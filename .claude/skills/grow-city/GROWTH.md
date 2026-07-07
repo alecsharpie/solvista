@@ -19,7 +19,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Nature** | 4, 26, 29 | 1, 13 | 37 | | | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2 |
 | **Urban fabric** | 32 | 7, 23 | 38 | | 8, 14, 24 | |
-| **Transport** | 2, 9, 21, 31 | | 28 | 5, 15 | | U1, U3 |
+| **Transport** | 2, 9, 21, 31 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | | | |
 | **Sky & atmosphere** | 27 | | 19, 35 | | | |
 | **People & activity** | | | 34 | | | |
@@ -43,9 +43,11 @@ tooltip / kelp re-gate · U3 determinism audit).
   nondeterminism. (Since 2026-07-08 the folder is `/Users/alec/me/solvista`,
   a git repo pushed to github.com/alecsharpie/solvista — commit each shipped
   iteration.)
-- **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): last run after
-  iter 34 — PASS (day 24.6ms ~flat, night 29ms +9% vs 2026-07-07 baseline;
-  within 15% TOL).
+- **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): **FAIL at iter 39** —
+  day mean 24→29.3/33.1ms (+22%/+38%, confirmed on re-run), night +13%.
+  Accumulated draw work since the 2026-07-07 baseline (polish-tile's 17-tile
+  redesign pass + iters 16-39). **Iter 40 = perf-fix iteration** per the skill
+  rule.
 
 ---
 
@@ -838,3 +840,22 @@ Cranes appear naturally whenever the live sim upgrades a parcel (boom eras
 especially). Un-zoomed 1982 boom-town shot read coherent (bonus: iter-35
 rainbow over the young city).
 **Verdict:** SHIP. Redeploy pending.
+
+## Iteration 39 — waiting riders at monorail stations (2026-07-08) [5th lap]
+
+**Vector:** Transport × Deepen — stations (iter 28) were bare platforms; now the
+transit system visibly serves people.
+**Change:** In `drawMonoAt`'s station block: 1-3 tiny riders (hashCell-placed
+and -counted, deterministic per cell; one fewer late at night) stand on the
+platform under the canopy, in ped palette colors. Draw-only, no rng().
+**Census:** VERDICT PASS, 0 page errors, fully surgical (draw-only).
+**Visual:** probe → station screen coords → clip at seed 42@2035: riders stand
+on the platform pad at the pylon base, correct height/occlusion, subtle at
+diorama scale (matches iter 28's station scale). No z-tears.
+**Holistic check (due at 39):** wides at seeds 42 & 1234 — both balanced and
+readable; the concurrent session's esplanade curves cleanly along both coasts;
+rainbows appear near rain clouds; no clutter/darkness compounding. **BUT the
+frame-time gate FAILED**: day mean 24→29.3ms then 33.1ms on the confirming
+re-run (+22%/+38%), night ~+13%. Real, not noise. Per the skill rule the next
+iteration is a perf-fix.
+**Verdict:** SHIP (feature) + FLAG (perf). Redeploy pending.

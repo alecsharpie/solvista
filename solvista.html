@@ -2439,6 +2439,15 @@ function drawMonoAt(x,y,i){
     prismS(cx,cy,0.17,0.17,0,2,col('deck',1),col('deckDk',0.7),col('deckDk',0.9));       /* platform */
     prismS(cx,cy,0.02,0.02,2,RAILH-4.5,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85)); /* post */
     prismS(cx,cy,0.15,0.15,RAILH-4.5,RAILH-3,col('teal',1),col('tealDk',0.6),col('tealDk',0.85)); /* canopy */
+    const nw=1+(hashCell(x,y,seedNum^0x9A55)*2.4|0)-(LITAMT>0.6?1:0); /* riders waiting for the next train */
+    const PC=['terra','teal','gold','coral','lav'];
+    for(let j=0;j<nw;j++){
+      const ox=(hashCell(x*7+j,y,seedNum^0x77A)-0.5)*7.5, oy=(hashCell(x,y*5+j,seedNum^0x3B2)-0.5)*3;
+      ctx.fillStyle=col(PC[(x+y+j)%5],0.95);
+      ctx.fillRect(cx+ox-0.8,cy+oy-5.2,1.6,2.7);
+      ctx.fillStyle=col('ink',1.35);
+      ctx.beginPath();ctx.arc(cx+ox,cy+oy-5.9,0.85,0,7);ctx.fill();
+    }
   }
   /* beam toward next+prev (half segments) */
   const nxt=monoPath[(i+1)%monoPath.length], prv=monoPath[(i-1+monoPath.length)%monoPath.length];
