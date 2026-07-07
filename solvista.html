@@ -2358,6 +2358,17 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.arc(cx,cy-h-1,4.4,Math.PI,0);ctx.fill();
     }
   }
+  if(c.th-c.h>5){ /* still rising: a tower crane works the top of the frame */
+    const[ccx,ccy]=px(gx,gy);
+    const dir=hashCell(x,y,seedNum^0xC4A9)<0.5?1:-1, mx=ccx+3*dir, my=ccy-h-9;
+    ctx.strokeStyle=col('gold',1.15);ctx.lineWidth=0.9;
+    ctx.beginPath();ctx.moveTo(mx,ccy-h+1);ctx.lineTo(mx,my);ctx.stroke();      /* mast */
+    ctx.beginPath();ctx.moveTo(mx-4*dir,my);ctx.lineTo(mx+8*dir,my);ctx.stroke(); /* jib */
+    ctx.lineWidth=0.55;
+    ctx.beginPath();ctx.moveTo(mx+8*dir,my);ctx.lineTo(mx+8*dir,my+5);ctx.stroke(); /* hoist */
+    ctx.fillStyle=col('ink',1.2);ctx.fillRect(mx+8*dir-0.8,my+5,1.6,1.6);          /* load */
+    ctx.fillStyle=col('coral',1.1);ctx.fillRect(mx-1.1,my-0.2,2.2,1.8);            /* cab */
+  }
 }
 
 /* monorail per-cell segment */

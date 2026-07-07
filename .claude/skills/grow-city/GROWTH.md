@@ -18,7 +18,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13 | 37 | | | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2 |
-| **Urban fabric** | 32 | 7, 23 | | | 8, 14, 24 | |
+| **Urban fabric** | 32 | 7, 23 | 38 | | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31 | | 28 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | | | |
 | **Sky & atmosphere** | 27 | | 19, 35 | | | |
@@ -814,4 +814,27 @@ render bucket, `__census().life.deer`, `fl()`-flood support.
 coords → west-forest clip at seed 42@2035: deer pairs at the meadow/forest
 boundary, one mid-graze (head down), bucks' antlers legible, fawns smaller.
 Wildlife scale matches herons. On-grid, no z-tears.
+**Verdict:** SHIP. Redeploy pending.
+
+## Iteration 38 — construction cranes (2026-07-08) [5th lap]
+
+**Vector:** Urban fabric × Deepen — that cell was empty, and the move makes the
+simulation's core premise ("watch it grow") *visible*: buildings already animate
+height growth at draw time (`drawBuilding` L~1934), but a rising frame looked
+identical to a finished one.
+**Change:** At the tail of `drawBuilding`, any building still well below its
+target (`c.th-c.h>5`) hosts a gold tower crane: mast to h+9, jib + counter-jib
+(direction from `hashCell(...^0xC4A9)`), hoist line with a hanging ink load, and
+a coral operator cab. Draw-only, no rng(), applies to every building type incl.
+civics mid-build.
+**Census:** VERDICT PASS, 0 page errors, fully surgical (no metric moves —
+construction is a transient draw state, invisible to `__warp`-completed censuses
+by design; no bespoke metric added per the sprawl rule).
+**Visual:** `?warp` completes all heights (h=th), so a natural shot shows no
+cranes — verified instead via an in-page Playwright probe that reset six
+downtown mid-rises to `h=th-22` and screenshotted the same page (no source
+edit): six cranes over rising frames, jibs/cabs legible, correct occlusion.
+Cranes appear naturally whenever the live sim upgrades a parcel (boom eras
+especially). Un-zoomed 1982 boom-town shot read coherent (bonus: iter-35
+rainbow over the young city).
 **Verdict:** SHIP. Redeploy pending.
