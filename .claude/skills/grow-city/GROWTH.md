@@ -43,11 +43,11 @@ tooltip / kelp re-gate · U3 determinism audit).
   nondeterminism. (Since 2026-07-08 the folder is `/Users/alec/me/solvista`,
   a git repo pushed to github.com/alecsharpie/solvista — commit each shipped
   iteration.)
-- **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): **FAIL at iter 39** —
-  day mean 24→29.3/33.1ms (+22%/+38%, confirmed on re-run), night +13%.
-  Accumulated draw work since the 2026-07-07 baseline (polish-tile's 17-tile
-  redesign pass + iters 16-39). **Iter 40 = perf-fix iteration** per the skill
-  rule.
+- **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
+  (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix):
+  day floor 23ms (−4% vs baseline, reproduced ×2), night ~30ms (+13%, within
+  TOL). ⚠ This machine runs hot (load avg 4+): perf numbers swing ±30% run to
+  run — run 3× and judge by the MINIMUM.
 
 ---
 
@@ -859,3 +859,26 @@ frame-time gate FAILED**: day mean 24→29.3ms then 33.1ms on the confirming
 re-run (+22%/+38%), night ~+13%. Real, not noise. Per the skill rule the next
 iteration is a perf-fix.
 **Verdict:** SHIP (feature) + FLAG (perf). Redeploy pending.
+
+## Iteration 40 — perf fix (2026-07-08) [5th lap]
+
+**Vector:** Polish (perf-fix, mandated by iter 39's failed frame-time gate —
+first time the perf guardrail has fired since joining the holistic check).
+**Diagnosis:** CDP CPU profile of the day scene: **61% of JS time in
+`ctx.fill()`** — thousands of small path fills; biggest populations are the
+per-floor window bands (2 fills each × ~5-8 floors × ~1400 buildings) and,
+subtler, `setLight()` doing `CCACHE={}` **every frame** from `render()`, so the
+color cache was discarded and rebuilt each frame even with unchanged light.
+**Change (both zero-visual-change):** (1) `bandS` now emits both face quads as
+subpaths of ONE path with a single `fill()` — halves every band fill in the
+city. (2) `setLight` early-returns when lit/tint are unchanged, so `CCACHE`
+persists across frames outside dawn/dusk transitions.
+**Result:** day mean 33ms → **23ms floor** (−4% vs the 2026-07-07 baseline,
+reproduced in two independent runs); night ~30ms (+13%, within the 15% TOL —
+night genuinely grew with the glow features; watch it). Numbers on this shared
+box swing ±30% with load (load avg 4+, one run hit 35ms on identical code) —
+the gate protocol is now min-of-3, noted in SKILL.md.
+**Census:** VERDICT PASS, 0 page errors, every metric exactly flat.
+**Visual:** downtown clip at seed 42@2035 — window bands / awnings / sign bands
+identical to before; no artifacts from the merged path.
+**Verdict:** FIXED. Redeploy pending.

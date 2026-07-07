@@ -163,8 +163,9 @@ only ever adds entities and draw work — dozens of individually-cheap features
 can compound into a slow frame exactly the way kelp compounded into a dark
 coast. PASS = mean frame time within 15% of baseline in both day/night scenes.
 Log the number in the holistic entry; if it regressed, the next iteration is a
-perf-fix iteration (headless timing is noisy — re-run once before believing a
-borderline number).
+perf-fix iteration. Headless timing on this shared machine swings ±30% with
+load — **run the gate 3× and judge by the minimum of each scene**, not a single
+reading (iter 40 saw 23ms and 35ms for the same code minutes apart).
 
 If run under `/loop`, do exactly one iteration per turn, then stop and let the
 loop re-invoke — don't chain multiple vectors in a single pass.

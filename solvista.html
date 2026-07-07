@@ -238,7 +238,10 @@ function daylight(t){
 
 /* per-frame tinted color cache */
 let TINT=[1,1,1], LITAMT=0, CCACHE={};
-function setLight(dl){TINT=dl.tint;LITAMT=dl.lit;CCACHE={};}
+function setLight(dl){ /* called every frame — only flush the color cache when the light actually moved */
+  if(dl.lit===LITAMT&&dl.tint[0]===TINT[0]&&dl.tint[1]===TINT[1]&&dl.tint[2]===TINT[2])return;
+  TINT=dl.tint;LITAMT=dl.lit;CCACHE={};
+}
 function col(name,f){ /* f: face brightness */
   const k=name+'|'+f;
   let c=CCACHE[k]; if(c)return c;
@@ -1256,11 +1259,14 @@ function prismS(cx,cy,ax,ay,z0,z1,ct,cl,cr){
 function prism(gx,gy,ax,ay,z0,z1,ct,cl,cr){
   const[cx,cy]=px(gx,gy); prismS(cx,cy,ax,ay,z0,z1,ct,cl,cr);
 }
-function bandS(cx,cy,ax,ay,z0,z1,fill){ /* horizontal band on both front faces */
+function bandS(cx,cy,ax,ay,z0,z1,fill){ /* horizontal band on both front faces
+  (single path, both quads — one fill() costs half of two) */
   const X=ax*2*HW, V=ay*2*VR, E=ay*2*ER;
   ctx.fillStyle=fill;
-  ctx.beginPath();ctx.moveTo(cx,cy+V-z1);ctx.lineTo(cx+X,cy+E-z1);ctx.lineTo(cx+X,cy+E-z0);ctx.lineTo(cx,cy+V-z0);ctx.closePath();ctx.fill();
-  ctx.beginPath();ctx.moveTo(cx-X,cy+E-z1);ctx.lineTo(cx,cy+V-z1);ctx.lineTo(cx,cy+V-z0);ctx.lineTo(cx-X,cy+E-z0);ctx.closePath();ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(cx,cy+V-z1);ctx.lineTo(cx+X,cy+E-z1);ctx.lineTo(cx+X,cy+E-z0);ctx.lineTo(cx,cy+V-z0);ctx.closePath();
+  ctx.moveTo(cx-X,cy+E-z1);ctx.lineTo(cx,cy+V-z1);ctx.lineTo(cx,cy+V-z0);ctx.lineTo(cx-X,cy+E-z0);ctx.closePath();
+  ctx.fill();
 }
 function bandR(gx,gy,ax,ay,z0,z1,fill){
   const[cx,cy]=px(gx,gy); bandS(cx,cy,ax,ay,z0,z1,fill);
