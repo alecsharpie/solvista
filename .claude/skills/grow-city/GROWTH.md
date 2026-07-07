@@ -22,15 +22,16 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Transport** | 2, 9, 21, 31 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | | | |
 | **Sky & atmosphere** | 27 | | 19, 35 | | | |
-| **People & activity** | | | 34 | | | |
+| **People & activity** | 41 | | 34 | | | |
 
 - **Interaction/UX kind:** only the hover tooltip (U2, user-directed) — never
   yet loop-driven.
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
-  elements) — prefer Deepen/Polish there. Least-touched: People & activity
-  (34 only), Sky & atmosphere (weather/fog/seasons untouched), Civic × Deepen
-  (civics never interconnected). Explored & reverted: solar-farm contagion
-  (iter 32 — terrain CA at early year = unavoidable pop wobble).
+  elements) — prefer Deepen/Polish there. Least-touched now: Sky & atmosphere
+  (fog/seasons/weather-fronts still untouched by the loop), Nature × Connect,
+  and Interaction/UX (never loop-driven). Explored & reverted: solar-farm
+  contagion (iter 32); tuned-not-reverted: forecourt plazas (iter 36 — 1996
+  start collapsed pop 5%, moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
   memory — includes iters 1–33 + user passes). **Pending: iters 34–40**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
@@ -883,3 +884,20 @@ the gate protocol is now min-of-3, noted in SKILL.md.
 **Visual:** downtown clip at seed 42@2035 — window bands / awnings / sign bands
 identical to before; no artifacts from the merged path.
 **Verdict:** FIXED. Redeploy pending.
+
+## Iteration 41 — evening crowds on the strip (2026-07-08) [6th lap]
+
+**Vector:** People & activity × New element — the domain had only iter 34; its
+night side was all lights and no people (drawPed thins crowds after dark, so
+streets empty exactly when the neon comes on).
+**Change:** In the COM draw case: high-value shopfronts (`v>0.6`) host 2-4 tiny
+figures out front after dusk — hashCell-placed/counted (deterministic, no
+rng()), PEDC-palette bodies + ink heads at sidewalk level, alpha-ramped in via
+`min(1,(LITAMT-0.35)*3)` so they fade in with the evening rather than popping.
+Draw-only.
+**Census:** VERDICT PASS, 0 page errors, every metric exactly flat.
+**Visual:** probe → densest high-value COM cluster → tight night clip (t=0.8,
+seed 42): pairs and small groups stand at the lit storefronts under awnings and
+neon, muted correctly by the night tint. Day framing shows none (same LITAMT
+gate as the neon). No z-tears.
+**Verdict:** SHIP. Redeploy pending (iters 34-41 + hooks + polish-tile work).

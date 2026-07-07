@@ -1993,6 +1993,20 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.fillStyle=col('gold',1.05);
       ctx.beginPath();ctx.ellipse(cx+3,cy-h-3.0,2.6,1.5,0,0,7);ctx.fill();
     }
+    if(LITAMT>0.35&&v>0.6){ /* evening crowd out on the strip, under the neon */
+      const[cx,cy]=px(gx,gy);
+      ctx.globalAlpha=Math.min(1,(LITAMT-0.35)*3);
+      const n=2+(hashCell(x,y,seedNum^0x216E)*2.6|0);
+      for(let j=0;j<n;j++){
+        const ox=(hashCell(x*5+j,y,seedNum^0x9D3)-0.5)*10;
+        const oy=2.5+hashCell(x,y*3+j,seedNum^0x64F)*2.4;
+        ctx.fillStyle=col(['coral','teal','gold','lav','white'][(x+y*2+j)%5],0.95);
+        ctx.fillRect(cx+ox-0.8,cy+oy-3.1,1.6,2.6);
+        ctx.fillStyle=col('ink',1.35);
+        ctx.beginPath();ctx.arc(cx+ox,cy+oy-3.8,0.85,0,7);ctx.fill();
+      }
+      ctx.globalAlpha=1;
+    }
     if(LITAMT>0.4){ /* neon sign glow at night */
       ctx.globalAlpha=(LITAMT-0.4)*0.9;
       bandR(gx,gy,0.375,0.335,h-4.6,h-0.6,col(signN,1.55));
