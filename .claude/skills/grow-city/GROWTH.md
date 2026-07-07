@@ -16,7 +16,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13 | | | | |
+| **Nature** | 4, 26, 29 | 1, 13 | 37 | | | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2 |
 | **Urban fabric** | 32 | 7, 23 | | | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31 | | 28 | 5, 15 | | U1, U3 |
@@ -795,4 +795,23 @@ read-the-seam rule caught a duplicate).
 squares with the golden statue + fountain rings, small trees, peds strolling
 (plazas are already in the ped `openCells`/`strollable` sets, so the forecourts
 get crowds for free), each at the door of its civic. On-grid, no z-tears.
+**Verdict:** SHIP. Redeploy pending.
+
+## Iteration 37 — deer at the forest edge (2026-07-08) [5th lap]
+
+**Vector:** Nature × Deepen — Nature's Deepen cell was empty; fauna rewards the
+woods the way herons rewarded the marsh (iter 17).
+**Change:** New `deer` entity, mirroring the heron pattern: spawned in
+`syncFleet` on quiet edge cells (MEADOW/EMPTY with a FOREST/REDWOOD neighbor and
+no road/dev neighbor), `Math.random()` placement, count `min(6, edge/10)` so the
+herd follows how much wild fringe survives urbanization. `drawDeer`: tan body,
+4 legs, neck + head that dips to graze on a slow `waveT` cycle, white tail
+flash; 30% fawns (smaller), 50% antlered bucks. Wired: declaration/reset,
+render bucket, `__census().life.deer`, `fl()`-flood support.
+**Census:** VERDICT PASS, 0 page errors. Fully surgical — everything flat;
+**life.deer 0→45** (~5/city).
+**Visual:** `?flood=deer:30` (URL hook — nothing to revert) + a probe for screen
+coords → west-forest clip at seed 42@2035: deer pairs at the meadow/forest
+boundary, one mid-graze (head down), bucks' antlers legible, fawns smaller.
+Wildlife scale matches herons. On-grid, no z-tears.
 **Verdict:** SHIP. Redeploy pending.
