@@ -1,0 +1,6 @@
+.DS_Store
+.claude/skills/*/shots/
+.claude/skills/*/census-latest.json
+.claude/skills/*/perf-latest.json
+shots/
+.claude/scheduled_tasks.lock

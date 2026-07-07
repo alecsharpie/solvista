@@ -1,0 +1,12 @@
+{
+  "wait": 1000,
+  "shots": [
+    { "name": "wide", "w": 1600, "h": 1000, "scroll": 0, "dsf": 2 },
+    { "name": "tall", "w": 1000, "h": 1200, "scroll": 0, "dsf": 2 },
+    { "name": "mobile", "w": 390, "h": 844, "scroll": 0, "dsf": 2 },
+    { "name": "coast", "w": 1600, "h": 1000, "dsf": 3,
+      "clip": { "x": 1180, "y": 120, "width": 420, "height": 840 } },
+    { "name": "downtown", "w": 1600, "h": 1000, "dsf": 3,
+      "clip": { "x": 480, "y": 250, "width": 620, "height": 520 } }
+  ]
+}
