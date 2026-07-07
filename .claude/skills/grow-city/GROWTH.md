@@ -17,7 +17,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13 | 37 | | | |
-| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2 |
+| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2, 44 |
 | **Urban fabric** | 32 | 7, 23 | 38 | | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | | | |
@@ -31,15 +31,15 @@ tooltip / kelp re-gate · U3 determinism audit).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
   sea-fog spells (35, 43); seasons/wind remain. Emptiest cells: Nature/Civic/
-  Sky × Connect, Water × Polish, People × New CA rule. Explored & reverted:
+  Sky × Connect, People × New CA rule. Explored & reverted:
   solar-farm contagion (iter 32); tuned-not-reverted: forecourt plazas
   (iter 36 — 1996 start collapsed pop 5%, moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–43**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–44**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
-  perf fix · evening crowds · entity tooltips · sea fog), the flood/step test
-  hooks, and the concurrent polish-tile session's esplanade + tile redesigns;
-  ask for the nod at session end.
+  perf fix · evening crowds · entity tooltips · sea fog · river flow), the
+  flood/step test hooks, and the concurrent polish-tile session's esplanade +
+  tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
   iter 35 ran (espRow/espAt/drawEspAt smooth esplanade; promenade metric
   399→153 is its intended re-banding, not a regression). If two loops run at
@@ -949,3 +949,23 @@ Control shot at step=0 (spell negative): clean coast, no fog.
 and the off-window; and when "gate open but invisible", suspect the amplitude
 envelope before the gate.
 **Verdict:** SHIP. Redeploy pending (iters 34-43 + hooks + polish-tile work).
+
+## Iteration 44 — river flow (2026-07-08) [6th lap]
+
+**Vector:** Water & coast × Polish — the domain's most-overdue slot (last loop
+touch iter 33) and the only Polish there was user-directed (U2). The river
+corridor has banks, bridges, marsh, herons and kayaks, but the water itself sat
+static — indistinguishable from a lake.
+**Change:** In the WATER draw case, river cells (`c.riv`) now show the current:
+each cell picks its downstream water neighbor (east/seaward wins; the open sea
+wins ties at the mouth) and slides two faint glint streaks along that axis,
+phase from `(time*0.22+hashCell)%1` with a sine alpha envelope (fade in/out at
+the ends). Draw-only, no rng(); ~33 river cells/city so cost is negligible.
+**Census:** VERDICT PASS, 0 page errors, all flat.
+**Visual:** river-centroid clip at seed 42@2035 — glints along the runs,
+clearly denser than (and directionally distinct from) the generic horizontal
+sea sparkle. Motion verified at the estuary with paired `?step=0`/`?step=1.5`
+clips: glints advanced along the channel toward the mouth, diagonal with the
+channel where it bends. (First motion-check clip missed the river entirely —
+aim clips with a probe, not by eyeballing screen coords off a scaled render.)
+**Verdict:** SHIP. Redeploy pending (iters 34-44 + hooks + polish-tile work).
