@@ -32,9 +32,10 @@ tooltip / kelp re-gate · U3 determinism audit).
   (civics never interconnected). Explored & reverted: solar-farm contagion
   (iter 32 — terrain CA at early year = unavoidable pop wobble).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34 (joggers) +
-  35 (rainbows), the flood/step test hooks, and a concurrent polish-tile
-  session's esplanade redesign**; ask for the nod at session end.
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–40**
+  (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
+  perf fix), the flood/step test hooks, and the concurrent polish-tile
+  session's esplanade + tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
   iter 35 ran (espRow/espAt/drawEspAt smooth esplanade; promenade metric
   399→153 is its intended re-banding, not a regression). If two loops run at
