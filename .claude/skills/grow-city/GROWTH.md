@@ -37,10 +37,12 @@ tooltip / kelp re-gate · U3 determinism audit).
   session's esplanade redesign**; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
   iter 35 ran (espRow/espAt/drawEspAt smooth esplanade; promenade metric
-  399→153 is its intended re-banding, not a regression). The repo has NO git —
-  if two loops run at once, unexplained metric moves may be the other session,
-  and file-state write conflicts are possible. Check for surprise
-  functions/metrics before blaming nondeterminism.
+  399→153 is its intended re-banding, not a regression). If two loops run at
+  once, unexplained metric moves may be the other session, and file-state write
+  conflicts are possible. Check for surprise functions/metrics before blaming
+  nondeterminism. (Since 2026-07-08 the folder is `/Users/alec/me/solvista`,
+  a git repo pushed to github.com/alecsharpie/solvista — commit each shipped
+  iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): last run after
   iter 34 — PASS (day 24.6ms ~flat, night 29ms +9% vs 2026-07-07 baseline;
   within 15% TOL).

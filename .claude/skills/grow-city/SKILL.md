@@ -124,7 +124,10 @@ The gates below are what make hours of this safe without a human watching.
    State of the city header** at the top of `GROWTH.md` (add the iteration number
    to its domain × kind cell; refresh the saturation/deploy lines) — that header
    is what step 1 reads instead of the whole archive, so a stale header
-   silently breaks rotation.
+   silently breaks rotation. Then **git commit** the iteration (source + ledger
+   in one commit, `Iter N: <what>`) and push — the repo is
+   github.com/alecsharpie/solvista, and with concurrent loops possible an
+   uncommitted iteration is one stale write away from being lost.
 6. **Redeploy note.** `solvista.html` is the durable source; the live artifact is
    a separate copy. Do **not** auto-redeploy without a nod — but don't let the
    request rot either: at the **end of a session** (or when the user next
