@@ -660,6 +660,24 @@ function tick(){
     if(c&&(c.t===T.EMPTY||c.t===T.RES)&&c.val>0.6&&countAround(x,y,1,n=>n.t===T.CIVIC)>=1
        &&countAround(x,y,3,n=>n.t===T.PLAZA)===0&&rng()<0.2){c.t=T.PLAZA;c.h=0;c.th=0;c.age=0;}
   }
+  /* civic forecourts: a major institution anchors a paved square at its door
+     (2020+ — firing earlier suppresses the RES→…→TOWER chain and cost 5% pop;
+     by 2020 the towers are seeded and the cascade is mild). The random-sample
+     rule above ~never fires (PLAZA stayed 0 for 35 iterations); it is kept only
+     so its rng() draws keep the stream aligned. hashCell-gated (no rng()). */
+  if(year>=2020)for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const c=cells[idx(x,y)];
+    if(c.t!==T.CIVIC)continue;
+    const k=c.kind;
+    if(k!=='hall'&&k!=='museum'&&k!=='parliament'&&k!=='university'&&k!=='library')continue;
+    if(countAround(x,y,2,n=>n.t===T.PLAZA)>0)continue;
+    for(const d of nbrDirs(y)){
+      const nx=x+d[0],ny=y+d[1],n=cellAt(nx,ny);
+      if(!n||(n.t!==T.RES&&n.t!==T.EMPTY))continue;
+      if(countAround(nx,ny,1,m=>m.t===T.ROAD)===0)continue;
+      if(hashCell(nx,ny,seedNum^0xF04C)<0.9){n.t=T.PLAZA;n.h=0;n.th=0;n.age=0;break;}
+    }
+  }
   /* far fields quietly go solar (2012+) */
   if(year>=2012)for(let k=0;k<6;k++){
     const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];

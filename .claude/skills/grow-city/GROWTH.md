@@ -20,7 +20,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2 |
 | **Urban fabric** | 32 | 7, 23 | | | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31 | | 28 | 5, 15 | | U1, U3 |
-| **Civic & culture** | 3, 11, 18, 30 | | | | | |
+| **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | | | |
 | **Sky & atmosphere** | 27 | | 19, 35 | | | |
 | **People & activity** | | | 34 | | | |
 
@@ -770,3 +770,29 @@ shot; the probe-then-clip workflow (evaluate cloud positions → computed screen
 coords → exact clip) is the reliable way to verify sky features.
 **Verdict:** SHIP. Redeploy pending (with iter 34 + hooks + the other session's
 esplanade).
+
+## Iteration 36 — civic forecourt plazas (2026-07-08) [5th lap]
+
+**Vector:** Civic & culture × New CA rule serving Deepen — the header flagged
+"civics never interconnected"; also fixes a known dead letter: PLAZA had been 0
+in every census since iter 0 (noted iter 30), so polish-tile's redesigned plaza
+art never appeared in a real city.
+**Change:** New `tick()` pass (2020+): a major institution (hall / museum /
+parliament / university / library) without a square in r2 converts one adjacent
+road-fronting RES/EMPTY cell into PLAZA, `hashCell(nx,ny,seedNum^0xF04C)<0.9`
+(no rng()). The old random-sample plaza rule (~never fires) is kept untouched so
+its rng() draws keep the stream aligned. First tries FAILED the gate and were
+tuned, not abandoned: at 1996 the pass suppressed the RES→MID→COM→TOWER chain —
+pop −5.3% COLLAPSE, towers −13% for +9 plazas; at 2020/thr 0.55 only +3 plazas.
+Final: 2020 + thr 0.9 → pop −0.7%, towers −4, **PLAZA 0→5** (~1-2 per mature
+city — town-square scale; candidacy, not the gate, is the constraint by 2020).
+**Census:** VERDICT PASS, 0 page errors. Tile histogram: **PLAZA 0→+5** (the
+intended move); rest is chaotic reshuffle from a terrain pass (expected).
+Amphitheater-concert idea was abandoned pre-code: the seam-read showed
+polish-tile's redesign already ships audience + night stage wash (2nd time the
+read-the-seam rule caught a duplicate).
+**Visual:** __find('PLAZA') → exact clips at seeds 42 & 7 @2035 — paved cream
+squares with the golden statue + fountain rings, small trees, peds strolling
+(plazas are already in the ped `openCells`/`strollable` sets, so the forecourts
+get crowds for free), each at the door of its civic. On-grid, no z-tears.
+**Verdict:** SHIP. Redeploy pending.
