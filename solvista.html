@@ -238,6 +238,10 @@ function daylight(t){
 
 /* per-frame tinted color cache */
 let TINT=[1,1,1], LITAMT=0, CCACHE={};
+/* entity screen-position stamps: each draw records where it drew this frame so
+   the hover tooltip can name moving things (stale stamps = not on screen) */
+let FRAMEN=0;
+const stamp=(e,x,y)=>{e._sx=x;e._sy=y;e._sf=FRAMEN;};
 function setLight(dl){ /* called every frame — only flush the color cache when the light actually moved */
   if(dl.lit===LITAMT&&dl.tint[0]===TINT[0]&&dl.tint[1]===TINT[1]&&dl.tint[2]===TINT[2])return;
   TINT=dl.tint;LITAMT=dl.lit;CCACHE={};
@@ -2499,6 +2503,7 @@ function drawVehicle(v){
   const lane=(v.kind==='bike'?0.17:0.09)*CW; /* cyclists hug the curb */
   const cx=lerp(A[0],B[0],v.p)-ddy/L*lane;
   const cy=lerp(A[1],B[1],v.p)+ddx/L*lane*0.6;
+  stamp(v,cx,cy);
   if(v.kind==='bike'){
     shadS(cx,cy,0.08,0.14);
     ctx.strokeStyle=col('ink',1.2);ctx.lineWidth=0.9;
@@ -2552,6 +2557,7 @@ function drawPed(p){
   if(LITAMT>0.75&&((p.x*7+p.y*3)%10)<5)return; /* crowds thin late at night */
   const z=onPier(p.x,p.y)?5:0;
   const[cx,cy]=px(p.x+0.5+p.ox,p.y+0.5+p.oy);
+  stamp(p,cx,cy-z);
   ctx.fillStyle=col(p.c,0.9);
   ctx.fillRect(cx-0.9,cy-3.6-z,1.8,3);
   ctx.fillStyle=col('ink',1.4);
@@ -2560,6 +2566,7 @@ function drawPed(p){
 function drawJogger(j){
   if(LITAMT>0.75&&(((j.ph*97)|0)%10)<6)return; /* only a few night runners */
   const[cx,cy]=pxc(shoreAtF(j.y)+j.off,j.y);
+  stamp(j,cx,cy);
   const st=Math.sin(waveT*7+j.ph), bob=Math.abs(st)*0.6;
   ctx.strokeStyle=col('ink',1.3);ctx.lineWidth=0.7; /* scissoring legs */
   ctx.beginPath();ctx.moveTo(cx,cy-1.6-bob);ctx.lineTo(cx+st*1.3,cy+0.2);ctx.stroke();
@@ -2571,6 +2578,7 @@ function drawJogger(j){
 }
 function drawBoat(b){
   const[cx,cy]=pxc(b.x,b.y);
+  stamp(b,cx,cy);
   const bob=Math.sin(waveT*1.5+b.ph)*0.8;
   ctx.fillStyle=col('terra',0.9);
   ctx.beginPath();ctx.moveTo(cx-5,cy+bob);ctx.lineTo(cx+5,cy+bob);ctx.lineTo(cx+3,cy+2.4+bob);ctx.lineTo(cx-3,cy+2.4+bob);ctx.closePath();ctx.fill();
@@ -2579,6 +2587,7 @@ function drawBoat(b){
 }
 function drawSurfer(s){
   const[cx,cy]=pxc(shoreAtF(s.y)+s.off,s.y);
+  stamp(s,cx,cy);
   const bob=Math.sin(waveT*1.7+s.ph)*0.9;
   ctx.fillStyle=col('foam',1);              /* a little wake */
   ctx.beginPath();ctx.ellipse(cx,cy+2.4+bob,3.4,1.1,0,0,7);ctx.fill();
@@ -2590,6 +2599,7 @@ function drawSurfer(s){
 }
 function drawFerry(f){
   const[cx,cy]=pxc(shoreAtF(f.y)+f.off,f.y);
+  stamp(f,cx,cy);
   const bob=Math.sin(waveT*1.2+f.ph)*0.6, dir=f.sp>=0?1:-1;
   ctx.fillStyle=col('foam',1);            /* wake */
   ctx.beginPath();ctx.ellipse(cx,cy+2.6+bob,6.6,1.7,0,0,7);ctx.fill();
@@ -2605,6 +2615,7 @@ function drawFerry(f){
 }
 function drawKayak(k){
   const[cx,cy]=pxc(k.x+k.ox,k.y);
+  stamp(k,cx,cy);
   const bob=Math.sin(waveT*1.4+k.ph)*0.5;
   ctx.fillStyle=col(k.c,1.05); /* hull */
   ctx.beginPath();ctx.ellipse(cx,cy+1+bob,3.4,1.1,0,0,7);ctx.fill();
@@ -2616,6 +2627,7 @@ function drawKayak(k){
 }
 function drawHeron(h){
   const[cx,cy]=px(h.x+0.5+h.ox,h.y+0.5+h.oy);
+  stamp(h,cx,cy);
   const bob=Math.sin(waveT*0.8+h.ph)*0.35;
   ctx.strokeStyle=col('soilDk',1);ctx.lineWidth=0.6; /* long legs */
   ctx.beginPath();ctx.moveTo(cx-0.6,cy);ctx.lineTo(cx-0.6,cy-3);ctx.moveTo(cx+0.5,cy);ctx.lineTo(cx+0.5,cy-3);ctx.stroke();
@@ -2628,6 +2640,7 @@ function drawHeron(h){
 }
 function drawDeer(d){
   const[cx,cy]=px(d.x+0.5+d.ox,d.y+0.5+d.oy);
+  stamp(d,cx,cy);
   const s=d.fawn?0.7:1, f=d.a;
   const gr=Math.max(0,Math.sin(waveT*0.45+d.ph)); /* head dips to graze */
   ctx.strokeStyle=col('trunk',0.85);ctx.lineWidth=0.55; /* legs */
@@ -2655,6 +2668,7 @@ function drawWhale(w){
   const[cx,cy]=pxc(shoreAtF(w.y)+w.off,w.y);
   const arc=Math.sin(waveT*0.7+w.ph);        /* slow surface/dive cycle */
   if(arc<0.2)return;                          /* mostly submerged */
+  stamp(w,cx,cy);
   const rise=(arc-0.2)*7, dir=w.sp>=0?1:-1;
   ctx.fillStyle=col('foam',1);                /* wake */
   ctx.beginPath();ctx.ellipse(cx,cy+2.6,6.5,1.2,0,0,7);ctx.fill();
@@ -2669,6 +2683,7 @@ function drawDolphin(d){
   const[cx,cy]=pxc(shoreAtF(d.y)+d.off,d.y);
   const arc=Math.sin(waveT*1.3+d.ph);      /* surface/dive cycle */
   if(arc<0.05)return;                       /* underwater — just ripples */
+  stamp(d,cx,cy);
   const rise=arc*4.2, dir=d.sp>=0?1:-1;
   ctx.strokeStyle=col('waterDk',0.7);ctx.lineWidth=1.4;ctx.lineCap='round';
   ctx.beginPath();ctx.arc(cx,cy+2-rise*0.5,3.4,Math.PI*1.05,Math.PI*1.95);ctx.stroke(); /* arched back */
@@ -2700,6 +2715,7 @@ function bucketAdd(x,y,fn){
 const STARS=[];for(let i=0;i<70;i++)STARS.push([Math.random(),Math.random()*0.55,Math.random()*7]);
 
 function render(){
+  FRAMEN++;
   applySeason();
   const dl=daylight(dayT); setLight(dl);
   ctx.setTransform(1,0,0,1,0,0);
@@ -2893,6 +2909,7 @@ function render(){
     const[cx,cy]=pxc(b.x,b.y);
     const s=b.sc||1;
     const by=cy-165-cy*0.45+Math.sin(time*0.6+b.ph)*4;
+    stamp(b,cx,by);
     ctx.fillStyle=col(b.c[0],1.05);
     ctx.beginPath();ctx.ellipse(cx,by,8*s,9*s,0,0,7);ctx.fill();
     ctx.fillStyle=col(b.c[1],1.05);
@@ -3053,20 +3070,59 @@ function describeTile(c){
   h+='<p class="td">'+data.join('&nbsp;·&nbsp;')+'</p>';
   return h;
 }
+/* hovering a moving thing names it; entities win over the tile under them.
+   INVARIANT: when adding a new entity array, stamp() it in its draw and add a
+   row here (same discipline as TILELABEL / the census hook). */
+const ENTINFO=[
+  [()=>whales,'Gray whale','Surfacing on a slow cruise up the bay.',12],
+  [()=>dolphins,'Dolphin','Rolling through the swell.',8],
+  [()=>ferries,'Harbor ferry','Working the shoreline, every stop.',10],
+  [()=>boats,'Sailboat','Out for a day on the bay.',8],
+  [()=>surfers,'Surfer','Waiting on the next set.',7],
+  [()=>kayaks,'Kayaker','Paddling the river.',7],
+  [()=>herons,'Great heron','Stalking the marsh shallows.',7],
+  [()=>deer,'Mule deer','Grazing where the meadow meets the woods.',7],
+  [()=>joggers,'Jogger','Logging shoreline miles.',7],
+  [()=>balloons,'Hot-air balloon','Drifting over on the fair-day breeze.',13],
+  [()=>trams,'Streetcar','Riding the avenues since 1985.',9],
+  [()=>trucks,'Delivery truck','Stock for the shopfronts.',9],
+  [()=>bikes,'Cyclist','Two wheels beat the traffic.',6],
+  [()=>peds,'Resident','Out for a stroll.',5],
+  [()=>dogs,'Good dog','Off to sniff everything.',5],
+];
+const VKIND={fireeng:['Fire engine','Lights on, heading to the smoke.'],
+  ambo:['Ambulance','On a call.'],police:['Police cruiser','On patrol.']};
+function pickEntity(wx,wy){
+  let best=null,bd=1e9;
+  const consider=(e,name,sub,r)=>{
+    if(e._sf===undefined||FRAMEN-e._sf>2)return;
+    const dx=wx-e._sx, dy=wy-(e._sy-3), d=dx*dx+dy*dy;
+    if(d<r*r&&d<bd){bd=d;best=[name,sub];}
+  };
+  for(const[g,name,sub,r]of ENTINFO)for(const e of g())consider(e,name,sub,r);
+  for(const v of vehicles){const k=VKIND[v.kind]||['Car',"Somebody's errand."];consider(v,k[0],k[1],6);}
+  return best;
+}
 const tipEl=$('tip');
 cvs.addEventListener('mousemove',e=>{
   if(panning&&dragMoved>4){tipEl.style.display='none';return;}
   const wx=(e.clientX-offX)/scale, wy=(e.clientY-offY)/scale;
-  const y0=Math.round(wy/ROWY-0.5), x0=Math.round(wx/CW-1);
-  let x=-1,y=-1,bd=1e9;
-  for(let yy=y0-1;yy<=y0+1;yy++)for(let xx=x0;xx<=x0+2;xx++){
-    if(!inB(xx,yy))continue;
-    const dx2=wx-(xx+0.5+(yy&1)*0.5)*CW, dy2=(wy-(yy+0.5)*ROWY)*1.73;
-    const d=dx2*dx2+dy2*dy2; if(d<bd){bd=d;x=xx;y=yy;}
+  const pe=pickEntity(wx,wy);
+  let html;
+  if(pe)html='<p class="tt">'+pe[0]+'</p><p class="td">'+pe[1]+'</p>';
+  else{
+    const y0=Math.round(wy/ROWY-0.5), x0=Math.round(wx/CW-1);
+    let x=-1,y=-1,bd=1e9;
+    for(let yy=y0-1;yy<=y0+1;yy++)for(let xx=x0;xx<=x0+2;xx++){
+      if(!inB(xx,yy))continue;
+      const dx2=wx-(xx+0.5+(yy&1)*0.5)*CW, dy2=(wy-(yy+0.5)*ROWY)*1.73;
+      const d=dx2*dx2+dy2*dy2; if(d<bd){bd=d;x=xx;y=yy;}
+    }
+    const c=cellAt(x,y);
+    if(!c){tipEl.style.display='none';return;}
+    html=describeTile(c);
   }
-  const c=cellAt(x,y);
-  if(!c){tipEl.style.display='none';return;}
-  tipEl.innerHTML=describeTile(c);
+  tipEl.innerHTML=html;
   const flipX=e.clientX>innerWidth-260, flipY=e.clientY>innerHeight-120;
   tipEl.style.transform='translate('+(flipX?'calc(-100% - 16px)':'16px')+','+(flipY?'calc(-100% - 4px)':'18px')+')';
   tipEl.style.left=e.clientX+'px'; tipEl.style.top=e.clientY+'px';

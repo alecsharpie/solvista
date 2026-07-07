@@ -259,7 +259,9 @@ even if the census looks fine:
   metric keeps measuring the right things.
 - **Keep the hover tooltip in sync.** When you add a tile type or civic kind, add
   it to `TILELABEL` / `CIVICLABEL` / `TILEDESC` (near the canvas `mousemove`
-  handler) so hovering it names + describes it. Same discipline as the census hook.
+  handler) so hovering it names + describes it. When you add an **entity** array,
+  `stamp(e,cx,cy)` it in its draw function and add an `ENTINFO` row so hovering
+  it names it too (iter 42). Same discipline as the census hook.
 - **Smooth motion:** anything that moves along the coast/water must derive its x
   from `shoreAtF(y)` (unrounded), NOT `shoreAt(y)` — the rounded version snaps the
   craft column-to-column and reads jumpy. (Terrain tiles keep the rounded coast.)

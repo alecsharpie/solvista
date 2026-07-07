@@ -24,8 +24,10 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Sky & atmosphere** | 27 | | 19, 35 | | | |
 | **People & activity** | 41 | | 34 | | | |
 
-- **Interaction/UX kind:** only the hover tooltip (U2, user-directed) — never
-  yet loop-driven.
+- **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
+  tooltips (iter 42 — first loop-driven UX move)**. When adding an entity
+  array: `stamp()` it in its draw + add an `ENTINFO` row (same discipline as
+  the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Least-touched now: Sky & atmosphere
   (fog/seasons/weather-fronts still untouched by the loop), Nature × Connect,
@@ -33,9 +35,9 @@ tooltip / kelp re-gate · U3 determinism audit).
   contagion (iter 32); tuned-not-reverted: forecourt plazas (iter 36 — 1996
   start collapsed pop 5%, moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–41**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–42**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
-  perf fix · evening crowds), the flood/step test hooks, and the concurrent
+  perf fix · evening crowds · entity tooltips), the flood/step test hooks, and the concurrent
   polish-tile session's esplanade + tile redesigns; ask for the nod at
   session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -902,3 +904,24 @@ seed 42): pairs and small groups stand at the lit storefronts under awnings and
 neon, muted correctly by the night tint. Day framing shows none (same LITAMT
 gate as the neon). No z-tears.
 **Verdict:** SHIP. Redeploy pending (iters 34-41 + hooks + polish-tile work).
+
+## Iteration 42 — entity tooltips (2026-07-08) [6th lap]
+
+**Vector:** Interaction/UX — the one kind never loop-driven. The tile tooltip
+(U2) names land, but the diorama's most pointed-at things are its inhabitants:
+hovering the whale said "Ocean", hovering a deer said "Meadow".
+**Change:** Each entity draw now `stamp()`s its screen position + a frame
+counter (new tiny helper; stale stamps = currently hidden, so diving dolphins /
+night-hidden balloons don't ghost). The `mousemove` picker checks entities
+first via `pickEntity` (16 kinds: whale, dolphin, ferry, sailboat, surfer,
+kayaker, heron, deer, jogger, balloon, streetcar, truck, cyclist, resident,
+dog, + service vehicles by kind — fire engine / ambulance / police), each with
+a name + one-line blurb in `ENTINFO`; falls through to the tile tooltip.
+New invariant documented in SKILL.md + in-code: new entity ⇒ stamp + ENTINFO row.
+**Census:** VERDICT PASS, 0 page errors, all flat (UI-only; stamps are inert
+fields).
+**Visual/interactive:** Playwright hover tests — ferry → "Harbor ferry", deer →
+"Mule deer", tram (sim paused; a moving tram outruns probe latency, not a
+hit-test bug) → "Streetcar", forest → "Woods" (tile fallback intact). Tooltip
+card renders beside the ferry in the screenshot.
+**Verdict:** SHIP. Redeploy pending (iters 34-42 + hooks + polish-tile work).
