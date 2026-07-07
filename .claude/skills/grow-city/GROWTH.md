@@ -21,7 +21,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Urban fabric** | 32 | 7, 23 | 38 | | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | | | |
-| **Sky & atmosphere** | 27 | | 19, 35 | | | |
+| **Sky & atmosphere** | 27, 43 | | 19, 35 | | | |
 | **People & activity** | 41 | | 34 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -29,17 +29,17 @@ tooltip / kelp re-gate · U3 determinism audit).
   array: `stamp()` it in its draw + add an `ENTINFO` row (same discipline as
   the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
-  elements) — prefer Deepen/Polish there. Least-touched now: Sky & atmosphere
-  (fog/seasons/weather-fronts still untouched by the loop), Nature × Connect,
-  and Interaction/UX (never loop-driven). Explored & reverted: solar-farm
-  contagion (iter 32); tuned-not-reverted: forecourt plazas (iter 36 — 1996
-  start collapsed pop 5%, moved to 2020).
+  elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
+  sea-fog spells (35, 43); seasons/wind remain. Emptiest cells: Nature/Civic/
+  Sky × Connect, Water × Polish, People × New CA rule. Explored & reverted:
+  solar-farm contagion (iter 32); tuned-not-reverted: forecourt plazas
+  (iter 36 — 1996 start collapsed pop 5%, moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–42**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–43**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
-  perf fix · evening crowds · entity tooltips), the flood/step test hooks, and the concurrent
-  polish-tile session's esplanade + tile redesigns; ask for the nod at
-  session end.
+  perf fix · evening crowds · entity tooltips · sea fog), the flood/step test
+  hooks, and the concurrent polish-tile session's esplanade + tile redesigns;
+  ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
   iter 35 ran (espRow/espAt/drawEspAt smooth esplanade; promenade metric
   399→153 is its intended re-banding, not a regression). If two loops run at
@@ -925,3 +925,27 @@ fields).
 hit-test bug) → "Streetcar", forest → "Woods" (tile fallback intact). Tooltip
 card renders beside the ferry in the screenshot.
 **Verdict:** SHIP. Redeploy pending (iters 34-42 + hooks + polish-tile work).
+
+## Iteration 43 — sea-fog spells (2026-07-08) [6th lap]
+
+**Vector:** Sky & atmosphere × New element — Sky was due in rotation and
+weather was its flagged frontier; kind varied (Sky's last two were Deepens).
+**Change:** A new fog pass after the dawn marine layer: on foggy spells, 7 soft
+white banks roll in off the ocean and thin as they cross the shoreline
+(`inland` fade off `SHOREX`), swallowing the beach and the first coastal
+blocks. Spell gate is a slow seeded oscillation
+`sin(time*0.028+(seedNum%97)*0.7)>0.25` — per-city phase, time-driven, no
+rng(), fully procedural like the dawn layer (no entity array, so no
+census/ENTINFO wiring is owed). Alpha ≤0.5, dimmed at night.
+**Census:** VERDICT PASS, 0 page errors, all flat (draw-only).
+**Visual:** first shot at the computed spell peak (`?step=128` for seed 42)
+showed NOTHING — probe proved the gate was open (spell 0.75) but the flicker
+factor (0.55±0.45) had zeroed the on-screen banks while strong banks sat
+off-map south. Tuned: flicker 0.75±0.25, y-wrap tightened to the map, 7 banks.
+Reshoot: banks over the open sea, one straddling the lighthouse beach, one
+thinning over the first inland blocks — reads as a marine layer rolling in.
+Control shot at step=0 (spell negative): clean coast, no fog.
+**Lesson:** for oscillating features, verify BOTH the on-window (via __step)
+and the off-window; and when "gate open but invisible", suspect the amplitude
+envelope before the gate.
+**Verdict:** SHIP. Redeploy pending (iters 34-43 + hooks + polish-tile work).

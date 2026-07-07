@@ -2832,6 +2832,22 @@ function render(){
       ctx.beginPath();ctx.ellipse(fx2,fy2-8,34,88,0,0,7);ctx.fill();
     }
   }
+  /* sea fog: some days a bank rolls in off the water and swallows the shore
+     for a spell — beyond the dawn layer above. Spell phase is seeded per city;
+     time-driven (no rng), so __step can reach a foggy window. */
+  const spell=Math.max(0,Math.sin(time*0.028+(seedNum%97)*0.7))-0.25;
+  if(spell>0){
+    const sA=Math.min(0.5,spell*1.1)*(1-LITAMT*0.45);
+    for(let i=0;i<7;i++){
+      const roll=(time*0.5+i*6.1)%28;              /* offshore -> inland */
+      const fx=G+4-roll, fy=((i*11.3+time*0.3)%(G+14))-7;
+      const inland=clamp((fx-(SHOREX-13))/6,0,1);  /* thins crossing the shore */
+      if(inland<=0)continue;
+      const[px2,py2]=pxc(fx,fy);
+      ctx.fillStyle='rgba(236,241,239,'+(sA*inland*(0.75+0.25*Math.sin(i*2.9+time*0.23)))+')';
+      ctx.beginPath();ctx.ellipse(px2,py2-9,40,95,0,0,7);ctx.fill();
+    }
+  }
   /* decade festival: fireworks over the pier */
   if((year|0)%10===0&&LITAMT>0.6&&year>=1980){
     const[bx0,by0]=px(pier.x1+1.5,pier.y+0.5);
