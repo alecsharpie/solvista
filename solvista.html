@@ -182,6 +182,7 @@ const BASE={
   sand:[238,220,178], sandDk:[212,190,146],
   grass:[150,181,122], grassDk:[122,155,100], meadow:[163,190,128],
   canopy:[104,146,92], canopyLt:[139,173,110], trunk:[122,90,62],
+  conifer:[104,146,92], coniferLt:[139,173,110], /* evergreens sit out the seasons */
   water:[92,172,178], waterDk:[62,138,148], foam:[255,251,240],
   road:[106,101,93], roadLine:[233,221,192],
   cream:[244,232,208], creamDk:[221,205,172],
@@ -201,15 +202,36 @@ const BASE={
   lav:[178,148,198],
   lawn:[150,181,122], /* irrigated green: parks stay lush when the hills go gold */
 };
-/* golden-hills seasons: wild grass dries toward late summer, parks stay green */
-const GRASS0=BASE.grass.slice(), GRASSDK0=BASE.grassDk.slice(), MEAD0=BASE.meadow.slice();
+/* the seasons, calendar-aligned on s=year%1: winter cools (~Jan, s≈0),
+   spring freshens (~Apr, s≈0.28), the hills go gold in late summer (s≈0.62,
+   the original golden-hills pass), deciduous canopies amber in autumn
+   (s≈0.87). Evergreens (conifer/coniferLt) sit it out. California coast:
+   winter means cool light and deep dull greens, never snow. */
+const GRASS0=BASE.grass.slice(), GRASSDK0=BASE.grassDk.slice(), MEAD0=BASE.meadow.slice(),
+      CAN0=BASE.canopy.slice(), CANL0=BASE.canopyLt.slice();
 function applySeason(){
   const s=((year%1)+1)%1;
   const dry=clamp(1-Math.abs(s-0.62)/0.34,0,1)*0.55;
+  const spring=clamp(1-Math.abs(s-0.28)/0.16,0,1);
+  const autumn=clamp(1-Math.abs(s-0.87)/0.11,0,1);
+  const winter=clamp(1-Math.min(s,1-s)/0.12,0,1);
   const mixA=(a,b,t)=>[lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)];
   BASE.grass=mixA(GRASS0,[199,174,105],dry);
   BASE.grassDk=mixA(GRASSDK0,[168,142,82],dry);
   BASE.meadow=mixA(MEAD0,[206,182,112],dry);
+  let can=mixA(CAN0,[176,138,70],autumn*0.75);
+  can=mixA(can,[118,172,96],spring*0.5);
+  BASE.canopy=mixA(can,[86,118,84],winter*0.5);
+  let cl=mixA(CANL0,[201,158,84],autumn*0.75);
+  cl=mixA(cl,[158,199,114],spring*0.5);
+  BASE.canopyLt=mixA(cl,[112,142,102],winter*0.45);
+  if(winter>0){ /* the cool months also mute the open ground */
+    BASE.grass=mixA(BASE.grass,[132,152,118],winter*0.4);
+    BASE.grassDk=mixA(BASE.grassDk,[106,128,96],winter*0.4);
+    BASE.meadow=mixA(BASE.meadow,[142,162,120],winter*0.4);
+  }
+  const sq=(s*48)|0; /* refresh the color cache as the season drifts (48/yr) */
+  if(sq!==applySeason.q){applySeason.q=sq;CCACHE={};}
 }
 const LIT=[255,196,112]; /* warm window light */
 
@@ -1640,7 +1662,7 @@ function drawCell(x,y){
         ctx.fillStyle=col('brickDk',0.9);ctx.fillRect(cx-0.8*sc,cy-H*0.22,1.6*sc,H*0.22); /* reddish trunk */
         for(let t=0;t<3;t++){
           const w=4.4*sc*(1-t*0.2), yb=cy-H*0.22-t*H*0.27, yt=yb-H*0.36;
-          ctx.fillStyle=col(t===0?'canopyLt':'canopy',0.8-t*0.05);
+          ctx.fillStyle=col(t===0?'coniferLt':'conifer',0.8-t*0.05);
           ctx.beginPath();ctx.moveTo(cx-w,yb);ctx.lineTo(cx,yt);ctx.lineTo(cx+w,yb);ctx.closePath();ctx.fill();
         }
       }
@@ -3489,6 +3511,7 @@ function frame(now){
 window.__warp=n=>{const target=year+n;while(year<target){year+=0.45/6;tick();}
   for(const c of cells)if(DEV.has(c.t))c.h=c.th; recount();syncStats();};
 window.__setTime=t=>{dayT=t;};
+window.__setYear=n=>{year=n;}; /* pin the calendar (seasons) for tests */
 /* test hook: advance entity motion n seconds without real time — lets warp
    screenshots catch drift-in entities (balloons, flock) and animation phases */
 window.__step=n=>{for(let r=n;r>0;r-=0.1)advanceEntities(Math.min(0.1,r),1);};

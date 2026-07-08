@@ -21,7 +21,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Urban fabric** | 32 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50 | | | |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | |
 | **People & activity** | 41, 56 | 49 | 34 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -30,9 +30,10 @@ tooltip / kelp re-gate · U3 determinism audit).
   (same discipline as the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
-  sea-fog spells (35, 43) + wind/gust cycle (50); seasons PARTIALLY exist
-  (`applySeason` L206: golden-hills grass drying only — a fuller seasonal pass
-  is the remaining Sky frontier). Emptiest cell left: Sky ×
+  sea-fog spells (35, 43) + wind/gust cycle (50) + FULL SEASONS (57: winter
+  cools, spring freshens, golden-hills summer, autumn ambers; evergreens sit
+  it out via the conifer palette split). Sky's weather frontier is now
+  essentially complete. Emptiest cell left: Sky ×
   Connect (dubious — what would it even link?); after 49 every flagged gap is
   filled, so lean Deepen/Polish/Interaction from here (saturation, not
   rotation, is now the binding constraint). ⚠ Nature × Connect is a DEAD END
@@ -48,8 +49,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
-  laundry lines · ferry gulls · kids in tow), the `__ents` entity-stamp hook
-  (iter 48), the
+  laundry lines · ferry gulls · kids in tow · full seasons), the `__ents`
+  entity-stamp hook (iter 48), the `__setYear` season-pin hook (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1274,3 +1275,31 @@ home by dark, before the adult crowds thin at 0.75. Garnish on the ped entity
 clearly (adult with small bright figure at their side). Whole-city frame
 coherent (kids are sub-wide-zoom detail, as intended).
 **Verdict:** SHIP. Redeploy pending (iters 34-56 + hooks + polish-tile work).
+
+## Iteration 57 — full seasons (2026-07-08) [8th lap — the "bigger swing"]
+
+**Vector:** Sky & atmosphere × Deepen — most-overdue domain (last: 50) and
+the header's flagged frontier (seasons were grass-drying only). Taken as the
+counterweight's occasional bigger swing; backed up first.
+**Change:** `applySeason` now runs the whole calendar on `s=year%1`: winter
+(s≈0, ±0.12) cools canopies and mutes open ground (California coast — cool
+deep greens, never snow); spring (s≈0.28) freshens canopies; the original
+golden-hills drying keeps late summer (s≈0.62); autumn (s≈0.87) ambers
+deciduous canopies 75%. **Evergreens sit it out**: new `conifer`/`coniferLt`
+palette entries (copies of canopy base) and the REDWOOD case switched to
+them — amber redwoods would read as a mistake. Also fixed a latent staleness
+bug: applySeason mutated BASE but never invalidated `CCACHE`; it now clears
+on quantized season steps (48/yr), so the palette actually drifts smoothly
+without per-frame cache thrash (iter 40 discipline).
+**Census:** VERDICT PASS ×2, 0 page errors, core exactly flat (pop ±3-6 =
+the session's known animation-timing jitter band).
+**Visual + the lesson:** first verification FAILED silently — four wide shots
+at fractional warps all looked identical because **the year races ~+0.15
+during page load/settle** (year+=dt/6 live), blowing past the ±0.11 autumn
+window before the shot; even click-PAUSE was too slow. An in-page palette
+probe proved the feature was live (canopy RGB responding), so the fix was a
+test hook, not code: `window.__setYear(n)` pins the calendar after PAUSE.
+Pinned clips: autumn = amber street trees against still-green conifer grove;
+spring visibly fresher; winter cooled; summer = the familiar golden hills.
+**For narrow-window time features: pin the clock, don't race it.**
+**Verdict:** SHIP. Redeploy pending (iters 34-57 + hooks + polish-tile work).
