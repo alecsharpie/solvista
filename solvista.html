@@ -39,6 +39,11 @@ body{
   letter-spacing:.02em; margin:0 0 3px; font-size:13px; }
 #tip .td{ color:var(--ink-soft); margin:2px 0 0; }
 #tip .td b{ color:var(--ink); font-weight:600; }
+#tip .ts{ margin-top:6px; padding-top:5px; border-top:1px solid var(--rule); }
+#tip .tr{ display:flex; justify-content:space-between; gap:16px;
+  color:var(--ink-soft); padding:1.5px 0; }
+#tip .tr b{ color:var(--ink); font-weight:600; }
+#tip .trf{ justify-content:flex-start; }
 .eyebrow{
   font-family:"Futura","Futura PT","Avenir Next","Century Gothic",sans-serif;
   font-size:10px; letter-spacing:.22em; color:var(--gold); text-transform:uppercase; margin:0 0 6px;
@@ -3746,19 +3751,27 @@ function describeTile(c){
   /* the CA already remembers when every parcel last changed: age ticks up
      once per tick (0.075yr), and siting/upgrades reset it — so age dates the
      CURRENT structure. Institutions say founded; buildings say built. */
+  /* each stat is a [label,value] row (label left, value right); a lone-element
+     entry [flag] renders as a single spanning row for boolean features */
   const est=Math.max(1974,Math.round(year-c.age*0.075));
-  if(c.t===T.CIVIC||c.t===T.STADIUM)data.push('Est.&nbsp;<b>'+est+'</b>');
-  else if(DEV.has(c.t))data.push('Built&nbsp;~<b>'+est+'</b>');
-  if(DEV.has(c.t))data.push('Floors&nbsp;~<b>'+Math.max(1,Math.round(c.h/2.7))+'</b>');
-  if(c.t===T.TOWER&&c.h>90)data.push('<b>Helipad</b>');
-  if(c.t===T.ROAD&&c.stop)data.push('<b>Bus&nbsp;stop</b>');
-  if(c.solar)data.push('Rooftop&nbsp;<b>solar</b>');
-  if(c.groof)data.push('<b>Green&nbsp;roof</b>');
-  if((c.t===T.COM||c.t===T.MARKET)&&DISTCOL[c.dist])data.push('District&nbsp;<b>'+DISTCOL[c.dist]+'</b>');
-  data.push('Value&nbsp;<b>'+Math.round(c.val*100)+'%</b>');
+  if(c.t===T.CIVIC||c.t===T.STADIUM)data.push(['Est.',est]);
+  else if(DEV.has(c.t))data.push(['Built','~'+est]);
+  if(DEV.has(c.t))data.push(['Floors','~'+Math.max(1,Math.round(c.h/2.7))]);
+  if(c.t===T.TOWER&&c.h>90)data.push(['Helipad']);
+  if(c.t===T.ROAD&&c.stop)data.push(['Bus stop']);
+  if(c.solar)data.push(['Rooftop solar']);
+  if(c.groof)data.push(['Green roof']);
+  if((c.t===T.COM||c.t===T.MARKET)&&DISTCOL[c.dist])data.push(['District',DISTCOL[c.dist]]);
+  data.push(['Value',Math.round(c.val*100)+'%']);
   let h='<p class="tt">'+title+'</p>';
   if(sub)h+='<p class="td">'+sub+'</p>';
-  h+='<p class="td">'+data.join(' · ')+'</p>';
+  if(data.length){
+    h+='<div class="ts">';
+    for(const d of data)h+=d.length>1
+      ?'<div class="tr"><span>'+d[0]+'</span><b>'+d[1]+'</b></div>'
+      :'<div class="tr trf"><b>'+d[0]+'</b></div>';
+    h+='</div>';
+  }
   return h;
 }
 /* hovering a moving thing names it; entities win over the tile under them.

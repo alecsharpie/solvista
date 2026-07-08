@@ -21,6 +21,37 @@ compounded, or **explore an idea and revert it** because it didn't earn its plac
 Exploring and rejecting is a real result — log it (step 5) so the run remembers.
 The gates below are what make hours of this safe without a human watching.
 
+## Worktree — where the loop runs
+
+This loop edits, screenshots, and frequently **reverts** — a lot of churn. To keep
+your **main checkout clean and usable while the loop runs unattended**, all of that
+happens in a dedicated git worktree on a `grow-city` branch. `main` only ever moves
+by a clean **fast-forward of a finished, verified iteration** (step 5), so your main
+checkout never carries the loop's half-done edits, reverted experiments, or
+screenshot scratch.
+
+**Once per session, before you start iterating**, make sure the worktree exists and
+is current, then `cd` into it — **every command in the loop below runs from the
+worktree root.** All the `.claude/skills/...`, `GROWTH.md`, and `solvista.html`
+paths are repo-relative and resolve inside the worktree (it's a full checkout;
+tracked files — `census.mjs`, `census-history.jsonl`, `census-baseline.json`,
+`GROWTH.md`, `solvista.html` — are all present; `census-latest.json` and `shots/`
+are gitignored and just regenerate there):
+
+```bash
+# from the main checkout (/Users/alec/me/solvista):
+WT=../solvista-grow
+git worktree list | grep -q solvista-grow \
+  || git worktree add "$WT" grow-city 2>/dev/null \
+  || git worktree add -b grow-city "$WT"    # first ever run: branch grow-city off main
+git -C "$WT" merge --ff-only main           # pick up anything that landed on main
+cd "$WT"                                     # run the whole loop from here
+```
+
+The worktree is a **single-writer** workspace — one loop at a time on the `grow-city`
+branch. (Two concurrent loops would need two worktrees on two branches; don't point
+both at this one.)
+
 ## The loop (one iteration)
 
 1. **Orient.** Read the **State of the city** header at the top of `GROWTH.md`
@@ -124,10 +155,22 @@ The gates below are what make hours of this safe without a human watching.
    State of the city header** at the top of `GROWTH.md` (add the iteration number
    to its domain × kind cell; refresh the saturation/deploy lines) — that header
    is what step 1 reads instead of the whole archive, so a stale header
-   silently breaks rotation. Then **git commit** the iteration (source + ledger
-   in one commit, `Iter N: <what>`) and push — the repo is
-   github.com/alecsharpie/solvista, and with concurrent loops possible an
-   uncommitted iteration is one stale write away from being lost.
+   silently breaks rotation. Then **commit the iteration on the `grow-city`
+   branch** (source + ledger in one commit, `Iter N: <what>`) and
+   **fast-forward `main` to it and push** — `main` is the durable source, and it
+   should only ever advance by a clean, verified iteration:
+   ```bash
+   # from the worktree (../solvista-grow):
+   git add -A && git commit -m "Iter N: <what>"
+   git -C ../solvista merge --ff-only grow-city && git -C ../solvista push
+   ```
+   The `--ff-only` is a guard: `grow-city` always descends from `main`, so it must
+   fast-forward — if it ever refuses, either someone put a divergent commit on
+   `main`, or `main`'s working tree has **uncommitted edits** to a file the merge
+   touches (e.g. hand-edits to `solvista.html` in the main checkout). **Stop and
+   reconcile rather than force it** — those are the user's changes, not yours. An
+   uncommitted iteration is one stale write away from being lost, so don't leave
+   the worktree dirty between iterations either.
 6. **Redeploy note.** `solvista.html` is the durable source; the live artifact is
    a separate copy. Do **not** auto-redeploy without a nod — but don't let the
    request rot either: at the **end of a session** (or when the user next
@@ -300,6 +343,11 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `--shots name`).
 
 ## Setup (once per machine)
+
+The **worktree** (`../solvista-grow`, branch `grow-city`) is created automatically
+by the idempotent snippet in *Worktree — where the loop runs*; no manual setup. To
+tear it down (e.g. to start clean): `git worktree remove ../solvista-grow` from the
+main checkout — the `grow-city` branch is preserved and re-attached next run.
 
 Playwright is borrowed from the `screenshot-verify` skill. If `census.mjs` can't
 find a browser:
