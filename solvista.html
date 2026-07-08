@@ -1115,7 +1115,9 @@ function syncFleet(){
   while(peds.length<wantPeds&&openCells.length){
     const[x,y]=openCells[(rng()*openCells.length)|0];
     peds.push({x,y,ox:(rng()-0.5)*0.6,oy:(rng()-0.5)*0.6,tx:0,ty:0,tm:0,
-               c:PEDC[(rng()*PEDC.length)|0]});
+               c:PEDC[(rng()*PEDC.length)|0],
+               kid:Math.random()<0.18?1+Math.random()*6:0}); /* some walk a child;
+               Math.random AFTER the rng draws so the seeded stream is untouched */
   }
   const wantDogs=Math.min(10,(stats.parks/4|0));
   while(dogs.length<wantDogs&&openCells.length){
@@ -2796,6 +2798,14 @@ function drawPed(p){
   ctx.fillRect(cx-0.9,cy-3.6-z,1.8,3);
   ctx.fillStyle=col('ink',1.4);
   ctx.beginPath();ctx.arc(cx,cy-4.4-z,1,0,7);ctx.fill();
+  if(p.kid&&LITAMT<0.5){ /* a little one skips alongside; home by dark */
+    const sk=Math.abs(Math.sin(time*5.5+p.kid))*1.1; /* skipping bounce */
+    const kx=cx+1.9,ky=cy-z-sk;
+    ctx.fillStyle=col(['coral','gold','teal'][(p.kid*7|0)%3],1.1);
+    ctx.fillRect(kx-0.6,ky-2.2,1.2,1.8);
+    ctx.fillStyle=col('ink',1.4);
+    ctx.beginPath();ctx.arc(kx,ky-2.7,0.75,0,7);ctx.fill();
+  }
 }
 function drawJogger(j){
   if(LITAMT>0.75&&(((j.ph*97)|0)%10)<6)return; /* only a few night runners */

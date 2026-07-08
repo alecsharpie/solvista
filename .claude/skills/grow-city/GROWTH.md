@@ -22,7 +22,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50 | | | |
-| **People & activity** | 41 | 49 | 34 | | | |
+| **People & activity** | 41, 56 | 49 | 34 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**.
@@ -30,7 +30,9 @@ tooltip / kelp re-gate · U3 determinism audit).
   (same discipline as the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
-  sea-fog spells (35, 43) + wind/gust cycle (50); seasons remain. Emptiest cell left: Sky ×
+  sea-fog spells (35, 43) + wind/gust cycle (50); seasons PARTIALLY exist
+  (`applySeason` L206: golden-hills grass drying only — a fuller seasonal pass
+  is the remaining Sky frontier). Emptiest cell left: Sky ×
   Connect (dubious — what would it even link?); after 49 every flagged gap is
   filled, so lean Deepen/Polish/Interaction from here (saturation, not
   rotation, is now the binding constraint). ⚠ Nature × Connect is a DEAD END
@@ -46,7 +48,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
-  laundry lines · ferry gulls), the `__ents` entity-stamp hook (iter 48), the
+  laundry lines · ferry gulls · kids in tow), the `__ents` entity-stamp hook
+  (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1250,3 +1253,24 @@ precedent), no rng(), ~9 strokes/frame.
 gulls visible wheeling off the stern, positions and wingbeats differing
 between steps (motion verified). Whole-city frame coherent.
 **Verdict:** SHIP. Redeploy pending (iters 34-55 + hooks + polish-tile work).
+
+## Iteration 56 — kids in tow (2026-07-08) [8th lap]
+
+**Vector:** People & activity × New element — most-overdue domain (last: 49);
+New element varies the recent Deepen/Deepen run. Seam check: kids/strollers
+appear in the domain blurb and the HOW-IT-GROWS copy but had never been
+built. (Also noted while checking: seasons PARTIALLY exist — `applySeason`
+does golden-hills grass drying only; logged in the header as the remaining
+Sky frontier.)
+**Change:** ~18% of residents now walk a child: `kid` field set by
+Math.random AT THE END of the ped spawn literal (after all rng() draws, so
+the seeded stream and ped count are untouched — peds 551 exactly flat).
+Draw: a half-height figure beside the adult in a bright coral/gold/teal
+shirt, skipping (bounce off `time*5.5+p.kid`); gated `LITAMT<0.5` — kids are
+home by dark, before the adult crowds thin at 0.75. Garnish on the ped entity
+(gull/butterfly precedent, no new array).
+**Census:** VERDICT PASS, 0 page errors, life.peds exactly 551, all flat.
+**Visual:** 5x clips at three resident clusters — parent+child pairs read
+clearly (adult with small bright figure at their side). Whole-city frame
+coherent (kids are sub-wide-zoom detail, as intended).
+**Verdict:** SHIP. Redeploy pending (iters 34-56 + hooks + polish-tile work).
