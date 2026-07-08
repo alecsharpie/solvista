@@ -2152,6 +2152,30 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.ellipse(cx,cy,3.4,1.9,0,0,7);ctx.fill();
     }
     if(v>0.8)palm(gx-0.34,gy+0.3,0.75);
+    { /* washing line to the neighbor one door west — out on dry days, in by
+         dark, and never during the block party. Flaps with the WINDA gusts. */
+      const n=cellAt(x-1,y);
+      if(n&&n.t===T.RES&&h>5&&n.h>5&&LITAMT<0.45&&!(c.party>0)&&!(n.party>0)
+         &&hashCell(x,y,seedNum^0x7A1D)<0.22){
+        const[ax2,ay2]=px(gx,gy),[bx2]=ctr(x-1,y);
+        const zl=Math.min(h,n.h)*0.5+1.5;
+        const x1=ax2+(bx2-ax2)*0.30,x2=ax2+(bx2-ax2)*0.70,yl=ay2-zl,my=yl+1.6;
+        ctx.strokeStyle=col('ink',0.55);ctx.lineWidth=0.5;
+        ctx.beginPath();ctx.moveTo(x1,yl);ctx.quadraticCurveTo((x1+x2)/2,my,x2,yl);ctx.stroke();
+        const LC=['white','coral','teal','lav','gold'];
+        for(let j=0;j<4;j++){
+          const t2=(j+1)/5;
+          const qx=(1-t2)*(1-t2)*x1+2*(1-t2)*t2*(x1+x2)/2+t2*t2*x2;
+          const qy=(1-t2)*(1-t2)*yl+2*(1-t2)*t2*my+t2*t2*yl;
+          const fl=Math.sin(time*2.3+j*1.7+x)*0.9*(0.35+0.65*WINDA);
+          ctx.fillStyle=col(LC[(x*3+y+j)%5],1.05);
+          ctx.beginPath();
+          ctx.moveTo(qx-0.9,qy);ctx.lineTo(qx+0.9,qy);
+          ctx.lineTo(qx+0.9+fl,qy+2.4);ctx.lineTo(qx-0.9+fl,qy+2.4);
+          ctx.closePath();ctx.fill();
+        }
+      }
+    }
   } else if(c.t===T.MID){
     const bodyN=v>0.72?'terra':'cream'; /* some walk-ups wear terracotta */
     prism(gx,gy,0.34,0.30,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));

@@ -18,7 +18,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44 |
-| **Urban fabric** | 32 | 7, 23 | 38 | 47 | 8, 14, 24 | |
+| **Urban fabric** | 32 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50 | | | |
@@ -45,8 +45,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
-  parties · wind · tide · Est./Built tooltip years · pasture patchwork), the
-  `__ents` entity-stamp hook (iter 48), the
+  parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
+  laundry lines), the `__ents` entity-stamp hook (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1204,3 +1204,23 @@ open land now reads as rolling quilted pasture instead of paint; forests have
 floor depth; the built core is untouched. Subtle at wide zoom, exactly the
 target.
 **Verdict:** SHIP. Redeploy pending (iters 34-53 + hooks + polish-tile work).
+
+## Iteration 54 — laundry lines (2026-07-08) [7th lap]
+
+**Vector:** Urban fabric × Deepen — most-overdue domain (last: 47).
+**Near-miss logged:** first idea was "make the four DISTCOL districts visible
+in the streetscape" — the seam read killed it: COM sign bands and MARKET
+stalls already wear their district color (awnings are deliberately varied).
+District identity IS drawn; don't re-pitch.
+**Change (the pivot):** washing lines between E-W RES neighbor pairs
+(skybridge geometry at clothesline height): the east house of a pair strings
+a sagging line to its neighbor (`hashCell<0.22` gate → 6-14 lines/city), with
+4 pastel garments whose hems skew with `WINDA` — the laundry flaps in the
+gusts. Out on dry days only: gated off at night (`LITAMT<0.45`) and during
+either house's block party (iter 49 interplay). Draw-only, no rng().
+**Census:** VERDICT PASS, 0 page errors, exactly flat.
+**Visual:** offline gate replication aimed clips at both seeds (6 lines at
+seed 42, 14 at seed 7); 5x gust-vs-calm pair at one line shows garments
+skewed at `step=44` and hanging straight at `step=20`. Whole-city frame
+coherent; the feature is invisible at wide zoom, as a detail should be.
+**Verdict:** SHIP. Redeploy pending (iters 34-54 + hooks + polish-tile work).
