@@ -1021,8 +1021,14 @@ function planMonorail(){
   if(xs.length<14)return;
   xs.sort((a,b)=>a-b);ys.sort((a,b)=>a-b);
   const q=(a,f)=>a[Math.min(a.length-1,(a.length*f)|0)];
-  let x0=clamp(q(xs,0.07)-1,2,G-12), x1=clamp(q(xs,0.93)+1,x0+7,SHOREX-3);
-  let y0=clamp(q(ys,0.07)-1,1,G-12), y1=clamp(q(ys,0.93)+1,y0+7,G-2);
+  /* route randomness comes from a private PRNG so the shared rng() stream
+     (and the whole downstream city) stays untouched */
+  let rs=(seedNum^0xC17A)>>>0;
+  const rr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
+  /* even the survey is opinionated: which quantile counts as "the core"
+     differs a little from city to city */
+  let x0=clamp(q(xs,0.04+rr()*0.07)-(rr()*3|0),2,G-12), x1=clamp(q(xs,0.96-rr()*0.07)+(rr()*3|0),x0+7,SHOREX-3);
+  let y0=clamp(q(ys,0.04+rr()*0.07)-(rr()*3|0),1,G-12), y1=clamp(q(ys,0.96-rr()*0.07)+(rr()*3|0),y0+7,G-2);
   /* snap top/bottom to nearby survey rows so it rides above the streets */
   const snap=(v,arr)=>{let best=v;
     for(const a of arr)if(Math.abs(a-v)<=2&&Math.abs(a-v)<Math.abs(best-v))best=a;
@@ -1031,36 +1037,53 @@ function planMonorail(){
   if(x1-x0<7)x1=Math.min(SHOREX-3,x0+7);
   if(y1-y0<6)y1=Math.min(G-2,y0+6);
   /* ring the core along hex axes, surveyed like the streets: long straight
-     legs, joints where the survey says so — never at a fixed rhythm.
-     Route randomness comes from a private PRNG so the shared rng() stream
-     (and the whole downstream city) stays untouched. */
-  let rs=(seedNum^0xC17A)>>>0;
-  const rr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
-  const side=(bx,firstFam,ys)=>{
+     legs, joints where the survey says so — never at a fixed rhythm. Every
+     leg rolls its own dice: jog count and depth, side wander width, bend
+     cadence, whether the floor climbs — so no two rings share a silhouette. */
+  const wmax=Math.max(2,Math.min(5,(x1-x0-3)>>1));
+  const wl=2+(rr()*(wmax-1)|0), wr=2+(rr()*(wmax-1)|0);
+  const side=(bx,firstFam,ys,ye,w)=>{
     const out=[]; let x=bx,fam=firstFam;
-    const lo=Math.max(bx-3,1), hi=Math.min(bx+3,SHOREX-2);
-    let run=3+(rr()*8|0);
-    for(let y=ys;y<y1;y++){
-      if(--run<0){fam=-fam;run=9+(rr()*8|0);}
+    const lo=Math.max(bx-w,1), hi=Math.min(bx+w,SHOREX-2);
+    let run=2+(rr()*9|0);
+    for(let y=ys;y<ye;y++){
+      if(--run<0){fam=-fam;run=6+(rr()*11|0);}
       let dx=fam>0?((y&1)?1:0):((y&1)?0:-1);
-      if(x+dx>hi||x+dx<lo){fam=-fam;run=9+(rr()*8|0);dx=fam>0?((y&1)?1:0):((y&1)?0:-1);}
+      if(x+dx>hi||x+dx<lo){fam=-fam;run=6+(rr()*11|0);dx=fam>0?((y&1)?1:0):((y&1)?0:-1);}
       x+=dx; out.push([x,y+1]);
     }
     return out;
   };
-  /* top, W->E — sometimes with one lazy jog, a street changing rows */
+  /* top, W->E — one or two lazy jogs, the line changing survey rows */
   monoPath=[];
-  const jd=rr()<0.6?2+(rr()*3|0):0;
-  const jx=x1-x0>=8?x0+4+(rr()*(x1-x0-7)|0):0;
+  const jm=new Map(); let jTot=0;
+  const nj=rr()<0.8?1+(rr()<0.4?1:0):0;
+  for(let k=0;k<nj;k++){
+    const d=1+(rr()*3|0);
+    if(jTot+d>y1-y0-4)break;
+    const jx=x0+3+(rr()*Math.max(1,x1-x0-7)|0);
+    if(!jm.has(jx)){jm.set(jx,d);jTot+=d;}
+  }
   let ty=y0;
   for(let x=x0;x<=x1;x++){
     monoPath.push([x,ty]);
-    if(jd&&jx&&x===jx)for(let k=0;k<jd;k++){x+=(ty&1)?1:0;ty++;monoPath.push([x,ty]);}
+    const jd=jm.get(x);
+    if(jd)for(let k=0;k<jd;k++){x+=(ty&1)?1:0;ty++;monoPath.push([x,ty]);}
   }
-  const rt=side(x1,rr()<0.5?1:-1,ty), lt=side(x0,rr()<0.5?-1:1,y0);
+  const rt=side(x1,rr()<0.5?1:-1,ty,y1,wr);             /* right side down */
+  /* the floor sometimes climbs a couple of rows before the west corner */
+  const maxUp=Math.min(3,y1-ty-3,((x1-wr)-(x0+wl)-4)>>1);
+  const jd2=maxUp>0&&rr()<0.65?1+(rr()*maxUp|0):0;
+  const yb=y1-jd2;
+  const lt=side(x0,rr()<0.5?-1:1,y0,yb,wl);   /* left side, short if the floor climbs */
   const xr=rt[rt.length-1][0], xl=lt[lt.length-1][0];
-  monoPath.push(...rt);                                 /* right side down */
-  for(let x=xr-1;x>xl;x--)monoPath.push([x,y1]);        /* bottom, E->W */
+  monoPath.push(...rt);
+  const jx2=Math.min(xr-2-jd2,xl+2+jd2+(rr()*Math.max(1,xr-xl-4-2*jd2)|0));
+  let by=y1;
+  for(let x=xr-1;x>xl;x--){                             /* bottom, E->W */
+    monoPath.push([x,by]);
+    if(by>yb&&x<=jx2)while(by>yb){const py=by-1;x-=(py&1)?1:0;by=py;monoPath.push([x,by]);}
+  }
   for(let i=lt.length-1;i>=0;i--)monoPath.push(lt[i]);  /* left side up */
   buildMonoSet();
 }
@@ -3679,6 +3702,7 @@ window.__ents=n=>{const out=[];
   for(const[g,name]of ENTINFO)if(!n||name===n)
     for(const e of g())if(e._sf!==undefined)out.push({name,sx:e._sx*scale+offX,sy:e._sy*scale+offY});
   return out;};
+window.__mono=()=>monoPath&&monoPath.map(p=>p.slice()); /* ring cells, path order */
 
 /* test hook: numeric census of the built city — the grow-city loop's growth/
    regression metric. Returns tile histogram + headline counts + variety tallies. */
