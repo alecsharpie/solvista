@@ -20,7 +20,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
-| **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
+| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | |
 | **People & activity** | 41, 56 | 49 | 34 | | | |
 
@@ -49,7 +49,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
-  laundry lines · ferry gulls · kids in tow · full seasons · moonglade), the
+  laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
+  school run), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -1328,3 +1329,26 @@ field densest near the moon, fading with distance, patterns animating; seed 7
 clip confirms cross-seed grace (less water in radius → less glade, no
 artifacts). Night whole-city frame coherent.
 **Verdict:** SHIP. Redeploy pending (iters 34-58 + hooks + polish-tile work).
+
+## Iteration 59 — the school run (2026-07-08) [8th lap]
+
+**Vector:** Civic & culture × Deepen — most-overdue domain (last: 52).
+**Near-miss logged:** the planned move was "stadium match nights" — the seam
+read killed it: the stadium already has a match-day concourse crowd, lit
+floodlight masts, AND a floodlit pitch with light cones. Stadium events are
+DONE; don't re-pitch.
+**Change (the pivot):** the school run — on weekday mornings
+(`dayT 0.15-0.30`), every schoolhouse gate draws a drop-off cluster: up to 5
+mingled figures (short bright kids alternating with taller muted adults,
+hashCell presence per slot, gentle time-sway), placed on the yard side the
+school already flips per seed. Connects three systems: schools × the kids
+idea (iter 56) × the daily rhythm (the first feature keyed to a MORNING
+window — evenings had crowds since iter 41 but mornings were empty).
+Draw-only, no rng().
+**Census:** VERDICT PASS, 0 page errors, flat (±3 jitter).
+**Visual:** aimed 4x clips via `__find('school')` — morning (t=0.22): a
+mingled crowd at the gate beside the play-court; midday control (t=0.5): the
+same gate EMPTY; second seed confirms. (First seed-42 clip landed under the
+HTML title card — pick `__find` results by screen position, not index.)
+Whole-city morning frame coherent.
+**Verdict:** SHIP. Redeploy pending (iters 34-59 + hooks + polish-tile work).

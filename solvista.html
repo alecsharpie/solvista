@@ -2510,6 +2510,20 @@ function drawBuilding(c,x,y,gx,gy){
       if(LITAMT>0.45){ /* one janitor window */
         ctx.fillStyle='rgba(255,214,140,'+(0.8*LITAMT)+')';
         ctx.fillRect(fx3-6,fy3-hb*0.5-1,2.2,2.6);}}
+      if(dayT>0.15&&dayT<0.30){ /* the school run: drop-off crowd at the gate */
+        const[gx3,gy3]=px(gx+fxS*0.24,gy+0.3);
+        const KC=['coral','gold','teal'],AC2=['terra','sage','lav'];
+        for(let j=0;j<5;j++){
+          if(hashCell(x*5+j,y,seedNum^0x5C0F)>0.85)continue;
+          const px4=gx3-5+j*2.6+Math.sin(time*1.9+j*2.2+x)*0.6;
+          const kid=j%2===0; /* kids and grown-ups mingle */
+          const hgt=kid?1.8:2.9, py4=gy3+1.6;
+          ctx.fillStyle=col(kid?KC[j%3]:AC2[j%3],1.1);
+          ctx.fillRect(px4-0.7,py4-hgt,1.4,hgt);
+          ctx.fillStyle=col('ink',1.4);
+          ctx.beginPath();ctx.arc(px4,py4-hgt-0.6,kid?0.7:0.9,0,7);ctx.fill();
+        }
+      }
     } else if(c.kind==='observatory'){
       /* the dome IS the building: white drum on a stone terrace, slit ajar at night */
       const sd=hashCell(x,y,seedNum^0x0B5E)<0.5?-1:1;   /* slit azimuth flips per city */
