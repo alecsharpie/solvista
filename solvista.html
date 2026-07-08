@@ -333,7 +333,7 @@ function genWorld(seed){
     else if(x===coastX[y])t=T.ROAD;
     else if(x>coastX[y])t=T.SHOREPARK;
     cells[idx(x,y)]={t,h:0,th:0,v:hashCell(x,y,seed),age:0,corr:false,lit:hashCell(y,x,seed),
-                     val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,loft:false,
+                     val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,loft:false,
                      bridge:false,riv:false,busy:false,solar:false,groof:false,treed:false,kind:''};
   }
   /* meadows, woods and boulders: the land the town was cut from */
@@ -950,6 +950,20 @@ function tick(){
        if(n&&FRM(n.t))m|=bit; bit<<=1;}
      c.hedge=m;
    }}
+  /* block parties: an excitable-media wave through the neighborhoods — a home
+     ignites a street party, it spreads to the adjacent homes for a spell, then
+     the block rests (refractory). Ignition hash is keyed on the year so parties
+     roam the city; no rng(), no terrain change — decoration state only. */
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const c=cells[idx(x,y)];
+    if(c.t!==T.RES){c.party=0;continue;}
+    if(c.party>0){c.party--; if(c.party===0)c.party=-16;}  /* wind down → rest */
+    else if(c.party<0)c.party++;
+    else if(hashCell(x,y+(year|0)*53,seedNum^0xFE57)<0.012
+          ||(countAround(x,y,1,n=>n.t===T.RES&&n.party>1)>0
+             &&hashCell(x,y+(year|0)*29,seedNum^0xAB3)<0.5))
+      c.party=5;
+  }
   /* monorail construction 1988-1995 */
   monorail.progress=monoPath?clamp((year-1988)/7,0,1):0;
   recount();
@@ -2056,9 +2070,28 @@ function drawCell(x,y){
           ctx.fillStyle=col('gold',1.1);ctx.fillRect(cx-2,cy,1.5,1.5);
           ctx.fillStyle=col('lav',1.05);ctx.fillRect(cx+2,cy-1.5,1.5,1.5);}
       }
+      if(c.party>0&&c.t===T.RES)drawParty(x,y,c,gx,gy);
       if(c.fire>0)drawFire(x,y,c,gx,gy);
     }
   }
+}
+
+function drawParty(x,y,c,gx,gy){ /* the street party out front of a home */
+  const a=Math.min(1,c.party/2);
+  const[cx,cy]=px(gx,gy);
+  ctx.globalAlpha=a;
+  ctx.fillStyle=col('deck',1.05);ctx.fillRect(cx-2.6,cy+2.6,5.2,1.4); /* trestle table */
+  const PB=['coral','gold','teal','lav','sage'];
+  for(let j=0;j<3;j++){ /* neighbors out front */
+    const hx=cx-4+j*3.6+Math.sin(time*1.7+j*2.1+x)*0.7, hy=cy+4.4;
+    ctx.fillStyle=col(PB[(x+y+j)%5],1.1);ctx.fillRect(hx-0.8,hy-2.6,1.6,2.6);
+    ctx.fillStyle=col('ink',1);ctx.fillRect(hx-0.6,hy-3.6,1.2,1.2);
+  }
+  for(let j=0;j<4;j++){ /* paper lanterns bobbing on a line */
+    ctx.fillStyle=col(PB[(x*2+y+j)%5],1.2);
+    ctx.fillRect(cx-4.5+j*3+Math.sin(time*2.3+j)*1,cy-0.5+(j%2)*1.8,1.1,1.1);
+  }
+  ctx.globalAlpha=1;
 }
 
 function drawFire(x,y,c,gx,gy){
@@ -3389,7 +3422,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 

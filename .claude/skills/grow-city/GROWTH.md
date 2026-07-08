@@ -22,7 +22,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35 | | | |
-| **People & activity** | 41 | | 34 | | | |
+| **People & activity** | 41 | 49 | 34 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42 — first loop-driven UX move)**. When adding an entity
@@ -30,8 +30,11 @@ tooltip / kelp re-gate · U3 determinism audit).
   the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
-  sea-fog spells (35, 43); seasons/wind remain. Emptiest cells: Sky × Connect,
-  People × New CA rule. ⚠ Nature × Connect is a DEAD END (iter 46): woodland
+  sea-fog spells (35, 43); seasons/wind remain. Emptiest cell left: Sky ×
+  Connect (dubious — what would it even link?); after 49 every flagged gap is
+  filled, so lean Deepen/Polish/Interaction from here (saturation, not
+  rotation, is now the binding constraint). ⚠ Nature × Connect is a DEAD END
+  (iter 46): woodland
   patches are never within ≤5 axis-steps of each other across open ground in
   real cities — wood-to-wood green links have no geometry to attach to; don't
   re-explore. Explored & reverted: solar-farm contagion (iter 32);
@@ -41,8 +44,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   memory — includes iters 1–33 + user passes). **Pending: iters 34–45**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
-  festival streets · field hedgerows · skybridges · city helicopter), the
-  `__ents` entity-stamp hook (iter 48), the
+  festival streets · field hedgerows · skybridges · city helicopter · block
+  parties), the `__ents` entity-stamp hook (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1080,3 +1083,28 @@ Motion proven by differing stamps at `step=40` vs `47`. Tooltip hover (paused
 sim) → "City helicopter / Hopping between the rooftop helipads." Whole-city
 frame coherent, copters visible in the sky band.
 **Verdict:** SHIP. Redeploy pending (iters 34-48 + hooks + polish-tile work).
+
+## Iteration 49 — block parties (2026-07-08) [6th lap]
+
+**Vector:** People & activity × New CA rule — most-overdue domain (last: 41)
+and the header's last flagged empty cell.
+**Change:** A new excitable-media pass at the end of `tick()` (the bloom
+wave's people-domain sibling, but hashCell-only where bloom uses rng): a RES
+home ignites a street party (`c.party=5` ticks), spreads to adjacent resting
+RES homes (year-keyed hash <0.5), then the block goes refractory (−16). The
+ignition hash is keyed on `(year|0)` so parties roam the city rather than
+pinning to fixed cells. Draw: trestle table, 3 swaying neighbors
+(PEDC-palette), bobbing paper-lantern dots — front-yard band kept above
+`cy+5` so the next row's ground tile can't overpaint it. `party:0` added to
+the cell literal; `__find('party')` hook added.
+**Tuning:** first cut (ignite 0.002, party 3, rest 10) gave 0-1 partying
+homes per city — do the duty-cycle math BEFORE probing: ~230 RES × p ×
+duration is the snapshot expectation. Retuned to ignite 0.012 / party 5 /
+rest 16 → 6-10 homes in clusters at three matrix cells; zeros at seed 42 are
+honest Poisson lulls (parties are events, not fixtures).
+**Census:** VERDICT PASS ×2 (pre- and post-tune), 0 page errors, exactly flat.
+**Visual:** day + night 3x clips at seed 7@2035, aimed at the densest cluster
+via `__find` — six adjacent homes with tables, small crowds and lanterns,
+reading as one block's party; correctly muted by the night tint. Whole-city
+frame coherent, parties subtle at wide zoom.
+**Verdict:** SHIP. Redeploy pending (iters 34-49 + hooks + polish-tile work).
