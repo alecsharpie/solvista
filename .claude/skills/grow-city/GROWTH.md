@@ -21,7 +21,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Urban fabric** | 32 | 7, 23 | 38 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
-| **Sky & atmosphere** | 27, 43 | | 19, 35 | | | |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50 | | | |
 | **People & activity** | 41 | 49 | 34 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -30,7 +30,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
-  sea-fog spells (35, 43); seasons/wind remain. Emptiest cell left: Sky ×
+  sea-fog spells (35, 43) + wind/gust cycle (50); seasons remain. Emptiest cell left: Sky ×
   Connect (dubious — what would it even link?); after 49 every flagged gap is
   filled, so lean Deepen/Polish/Interaction from here (saturation, not
   rotation, is now the binding constraint). ⚠ Nature × Connect is a DEAD END
@@ -45,7 +45,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
-  parties), the `__ents` entity-stamp hook (iter 48), the
+  parties · wind), the `__ents` entity-stamp hook (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -58,8 +58,9 @@ tooltip / kelp re-gate · U3 determinism audit).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest holistic pass (iter 45): PASS ×3, day floor 23.39ms (−2.5%), night
-  floor 24.17ms (−9%); whole-city frames at seeds 42/7 read clean. ⚠ This
+  Latest holistic pass (iter 50): PASS ×3 pre-wind (day floor 23.0ms) AND ×3
+  post-wind (23.11ms — the per-tree sway sin() costs nothing measurable);
+  whole-city frames at seeds 1234/7 (incl. a sunset scene) read clean. ⚠ This
   machine runs hot (load avg 4+): perf numbers swing ±30% run to run — run 3×
   and judge by the MINIMUM.
 
@@ -1108,3 +1109,28 @@ via `__find` — six adjacent homes with tables, small crowds and lanterns,
 reading as one block's party; correctly muted by the night tint. Whole-city
 frame coherent, parties subtle at wide zoom.
 **Verdict:** SHIP. Redeploy pending (iters 34-49 + hooks + polish-tile work).
+
+## Iteration 50 — wind (2026-07-08) [7th lap + holistic check]
+
+**Holistic step-back (every ~5 iters):** whole-city frames at seed 1234@2035
+(fresh seed) and seed 7@2005 **sunset** (first holistic read of a non-noon
+scene) — both balanced, no compounded clutter; the five features since iter 45
+left no visual debt. Perf gate PASS ×3 (day floor 23.0ms, night 24.2ms).
+
+**Vector:** Sky & atmosphere × Deepen — most-overdue domain (last: 43); wind
+was the header's flagged weather frontier, and it's an interconnect: one
+signal that existing elements respond to, not a new element.
+**Change:** Global `WINDA` breeze signal (0..1), updated with the entity
+clocks in `advanceEntities` so `&step=` reaches any phase: a slow seeded gust
+cycle (`sin(time*0.13+(seedNum%89)*0.5)` clamped at 0 for genuine lulls,
+amplitude-modulated for gustiness). Three consumers: tree canopies sway (±1.1px,
+trunks stay rooted), palm crowns lean with leeward fronds fluttering more, and
+clouds drift 0.55-1.45× with the gusts — the whole scene gusts together.
+**Census:** VERDICT PASS, 0 page errors, exactly flat (draw/motion only).
+**Perf:** re-ran the gate ×3 post-change (thousands of new per-frame sin()
+calls warranted it): day 23.11ms / night 24.4ms — no measurable cost.
+**Visual:** paired `?step=` clips at computed gust (44/45, opposite sway
+phases) vs lull (20) on a palm/tree stretch — crowns and canopies visibly
+displaced between gust phases, neutral in the calm; whole-city gust frame
+coherent, no distortion.
+**Verdict:** SHIP. Redeploy pending (iters 34-50 + hooks + polish-tile work).

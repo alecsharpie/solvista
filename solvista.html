@@ -1355,12 +1355,13 @@ function shadowEl(gx,gy,r,a){
 }
 function tree(gx,gy,s,shade){
   const[cx,cy]=px(gx,gy);
+  const w=Math.sin(time*1.6+cx*0.05+cy*0.03)*1.1*WINDA*s; /* canopy sways, trunk stays */
   ctx.strokeStyle=col('trunk',0.9);ctx.lineWidth=1.4;
   ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,cy-5*s);ctx.stroke();
   ctx.fillStyle=col('canopy',shade);
-  ctx.beginPath();ctx.arc(cx+1,cy-6*s,3.6*s,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(cx+1+w,cy-6*s,3.6*s,0,7);ctx.fill();
   ctx.fillStyle=col('canopyLt',shade);
-  ctx.beginPath();ctx.arc(cx-1,cy-7.4*s,3.0*s,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(cx-1+w*1.35,cy-7.4*s,3.0*s,0,7);ctx.fill();
 }
 function hedge(c,x,y,gx,gy){ /* scrub along the field edges this cell borders */
   const[cx,cy]=px(gx,gy);
@@ -1383,19 +1384,20 @@ function hedge(c,x,y,gx,gy){ /* scrub along the field edges this cell borders */
 }
 function palm(gx,gy,s){
   const[cx,cy]=px(gx,gy);
+  const w=Math.sin(time*1.4+cx*0.04+cy*0.02)*1.6*WINDA*s; /* crown rides the breeze */
   ctx.strokeStyle=col('trunk',1);ctx.lineWidth=1.3;
-  ctx.beginPath();ctx.moveTo(cx,cy);ctx.quadraticCurveTo(cx+2*s,cy-6*s,cx+3*s,cy-11*s);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.quadraticCurveTo(cx+2*s+w*0.4,cy-6*s,cx+3*s+w,cy-11*s);ctx.stroke();
   ctx.strokeStyle=col('canopy',1.05);ctx.lineWidth=1.4;
   for(let i=0;i<5;i++){
-    const a=-0.4-i*0.55;
-    ctx.beginPath();ctx.moveTo(cx+3*s,cy-11*s);
-    ctx.quadraticCurveTo(cx+3*s+Math.cos(a)*5*s,cy-11*s+Math.sin(a)*3*s-2,
-                         cx+3*s+Math.cos(a)*8*s,cy-11*s+Math.sin(a)*4.5*s+1);
+    const a=-0.4-i*0.55, fl=w*(0.5+i*0.18); /* leeward fronds flutter more */
+    ctx.beginPath();ctx.moveTo(cx+3*s+w,cy-11*s);
+    ctx.quadraticCurveTo(cx+3*s+w+Math.cos(a)*5*s+fl*0.5,cy-11*s+Math.sin(a)*3*s-2,
+                         cx+3*s+w+Math.cos(a)*8*s+fl,cy-11*s+Math.sin(a)*4.5*s+1);
     ctx.stroke();
   }
 }
 
-let time=0, waveT=0;
+let time=0, waveT=0, WINDA=0.5; /* breeze strength 0..1: seeded gust cycle */
 
 /* boardwalk pier deck; wheel drawn at the far end */
 function drawPierAt(x,y){
@@ -3367,13 +3369,16 @@ let tickAcc=0,lastT=performance.now();
    hook can advance them without real time (drift-in entities, stride phases) */
 function advanceEntities(dt,s){
   time+=dt*s; waveT+=dt*(REDUCED?0.3:1)*s;
+  /* the breeze: slow seeded gust cycle with genuine lulls; trees, palms and
+     clouds all read from this one signal so the whole scene gusts together */
+  WINDA=0.25+0.75*Math.max(0,Math.sin(time*0.13+(seedNum%89)*0.5))*(0.72+0.28*Math.sin(time*0.57));
   for(const v of vehicles)stepVehicle(v,dt*s);
   for(const v of bikes)stepVehicle(v,dt*s);
   for(const v of trams)stepVehicle(v,dt*s);
   for(const v of trucks)stepVehicle(v,dt*s);
   for(const p of peds)stepPed(p,dt*s);
   for(const d of dogs)stepDog(d,dt*s);
-  for(const cl of clouds){cl.x+=cl.sp*dt*s; if(cl.x>G+6)cl.x=-6;}
+  for(const cl of clouds){cl.x+=cl.sp*(0.55+0.9*WINDA)*dt*s; if(cl.x>G+6)cl.x=-6;}
   for(const b of balloons){b.x+=b.sp*dt*s; if(b.x>G+8){b.x=-8;b.y=6+Math.random()*(G-12);}}
   for(const h of copters){h.t+=h.sp*dt*s;
     if(h.t>=1.4&&heliPads.length){ /* dwell on the pad, then lift for a new one */
