@@ -2243,6 +2243,18 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.fillStyle=col('sage',1);
       const[cx,cy]=px(gx,gy);
       ctx.fillRect(cx-4,cy-h-3.4,8,2);
+    } else if(!c.solar&&!c.groof&&hashCell(x,y,seedNum^0x7A7E)<0.3){
+      /* the older walk-ups keep a timber water tank on the roof */
+      const[cx,cy]=px(gx,gy);
+      const tx=cx+3.1,ty=cy-h-1.6;
+      ctx.strokeStyle=col('ink',0.75);ctx.lineWidth=0.6;               /* legs */
+      ctx.beginPath();ctx.moveTo(tx-1.5,ty);ctx.lineTo(tx-1.5,ty-2);
+      ctx.moveTo(tx+1.5,ty);ctx.lineTo(tx+1.5,ty-2);ctx.stroke();
+      ctx.fillStyle=col('deck',1.02);ctx.fillRect(tx-2,ty-6.2,4,4.2);  /* barrel */
+      ctx.fillStyle=col('deckDk',0.95);ctx.fillRect(tx-2,ty-6.2,4,1);  /* hoop */
+      ctx.fillStyle=col('terraDk',1);                                   /* cap */
+      ctx.beginPath();ctx.moveTo(tx-2.4,ty-6.2);ctx.lineTo(tx,ty-8.1);
+      ctx.lineTo(tx+2.4,ty-6.2);ctx.closePath();ctx.fill();
     }
   } else if(c.t===T.COM){
     const signN=DISTCOL[c.dist]; /* shopfronts wear their district's color */

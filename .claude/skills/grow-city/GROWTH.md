@@ -18,7 +18,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44, 58 |
-| **Urban fabric** | 32 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
+| **Urban fabric** | 32, 62 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
@@ -44,13 +44,13 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–45**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–62**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
-  school run · fairy rings · sea-fog fix), the
+  school run · fairy rings · sea-fog fix · rooftop water tanks), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -1401,3 +1401,29 @@ the seed phase) — layered haze over the pier and sea, no pucks. Both frames
 coherent.
 **Verdict:** FIXED. Redeploy pending (iters 34-61 + hooks + polish-tile
 work).
+
+## Iteration 62 — rooftop water tanks (2026-07-08)
+
+**Vector:** Urban fabric × New element — rotation pointed at Urban after 61's
+fix lap; the domain had only one New-element entry (32) and the mid-rise roofs
+were the blandest surface downtown (solar/green-roof/fringe only).
+**Change:** timber water tanks on the older walk-ups. In `drawBuilding`'s MID
+branch, as `else if` after the v>0.5 roof-garden fringe: gates
+`!c.solar && !c.groof && hashCell(x,y,seedNum^0x7A7E)<0.3`, so tanks land only
+on low-value stock with a bare roof. Draw-only: ink legs, timber barrel
+(`deck`), dark hoop band, terracotta conical cap, offset `tx=cx+3.1` so it
+shares the roof with nothing. No terrain, no rng(), no entities.
+**Census:** VERDICT PASS, 0 page errors, pop/developed/roads exactly +0
+(draw-only, as designed).
+**Visual:** offline hash aim was insufficient — 54 hash-gated MIDs at seed 42
+but only 15 truly fire (v>0.5 fringe + solar/groof suppress ~72%); rewrote the
+probe to evaluate the exact branch condition in-page and clip roof-centered at
+4×. Seed 42: clear tanks (legs/barrel/hoop/cap) on two walk-ups + one on the
+center turret block; seed 7: two more on adjacent roofs. Sit on the roof slab
+cleanly, no z-order tears. Whole-city frame coherent, tanks subtle at full
+zoom as intended.
+**Lesson:** when a draw gate depends on runtime cell state (v, solar, groof),
+aim clips from an in-page probe of the exact condition, not an offline
+hashCell replica — the replica overcounts and the clips point at suppressed
+candidates.
+**Verdict:** SHIP. Redeploy pending (iters 34–62 + hooks + polish-tile work).
