@@ -16,7 +16,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | |
+| **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44 |
 | **Urban fabric** | 32 | 7, 23 | 38 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39 | 5, 15 | | U1, U3 |
@@ -45,8 +45,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
-  parties · wind · tide · Est./Built tooltip years), the `__ents` entity-stamp
-  hook (iter 48), the
+  parties · wind · tide · Est./Built tooltip years · pasture patchwork), the
+  `__ents` entity-stamp hook (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1183,3 +1183,24 @@ gate; University "Est. 2035" (latest 14k-pop expansion); RES "Built ~1980" in
 an early neighborhood. Tooltip card screenshot clean; whole-city frame
 untouched (DOM-only change).
 **Verdict:** SHIP. Redeploy pending (iters 34-52 + hooks + polish-tile work).
+
+## Iteration 53 — pasture patchwork (2026-07-08) [7th lap]
+
+**Vector:** Nature × Polish — most-overdue domain (last: 46); the empty Polish
+cell varies the recent CA/Deepen/Deepen/Interaction run. Target chosen from
+this session's own holistic reads: the big open-grass sheets at 1985/2005 eras
+were the flattest thing in the frame.
+**Change:** ground-tone modulation on open land, mirroring what MEADOW already
+did: EMPTY grass gets low-frequency waves + a per-cell hashCell fleck
+(`0.93+0.05·sin(x·0.85+y·0.6)+0.04·hash`), FOREST floor gets gentle waves
+(`0.95+0.05·sin`). Zero extra draw calls — the same hexTile, a varied
+brightness. Time-free modulation, so `col()`'s color cache keys stay stable
+across frames (the CCACHE lesson from iter 40 respected).
+**Census:** VERDICT PASS, 0 page errors, flat (±3 jitter).
+**Perf:** single sanity run — day 23.33ms / night 24.49ms, flat vs the
+iter-50 floor.
+**Visual:** wide frames at seed 42@1985 (grass-dominant) and seed 7@2005 —
+open land now reads as rolling quilted pasture instead of paint; forests have
+floor depth; the built core is untouched. Subtle at wide zoom, exactly the
+target.
+**Verdict:** SHIP. Redeploy pending (iters 34-53 + hooks + polish-tile work).

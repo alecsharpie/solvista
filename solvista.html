@@ -1625,7 +1625,7 @@ function drawCell(x,y){
       if(year>=1986&&y===pier.y&&x>pier.x0&&x<=pier.x1)drawPierAt(x,y);
       break;}
     case T.FOREST:{
-      hexTile(gx,gy,1.02,col('grassDk',0.98));
+      hexTile(gx,gy,1.02,col('grassDk',0.95+0.05*Math.sin(x*0.9+y*0.7)));
       tree(gx-0.22,gy-0.18,0.9+v*0.4,0.9);
       tree(gx+0.2,gy+0.1,0.8+v*0.3,1.0);
       tree(gx-0.05,gy+0.3,0.7,0.85);
@@ -2078,8 +2078,11 @@ function drawCell(x,y){
         }
       }
       break;}
-    default:{ /* buildable ground under structures */
-      hexTile(gx,gy,1.02,col(c.t===T.EMPTY?'grass':'sandDk',c.t===T.EMPTY?0.96:0.9));
+    default:{ /* buildable ground under structures; open grass gets a gentle
+                 patchwork (low-frequency waves + per-cell fleck) so the green
+                 sheets read as pasture, not paint */
+      hexTile(gx,gy,1.02,col(c.t===T.EMPTY?'grass':'sandDk',
+        c.t===T.EMPTY?0.93+0.05*Math.sin(x*0.85+y*0.6)+0.04*hashCell(x,y,seedNum^0x6EAF):0.9));
       if(DEV.has(c.t))drawBuilding(c,x,y,gx,gy);
       else if(c.t===T.EMPTY){ /* succession: idle lots grow back on their own */
         if(c.hedge)hedge(c,x,y,gx,gy);
