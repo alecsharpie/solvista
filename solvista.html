@@ -355,7 +355,7 @@ function genWorld(seed){
     else if(x===coastX[y])t=T.ROAD;
     else if(x>coastX[y])t=T.SHOREPARK;
     cells[idx(x,y)]={t,h:0,th:0,v:hashCell(x,y,seed),age:0,corr:false,lit:hashCell(y,x,seed),
-                     val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,loft:false,
+                     val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,shroom:0,loft:false,
                      bridge:false,riv:false,busy:false,solar:false,groof:false,treed:false,kind:''};
   }
   /* meadows, woods and boulders: the land the town was cut from */
@@ -986,6 +986,18 @@ function tick(){
              &&hashCell(x,y+(year|0)*29,seedNum^0xAB3)<0.5))
       c.party=5;
   }
+  /* fairy rings: after the first autumn rains, mushroom rings surface on the
+     woodland floor for a spell, then fade and the ground rests. Year-keyed
+     hash so the rings roam; no rng(), decoration state only. */
+  {const s2=((year%1)+1)%1, shroomSeason=s2>0.76&&s2<0.98;
+   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+     const c=cells[idx(x,y)];
+     if(c.t!==T.FOREST&&c.t!==T.REDWOOD){c.shroom=0;continue;}
+     if(c.shroom>0){c.shroom--; if(c.shroom===0)c.shroom=-20;}
+     else if(c.shroom<0)c.shroom++;
+     else if(shroomSeason&&hashCell(x,y+(year|0)*37,seedNum^0xF469)<0.06)
+       c.shroom=3; /* ~a fifth of a year, gone by winter */
+   }}
   /* monorail construction 1988-1995 */
   monorail.progress=monoPath?clamp((year-1988)/7,0,1):0;
   recount();
@@ -1653,6 +1665,7 @@ function drawCell(x,y){
       tree(gx-0.22,gy-0.18,0.9+v*0.4,0.9);
       tree(gx+0.2,gy+0.1,0.8+v*0.3,1.0);
       tree(gx-0.05,gy+0.3,0.7,0.85);
+      if(c.shroom>0)drawShroom(x,y,c,gx,gy);
       if(c.fire>0)drawFire(x,y,c,gx,gy);
       break;}
     case T.REDWOOD:{
@@ -1666,6 +1679,7 @@ function drawCell(x,y){
           ctx.beginPath();ctx.moveTo(cx-w,yb);ctx.lineTo(cx,yt);ctx.lineTo(cx+w,yb);ctx.closePath();ctx.fill();
         }
       }
+      if(c.shroom>0)drawShroom(x,y,c,gx,gy);
       if(c.fire>0)drawFire(x,y,c,gx,gy);
       break;}
     case T.ROCK:{
@@ -2120,6 +2134,19 @@ function drawCell(x,y){
       if(c.fire>0)drawFire(x,y,c,gx,gy);
     }
   }
+}
+
+function drawShroom(x,y,c,gx,gy){ /* an autumn fairy ring on the leaf litter */
+  const[cx,cy]=px(gx,gy);
+  ctx.globalAlpha=Math.min(1,c.shroom/2);
+  for(let m=0;m<6;m++){
+    const an=m*1.047+hashCell(x,y,m+400)*0.5;
+    const mx3=cx+Math.cos(an)*4.2, my3=cy+Math.sin(an)*2.4+1;
+    ctx.fillStyle=col('white',1.05);ctx.fillRect(mx3-0.4,my3-1,0.8,1);      /* stem */
+    ctx.fillStyle=col(hashCell(x,y,m+500)<0.5?'coral':'cream',1.15);        /* cap */
+    ctx.beginPath();ctx.arc(mx3,my3-1.2,0.8,0,7);ctx.fill();
+  }
+  ctx.globalAlpha=1;
 }
 
 function drawParty(x,y,c,gx,gy){ /* the street party out front of a home */
@@ -3567,7 +3594,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 

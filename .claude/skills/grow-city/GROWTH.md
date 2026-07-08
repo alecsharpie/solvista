@@ -16,7 +16,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | 53 |
+| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
@@ -50,7 +50,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
-  school run), the
+  school run · fairy rings), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -65,12 +65,13 @@ tooltip / kelp re-gate · U3 determinism audit).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest holistic pass (iter 55): PASS ×3, day floor 23.33ms / night 24.49ms —
-  the ten features since iter 45 cost ~0.3ms total; whole-city frames at
-  seed 42 NIGHT and seed 1234@1995 rural both read clean (night scene is
-  balanced, pasture patchwork works with farms). ⚠ This machine runs hot
-  (load avg 4+): perf numbers swing ±30% run to run — run 3× and judge by the
-  MINIMUM.
+  Latest holistic pass (iter 60): PASS ×3, day floor 23.44ms / night 24.78ms
+  (+0.1-0.3ms creep from iters 56-59 — fine, but watch the trend). Fresh-seed
+  probe (seed 99, never tested) fully coherent. ⚠ WATCH ITEM: iter 43's
+  sea-fog banks read as blobby vertical glare at seed 99's coastline (one bank
+  hovering near the built edge) — not compounding, but if a future holistic
+  sees it again, spend a Polish on the bank shape/inland fade. ⚠ This machine
+  runs hot (load avg 4+): run the gate 3× and judge by the MINIMUM.
 
 ---
 
@@ -1352,3 +1353,29 @@ same gate EMPTY; second seed confirms. (First seed-42 clip landed under the
 HTML title card — pick `__find` results by screen position, not index.)
 Whole-city morning frame coherent.
 **Verdict:** SHIP. Redeploy pending (iters 34-59 + hooks + polish-tile work).
+
+## Iteration 60 — fairy rings (2026-07-08) [8th lap + holistic check]
+
+**Holistic step-back:** whole-city frames at **seed 99 (never tested — a
+procedural-robustness probe)** and seed 42@2005 golden hour. Seed 99 fully
+coherent (river/farms/monorail/pier all correct on a fresh seed); golden hour
+beautiful. One WATCH ITEM logged (header): iter 43's sea-fog banks read
+blobby at seed 99's coastline. Perf gate PASS ×3 (day 23.44 / night 24.78 —
++0.1-0.3ms creep from iters 56-59, within tolerance, trend noted).
+
+**Vector:** Nature × New CA rule — most-overdue domain (last: 53); the
+engine's native currency, unused by Nature since iter 13.
+**Change:** fairy rings — a third decoration-state CA (bloom/party family):
+in the autumn window (`s 0.76-0.98`, tying into iter 57's seasons), woodland
+cells (FOREST/REDWOOD) surface a mushroom ring via year-keyed hash (6%/yr),
+hold 3 ticks (~a fifth of a year — first cut was 6 ticks, which would have
+persisted into SPRING; do the duration math against the calendar), then rest
+20 ticks. Draw: a ring of six tiny white-stemmed mushrooms, coral/cream caps
+hashCell-varied, alpha-ramped. `shroom:0` in the cell literal;
+`__find('shroom')` hook.
+**Census:** VERDICT PASS ×2, 0 page errors, exactly flat.
+**Visual:** autumn probe (warp 61.8): 8 rings at seed 42, 5 at seed 7 — 4x
+clips show clear rings between autumn-tinted trees (the seasonal composition
+works); summer control (warp 61.4): 0 rings. Whole-city autumn frame
+coherent.
+**Verdict:** SHIP. Redeploy pending (iters 34-60 + hooks + polish-tile work).
