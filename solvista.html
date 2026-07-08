@@ -1063,24 +1063,40 @@ function growMonorail(){
   const tries=1+(g.rr()<0.55?1:0);    /* the crews lay one or two spans a tick */
   for(let t=0;t<tries&&!monoClosed;t++){
     const L=monoPath.length,[hx,hy]=monoPath[L-1],[sx,sy]=monoPath[0];
-    if(L>=g.minLen&&hexDist(hx,hy,sx,sy)===1){ /* the loop bites its tail */
+    if((L>=g.minLen||g.homing)&&hexDist(hx,hy,sx,sy)===1){ /* it bites its tail */
       monoClosed=true;
       const n=L>96?3:2;
       monorail.trains=Array.from({length:n},(_,i)=>({p:i/n}));
       buildMonoSet();
       return;
     }
-    if(g.relax>=4){ /* head walled in beyond saving — open the line as-is */
-      monoClosed=true;
-      monorail.trains=[{p:0},{p:0.5}];
+    /* homeward mode: after enough wandering (or a stubborn decade, or a boxed-in
+       railhead) the value hunt gives way to closing the loop */
+    if(L>=g.minLen+30||year>=2004||g.relax>=2)g.homing=true;
+    if(g.homing){
+      if(!g.route||!g.route.length){
+        g.route=monoRouteHome(g);
+        if(!g.route){ /* no clean route home — the alignment failed its review:
+                         tear up recent track and resurvey from further back
+                         (retreating along its own trail always un-walls the head) */
+          monoPath.length-=Math.min(6,monoPath.length-2);
+          const M=monoPath.length;
+          if(M>=2){const[px2,py2]=monoPath[M-2],[qx,qy]=monoPath[M-1];
+            for(let k=0;k<6;k++){const[ax2,ay2]=axStep(px2,py2,k);
+              if(ax2===qx&&ay2===qy){g.d=k;break;}}}
+          buildMonoSet();
+          return;
+        }
+      }
+      const[nx,ny]=g.route.shift();
+      for(let k=0;k<6;k++){const[qx,qy]=axStep(hx,hy,k);
+        if(qx===nx&&qy===ny){g.d=k;break;}}
+      monoPath.push([nx,ny]);
       buildMonoSet();
-      return;
+      continue;
     }
-    /* homeward mode: after enough wandering (or a stubborn decade) the value
-       hunt gives way to closing the loop */
-    const closing=L>=g.minLen+30||year>=2004;
     let cand;
-    if(closing||g.relax>=1)cand=[g.d,(g.d+1)%6,(g.d+5)%6,(g.d+2)%6,(g.d+4)%6];
+    if(g.relax>=1)cand=[g.d,(g.d+1)%6,(g.d+5)%6,(g.d+2)%6,(g.d+4)%6];
     else if(g.run>0)cand=[g.d];
     else cand=[(g.d+1)%6,(g.d+5)%6,g.d];
     let bs=-1e9,bc=-1,bx=0,by=0,bval=0;
@@ -1088,25 +1104,74 @@ function growMonorail(){
       const[nx,ny]=axStep(hx,hy,c);
       if(!inB(nx,ny)||nx<1||nx>SHOREX-2||ny<1||ny>G-2)continue;
       if(monoSet.has(idx(nx,ny)))continue;              /* never over itself */
-      let hug=0; /* stay off its own corridor — that pressure is what bends
-                    the line around the core instead of back through it */
+      let hug=0,door=0; /* stay off its own corridor — that pressure is what
+                    bends the line around the core instead of back through it */
       nbrs6(nx,ny,(qx,qy)=>{const i2=monoSet.get(idx(qx,qy));
-        if(i2!==undefined&&i2<L-2&&!(L>=g.minLen&&i2<=1))hug++;});
-      if(hug&&g.relax<1&&!closing)continue;
+        if(i2!==undefined&&i2<L-2){hug++;if(i2<2)door++;}});
+      if(door&&L>4)continue; /* the first pylon's doorstep stays clear, always —
+                    the route home must never be built shut */
+      if(hug&&g.relax<1)continue;
       const v=railValue(nx,ny,c)+0.04*countAround(nx,ny,1,q=>DEV.has(q.t))
               +g.rr()*0.08-hug*0.5;
-      const s=closing?v*0.4-hexDist(nx,ny,sx,sy)*1.5:v;
-      if(s>bs){bs=s;bc=c;bx=nx;by=ny;bval=cellAt(nx,ny).val;}
+      if(v>bs){bs=v;bc=c;bx=nx;by=ny;bval=cellAt(nx,ny).val;}
     }
     if(bc<0){g.relax++;return;}    /* boxed in — widen the survey next tick */
     /* the CA gate: track only goes down where value clears the bar; waiting
        erodes the bar a little, the way a stalled project lowers its standards */
-    if(!closing&&bval<0.53-g.wait*0.0018){g.wait++;return;}
+    if(bval<0.53-g.wait*0.0018){g.wait++;return;}
     monoPath.push([bx,by]);
     if(bc!==g.d){g.d=bc;g.run=5+(g.rr()*10|0);}
     g.run--; g.wait=0; g.relax=0;
     buildMonoSet();
   }
+}
+/* when the loop decides to close, it plots a real route home: Dijkstra over
+   (cell, heading) with a turn penalty and value-weighted costs, so the
+   homeward leg still reads as long surveyed track — and it can thread around
+   the line's own trail instead of walking into it. The route is then laid
+   one span a tick like every other stretch of track. */
+function monoRouteHome(g){
+  const L=monoPath.length,[hx,hy]=monoPath[L-1],[sx,sy]=monoPath[0];
+  const tgt=new Set(); /* the free parcels beside the first pylon */
+  nbrs6(sx,sy,(qx,qy)=>{
+    if(inB(qx,qy)&&qx>=1&&qx<=SHOREX-2&&qy>=1&&qy<=G-2&&!monoSet.has(idx(qx,qy)))
+      tgt.add(idx(qx,qy));});
+  if(!tgt.size)return null;
+  const NS=G*G*6, cost=new Float64Array(NS).fill(Infinity), par=new Int32Array(NS).fill(-1);
+  const hc=[],hs=[]; /* tiny binary min-heap */
+  const push=(c,s)=>{let i=hc.length;hc.push(c);hs.push(s);
+    while(i>0){const p=(i-1)>>1;if(hc[p]<=hc[i])break;
+      [hc[p],hc[i]]=[hc[i],hc[p]];[hs[p],hs[i]]=[hs[i],hs[p]];i=p;}};
+  const pop=()=>{const c=hc[0],s=hs[0],lc=hc.pop(),ls=hs.pop();
+    if(hc.length){hc[0]=lc;hs[0]=ls;let i=0;
+      for(;;){const a=2*i+1,b=a+1;let m=i;
+        if(a<hc.length&&hc[a]<hc[m])m=a;
+        if(b<hc.length&&hc[b]<hc[m])m=b;
+        if(m===i)break;[hc[m],hc[i]]=[hc[i],hc[m]];[hs[m],hs[i]]=[hs[i],hs[m]];i=m;}}
+    return[c,s];};
+  const s0=idx(hx,hy)*6+g.d; cost[s0]=0; push(0,s0);
+  let goal=-1;
+  while(hc.length){
+    const[c,s]=pop();
+    if(c>cost[s])continue;
+    const cell=s/6|0, cx=cell%G, cy=cell/G|0, cd=s%6;
+    if(tgt.has(cell)){goal=s;break;}
+    for(let k=0;k<6;k++){
+      if(k===(cd+3)%6&&s!==s0)continue;         /* no doubling back mid-route */
+      const[nx,ny]=axStep(cx,cy,k);
+      if(!inB(nx,ny)||nx<1||nx>SHOREX-2||ny<1||ny>G-2)continue;
+      const ci=idx(nx,ny);
+      if(monoSet.has(ci))continue;
+      const cc=cells[ci];
+      const w=1+(k!==cd?0.5:0)+Math.max(0,0.6-cc.val)*0.6+(cc.t===T.WATER?0.8:0);
+      const ns=ci*6+k;
+      if(c+w<cost[ns]){cost[ns]=c+w;par[ns]=s;push(c+w,ns);}
+    }
+  }
+  if(goal<0)return null;
+  const route=[];
+  for(let s=goal;s!==s0&&s>=0;s=par[s])route.push([(s/6|0)%G,(s/6|0)/G|0]);
+  return route.reverse();
 }
 function recount(){
   let pop=0,parks=0,towers=0,schools=0,stad=0;
