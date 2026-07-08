@@ -19,7 +19,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
-| **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
+| **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
 | **People & activity** | 41, 56 | 49 | 34 | | | |
@@ -44,13 +44,14 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–62**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–63**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
-  school run · fairy rings · sea-fog fix · rooftop water tanks), the
+  school run · fairy rings · sea-fog fix · rooftop water tanks · bus
+  stops), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -1427,3 +1428,31 @@ aim clips from an in-page probe of the exact condition, not an offline
 hashCell replica — the replica overcounts and the clips point at suppressed
 candidates.
 **Verdict:** SHIP. Redeploy pending (iters 34–62 + hooks + polish-tile work).
+
+## Iteration 63 — bus stops (2026-07-08)
+
+**Vector:** Transport × Deepen — rotation pointed at Transport (last touched
+55); its additive moves are flagged saturated, so deepen what exists: buses
+have been in the road fleet since iter 0 (gold, `kind='bus'`, 14% of spawns)
+but drove past everything. Now the street network has stops and the buses
+use them.
+**Change:** three seams. (1) End-of-tick derivation pass (fete/hedge
+precedent): `c.stop=1` on ROAD cells (not bridge, not the coast highway) with
+≥2 developed neighbors, gated `hashCell(x,y,seedNum^0xB5B5)<0.05` → ~28
+stops/city. (2) ROAD draw case: sidewalk shelter (ink posts, flat cream
+canopy, gold route sign) with 1–2 waiting figures by day, subtle idle bob.
+Skips fete cells so bunting streets don't clutter. (3) `stepVehicle`: buses
+arriving on a stop cell pull in for 1.2–2.1s (`v.wait`), with a 16s
+refractory (`v.dwell`) so they don't re-stop instantly; path picks already
+used `Math.random`, so no seeded-stream risk. Tooltip gets a "Bus stop" line;
+`__find('stop')` added for aiming.
+**Census:** VERDICT PASS, 0 page errors, exactly flat (towerHt +1 = known
+animation jitter).
+**Visual:** seed 42 clips show shelters with canopy/sign/waiting figures at
+two park-corner stops, correct sidewalk side, no z-order tears (shelter
+extent stays within the cy+5 next-row budget). Numeric dwell probe: 5 of 9
+buses at seed 42 carried positive `dwell` refractory — they genuinely pull
+in. Whole-city frame coherent; 28 shelters vanish into street texture at
+full zoom, as street furniture should.
+**Verdict:** DEEPENED. Redeploy pending (iters 34–63 + hooks + polish-tile
+work).

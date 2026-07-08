@@ -355,7 +355,7 @@ function genWorld(seed){
     else if(x===coastX[y])t=T.ROAD;
     else if(x>coastX[y])t=T.SHOREPARK;
     cells[idx(x,y)]={t,h:0,th:0,v:hashCell(x,y,seed),age:0,corr:false,lit:hashCell(y,x,seed),
-                     val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,shroom:0,loft:false,
+                     val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,shroom:0,stop:0,loft:false,
                      bridge:false,riv:false,busy:false,solar:false,groof:false,treed:false,kind:''};
   }
   /* meadows, woods and boulders: the land the town was cut from */
@@ -998,6 +998,15 @@ function tick(){
      else if(shroomSeason&&hashCell(x,y+(year|0)*37,seedNum^0xF469)<0.06)
        c.shroom=3; /* ~a fifth of a year, gone by winter */
    }}
+  /* bus stops: shelters take root where a quiet street fronts the built-up
+     blocks — and the buses actually pull in (stepVehicle). Pure derivation
+     (hash-gated, recomputed as the city builds); no rng(), no terrain change. */
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const c=cells[idx(x,y)]; c.stop=0;
+    if(c.t!==T.ROAD||c.bridge||x===SHOREX)continue;
+    if(countAround(x,y,1,n=>DEV.has(n.t))<2)continue;
+    if(hashCell(x,y,seedNum^0xB5B5)<0.05)c.stop=1;
+  }
   /* monorail construction 1988-1995 */
   monorail.progress=monoPath?clamp((year-1988)/7,0,1):0;
   recount();
@@ -1227,10 +1236,14 @@ function syncFleet(){
   }
 }
 function stepVehicle(v,dt){
+  if(v.wait>0){v.wait-=dt;return;}   /* a bus pulled in at its stop */
+  if(v.dwell>0)v.dwell-=dt;
   v.p+=dt*v.sp;
   while(v.p>=1){
     v.p-=1;
     const lx=v.x,ly=v.y; v.x=v.nx; v.y=v.ny;
+    const cc=cellAt(v.x,v.y);
+    if(v.kind==='bus'&&cc&&cc.stop&&!(v.dwell>0)){v.wait=1.2+Math.random()*0.9;v.dwell=16;}
     const opts=roadNbrOpts(v.x,v.y,lx,ly);
     if(!opts.length){v.nx=lx;v.ny=ly;continue}
     /* prefer whichever neighbor keeps the heading straightest */
@@ -2112,6 +2125,34 @@ function drawCell(x,y){
               const qx=(1-t2)*(1-t2)*x1+2*(1-t2)*t2*mx+t2*t2*x2;
               const qy=(1-t2)*(1-t2)*(y1-9)+2*(1-t2)*t2*(my+2)+t2*t2*(y2-9);
               ctx.beginPath();ctx.arc(qx,qy-0.6,1.1,0,7);ctx.fill();}
+          }
+        }
+      }
+      if(c.stop&&!c.fete){ /* bus shelter on the sidewalk; the buses pull in */
+        let rdx=0,rdy=0;
+        for(const[dx2,dy2]of nbrDirs(y)){const n=cellAt(x+dx2,y+dy2);
+          if(n&&n.t===T.ROAD){const[nx2,ny2]=ctr(x+dx2,y+dy2);rdx=nx2-cx;rdy=ny2-cy;break;}}
+        if(rdx||rdy){
+          const L=Math.hypot(rdx,rdy),ax=rdx/L,ay=rdy/L;      /* along the street */
+          const sd=((x+y)&1)?1:-1,ox=-ay*3.6*sd,oy=ax*3.6*sd; /* sidewalk side */
+          const x1=cx-ax*2.4+ox,y1=cy-ay*2.4+oy,x2=cx+ax*2.4+ox,y2=cy+ay*2.4+oy;
+          ctx.strokeStyle=col('ink',0.8);ctx.lineWidth=0.6;   /* posts */
+          ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x1,y1-3.8);
+          ctx.moveTo(x2,y2);ctx.lineTo(x2,y2-3.8);ctx.stroke();
+          ctx.strokeStyle=col('cream',1.05);ctx.lineWidth=2;  /* the flat canopy */
+          ctx.beginPath();ctx.moveTo(x1-ax*0.8,y1-4.4);ctx.lineTo(x2+ax*0.8,y2-4.4);ctx.stroke();
+          ctx.fillStyle=col('gold',1.1);                      /* route sign */
+          ctx.fillRect(x2+ax*1.2-0.8,y2-3.4,1.6,1.3);
+          if(LITAMT<0.55){ /* somebody's always waiting on the day buses */
+            const WC=['coral','teal','lav'];
+            for(let j=0;j<1+((x+y)&1);j++){
+              const fx2=lerp(x1,x2,0.3+j*0.4),fy2=lerp(y1,y2,0.3+j*0.4);
+              const bob=Math.sin(time*1.3+j*2.1+x)*0.25;
+              ctx.strokeStyle=col(WC[(x*3+y+j)%3],1);ctx.lineWidth=1.1;
+              ctx.beginPath();ctx.moveTo(fx2,fy2);ctx.lineTo(fx2,fy2-2.2+bob);ctx.stroke();
+              ctx.fillStyle=col('ink',0.9);
+              ctx.beginPath();ctx.arc(fx2,fy2-2.8+bob,0.55,0,7);ctx.fill();
+            }
           }
         }
       }
@@ -3477,6 +3518,7 @@ function describeTile(c){
   else if(DEV.has(c.t))data.push('Built&nbsp;~<b>'+est+'</b>');
   if(DEV.has(c.t))data.push('Floors&nbsp;~<b>'+Math.max(1,Math.round(c.h/2.7))+'</b>');
   if(c.t===T.TOWER&&c.h>90)data.push('<b>Helipad</b>');
+  if(c.t===T.ROAD&&c.stop)data.push('<b>Bus&nbsp;stop</b>');
   if(c.solar)data.push('Rooftop&nbsp;<b>solar</b>');
   if(c.groof)data.push('<b>Green&nbsp;roof</b>');
   if((c.t===T.COM||c.t===T.MARKET)&&DISTCOL[c.dist])data.push('District&nbsp;<b>'+DISTCOL[c.dist]+'</b>');
@@ -3612,7 +3654,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 
