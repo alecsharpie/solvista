@@ -3190,11 +3190,17 @@ function render(){
     for(let i=0;i<7;i++){
       const roll=(time*0.5+i*6.1)%28;              /* offshore -> inland */
       const fx=G+4-roll, fy=((i*11.3+time*0.3)%(G+14))-7;
-      const inland=clamp((fx-(SHOREX-13))/6,0,1);  /* thins crossing the shore */
+      const inland=clamp((fx-(SHOREX-4))/5,0,1);   /* spent by the first blocks */
       if(inland<=0)continue;
       const[px2,py2]=pxc(fx,fy);
-      ctx.fillStyle='rgba(236,241,239,'+(sA*inland*(0.75+0.25*Math.sin(i*2.9+time*0.23)))+')';
-      ctx.beginPath();ctx.ellipse(px2,py2-9,40,95,0,0,7);ctx.fill();
+      /* a bank is three feathered lenses stacked along the coast, not one
+         hard ellipse — the single 40x95 oval read as a glare puck (iter 60
+         holistic, seed 99) */
+      const bA=sA*inland*(0.75+0.25*Math.sin(i*2.9+time*0.23))*0.55;
+      ctx.fillStyle='rgba(236,241,239,'+bA+')';
+      ctx.beginPath();ctx.ellipse(px2,py2-9,30,72,0,0,7);ctx.fill();
+      ctx.beginPath();ctx.ellipse(px2+9,py2-61,24,42,0,0,7);ctx.fill();
+      ctx.beginPath();ctx.ellipse(px2-8,py2+46,25,46,0,0,7);ctx.fill();
     }
   }
   /* decade festival: fireworks over the pier */

@@ -21,7 +21,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Urban fabric** | 32 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59 | 45 | | |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
 | **People & activity** | 41, 56 | 49 | 34 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -50,7 +50,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
-  school run · fairy rings), the
+  school run · fairy rings · sea-fog fix), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -67,11 +67,9 @@ tooltip / kelp re-gate · U3 determinism audit).
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
   Latest holistic pass (iter 60): PASS ×3, day floor 23.44ms / night 24.78ms
   (+0.1-0.3ms creep from iters 56-59 — fine, but watch the trend). Fresh-seed
-  probe (seed 99, never tested) fully coherent. ⚠ WATCH ITEM: iter 43's
-  sea-fog banks read as blobby vertical glare at seed 99's coastline (one bank
-  hovering near the built edge) — not compounding, but if a future holistic
-  sees it again, spend a Polish on the bank shape/inland fade. ⚠ This machine
-  runs hot (load avg 4+): run the gate 3× and judge by the MINIMUM.
+  probe (seed 99, never tested) fully coherent. Sea-fog watch item from
+  iter 60 **FIXED at iter 61** (feathered banks + beach-band fade). ⚠ This
+  machine runs hot (load avg 4+): run the gate 3× and judge by the MINIMUM.
 
 ---
 
@@ -1379,3 +1377,27 @@ clips show clear rings between autumn-tinted trees (the seasonal composition
 works); summer control (warp 61.4): 0 rings. Whole-city autumn frame
 coherent.
 **Verdict:** SHIP. Redeploy pending (iters 34-60 + hooks + polish-tile work).
+
+## Iteration 61 — sea-fog fix (2026-07-08) [8th lap]
+
+**Vector:** Sky & atmosphere × Polish (FIX) — **deliberate rotation override**
+(rotation pointed at Urban): iter 60's holistic flagged the sea-fog banks as
+the only known visual flaw, and fixing what the step-back turns up outranks
+adding more. The iter-60 "watch" bar was overridden one lap early because the
+fix was cheap and no Urban polish of equal value was identified.
+**Diagnosis:** two defects in iter 43's banks: (1) each bank was ONE hard
+40×95 ellipse — reads as a portrait glare puck, not fog; (2) the inland fade
+`(fx-(SHOREX-13))/6` kept FULL-strength fog over the last ~7 columns of
+city — the "bank hovering over the built edge" at seed 99.
+**Change:** each bank is now three feathered lenses stacked along the coast
+(30×72 core + two 24×42-ish offsets, per-lens alpha ×0.55 so the overlap
+matches the old peak but the edges feather), and the fade dies at the first
+blocks (`(fx-(SHOREX-4))/5`) — fog swallows beach and waterfront, never the
+core.
+**Census:** VERDICT PASS, 0 page errors, exactly flat.
+**Visual:** seed 99 reshoot — banks read as soft marine haze over sea/beach,
+the built-edge bank GONE; seed 42 mid-spell (`step=100`, window computed from
+the seed phase) — layered haze over the pier and sea, no pucks. Both frames
+coherent.
+**Verdict:** FIXED. Redeploy pending (iters 34-61 + hooks + polish-tile
+work).
