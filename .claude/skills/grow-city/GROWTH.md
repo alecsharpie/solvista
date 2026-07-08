@@ -19,7 +19,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2, 44 |
 | **Urban fabric** | 32 | 7, 23 | 38 | 47 | 8, 14, 24 | |
-| **Transport** | 2, 9, 21, 31 | | 28, 39 | 5, 15 | | U1, U3 |
+| **Transport** | 2, 9, 21, 31, 48 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35 | | | |
 | **People & activity** | 41 | | 34 | | | |
@@ -41,7 +41,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   memory — includes iters 1–33 + user passes). **Pending: iters 34–45**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
-  festival streets · field hedgerows · skybridges), the
+  festival streets · field hedgerows · skybridges · city helicopter), the
+  `__ents` entity-stamp hook (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1053,3 +1054,29 @@ gate offline from `__find('TOWER')` dumps — the URL seed IS seedNum, so gates
 are replicable outside the page): tube spans the terracotta→teal pair
 cleanly, glows at night; downtown + whole-city frames coherent.
 **Verdict:** SHIP. Redeploy pending (iters 34-47 + hooks + polish-tile work).
+
+## Iteration 48 — city helicopter (2026-07-08) [6th lap]
+
+**Vector:** Transport × New element — most-overdue domain (last: 39); recent
+kinds were Connect/Deepen/Connect so New element varies the kind. Also a
+Deepen: rooftop helipads have existed since the tall-tower feature (~73 across
+the matrix) but sat inert — now they're destinations.
+**Change:** `copters` entity (2012+, needs ≥2 helipad towers, 1-2 per city):
+hops pad-to-pad with a smoothstep flight arc (+26px cruise altitude over the
+rooftops), dwells ~1/3 of a hop on the pad, then picks a new pad. Math.random
+picks only — zero seeded-stream perturbation. Draw in the sky layer: coral
+body/tail/fin, white belly, ink skids, time-spun rotor blur, blinking red
+beacon after dusk. Full entity wiring: arrays + reset, syncFleet spawn with
+`fl('copters',…)` flood support, advanceEntities step (so `&step=` works),
+stamp + ENTINFO row, census transport tally. Also added `window.__ents(name)`
+— stamped screen coords of live entities, so clips can be AIMED at movers
+(the downtown-clip hunt failed before this; the aimed clips hit first try).
+**Census:** VERDICT PASS, 0 page errors, core exactly flat. **copters 0→6
+NEW** (2 × three 2035 cells), transportModes +3 — surgical, the intended
+growth signal.
+**Visual/interactive:** aimed 3x clips: day — copter over the "H" pad tower,
+rotor bar reading clearly; night — red beacon lit above the glowing towers.
+Motion proven by differing stamps at `step=40` vs `47`. Tooltip hover (paused
+sim) → "City helicopter / Hopping between the rooftop helipads." Whole-city
+frame coherent, copters visible in the sky band.
+**Verdict:** SHIP. Redeploy pending (iters 34-48 + hooks + polish-tile work).

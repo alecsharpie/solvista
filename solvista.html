@@ -265,7 +265,7 @@ function colLit(name,f,litMix){ /* window glass mixing toward warm light at nigh
 /* ---------------- world ---------------- */
 let rng, seedNum, cells, year, dayT, monorail, monoPath, gondPath, gond, stats, pier, hut;
 let YC=[], turbines=[], turbSet=new Map();
-let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], ferries=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[];
+let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], ferries=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
 /* debug flood (?flood=joggers:30,whales:8): overrides entity spawn counts so
    sparse features can be screenshot-verified without a source edit to revert */
 let FLOOD={};
@@ -306,7 +306,7 @@ function genWorld(seed){
   seedNum=seed; rng=mulberry32(seed);
   sAmp=1.2+rng()*1.6; sFreq=0.22+rng()*0.24; sPh=rng()*7;
   year=1974; dayT=0.30; devBudgetUsed=0;
-  vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];ferries=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];
+  vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];ferries=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
   /* the coast highway hugs the shore in long hex-diagonal runs
      (a straight vertical column would wiggle across hex rows) */
   const coastX=new Int16Array(G);
@@ -1163,6 +1163,17 @@ function syncFleet(){
     const i=balloons.length;
     balloons.push({x:-6-i*11-Math.random()*8,y:6+Math.random()*(G-12),sp:0.09+Math.random()*0.07,
                    ph:Math.random()*7,sc:0.8+Math.random()*0.55,c:BALC[i%BALC.length]});
+  }
+  /* a city helicopter hops between rooftop helipads (2012+, needs 2 pads).
+     Math.random picks — the flights never perturb the seeded simulation.
+     Pads only ever accumulate (towers don't shrink), so indices stay valid. */
+  heliPads=[];
+  for(let i=0;i<G*G;i++){const c=cells[i]; if(c.t===T.TOWER&&c.th>90)heliPads.push({x:i%G,y:(i/G)|0});}
+  const wantCopters=year>=2012&&heliPads.length>=2?fl('copters',heliPads.length>=5?2:1):0;
+  while(copters.length<wantCopters){
+    const a=(Math.random()*heliPads.length)|0;
+    let b=(Math.random()*heliPads.length)|0; if(b===a)b=(a+1)%heliPads.length;
+    copters.push({a,b,t:Math.random()*0.8,sp:0.09+Math.random()*0.04,ph:Math.random()*7});
   }
 }
 function stepVehicle(v,dt){
@@ -3081,6 +3092,33 @@ function render(){
     ctx.lineTo(cx+1.1*s,by+12*s);ctx.lineTo(cx-1.1*s,by+12*s);ctx.closePath();ctx.fill();
     ctx.fillStyle=col('deck',1);ctx.fillRect(cx-1.6*s,by+12*s,3.2*s,2.6*s);
   }
+  /* the city helicopter hops between rooftop helipads */
+  for(const h of copters){
+    if(!heliPads.length)break;
+    const A=heliPads[h.a%heliPads.length],B=heliPads[h.b%heliPads.length];
+    const ca=cellAt(A.x,A.y),cb=cellAt(B.x,B.y);
+    const p=Math.min(1,h.t), e2=p*p*(3-2*p); /* smoothstep across the hop */
+    const[ax,ay]=ctr(A.x,A.y),[bx,by]=ctr(B.x,B.y);
+    const zg=(ca?ca.h:60)+((cb?cb.h:60)-(ca?ca.h:60))*e2;
+    const cx=ax+(bx-ax)*e2, cy=ay+(by-ay)*e2-zg-4.5-Math.sin(Math.PI*p)*26;
+    stamp(h,cx,cy);
+    ctx.fillStyle=col('coral',1.02);
+    ctx.beginPath();ctx.ellipse(cx,cy,3.6,2.1,0,0,7);ctx.fill();
+    ctx.fillStyle=col('white',1);
+    ctx.beginPath();ctx.ellipse(cx+1.1,cy+0.5,1.7,0.9,0,0,7);ctx.fill();
+    ctx.strokeStyle=col('coral',0.92);ctx.lineWidth=1.1; /* tail boom */
+    ctx.beginPath();ctx.moveTo(cx-3.2,cy-0.3);ctx.lineTo(cx-6.4,cy-1);ctx.stroke();
+    ctx.fillStyle=col('coral',0.95);ctx.fillRect(cx-7.2,cy-2.4,1.6,2); /* fin */
+    ctx.strokeStyle=col('ink',0.8);ctx.lineWidth=0.7; /* skids */
+    ctx.beginPath();ctx.moveTo(cx-2.2,cy+2.6);ctx.lineTo(cx+2.6,cy+2.6);ctx.stroke();
+    ctx.fillStyle=col('ink',1);ctx.fillRect(cx-0.5,cy-3.8,1,1.7); /* mast */
+    const rw=7.5*(0.55+0.45*Math.abs(Math.sin(time*9+h.ph))); /* rotor blur */
+    ctx.strokeStyle='rgba(60,56,48,0.55)';ctx.lineWidth=0.9;
+    ctx.beginPath();ctx.moveTo(cx-rw,cy-3.4);ctx.lineTo(cx+rw,cy-3.4);ctx.stroke();
+    if(LITAMT>0.25&&Math.sin(time*5+h.ph)>0.2){ /* night beacon blinks */
+      ctx.fillStyle='rgba(255,90,70,'+(0.9*LITAMT)+')';
+      ctx.beginPath();ctx.arc(cx-6.8,cy-2.8,1,0,7);ctx.fill();}
+  }
 }
 
 /* ---------------- sky sync ---------------- */
@@ -3244,6 +3282,7 @@ const ENTINFO=[
   [()=>deer,'Mule deer','Grazing where the meadow meets the woods.',7],
   [()=>joggers,'Jogger','Logging shoreline miles.',7],
   [()=>balloons,'Hot-air balloon','Drifting over on the fair-day breeze.',13],
+  [()=>copters,'City helicopter','Hopping between the rooftop helipads.',10],
   [()=>trams,'Streetcar','Riding the avenues since 1985.',9],
   [()=>trucks,'Delivery truck','Stock for the shopfronts.',9],
   [()=>bikes,'Cyclist','Two wheels beat the traffic.',6],
@@ -3303,6 +3342,10 @@ function advanceEntities(dt,s){
   for(const d of dogs)stepDog(d,dt*s);
   for(const cl of clouds){cl.x+=cl.sp*dt*s; if(cl.x>G+6)cl.x=-6;}
   for(const b of balloons){b.x+=b.sp*dt*s; if(b.x>G+8){b.x=-8;b.y=6+Math.random()*(G-12);}}
+  for(const h of copters){h.t+=h.sp*dt*s;
+    if(h.t>=1.4&&heliPads.length){ /* dwell on the pad, then lift for a new one */
+      h.a=h.b; let nb=(Math.random()*heliPads.length)|0;
+      if(nb===h.a)nb=(h.a+1)%heliPads.length; h.b=nb; h.t=0;}}
   for(const b of boats){if(b.moored)continue; b.y+=b.sp*dt*s; if(b.y<4||b.y>G-4)b.sp*=-1; b.x=shoreAtF(b.y)+b.off;}
   for(const su of surfers){su.y+=su.drift*dt*s; if(su.y<5||su.y>G-5)su.drift*=-1;}
   for(const f of ferries){f.y+=f.sp*dt*s; if(f.y<7||f.y>G-7)f.sp*=-1;}
@@ -3350,6 +3393,13 @@ window.__find=n=>{
       const[cx,cy]=ctr(x,y);out.push({x,y,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 
+/* test hook: stamped screen coords of live entities (by ENTINFO name, or all) —
+   lets the verification loop aim clips at movers without sweeping the mouse. */
+window.__ents=n=>{const out=[];
+  for(const[g,name]of ENTINFO)if(!n||name===n)
+    for(const e of g())if(e._sf!==undefined)out.push({name,sx:e._sx*scale+offX,sy:e._sy*scale+offY});
+  return out;};
+
 /* test hook: numeric census of the built city — the grow-city loop's growth/
    regression metric. Returns tile histogram + headline counts + variety tallies. */
 window.__census=()=>{
@@ -3376,7 +3426,7 @@ window.__census=()=>{
   for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(cells[idx(x,y)].t===T.PARK&&countAround(x,y,1,n=>n.t===T.COM||n.t===T.MARKET||n.t===T.CIVIC)>0)cafes++;
   const transport={cars:vehicles.length,bikes:bikes.length,trams:trams.length,trucks:trucks.length,boats:boats.length,
     ferries:ferries.length,shuttles:shuttles.length,monorail:monorail.progress>=1?monorail.trains.length:0,
-    gondola:gondPath&&gondPath.length>1?gond.cabins.length:0};
+    gondola:gondPath&&gondPath.length>1?gond.cabins.length:0,copters:copters.length};
   return {
     G, year:year|0, seed:seedNum.toString(36),
     pop:stats.pop|0, parks:stats.parks|0, towers:stats.towers|0,
