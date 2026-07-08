@@ -2846,6 +2846,18 @@ function drawFerry(f){
   ctx.strokeStyle=col('ink',1.1);ctx.lineWidth=0.6;                        /* flag */
   ctx.beginPath();ctx.moveTo(cx+5*dir,cy-0.8+bob);ctx.lineTo(cx+5*dir,cy-4.4+bob);ctx.stroke();
   ctx.fillStyle=col('coral',1.1);ctx.fillRect(cx+5*dir,cy-4.4+bob,2*dir,1.3);
+  if(LITAMT<0.55){ /* gulls work the wake for churned-up fish; roost at dark */
+    ctx.strokeStyle='rgba(252,252,246,0.95)';ctx.lineWidth=0.8;
+    for(let g=0;g<3;g++){
+      const a=time*(1.1+g*0.23)+f.ph+g*2.1;
+      const gx2=cx-dir*(7+g*3.5)+Math.cos(a)*(3.5+g*1.2);
+      const gy2=cy-6-g*1.8+Math.sin(a*1.3)*2.2+bob*0.5;
+      const wf=Math.sin(time*7+g*2.4)*1.1; /* wingbeat */
+      ctx.beginPath();
+      ctx.moveTo(gx2-1.8,gy2-wf);ctx.quadraticCurveTo(gx2,gy2+0.7,gx2+1.8,gy2-wf);
+      ctx.stroke();
+    }
+  }
 }
 function drawKayak(k){
   const[cx,cy]=pxc(k.x+k.ox,k.y);

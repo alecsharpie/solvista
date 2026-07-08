@@ -19,7 +19,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44 |
 | **Urban fabric** | 32 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
-| **Transport** | 2, 9, 21, 31, 48 | | 28, 39 | 5, 15 | | U1, U3 |
+| **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50 | | | |
 | **People & activity** | 41 | 49 | 34 | | | |
@@ -46,7 +46,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
-  laundry lines), the `__ents` entity-stamp hook (iter 48), the
+  laundry lines · ferry gulls), the `__ents` entity-stamp hook (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -59,11 +59,12 @@ tooltip / kelp re-gate · U3 determinism audit).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest holistic pass (iter 50): PASS ×3 pre-wind (day floor 23.0ms) AND ×3
-  post-wind (23.11ms — the per-tree sway sin() costs nothing measurable);
-  whole-city frames at seeds 1234/7 (incl. a sunset scene) read clean. ⚠ This
-  machine runs hot (load avg 4+): perf numbers swing ±30% run to run — run 3×
-  and judge by the MINIMUM.
+  Latest holistic pass (iter 55): PASS ×3, day floor 23.33ms / night 24.49ms —
+  the ten features since iter 45 cost ~0.3ms total; whole-city frames at
+  seed 42 NIGHT and seed 1234@1995 rural both read clean (night scene is
+  balanced, pasture patchwork works with farms). ⚠ This machine runs hot
+  (load avg 4+): perf numbers swing ±30% run to run — run 3× and judge by the
+  MINIMUM.
 
 ---
 
@@ -1224,3 +1225,28 @@ seed 42, 14 at seed 7); 5x gust-vs-calm pair at one line shows garments
 skewed at `step=44` and hanging straight at `step=20`. Whole-city frame
 coherent; the feature is invisible at wide zoom, as a detail should be.
 **Verdict:** SHIP. Redeploy pending (iters 34-54 + hooks + polish-tile work).
+
+## Iteration 55 — ferry gulls (2026-07-08) [7th lap + holistic check]
+
+**Holistic step-back:** whole-city frames at seed 42 NIGHT and seed 1234@1995
+rural — first night-scene holistic read: balanced, warm, no compounded
+darkness; the rural frame shows the pasture patchwork composing well with
+farms/river. Perf gate PASS ×3 (day floor 23.33ms / night 24.49ms — ten
+features since iter 45 cost ~0.3ms total).
+
+**Vector:** Transport × Deepen — most-overdue domain (last: 48).
+**Two near-misses logged:** (1) vehicle headlights already exist (forward
+lamp dot at `LITAMT>0.35` in drawVehicle); (2) buses already exist (14% of
+the car fleet spawns as `kind='bus'`). Transport's obvious additive moves are
+DONE — this domain is saturated; future laps should reach for
+Deepen/Polish/Interaction here.
+**Change:** gulls trail the ferries — 3 white wingbeat "m" strokes wheel
+behind each ferry's stern (per-gull circling phase off `f.ph`, wingbeat off
+`time`, bob-coupled), gated to daylight (`LITAMT<0.55`, gulls roost at dark).
+Pure draw-time garnish inside drawFerry — no entity array (butterfly
+precedent), no rng(), ~9 strokes/frame.
+**Census:** VERDICT PASS, 0 page errors, exactly flat.
+**Visual:** aimed 4x clips via `__ents('Harbor ferry')` at `step=30/31` —
+gulls visible wheeling off the stern, positions and wingbeats differing
+between steps (motion verified). Whole-city frame coherent.
+**Verdict:** SHIP. Redeploy pending (iters 34-55 + hooks + polish-tile work).
