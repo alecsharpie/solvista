@@ -16,7 +16,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46 | ~~46~~ | | 53 |
+| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3 |
@@ -44,14 +44,14 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–66**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–67**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
   school run · fairy rings · sea-fog fix · rooftop water tanks · bus
-  stops · dog walkers · tidepools · civic flags), the
+  stops · dog walkers · tidepools · civic flags · seasonal orchards), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -1550,3 +1550,26 @@ BOTH flags → they genuinely respond to the gust signal. Whole-city seed-42 fra
 coherent; flags stay subtle street-furniture at city zoom.
 **Verdict:** DEEPENED (Civic × Sky interconnect). Redeploy pending (iters 34–66
 + hooks + the concurrent session's transport/camera/shoreline commits).
+
+## Iteration 67 — orchards keep the seasons (2026-07-08)
+
+**Vector:** Nature × Deepen — rotation pointed at Nature (most-neglected, last
+real touch 60); its additive columns (3 elements, 3 CA rules) are spent, so
+interconnect. The orchards drew coral/gold fruit **year-round** — laden even in
+winter and spring. Their canopy color already shifted with the seasons
+(`applySeason` recolors `canopy`/`canopyLt`, iter 57), but the fruit ignored the
+calendar; the grove never actually turned with the year.
+**Change:** in the ORCHARD draw case, gate the crop on `s2=year%1`: a pale
+blossom flush (`col('coral',1.42)` at α0.6, two soft puffs per crown) in spring
+(0.16–0.42), coral/gold fruit at harvest (0.70–0.99), and bare green through
+summer + cool-bare in winter. Draw-only — no rng, no terrain, no new state; the
+canopy's existing seasonal palette does the rest.
+**Census:** VERDICT PASS, 0 page errors, pop/roads/developed exactly +0.
+**Visual:** one grove (seed 42, 17,16) shot across four `__setYear`-pinned
+seasons at 4.2× camera zoom: spring = pink-white blossom over fresh green;
+summer = plain green, no crop; autumn = ambered crowns laden with fruit;
+winter = cool bare. Distinct and legible each season. Whole-city seed-7 frame
+coherent (orchards read naturally in the farm belt; the concurrent session's
+new Dijkstra monorail traces clean).
+**Verdict:** DEEPENED (Nature × Sky/seasons interconnect). Redeploy pending
+(iters 34–67 + hooks + the concurrent transport/camera/shoreline commits).
