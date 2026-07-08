@@ -17,7 +17,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | |
-| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2, 44 |
+| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44 |
 | **Urban fabric** | 32 | 7, 23 | 38 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
@@ -45,7 +45,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
-  parties · wind), the `__ents` entity-stamp hook (iter 48), the
+  parties · wind · tide), the `__ents` entity-stamp hook (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1134,3 +1134,27 @@ phases) vs lull (20) on a palm/tree stretch — crowns and canopies visibly
 displaced between gust phases, neutral in the calm; whole-city gust frame
 coherent, no distortion.
 **Verdict:** SHIP. Redeploy pending (iters 34-50 + hooks + polish-tile work).
+
+## Iteration 51 — the tide (2026-07-08) [7th lap]
+
+**Vector:** Water & coast × Deepen — most-overdue domain (last: 44); additive
+moves there long flagged as spent, and the tide is an interconnect in the
+iter-50 spirit: one slow ambient signal the existing shoreline responds to.
+**Change:** Global `TIDE` (0..1, ~2min seeded cycle on `waveT`, updated with
+the clocks so `&step=` reaches any phase). Two consumers: the existing surf
+line on WATER cells recedes seaward `(1-TIDE)*3.2` at ebb, and BEACH cells
+paint a wet-sand band along **every sea-facing hex edge** (inset stroke along
+the shared edge, same edge-walk as iter 46's hedgerows) whose width and
+darkness peak just after the ebb. River water excluded.
+**Census:** VERDICT PASS ×2, 0 page errors, flat (draw-only; ±3 = known
+jitter).
+**Visual:** first cut only banded cells whose water neighbor was due EAST —
+the meandering coast mostly touches water diagonally, so the band was patchy
+and unconvincing. Rebuilt on all six sea-facing edges: paired coast clips at
+computed ebb (`step=7`) vs flood (`step=77`) — at ebb a continuous wet swash
+zone traces the entire zigzag coastline; at flood the sand runs clean to the
+water. Whole-city frame coherent, band subtle at wide zoom. **Lesson (rhymes
+with iter 45/47):** anything meant to follow the coastline must handle all
+six edge directions, not just the cardinal one — the coast is a zigzag, not a
+column.
+**Verdict:** SHIP. Redeploy pending (iters 34-51 + hooks + polish-tile work).

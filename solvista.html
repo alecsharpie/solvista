@@ -1398,6 +1398,7 @@ function palm(gx,gy,s){
 }
 
 let time=0, waveT=0, WINDA=0.5; /* breeze strength 0..1: seeded gust cycle */
+let TIDE=0.5; /* sea level 0..1 on a slow seeded cycle: 1=high water, 0=low */
 
 /* boardwalk pier deck; wheel drawn at the far end */
 function drawPierAt(x,y){
@@ -1542,9 +1543,9 @@ function drawCell(x,y){
         }
       }
       const w=cellAt(x-1,y);
-      if(w&&w.t===T.BEACH){ /* surf along the hex's west edge */
+      if(w&&w.t===T.BEACH){ /* surf along the hex's west edge; recedes at ebb */
         const[cx2,cy2]=px(gx,gy);
-        const o=1.5+Math.sin(waveT*1.8+y*0.9)*1.5;
+        const o=1.5+Math.sin(waveT*1.8+y*0.9)*1.5+(1-TIDE)*3.2;
         ctx.strokeStyle='rgba(255,251,240,'+(0.5+0.3*Math.sin(waveT*1.8+y))+')';
         ctx.lineWidth=1.6;
         ctx.beginPath();
@@ -1577,6 +1578,22 @@ function drawCell(x,y){
       break;}
     case T.BEACH:{
       hexTile(gx,gy,1.02,col('sand',1));
+      { /* the tide: wet sand banding every sea-facing edge, widest after the ebb */
+        const[cx,cy]=px(gx,gy);
+        const w2=2.4+(1-TIDE)*5;
+        ctx.globalAlpha=0.42+0.26*(1-TIDE);
+        ctx.strokeStyle=col('sandDk',0.82);ctx.lineWidth=w2;
+        for(const[dx,dy]of nbrDirs(y)){
+          const e=cellAt(x+dx,y+dy);
+          if(!e||e.t!==T.WATER||e.riv)continue;
+          const[nx,ny]=ctr(x+dx,y+dy);
+          const L3=Math.hypot(nx-cx,ny-cy),ux=(nx-cx)/L3,uy=(ny-cy)/L3;
+          const mx=(cx+nx)/2-ux*w2*0.5,my=(cy+ny)/2-uy*w2*0.5;
+          ctx.beginPath();
+          ctx.moveTo(mx+uy*5.4,my-ux*5.4);ctx.lineTo(mx-uy*5.4,my+ux*5.4);ctx.stroke();
+        }
+        ctx.globalAlpha=1;
+      }
       const esp=x===shoreAt(y)-1&&espAt(y); /* the boardwalk runs over this tile */
       if(esp)drawEspAt(x,y);
       if(!esp&&v>0.42&&v<0.47&&LITAMT>0.5){ /* beach bonfire */
@@ -3372,6 +3389,7 @@ function advanceEntities(dt,s){
   /* the breeze: slow seeded gust cycle with genuine lulls; trees, palms and
      clouds all read from this one signal so the whole scene gusts together */
   WINDA=0.25+0.75*Math.max(0,Math.sin(time*0.13+(seedNum%89)*0.5))*(0.72+0.28*Math.sin(time*0.57));
+  TIDE=0.5+0.5*Math.sin(waveT*0.045+(seedNum%31)*0.4); /* ~2min ebb and flood */
   for(const v of vehicles)stepVehicle(v,dt*s);
   for(const v of bikes)stepVehicle(v,dt*s);
   for(const v of trams)stepVehicle(v,dt*s);
