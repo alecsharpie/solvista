@@ -18,7 +18,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2, 44 |
-| **Urban fabric** | 32 | 7, 23 | 38 | | 8, 14, 24 | |
+| **Urban fabric** | 32 | 7, 23 | 38 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31 | | 28, 39 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35 | | | |
@@ -41,7 +41,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   memory — includes iters 1–33 + user passes). **Pending: iters 34–45**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
-  festival streets · field hedgerows), the
+  festival streets · field hedgerows · skybridges), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1031,3 +1031,25 @@ coexist; whole-city frames at 1985 (feature-rich) and 2035 (feature-absent,
 frame unchanged) both coherent.
 **Verdict:** SHIP (as Deepen; Connect cell struck through in the grid).
 Redeploy pending (iters 34-46 + hooks + polish-tile work).
+
+## Iteration 47 — skybridges (2026-07-08) [6th lap]
+
+**Vector:** Urban fabric × Connect — most-overdue domain (last: 38), empty kind.
+**Change:** In the TOWER draw branch: a tower whose WEST neighbor is also a
+tower links to it with an enclosed glass skywalk at mid-height —
+`hashCell(x,y,seedNum^0x5B1D)<0.5` gate, height varied by a second salt, both
+towers must be built past h 26. E-W pairs only (drawn left→right so the east
+tower paints the bridge over both faces; diagonal prisms visually overlap so a
+bridge there would be stubby/hidden). Draw-only, no rng(). Scale-checked
+first: 7-24 E-W tower pairs at 2035 across seeds → ~3-13 bridges; 13 at
+seed 7.
+**Census:** VERDICT PASS ×2, 0 page errors, flat (±3 pop = known harness
+frame-timing jitter).
+**Visual:** first design (dark deck + thin glass line) read as a black dash
+stuck to one tower and vanished at night. Redesigned as an enclosed tube:
+ink shadow frame + white body + glass window band + 4 warm window dots after
+dusk. Tight 3x day/night clips at seed 7 (aimed by replicating the hashCell
+gate offline from `__find('TOWER')` dumps — the URL seed IS seedNum, so gates
+are replicable outside the page): tube spans the terracotta→teal pair
+cleanly, glows at night; downtown + whole-city frames coherent.
+**Verdict:** SHIP. Redeploy pending (iters 34-47 + hooks + polish-tile work).

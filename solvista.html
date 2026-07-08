@@ -2190,6 +2190,26 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.moveTo(cx,cy-h-3);ctx.lineTo(cx,cy-h-10);ctx.stroke();
       if(LITAMT>0.3){ctx.fillStyle='rgba(240,120,90,'+LITAMT+')';ctx.fillRect(cx-1,cy-h-11,2,2);}
     }
+    { /* skybridge: a glass link to the tower one block west (drawn after both,
+         so it paints over both faces; E-W only — diagonal prisms overlap) */
+      const n=cellAt(x-1,y);
+      if(n&&n.t===T.TOWER&&h>26&&n.h>26&&hashCell(x,y,seedNum^0x5B1D)<0.5){
+        const[ax2,ay2]=px(gx,gy),[bx2]=ctr(x-1,y);
+        const zb=Math.min(h,n.h)*(0.42+0.22*hashCell(x,y,seedNum^0x77E1));
+        const x1=ax2+(bx2-ax2)*0.28,x2=ax2+(bx2-ax2)*0.72,yb=ay2-zb;
+        ctx.strokeStyle=col('ink',0.8);ctx.lineWidth=4.6;   /* shadowed frame */
+        ctx.beginPath();ctx.moveTo(x1,yb+1.1);ctx.lineTo(x2,yb+1.1);ctx.stroke();
+        ctx.strokeStyle=col('white',0.97);ctx.lineWidth=3.4; /* enclosed tube */
+        ctx.beginPath();ctx.moveTo(x1,yb);ctx.lineTo(x2,yb);ctx.stroke();
+        ctx.strokeStyle=colLit('glass',0.9,lit);ctx.lineWidth=1.5; /* window band */
+        ctx.beginPath();ctx.moveTo(x1,yb-0.3);ctx.lineTo(x2,yb-0.3);ctx.stroke();
+        if(LITAMT>0.25){ /* the walkway glows across the gap at night */
+          ctx.fillStyle='rgba(255,214,140,'+(0.75*LITAMT)+')';
+          for(let j=0;j<4;j++){const wx=x1+(x2-x1)*(0.14+j*0.24);
+            ctx.fillRect(wx-0.8,yb-1,1.6,1.6);}
+        }
+      }
+    }
     if(under){ /* construction crane */
       const[cx,cy]=px(gx+0.3,gy-0.3);
       const top=Math.max(h,c.th*0.5)+16;
