@@ -17,7 +17,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | 53 |
-| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44 |
+| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
@@ -49,8 +49,9 @@ tooltip / kelp re-gate · U3 determinism audit).
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
-  laundry lines · ferry gulls · kids in tow · full seasons), the `__ents`
-  entity-stamp hook (iter 48), the `__setYear` season-pin hook (iter 57), the
+  laundry lines · ferry gulls · kids in tow · full seasons · moonglade), the
+  `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
+  (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1303,3 +1304,27 @@ Pinned clips: autumn = amber street trees against still-green conifer grove;
 spring visibly fresher; winter cooled; summer = the familiar golden hills.
 **For narrow-window time features: pin the clock, don't race it.**
 **Verdict:** SHIP. Redeploy pending (iters 34-57 + hooks + polish-tile work).
+
+## Iteration 58 — moonglade (2026-07-08) [8th lap]
+
+**Vector:** Water & coast × Polish — most-overdue domain (last: 51); target
+picked from iter 55's night holistic read (moon over a plain dark sea).
+**Change:** the sea twinkles in a pool of moonlight: the screen-space moon
+(iw·0.80, ih·0.15) is projected into world space, and open-water cells within
+a 210px radial falloff draw 1-2 extra twinkle dashes (waveT-phased, hashCell-
+placed, alpha = LITAMT·fall²·twinkle). Drawn in the post-map overlay pass
+(before the fog layers). Night-gated `LITAMT>0.5`.
+**Design lesson:** the first cut was a physically-strict glitter COLUMN below
+the moon with an open-water guard — invisible at seed 42 because the fixed
+moon anchor sits over the HEADLAND there, and the guard skipped nearly every
+dash (the pale marks I first credited were the pre-existing city-light
+smears). The coastline under the moon varies per seed, so the glade must be
+RADIAL — pool on whatever water is near the moon — not columnar. Rhymes with
+iters 45/47/51: screen-fixed anchors and per-seed geometry don't mix; light
+the water you have.
+**Census:** VERDICT PASS, 0 page errors, exactly flat (draw-only).
+**Visual:** 3x clips under the moon at two waveT phases (seed 42) — twinkle
+field densest near the moon, fading with distance, patterns animating; seed 7
+clip confirms cross-seed grace (less water in radius → less glade, no
+artifacts). Night whole-city frame coherent.
+**Verdict:** SHIP. Redeploy pending (iters 34-58 + hooks + polish-tile work).

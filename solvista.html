@@ -3100,6 +3100,36 @@ function render(){
     }
   }
 
+  /* moonglade: the sea twinkles in a pool of moonlight. The moon is a
+     screen-space fixture (iw*0.80, ih*0.15); project it to world space and
+     brighten twinkles on open-water cells within a radial falloff — radial
+     (not a strict column) because the coastline under the moon varies per
+     seed and a column mostly lands on the headland. */
+  if(LITAMT>0.5){
+    const wmx=(innerWidth*0.80-offX)/scale, wmy=(innerHeight*0.15-offY)/scale;
+    const R=210; ctx.lineWidth=1;
+    for(let y=0;y<G;y++){
+      const dy2=(y+0.5)*ROWY-wmy;
+      if(dy2<-40||dy2>R+40)continue;
+      for(let x=SHOREX-4;x<G;x++){
+        const c=cells[idx(x,y)];
+        if(!c||c.t!==T.WATER||c.riv)continue;
+        const[cx2,cy2]=ctr(x,y);
+        const d=Math.hypot(cx2-wmx,cy2-wmy);
+        if(d>R)continue;
+        const fall=(1-d/R)*(1-d/R);
+        for(let k=0;k<2;k++){
+          const hx=hashCell(x,y,k+977);
+          const tw=Math.pow(Math.sin(waveT*1.5+hx*9+x+y),2);
+          const a=LITAMT*0.5*fall*tw;
+          if(a<0.03)continue;
+          const ox=(hx-0.5)*CW*0.8, oy=(hashCell(y,x,k+31)-0.5)*ROWY*0.8;
+          ctx.strokeStyle='rgba(242,240,222,'+a+')';
+          ctx.beginPath();ctx.moveTo(cx2+ox-2.4,cy2+oy);ctx.lineTo(cx2+ox+2.4,cy2+oy);ctx.stroke();
+        }
+      }
+    }
+  }
   /* the marine layer: fog banks roll over the sea at dawn */
   const fogA=clamp(1-Math.abs(dayT-0.10)/0.09,0,1)*0.45;
   if(fogA>0.02){ /* banks ride up the coast, which now runs down-screen */
