@@ -25,9 +25,9 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **People & activity** | 41 | 49 | 34 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
-  tooltips (iter 42 — first loop-driven UX move)**. When adding an entity
-  array: `stamp()` it in its draw + add an `ENTINFO` row (same discipline as
-  the census hook).
+  tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**.
+  When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
+  (same discipline as the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
   sea-fog spells (35, 43) + wind/gust cycle (50); seasons remain. Emptiest cell left: Sky ×
@@ -45,7 +45,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
-  parties · wind · tide), the `__ents` entity-stamp hook (iter 48), the
+  parties · wind · tide · Est./Built tooltip years), the `__ents` entity-stamp
+  hook (iter 48), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -1158,3 +1159,27 @@ with iter 45/47):** anything meant to follow the coastline must handle all
 six edge directions, not just the cardinal one — the coast is a zigzag, not a
 column.
 **Verdict:** SHIP. Redeploy pending (iters 34-51 + hooks + polish-tile work).
+
+## Iteration 52 — Est./Built years in the tooltip (2026-07-08) [7th lap]
+
+**Vector:** Civic & culture × Interaction — most-overdue domain (last: 45);
+Interaction has been loop-driven only once (42), and saturation guidance says
+lean Deepen/Polish/Interaction.
+**Near-miss logged:** the planned move was Civic × Polish "floodlight the
+institutions at night" — the seam read killed it: per-kind night lighting
+already exists (museum pediment wash L~2413, firehouse glowing bays,
+observatory instrument leak, amphitheater stage wash + footlights). Civic
+night lighting is DONE in this artifact; don't re-pitch it.
+**Change (the pivot):** the CA already remembers every parcel's history —
+`c.age` ticks up once per tick (0.075yr/tick, identical in the live loop and
+`__warp`) and is zeroed by civic siting and building upgrades. `describeTile`
+now surfaces it: civics + stadium say "Est. YYYY", developed parcels say
+"Built ~YYYY" (dating the CURRENT structure — a redeveloped tower shows its
+redevelopment year). One `est` line + two pushes; no canvas change.
+**Census:** VERDICT PASS, 0 page errors, flat (±3 jitter).
+**Verified truth, not just rendering:** hover probes — Museum "Est. 1997"
+matches its [1997,'museum'] milestone; Stadium "Est. 1998" matches its 1998+
+gate; University "Est. 2035" (latest 14k-pop expansion); RES "Built ~1980" in
+an early neighborhood. Tooltip card screenshot clean; whole-city frame
+untouched (DOM-only change).
+**Verdict:** SHIP. Redeploy pending (iters 34-52 + hooks + polish-tile work).

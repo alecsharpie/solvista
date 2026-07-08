@@ -3309,6 +3309,12 @@ function describeTile(c){
     sub=c.bridge?'Carries the street across the water.':(c.busy?'A busy, tree-lined arterial.':'A quiet local street.');}
   else if(c.t===T.WATER&&c.riv){title='River';sub='Fresh water winding down to the sea.';}
   else{title=TILELABEL[c.t]||'Land';sub=TILEDESC[c.t]||'';}
+  /* the CA already remembers when every parcel last changed: age ticks up
+     once per tick (0.075yr), and siting/upgrades reset it — so age dates the
+     CURRENT structure. Institutions say founded; buildings say built. */
+  const est=Math.max(1974,Math.round(year-c.age*0.075));
+  if(c.t===T.CIVIC||c.t===T.STADIUM)data.push('Est.&nbsp;<b>'+est+'</b>');
+  else if(DEV.has(c.t))data.push('Built&nbsp;~<b>'+est+'</b>');
   if(DEV.has(c.t))data.push('Floors&nbsp;~<b>'+Math.max(1,Math.round(c.h/2.7))+'</b>');
   if(c.t===T.TOWER&&c.h>90)data.push('<b>Helipad</b>');
   if(c.solar)data.push('Rooftop&nbsp;<b>solar</b>');
