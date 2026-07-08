@@ -3525,7 +3525,7 @@ function describeTile(c){
   data.push('Value&nbsp;<b>'+Math.round(c.val*100)+'%</b>');
   let h='<p class="tt">'+title+'</p>';
   if(sub)h+='<p class="td">'+sub+'</p>';
-  h+='<p class="td">'+data.join('&nbsp;·&nbsp;')+'</p>';
+  h+='<p class="td">'+data.join(' · ')+'</p>';
   return h;
 }
 /* hovering a moving thing names it; entities win over the tile under them.
