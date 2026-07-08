@@ -17,7 +17,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46 | ~~46~~ | | 53 |
-| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51 | 22 | | U2, 44, 58 |
+| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59 | 45 | | |
@@ -44,14 +44,14 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–64**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–65**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
   school run · fairy rings · sea-fog fix · rooftop water tanks · bus
-  stops · dog walkers), the
+  stops · dog walkers · tidepools), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -66,11 +66,17 @@ tooltip / kelp re-gate · U3 determinism audit).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest holistic pass (iter 60): PASS ×3, day floor 23.44ms / night 24.78ms
-  (+0.1-0.3ms creep from iters 56-59 — fine, but watch the trend). Fresh-seed
-  probe (seed 99, never tested) fully coherent. Sea-fog watch item from
+  Latest holistic pass (iter 65): PASS ×3 by minimum, day floor 24.11ms /
+  night 25.44ms. ⚠ Day floor has crept 23.44→24.11 across iters 61-64 (small
+  draw work compounding); still inside the 15% gate but if it crosses ~25.5
+  the next lap is a perf-fix lap. Fresh-seed probe (seed 123) fully coherent;
+  sea-fog lenses read soft post-61. Sea-fog watch item from
   iter 60 **FIXED at iter 61** (feathered banks + beach-band fade). ⚠ This
   machine runs hot (load avg 4+): run the gate 3× and judge by the MINIMUM.
+  ⚠ Harness lesson (iter 65): NEVER run census + shoot.mjs in one parallel
+  command — contended Chromiums time out mid-init and produce blank "1974 /
+  0 residents" frames that look like a catastrophic regression. Re-shoot
+  solo before believing a blank frame.
 
 ---
 
@@ -1483,3 +1489,32 @@ the bottom-left stats panel diffs identical — occlusion, not a render bug;
 filter aim targets to sy 160–640.
 **Verdict:** DEEPENED. Redeploy pending (iters 34–64 + hooks + polish-tile
 work).
+
+## Iteration 65 — holistic step-back + tidepools (2026-07-08) [9th lap]
+
+**Holistic (every-5 check):** whole-city frames at seed 42 (golden hour) and
+seed 123 (never-tested) — both fully coherent: balanced color, readable
+coast, sea-fog lenses soft, no compounding clutter or darkness. Perf gate
+×3 by minimum: day 24.11ms / night 25.44ms vs baselines 24/26.61 — PASS.
+Watch: day floor crept 23.44→24.11 over iters 61–64; next perf lap decides
+if a fix iteration is due. **Harness incident:** the first two holistic
+frames came back BLANK (1974 / 0 residents / specimen "—") and looked like
+a catastrophic load regression — they were contention artifacts from
+chaining census + two shoot.mjs runs in one parallel command; solo
+re-shoots rendered perfectly. Logged in the header: re-shoot solo before
+believing a blank frame.
+**Vector:** Water & coast × Deepen — tidepools, compounding the iter-51
+tide system (the TIDE signal previously only widened the wet band).
+**Change:** in the BEACH tide-band edge loop: hash-gated pool candidates
+per sea-facing edge (`hashCell(x*7+dx*3,y*5+dy*3,seedNum^0x71DE)<0.34`),
+drawn after the band pass as small water ellipses with a sandDk rim and a
+coral starfish on ~40% of them, alpha keyed `(0.45-TIDE)/0.45` — pools
+surface only on the ebb and drown at high water. Draw-only; no terrain, no
+rng(), no new state.
+**Census:** VERDICT PASS, 0 page errors, pop −3 (known jitter).
+**Visual:** pinned-clock A/B at seed 42 (`playing=false; TIDE=0.05/0.95`,
+same coast clip): low tide shows pools with rims + starfish dotted along
+the wet flats; high tide shows none. Whole-city seed-7 frame coherent —
+mid-cycle tide keeps pools subtle at full zoom.
+**Verdict:** DEEPENED (holistic clean). Redeploy pending (iters 34–65 +
+hooks + polish-tile work).

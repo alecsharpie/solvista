@@ -1668,6 +1668,7 @@ function drawCell(x,y){
       { /* the tide: wet sand banding every sea-facing edge, widest after the ebb */
         const[cx,cy]=px(gx,gy);
         const w2=2.4+(1-TIDE)*5;
+        const pools=[];
         ctx.globalAlpha=0.42+0.26*(1-TIDE);
         ctx.strokeStyle=col('sandDk',0.82);ctx.lineWidth=w2;
         for(const[dx,dy]of nbrDirs(y)){
@@ -1678,8 +1679,23 @@ function drawCell(x,y){
           const mx=(cx+nx)/2-ux*w2*0.5,my=(cy+ny)/2-uy*w2*0.5;
           ctx.beginPath();
           ctx.moveTo(mx+uy*5.4,my-ux*5.4);ctx.lineTo(mx-uy*5.4,my+ux*5.4);ctx.stroke();
+          const hp=hashCell(x*7+dx*3,y*5+dy*3,seedNum^0x71DE);
+          if(hp<0.34)pools.push([mx-ux*2.4+(hp-0.17)*7*uy,my-uy*2.4-(hp-0.17)*7*ux,hp]);
         }
         ctx.globalAlpha=1;
+        if(TIDE<0.45)for(const[px2,py2,hp]of pools){ /* the ebb uncovers tidepools */
+          const rev=(0.45-TIDE)/0.45;
+          ctx.globalAlpha=0.6*rev;
+          ctx.fillStyle=col('water',1.06);
+          ctx.beginPath();ctx.ellipse(px2,py2,2.6,1.5,0,0,7);ctx.fill();
+          ctx.strokeStyle=col('sandDk',0.7);ctx.lineWidth=0.5;
+          ctx.beginPath();ctx.ellipse(px2,py2,2.6,1.5,0,0,7);ctx.stroke();
+          if(hp>0.2){ /* a starfish stayed behind */
+            ctx.fillStyle=col('coral',1.15);
+            ctx.fillRect(px2-0.7+(hp*8%1)*1.4,py2-0.5,1.1,1.1);
+          }
+          ctx.globalAlpha=1;
+        }
       }
       const esp=x===shoreAt(y)-1&&espAt(y); /* the boardwalk runs over this tile */
       if(esp)drawEspAt(x,y);

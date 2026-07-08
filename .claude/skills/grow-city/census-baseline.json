@@ -1,5 +1,5 @@
 {
- "when": "2026-07-08T09:01:23.302Z",
+ "when": "2026-07-08T09:16:45.081Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -110,7 +110,7 @@
    "boulevardTrees": 27,
    "avenues": 120,
    "promenade": 15,
-   "stations": 8,
+   "stations": 10,
    "cafes": 30,
    "tileKinds": 22,
    "civicKinds": 8,
@@ -203,7 +203,7 @@
    "boulevardTrees": 289,
    "avenues": 334,
    "promenade": 15,
-   "stations": 10,
+   "stations": 12,
    "cafes": 55,
    "tileKinds": 23,
    "civicKinds": 11,
@@ -664,7 +664,7 @@
    "boulevardTrees": 26,
    "avenues": 138,
    "promenade": 21,
-   "stations": 12,
+   "stations": 11,
    "cafes": 31,
    "tileKinds": 24,
    "civicKinds": 7,
@@ -756,7 +756,7 @@
    "boulevardTrees": 249,
    "avenues": 278,
    "promenade": 21,
-   "stations": 14,
+   "stations": 12,
    "cafes": 54,
    "tileKinds": 27,
    "civicKinds": 11,
