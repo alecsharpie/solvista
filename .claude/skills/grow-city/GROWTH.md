@@ -16,7 +16,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13 | 37 | | | |
+| **Nature** | 4, 26, 29 | 1, 13 | 37, 46 | ~~46~~ | | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2, 44 |
 | **Urban fabric** | 32 | 7, 23 | 38 | | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31 | | 28, 39 | 5, 15 | | U1, U3 |
@@ -30,15 +30,18 @@ tooltip / kelp re-gate · U3 determinism audit).
   the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
-  sea-fog spells (35, 43); seasons/wind remain. Emptiest cells: Nature/Sky ×
-  Connect, People × New CA rule. Explored & reverted:
-  solar-farm contagion (iter 32); tuned-not-reverted: forecourt plazas
-  (iter 36 — 1996 start collapsed pop 5%, moved to 2020).
+  sea-fog spells (35, 43); seasons/wind remain. Emptiest cells: Sky × Connect,
+  People × New CA rule. ⚠ Nature × Connect is a DEAD END (iter 46): woodland
+  patches are never within ≤5 axis-steps of each other across open ground in
+  real cities — wood-to-wood green links have no geometry to attach to; don't
+  re-explore. Explored & reverted: solar-farm contagion (iter 32);
+  tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
+  moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
   memory — includes iters 1–33 + user passes). **Pending: iters 34–45**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
-  festival streets), the
+  festival streets · field hedgerows), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -998,3 +1001,33 @@ strands tracking the street axis, lit dots at night; whole-frame shot
 unchanged elsewhere. **Lesson:** anything spanning a street reads better along
 it than across it in this projection — "across" collapses to ~10px vertical.
 **Verdict:** SHIP. Redeploy pending (iters 34-45 + hooks + polish-tile work).
+
+## Iteration 46 — field hedgerows (2026-07-08) [6th lap]
+
+**Vector:** Nature × Connect (most-overdue domain + flagged empty cell) —
+**pivoted mid-iteration to Nature × Deepen** when the Connect framing proved
+geometrically impossible (below).
+**Dead end (logged so it isn't re-explored):** the plan was wood-to-wood green
+links — scrub lines across short open gaps between woodland patches along a hex
+axis. Implemented, saw 0 hedge cells at both test seeds; offline recomputation
+from `__find` dumps confirmed the CONDITION never occurs, not a bug: woodland
+patches are never within ≤5 axis-steps across open/road ground (0 cells at
+seed 42 even fully relaxed; 2 at seed 7). Solvista's woods are compact blobs
+separated by development — there is nothing for wood-to-wood links to attach
+to. Offline probing via `__find` coordinate dumps beats shipping and squinting.
+**Change (the pivot):** field hedgerows — the classic real-world pattern. End-
+of-tick pass marks open cells (EMPTY/MEADOW, non-corridor) with a bitmask of
+farm-facing edges (FARM/ORCHARD/VINEYARD neighbors, `nbrDirs` order); a new
+`hedge()` helper draws 3 canopy-scrub bumps along each marked shared edge.
+Continuous field-boundary hedges ringing the farm districts; naturally
+"grubbed out" as development presses against the fields late-era (39 cells at
+seed 42@1985 → 11 @2005 → 1 @2035; 45 at seed 7@2005). Pure derivation — no
+rng(), no terrain change. `__find('hedge')` added.
+**Census:** VERDICT PASS ×2, 0 page errors, exactly flat on re-run (single ±1
+wobbles on first runs were harness frame-timing jitter, same as iter 45).
+**Visual:** 3x clips at seed 7@2005 and seed 42@1985 — continuous scrub lines
+hug the farm-block boundaries, English-countryside reading, meadow flowers
+coexist; whole-city frames at 1985 (feature-rich) and 2035 (feature-absent,
+frame unchanged) both coherent.
+**Verdict:** SHIP (as Deepen; Connect cell struck through in the grid).
+Redeploy pending (iters 34-46 + hooks + polish-tile work).

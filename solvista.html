@@ -936,6 +936,20 @@ function tick(){
          if(m&&m.t===T.ROAD&&!m.bridge&&!seen.has(idx(a,b))){seen.add(idx(a,b));q.push([a,b,d+1]);}});
      }
    }}
+  /* field hedgerows: scrub lines bound the farm fields where they meet open
+     ground — continuous along the boundary, and naturally grubbed out as the
+     city builds up to the fields. c.hedge is a bitmask of farm-facing edges
+     (nbrDirs order). Pure derivation (no rng, no terrain change): open cells
+     are marked and drawn over, never converted. */
+  {const FRM=t=>t===T.FARM||t===T.ORCHARD||t===T.VINEYARD;
+   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+     const c=cells[idx(x,y)]; c.hedge=0;
+     if((c.t!==T.EMPTY&&c.t!==T.MEADOW)||c.corr)continue;
+     let m=0,bit=1;
+     for(const[dx,dy]of nbrDirs(y)){const n=cellAt(x+dx,y+dy);
+       if(n&&FRM(n.t))m|=bit; bit<<=1;}
+     c.hedge=m;
+   }}
   /* monorail construction 1988-1995 */
   monorail.progress=monoPath?clamp((year-1988)/7,0,1):0;
   recount();
@@ -1322,6 +1336,25 @@ function tree(gx,gy,s,shade){
   ctx.beginPath();ctx.arc(cx+1,cy-6*s,3.6*s,0,7);ctx.fill();
   ctx.fillStyle=col('canopyLt',shade);
   ctx.beginPath();ctx.arc(cx-1,cy-7.4*s,3.0*s,0,7);ctx.fill();
+}
+function hedge(c,x,y,gx,gy){ /* scrub along the field edges this cell borders */
+  const[cx,cy]=px(gx,gy);
+  let bit=1;
+  for(const[dx,dy]of nbrDirs(y)){
+    if(c.hedge&bit){
+      const[nx,ny]=ctr(x+dx,y+dy);
+      const mx=cx+(nx-cx)*0.44,my=cy+(ny-cy)*0.44;
+      const L=Math.hypot(nx-cx,ny-cy),ux=-(ny-cy)/L,uy=(nx-cx)/L;
+      for(let j=-1;j<=1;j++){
+        const bx=mx+ux*j*3.1,by=my+uy*j*3.1;
+        ctx.fillStyle=col('canopy',0.92+((x*2+y+j+3)%3)*0.07);
+        ctx.beginPath();ctx.ellipse(bx,by-1,2.2,1.5,0,0,7);ctx.fill();
+        ctx.fillStyle=col('canopyLt',1);
+        ctx.beginPath();ctx.ellipse(bx-0.5,by-1.7,1,0.7,0,0,7);ctx.fill();
+      }
+    }
+    bit<<=1;
+  }
 }
 function palm(gx,gy,s){
   const[cx,cy]=px(gx,gy);
@@ -1746,6 +1779,7 @@ function drawCell(x,y){
       if(v<0.22)tree(gx,gy+0.05,0.85+v,0.95);
       else if(v<0.28){const[cx,cy]=px(gx,gy);ctx.fillStyle=col('gold',1.1);
         ctx.fillRect(cx-3,cy-1,1.6,1.6);ctx.fillRect(cx+2,cy+1,1.6,1.6);}
+      if(c.hedge)hedge(c,x,y,gx,gy);
       break;}
     case T.FARM:{
       hexTile(gx,gy,1.02,col('soil',0.98));
@@ -2004,6 +2038,7 @@ function drawCell(x,y){
       hexTile(gx,gy,1.02,col(c.t===T.EMPTY?'grass':'sandDk',c.t===T.EMPTY?0.96:0.9));
       if(DEV.has(c.t))drawBuilding(c,x,y,gx,gy);
       else if(c.t===T.EMPTY){ /* succession: idle lots grow back on their own */
+        if(c.hedge)hedge(c,x,y,gx,gy);
         if(v>0.86)tree(gx,gy,0.7,0.9);
         else if(c.age>20&&v>0.55)tree(gx,gy,Math.min(0.75,0.4+c.age*0.004),0.95);
         else if(c.age>12&&v<0.2){const[cx,cy]=px(gx,gy);
@@ -3291,7 +3326,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 
