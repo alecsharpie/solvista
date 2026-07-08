@@ -1165,7 +1165,9 @@ function syncFleet(){
   const wantDogs=Math.min(10,(stats.parks/4|0));
   while(dogs.length<wantDogs&&openCells.length){
     const[x,y]=openCells[(rng()*openCells.length)|0];
-    dogs.push({x,y,ox:0,oy:0,tx:0,ty:0,tm:0,c:rng()<0.5?'trunk':'white'});
+    dogs.push({x,y,ox:0,oy:0,tx:0,ty:0,tm:0,c:rng()<0.5?'trunk':'white',
+               walker:Math.random()<0.45?0.1+Math.random()*7:0}); /* some dogs walk
+               their human; Math.random AFTER the rng draws, stream untouched */
   }
   /* herons wade in the estuary marsh. Math.random (not rng) so they don't perturb
      the seeded simulation; count follows how much marsh formed. */
@@ -1530,8 +1532,21 @@ function drawEspAt(x,y){
       ctx.beginPath();ctx.arc(x1-w-1.1,y1-lift-7.5,2.3,0,7);ctx.fill();}
   }
 }
+const WKC=['terra','teal','gold','coral','lav'];
 function drawDog(d){
   const[cx,cy]=px(d.x+0.5+d.ox,d.y+0.5+d.oy);
+  if(d.walker){ /* somebody's on the other end of the leash; they stand while
+                   the dog sniffs out the whole radius */
+    const[wx,wy]=px(d.x+0.5,d.y+0.5);
+    const sway=Math.sin(time*1.7+d.walker)*0.3;
+    ctx.strokeStyle=col('ink',0.7);ctx.lineWidth=0.7;
+    ctx.beginPath();ctx.moveTo(wx+sway*0.4,wy-2.4);
+    ctx.quadraticCurveTo((wx+cx)/2,(wy+cy)/2-0.6,cx,cy-1.8);ctx.stroke();
+    ctx.strokeStyle=col(WKC[(d.walker*5|0)%5],1);ctx.lineWidth=1.3;
+    ctx.beginPath();ctx.moveTo(wx,wy);ctx.lineTo(wx+sway*0.4,wy-3.1);ctx.stroke();
+    ctx.fillStyle=col('ink',0.9);
+    ctx.beginPath();ctx.arc(wx+sway*0.4,wy-3.8,0.7,0,7);ctx.fill();
+  }
   ctx.fillStyle=col(d.c,0.95);
   ctx.fillRect(cx-1.6,cy-2.2,3.2,1.7);
   ctx.fillRect(cx+1.2,cy-3.1,1.4,1.4);
