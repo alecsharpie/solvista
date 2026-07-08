@@ -918,6 +918,24 @@ function tick(){
     if(c&&(c.t===T.EMPTY||c.t===T.RES||c.t===T.COM)&&c.val>0.52&&roadNear(x,y)
        &&countAround(x,y,2,n=>DEV.has(n.t))>=4){c.t=T.STADIUM;c.h=0;c.th=0;c.age=0;break;}
   }
+  /* festival streets: where two civic institutions front the same short stretch
+     of street, the blocks between them string up bunting — a civic mile tying the
+     district together. Pure derivation from civic positions (no rng, no hashCell),
+     recomputed each tick as institutions arrive. */
+  for(const c of cells){c.fete=0;c.feteId=0;}
+  {let cid=0;
+   for(let i=0;i<G*G;i++){
+     if(cells[i].t!==T.CIVIC)continue; cid++;
+     const q=[],seen=new Set();
+     nbrs6(i%G,(i/G)|0,(a,b)=>{const n=cellAt(a,b);
+       if(n&&n.t===T.ROAD&&!n.bridge){seen.add(idx(a,b));q.push([a,b,1]);}});
+     while(q.length){
+       const[qx,qy,d]=q.shift(); const n=cells[idx(qx,qy)];
+       if(n.feteId&&n.feteId!==cid)n.fete=1; else n.feteId=cid;
+       if(d<3)nbrs6(qx,qy,(a,b)=>{const m=cellAt(a,b);
+         if(m&&m.t===T.ROAD&&!m.bridge&&!seen.has(idx(a,b))){seen.add(idx(a,b));q.push([a,b,d+1]);}});
+     }
+   }}
   /* monorail construction 1988-1995 */
   monorail.progress=monoPath?clamp((year-1988)/7,0,1):0;
   recount();
@@ -1607,6 +1625,28 @@ function drawCell(x,y){
         ctx.fillStyle='rgba(255,252,244,0.85)';
         const fh=((time*7)%5);
         ctx.fillRect(cx-0.7,cy-1.5-fh,1.4,1.4);
+      }
+      { /* bunting: the square dresses up for its institution */
+        let civ=null;
+        for(const d of nbrDirs(y)){const n=cellAt(x+d[0],y+d[1]);
+          if(n&&n.t===T.CIVIC){civ=[x+d[0],y+d[1]];break;}}
+        if(civ){
+          const[ax,ay]=ctr(civ[0],civ[1]);
+          const ex=cx+(ax-cx)*0.72, ey=cy+(ay-cy)*0.72-9; /* anchor on the civic wall */
+          const px0=cx+(ax-cx)*0.1, py0=cy+(ay-cy)*0.1;   /* flag pole on the square */
+          ctx.strokeStyle=col('ink',0.9);ctx.lineWidth=0.6;
+          ctx.beginPath();ctx.moveTo(px0,py0);ctx.lineTo(px0,py0-8);ctx.stroke();
+          const mx=(px0+ex)/2, my=(py0-8+ey)/2+2.4; /* the string sags */
+          ctx.beginPath();ctx.moveTo(px0,py0-8);ctx.quadraticCurveTo(mx,my+2,ex,ey);ctx.stroke();
+          const PB=['coral','gold','teal','lav','sage'];
+          for(let j=1;j<=5;j++){
+            const t2=j/6;
+            const qx=(1-t2)*(1-t2)*px0+2*(1-t2)*t2*mx+t2*t2*ex;
+            const qy=(1-t2)*(1-t2)*(py0-8)+2*(1-t2)*t2*(my+2)+t2*t2*ey;
+            ctx.fillStyle=col(PB[j%5],1.1);
+            ctx.beginPath();ctx.moveTo(qx-1,qy);ctx.lineTo(qx+1,qy);ctx.lineTo(qx,qy+2.2);ctx.closePath();ctx.fill();
+          }
+        }
       }}
       tree(gx-0.3,gy+0.26,0.6,1.05);tree(gx+0.3,gy-0.26,0.6,1.0);
       break;}
@@ -1928,6 +1968,36 @@ function drawCell(x,y){
       if(LITAMT>0.25&&((x*7+y*5)%(c.busy?2:4))===0){ /* street lamps at night */
         ctx.fillStyle='rgba(255,200,110,'+(0.30*LITAMT)+')';
         ctx.beginPath();ctx.arc(cx,cy-2,4.5,0,7);ctx.fill();
+      }
+      if(c.fete){ /* festival bunting strung down the civic mile between institutions */
+        let rdx=0,rdy=0;
+        for(const[dx2,dy2]of nbrDirs(y)){const n=cellAt(x+dx2,y+dy2);
+          if(n&&n.t===T.ROAD){const[nx2,ny2]=ctr(x+dx2,y+dy2);rdx=nx2-cx;rdy=ny2-cy;break;}}
+        if(rdx||rdy){
+          const L=Math.hypot(rdx,rdy),ax=rdx/L,ay=rdy/L;      /* along the street */
+          const sd=((x+y)&1)?1:-1,ox=-ay*3.4*sd,oy=ax*3.4*sd; /* sidewalk side */
+          const x1=cx-ax*6.6+ox,y1=cy-ay*6.6+oy,x2=cx+ax*6.6+ox,y2=cy+ay*6.6+oy;
+          ctx.strokeStyle=col('ink',0.85);ctx.lineWidth=0.6;
+          ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x1,y1-9);
+          ctx.moveTo(x2,y2);ctx.lineTo(x2,y2-9);ctx.stroke();
+          const mx=(x1+x2)/2,my=(y1+y2)/2-9+2.6; /* the string sags mid-street */
+          ctx.beginPath();ctx.moveTo(x1,y1-9);ctx.quadraticCurveTo(mx,my+2,x2,y2-9);ctx.stroke();
+          const PB=['coral','gold','teal','lav','sage'];
+          for(let j=1;j<=5;j++){
+            const t2=j/6;
+            const qx=(1-t2)*(1-t2)*x1+2*(1-t2)*t2*mx+t2*t2*x2;
+            const qy=(1-t2)*(1-t2)*(y1-9)+2*(1-t2)*t2*(my+2)+t2*t2*(y2-9);
+            ctx.fillStyle=col(PB[(x*5+y*3+j)%5],1.1);
+            ctx.beginPath();ctx.moveTo(qx-1,qy);ctx.lineTo(qx+1,qy);ctx.lineTo(qx,qy+2.2);ctx.closePath();ctx.fill();
+          }
+          if(LITAMT>0.25){ /* the strand lights up for the evening */
+            ctx.fillStyle='rgba(255,214,130,'+(0.55*LITAMT)+')';
+            for(let j=1;j<=5;j+=2){const t2=j/6;
+              const qx=(1-t2)*(1-t2)*x1+2*(1-t2)*t2*mx+t2*t2*x2;
+              const qy=(1-t2)*(1-t2)*(y1-9)+2*(1-t2)*t2*(my+2)+t2*t2*(y2-9);
+              ctx.beginPath();ctx.arc(qx,qy-0.6,1.1,0,7);ctx.fill();}
+          }
+        }
       }
       break;}
     default:{ /* buildable ground under structures */
@@ -3221,7 +3291,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 

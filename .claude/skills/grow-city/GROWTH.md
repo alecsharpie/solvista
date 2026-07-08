@@ -20,7 +20,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25 | 22 | | U2, 44 |
 | **Urban fabric** | 32 | 7, 23 | 38 | | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31 | | 28, 39 | 5, 15 | | U1, U3 |
-| **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | | | |
+| **Civic & culture** | 3, 11, 18, 30 | 36 | 36 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35 | | | |
 | **People & activity** | 41 | | 34 | | | |
 
@@ -30,14 +30,15 @@ tooltip / kelp re-gate · U3 determinism audit).
   the census hook).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
-  sea-fog spells (35, 43); seasons/wind remain. Emptiest cells: Nature/Civic/
-  Sky × Connect, People × New CA rule. Explored & reverted:
+  sea-fog spells (35, 43); seasons/wind remain. Emptiest cells: Nature/Sky ×
+  Connect, People × New CA rule. Explored & reverted:
   solar-farm contagion (iter 32); tuned-not-reverted: forecourt plazas
   (iter 36 — 1996 start collapsed pop 5%, moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–44**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–45**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
-  perf fix · evening crowds · entity tooltips · sea fog · river flow), the
+  perf fix · evening crowds · entity tooltips · sea fog · river flow ·
+  festival streets), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
@@ -49,10 +50,11 @@ tooltip / kelp re-gate · U3 determinism audit).
   a git repo pushed to github.com/alecsharpie/solvista — commit each shipped
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
-  (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix):
-  day floor 23ms (−4% vs baseline, reproduced ×2), night ~30ms (+13%, within
-  TOL). ⚠ This machine runs hot (load avg 4+): perf numbers swing ±30% run to
-  run — run 3× and judge by the MINIMUM.
+  (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
+  Latest holistic pass (iter 45): PASS ×3, day floor 23.39ms (−2.5%), night
+  floor 24.17ms (−9%); whole-city frames at seeds 42/7 read clean. ⚠ This
+  machine runs hot (load avg 4+): perf numbers swing ±30% run to run — run 3×
+  and judge by the MINIMUM.
 
 ---
 
@@ -969,3 +971,30 @@ clips: glints advanced along the channel toward the mouth, diagonal with the
 channel where it bends. (First motion-check clip missed the river entirely —
 aim clips with a probe, not by eyeballing screen coords off a scaled render.)
 **Verdict:** SHIP. Redeploy pending (iters 34-44 + hooks + polish-tile work).
+
+## Iteration 45 — festival streets (2026-07-08) [6th lap + holistic check]
+
+**Holistic step-back (every ~5 iters):** whole-city wide shots at seeds 42/7 —
+balanced, bright coast, no compounded clutter; nothing owed a fix. Perf gate
+PASS ×3: day floor 23.39ms (−2.5% vs baseline), night floor 24.17ms (−9%).
+
+**Vector:** Civic & culture × Connect — the domain most overdue (last: 36) and
+the header's flagged empty cell.
+**Change:** New end-of-tick pass: BFS ≤3 road-steps out from every civic; road
+cells reached by TWO distinct civics (`c.fete`) are the short street stretch
+between a nearby civic pair, and they string up festival bunting — pole pairs
+on the sidewalk side, a sagging 5-pennant strand along the block (PB palette),
+warm bulb dots after dusk. Pure derivation from civic positions — no rng(), no
+hashCell — recomputed each tick as institutions arrive. `__find('fete')` added
+for verification (same hook discipline as tiles/civics).
+**Census:** VERDICT PASS ×2, 0 page errors; second run EXACTLY flat on all
+metrics (first run's pop +3 was harness frame-timing jitter — re-ran to
+confirm). Surgical, as a pure-derivation pass should be.
+**Visual:** first design strung the bunting ACROSS the street — in this
+projection that span is near-vertical on screen, so pennants stacked into an
+unreadable totem. Redesigned to string ALONG the street (lamppost-to-lamppost
+look): 4x clips at seed 42 (4 fete cells) and seed 7 (6) show sagging pennant
+strands tracking the street axis, lit dots at night; whole-frame shot
+unchanged elsewhere. **Lesson:** anything spanning a street reads better along
+it than across it in this projection — "across" collapses to ~10px vertical.
+**Verdict:** SHIP. Redeploy pending (iters 34-45 + hooks + polish-tile work).
