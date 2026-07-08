@@ -20,7 +20,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3 |
-| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59 | 45 | | |
+| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | | | |
 
@@ -44,14 +44,14 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–65**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–66**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
   school run · fairy rings · sea-fog fix · rooftop water tanks · bus
-  stops · dog walkers · tidepools), the
+  stops · dog walkers · tidepools · civic flags), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -1518,3 +1518,35 @@ the wet flats; high tide shows none. Whole-city seed-7 frame coherent —
 mid-cycle tide keeps pools subtle at full zoom.
 **Verdict:** DEEPENED (holistic clean). Redeploy pending (iters 34–65 +
 hooks + polish-tile work).
+
+## Iteration 66 — civic flags catch the wind (2026-07-08)
+
+**Worktree migration:** the skill grew a git-worktree workflow this session — the
+loop now runs in `../solvista-grow` on branch `grow-city`, and `main` advances
+only by a verified `--ff-only` merge. Adopted it here specifically because a
+concurrent session (the transport/monorail rework) was continuously editing
+`main`'s `solvista.html`; iters 66-a/66-b were yielded to avoid clobbering that
+uncommitted work. The worktree isolates this loop cleanly. (See the ff-merge
+note below re: publishing to main.)
+**Vector:** Civic & culture × Deepen — rotation pointed at Civic (least-touched,
+last 59; empty Polish/Scale columns). Its 13 building types are already richly
+detailed with night lighting, so the move is interconnection, not addition: the
+`WINDA` gust cycle (iter 50) blows through trees, palms, clouds and laundry, but
+the civic flags hung dead — the school flag was a static gold triangle and the
+town hall had only a bare finial.
+**Change:** a shared `windFlag(bx,by,dir,L,H,color,ph)` helper (draw-only): a
+rectangular flag whose ripple is a sine wave travelling down its length, scaled
+by `0.28+0.72*WINDA` so it hangs limp in the calm and snaps straight in a gust,
+with the free end swinging more than the hoist. Wired to two civics: (1) a new
+coral national flag on a pole rising from the town-hall dome finial (gold pole
+ball), and (2) the school flag's static triangle replaced with a gold `windFlag`.
+No terrain, no rng(), no new state — pop stays flat.
+**Census:** VERDICT PASS, 0 page errors, pop +21 (draw-only wobble).
+**Visual:** camera-zoomed frames (in-page `scale`/`offX` override) show the
+town-hall coral flag streaming above the gold dome and the school's gold flag
+flying over the play-court — both read cleanly. Pinned-frame A/B
+(`playing=false; WINDA=0.95 vs 0.03`) on tight clips: wind≠calm hash differs for
+BOTH flags → they genuinely respond to the gust signal. Whole-city seed-42 frame
+coherent; flags stay subtle street-furniture at city zoom.
+**Verdict:** DEEPENED (Civic × Sky interconnect). Redeploy pending (iters 34–66
++ hooks + the concurrent session's transport/camera/shoreline commits).

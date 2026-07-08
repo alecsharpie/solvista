@@ -1673,6 +1673,20 @@ function drawKite(k){
   ctx.beginPath();ctx.moveTo(kx,ky+4.5);
   ctx.quadraticCurveTo(kx-3+Math.sin(t*2)*3,ky+9,kx+Math.sin(t*2.4)*4,ky+13);ctx.stroke();
 }
+/* a flag flying from a pole-top at (bx,by), streaming in the +dir direction and
+   rippling with the same WINDA gust cycle the trees and clouds ride (iter 50):
+   limp in the calm, snapping straight in a gust. The wave travels down the flag's
+   length and the free end swings more than the hoist. Draw-only. */
+function windFlag(bx,by,dir,L,H,color,ph){
+  const g=0.28+0.72*WINDA, N=5;
+  ctx.fillStyle=color;
+  ctx.beginPath();
+  for(let i=0;i<=N;i++){const t2=i/N, w=Math.sin(time*5+ph-t2*4.5)*H*0.5*t2*g;
+    ctx.lineTo(bx+dir*L*t2, by+w);}
+  for(let i=N;i>=0;i--){const t2=i/N, w=Math.sin(time*5+ph-t2*4.5)*H*0.5*t2*g;
+    ctx.lineTo(bx+dir*L*t2, by+H+w);}
+  ctx.closePath();ctx.fill();
+}
 
 function drawCell(x,y){
   const c=cells[idx(x,y)];
@@ -2699,6 +2713,11 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.fillStyle=col('gold',1.05);
       ctx.beginPath();ctx.arc(cx,cy-hb-3.2,6.6*dv,Math.PI,0);ctx.fill();
       ctx.fillStyle=col('gold',1.3);ctx.fillRect(cx-0.6,cy-hb-3.2-6.6*dv-2.2,1.2,2.2); /* finial */
+      {const fpy=cy-hb-3.2-6.6*dv-2.2; /* the town flag flies from the finial */
+      ctx.strokeStyle=col('ink',0.85);ctx.lineWidth=0.8;
+      ctx.beginPath();ctx.moveTo(cx,fpy);ctx.lineTo(cx,fpy-9.5);ctx.stroke();
+      ctx.fillStyle=col('gold',1.35);ctx.beginPath();ctx.arc(cx,fpy-9.5,0.95,0,7);ctx.fill(); /* pole ball */
+      windFlag(cx+0.6,fpy-9,1,7.4,4.4,col('coral',1.08),x*0.7+y*0.5);}
       /* the clock face the town sets its watches by */
       {const X2=0.33*2*HW, V2=0.29*2*VR, E2=0.29*2*ER;
       const fx2=cx+X2*0.55, fy2=cy+V2-(V2-E2)*0.55-(hb-7);
@@ -2773,8 +2792,7 @@ function drawBuilding(c,x,y,gx,gy){
       {const[fx3,fy3]=px(gx-fxS*0.13,gy-0.06); /* the flag */
       ctx.strokeStyle=col('whiteDk',1);ctx.lineWidth=1;
       ctx.beginPath();ctx.moveTo(fx3+3,fy3-hb-1.5);ctx.lineTo(fx3+3,fy3-hb-11);ctx.stroke();
-      ctx.fillStyle=col('gold',1.25);
-      ctx.beginPath();ctx.moveTo(fx3+3,fy3-hb-11);ctx.lineTo(fx3+8.2,fy3-hb-9.6);ctx.lineTo(fx3+3,fy3-hb-8.2);ctx.closePath();ctx.fill();
+      windFlag(fx3+3,fy3-hb-10.8,1,5.4,2.9,col('gold',1.25),x*0.9+y*0.6); /* flies with the breeze */
       if(LITAMT>0.45){ /* one janitor window */
         ctx.fillStyle='rgba(255,214,140,'+(0.8*LITAMT)+')';
         ctx.fillRect(fx3-6,fy3-hb*0.5-1,2.2,2.6);}}

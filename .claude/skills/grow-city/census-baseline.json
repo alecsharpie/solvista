@@ -1,5 +1,5 @@
 {
- "when": "2026-07-08T09:33:33.999Z",
+ "when": "2026-07-08T09:50:39.138Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -26,7 +26,7 @@
    "cafes": 10,
    "tileKinds": 18,
    "civicKinds": 3,
-   "transportModes": 7,
+   "transportModes": 6,
    "tiles": {
     "EMPTY": 1066,
     "ROAD": 275,
@@ -72,7 +72,7 @@
     "ferries": 2,
     "shuttles": 0,
     "monorail": 0,
-    "gondola": 2,
+    "gondola": 0,
     "copters": 0
    },
    "life": {
@@ -110,11 +110,11 @@
    "boulevardTrees": 27,
    "avenues": 120,
    "promenade": 15,
-   "stations": 10,
+   "stations": 8,
    "cafes": 30,
    "tileKinds": 22,
    "civicKinds": 8,
-   "transportModes": 8,
+   "transportModes": 7,
    "tiles": {
     "EMPTY": 550,
     "ROAD": 497,
@@ -164,7 +164,7 @@
     "boats": 6,
     "ferries": 2,
     "shuttles": 0,
-    "monorail": 2,
+    "monorail": 0,
     "gondola": 2,
     "copters": 0
    },
@@ -196,14 +196,14 @@
    "bridges": 0,
    "developed": 865,
    "solarRoofs": 380,
-   "greenRoofs": 68,
+   "greenRoofs": 67,
    "towerHt": 6717,
    "tallTowers": 42,
    "helipads": 30,
    "boulevardTrees": 289,
    "avenues": 334,
    "promenade": 15,
-   "stations": 12,
+   "stations": 14,
    "cafes": 55,
    "tileKinds": 23,
    "civicKinds": 11,
@@ -303,7 +303,7 @@
    "cafes": 19,
    "tileKinds": 20,
    "civicKinds": 3,
-   "transportModes": 7,
+   "transportModes": 6,
    "tiles": {
     "EMPTY": 971,
     "ROAD": 288,
@@ -349,7 +349,7 @@
     "ferries": 2,
     "shuttles": 0,
     "monorail": 0,
-    "gondola": 2,
+    "gondola": 0,
     "copters": 0
    },
    "life": {
@@ -387,11 +387,11 @@
    "boulevardTrees": 29,
    "avenues": 131,
    "promenade": 15,
-   "stations": 8,
+   "stations": 1,
    "cafes": 44,
    "tileKinds": 24,
    "civicKinds": 8,
-   "transportModes": 8,
+   "transportModes": 7,
    "tiles": {
     "EMPTY": 441,
     "ROAD": 533,
@@ -441,7 +441,7 @@
     "boats": 6,
     "ferries": 2,
     "shuttles": 0,
-    "monorail": 2,
+    "monorail": 0,
     "gondola": 2,
     "copters": 0
    },
@@ -480,7 +480,7 @@
    "boulevardTrees": 261,
    "avenues": 293,
    "promenade": 15,
-   "stations": 8,
+   "stations": 5,
    "cafes": 62,
    "tileKinds": 26,
    "civicKinds": 12,
@@ -581,7 +581,7 @@
    "cafes": 12,
    "tileKinds": 19,
    "civicKinds": 2,
-   "transportModes": 7,
+   "transportModes": 6,
    "tiles": {
     "EMPTY": 997,
     "ROAD": 283,
@@ -626,7 +626,7 @@
     "ferries": 2,
     "shuttles": 0,
     "monorail": 0,
-    "gondola": 2,
+    "gondola": 0,
     "copters": 0
    },
    "life": {
@@ -648,7 +648,7 @@
    "G": 48,
    "year": 2005,
    "seed": "ya",
-   "pop": 10473,
+   "pop": 10476,
    "parks": 62,
    "towers": 26,
    "schools": 1,
@@ -658,17 +658,17 @@
    "developed": 480,
    "solarRoofs": 0,
    "greenRoofs": 0,
-   "towerHt": 1795,
+   "towerHt": 1796,
    "tallTowers": 11,
    "helipads": 4,
    "boulevardTrees": 26,
    "avenues": 138,
    "promenade": 21,
-   "stations": 11,
+   "stations": 4,
    "cafes": 31,
    "tileKinds": 24,
    "civicKinds": 7,
-   "transportModes": 8,
+   "transportModes": 7,
    "tiles": {
     "EMPTY": 471,
     "ROAD": 537,
@@ -717,7 +717,7 @@
     "boats": 6,
     "ferries": 2,
     "shuttles": 0,
-    "monorail": 2,
+    "monorail": 0,
     "gondola": 2,
     "copters": 0
    },
