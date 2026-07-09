@@ -57,7 +57,11 @@ both at this one.)
 1. **Orient.** Read the **State of the city** header at the top of `GROWTH.md`
    (the domain × kind grid + saturation notes) plus the **last ~5 entries** — you
    don't need to re-read the whole archive every iteration; the header exists so
-   rotation and saturation are legible at a glance. Then pick the next
+   rotation and saturation are legible at a glance. `GROWTH.md` is kept small
+   (header + last 10 entries) by `rotate-ledger.mjs`; older entries live in
+   `GROWTH-archive.md`, which you should **not** read by default. **Never read
+   the archive to "catch up"** — the header is the summary, and the archive is
+   ~80k tokens of context you will not get back. Then pick the next
    **domain × kind** (see the menu below): **rotate the domain** so no
    part of the city is neglected, and **vary the kind** so you don't repeat a move
    (don't ship five new tiles — or five diffusion CAs — in a row).
@@ -82,7 +86,11 @@ both at this one.)
    kind can be additive (new element / CA rule) OR non-additive (**Deepen**,
    **Polish**, **Interaction**) — a change that adds nothing is still a valid
    iteration.
-   - **Read the target seam BEFORE designing.** `GROWTH.md` is the loop's memory,
+   - **Read the target seam BEFORE designing — the seam, not the file.**
+     `solvista.html` is ~4k lines (~55k tokens); reading it whole burns a third
+     of a fresh context before you have written a line. `grep -n` the seam
+     names from the domain table, then `Read` with `offset`/`limit` around the
+     hits. `GROWTH.md` is the loop's memory,
      **not the artifact's inventory** — the artifact predates the ledger, and many
      features (beach towels, bonfires, kites, the pier, string lights…) exist
      without a ledger entry. Grep/read the draw case, `tick()` pass, or entity
@@ -112,9 +120,31 @@ both at this one.)
      node ~/.claude/skills/screenshot-verify/shoot.mjs 'solvista.html?seed=42&warp=61&t=0.3' --shots wide --out .claude/skills/grow-city/shots/after
      node ~/.claude/skills/screenshot-verify/shoot.mjs 'solvista.html?seed=7&warp=31&t=0.3'  --shots wide --out .claude/skills/grow-city/shots/after7
      ```
-     **Read** the PNGs. Confirm the new thing is visible, sits correctly on the
-     hex grid, and the scene still reads as a coherent coastal city — no z-order
-     tears, floating tiles, or blown-out color.
+     Someone must **look at** the PNGs and confirm the new thing is visible, sits
+     correctly on the hex grid, and the scene still reads as a coherent coastal
+     city — no z-order tears, floating tiles, or blown-out color.
+
+     **Delegate that looking to subagents — do not read the PNGs yourself.**
+     Images are the single most expensive thing that can enter a context, they are
+     worthless on the next iteration, and this loop is built to run for hours. Take
+     the shots, then spawn **one `Agent` per seed, in parallel** (a single message
+     with one `Agent` call per seed), each told to read only its own PNGs and
+     reply with a short text verdict. Their contexts — and the images in them — are
+     discarded when they return; only the verdict text reaches you. Give each a
+     strict contract:
+
+     > Read `<png paths>`. This is a procedural hex-grid coastal city diorama.
+     > The change under test is: `<one sentence>`. Report, in ≤8 lines:
+     > (1) is the change visible, and does it sit correctly on the hex grid?
+     > (2) any z-order tears, floating tiles, or blown-out color *anywhere* in
+     > the frame — not just at the change? (3) does the whole frame still read
+     > as a balanced, beautiful coastal city, or has something compounded into
+     > clutter/darkness? End with exactly one line: `VISUAL: PASS` or
+     > `VISUAL: FAIL — <reason>`.
+
+     Any `VISUAL: FAIL` fails the gate. If a verdict is vague or you have reason
+     to doubt it, look at *that one* PNG yourself — the budget exists to be spent
+     when it matters, not to be defended.
      - **Zooming in:** `shoot.config.json` has named clip framings — `--shots coast`
        (the beach/ocean band) and `--shots downtown` (the dense core) — so you
        don't hand-compute clip rectangles. For an arbitrary tile/civic, the
@@ -155,8 +185,20 @@ both at this one.)
    State of the city header** at the top of `GROWTH.md` (add the iteration number
    to its domain × kind cell; refresh the saturation/deploy lines) — that header
    is what step 1 reads instead of the whole archive, so a stale header
-   silently breaks rotation. Then **commit the iteration on the `grow-city`
-   branch** (source + ledger in one commit, `Iter N: <what>`) and
+   silently breaks rotation.
+
+   Then **rotate the ledger** so it can't grow without bound — this loop is meant
+   to run for hundreds of iterations, and step 1 has to stay cheap:
+   ```bash
+   node .claude/skills/grow-city/rotate-ledger.mjs
+   ```
+   It keeps the header + the last 10 entries in `GROWTH.md` and moves older ones
+   to `GROWTH-archive.md`, preserving every entry byte-for-byte. It is idempotent
+   and a no-op below the threshold, so run it unconditionally, *after* appending
+   your entry and *before* committing (the rotation lands in the same commit).
+
+   Then **commit the iteration on the `grow-city`
+   branch** (source + ledger + archive in one commit, `Iter N: <what>`) and
    **fast-forward `main` to it and push** — `main` is the durable source, and it
    should only ever advance by a clean, verified iteration:
    ```bash
@@ -208,10 +250,40 @@ coast. PASS = mean frame time within 15% of baseline in both day/night scenes.
 Log the number in the holistic entry; if it regressed, the next iteration is a
 perf-fix iteration. Headless timing on this shared machine swings ±30% with
 load — **run the gate 3× and judge by the minimum of each scene**, not a single
-reading (iter 40 saw 23ms and 35ms for the same code minutes apart).
+reading (iter 40 saw 23ms and 35ms for the same code minutes apart). Run those
+three passes **sequentially, and never alongside a subagent that is doing
+anything** — the gate measures frame time on a loaded shared machine, so
+concurrency doesn't just slow it, it *corrupts the reading*. (The visual gate
+parallelizes safely because reading a PNG has no timing semantics. The perf gate
+does not.)
 
-If run under `/loop`, do exactly one iteration per turn, then stop and let the
-loop re-invoke — don't chain multiple vectors in a single pass.
+The whole-city read in this step-back is the same job as the visual gate, so
+delegate it the same way: one `Agent` per seed, each reading its own un-zoomed
+frame, each returning a text verdict. Ask them the *cumulative* question — "has
+anything compounded into clutter or darkness?" — not "is the new feature there."
+
+## Running unattended
+
+**One invocation = one iteration.** Do exactly one vector, then stop and let the
+runner re-invoke you — never chain multiple vectors in a single pass.
+
+The loop is driven **headless, event-based**: each iteration is a fresh `claude -p`
+process that starts with an empty context, does one vector, and exits. The next
+one starts when the previous exits — no fixed interval, no accumulating
+transcript. `run-loop.sh` in this directory is the runner; `com.solvista.growcity.plist`
+installs it under launchd.
+
+This is why the ledger discipline in steps 1 and 5 is load-bearing rather than
+tidy: **`GROWTH.md` is not a summary of your memory, it *is* your memory.** A
+fresh process knows only what the header grid, the last 10 entries, and
+`census-history.jsonl` tell it. Anything you learned and did not write down is
+gone the moment you exit.
+
+Running under `/loop` still works, but it re-fires into the *same* session, so
+every census table, source read, and screenshot accumulates across iterations —
+and with an interval longer than the 5-minute prompt-cache TTL, that whole
+transcript is re-read uncached on every firing. Prefer the headless runner for
+anything longer than a couple of iterations.
 
 ## Growth menu — pick a DOMAIN × a KIND OF CHANGE
 
@@ -335,8 +407,18 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   (scalars + tile histogram + life/transport totals), so the city's numeric
   story across all iterations survives baseline overwrites. Never edit; plot it
   someday.
-- `GROWTH.md` — the append-only iteration ledger, with the maintained
-  **State of the city** header (domain × kind grid) at the top.
+- `GROWTH.md` — the iteration ledger: the maintained **State of the city** header
+  (domain × kind grid) + the most recent 10 entries. Kept small on purpose.
+- `GROWTH-archive.md` — older entries, rotated out. Append-only, oldest first.
+  **Nothing reads this by default.** Consult it only to answer a specific
+  question about an old vector ("was X ever tried?"), and even then `grep` it —
+  don't read it.
+- `rotate-ledger.mjs` — moves all but the last 10 entries from `GROWTH.md` into
+  the archive. Idempotent, no-op below the threshold, refuses to write unless
+  every entry is accounted for exactly once. `--keep N`, `--dry-run`.
+- `run-loop.sh` — the headless event-based runner (one fresh `claude -p` per
+  iteration, next starts when the previous exits).
+- `com.solvista.growcity.plist` — launchd wrapper for `run-loop.sh`.
 - `shots/` — screenshot output (gitignore-able scratch).
 - Repo root `shoot.config.json` — city framings for `screenshot-verify`
   (`wide`/`tall`/`mobile` full-page + `coast`/`downtown` zoom clips; select with

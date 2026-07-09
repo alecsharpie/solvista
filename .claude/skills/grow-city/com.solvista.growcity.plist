@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd wrapper for run-loop.sh.
+
+  Install:
+    cp .claude/skills/grow-city/com.solvista.growcity.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.solvista.growcity.plist
+
+  Stop (graceful, after the current iteration):
+    touch .claude/skills/grow-city/STOP
+
+  Stop (now) / start again / remove:
+    launchctl kill TERM gui/$(id -u)/com.solvista.growcity
+    launchctl kickstart -k gui/$(id -u)/com.solvista.growcity
+    launchctl bootout gui/$(id -u)/com.solvista.growcity
+
+  KeepAlive/SuccessfulExit=false means: restart if the runner crashes, but a
+  clean exit (STOP file, MAX_ITERS) stays stopped. ThrottleInterval keeps a
+  crash-on-startup from hammering.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.solvista.growcity</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/alec/me/solvista/.claude/skills/grow-city/run-loop.sh</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/alec/me/solvista</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/alec/.local/bin:/Users/alec/.volta/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOME</key>
+    <string>/Users/alec</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+
+  <key>ThrottleInterval</key>
+  <integer>60</integer>
+
+  <key>StandardOutPath</key>
+  <string>/Users/alec/Library/Logs/solvista-growcity.launchd.out</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/alec/Library/Logs/solvista-growcity.launchd.err</string>
+</dict>
+</plist>
