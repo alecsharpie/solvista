@@ -10,14 +10,15 @@ Metrics are summed over all 9 cells of the matrix.
 ## State of the city (maintained header — UPDATE EACH ITERATION)
 
 This grid + the notes below are what step 1 (Orient) reads instead of the whole
-archive. Cells hold iteration numbers; `U1`–`U5` are user-directed passes
+archive. Cells hold iteration numbers (**struck = explored and reverted**, so the
+cell is *attempted*, not *filled* — read its entry before re-trying it); `U1`–`U5` are user-directed passes
 (U1 generative monorail · U2 feedback polish: smooth water motion / hover
 tooltip / kelp re-gate · U3 determinism audit · U4 hexagon plate + plural
 rivers/monorails/cable cars · U5 census stats that can fall).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~ | U4 | 53 |
+| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87 |
@@ -82,6 +83,18 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   every side, so things drawn there project over the pavement and read as depth
   **without** crossing into the next row — the trick that makes an overhang safe in a
   painter's-order renderer.
+- **⚠ Nature × Connect is not reachable draw-only (iter 88, EXPLORED→REVERTED).** Shelterbelts
+  linking wood to wood along the hex axes: **1 / 0 / 1** belt cells at 2035 across the three
+  seeds (vs 14 / 6 / 16 at 1985), and `BELTR` 4→8 doesn't move it. By 2035 the woods are not
+  separated by open ground, they are **walled by buildings** — the axis walks die on
+  `RES 122 · MID 75 · COM 46 · PARK 30`, and the walks that still land are wood-adjacent-to-wood.
+  Including `PARK`/`GARDEN`/`SHOREPARK` as endpoints *and* pass-throughs gives 4 / 1 / 3. Same
+  answer. **Don't re-try a wood corridor as a flag + draw.** Two reusable results: mark corridors
+  as **paths, not per-cell tests** (per-cell drew a *dotted* line and pushed seed 1234's patch
+  count **up**, 39→43; path-marking gives 39→32), and a **patch-count union-find over `__find`
+  is the honest test of any Connect claim** — make the next one pass one. `AXSTEP`, the
+  parity-free three-axis stepper, is preserved verbatim in 88's entry. Also: `c.hedge` (L1206)
+  **already rims the farm fields**, so any new line-of-scrub vector must first say how it differs.
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
   (a) **the rainbow floats** — `L4166`, drawn in screen space trailing a raining
   cloud; at seed 7 a leg ends mid-air over open ocean. Same defect iter 81 fixed for
@@ -414,100 +427,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 80 entries before Iteration 78 live in
+> **Archive:** the 81 entries before Iteration 79 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 78 — the parks grow sidewalks (2026-07-10)
-
-**Vector:** People & activity × **Connect** — rotation pointed at People & activity
-(stalest live domain, untouched since 64; Sky is saturated-closed), and its × Connect
-cell was **empty across all 78 laps**. The kind also had to change after 77's New CA
-rule, 76's Deepen and 75's Polish; Connect hadn't been used since iter 47.
-
-**Orient — the flaw was structural, and one line long.** `strollable()` (L1641) admits
-PARK, PLAZA, BEACH, SHOREPARK, MARKET, GARDEN, FIELD, STADIUM and the pier — and
-**never ROAD**. So in a city with ~800 road hexes per seed and a brand-new arterial
-spine, the residents were sealed inside parkland. There were no sidewalks.
-
-**Measured before writing a line (76/77's discipline), and the first two numbers
-reframed the vector.**
-1. **Open ground is ~100 disconnected islands** at 2035 (99 / 101 / 95 over seeds
-   7 / 42 / 1234) for ~130 peds — about *one person per island*, and none of them
-   could ever leave it. That is the real defect; "peds can't walk on roads" was only
-   its symptom.
-2. **Free diffusion would have been a disaster.** Adding roads to the walk graph
-   roughly *doubles* the wander area (open 437 → union 1034 on seed 1234), so 130 peds
-   would thin to half density and smear across the suburbs. The parks would have
-   visibly emptied. A leash was mandatory, and the probe is what said so.
-
-**Change:** peds get an anchor `p.hx,p.hy` (their spawn cell) and may step onto a
-**road** hex within `PEDLEASH`=2 of it, **re-anchoring whenever they reach open
-ground** — so a ped chains park → street → next park, but can never wander off down a
-suburban lane. Bridges excluded (`!c.bridge`): the deck is raised and a ground-drawn
-ped sinks through it. `kerbDir()` puts a street ped at the **kerb**, offset toward the
-destination it fronts (`PEDDEST`), never on the centre line where the cars are —
-direction taken from `ctr()` deltas, per the header's warning that the sign of `dx`
-flips with row parity. **`strollable()` itself is untouched, so dogs stay park-bound**
-and the blast radius is peds only. No `rng()`, no `hashCell`, no terrain, no new
-tile/entity → no census-hook, `TILELABEL` or `ENTINFO` sync needed.
-
-**The tuning is the interesting part — my own model was wrong.** I wanted streets to be
-*transit* and parks *destination*, so road peds re-decide sooner **and** step on more
-often. An offline sim said `PEDSTEP_RD`=0.45 → ~15–21% street occupancy. The live city
-said **9–12%**: the sim assumed equal decision *intervals*, but road peds also carry a
-shorter `tm` (1.4–3.8s vs 2–6s), and the two effects **compound**, emptying the streets
-~1.5× faster than modelled. Snapshot sampling then lied in the other direction (24.6%
-vs 10.0% for the *same* setting on two seeds — a 130-ped binomial). Only a
-**time-averaged in-page sweep replicating the real `tm` semantics** gave a monotone,
-low-variance curve: 0.45→14%, **0.30→19%**, 0.22→24%, 0.15→28%. Shipped 0.30.
-**Lesson: an offline model of an entity rule must replicate its timing, not just its
-probabilities — and a single snapshot of 130 agents is noise, not a measurement.**
-
-**Census:** VERDICT PASS, 0 page errors. **Every one of the 22 metrics exactly +0**
-(pop 142497, roads 5754, developed 6210, arterials 876…), tile histogram **empty**,
-`peds 633` and every other entity count unchanged. Not even the usual last-partial-tick
-jitter — the exact signature of a behaviour-only change on a quiet box.
-
-**Live behaviour probe (3 seeds, `step=400`):** 0 peds on bridges, 0 leash violations,
-**0 peds standing mid-street**, no page errors. The invariants hold by construction.
-
-**Visual:** BEFORE control at identical clip coords (`git show HEAD:solvista.html`),
-`downtown` clip + un-zoomed whole-city, seeds 42 and 7, `step=900`. Two subagents,
-both **PASS**, both explicitly primed *against* the confusable pre-existing element
-(peds already exist in parks). Both isolated real new figures **on road hexes, at the
-kerb, clear of the centre line, not on vehicles, not floating** — seed 42's agent even
-rejected two candidate diffs as pre-existing (one a tram, one on a park tile). Whole-city
-frames: balanced, coherent, no tears, no darkening; parks still hold the large majority.
-
-**Both agents' caveat was a finding — and their explanation was wrong.** Each saw cars,
-trams and a helicopter shift between BEFORE and AFTER, and seed 42's concluded the change
-"perturbed the scene RNG order." It did not. `stepVehicle` calls `Math.random()` twice and
-`rng()` **zero** times: entity motion rides the *shared unseeded* stream, so altering how
-many draws happen per frame re-rolls every moving thing while leaving the seeded CA
-untouched — which is precisely why the census came back perfectly flat. **Corollary now in
-the header: an entity-behaviour change can never have a pixel-identical BEFORE control.**
-Only terrain/draw changes (76, 77) can. Ask the reviewer for *stationary* evidence.
-
-**Perf:** PASS ×3, judged by minimum on a quiet box. Day **30.17ms** (baseline 31.33,
-−3.7%), night **34.28ms** (baseline 37.22, −7.9%) — both *under* baseline and matching
-76/77 to 0.2ms. The added ~130 `cellAt`/frame is free next to the draw. Run here rather
-than deferred to 79's step-back because this lap touched the per-frame entity loop, and
-an unattributed regression is worse than an early reading.
-
-**Verdict:** SHIPPED. The city's residents are no longer prisoners of the park they were
-born in: the walkable islands roughly **halve** (99→46, 101→37, 95→53) and the largest
-connected walkable region grows **207 → 657 cells**. The lasting results are the anchor/
-leash pattern — a way to open a big graph to wanderers *without* diluting them — and the
-`Math.random` draw-order fact, which would otherwise read as a determinism bug forever.
-
-**Follow-ups worth taking:** **dogs are still park-bound** (`strollable` unchanged) — the
-obvious next Connect/Deepen, and a dog on a sidewalk is charming. `PEDDEST` could weight
-the kerb toward *open* shopfronts at day and lit windows at night. Iter 77's `treed`-on-
-`c.flow` boulevard retarget, 73's corner-lot lead and 76's REDWOOD closure lead all remain
-open. **Iteration 79 owes the holistic step-back** (74 + 5).
 
 ## Iteration 79 — the surf learns it is not a light source (2026-07-10) [12th lap]
 
@@ -1258,3 +1182,103 @@ obvious Sky × Polish lap. Standing leads, all still open: 77's `treed`-on-`c.fl
 boulevard retarget (allées still line `busy`, not the arterials — Transport × Deepen),
 78's dogs-on-sidewalks (`strollable()` still park-bound), 73's corner-lot side choice,
 76's REDWOOD closure. **Iteration 89 owes the holistic step-back** (84 + 5).
+
+## Iteration 88 — the woods refuse to be connected (2026-07-10)
+
+**Vector** — Nature × **Connect**. Rotation forced both axes: 83/84/85/86/87 were
+*five straight Polish laps* (87 took the fifth deliberately and said "the kind axis
+should rotate at 88"), and Nature was the most-lagged domain at 12 iterations cold
+(last touched at 76). **Connect was the one empty cell in the Nature row.** The only
+strong open cue (the floating rainbow) is Sky × Polish, so taking it would have made
+the kind repeat a sixth time.
+
+**Hypothesis.** Forest spreads *only* by adjacency (L896) and along the river (L914),
+so the fragments the city leaves behind stay islands forever. A **shelterbelt** — a
+file of trees across open ground linking two stands of woods along one of the three
+hex axes — would stitch them back together. Draw-only (a `c.belt` flag on `EMPTY`/
+`MEADOW`, never a terrain conversion), exactly like the existing `c.hedge`, so the
+seeded `rng()` stream is untouched and pop stays flat.
+
+**Grepped first, and it paid.** `c.hedge` (L1206) already exists — *scrub lines rimming
+the farm fields*. Nearly shipped a second hedgerow onto a city that has them (iter 34's
+beach-towel trap). Belts were kept distinct: they cross **open ground between woods**,
+skip any cell the hedgerow owns, and are the only thing drawn along an axis.
+
+**Built.** `AXSTEP` (below), the `c.belt=1+axis` derivation pass beside the hedgerow
+pass, a `belt()` draw of three `treeAt()` trees strung along the axis, `tree()` split
+into a screen-space `treeAt(cx,cy,s,shade)`, and `__find('belt')`.
+
+**Measured — and the measurement killed it, twice.** `probe-belt.mjs` union-finds the
+wood patches with and without the belt cells; a real corridor network *merges* patches.
+
+1. **A per-cell test fragments; it does not connect.** v1 marked each open cell that
+   independently had woods on both sides within `BELTR`. At `BELTR=8`, seed 1234:
+   47 belt cells and patches **39 → 43**. It went *up*. Because each cell qualifies
+   alone, a corridor is only continuous where every cell happens to pass — so it draws
+   a **dotted** line, and the dots are new one-cell islands. Rewrote it to mark whole
+   **paths** (walk out from each wood; on landing, mark every cell in the run). Patches
+   then always fall: `25→19`, `17→14`, `39→32`. **The algorithm was fixed.**
+2. **The mature city has nowhere to put a corridor.** Belt cells by era, all three seeds:
+   `1985: 14 / 6 / 16` → `2005: 3 / 6 / 7` → **`2035: 1 / 0 / 1`**. `BELTR` 4 vs 6 vs 8
+   does not move 2035. `probe-beltblock.mjs` histograms what stops each axis walk:
+   at 1985 it is `WATER 100 · (too far) 52 · RES 45`; at 2035 it is **`RES 122 · MID 75 ·
+   COM 46 · PARK 30`**. By 2035 the woods are not separated by *open ground* — they are
+   **walled by buildings**, and the walks that still land are wood-adjacent-to-wood
+   (zero-length gaps, nothing to plant). A draw-only corridor has no canvas.
+   Widening the endpoints *and* the pass-through set to include `PARK`/`GARDEN`/
+   `SHOREPARK` (a "green network" rather than a wood network) changes 2035 to
+   **4 / 1 / 3**. Same answer.
+
+**Visual** — 1 agent on the `tileshot.mjs belt` magnified clip at seed 1234 / 1985, the
+feature's *best* era and scale. `VISUAL: FAIL`. Unprompted, it landed on the same defect
+the numbers imply: "the belt trees are the SAME size, colour and canopy style as the
+ordinary scattered meadow trees, so the only cue that it's a line is their spacing… it
+reads as *slightly aligned scatter*… a viewer who wasn't told wouldn't spot it." Grounding
+and z-order were clean. Wide 1985/2035 frames were shot but not spent on agents once the
+zoom failed — the zoom is the scale the feature lives at (iter 82's rule).
+
+**Census** — run on the reverted tree: `+0` on **all 22 metrics**, empty tile histogram,
+0 page errors. VERDICT: PASS. The working tree is byte-identical to HEAD.
+
+**Verdict: EXPLORED → REVERTED.** Tunable (bigger/darker/tighter trees would fix the
+"aligned scatter") — but tuning cannot reach the real defect, which is that the feature
+is **1 cell at 2035 and 0 on seed 42**. The city as it matures is the state a viewer
+looks at, and every gate shoots it. Two ways to force it, both rejected: convert the
+corridor to `FOREST` (terrain-altering → pop wobble, and it *still* doesn't land,
+because at 2035 the walks are blocked by `RES`/`MID`, not by open ground), or take land
+from the city. A −0-visibility feature for either price is the solar-farm trade again.
+
+**Findings — what iteration 89+ should lift from this**
+- **⚠ Nature × Connect is NOT reachable draw-only.** This is the load-bearing result.
+  "Link the woods" needs land the city has already taken. Do not re-try a wood-to-wood
+  corridor as a `c.flag` + draw. The *reachable* Connect hosts in a mature Solvista are
+  the greens the city already protects — and note `PARK` blocks 30 wood-walks at 2035,
+  so a **PARK↔PARK↔FOREST greenway that treats `PARK` as an endpoint** is the version
+  with an actual host, if one plants it as terrain early enough to survive.
+- **Corridors must be marked as PATHS, not as cells that each independently qualify.**
+  A per-cell test yields a dotted line and *raises* the patch count (39→43). Measured,
+  not argued. This generalises to any future network vector (greenways, view corridors,
+  bike routes): find the endpoints, walk between them, mark the whole run.
+- **`AXSTEP` — parity-free walking along the three hex axes.** Worth re-adding whenever
+  something must run along the grain of the plate. Reverted with the rest, so here it is;
+  the diagonals are walked in *axial* form, so row parity never appears:
+  ```js
+  const AXSTEP=[
+    (x,y,k)=>[x+k,y],                                              /* E-W row    */
+    (x,y,k)=>{const q=x-(y>>1),ny=y+k;return[q+(ny>>1),ny]},       /* SE: q const */
+    (x,y,k)=>{const s=x+((y+1)>>1),ny=y+k;return[s-((ny+1)>>1),ny]},/* SW: s const */
+  ];
+  ```
+  Verified against `NBR_E`/`NBR_O` at both row parities: `k=1` is always a true neighbour.
+- **`c.hedge` already rims the farm fields** (L1206) and `hedge()` draws it. Any future
+  "line of scrub/trees" vector must say how it differs from the hedgerow *before* drawing.
+- **A patch-count union-find is the honest test of a "Connect" claim**, and it is ~30 lines
+  over `__find`. Any Connect iteration should have to pass one. It is what turned "the
+  belts look like they connect things" into "the belts raised the patch count."
+- **`probe-*.mjs` at the repo root is gitignored scratch** (as iter 86 noted). `probe-belt.mjs`
+  and `probe-beltblock.mjs` are left in the worktree, uncommitted, for whoever takes the
+  greenway.
+
+**Iteration 89 still owes the holistic step-back** (84 + 5) — 88 shipped no pixels, so the
+cumulative-drift question is exactly as open as 87 left it. The rainbow (cue (a), `L4166`,
+Sky × Polish) remains the only strong open cue.
