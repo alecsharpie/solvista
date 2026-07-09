@@ -30,7 +30,10 @@ body{
   box-shadow:0 2px 14px rgba(40,30,15,.18);
   padding:14px 18px 13px;
 }
-.placard{ top:20px; left:20px; max-width:300px; }
+/* keep the placard clear of the census bar below it: when "How it grows" is
+   expanded on a short viewport it scrolls within itself instead of sliding
+   behind the stats box (~92px tall, plus margins) */
+.placard{ top:20px; left:20px; max-width:300px; box-sizing:border-box; max-height:calc(100vh - 132px); overflow-y:auto; overscroll-behavior:contain; }
 #tip{ position:fixed; left:0; top:0; pointer-events:none; z-index:30; display:none;
   background:var(--card); color:var(--ink); border:1px solid var(--rule); border-radius:3px;
   box-shadow:0 2px 14px rgba(40,30,15,.22); padding:8px 11px; max-width:240px;
