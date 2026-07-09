@@ -1284,3 +1284,29 @@ HTML title card — pick `__find` results by screen position, not index.)
 Whole-city morning frame coherent.
 **Verdict:** SHIP. Redeploy pending (iters 34-59 + hooks + polish-tile work).
 
+## Iteration 60 — fairy rings (2026-07-08) [8th lap + holistic check]
+
+**Holistic step-back:** whole-city frames at **seed 99 (never tested — a
+procedural-robustness probe)** and seed 42@2005 golden hour. Seed 99 fully
+coherent (river/farms/monorail/pier all correct on a fresh seed); golden hour
+beautiful. One WATCH ITEM logged (header): iter 43's sea-fog banks read
+blobby at seed 99's coastline. Perf gate PASS ×3 (day 23.44 / night 24.78 —
++0.1-0.3ms creep from iters 56-59, within tolerance, trend noted).
+
+**Vector:** Nature × New CA rule — most-overdue domain (last: 53); the
+engine's native currency, unused by Nature since iter 13.
+**Change:** fairy rings — a third decoration-state CA (bloom/party family):
+in the autumn window (`s 0.76-0.98`, tying into iter 57's seasons), woodland
+cells (FOREST/REDWOOD) surface a mushroom ring via year-keyed hash (6%/yr),
+hold 3 ticks (~a fifth of a year — first cut was 6 ticks, which would have
+persisted into SPRING; do the duration math against the calendar), then rest
+20 ticks. Draw: a ring of six tiny white-stemmed mushrooms, coral/cream caps
+hashCell-varied, alpha-ramped. `shroom:0` in the cell literal;
+`__find('shroom')` hook.
+**Census:** VERDICT PASS ×2, 0 page errors, exactly flat.
+**Visual:** autumn probe (warp 61.8): 8 rings at seed 42, 5 at seed 7 — 4x
+clips show clear rings between autumn-tinted trees (the seasonal composition
+works); summer control (warp 61.4): 0 rings. Whole-city autumn frame
+coherent.
+**Verdict:** SHIP. Redeploy pending (iters 34-60 + hooks + polish-tile work).
+

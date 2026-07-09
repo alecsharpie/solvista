@@ -19,7 +19,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24 | |
-| **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3 |
+| **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | | | |
@@ -53,7 +53,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–69**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–70**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
@@ -61,11 +61,25 @@ tooltip / kelp re-gate · U3 determinism audit).
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
   school run · fairy rings · sea-fog fix · rooftop water tanks · bus
   stops · dog walkers · tidepools · civic flags · seasonal orchards ·
-  rooftop gardens), the
+  rooftop gardens · **vehicle headlights/taillights**), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
   tile redesigns; ask for the nod at session end.
+- **⚠ `__ents` blind spot (iter 70):** the `vehicles` array (private cars, buses,
+  police, ambo, fireeng) has **no `ENTINFO` row** — it's a mixed-kind array, so
+  one label would be wrong — which means `__ents()` never returns cars and you
+  **cannot aim a clip at a car** with it. `__ents` only sees trams
+  ('Streetcar'), trucks ('Delivery truck') and bikes ('Cyclist'). Don't conclude
+  "this seed has no cars" from an empty `__ents` result (iter 70 nearly did).
+- **⚠ Visual-gate false negatives (iter 70):** a subagent returned `VISUAL: FAIL`
+  for a night-lighting change purely because the feature was **too small to
+  resolve** at the `downtown` clip scale at dusk — not because it was broken. A
+  few-pixel feature needs a **magnified clip** (`__ents` coords + a ~110×80 clip
+  at `deviceScaleFactor:4`) before a FAIL means anything. Also: the big grey
+  diagonal in many clips is the **monorail/gondola support**, and at low
+  resolution it looks exactly like a hard-edged white light beam — tell the
+  subagent so, or it will report a phantom tear.
 - **⚠ Concurrent sessions:** a polish-tile loop edited `solvista.html` *while*
   iter 35 ran (espRow/espAt/drawEspAt smooth esplanade; promenade metric
   399→153 is its intended re-banding, not a regression). If two loops run at
@@ -76,13 +90,17 @@ tooltip / kelp re-gate · U3 determinism audit).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest holistic pass (iter 69): PASS ×3 by minimum, day floor 25.17ms /
-  night 26.39ms (baselines 24 / 26.61). ⚠ Day floor keeps creeping
-  (23.44 @60 → 24.11 @65 → 25.17 @69, +1.7ms over ~9 laps as draw work
-  compounds — flags/orchards/roof-gardens/tidepools + the concurrent
-  monorail/shoreline). Now ~0.3ms under the ~25.5 fix-lap threshold: the
-  NEXT perf reading that crosses it makes the following lap a perf-fix lap
-  (profile drawCell hot paths / cache more). Fresh-seed probe @69 (seed 314,
+  Latest reading (iter 70, run because that lap added night draw work):
+  PASS ×3 by minimum, day floor 25.22ms / night 26.66ms (baselines
+  24 / 26.61). ⚠ Day floor keeps creeping
+  (23.44 @60 → 24.11 @65 → 25.17 @69 → 25.22 @70, +1.8ms over ~10 laps as
+  draw work compounds — flags/orchards/roof-gardens/tidepools + the
+  concurrent monorail/shoreline). Now ~0.3ms under the ~25.5 fix-lap
+  threshold: the NEXT perf reading that crosses it makes the following lap
+  a perf-fix lap (profile drawCell hot paths / cache more). Night rose
+  +0.27ms @70 (vehicle lights) — cheap, and the day scene is untouched
+  because the lights are gated on `LITAMT>0.35`. **Gating new draw work on
+  night is a good way to buy detail without touching the day floor.** Fresh-seed probe @69 (seed 314,
   night, 24.8k pop) fully coherent — warm lit windows, moon+moonglade, dense
   but readable; seed 42 golden hour balanced. sea-fog lenses read soft post-61. Sea-fog watch item from
   iter 60 **FIXED at iter 61** (feathered banks + beach-band fade). ⚠ This
@@ -96,37 +114,11 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 <!-- rotated -->
 
-> **Archive:** the 60 iterations before Iteration 60 live in
+> **Archive:** the 61 iterations before Iteration 61 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 60 — fairy rings (2026-07-08) [8th lap + holistic check]
-
-**Holistic step-back:** whole-city frames at **seed 99 (never tested — a
-procedural-robustness probe)** and seed 42@2005 golden hour. Seed 99 fully
-coherent (river/farms/monorail/pier all correct on a fresh seed); golden hour
-beautiful. One WATCH ITEM logged (header): iter 43's sea-fog banks read
-blobby at seed 99's coastline. Perf gate PASS ×3 (day 23.44 / night 24.78 —
-+0.1-0.3ms creep from iters 56-59, within tolerance, trend noted).
-
-**Vector:** Nature × New CA rule — most-overdue domain (last: 53); the
-engine's native currency, unused by Nature since iter 13.
-**Change:** fairy rings — a third decoration-state CA (bloom/party family):
-in the autumn window (`s 0.76-0.98`, tying into iter 57's seasons), woodland
-cells (FOREST/REDWOOD) surface a mushroom ring via year-keyed hash (6%/yr),
-hold 3 ticks (~a fifth of a year — first cut was 6 ticks, which would have
-persisted into SPRING; do the duration math against the calendar), then rest
-20 ticks. Draw: a ring of six tiny white-stemmed mushrooms, coral/cream caps
-hashCell-varied, alpha-ramped. `shroom:0` in the cell literal;
-`__find('shroom')` hook.
-**Census:** VERDICT PASS ×2, 0 page errors, exactly flat.
-**Visual:** autumn probe (warp 61.8): 8 rings at seed 42, 5 at seed 7 — 4x
-clips show clear rings between autumn-tinted trees (the seasonal composition
-works); summer control (warp 61.4): 0 rings. Whole-city autumn frame
-coherent.
-**Verdict:** SHIP. Redeploy pending (iters 34-60 + hooks + polish-tile work).
 
 ## Iteration 61 — sea-fog fix (2026-07-08) [8th lap]
 
@@ -365,3 +357,45 @@ most domains answer "does X exist?" with YES. Recorded so future laps lean on
 genuinely-absent interconnects / Polish, and treat "stop" as live.
 **Verdict:** HOLISTIC — clean, no fix needed. Redeploy pending (iters 34–69 +
 hooks + the concurrent transport/camera/shoreline/CSS commits).
+
+## Iteration 70 — vehicles light up after dark (2026-07-09)
+
+**Vector:** Transport × **Polish** — rotation pointed at Transport (least-recently
+touched non-saturated domain, last 63), and the *kind* had to change: 65–68 were
+four straight Deepens. Polish adds nothing, which suited a mature city.
+**Orient/seam finding:** `grep -i headlight` returned **nothing**, which looked
+like a clean gap — but reading the seam (`drawVehicle`, ~L3165) showed a light
+already there: one anonymous flat `2×2` warm rect at the nose, no taillight, no
+light cast on the road. Exactly the iter-34 beach-towel trap; the grep lied
+because the feature had no name. So the move was to *improve* it, not add it.
+**Change:** in `drawVehicle`, a heading basis in the squashed iso plane
+(`FX,FY` forward · `PX,PY` across-lane, both carrying the existing `*0.55`
+vertical compression) drives: (1) **paired** warm headlamps at ±1.5 across the
+nose; (2) a **beam pooled on the road** — one low-alpha (`0.14*LITAMT`) trapezoid
+fanning 11px forward from the nose to a 8.6px-wide far edge, started *at* the
+nose so it never overlaps the body and z-order stays clean; (3) **red taillights**
+at the rear. Bikes get a single warm bar lamp. All alphas scale with `LITAMT`, so
+lights fade up through dusk. Whole block gated `LITAMT>0.35`. No gradients (the
+file has zero `createRadialGradient` — flat alpha shapes only). Draw-only: no
+rng, no hashCell, no terrain, no new state, no new entity.
+**Census:** VERDICT PASS, 0 page errors. pop +3, towerHt +1, **tile histogram
+empty** — no tile changed, as a draw-only change must. (Small non-zero pop wobble
+on a draw-only change is census timing jitter, cf. iter 66's +21; the sim's last
+partial tick is wall-clock-dependent.)
+**Perf:** ran the gate even though 70 isn't a step-back lap, *because the change
+adds per-vehicle night draw work* and the header flags a creeping day floor.
+PASS ×3 by minimum: day 25.22ms (vs 25.17 @69 — untouched, the gate holds),
+night 26.66ms (vs 26.39, +0.27ms for the lights). Baselines 24 / 26.61.
+**Visual:** 4 subagent verdicts. seed 42 deep night PASS (beams align to the hex
+road axes, lie flat, attach to bodies); whole-city night PASS ("tasteful sparkle,
+not glare"; coast + dark parks still read clean); **daylight control PASS — zero
+light effects visible, confirming the night gate**. seed 7 dusk returned
+`VISUAL: FAIL`, and it was a **false negative**: I clipped a streetcar at 4×
+myself and saw lamp + beam + taillights rendering correctly. Root causes logged
+in the header — the feature is a few px at `downtown` scale, and my two
+hypotheses for the "hard white wedge" (beam spilling off asphalt onto grass) were
+both wrong: it was the **monorail support line**. Re-tested seed 7 at full night
+with a magnified clip → PASS.
+**Verdict:** POLISHED. Two harness lessons recorded (the `__ents` car blind spot;
+magnify before believing a visual FAIL). Redeploy pending (iters 34–70 + hooks +
+the concurrent transport/camera/shoreline commits).

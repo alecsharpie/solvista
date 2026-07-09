@@ -3118,6 +3118,8 @@ function drawVehicle(v){
   const cx=lerp(A[0],B[0],v.p)-ddy/L*lane;
   const cy=lerp(A[1],B[1],v.p)+ddx/L*lane*0.6;
   stamp(v,cx,cy);
+  /* heading in the squashed iso plane: F points where it drives, P is across the lane */
+  const FX=ddx/L, FY=ddy/L*0.55, PX=-ddy/L, PY=ddx/L*0.55;
   if(v.kind==='bike'){
     shadS(cx,cy,0.08,0.14);
     ctx.strokeStyle=col('ink',1.2);ctx.lineWidth=0.9;
@@ -3126,6 +3128,10 @@ function drawVehicle(v){
     ctx.fillRect(cx-0.9,cy-4.4,1.8,2.7);
     ctx.fillStyle=col('ink',1.4);
     ctx.beginPath();ctx.arc(cx,cy-5.2,0.9,0,7);ctx.fill();
+    if(LITAMT>0.35){ /* a single bar lamp, the way a bike is lit */
+      ctx.fillStyle='rgba(255,240,190,'+(0.85*LITAMT)+')';
+      ctx.beginPath();ctx.arc(cx+FX*2.4,cy-1.9+FY*2.4,0.8,0,7);ctx.fill();
+    }
     return;
   }
   const long=v.kind==='bus'?0.30:(v.kind==='tram'?0.36:(v.kind==='truck'?0.34:(v.kind==='fireeng'?0.27:(v.kind==='ambo'?0.22:0.17))));
@@ -3163,8 +3169,26 @@ function drawVehicle(v){
     ctx.fillStyle=col('ink',1.3);ctx.beginPath();ctx.arc(cx+1.3,cy-9.4,0.7,0,7);ctx.fill();
   }
   if(LITAMT>0.35){
-    const hx=cx+ddx/L*long*CW*0.9, hy=cy+ddy/L*long*CW*0.55;
-    ctx.fillStyle='rgba(255,235,180,'+(0.8*LITAMT)+')';ctx.fillRect(hx-1,hy-3,2,2);
+    const nose=long*CW*0.9, hx=cx+FX*nose, hy=cy+FY*nose;
+    const tx=cx-FX*nose, ty=cy-FY*nose;
+    /* the beam pools on the road ahead of the nose, so it never overlaps the body */
+    ctx.fillStyle='rgba(255,230,165,'+(0.14*LITAMT)+')';
+    ctx.beginPath();
+    ctx.moveTo(hx+PX*1.5,hy+PY*1.5-0.4);
+    ctx.lineTo(hx-PX*1.5,hy-PY*1.5-0.4);
+    ctx.lineTo(hx+FX*11-PX*4.3,hy+FY*11-PY*4.3-0.4);
+    ctx.lineTo(hx+FX*11+PX*4.3,hy+FY*11+PY*4.3-0.4);
+    ctx.fill();
+    ctx.fillStyle='rgba(255,238,190,'+(0.9*LITAMT)+')';
+    ctx.beginPath();
+    ctx.arc(hx+PX*1.5,hy+PY*1.5-3,0.8,0,7);
+    ctx.arc(hx-PX*1.5,hy-PY*1.5-3,0.8,0,7);
+    ctx.fill();
+    ctx.fillStyle='rgba(255,86,66,'+(0.75*LITAMT)+')';
+    ctx.beginPath();
+    ctx.arc(tx+PX*1.5,ty+PY*1.5-3,0.65,0,7);
+    ctx.arc(tx-PX*1.5,ty-PY*1.5-3,0.65,0,7);
+    ctx.fill();
   }
 }
 function drawPed(p){
