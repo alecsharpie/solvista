@@ -19,7 +19,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
-| **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75 |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81 |
@@ -56,6 +56,21 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   now answers `'arterial'`. Reuse `c.flow` for anything that should follow the main
   roads — don't hand-roll a second notion of "important street". **Iter 80 is the
   first reuse:** civic forecourts pick the lot fronting the loudest street.
+  **⚠ But flow is a bad host for *land use* (iter 82).** `RES→COM` on arterial
+  frontage produced 85% **singletons** — by the time a street carries flow its
+  frontage is already `COM`/`MID`/`TOWER`, so the houses left to convert are
+  scattered. Flow suits *point* decisions (which lot fronts the loudest street) far
+  better than *linear* ones (grow a high street). Don't re-try RES→COM on arterials.
+- **⚠ `COM` is the TOWER precursor (iter 82).** The upgrades pass promotes `COM` on a
+  `com>=2` quorum, so **anything that makes shops makes skyscrapers**: +115 COM came
+  back as +31% towers and +12.8% pop. Any future rule that mints `COM` must decide
+  whether those lots are downtown parcels or terminal shopfronts, and if the latter,
+  exclude them from both the upgrade *and* the neighbour quorum.
+- **`COM` has no shopfront draw — fix this before siting shops (iter 82).** At city
+  zoom a `COM` hex is near-indistinguishable from `RES`/`MID`, so +182 shop tiles were
+  numerically real and visually invisible. Urban × Polish on `drawBuilding`'s `COM`
+  case (awnings, signage, kerb frontage) is the prerequisite for any retail vector,
+  and is worth doing on its own.
 - **Civic forecourts are a *placement* rule, not a tile (iters 36 → 80).** Every
   `PLAZA` in the city is a forecourt; 36's random-sample rule at L909 has never
   fired even once and survives only to keep the `rng()` stream aligned — do not
@@ -119,6 +134,19 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   as "muddy brown… acceptable", which is the tint working, but looking at *why* they both
   reached for it surfaced the untinted foam beside it. Look at the frame yourself when two
   agents agree in different words.
+- **⚠ A reviewer only sees the change at the scale the change lives at (iter 82).** Two
+  wide-frame agents returned `VISUAL: PASS` on a change that the one **downtown-zoom**
+  agent correctly failed. A street wall is a *block-scale* feature, so the block-scale
+  verdict outranks two city-scale ones. Send the zoom that matches the feature's scale,
+  and **when verdicts split, believe the tighter one** — then confirm by eye.
+- **⚠ A moved tile histogram can still be a lie (iter 82).** `COM +182` read as 182 new
+  shops; a probe showed only ~45/city were actually the feature — the rest was the
+  seeded stream reshuffling downstream of a terrain change. The histogram proves the
+  vector *touched* its tile, not that it *built* the thing you designed. **When a
+  feature has a shape (a run, a ring, a spine), measure the shape.** A 40-line
+  connected-components probe in the page (`cells`/`cellAt`/`nbrDirs` are page globals;
+  copy `probe-forecourt.mjs`) settled in 90s what 3 screenshots and 3 subagents could
+  not. Delete the probe after; the finding goes here.
 - **The marine layer is a FIELD on the plate, not blobs on the lens (iter 81).**
   `fogAt(x,y,i)` × `FOGAMT`, emitted per-hex *inside* the row loop, so the next row
   occludes it and it can never hang off the plate. Gated by `rSea` — a fifth
@@ -318,59 +346,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 74 entries before Iteration 74 live in
+> **Archive:** the 75 entries before Iteration 75 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 74 — holistic step-back (2026-07-09) [11th lap]
-
-**Vector:** review lap, no feature shipped. 69 + 5 = 74 landed exactly on the
-step-back cadence, and the header flagged a day frame-time floor ~0.3ms under the
-fix-lap threshold — so the two things this lap owed the city were a cumulative
-visual read and a perf reading, not another feature.
-**Census:** VERDICT PASS, 0 page errors, and **every single metric exactly flat**
-(baseline and gate run back-to-back on unedited code) — pop 108630, roads 4290,
-developed 4468, towerHt 18057, tile histogram empty.
-**Perf — the creep was largely an artifact.** PASS ×3 by minimum: day **24.50ms**,
-night **25.89ms** (baselines 24 / 26.61; night is *under* its baseline). The day
-floor has now FALLEN three readings running — 25.17 @69 → 25.22 @70 → 25.11 @71 →
-24.78 @72 → **24.50 @74** — even though the code only *gained* draw work over that
-span (freighters, the focus ring, `frontSide`). Draw cost cannot go down while draw
-work goes up, so the "+1.8ms creep over ~10 laps" the header has been tracking was
-substantially **machine-load contamination of the earlier minima**, not compounding
-render cost. Threshold pressure is off. Keep taking the reading, but stop treating
-the creep as an established trend — and note the corollary: min-of-3 is *still* not
-enough isolation on this box to make a 0.5ms difference mean anything.
-**Visual:** 4 un-zoomed whole-city frames — a **never-tested seed 903** and seed
-1234, each at day and night, 2035, `step=300`. Two subagents (one per seed), both
-`VISUAL: PASS`, both specific: coherent land→sea gradient, downtown dense but with
-streets still separating blocks, rooftop props "varied, not clutter-spam," water
-well-spaced, night lights "tasteful sparkle... no glare discs or bloom halos," no
-z-order tears, no floating tiles, no blown color.
-**The caveat I chased (per iter 71's lesson that a subagent's caveat is a finding).**
-Seed 1234's agent flagged two watch items seed 903's did not: prominent soft
-translucent ovals over the water, and a bright promenade glow at night. I looked at
-the frame myself and then found the source: the ovals are the **sea-fog banks**
-(`solvista.html:3618`), whose spell phase is `sin(time*0.028+(seedNum%97)*0.7)`.
-`1234%97 = 70` puts that city *inside* a foggy window; `903%97 = 30` does not. The
-divergence between the two agents was the seed, not drift — and iter 61's
-three-feathered-lens rework is visibly doing its job (soft haze, not the old "glare
-puck"). **No fix needed.** Recording the arithmetic so a future lap doesn't
-re-investigate its own fog.
-**Determinism note (corrects a loose claim, doesn't overturn it).** Iters 70/72/73
-each attributed a ±1..21 wobble on a draw-only change to "last-partial-tick jitter."
-That is *right*, and now it has a mechanism: `__warp` is a fixed, fully deterministic
-tick loop, but `census.mjs:55` reads `__census()` after a **500ms wall-clock wait**,
-during which the page's own RAF loop keeps advancing `year += dt*s/110`. So the
-partial tick is real and **load-correlated** — which is why today's quiet machine
-landed both runs in the identical bucket and printed a perfectly flat table. An
-exactly-flat census is therefore evidence the box was quiet, *not* proof a change
-was pure; don't read it as a stronger guarantee than it is.
-**Verdict:** HOLISTIC — city is clean, no fix lap needed. The two standing worries
-(day-floor creep, fog reading as glare) both dissolved on inspection. Redeploy
-pending (iters 34–74 + hooks + the concurrent transport/camera/shoreline commits).
 
 ## Iteration 75 — after dark, not everyone is home (2026-07-09)
 
@@ -1013,3 +993,72 @@ L3659) are still open — the same `colA` treatment. 77's `treed`-on-`c.flow`
 boulevard retarget, 78's dogs-on-sidewalks, 73's corner-lot lead and 76's REDWOOD
 closure lead all remain open. **Iteration 84 still owes the holistic step-back**
 (79 + 5).
+
+## Iteration 82 — retail will not follow the traffic (2026-07-10)
+
+**Vector** — Urban fabric × New CA rule. (Rotation: 76–81 hit Nature/Transport/
+People/Water/Civic/Sky; Urban fabric was last touched at 75. Kind: New CA rule was
+last used in this domain at iter 23.)
+
+**Change (attempted, REVERTED)** — a new `tick()` pass, second reuse of `c.flow`
+(iter 77) after 80's forecourts. Premise: the parcels pass sites shops by a *local*
+test (`roads>=2` = "corner lot"), so shops scatter over every corner; `c.flow` knows
+which street the city actually drives down. So: a `T.RES` lot fronting an arterial
+(`flow>=ARTFLOW`, non-bridge) converts to `T.COM`, gated by a per-lot `hashCell`
+propensity vs a year-rising `push` — no `rng()` draw. Expected: a legible commercial
+street wall along the trunks.
+
+**Census** — attempt 1 PASSED and was still wrong: `COM 1246→1361 (+115)`,
+`RES −139` — the vector moved the intended tile — but `TOWER 270→355 (+31%)`,
+`towerHt +35%`, `tallTowers +41`, `pop +12.8%`. **`COM` is the tower precursor**
+(the `com>=2` quorum in the upgrades pass), so "retail follows traffic" silently
+became "+31% towers". Attempt 2 added `c.strip=1` to mark a shopfront a *terminal*
+use — strip lots neither upgrade nor count toward a neighbour's tower quorum.
+That fixed the cascade (`TOWER 253`, `pop −3.2%`, `COM +182`) at the cost of −6%
+towers and −3.2% pop.
+
+**Visual** — 3 subagents on matched BEFORE/AFTER pairs. Attempt 1: two `VISUAL: PASS`
+(both wide frames) and one `VISUAL: FAIL` from the **downtown zoom** — "no continuous
+shop street wall; conversions read as scattered extra towers and flatten the mid-rise
+height variety." The FAIL was correct and the two PASSes were wrong; confirmed by eye.
+Attempt 2 fixed the towers but the wall still did not read: **`COM` draws almost
+identically to `RES`/`MID` at city zoom**, so +182 shop tiles are numerically real and
+visually invisible.
+
+**The measurement that decided it** — a throwaway `probe-strip.mjs` (hex
+connected-components over `c.strip`) showed the shopfronts are **not a street at all**:
+
+```
+seed 7:    51 lots, 43 components, 85% singletons, longest run 3
+seed 42:   45 lots, 42 components, 87% singletons, longest run 2
+seed 1234: 37 lots, 31 components, 76% singletons, longest run 5
+```
+
+**Verdict: EXPLORED → REVERTED.** Reverted to HEAD; census re-run gives `pop/roads/
+developed` exactly **+0** (clean revert, determinism holds).
+
+**Why it failed the bar, and what NOT to re-try** — the premise is false in this city.
+*By the time a street carries arterial flow, its frontage is no longer houses* — it is
+already `COM`/`MID`/`TOWER`, so the leftover `RES` lots that the rule can convert are
+scattered singletons. No siting tweak fixes that; a high street cannot be grown by
+converting the few houses left on a built-out trunk. **Do not re-try RES→COM on
+arterial frontage.** If a future lap wants a high street it must (a) reserve the
+frontage *early* (pre-1990, before the trunk builds out) so the run is contiguous, and
+(b) **give `COM` a distinct shopfront draw first** — awnings/signage/continuous kerb
+frontage. Urban × Polish on `drawBuilding`'s `COM` case is the prerequisite, and is
+worth doing on its own merits regardless of siting.
+
+**Two transferable findings**
+- **A moved tile histogram can still be a lie.** `COM +182` looked like 182 new shops;
+  only ~45/city were actually strip lots. The rest was the seeded stream reshuffling
+  downstream of a terrain change (and `COM` no longer being consumed into `TOWER`).
+  The histogram is evidence the vector *touched* its tile, not that it *built* the
+  thing you designed. When a feature has a shape (a run, a ring, a spine), **measure
+  the shape** — a 40-line connected-components probe settled in 90s what three
+  screenshots and three subagents could not.
+- **Zoom level determines who is right.** The two wide-frame agents ratified a change
+  that the one downtown-zoom agent correctly failed. Iter 79 warned a holistic PASS is
+  weak evidence; the sharper rule is that **a reviewer can only see the change at the
+  scale the change lives at.** A street wall is a *block-scale* feature, so the
+  block-scale reviewer's FAIL outranks two city-scale PASSes. Send the zoom that
+  matches the feature's scale, and when verdicts split, believe the tighter one.

@@ -1757,3 +1757,51 @@ currently fall back to a hash. Choosing the *less-occluded* street side there �
 the camera can actually see — would convert this from semantics into a visible win, and
 is the natural next Civic × Polish lap.
 
+## Iteration 74 — holistic step-back (2026-07-09) [11th lap]
+
+**Vector:** review lap, no feature shipped. 69 + 5 = 74 landed exactly on the
+step-back cadence, and the header flagged a day frame-time floor ~0.3ms under the
+fix-lap threshold — so the two things this lap owed the city were a cumulative
+visual read and a perf reading, not another feature.
+**Census:** VERDICT PASS, 0 page errors, and **every single metric exactly flat**
+(baseline and gate run back-to-back on unedited code) — pop 108630, roads 4290,
+developed 4468, towerHt 18057, tile histogram empty.
+**Perf — the creep was largely an artifact.** PASS ×3 by minimum: day **24.50ms**,
+night **25.89ms** (baselines 24 / 26.61; night is *under* its baseline). The day
+floor has now FALLEN three readings running — 25.17 @69 → 25.22 @70 → 25.11 @71 →
+24.78 @72 → **24.50 @74** — even though the code only *gained* draw work over that
+span (freighters, the focus ring, `frontSide`). Draw cost cannot go down while draw
+work goes up, so the "+1.8ms creep over ~10 laps" the header has been tracking was
+substantially **machine-load contamination of the earlier minima**, not compounding
+render cost. Threshold pressure is off. Keep taking the reading, but stop treating
+the creep as an established trend — and note the corollary: min-of-3 is *still* not
+enough isolation on this box to make a 0.5ms difference mean anything.
+**Visual:** 4 un-zoomed whole-city frames — a **never-tested seed 903** and seed
+1234, each at day and night, 2035, `step=300`. Two subagents (one per seed), both
+`VISUAL: PASS`, both specific: coherent land→sea gradient, downtown dense but with
+streets still separating blocks, rooftop props "varied, not clutter-spam," water
+well-spaced, night lights "tasteful sparkle... no glare discs or bloom halos," no
+z-order tears, no floating tiles, no blown color.
+**The caveat I chased (per iter 71's lesson that a subagent's caveat is a finding).**
+Seed 1234's agent flagged two watch items seed 903's did not: prominent soft
+translucent ovals over the water, and a bright promenade glow at night. I looked at
+the frame myself and then found the source: the ovals are the **sea-fog banks**
+(`solvista.html:3618`), whose spell phase is `sin(time*0.028+(seedNum%97)*0.7)`.
+`1234%97 = 70` puts that city *inside* a foggy window; `903%97 = 30` does not. The
+divergence between the two agents was the seed, not drift — and iter 61's
+three-feathered-lens rework is visibly doing its job (soft haze, not the old "glare
+puck"). **No fix needed.** Recording the arithmetic so a future lap doesn't
+re-investigate its own fog.
+**Determinism note (corrects a loose claim, doesn't overturn it).** Iters 70/72/73
+each attributed a ±1..21 wobble on a draw-only change to "last-partial-tick jitter."
+That is *right*, and now it has a mechanism: `__warp` is a fixed, fully deterministic
+tick loop, but `census.mjs:55` reads `__census()` after a **500ms wall-clock wait**,
+during which the page's own RAF loop keeps advancing `year += dt*s/110`. So the
+partial tick is real and **load-correlated** — which is why today's quiet machine
+landed both runs in the identical bucket and printed a perfectly flat table. An
+exactly-flat census is therefore evidence the box was quiet, *not* proof a change
+was pure; don't read it as a stronger guarantee than it is.
+**Verdict:** HOLISTIC — city is clean, no fix lap needed. The two standing worries
+(day-floor creep, fog reading as glare) both dissolved on inspection. Redeploy
+pending (iters 34–74 + hooks + the concurrent transport/camera/shoreline commits).
+
