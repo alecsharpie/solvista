@@ -41,7 +41,7 @@ const ERAS  = [{ name: '1985', warp: 11 }, { name: '2005', warp: 31 }, { name: '
  * structural COLLAPSE (a core aggregate cratering); the rest is for judgment. */
 const GROWTH = ['pop', 'parks', 'towers', 'roads', 'bridges', 'developed',
                 'tileKinds', 'civicKinds', 'transportModes', 'solarRoofs', 'greenRoofs',
-                'towerHt', 'tallTowers', 'helipads', 'boulevardTrees', 'avenues', 'promenade', 'stations', 'cafes', 'schools', 'stadiums'];
+                'towerHt', 'tallTowers', 'helipads', 'boulevardTrees', 'avenues', 'arterials', 'promenade', 'stations', 'cafes', 'schools', 'stadiums'];
 const CORE = ['pop', 'developed', 'roads'];   // structural health — collapse = real regression
 const TOL = 0.05;                              // <5% wobble in a core aggregate is chaotic noise
 

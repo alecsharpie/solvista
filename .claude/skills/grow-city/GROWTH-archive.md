@@ -1523,3 +1523,28 @@ richer green tops, no clutter/darkness, no z-order tears.
 **Verdict:** DEEPENED. Redeploy pending (iters 34–68 + hooks + the concurrent
 session's transport/camera/shoreline/CSS commits).
 
+## Iteration 69 — holistic step-back (2026-07-09) [10th lap]
+
+**Vector:** review lap, no feature shipped. Rotation pointed at People (last 64)
+but a seam-read found it near-saturated (picnics, benches, park cafés,
+fireflies, block parties, evening crowds all exist) — and a LOT of concurrent
+change had landed on main since the last holistic (iter 65): the Dijkstra
+monorail rework, the shoreline re-band, the camera zoom. That made a holistic
+the highest-value use of the lap.
+**Holistic:** two un-zoomed whole-city frames — seed 42 golden hour (2035, 21k
+pop) and a never-tested seed 314 at night (2035, 24.8k pop, 55 towers). Both
+fully coherent: warm balanced golden-hour scene; dense-but-readable night city
+with lit windows, moon + moonglade, monorail loop tracing clean, no clutter /
+darkness / z-order tears. The concurrent monorail/shoreline/camera work
+integrated cleanly.
+**Perf:** PASS ×3 by minimum — day 25.17ms / night 26.39ms (baselines
+24 / 26.61). Day floor keeps creeping (23.44@60 → 24.11@65 → 25.17@69); now
+~0.3ms under the ~25.5 fix-lap threshold. Flagged in the header: the next
+reading that crosses it makes the following lap a perf-fix lap.
+**Maturity finding:** Sky is confirmed saturated (see saturation notes); People
+and the park/roof systems are near-saturated. The city is broadly mature —
+most domains answer "does X exist?" with YES. Recorded so future laps lean on
+genuinely-absent interconnects / Polish, and treat "stop" as live.
+**Verdict:** HOLISTIC — clean, no fix needed. Redeploy pending (iters 34–69 +
+hooks + the concurrent transport/camera/shoreline/CSS commits).
+

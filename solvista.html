@@ -235,7 +235,7 @@ const BASE={
   canopy:[104,146,92], canopyLt:[139,173,110], trunk:[122,90,62],
   conifer:[104,146,92], coniferLt:[139,173,110], /* evergreens sit out the seasons */
   water:[92,172,178], waterDk:[62,138,148], foam:[255,251,240],
-  road:[106,101,93], roadLine:[233,221,192],
+  road:[106,101,93], roadArt:[86,82,75], roadLine:[233,221,192],
   cream:[244,232,208], creamDk:[221,205,172],
   terra:[199,111,74], terraDk:[170,90,60],
   white:[250,246,236], whiteDk:[228,220,204],
@@ -451,7 +451,7 @@ function genWorld(seed){
     else if(x>coastX[y])t=T.SHOREPARK;
     cells[idx(x,y)]={t,h:0,th:0,v:hashCell(x,y,seed),age:0,corr:false,lit:hashCell(y,x,seed),
                      val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,shroom:0,stop:0,loft:false,
-                     bridge:false,riv:false,busy:false,solar:false,groof:false,treed:false,kind:''};
+                     bridge:false,riv:false,busy:false,flow:0,solar:false,groof:false,treed:false,kind:''};
   }
   /* meadows, woods and boulders: the land the town was cut from */
   const nMead=ks(3)+(rng()*3|0);
@@ -664,6 +664,56 @@ function reachFill(out,r,isSrc){
 const rTransit=new Uint8Array(G*G), rGreen=new Uint8Array(G*G),
       rShop=new Uint8Array(G*G), rServ=new Uint8Array(G*G);
 const HOME=new Set([T.RES,T.MID,T.TOWER]);
+/* Traffic, as flow accumulation — the rule that turns rain into rivers.
+   Every developed block generates trips; every trip drains downhill along the
+   streets toward the value core, and where the drainage tree collects, an
+   arterial emerges. `busy` (>=3 developed neighbours) is a LOCAL test and calls
+   half the city an avenue; flow is a NETWORK one, so the quiet corridor feeding
+   a bridge outranks a dense downtown side street. The bridges come out as the
+   trunks on their own — a river crossing is a bottleneck every trip must share.
+   Reads topology + val, writes only c.flow: no rng(), no hashCell, no terrain. */
+const ARTFLOW=64;                    /* trip-units above which a street is an arterial */
+const _flQ=new Int32Array(G*G), _flD=new Uint8Array(G*G), _flA=new Float32Array(G*G);
+const _flVal=new Float32Array(G*G);
+function trafficFlow(){
+  let n=0;
+  for(const i of HEXI)if(cells[i].t===T.ROAD)_flVal[n++]=cells[i].val;
+  if(!n)return;
+  /* sinks: the streets of the value core, i.e. downtown. Rank, not a magic
+     threshold, so it holds whether land value is peaked or flat. */
+  const cut=_flVal.subarray(0,n).slice().sort()[Math.max(0,n-1-((n*0.04)|0))];
+  _flD.fill(255);
+  let head=0,tail=0;
+  for(const i of HEXI)if(cells[i].t===T.ROAD&&cells[i].val>=cut){_flD[i]=0;_flQ[tail++]=i;}
+  if(!tail)return;
+  while(head<tail){                                  /* BFS over the road network */
+    const i=_flQ[head++], d=_flD[i], x=i%G, y=(i/G)|0;
+    if(d>=254)continue;
+    for(const[dx,dy]of nbrDirs(y)){
+      const c=cellAt(x+dx,y+dy); if(!c||c.t!==T.ROAD)continue;
+      const j=idx(x+dx,y+dy); if(_flD[j]!==255)continue;
+      _flD[j]=d+1;_flQ[tail++]=j;
+    }
+  }
+  /* BFS visits in nondecreasing depth, so the queue REVERSED is already the
+     leaves-first order accumulation needs — no sort. */
+  for(let k=0;k<tail;k++)_flA[_flQ[k]]=0;
+  for(let k=tail-1;k>=0;k--){
+    const i=_flQ[k], x=i%G, y=(i/G)|0, d=_flD[i];
+    let own=1;                                       /* the street itself, plus what it serves */
+    for(const[dx,dy]of nbrDirs(y)){const c=cellAt(x+dx,y+dy); if(c&&DEV.has(c.t))own++;}
+    _flA[i]+=own;
+    if(d===0)continue;
+    let bj=-1,bv=-1;                                 /* drain to the lower neighbour nearest the core */
+    for(const[dx,dy]of nbrDirs(y)){
+      const c=cellAt(x+dx,y+dy); if(!c||c.t!==T.ROAD)continue;
+      const j=idx(x+dx,y+dy); if(_flD[j]>=d)continue;
+      if(c.val>bv){bv=c.val;bj=j;}                   /* tie-break toward value: keeps trunks from wandering */
+    }
+    if(bj>=0)_flA[bj]+=_flA[i];
+  }
+  for(const i of HEXI)if(cells[i].t===T.ROAD)cells[i].flow=_flD[i]===255?0:_flA[i];
+}
 function roadNear(x,y){return countAround(x,y,1,c=>c.t===T.ROAD)>0}
 function greenNear(x,y,r){return countAround(x,y,r,c=>c.t===T.PARK||c.t===T.MEADOW||c.t===T.SHOREPARK||c.t===T.BEACH)>0}
 /* which way a lot's public face should turn: +1 if the street it fronts lies east,
@@ -1000,6 +1050,7 @@ function tick(){
     else if(c.bloom<0)c.bloom++;
     else if((x===sx&&y===sy)||(countAround(x,y,1,n=>n.t===T.MEADOW&&n.bloom>3)>0&&rng()<0.6))c.bloom=7;
   }
+  trafficFlow();          /* trips drain to the core; the trunks become arterials */
   /* park zoning: dense areas without a park plant one */
   for(let k=0;k<ks(30);k++){
     const[x,y]=rcIn(4,G-4,4,G-4); const c=cells[idx(x,y)];
@@ -2526,10 +2577,13 @@ function drawCell(x,y){
         bandR(gx,gy,ew?0.52:0.32,ew?0.32:0.52,4.4,5.2,col('whiteDk',0.95));
         break;
       }
-      hexTile(gx,gy,1.02,col('road',1));
+      const art=c.flow>=ARTFLOW;
+      hexTile(gx,gy,1.02,col(art?'roadArt':'road',1));  /* trunks wear their asphalt darker */
       /* lane dashes reach toward each road neighbor; roads run on hex
          axes, so straight runs draw as straight dashed lines;
-         busy streets grade up to gold-marked avenues */
+         busy streets grade up to gold-marked avenues, and where the traffic
+         tree collects into an arterial the marking runs solid and doubled —
+         edge-to-edge, so it joins up with the next trunk hex into one line */
       const[cx,cy]=px(gx,gy);
       ctx.strokeStyle=col(c.busy?'gold':'roadLine',0.9);ctx.lineWidth=1;
       ctx.globalAlpha=0.55;
@@ -2539,12 +2593,34 @@ function drawCell(x,y){
         if(!n||n.t!==T.ROAD)continue;
         if(dy2===0)ewN++; else diagN++;
         const[nx2,ny2]=ctr(x+dx2,y+dy2);
+        if(art&&n.flow>=ARTFLOW)continue;               /* the trunk is drawn solid below */
         ctx.beginPath();
         ctx.moveTo(lerp(cx,nx2,0.10),lerp(cy,ny2,0.10));
         ctx.lineTo(lerp(cx,nx2,0.42),lerp(cy,ny2,0.42));
         ctx.stroke();
       }
       ctx.globalAlpha=1;
+      if(art){ /* the arterial's centre line, edge-to-edge toward each trunk neighbor.
+                  A hex is only ~23 screen px at rest, so a doubled line is below the
+                  resolution ceiling: it draws as ONE crisp line, and only splits into
+                  two lanes once the camera is wheeled in far enough to resolve them. */
+        const dbl=scale>1.7, off=dbl?0.9:0;
+        ctx.strokeStyle=col('gold',0.95);ctx.lineWidth=dbl?0.9:1.4;ctx.globalAlpha=0.92;
+        for(const[dx2,dy2]of nbrDirs(y)){
+          const n=cellAt(x+dx2,y+dy2);
+          if(!n||n.t!==T.ROAD||n.flow<ARTFLOW)continue;
+          const[nx2,ny2]=ctr(x+dx2,y+dy2);
+          const ux=nx2-cx,uy=ny2-cy,L=Math.hypot(ux,uy)||1;
+          const ox=-uy/L*off,oy=ux/L*off;               /* perpendicular: the two lanes */
+          for(const s of(dbl?[-1,1]:[0])){
+            ctx.beginPath();
+            ctx.moveTo(cx+ox*s,cy+oy*s);
+            ctx.lineTo(lerp(cx,nx2,0.5)+ox*s,lerp(cy,ny2,0.5)+oy*s);
+            ctx.stroke();
+          }
+        }
+        ctx.globalAlpha=1;
+      }
       /* street trees on straight blocks (not the coast highway; palms line that) */
       if(!c.treed&&x!==SHOREX&&((x*3+y)%4)===0){
         if(ewN>=2&&!diagN)tree(gx,gy+((x%2)?0.34:-0.34),0.55,1.02);
@@ -4132,8 +4208,11 @@ const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats 
 function describeTile(c){
   let title,sub,data=[];
   if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';sub='A public institution.';}
-  else if(c.t===T.ROAD){title=c.bridge?'Bridge':(c.busy?'Avenue':'Street');
-    sub=c.bridge?'Carries the street across the water.':(c.busy?'A busy, tree-lined arterial.':'A quiet local street.');}
+  else if(c.t===T.ROAD){const art=c.flow>=ARTFLOW;
+    title=c.bridge?'Bridge':(art?'Arterial':(c.busy?'Avenue':'Street'));
+    sub=c.bridge?'Carries the street across the water.'
+       :art?'A trunk route — traffic from half the district drains through here.'
+       :(c.busy?'A busy street between built-up blocks.':'A quiet local street.');}
   else if(c.t===T.WATER&&c.riv){title='River';sub='Fresh water winding down to the sea.';}
   else{title=TILELABEL[c.t]||'Land';sub=TILEDESC[c.t]||'';}
   /* the CA already remembers when every parcel last changed: age ticks up
@@ -4146,6 +4225,7 @@ function describeTile(c){
   else if(DEV.has(c.t))data.push(['Built','~'+est]);
   if(DEV.has(c.t))data.push(['Floors','~'+floorsOf(c.h)]);
   if(c.t===T.TOWER&&c.h>90)data.push(['Helipad']);
+  if(c.t===T.ROAD)data.push(['Traffic',Math.round(c.flow)]);
   if(c.t===T.ROAD&&c.stop)data.push(['Bus stop']);
   if(c.solar)data.push(['Rooftop solar']);
   if(c.groof)data.push(['Green roof']);
@@ -4293,7 +4373,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 
@@ -4316,10 +4396,10 @@ window.__census=()=>{
   recount();
   const TN=Object.fromEntries(Object.entries(T).map(([k,v])=>[v,k]));
   const tiles={}; for(const k in T)tiles[k]=0;
-  const civic={}; let roads=0,bridges=0,dev=0,solarRoofs=0,greenRoofs=0,towerHt=0,tallTowers=0,helipads=0,boulevardTrees=0,avenues=0;
+  const civic={}; let roads=0,bridges=0,dev=0,solarRoofs=0,greenRoofs=0,towerHt=0,tallTowers=0,helipads=0,boulevardTrees=0,avenues=0,arterials=0;
   for(const c of cells){
     tiles[TN[c.t]]++;
-    if(c.t===T.ROAD){roads++; if(c.bridge)bridges++;}
+    if(c.t===T.ROAD){roads++; if(c.bridge)bridges++; if(c.flow>=ARTFLOW)arterials++;}
     if(c.t===T.CIVIC)civic[c.kind||'?']=(civic[c.kind||'?']||0)+1;
     if(DEV.has(c.t))dev++;
     if(c.solar)solarRoofs++;
@@ -4342,7 +4422,7 @@ window.__census=()=>{
     pop:stats.pop|0, parks:stats.parks|0, towers:stats.towers|0, tallestFloors:stats.tall|0,
     density:stats.density|0, solarPct:stats.solarPct|0, transitPct:stats.transitPct|0, walkPct:stats.walkPct|0,
     schools:stats.schools|0, stadiums:stats.stad|0,
-    roads, bridges, developed:dev, solarRoofs, greenRoofs, towerHt:towerHt|0, tallTowers, helipads, boulevardTrees, avenues, promenade, stations, cafes,
+    roads, bridges, developed:dev, solarRoofs, greenRoofs, towerHt:towerHt|0, tallTowers, helipads, boulevardTrees, avenues, arterials, promenade, stations, cafes,
     tileKinds:Object.values(tiles).filter(n=>n>0).length,   /* landscape variety */
     civicKinds:Object.keys(civic).length,                   /* service variety */
     transportModes:Object.values(transport).filter(n=>n>0).length,
