@@ -32,8 +32,17 @@ tooltip / kelp re-gate · U3 determinism audit).
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
   sea-fog spells (35, 43) + wind/gust cycle (50) + FULL SEASONS (57: winter
   cools, spring freshens, golden-hills summer, autumn ambers; evergreens sit
-  it out via the conifer palette split). Sky's weather frontier is now
-  essentially complete. Emptiest cell left: Sky ×
+  it out via the conifer palette split). ⚠ **Sky is now CONFIRMED SATURATED
+  (iter 68/69):** probing for a Sky feature turned up clouds + cloud shadows,
+  rain, rainbows, sea-fog, wind, seasons, moon, moonglade, stars AND shooting
+  stars all already present — don't add to Sky, it's done. **People is
+  near-saturated too (iter 69):** peds/dogs/walkers/kids/joggers + block
+  parties, evening crowds, picnics, benches, park cafés, fireflies all exist.
+  Parks are mature (café kiosks, ponds, fountains, sculptures, fireflies).
+  The city is reaching overall maturity — most domains now answer a
+  "does this exist?" probe with YES. Lean hard on Deepen/Polish/Interaction,
+  reach for genuinely-absent interconnects, and treat "returns have
+  flattened → stop" as a live option. Emptiest cell left: Sky ×
   Connect (dubious — what would it even link?); after 49 every flagged gap is
   filled, so lean Deepen/Polish/Interaction from here (saturation, not
   rotation, is now the binding constraint). ⚠ Nature × Connect is a DEAD END
@@ -44,7 +53,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–68**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–69**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
@@ -67,11 +76,15 @@ tooltip / kelp re-gate · U3 determinism audit).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest holistic pass (iter 65): PASS ×3 by minimum, day floor 24.11ms /
-  night 25.44ms. ⚠ Day floor has crept 23.44→24.11 across iters 61-64 (small
-  draw work compounding); still inside the 15% gate but if it crosses ~25.5
-  the next lap is a perf-fix lap. Fresh-seed probe (seed 123) fully coherent;
-  sea-fog lenses read soft post-61. Sea-fog watch item from
+  Latest holistic pass (iter 69): PASS ×3 by minimum, day floor 25.17ms /
+  night 26.39ms (baselines 24 / 26.61). ⚠ Day floor keeps creeping
+  (23.44 @60 → 24.11 @65 → 25.17 @69, +1.7ms over ~9 laps as draw work
+  compounds — flags/orchards/roof-gardens/tidepools + the concurrent
+  monorail/shoreline). Now ~0.3ms under the ~25.5 fix-lap threshold: the
+  NEXT perf reading that crosses it makes the following lap a perf-fix lap
+  (profile drawCell hot paths / cache more). Fresh-seed probe @69 (seed 314,
+  night, 24.8k pop) fully coherent — warm lit windows, moon+moonglade, dense
+  but readable; seed 42 golden hour balanced. sea-fog lenses read soft post-61. Sea-fog watch item from
   iter 60 **FIXED at iter 61** (feathered banks + beach-band fade). ⚠ This
   machine runs hot (load avg 4+): run the gate 3× and judge by the MINIMUM.
   ⚠ Harness lesson (iter 65): NEVER run census + shoot.mjs in one parallel
@@ -1598,3 +1611,28 @@ lantern glowing on the decks. Whole-city seed-7 frame coherent — roofs read as
 richer green tops, no clutter/darkness, no z-order tears.
 **Verdict:** DEEPENED. Redeploy pending (iters 34–68 + hooks + the concurrent
 session's transport/camera/shoreline/CSS commits).
+
+## Iteration 69 — holistic step-back (2026-07-09) [10th lap]
+
+**Vector:** review lap, no feature shipped. Rotation pointed at People (last 64)
+but a seam-read found it near-saturated (picnics, benches, park cafés,
+fireflies, block parties, evening crowds all exist) — and a LOT of concurrent
+change had landed on main since the last holistic (iter 65): the Dijkstra
+monorail rework, the shoreline re-band, the camera zoom. That made a holistic
+the highest-value use of the lap.
+**Holistic:** two un-zoomed whole-city frames — seed 42 golden hour (2035, 21k
+pop) and a never-tested seed 314 at night (2035, 24.8k pop, 55 towers). Both
+fully coherent: warm balanced golden-hour scene; dense-but-readable night city
+with lit windows, moon + moonglade, monorail loop tracing clean, no clutter /
+darkness / z-order tears. The concurrent monorail/shoreline/camera work
+integrated cleanly.
+**Perf:** PASS ×3 by minimum — day 25.17ms / night 26.39ms (baselines
+24 / 26.61). Day floor keeps creeping (23.44@60 → 24.11@65 → 25.17@69); now
+~0.3ms under the ~25.5 fix-lap threshold. Flagged in the header: the next
+reading that crosses it makes the following lap a perf-fix lap.
+**Maturity finding:** Sky is confirmed saturated (see saturation notes); People
+and the park/roof systems are near-saturated. The city is broadly mature —
+most domains answer "does X exist?" with YES. Recorded so future laps lean on
+genuinely-absent interconnects / Polish, and treat "stop" as live.
+**Verdict:** HOLISTIC — clean, no fix needed. Redeploy pending (iters 34–69 +
+hooks + the concurrent transport/camera/shoreline/CSS commits).
