@@ -25,9 +25,24 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **People & activity** | 41, 56 | 49 | 34, 64 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
-  tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**.
+  tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
+  + **hover focus ring (iter 71, People-led)**.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
-  (same discipline as the census hook).
+  (same discipline as the census hook). `stamp()` now also draws the focus ring,
+  so any stamped entity is ringable for free.
+- **⚠ Overlays drawn last FLOAT (iter 71):** the instinct to draw a highlight
+  "last of all, so it can never tear" is wrong in this renderer. Rows draw
+  top→bottom, so an entity in row *y* is legitimately occluded by a tower in
+  row *y+1* — an overlay drawn after everything then lands on that tower's roof,
+  ringing the wrong object. Draw entity overlays **at the entity's own z** (i.e.
+  from `stamp()`), and accept that an occluded entity shows no ring. Also:
+  `ctx.lineWidth` is in **world** units under the camera transform, so a 2.2px
+  stroke is *thicker than a 1.8px pedestrian* — keep entity-scale strokes ≤1.1.
+- **Hover verification:** `shoot.mjs` cannot hover. `hovershot.mjs` (iter 71)
+  drives Playwright directly: `__ents` aims the real cursor at a named entity,
+  `ZOOM=n` wheels the artifact's own camera in (real magnification, not upscaled
+  pixels), `PICK=front` favours front rows (a back-row entity may be occluded
+  and legitimately ringless). Emits a no-hover control frame + 3 clip scales.
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
   sea-fog spells (35, 43) + wind/gust cycle (50) + FULL SEASONS (57: winter
@@ -53,7 +68,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–70**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–71**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
@@ -61,7 +76,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
   school run · fairy rings · sea-fog fix · rooftop water tanks · bus
   stops · dog walkers · tidepools · civic flags · seasonal orchards ·
-  rooftop gardens · **vehicle headlights/taillights**), the
+  rooftop gardens · vehicle headlights/taillights · **hover focus ring**), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -90,10 +105,11 @@ tooltip / kelp re-gate · U3 determinism audit).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest reading (iter 70, run because that lap added night draw work):
-  PASS ×3 by minimum, day floor 25.22ms / night 26.66ms (baselines
+  Latest reading (iter 71, run because the focus ring draws from `stamp()`, a
+  per-entity-per-frame hot path): PASS ×3 by minimum, day floor 25.11ms /
+  night 26.33ms (baselines
   24 / 26.61). ⚠ Day floor keeps creeping
-  (23.44 @60 → 24.11 @65 → 25.17 @69 → 25.22 @70, +1.8ms over ~10 laps as
+  (23.44 @60 → 24.11 @65 → 25.17 @69 → 25.22 @70 → 25.11 @71, +1.8ms over ~10 laps as
   draw work compounds — flags/orchards/roof-gardens/tidepools + the
   concurrent monorail/shoreline). Now ~0.3ms under the ~25.5 fix-lap
   threshold: the NEXT perf reading that crosses it makes the following lap
@@ -114,35 +130,11 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 <!-- rotated -->
 
-> **Archive:** the 61 iterations before Iteration 61 live in
+> **Archive:** the 62 iterations before Iteration 62 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 61 — sea-fog fix (2026-07-08) [8th lap]
-
-**Vector:** Sky & atmosphere × Polish (FIX) — **deliberate rotation override**
-(rotation pointed at Urban): iter 60's holistic flagged the sea-fog banks as
-the only known visual flaw, and fixing what the step-back turns up outranks
-adding more. The iter-60 "watch" bar was overridden one lap early because the
-fix was cheap and no Urban polish of equal value was identified.
-**Diagnosis:** two defects in iter 43's banks: (1) each bank was ONE hard
-40×95 ellipse — reads as a portrait glare puck, not fog; (2) the inland fade
-`(fx-(SHOREX-13))/6` kept FULL-strength fog over the last ~7 columns of
-city — the "bank hovering over the built edge" at seed 99.
-**Change:** each bank is now three feathered lenses stacked along the coast
-(30×72 core + two 24×42-ish offsets, per-lens alpha ×0.55 so the overlap
-matches the old peak but the edges feather), and the fade dies at the first
-blocks (`(fx-(SHOREX-4))/5`) — fog swallows beach and waterfront, never the
-core.
-**Census:** VERDICT PASS, 0 page errors, exactly flat.
-**Visual:** seed 99 reshoot — banks read as soft marine haze over sea/beach,
-the built-edge bank GONE; seed 42 mid-spell (`step=100`, window computed from
-the seed phase) — layered haze over the pier and sea, no pucks. Both frames
-coherent.
-**Verdict:** FIXED. Redeploy pending (iters 34-61 + hooks + polish-tile
-work).
 
 ## Iteration 62 — rooftop water tanks (2026-07-08)
 
@@ -399,3 +391,62 @@ with a magnified clip → PASS.
 **Verdict:** POLISHED. Two harness lessons recorded (the `__ents` car blind spot;
 magnify before believing a visual FAIL). Redeploy pending (iters 34–70 + hooks +
 the concurrent transport/camera/shoreline commits).
+
+## Iteration 71 — the hovered thing wears a ring (2026-07-09)
+
+**Vector:** People & activity × **Interaction/UX** — rotation pointed at People
+(least-recently-touched non-saturated domain, last 64) and the *kind* had to
+change again: 65–68 were four Deepens and 70 was a Polish. Interaction/UX had
+gone unused since iter 52, and the header's own advice ("lean hard on
+Deepen/Polish/Interaction") pointed straight at it. People being *near*-saturated
+argued for adding no new person at all — only a better way to read the ones
+already there.
+**Orient/seam finding:** entity tooltips (iter 42) name the thing under the
+cursor, but in a dense block a `Resident` is a 1.8×5px figure among a hundred
+others — the tooltip tells you *what* without telling you *which*. That missing
+half is the feature. Also corrected a header claim in passing: cars *are* named
+on hover (via `VKIND`, not `ENTINFO`) — `__ents` can't *return* them, which is a
+different thing.
+**Change:** `pickEntity` now also returns the entity and its pick radius;
+`mousemove` parks them in `hoverEnt`/`hoverR` (cleared on tile-hover, pan, and
+mouseleave). `stamp()` — already called at the top of every entity's draw —
+draws a focus ring when it stamps the hovered entity: a squashed ellipse
+(`ry=rx*0.5`) at the entity's feet, ink stroke `1.1` under a pulsing cream
+stroke `0.7`. Scales with the pick radius, so a ped gets a small ring and a
+ferry a large one. Draw-only: no rng, no hashCell, no terrain, no new state, no
+new entity, no new ENTINFO row.
+**The bug that made this iteration worth it:** I first drew the ring *last of
+all* in `render()`, reasoning that an overlay above everything can never tear.
+A subagent passed it but flagged that it couldn't resolve a figure inside the
+ring; I assumed an iso misread and went to look myself — the ring was sitting on
+a **rooftop with no pedestrian in it**. Rows draw top→bottom, so the ped was
+legitimately hidden behind a mid-rise in the next row, and the last-drawn ring
+floated up onto the roof of the very building occluding it — highlighting the
+wrong object. Moving the draw into `stamp()` puts the ring at the entity's own
+z: it is occluded exactly when its entity is. Second bug, found by magnifying:
+`ctx.lineWidth` is in **world** units under the camera transform, so the
+original `2.2` stroke was *thicker than the 1.8px pedestrian* and read as a
+black tire. Retuned to 1.1/0.7.
+**Harness:** `hovershot.mjs` — `shoot.mjs` can't hover, so this drives Playwright
+directly (`__ents` to aim the cursor, `ZOOM=n` to wheel the artifact's real
+camera in, `PICK=front` to avoid picking an occluded back-row entity, plus a
+no-hover control frame). Both lessons + the tool are in the header.
+**Census:** VERDICT PASS, 0 page errors, **every metric exactly flat** and tile
+histogram empty — the cleanest possible signature for a draw-only change (cf.
+iter 70's ±3 pop timing jitter).
+**Perf:** ran the gate despite 71 not being a step-back lap, because the ring
+draws from `stamp()`, a hot path hit for every entity every frame. PASS ×3 by
+minimum: day **25.11ms** (25.17 @69/70 — flat, still under the ~25.5 fix-lap
+threshold), night **26.33ms**. The `e===hoverEnt` compare costs nothing.
+**Visual:** 6 subagent verdicts across two rounds. Round 1 (last-drawn ring)
+returned 3× PASS and I shipped nothing on it — the PASSes were *correct about
+what they saw* and blind to the floating-ring bug, which only a caveat plus my
+own look surfaced. Round 2 (tuned, stamped): seed 42 ped PASS (figure stands in
+the ring, ring flat on the ground plane, body draws over the rear arc, stroke
+proportionally thinner than the figure); seed 7 ferry PASS (ring scales to the
+hull, hull occludes the rear arc); whole-city control at seeds 42 and 7 PASS
+(no stray ring anywhere, no tears, city still balanced).
+**Verdict:** SHIPPED. The visual gate's real lesson this lap is the inverse of
+iter 70's: there, a FAIL was a false negative; here, three PASSes were true
+statements that missed a real bug. **A subagent's caveat is a finding.** Redeploy
+pending (iters 34–71 + hooks + the concurrent transport/camera/shoreline commits).

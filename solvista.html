@@ -269,7 +269,22 @@ let TINT=[1,1,1], LITAMT=0, CCACHE={};
 /* entity screen-position stamps: each draw records where it drew this frame so
    the hover tooltip can name moving things (stale stamps = not on screen) */
 let FRAMEN=0;
-const stamp=(e,x,y)=>{e._sx=x;e._sy=y;e._sf=FRAMEN;};
+/* focus ring: the hovered entity wears a ring at its feet so you can tell WHICH
+   of a crowd the tooltip is naming. Drawn from stamp() — i.e. inside the
+   entity's own bucket, just under its body — so it shares the entity's z: a
+   ped hidden behind a tower gets no ring rather than a ring floating on the
+   tower's roof. Squashed into the iso plane; tracked per frame, so it follows a
+   walker the tooltip has stopped updating. */
+const stamp=(e,x,y)=>{e._sx=x;e._sy=y;e._sf=FRAMEN;
+  if(e===hoverEnt){
+    /* strokes stay thinner than the figure they ring — a ped is only 1.8 wide */
+    const rx=hoverR*1.25, ry=rx*0.5;
+    ctx.strokeStyle=col('ink',0.34);ctx.lineWidth=1.1;
+    ctx.beginPath();ctx.ellipse(x,y,rx+0.4,ry+0.2,0,0,7);ctx.stroke();
+    ctx.strokeStyle='rgba(255,252,240,'+(0.72+0.22*Math.sin(time*3.2))+')';
+    ctx.lineWidth=0.7;
+    ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,7);ctx.stroke();
+  }};
 function setLight(dl){ /* called every frame — only flush the color cache when the light actually moved */
   if(dl.lit===LITAMT&&dl.tint[0]===TINT[0]&&dl.tint[1]===TINT[1]&&dl.tint[2]===TINT[2])return;
   TINT=dl.tint;LITAMT=dl.lit;CCACHE={};
@@ -3845,12 +3860,14 @@ const ENTINFO=[
 ];
 const VKIND={fireeng:['Fire engine','Lights on, heading to the smoke.'],
   ambo:['Ambulance','On a call.'],police:['Police cruiser','On patrol.']};
+/* the entity the cursor is naming right now (null when hovering a tile) */
+let hoverEnt=null,hoverR=0;
 function pickEntity(wx,wy){
   let best=null,bd=1e9;
   const consider=(e,name,sub,r)=>{
     if(e._sf===undefined||FRAMEN-e._sf>2)return;
     const dx=wx-e._sx, dy=wy-(e._sy-3), d=dx*dx+dy*dy;
-    if(d<r*r&&d<bd){bd=d;best=[name,sub];}
+    if(d<r*r&&d<bd){bd=d;best=[name,sub,e,r];}
   };
   for(const[g,name,sub,r]of ENTINFO)for(const e of g())consider(e,name,sub,r);
   for(const v of vehicles){const k=VKIND[v.kind]||['Car',"Somebody's errand."];consider(v,k[0],k[1],6);}
@@ -3858,9 +3875,10 @@ function pickEntity(wx,wy){
 }
 const tipEl=$('tip');
 cvs.addEventListener('mousemove',e=>{
-  if(panning&&dragMoved>4){tipEl.style.display='none';return;}
+  if(panning&&dragMoved>4){tipEl.style.display='none';hoverEnt=null;return;}
   const wx=(e.clientX-offX)/scale, wy=(e.clientY-offY)/scale;
   const pe=pickEntity(wx,wy);
+  hoverEnt=pe?pe[2]:null; hoverR=pe?pe[3]:0;
   let html;
   if(pe)html='<p class="tt">'+pe[0]+'</p><p class="td">'+pe[1]+'</p>';
   else{
@@ -3881,7 +3899,7 @@ cvs.addEventListener('mousemove',e=>{
   tipEl.style.left=e.clientX+'px'; tipEl.style.top=e.clientY+'px';
   tipEl.style.display='block';
 });
-cvs.addEventListener('mouseleave',()=>{tipEl.style.display='none';});
+cvs.addEventListener('mouseleave',()=>{tipEl.style.display='none';hoverEnt=null;});
 
 let tickAcc=0,lastT=performance.now();
 /* entity motion + animation clocks, factored out of frame() so the __step test

@@ -419,6 +419,13 @@ marginal filler instead — until a framing was found that made it low-risk. So:
 - `run-loop.sh` — the headless event-based runner (one fresh `claude -p` per
   iteration, next starts when the previous exits).
 - `com.solvista.growcity.plist` — launchd wrapper for `run-loop.sh`.
+- `hovershot.mjs` — screenshots a *hover*, which `shoot.mjs` cannot do. Aims the
+  real cursor at an entity via `__ents`, then clips it at three scales plus a
+  no-hover control frame. `node hovershot.mjs '<url query>' '<Entity name>'
+  <outdir>`; `ZOOM=n` first wheels the artifact's own camera in (real
+  magnification, not upscaled pixels), `PICK=front` picks a front-row instance
+  (back-row entities can be legitimately occluded). Use it for any change to the
+  tooltip / hover / selection surface.
 - `shots/` — screenshot output (gitignore-able scratch).
 - Repo root `shoot.config.json` — city framings for `screenshot-verify`
   (`wide`/`tall`/`mobile` full-page + `coast`/`downtown` zoom clips; select with

@@ -1310,3 +1310,27 @@ works); summer control (warp 61.4): 0 rings. Whole-city autumn frame
 coherent.
 **Verdict:** SHIP. Redeploy pending (iters 34-60 + hooks + polish-tile work).
 
+## Iteration 61 — sea-fog fix (2026-07-08) [8th lap]
+
+**Vector:** Sky & atmosphere × Polish (FIX) — **deliberate rotation override**
+(rotation pointed at Urban): iter 60's holistic flagged the sea-fog banks as
+the only known visual flaw, and fixing what the step-back turns up outranks
+adding more. The iter-60 "watch" bar was overridden one lap early because the
+fix was cheap and no Urban polish of equal value was identified.
+**Diagnosis:** two defects in iter 43's banks: (1) each bank was ONE hard
+40×95 ellipse — reads as a portrait glare puck, not fog; (2) the inland fade
+`(fx-(SHOREX-13))/6` kept FULL-strength fog over the last ~7 columns of
+city — the "bank hovering over the built edge" at seed 99.
+**Change:** each bank is now three feathered lenses stacked along the coast
+(30×72 core + two 24×42-ish offsets, per-lens alpha ×0.55 so the overlap
+matches the old peak but the edges feather), and the fade dies at the first
+blocks (`(fx-(SHOREX-4))/5`) — fog swallows beach and waterfront, never the
+core.
+**Census:** VERDICT PASS, 0 page errors, exactly flat.
+**Visual:** seed 99 reshoot — banks read as soft marine haze over sea/beach,
+the built-edge bank GONE; seed 42 mid-spell (`step=100`, window computed from
+the seed phase) — layered haze over the pier and sea, no pucks. Both frames
+coherent.
+**Verdict:** FIXED. Redeploy pending (iters 34-61 + hooks + polish-tile
+work).
+
