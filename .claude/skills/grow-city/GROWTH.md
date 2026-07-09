@@ -23,7 +23,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81 |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81, 89 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | 84 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -96,11 +96,14 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   parity-free three-axis stepper, is preserved verbatim in 88's entry. Also: `c.hedge` (L1206)
   **already rims the farm fields**, so any new line-of-scrub vector must first say how it differs.
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
-  (a) **the rainbow floats** — `L4166`, drawn in screen space trailing a raining
-  cloud; at seed 7 a leg ends mid-air over open ocean. Same defect iter 81 fixed for
-  fog, same fix. Re-confirmed a **third** time at iter 86 (seed 42's agent noted it
-  unprompted, "unchanged from before"). *Sky × Polish — and since iter 87 closed (c),
-  this is the **only** strong open cue left.*
+  ~~(a) **the rainbow floats**~~ — **CLOSED by iter 89.** Not by 81's fog fix, though the
+  cue predicted it would be: a bow forms in *nearby* drops, so it may legitimately hang in
+  **front** of the city, and moving it into the row loop would have buried it. What was
+  wrong was that it drew over the **void** past the rim and **ended on a hard chord**.
+  Fixed by anchoring it to the ground its shower falls on and dissolving both legs.
+  **With (a), (b) and (c) all closed, there is NO strong open cue left** — the next
+  holistic pass has to find its own, and if it finds nothing, that is a real signal that
+  the artifact has stopped accumulating visual debt.
   ~~(b) **the asphalt floods the interior**~~ — **CLOSED by iter 86.**
   ~~(c) **the monorail beam reads as UI chrome**~~ — **CLOSED by iter 87.** Six agents on
   4 seeds across iters 79/84/85 called `drawMonoAt`'s beam a "debug overlay floating above
@@ -427,89 +430,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 81 entries before Iteration 79 live in
+> **Archive:** the 82 entries before Iteration 80 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 79 — the surf learns it is not a light source (2026-07-10) [12th lap]
-
-**Vector:** the holistic step-back (74 + 5, and iter 78 explicitly booked it) —
-which found a real defect, so the lap became **Water & coast × Polish** and fixed
-it. Verdict is therefore HOLISTIC **+ FIXED**, not a review with a TODO attached.
-
-**The step-back's own numbers, on unedited code.** Census VERDICT PASS, 0 page
-errors, **all 22 metrics exactly flat** (pop 142497, roads 5754, developed 6210,
-arterials 876), tile histogram empty — a quiet box, per 74's caveat that a flat
-table proves the machine was idle, not that anything is pure. Perf PASS ×3 by
-minimum: day **30.05ms** (baseline 31.33, −4.1%), night **34.22ms** (baseline
-37.22, −8.1%), three runs agreeing to ±0.11ms. Both scenes *under* baseline, and
-matching 77's readings — the day-floor "creep" 74 retired stays retired.
-
-**The finding, and how the gate nearly ate it.** Two subagents read whole-city
-day+night frames (seed 42 and a never-tested seed 314) and **both returned
-`VISUAL: PASS`** — while the surf was rendering as a hard white neon rim around
-the entire coastline at night. What convicted it was not their verdicts but their
-*caveats*: both volunteered that the night sand goes "muddy brown… acceptable,"
-and both explained away the same white lines with **contradictory** stories
-("stadium pitch markings" vs "the UI selection/route overlay"). Two agents
-inventing two different explanations for one artifact is the signature of
-something being rationalized. Looked at the frame myself. The white lines were
-innocent — `drawGondAt`'s `col('whiteDk')` pylons and cables (L3424), the plural
-cable-car lines from U4. Beside them, the surf was not.
-
-**Root cause — a whole class, not a typo.** `col()` applies `TINT` but returns
-`rgb(...)`, with nowhere to put an alpha. So *every translucent highlight in the
-file* had been written as a hardcoded `rgba(...)` literal, bypassing the lighting
-entirely. The surf at L2081 was `rgba(255,251,240, a2≤0.76)` — pure white, at up
-to 76% alpha, along **every beach-facing edge of the whole coast**, while each
-neighbouring surface was tinted to `[.42,.42,.58]`. Meanwhile the wakes and
-splashes ten lines away (`drawBoat`, `drawWhale`) correctly call `col('foam',1)`.
-This is the kelp failure inverted: an element ringing the entire coastline,
-structurally invisible to zoomed daytime checks, surviving **79 iterations**.
-
-**Change (draw-only).** Added `colA(name,f,a)` beside `col()` — the tinted-rgba
-twin, deliberately **uncached** because `a` is continuous per cell and per frame.
-Retargeted the three *reflective* water highlights: surf foam (L2081), river
-current glints (L2047, new `BASE.glint`), open-water sparkle (L2029). Left the
-*emissive* literals alone — the moon, aquarium bioluminescence, window lights,
-and the `LITAMT`-gated shore glow emit light and correctly ignore the tint. The
-discriminator is **reflect vs emit**, and it is now written in the header so a
-future lap doesn't "fix" the moon.
-
-**Census:** VERDICT PASS, 0 page errors. Every metric +0 except `pop -1` — the
-documented last-partial-tick jitter. Tile histogram empty, all 25 entity counts
-unchanged. The exact signature of a draw-only change.
-
-**Visual — with a BEFORE control, per 77's rule.** `git show HEAD:solvista.html`,
-identical clip coords, both seeds, and the agents were **named the confusable
-elements and forbidden to report them** (moon, moon-reflection, window lights,
-cable-car lines, boat wakes). 3/3 PASS, all citing *what differs*. Seed 314's agent
-sampled the rim: **(230,230,224) BEFORE → (99,100,133) AFTER**, against night water
-(39,72,103) — within noise of the (107,105,139) the tint predicts, so the pixels
-confirm the arithmetic rather than merely agreeing with it. Foam still reads as
-moonlit surf: brighter and cooler than the water, clean against the sand, not
-vanished. The **day control is unchanged** (midday tint ≈1.0), which is the half of
-the test that proves the fix is a tint and not a dimmer.
-
-**Perf:** a rare clean A/B — same quiet box, minutes apart, same session. Day
-30.05 → **30.11ms**, night 34.22 → **34.17ms**, against ±0.06ms run-to-run spread.
-`colA`'s per-cell arithmetic is free next to the stroke it feeds; the uncached
-call was the one thing worth measuring, and it cost nothing.
-
-**Verdict:** HOLISTIC + FIXED. The city is otherwise clean — balanced, readable at
-night, no clutter, no tears, and the coastline is now *pleasant* instead of rimmed.
-The lasting result is `colA` plus the reflect-vs-emit rule: the tinting bug was
-never one line, it was a missing primitive, and the missing primitive is why the
-literals were there in the first place.
-
-**Follow-ups worth taking:** two untinted literals of the same class remain, both
-sitting next to correct `col('foam',1)` calls — the whale spout (L3774) and a boat
-wake (L3659). Iter 77's `treed`-on-`c.flow` boulevard retarget (allées still line
-`busy`, not the arterials), 78's dogs-on-sidewalks (`strollable()` still park-bound),
-73's corner-lot lead and 76's REDWOOD closure lead all remain open. **Iteration 84
-owes the next holistic step-back** (79 + 5).
 
 ## Iteration 80 — the forecourt learns which way is front (2026-07-10)
 
@@ -1282,3 +1207,88 @@ from the city. A −0-visibility feature for either price is the solar-farm trad
 **Iteration 89 still owes the holistic step-back** (84 + 5) — 88 shipped no pixels, so the
 cumulative-drift question is exactly as open as 87 left it. The rainbow (cue (a), `L4166`,
 Sky × Polish) remains the only strong open cue.
+
+## Iteration 89 — the rainbow lands (2026-07-10) [holistic step-back]
+
+**Vector** — Sky & atmosphere × **Polish (FIXED)**. Both axes agreed for once: Sky was
+the most-lagged domain (last touched at 81), and the rainbow was the *only* strong open
+cue, banked by three separate holistic passes (79/84/86 — at 86 seed 42's agent raised it
+unprompted). 88 had just broken the five-Polish streak with a Connect, so a Polish lap was
+clean again. **Iteration 89 also owed the holistic step-back (84 + 5); it is discharged
+below**, since the gate frames were read un-zoomed at three seeds.
+
+**Measured the defect before designing the fix** (`probe-rainbow.mjs`, gitignored scratch).
+The bow is `arc(bx,by,r0, PI, 2PI)` in the cloud loop. For each raining cloud over a sweep
+of 6 seeds × 10 `__step`s, the probe reported both feet's distance to the nearest **live**
+cell. Two faults, and only one of them was the one the cue named:
+
+1. **It draws over the void.** Seed 7 step 0 — the exact frame the agents kept reporting —
+   puts the bow's feet **52px and 205px** from any live cell: the whole arc hangs past the
+   plate's right rim, over empty background. Seed 1234 step 180 reaches **277px**, seed 2
+   step 180 **354px**, seed 1234 step 900 **451px**.
+2. **It ENDS.** `PI..2PI` stops dead on a horizontal chord at full alpha. Even the bows that
+   sit squarely over the city are sliced flat across the bottom — which is iter 85's lesson
+   restated: *a stroke that terminates on a hard edge is the grammar of a UI overlay.* No
+   agent had named this one; the probe found it by asking where the feet were.
+
+**The cue's prescribed fix was wrong, and the probe is why I noticed.** The header said
+"same defect iter 81 fixed for fog, same fix" — i.e. move it inside the row loop for depth.
+But a rainbow forms in the drops of *this* shower, a few hundred metres off, so it
+legitimately passes **in front of** distant scenery. Drawn behind the rows it would have
+been swallowed by the plate and the feature would have quietly died. Fog piles *on* the
+world; a bow hangs *in front of* it. **Same symptom, opposite remedy.**
+
+**Change (draw-only, `L4225`).**
+- **Anchored to the ground its rain falls on.** `pa` fades the bow out over the last 2 hexes
+  before the rim, reusing the cloud shade's own rule from one line above ("shade only falls
+  where there is ground to catch it"). Critically the gate tests the **legs, not the cloud**:
+  the arc reaches ±`r0`≈108px ≈ 3 cells sideways, so a shower still safely inland can hang a
+  leg past the rim. Gating on `cl.x` alone left bows with a foot 190px into the void at
+  `pa=1`; gating on `fl`/`fr` (the feet's columns, via `CW`) cut the worst drawn foot from
+  **451px → ~20px**. Suppressed 9→16 of 41 sampled bows; seed 7 step 0 is now dark.
+- **Both legs dissolve.** The crown stays **one unbroken arc per band** (no seams where it is
+  brightest), and only the bottom `asin(0.45)`≈27° of each leg is drawn as 8 alpha-ramped
+  segments, smoothstepped to 0. So the bow fades into haze and never terminates — over city,
+  sea or void alike.
+
+**Census:** VERDICT **PASS**, 0 page errors. **All 22 metrics exactly +0**, tile histogram
+empty, all 25 entity counts unchanged. The draw-only signature (cf. 79, 81).
+
+**Visual:** **3/3 `VISUAL: PASS`**, before/after on identical clips (`before.html` =
+`git show HEAD`), one agent per seed. Seed 7: "hangs entirely over the void beyond the slab
+edge… terminating on a hard, abrupt cut-off" → gone in AFTER. Seeds 42 and 1234 keep their
+bows and report the legs "dissolve into the sea haze instead of ending on a flat line",
+**with no banding, seams or beads** — the one risk I could not reason away, since consecutive
+alpha-ramped arc segments can bead at the joints. Splitting core-from-legs is what avoided it.
+Seed 42's agent, unprompted: it now reads "MORE like an atmospheric rainbow and LESS like a
+pasted-on UI/debug graphic."
+
+**Perf — and this time the gate is NOT blind.** 3× sequential; day **31.89ms (+1.8%)**,
+night **35.83ms (−3.7%)**, PASS. Worth recording *why* that number is trustworthy where 81's
+was not: I checked, rather than assumed, and the perf day scene (seed 42, `t=0.35`,
+`LITAMT=0.017`) **draws exactly one rainbow**, so the +1.8% is the real cost of 5 core arcs +
+80 leg segments. The night scene draws none (`LITAMT=0.892`), so its −3.7% is pure noise.
+
+**Holistic step-back (84 + 5), discharged.** The three un-zoomed whole-city frames were read
+for *cumulative* drift, not for the feature: all three report no z-order tears, no floating
+tiles, no blown-out color, and that the city still reads as balanced and beautiful. Nothing
+has compounded since 87. Perf is flat against a baseline pinned 2026-07-09. **No new cue was
+found** — and with (a) now closed, the cue list is empty for the first time.
+
+**Verdict:** **FIXED.** The bow floated for 88 iterations; it now belongs to its shower.
+
+**Lessons.**
+- **A banked cue records a symptom reliably and a diagnosis unreliably.** Three passes
+  correctly saw the rainbow floating; the fix they prescribed (81's) would have deleted the
+  feature. Re-derive the *cause* when you take a cue off the shelf — the symptom is evidence,
+  the proposed fix is a guess made without the code open.
+- **Probe the thing you are about to change, even for a "look at it" polish job.** The hard
+  chord was invisible to eight iterations of agents *looking at screenshots of it*, because a
+  sliced arc looks fine at 0.38 alpha until you ask "where exactly does this stroke stop?"
+  Two lines of geometry in a probe found what six agent-readings missed.
+- **When a gate is blind, say so; when it isn't, prove it.** 81 warned the perf gate never
+  sees the fog. The reflex is to write "gate blind here" again — but one 20-line probe showed
+  it *does* see the rainbow. Inherited caveats need re-checking too.
+- **An overlay can be fixed by anchoring rather than by reordering.** Reaching for depth
+  (`z`) is not the only cure for something that floats; giving it a reason to *stop existing*
+  where it has no business being (`pa`) is cheaper and, here, the only one that keeps it.
