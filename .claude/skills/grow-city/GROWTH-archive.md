@@ -1360,3 +1360,31 @@ hashCell replica — the replica overcounts and the clips point at suppressed
 candidates.
 **Verdict:** SHIP. Redeploy pending (iters 34–62 + hooks + polish-tile work).
 
+## Iteration 63 — bus stops (2026-07-08)
+
+**Vector:** Transport × Deepen — rotation pointed at Transport (last touched
+55); its additive moves are flagged saturated, so deepen what exists: buses
+have been in the road fleet since iter 0 (gold, `kind='bus'`, 14% of spawns)
+but drove past everything. Now the street network has stops and the buses
+use them.
+**Change:** three seams. (1) End-of-tick derivation pass (fete/hedge
+precedent): `c.stop=1` on ROAD cells (not bridge, not the coast highway) with
+≥2 developed neighbors, gated `hashCell(x,y,seedNum^0xB5B5)<0.05` → ~28
+stops/city. (2) ROAD draw case: sidewalk shelter (ink posts, flat cream
+canopy, gold route sign) with 1–2 waiting figures by day, subtle idle bob.
+Skips fete cells so bunting streets don't clutter. (3) `stepVehicle`: buses
+arriving on a stop cell pull in for 1.2–2.1s (`v.wait`), with a 16s
+refractory (`v.dwell`) so they don't re-stop instantly; path picks already
+used `Math.random`, so no seeded-stream risk. Tooltip gets a "Bus stop" line;
+`__find('stop')` added for aiming.
+**Census:** VERDICT PASS, 0 page errors, exactly flat (towerHt +1 = known
+animation jitter).
+**Visual:** seed 42 clips show shelters with canopy/sign/waiting figures at
+two park-corner stops, correct sidewalk side, no z-order tears (shelter
+extent stays within the cy+5 next-row budget). Numeric dwell probe: 5 of 9
+buses at seed 42 carried positive `dwell` refractory — they genuinely pull
+in. Whole-city frame coherent; 28 shelters vanish into street texture at
+full zoom, as street furniture should.
+**Verdict:** DEEPENED. Redeploy pending (iters 34–63 + hooks + polish-tile
+work).
+

@@ -20,7 +20,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3, 70 |
-| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | |
+| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | | | |
 
@@ -38,6 +38,18 @@ tooltip / kelp re-gate · U3 determinism audit).
   from `stamp()`), and accept that an occluded entity shows no ring. Also:
   `ctx.lineWidth` is in **world** units under the camera transform, so a 2.2px
   stroke is *thicker than a 1.8px pedestrian* — keep entity-scale strokes ≤1.1.
+- **⚠ `dx` is NOT a screen direction (iter 73):** on this offset-row hex grid the
+  sign of a neighbour's `dx` does not say which way it lies on screen. An **even**
+  row's `dx=0` diagonals sit half a cell **EAST** (`sdx=+16`) and its `dx=-1`
+  diagonals WEST; **odd** rows invert it. Code that buckets neighbours by
+  `dx>0 / dx<0` (and skips `dx===0`) silently becomes *east on odd rows, west on
+  even rows*. Always difference `ctr(x,y)[0]`. `frontSide()` does this; it also
+  weights the due-E/W neighbour 2× a diagonal, which is correct.
+- **⚠ Facing ≠ visible (iter 73):** orienting a detail toward a street does not
+  make it *seen* — a tall tower up to ~3 rows **south** covers a face whichever
+  side it is on (11 of 24 reoriented civics got more occluded, 10 less). Occlusion
+  is a coin flip orthogonal to siting. If a Polish lap wants a *visible* win, it
+  must choose the less-occluded side, not just the correct one.
 - **Hover verification:** `shoot.mjs` cannot hover. `hovershot.mjs` (iter 71)
   drives Playwright directly: `__ents` aims the real cursor at a named entity,
   `ZOOM=n` wheels the artifact's own camera in (real magnification, not upscaled
@@ -66,9 +78,14 @@ tooltip / kelp re-gate · U3 determinism audit).
   real cities — wood-to-wood green links have no geometry to attach to; don't
   re-explore. Explored & reverted: solar-farm contagion (iter 32);
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
-  moved to 2020).
+  moved to 2020). **Civic is additively saturated too (iter 73):** every civic
+  kind is already richly drawn (flags, beacons, night glows, an amphitheatre
+  audience) — probe the draw case before believing any Civic gap. Open Civic
+  lead: the 27-of-74 civics that front roads on *both* sides (corner lots) still
+  fall back to a hash in `frontSide` — picking the less-occluded side there is
+  the natural next Civic × Polish lap (see iter 73's follow-up).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–72**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–73**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
@@ -77,7 +94,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   school run · fairy rings · sea-fog fix · rooftop water tanks · bus
   stops · dog walkers · tidepools · civic flags · seasonal orchards ·
   rooftop gardens · vehicle headlights/taillights · hover focus ring ·
-  **harbor freighters**), the
+  harbor freighters · **civics facing their street**), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -131,39 +148,11 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 <!-- rotated -->
 
-> **Archive:** the 63 iterations before Iteration 63 live in
+> **Archive:** the 64 iterations before Iteration 64 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 63 — bus stops (2026-07-08)
-
-**Vector:** Transport × Deepen — rotation pointed at Transport (last touched
-55); its additive moves are flagged saturated, so deepen what exists: buses
-have been in the road fleet since iter 0 (gold, `kind='bus'`, 14% of spawns)
-but drove past everything. Now the street network has stops and the buses
-use them.
-**Change:** three seams. (1) End-of-tick derivation pass (fete/hedge
-precedent): `c.stop=1` on ROAD cells (not bridge, not the coast highway) with
-≥2 developed neighbors, gated `hashCell(x,y,seedNum^0xB5B5)<0.05` → ~28
-stops/city. (2) ROAD draw case: sidewalk shelter (ink posts, flat cream
-canopy, gold route sign) with 1–2 waiting figures by day, subtle idle bob.
-Skips fete cells so bunting streets don't clutter. (3) `stepVehicle`: buses
-arriving on a stop cell pull in for 1.2–2.1s (`v.wait`), with a 16s
-refractory (`v.dwell`) so they don't re-stop instantly; path picks already
-used `Math.random`, so no seeded-stream risk. Tooltip gets a "Bus stop" line;
-`__find('stop')` added for aiming.
-**Census:** VERDICT PASS, 0 page errors, exactly flat (towerHt +1 = known
-animation jitter).
-**Visual:** seed 42 clips show shelters with canopy/sign/waiting figures at
-two park-corner stops, correct sidewalk side, no z-order tears (shelter
-extent stays within the cy+5 next-row budget). Numeric dwell probe: 5 of 9
-buses at seed 42 carried positive `dwell` refractory — they genuinely pull
-in. Whole-city frame coherent; 28 shelters vanish into street texture at
-full zoom, as street furniture should.
-**Verdict:** DEEPENED. Redeploy pending (iters 34–63 + hooks + polish-tile
-work).
 
 ## Iteration 64 — dog walkers (2026-07-08)
 
@@ -479,3 +468,57 @@ resolution limit* rather than calling them broken — exactly the iter-70 discip
 asked of it, and not a defect.
 **Verdict:** SHIPPED. Redeploy pending (iters 34–72 + hooks + the concurrent
 transport/camera/shoreline commits).
+
+## Iteration 73 — civic buildings turn to face the street (2026-07-09)
+
+**Vector:** Civic & culture × **Polish** — rotation pointed at Civic (least-recently
+touched, last 66) and the cell was empty; the kind had to change after 72's Deepen.
+Polish adds nothing, which suits a mature city. Deep single-tile redesigns belong to
+`polish-tile`, so the move had to be *cross-civic* and systemic, not one building.
+**Orient/seam finding:** every civic is already richly drawn (flags, beacons, night
+glows, an amphitheatre audience) — no additive gap. What the seam read *did* turn up:
+the hospital, school and university each pick which side their **public face** goes on
+from `hashCell(...)<0.5?1:-1` — a per-city coin flip. So the ambulance bay, the
+schoolyard and the lawn quad point in a random direction, as often at a neighbour's
+back wall as at the street the building was sited on (`roadNear`).
+**Change:** one helper, `frontSide(x,y,fallback)` (~L560), sums each ROAD neighbour's
+**screen-x displacement** and returns +1/-1 for the side the lot fronts; an even split
+(a corner lot) falls back to the caller's existing hash, so nothing is forced. Wired
+into the three `fx`/`fxS`/`fxU` mirror flags. Read-only: no `rng()`, no `hashCell`
+draw of its own, no terrain touched.
+**⚠ The bug the visual gate caught — `dx` sign is NOT the screen side.** v1 counted
+neighbours by the sign of `dx` and skipped `dx===0`. On offset rows that is simply
+wrong: an even row's `dx=0` diagonals sit **half a cell EAST** (`sdx=+16`) and its
+`dx=-1` diagonals WEST — odd rows invert it. So v1 was "west on even rows, east on odd
+rows" whenever only diagonals had roads, and it turned seed 42's hospital *away* from
+its street. A subagent returned `VISUAL: FAIL` on exactly that frame; a numeric probe
+confirmed the hospital's two road neighbours are `(0,-1) sdx=+16` and `(-1,-1) sdx=-16`
+— a true tie the buggy code read as west. **Never infer a screen direction from `dx` on
+an offset-row hex grid; take `ctr()[0]` differences.** Summing displacement also weights
+a due-E/W neighbour 2x a diagonal, which is what you want.
+**Census:** VERDICT PASS, 0 page errors. Every core metric exactly flat (pop, roads,
+developed, towerHt all +0), tile histogram empty — the correct signature of a draw-only
+change that touches no terrain and no seeded stream. (Lone ±1 on greenRoofs = the usual
+last-partial-tick jitter.)
+**Measured effect (15 seed x era scenes, `frontSide` vs the old coin flip):**
+university **7 turned / 2 already / 2 tie** — the strong case; school **17 / 9 / 13**;
+hospital **0 / 3 / 12** — a hospital *never* turned, they sit on symmetric frontage.
+**Occlusion is orthogonal and a coin flip** (tallest building <=3 rows south on the
+chosen side): 11 turned instances end up more occluded, 10 less, 3 the same. Facing the
+street does **not** mean being *seen* — a distant tall tower to the south covers a face
+regardless of which side it is on. Expected visibility is therefore unchanged; the gain
+is semantic (the yard/quad now *means* something) and it is subtle by design.
+**Visual:** university PASS on 2 seeds — "quad opens onto an adjacent grey street, wings
+close the back," verified by pixel coordinate on both. Whole-city PASS on seeds 42/1234:
+no tears, no floaters, no blown colour, no civic wedged against a back wall. I looked at
+the seed-42 school pair **myself** (n=1 agent verdict contradicted a numeric probe): the
+building does mirror correctly onto its street side — 3 west road neighbours vs 1 east —
+but a tall tower to the *south-west* then hides the chalked oval. That is one of the 11
+unlucky instances above, not a regression: the old hash was 50/50 for occlusion too.
+**Verdict:** SHIPPED. The rule is right and the census is clean, but log the honest
+size of the win: it is a coherence fix, not a visible one, and half of what it turns
+stays hidden behind towers.
+**Follow-up worth taking:** 27 of the 74 audited civics are **ties** (corner lots) that
+currently fall back to a hash. Choosing the *less-occluded* street side there — the one
+the camera can actually see — would convert this from semantics into a visible win, and
+is the natural next Civic × Polish lap.

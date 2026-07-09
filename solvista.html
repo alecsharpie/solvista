@@ -557,6 +557,23 @@ function countAround(x,y,r,pred){ /* all cells within hex distance r */
 }
 function roadNear(x,y){return countAround(x,y,1,c=>c.t===T.ROAD)>0}
 function greenNear(x,y,r){return countAround(x,y,r,c=>c.t===T.PARK||c.t===T.MEADOW||c.t===T.SHOREPARK||c.t===T.BEACH)>0}
+/* which way a lot's public face should turn: +1 if the street it fronts lies east,
+   -1 if west. Civics are sited by roadNear, so one usually does; a lot fronting
+   roads evenly both ways (or none) falls back to the caller's per-city hash.
+   Sum the ROAD neighbors' screen-x displacement rather than testing the sign of
+   dx: on offset rows a diagonal's dx does NOT say which way it leans — an even
+   row's dx=0 diagonals sit half a cell EAST and its dx=-1 ones WEST, and odd
+   rows invert that — so reading dx alone yields a per-parity bias, not a facing.
+   Displacement also weights the due-E/W neighbor 2x a diagonal, which is right.
+   Read-only — no rng(), no hashCell draw of its own. */
+function frontSide(x,y,fallback){
+  const[cx0]=ctr(x,y); let s=0;
+  for(const[dx,dy]of nbrDirs(y)){
+    const n=cellAt(x+dx,y+dy);
+    if(n&&n.t===T.ROAD&&!n.bridge)s+=ctr(x+dx,y+dy)[0]-cx0;
+  }
+  return Math.abs(s)<1e-6?fallback:(s>0?1:-1);
+}
 
 /* land value: a diffusing field — each parcel averages its neighbors,
    pulled toward what actually sits on the lot */
@@ -2698,7 +2715,8 @@ function drawBuilding(c,x,y,gx,gy){
     const[cx,cy]=px(gx,gy);
     if(c.kind==='hospital'){
       /* white campus: tall ward slab + low clinic wing, big coral cross on the roof */
-      const fx=hashCell(x,y,seedNum^0x405B)<0.5?1:-1;   /* clinic wing side flips per city */
+      /* the ambulance bay opens onto the street the campus fronts */
+      const fx=frontSide(x,y,hashCell(x,y,seedNum^0x405B)<0.5?1:-1);
       const h1=Math.max(15,h*0.92), h2=Math.max(6.5,h1*0.4);
       prism(gx,gy,0.44,0.38,0,1.2,col('cream',1.02),col('creamDk',0.7),col('creamDk',0.9)); /* forecourt */
       /* main ward slab */
@@ -2832,7 +2850,8 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.arc(tx2,ty2-hb-10.8,1.7,0,7);ctx.fill();}
     } else if(c.kind==='school'){
       /* low schoolhouse: teal wainscot, gabled porch, gold flag, chalked play-court */
-      const fxS=hashCell(x,y,seedNum^0x5C01)<0.5?1:-1;  /* yard side flips per school */
+      /* the yard — and the drop-off crowd at its gate — face the street */
+      const fxS=frontSide(x,y,hashCell(x,y,seedNum^0x5C01)<0.5?1:-1);
       const hb=Math.max(9,h*0.6);
       prism(gx,gy,0.44,0.38,0,1.1,col('cream',1),col('creamDk',0.7),col('creamDk',0.9)); /* yard */
       {const[yx,yy]=px(gx+fxS*0.24,gy+0.18); /* play-court markings */
@@ -2942,7 +2961,8 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.moveTo(mx2,my2-hb-9);ctx.lineTo(mx2+5+wv,my2-hb-7.8);ctx.lineTo(mx2,my2-hb-6.6);ctx.closePath();ctx.fill();}
     } else if(c.kind==='university'){
       /* collegiate quad: sage lawn framed by cream wings, campanile above all */
-      const fxU=hashCell(x,y,seedNum^0x0431)<0.5?1:-1;  /* quad orientation flips */
+      /* the quad opens toward the street; the wings close the back of the block */
+      const fxU=frontSide(x,y,hashCell(x,y,seedNum^0x0431)<0.5?1:-1);
       const hw2=Math.max(8,h*0.38);
       prism(gx,gy,0.44,0.38,0,1.1,col('cream',1),col('creamDk',0.7),col('creamDk',0.9)); /* grounds */
       {const[qx,qy]=px(gx+fxU*0.16,gy+0.14); /* the quad */
