@@ -120,12 +120,12 @@ h1{
   <p class="eyebrow">Cellular-automata diorama</p>
   <h1>Solvista</h1>
   <p class="sub">Founded 1974 on the California coast &mdash; and different every
-  time. Streets, farms, river and rail all find their own way, hex by hex,
+  time. Streets, farms, rivers and rail all find their own way, hex by hex,
   toward the utopia the town always planned to be.</p>
   <details>
     <summary>How it grows</summary>
     <ul>
-      <li>Every city starts from a new seed: coastline, river, woods, survey grid.</li>
+      <li>Every city starts from a new seed: coastline, one to three rivers, woods, survey grid.</li>
       <li>The survey runs on hexagons: streets follow the grain &mdash; east&ndash;west rows and the two hex diagonals.</li>
       <li>Farm clusters feed the young town; the growing edge buys them out.</li>
       <li>Homes appear where a street meets greenery; every parcel feels its neighbors' land value.</li>
@@ -137,8 +137,8 @@ h1{
       <li>Schools follow the children; library, museum and capitol follow the decades.</li>
       <li>Ball fields, stadiums, statues and plazas appear where the crowds already are.</li>
       <li>Warehouses become lofts and far fields go solar once the rent says so.</li>
-      <li>From 1988 the monorail grows hex by hex toward high land value, until the loop bites its own tail.</li>
-      <li>The cable car creeps down the shore the same way, one span at a time, wherever the view is earned.</li>
+      <li>From 1988 the monorail network opens line by line &mdash; each loop grows hex by hex toward high land value until it bites its own tail.</li>
+      <li>Cable cars creep down the shore the same way, one span at a time, wherever the view is earned.</li>
     </ul>
   </details>
   <p class="serial">specimen <b id="stSeed">&mdash;</b></p>
@@ -172,7 +172,11 @@ const clamp=(v,a,b)=>v<a?a:v>b?b:v;
 function hashCell(x,y,s){let h=(x*374761393+y*668265263+s*974711)|0;h=(h^(h>>>13))*1274126177|0;return((h^(h>>>16))>>>0)/4294967296}
 
 /* ---------------- constants ---------------- */
-const G=48, TW=16, TH=8, SLAB=26;
+/* the diorama plate is itself a hexagon: every cell within HEXR rings of the
+   center. G is only the bounding square the cells array lives in. */
+const HEXR=33;
+const G=2*HEXR+1, CTRX=HEXR, CTRY=HEXR;
+const TW=16, TH=8, SLAB=26;
 /* hex geometry: pointy-top hexes squashed for the diorama view,
    odd rows shifted half a tile right (odd-r offset grid) */
 const CW=TW*2;        /* horizontal center spacing */
@@ -183,9 +187,33 @@ const HW=TW;          /* half hex width */
 const NBR_E=[[1,0],[-1,0],[0,-1],[0,1],[-1,-1],[-1,1]]; /* even rows */
 const NBR_O=[[1,0],[-1,0],[0,-1],[0,1],[1,-1],[1,1]];   /* odd rows */
 const nbrDirs=y=>(y&1)?NBR_O:NBR_E;
-const T={EMPTY:0,ROAD:1,RES:2,MID:3,COM:4,TOWER:5,CIVIC:6,PARK:7,BEACH:8,WATER:9,PLAZA:10,MEADOW:11,SHOREPARK:12,FARM:13,IND:14,MARKET:15,GARDEN:16,BURNT:17,FOREST:18,ROCK:19,SOLARF:20,FIELD:21,STADIUM:22,VINEYARD:23,MARSH:24,LIGHTHOUSE:25,KELP:26,ORCHARD:27,REDWOOD:28};
+const T={EMPTY:0,ROAD:1,RES:2,MID:3,COM:4,TOWER:5,CIVIC:6,PARK:7,BEACH:8,WATER:9,PLAZA:10,MEADOW:11,SHOREPARK:12,FARM:13,IND:14,MARKET:15,GARDEN:16,BURNT:17,FOREST:18,ROCK:19,SOLARF:20,FIELD:21,STADIUM:22,VINEYARD:23,MARSH:24,LIGHTHOUSE:25,KELP:26,ORCHARD:27,REDWOOD:28,VOID:29};
 const DEV=new Set([T.RES,T.MID,T.COM,T.TOWER,T.CIVIC,T.IND,T.MARKET]);
-const SHOREX=G-12; /* the coast highway column */
+const SHOREX=CTRX+11; /* the coast highway column */
+const SHORE0=SHOREX+5; /* nominal water's edge, five lots seaward of the highway */
+
+/* the plate mask. HEXOK gates inB(), so world generation, growth, picking and
+   drawing all see a hexagon; HEXI is its cell list (seeded random picks land on
+   the plate, not in the bounding square's dead corners); ROWMIN/ROWMAX are each
+   row's live span, which the coastline and its craft clamp themselves to. */
+const HEXOK=new Uint8Array(G*G), HEXI=[], ROWMIN=new Int16Array(G), ROWMAX=new Int16Array(G);
+{
+  const ax=(x,y)=>x-((y-(y&1))>>1), q0=ax(CTRX,CTRY);
+  for(let y=0;y<G;y++){
+    let lo=-1,hi=-1;
+    for(let x=0;x<G;x++){
+      const dq=ax(x,y)-q0, dr=y-CTRY;
+      if((Math.abs(dq)+Math.abs(dq+dr)+Math.abs(dr))/2>HEXR)continue;
+      HEXOK[y*G+x]=1; HEXI.push(y*G+x);
+      if(lo<0)lo=x; hi=x;
+    }
+    ROWMIN[y]=lo; ROWMAX[y]=hi;
+  }
+}
+/* the plate carries ~46% more land than the old 48x48 square, so the per-tick
+   development attempts scale with it — otherwise the city fills 46% slower */
+const KS=1.46;
+const ks=n=>Math.round(n*KS);
 const POPW={[T.RES]:4,[T.MID]:28,[T.COM]:10,[T.TOWER]:240,[T.CIVIC]:40,[T.IND]:16,[T.MARKET]:14};
 const DISTCOL=['gold','teal','coral','sage']; /* district identities */
 
@@ -312,7 +340,7 @@ function colLit(name,f,litMix){ /* window glass mixing toward warm light at nigh
 }
 
 /* ---------------- world ---------------- */
-let rng, seedNum, cells, year, dayT, monorail, monoPath, monoClosed, monoG, gondPath, gondG, gond, stats, pier, hut, harborY;
+let rng, seedNum, cells, year, dayT, monos, monoPlan, gonds, gondPlan, stats, pier, hut, harborY;
 let YC=[], turbines=[], turbSet=new Map();
 let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], ferries=[], freighters=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
 /* debug flood (?flood=joggers:30,whales:8): overrides entity spawn counts so
@@ -322,13 +350,40 @@ const fl=(name,n)=>FLOOD[name]!==undefined?FLOOD[name]:n;
 let devBudgetUsed=0, firesNow=false, flock=null;
 
 function idx(x,y){return y*G+x}
-function inB(x,y){return x>=0&&y>=0&&x<G&&y<G}
+function inB(x,y){return x>=0&&y>=0&&x<G&&y<G&&HEXOK[y*G+x]===1}
 function cellAt(x,y){return inB(x,y)?cells[idx(x,y)]:null}
+/* seeded random cell on the plate, and the same inside a bounding box */
+function rc(){const i=HEXI[(rng()*HEXI.length)|0]; return[i%G,(i/G)|0,cells[i]]}
+function rcIn(x0,x1,y0,y1){
+  for(let i=0;i<20;i++){
+    const x=x0+((rng()*(x1-x0))|0), y=y0+((rng()*(y1-y0))|0);
+    if(inB(x,y))return[x,y];
+  }
+  return[CTRX,CTRY];
+}
 
-/* seeded coastline: amplitude, frequency and phase differ every city */
+/* seeded coastline: amplitude, frequency and phase differ every city. The shore
+   is pinned two cells inside the plate's rim, so as the hexagon tapers north and
+   south the bay narrows with it instead of running off the edge. */
 let sAmp=1.8, sFreq=0.34, sPh=0;
-function shoreAt(y){return (G-7)+Math.round(sAmp*Math.sin(y*sFreq+sPh))}
-function shoreAtF(y){return (G-7)+sAmp*Math.sin(y*sFreq+sPh)} /* smooth, unrounded — so water craft glide instead of snapping column-to-column */
+const rowCap=y=>ROWMAX[clamp(Math.round(y),0,G-1)]-2;
+function shoreAt(y){return Math.min(SHORE0+Math.round(sAmp*Math.sin(y*sFreq+sPh)),rowCap(y))}
+function shoreAtF(y){return Math.min(SHORE0+sAmp*Math.sin(y*sFreq+sPh),rowCap(y))} /* smooth, unrounded — so water craft glide instead of snapping column-to-column */
+/* where a craft riding `off` columns out from shore actually sits: never past the
+   plate's rim, so the narrow water at the north and south points still floats it */
+function seaXF(y,off){
+  const r=clamp(Math.round(y),0,G-1);
+  return Math.min(shoreAtF(y)+off,ROWMAX[r]-0.55);
+}
+/* how many columns of open water this row carries, shore to rim */
+function seaSpan(y){const r=clamp(Math.round(y),0,G-1);return Math.max(0.5,(ROWMAX[r]-0.55)-shoreAtF(y));}
+/* open-water craft ride a FRACTION of the bay's width, so sailboats, ships and
+   whales spread from the surf line clear out to the plate's rim instead of all
+   hugging the shore. A nearshore margin (capped) keeps them off the sand, and
+   because it's recomputed from the live row span they hug the bay as it tapers. */
+function seaXFr(y,fr){const sp=seaSpan(y),m=Math.min(1.6,sp*0.3);return shoreAtF(y)+m+fr*(sp-m);}
+/* rows with open water enough for the deep-sea traffic to work */
+const SEAY0=CTRY-24, SEAY1=CTRY+24;
 /* the boardwalk esplanade decks only a few band-hashed stretches of coast (the
    pier's band always among them) — the rest stays open swimming beach */
 function espRow(y){
@@ -366,7 +421,8 @@ function genWorld(seed){
     const rr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
     let x=SHOREX+(rng()<0.5?0:1), fam=rng()<0.5?1:-1, run=2+(rr()*7|0);
     for(let y=0;y<G;y++){
-      coastX[y]=x;
+      /* it never runs onto the sand: where the plate tapers, so does the highway */
+      coastX[y]=Math.min(x,shoreAt(y)-4);
       if(--run<0){fam=-fam;run=5+(rr()*7|0);}
       let dx=fam>0?((y&1)?1:0):((y&1)?0:-1);
       if(x+dx>SHOREX+1||x+dx<SHOREX-2){fam=-fam;run=5+(rr()*7|0);dx=fam>0?((y&1)?1:0):((y&1)?0:-1);}
@@ -377,8 +433,9 @@ function genWorld(seed){
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     let t=T.EMPTY;
     const sh=shoreAt(y);
-    if(x>=sh)t=T.WATER;
-    else if(x>=sh-3&&x>=G-10)t=T.BEACH;
+    if(!HEXOK[y*G+x])t=T.VOID;   /* outside the plate: never drawn, never grows */
+    else if(x>=sh)t=T.WATER;
+    else if(x>=sh-3)t=T.BEACH;
     else if(x===coastX[y])t=T.ROAD;
     else if(x>coastX[y])t=T.SHOREPARK;
     cells[idx(x,y)]={t,h:0,th:0,v:hashCell(x,y,seed),age:0,corr:false,lit:hashCell(y,x,seed),
@@ -386,29 +443,37 @@ function genWorld(seed){
                      bridge:false,riv:false,busy:false,solar:false,groof:false,treed:false,kind:''};
   }
   /* meadows, woods and boulders: the land the town was cut from */
-  const nMead=3+(rng()*3|0);
-  for(let i=0;i<nMead;i++)blob(2+(rng()*(SHOREX-4))|0,2+(rng()*(G-4))|0,2+(rng()*3|0),
-    c=>{if(c.t===T.EMPTY)c.t=T.MEADOW;});
-  const nFor=2+(rng()*3|0);
-  for(let i=0;i<nFor;i++)blob(2+(rng()*(SHOREX-6))|0,3+(rng()*(G-6))|0,2+(rng()*2|0),
-    c=>{if(c.t===T.EMPTY||c.t===T.MEADOW)c.t=T.FOREST;});
+  const nMead=ks(3)+(rng()*3|0);
+  for(let i=0;i<nMead;i++){const[mx,my]=rcIn(2,SHOREX-2,2,G-2);
+    blob(mx,my,2+(rng()*3|0),c=>{if(c.t===T.EMPTY)c.t=T.MEADOW;});}
+  const nFor=ks(2)+(rng()*3|0);
+  for(let i=0;i<nFor;i++){const[fx,fy2]=rcIn(2,SHOREX-4,3,G-3);
+    blob(fx,fy2,2+(rng()*2|0),c=>{if(c.t===T.EMPTY||c.t===T.MEADOW)c.t=T.FOREST;});}
   for(let y=0;y<G;y++)for(let x=0;x<SHOREX-1;x++){
     const c=cells[idx(x,y)];
     if(c.t===T.EMPTY&&hashCell(x,y,seed^31)<0.012)c.t=T.ROCK;
   }
-  /* a river finds its own way to the sea (most seeds) */
+  /* rivers find their own way to the sea. Most seeds carry at least one; some
+     braid two or three across the plate, each with its own meander frequency,
+     drift, phase and a width that swells and pinches down its length. */
   let ry0=-99;
-  if(rng()<0.85){
-    ry0=6+rng()*(G-16);
-    const ramp=1.4+rng()*2, rph=rng()*7, drift=(rng()-0.5)*0.16, wide=rng()<0.4;
+  const nRiv=rng()<0.9?1+(rng()<0.45?1:0)+(rng()<0.2?1:0):0;
+  for(let ri=0;ri<nRiv;ri++){
+    const start=CTRY-26+rng()*52;
+    if(ri===0)ry0=start;                            /* the founding keeps clear of the first */
+    const ramp=0.9+rng()*2.8, rph=rng()*7, drift=(rng()-0.5)*0.22,
+          freq=0.15+rng()*0.18,                     /* how tightly it meanders */
+          wph=rng()*7, wfreq=0.05+rng()*0.14,       /* where it swells wide */
+          fat=rng()<0.5?1:0;                         /* a broad river, or a creek */
     let prevYy=null;
     outer:
     for(let x=0;x<G;x++){
-      const yy=Math.round(ry0+ramp*Math.sin(x*0.24+rph)+drift*x);
+      const yy=Math.round(start+ramp*Math.sin(x*freq+rph)+drift*x);
+      const wide=fat+(Math.sin(x*wfreq+wph)>0.3?1:0); /* 0..2 extra rows this span */
       /* fill the whole bend so the channel stays hex-connected */
       const yA=prevYy===null?yy:Math.min(prevYy,yy), yB=prevYy===null?yy:Math.max(prevYy,yy);
       prevYy=yy;
-      for(let y2=yA;y2<=yB;y2++)for(let w=0;w<(wide?2:1);w++){
+      for(let y2=yA;y2<=yB;y2++)for(let w=0;w<=wide;w++){
         const c=cellAt(x,y2+w);
         if(!c)continue;
         if(c.t===T.WATER&&!c.riv)break outer;      /* reached the sea */
@@ -431,7 +496,8 @@ function genWorld(seed){
   for(const s of DSW)for(let y=0;y<G;y++)corrMark(s-((y+1)>>1),y);
   /* the founding: a crossroads near the coast, wherever suits this seed */
   let fy=YC[(rng()*YC.length)|0];
-  for(let tries=0;tries<24&&(Math.abs(fy-ry0)<5||fy<4||fy>G-5);tries++)fy=YC[(rng()*YC.length)|0];
+  /* it wants the plate's broad middle, not a tapering point */
+  for(let tries=0;tries<24&&(Math.abs(fy-ry0)<5||Math.abs(fy-CTRY)>14);tries++)fy=YC[(rng()*YC.length)|0];
   const mainX=SHOREX-14+(rng()*11|0);
   const act=(x,y)=>{const c=cellAt(x,y);
     if(!c||c.t===T.FOREST||c.t===T.ROCK)return;
@@ -459,13 +525,12 @@ function genWorld(seed){
     if(c&&c.t===T.EMPTY&&roadNear(gx,gy)){c.t=T.CIVIC;c.kind='hall';c.th=20;break}
   }
   /* farm clusters: wherever the soil is good this time around */
-  const nFarm=2+(rng()*2|0);
-  for(let i=0;i<nFarm;i++)
-    blob(3+(rng()*(SHOREX-10))|0,3+(rng()*(G-6))|0,2+(rng()*2|0),
-      c=>{if(c.t===T.EMPTY||c.t===T.MEADOW)c.t=T.FARM;});
+  const nFarm=ks(2)+(rng()*2|0);
+  for(let i=0;i<nFarm;i++){const[ax2,ay2]=rcIn(3,SHOREX-7,3,G-3);
+    blob(ax2,ay2,2+(rng()*2|0),c=>{if(c.t===T.EMPTY||c.t===T.MEADOW)c.t=T.FARM;});}
   /* harbor works: a warehouse cluster somewhere along the coast highway */
   {
-    let wy=clamp(fy+(rng()<0.5?-1:1)*(8+(rng()*10|0)),3,G-4)|0;
+    let wy=clamp(fy+(rng()<0.5?-1:1)*(8+(rng()*10|0)),SEAY0+2,SEAY1-2)|0;
     harborY=wy; /* remembered: the shipping stands off this row (see freighters) */
     for(let i=0;i<3;i++){
       const c=cellAt(SHOREX-1-(rng()*3|0),clamp(wy+((rng()*5)|0)-2,2,G-3)|0);
@@ -474,38 +539,40 @@ function genWorld(seed){
   }
   /* the monorail is only a rumor in 1974 — the first track is laid in 1988,
      and from there the line grows wherever the land value says to */
-  monoPath=null; monoClosed=false; monoG=null; gondG=null; buildMonoSet();
-  monorail={progress:0,trains:[{p:0},{p:0.5}]};
-  gondPath=null; gond={cabins:[{p:0.15},{p:0.62}]};
+  monos=[]; monoPlan=null; buildMonoSet();
+  gonds=[]; gondPlan=null; buildGondSet();
   /* boardwalk pier (opens 1986), clear of the founding row and river mouth */
   {
     const rivRow=py=>{for(let dx=0;dx<7;dx++){
       const a=cellAt(shoreAt(py)-dx,py),b=cellAt(shoreAt(py)-dx,py+1);
       if((a&&a.riv)||(b&&b.riv))return true;}return false};
-    let py=5+((rng()*(G-10))|0);
-    for(let tries=0;tries<30&&(Math.abs(py-fy)<3||rivRow(py));tries++)py=5+((rng()*(G-10))|0);
+    const pyR=()=>SEAY0+4+((rng()*(SEAY1-SEAY0-8))|0); /* where the bay is deep */
+    let py=pyR();
+    for(let tries=0;tries<30&&(Math.abs(py-fy)<3||rivRow(py));tries++)py=pyR();
     const x0=shoreAt(py)-2;
-    pier={y:py,x0,x1:x0+4+(rng()*3|0)};
+    pier={y:py,x0,x1:Math.min(x0+4+(rng()*3|0),ROWMAX[py]-1)};
   }
   /* lifeguard tower on a random stretch of sand */
   {
-    let hy=4+((rng()*(G-8))|0);
-    for(let tries=0;tries<20&&Math.abs(hy-pier.y)<4;tries++)hy=4+((rng()*(G-8))|0);
+    let hy=SEAY0+((rng()*(SEAY1-SEAY0))|0);
+    for(let tries=0;tries<20&&Math.abs(hy-pier.y)<4;tries++)hy=SEAY0+((rng()*(SEAY1-SEAY0))|0);
     hut={y:hy};
   }
   /* offshore wind farm sites (turn in 2020) */
   turbines=[];
   for(let i=0;i<3;i++){
-    const ty=4+((rng()*(G-8))|0);
-    turbines.push({x:Math.min(G-2,shoreAt(ty)+5+(rng()*4|0)),y:ty,ph:rng()*7});
+    const ty=SEAY0+2+((rng()*(SEAY1-SEAY0-4))|0);
+    turbines.push({x:Math.min(ROWMAX[ty]-1,shoreAt(ty)+5+(rng()*4|0)),y:ty,ph:rng()*7});
   }
   turbSet=new Map(turbines.map(t=>[idx(t.x,t.y),t]));
   /* boats & birds & sky; a few craft stay moored off the pier */
-  for(let i=0;i<3;i++)boats.push({y:6+rng()*(G-12),off:2.2+rng()*2.5,ph:rng()*7,sp:(0.12+rng()*0.1)*(rng()<.5?1:-1)});
-  for(let i=0;i<3;i++)boats.push({moored:true,x:pier.x1+1.2+rng()*1.8,y:pier.y-2.6+i*2.4,ph:rng()*7,off:0,sp:0});
+  const SEAH=SEAY1-SEAY0;
+  /* sailboats scatter across the whole bay — near the break to far offshore */
+  for(let i=0;i<6;i++)boats.push({y:SEAY0+2+rng()*(SEAH-4),fr:0.12+rng()*0.8,ph:rng()*7,sp:(0.12+rng()*0.1)*(rng()<.5?1:-1)});
+  for(let i=0;i<3;i++)boats.push({moored:true,x:Math.min(pier.x1+1.2+rng()*1.8,ROWMAX[pier.y]-0.4),y:pier.y-2.6+i*2.4,ph:rng()*7,off:0,sp:0});
   /* a coastal passenger ferry works the shoreline. Math.random so the service
-     never perturbs the seeded simulation; it runs seaward of the sailboats. */
-  for(let i=0;i<fl('ferries',2);i++)ferries.push({y:8+i*(G-16),off:3.4+Math.random()*1.0,
+     never perturbs the seeded simulation; it runs the near-to-mid water. */
+  for(let i=0;i<fl('ferries',2);i++)ferries.push({y:SEAY0+3+i*(SEAH-6),fr:0.28+i*0.22+Math.random()*0.1,
      sp:(0.18+Math.random()*0.05)*(i?-1:1),ph:Math.random()*7,c:i?'teal':'terra'});
   /* the harbor works are fed by sea. The first ship rides at anchor in the
      roadstead off the warehouse row, waiting on a berth; the rest steam the deep
@@ -516,33 +583,33 @@ function genWorld(seed){
     const anchored=i===0;
     freighters.push({
       anchored,
-      y: anchored?clamp(harborY+Math.random()*2.4-1.2,7,G-7):8+Math.random()*(G-16),
-      off: 4.6+Math.random()*0.6,
+      y: anchored?clamp(harborY+Math.random()*2.4-1.2,SEAY0+1,SEAY1-1):SEAY0+3+Math.random()*(SEAH-6),
+      fr: anchored?0.15+Math.random()*0.1:0.58+Math.random()*0.32,  /* anchored off the harbor; the rest steam the deep lane */
       sp: anchored?0:(0.045+Math.random()*0.022)*(Math.random()<0.5?1:-1),
       ph: Math.random()*7, st:(Math.random()*64)|0,
       c: Array.from({length:6},()=>CBOX[(Math.random()*CBOX.length)|0])});
   }
   /* dolphin pods roll through the open sea. Math.random so they never perturb the
      seeded simulation; they swim well seaward of the surf. */
-  for(let i=0;i<fl('dolphins',3);i++)dolphins.push({y:7+Math.random()*(G-14),off:4+Math.random()*2.2,
+  for(let i=0;i<fl('dolphins',4);i++)dolphins.push({y:SEAY0+2+Math.random()*(SEAH-4),fr:0.3+Math.random()*0.6,
      sp:(0.10+Math.random()*0.05)*(Math.random()<0.5?1:-1),ph:Math.random()*7});
   /* a whale or two cruise the deep bay (Math.random, no perturbation) */
-  for(let i=0;i<fl('whales',2);i++)whales.push({y:8+Math.random()*(G-16),off:2.5+Math.random()*3,
+  for(let i=0;i<fl('whales',2);i++)whales.push({y:SEAY0+3+Math.random()*(SEAH-6),fr:0.45+Math.random()*0.5,
      sp:(0.05+Math.random()*0.03)*(Math.random()<0.5?1:-1),ph:Math.random()*7});
-  for(let i=0;i<6;i++)birds.push({x:rng()*G,y:rng()*G,a:rng()*7,sp:0.9+rng()*0.6,h:70+rng()*40});
+  for(let i=0;i<8;i++){const[bx2,by2]=rc();birds.push({x:bx2,y:by2,a:rng()*7,sp:0.9+rng()*0.6,h:70+rng()*40});}
   /* a pelican flock glides over in V-formation (Math.random, no perturbation) */
-  {const d=Math.random()<0.5?1:-1; flock={x:d>0?-8:G+8,y:6+Math.random()*(G-12),h:92+Math.random()*22,dir:d,sp:0.55+Math.random()*0.2,n:7};}
-  for(let i=0;i<5;i++)clouds.push({x:rng()*G,y:4+rng()*(G-10),s:0.8+rng()*0.9,sp:0.06+rng()*0.05,rain:rng()<0.3});
+  {const d=Math.random()<0.5?1:-1; flock={x:d>0?-8:G+8,y:CTRY-16+Math.random()*32,h:92+Math.random()*22,dir:d,sp:0.55+Math.random()*0.2,n:7};}
+  for(let i=0;i<7;i++)clouds.push({x:rng()*G,y:CTRY-20+rng()*40,s:0.8+rng()*0.9,sp:0.06+rng()*0.05,rain:rng()<0.3});
   /* kites over the beach */
   for(let i=0;i<3;i++){
-    const ky=6+((rng()*(G-14))|0);
+    const ky=SEAY0+((rng()*(SEAY1-SEAY0))|0);
     kites.push({x:shoreAt(ky)-2,y:ky,ph:rng()*7,c:i%2?'coral':'gold'});
   }
   /* surfers wait in the break just off the beach. Math.random (not rng) so the
      lineup never perturbs the seeded simulation — count is fixed, spots vary. */
   const SURFC=['coral','gold','teal','white'];
-  for(let i=0;i<fl('surfers',7);i++){
-    surfers.push({y:5+((Math.random()*(G-10))|0),off:1.4+Math.random()*2.2,
+  for(let i=0;i<fl('surfers',9);i++){
+    surfers.push({y:SEAY0+((Math.random()*SEAH)|0),off:1.4+Math.random()*2.2,
                   ph:Math.random()*7,drift:(Math.random()<0.5?1:-1)*(0.05+Math.random()*0.06),
                   c:SURFC[(Math.random()*SURFC.length)|0]});
   }
@@ -615,7 +682,7 @@ function tick(){
   updateValue();
   if(year>=1988)growMonorail();
   growGondola();
-  const budget=31+(year-1974)*15;               /* development pacing (scaled with G) */
+  const budget=ks(31+(year-1974)*15);           /* development pacing (scaled with the plate) */
   const seaside=x=>x>SHOREX-4;                  /* keep the waterfront low-rise */
   /* street growth along corridors; bridges where a corridor meets the river */
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
@@ -625,16 +692,15 @@ function tick(){
       if(touch>0){
         const demand=countAround(x,y,2,n=>DEV.has(n.t));
         let p=0.02+0.05*Math.min(demand,4);
-        if(c.t===T.WATER)p*=0.45;               /* bridges cost more */
+        if(c.t===T.WATER)p*=0.18;               /* bridges cost dear — the river is a real barrier */
         if(rng()<p){c.bridge=c.t===T.WATER;c.t=T.ROAD;c.corr=false;}
       }
     }
   }
   /* parcels — development runs right out to the map's edge */
   if(devBudgetUsed<budget)
-  for(let i=0;i<480;i++){
-    const x=(rng()*G)|0, y=(rng()*G)|0;
-    const c=cells[idx(x,y)]; if(!c)continue;
+  for(let i=0;i<ks(480);i++){
+    const[x,y,c]=rc();
     if((c.t===T.EMPTY||c.t===T.MEADOW)&&!c.corr&&countAround(x,y,2,n=>n.t===T.ROAD)>0){
       const dev=countAround(x,y,1,n=>DEV.has(n.t));
       let p=0.22+0.06*dev+(greenNear(x,y,2)?0.12:0)+0.24*(c.val-0.5);
@@ -649,32 +715,31 @@ function tick(){
     }
   }
   /* farm clusters swell at their own edges while the town is young */
-  if(year<1998)for(let k=0;k<16;k++){
-    const x=1+(rng()*(SHOREX-3))|0, y=1+(rng()*(G-2))|0; const c=cells[idx(x,y)];
+  if(year<1998)for(let k=0;k<ks(16);k++){
+    const[x,y]=rcIn(1,SHOREX-2,1,G-1); const c=cells[idx(x,y)];
     if(c&&(c.t===T.EMPTY||c.t===T.MEADOW)&&!c.corr&&countAround(x,y,1,n=>n.t===T.FARM)>0&&rng()<0.3){
       c.t=T.FARM;c.th=0;c.h=0;c.age=0;
     }
   }
   /* urbanization: fields at the growing edge sell to developers
      (easier once the century turns; the far-west greenbelt holds out) */
-  for(let k=0;k<20;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  for(let k=0;k<ks(20);k++){
+    const[x,y,c]=rc();
     if(c&&c.t===T.FARM&&countAround(x,y,2,n=>DEV.has(n.t))>=(year<2000?3:2)
        &&rng()<0.05+0.3*(c.val-0.5)){
       c.t=T.RES;c.th=9+c.v*7;c.h=0;c.age=0;devBudgetUsed++;
     }
   }
   /* upgrades */
-  for(let k=0;k<240;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0; const c=cells[idx(x,y)];
-    if(!c)continue;
+  for(let k=0;k<ks(240);k++){
+    const[x,y,c]=rc();
     if(c.t===T.RES&&year>=1984&&!seaside(x)){
       const dev=countAround(x,y,1,n=>DEV.has(n.t));
       const inland=clamp((SHOREX-4-x)/14,0.15,1); /* keep the coast low-rise */
       if(dev>=3&&rng()<0.12*inland*(0.5+c.val)){c.t=T.MID;c.th=22+c.v*14;c.age=0;}
     } else if(c.t===T.COM&&year>=1996&&!seaside(x)){
       const com=countAround(x,y,1,n=>n.t===T.COM||n.t===T.TOWER);
-      const back=clamp((G+10-(x+y))/(G-2),0,1);   /* towers cluster inland */
+      const back=clamp((CTRX+CTRY+10-(x+y))/(G-2),0,1);   /* towers cluster inland */
       if(com>=2&&rng()<(0.14+0.20*back)*(0.5+c.val)){
         c.t=T.TOWER; c.th=(54+c.v*82)*(0.6+0.5*back); c.age=0; stats.towers++;
       }
@@ -686,15 +751,15 @@ function tick(){
   }
   /* harbor works: the warehouse cluster grows while shipping pays */
   if(year<1996)for(let k=0;k<6;k++){
-    const x=SHOREX-1-(rng()*4|0), y=1+(rng()*(G-2))|0; const c=cellAt(x,y);
+    const y=1+(rng()*(G-2))|0, x=SHOREX-1-(rng()*4|0); const c=cellAt(x,y);
     if(c&&c.t===T.EMPTY&&!c.corr&&roadNear(x,y)&&rng()<0.25){
       const near=countAround(x,y,2,n=>n.t===T.IND);
       if(near>=1&&near<4){c.t=T.IND;c.th=10+c.v*4;c.h=0;c.age=0;}
     }
   }
   /* rising land value turns old warehouses into lofts and market halls */
-  if(year>=2006)for(let k=0;k<8;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  if(year>=2006)for(let k=0;k<ks(8);k++){
+    const[x,y,c]=rc();
     if(c&&c.t===T.IND&&!c.loft&&c.val>0.45&&rng()<0.08){
       if(rng()<0.25){c.t=T.MARKET;c.th=0;c.h=0;}
       else {c.loft=true;c.th=16+c.v*8;}
@@ -702,16 +767,16 @@ function tick(){
     }
   }
   /* a shop ringed by shops near greenery becomes a market square */
-  if(year>=1992)for(let k=0;k<6;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  if(year>=1992)for(let k=0;k<ks(6);k++){
+    const[x,y,c]=rc();
     if(c&&c.t===T.COM&&countAround(x,y,1,n=>n.t===T.COM)>=3&&greenNear(x,y,2)
        &&countAround(x,y,4,n=>n.t===T.MARKET)===0&&rng()<0.3){
       c.t=T.MARKET;c.th=0;c.h=0;c.age=0;
     }
   }
   /* residents dig community gardens between the houses (2008+) */
-  if(year>=2008)for(let k=0;k<6;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  if(year>=2008)for(let k=0;k<ks(6);k++){
+    const[x,y,c]=rc();
     if(c&&c.t===T.RES&&countAround(x,y,1,n=>n.t===T.RES)>=3
        &&countAround(x,y,2,n=>n.t===T.GARDEN)===0&&rng()<0.05){
       c.t=T.GARDEN;c.th=0;c.h=0;c.age=0;
@@ -719,12 +784,12 @@ function tick(){
   }
   /* the woods: logged at the growing edge (conservation from 2000),
      creeping back wherever nothing stops them */
-  if(year<2000)for(let k=0;k<12;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  if(year<2000)for(let k=0;k<ks(12);k++){
+    const[x,y,c]=rc();
     if(c&&c.t===T.FOREST&&countAround(x,y,1,n=>n.t===T.ROAD||DEV.has(n.t))>=2&&rng()<0.12){c.t=T.EMPTY;c.age=0;}
   }
   for(let k=0;k<10;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+    const[x,y,c]=rc();
     if(c&&(c.t===T.EMPTY||c.t===T.MEADOW)&&c.age>16&&countAround(x,y,1,n=>n.t===T.FOREST)>=2&&rng()<0.2){c.t=T.FOREST;c.age=0;}
   }
   /* old-growth: deep undisturbed woods mature into redwood groves. hashCell-gated
@@ -746,8 +811,8 @@ function tick(){
        &&hashCell(x,y,seedNum^0x9E37)<0.5){c.t=T.FOREST;c.age=0;}
   }
   /* a paved plaza opens beside busy civic halls (1996+) */
-  if(year>=1996)for(let k=0;k<6;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  if(year>=1996)for(let k=0;k<ks(6);k++){
+    const[x,y,c]=rc();
     if(c&&(c.t===T.EMPTY||c.t===T.RES)&&c.val>0.6&&countAround(x,y,1,n=>n.t===T.CIVIC)>=1
        &&countAround(x,y,3,n=>n.t===T.PLAZA)===0&&rng()<0.2){c.t=T.PLAZA;c.h=0;c.th=0;c.age=0;}
   }
@@ -770,8 +835,8 @@ function tick(){
     }
   }
   /* far fields quietly go solar (2012+) */
-  if(year>=2012)for(let k=0;k<6;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  if(year>=2012)for(let k=0;k<ks(6);k++){
+    const[x,y,c]=rc();
     if(c&&c.t===T.FARM&&countAround(x,y,2,n=>DEV.has(n.t))===0&&rng()<0.02){c.t=T.SOLARF;c.age=0;}
   }
   /* dry inland farms terrace into vineyards — wine country on the golden hills
@@ -813,8 +878,9 @@ function tick(){
      flank the water on two sides (2000+). hashCell-gated; reuses bridge rendering. */
   if(year>=2000)for(let i=0;i<G*G;i++){
     const x=i%G,y=(i/G)|0,c=cells[i];
-    if(c.t===T.WATER&&c.riv&&countAround(x,y,1,n=>n.t===T.ROAD)>=3
-       &&hashCell(x,y,seedNum^0xB21D)<0.55){c.bridge=true;c.t=T.ROAD;c.corr=false;c.age=0;}
+    if(c.t===T.WATER&&c.riv&&countAround(x,y,1,n=>n.t===T.ROAD)>=4
+       &&countAround(x,y,1,n=>n.t===T.ROAD&&n.bridge)===0   /* keep spans apart — no bridge beside a bridge */
+       &&hashCell(x,y,seedNum^0xB21D)<0.14){c.bridge=true;c.t=T.ROAD;c.corr=false;c.age=0;}
   }
   /* rooftop solar spreads by imitation once panels get cheap (2010+): a diffusion
      CA — a roof is far likelier to convert the more of its neighbors already have.
@@ -850,11 +916,11 @@ function tick(){
   /* fire: timber blocks smolder until the 1991 firehouse (gone by 2006);
      dry-season lightning takes a patch of forest now and then */
   if(year<2006&&rng()<0.08){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+    const[x,y,c]=rc();
     if(c&&(c.t===T.RES||c.t===T.COM)&&c.age>26&&c.fire===0&&rng()<(year<1992?0.5:0.12))c.fire=4;
   }
   if(year<2030&&rng()<0.03){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+    const[x,y,c]=rc();
     if(c&&c.t===T.FOREST&&c.fire===0&&rng()<0.4)c.fire=4;
   }
   firesNow=false;
@@ -871,8 +937,8 @@ function tick(){
     } else if(c.t===T.BURNT&&c.age>6){c.t=T.EMPTY;c.age=0;}
   }
   /* districts: blocks slowly vote themselves a shared identity (majority CA) */
-  for(let k=0;k<50;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  for(let k=0;k<ks(50);k++){
+    const[x,y,c]=rc();
     if(!c||!DEV.has(c.t))continue;
     const votes=[0,0,0,0];
     nbrs6(x,y,(a,b)=>{const n=cellAt(a,b); if(n&&DEV.has(n.t))votes[n.dist]++;});
@@ -899,8 +965,8 @@ function tick(){
     else if((x===sx&&y===sy)||(countAround(x,y,1,n=>n.t===T.MEADOW&&n.bloom>3)>0&&rng()<0.6))c.bloom=7;
   }
   /* park zoning: dense areas without a park plant one */
-  for(let k=0;k<30;k++){
-    const x=4+(rng()*(G-8))|0, y=4+(rng()*(G-8))|0; const c=cells[idx(x,y)];
+  for(let k=0;k<ks(30);k++){
+    const[x,y]=rcIn(4,G-4,4,G-4); const c=cells[idx(x,y)];
     if(!c||!DEV.has(c.t))continue;
     if(countAround(x,y,3,n=>n.t===T.PARK)===0&&countAround(x,y,2,n=>DEV.has(n.t))>=5){
       /* convert a nearby modest parcel */
@@ -924,7 +990,7 @@ function tick(){
   for(const[cy,kind]of civics){
     if(year>=cy&&!cells.some(c=>c.t===T.CIVIC&&c.kind===kind)){
       for(let tries=0;tries<90;tries++){
-        const x=2+(rng()*(SHOREX-3))|0, y=2+(rng()*(G-4))|0; const c=cells[idx(x,y)];
+        const[x,y]=rcIn(2,SHOREX-1,2,G-2); const c=cells[idx(x,y)];
         if(c&&(c.t===T.EMPTY||c.t===T.RES)&&roadNear(x,y)){
           c.t=T.CIVIC;c.kind=kind;c.th=kind==='parliament'?34:20+c.v*14;c.h=0;c.age=0;break;}
       }
@@ -933,7 +999,7 @@ function tick(){
   /* every ~3500 residents earns the district another school */
   if(stats.pop>3500*(stats.schools+1)&&rng()<0.25){
     for(let tries=0;tries<60;tries++){
-      const x=2+(rng()*(SHOREX-3))|0, y=2+(rng()*(G-4))|0; const c=cells[idx(x,y)];
+      const[x,y]=rcIn(2,SHOREX-1,2,G-2); const c=cells[idx(x,y)];
       if(c&&(c.t===T.EMPTY||c.t===T.RES)&&roadNear(x,y)
          &&countAround(x,y,4,n=>n.t===T.CIVIC&&n.kind==='school')===0){
         c.t=T.CIVIC;c.kind='school';c.th=18+c.v*8;c.h=0;c.age=0;break;}
@@ -990,15 +1056,15 @@ function tick(){
     }
   }
   /* ball fields open near schools and parks (1980+) */
-  if(year>=1980)for(let k=0;k<4;k++){
-    const x=(rng()*G)|0,y=(rng()*G)|0;const c=cells[idx(x,y)];
+  if(year>=1980)for(let k=0;k<ks(4);k++){
+    const[x,y,c]=rc();
     if(c&&c.t===T.EMPTY&&!c.corr&&roadNear(x,y)
        &&countAround(x,y,2,n=>n.t===T.PARK||(n.t===T.CIVIC&&n.kind==='school'))>0
        &&countAround(x,y,3,n=>n.t===T.FIELD)===0&&rng()<0.1){c.t=T.FIELD;c.age=0;}
   }
   /* the city earns a stadium (1998+); a second past 15k residents */
   if(year>=1998&&stats.stad<(stats.pop>15000?2:1))for(let k=0;k<30;k++){
-    const x=2+(rng()*(SHOREX-4))|0,y=2+(rng()*(G-4))|0;const c=cells[idx(x,y)];
+    const[x,y]=rcIn(2,SHOREX-2,2,G-2);const c=cells[idx(x,y)];
     if(c&&(c.t===T.EMPTY||c.t===T.RES||c.t===T.COM)&&c.val>0.52&&roadNear(x,y)
        &&countAround(x,y,2,n=>DEV.has(n.t))>=4){c.t=T.STADIUM;c.h=0;c.th=0;c.age=0;break;}
   }
@@ -1069,20 +1135,20 @@ function tick(){
     if(countAround(x,y,1,n=>DEV.has(n.t))<2)continue;
     if(hashCell(x,y,seedNum^0xB5B5)<0.05)c.stop=1;
   }
-  /* monorail construction 1988-1995 */
-  monorail.progress=monoClosed?1:(monoPath?Math.min(0.9,monoPath.length/110):0);
   recount();
   syncFleet();
 }
 
-/* the monorail grows the way the streets do. From 1988 a line crawls out of
-   the city's highest-value parcel one hex at a time, riding the three hex
-   axes in long surveyed runs and steering wherever the land-value field is
-   rich enough; track is only laid where value clears the bar, so the line
-   genuinely waits for the city to earn it. Once it has wandered far enough
-   it hunts down its own first pylon and the loop closes. Route dice come
-   from a private PRNG (seedNum^0xC17A) so the shared rng() stream — and the
-   whole downstream city — stays untouched. */
+/* monorails grow the way the streets do. From 1988 the network opens line by
+   line — a plan rolls 1–3 loops with staggered opening years — and each line
+   crawls out of a rich developed parcel (in its own quarter of the city, clear
+   of the track already down) one hex at a time, riding the three hex axes in
+   long surveyed runs and steering wherever the land-value field is rich enough.
+   Track is only laid where value clears that line's own bar, so it genuinely
+   waits for the city to earn it. Once it has wandered far enough it hunts down
+   its own first pylon and the loop closes. Every line's route dice come from
+   its own private PRNG (seedNum^0xC17A per line) so the shared rng() stream —
+   and the whole downstream city — stays untouched. */
 const axStep=(x,y,d)=>d===0?[x+1,y]:d===3?[x-1,y]
   :d===1?[x+((y&1)?1:0),y+1]:d===2?[x+((y&1)?0:-1),y+1]
   :d===5?[x+((y&1)?1:0),y-1]:[x+((y&1)?0:-1),y-1];
@@ -1101,48 +1167,73 @@ function railValue(x,y,d){
   }
   return v;
 }
-function growMonorail(){
-  if(monoClosed)return;
-  if(!monoG){ /* 1988: one survey, then the line is on its own */
-    let best=null,bv=-1;
-    for(let y=2;y<G-2;y++)for(let x=2;x<=SHOREX-3;x++){
-      const c=cells[idx(x,y)];
-      if(!DEV.has(c.t))continue;
-      const v=c.val+hashCell(x,y,seedNum^0x40A1)*0.08;
-      if(v>bv){bv=v;best=[x,y];}
-    }
-    if(!best)return; /* nothing built yet — keep waiting */
-    let rs=(seedNum^0xC17A)>>>0;
-    const rr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
-    monoG={rr,d:(rr()*6)|0,run:4+(rr()*9|0),minLen:40+(rr()*24|0),wait:0,relax:0};
-    monoPath=[best]; buildMonoSet();
-    return;
+/* the network plan: how many loops this city will open, and when. Rolled once
+   from the shared monorail seed so it's stable across a session. */
+function buildMonoPlan(){
+  let rs=(seedNum^0xC17A)>>>0;
+  const rr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
+  const target=1+(rr()<0.6?1:0)+(rr()<0.3?1:0);   /* 1..3 lines */
+  const years=[]; let y=1988;
+  for(let i=0;i<target;i++){years.push(y|0); y+=9+(rr()*15|0);} /* staggered openings */
+  monoPlan={rr,target,years};
+}
+/* break ground on line `li`: survey the richest developed parcel that isn't
+   already close to existing track, then hand the line its own route PRNG and
+   randomized temperament (heading, run length, target size, value bar). */
+function seedMono(li){
+  let best=null,bv=-1;
+  for(let y=2;y<G-2;y++)for(let x=2;x<=SHOREX-3;x++){
+    const c=cells[idx(x,y)];
+    if(!DEV.has(c.t))continue;
+    if(monoSet.has(idx(x,y)))continue;              /* never atop track already down */
+    let pen=0;                                       /* each line wants its own quarter */
+    for(const m of monos){const[hx,hy]=m.path[0]; if(hexDist(x,y,hx,hy)<9)pen+=0.5;}
+    const v=c.val+hashCell(x,y,seedNum^(0x40A1+li))*0.08-pen;
+    if(v>bv){bv=v;best=[x,y];}
   }
-  const g=monoG;
+  if(!best)return false; /* nothing built yet — keep waiting */
+  let rs=((seedNum^0xC17A^((li+1)*0x9E3779B1))>>>0);
+  const lr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
+  const g={rr:lr,d:(lr()*6)|0,run:3+(lr()*12|0),minLen:32+(lr()*50|0),
+           bar:0.44+lr()*0.20,deadline:(year+12+(lr()*14|0))|0,wait:0,relax:0};
+  monos.push({path:[best],closed:false,trains:[{p:0},{p:0.5}],g});
+  buildMonoSet();
+  return true;
+}
+function growMonorail(){
+  if(!monoPlan)buildMonoPlan();
+  const p=monoPlan;
+  if(monos.length<p.target&&year>=p.years[monos.length])seedMono(monos.length);
+  for(const m of monos)if(!m.closed)stepMono(m);
+}
+/* advance one open line by a span or two — the value-hunting walk, its bar
+   gate, and the homeward hunt for its own first pylon (see the header note). */
+function stepMono(m){
+  const g=m.g, path=m.path;
   const tries=1+(g.rr()<0.55?1:0);    /* the crews lay one or two spans a tick */
-  for(let t=0;t<tries&&!monoClosed;t++){
-    const L=monoPath.length,[hx,hy]=monoPath[L-1],[sx,sy]=monoPath[0];
+  for(let t=0;t<tries&&!m.closed;t++){
+    const L=path.length,[hx,hy]=path[L-1],[sx,sy]=path[0];
     if((L>=g.minLen||g.homing)&&hexDist(hx,hy,sx,sy)===1){ /* it bites its tail */
-      monoClosed=true;
+      m.closed=true;
       /* one train roughly every 30 hexes so headway stays constant — a longer
          loop earns a busier line instead of pinning at two */
       const n=clamp(Math.round(L/30),2,6);
-      monorail.trains=Array.from({length:n},(_,i)=>({p:i/n}));
+      m.trains=Array.from({length:n},(_,i)=>({p:i/n}));
       buildMonoSet();
       return;
     }
-    /* homeward mode: after enough wandering (or a stubborn decade, or a boxed-in
-       railhead) the value hunt gives way to closing the loop */
-    if(L>=g.minLen+30||year>=2004||g.relax>=2)g.homing=true;
+    /* homeward mode: after enough wandering (or a stubborn decade past its
+       deadline, or a boxed-in railhead) the value hunt gives way to closing */
+    if(L>=g.minLen+30||year>=g.deadline||g.relax>=2)g.homing=true;
     if(g.homing){
       if(!g.route||!g.route.length){
-        g.route=monoRouteHome(g);
+        g.route=monoRouteHome(m);
         if(!g.route){ /* no clean route home — the alignment failed its review:
                          tear up recent track and resurvey from further back
                          (retreating along its own trail always un-walls the head) */
-          monoPath.length-=Math.min(6,monoPath.length-2);
-          const M=monoPath.length;
-          if(M>=2){const[px2,py2]=monoPath[M-2],[qx,qy]=monoPath[M-1];
+          path.length-=Math.min(6,path.length-2);
+          const M=path.length;
+          if(M>=2){const[px2,py2]=path[M-2],[qx,qy]=path[M-1];
             for(let k=0;k<6;k++){const[ax2,ay2]=axStep(px2,py2,k);
               if(ax2===qx&&ay2===qy){g.d=k;break;}}}
           buildMonoSet();
@@ -1152,7 +1243,7 @@ function growMonorail(){
       const[nx,ny]=g.route.shift();
       for(let k=0;k<6;k++){const[qx,qy]=axStep(hx,hy,k);
         if(qx===nx&&qy===ny){g.d=k;break;}}
-      monoPath.push([nx,ny]);
+      path.push([nx,ny]);
       buildMonoSet();
       continue;
     }
@@ -1164,11 +1255,11 @@ function growMonorail(){
     for(const c of cand){
       const[nx,ny]=axStep(hx,hy,c);
       if(!inB(nx,ny)||nx<1||nx>SHOREX-2||ny<1||ny>G-2)continue;
-      if(monoSet.has(idx(nx,ny)))continue;              /* never over itself */
+      if(monoSet.has(idx(nx,ny)))continue;              /* never over any line */
       let hug=0,door=0; /* stay off its own corridor — that pressure is what
                     bends the line around the core instead of back through it */
-      nbrs6(nx,ny,(qx,qy)=>{const i2=monoSet.get(idx(qx,qy));
-        if(i2!==undefined&&i2<L-2){hug++;if(i2<2)door++;}});
+      nbrs6(nx,ny,(qx,qy)=>{const e=monoSet.get(idx(qx,qy));
+        if(e!==undefined&&e.m===m&&e.i<L-2){hug++;if(e.i<2)door++;}});
       if(door&&L>4)continue; /* the first pylon's doorstep stays clear, always —
                     the route home must never be built shut */
       if(hug&&g.relax<1)continue;
@@ -1177,10 +1268,10 @@ function growMonorail(){
       if(v>bs){bs=v;bc=c;bx=nx;by=ny;bval=cellAt(nx,ny).val;}
     }
     if(bc<0){g.relax++;return;}    /* boxed in — widen the survey next tick */
-    /* the CA gate: track only goes down where value clears the bar; waiting
-       erodes the bar a little, the way a stalled project lowers its standards */
-    if(bval<0.53-g.wait*0.0018){g.wait++;return;}
-    monoPath.push([bx,by]);
+    /* the CA gate: track only goes down where value clears this line's bar;
+       waiting erodes the bar a little, the way a stalled project lowers its standards */
+    if(bval<g.bar-g.wait*0.0018){g.wait++;return;}
+    path.push([bx,by]);
     if(bc!==g.d){g.d=bc;g.run=5+(g.rr()*10|0);}
     g.run--; g.wait=0; g.relax=0;
     buildMonoSet();
@@ -1191,8 +1282,9 @@ function growMonorail(){
    homeward leg still reads as long surveyed track — and it can thread around
    the line's own trail instead of walking into it. The route is then laid
    one span a tick like every other stretch of track. */
-function monoRouteHome(g){
-  const L=monoPath.length,[hx,hy]=monoPath[L-1],[sx,sy]=monoPath[0];
+function monoRouteHome(ln){
+  const path=ln.path, g=ln.g;
+  const L=path.length,[hx,hy]=path[L-1],[sx,sy]=path[0];
   const tgt=new Set(); /* the free parcels beside the first pylon */
   nbrs6(sx,sy,(qx,qy)=>{
     if(inB(qx,qy)&&qx>=1&&qx<=SHOREX-2&&qy>=1&&qy<=G-2&&!monoSet.has(idx(qx,qy)))
@@ -1367,7 +1459,7 @@ function syncFleet(){
   const riverCells=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){const c=cells[idx(x,y)]; if(c.t===T.WATER&&c.riv)riverCells.push([x,y]);}
   const KAYC=['coral','gold','teal','lav'];
-  const wantKayaks=fl('kayaks',Math.min(5,(riverCells.length/6)|0));
+  const wantKayaks=fl('kayaks',Math.min(9,(riverCells.length/6)|0));
   while(kayaks.length<wantKayaks&&riverCells.length){
     const[x,y]=riverCells[(Math.random()*riverCells.length)|0];
     kayaks.push({x,y,ox:(Math.random()-0.5)*0.4,ph:Math.random()*7,a:Math.random()<0.5?1:-1,c:KAYC[(Math.random()*KAYC.length)|0]});
@@ -1377,16 +1469,16 @@ function syncFleet(){
   const JOGC=['coral','teal','gold','lav','terra'];
   const wantJoggers=fl('joggers',Math.min(7,2+(stats.pop/9000|0)));
   while(joggers.length<wantJoggers){
-    joggers.push({y:8+Math.random()*(G-16),off:-0.75+Math.random()*0.3,
+    joggers.push({y:SEAY0+3+Math.random()*(SEAY1-SEAY0-6),off:-0.75+Math.random()*0.3,
       sp:(0.28+Math.random()*0.12)*(Math.random()<0.5?1:-1),ph:Math.random()*7,c:JOGC[(Math.random()*JOGC.length)|0]});
   }
   const wantShuttles=year>=2030?6:(year>=2012?3:0);
   while(shuttles.length<wantShuttles){
-    shuttles.push({x:rng()*G*0.6+3,y:rng()*G*0.6+3,tx:0,ty:0,tm:0});
+    {const[sx,sy]=rcIn(4,SHOREX-4,4,G-4); shuttles.push({x:sx,y:sy,tx:0,ty:0,tm:0});}
   }
   /* hot-air balloons drift over on fair days (1998+) */
   while(year>=1998&&balloons.length<2){
-    balloons.push({x:-6-balloons.length*18,y:6+rng()*(G-12),sp:0.10+rng()*0.06,ph:rng()*7,
+    balloons.push({x:-6-balloons.length*18,y:CTRY-18+rng()*36,sp:0.10+rng()*0.06,ph:rng()*7,
                    c:balloons.length?['teal','sage']:['coral','gold']});
   }
   /* fair-weather balloon festival: a colorful fleet joins the two regulars.
@@ -1394,7 +1486,7 @@ function syncFleet(){
   const BALC=[['lav','white'],['gold','terra'],['sage','cream'],['coral','cream'],['teal','gold']];
   while(year>=1998&&balloons.length<fl('balloons',7)){
     const i=balloons.length;
-    balloons.push({x:-6-i*11-Math.random()*8,y:6+Math.random()*(G-12),sp:0.09+Math.random()*0.07,
+    balloons.push({x:-6-i*11-Math.random()*8,y:CTRY-18+Math.random()*36,sp:0.09+Math.random()*0.07,
                    ph:Math.random()*7,sc:0.8+Math.random()*0.55,c:BALC[i%BALC.length]});
   }
   /* a city helicopter hops between rooftop helipads (2012+, needs 2 pads).
@@ -1462,7 +1554,10 @@ function stepDog(d,dt){
 }
 function stepShuttle(s,dt){
   s.tm-=dt;
-  if(s.tm<=0){s.tx=3+Math.random()*(SHOREX-6);s.ty=3+Math.random()*(G-8);s.tm=10+Math.random()*8;}
+  if(s.tm<=0){/* a target on the plate, inland of the shore */
+    for(let i=0;i<24;i++){const tx=3+Math.random()*(SHOREX-6),ty=3+Math.random()*(G-6);
+      if(inB(tx|0,ty|0)){s.tx=tx;s.ty=ty;break;}}
+    s.tm=10+Math.random()*8;}
   s.x=lerp(s.x,s.tx,dt*0.10); s.y=lerp(s.y,s.ty,dt*0.10);
 }
 
@@ -1485,9 +1580,9 @@ function resize(){
   const atFit=had&&zoom===1&&Math.abs(offX-fitX)<0.5&&Math.abs(offY-fitY)<0.5;
   vpW=innerWidth; vpH=innerHeight;
   cvs.width=innerWidth*dpr; cvs.height=innerHeight*dpr;
-  wldW=(G+0.5)*CW+24; wldH=G*ROWY+VR+SLAB+150;     /* 150px headroom for towers+rail */
+  wldW=G*CW+24; wldH=G*ROWY+VR+SLAB+150;           /* 150px headroom for towers+rail */
   fitScale=Math.min(innerWidth*0.99/wldW, innerHeight*0.97/wldH);
-  fitX=(innerWidth-(G+0.5)*CW*fitScale)/2; fitY=(innerHeight-wldH*fitScale)/2+142*fitScale;
+  fitX=(innerWidth-G*CW*fitScale)/2; fitY=(innerHeight-wldH*fitScale)/2+142*fitScale;
   scale=fitScale*zoom;
   if(!had||atFit){offX=fitX; offY=fitY;}
   else{offX=innerWidth/2-wcx*scale; offY=innerHeight/2-wcy*scale; clampPan();}
@@ -1768,6 +1863,7 @@ function windFlag(bx,by,dir,L,H,color,ph){
 
 function drawCell(x,y){
   const c=cells[idx(x,y)];
+  if(c.t===T.VOID)return;   /* off the plate — nothing to draw here */
   const gx=x+0.5, gy=y+0.5;
   const v=c.v;
   switch(c.t){
@@ -3073,36 +3169,49 @@ function drawBuilding(c,x,y,gx,gy){
 
 /* monorail per-cell segment */
 const monoSet=new Map(), gondSet=new Map();
-const GONDH=26; /* cable-car height — clears the low-rise coast */
-function buildGondSet(){gondSet.clear();if(!gondPath)return;gondPath.forEach(([x,y],i)=>gondSet.set(idx(x,y),i));}
-/* the scenic aerial tram grows the same way the monorail does, just gentler:
-   from ~1990 a line seeded near the pier creeps south over the shore strip
-   one span at a time, swinging between the two seaward diagonals wherever
-   the parcels below are worth the view, and pausing whenever they aren't.
-   Private PRNG (seedNum^0x60D0) so the shared rng() stream stays untouched. */
+function buildGondSet(){gondSet.clear();if(!gonds)return;
+  for(const g of gonds)if(g.path)g.path.forEach(([x,y],i)=>gondSet.set(idx(x,y),{g,i}));}
+/* scenic aerial trams grow the way the monorails do, just gentler: a plan rolls
+   1–3 lines, each seeded over its own stretch of shore. From its own opening
+   year a line creeps one span at a time, swinging between the two seaward
+   diagonals wherever the parcels below are worth the view, pausing whenever
+   they aren't, and steering clear of the other cables. Each line rolls its own
+   heading bias, length, value bar and ride height. Every line's dice come from
+   a private PRNG (seedNum^0x60D0 per line) so the shared rng() stays untouched. */
+function buildGondPlan(){
+  let rs=(seedNum^0x60D0)>>>0;
+  const rr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
+  const target=1+(rr()<0.55?1:0)+(rr()<0.28?1:0);   /* 1..3 aerial lines */
+  gondPlan={rr,target};
+}
+function seedGond(li){
+  let rs=((seedNum^0x60D0^((li+1)*0x85EBCA6B))>>>0);
+  const lr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
+  const pref=pier?pier.y:(G/2)|0;
+  gonds.push({rr:lr,path:null,cabins:[{p:0.15},{p:0.62}],
+    start:1990+lr()*12, target:9+(lr()*13|0), fam:lr()<0.5?1:-1,
+    run:2+(lr()*5|0), ph:0, wait:0, bar:0.42+lr()*0.18, h:22+lr()*12,
+    ax:clamp(SHOREX-6+(lr()*5|0),4,G-8),
+    ay:clamp((li===0?pref-(4+lr()*7):8+lr()*(G-16))|0,4,G-4)});
+}
 function growGondola(){
-  if(!gondG){
-    if(year<1990)return;
-    let rs=(seedNum^0x60D0)>>>0;
-    const rr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
-    gondG={rr,start:1990+rr()*9,target:10+(rr()*7|0),fam:rr()<0.5?1:-1,
-           run:2+(rr()*5|0),ph:0,wait:0,
-           ax:clamp(SHOREX-5+(rr()*4|0),4,G-8),
-           ay:clamp((pier?pier.y:G/2)-(4+(rr()*7|0)),4,G-4)};
-    return;
-  }
-  const g=gondG;
-  if(!gondPath){ /* ground is broken once the anchor parcel is worth riding over */
+  if(!gondPlan)buildGondPlan();
+  while(gonds.length<gondPlan.target)seedGond(gonds.length);
+  for(const g of gonds)stepGond(g);
+}
+function stepGond(g){
+  if(!g.path){ /* ground is broken once the anchor parcel is worth riding over */
     if(year<g.start)return;
+    if(gondSet.has(idx(g.ax,g.ay))){g.ay=clamp(g.ay+(g.rr()<0.5?2:-2),4,G-4);return;}
     const c=cellAt(g.ax,g.ay);
-    if(!c||c.val<0.5-g.wait*0.002){g.wait++;return;}
-    gondPath=[[g.ax,g.ay]]; g.wait=0; buildGondSet();
+    if(!c||c.val<g.bar-g.wait*0.002){g.wait++;return;}
+    g.path=[[g.ax,g.ay]]; g.wait=0; buildGondSet();
     return;
   }
-  const L=gondPath.length;
-  if(L>=g.target)return;                       /* the line is done */
-  if((g.ph=(g.ph+1)%3))return;                 /* a span every third tick */
-  const[tx,ty]=gondPath[L-1];
+  const L=g.path.length;
+  if(L>=g.target)return;                        /* the line is done */
+  if((g.ph=(g.ph+1)%3))return;                  /* a span every third tick */
+  const[tx,ty]=g.path[L-1];
   if(ty>=G-3)return;
   const lo=SHOREX-6, hi=Math.min(G-5,SHOREX+4); /* stay over the low-rise strip */
   if(--g.run<0){ /* survey both seaward diagonals, follow the value */
@@ -3114,35 +3223,40 @@ function growGondola(){
   if(nx<lo||nx>hi){g.fam=-g.fam;d=g.fam>0?1:2;[nx,ny]=axStep(tx,ty,d);}
   const c=cellAt(nx,ny);
   if(!c)return;
-  if(c.val<0.5-g.wait*0.002){g.wait++;return;} /* waits for the shore to earn it */
+  if(gondSet.has(idx(nx,ny))){g.fam=-g.fam;return;} /* keep clear of the other cables */
+  if(c.val<g.bar-g.wait*0.002){g.wait++;return;} /* waits for the shore to earn it */
   /* keep the cabins where they are while the line lengthens under them */
-  if(L>1){const k=(L-1)/L;for(const cb of gond.cabins)cb.p=cb.p<0.5?cb.p*k:1-(1-cb.p)*k;}
-  gondPath.push([nx,ny]); g.wait=0;
+  if(L>1){const k=(L-1)/L;for(const cb of g.cabins)cb.p=cb.p<0.5?cb.p*k:1-(1-cb.p)*k;}
+  g.path.push([nx,ny]); g.wait=0;
   buildGondSet();
 }
-function drawGondAt(x,y,i){
+function drawGondAt(x,y,e){
+  const g=e.g,i=e.i,path=g.path,H=g.h;
   const[cx,cy]=ctr(x,y);
-  if(i%3===0)prismS(cx,cy,0.028,0.028,0,GONDH,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85)); /* pylon */
-  if(i+1<gondPath.length){const n=gondPath[i+1],[nx,ny]=ctr(n[0],n[1]);
+  if(i%3===0||i===path.length-1)prismS(cx,cy,0.028,0.028,0,H,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85)); /* pylon — always one at the terminal so the cable never overshoots */
+  if(i+1<path.length){const n=path[i+1],[nx,ny]=ctr(n[0],n[1]);
     ctx.strokeStyle=col('ink',1.05);ctx.lineWidth=0.9;
-    ctx.beginPath();ctx.moveTo(cx,cy-GONDH);ctx.lineTo(nx,ny-GONDH);ctx.stroke();}
+    ctx.beginPath();ctx.moveTo(cx,cy-H);ctx.lineTo(nx,ny-H);ctx.stroke();}
 }
-function gondPos(p){ /* ping-pong along the open line -> [sx,sy,cellx,celly] */
-  const L=gondPath.length, t=p<0.5?p*2:(2-p*2), f=t*(L-1), i=Math.min(L-2,f|0), fr=f-i;
-  const A=ctr(gondPath[i][0],gondPath[i][1]), B=ctr(gondPath[i+1][0],gondPath[i+1][1]);
-  return[lerp(A[0],B[0],fr),lerp(A[1],B[1],fr),gondPath[i][0],gondPath[i][1]];
+function gondPos(g,p){ /* ping-pong along one open line -> [sx,sy,cellx,celly] */
+  const path=g.path, L=path.length, t=p<0.5?p*2:(2-p*2), f=t*(L-1), i=Math.min(L-2,f|0), fr=f-i;
+  const A=ctr(path[i][0],path[i][1]), B=ctr(path[i+1][0],path[i+1][1]);
+  return[lerp(A[0],B[0],fr),lerp(A[1],B[1],fr),path[i][0],path[i][1]];
 }
-/* candidate stop indices: hash-spaced 4-8 apart, not an i%6 metronome;
-   a stop only becomes a station once its neighborhood is busy */
-const monoStops=new Set();
-function buildMonoSet(){monoSet.clear();monoStops.clear();if(!monoPath)return;
-  monoPath.forEach(([x,y],i)=>monoSet.set(idx(x,y),i));
-  let gap=0;
-  for(let i=0;i<monoPath.length;i++){
-    if(--gap>0)continue;
-    const[x,y]=monoPath[i];
-    monoStops.add(i);
-    gap=4+(hashCell(x,y,seedNum^0x57A7)*5|0);
+/* rebuild the cell->line lookup and each line's stop set. Candidate stops are
+   hash-spaced 4-8 apart, not an i%6 metronome; a stop only becomes a station
+   once its neighborhood is busy. */
+function buildMonoSet(){monoSet.clear();if(!monos)return;
+  for(const m of monos){
+    m.stops=new Set();
+    m.path.forEach(([x,y],i)=>monoSet.set(idx(x,y),{m,i}));
+    let gap=0;
+    for(let i=0;i<m.path.length;i++){
+      if(--gap>0)continue;
+      const[x,y]=m.path[i];
+      m.stops.add(i);
+      gap=4+(hashCell(x,y,seedNum^0x57A7)*5|0);
+    }
   }
 }
 const RAILH=40;
@@ -3150,16 +3264,17 @@ function hexAdj(x,y,qx,qy){
   for(const[dx,dy]of nbrDirs(y))if(x+dx===qx&&y+dy===qy)return true;
   return false;
 }
-function drawMonoAt(x,y,i){
+function drawMonoAt(x,y,e){
+  const m=e.m, i=e.i, path=m.path, closed=m.closed;
   const[cx,cy]=ctr(x,y);
-  if(!monoClosed&&i>=monoPath.length-1){ /* the railhead: a fresh pylon, beams to come */
+  if(!closed&&i>=path.length-1){ /* the railhead: a fresh pylon, beams to come */
     prismS(cx,cy,0.045,0.045,0,RAILH,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85));
     return;
   }
   if(i%2===0){ /* pylon, planted under the beam */
     prismS(cx,cy,0.045,0.045,0,RAILH,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85));
   }
-  if(monoStops.has(i)&&countAround(x,y,1,n=>DEV.has(n.t))>=3){ /* a station at the busy stops */
+  if(m.stops.has(i)&&countAround(x,y,1,n=>DEV.has(n.t))>=3){ /* a station at the busy stops */
     prismS(cx,cy,0.17,0.17,0,2,col('deck',1),col('deckDk',0.7),col('deckDk',0.9));       /* platform */
     prismS(cx,cy,0.02,0.02,2,RAILH-4.5,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85)); /* post */
     prismS(cx,cy,0.15,0.15,RAILH-4.5,RAILH-3,col('teal',1),col('tealDk',0.6),col('tealDk',0.85)); /* canopy */
@@ -3175,9 +3290,9 @@ function drawMonoAt(x,y,i){
   }
   /* beam toward next+prev (half segments); an open, still-growing line
      has no wrap segment between head and tail */
-  const L=monoPath.length, segs=[];
-  if(monoClosed||i+1<L)segs.push(monoPath[(i+1)%L]);
-  if(monoClosed||i>0)segs.push(monoPath[(i-1+L)%L]);
+  const L=path.length, segs=[];
+  if(closed||i+1<L)segs.push(path[(i+1)%L]);
+  if(closed||i>0)segs.push(path[(i-1+L)%L]);
   ctx.lineCap='round';
   for(const[qx,qy]of segs){
     if(!hexAdj(x,y,qx,qy))continue;
@@ -3190,10 +3305,10 @@ function drawMonoAt(x,y,i){
   }
   ctx.lineCap='butt';
 }
-function trainPos(p){ /* -> [screenX, screenY, alongX, cell] */
-  const L=monoPath.length; const f=((p%1)+1)%1*L;
+function trainPos(m,p){ /* -> [screenX, screenY, alongX, cell] */
+  const path=m.path, L=path.length; const f=((p%1)+1)%1*L;
   const i=f|0, fr=f-i;
-  const a=monoPath[i], b=monoPath[(i+1)%L];
+  const a=path[i], b=path[(i+1)%L];
   const A=ctr(a[0],a[1]), B=ctr(b[0],b[1]);
   return[lerp(A[0],B[0],fr), lerp(A[1],B[1],fr), Math.abs(B[0]-A[0])>=Math.abs(B[1]-A[1]), a];
 }
@@ -3300,7 +3415,7 @@ function drawPed(p){
 }
 function drawJogger(j){
   if(LITAMT>0.75&&(((j.ph*97)|0)%10)<6)return; /* only a few night runners */
-  const[cx,cy]=pxc(shoreAtF(j.y)+j.off,j.y);
+  const[cx,cy]=pxc(seaXF(j.y,j.off),j.y);
   stamp(j,cx,cy);
   const st=Math.sin(waveT*7+j.ph), bob=Math.abs(st)*0.6;
   ctx.strokeStyle=col('ink',1.3);ctx.lineWidth=0.7; /* scissoring legs */
@@ -3321,7 +3436,7 @@ function drawBoat(b){
   ctx.beginPath();ctx.moveTo(cx,cy-1+bob);ctx.lineTo(cx,cy-10+bob);ctx.lineTo(cx+4.5,cy-2.5+bob);ctx.closePath();ctx.fill();
 }
 function drawSurfer(s){
-  const[cx,cy]=pxc(shoreAtF(s.y)+s.off,s.y);
+  const[cx,cy]=pxc(seaXF(s.y,s.off),s.y);
   stamp(s,cx,cy);
   const bob=Math.sin(waveT*1.7+s.ph)*0.9;
   ctx.fillStyle=col('foam',1);              /* a little wake */
@@ -3333,7 +3448,7 @@ function drawSurfer(s){
   ctx.beginPath();ctx.arc(cx,cy-3.4+bob,0.85,0,7);ctx.fill();
 }
 function drawFerry(f){
-  const[cx,cy]=pxc(shoreAtF(f.y)+f.off,f.y);
+  const[cx,cy]=pxc(seaXFr(f.y,f.fr),f.y);
   stamp(f,cx,cy);
   const bob=Math.sin(waveT*1.2+f.ph)*0.6, dir=f.sp>=0?1:-1;
   ctx.fillStyle=col('foam',1);            /* wake */
@@ -3361,7 +3476,7 @@ function drawFerry(f){
   }
 }
 function drawFreighter(f){
-  const[cx,cy]=pxc(shoreAtF(f.y)+f.off,f.y);
+  const[cx,cy]=pxc(seaXFr(f.y,f.fr),f.y);
   stamp(f,cx,cy);
   const bob=Math.sin(waveT*(f.anchored?0.55:0.75)+f.ph)*0.45;
   /* drawn bow-to-starboard in local coords, then mirrored to the heading —
@@ -3452,7 +3567,7 @@ function drawDeer(d){
   ctx.beginPath();ctx.arc(cx-f*2.0*s,cy-3.0*s,0.42*s,0,7);ctx.fill();
 }
 function drawWhale(w){
-  const[cx,cy]=pxc(shoreAtF(w.y)+w.off,w.y);
+  const[cx,cy]=pxc(seaXFr(w.y,w.fr),w.y);
   const arc=Math.sin(waveT*0.7+w.ph);        /* slow surface/dive cycle */
   if(arc<0.2)return;                          /* mostly submerged */
   stamp(w,cx,cy);
@@ -3467,7 +3582,7 @@ function drawWhale(w){
     ctx.beginPath();ctx.ellipse(cx+4*dir,cy-6.5-rise*0.4,1.7,4.2,0,0,7);ctx.fill();}
 }
 function drawDolphin(d){
-  const[cx,cy]=pxc(shoreAtF(d.y)+d.off,d.y);
+  const[cx,cy]=pxc(seaXFr(d.y,d.fr),d.y);
   const arc=Math.sin(waveT*1.3+d.ph);      /* surface/dive cycle */
   if(arc<0.05)return;                       /* underwater — just ripples */
   stamp(d,cx,cy);
@@ -3496,6 +3611,33 @@ function bucketAdd(x,y,fn){
   const k=idx(x,y);
   let a=buckets.get(k); if(!a){a=[];buckets.set(k,a);}
   a.push(fn);
+}
+
+/* the plate's cut edge. A hex shows soil wherever it has no neighbor to the
+   south-west or south-east, which traces the hexagon's whole front rim — the
+   flat bottom row and both slanted lower edges up to the east and west points.
+   Drawn inline with the cell so the row in front paints back over it. */
+function drawSkirt(x,y){
+  const c=cells[idx(x,y)];
+  if(c.t===T.VOID)return;
+  const noSW=!inB((y&1)?x:x-1,y+1), noSE=!inB((y&1)?x+1:x,y+1);
+  if(!noSW&&!noSE)return;
+  const[cx,cy]=ctr(x,y);
+  const SWx=cx-HW,SWy=cy+ER, Sx=cx,Sy=cy+VR, SEx=cx+HW,SEy=cy+ER;
+  const isW=c.t===T.WATER;
+  const lip=isW?col('water',1.05):col(c.t===T.BEACH?'sandDk':'grassDk',0.85);
+  if(noSW){
+    ctx.fillStyle=isW?col('waterDk',0.85):col('soil',0.72);
+    ctx.beginPath();ctx.moveTo(SWx,SWy);ctx.lineTo(Sx,Sy);ctx.lineTo(Sx,Sy+SLAB);ctx.lineTo(SWx,SWy+SLAB);ctx.closePath();ctx.fill();
+    ctx.fillStyle=lip;
+    ctx.beginPath();ctx.moveTo(SWx,SWy);ctx.lineTo(Sx,Sy);ctx.lineTo(Sx,Sy+3);ctx.lineTo(SWx,SWy+3);ctx.closePath();ctx.fill();
+  }
+  if(noSE){
+    ctx.fillStyle=isW?col('waterDk',1):col('soilDk',0.85);
+    ctx.beginPath();ctx.moveTo(Sx,Sy);ctx.lineTo(SEx,SEy);ctx.lineTo(SEx,SEy+SLAB);ctx.lineTo(Sx,Sy+SLAB);ctx.closePath();ctx.fill();
+    ctx.fillStyle=lip;
+    ctx.beginPath();ctx.moveTo(Sx,Sy);ctx.lineTo(SEx,SEy);ctx.lineTo(SEx,SEy+3);ctx.lineTo(Sx,Sy+3);ctx.closePath();ctx.fill();
+  }
 }
 
 /* fixed star field (screen space) */
@@ -3544,23 +3686,23 @@ function render(){
   for(const v of trams)bucketAdd(v.p<0.5?v.x:v.nx,v.p<0.5?v.y:v.ny,()=>drawVehicle(v));
   for(const v of trucks)bucketAdd(v.p<0.5?v.x:v.nx,v.p<0.5?v.y:v.ny,()=>drawVehicle(v));
   for(const p of peds)bucketAdd(p.x,p.y,()=>drawPed(p));
-  for(const j of joggers)bucketAdd((shoreAtF(j.y)+j.off)|0,j.y|0,()=>drawJogger(j));
+  for(const j of joggers)bucketAdd(seaXF(j.y,j.off)|0,j.y|0,()=>drawJogger(j));
   for(const d of dogs)bucketAdd(d.x,d.y,()=>drawDog(d));
   for(const k of kites)bucketAdd(k.x,k.y,()=>drawKite(k));
-  for(const s of surfers)bucketAdd((shoreAtF(s.y)+s.off)|0,s.y|0,()=>drawSurfer(s));
+  for(const s of surfers)bucketAdd(seaXF(s.y,s.off)|0,s.y|0,()=>drawSurfer(s));
   for(const b of boats)bucketAdd(b.x|0,b.y|0,()=>drawBoat(b));
-  for(const f of ferries)bucketAdd((shoreAtF(f.y)+f.off)|0,f.y|0,()=>drawFerry(f));
-  for(const f of freighters)bucketAdd((shoreAtF(f.y)+f.off)|0,f.y|0,()=>drawFreighter(f));
-  for(const d of dolphins)bucketAdd((shoreAtF(d.y)+d.off)|0,d.y|0,()=>drawDolphin(d));
-  for(const w of whales)bucketAdd((shoreAtF(w.y)+w.off)|0,w.y|0,()=>drawWhale(w));
+  for(const f of ferries)bucketAdd(seaXFr(f.y,f.fr)|0,f.y|0,()=>drawFerry(f));
+  for(const f of freighters)bucketAdd(seaXFr(f.y,f.fr)|0,f.y|0,()=>drawFreighter(f));
+  for(const d of dolphins)bucketAdd(seaXFr(d.y,d.fr)|0,d.y|0,()=>drawDolphin(d));
+  for(const w of whales)bucketAdd(seaXFr(w.y,w.fr)|0,w.y|0,()=>drawWhale(w));
   for(const h of herons)bucketAdd(h.x,h.y,()=>drawHeron(h));
   for(const d of deer)bucketAdd(d.x,d.y,()=>drawDeer(d));
   for(const k of kayaks)bucketAdd(k.x,k.y,()=>drawKayak(k));
   for(const s of shuttles)bucketAdd(s.x|0,s.y|0,()=>drawShuttle(s));
-  if(monorail.progress>=1){
-    for(const tr of monorail.trains){
+  for(const m of monos)if(m.closed){ /* trains, once a loop is running */
+    for(const tr of m.trains){
       for(let carN=0;carN<3;carN++){
-        const[tsx,tsy,alongX,cell]=trainPos(tr.p-carN*0.011);
+        const[tsx,tsy,alongX,cell]=trainPos(m,tr.p-carN*0.011);
         bucketAdd(cell[0],cell[1],()=>{
           const ax=alongX?0.26:0.10, ay=alongX?0.10:0.26;
           prismS(tsx,tsy,ax,ay,RAILH+2.6,RAILH+8.6,col('white',1.06),col('teal',0.7),col('teal',0.95));
@@ -3569,12 +3711,12 @@ function render(){
       }
     }
   }
-  if(gondPath&&gondPath.length>1)for(const cb of gond.cabins){ /* cable-car cabins */
-    const[gsx,gsy,ccx,ccy]=gondPos(cb.p);
+  for(const g of gonds)if(g.path&&g.path.length>1)for(const cb of g.cabins){ /* cable-car cabins */
+    const H=g.h, [gsx,gsy,ccx,ccy]=gondPos(g,cb.p);
     bucketAdd(ccx,ccy,()=>{
-      ctx.strokeStyle=col('ink',1);ctx.lineWidth=0.7;ctx.beginPath();ctx.moveTo(gsx,gsy-GONDH);ctx.lineTo(gsx,gsy-GONDH+3);ctx.stroke();
-      prismS(gsx,gsy,0.11,0.085,GONDH-6.5,GONDH-3,col('coral',1.05),col('coral',0.62),col('coral',0.88));
-      bandS(gsx,gsy,0.11,0.085,GONDH-5.5,GONDH-4,colLit('glass',0.9,Math.max(0.25,LITAMT*0.8)));
+      ctx.strokeStyle=col('ink',1);ctx.lineWidth=0.7;ctx.beginPath();ctx.moveTo(gsx,gsy-H);ctx.lineTo(gsx,gsy-H+3);ctx.stroke();
+      prismS(gsx,gsy,0.11,0.085,H-6.5,H-3,col('coral',1.05),col('coral',0.62),col('coral',0.88));
+      bandS(gsx,gsy,0.11,0.085,H-5.5,H-4,colLit('glass',0.9,Math.max(0.25,LITAMT*0.8)));
     });
   }
 
@@ -3582,31 +3724,13 @@ function render(){
   for(let y=0;y<G;y++){
     for(let x=0;x<G;x++){
       drawCell(x,y);
+      drawSkirt(x,y);
       const mi=monoSet.get(idx(x,y));
       if(mi!==undefined)drawMonoAt(x,y,mi);
       const gi=gondSet.get(idx(x,y));
       if(gi!==undefined)drawGondAt(x,y,gi);
       const bk=buckets.get(idx(x,y));
       if(bk)for(const f of bk)f();
-    }
-  }
-
-  /* slab soil skirt under the front row of hexes */
-  {
-    const y=G-1;
-    for(let x=0;x<G;x++){
-      const c=cells[idx(x,y)];
-      const[cx,cy]=ctr(x,y);
-      const SWx=cx-HW,SWy=cy+ER, Sx=cx,Sy=cy+VR, SEx=cx+HW,SEy=cy+ER;
-      const isW=c.t===T.WATER;
-      ctx.fillStyle=isW?col('waterDk',0.85):col('soil',0.72);
-      ctx.beginPath();ctx.moveTo(SWx,SWy);ctx.lineTo(Sx,Sy);ctx.lineTo(Sx,Sy+SLAB);ctx.lineTo(SWx,SWy+SLAB);ctx.closePath();ctx.fill();
-      ctx.fillStyle=isW?col('waterDk',1):col('soilDk',0.85);
-      ctx.beginPath();ctx.moveTo(Sx,Sy);ctx.lineTo(SEx,SEy);ctx.lineTo(SEx,SEy+SLAB);ctx.lineTo(Sx,Sy+SLAB);ctx.closePath();ctx.fill();
-      /* grass/sand lip along the rim */
-      ctx.fillStyle=isW?col('water',1.05):col(c.t===T.BEACH?'sandDk':'grassDk',0.85);
-      ctx.beginPath();ctx.moveTo(SWx,SWy);ctx.lineTo(Sx,Sy);ctx.lineTo(SEx,SEy);
-      ctx.lineTo(SEx,SEy+3);ctx.lineTo(Sx,Sy+3);ctx.lineTo(SWx,SWy+3);ctx.closePath();ctx.fill();
     }
   }
 
@@ -3645,7 +3769,7 @@ function render(){
   if(fogA>0.02){ /* banks ride up the coast, which now runs down-screen */
     for(let i=0;i<4;i++){
       const fy=((time*1.1+i*13)%(G+22))-11;
-      const[fx2,fy2]=pxc(G-5+i*1.5,fy);
+      const[fx2,fy2]=pxc(SHORE0+2+i*1.5,fy);
       ctx.fillStyle='rgba(238,242,240,'+(fogA*(0.5+0.5*Math.sin(i*2.2+time*0.3)))+')';
       ctx.beginPath();ctx.ellipse(fx2,fy2-8,34,88,0,0,7);ctx.fill();
     }
@@ -3658,7 +3782,7 @@ function render(){
     const sA=Math.min(0.5,spell*1.1)*(1-LITAMT*0.45);
     for(let i=0;i<7;i++){
       const roll=(time*0.5+i*6.1)%28;              /* offshore -> inland */
-      const fx=G+4-roll, fy=((i*11.3+time*0.3)%(G+14))-7;
+      const fx=SHORE0+11-roll, fy=((i*11.3+time*0.3)%(G+14))-7;
       const inland=clamp((fx-(SHOREX-4))/5,0,1);   /* spent by the first blocks */
       if(inland<=0)continue;
       const[px2,py2]=pxc(fx,fy);
@@ -3713,8 +3837,10 @@ function render(){
   /* drifting clouds + their shade */
   for(const cl of clouds){
     const[cx,cy]=pxc(cl.x,cl.y);
-    ctx.fillStyle='rgba(36,30,20,'+(0.05*(1-LITAMT*0.6))+')';
-    ctx.beginPath();ctx.ellipse(cx,cy,30*cl.s,12*cl.s,0,0,7);ctx.fill();
+    if(inB(cl.x|0,cl.y|0)){ /* shade only falls where there is ground to catch it */
+      ctx.fillStyle='rgba(36,30,20,'+(0.05*(1-LITAMT*0.6))+')';
+      ctx.beginPath();ctx.ellipse(cx,cy,30*cl.s,12*cl.s,0,0,7);ctx.fill();
+    }
     const a=0.5*(1-LITAMT*0.72);
     const py2r=cy-185-cy*0.52;
     if(cl.rain&&LITAMT<0.15){ /* sun + rain = an occasional rainbow trailing the shower */
@@ -3808,7 +3934,7 @@ const elYear=$('stYear'),elPhase=$('stPhase'),elPop=$('stPop'),elParks=$('stPark
 /* a monorail stop counts as a real station only once its neighborhood is busy */
 function monoStationCount(){
   let n=0;
-  if(monoPath)monoPath.forEach(([x,y],i)=>{if(monoStops.has(i)&&countAround(x,y,1,k=>DEV.has(k.t))>=3)n++;});
+  for(const m of monos)m.path.forEach(([x,y],i)=>{if(m.stops.has(i)&&countAround(x,y,1,k=>DEV.has(k.t))>=3)n++;});
   return n;
 }
 
@@ -3829,11 +3955,11 @@ function syncStats(){
   elTowers.textContent=stats.towers;
   elCivic.textContent=stats.civic|0;
   elSolar.textContent=stats.solar|0;
-  elRail.textContent=year<1988?'planned':(monorail.progress<1?'building':monoStationCount()+' stops');
+  elRail.textContent=!monos.length?'planned':(monos.some(m=>m.closed)?monoStationCount()+' stops':'building');
   elSeed.textContent=seedNum.toString(36);
 }
 $('btnPause').onclick=()=>{playing=!playing;$('btnPause').textContent=playing?'Pause':'Play';};
-$('btnSpeed').onclick=()=>{speed=speed===1?2:(speed===2?4:1);$('btnSpeed').textContent=speed+'\u00d7';};
+$('btnSpeed').onclick=()=>{speed=speed===1?2:(speed===2?4:(speed===4?8:1));$('btnSpeed').textContent=speed+'\u00d7';};
 $('btnNew').onclick=()=>{genWorld((Math.random()*1e9)|0);buildMonoSet();syncStats();};
 
 /* ---- camera input: wheel zoom, drag / pinch pan-zoom, keyboard ---- */
@@ -4041,25 +4167,25 @@ function advanceEntities(dt,s){
   for(const p of peds)stepPed(p,dt*s);
   for(const d of dogs)stepDog(d,dt*s);
   for(const cl of clouds){cl.x+=cl.sp*(0.55+0.9*WINDA)*dt*s; if(cl.x>G+6)cl.x=-6;}
-  for(const b of balloons){b.x+=b.sp*dt*s; if(b.x>G+8){b.x=-8;b.y=6+Math.random()*(G-12);}}
+  for(const b of balloons){b.x+=b.sp*dt*s; if(b.x>G+8){b.x=-8;b.y=CTRY-18+Math.random()*36;}}
   for(const h of copters){h.t+=h.sp*dt*s;
     if(h.t>=1.4&&heliPads.length){ /* dwell on the pad, then lift for a new one */
       h.a=h.b; let nb=(Math.random()*heliPads.length)|0;
       if(nb===h.a)nb=(h.a+1)%heliPads.length; h.b=nb; h.t=0;}}
-  for(const b of boats){if(b.moored)continue; b.y+=b.sp*dt*s; if(b.y<4||b.y>G-4)b.sp*=-1; b.x=shoreAtF(b.y)+b.off;}
-  for(const su of surfers){su.y+=su.drift*dt*s; if(su.y<5||su.y>G-5)su.drift*=-1;}
-  for(const f of ferries){f.y+=f.sp*dt*s; if(f.y<7||f.y>G-7)f.sp*=-1;}
-  for(const f of freighters){if(f.anchored)continue; f.y+=f.sp*dt*s; if(f.y<7||f.y>G-7)f.sp*=-1;}
-  for(const j of joggers){j.y+=j.sp*dt*s; if(j.y<7||j.y>G-7)j.sp*=-1;}
-  for(const d of dolphins){d.y+=d.sp*dt*s; if(d.y<6||d.y>G-6)d.sp*=-1;}
-  for(const w of whales){w.y+=w.sp*dt*s; if(w.y<7||w.y>G-7)w.sp*=-1;}
+  for(const b of boats){if(b.moored)continue; b.y+=b.sp*dt*s; if(b.y<SEAY0+1||b.y>SEAY1-1)b.sp*=-1; b.x=seaXFr(b.y,b.fr);}
+  for(const su of surfers){su.y+=su.drift*dt*s; if(su.y<SEAY0||su.y>SEAY1)su.drift*=-1;}
+  for(const f of ferries){f.y+=f.sp*dt*s; if(f.y<SEAY0+2||f.y>SEAY1-2)f.sp*=-1;}
+  for(const f of freighters){if(f.anchored)continue; f.y+=f.sp*dt*s; if(f.y<SEAY0+2||f.y>SEAY1-2)f.sp*=-1;}
+  for(const j of joggers){j.y+=j.sp*dt*s; if(j.y<SEAY0+2||j.y>SEAY1-2)j.sp*=-1;}
+  for(const d of dolphins){d.y+=d.sp*dt*s; if(d.y<SEAY0+1||d.y>SEAY1-1)d.sp*=-1;}
+  for(const w of whales){w.y+=w.sp*dt*s; if(w.y<SEAY0+2||w.y>SEAY1-2)w.sp*=-1;}
   for(const b of birds){b.x+=Math.cos(b.a)*b.sp*dt*s;b.y+=Math.sin(b.a)*b.sp*dt*s;b.a+=dt*0.15;
     if(b.x<-2||b.y<-2||b.x>G+2||b.y>G+2){b.x=clamp(b.x,-2,G+2);b.y=clamp(b.y,-2,G+2);b.a+=Math.PI;}}
   if(flock){flock.x+=flock.dir*flock.sp*dt*s;
-    if((flock.dir>0&&flock.x>G+12)||(flock.dir<0&&flock.x<-12)){flock.x=flock.dir>0?-12:G+12;flock.y=6+Math.random()*(G-12);}}
+    if((flock.dir>0&&flock.x>G+12)||(flock.dir<0&&flock.x<-12)){flock.x=flock.dir>0?-12:G+12;flock.y=CTRY-16+Math.random()*32;}}
   for(const sh of shuttles)stepShuttle(sh,dt*s);
-  if(monorail.progress>=1)for(const tr of monorail.trains)tr.p+=dt*s*0.014;
-  for(const cb of gond.cabins){cb.p+=dt*s*0.02; if(cb.p>1)cb.p-=1;}
+  for(const m of monos)if(m.closed)for(const tr of m.trains)tr.p+=dt*s*0.014;
+  for(const g of gonds)for(const cb of g.cabins){cb.p+=dt*s*0.02; if(cb.p>1)cb.p-=1;}
 }
 function frame(now){
   const dt=Math.min(0.05,(now-lastT)/1000); lastT=now;
@@ -4101,10 +4227,12 @@ window.__ents=n=>{const out=[];
   for(const[g,name]of ENTINFO)if(!n||name===n)
     for(const e of g())if(e._sf!==undefined)out.push({name,sx:e._sx*scale+offX,sy:e._sy*scale+offY});
   return out;};
-window.__mono=()=>monoPath&&monoPath.map(p=>p.slice()); /* ring cells, path order */
-window.__rail=()=>({closed:!!monoClosed,len:monoPath?monoPath.length:0,
-  trains:monorail.trains.length,relax:monoG?monoG.relax:0,wait:monoG?monoG.wait:0,
-  gond:gondPath?gondPath.length:0,gondTarget:gondG?gondG.target:0}); /* growth state */
+window.__mono=()=>monos.map(m=>m.path.map(p=>p.slice())); /* each line's cells, path order */
+window.__rail=()=>({lines:monos.length,closed:monos.filter(m=>m.closed).length,
+  lens:monos.map(m=>m.path.length),
+  trains:monos.reduce((a,m)=>a+(m.closed?m.trains.length:0),0),
+  gondLines:gonds.length,gondSpans:gonds.map(g=>g.path?g.path.length:0),
+  gondTargets:gonds.map(g=>g.target)}); /* growth state */
 
 /* test hook: numeric census of the built city — the grow-city loop's growth/
    regression metric. Returns tile histogram + headline counts + variety tallies. */
@@ -4130,8 +4258,9 @@ window.__census=()=>{
   let cafes=0;
   for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(cells[idx(x,y)].t===T.PARK&&countAround(x,y,1,n=>n.t===T.COM||n.t===T.MARKET||n.t===T.CIVIC)>0)cafes++;
   const transport={cars:vehicles.length,bikes:bikes.length,trams:trams.length,trucks:trucks.length,boats:boats.length,
-    ferries:ferries.length,freighters:freighters.length,shuttles:shuttles.length,monorail:monorail.progress>=1?monorail.trains.length:0,
-    gondola:gondPath&&gondPath.length>1?gond.cabins.length:0,copters:copters.length};
+    ferries:ferries.length,freighters:freighters.length,shuttles:shuttles.length,
+    monoLines:monos.length,monorail:monos.reduce((a,m)=>a+(m.closed?m.trains.length:0),0),
+    gondLines:gonds.length,gondola:gonds.reduce((a,g)=>a+(g.path&&g.path.length>1?g.cabins.length:0),0),copters:copters.length};
   return {
     G, year:year|0, seed:seedNum.toString(36),
     pop:stats.pop|0, parks:stats.parks|0, towers:stats.towers|0,
