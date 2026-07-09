@@ -17,7 +17,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67 | ~~46~~ | U4 | 53 |
+| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75 |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
@@ -89,6 +89,18 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   `tile-close/tile-mid.png`. Use it whenever the feature under test is only a few
   pixels wide — it is the standing fix for iter 70's false-negative trap (a
   subagent calling FAIL because a feature was unresolvable at `downtown` scale).
+- **⚠ `c.age` is in TICKS, not years — ~13.3 ticks/year (iter 76):** max age is 681 at
+  year 2025. Any threshold you write thinking in years is off by 13×. (The sim's own
+  rules already know this: `age>16` at the succession pass is ~1.2 *years*, not 16.)
+- **⚠ Forest age is a DEAD field; the woods are frozen (iter 76):** `c.age` is ticked
+  and reset by fire/logging/succession but **no sim rule reads a FOREST's age**, and
+  turnover is ~zero after ~1995 — forest hexes younger than 15 years at 2035 number
+  **0/1/0** across seeds 7/42/1234. So "forests grow up / burn scars regrow" would be
+  invisible in ~99% of cells. Don't re-explore it. What *does* vary is **canopy
+  closure** (wooded-neighbour count fills all of buckets 0–6), which is what 76 shipped.
+  Related: **`MEADOW` is down to 1 cell at 2035** — the wildflower-bloom CA and the
+  deer's meadow habitat have almost nothing left to run on in a mature city, so
+  deepening blooms or deer buys nothing at the late era.
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
   sea-fog spells (35, 43) + wind/gust cycle (50) + FULL SEASONS (57: winter
@@ -191,35 +203,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 68 entries before Iteration 68 live in
+> **Archive:** the 69 entries before Iteration 69 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 68 — planted rooftop gardens (2026-07-09)
-
-**Vector:** Urban fabric × Deepen (empty Polish column, last touched 62).
-**Orient/saturation finding:** rotation first pointed at Sky (last 61), but Sky
-is now confirmed SATURATED — probing turned up clouds + **cloud shadows** (drift
-ellipse under each cloud), rain, rainbows, sea-fog, wind, seasons, moon,
-moonglade, stars AND **shooting stars** all already present. Three would-be Sky
-features already exist; per the saturation rule I did not force one and rotated
-to Urban.
-**Change:** the MID (walk-up) green roofs were a bare sage box — the `groof`
-flag set the deck but nothing was planted on it (COM roofs already had café
-umbrellas + v>0.85 gate; MID had nothing). Turned the deck into an actual
-garden: two-tone sage shrub clusters + a canopyLt tuft on top of the sage
-prism, plus a warm terrace lantern after dark on ~55% (`hashCell^0x60F0`).
-Draw-only; interconnects the existing green-roof system with visible rooftop
-life. No rng, no terrain, no new state.
-**Census:** VERDICT PASS, pop/roads/developed exactly +0, greenRoofs steady 256.
-**Visual:** camera-zoomed MID green roof (seed 42, 29,7; 84 groof MIDs) — day
-shows planted shrub clusters vs the old bare box; night shows the warm terrace
-lantern glowing on the decks. Whole-city seed-7 frame coherent — roofs read as
-richer green tops, no clutter/darkness, no z-order tears.
-**Verdict:** DEEPENED. Redeploy pending (iters 34–68 + hooks + the concurrent
-session's transport/camera/shoreline/CSS commits).
 
 ## Iteration 69 — holistic step-back (2026-07-09) [10th lap]
 
@@ -631,3 +619,81 @@ at the school test, so a stat that perturbs pop would silently reroll the whole 
 **Layout:** ten stats overflowed the strip into the controls card at ≤1280px. The bar
 now sheds stats as the window narrows (civic pair at 1300px, derived shares at 1120px)
 rather than wrapping — the unbroken row is the design.
+
+## Iteration 76 — the woods grow a closed core and a feathered edge (2026-07-10)
+
+**Vector:** Nature × **Deepen** — rotation pointed at Nature (stalest live domain,
+untouched since 67; Sky is saturated-closed) and the kind had to change after 75's
+Polish. Deepen is the skill's stated highest-yield move once a domain has its basics.
+
+**Orient — the ledger undersells Nature, and the first idea died on a probe.**
+Nature is far richer than the header implies: forest, redwood, meadow, bloom,
+orchard, vineyard, farm, fire, logging, succession, mushrooms *and* deer all exist.
+The first vector I designed was **"forests grow up"**: `c.age` is incremented every
+tick (L996) and reset by fire, logging, redwood conversion and succession, yet
+**nothing in the sim ever reads a forest's age** and the draw ignored it — a free,
+already-maintained field. Scaling tree size by age would have made burn scars and
+logging cuts visibly regrow.
+
+**I measured it before writing a line, and it was a dead end.** Two findings:
+1. **`c.age` is in TICKS, not years — ~13.3 ticks/year** (max 681 at year 2025).
+   Any age threshold written in "years" is off by 13×.
+2. **Forest turnover is ~zero after the early years.** Forest hexes younger than 15
+   years at 2035: **0 / 1 / 0** across seeds 7 / 42 / 1234 (n=67/67/102). Counts are
+   near-static (62→67, 65→67, 98→102) because logging and succession cancel, and by
+   ~1995 there are no EMPTY cells left beside the woods to succeed into. The feature
+   would have been invisible in ~99% of cells — textbook marginal filler. **Dropped
+   at design time, zero edits.** Don't re-explore forest age; the field is dead
+   because the woods are frozen, not because the draw was lazy.
+
+Same probe turned up: **`MEADOW` is down to 1 cell at 2035**, so the wildflower-bloom
+CA (excitable media) and the deer's meadow habitat have almost nothing left to run
+on in a mature city. Worth knowing before anyone deepens blooms or deer.
+
+**The vector that survived a probe.** Every `T.FOREST` hex drew **the same three
+trees at the same offsets and sizes** — a hex in the deep interior was pixel-identical
+to a lone stand in the open. So closure, not age, is the axis with spread. Measured
+first: bucketing forest hexes by wooded-neighbour count 0..6 fills **every bucket**
+(seed 42 @2035: `[6,15,12,11,9,7,7]`) — ~40% edge (0–2), ~35% interior (3+), and
+seed 1234 has 24 hexes with *zero* wooded neighbours. Confirming the physics:
+**`REDWOOD` sits almost entirely at 4–6 neighbours** — this world already puts its
+old growth in the core, unprompted.
+
+**Change:** one draw case (~L2112). `k=countAround(x,y,1,forest||redwood)`, `m=k/6`.
+Interior hexes get taller trees (`s=0.78+0.34m`), a 4th tree at `k>=4`, a deeper
+canopy and a shaded floor (`×(1.08-0.18m)`); edge hexes get smaller trees, only 2 of
+them, low understory scrub, and a *brighter* sunlit floor. **Tree budget deliberately
+held flat** — edge loses one, interior gains one: 203 trees vs the old 201, so the
+change is perf-neutral by construction rather than by hope.
+Draw-only: no `rng()`, no `hashCell`, no terrain, no new tile/entity → no census hook,
+`TILELABEL` or `ENTINFO` sync needed. Derived per-frame from neighbours (~720 `cellAt`
+calls/frame, negligible) rather than stored in a new cell field, keeping the blast
+radius to a single `case`.
+
+**Census:** VERDICT PASS, 0 page errors. pop, roads, developed, towerHt, towers,
+tallTowers, boulevardTrees **all exactly +0**; tile histogram **empty**. `greenRoofs +1`
+is the last-partial-tick jitter documented at 74. The correct signature of a draw-only
+change.
+
+**Visual:** 3 subagents, all PASS, on **before/after pairs** (the old file shot from a
+backup at identical clip coords, 800,477 and 800,406 — a subtle draw change earns a
+control frame). Seeds 42 and 1234 *independently* described BEFORE as a "uniform
+stipple" / "flat stamp… wallpaper repetition" and AFTER as "a dense core fading to a
+softer edge." Both explicitly cleared the over-darkening risk: only true interior hexes
+deepen, and **edge hexes read a touch brighter**, so the woods gained depth, not
+muddiness — the kelp failure mode did not recur. Seed 7 whole-city: PASS, no tears, no
+floaters, nothing compounded.
+
+**Perf:** PASS ×3, judged by minimum on a quiet box. Day **30.28ms** (baseline 31.33,
+−3.4%), night **34.44ms** (baseline 37.22, −7.1%) — both *under* baseline. The flat
+tree budget did its job; a Nature draw-deepening cost nothing.
+
+**Verdict:** SHIPPED. The woods stop being wallpaper: they now have a treeline. The
+lasting result of this lap is as much the two probes as the feature — forest age is a
+dead field, meadows are nearly extinct, and **closure is the axis of variation this
+CA was already encoding in its redwoods.**
+
+**Follow-up worth taking:** iter 73's corner-lot lead is still open (27 of 74 civics
+tie in `frontSide`). Also: `REDWOOD` (18 hexes) still draws three fixed trees and
+never varies — the same closure treatment, or an age-driven one, is a natural
+follow-on now that redwoods are confirmed to be interior-only.

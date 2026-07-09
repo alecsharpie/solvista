@@ -1499,3 +1499,27 @@ new Dijkstra monorail traces clean).
 **Verdict:** DEEPENED (Nature × Sky/seasons interconnect). Redeploy pending
 (iters 34–67 + hooks + the concurrent transport/camera/shoreline commits).
 
+## Iteration 68 — planted rooftop gardens (2026-07-09)
+
+**Vector:** Urban fabric × Deepen (empty Polish column, last touched 62).
+**Orient/saturation finding:** rotation first pointed at Sky (last 61), but Sky
+is now confirmed SATURATED — probing turned up clouds + **cloud shadows** (drift
+ellipse under each cloud), rain, rainbows, sea-fog, wind, seasons, moon,
+moonglade, stars AND **shooting stars** all already present. Three would-be Sky
+features already exist; per the saturation rule I did not force one and rotated
+to Urban.
+**Change:** the MID (walk-up) green roofs were a bare sage box — the `groof`
+flag set the deck but nothing was planted on it (COM roofs already had café
+umbrellas + v>0.85 gate; MID had nothing). Turned the deck into an actual
+garden: two-tone sage shrub clusters + a canopyLt tuft on top of the sage
+prism, plus a warm terrace lantern after dark on ~55% (`hashCell^0x60F0`).
+Draw-only; interconnects the existing green-roof system with visible rooftop
+life. No rng, no terrain, no new state.
+**Census:** VERDICT PASS, pop/roads/developed exactly +0, greenRoofs steady 256.
+**Visual:** camera-zoomed MID green roof (seed 42, 29,7; 84 groof MIDs) — day
+shows planted shrub clusters vs the old bare box; night shows the warm terrace
+lantern glowing on the decks. Whole-city seed-7 frame coherent — roofs read as
+richer green tops, no clutter/darkness, no z-order tears.
+**Verdict:** DEEPENED. Redeploy pending (iters 34–68 + hooks + the concurrent
+session's transport/camera/shoreline/CSS commits).
+

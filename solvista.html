@@ -2110,10 +2110,22 @@ function drawCell(x,y){
       if(year>=1986&&y===pier.y&&x>pier.x0&&x<=pier.x1)drawPierAt(x,y);
       break;}
     case T.FOREST:{
-      hexTile(gx,gy,1.02,col('grassDk',0.95+0.05*Math.sin(x*0.9+y*0.7)));
-      tree(gx-0.22,gy-0.18,0.9+v*0.4,0.9);
-      tree(gx+0.2,gy+0.1,0.8+v*0.3,1.0);
-      tree(gx-0.05,gy+0.3,0.7,0.85);
+      /* canopy closure: a hex ringed by woods closes its canopy — taller, denser,
+         a shaded floor. A stand at the wood's edge stays open, keeps the light,
+         and carries the scrub that only grows where the canopy never met. */
+      const k=countAround(x,y,1,n=>n.t===T.FOREST||n.t===T.REDWOOD), m=k/6, s=0.78+0.34*m, sh=1.04-0.10*m;
+      hexTile(gx,gy,1.02,col('grassDk',(0.95+0.05*Math.sin(x*0.9+y*0.7))*(1.08-0.18*m)));
+      if(k<=1){ /* sunlit edge: low scrub between the trunks */
+        const[sx2,sy2]=px(gx+0.16,gy+0.24);
+        for(let j=0;j<2;j++){
+          ctx.fillStyle=col('canopy',0.98+j*0.06);
+          ctx.beginPath();ctx.ellipse(sx2-2.6+j*4.2,sy2-0.6,2.0,1.3,0,0,7);ctx.fill();
+        }
+      }
+      tree(gx-0.22,gy-0.18,(0.9+v*0.4)*s,0.9*sh);
+      tree(gx+0.2,gy+0.1,(0.8+v*0.3)*s,1.0*sh);
+      if(k>=2)tree(gx-0.05,gy+0.3,0.7*s,0.85*sh);
+      if(k>=4)tree(gx+0.08,gy-0.36,0.62*s,0.95*sh);
       if(c.shroom>0)drawShroom(x,y,c,gx,gy);
       if(c.fire>0)drawFire(x,y,c,gx,gy);
       break;}
