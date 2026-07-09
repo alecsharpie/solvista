@@ -31,12 +31,19 @@ if (!Number.isInteger(KEEP) || KEEP < 1) {
   process.exit(2);
 }
 
-const ENTRY_RE = /^## Iteration /gm;
+/* Entries are loop iterations (`## Iteration 7`) *and* user-directed passes
+ * (`## U4`), which the header grid has always numbered alongside them. Matching
+ * only `Iteration` silently swallowed a U-pass into the preceding entry and
+ * dragged it into the archive on the next rotation. */
+const ENTRY_RE = /^## (?:Iteration \d+|U\d+) /gm;
 const MARK_OPEN = '<!-- rotated -->';
 const MARK_CLOSE = '<!-- /rotated -->';
 
+/* "Iteration 73" / "U4" for a heading, for the archive pointer and the log. */
+const labelOf = (entry) => entry.match(/^## (Iteration \d+|U\d+)/)?.[1];
+
 /* Split a ledger body into [header, entries[]]. An entry runs from its
- * `## Iteration ...` heading to the start of the next one. */
+ * `## Iteration ...` / `## U...` heading to the start of the next one. */
 function parse(text) {
   const starts = [...text.matchAll(ENTRY_RE)].map((m) => m.index);
   if (starts.length === 0) return { header: text, entries: [] };
@@ -54,8 +61,8 @@ function stripPointer(header) {
 }
 
 function pointer(archivedCount, firstKept) {
-  const label = firstKept.match(/^## (Iteration \d+)/)?.[1] ?? 'the entries below';
-  return `${MARK_OPEN}\n\n> **Archive:** the ${archivedCount} iterations before ${label} live in\n> \`GROWTH-archive.md\`. Nothing reads that file by default — the header grid above\n> is the maintained summary. Rotated by \`rotate-ledger.mjs\`.\n\n${MARK_CLOSE}\n\n`;
+  const label = labelOf(firstKept) ?? 'the entries below';
+  return `${MARK_OPEN}\n\n> **Archive:** the ${archivedCount} entries before ${label} live in\n> \`GROWTH-archive.md\`. Nothing reads that file by default — the header grid above\n> is the maintained summary. Rotated by \`rotate-ledger.mjs\`.\n\n${MARK_CLOSE}\n\n`;
 }
 
 function atomicWrite(path, text) {
@@ -101,7 +108,7 @@ if (after !== before) {
   process.exit(1);
 }
 
-const moved = `${toArchive.length} entries (${toArchive[0].match(/^## (Iteration \d+)/)?.[1]} .. ${toArchive.at(-1).match(/^## (Iteration \d+)/)?.[1]})`;
+const moved = `${toArchive.length} entries (${labelOf(toArchive[0])} .. ${labelOf(toArchive.at(-1))})`;
 
 if (dryRun) {
   console.log(`[dry-run] would archive ${moved}`);

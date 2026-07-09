@@ -10,26 +10,54 @@ Metrics are summed over all 9 cells of the matrix.
 ## State of the city (maintained header — UPDATE EACH ITERATION)
 
 This grid + the notes below are what step 1 (Orient) reads instead of the whole
-archive. Cells hold iteration numbers; `U1`–`U3` are user-directed passes
+archive. Cells hold iteration numbers; `U1`–`U5` are user-directed passes
 (U1 generative monorail · U2 feedback polish: smooth water motion / hover
-tooltip / kelp re-gate · U3 determinism audit).
+tooltip / kelp re-gate · U3 determinism audit · U4 hexagon plate + plural
+rivers/monorails/cable cars · U5 census stats that can fall).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67 | ~~46~~ | | 53 |
+| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67 | ~~46~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58 |
-| **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24 | 75 |
-| **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3, 70 |
+| **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75 |
+| **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
-  + **hover focus ring (iter 71, People-led)**.
+  + **hover focus ring (iter 71, People-led)** + **census stats that can fall
+  (U5: tallest / density / solar share / transit reach / walkable)**.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
+- **⚠ The plate is a HEXAGON, not a square (U4):** `G` (=67) is only the bounding
+  box the `cells` array lives in; the live plate is the `HEXR`=33 rings masked by
+  `HEXOK`, and everything outside it is `T.VOID`. So: never loop `0..G` and assume
+  a live cell — `inB()` gates it, `cellAt()` returns `null` off-plate, and a seeded
+  random cell must come from **`HEXI`** (the live-cell list) or it lands in a dead
+  corner. Each row's live span is `ROWMIN[y]`/`ROWMAX[y]`; the coast and its craft
+  clamp to those. Per-tick development attempts are scaled by `KS`=1.46 because the
+  plate carries ~46% more land than the old 48×48 square — a new per-tick placement
+  loop should scale with `ks(n)` too, or it will fill proportionally slower.
+- **⚠ Monorail and cable cars are PLURAL (U4):** `monos` / `gonds` are *lists* of
+  independently grown lines, each closing its own loop. The old singular `monorail`,
+  `monoPath`, `monoClosed`, `gond`, `gondPath` are gone — code written against them
+  will silently read `undefined`.
+- **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a
+  multi-source hex BFS capped at radius `r`, walking over land only (`WETSET` blocks
+  water/marsh/kelp), filling `out` with steps-to-nearest-source and 255 for "farther
+  than r". `recount()` already runs four per tick (transit / green / shop / service).
+  Any "how far is X from Y" question should call it rather than hand-rolling a flood
+  fill. Cost is ~1ms per `recount()`, which is per *tick*, not per frame.
+- **⚠ Three census stats can FALL, by design (U5):** `walkPct`, `transitPct` and
+  `solarPct` are shares of residents/roofs, not counts. Green space and shops
+  saturate >90% on their own, so **services are walkable's binding constraint** — a
+  tower lap that adds residents without civics will *drop* `walkPct`, and that is
+  the stat working, not a regression. Judge them by whether the city earned the
+  change, not by "up = good". `density` (residents per developed hex) rises with
+  intensification and falls with sprawl.
 - **⚠ Overlays drawn last FLOAT (iter 71):** the instinct to draw a highlight
   "last of all, so it can never tear" is wrong in this renderer. Rows draw
   top→bottom, so an entity in row *y* is legitimately occluded by a tower in
@@ -175,66 +203,11 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 <!-- rotated -->
 
-> **Archive:** the 66 iterations before Iteration 66 live in
+> **Archive:** the 68 entries before Iteration 68 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 66 — civic flags catch the wind (2026-07-08)
-
-**Worktree migration:** the skill grew a git-worktree workflow this session — the
-loop now runs in `../solvista-grow` on branch `grow-city`, and `main` advances
-only by a verified `--ff-only` merge. Adopted it here specifically because a
-concurrent session (the transport/monorail rework) was continuously editing
-`main`'s `solvista.html`; iters 66-a/66-b were yielded to avoid clobbering that
-uncommitted work. The worktree isolates this loop cleanly. (See the ff-merge
-note below re: publishing to main.)
-**Vector:** Civic & culture × Deepen — rotation pointed at Civic (least-touched,
-last 59; empty Polish/Scale columns). Its 13 building types are already richly
-detailed with night lighting, so the move is interconnection, not addition: the
-`WINDA` gust cycle (iter 50) blows through trees, palms, clouds and laundry, but
-the civic flags hung dead — the school flag was a static gold triangle and the
-town hall had only a bare finial.
-**Change:** a shared `windFlag(bx,by,dir,L,H,color,ph)` helper (draw-only): a
-rectangular flag whose ripple is a sine wave travelling down its length, scaled
-by `0.28+0.72*WINDA` so it hangs limp in the calm and snaps straight in a gust,
-with the free end swinging more than the hoist. Wired to two civics: (1) a new
-coral national flag on a pole rising from the town-hall dome finial (gold pole
-ball), and (2) the school flag's static triangle replaced with a gold `windFlag`.
-No terrain, no rng(), no new state — pop stays flat.
-**Census:** VERDICT PASS, 0 page errors, pop +21 (draw-only wobble).
-**Visual:** camera-zoomed frames (in-page `scale`/`offX` override) show the
-town-hall coral flag streaming above the gold dome and the school's gold flag
-flying over the play-court — both read cleanly. Pinned-frame A/B
-(`playing=false; WINDA=0.95 vs 0.03`) on tight clips: wind≠calm hash differs for
-BOTH flags → they genuinely respond to the gust signal. Whole-city seed-42 frame
-coherent; flags stay subtle street-furniture at city zoom.
-**Verdict:** DEEPENED (Civic × Sky interconnect). Redeploy pending (iters 34–66
-+ hooks + the concurrent session's transport/camera/shoreline commits).
-
-## Iteration 67 — orchards keep the seasons (2026-07-08)
-
-**Vector:** Nature × Deepen — rotation pointed at Nature (most-neglected, last
-real touch 60); its additive columns (3 elements, 3 CA rules) are spent, so
-interconnect. The orchards drew coral/gold fruit **year-round** — laden even in
-winter and spring. Their canopy color already shifted with the seasons
-(`applySeason` recolors `canopy`/`canopyLt`, iter 57), but the fruit ignored the
-calendar; the grove never actually turned with the year.
-**Change:** in the ORCHARD draw case, gate the crop on `s2=year%1`: a pale
-blossom flush (`col('coral',1.42)` at α0.6, two soft puffs per crown) in spring
-(0.16–0.42), coral/gold fruit at harvest (0.70–0.99), and bare green through
-summer + cool-bare in winter. Draw-only — no rng, no terrain, no new state; the
-canopy's existing seasonal palette does the rest.
-**Census:** VERDICT PASS, 0 page errors, pop/roads/developed exactly +0.
-**Visual:** one grove (seed 42, 17,16) shot across four `__setYear`-pinned
-seasons at 4.2× camera zoom: spring = pink-white blossom over fresh green;
-summer = plain green, no crop; autumn = ambered crowns laden with fruit;
-winter = cool bare. Distinct and legible each season. Whole-city seed-7 frame
-coherent (orchards read naturally in the farm belt; the concurrent session's
-new Dijkstra monorail traces clean).
-**Verdict:** DEEPENED (Nature × Sky/seasons interconnect). Redeploy pending
-(iters 34–67 + hooks + the concurrent transport/camera/shoreline commits).
 
 ## Iteration 68 — planted rooftop gardens (2026-07-09)
 
@@ -602,3 +575,71 @@ cost no terrain, no seeded stream, and no daylight performance.
 in `frontSide` and fall back to a hash; choosing the *less-occluded* side would convert
 that semantic win into a visible one). Also: `slotS` sat unused by non-civics for the
 whole project — worth grepping for other primitives the building cases never adopted.
+
+## U4 — the plate becomes a hexagon; rivers, monorails and cable cars go plural (2026-07-09)
+
+**Not a loop iteration, and not written by the loop.** This landed in an interactive
+session and sat *uncommitted* in `main`'s working tree — no ledger entry, no commit —
+until a later session found it, verified it, and committed it as `41b0acd`.
+Reconstructed here from the diff; the intent below is inferred, not reported.
+
+**Vector:** Urban fabric × **Scale** (with Nature × Scale and Transport × Scale along
+for the ride). The diorama plate was a 48×48 square whose dead corners the eye never
+saw. It is now a hexagon: `HEXR`=33 rings inscribed in a `G`=67 bounding array, masked
+by `HEXOK`/`HEXI`, with a `T.VOID` tile for everything outside. Generation, growth,
+picking, drawing and the seeded random cell picks all go through the mask;
+`ROWMIN`/`ROWMAX` give each row's live span for the coastline and the craft that clamp
+to it. The plate carries ~46% more land, so per-tick development attempts scale by
+`KS`=1.46 — without it the city would fill 46% slower over the same span of years.
+Alongside it the singular networks went plural: `monorail`/`monoPath` → a `monos` list
+of independently grown lines each closing its own loop, `gond` → `gonds`, and the
+generator lays one to three rivers rather than always one.
+
+**Census:** PASS when re-run against it (that is *why* it was kept — see the skill's
+dirty-worktree rule, which this change rewrote). At seed 42/2035 the plate roughly
+doubles the city vs the old square: 73 towers vs 36, pop 36,054 vs 21,014.
+
+**Both baselines went stale and nobody noticed.** `census-baseline.json` predated the
+plate, so every run reported `VOID 0 → 10098 NEW` and inflated growth everywhere — it
+still PASSed, because census only fails on regressions, which is exactly how a stale
+baseline hides one. `perf-baseline.json` (day 24ms) predated it too, so the extra land
+read as a permanent frame-time regression and **the perf gate failed on every run**
+until re-pinned. Both are now re-pinned against the hexagon city (perf: day 31.33ms,
+night 37.22ms, pinned from the fastest of five runs because the gate *judges* by the
+minimum of three). **A scale move invalidates both gates — re-pin both, in the same
+pass, or the next ten iterations inherit a gate they learn to ignore.**
+
+## U5 — census stats that can fall (2026-07-09)
+
+**User-directed**, interactive session, committed as `f1638e8`. Kind: Interaction/UX.
+
+**Vector:** the census bar *counted* things — towers, parks, solar roofs — but
+*measured* nothing: every stat could only climb as the city sprawled. Five new stats,
+three of which can go down. `tallest, floors` (skyline high-water mark, via a shared
+`floorsOf()` the hex tooltip now uses too); `per built hex` (residents ÷ developed hex
+— intensifying vs merely sprawling); `solar share`, `transit reach`, `walkable` (all
+shares, not counts). Transit = residents within 2 hexes of a monorail station or bus
+shelter. Walkable = residents who can reach a green space, a shop *and* a public
+service on foot. Both weight by residents, not by hex, so a tower speaks for the
+hundreds of people inside it.
+
+**The seam:** `reachFill()`, a multi-source hex BFS over walkable land (a park across
+the bay is close only if a bridge carries you there). Four run per `recount()`, i.e.
+per *tick*, not per frame: +0.3ms/frame measured.
+
+**The design failure worth remembering.** Walkable first used one 3-hex radius for all
+three errands and was quietly broken: green space already reaches **95%** of residents
+unaided and shops **97%**, so the stat was "near a civic building" wearing a disguise,
+reading 12–26% in a mature city. Services now get the 6-hex catchment a school or
+clinic earns → a 33–56% band. **Check what each term of a composite metric actually
+discriminates before shipping it**; two of the three were pure noise and the number
+looked meaningful anyway.
+
+**Census:** PASS. Verified sim-identical against the tree minus these edits (same pop,
+towers, roads, water at seed 42/2035 — no `rng()` divergence), which is the check that
+matters for a stat touching `recount()`: `stats.pop` feeds a `rng()`-gated growth rule
+at the school test, so a stat that perturbs pop would silently reroll the whole city.
+
+**Layout:** ten stats overflowed the strip into the controls card at ≤1280px. The bar
+now sheds stats as the window narrows (civic pair at 1300px, derived shares at 1120px)
+rather than wrapping — the unbroken row is the design.

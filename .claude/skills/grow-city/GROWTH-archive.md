@@ -1444,3 +1444,58 @@ mid-cycle tide keeps pools subtle at full zoom.
 **Verdict:** DEEPENED (holistic clean). Redeploy pending (iters 34–65 +
 hooks + polish-tile work).
 
+## Iteration 66 — civic flags catch the wind (2026-07-08)
+
+**Worktree migration:** the skill grew a git-worktree workflow this session — the
+loop now runs in `../solvista-grow` on branch `grow-city`, and `main` advances
+only by a verified `--ff-only` merge. Adopted it here specifically because a
+concurrent session (the transport/monorail rework) was continuously editing
+`main`'s `solvista.html`; iters 66-a/66-b were yielded to avoid clobbering that
+uncommitted work. The worktree isolates this loop cleanly. (See the ff-merge
+note below re: publishing to main.)
+**Vector:** Civic & culture × Deepen — rotation pointed at Civic (least-touched,
+last 59; empty Polish/Scale columns). Its 13 building types are already richly
+detailed with night lighting, so the move is interconnection, not addition: the
+`WINDA` gust cycle (iter 50) blows through trees, palms, clouds and laundry, but
+the civic flags hung dead — the school flag was a static gold triangle and the
+town hall had only a bare finial.
+**Change:** a shared `windFlag(bx,by,dir,L,H,color,ph)` helper (draw-only): a
+rectangular flag whose ripple is a sine wave travelling down its length, scaled
+by `0.28+0.72*WINDA` so it hangs limp in the calm and snaps straight in a gust,
+with the free end swinging more than the hoist. Wired to two civics: (1) a new
+coral national flag on a pole rising from the town-hall dome finial (gold pole
+ball), and (2) the school flag's static triangle replaced with a gold `windFlag`.
+No terrain, no rng(), no new state — pop stays flat.
+**Census:** VERDICT PASS, 0 page errors, pop +21 (draw-only wobble).
+**Visual:** camera-zoomed frames (in-page `scale`/`offX` override) show the
+town-hall coral flag streaming above the gold dome and the school's gold flag
+flying over the play-court — both read cleanly. Pinned-frame A/B
+(`playing=false; WINDA=0.95 vs 0.03`) on tight clips: wind≠calm hash differs for
+BOTH flags → they genuinely respond to the gust signal. Whole-city seed-42 frame
+coherent; flags stay subtle street-furniture at city zoom.
+**Verdict:** DEEPENED (Civic × Sky interconnect). Redeploy pending (iters 34–66
++ hooks + the concurrent session's transport/camera/shoreline commits).
+
+## Iteration 67 — orchards keep the seasons (2026-07-08)
+
+**Vector:** Nature × Deepen — rotation pointed at Nature (most-neglected, last
+real touch 60); its additive columns (3 elements, 3 CA rules) are spent, so
+interconnect. The orchards drew coral/gold fruit **year-round** — laden even in
+winter and spring. Their canopy color already shifted with the seasons
+(`applySeason` recolors `canopy`/`canopyLt`, iter 57), but the fruit ignored the
+calendar; the grove never actually turned with the year.
+**Change:** in the ORCHARD draw case, gate the crop on `s2=year%1`: a pale
+blossom flush (`col('coral',1.42)` at α0.6, two soft puffs per crown) in spring
+(0.16–0.42), coral/gold fruit at harvest (0.70–0.99), and bare green through
+summer + cool-bare in winter. Draw-only — no rng, no terrain, no new state; the
+canopy's existing seasonal palette does the rest.
+**Census:** VERDICT PASS, 0 page errors, pop/roads/developed exactly +0.
+**Visual:** one grove (seed 42, 17,16) shot across four `__setYear`-pinned
+seasons at 4.2× camera zoom: spring = pink-white blossom over fresh green;
+summer = plain green, no crop; autumn = ambered crowns laden with fruit;
+winter = cool bare. Distinct and legible each season. Whole-city seed-7 frame
+coherent (orchards read naturally in the farm belt; the concurrent session's
+new Dijkstra monorail traces clean).
+**Verdict:** DEEPENED (Nature × Sky/seasons interconnect). Redeploy pending
+(iters 34–67 + hooks + the concurrent transport/camera/shoreline commits).
+
