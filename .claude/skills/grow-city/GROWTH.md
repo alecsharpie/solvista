@@ -18,7 +18,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58 |
-| **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24 | |
+| **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24 | 75 |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
@@ -55,6 +55,12 @@ tooltip / kelp re-gate · U3 determinism audit).
   `ZOOM=n` wheels the artifact's own camera in (real magnification, not upscaled
   pixels), `PICK=front` favours front rows (a back-row entity may be occluded
   and legitimately ringless). Emits a no-hover control frame + 3 clip scales.
+- **Magnified TILE clips: `tileshot.mjs` (iter 75).** The tile-side twin of
+  `hovershot`: `node tileshot.mjs '<url query>' TOWER <outdir>` aims a
+  `deviceScaleFactor:4` clip at one instance via `__find`, emitting
+  `tile-close/tile-mid.png`. Use it whenever the feature under test is only a few
+  pixels wide — it is the standing fix for iter 70's false-negative trap (a
+  subagent calling FAIL because a feature was unresolvable at `downtown` scale).
 - **Saturation notes:** Water & coast additive moves are well spent (6 new
   elements) — prefer Deepen/Polish there. Weather now has rain + rainbows +
   sea-fog spells (35, 43) + wind/gust cycle (50) + FULL SEASONS (57: winter
@@ -85,7 +91,7 @@ tooltip / kelp re-gate · U3 determinism audit).
   fall back to a hash in `frontSide` — picking the less-occluded side there is
   the natural next Civic × Polish lap (see iter 73's follow-up).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–74 (41 iterations)**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–75 (42 iterations)**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
@@ -94,8 +100,8 @@ tooltip / kelp re-gate · U3 determinism audit).
   school run · fairy rings · sea-fog fix · rooftop water tanks · bus
   stops · dog walkers · tidepools · civic flags · seasonal orchards ·
   rooftop gardens · vehicle headlights/taillights · hover focus ring ·
-  harbor freighters · **civics facing their street** — 74 was a review lap and
-  shipped no feature), the
+  harbor freighters · civics facing their street · **windows that go dark after
+  dark** — 74 was a review lap and shipped no feature), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -124,8 +130,14 @@ tooltip / kelp re-gate · U3 determinism audit).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest reading (**iter 74**): PASS ×3 by minimum, day floor **24.50ms** /
-  night **25.89ms** (baselines 24 / 26.61 — night is *under* baseline).
+  Latest reading (**iter 75**): PASS ×3, day **24.55ms** / night **27.44ms**
+  (baselines 24 / 26.61 → +2.3% / +3.1%). Iter 75's lit windows cost
+  **+1.55ms of NIGHT frame** (25.89 @74 → 27.44) and **+0.05ms of day** (i.e.
+  nothing) — the first clean measurement of the header's own "gate new draw work
+  on night" heuristic, and it holds. **Night now carries ~2.9ms of headroom
+  before +15%; it is the scarcer budget from here, so the next few laps should
+  prefer day-visible or draw-free vectors.** (Readings were unusually stable —
+  all three runs agreed to ±0.05ms, so the box was quiet.)
   ⚠ **The "creeping day floor" was mostly measurement noise — claim retired at
   iter 74.** The floor FELL across 25.17 @69 → 25.22 @70 → 25.11 @71 → 24.78 @72
   → 24.50 @74 while the code only *gained* draw work (freighters, focus ring,
@@ -163,40 +175,11 @@ tooltip / kelp re-gate · U3 determinism audit).
 
 <!-- rotated -->
 
-> **Archive:** the 65 iterations before Iteration 65 live in
+> **Archive:** the 66 iterations before Iteration 66 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 65 — holistic step-back + tidepools (2026-07-08) [9th lap]
-
-**Holistic (every-5 check):** whole-city frames at seed 42 (golden hour) and
-seed 123 (never-tested) — both fully coherent: balanced color, readable
-coast, sea-fog lenses soft, no compounding clutter or darkness. Perf gate
-×3 by minimum: day 24.11ms / night 25.44ms vs baselines 24/26.61 — PASS.
-Watch: day floor crept 23.44→24.11 over iters 61–64; next perf lap decides
-if a fix iteration is due. **Harness incident:** the first two holistic
-frames came back BLANK (1974 / 0 residents / specimen "—") and looked like
-a catastrophic load regression — they were contention artifacts from
-chaining census + two shoot.mjs runs in one parallel command; solo
-re-shoots rendered perfectly. Logged in the header: re-shoot solo before
-believing a blank frame.
-**Vector:** Water & coast × Deepen — tidepools, compounding the iter-51
-tide system (the TIDE signal previously only widened the wet band).
-**Change:** in the BEACH tide-band edge loop: hash-gated pool candidates
-per sea-facing edge (`hashCell(x*7+dx*3,y*5+dy*3,seedNum^0x71DE)<0.34`),
-drawn after the band pass as small water ellipses with a sandDk rim and a
-coral starfish on ~40% of them, alpha keyed `(0.45-TIDE)/0.45` — pools
-surface only on the ebb and drown at high water. Draw-only; no terrain, no
-rng(), no new state.
-**Census:** VERDICT PASS, 0 page errors, pop −3 (known jitter).
-**Visual:** pinned-clock A/B at seed 42 (`playing=false; TIDE=0.05/0.95`,
-same coast clip): low tide shows pools with rims + starfish dotted along
-the wet flats; high tide shows none. Whole-city seed-7 frame coherent —
-mid-cycle tide keeps pools subtle at full zoom.
-**Verdict:** DEEPENED (holistic clean). Redeploy pending (iters 34–65 +
-hooks + polish-tile work).
 
 ## Iteration 66 — civic flags catch the wind (2026-07-08)
 
@@ -558,3 +541,64 @@ was pure; don't read it as a stronger guarantee than it is.
 **Verdict:** HOLISTIC — city is clean, no fix lap needed. The two standing worries
 (day-floor creep, fog reading as glare) both dissolved on inspection. Redeploy
 pending (iters 34–74 + hooks + the concurrent transport/camera/shoreline commits).
+
+## Iteration 75 — after dark, not everyone is home (2026-07-09)
+
+**Vector:** Urban fabric × **Polish** — rotation pointed at Urban fabric (untouched
+since 68, the stalest live domain; Sky is saturated-closed) and its × Polish cell was
+the last empty non-dubious cell in the grid. Polish adds nothing, which is the right
+kind for a mature city, and 74 shipped no feature, so a feature lap was owed.
+**Orient/seam finding — the primitive already existed, unused.** `slotS()` (~L1550) has
+been in the file all along: it draws a single window-shaped quad on a prism's left or
+right front face, taking `u ∈ (-1,1)` where the *sign* picks the face and `|u|` the
+position along it. **Only the CIVIC draw cases ever called it.** Every home, walk-up and
+tower drew its glass with `bandR()` — a *continuous ribbon* spanning both front faces.
+So at night the entire city's glass lit up as solid unbroken stripes: towers varied
+brightness per floor (`hashCell(x,z,…)`), but within a floor it was one flat bar. No
+building anywhere read as having individual windows.
+**Change:** one helper, `darkWinR(gx,gy,ax,ay,z0,z1,x,y,salt)` beside `bandR` (~L1548).
+After the ribbon is drawn it punches **unlit panes** into it via `slotS`, one per front
+face, each face rolling independently off `hashCell(x*13+(s+1)*3, y*7+(z0|0), seedNum^salt)`;
+a face below the 0.36 threshold keeps all its lights on. Wired into all six glass-ribbon
+band sites: RES's window strip, MID's floor loop, and each of the four TOWER styles.
+Two deliberate choices: (1) **subtractive, not additive** — the ribbon stays warm and a
+few panes go dark, rather than dimming the glass and punching *lit* panes in. The
+additive version is more physical but would have darkened downtown, which is exactly the
+compounding failure mode kelp taught (a good-in-isolation change that dims the whole
+frame). (2) **Night-gated**: `if(LITAMT<0.35)return` as the first line, so the day frame
+pays a branch and nothing else.
+Draw-only: no `rng()`, no terrain, no new tile/entity → no census hook, `TILELABEL` or
+`ENTINFO` sync needed.
+**Census:** VERDICT PASS, 0 page errors. pop +3, towerHt +1, every other metric exactly
++0, **tile histogram empty** — the correct signature of a draw-only change, and the ±few
+is the known last-partial-tick jitter documented at 74. Per the skill's own rule I did
+**not** add a bespoke metric for this: it moves nothing the hook reports, and the growth
+signal here is the screenshots.
+**Visual:** 3 subagents, all PASS. Both night seeds (42, 7) independently confirmed the
+panes "sit ON the slanted facade, following the isometric skew of both wall planes,"
+read as fenestration rather than "noise or dirt," and that **downtown is not darker** —
+the specific risk I designed against. Crucially I also ran a **daylight control** (seed
+42, magnified tower + wide): bands "smooth and continuous, no dark notches," proving the
+night gate actually holds. A control frame is cheap and it is the only thing that can
+falsify a gating claim.
+**Tooling:** a 2px pane is below the resolving power of the `downtown` clip — precisely
+iter 70's false-negative trap, where a subagent failed a feature it simply could not see.
+So I wrote **`tileshot.mjs`**, the tile-side twin of `hovershot.mjs`: `__find(TYPE)` →
+`deviceScaleFactor:4` clip on one instance. It is the reason all three verdicts were
+specific about pane geometry instead of hedging. Kept and generalized (any tile type /
+civic kind), not left as a throwaway.
+**Perf — the header's night-gating heuristic, finally measured.** PASS ×3 (unusually
+quiet box: all runs agreed to ±0.05ms). Day **24.55ms** vs 24.50 @74 = **+0.05ms, i.e.
+free**, as the early-return predicts. Night **27.44ms** vs 25.89 @74 = **+1.55ms**, the
+true cost of ~1.2k extra fills/frame. Still PASS (+3.1% on a +15% gate), and worth it
+for a citywide legibility win — but logged precisely, because it is the largest single
+night-frame charge any iteration has made. **Night is now the scarcer budget** (~2.9ms of
+headroom); "gate it on night, it's free" is true of the *day* floor only, and the next
+laps should know night is no longer cheap.
+**Verdict:** SHIPPED. The city's buildings now read as buildings after dark instead of
+glowing bars — the single most visible night change since vehicle lights (70), and it
+cost no terrain, no seeded stream, and no daylight performance.
+**Follow-up worth taking:** iter 73's corner-lot lead is still open (27 of 74 civics tie
+in `frontSide` and fall back to a hash; choosing the *less-occluded* side would convert
+that semantic win into a visible one). Also: `slotS` sat unused by non-civics for the
+whole project — worth grepping for other primitives the building cases never adopted.

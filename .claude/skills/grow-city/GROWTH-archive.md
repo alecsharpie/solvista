@@ -1415,3 +1415,32 @@ filter aim targets to sy 160–640.
 **Verdict:** DEEPENED. Redeploy pending (iters 34–64 + hooks + polish-tile
 work).
 
+## Iteration 65 — holistic step-back + tidepools (2026-07-08) [9th lap]
+
+**Holistic (every-5 check):** whole-city frames at seed 42 (golden hour) and
+seed 123 (never-tested) — both fully coherent: balanced color, readable
+coast, sea-fog lenses soft, no compounding clutter or darkness. Perf gate
+×3 by minimum: day 24.11ms / night 25.44ms vs baselines 24/26.61 — PASS.
+Watch: day floor crept 23.44→24.11 over iters 61–64; next perf lap decides
+if a fix iteration is due. **Harness incident:** the first two holistic
+frames came back BLANK (1974 / 0 residents / specimen "—") and looked like
+a catastrophic load regression — they were contention artifacts from
+chaining census + two shoot.mjs runs in one parallel command; solo
+re-shoots rendered perfectly. Logged in the header: re-shoot solo before
+believing a blank frame.
+**Vector:** Water & coast × Deepen — tidepools, compounding the iter-51
+tide system (the TIDE signal previously only widened the wet band).
+**Change:** in the BEACH tide-band edge loop: hash-gated pool candidates
+per sea-facing edge (`hashCell(x*7+dx*3,y*5+dy*3,seedNum^0x71DE)<0.34`),
+drawn after the band pass as small water ellipses with a sandDk rim and a
+coral starfish on ~40% of them, alpha keyed `(0.45-TIDE)/0.45` — pools
+surface only on the ebb and drown at high water. Draw-only; no terrain, no
+rng(), no new state.
+**Census:** VERDICT PASS, 0 page errors, pop −3 (known jitter).
+**Visual:** pinned-clock A/B at seed 42 (`playing=false; TIDE=0.05/0.95`,
+same coast clip): low tide shows pools with rims + starfish dotted along
+the wet flats; high tide shows none. Whole-city seed-7 frame coherent —
+mid-cycle tide keeps pools subtle at full zoom.
+**Verdict:** DEEPENED (holistic clean). Redeploy pending (iters 34–65 +
+hooks + polish-tile work).
+

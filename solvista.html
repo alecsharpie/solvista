@@ -1545,6 +1545,21 @@ function bandS(cx,cy,ax,ay,z0,z1,fill){ /* horizontal band on both front faces
 function bandR(gx,gy,ax,ay,z0,z1,fill){
   const[cx,cy]=px(gx,gy); bandS(cx,cy,ax,ay,z0,z1,fill);
 }
+/* After dark, not everyone is home. Punch an unlit pane into a glass band so a
+   facade reads as separate windows instead of one glowing ribbon. Each front
+   face rolls independently; a lit face is left alone, so most glass stays lit
+   and downtown does not darken. Night-only — the day frame pays nothing. */
+function darkWinR(gx,gy,ax,ay,z0,z1,x,y,salt){
+  if(LITAMT<0.35)return;
+  const[cx,cy]=px(gx,gy);
+  const dk=col('glass',0.42), w=Math.min(1.9,(z1-z0)*0.8);
+  const inset=Math.min(0.35,(z1-z0)*0.16);
+  for(let s=-1;s<=1;s+=2){
+    const hb=hashCell(x*13+(s+1)*3,y*7+(z0|0),seedNum^salt);
+    if(hb<0.36)continue;                       /* this face keeps its lights on */
+    slotS(cx,cy,ax,ay,s*(0.24+hb*0.5),z0+inset,z1-inset,w,dk,false);
+  }
+}
 /* vertical slot (window/column) on a prism front face; u in (-1,1): sign picks
    the left/right face, |u| the position along it; w = slot width, arch tops it */
 function slotS(cx,cy,ax,ay,u,z0,z1,w,fill,arch){
@@ -2501,6 +2516,7 @@ function drawBuilding(c,x,y,gx,gy){
     prism(gx,gy-0.06,0.30,0.26,0,h,col(bodyN==='terra'?'terra':'cream',1),col(bodyN,0.62),col(bodyN,0.85));
     prism(gx,gy-0.06,0.34,0.30,h,h+2,col(roofN,1.02),col(roofN,0.6),col(roofN,0.82));
     bandR(gx,gy-0.06,0.30,0.26,h*0.35,h*0.62,colLit('glass',0.8,lit*0.8)); /* window strip */
+    darkWinR(gx,gy-0.06,0.30,0.26,h*0.35,h*0.62,x,y,0x1DE7);
     if(hashCell(x,y,5)<0.3) /* brick chimney */
       prism(gx+0.15,gy-0.24,0.045,0.04,h+2,h+6,col('brick',1),col('brick',0.6),col('brick',0.85));
     if(c.solar) /* rooftop solar — adopted by the diffusion CA */
@@ -2540,6 +2556,7 @@ function drawBuilding(c,x,y,gx,gy){
     prism(gx,gy,0.34,0.30,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
     for(let z=5;z<h-4;z+=7){
       bandR(gx,gy,0.34,0.30,z,z+3,colLit('glass',0.82,lit));
+      darkWinR(gx,gy,0.34,0.30,z,z+3,x,y,0x1DE7);
       if(bodyN==='terra')bandR(gx,gy,0.348,0.308,z+3,z+3.9,col('white',0.95)); /* balcony rails */
     }
     prism(gx,gy,0.36,0.32,h,h+1.6,col('creamDk',1),col('creamDk',0.6),col('creamDk',0.82));
@@ -2618,19 +2635,29 @@ function drawBuilding(c,x,y,gx,gy){
     const under=c.h<c.th-3;
     if(style===0){ /* white fins + teal glass bands */
       prism(gx,gy,0.32,0.28,0,h,col('white',1),col('white',0.6),col('white',0.84));
-      for(let z=4;z<h-6;z+=8)bandR(gx,gy,0.32,0.28,z,z+3.6,colLit('glass',0.8,lit*(0.5+0.5*hashCell(x,z|0,3))));
+      for(let z=4;z<h-6;z+=8){
+        bandR(gx,gy,0.32,0.28,z,z+3.6,colLit('glass',0.8,lit*(0.5+0.5*hashCell(x,z|0,3))));
+        darkWinR(gx,gy,0.32,0.28,z,z+3.6,x,y,0x1DE7);
+      }
       prism(gx,gy,0.2,0.17,h,h+3,col('sage',1),col('sage',0.62),col('sage',0.85)); /* roof garden */
     } else if(style===1){ /* teal glass slab with white cap + setback */
       const h1=h*0.7;
       prism(gx,gy,0.33,0.29,0,h1,col('teal',1),col('teal',0.6),col('teal',0.84));
-      for(let z=4;z<h1-4;z+=6)bandR(gx,gy,0.33,0.29,z,z+2.4,colLit('glass',0.95,lit*(0.5+0.5*hashCell(x+3,z|0,5))));
+      for(let z=4;z<h1-4;z+=6){
+        bandR(gx,gy,0.33,0.29,z,z+2.4,colLit('glass',0.95,lit*(0.5+0.5*hashCell(x+3,z|0,5))));
+        darkWinR(gx,gy,0.33,0.29,z,z+2.4,x,y,0x1DE7);
+      }
       prism(gx,gy,0.24,0.21,h1,h,col('white',1),col('white',0.6),col('white',0.84));
-      for(let z=h1+3;z<h-3;z+=6)bandR(gx,gy,0.24,0.21,z,z+2.2,colLit('glass',0.85,lit));
+      for(let z=h1+3;z<h-3;z+=6){
+        bandR(gx,gy,0.24,0.21,z,z+2.2,colLit('glass',0.85,lit));
+        darkWinR(gx,gy,0.24,0.21,z,z+2.2,x,y,0x1DE7);
+      }
       bandR(gx,gy,0.26,0.23,h1,h1+2,col('sage',1)); /* terrace */
     } else if(style===2){ /* garden tower: stacked terraces */
       prism(gx,gy,0.31,0.27,0,h,col('cream',1),col('cream',0.6),col('cream',0.84));
       for(let z=6;z<h-4;z+=10){
         bandR(gx,gy,0.31,0.27,z,z+3.4,colLit('glass',0.82,lit*(0.5+0.5*hashCell(x,z|0,9))));
+        darkWinR(gx,gy,0.31,0.27,z,z+3.4,x,y,0x1DE7);
         bandR(gx,gy,0.325,0.285,z+3.4,z+4.8,col('sage',1));
       }
       prism(gx,gy,0.18,0.15,h,h+2.6,col('sage',1),col('sage',0.6),col('sage',0.84));
@@ -2642,6 +2669,7 @@ function drawBuilding(c,x,y,gx,gy){
       for(let z=4;z<h-4;z+=7){
         const wx2=z<h1?0.34:(z<h2?0.27:0.19), wy2=z<h1?0.30:(z<h2?0.23:0.16);
         bandR(gx,gy,wx2,wy2,z,z+2.6,colLit('glass',0.85,lit*(0.5+0.5*hashCell(x,z|0,13))));
+        darkWinR(gx,gy,wx2,wy2,z,z+2.6,x,y,0x1DE7);
       }
       bandR(gx,gy,0.28,0.24,h1,h1+1.6,col('gold',1));
       bandR(gx,gy,0.20,0.17,h2,h2+1.6,col('gold',1));
