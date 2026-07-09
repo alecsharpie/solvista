@@ -1805,3 +1805,64 @@ was pure; don't read it as a stronger guarantee than it is.
 (day-floor creep, fog reading as glare) both dissolved on inspection. Redeploy
 pending (iters 34–74 + hooks + the concurrent transport/camera/shoreline commits).
 
+## Iteration 75 — after dark, not everyone is home (2026-07-09)
+
+**Vector:** Urban fabric × **Polish** — rotation pointed at Urban fabric (untouched
+since 68, the stalest live domain; Sky is saturated-closed) and its × Polish cell was
+the last empty non-dubious cell in the grid. Polish adds nothing, which is the right
+kind for a mature city, and 74 shipped no feature, so a feature lap was owed.
+**Orient/seam finding — the primitive already existed, unused.** `slotS()` (~L1550) has
+been in the file all along: it draws a single window-shaped quad on a prism's left or
+right front face, taking `u ∈ (-1,1)` where the *sign* picks the face and `|u|` the
+position along it. **Only the CIVIC draw cases ever called it.** Every home, walk-up and
+tower drew its glass with `bandR()` — a *continuous ribbon* spanning both front faces.
+So at night the entire city's glass lit up as solid unbroken stripes: towers varied
+brightness per floor (`hashCell(x,z,…)`), but within a floor it was one flat bar. No
+building anywhere read as having individual windows.
+**Change:** one helper, `darkWinR(gx,gy,ax,ay,z0,z1,x,y,salt)` beside `bandR` (~L1548).
+After the ribbon is drawn it punches **unlit panes** into it via `slotS`, one per front
+face, each face rolling independently off `hashCell(x*13+(s+1)*3, y*7+(z0|0), seedNum^salt)`;
+a face below the 0.36 threshold keeps all its lights on. Wired into all six glass-ribbon
+band sites: RES's window strip, MID's floor loop, and each of the four TOWER styles.
+Two deliberate choices: (1) **subtractive, not additive** — the ribbon stays warm and a
+few panes go dark, rather than dimming the glass and punching *lit* panes in. The
+additive version is more physical but would have darkened downtown, which is exactly the
+compounding failure mode kelp taught (a good-in-isolation change that dims the whole
+frame). (2) **Night-gated**: `if(LITAMT<0.35)return` as the first line, so the day frame
+pays a branch and nothing else.
+Draw-only: no `rng()`, no terrain, no new tile/entity → no census hook, `TILELABEL` or
+`ENTINFO` sync needed.
+**Census:** VERDICT PASS, 0 page errors. pop +3, towerHt +1, every other metric exactly
++0, **tile histogram empty** — the correct signature of a draw-only change, and the ±few
+is the known last-partial-tick jitter documented at 74. Per the skill's own rule I did
+**not** add a bespoke metric for this: it moves nothing the hook reports, and the growth
+signal here is the screenshots.
+**Visual:** 3 subagents, all PASS. Both night seeds (42, 7) independently confirmed the
+panes "sit ON the slanted facade, following the isometric skew of both wall planes,"
+read as fenestration rather than "noise or dirt," and that **downtown is not darker** —
+the specific risk I designed against. Crucially I also ran a **daylight control** (seed
+42, magnified tower + wide): bands "smooth and continuous, no dark notches," proving the
+night gate actually holds. A control frame is cheap and it is the only thing that can
+falsify a gating claim.
+**Tooling:** a 2px pane is below the resolving power of the `downtown` clip — precisely
+iter 70's false-negative trap, where a subagent failed a feature it simply could not see.
+So I wrote **`tileshot.mjs`**, the tile-side twin of `hovershot.mjs`: `__find(TYPE)` →
+`deviceScaleFactor:4` clip on one instance. It is the reason all three verdicts were
+specific about pane geometry instead of hedging. Kept and generalized (any tile type /
+civic kind), not left as a throwaway.
+**Perf — the header's night-gating heuristic, finally measured.** PASS ×3 (unusually
+quiet box: all runs agreed to ±0.05ms). Day **24.55ms** vs 24.50 @74 = **+0.05ms, i.e.
+free**, as the early-return predicts. Night **27.44ms** vs 25.89 @74 = **+1.55ms**, the
+true cost of ~1.2k extra fills/frame. Still PASS (+3.1% on a +15% gate), and worth it
+for a citywide legibility win — but logged precisely, because it is the largest single
+night-frame charge any iteration has made. **Night is now the scarcer budget** (~2.9ms of
+headroom); "gate it on night, it's free" is true of the *day* floor only, and the next
+laps should know night is no longer cheap.
+**Verdict:** SHIPPED. The city's buildings now read as buildings after dark instead of
+glowing bars — the single most visible night change since vehicle lights (70), and it
+cost no terrain, no seeded stream, and no daylight performance.
+**Follow-up worth taking:** iter 73's corner-lot lead is still open (27 of 74 civics tie
+in `frontSide` and fall back to a hash; choosing the *less-occluded* side would convert
+that semantic win into a visible one). Also: `slotS` sat unused by non-civics for the
+whole project — worth grepping for other primitives the building cases never adopted.
+

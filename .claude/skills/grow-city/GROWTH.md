@@ -19,7 +19,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75 |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81 |
@@ -66,11 +66,28 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   back as +31% towers and +12.8% pop. Any future rule that mints `COM` must decide
   whether those lots are downtown parcels or terminal shopfronts, and if the latter,
   exclude them from both the upgrade *and* the neighbour quorum.
-- **`COM` has no shopfront draw — fix this before siting shops (iter 82).** At city
-  zoom a `COM` hex is near-indistinguishable from `RES`/`MID`, so +182 shop tiles were
-  numerically real and visually invisible. Urban × Polish on `drawBuilding`'s `COM`
-  case (awnings, signage, kerb frontage) is the prerequisite for any retail vector,
-  and is worth doing on its own.
+- **`COM` now has a shopfront, and it faces the street (iter 83 — 82's blocker is
+  cleared).** 82 said `COM` had "no shopfront draw"; it had one, but the awning was a
+  `bandR` **ring** and the glass ran full height, so a shop was a `MID` in a colored
+  belt. Now: glass at street level over a stallriser, a `slotS` door, a kerb apron,
+  and a **projecting striped awning** — all on `frontSide()`'s road-facing face
+  (cached as `c.fs`, refreshed on `year`). A retail siting vector is now unblocked
+  *visually*, but 82's siting lesson stands unchanged: reserve frontage pre-1990,
+  and never re-try RES→COM on arterials.
+- **One-sided drawing has a vocabulary now (iter 83).** `bandR`/`bandS` wrap **both**
+  visible faces — a ring cannot express frontage. Use `faceOutS()` (a face's outward
+  screen normal), `awnS()`, `kerbS()` and the older `slotS()` for anything a building
+  does *toward a street*: porches, stoops, loading docks, café spill-out. And note
+  the **`0.5 − ax` margin**: a prism at `ax=0.36` leaves ~4.5px of its own hex free on
+  every side, so things drawn there project over the pavement and read as depth
+  **without** crossing into the next row — the trick that makes an overhang safe in a
+  painter's-order renderer.
+- **Open cues, banked by holistic passes (take one when its domain comes up):**
+  (a) **the rainbow floats** — `L4166`, drawn in screen space trailing a raining
+  cloud; at seed 7 a leg ends mid-air over open ocean. Same defect iter 81 fixed for
+  fog, same fix. *Sky × Polish.* (b) **the asphalt floods the interior** — by 2035 the
+  road ground tone compounds into a dark brown smear that robs the parks of contrast.
+  The kelp-coast failure mode, inland. *Urban × Polish.*
 - **Civic forecourts are a *placement* rule, not a tile (iters 36 → 80).** Every
   `PLAZA` in the city is a forecourt; 36's random-sample rule at L909 has never
   fired even once and survives only to keep the `rng()` stream aligned — do not
@@ -346,72 +363,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 75 entries before Iteration 75 live in
+> **Archive:** the 76 entries before U4 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 75 — after dark, not everyone is home (2026-07-09)
-
-**Vector:** Urban fabric × **Polish** — rotation pointed at Urban fabric (untouched
-since 68, the stalest live domain; Sky is saturated-closed) and its × Polish cell was
-the last empty non-dubious cell in the grid. Polish adds nothing, which is the right
-kind for a mature city, and 74 shipped no feature, so a feature lap was owed.
-**Orient/seam finding — the primitive already existed, unused.** `slotS()` (~L1550) has
-been in the file all along: it draws a single window-shaped quad on a prism's left or
-right front face, taking `u ∈ (-1,1)` where the *sign* picks the face and `|u|` the
-position along it. **Only the CIVIC draw cases ever called it.** Every home, walk-up and
-tower drew its glass with `bandR()` — a *continuous ribbon* spanning both front faces.
-So at night the entire city's glass lit up as solid unbroken stripes: towers varied
-brightness per floor (`hashCell(x,z,…)`), but within a floor it was one flat bar. No
-building anywhere read as having individual windows.
-**Change:** one helper, `darkWinR(gx,gy,ax,ay,z0,z1,x,y,salt)` beside `bandR` (~L1548).
-After the ribbon is drawn it punches **unlit panes** into it via `slotS`, one per front
-face, each face rolling independently off `hashCell(x*13+(s+1)*3, y*7+(z0|0), seedNum^salt)`;
-a face below the 0.36 threshold keeps all its lights on. Wired into all six glass-ribbon
-band sites: RES's window strip, MID's floor loop, and each of the four TOWER styles.
-Two deliberate choices: (1) **subtractive, not additive** — the ribbon stays warm and a
-few panes go dark, rather than dimming the glass and punching *lit* panes in. The
-additive version is more physical but would have darkened downtown, which is exactly the
-compounding failure mode kelp taught (a good-in-isolation change that dims the whole
-frame). (2) **Night-gated**: `if(LITAMT<0.35)return` as the first line, so the day frame
-pays a branch and nothing else.
-Draw-only: no `rng()`, no terrain, no new tile/entity → no census hook, `TILELABEL` or
-`ENTINFO` sync needed.
-**Census:** VERDICT PASS, 0 page errors. pop +3, towerHt +1, every other metric exactly
-+0, **tile histogram empty** — the correct signature of a draw-only change, and the ±few
-is the known last-partial-tick jitter documented at 74. Per the skill's own rule I did
-**not** add a bespoke metric for this: it moves nothing the hook reports, and the growth
-signal here is the screenshots.
-**Visual:** 3 subagents, all PASS. Both night seeds (42, 7) independently confirmed the
-panes "sit ON the slanted facade, following the isometric skew of both wall planes,"
-read as fenestration rather than "noise or dirt," and that **downtown is not darker** —
-the specific risk I designed against. Crucially I also ran a **daylight control** (seed
-42, magnified tower + wide): bands "smooth and continuous, no dark notches," proving the
-night gate actually holds. A control frame is cheap and it is the only thing that can
-falsify a gating claim.
-**Tooling:** a 2px pane is below the resolving power of the `downtown` clip — precisely
-iter 70's false-negative trap, where a subagent failed a feature it simply could not see.
-So I wrote **`tileshot.mjs`**, the tile-side twin of `hovershot.mjs`: `__find(TYPE)` →
-`deviceScaleFactor:4` clip on one instance. It is the reason all three verdicts were
-specific about pane geometry instead of hedging. Kept and generalized (any tile type /
-civic kind), not left as a throwaway.
-**Perf — the header's night-gating heuristic, finally measured.** PASS ×3 (unusually
-quiet box: all runs agreed to ±0.05ms). Day **24.55ms** vs 24.50 @74 = **+0.05ms, i.e.
-free**, as the early-return predicts. Night **27.44ms** vs 25.89 @74 = **+1.55ms**, the
-true cost of ~1.2k extra fills/frame. Still PASS (+3.1% on a +15% gate), and worth it
-for a citywide legibility win — but logged precisely, because it is the largest single
-night-frame charge any iteration has made. **Night is now the scarcer budget** (~2.9ms of
-headroom); "gate it on night, it's free" is true of the *day* floor only, and the next
-laps should know night is no longer cheap.
-**Verdict:** SHIPPED. The city's buildings now read as buildings after dark instead of
-glowing bars — the single most visible night change since vehicle lights (70), and it
-cost no terrain, no seeded stream, and no daylight performance.
-**Follow-up worth taking:** iter 73's corner-lot lead is still open (27 of 74 civics tie
-in `frontSide` and fall back to a hash; choosing the *less-occluded* side would convert
-that semantic win into a visible one). Also: `slotS` sat unused by non-civics for the
-whole project — worth grepping for other primitives the building cases never adopted.
 
 ## U4 — the plate becomes a hexagon; rivers, monorails and cable cars go plural (2026-07-09)
 
@@ -1062,3 +1018,78 @@ worth doing on its own merits regardless of siting.
   scale the change lives at.** A street wall is a *block-scale* feature, so the
   block-scale reviewer's FAIL outranks two city-scale PASSes. Send the zoom that
   matches the feature's scale, and when verdicts split, believe the tighter one.
+
+## Iteration 83 — the shops get a face (2026-07-10)
+
+**Vector** — Urban fabric × Polish. Iter 82 reverted its retail CA rule and named
+this iteration twice, in its own entry and in the header: *"give `COM` a distinct
+shopfront draw first — awnings/signage/continuous kerb frontage. Urban × Polish on
+`drawBuilding`'s `COM` case is the prerequisite, and is worth doing on its own
+merits regardless of siting."* Rotation agrees: Urban has shipped nothing since 75
+(82 reverted), and Polish varies the kind from 82's New CA rule.
+
+**82's premise was half wrong, and grepping the seam first caught it.** `COM` did
+*not* lack a shopfront draw — it already had an awning band and a district-colored
+sign band (old L2926-2928). The actual defect was subtler and worth stating
+precisely: **the awning was a *ring*, and the glass ran full height.** `bandR`
+wraps both visible faces, so the awning was a flat stripe with no projection, and
+`bandR(...,8,h-5,glass)` gave every shop a tall glass band — which is exactly what
+`MID` draws (repeated glass bands). A shop was a mid-rise wearing a colored belt.
+Retail is a **ground-floor, one-sided** thing, and the draw code encoded neither.
+
+**Change (draw-only; no `rng()`, no terrain, no new tile).**
+- Two new face-local primitives beside `slotS`/`darkWinR`: `faceOutS()` returns a
+  prism face's outward screen normal, and `awnS()` / `kerbS()` draw a projecting
+  striped canopy and a kerb apron on **one** face. `awnS` is 3 fills (canopy, all
+  accent stripes batched into one path, valance).
+- The `COM` case now picks a **front**: `fs = frontSide(x,y, hashed fallback)` —
+  the third reuse of iter 73's `frontSide` after 80's forecourts. Glass drops to
+  street level (z 1.3→6.4) over a dark stallriser; a `slotS` doorway, the kerb
+  apron and the projecting awning all land on `fs`. Taller shops (`h>=17`) get one
+  upper office band with `darkWinR`. Sign band + neon glow unchanged.
+- The awning projects **3px along the face normal**, and the prism is `ax=0.36`
+  against a `0.5` hex, so the canopy stays inside its own tile — it cannot tear
+  against the row drawn after it. That margin is why this is safe at all.
+- `frontSide` is 6 neighbour probes and there are ~1250 shops **per frame**, so it
+  is cached on the cell (`c.fs`/`c.fsY`) and refreshed when `year` advances — a
+  street built later still turns the shop around.
+
+**Census** — `+0` on **all 22 metrics**, 0 page errors, empty tile histogram.
+Correct and expected: a draw-only change that adds no `Math.random()` draw has a
+pixel-identical control, so this is the clean-determinism case iter 78 described.
+
+**Visual** — 4 subagents. Per 82 ("a reviewer only sees the change at the scale the
+change lives at"), the primary verdicts are the two **downtown-zoom** BEFORE/AFTER
+pairs; both `VISUAL: PASS`, both independently reporting that shops are now
+distinguishable at a glance from houses/mid-rises where in BEFORE they were not,
+that awnings stay inside their hex with no z-order tears, and that no awning fronts
+a roadless face. A night-downtown agent scanned all 2.9M pixels: **zero pixels above
+235** — the awning takes `TINT` through `col()` and reads reflective, not emissive
+(iter 79's test). A wide 2-seed holistic agent also passed.
+
+**Perf** — 3 sequential passes, judged by the minimum of each scene:
+`day 31.33 → 32.33ms (+3.2%)`, `night 37.22 → 36.61ms (−1.6%)`. PASS. The +3.2% is
+the added fills on the city's most numerous building; the `c.fs` cache is what kept
+it there.
+
+**Verdict: SHIPPED.** The prerequisite 82 asked for now exists.
+
+**Findings**
+- **`bandR` is a ring, and rings cannot express frontage.** Every band in
+  `drawBuilding` wraps both visible faces, which is right for a tower's window
+  courses and wrong for anything a building does *toward a street*. The new
+  `awnS`/`kerbS`/`faceOutS` + the existing `slotS` are the one-sided vocabulary;
+  reach for them for porches, loading docks, stoops, café spill-out.
+- **The `0.5 − ax` margin is a real drawing surface.** A prism at `ax=0.36` leaves
+  ~4.5px of its own hex unused on every side. Things drawn there project over the
+  pavement and read as depth *without* crossing into the next row — the constraint
+  that makes overhangs safe in a painter's-order renderer.
+- **Two cumulative cues the holistic agent volunteered** (neither caused by this
+  lap; both worth a future iteration):
+  1. **The rainbow floats.** `L4166` (`cl.rain && LITAMT<0.15`) draws it in screen
+     space trailing a shower; at seed 7 it arcs over open ocean with one leg ending
+     mid-air. This is precisely iter 81's fog defect — an overlay on the lens
+     instead of a field on the plate — and 81's fix is the template. **Sky × Polish.**
+  2. **The asphalt floods the interior.** At seed 42/2035 the road ground tone has
+     compounded until the built interior reads as a dark brown smear that robs the
+     parks of contrast. The kelp-coast failure mode, inland. **Urban × Polish.**
