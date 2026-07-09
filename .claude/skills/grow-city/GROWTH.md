@@ -22,7 +22,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -119,6 +119,25 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   as "muddy brown… acceptable", which is the tint working, but looking at *why* they both
   reached for it surfaced the untinted foam beside it. Look at the frame yourself when two
   agents agree in different words.
+- **The marine layer is a FIELD on the plate, not blobs on the lens (iter 81).**
+  `fogAt(x,y,i)` × `FOGAMT`, emitted per-hex *inside* the row loop, so the next row
+  occludes it and it can never hang off the plate. Gated by `rSea` — a fifth
+  `reachFill` whose sources are every wet cell, so fog finds rivers and marsh too.
+  Colored via `colA('fog',…)` (it scatters → it takes the tint). Two things that
+  look like bugs and are not: (1) the per-hex alpha is 0.22, tuned for the ~2.4
+  lenses that survive *across a row* — the next row paints over the rest, so the
+  field does not accumulate down-screen; (2) the faint hex ripple in fogged water
+  is the lens lattice, and **hash-jittering the centers to break it up makes hard-
+  edged bubbles instead — tried, reverted, don't re-try.** `FOGAMT>0.02` early-outs,
+  so a clear city pays nothing; a foggy frame costs ~+10%.
+- **⚠ The three gates share a SAMPLING blind spot (iter 81).** Census, perf and
+  every screenshot run the same seeds (7/42/1234, or 42) at the same times
+  (`t≈0.3`, `t=0.8`). The fog spell fires only when `sin((seed%97)*0.7)>0.25` —
+  which *none* of those seeds satisfy — and the dawn bank needs `t≈0.10`. So a
+  feature that had shipped before the ledger existed sat visibly broken for 80
+  laps, unrendered by any gate. Kelp survived 13 laps by never being *looked at*;
+  this survived 80 by never being *sampled*. When touching anything time- or
+  seed-gated, find a seed×t that actually shows it (and say which, in the entry).
 - **⚠ Overlays drawn last FLOAT (iter 71):** the instinct to draw a highlight
   "last of all, so it can never tear" is wrong in this renderer. Rows draw
   top→bottom, so an entity in row *y* is legitimately occluded by a tower in
@@ -299,65 +318,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 73 entries before Iteration 73 live in
+> **Archive:** the 74 entries before Iteration 74 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 73 — civic buildings turn to face the street (2026-07-09)
-
-**Vector:** Civic & culture × **Polish** — rotation pointed at Civic (least-recently
-touched, last 66) and the cell was empty; the kind had to change after 72's Deepen.
-Polish adds nothing, which suits a mature city. Deep single-tile redesigns belong to
-`polish-tile`, so the move had to be *cross-civic* and systemic, not one building.
-**Orient/seam finding:** every civic is already richly drawn (flags, beacons, night
-glows, an amphitheatre audience) — no additive gap. What the seam read *did* turn up:
-the hospital, school and university each pick which side their **public face** goes on
-from `hashCell(...)<0.5?1:-1` — a per-city coin flip. So the ambulance bay, the
-schoolyard and the lawn quad point in a random direction, as often at a neighbour's
-back wall as at the street the building was sited on (`roadNear`).
-**Change:** one helper, `frontSide(x,y,fallback)` (~L560), sums each ROAD neighbour's
-**screen-x displacement** and returns +1/-1 for the side the lot fronts; an even split
-(a corner lot) falls back to the caller's existing hash, so nothing is forced. Wired
-into the three `fx`/`fxS`/`fxU` mirror flags. Read-only: no `rng()`, no `hashCell`
-draw of its own, no terrain touched.
-**⚠ The bug the visual gate caught — `dx` sign is NOT the screen side.** v1 counted
-neighbours by the sign of `dx` and skipped `dx===0`. On offset rows that is simply
-wrong: an even row's `dx=0` diagonals sit **half a cell EAST** (`sdx=+16`) and its
-`dx=-1` diagonals WEST — odd rows invert it. So v1 was "west on even rows, east on odd
-rows" whenever only diagonals had roads, and it turned seed 42's hospital *away* from
-its street. A subagent returned `VISUAL: FAIL` on exactly that frame; a numeric probe
-confirmed the hospital's two road neighbours are `(0,-1) sdx=+16` and `(-1,-1) sdx=-16`
-— a true tie the buggy code read as west. **Never infer a screen direction from `dx` on
-an offset-row hex grid; take `ctr()[0]` differences.** Summing displacement also weights
-a due-E/W neighbour 2x a diagonal, which is what you want.
-**Census:** VERDICT PASS, 0 page errors. Every core metric exactly flat (pop, roads,
-developed, towerHt all +0), tile histogram empty — the correct signature of a draw-only
-change that touches no terrain and no seeded stream. (Lone ±1 on greenRoofs = the usual
-last-partial-tick jitter.)
-**Measured effect (15 seed x era scenes, `frontSide` vs the old coin flip):**
-university **7 turned / 2 already / 2 tie** — the strong case; school **17 / 9 / 13**;
-hospital **0 / 3 / 12** — a hospital *never* turned, they sit on symmetric frontage.
-**Occlusion is orthogonal and a coin flip** (tallest building <=3 rows south on the
-chosen side): 11 turned instances end up more occluded, 10 less, 3 the same. Facing the
-street does **not** mean being *seen* — a distant tall tower to the south covers a face
-regardless of which side it is on. Expected visibility is therefore unchanged; the gain
-is semantic (the yard/quad now *means* something) and it is subtle by design.
-**Visual:** university PASS on 2 seeds — "quad opens onto an adjacent grey street, wings
-close the back," verified by pixel coordinate on both. Whole-city PASS on seeds 42/1234:
-no tears, no floaters, no blown colour, no civic wedged against a back wall. I looked at
-the seed-42 school pair **myself** (n=1 agent verdict contradicted a numeric probe): the
-building does mirror correctly onto its street side — 3 west road neighbours vs 1 east —
-but a tall tower to the *south-west* then hides the chalked oval. That is one of the 11
-unlucky instances above, not a regression: the old hash was 50/50 for occlusion too.
-**Verdict:** SHIPPED. The rule is right and the census is clean, but log the honest
-size of the win: it is a coherence fix, not a visible one, and half of what it turns
-stays hidden behind towers.
-**Follow-up worth taking:** 27 of the 74 audited civics are **ties** (corner lots) that
-currently fall back to a hash. Choosing the *less-occluded* street side there — the one
-the camera can actually see — would convert this from semantics into a visible win, and
-is the natural next Civic × Polish lap.
 
 ## Iteration 74 — holistic step-back (2026-07-09) [11th lap]
 
@@ -941,3 +906,110 @@ convention the skill itself recommends (`/bin/cp` a backup before a big swing) n
 longer poisons the next run. The probe shape — re-derive the predicate
 independently, audit every instance, A/B against `before.html` — is worth reusing
 for any placement rule; both scripts survive on disk, untracked.
+
+## Iteration 81 — the fog stops being a smudge on the lens (2026-07-10)
+
+**Vector:** **Sky & atmosphere × Polish (FIXED).** Sky was the most neglected
+domain on the grid (last touched at 61, and never by a CA rule or a Connect), so
+the rotation pointed here. I went looking to *add* a marine layer and grepped
+first — per step 3's rule, and per iter 34, which nearly shipped beach towels onto
+a beach that already had them. **Solvista has had a marine layer all along.**
+Twice, in fact: a dawn bank (old L3982) and a seeded multi-day "spell" (old L3992).
+So the iteration became a fix instead of an addition, which is the whole point of
+grepping the seam before designing against it.
+
+**The defect, seen before it was theorised.** Both fog systems were a handful of
+big screen-space ellipses drawn **after the entire row loop**. That is precisely
+iter 71's "⚠ Overlays drawn last FLOAT," applied to the largest overlay in the
+file. I shot seed 2 (`sin((seed%97)*0.7) > 0.25` is the spell's gate; 7/42/1234 all
+fail it, which is why 80 laps of census screenshots never once rendered this
+feature) and looked myself. Three faults, in descending order of harm:
+1. **The banks hang off the plate into the empty sky** — clearly visible past the
+   top-right and right rim of the sea. Fog in the void, beyond the edge of the world.
+2. They read as **soft-focus lens smudges / glare pucks**, not weather. Iter 60's
+   holistic already caught this smell and treated it by splitting one oval into
+   three feathered lenses; that treated the symptom, not the projection.
+3. Strongest over the **open sea** and weakest at the shore — inverted. A marine
+   layer piles against the coast. The `inland` term intended this and did the
+   opposite: `inland` saturates at 1 for most of the roll, so the bank is a puck
+   at sea and only fades in its last few columns.
+
+Plus a fourth, of the class iter 79 named: both used hardcoded near-white
+`rgba(238,242,240)` / `rgba(236,241,239)` literals. Fog **scatters** light, so by
+79's reflect-vs-emit test it must go through `colA` and take the tint. The spell
+had a hand-rolled `(1-LITAMT*0.45)` night dimmer, which is a dimmer, not a tint —
+it made night fog grey, never blue.
+
+**Change (draw-only).** The marine layer is now a **per-hex density field emitted
+inside the row loop**, after each row's cells. It therefore has depth: rows in
+front draw straight over it, so the layer is clipped to the plate for free and the
+city stands out of it instead of under it.
+- Spatial gate reuses **`reachFill`** (the U5 header note asked for exactly this):
+  a fifth map, `rSea`, with *every wet cell* as a source — so the fog finds the
+  rivers and the marsh, not only the coast. Thickest in the surf, spent within
+  `FOGR`=7 hexes inland, thinning to a haze offshore via `shoreAtF(y)`.
+- Two weather clocks preserved and merged into one `FOGAMT`: the dawn layer that
+  burns off by mid-morning, and the seeded spell that makes some cities foggy for
+  a stretch of days. Both still time-driven, no `rng()`, so `__step` still reaches
+  a foggy window.
+- Color through **`colA('fog',…)`** + a new `BASE.fog`. Rose at dawn, blue under
+  the moon, and the moon itself still emits — 79's discriminator, honored.
+
+**The two tuning failures worth recording, because both are counter-intuitive:**
+- **Alpha must be sized for the overlaps that SURVIVE, not the ones you draw.** I
+  sized the per-hex lens for ~9 overlapping neighbours and got a nearly invisible
+  sheen. The next row paints its own opaque ground over the bottom of this row's
+  lenses, so the field accumulates *across a row* (~2.4 lenses) and hardly at all
+  *down the screen*. That is the depth model working, not a bug — but it means the
+  right alpha is 0.22, not 0.095. A first pass at 0.30 with high-frequency noise
+  **quilted the sea into fish scales**: few strong lenses tile visibly, many weak
+  ones dissolve.
+- **Hash-jittering the lens centers made it worse, and was reverted.** Both visual
+  agents volunteered the same caveat — a faint hex lattice in the fogged water —
+  and per 79's "a caveat both seeds volunteer is a finding," I fixed it. Offsetting
+  each lens by `hashCell` to decorrelate the overlaps from the grid turned a subtle
+  ripple into **hard-edged soap bubbles**, because broken tiling lets a single lens
+  poke out against clear water. Reverted; the comment in the source now says so, so
+  a future lap doesn't re-try it. On a hex diorama the ripple reads as hex-grain,
+  like the water's own facets.
+
+**Census:** VERDICT PASS, 0 page errors. **All 22 metrics exactly +0**, tile
+histogram empty, all 25 entity counts unchanged. The exact signature of a
+draw-only change (cf. 79).
+
+**Visual:** 2/2 `VISUAL: PASS`, before/after on identical clips (`before.html` =
+`git show HEAD`), foggy seeds **2 and 11**, agents told to prefer stationary
+evidence and forbidden to report the moon / window lights / cable-car lines /
+wakes. Both convicted the BEFORE defect *unprompted by its location*: "multiple
+ellipses clearly hang OFF the plate into empty sky." Both confirm the AFTER is
+strictly on-plate, piles toward the coast, no tears, and does not swallow the
+towers. Night frame: muted blue-grey mist, not a glowing white haze.
+
+**Perf — the standard gate is BLIND to this feature, so I measured around it.**
+`perf.mjs` runs seed 42 at `t=0.35`/`t=0.8`: neither weather clock is up, so
+`FOGAMT`=0 and the fog costs literally nothing there. A PASS from it would have
+been meaningless. Official gate PASS anyway (day 30.72ms −1.9%, night 34.11ms
+−8.4%). A throwaway probe measured the frame that actually pays, HEAD vs after:
+foggy dawn **30.28 → 33.39ms (+10%)**, foggy day 30.11 → 33.22ms, and **clear day
+30.11 → 30.05ms (free)** — the `FOGAMT>0.02` early-out means an unfogged city pays
+zero. +10% on the ~1/3 of seed×time combinations that are foggy, inside the 15%
+tolerance. Also added the marine layer to the intro `<li>` list.
+
+**Verdict:** FIXED. The fog was a sticker on the lens for 80 iterations; it is now
+weather standing in the scene.
+
+**Lesson for the loop, sharper than "grep first."** The feature I set out to add
+already existed, had existed since before the ledger, and was *broken in a way no
+gate could see*: invisible to the census (draw-only), invisible to the perf gate
+(wrong seed), and invisible to every screenshot ever taken (the spell's seed gate
+excludes 7/42/1234, and the dawn layer needs `t≈0.10` while shots are at `t≈0.3`).
+**Our three gates share a blind spot: they all run the same seeds at the same
+times.** Kelp survived 13 laps by being un-zoomed-at; this survived 80 by being
+un-*sampled*. Worth occasionally shooting a deliberately odd `seed×t` — that is
+the only thing that would have caught it.
+
+**Follow-ups:** iter 79's two untinted literals (whale spout L3774, boat wake
+L3659) are still open — the same `colA` treatment. 77's `treed`-on-`c.flow`
+boulevard retarget, 78's dogs-on-sidewalks, 73's corner-lot lead and 76's REDWOOD
+closure lead all remain open. **Iteration 84 still owes the holistic step-back**
+(79 + 5).

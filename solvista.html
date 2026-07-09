@@ -139,6 +139,7 @@ h1{
       <li>Streets reach toward demand, bridging the river when they must.</li>
       <li>The woods are logged at the edges, creep back, and sometimes burn.</li>
       <li>Rain showers seed wildflower waves across the meadows.</li>
+      <li>The marine layer piles on the water at dawn and creeps a few blocks inland.</li>
       <li>Fires jump block to block until the 1991 firehouse; the engine still patrols.</li>
       <li>Schools follow the children; library, museum and capitol follow the decades.</li>
       <li>Ball fields, stadiums, statues and plazas appear where the crowds already are.</li>
@@ -239,6 +240,7 @@ const BASE={
   canopy:[104,146,92], canopyLt:[139,173,110], trunk:[122,90,62],
   conifer:[104,146,92], coniferLt:[139,173,110], /* evergreens sit out the seasons */
   water:[92,172,178], waterDk:[62,138,148], foam:[255,251,240], glint:[235,248,250],
+  fog:[236,241,239],
   road:[106,101,93], roadArt:[86,82,75], roadLine:[233,221,192],
   cream:[244,232,208], creamDk:[221,205,172],
   terra:[199,111,74], terraDk:[170,90,60],
@@ -672,6 +674,11 @@ function reachFill(out,r,isSrc){
 }
 const rTransit=new Uint8Array(G*G), rGreen=new Uint8Array(G*G),
       rShop=new Uint8Array(G*G), rServ=new Uint8Array(G*G);
+/* how far each hex sits from open water — the marine layer's spatial gate.
+   Every wet cell is a source, so the fog also finds the rivers and the marsh.
+   Starts "far from the sea" so the first frame can't fog a city it hasn't
+   measured yet. */
+const FOGR=7, rSea=new Uint8Array(G*G).fill(255);
 const HOME=new Set([T.RES,T.MID,T.TOWER]);
 /* Traffic, as flow accumulation — the rule that turns rain into rivers.
    Every developed block generates trips; every trip drains downhill along the
@@ -1450,6 +1457,7 @@ function recount(){
   reachFill(rGreen,3,c=>c.t===T.PARK||c.t===T.GARDEN||c.t===T.PLAZA||c.t===T.SHOREPARK);
   reachFill(rShop,3,c=>c.t===T.COM||c.t===T.MARKET);
   reachFill(rServ,6,c=>c.t===T.CIVIC);
+  reachFill(rSea,FOGR,c=>WETSET.has(c.t));
   for(let i=0;i<cells.length;i++){
     const c=cells[i];
     const w=POPW[c.t]?POPW[c.t]*(c.t===T.TOWER?clamp(c.h/Math.max(c.th,1),0,1):1):0;
@@ -3858,10 +3866,49 @@ function drawSkirt(x,y){
 /* fixed star field (screen space) */
 const STARS=[];for(let i=0;i<70;i++)STARS.push([Math.random(),Math.random()*0.55,Math.random()*7]);
 
+/* THE MARINE LAYER — weather standing in the scene, not a smudge on the lens.
+   It used to be a handful of big screen-space ellipses drawn after every row,
+   which put it on top of the whole diorama and let it hang off the plate into
+   the empty sky. Now it is a per-hex density field emitted inside the row loop,
+   so it is clipped to the land it sits on and the rows in FRONT of a bank draw
+   over it: the towers stand out of the fog and the hills behind vanish into it.
+
+   Thickest on the water (rSea), spent within FOGR hexes inland — so it finds
+   the rivers and the marsh, not just the coast. Fog SCATTERS light rather than
+   emitting it, so the color goes through colA and turns rose at dawn and blue
+   under the moon (iter 79's rule). */
+let FOGAMT=0;                    /* 0..1, how foggy this frame is; 0 = free */
+const FOGZ=9;                    /* the layer floats this far off the ground */
+function fogDepth(){
+  /* two weather clocks: the dawn layer that burns off by mid-morning, and the
+     seeded spell that makes some cities foggy for a stretch of days. Both are
+     time-driven (no rng), so __step can reach a foggy window. */
+  const dawn=clamp(1-Math.abs(dayT-0.10)/0.09,0,1);
+  const spell=Math.sin(time*0.028+(seedNum%97)*0.7)-0.25;
+  return clamp(dawn*0.85+Math.max(0,spell)*1.25,0,1);
+}
+function fogAt(x,y,i){
+  const d=rSea[i]; if(d===255)return 0;                 /* deep inland: dry */
+  /* the layer piles against the coast: thickest in the surf, spent within FOGR
+     hexes inland, and thinning out to a haze over the open sea (a river, which
+     is wet but far from the horizon, keeps the full weight) */
+  let near;
+  if(d===0){const off=x-shoreAtF(y); near=clamp(1-Math.max(0,off-1)/13,0.14,1);}
+  else near=clamp(1-(d-1)/FOGR,0,1);
+  /* banks, drifting onshore: two slow sines crossed at a shallow angle, so the
+     field breaks into lobes instead of an even wash */
+  const b=Math.sin(x*0.13+y*0.07-time*0.09)*Math.sin(y*0.10-x*0.05+time*0.05);
+  const bank=Math.pow(clamp(0.5+0.5*b,0,1),1.6);
+  /* let the field die before the plate's rim, or the lenses hang off the world */
+  const rim=clamp(Math.min(x-ROWMIN[y],ROWMAX[y]-x)*0.5,0,1);
+  return near*near*rim*clamp(0.08+1.05*bank,0,1);
+}
+
 function render(){
   FRAMEN++;
   applySeason();
   const dl=daylight(dayT); setLight(dl);
+  FOGAMT=fogDepth();
   ctx.setTransform(1,0,0,1,0,0);
   ctx.clearRect(0,0,cvs.width,cvs.height);
 
@@ -3947,6 +3994,31 @@ function render(){
       const bk=buckets.get(idx(x,y));
       if(bk)for(const f of bk)f();
     }
+    /* the row's fog, once the row is built: it veils this row and everything
+       behind it, and the next row draws straight over it. Each hex contributes
+       one wide, faint lens, and neighbouring lenses sum into a seamless bank.
+       Keep the per-hex alpha low — a few strong lenses quilt the sea into fish
+       scales, where many weak ones dissolve. But not too low: only the ~2.4
+       neighbours across the row survive, because the next row paints its own
+       ground over the bottom of this one. The field builds along a row and
+       hardly at all down the screen. */
+    if(FOGAMT>0.02){
+      for(let x=0;x<G;x++){
+        const i=idx(x,y);
+        if(cells[i].t===T.VOID)continue;      /* never fog the empty sky */
+        const a=fogAt(x,y,i)*FOGAMT*0.22;
+        if(a<0.004)continue;
+        const[cx,cy]=ctr(x,y);
+        /* Lenses on a regular lattice leave a faint hex ripple on the water.
+           Hash-jittering each center to decorrelate it is the obvious fix and
+           is WRONG: broken tiling lets single lenses poke out as hard-edged
+           bubbles against clear water, which is far louder than the ripple.
+           Keep them on the grid — the ripple reads as hex-grain, like the
+           water's own facets. */
+        ctx.fillStyle=colA('fog',1,a);
+        ctx.beginPath();ctx.ellipse(cx,cy-FOGZ,HW*2.4,VR*1.9,0,0,7);ctx.fill();
+      }
+    }
   }
 
   /* moonglade: the sea twinkles in a pool of moonlight. The moon is a
@@ -3977,38 +4049,6 @@ function render(){
           ctx.beginPath();ctx.moveTo(cx2+ox-2.4,cy2+oy);ctx.lineTo(cx2+ox+2.4,cy2+oy);ctx.stroke();
         }
       }
-    }
-  }
-  /* the marine layer: fog banks roll over the sea at dawn */
-  const fogA=clamp(1-Math.abs(dayT-0.10)/0.09,0,1)*0.45;
-  if(fogA>0.02){ /* banks ride up the coast, which now runs down-screen */
-    for(let i=0;i<4;i++){
-      const fy=((time*1.1+i*13)%(G+22))-11;
-      const[fx2,fy2]=pxc(SHORE0+2+i*1.5,fy);
-      ctx.fillStyle='rgba(238,242,240,'+(fogA*(0.5+0.5*Math.sin(i*2.2+time*0.3)))+')';
-      ctx.beginPath();ctx.ellipse(fx2,fy2-8,34,88,0,0,7);ctx.fill();
-    }
-  }
-  /* sea fog: some days a bank rolls in off the water and swallows the shore
-     for a spell — beyond the dawn layer above. Spell phase is seeded per city;
-     time-driven (no rng), so __step can reach a foggy window. */
-  const spell=Math.max(0,Math.sin(time*0.028+(seedNum%97)*0.7))-0.25;
-  if(spell>0){
-    const sA=Math.min(0.5,spell*1.1)*(1-LITAMT*0.45);
-    for(let i=0;i<7;i++){
-      const roll=(time*0.5+i*6.1)%28;              /* offshore -> inland */
-      const fx=SHORE0+11-roll, fy=((i*11.3+time*0.3)%(G+14))-7;
-      const inland=clamp((fx-(SHOREX-4))/5,0,1);   /* spent by the first blocks */
-      if(inland<=0)continue;
-      const[px2,py2]=pxc(fx,fy);
-      /* a bank is three feathered lenses stacked along the coast, not one
-         hard ellipse — the single 40x95 oval read as a glare puck (iter 60
-         holistic, seed 99) */
-      const bA=sA*inland*(0.75+0.25*Math.sin(i*2.9+time*0.23))*0.55;
-      ctx.fillStyle='rgba(236,241,239,'+bA+')';
-      ctx.beginPath();ctx.ellipse(px2,py2-9,30,72,0,0,7);ctx.fill();
-      ctx.beginPath();ctx.ellipse(px2+9,py2-61,24,42,0,0,7);ctx.fill();
-      ctx.beginPath();ctx.ellipse(px2-8,py2+46,25,46,0,0,7);ctx.fill();
     }
   }
   /* decade festival: fireworks over the pier */

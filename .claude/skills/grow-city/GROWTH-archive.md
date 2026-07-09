@@ -1703,3 +1703,57 @@ asked of it, and not a defect.
 **Verdict:** SHIPPED. Redeploy pending (iters 34–72 + hooks + the concurrent
 transport/camera/shoreline commits).
 
+## Iteration 73 — civic buildings turn to face the street (2026-07-09)
+
+**Vector:** Civic & culture × **Polish** — rotation pointed at Civic (least-recently
+touched, last 66) and the cell was empty; the kind had to change after 72's Deepen.
+Polish adds nothing, which suits a mature city. Deep single-tile redesigns belong to
+`polish-tile`, so the move had to be *cross-civic* and systemic, not one building.
+**Orient/seam finding:** every civic is already richly drawn (flags, beacons, night
+glows, an amphitheatre audience) — no additive gap. What the seam read *did* turn up:
+the hospital, school and university each pick which side their **public face** goes on
+from `hashCell(...)<0.5?1:-1` — a per-city coin flip. So the ambulance bay, the
+schoolyard and the lawn quad point in a random direction, as often at a neighbour's
+back wall as at the street the building was sited on (`roadNear`).
+**Change:** one helper, `frontSide(x,y,fallback)` (~L560), sums each ROAD neighbour's
+**screen-x displacement** and returns +1/-1 for the side the lot fronts; an even split
+(a corner lot) falls back to the caller's existing hash, so nothing is forced. Wired
+into the three `fx`/`fxS`/`fxU` mirror flags. Read-only: no `rng()`, no `hashCell`
+draw of its own, no terrain touched.
+**⚠ The bug the visual gate caught — `dx` sign is NOT the screen side.** v1 counted
+neighbours by the sign of `dx` and skipped `dx===0`. On offset rows that is simply
+wrong: an even row's `dx=0` diagonals sit **half a cell EAST** (`sdx=+16`) and its
+`dx=-1` diagonals WEST — odd rows invert it. So v1 was "west on even rows, east on odd
+rows" whenever only diagonals had roads, and it turned seed 42's hospital *away* from
+its street. A subagent returned `VISUAL: FAIL` on exactly that frame; a numeric probe
+confirmed the hospital's two road neighbours are `(0,-1) sdx=+16` and `(-1,-1) sdx=-16`
+— a true tie the buggy code read as west. **Never infer a screen direction from `dx` on
+an offset-row hex grid; take `ctr()[0]` differences.** Summing displacement also weights
+a due-E/W neighbour 2x a diagonal, which is what you want.
+**Census:** VERDICT PASS, 0 page errors. Every core metric exactly flat (pop, roads,
+developed, towerHt all +0), tile histogram empty — the correct signature of a draw-only
+change that touches no terrain and no seeded stream. (Lone ±1 on greenRoofs = the usual
+last-partial-tick jitter.)
+**Measured effect (15 seed x era scenes, `frontSide` vs the old coin flip):**
+university **7 turned / 2 already / 2 tie** — the strong case; school **17 / 9 / 13**;
+hospital **0 / 3 / 12** — a hospital *never* turned, they sit on symmetric frontage.
+**Occlusion is orthogonal and a coin flip** (tallest building <=3 rows south on the
+chosen side): 11 turned instances end up more occluded, 10 less, 3 the same. Facing the
+street does **not** mean being *seen* — a distant tall tower to the south covers a face
+regardless of which side it is on. Expected visibility is therefore unchanged; the gain
+is semantic (the yard/quad now *means* something) and it is subtle by design.
+**Visual:** university PASS on 2 seeds — "quad opens onto an adjacent grey street, wings
+close the back," verified by pixel coordinate on both. Whole-city PASS on seeds 42/1234:
+no tears, no floaters, no blown colour, no civic wedged against a back wall. I looked at
+the seed-42 school pair **myself** (n=1 agent verdict contradicted a numeric probe): the
+building does mirror correctly onto its street side — 3 west road neighbours vs 1 east —
+but a tall tower to the *south-west* then hides the chalked oval. That is one of the 11
+unlucky instances above, not a regression: the old hash was 50/50 for occlusion too.
+**Verdict:** SHIPPED. The rule is right and the census is clean, but log the honest
+size of the win: it is a coherence fix, not a visible one, and half of what it turns
+stays hidden behind towers.
+**Follow-up worth taking:** 27 of the 74 audited civics are **ties** (corner lots) that
+currently fall back to a hash. Choosing the *less-occluded* street side there — the one
+the camera can actually see — would convert this from semantics into a visible win, and
+is the natural next Civic × Polish lap.
+
