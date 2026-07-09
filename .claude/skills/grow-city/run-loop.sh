@@ -61,7 +61,7 @@ if [ "${1:-}" = "--status" ]; then
   fi
   echo "  repo: $(git -C "$REPO" rev-parse --short HEAD) $(git -C "$REPO" log -1 --format=%s | cut -c1-48)"
   [ -n "$(git -C "$REPO" status --porcelain)" ] && echo "  ⚠ main is DIRTY — the runner will refuse to start"
-  [ -n "$(git -C "$REPO/../solvista-grow" status --porcelain 2>/dev/null)" ] &&
+  [ -n "$(git -C "$REPO/../solvista-grow" status --porcelain 2>/dev/null | grep -v 'census-history\.jsonl$')" ] &&
     echo "  ⚠ worktree is DIRTY — an iteration died mid-flight; inspect before restarting"
   echo
   echo "  last log:  $(grep -E 'iteration [0-9]+ (starting|finished|FAILED)|session limit|giving up|runner exiting' "$LOG" 2>/dev/null | tail -1 | sed 's/^[0-9-]* //')"
@@ -111,8 +111,13 @@ fi
 # worktree, uncommitted. That is often a COMPLETE, gate-passed iteration that
 # only missed its `git commit` — do not silently start a new one on top of it
 # and do not discard it. Surface it and let a human look.
+# census-history.jsonl is tracked and append-only: *any* census run adds a line,
+# including a diagnostic one a human does to inspect this very situation. So it is
+# not evidence of a dead iteration — ignore it here. A real mid-flight death also
+# leaves solvista.html and/or GROWTH.md modified, which this still catches.
 WT="$REPO/../solvista-grow"
-if [ -d "$WT" ] && [ -n "$(git -C "$WT" status --porcelain 2>/dev/null)" ]; then
+wt_dirty() { git -C "$WT" status --porcelain 2>/dev/null | grep -v 'census-history\.jsonl$'; }
+if [ -d "$WT" ] && [ -n "$(wt_dirty)" ]; then
   log "REFUSING: the grow-city worktree has uncommitted changes — an earlier"
   log "iteration probably died mid-flight. It may be finished, verified work that"
   log "only missed its commit (check for a new '## Iteration' entry in GROWTH.md,"
