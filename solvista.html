@@ -3579,7 +3579,17 @@ function buildMonoSet(){monoSet.clear();if(!monos)return;
     }
   }
 }
-const RAILH=40;
+/* RAILH is the beam's SOFFIT (underside); the deck runs RAILH..RAILH+BEAMD above it,
+   and a pylon's head tops out exactly at RAILH so the girder rests on it. */
+const RAILH=40, BEAMD=3.4;
+/* A pylon in three parts, same grammar as the gondola tower (iter 85): a footing that
+   plants it, a mast with genuinely lit/shadowed faces, and a pier head whose top face
+   is AT the soffit. A single uniform full-bright stick is what read as UI chrome. */
+function monoPylon(cx,cy){
+  prismS(cx,cy,0.072,0.062,0,1.1,col('creamDk',0.95),col('creamDk',0.58),col('creamDk',0.8));         /* footing */
+  prismS(cx,cy,0.046,0.040,1.1,RAILH-3.2,col('whiteDk',0.92),col('whiteDk',0.48),col('whiteDk',0.72));/* mast */
+  prismS(cx,cy,0.10,0.052,RAILH-3.2,RAILH,col('whiteDk',0.68),col('whiteDk',0.38),col('whiteDk',0.56));/* pier head, top face AT the soffit */
+}
 function hexAdj(x,y,qx,qy){
   for(const[dx,dy]of nbrDirs(y))if(x+dx===qx&&y+dy===qy)return true;
   return false;
@@ -3588,15 +3598,13 @@ function drawMonoAt(x,y,e){
   const m=e.m, i=e.i, path=m.path, closed=m.closed;
   const[cx,cy]=ctr(x,y);
   if(!closed&&i>=path.length-1){ /* the railhead: a fresh pylon, beams to come */
-    prismS(cx,cy,0.045,0.045,0,RAILH,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85));
+    monoPylon(cx,cy);
     return;
   }
-  if(i%2===0){ /* pylon, planted under the beam */
-    prismS(cx,cy,0.045,0.045,0,RAILH,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85));
-  }
+  if(i%2===0)monoPylon(cx,cy); /* pylon, planted under the beam */
   if(m.stops.has(i)&&countAround(x,y,1,n=>DEV.has(n.t))>=3){ /* a station at the busy stops */
     prismS(cx,cy,0.17,0.17,0,2,col('deck',1),col('deckDk',0.7),col('deckDk',0.9));       /* platform */
-    prismS(cx,cy,0.02,0.02,2,RAILH-4.5,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85)); /* post */
+    prismS(cx,cy,0.02,0.02,2,RAILH-4.5,col('whiteDk',0.92),col('whiteDk',0.48),col('whiteDk',0.72)); /* post */
     prismS(cx,cy,0.15,0.15,RAILH-4.5,RAILH-3,col('teal',1),col('tealDk',0.6),col('tealDk',0.85)); /* canopy */
     const nw=1+(hashCell(x,y,seedNum^0x9A55)*2.4|0)-(LITAMT>0.6?1:0); /* riders waiting for the next train */
     const PC=['terra','teal','gold','coral','lav'];
@@ -3613,15 +3621,19 @@ function drawMonoAt(x,y,e){
   const L=path.length, segs=[];
   if(closed||i+1<L)segs.push(path[(i+1)%L]);
   if(closed||i>0)segs.push(path[(i-1+L)%L]);
+  /* The girder is a solid with an underside, not an outline: one wide shadowed body
+     spanning the soffit up to the deck, capped by a narrower lit running surface.
+     The old draw was a 2px pure-white(1.02) stroke over a 3.4px whiteDk(0.85) one —
+     brighter than every building it flew over, and with nothing beneath it. */
   ctx.lineCap='round';
   for(const[qx,qy]of segs){
     if(!hexAdj(x,y,qx,qy))continue;
     const[nx2,ny2]=ctr(qx,qy);
     const mx=(cx+nx2)/2, my=(cy+ny2)/2;
-    ctx.strokeStyle=col('whiteDk',0.85);ctx.lineWidth=3.4;
-    ctx.beginPath();ctx.moveTo(cx,cy-RAILH-1.2);ctx.lineTo(mx,my-RAILH-1.2);ctx.stroke();
-    ctx.strokeStyle=col('white',1.02);ctx.lineWidth=2;
-    ctx.beginPath();ctx.moveTo(cx,cy-RAILH-2);ctx.lineTo(mx,my-RAILH-2);ctx.stroke();
+    ctx.strokeStyle=col('whiteDk',0.5);ctx.lineWidth=BEAMD;                /* body + soffit, in shadow */
+    ctx.beginPath();ctx.moveTo(cx,cy-RAILH-BEAMD/2);ctx.lineTo(mx,my-RAILH-BEAMD/2);ctx.stroke();
+    ctx.strokeStyle=col('whiteDk',0.95);ctx.lineWidth=1.6;                /* deck; 1.6 world = 1.17 device px at rest */
+    ctx.beginPath();ctx.moveTo(cx,cy-RAILH-BEAMD+0.6);ctx.lineTo(mx,my-RAILH-BEAMD+0.6);ctx.stroke();
   }
   ctx.lineCap='butt';
 }

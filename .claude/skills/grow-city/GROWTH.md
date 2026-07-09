@@ -20,7 +20,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85 |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | 84 |
@@ -86,19 +86,17 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   (a) **the rainbow floats** — `L4166`, drawn in screen space trailing a raining
   cloud; at seed 7 a leg ends mid-air over open ocean. Same defect iter 81 fixed for
   fog, same fix. Re-confirmed a **third** time at iter 86 (seed 42's agent noted it
-  unprompted, "unchanged from before"). *Sky × Polish — now the strongest open cue.*
-  ~~(b) **the asphalt floods the interior**~~ — **CLOSED by iter 86.** (c) **the MONORAIL BEAM reads as UI chrome —
-  `drawMonoAt`, not `drawGondAt` (attribution corrected at iter 85).** **Six** agents across
-  iters 79/84/85, on 4 seeds, have called it "stadium markings" / "selection overlay" /
-  "transit route overlay" / "a debug overlay floating above the rooftops with no shadow";
-  iter 85's two sightings were *unprimed and on a fresh seed*, and a BEFORE/AFTER pass proved
-  the shapes pixel-identical before any of that lap's edits. The culprit is the beam: a **2px
-  pure-`white`(1.02) stroke over a 3.4px `whiteDk`(0.85) one at `RAILH=40`** — straight,
-  unshaded, uniform, floating over every roof, and brighter than any building. Its **closed
-  loops** are what agents call "outlined polygons". Iter 85 fixed exactly this defect on the
-  gondola and the recipe transfers: **dim off maximum, give the deck an underside, plant the
-  pylons** (footing + shaded mast + head). It is legitimate geometry — **do not "fix" it by
-  deleting it.** *Transport × Polish, and now the best-evidenced cue in the ledger.*
+  unprompted, "unchanged from before"). *Sky × Polish — and since iter 87 closed (c),
+  this is the **only** strong open cue left.*
+  ~~(b) **the asphalt floods the interior**~~ — **CLOSED by iter 86.**
+  ~~(c) **the monorail beam reads as UI chrome**~~ — **CLOSED by iter 87.** Six agents on
+  4 seeds across iters 79/84/85 called `drawMonoAt`'s beam a "debug overlay floating above
+  the rooftops"; 85 corrected the attribution (it was never `drawGondAt`) and 87 fixed it:
+  peak tone **255 → 217**, the girder given a shadowed body + underside, the pylons planted
+  on `creamDk` footings under a pier head whose top face is `RAILH` itself. Both wide agents
+  confirmed it now reads as elevated infrastructure. It is legitimate geometry — **never
+  "fix" it by deleting it.** One durable lesson: the monorail deliberately has **no sag**,
+  because a rigid box girder does not sag; only the gondola's rope does. *Don't re-open.*
 - **⚠ `pop` is NOT bit-reproducible across census runs (iter 85).** Identical source, three
   runs: `+2`, `+2`, `+0`. So a ±2 wobble on a **draw-only** change means nothing — re-run the
   gate on unchanged source before concluding the seeded stream moved. (Iters 78/84's "+0 on
@@ -361,7 +359,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   iteration.)
 - **Perf gate** (`polish-tile/perf.mjs`, every ~5 iters): FAILED at iter 39
   (day +22-38%); **FIXED at iter 40** (bandS single-path + setLight cache fix).
-  Latest reading (**iter 77**): PASS ×3 on a quiet box, day **30.17ms** / night
+  Latest reading (**iter 87**): PASS ×3, min of each scene, day **31.78ms** (baseline
+  31.33, **+1.4%**) / night **35.89ms** (baseline 37.22, **−3.6%**) — within 0.2ms of
+  iter 85's numbers for the structurally identical pylon change. Two extra prisms on
+  ~40 monorail pylons cost nothing measurable, exactly as 85's ~21 gondola towers didn't.
+  Earlier reading (**iter 77**): PASS ×3 on a quiet box, day **30.17ms** / night
   **34.11ms** (baselines 31.33 / 37.22 → **−3.7% / −8.4%**, both *under* baseline and
   matching iter 76's 30.28/34.44). A per-tick CA pass over ~800 road cells plus the
   arterial centre lines cost **nothing measurable** — the pass is per *tick*, not per
@@ -412,92 +414,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 79 entries before Iteration 77 live in
+> **Archive:** the 80 entries before Iteration 78 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 77 — the streets discover which of them is a highway (2026-07-10)
-
-**Vector:** Transport × **New CA rule** — rotation pointed at Transport (stalest live
-domain, untouched since 70), and its × New CA rule cell was **empty across all 77 laps**.
-The kind also had to change after 76's Deepen and 75's Polish; "New CA rule" hadn't been
-used since iter 60. A rare coordinate where domain, kind and emptiness all agreed.
-
-**Orient — the flaw was already in the file, wearing the right name.** Roads carry
-`busy`, set at L997 as `countAround(...,DEV)>=3`: a purely **local** density test. It
-calls ~a third of the city an avenue, and the tooltip already described a busy street as
-"a busy, tree-lined arterial" — a word the sim had not earned. A quiet corridor carrying
-every trip to a bridge was not busy; a dead-end lane inside downtown was. Real arterials
-emerge from **connectivity**, not local density.
-
-**Measured before writing a line (iter 76's discipline).** A throwaway probe computed the
-proposed field over 6 seed×era cells and answered three questions that would have killed
-it: (1) *does it vary?* — median flow 11–15, p90 85–136, **max 359–635**: the heavy tail
-of flow accumulation, so "arterial" is a rare, legible class, not a wash. (2) *is it new
-information, or a restatement of `busy`?* — **~200 high-flow roads are not `busy`, and
-94–249 `busy` roads are not high-flow.** (3) *does anything get stranded?* — `orphan: 0`
-in every cell; the road network is always fully connected to the value core.
-
-**Change:** one new `tick()` pass, `trafficFlow()` (~L667). Every developed hex generates
-trips; trips drain downhill along streets toward the **value core** (sinks = top 4% of
-road `val`, by rank, not a magic threshold), accumulating exactly as rain accumulates into
-rivers. Implementation note worth keeping: **BFS visits in nondecreasing depth, so the
-queue reversed is already the leaves-first topological order accumulation needs — no
-sort.** Ties break toward higher `val`, which stops trunks wandering. Draw: `flow>=64`
-(`ARTFLOW`) → darker asphalt + a solid continuous gold centre line, edge-to-edge, so
-adjacent trunk hexes join into one unbroken line; ordinary streets keep their dashes.
-Tooltip gains a real hierarchy (Street / Avenue / **Arterial** / Bridge) and a `Traffic`
-row; `__find('arterial')` and one census scalar `arterials` added.
-**No `rng()`, no `hashCell`, no terrain touched** — reads topology + `val`, writes only
-`c.flow`. The physics fell out of the geometry: **bridges become the trunks unprompted**
-(seed 42's global maximum, 635, is a bridge deck), because a river crossing is a
-bottleneck every trip must share. The spine is genuinely connected — **153 of 155**
-arterial hexes touch another.
-
-**Census:** VERDICT PASS, 0 page errors. `arterials 0 → 876` (~97/city, 15.2% of roads);
-pop, roads, developed, towerHt, boulevardTrees, avenues **all +0**; tile histogram
-**empty**. The −1 on pop/greenRoofs is the last-partial-tick jitter documented at 74.
-The exact signature of a draw-only change.
-
-**Visual — the gate failed first, and it was RIGHT.** The first draw shipped a "doubled"
-centre line as two `lineWidth=0.42` strokes 0.62 apart. `lineWidth` is in **world** units
-and `scale` at rest is **0.73**, so those rendered **0.31 device px each, 0.45px apart**
-— unresolvable, and *fainter than the 1.0-wide dash they replaced*. Two of three
-subagents called FAIL. Rather than trust any verdict I measured the camera: a hex is
-**23.4 screen px**. Redrew as one crisp 1.4-world line that **splits into two lanes only
-when `scale>1.7`** (LOD; the camera zooms to 14×), and deepened `roadArt`. Re-shot with a
-**BEFORE control at identical clip coords**: 3/3 PASS, all citing *what differs* —
-continuous unbroken lines in AFTER, absent in BEFORE, on hex axes, forming a connected
-spine, no tears, no clutter, city still coherent.
-
-**Two gate lessons, both now in the header.** The **false PASS** is the one that matters:
-seed 7's first agent, primed to "look for gold lines," reported seeing them *while the
-feature was rendering sub-pixel* — because the city already had gold `busy` dashes that
-look like the feature. A primed reviewer pattern-matches; only a BEFORE control can
-convict. (Iter 70 recorded the opposite failure, a false FAIL; both are now paired in the
-header.) Separately, one FAIL was pure framing: **`tileshot.mjs` lifts its clip 110px
-above the tile centre** for tall towers, which pushes a *flat* road tile to the bottom
-edge. Two of three initial verdicts were artifacts — of the tooling, not the feature.
-
-**Perf:** PASS ×3, judged by minimum on a quiet box (three runs agreed to ±0.11ms).
-Day **30.17ms** (baseline 31.33, −3.7%), night **34.11ms** (baseline 37.22, −8.4%) —
-both *under* baseline, matching 76. A per-tick pass over ~800 road cells is free next to
-the frame, and trunk hexes skip the dashes they replace, so the draw is neutral by
-construction rather than by hope.
-
-**Verdict:** SHIPPED. The city now knows its own highways: the trunks emerge from the
-CA, not from a rule that says "downtown is busy." The lasting results are the field —
-`c.flow`, reusable by anything that should follow the main roads — and the discovery that
-**an "additively saturated" domain can still be missing its CA rule**: Transport's empty
-cell sat there for 76 laps and paid out a city-scale structure at zero terrain risk.
-
-**Follow-ups worth taking:** `treed` boulevards still spread on `busy`, so the allées line
-the wrong streets — retarget them to `c.flow` and the trees line the trunks (Transport ×
-Deepen, a one-line change to an existing hashCell pass). Vehicles ignore `c.flow` and
-could prefer arterials. Iter 73's corner-lot lead and 76's REDWOOD closure lead are both
-still open.
 
 ## Iteration 78 — the parks grow sidewalks (2026-07-10)
 
@@ -1238,3 +1159,102 @@ contrast back. Cue (b) is closed.
   whatever is drawn on top of the tile (trees, dashes, lamps).
 - Agents read the **`SPECIMEN nn`** caption in the UI and will report *that* as the seed
   ("seed-16" for `seed=42`). Not confabulation — don't discount a verdict over it.
+
+## Iteration 87 — the monorail stops looking like a UI overlay (2026-07-10)
+
+**Vector** — Transport × **Polish**. Cue (c) was the best-evidenced open cue in the
+ledger: **six agents, four seeds, three iterations** (79/84/85), unprimed, calling
+`drawMonoAt`'s beam "stadium markings" / "a selection overlay" / "a debug overlay
+floating above the rooftops with no shadow." Iter 85 proved the attribution with a
+BEFORE/AFTER pass and deferred the fix only because it had just spent its lap on the
+gondola; iter 86 deferred it again to avoid repeating both axes. Urban intervened, so
+Transport is no longer back-to-back.
+
+**On the kind repeating a fifth time.** 83/84/85/86 were all Polish and so is this. I
+took it deliberately: **both** remaining strong cues (the monorail beam, the floating
+rainbow) are Polish cues, so there is no cue-driven lap that isn't. The skill's own
+tiebreak decides it — *if something compounded badly, fix it before adding more* — and
+shipping a shallow Nature element purely to rotate the kind is exactly the "one more
+shallow feature" it warns against. The kind axis should rotate at **88**; the city has
+now closed both of the defects that were disfiguring it at city scale.
+
+**The defect, already measured by iter 85.** The beam was a **2px pure-`white`(1.02)
+stroke over a 3.4px `whiteDk`(0.85) one** at constant `RAILH=40` — dead straight,
+unshaded, uniform, floating over every roof, and **brighter than any building in the
+city**. Its closed loops are what agents kept calling "outlined polygons". The pylons
+were `prismS(...,0.045,0.045,0,RAILH,...)`: uniform full-bright sticks terminating on
+the asphalt with no footing and no head. Straight + uniform + unsupported + maximally
+bright *is* the grammar of a vector overlay. The artifact was drawing a ruler.
+
+**Change (draw-only: no terrain, no `rng()`, no `hashCell`, no new `Math.random()` draw).**
+Applied iter 85's proven gondola recipe — *dim off maximum, give the deck an underside,
+plant the pylons* — with one deliberate departure.
+- **`RAILH` is now defined as the beam's SOFFIT**, not a vague reference height, and
+  `BEAMD=3.4` is the girder depth. Stating the datum is what makes the pylon head and
+  the beam underside meet by construction rather than by tuning.
+- **The beam is a solid, not an outline.** One wide `whiteDk(0.5)` body stroke spanning
+  soffit→deck (the shadowed side *and* the underside read as one dark mass), capped by a
+  1.6-world `whiteDk(0.95)` deck. Peak tone drops **255 → 217**, so it is no longer the
+  brightest thing in the frame; the buildings win again.
+- **`monoPylon()`**: `creamDk` footing (`ax .072`) → `whiteDk` mast at `.046/.040` with
+  real lit/shadowed faces → a wider `.10/.052` pier head **whose top face sits exactly at
+  `RAILH`**, so the girder rests on it. The station post was dimmed to the same mast tones.
+- **No sag** — and that is the departure. A haul rope sags; a **rigid box girder does
+  not**. Iter 85's header note ("sag is the cheapest of the four") is true of *cables*;
+  transplanting it here would have drawn a wrong bridge. For a rigid span the other three
+  cues — thickness with an underside, shading, a footing and a cap — must carry the whole
+  load, and they do.
+- Resolution check first, per iter 77: deck `1.6 world × 0.73 = 1.17 device px`. Above the
+  ceiling. The 3.4-world body is 2.5 device px.
+
+**Census** — `+0` on **all 22 metrics** (pop 144403, roads 5752, arterials 856…), empty
+tile histogram, 0 page errors, `monoLines 11 · monorail 19` unchanged. VERDICT: PASS. The
+pixel-identical control that iter 78 says only a draw-only change can have — and it came
+back exactly flat, without even iter 85's ±2 `pop` wobble.
+
+**Visual** — BEFORE control from `git show HEAD:solvista.html` at identical clip coords
+(iter 77's rule for any line-weight/colour change), 3 agents, both seeds, and I read the
+downtown crop myself before spawning any of them. All named the confusable elements
+(gondola cables, gold arterial centre lines, the rainbow) and were forbidden to report them.
+- **Downtown zoom, the scale the pylons live at → the primary verdict** (iter 82's rule):
+  `VISUAL: PASS`. Footing/mast/head all read; "the beam underside sits on the pier heads
+  with no visible floating gap and no head poking up through the deck."
+- **Whole-city, seeds 42 and 7:** `VISUAL: PASS` ×2, and this is the line that closes the
+  cue — both said, in their own words, that the AFTER beam reads as **elevated
+  infrastructure rather than UI chrome**. Seed 7's agent volunteered the diagnosis
+  unasked: *"the worst blowout (the white line) was the thing fixed."*
+
+**Perf** — 3 sequential passes, minimum of each scene: day `31.33 → 31.78ms (+1.4%)`,
+night `37.22 → 35.89ms (−3.6%)`. PASS, and within 0.2ms of iter 85's reading for the
+structurally identical change (two extra prisms on ~40 pylons is free). Run this lap
+rather than deferred to 89's step-back because the lap touched the per-frame draw loop.
+
+**Verdict: SHIPPED.** Cue (c) is **CLOSED**. Both of the city-scale defects the holistic
+passes kept surfacing — the dark asphalt (86) and the chrome beam (87) — are now fixed,
+and the aerial systems finally share one visual language: the gondola sags because it is a
+rope, the monorail does not because it is a girder, and both are planted.
+
+**Findings**
+- **The "overlay grammar" checklist generalizes, but its items are not interchangeable.**
+  Sag / shading / footing / cap separate geometry from chrome — however **sag is a property
+  of the member, not of the fix.** Ask what the thing *is* before borrowing the previous
+  lap's recipe wholesale. The remaining long uniform strokes (bridge cables, string lights)
+  each need this question asked separately.
+- **Name the datum in a constant.** Renaming `RAILH` from "the height the beam is near" to
+  "the height of the beam's soffit" turned a two-magic-number junction (`-RAILH-1.2`,
+  `-RAILH-2`) into one that closes by construction. The old code's pylon top at `RAILH` sat
+  *inside* the beam it was supposed to support, which is precisely why nothing looked planted.
+- **Two brightest-object bugs in three laps** (86's asphalt floor, 87's beam ceiling) were
+  both found by asking *what is the extreme tone in this frame, and has it earned that*.
+  That question is cheap and neither the census nor a primed screenshot agent asks it.
+- **A cue's attribution can be wrong while the cue is right.** Cue (c) blamed the gondola
+  for three iterations; 85 corrected it to the monorail and 87 fixed it. Six agents were
+  right about *what they saw* and wrong about *what it was* — which is the argument for
+  BEFORE/AFTER attribution passes over verdicts.
+
+**Follow-ups:** cue (a), **the floating rainbow** (`L4166`, drawn in screen space; a leg
+ends mid-air over open ocean at seed 7), is now the **only** strong open cue and the
+obvious Sky × Polish lap. Standing leads, all still open: 77's `treed`-on-`c.flow`
+boulevard retarget (allées still line `busy`, not the arterials — Transport × Deepen),
+78's dogs-on-sidewalks (`strollable()` still park-bound), 73's corner-lot side choice,
+76's REDWOOD closure. **Iteration 89 owes the holistic step-back** (84 + 5).

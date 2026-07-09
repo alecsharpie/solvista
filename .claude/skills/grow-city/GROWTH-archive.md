@@ -2012,3 +2012,84 @@ tie in `frontSide`). Also: `REDWOOD` (18 hexes) still draws three fixed trees an
 never varies — the same closure treatment, or an age-driven one, is a natural
 follow-on now that redwoods are confirmed to be interior-only.
 
+## Iteration 77 — the streets discover which of them is a highway (2026-07-10)
+
+**Vector:** Transport × **New CA rule** — rotation pointed at Transport (stalest live
+domain, untouched since 70), and its × New CA rule cell was **empty across all 77 laps**.
+The kind also had to change after 76's Deepen and 75's Polish; "New CA rule" hadn't been
+used since iter 60. A rare coordinate where domain, kind and emptiness all agreed.
+
+**Orient — the flaw was already in the file, wearing the right name.** Roads carry
+`busy`, set at L997 as `countAround(...,DEV)>=3`: a purely **local** density test. It
+calls ~a third of the city an avenue, and the tooltip already described a busy street as
+"a busy, tree-lined arterial" — a word the sim had not earned. A quiet corridor carrying
+every trip to a bridge was not busy; a dead-end lane inside downtown was. Real arterials
+emerge from **connectivity**, not local density.
+
+**Measured before writing a line (iter 76's discipline).** A throwaway probe computed the
+proposed field over 6 seed×era cells and answered three questions that would have killed
+it: (1) *does it vary?* — median flow 11–15, p90 85–136, **max 359–635**: the heavy tail
+of flow accumulation, so "arterial" is a rare, legible class, not a wash. (2) *is it new
+information, or a restatement of `busy`?* — **~200 high-flow roads are not `busy`, and
+94–249 `busy` roads are not high-flow.** (3) *does anything get stranded?* — `orphan: 0`
+in every cell; the road network is always fully connected to the value core.
+
+**Change:** one new `tick()` pass, `trafficFlow()` (~L667). Every developed hex generates
+trips; trips drain downhill along streets toward the **value core** (sinks = top 4% of
+road `val`, by rank, not a magic threshold), accumulating exactly as rain accumulates into
+rivers. Implementation note worth keeping: **BFS visits in nondecreasing depth, so the
+queue reversed is already the leaves-first topological order accumulation needs — no
+sort.** Ties break toward higher `val`, which stops trunks wandering. Draw: `flow>=64`
+(`ARTFLOW`) → darker asphalt + a solid continuous gold centre line, edge-to-edge, so
+adjacent trunk hexes join into one unbroken line; ordinary streets keep their dashes.
+Tooltip gains a real hierarchy (Street / Avenue / **Arterial** / Bridge) and a `Traffic`
+row; `__find('arterial')` and one census scalar `arterials` added.
+**No `rng()`, no `hashCell`, no terrain touched** — reads topology + `val`, writes only
+`c.flow`. The physics fell out of the geometry: **bridges become the trunks unprompted**
+(seed 42's global maximum, 635, is a bridge deck), because a river crossing is a
+bottleneck every trip must share. The spine is genuinely connected — **153 of 155**
+arterial hexes touch another.
+
+**Census:** VERDICT PASS, 0 page errors. `arterials 0 → 876` (~97/city, 15.2% of roads);
+pop, roads, developed, towerHt, boulevardTrees, avenues **all +0**; tile histogram
+**empty**. The −1 on pop/greenRoofs is the last-partial-tick jitter documented at 74.
+The exact signature of a draw-only change.
+
+**Visual — the gate failed first, and it was RIGHT.** The first draw shipped a "doubled"
+centre line as two `lineWidth=0.42` strokes 0.62 apart. `lineWidth` is in **world** units
+and `scale` at rest is **0.73**, so those rendered **0.31 device px each, 0.45px apart**
+— unresolvable, and *fainter than the 1.0-wide dash they replaced*. Two of three
+subagents called FAIL. Rather than trust any verdict I measured the camera: a hex is
+**23.4 screen px**. Redrew as one crisp 1.4-world line that **splits into two lanes only
+when `scale>1.7`** (LOD; the camera zooms to 14×), and deepened `roadArt`. Re-shot with a
+**BEFORE control at identical clip coords**: 3/3 PASS, all citing *what differs* —
+continuous unbroken lines in AFTER, absent in BEFORE, on hex axes, forming a connected
+spine, no tears, no clutter, city still coherent.
+
+**Two gate lessons, both now in the header.** The **false PASS** is the one that matters:
+seed 7's first agent, primed to "look for gold lines," reported seeing them *while the
+feature was rendering sub-pixel* — because the city already had gold `busy` dashes that
+look like the feature. A primed reviewer pattern-matches; only a BEFORE control can
+convict. (Iter 70 recorded the opposite failure, a false FAIL; both are now paired in the
+header.) Separately, one FAIL was pure framing: **`tileshot.mjs` lifts its clip 110px
+above the tile centre** for tall towers, which pushes a *flat* road tile to the bottom
+edge. Two of three initial verdicts were artifacts — of the tooling, not the feature.
+
+**Perf:** PASS ×3, judged by minimum on a quiet box (three runs agreed to ±0.11ms).
+Day **30.17ms** (baseline 31.33, −3.7%), night **34.11ms** (baseline 37.22, −8.4%) —
+both *under* baseline, matching 76. A per-tick pass over ~800 road cells is free next to
+the frame, and trunk hexes skip the dashes they replace, so the draw is neutral by
+construction rather than by hope.
+
+**Verdict:** SHIPPED. The city now knows its own highways: the trunks emerge from the
+CA, not from a rule that says "downtown is busy." The lasting results are the field —
+`c.flow`, reusable by anything that should follow the main roads — and the discovery that
+**an "additively saturated" domain can still be missing its CA rule**: Transport's empty
+cell sat there for 76 laps and paid out a city-scale structure at zero terrain risk.
+
+**Follow-ups worth taking:** `treed` boulevards still spread on `busy`, so the allées line
+the wrong streets — retarget them to `c.flow` and the trees line the trunks (Transport ×
+Deepen, a one-line change to an existing hashCell pass). Vehicles ignore `c.flow` and
+could prefer arterials. Iter 73's corner-lot lead and 76's REDWOOD closure lead are both
+still open.
+
