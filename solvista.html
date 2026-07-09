@@ -200,6 +200,10 @@ const NBR_O=[[1,0],[-1,0],[0,-1],[0,1],[1,-1],[1,1]];   /* odd rows */
 const nbrDirs=y=>(y&1)?NBR_O:NBR_E;
 const T={EMPTY:0,ROAD:1,RES:2,MID:3,COM:4,TOWER:5,CIVIC:6,PARK:7,BEACH:8,WATER:9,PLAZA:10,MEADOW:11,SHOREPARK:12,FARM:13,IND:14,MARKET:15,GARDEN:16,BURNT:17,FOREST:18,ROCK:19,SOLARF:20,FIELD:21,STADIUM:22,VINEYARD:23,MARSH:24,LIGHTHOUSE:25,KELP:26,ORCHARD:27,REDWOOD:28,VOID:29};
 const DEV=new Set([T.RES,T.MID,T.COM,T.TOWER,T.CIVIC,T.IND,T.MARKET]);
+/* lots a great institution may clear to open its forecourt. A city demolishes a
+   shop or a mid-rise for the square in front of its parliament; it does not take
+   down a tower, and it does not pave a park. */
+const FORECOURT_LOT=new Set([T.EMPTY,T.RES,T.COM,T.MID]);
 const SHOREX=CTRX+11; /* the coast highway column */
 const SHORE0=SHOREX+5; /* nominal water's edge, five lots seaward of the highway */
 
@@ -918,12 +922,25 @@ function tick(){
     const k=c.kind;
     if(k!=='hall'&&k!=='museum'&&k!=='parliament'&&k!=='university'&&k!=='library')continue;
     if(countAround(x,y,2,n=>n.t===T.PLAZA)>0)continue;
+    /* Which side is the front? The same displacement sum iter 73 gave the hospital.
+       Then, among the lots on that side, take the one fronting the loudest street:
+       c.flow is last tick's drainage load, so the square opens onto the arterial
+       rather than the service lane behind it. Front dominates flow; flow only
+       breaks the tie, and nbrDirs order breaks that. */
+    const fx=frontSide(x,y,hashCell(x,y,seedNum^0x7C3D)<0.5?1:-1),[cx0]=ctr(x,y);
+    let best=null,bestScore=-1;
     for(const d of nbrDirs(y)){
       const nx=x+d[0],ny=y+d[1],n=cellAt(nx,ny);
-      if(!n||(n.t!==T.RES&&n.t!==T.EMPTY))continue;
-      if(countAround(nx,ny,1,m=>m.t===T.ROAD)===0)continue;
-      if(hashCell(nx,ny,seedNum^0xF04C)<0.9){n.t=T.PLAZA;n.h=0;n.th=0;n.age=0;break;}
+      if(!n||!FORECOURT_LOT.has(n.t))continue;
+      let flow=-1;
+      nbrs6(nx,ny,(mx,my)=>{const m=cellAt(mx,my);
+        if(m&&m.t===T.ROAD)flow=Math.max(flow,m.flow||0);});
+      if(flow<0)continue;                                   /* the lot fronts no street */
+      const score=((ctr(nx,ny)[0]-cx0>0?1:-1)===fx?1e6:0)+flow;
+      if(score>bestScore){bestScore=score;best=[nx,ny,n];}
     }
+    if(best&&hashCell(best[0],best[1],seedNum^0xF04C)<0.9){
+      const n=best[2];n.t=T.PLAZA;n.h=0;n.th=0;n.age=0;}
   }
   /* far fields quietly go solar (2012+) */
   if(year>=2012)for(let k=0;k<ks(6);k++){

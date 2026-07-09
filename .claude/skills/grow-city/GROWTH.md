@@ -21,7 +21,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
-| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | 73 |
+| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | |
 
@@ -54,7 +54,17 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   **Bridges come out as the trunks unprompted** (seed 42's global max, 635, is a bridge
   deck), and the spine is connected: 153 of 155 arterial hexes touch another. `__find`
   now answers `'arterial'`. Reuse `c.flow` for anything that should follow the main
-  roads — don't hand-roll a second notion of "important street".
+  roads — don't hand-roll a second notion of "important street". **Iter 80 is the
+  first reuse:** civic forecourts pick the lot fronting the loudest street.
+- **Civic forecourts are a *placement* rule, not a tile (iters 36 → 80).** Every
+  `PLAZA` in the city is a forecourt; 36's random-sample rule at L909 has never
+  fired even once and survives only to keep the `rng()` stream aligned — do not
+  "fix" it, and do not count on it to make plazas. Placement scores each neighbour
+  `(front side ? 1e6 : 0) + maxAdjacentRoadFlow`, so **front dominates and flow
+  only breaks the tie**. `FORECOURT_LOT` = `{EMPTY, RES, COM, MID}`: an institution
+  may clear a shop or a mid-rise for its square, never a `TOWER`, never a `PARK`.
+  Widening that set from `{EMPTY,RES}` is what took coverage 6/15 → 14/15 civics —
+  the downtown halls ringed by shops were the ones going without.
 - **Peds walk the streets now — `pedWalk`/`PEDLEASH`/`kerbDir` (iter 78).** Open ground
   is ~100 *disconnected islands* by 2035 (parks/plazas/beaches), so a ped confined to it
   can never leave the one it spawned on. Peds may now also walk **roads** (not bridges —
@@ -289,65 +299,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 72 entries before Iteration 72 live in
+> **Archive:** the 73 entries before Iteration 73 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 72 — the harbor gets its ships (2026-07-09)
-
-**Vector:** Water & coast × **Deepen / interconnect** — rotation pointed at Water &
-coast (least-recently-touched domain, last 65). Its *additive* moves are long spent
-(6 new elements), so the kind had to be Deepen; the mechanism happens to be a new
-entity array, but the vector was to connect an existing system to the sea, not to
-add another sea creature.
-**Orient/seam findings (two dead ends closed before writing a line):**
-- **The lighthouse already sweeps a beam** at night (`case T.LIGHTHOUSE`, `LITAMT>0.12`
-  — a rotating wedge + lantern glow). It looked like a glaring gap from the ledger;
-  it isn't. Don't re-explore. Third time the beach-towel trap has been dodged by
-  grepping the draw case first.
-- **The "harbor works" warehouses are NOT on a quay.** They're placed at
-  `SHOREX-1-(rng()*3)`, and `SHOREX=G-12` while `shoreAt()≈G-7±sAmp` — so the cluster
-  sits ~6–9 columns *inland* of the water. Gantry cranes reaching over a berth would
-  have been geometrically wrong. A container yard would have been Urban, not Water.
-- What was genuinely missing: the founding comment literally says *"the warehouse
-  cluster grows while shipping pays"* — and the city had **no ship**. Sailboats,
-  ferry, kayaks, whales, dolphins, turbines, moored craft: all present. Cargo: none.
-  The economy's whole premise was undepicted.
-**Change:** a `freighters` array. Founding now remembers the warehouse row as
-`harborY` (a read, no new `rng()` draw), and **the first ship rides at anchor in the
-roadstead off that exact row** — that's the interconnect, the harbor's latitude
-picked the ship's. The second steams the deep lane at `off≈4.6–5.2`, seaward of the
-ferries (3.4–4.4) and inside the dolphins (4–6.2). `drawFreighter` renders bow-to-
-starboard in local coords under `ctx.save()/translate/scale(dir,1)` — mirroring to
-the heading instead of sign-juggling every `fillRect`: navy `solar` hull with a raked
-bow, `terraDk` boot-top at the waterline, six container stacks (a `st` bitmask picks
-which go two-high), white stern house, `terra` funnel, foremast; a long slow wake
-only if under way. Night (`LITAMT>0.35`): masthead + funnel lamps, a low-alpha pooled
-deck glow, green bow / red stern nav lights, lit house windows via `colLit`.
-Spawned with **`Math.random`, never `rng()`** — shipping must not perturb the seeded
-simulation. Wired into the bucket sort, the step loop (anchored ships skip it),
-`ENTINFO` ('Container ship', r=14), and the census `transport` tally, per invariant.
-**Census:** VERDICT PASS, 0 page errors. **Every core metric exactly flat** (pop,
-roads, developed, towerHt all +0) and the tile histogram empty — the clean signature
-of a `Math.random`, draw-only, no-terrain feature. `transportModes +9`;
-**`freighters 0->18 NEW`** (2 ships × 9 matrix cells). The lone ±1 on
-solar/greenRoofs is the usual last-partial-tick jitter.
-**Perf:** ran the gate despite 72 not being a step-back lap, because the header flags
-a creeping day floor. PASS ×3 by minimum: day **24.78ms**, night **26.39ms**
-(baselines 24 / 26.61). The day floor actually *fell* from 25.11 @71 — two entities
-are free next to hundreds of peds. Threshold pressure relieved for now.
-**Visual:** 3 subagent verdicts, all PASS, all specific (each located both hulls by
-pixel coordinate). seed 42 day: hulls flush on the waterline, not clipped at the
-seaward edge, "tastefully scaled — noticeably larger than ferries but not
-dominating." seed 7 day: same, ships "anchor the deep water without dominating."
-Night: "small warm/colored points, not glare; no white blob, no halo," hull still
-reads as a ship. The night agent honestly flagged the nav lights as *near the
-resolution limit* rather than calling them broken — exactly the iter-70 discipline
-asked of it, and not a defect.
-**Verdict:** SHIPPED. Redeploy pending (iters 34–72 + hooks + the concurrent
-transport/camera/shoreline commits).
 
 ## Iteration 73 — civic buildings turn to face the street (2026-07-09)
 
@@ -905,3 +861,83 @@ wake (L3659). Iter 77's `treed`-on-`c.flow` boulevard retarget (allées still li
 `busy`, not the arterials), 78's dogs-on-sidewalks (`strollable()` still park-bound),
 73's corner-lot lead and 76's REDWOOD closure lead all remain open. **Iteration 84
 owes the next holistic step-back** (79 + 5).
+
+## Iteration 80 — the forecourt learns which way is front (2026-07-10)
+
+**Provenance — not my work.** Found complete and uncommitted in the worktree at
+startup, killed between its verdict and its `git commit` (the third time: 70, 72,
+now 80). No `## Iteration 80` entry, so it died *before* step 5 and left no
+statement of intent. Per the skill, the ledger entry is evidence but **the census
+is the verdict** — so this entry is written from the diff and from gates I re-ran
+myself, and describes what the code *does*, not what its author meant. The prose
+below is mine; the change is not.
+
+**Vector:** **Civic & culture × Deepen** — no new tile, no new CA pass, no new
+entity. It rewrites the *lot choice* inside iter 36's existing forecourt rule
+(L919-944) by wiring in two systems that did not exist when 36 shipped:
+`frontSide()` from **iter 73** and `c.flow` from **iter 77**. Exactly the
+interconnect the 77 header note invited ("reuse `c.flow` for anything that should
+follow the main roads").
+
+**Change.** Iter 36 took the *first* neighbour in `nbrDirs` order that was `RES`
+or `EMPTY` and touched any road. That is two arbitrary choices — the lot could sit
+behind the building, and it could front a service lane. Now:
+- a new `FORECOURT_LOT` = `{EMPTY, RES, COM, MID}`: a city demolishes a shop or a
+  mid-rise for the square before its parliament. It still will not take down a
+  `TOWER` and will not pave a `PARK`.
+- every candidate is scored `(on the front side ? 1e6 : 0) + maxAdjacentRoadFlow`.
+  So **front dominates, flow only breaks the tie**, and `nbrDirs` order breaks
+  that. A lot fronting no street at all (`flow<0`) is skipped outright.
+
+**Census:** VERDICT PASS, 0 page errors. Core flat — `pop 142497→144403 (+1.3%)`,
+`roads -2`, `developed -12`. Target tile moved: **`PLAZA 6 → 14 (+8)`**. The
+paying tiles are `MID -17` / `COM -7`, which *is* the change: the widened lot set
+clearing shops and mid-rises. `TOWER +10` / `towerHt +637` is the documented
+chaotic-CA downstream of touching terrain a later pass tests, not a second effect.
+
+**Visual:** 2/2 `VISUAL: PASS`, before/after on an identical clip (`before.html` =
+`git show HEAD`), seeds 42 and 7. Seed 7's agent convicted the new lot set without
+being told it existed: *"a coral-roofed shop/mid-rise that occupied that hex in
+the before shot is gone, replaced by the open paved plaza square."* Old code could
+not have cleared that hex. Both agents read the plaza as sitting in **front** of
+the hall, flush on the hex grid; both whole-city frames clean — no tears, no
+floating tiles, no compounded clutter.
+
+**The A/B that makes this more than an assertion.** A throwaway probe re-derived
+`frontSide` and road flow independently, then audited every placed plaza. HEAD vs
+working tree, seeds 7/42/1234 at `warp=61`:
+
+| | forecourt placed | on the front side |
+| --- | --- | --- |
+| HEAD | 6 / 15 eligible civics | 3 / 6 — a coin flip |
+| after | **14 / 15** | **11 / 14** |
+
+Coverage more than doubled, and the reason is the lot set: a *downtown* hall ringed
+by shops previously got nothing, because 36 only ever cleared a house or a vacant
+lot. The civics that most deserve a square were precisely the ones that never got
+one. The 3 off-front placements are the designed precedence, not a bug — no
+eligible lot existed on the front side, so flow chose among the back ones. The 1
+civic still without a forecourt has no street-fronting neighbour at all.
+(Don't read the before-column's "best flow 5/6" as HEAD already working: with only
+`RES`/`EMPTY` eligible, the candidate set is often a single lot, so the max is hit
+by default. `onFront` is the honest column, and it is chance.)
+
+`plazaTotal == withPlaza` in both builds: **every plaza in the city is a
+forecourt.** Iter 36's random-sample rule at L909 has never once fired, exactly as
+its own comment claims — it survives only to keep the `rng()` stream aligned.
+
+**Verdict:** SHIPPED (recovered). Kept, not because it was found in the tree, but
+because it passes all three gates on re-run and the diff is one coherent thought.
+
+**A loop fix, learned the hard way.** The dead iteration left three untracked
+scratch files (`before.html` + two probe scripts). Deleting them was refused —
+correctly: they were *someone else's* uncommitted work, unique on disk. But
+`run-loop.sh`'s dirty check is `git status --porcelain`, which counts untracked
+files, so leaving them would have made the runner **refuse to start on every
+later iteration** — a killed iteration's litter silently halting the whole night.
+Resolved by *ignoring* rather than deleting: `.gitignore` now covers
+`before.html`, `probe-*.mjs`, `shot-*.mjs`. Nothing is destroyed, and the scratch
+convention the skill itself recommends (`/bin/cp` a backup before a big swing) no
+longer poisons the next run. The probe shape — re-derive the predicate
+independently, audit every instance, A/B against `before.html` — is worth reusing
+for any placement rule; both scripts survive on disk, untracked.

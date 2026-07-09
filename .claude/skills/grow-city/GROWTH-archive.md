@@ -1649,3 +1649,57 @@ iter 70's: there, a FAIL was a false negative; here, three PASSes were true
 statements that missed a real bug. **A subagent's caveat is a finding.** Redeploy
 pending (iters 34–71 + hooks + the concurrent transport/camera/shoreline commits).
 
+## Iteration 72 — the harbor gets its ships (2026-07-09)
+
+**Vector:** Water & coast × **Deepen / interconnect** — rotation pointed at Water &
+coast (least-recently-touched domain, last 65). Its *additive* moves are long spent
+(6 new elements), so the kind had to be Deepen; the mechanism happens to be a new
+entity array, but the vector was to connect an existing system to the sea, not to
+add another sea creature.
+**Orient/seam findings (two dead ends closed before writing a line):**
+- **The lighthouse already sweeps a beam** at night (`case T.LIGHTHOUSE`, `LITAMT>0.12`
+  — a rotating wedge + lantern glow). It looked like a glaring gap from the ledger;
+  it isn't. Don't re-explore. Third time the beach-towel trap has been dodged by
+  grepping the draw case first.
+- **The "harbor works" warehouses are NOT on a quay.** They're placed at
+  `SHOREX-1-(rng()*3)`, and `SHOREX=G-12` while `shoreAt()≈G-7±sAmp` — so the cluster
+  sits ~6–9 columns *inland* of the water. Gantry cranes reaching over a berth would
+  have been geometrically wrong. A container yard would have been Urban, not Water.
+- What was genuinely missing: the founding comment literally says *"the warehouse
+  cluster grows while shipping pays"* — and the city had **no ship**. Sailboats,
+  ferry, kayaks, whales, dolphins, turbines, moored craft: all present. Cargo: none.
+  The economy's whole premise was undepicted.
+**Change:** a `freighters` array. Founding now remembers the warehouse row as
+`harborY` (a read, no new `rng()` draw), and **the first ship rides at anchor in the
+roadstead off that exact row** — that's the interconnect, the harbor's latitude
+picked the ship's. The second steams the deep lane at `off≈4.6–5.2`, seaward of the
+ferries (3.4–4.4) and inside the dolphins (4–6.2). `drawFreighter` renders bow-to-
+starboard in local coords under `ctx.save()/translate/scale(dir,1)` — mirroring to
+the heading instead of sign-juggling every `fillRect`: navy `solar` hull with a raked
+bow, `terraDk` boot-top at the waterline, six container stacks (a `st` bitmask picks
+which go two-high), white stern house, `terra` funnel, foremast; a long slow wake
+only if under way. Night (`LITAMT>0.35`): masthead + funnel lamps, a low-alpha pooled
+deck glow, green bow / red stern nav lights, lit house windows via `colLit`.
+Spawned with **`Math.random`, never `rng()`** — shipping must not perturb the seeded
+simulation. Wired into the bucket sort, the step loop (anchored ships skip it),
+`ENTINFO` ('Container ship', r=14), and the census `transport` tally, per invariant.
+**Census:** VERDICT PASS, 0 page errors. **Every core metric exactly flat** (pop,
+roads, developed, towerHt all +0) and the tile histogram empty — the clean signature
+of a `Math.random`, draw-only, no-terrain feature. `transportModes +9`;
+**`freighters 0->18 NEW`** (2 ships × 9 matrix cells). The lone ±1 on
+solar/greenRoofs is the usual last-partial-tick jitter.
+**Perf:** ran the gate despite 72 not being a step-back lap, because the header flags
+a creeping day floor. PASS ×3 by minimum: day **24.78ms**, night **26.39ms**
+(baselines 24 / 26.61). The day floor actually *fell* from 25.11 @71 — two entities
+are free next to hundreds of peds. Threshold pressure relieved for now.
+**Visual:** 3 subagent verdicts, all PASS, all specific (each located both hulls by
+pixel coordinate). seed 42 day: hulls flush on the waterline, not clipped at the
+seaward edge, "tastefully scaled — noticeably larger than ferries but not
+dominating." seed 7 day: same, ships "anchor the deep water without dominating."
+Night: "small warm/colored points, not glare; no white blob, no halo," hull still
+reads as a ship. The night agent honestly flagged the nav lights as *near the
+resolution limit* rather than calling them broken — exactly the iter-70 discipline
+asked of it, and not a defect.
+**Verdict:** SHIPPED. Redeploy pending (iters 34–72 + hooks + the concurrent
+transport/camera/shoreline commits).
+
