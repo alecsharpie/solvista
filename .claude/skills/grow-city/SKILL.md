@@ -1,13 +1,13 @@
 ---
 name: grow-city
-description: Grow the Solvista city diorama (solvista.html) by one increment — make it bigger / more varied / more connected / more alive — then verify with screenshots + a numeric census that it grew and nothing regressed. Run repeatedly (loop-friendly) to compound improvements. Use when asked to "add more city", "grow the city", "keep improving the diorama", or run it under /loop.
+description: Grow the Solvista city diorama (solvista.html) by one increment — make it bigger / more varied / more connected / more alive — then verify with screenshots + a numeric census that it grew and nothing regressed. One invocation = one iteration; `run-loop.sh` runs it repeatedly to compound improvements. Use when asked to "add more city", "grow the city", "keep improving the diorama".
 ---
 
 # grow-city
 
 An **autonomous improvement loop** for `solvista.html` (the "Solvista" procedural
 cellular-automata hex-city artifact), built to run **unattended for long stretches**
-(all night, under `/loop`). Each invocation performs **one** iteration and leaves
+(all night, under `run-loop.sh`). Each invocation performs **one** iteration and leaves
 the repo verified and logged, so it can be run again and again to compound the city
 over time.
 
@@ -223,7 +223,7 @@ both at this one.)
 ## Every ~5 iterations: step back (autonomous self-check)
 
 This loop is built to run **unattended for long stretches** — all night, under
-`/loop`, with nobody watching. That is the point of the experiment: find the
+`run-loop.sh`, with nobody watching. That is the point of the experiment: find the
 guardrails that let an autonomous improvement loop run for hours without drifting.
 So the runner must be its **own** reviewer; the fix for self-verification's ceiling
 is a *wider* self-check, not a human.
@@ -270,14 +270,52 @@ runner re-invoke you — never chain multiple vectors in a single pass.
 The loop is driven **headless, event-based**: each iteration is a fresh `claude -p`
 process that starts with an empty context, does one vector, and exits. The next
 one starts when the previous exits — no fixed interval, no accumulating
-transcript. `run-loop.sh` in this directory is the runner; `com.solvista.growcity.plist`
-installs it under launchd.
+transcript.
+
+```bash
+cd .claude/skills/grow-city
+caffeinate -is ./run-loop.sh      # overnight: keep the Mac awake for the whole run
+MAX_ITERS=3 ./run-loop.sh         # a supervised burst
+./run-loop.sh --status            # how's it going? (no 40MB log to read)
+touch STOP                        # stop gracefully after the current iteration
+```
+
+**`caffeinate` is not optional for an overnight run.** A Mac that sleeps kills
+`claude` mid-iteration and leaves the worktree holding a half-finished — or
+worse, a *finished but uncommitted* — iteration.
+
+The runner treats a **session rate limit as a wait, not a failure**: it parses the
+reset time out of claude's message, sleeps until then (capped at 6h; a short retry
+if the reset already passed; a 30m poll if it can't parse one), and does not count
+it against `MAX_FAILS`. `MAX_ITERS` counts *completed* iterations, so a night that
+spends two hours rate-limited still grows the city the number of times you asked.
 
 This is why the ledger discipline in steps 1 and 5 is load-bearing rather than
 tidy: **`GROWTH.md` is not a summary of your memory, it *is* your memory.** A
 fresh process knows only what the header grid, the last 10 entries, and
 `census-history.jsonl` tell it. Anything you learned and did not write down is
 gone the moment you exit.
+
+### If you find the worktree dirty at startup
+
+An iteration killed mid-flight (rate limit, machine sleep, `^C`) leaves its work
+uncommitted. The runner refuses to start on top of it, and you must not reflexively
+`git checkout -- .` it. **Look at what's there first.** The commit is the *last*
+thing an iteration does, so a killed iteration is often a complete, gate-passed
+change that only missed `git commit`:
+
+- Is there a new `## Iteration N` entry in `GROWTH.md`? Then it reached step 5 —
+  it had already passed all three gates and written its verdict.
+- Re-run `node .claude/skills/grow-city/census.mjs` yourself. It needs no API
+  tokens, and it will tell you in ~90s whether the change still passes.
+- If it passes: rotate, commit it, ff-merge, push — exactly as step 5 would have.
+- Only discard when the change is genuinely half-written (no ledger entry, or the
+  census fails). Then `git stash` it rather than deleting, and say so.
+
+Iteration 72 ("the harbor gets its ships") was killed by a rate limit *between*
+its verdict and its commit. It had passed every gate; discarding it would have
+silently thrown away a good iteration and left the loop to rediscover it. Iteration
+70's chimney smoke was the same shape and was nearly lost the same way.
 
 Running under `/loop` still works, but it re-fires into the *same* session, so
 every census table, source read, and screenshot accumulates across iterations —
@@ -417,8 +455,8 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   the archive. Idempotent, no-op below the threshold, refuses to write unless
   every entry is accounted for exactly once. `--keep N`, `--dry-run`.
 - `run-loop.sh` — the headless event-based runner (one fresh `claude -p` per
-  iteration, next starts when the previous exits).
-- `com.solvista.growcity.plist` — launchd wrapper for `run-loop.sh`.
+  iteration, next starts when the previous exits). Handles rate limits, refuses
+  to start on a dirty tree or a dirty worktree, `--status`, `STOP`.
 - `hovershot.mjs` — screenshots a *hover*, which `shoot.mjs` cannot do. Aims the
   real cursor at an entity via `__ents`, then clips it at three scales plus a
   no-hover control frame. `node hovershot.mjs '<url query>' '<Entity name>'
