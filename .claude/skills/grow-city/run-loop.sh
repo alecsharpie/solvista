@@ -183,15 +183,28 @@ while :; do
   # Two ways to know: the structured rate_limit_event that fmt-stream.mjs lifts
   # out of the stream (authoritative — `resetsAt` is a unix timestamp), or the
   # English message as a fallback for older CLIs.
-  rl_status=""; rl_resets=""
+  rl_status=""; rl_resets=""; rl_limited=""
   if [ -s "$RATE_FILE" ]; then
     rl_status="$(node -e 'try{const j=require(process.argv[1]);process.stdout.write(j.status??"")}catch{}' "$RATE_FILE" 2>/dev/null || true)"
     rl_resets="$(node -e 'try{const j=require(process.argv[1]);process.stdout.write(String(j.resetsAt??""))}catch{}' "$RATE_FILE" 2>/dev/null || true)"
+    rl_limited="$(node -e 'try{const j=require(process.argv[1]);process.stdout.write(j.limited===true?"1":"")}catch{}' "$RATE_FILE" 2>/dev/null || true)"
   fi
+  # `allowed` fires on EVERY run; `allowed_warning` means "approaching a limit,
+  # request still served". Neither stopped the work. Testing `!= "allowed"` put a
+  # healthy, shipped iteration to sleep for 30m and never counted it (iter 76).
+  # Only a status outside the allowed* family is an actual limit.
   limit_line=""
-  if [ -n "$rl_status" ] && [ "$rl_status" != "allowed" ]; then
+  if [ "$rl_limited" = "1" ]; then
     limit_line="rate_limit_event: status=$rl_status"
-  else
+  elif [ -n "$rl_status" ]; then
+    case "$rl_status" in
+      allowed|allowed_*) ;;                        # not limited; trust the event
+      *) limit_line="rate_limit_event: status=$rl_status" ;;
+    esac
+  elif [ "$rc" -ne 0 ]; then
+    # No structured event (older CLI): fall back to the English message — but only
+    # on a nonzero exit. An iteration that merely *reads* this file, or writes a
+    # ledger entry about rate limits, would otherwise match its own transcript.
     limit_line="$(grep -m1 -iE "hit your (session|usage) limit|rate limit exceeded" "$out" || true)"
   fi
 

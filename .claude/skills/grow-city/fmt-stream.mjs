@@ -113,13 +113,21 @@ for await (const line of rl) {
   switch (ev.type) {
     case 'rate_limit_event': {
       const info = ev.rate_limit_info ?? {};
+      /* Statuses seen: `allowed` (fires on every run), `allowed_warning` (you are
+       * approaching a limit but the request went through), and the ones that
+       * actually stop you. Anything in the `allowed*` family is NOT a limit —
+       * testing `!== 'allowed'` classified a healthy run as rate-limited. */
+      const limited = !!info.status && !info.status.startsWith('allowed');
       if (RATE_FILE && info.resetsAt) {
         try {
-          writeFileSync(RATE_FILE, JSON.stringify({ status: info.status, resetsAt: info.resetsAt, type: info.rateLimitType }));
+          writeFileSync(RATE_FILE, JSON.stringify({ status: info.status, resetsAt: info.resetsAt, type: info.rateLimitType, limited }));
         } catch { /* the runner falls back to its own parsing */ }
       }
-      if (info.status && info.status !== 'allowed') {
-        emit('⚠', 'limit', `${info.rateLimitType ?? 'rate'} limit ${info.status}; resets ${new Date(info.resetsAt * 1000).toTimeString().slice(0, 5)}`);
+      const at = info.resetsAt ? new Date(info.resetsAt * 1000).toTimeString().slice(0, 5) : '?';
+      if (limited) {
+        emit('⚠', 'limit', `${info.rateLimitType ?? 'rate'} limit ${info.status}; resets ${at}`);
+      } else if (info.status === 'allowed_warning') {
+        emit('·', 'quota', `approaching the ${info.rateLimitType ?? 'rate'} limit; resets ${at} — still running`);
       }
       break;
     }
