@@ -788,6 +788,46 @@ function updateValue(){
   for(let i=0;i<G*G;i++)cells[i].val=valBuf[i];
 }
 
+/* the monumental institutions — the ones that make a civic quarter, and the only
+   ones that earn a paved forecourt. Services (school, police, firehouse, hospital,
+   aquarium, amphitheater, observatory) are sited by need, not by rank. */
+const MAJORK=new Set(['hall','museum','parliament','university','library']);
+const QUARTER=new Set(['library','museum','parliament']);
+const QNEAR=2, QFAR=4;   /* hexes to the nearest standing institution: near enough
+                            to share a street, far enough to leave one between */
+
+/* The civic quarter. A monumental institution is drawn to the ones already
+   standing rather than dropped wherever the dice land, so state and culture
+   accrete into one readable district instead of scattering to the plate's rim.
+   Deterministic scan over the live cells (no rng() draw, like the university and
+   aquarium siting) — so choosing the site perturbs nothing downstream. Returns
+   false when the quarter has no room, and the caller falls back to the old
+   scattered search: an institution is never lost to a walled-in core. */
+function siteQuarter(kind){
+  const anchors=[];
+  for(const i of HEXI){const c=cells[i];
+    if(c.t===T.CIVIC&&MAJORK.has(c.kind))anchors.push([i%G,(i/G)|0]);}
+  if(!anchors.length)return false;
+  for(const far of[QFAR,QFAR+3]){        /* hug the quarter; widen once if walled in */
+    let best=-1,bi=-1;
+    for(const i of HEXI){
+      const x=i%G,y=(i/G)|0,c=cells[i];
+      if((c.t!==T.EMPTY&&c.t!==T.RES)||!roadNear(x,y))continue;
+      let d=99;
+      for(const[ax,ay]of anchors){const q=hexDist(x,y,ax,ay); if(q<d)d=q;}
+      if(d<QNEAR||d>far)continue;
+      /* hug the nearest institution, prefer the valuable ground a core sits on,
+         and let the spatial hash break the ties that leaves */
+      const s=(far-d)*2+c.val*3+hashCell(x,y,seedNum^0xC17C)*0.9;
+      if(s>best){best=s;bi=i;}
+    }
+    if(bi>=0){const c=cells[bi];
+      c.t=T.CIVIC;c.kind=kind;c.th=kind==='parliament'?34:20+c.v*14;c.h=0;c.age=0;
+      return true;}
+  }
+  return false;
+}
+
 /* ---------------- cellular automata tick ---------------- */
 function tick(){
   updateValue();
@@ -935,8 +975,7 @@ function tick(){
   if(year>=2020)for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];
     if(c.t!==T.CIVIC)continue;
-    const k=c.kind;
-    if(k!=='hall'&&k!=='museum'&&k!=='parliament'&&k!=='university'&&k!=='library')continue;
+    if(!MAJORK.has(c.kind))continue;
     if(countAround(x,y,2,n=>n.t===T.PLAZA)>0)continue;
     /* Which side is the front? The same displacement sum iter 73 gave the hospital.
        Then, among the lots on that side, take the one fronting the loudest street:
@@ -1136,11 +1175,23 @@ function tick(){
                 [1997,'museum'],[2003,'hospital'],[2018,'observatory'],[2034,'parliament']];
   for(const[cy,kind]of civics){
     if(year>=cy&&!cells.some(c=>c.t===T.CIVIC&&c.kind===kind)){
+      /* The scattered search runs FIRST and always, even for a kind the civic
+         quarter will claim, and its rng() draws are spent either way. siteQuarter
+         is deterministic and makes no draw of its own; simply skipping this loop
+         reshuffles the entire downstream stream — measured at −22% pop and −47%
+         towers by 2035, a collapse with nothing to do with where the building
+         went. Same discipline as the plaza rule below: the draws keep the stream
+         aligned, so the only thing that changes is which lot the institution
+         stands on. Placing nothing before siteQuarter runs also keeps the draw
+         count provably independent of the quarter's own terrain edit. */
+      let lot=-1;
       for(let tries=0;tries<90;tries++){
         const[x,y]=rcIn(2,SHOREX-1,2,G-2); const c=cells[idx(x,y)];
-        if(c&&(c.t===T.EMPTY||c.t===T.RES)&&roadNear(x,y)){
-          c.t=T.CIVIC;c.kind=kind;c.th=kind==='parliament'?34:20+c.v*14;c.h=0;c.age=0;break;}
+        if(c&&(c.t===T.EMPTY||c.t===T.RES)&&roadNear(x,y)){lot=idx(x,y);break;}
       }
+      if(QUARTER.has(kind)&&siteQuarter(kind))continue;   /* joins the civic quarter */
+      if(lot>=0){const c=cells[lot];
+        c.t=T.CIVIC;c.kind=kind;c.th=kind==='parliament'?34:20+c.v*14;c.h=0;c.age=0;}
     }
   }
   /* every ~3500 residents earns the district another school */

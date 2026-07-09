@@ -1,5 +1,5 @@
 {
- "when": "2026-07-09T21:51:09.646Z",
+ "when": "2026-07-09T22:25:58.628Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -30,7 +30,7 @@
    "promenade": 16,
    "stations": 0,
    "cafes": 14,
-   "tileKinds": 21,
+   "tileKinds": 22,
    "civicKinds": 3,
    "transportModes": 8,
    "tiles": {
@@ -42,7 +42,7 @@
     "TOWER": 0,
     "CIVIC": 3,
     "PARK": 47,
-    "BEACH": 179,
+    "BEACH": 159,
     "WATER": 795,
     "PLAZA": 0,
     "MEADOW": 64,
@@ -63,7 +63,8 @@
     "KELP": 17,
     "ORCHARD": 7,
     "REDWOOD": 5,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 20
    },
    "civic": {
     "school": 1,
@@ -128,7 +129,7 @@
    "promenade": 16,
    "stations": 10,
    "cafes": 52,
-   "tileKinds": 26,
+   "tileKinds": 27,
    "civicKinds": 8,
    "transportModes": 10,
    "tiles": {
@@ -140,7 +141,7 @@
     "TOWER": 19,
     "CIVIC": 9,
     "PARK": 113,
-    "BEACH": 179,
+    "BEACH": 151,
     "WATER": 780,
     "PLAZA": 0,
     "MEADOW": 42,
@@ -161,7 +162,8 @@
     "KELP": 17,
     "ORCHARD": 7,
     "REDWOOD": 5,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 28
    },
    "civic": {
     "amphitheater": 1,
@@ -231,7 +233,7 @@
    "promenade": 16,
    "stations": 29,
    "cafes": 86,
-   "tileKinds": 28,
+   "tileKinds": 29,
    "civicKinds": 12,
    "transportModes": 13,
    "tiles": {
@@ -243,7 +245,7 @@
     "TOWER": 71,
     "CIVIC": 17,
     "PARK": 179,
-    "BEACH": 179,
+    "BEACH": 144,
     "WATER": 757,
     "PLAZA": 5,
     "MEADOW": 2,
@@ -264,7 +266,8 @@
     "KELP": 17,
     "ORCHARD": 9,
     "REDWOOD": 5,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 35
    },
    "civic": {
     "university": 2,
@@ -338,7 +341,7 @@
    "promenade": 13,
    "stations": 0,
    "cafes": 13,
-   "tileKinds": 21,
+   "tileKinds": 22,
    "civicKinds": 3,
    "transportModes": 8,
    "tiles": {
@@ -350,7 +353,7 @@
     "TOWER": 0,
     "CIVIC": 3,
     "PARK": 40,
-    "BEACH": 192,
+    "BEACH": 172,
     "WATER": 719,
     "PLAZA": 0,
     "MEADOW": 64,
@@ -371,7 +374,8 @@
     "KELP": 11,
     "ORCHARD": 2,
     "REDWOOD": 9,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 20
    },
    "civic": {
     "school": 1,
@@ -436,7 +440,7 @@
    "promenade": 13,
    "stations": 1,
    "cafes": 43,
-   "tileKinds": 25,
+   "tileKinds": 26,
    "civicKinds": 8,
    "transportModes": 11,
    "tiles": {
@@ -448,7 +452,7 @@
     "TOWER": 17,
     "CIVIC": 8,
     "PARK": 98,
-    "BEACH": 192,
+    "BEACH": 159,
     "WATER": 712,
     "PLAZA": 0,
     "MEADOW": 11,
@@ -469,7 +473,8 @@
     "KELP": 11,
     "ORCHARD": 4,
     "REDWOOD": 9,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 33
    },
    "civic": {
     "amphitheater": 1,
@@ -539,7 +544,7 @@
    "promenade": 13,
    "stations": 5,
    "cafes": 75,
-   "tileKinds": 27,
+   "tileKinds": 28,
    "civicKinds": 12,
    "transportModes": 13,
    "tiles": {
@@ -551,7 +556,7 @@
     "TOWER": 69,
     "CIVIC": 18,
     "PARK": 157,
-    "BEACH": 192,
+    "BEACH": 155,
     "WATER": 702,
     "PLAZA": 4,
     "MEADOW": 1,
@@ -572,7 +577,8 @@
     "KELP": 11,
     "ORCHARD": 5,
     "REDWOOD": 9,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 37
    },
    "civic": {
     "university": 2,
@@ -646,7 +652,7 @@
    "promenade": 34,
    "stations": 0,
    "cafes": 20,
-   "tileKinds": 21,
+   "tileKinds": 22,
    "civicKinds": 3,
    "transportModes": 8,
    "tiles": {
@@ -658,7 +664,7 @@
     "TOWER": 0,
     "CIVIC": 3,
     "PARK": 41,
-    "BEACH": 179,
+    "BEACH": 157,
     "WATER": 794,
     "PLAZA": 0,
     "MEADOW": 79,
@@ -679,7 +685,8 @@
     "KELP": 8,
     "ORCHARD": 3,
     "REDWOOD": 18,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 22
    },
    "civic": {
     "hall": 1,
@@ -744,7 +751,7 @@
    "promenade": 34,
    "stations": 4,
    "cafes": 56,
-   "tileKinds": 24,
+   "tileKinds": 25,
    "civicKinds": 8,
    "transportModes": 10,
    "tiles": {
@@ -756,7 +763,7 @@
     "TOWER": 26,
     "CIVIC": 9,
     "PARK": 97,
-    "BEACH": 179,
+    "BEACH": 146,
     "WATER": 769,
     "PLAZA": 0,
     "MEADOW": 22,
@@ -777,7 +784,8 @@
     "KELP": 8,
     "ORCHARD": 3,
     "REDWOOD": 18,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 33
    },
    "civic": {
     "amphitheater": 1,
@@ -823,7 +831,7 @@
    "G": 67,
    "year": 2035,
    "seed": "ya",
-   "pop": 32173,
+   "pop": 32174,
    "parks": 149,
    "towers": 68,
    "tallestFloors": 56,
@@ -838,7 +846,7 @@
    "developed": 1042,
    "solarRoofs": 429,
    "greenRoofs": 160,
-   "towerHt": 5389,
+   "towerHt": 5390,
    "tallTowers": 31,
    "helipads": 19,
    "boulevardTrees": 351,
@@ -847,7 +855,7 @@
    "promenade": 34,
    "stations": 6,
    "cafes": 81,
-   "tileKinds": 27,
+   "tileKinds": 28,
    "civicKinds": 12,
    "transportModes": 13,
    "tiles": {
@@ -859,7 +867,7 @@
     "TOWER": 68,
     "CIVIC": 16,
     "PARK": 146,
-    "BEACH": 179,
+    "BEACH": 141,
     "WATER": 757,
     "PLAZA": 5,
     "MEADOW": 1,
@@ -880,7 +888,8 @@
     "KELP": 8,
     "ORCHARD": 3,
     "REDWOOD": 18,
-    "VOID": 1122
+    "VOID": 1122,
+    "DUNE": 38
    },
    "civic": {
     "university": 2,

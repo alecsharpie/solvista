@@ -2340,3 +2340,110 @@ longer poisons the next run. The probe shape — re-derive the predicate
 independently, audit every instance, A/B against `before.html` — is worth reusing
 for any placement rule; both scripts survive on disk, untracked.
 
+## Iteration 81 — the fog stops being a smudge on the lens (2026-07-10)
+
+**Vector:** **Sky & atmosphere × Polish (FIXED).** Sky was the most neglected
+domain on the grid (last touched at 61, and never by a CA rule or a Connect), so
+the rotation pointed here. I went looking to *add* a marine layer and grepped
+first — per step 3's rule, and per iter 34, which nearly shipped beach towels onto
+a beach that already had them. **Solvista has had a marine layer all along.**
+Twice, in fact: a dawn bank (old L3982) and a seeded multi-day "spell" (old L3992).
+So the iteration became a fix instead of an addition, which is the whole point of
+grepping the seam before designing against it.
+
+**The defect, seen before it was theorised.** Both fog systems were a handful of
+big screen-space ellipses drawn **after the entire row loop**. That is precisely
+iter 71's "⚠ Overlays drawn last FLOAT," applied to the largest overlay in the
+file. I shot seed 2 (`sin((seed%97)*0.7) > 0.25` is the spell's gate; 7/42/1234 all
+fail it, which is why 80 laps of census screenshots never once rendered this
+feature) and looked myself. Three faults, in descending order of harm:
+1. **The banks hang off the plate into the empty sky** — clearly visible past the
+   top-right and right rim of the sea. Fog in the void, beyond the edge of the world.
+2. They read as **soft-focus lens smudges / glare pucks**, not weather. Iter 60's
+   holistic already caught this smell and treated it by splitting one oval into
+   three feathered lenses; that treated the symptom, not the projection.
+3. Strongest over the **open sea** and weakest at the shore — inverted. A marine
+   layer piles against the coast. The `inland` term intended this and did the
+   opposite: `inland` saturates at 1 for most of the roll, so the bank is a puck
+   at sea and only fades in its last few columns.
+
+Plus a fourth, of the class iter 79 named: both used hardcoded near-white
+`rgba(238,242,240)` / `rgba(236,241,239)` literals. Fog **scatters** light, so by
+79's reflect-vs-emit test it must go through `colA` and take the tint. The spell
+had a hand-rolled `(1-LITAMT*0.45)` night dimmer, which is a dimmer, not a tint —
+it made night fog grey, never blue.
+
+**Change (draw-only).** The marine layer is now a **per-hex density field emitted
+inside the row loop**, after each row's cells. It therefore has depth: rows in
+front draw straight over it, so the layer is clipped to the plate for free and the
+city stands out of it instead of under it.
+- Spatial gate reuses **`reachFill`** (the U5 header note asked for exactly this):
+  a fifth map, `rSea`, with *every wet cell* as a source — so the fog finds the
+  rivers and the marsh, not only the coast. Thickest in the surf, spent within
+  `FOGR`=7 hexes inland, thinning to a haze offshore via `shoreAtF(y)`.
+- Two weather clocks preserved and merged into one `FOGAMT`: the dawn layer that
+  burns off by mid-morning, and the seeded spell that makes some cities foggy for
+  a stretch of days. Both still time-driven, no `rng()`, so `__step` still reaches
+  a foggy window.
+- Color through **`colA('fog',…)`** + a new `BASE.fog`. Rose at dawn, blue under
+  the moon, and the moon itself still emits — 79's discriminator, honored.
+
+**The two tuning failures worth recording, because both are counter-intuitive:**
+- **Alpha must be sized for the overlaps that SURVIVE, not the ones you draw.** I
+  sized the per-hex lens for ~9 overlapping neighbours and got a nearly invisible
+  sheen. The next row paints its own opaque ground over the bottom of this row's
+  lenses, so the field accumulates *across a row* (~2.4 lenses) and hardly at all
+  *down the screen*. That is the depth model working, not a bug — but it means the
+  right alpha is 0.22, not 0.095. A first pass at 0.30 with high-frequency noise
+  **quilted the sea into fish scales**: few strong lenses tile visibly, many weak
+  ones dissolve.
+- **Hash-jittering the lens centers made it worse, and was reverted.** Both visual
+  agents volunteered the same caveat — a faint hex lattice in the fogged water —
+  and per 79's "a caveat both seeds volunteer is a finding," I fixed it. Offsetting
+  each lens by `hashCell` to decorrelate the overlaps from the grid turned a subtle
+  ripple into **hard-edged soap bubbles**, because broken tiling lets a single lens
+  poke out against clear water. Reverted; the comment in the source now says so, so
+  a future lap doesn't re-try it. On a hex diorama the ripple reads as hex-grain,
+  like the water's own facets.
+
+**Census:** VERDICT PASS, 0 page errors. **All 22 metrics exactly +0**, tile
+histogram empty, all 25 entity counts unchanged. The exact signature of a
+draw-only change (cf. 79).
+
+**Visual:** 2/2 `VISUAL: PASS`, before/after on identical clips (`before.html` =
+`git show HEAD`), foggy seeds **2 and 11**, agents told to prefer stationary
+evidence and forbidden to report the moon / window lights / cable-car lines /
+wakes. Both convicted the BEFORE defect *unprompted by its location*: "multiple
+ellipses clearly hang OFF the plate into empty sky." Both confirm the AFTER is
+strictly on-plate, piles toward the coast, no tears, and does not swallow the
+towers. Night frame: muted blue-grey mist, not a glowing white haze.
+
+**Perf — the standard gate is BLIND to this feature, so I measured around it.**
+`perf.mjs` runs seed 42 at `t=0.35`/`t=0.8`: neither weather clock is up, so
+`FOGAMT`=0 and the fog costs literally nothing there. A PASS from it would have
+been meaningless. Official gate PASS anyway (day 30.72ms −1.9%, night 34.11ms
+−8.4%). A throwaway probe measured the frame that actually pays, HEAD vs after:
+foggy dawn **30.28 → 33.39ms (+10%)**, foggy day 30.11 → 33.22ms, and **clear day
+30.11 → 30.05ms (free)** — the `FOGAMT>0.02` early-out means an unfogged city pays
+zero. +10% on the ~1/3 of seed×time combinations that are foggy, inside the 15%
+tolerance. Also added the marine layer to the intro `<li>` list.
+
+**Verdict:** FIXED. The fog was a sticker on the lens for 80 iterations; it is now
+weather standing in the scene.
+
+**Lesson for the loop, sharper than "grep first."** The feature I set out to add
+already existed, had existed since before the ledger, and was *broken in a way no
+gate could see*: invisible to the census (draw-only), invisible to the perf gate
+(wrong seed), and invisible to every screenshot ever taken (the spell's seed gate
+excludes 7/42/1234, and the dawn layer needs `t≈0.10` while shots are at `t≈0.3`).
+**Our three gates share a blind spot: they all run the same seeds at the same
+times.** Kelp survived 13 laps by being un-zoomed-at; this survived 80 by being
+un-*sampled*. Worth occasionally shooting a deliberately odd `seed×t` — that is
+the only thing that would have caught it.
+
+**Follow-ups:** iter 79's two untinted literals (whale spout L3774, boat wake
+L3659) are still open — the same `colA` treatment. 77's `treed`-on-`c.flow`
+boulevard retarget, 78's dogs-on-sidewalks, 73's corner-lot lead and 76's REDWOOD
+closure lead all remain open. **Iteration 84 still owes the holistic step-back**
+(79 + 5).
+

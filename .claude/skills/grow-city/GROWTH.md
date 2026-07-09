@@ -22,7 +22,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87 |
-| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
+| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81, 89 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | 84 |
 
@@ -95,15 +95,54 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   is the honest test of any Connect claim** — make the next one pass one. `AXSTEP`, the
   parity-free three-axis stepper, is preserved verbatim in 88's entry. Also: `c.hedge` (L1206)
   **already rims the farm fields**, so any new line-of-scrub vector must first say how it differs.
+- **⚠ REMOVING an `rng()` draw perturbs FAR more than moving a building (iter 91).** The
+  single most valuable measurement of the lap, and it inverts the intuition. Siting the
+  library/museum/parliament by a deterministic `hashCell` scan *instead of* the old
+  `rcIn()` search looked like the safe, house-style move ("no rng draw, so siting perturbs
+  nothing"). It cost **−22% pop and −47% towers by 2035** — a hard core-gate collapse. A
+  controlled experiment (burn the draws the old loop would have made, so the *only*
+  difference is where the building stands) showed the siting itself was **worth +2 to
+  +14% pop**: the loss was 100% the three skipped draws reshuffling 800 ticks of stream.
+  **So: a deterministic rule that REPLACES an existing rng search must still spend that
+  search's draws.** Run the old loop, keep its result, throw it away. The codebase already
+  did this once — the 1996 plaza rule "is kept only so its `rng()` draws keep the stream
+  aligned" — but the lesson was filed as a quirk of that rule, not as a law. It is a law.
+  The advice "prefer `hashCell` so your rule perturbs nothing it doesn't touch" is only
+  true for a rule that is **purely additive**; a *substitution* is a different animal.
+  Corollary: **`rng()`-draw *count* is the invariant, not `rng()` avoidance.** Order your
+  code so the draw count is provably independent of your new terrain edit (place nothing
+  until after the search runs), and the diff is exactly "the building moved".
+- **Institutions now cluster: `MAJORK` / `QUARTER` / `siteQuarter()` (iter 91).** `MAJORK` =
+  the five monumental kinds (`hall museum parliament university library`) — it is the shared
+  vocabulary for "major institution", used by **both** the civic quarter and the 2020+
+  forecourt rule (which previously inlined the same five-way test). `QUARTER` = the three
+  that *seek* the quarter (`library museum parliament`, at 1982/1997/2034); services (school,
+  police, firehouse, hospital, aquarium, amphitheater, observatory) stay sited by need, and
+  `observatory` is deliberately left free to sit at the rim. `siteQuarter()` hugs the nearest
+  standing major at `QNEAR..QFAR` = **2–4 hexes** — near enough to share a street, far enough
+  to leave one between (adjacency would kill the bunting, which needs a ROAD cell reachable
+  from two civics). It falls back to the scattered search when the core is walled in, so
+  `civicKinds` never drops. **Two existing systems light up for free:** festival bunting
+  (iter 45) roughly **doubles-to-triples** (fete 9→16, 6→18 per city), and downtown builds
+  **taller** because three clustered civics choke one COM quorum instead of three.
+- **A forecourt is now SHARED, by construction (iter 91).** The 2020+ rule skips a civic with a
+  `PLAZA` within 2 hexes, and quarter members sit 2–4 apart — so the quarter gets **one** square,
+  not four (`PLAZA 14→10` across the matrix). That is defensible urbanism and was accepted, but
+  it is the one place the vector *cost* something. See open cue (d).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
+  **(d) the civic quarter deserves a real square** *(banked by iter 91, Civic × Polish)* — the
+  quarter now reads as a knot of pale domes sharing a single forecourt hex. A proper civic
+  square (2–3 contiguous `PLAZA` cells fronting several institutions, rather than one lot won
+  by the loudest street) would repay the clustering. Do **not** implement it by loosening the
+  radius-2 guard globally — that would pave forecourts city-wide; scope it to `MAJORK` cells
+  that have ≥2 other `MAJORK` within 4 hexes.
   ~~(a) **the rainbow floats**~~ — **CLOSED by iter 89.** Not by 81's fog fix, though the
   cue predicted it would be: a bow forms in *nearby* drops, so it may legitimately hang in
   **front** of the city, and moving it into the row loop would have buried it. What was
   wrong was that it drew over the **void** past the rim and **ended on a hard chord**.
   Fixed by anchoring it to the ground its shower falls on and dissolving both legs.
-  **With (a), (b) and (c) all closed, there is NO strong open cue left** — the next
-  holistic pass has to find its own, and if it finds nothing, that is a real signal that
-  the artifact has stopped accumulating visual debt.
+  With (a), (b) and (c) all closed the cue list was empty for one iteration; **(d), above,
+  is now the only open cue**, and it was found by a *vector* rather than by a holistic pass.
   ~~(b) **the asphalt floods the interior**~~ — **CLOSED by iter 86.**
   ~~(c) **the monorail beam reads as UI chrome**~~ — **CLOSED by iter 87.** Six agents on
   4 seeds across iters 79/84/85 called `drawMonoAt`'s beam a "debug overlay floating above
@@ -455,118 +494,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 83 entries before Iteration 81 live in
+> **Archive:** the 84 entries before Iteration 82 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 81 — the fog stops being a smudge on the lens (2026-07-10)
-
-**Vector:** **Sky & atmosphere × Polish (FIXED).** Sky was the most neglected
-domain on the grid (last touched at 61, and never by a CA rule or a Connect), so
-the rotation pointed here. I went looking to *add* a marine layer and grepped
-first — per step 3's rule, and per iter 34, which nearly shipped beach towels onto
-a beach that already had them. **Solvista has had a marine layer all along.**
-Twice, in fact: a dawn bank (old L3982) and a seeded multi-day "spell" (old L3992).
-So the iteration became a fix instead of an addition, which is the whole point of
-grepping the seam before designing against it.
-
-**The defect, seen before it was theorised.** Both fog systems were a handful of
-big screen-space ellipses drawn **after the entire row loop**. That is precisely
-iter 71's "⚠ Overlays drawn last FLOAT," applied to the largest overlay in the
-file. I shot seed 2 (`sin((seed%97)*0.7) > 0.25` is the spell's gate; 7/42/1234 all
-fail it, which is why 80 laps of census screenshots never once rendered this
-feature) and looked myself. Three faults, in descending order of harm:
-1. **The banks hang off the plate into the empty sky** — clearly visible past the
-   top-right and right rim of the sea. Fog in the void, beyond the edge of the world.
-2. They read as **soft-focus lens smudges / glare pucks**, not weather. Iter 60's
-   holistic already caught this smell and treated it by splitting one oval into
-   three feathered lenses; that treated the symptom, not the projection.
-3. Strongest over the **open sea** and weakest at the shore — inverted. A marine
-   layer piles against the coast. The `inland` term intended this and did the
-   opposite: `inland` saturates at 1 for most of the roll, so the bank is a puck
-   at sea and only fades in its last few columns.
-
-Plus a fourth, of the class iter 79 named: both used hardcoded near-white
-`rgba(238,242,240)` / `rgba(236,241,239)` literals. Fog **scatters** light, so by
-79's reflect-vs-emit test it must go through `colA` and take the tint. The spell
-had a hand-rolled `(1-LITAMT*0.45)` night dimmer, which is a dimmer, not a tint —
-it made night fog grey, never blue.
-
-**Change (draw-only).** The marine layer is now a **per-hex density field emitted
-inside the row loop**, after each row's cells. It therefore has depth: rows in
-front draw straight over it, so the layer is clipped to the plate for free and the
-city stands out of it instead of under it.
-- Spatial gate reuses **`reachFill`** (the U5 header note asked for exactly this):
-  a fifth map, `rSea`, with *every wet cell* as a source — so the fog finds the
-  rivers and the marsh, not only the coast. Thickest in the surf, spent within
-  `FOGR`=7 hexes inland, thinning to a haze offshore via `shoreAtF(y)`.
-- Two weather clocks preserved and merged into one `FOGAMT`: the dawn layer that
-  burns off by mid-morning, and the seeded spell that makes some cities foggy for
-  a stretch of days. Both still time-driven, no `rng()`, so `__step` still reaches
-  a foggy window.
-- Color through **`colA('fog',…)`** + a new `BASE.fog`. Rose at dawn, blue under
-  the moon, and the moon itself still emits — 79's discriminator, honored.
-
-**The two tuning failures worth recording, because both are counter-intuitive:**
-- **Alpha must be sized for the overlaps that SURVIVE, not the ones you draw.** I
-  sized the per-hex lens for ~9 overlapping neighbours and got a nearly invisible
-  sheen. The next row paints its own opaque ground over the bottom of this row's
-  lenses, so the field accumulates *across a row* (~2.4 lenses) and hardly at all
-  *down the screen*. That is the depth model working, not a bug — but it means the
-  right alpha is 0.22, not 0.095. A first pass at 0.30 with high-frequency noise
-  **quilted the sea into fish scales**: few strong lenses tile visibly, many weak
-  ones dissolve.
-- **Hash-jittering the lens centers made it worse, and was reverted.** Both visual
-  agents volunteered the same caveat — a faint hex lattice in the fogged water —
-  and per 79's "a caveat both seeds volunteer is a finding," I fixed it. Offsetting
-  each lens by `hashCell` to decorrelate the overlaps from the grid turned a subtle
-  ripple into **hard-edged soap bubbles**, because broken tiling lets a single lens
-  poke out against clear water. Reverted; the comment in the source now says so, so
-  a future lap doesn't re-try it. On a hex diorama the ripple reads as hex-grain,
-  like the water's own facets.
-
-**Census:** VERDICT PASS, 0 page errors. **All 22 metrics exactly +0**, tile
-histogram empty, all 25 entity counts unchanged. The exact signature of a
-draw-only change (cf. 79).
-
-**Visual:** 2/2 `VISUAL: PASS`, before/after on identical clips (`before.html` =
-`git show HEAD`), foggy seeds **2 and 11**, agents told to prefer stationary
-evidence and forbidden to report the moon / window lights / cable-car lines /
-wakes. Both convicted the BEFORE defect *unprompted by its location*: "multiple
-ellipses clearly hang OFF the plate into empty sky." Both confirm the AFTER is
-strictly on-plate, piles toward the coast, no tears, and does not swallow the
-towers. Night frame: muted blue-grey mist, not a glowing white haze.
-
-**Perf — the standard gate is BLIND to this feature, so I measured around it.**
-`perf.mjs` runs seed 42 at `t=0.35`/`t=0.8`: neither weather clock is up, so
-`FOGAMT`=0 and the fog costs literally nothing there. A PASS from it would have
-been meaningless. Official gate PASS anyway (day 30.72ms −1.9%, night 34.11ms
-−8.4%). A throwaway probe measured the frame that actually pays, HEAD vs after:
-foggy dawn **30.28 → 33.39ms (+10%)**, foggy day 30.11 → 33.22ms, and **clear day
-30.11 → 30.05ms (free)** — the `FOGAMT>0.02` early-out means an unfogged city pays
-zero. +10% on the ~1/3 of seed×time combinations that are foggy, inside the 15%
-tolerance. Also added the marine layer to the intro `<li>` list.
-
-**Verdict:** FIXED. The fog was a sticker on the lens for 80 iterations; it is now
-weather standing in the scene.
-
-**Lesson for the loop, sharper than "grep first."** The feature I set out to add
-already existed, had existed since before the ledger, and was *broken in a way no
-gate could see*: invisible to the census (draw-only), invisible to the perf gate
-(wrong seed), and invisible to every screenshot ever taken (the spell's seed gate
-excludes 7/42/1234, and the dawn layer needs `t≈0.10` while shots are at `t≈0.3`).
-**Our three gates share a blind spot: they all run the same seeds at the same
-times.** Kelp survived 13 laps by being un-zoomed-at; this survived 80 by being
-un-*sampled*. Worth occasionally shooting a deliberately odd `seed×t` — that is
-the only thing that would have caught it.
-
-**Follow-ups:** iter 79's two untinted literals (whale spout L3774, boat wake
-L3659) are still open — the same `colA` treatment. 77's `treed`-on-`c.flow`
-boulevard retarget, 78's dogs-on-sidewalks, 73's corner-lot lead and 76's REDWOOD
-closure lead all remain open. **Iteration 84 still owes the holistic step-back**
-(79 + 5).
 
 ## Iteration 82 — retail will not follow the traffic (2026-07-10)
 
@@ -1304,3 +1236,120 @@ that is the CA working (mid-succession, mean sand 13/30), not a defect.
   draw was a fried egg. Six agent-readings would not have caught it; iter 89 said the same thing.
 - **Preset framings lie about small features.** `--shots coast` is ocean-heavy and misses the sand on
   some seeds; two separate agents flagged it unprompted. Aim clips with `__find`, not with a preset.
+
+## Iteration 91 — the institutions find each other (2026-07-10)
+
+**Vector** — Civic & culture × **Deepen / interconnect (SHIPPED)**. Both axes pointed here.
+Civic was the most-lagged domain (last touched at 80), and the last five kinds were
+Polish ×3 + Connect + New CA, so a Deepen lap was clean. Civic's Deepen cell was already
+the busiest in its row (36, 59, 66, 80) — but every one of those had deepened *one civic
+building* (its forecourt, its flag, its facing, its school run). **Nothing had ever asked
+where institutions stand relative to each other.**
+
+**Probed the host before designing** (`probe-civic.mjs`, gitignored — iters 88/90's lesson).
+The answer was stark: at 2035 a city has 16–18 civics whose **mean nearest-civic distance is
+6.6–7.6 hexes**, only **1–2 pairs within 3 hexes**, and a mean distance from the town hall of
+**~20 hexes on a plate of radius 33**. Every institution is sited by an independent scan that
+ignores every other institution. There was no civic centre — the museum was as likely to open
+on a farm at the rim as beside the hall.
+
+**Change.**
+- `MAJORK` — the five monumental kinds (`hall museum parliament university library`). The
+  2020+ forecourt rule already inlined exactly this five-way test; it now shares the set.
+- `QUARTER` — the three that *seek* the quarter (`library` 1982, `museum` 1997, `parliament`
+  2034). Services (school, police, firehouse, hospital, aquarium, amphitheater) stay sited by
+  need; **`observatory` is deliberately excluded** — it belongs at the dark rim.
+- `siteQuarter(kind)` — a deterministic scan over `HEXI` that hugs the **nearest standing
+  major** at `QNEAR..QFAR` = **2–4 hexes**: near enough to share a street, far enough to leave
+  one between. (Adjacency would have killed the payoff — bunting needs a `ROAD` cell reachable
+  from two civics.) Score = hug the nearest, prefer the valuable ground a core sits on, and let
+  `hashCell` break the ties that leaves. It widens to 7 hexes once if walled in, then **falls
+  back to the old scattered search**, so `civicKinds` can never drop.
+- The scattered `rcIn()` search now **runs first and always**, even for a kind the quarter will
+  claim, and its result is discarded when the quarter takes it. See below — this is the whole
+  iteration.
+
+**The measurement that saved the vector.** The first build was the obvious one: skip the
+`rcIn()` loop for quarter kinds, since `siteQuarter` is deterministic and the house style says
+a `hashCell` rule "perturbs nothing it doesn't touch". Census came back a **collapse**:
+`pop −12.9% (seed 42) / −22.2% (seed 1234)`, `towers −23% / −47%`. Rather than tune the siting
+I asked *which half* was to blame, since the two demand opposite fixes. `before.html` was
+regenerated from `git show HEAD` (my first copy was taken **after** editing and silently made
+the baseline row identical to the test row — caught only because the deltas were exactly 0),
+and a `&burn` flag re-consumed the draws the old loop would have made, so the **only** remaining
+difference was where the building stood:
+
+| seed | pop, baseline | quarter + skipped draws | quarter + draws burned |
+| --- | --- | --- | --- |
+| 7 | 35024 | 35418 (+1.1%) | **40112 (+14.5%)** |
+| 42 | 35236 | 30688 (**−12.9%**) | **37524 (+6.5%)** |
+| 1234 | 32168 | 25042 (**−22.2%**) | **32936 (+2.4%)** |
+
+The siting was never the problem. **The three skipped `rng()` draws were** — they reshuffled
+800 ticks of terrain-gated stream. Clustering the institutions is in fact worth *up to +14% pop*,
+because three civics squatting on three random prime lots choke three separate `COM` quorums,
+and one quarter chokes one. Shipped form orders the code so the draw count is **provably**
+independent of the quarter's terrain edit: search, then site, then place only if the quarter
+declined. Promoted to the header as a law.
+
+**Census:** VERDICT **PASS**, 0 page errors. `pop 144404 → 152328 (+5.5%)`, `towers 270 → 308`,
+`towerHt +3201`, `tallTowers +26`, `helipads +27`, `stations +13`, `cafes +24`. Core structurals
+flat: `developed 6198→6203`, `roads 5752→5789`. **`civicKinds +0`** — the walled-in fallback
+works; no institution was lost. `CIVIC 86→83` and `schools 23→20` are the same three tiles:
+downstream chaos moved the rng-gated "every ~3500 residents earns a school" rule, not a defect.
+`PLAZA 14→10` is real and structural — see below.
+
+**Interconnect payoff (the actual point), measured per-city at 2035:**
+
+| seed | majors within 260px of hall | festival bunting (`fete` cells) |
+| --- | --- | --- |
+| 42 | 2 → **4** | 9 → **16** |
+| 1234 | 3 → **4** | 6 → **18** |
+
+Pairs of civics within 3 hexes went 2→5, 2→8, 1→8 across the matrix. Two systems built by
+earlier iterations (45's festival streets, 36/80's forecourts) light up with **no new code**.
+
+**The cost, accepted.** `PLAZA 14→10`. The forecourt rule skips a civic with a `PLAZA` within
+2 hexes, and quarter members sit 2–4 apart, so the quarter earns **one** shared square rather
+than four private ones. Defensible urbanism, and arguably the correct reading — but it is the
+one place the vector took something away, so it is **banked as open cue (d)** rather than
+quietly pocketed.
+
+**Visual:** **4/4 `VISUAL: PASS`.** The town hall is placed at founding, before any quarter code
+runs, so it occupies the **same cell in both builds** — which makes a rect centred on it an
+honest A/B (asserted in the shot script, not assumed). Two agents on before/after clips at seeds
+42 and 1234, two on un-zoomed whole frames at seeds 42 (2035) and 7 (2005). Both A/B agents
+reported the cluster **and, unprompted, the bunting**: "festival bunting visible spanning the
+streets between the clustered institutions". Seed 1234's agent volunteered that the monorail
+correctly passes *over* buildings and is not a z-tear (iter 87 holding). Whole-frame agents:
+"the civic quarter adds a legible focal point", towers "distributed… not walling off into a
+monolithic slab", coastline "bright… readable surf edge". No z-order tears, floating tiles or
+blown-out colour on any frame. Grouped "but airy", not a white blob.
+
+**Perf — run because the vector *grew* the city, not because it was due.** The step-back is not
+owed until 94, but +38 towers / +3201 `towerHt` / +27 helipads is exactly the added draw work the
+census cannot see. 3× sequential, judged on the minimum: day **32.5ms (+3.7%)**, night **36.5ms
+(−1.9%)**, PASS. Unusually tight spread (32.50/32.55/32.67) — the +3.7% is not noise, it is the
+honest cost of drawing a taller downtown, and it is well inside the 15% gate.
+
+**Verdict:** **SHIPPED.** The city acquires a civic centre, and its institutions stop squatting
+on the lots downtown wanted.
+
+**Lessons.**
+- **Removing an `rng()` draw is a far bigger perturbation than moving a building.** The header
+  law. `hashCell` is safe for an *additive* rule; a rule that *substitutes* for an existing
+  `rng()` search must still spend that search's draws. The codebase already knew this once —
+  the 1996 plaza rule survives purely to keep its draws aligned — but it was filed as a quirk
+  of that rule rather than as a law, so I rediscovered it at the cost of a −22% census.
+- **When a change fails, first ask which *half* of it failed.** Siting and stream-shift were
+  confounded, demanded opposite fixes, and the wrong guess (tune the siting scores) would have
+  chased a phantom for hours and probably reverted a good vector. One flag and one control run
+  separated them in ten minutes. *A failing census is a question, not a verdict.*
+- **Regenerate the baseline from `git`, never from the working tree.** My `before.html` was copied
+  after the first edit. It produced a perfectly plausible table in which the baseline and the test
+  agreed to the digit — which is *itself* the tell. Deltas of exactly 0.0% across three seeds mean
+  you are diffing a file against itself.
+- **The best Deepen asks how existing things relate, not how one thing looks.** Four prior Civic
+  Deepens each polished a single building's relationship to its own street. Asking where buildings
+  stand relative to *each other* cost ~40 lines, added no tile, no entity and no draw call, and
+  lit up two systems built 45 iterations apart.
