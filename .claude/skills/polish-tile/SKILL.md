@@ -38,6 +38,11 @@ verified and logged. Loop-friendly: under `/loop`, do one tile per turn.
    node .claude/skills/grow-city/census.mjs --save-baseline
    node .claude/skills/polish-tile/perf.mjs --save-baseline
    ```
+   `--save-baseline` pins **one** run, but a reading is judged by the *minimum* of
+   three (frame time is noisy on a loaded machine). Pin the same way you judge:
+   run the gate a few times, and re-run `--save-baseline` until the saved run is
+   the fastest you've seen. A baseline pinned from a slow run hides real
+   regressions underneath it; one pinned from a lucky fast run cries wolf.
    …and take BEFORE zoom shots (see *Locating & shooting the tile* below) into
    `.claude/skills/polish-tile/shots/<tile>_before/`.
 3. **Research (when helpful).** If the type has a real-world visual language you

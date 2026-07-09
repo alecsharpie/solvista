@@ -325,18 +325,36 @@ uncommitted. The runner refuses to start on top of it, and you must not reflexiv
 thing an iteration does, so a killed iteration is often a complete, gate-passed
 change that only missed `git commit`:
 
-- Is there a new `## Iteration N` entry in `GROWTH.md`? Then it reached step 5 —
-  it had already passed all three gates and written its verdict.
-- Re-run `node .claude/skills/grow-city/census.mjs` yourself. It needs no API
-  tokens, and it will tell you in ~90s whether the change still passes.
-- If it passes: rotate, commit it, ff-merge, push — exactly as step 5 would have.
-- Only discard when the change is genuinely half-written (no ledger entry, or the
-  census fails). Then `git stash` it rather than deleting, and say so.
+**The gates decide, not the ledger.** Re-run `node .claude/skills/grow-city/census.mjs`
+yourself — it needs no API tokens and tells you in ~90s whether the change still
+passes. That verdict, plus a look at the diff, is what says whether the work is
+sound. A missing `## Iteration N` entry does **not** mean the work is half-written.
+
+- Census passes, and the diff reads as one coherent change? Keep it. Write the
+  ledger entry yourself from the diff, then rotate, commit, ff-merge, push —
+  exactly as step 5 would have. If you did not author it, say so in the entry
+  and in the commit message, and describe it from the diff rather than inventing
+  the intent.
+- A new `## Iteration N` entry already there? Then it reached step 5 and had
+  already written its own verdict — commit as-is.
+- Census fails, or the diff is visibly mid-thought (a half-added tile with no
+  draw case, a `tick()` pass wired to nothing)? `git stash` it rather than
+  deleting, and say so.
 
 Iteration 72 ("the harbor gets its ships") was killed by a rate limit *between*
 its verdict and its commit. It had passed every gate; discarding it would have
 silently thrown away a good iteration and left the loop to rediscover it. Iteration
 70's chimney smoke was the same shape and was nearly lost the same way.
+
+Those two died *after* step 5, so they had ledger entries to prove themselves by.
+The hexagon plate (commit `41b0acd`: `G=48` square → `HEXR=33` masked hexagon,
+plural monorail/gondola lines, one-to-three rivers) died *before* step 5 and had
+none — yet it was complete, and census passed. An earlier form of this section
+told you to discard when there was "no ledger entry, **or** the census fails,"
+which would have thrown it away. Hence the rule above: **the ledger entry is
+evidence, the census is the verdict.** Expect unlogged work in the tree —
+`GROWTH.md` is the loop's memory, not the artifact's inventory (step 1), and that
+cuts both ways: features land without entries, and so do whole rewrites.
 
 Running under `/loop` still works, but it re-fires into the *same* session, so
 every census table, source read, and screenshot accumulates across iterations —
@@ -386,7 +404,12 @@ lever together, so almost anything could be labeled almost anything.
 - **Scale** — bigger/denser: raise `G`, push development, taller/denser downtown.
   An **occasional structural lever, NOT a per-lap move** — reach for it only when
   the city feels cramped, and re-baseline carefully (it regenerates everything, so
-  expect pop to jump; that's up, not a collapse).
+  expect pop to jump; that's up, not a collapse). Re-baseline **both** gates: a
+  bigger plate means more tiles to draw, so `polish-tile/perf-baseline.json` is
+  stale too, and it will read the extra land as a frame-time regression forever.
+  The hexagon plate (`41b0acd`) left both stale and the perf gate failed on every
+  later iteration until they were re-pinned — a failing gate nobody trusts is
+  worse than no gate.
 - **Polish** — make something that already exists read better / look beautiful,
   adding nothing. Often the highest value late-game (e.g. the too-dark coast was a
   polish job). Deep single-tile redesigns belong to the separate `polish-tile` skill.
