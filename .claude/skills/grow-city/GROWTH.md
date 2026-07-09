@@ -19,7 +19,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53 |
-| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
+| **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
@@ -113,6 +113,31 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   confirmed it now reads as elevated infrastructure. It is legitimate geometry — **never
   "fix" it by deleting it.** One durable lesson: the monorail deliberately has **no sag**,
   because a rigid box girder does not sag; only the gondola's rope does. *Don't re-open.*
+- **⚠ A TICK IS 0.075 YEARS, NOT ONE (iter 90).** `__warp(n)` runs `while(year<target){year+=0.45/6;tick();}`
+  — so a `tick()` pass runs **~147 times by 1985, ~413 by 2005, ~813 by 2035**. Any *per-tick rate*
+  (accretion, decay, growth) must be scaled to ~800 ticks or it saturates long before the first era
+  you can screenshot. Iter 90's first two attempts were ~13× too fast and the dune ridge was fully
+  grown *and* grassed at 1985, with zero visible succession; it looked like a placement rule. If your
+  new pass is meant to *evolve over the eras*, print its state at all three eras before you tune it.
+- **A terrain-altering CA CAN be pop-neutral — preserve every predicate the old tile answered (iter 90).**
+  The standing warning that terrain passes always wobble pop a few % is true only if you let the
+  swapped tile *drop out* of the predicates the old one satisfied. `BEACH→DUNE` moved 266 cells and
+  came back **+0 on all 22 metrics** (pop, developed, roads exact) because DUNE was added to every
+  passive test BEACH participated in: **`valueSrc` (0.74 — the big one; the `default: 0.5` would have
+  shifted the coastal land-value field inland and cascaded into development), `greenNear`,
+  `openCells`, `strollable`, and the aquarium's shoreline adjacency**. Grep the new tile's *predecessor*
+  for every mention before you swap it. Two conversions were provably safe to skip: KELP and the
+  LIGHTHOUSE both require a **water-adjacent** beach cell, and a dune by construction has no wet
+  neighbour — reason it out rather than adding the tile everywhere by reflex.
+- **⚠ Drawing a rounded natural mound: apex + ground contact + ONE hard facet boundary (iter 90).**
+  Four attempts, all looked at zoomed. **There are ZERO gradients in the file** (`createRadialGradient`
+  ×0) — the style is flat facets, so soft shading is not available. What fails: two stacked ellipses
+  read as a **pancake on a cast shadow** (a larger, lower, darker ellipse *is* the grammar of a drop
+  shadow) — and no amount of resizing them fixes it; a single symmetric ellipse cut by a straight
+  ridge reads **flat**; a truncated cone reads as a **drum/volcano**. What works is `T.ROCK`'s idiom:
+  a silhouette with a **visible apex** and a **visible ground-contact line**, split by one crisp facet
+  edge (dome profile arc + contact arc, shaded, with a lit cap sagging back from the apex). Copy the
+  ROCK case, not the MARSH case, for anything that must sit *up* off its tile.
 - **⚠ `pop` is NOT bit-reproducible across census runs (iter 85).** Identical source, three
   runs: `+2`, `+2`, `+0`. So a ±2 wobble on a **draw-only** change means nothing — re-run the
   gate on unchanged source before concluding the seeded stream moved. (Iters 78/84's "+0 on
@@ -430,91 +455,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 82 entries before Iteration 80 live in
+> **Archive:** the 83 entries before Iteration 81 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 80 — the forecourt learns which way is front (2026-07-10)
-
-**Provenance — not my work.** Found complete and uncommitted in the worktree at
-startup, killed between its verdict and its `git commit` (the third time: 70, 72,
-now 80). No `## Iteration 80` entry, so it died *before* step 5 and left no
-statement of intent. Per the skill, the ledger entry is evidence but **the census
-is the verdict** — so this entry is written from the diff and from gates I re-ran
-myself, and describes what the code *does*, not what its author meant. The prose
-below is mine; the change is not.
-
-**Vector:** **Civic & culture × Deepen** — no new tile, no new CA pass, no new
-entity. It rewrites the *lot choice* inside iter 36's existing forecourt rule
-(L919-944) by wiring in two systems that did not exist when 36 shipped:
-`frontSide()` from **iter 73** and `c.flow` from **iter 77**. Exactly the
-interconnect the 77 header note invited ("reuse `c.flow` for anything that should
-follow the main roads").
-
-**Change.** Iter 36 took the *first* neighbour in `nbrDirs` order that was `RES`
-or `EMPTY` and touched any road. That is two arbitrary choices — the lot could sit
-behind the building, and it could front a service lane. Now:
-- a new `FORECOURT_LOT` = `{EMPTY, RES, COM, MID}`: a city demolishes a shop or a
-  mid-rise for the square before its parliament. It still will not take down a
-  `TOWER` and will not pave a `PARK`.
-- every candidate is scored `(on the front side ? 1e6 : 0) + maxAdjacentRoadFlow`.
-  So **front dominates, flow only breaks the tie**, and `nbrDirs` order breaks
-  that. A lot fronting no street at all (`flow<0`) is skipped outright.
-
-**Census:** VERDICT PASS, 0 page errors. Core flat — `pop 142497→144403 (+1.3%)`,
-`roads -2`, `developed -12`. Target tile moved: **`PLAZA 6 → 14 (+8)`**. The
-paying tiles are `MID -17` / `COM -7`, which *is* the change: the widened lot set
-clearing shops and mid-rises. `TOWER +10` / `towerHt +637` is the documented
-chaotic-CA downstream of touching terrain a later pass tests, not a second effect.
-
-**Visual:** 2/2 `VISUAL: PASS`, before/after on an identical clip (`before.html` =
-`git show HEAD`), seeds 42 and 7. Seed 7's agent convicted the new lot set without
-being told it existed: *"a coral-roofed shop/mid-rise that occupied that hex in
-the before shot is gone, replaced by the open paved plaza square."* Old code could
-not have cleared that hex. Both agents read the plaza as sitting in **front** of
-the hall, flush on the hex grid; both whole-city frames clean — no tears, no
-floating tiles, no compounded clutter.
-
-**The A/B that makes this more than an assertion.** A throwaway probe re-derived
-`frontSide` and road flow independently, then audited every placed plaza. HEAD vs
-working tree, seeds 7/42/1234 at `warp=61`:
-
-| | forecourt placed | on the front side |
-| --- | --- | --- |
-| HEAD | 6 / 15 eligible civics | 3 / 6 — a coin flip |
-| after | **14 / 15** | **11 / 14** |
-
-Coverage more than doubled, and the reason is the lot set: a *downtown* hall ringed
-by shops previously got nothing, because 36 only ever cleared a house or a vacant
-lot. The civics that most deserve a square were precisely the ones that never got
-one. The 3 off-front placements are the designed precedence, not a bug — no
-eligible lot existed on the front side, so flow chose among the back ones. The 1
-civic still without a forecourt has no street-fronting neighbour at all.
-(Don't read the before-column's "best flow 5/6" as HEAD already working: with only
-`RES`/`EMPTY` eligible, the candidate set is often a single lot, so the max is hit
-by default. `onFront` is the honest column, and it is chance.)
-
-`plazaTotal == withPlaza` in both builds: **every plaza in the city is a
-forecourt.** Iter 36's random-sample rule at L909 has never once fired, exactly as
-its own comment claims — it survives only to keep the `rng()` stream aligned.
-
-**Verdict:** SHIPPED (recovered). Kept, not because it was found in the tree, but
-because it passes all three gates on re-run and the diff is one coherent thought.
-
-**A loop fix, learned the hard way.** The dead iteration left three untracked
-scratch files (`before.html` + two probe scripts). Deleting them was refused —
-correctly: they were *someone else's* uncommitted work, unique on disk. But
-`run-loop.sh`'s dirty check is `git status --porcelain`, which counts untracked
-files, so leaving them would have made the runner **refuse to start on every
-later iteration** — a killed iteration's litter silently halting the whole night.
-Resolved by *ignoring* rather than deleting: `.gitignore` now covers
-`before.html`, `probe-*.mjs`, `shot-*.mjs`. Nothing is destroyed, and the scratch
-convention the skill itself recommends (`/bin/cp` a backup before a big swing) no
-longer poisons the next run. The probe shape — re-derive the predicate
-independently, audit every instance, A/B against `before.html` — is worth reusing
-for any placement rule; both scripts survive on disk, untracked.
 
 ## Iteration 81 — the fog stops being a smudge on the lens (2026-07-10)
 
@@ -1292,3 +1237,70 @@ found** — and with (a) now closed, the cue list is empty for the first time.
 - **An overlay can be fixed by anchoring rather than by reordering.** Reaching for depth
   (`z`) is not the only cure for something that floats; giving it a reason to *stop existing*
   where it has no business being (`pa`) is cheaper and, here, the only one that keeps it.
+
+## Iteration 90 — the back beach grows dunes (2026-07-10)
+
+**Vector** — Water & coast × **New CA rule (SHIPPED)**. Both axes pointed here. Water & coast
+was the most-lagged domain (last touched at 79), and its **New CA rule cell was empty after 89
+iterations** — the only domain with none. The last five kinds were Polish ×4 + 88's Connect, so
+an additive CA also broke a long Polish streak.
+
+**Probed the host before designing** (`probe-dune.mjs`, gitignored) — iter 88's lesson, applied.
+Terrain gen makes the beach **three columns wide** (`x>=sh-3`, L460), so a landward band exists.
+The radius-1 back beach (no `WETSET` neighbour, no road/dev neighbour) is **83–93 cells in 2–4
+long connected runs** — exactly a ridge. Two facts made the vector safe: that band is
+**era-invariant** (identical at 1985/2005/2035; the beach never develops), and a radius-**2** band
+is far too strict — 21–36 cells shattered into 1–2 cell fragments, no ridge at all.
+
+**Change.** A new tile `T.DUNE` (30) and one `tick()` pass beside the KELP/MARSH rules.
+- **Accretion, not placement.** Each tick a dry back-beach cell gains
+  `(hashCell(x,y,seed^0x5D17) − DUNEEXP)*DUNEGAIN + min(shelter,3)*DUNESH` sand, where `shelter` is
+  its count of DUNE neighbours. Exposed cells (low hash) **deflate to 0 and stay bare**; sheltered
+  ones accrete. Sand traps where sand is, so ridges thicken outward from their seeds and the hollows
+  between them stay beach. `c.sand` crosses `DUNESEED` → BEACH becomes DUNE; crosses `DUNEMARRAM` →
+  marram grass roots. A dune that gets a road/dev neighbour is **walked back to BEACH**.
+- **The shelter bonus is capped** (`DUNESHMAX`=3). Uncapped at 0.30/neighbour it *overwhelmed* the
+  exposure term (min −0.595), so any cell with 2 dune neighbours grew regardless of exposure — and in
+  a 1–2 cell wide band nearly everything has 2. First attempt: **83 of 93 host cells were dune by 1985**.
+- **Draw**: a dome — shaded dome-profile + ground-contact arc, with a lit cap sagging back from the
+  apex; marram tufts (`sage`/`grassDk`) once `sand>=DUNEMARRAM`. See the header lesson; it took four
+  goes and the first three were a pancake, a flat egg and a drum.
+- `__find` now returns `sand` per cell (it is the debug hook; that is its job).
+
+**Census:** VERDICT **PASS**, 0 page errors. `BEACH 1650 → 1384 (−266)` / `DUNE 0 → 266 (+266)`,
+`tileKinds +9` (one new kind × 9 matrix cells). **All 22 metrics exactly +0** — `pop`, `developed`
+and `roads` bit-exact — because DUNE was added to every passive predicate BEACH answered
+(`valueSrc`=0.74, `greenNear`, `openCells`, `strollable`, aquarium adjacency). A 266-cell terrain
+rewrite that perturbed the seeded stream **not at all**; see the header lesson.
+
+**Succession (`probe-dune2.mjs`), the payoff and the thing that was nearly missed:**
+
+| era | dunes | mean sand | grassed |
+| --- | --- | --- | --- |
+| 1985 | ~20 | 6.0 | **0** |
+| 2005 | ~31 | 13.6 | ~18 |
+| 2035 | ~37 | 21.0 | ~28 |
+
+Consistent across all three seeds; beach holds at 141–159 cells, so the sand is not swallowed.
+
+**Visual:** **3/3 `VISUAL: PASS`**, un-zoomed whole-frame at seeds 42/1234 (2035) and 7 (2005).
+Both mature frames read the mounds as *raised sand domes with a lit cap and shaded contact*, correctly
+landward, never in the water; all three report no z-order tears, no floating tiles, no blown-out colour,
+and **no coastal darkening or clutter**. Seed 7 at 2005 calls them "barely perceptible" un-zoomed —
+that is the CA working (mid-succession, mean sand 13/30), not a defect.
+
+**Verdict:** **SHIPPED.** The coast gains a landward edge that grows for fifty years.
+
+**Lessons.**
+- **A tick is 0.075 years.** The single most expensive mistake of the lap: rates tuned as if `warp=11`
+  meant 11 ticks were ~13× too fast, and the ridge was mature and grassed before the first visible era.
+  Promoted to the header — it will bite any future `tick()` pass meant to evolve.
+- **Positive feedback needs a brake.** "Sand traps where sand is" is the whole physics of a dune, and
+  uncapped it fills the band in one era. The cap that lets *exposure veto shelter* is what turns a
+  spread into a **ridge with hollows between it**.
+- **Verify the load-bearing claim yourself.** The first-round agent called the succession "subtle" — its
+  `coast` framing had sliced the beach off the left edge. Re-aiming the clip via `__find('DUNE')` +
+  the artifact's own camera zoom (`shot-dune.mjs`, ZOOM=n, both eras on the **same rect**) showed the
+  draw was a fried egg. Six agent-readings would not have caught it; iter 89 said the same thing.
+- **Preset framings lie about small features.** `--shots coast` is ocean-heavy and misses the sand on
+  some seeds; two separate agents flagged it unprompted. Aim clips with `__find`, not with a preset.

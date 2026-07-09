@@ -199,7 +199,7 @@ const HW=TW;          /* half hex width */
 const NBR_E=[[1,0],[-1,0],[0,-1],[0,1],[-1,-1],[-1,1]]; /* even rows */
 const NBR_O=[[1,0],[-1,0],[0,-1],[0,1],[1,-1],[1,1]];   /* odd rows */
 const nbrDirs=y=>(y&1)?NBR_O:NBR_E;
-const T={EMPTY:0,ROAD:1,RES:2,MID:3,COM:4,TOWER:5,CIVIC:6,PARK:7,BEACH:8,WATER:9,PLAZA:10,MEADOW:11,SHOREPARK:12,FARM:13,IND:14,MARKET:15,GARDEN:16,BURNT:17,FOREST:18,ROCK:19,SOLARF:20,FIELD:21,STADIUM:22,VINEYARD:23,MARSH:24,LIGHTHOUSE:25,KELP:26,ORCHARD:27,REDWOOD:28,VOID:29};
+const T={EMPTY:0,ROAD:1,RES:2,MID:3,COM:4,TOWER:5,CIVIC:6,PARK:7,BEACH:8,WATER:9,PLAZA:10,MEADOW:11,SHOREPARK:12,FARM:13,IND:14,MARKET:15,GARDEN:16,BURNT:17,FOREST:18,ROCK:19,SOLARF:20,FIELD:21,STADIUM:22,VINEYARD:23,MARSH:24,LIGHTHOUSE:25,KELP:26,ORCHARD:27,REDWOOD:28,VOID:29,DUNE:30};
 const DEV=new Set([T.RES,T.MID,T.COM,T.TOWER,T.CIVIC,T.IND,T.MARKET]);
 /* lots a great institution may clear to open its forecourt. A city demolishes a
    shop or a mid-rise for the square in front of its parliament; it does not take
@@ -461,7 +461,7 @@ function genWorld(seed){
     else if(x===coastX[y])t=T.ROAD;
     else if(x>coastX[y])t=T.SHOREPARK;
     cells[idx(x,y)]={t,h:0,th:0,v:hashCell(x,y,seed),age:0,corr:false,lit:hashCell(y,x,seed),
-                     val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,shroom:0,stop:0,loft:false,
+                     val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,shroom:0,stop:0,loft:false,sand:0,
                      bridge:false,riv:false,busy:false,flow:0,solar:false,groof:false,treed:false,kind:''};
   }
   /* meadows, woods and boulders: the land the town was cut from */
@@ -656,6 +656,14 @@ function countAround(x,y,r,pred){ /* all cells within hex distance r */
    the water is only close if a bridge carries you there. Callers own `out`, so
    several reach maps stay live at once (see recount's transit/walkable share). */
 const WETSET=new Set([T.WATER,T.MARSH,T.KELP]);
+/* dune accretion: sand a cell must trap to become a dune, the crest it saturates at,
+   and the depth at which marram grass can root and pin it down. The shelter bonus is
+   capped (DUNESHMAX) so it can never outrun a cell's own exposure — uncapped, a ridge
+   two cells wide gives every hollow 2+ dune neighbours and the whole band fills by 1985.
+   Rates are per TICK, and a tick is 0.075yr (__warp) — ~147 of them by 1985, ~813 by
+   2035 — so these look implausibly tiny and are not: DUNEGAIN*0.4 is a decade of sand. */
+const DUNESEED=3.2, DUNECAP=30, DUNEMARRAM=12, DUNESHMAX=3, DUNESH=0.006;
+const DUNEEXP=0.60, DUNEGAIN=0.133;  /* exposure below which a cell deflates, and the rate */
 const _reachQ=new Int32Array(G*G);
 function reachFill(out,r,isSrc){
   out.fill(255);
@@ -732,7 +740,7 @@ function trafficFlow(){
   for(const i of HEXI)if(cells[i].t===T.ROAD)cells[i].flow=_flD[i]===255?0:_flA[i];
 }
 function roadNear(x,y){return countAround(x,y,1,c=>c.t===T.ROAD)>0}
-function greenNear(x,y,r){return countAround(x,y,r,c=>c.t===T.PARK||c.t===T.MEADOW||c.t===T.SHOREPARK||c.t===T.BEACH)>0}
+function greenNear(x,y,r){return countAround(x,y,r,c=>c.t===T.PARK||c.t===T.MEADOW||c.t===T.SHOREPARK||c.t===T.BEACH||c.t===T.DUNE)>0}
 /* which way a lot's public face should turn: +1 if the street it fronts lies east,
    -1 if west. Civics are sited by roadNear, so one usually does; a lot fronting
    roads evenly both ways (or none) falls back to the caller's per-city hash.
@@ -760,7 +768,7 @@ function valueSrc(t){
     case T.PLAZA: return 0.85;
     case T.FIELD: return 0.8;
     case T.STADIUM: return 0.6;
-    case T.SHOREPARK: case T.BEACH: case T.WATER: case T.MARSH: case T.LIGHTHOUSE: case T.KELP: return 0.74;
+    case T.SHOREPARK: case T.BEACH: case T.DUNE: case T.WATER: case T.MARSH: case T.LIGHTHOUSE: case T.KELP: return 0.74;
     case T.FOREST: case T.REDWOOD: return 0.6;
     case T.MEADOW: case T.FARM: case T.VINEYARD: case T.ORCHARD: return 0.56;
     case T.SOLARF: return 0.3;
@@ -990,6 +998,28 @@ function tick(){
        &&hashCell(5,y>>2,seedNum^0x4E1F)<0.34
        &&hashCell(x,y,seedNum^0x4E1F)<0.62){c.t=T.KELP;c.h=0;c.th=0;c.age=0;}
   }
+  /* wind-blown sand piles into a dune ridge along the BACK of the beach. Accretion,
+     not placement: every tick a dry cell gains sand at a rate set by its own exposure
+     (hashCell) plus a shelter bonus for each dune already beside it — so sand traps
+     where sand is, ridges thicken from their seeds outward, and the exposed hollows
+     between them deflate to bare beach and stay there. Marram grass roots once a
+     mound stands high enough to hold still. hashCell-gated (no rng); the wet beach
+     (any WETSET neighbour) never builds, and a trampled dune is walked back to sand.
+     Mutates in place like the other passes, so shelter reads this tick's dunes — a
+     one-tick anisotropy along the scan, not a behaviour worth a second buffer. */
+  for(let i=0;i<G*G;i++){
+    const x=i%G,y=(i/G)|0,c=cells[i];
+    if(c.t!==T.BEACH&&c.t!==T.DUNE)continue;
+    if(c.corr||countAround(x,y,1,n=>WETSET.has(n.t))>0)continue;
+    if(countAround(x,y,1,n=>DEV.has(n.t)||n.t===T.ROAD)>0){   /* feet and tyres strip it */
+      c.sand=0; if(c.t===T.DUNE){c.t=T.BEACH;c.h=0;c.th=0;c.age=0;}
+      continue;
+    }
+    const shelter=Math.min(countAround(x,y,1,n=>n.t===T.DUNE),DUNESHMAX);
+    const gain=(hashCell(x,y,seedNum^0x5D17)-DUNEEXP)*DUNEGAIN+shelter*DUNESH;
+    c.sand=clamp(c.sand+gain,0,DUNECAP);
+    if(c.t===T.BEACH&&c.sand>=DUNESEED){c.t=T.DUNE;c.h=0;c.th=0;c.age=0;}
+  }
   /* the city keeps spanning its river: extra crossings appear where streets already
      flank the water on two sides (2000+). hashCell-gated; reuses bridge rendering. */
   if(year>=2000)for(let i=0;i<G*G;i++){
@@ -1156,7 +1186,7 @@ function tick(){
     for(let i=0;i<G*G;i++){
       const x=i%G,y=(i/G)|0,c=cells[i];
       if((c.t===T.EMPTY||c.t===T.RES||c.t===T.COM)&&roadNear(x,y)
-         &&countAround(x,y,1,n=>n.t===T.BEACH||n.t===T.SHOREPARK||n.t===T.WATER)>0
+         &&countAround(x,y,1,n=>n.t===T.BEACH||n.t===T.DUNE||n.t===T.SHOREPARK||n.t===T.WATER)>0
          &&hashCell(x,y,seedNum^0x0AC1)<0.85){
         c.t=T.CIVIC;c.kind='aquarium';c.th=15+c.v*6;c.h=0;c.age=0;break;}
     }
@@ -1556,7 +1586,7 @@ function syncFleet(){
   }
   const openCells=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){const t=cells[idx(x,y)].t;
-    if(t===T.PARK||t===T.PLAZA||t===T.BEACH||t===T.SHOREPARK||t===T.GARDEN||t===T.FIELD)openCells.push([x,y]);
+    if(t===T.PARK||t===T.PLAZA||t===T.BEACH||t===T.DUNE||t===T.SHOREPARK||t===T.GARDEN||t===T.FIELD)openCells.push([x,y]);
     if(t===T.MARKET||t===T.STADIUM){openCells.push([x,y],[x,y],[x,y]);}} /* markets & matches draw a crowd */
   if(year>=1987)for(let x=pier.x0+1;x<=pier.x1;x++)openCells.push([x,pier.y]);
   const PEDC=['terra','teal','gold','coral','sage','lav','white'];
@@ -1674,7 +1704,7 @@ function stepVehicle(v,dt){
 function onPier(x,y){return year>=1987&&y===pier.y&&x>pier.x0&&x<=pier.x1}
 function strollable(x,y){
   const n=cellAt(x,y);
-  return(n&&(n.t===T.PARK||n.t===T.PLAZA||n.t===T.BEACH||n.t===T.SHOREPARK||n.t===T.MARKET||n.t===T.GARDEN||n.t===T.FIELD||n.t===T.STADIUM))||onPier(x,y);
+  return(n&&(n.t===T.PARK||n.t===T.PLAZA||n.t===T.BEACH||n.t===T.DUNE||n.t===T.SHOREPARK||n.t===T.MARKET||n.t===T.GARDEN||n.t===T.FIELD||n.t===T.STADIUM))||onPier(x,y);
 }
 /* ---- sidewalks ------------------------------------------------------------
    Open ground (parks, plazas, beaches, markets) is ~100 disconnected islands by
@@ -2186,6 +2216,41 @@ function drawCell(x,y){
         ctx.beginPath();ctx.ellipse(bx+sway,cy-4.6,1.0,0.55,0,0,7);ctx.fill();
       }
       ctx.lineCap='butt';
+      break;}
+    case T.DUNE:{
+      hexTile(gx,gy,1.02,col('sand',0.99));   /* the dry back beach it stands on */
+      const[cx,cy]=px(gx,gy);
+      const sd=c.sand||0, m=clamp(sd/DUNECAP,0,1);
+      const hgt=2.0+m*4.2;                    /* the crest rises as the mound accretes */
+      const rxb=(5.2+m*1.4)+hashCell(x,y,seedNum^0x5D18)*1.6;   /* and it broadens too */
+      const by=cy+2.0, ryb=rxb*0.30;          /* where the sand meets the flat beach */
+      /* A DOME: an apex hgt above a visible ground contact, shaded, with a lit cap
+         riding the top. Both are needed — a symmetric ellipse cut by a straight ridge
+         reads flat however it is toned, and two stacked ellipses read as a pancake on
+         a cast shadow. What sells relief here is the same thing that sells ROCK: an
+         apex, a contact line, and one hard facet boundary between them. */
+      ctx.fillStyle=col('sandDk',0.88);       /* the shaded flank, apex to contact */
+      ctx.beginPath();
+      ctx.ellipse(cx,by,rxb,hgt,0,Math.PI,2*Math.PI);   /* the dome profile, L->R */
+      ctx.ellipse(cx,by,rxb,ryb,0,0,Math.PI);           /* the ground contact, R->L */
+      ctx.closePath();ctx.fill();
+      ctx.fillStyle=col('sand',1.10);         /* the sunlit cap, down to the crest */
+      ctx.beginPath();
+      ctx.ellipse(cx,by,rxb,hgt,0,Math.PI,2*Math.PI);
+      ctx.quadraticCurveTo(cx,by-hgt*0.30,cx-rxb,by);   /* the crest, sagging back */
+      ctx.closePath();ctx.fill();
+      if(sd>=DUNEMARRAM){                     /* marram roots and pins the sand down */
+        ctx.lineCap='round';ctx.lineWidth=0.65;
+        const nt=3+((hashCell(y,x,seedNum^0x5D19)*3)|0)+(m>0.75?1:0);
+        for(let j=0;j<nt;j++){
+          const a=hashCell(x,y,j+40), b2=hashCell(y,x,j+50);
+          const tx=cx+(a-0.5)*rxb*1.25, tyy=by-hgt*0.62+(b2-0.3)*hgt*0.30,
+                lean=(hashCell(x,j,11)-0.5)*1.7, ln=2.2+hashCell(j,y,3)*1.7;
+          ctx.strokeStyle=col(j%3?'sage':'grassDk',0.95+a*0.1);
+          ctx.beginPath();ctx.moveTo(tx,tyy);ctx.lineTo(tx+lean,tyy-ln);ctx.stroke();
+        }
+        ctx.lineCap='butt';
+      }
       break;}
     case T.BEACH:{
       hexTile(gx,gy,1.02,col('sand',1));
@@ -3972,7 +4037,7 @@ function drawSkirt(x,y){
   const[cx,cy]=ctr(x,y);
   const SWx=cx-HW,SWy=cy+ER, Sx=cx,Sy=cy+VR, SEx=cx+HW,SEy=cy+ER;
   const isW=c.t===T.WATER;
-  const lip=isW?col('water',1.05):col(c.t===T.BEACH?'sandDk':'grassDk',0.85);
+  const lip=isW?col('water',1.05):col(c.t===T.BEACH||c.t===T.DUNE?'sandDk':'grassDk',0.85);
   if(noSW){
     ctx.fillStyle=isW?col('waterDk',0.85):col('soil',0.72);
     ctx.beginPath();ctx.moveTo(SWx,SWy);ctx.lineTo(Sx,Sy);ctx.lineTo(Sx,Sy+SLAB);ctx.lineTo(SWx,SWy+SLAB);ctx.closePath();ctx.fill();
@@ -4444,7 +4509,7 @@ const TILELABEL={[T.EMPTY]:'Vacant lot',[T.ROAD]:'Street',[T.RES]:'Homes',[T.MID
   [T.IND]:'Industry',[T.MARKET]:'Market',[T.GARDEN]:'Community garden',[T.BURNT]:'Burnt lot',
   [T.FOREST]:'Woods',[T.ROCK]:'Rocks',[T.SOLARF]:'Solar field',[T.FIELD]:'Ball field',
   [T.STADIUM]:'Stadium',[T.VINEYARD]:'Vineyard',[T.MARSH]:'Salt marsh',[T.LIGHTHOUSE]:'Lighthouse',
-  [T.KELP]:'Kelp bed',[T.ORCHARD]:'Orchard',[T.REDWOOD]:'Redwood grove'};
+  [T.KELP]:'Kelp bed',[T.ORCHARD]:'Orchard',[T.REDWOOD]:'Redwood grove',[T.DUNE]:'Dune'};
 const CIVICLABEL={hall:'Town hall',school:'School',library:'Library',police:'Police station',
   firehouse:'Firehouse',museum:'Museum',hospital:'Hospital',observatory:'Observatory',
   parliament:'Parliament',university:'University',aquarium:'Aquarium',amphitheater:'Amphitheater'};
@@ -4454,6 +4519,7 @@ const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats 
   [T.FARM]:'Row crops on the golden hills.',[T.VINEYARD]:'Terraced grapevines — wine country.',
   [T.ORCHARD]:'Fruit groves.',[T.FOREST]:'Coastal woodland.',[T.REDWOOD]:'Old-growth redwoods, deep in the hills.',
   [T.MARSH]:'Reedy tidal wetland where the river meets the sea.',[T.KELP]:'Seaweed swaying in the shallows.',
+  [T.DUNE]:'Wind-piled sand along the back beach, held down by marram grass.',
   [T.SOLARF]:'A field of solar panels.',[T.LIGHTHOUSE]:'Guards the headland; sweeps the bay at night.',
   [T.MARKET]:'Open-air market stalls.',[T.GARDEN]:'Allotments tucked between the houses.',
   [T.STADIUM]:'Home of the local side.',[T.FIELD]:'A neighborhood sports pitch.',
@@ -4629,7 +4695,7 @@ window.__find=n=>{
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
     if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)){
-      const[cx,cy]=ctr(x,y);out.push({x,y,sx:cx*scale+offX,sy:cy*scale+offY});}}
+      const[cx,cy]=ctr(x,y);out.push({x,y,sand:c.sand,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 
 /* test hook: stamped screen coords of live entities (by ENTINFO name, or all) —
