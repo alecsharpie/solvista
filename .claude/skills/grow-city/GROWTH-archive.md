@@ -1899,3 +1899,38 @@ night 37.22ms, pinned from the fastest of five runs because the gate *judges* by
 minimum of three). **A scale move invalidates both gates — re-pin both, in the same
 pass, or the next ten iterations inherit a gate they learn to ignore.**
 
+## U5 — census stats that can fall (2026-07-09)
+
+**User-directed**, interactive session, committed as `f1638e8`. Kind: Interaction/UX.
+
+**Vector:** the census bar *counted* things — towers, parks, solar roofs — but
+*measured* nothing: every stat could only climb as the city sprawled. Five new stats,
+three of which can go down. `tallest, floors` (skyline high-water mark, via a shared
+`floorsOf()` the hex tooltip now uses too); `per built hex` (residents ÷ developed hex
+— intensifying vs merely sprawling); `solar share`, `transit reach`, `walkable` (all
+shares, not counts). Transit = residents within 2 hexes of a monorail station or bus
+shelter. Walkable = residents who can reach a green space, a shop *and* a public
+service on foot. Both weight by residents, not by hex, so a tower speaks for the
+hundreds of people inside it.
+
+**The seam:** `reachFill()`, a multi-source hex BFS over walkable land (a park across
+the bay is close only if a bridge carries you there). Four run per `recount()`, i.e.
+per *tick*, not per frame: +0.3ms/frame measured.
+
+**The design failure worth remembering.** Walkable first used one 3-hex radius for all
+three errands and was quietly broken: green space already reaches **95%** of residents
+unaided and shops **97%**, so the stat was "near a civic building" wearing a disguise,
+reading 12–26% in a mature city. Services now get the 6-hex catchment a school or
+clinic earns → a 33–56% band. **Check what each term of a composite metric actually
+discriminates before shipping it**; two of the three were pure noise and the number
+looked meaningful anyway.
+
+**Census:** PASS. Verified sim-identical against the tree minus these edits (same pop,
+towers, roads, water at seed 42/2035 — no `rng()` divergence), which is the check that
+matters for a stat touching `recount()`: `stats.pop` feeds a `rng()`-gated growth rule
+at the school test, so a stat that perturbs pop would silently reroll the whole city.
+
+**Layout:** ten stats overflowed the strip into the controls card at ≤1280px. The bar
+now sheds stats as the window narrows (civic pair at 1300px, derived shares at 1120px)
+rather than wrapping — the unbroken row is the design.
+

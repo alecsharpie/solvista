@@ -20,7 +20,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83 |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81 |
 | **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | 84 |
@@ -92,12 +92,32 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   found the rainbow offshore *with no rain cloud attached*, and **both** seeds named the
   road tone as "the element most at risk of compounding" without being asked. Per iter 79,
   a caveat two seeds volunteer is a finding — these two are now well past a hunch, and
-  (b) is the strongest open cue in the ledger. (c) *new:* the `drawGondAt` cable-car
-  pylons/cables (`col('whiteDk')`, L3424) have now been mistaken for a UI overlay by
-  **four** different agents across iters 79 and 84 ("stadium markings", "selection
-  overlay", "transit/route overlay"). They are legitimate geometry, so this is not a bug —
-  but a stark white line that four fresh eyes read as chrome is a legibility defect worth
-  a *Transport × Polish* lap. Do not "fix" it by deleting it.
+  (b) is the strongest open cue in the ledger. (c) **the MONORAIL BEAM reads as UI chrome —
+  `drawMonoAt`, not `drawGondAt` (attribution corrected at iter 85).** **Six** agents across
+  iters 79/84/85, on 4 seeds, have called it "stadium markings" / "selection overlay" /
+  "transit route overlay" / "a debug overlay floating above the rooftops with no shadow";
+  iter 85's two sightings were *unprimed and on a fresh seed*, and a BEFORE/AFTER pass proved
+  the shapes pixel-identical before any of that lap's edits. The culprit is the beam: a **2px
+  pure-`white`(1.02) stroke over a 3.4px `whiteDk`(0.85) one at `RAILH=40`** — straight,
+  unshaded, uniform, floating over every roof, and brighter than any building. Its **closed
+  loops** are what agents call "outlined polygons". Iter 85 fixed exactly this defect on the
+  gondola and the recipe transfers: **dim off maximum, give the deck an underside, plant the
+  pylons** (footing + shaded mast + head). It is legitimate geometry — **do not "fix" it by
+  deleting it.** *Transport × Polish, and now the best-evidenced cue in the ledger.*
+- **⚠ `pop` is NOT bit-reproducible across census runs (iter 85).** Identical source, three
+  runs: `+2`, `+2`, `+0`. So a ±2 wobble on a **draw-only** change means nothing — re-run the
+  gate on unchanged source before concluding the seeded stream moved. (Iters 78/84's "+0 on
+  all 22" controls were real, but the guarantee is statistical, not exact.)
+- **Aerial structures: a straight uniform stroke IS the grammar of a UI overlay (iter 85).**
+  What separates geometry from chrome is **sag, shading, a footing and a cap** — and sag is
+  the cheapest. The gondola now has all four: `gondSag(g,f)` is a parabola over the span
+  between bracketing towers (`GONDSAG`=0.95px/cell → 2.81px over 3 cells, a ~4% sag ratio),
+  **exactly 0 at each tower** so the rope lands on the sheave head; `buildGondSet` publishes
+  `g.pyl` (spans, for `gondSag`) + `g.pylSet` (draw test); the pylon is footing + shaded mast
+  + head; `gondPos` returns sag as a **5th element** so cabins ride the curve. **⚠ Draw any
+  per-cell curve with `GONDSEG` sub-steps** — a 3-cell span has only *two* interior cells and
+  symmetry forces them to equal height, so cell-centre sampling yields a **trapezoid**, not a
+  curve (`0 2.53 2.53 0`). `drawMonoAt`'s beam is the same defect, unfixed — see cue (c).
 - **Civic forecourts are a *placement* rule, not a tile (iters 36 → 80).** Every
   `PLAZA` in the city is a forecourt; 36's random-sample rule at L909 has never
   fired even once and survives only to keep the `rng()` stream aligned — do not
@@ -134,7 +154,9 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   a building. Re-pick the ped *nearest screen centre each frame* instead. (b) Entities are
   drawn **with their row**, so buildings in the rows *below* paint straight over them: a
   perfectly-centred ped can be entirely hidden. Filter to peds whose next two rows downhill
-  are flat (`!TALL.has(c.t)`) and that stand on open ground — `hovershot.mjs`'s `PICK=front`
+  are flat (`!TALL.has(c.t)` — **`TALL` is NOT a page global**, iter 85 tripped on this;
+  rebuild it in the probe as `new Set([T.TOWER,T.MID,T.CIVIC,T.COM])`) and that stand on
+  open ground — `hovershot.mjs`'s `PICK=front`
   is the same lesson, generalized. (c) At `ZMAX=14` an 80px clip is **narrower than one hex**;
   use ~200px so the figure has context and survives a one-hex stroll. Budget ~4 shot
   attempts for any few-px entity, and **look at the first frame yourself before spawning
@@ -395,46 +417,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 77 entries before U5 live in
+> **Archive:** the 78 entries before Iteration 76 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## U5 — census stats that can fall (2026-07-09)
-
-**User-directed**, interactive session, committed as `f1638e8`. Kind: Interaction/UX.
-
-**Vector:** the census bar *counted* things — towers, parks, solar roofs — but
-*measured* nothing: every stat could only climb as the city sprawled. Five new stats,
-three of which can go down. `tallest, floors` (skyline high-water mark, via a shared
-`floorsOf()` the hex tooltip now uses too); `per built hex` (residents ÷ developed hex
-— intensifying vs merely sprawling); `solar share`, `transit reach`, `walkable` (all
-shares, not counts). Transit = residents within 2 hexes of a monorail station or bus
-shelter. Walkable = residents who can reach a green space, a shop *and* a public
-service on foot. Both weight by residents, not by hex, so a tower speaks for the
-hundreds of people inside it.
-
-**The seam:** `reachFill()`, a multi-source hex BFS over walkable land (a park across
-the bay is close only if a bridge carries you there). Four run per `recount()`, i.e.
-per *tick*, not per frame: +0.3ms/frame measured.
-
-**The design failure worth remembering.** Walkable first used one 3-hex radius for all
-three errands and was quietly broken: green space already reaches **95%** of residents
-unaided and shops **97%**, so the stat was "near a civic building" wearing a disguise,
-reading 12–26% in a mature city. Services now get the 6-hex catchment a school or
-clinic earns → a 33–56% band. **Check what each term of a composite metric actually
-discriminates before shipping it**; two of the three were pure noise and the number
-looked meaningful anyway.
-
-**Census:** PASS. Verified sim-identical against the tree minus these edits (same pop,
-towers, roads, water at seed 42/2035 — no `rng()` divergence), which is the check that
-matters for a stat touching `recount()`: `stats.pop` feeds a `rng()`-gated growth rule
-at the school test, so a stat that perturbs pop would silently reroll the whole city.
-
-**Layout:** ten stats overflowed the strip into the controls card at ≤1280px. The bar
-now sheds stats as the window narrows (civic pair at 1300px, derived shares at 1120px)
-rather than wrapping — the unbroken row is the design.
 
 ## Iteration 76 — the woods grow a closed core and a feathered edge (2026-07-10)
 
@@ -1174,3 +1161,99 @@ deleted; finding kept.
   **both** seeds volunteered as the city's biggest compounding risk. Promoted in the header.
   A third emerged: the white cable-car lines have now been misread as UI chrome by four
   separate agents.
+
+## Iteration 85 — the cable car stops looking like a UI overlay (2026-07-10)
+
+**Vector** — Transport × **Polish**. Rotation: Transport was the least-recently-touched
+domain after Nature (last real lap 77; last Polish 70). Kind repeats 83/84's Polish, and
+I took it anyway: all three banked cues were Polish cues, and the ledger says a cue two
+seeds volunteer is a finding. Shipping a shallow Nature element to satisfy the
+kind-rotation rule would have been exactly the "one more shallow feature" the skill warns
+against.
+
+**The defect, measured.** Cue (c) said four agents across iters 79/84 read the cable car
+as UI chrome. A probe said why, in numbers: the pylon is `prismS(...,0.028,0.028,0,H,...)`
+→ `ax*2*HW` = **1.8 world px wide and ~30 px tall**, a 17:1 uniform stick in `whiteDk` at
+**full alpha — the brightest structural tone in the palette** — with no head, no footing,
+just terminating on the asphalt. The cable was a dead-straight chord at constant `H`.
+Straight + uniform + unsupported + maximally bright *is* the visual grammar of a vector
+overlay. The agents were right; the artifact was drawing a ruler.
+
+**Change (draw-only: no terrain, no `rng()`, no new `Math.random()` draw).**
+- **The rope sags.** `gondSag(g,f)` = `GONDSAG*(b-a)*4u(1-u)` over the span between the
+  towers bracketing fractional path index `f`; `GONDSAG=0.95` px/cell → **2.81px over a
+  3-cell (~66px) span, a ~4% sag ratio**, which is what a real haul rope does. It is
+  **exactly 0 at every tower**, so the cable always lands on the sheave head.
+- **The towers are `buildGondSet`'s job now.** It computes `g.pyl` (the span list, which
+  `gondSag` needs) and `g.pylSet` (the draw test). The set is identical to the old
+  `i%3===0||i===L-1`, so **the pylon count did not change** — only what one looks like.
+- **The pylon has three parts**: a `creamDk` concrete footing (`ax .075`), a `whiteDk`
+  mast at `.045/.040` with real lit/shadowed faces (**and dimmed 1/0.6/0.85 → 0.95/0.5/0.75**
+  — the old one was brighter than the buildings it stood among), and a sheave head
+  (`.105/.055`) whose **top face sits exactly at `H`** so the cable emerges from it.
+- **`GONDSEG=3` sub-samples per cell.** The first cut sampled the parabola only at cell
+  centres, and the probe printed `0 2.533 2.533 0` — a 3-cell span has two interior points,
+  and a symmetric parabola puts them at the *same* height. It was a trapezoid with a flat
+  bottom, not a curve. Sub-sampling gives `0 1.13 1.97 2.53 2.81 2.81 2.53 1.97 1.13 0`.
+- Cabins ride the curve: `gondPos` returns the sag as a 5th element, cabin body/hanger/band
+  all offset by it.
+
+**Census** — `+0` on **all 22 metrics**, empty tile histogram, 0 page errors,
+`gondLines 15 · gondola 16` unchanged. The pixel-identical control that iter 78 says only
+draw-only changes can have.
+
+**⚠ …except `pop` turned out NOT to be bit-reproducible.** A later gate run on the *same*
+source printed `pop +2`. I re-ran it twice more **without touching a byte**: `+2`, then `+0`.
+So `pop` wobbles by ±2 (≈0.0014%) run-to-run on identical code — a tick lands, or doesn't,
+before the snapshot. **A tiny non-zero delta on a draw-only change is therefore NOT evidence
+that the seeded stream was perturbed.** The way to tell is to re-run the gate on unchanged
+source (90s); do not go hunting for a CA bug over a `+2`.
+
+**Probe** — a histogram cannot see a catenary; per iter 82, *measure the shape.* Across 5
+lines × 3 seeds: sag **0 at all 20 towers**, max **2.81px**, cabin-off-cable error ≤ **0.034px**,
+0 page errors. Probe deleted.
+
+**Visual** — 6 agents + a 7th attribution agent, and I looked at the tower crop myself first.
+- **Tower zoom, ~10× real camera magnification, seeds 42 & 7 (the scale the change lives at
+  → the primary verdict):** `VISUAL: PASS` ×2. "Reads as a physical steel tower, not a UI
+  line." Footing plants on both asphalt and a green terrace; cable emerges from the head.
+- **Downtown at 1:1:** `VISUAL: PASS`, and honestly reported the sag as "present but
+  genuinely subtle, 1–2px… I would not swear to it in a blind test." That is the correct
+  answer at that scale and I asked for it explicitly.
+- **Night (t=0.8):** `VISUAL: PASS`. Towers take the tint; nothing non-emissive outshines
+  the windows or the moon.
+- **Whole-city, 2 unprimed seeds: `VISUAL: FAIL` ×2** — both flagged "white angular
+  polygons / a closed loop floating above the rooftops with no shadow" as a debug overlay.
+
+**The FAILs were not this change — and they correct the ledger.** My cable is `col('ink')`;
+theirs was *white*, and *closed*. A closed loop is a **monorail** line. A BEFORE/AFTER
+attribution pass confirmed the white loops are **pixel-identical in BEFORE** and that the
+only deltas anywhere in the frame are the cable's sag and the masts' new base/cap. So
+cue (c)'s attribution to `drawGondAt` was **wrong**: the thing four agents have been calling
+UI chrome is `drawMonoAt`'s beam — a **2px pure-`white` (1.02) stroke over a 3.4px `whiteDk`
+one, at `RAILH=40`**, straight, unshaded, floating over every roof. Two more agents just
+made it six, on a fresh seed, unprompted.
+
+**Perf** — 3 sequential passes, minimum of each scene: `day 31.33 → 31.67ms (+1.1%)`,
+`night 37.22 → 35.72ms (−4.0%)`. PASS. Two extra prisms per tower (~21 towers) is free.
+
+**Verdict: SHIPPED.** The cable car is infrastructure now, not chrome.
+
+**Findings**
+- **`drawMonoAt`'s beam is the real chrome, and it is now the strongest open cue** (6 agents,
+  4 seeds, 3 iterations). The fix vocabulary is already written and proven in this lap:
+  dim the stroke off maximum, give the deck an underside, and plant the pylons. Do NOT
+  delete it — it is legitimate geometry, same as the gondola was. *Transport × Polish.*
+- **A straight line at constant height is the grammar of an overlay.** Sag, taper, a footing
+  and a cap are what separate "geometry" from "chrome" — and sag is the cheapest of the four.
+  Anything the artifact draws as a long uniform stroke (mono beams, bridge cables, string
+  lights) inherits this defect by construction.
+- **A parabola sampled at 2 interior points is a trapezoid.** Any curve drawn per-cell in a
+  hex renderer needs sub-sampling, because a 3-cell span *only has* two interior cells and
+  symmetry forces them equal. The probe caught this; no screenshot at 1:1 would have.
+- **Scale-matched verdicts outranked the wide ones again (iter 82's rule), and this time the
+  wide agents were right about something else.** Don't discard a FAIL you can't reproduce —
+  *attribute* it. A BEFORE/AFTER attribution agent settled in 2 minutes what would otherwise
+  have been either a wrongly-reverted iteration or a silently-ignored gate.
+- **`TALL` does not exist in `solvista.html`** — the header's iter-84 note implies it does.
+  It was a set defined locally inside 84's probe. Rebuild it as `new Set([T.TOWER,T.MID,T.CIVIC,T.COM])`.
