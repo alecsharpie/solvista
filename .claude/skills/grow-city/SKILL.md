@@ -275,20 +275,41 @@ transcript.
 ```bash
 cd .claude/skills/grow-city
 caffeinate -is ./run-loop.sh      # overnight: keep the Mac awake for the whole run
-MAX_ITERS=3 ./run-loop.sh         # a supervised burst
+MAX_ITERS=3 ./run-loop.sh         # a supervised burst (counts COMPLETED iterations)
 ./run-loop.sh --status            # how's it going? (no 40MB log to read)
 touch STOP                        # stop gracefully after the current iteration
+VERBOSE=0|1|2 ./run-loop.sh       # quiet | action feed (default) | full prose
 ```
+
+The runner streams each iteration through `fmt-stream.mjs`, which renders claude's
+`--output-format stream-json` as one line per action, so a 40-minute iteration is a
+live feed rather than 40 minutes of silence:
+
+```
+  19:54:01  ⊙ baseline pinning the seed×era matrix
+  19:55:12  ▸ read    solvista.html:2450+70
+  19:58:40  ✎ edit    solvista.html
+  20:01:03  ⊙ census  regression gate
+  20:03:11  ⇉ agent   visual gate, seed 42
+  20:07:55  ⋯ still working (13m elapsed, 24 actions)
+  20:33:16  ✔ done    40m06s  ·  61 actions  ·  38 turns  ·  $2.41
+```
+
+Each iteration's **final report is printed in full** — that's the one piece of prose
+worth reading, and it's where the loop asks for the redeploy nod.
 
 **`caffeinate` is not optional for an overnight run.** A Mac that sleeps kills
 `claude` mid-iteration and leaves the worktree holding a half-finished — or
 worse, a *finished but uncommitted* — iteration.
 
-The runner treats a **session rate limit as a wait, not a failure**: it parses the
-reset time out of claude's message, sleeps until then (capped at 6h; a short retry
-if the reset already passed; a 30m poll if it can't parse one), and does not count
-it against `MAX_FAILS`. `MAX_ITERS` counts *completed* iterations, so a night that
-spends two hours rate-limited still grows the city the number of times you asked.
+The runner treats a **session rate limit as a wait, not a failure**: the stream
+carries a structured `rate_limit_event` whose `resetsAt` is a unix timestamp, so it
+sleeps exactly long enough (capped at 6h; short retry if the reset already passed;
+30m poll if there's no usable time), and does not count it against `MAX_FAILS`.
+Note `rate_limit_event` fires on *every* run with `status: "allowed"` — only a
+non-`allowed` status means you're actually limited, and a genuine crash while
+`allowed` is still a failure. `MAX_ITERS` counts *completed* iterations, so a night
+that spends two hours rate-limited still grows the city the number of times you asked.
 
 This is why the ledger discipline in steps 1 and 5 is load-bearing rather than
 tidy: **`GROWTH.md` is not a summary of your memory, it *is* your memory.** A
@@ -457,6 +478,8 @@ marginal filler instead — until a framing was found that made it low-risk. So:
 - `run-loop.sh` — the headless event-based runner (one fresh `claude -p` per
   iteration, next starts when the previous exits). Handles rate limits, refuses
   to start on a dirty tree or a dirty worktree, `--status`, `STOP`.
+- `fmt-stream.mjs` — renders the runner's `stream-json` output as a live one-line-
+  per-action feed, and lifts `rate_limit_event.resetsAt` out for the runner.
 - `hovershot.mjs` — screenshots a *hover*, which `shoot.mjs` cannot do. Aims the
   real cursor at an entity via `__ents`, then clips it at three scales plus a
   no-hover control frame. `node hovershot.mjs '<url query>' '<Entity name>'

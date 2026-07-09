@@ -12,7 +12,10 @@
 #
 # Env:
 #   PERM       permission mode (default: auto). See the note below.
-#   MAX_ITERS  stop after this many iterations (default: unlimited)
+#   MAX_ITERS  stop after this many COMPLETED iterations (default: unlimited)
+#   VERBOSE    0 = iteration boundaries + each iteration's final report
+#              1 = live feed, one line per action (default)
+#              2 = live feed + the model's full prose
 #   LOG        log file (default: ~/Library/Logs/solvista-grow-city.log)
 #
 # Permissions: `auto` will still block on anything the project's settings.json
@@ -45,6 +48,9 @@ BACKOFF_CAP="${BACKOFF_CAP:-900}"
 LIMIT_FALLBACK="${LIMIT_FALLBACK:-1800}"  # poll interval when the reset time is unusable
 LIMIT_RETRY="${LIMIT_RETRY:-120}"         # reset time already passed — try again soon
 LIMIT_MAX="${LIMIT_MAX:-21600}"           # never sleep longer than this (6h) on one limit
+
+VERBOSE="${VERBOSE:-1}"   # 0 = boundaries + final report only, 1 = live action feed, 2 = full prose
+RATE_FILE="${TMPDIR:-/tmp}/solvista-growcity-rate.json"
 
 mkdir -p "$(dirname "$LOG")"
 log() { printf '%s  %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*" | tee -a "$LOG"; }
@@ -133,6 +139,7 @@ log "=== grow-city runner up. repo=$REPO perm=$PERM max_iters=${MAX_ITERS:-unlim
 # ---- the loop ----------------------------------------------------------------
 done_ok=0    # iterations that actually COMPLETED — what MAX_ITERS counts
 attempt=0    # invocations, including failures and rate-limit retries
+tries=0      # attempts at the CURRENT iteration; resets when one lands
 fails=0
 
 while :; do
@@ -150,34 +157,64 @@ while :; do
   fi
 
   attempt=$((attempt + 1))
+  tries=$((tries + 1))
   started=$(date +%s)
-  log "--- iteration $((done_ok + 1)) starting (attempt $attempt) ---"
+  # "(retry N)" only when this same iteration is being re-attempted — the old
+  # global counter made a healthy iteration 2 look like a retry.
+  log "--- iteration $((done_ok + 1)) starting$([ "$tries" -gt 1 ] && echo " (retry $tries)") ---"
 
   # A fresh process, an empty context. Everything it needs to know is on disk.
-  # tee, not >>: we need to *read* the output to spot a rate limit.
-  out="$(mktemp)"
-  claude -p "/grow-city" --permission-mode "$PERM" 2>&1 | tee -a "$LOG" > "$out"
+  # stream-json + fmt-stream.mjs turns 40 minutes of silence into a live feed.
+  # raw: keeps the untouched stream so we can grep it and debug after the fact.
+  raw="$(mktemp)"; : > "$RATE_FILE"
+  claude -p "/grow-city" --permission-mode "$PERM" \
+         --output-format stream-json --verbose < /dev/null 2>&1 \
+    | tee -a "$raw" \
+    | VERBOSE="$VERBOSE" node "$HERE/fmt-stream.mjs" --rate-file "$RATE_FILE" \
+    | tee -a "$LOG"
   rc=${PIPESTATUS[0]}
   elapsed=$(( $(date +%s) - started ))
+  out="$raw"
 
   # ---- rate limit: not a failure, just a wait ------------------------------
   # A session limit is the expected end of a long unattended run, not a broken
   # city. Retrying on a 60s backoff just burns attempts against a wall that may
   # not fall for half an hour, and (before this) counted each one toward
   # MAX_FAILS until the runner gave up on a perfectly healthy repo.
-  if limit_line="$(grep -m1 -iE "hit your (session|usage) limit|rate limit|resets? [0-9]" "$out")"; then
-    rm -f "$out"
+  # Two ways to know: the structured rate_limit_event that fmt-stream.mjs lifts
+  # out of the stream (authoritative — `resetsAt` is a unix timestamp), or the
+  # English message as a fallback for older CLIs.
+  rl_status=""; rl_resets=""
+  if [ -s "$RATE_FILE" ]; then
+    rl_status="$(node -e 'try{const j=require(process.argv[1]);process.stdout.write(j.status??"")}catch{}' "$RATE_FILE" 2>/dev/null || true)"
+    rl_resets="$(node -e 'try{const j=require(process.argv[1]);process.stdout.write(String(j.resetsAt??""))}catch{}' "$RATE_FILE" 2>/dev/null || true)"
+  fi
+  limit_line=""
+  if [ -n "$rl_status" ] && [ "$rl_status" != "allowed" ]; then
+    limit_line="rate_limit_event: status=$rl_status"
+  else
+    limit_line="$(grep -m1 -iE "hit your (session|usage) limit|rate limit exceeded" "$out" || true)"
+  fi
+
+  if [ -n "$limit_line" ]; then
+    rm -f "$raw"
     limit_line="$(tr -d '\n' <<<"$limit_line" | cut -c1-70)"
 
-    # "resets 6:40pm (Australia/Melbourne)" -> seconds until that clock time.
-    # grep -oiE, not `sed ...I`: the case-insensitive sed flag is GNU-only.
-    reset="$(grep -oiE '[0-9]{1,2}:[0-9]{2} ?[apm]{2}|[0-9]{1,2} ?[apm]{2}' <<<"$limit_line" | head -1)"
-    wait_s=""
-    if [ -n "$reset" ]; then
-      norm="$(tr -d ' ' <<<"$reset" | tr '[:lower:]' '[:upper:]')"
-      [[ "$norm" != *:* ]] && norm="${norm%[AP]M}:00${norm##*[0-9]}"   # "5PM" -> "5:00PM"
-      target="$(date -j -f "%I:%M%p" "$norm" "+%s" 2>/dev/null || true)"
-      [ -n "$target" ] && wait_s=$(( target - $(date +%s) ))
+    wait_s=""; reset=""
+    # Prefer the structured timestamp. Only trust it if it's actually ahead of us.
+    if [ -n "$rl_resets" ] && [ "$rl_resets" -gt "$(date +%s)" ] 2>/dev/null; then
+      wait_s=$(( rl_resets - $(date +%s) ))
+      reset="$(date -r "$rl_resets" '+%-I:%M%p' 2>/dev/null || echo "$rl_resets")"
+    else
+      # "resets 6:40pm (Australia/Melbourne)" -> seconds until that clock time.
+      # grep -oiE, not `sed ...I`: the case-insensitive sed flag is GNU-only.
+      reset="$(grep -oiE '[0-9]{1,2}:[0-9]{2} ?[apm]{2}|[0-9]{1,2} ?[apm]{2}' <<<"$(grep -m1 -iE 'resets' "$out" 2>/dev/null || echo)" | head -1)"
+      if [ -n "$reset" ]; then
+        norm="$(tr -d ' ' <<<"$reset" | tr '[:lower:]' '[:upper:]')"
+        [[ "$norm" != *:* ]] && norm="${norm%[AP]M}:00${norm##*[0-9]}"   # "5PM" -> "5:00PM"
+        target="$(date -j -f "%I:%M%p" "$norm" "+%s" 2>/dev/null || true)"
+        [ -n "$target" ] && wait_s=$(( target - $(date +%s) ))
+      fi
     fi
 
     # Every branch below must leave a *sane* wait. A reset time that has already
@@ -207,6 +244,7 @@ while :; do
 
   if [ "$rc" -eq 0 ]; then
     fails=0
+    tries=0
     done_ok=$((done_ok + 1))
     log "--- iteration $done_ok finished ok in ${elapsed}s ---"
   else

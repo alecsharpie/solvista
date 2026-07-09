@@ -102,6 +102,7 @@ h1{
   .placard .sub{display:none}
   .census{gap:14px; padding:10px 14px; right:20px; left:20px; justify-content:space-between;}
   .stat{min-width:0}
+  .stat.opt{display:none}
   .stat:last-child{display:none}
   .stat b{font-size:16px} .stat.year b{font-size:18px}
   .controls{bottom:86px;}
@@ -143,8 +144,10 @@ h1{
 <div class="card census">
   <div class="stat year"><b id="stYear">1974</b><span id="stPhase">morning</span></div>
   <div class="stat"><b id="stPop">0</b><span>residents</span></div>
-  <div class="stat"><b id="stParks">0</b><span>parks</span></div>
   <div class="stat"><b id="stTowers">0</b><span>towers</span></div>
+  <div class="stat"><b id="stParks">0</b><span>parks</span></div>
+  <div class="stat opt"><b id="stCivic">0</b><span>services</span></div>
+  <div class="stat opt"><b id="stSolar">0</b><span>solar roofs</span></div>
   <div class="stat"><b id="stRail">&mdash;</b><span>monorail</span></div>
 </div>
 
@@ -1118,7 +1121,9 @@ function growMonorail(){
     const L=monoPath.length,[hx,hy]=monoPath[L-1],[sx,sy]=monoPath[0];
     if((L>=g.minLen||g.homing)&&hexDist(hx,hy,sx,sy)===1){ /* it bites its tail */
       monoClosed=true;
-      const n=L>96?3:2;
+      /* one train roughly every 30 hexes so headway stays constant — a longer
+         loop earns a busier line instead of pinning at two */
+      const n=clamp(Math.round(L/30),2,6);
       monorail.trains=Array.from({length:n},(_,i)=>({p:i/n}));
       buildMonoSet();
       return;
@@ -1227,15 +1232,17 @@ function monoRouteHome(g){
   return route.reverse();
 }
 function recount(){
-  let pop=0,parks=0,towers=0,schools=0,stad=0;
+  let pop=0,parks=0,towers=0,schools=0,stad=0,civic=0,solar=0;
   for(const c of cells){
     if(POPW[c.t])pop+=POPW[c.t]*(c.t===T.TOWER?clamp(c.h/Math.max(c.th,1),0,1):1);
     if(c.t===T.PARK||c.t===T.GARDEN)parks++;
     if(c.t===T.TOWER)towers++;
-    if(c.t===T.CIVIC&&c.kind==='school')schools++;
+    if(c.t===T.CIVIC){civic++; if(c.kind==='school')schools++;}
     if(c.t===T.STADIUM)stad++;
+    if(c.solar)solar++;
   }
   stats.pop=pop|0; stats.parks=parks; stats.towers=towers; stats.schools=schools; stats.stad=stad;
+  stats.civic=civic; stats.solar=solar;
 }
 
 /* ---------------- entities ---------------- */
@@ -3794,7 +3801,13 @@ function syncSky(now){
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let playing=true, speed=1;
 const $=id=>document.getElementById(id);
-const elYear=$('stYear'),elPhase=$('stPhase'),elPop=$('stPop'),elParks=$('stParks'),elTowers=$('stTowers'),elRail=$('stRail'),elSeed=$('stSeed');
+const elYear=$('stYear'),elPhase=$('stPhase'),elPop=$('stPop'),elParks=$('stParks'),elTowers=$('stTowers'),elCivic=$('stCivic'),elSolar=$('stSolar'),elRail=$('stRail'),elSeed=$('stSeed');
+/* a monorail stop counts as a real station only once its neighborhood is busy */
+function monoStationCount(){
+  let n=0;
+  if(monoPath)monoPath.forEach(([x,y],i)=>{if(monoStops.has(i)&&countAround(x,y,1,k=>DEV.has(k.t))>=3)n++;});
+  return n;
+}
 
 function phaseWord(t){
   t=((t%1)+1)%1;
@@ -3811,7 +3824,9 @@ function syncStats(){
   elPop.textContent=(stats.pop).toLocaleString('en-US');
   elParks.textContent=stats.parks;
   elTowers.textContent=stats.towers;
-  elRail.textContent=year<1988?'planned':(monorail.progress<1?'building':monorail.trains.length+' trains');
+  elCivic.textContent=stats.civic|0;
+  elSolar.textContent=stats.solar|0;
+  elRail.textContent=year<1988?'planned':(monorail.progress<1?'building':monoStationCount()+' stops');
   elSeed.textContent=seedNum.toString(36);
 }
 $('btnPause').onclick=()=>{playing=!playing;$('btnPause').textContent=playing?'Pause':'Play';};
@@ -4108,8 +4123,7 @@ window.__census=()=>{
   }
   let promenade=0; /* rows of coast with boardwalk decking */
   for(let y=0;y<G;y++)if(espAt(y))promenade++;
-  let stations=0;
-  if(monoPath)monoPath.forEach(([x,y],i)=>{if(monoStops.has(i)&&countAround(x,y,1,n=>DEV.has(n.t))>=3)stations++;});
+  const stations=monoStationCount();
   let cafes=0;
   for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(cells[idx(x,y)].t===T.PARK&&countAround(x,y,1,n=>n.t===T.COM||n.t===T.MARKET||n.t===T.CIVIC)>0)cafes++;
   const transport={cars:vehicles.length,bikes:bikes.length,trams:trams.length,trucks:trucks.length,boats:boats.length,
