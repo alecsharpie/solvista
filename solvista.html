@@ -99,6 +99,12 @@ h1{
 .controls button:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
 .hint{ font-size:11px; color:var(--ink-soft); }
 
+/* the census strip is one unbroken row by design, so as the window narrows it
+   sheds stats rather than wrapping into the controls card at bottom-right:
+   first the civic pair, then the derived shares, leaving the founding four. */
+@media (max-width:1300px){ .stat.md{display:none} }
+@media (max-width:1120px){ .stat.sm{display:none} }
+
 @media (max-width:720px){
   .placard{max-width:230px; padding:10px 14px;}
   h1{font-size:22px;}
@@ -148,10 +154,13 @@ h1{
   <div class="stat year"><b id="stYear">1974</b><span id="stPhase">morning</span></div>
   <div class="stat"><b id="stPop">0</b><span>residents</span></div>
   <div class="stat"><b id="stTowers">0</b><span>towers</span></div>
+  <div class="stat opt sm"><b id="stTall">&mdash;</b><span>tallest, floors</span></div>
   <div class="stat"><b id="stParks">0</b><span>parks</span></div>
-  <div class="stat opt"><b id="stCivic">0</b><span>services</span></div>
-  <div class="stat opt"><b id="stSolar">0</b><span>solar roofs</span></div>
-  <div class="stat"><b id="stRail">&mdash;</b><span>monorail</span></div>
+  <div class="stat opt sm"><b id="stDens">0</b><span>per built hex</span></div>
+  <div class="stat opt md"><b id="stCivic">0</b><span>services</span></div>
+  <div class="stat opt md"><b id="stSolar">0%</b><span>solar share</span></div>
+  <div class="stat opt sm"><b id="stWalk">0%</b><span>walkable</span></div>
+  <div class="stat"><b id="stTransit">0%</b><span>transit reach</span></div>
 </div>
 
 <div class="card controls">
@@ -170,6 +179,8 @@ function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a
 const lerp=(a,b,t)=>a+(b-a)*t;
 const clamp=(v,a,b)=>v<a?a:v>b?b:v;
 function hashCell(x,y,s){let h=(x*374761393+y*668265263+s*974711)|0;h=(h^(h>>>13))*1274126177|0;return((h^(h>>>16))>>>0)/4294967296}
+/* one storey is 2.7 world units; a sited-but-unbuilt lot still reads as 1 floor */
+const floorsOf=h=>Math.max(1,Math.round(h/2.7));
 
 /* ---------------- constants ---------------- */
 /* the diorama plate is itself a hexagon: every cell within HEXR rings of the
@@ -628,6 +639,31 @@ function countAround(x,y,r,pred){ /* all cells within hex distance r */
     const c=cellAt(xx,rr); if(c&&pred(c))n++;
   } return n;
 }
+/* multi-source hex BFS, capped at radius r: fills `out` with the number of
+   walking steps to the nearest source, 255 meaning "farther than r". Distance
+   is measured along walkable land, not straight through the bay — a park across
+   the water is only close if a bridge carries you there. Callers own `out`, so
+   several reach maps stay live at once (see recount's transit/walkable share). */
+const WETSET=new Set([T.WATER,T.MARSH,T.KELP]);
+const _reachQ=new Int32Array(G*G);
+function reachFill(out,r,isSrc){
+  out.fill(255);
+  let head=0,tail=0;
+  for(const i of HEXI)if(isSrc(cells[i],i)){out[i]=0;_reachQ[tail++]=i;}
+  while(head<tail){
+    const i=_reachQ[head++], d=out[i];
+    if(d>=r)continue;
+    const x=i%G, y=(i/G)|0;
+    for(const[dx,dy]of nbrDirs(y)){
+      const c=cellAt(x+dx,y+dy); if(!c||WETSET.has(c.t))continue;
+      const j=idx(x+dx,y+dy); if(out[j]!==255)continue;
+      out[j]=d+1; _reachQ[tail++]=j;
+    }
+  }
+}
+const rTransit=new Uint8Array(G*G), rGreen=new Uint8Array(G*G),
+      rShop=new Uint8Array(G*G), rServ=new Uint8Array(G*G);
+const HOME=new Set([T.RES,T.MID,T.TOWER]);
 function roadNear(x,y){return countAround(x,y,1,c=>c.t===T.ROAD)>0}
 function greenNear(x,y,r){return countAround(x,y,r,c=>c.t===T.PARK||c.t===T.MEADOW||c.t===T.SHOREPARK||c.t===T.BEACH)>0}
 /* which way a lot's public face should turn: +1 if the street it fronts lies east,
@@ -1327,17 +1363,41 @@ function monoRouteHome(ln){
   return route.reverse();
 }
 function recount(){
-  let pop=0,parks=0,towers=0,schools=0,stad=0,civic=0,solar=0;
-  for(const c of cells){
-    if(POPW[c.t])pop+=POPW[c.t]*(c.t===T.TOWER?clamp(c.h/Math.max(c.th,1),0,1):1);
+  let pop=0,parks=0,towers=0,schools=0,stad=0,civic=0,solar=0,tallH=0,dev=0;
+  let homePop=0,transitPop=0,walkPop=0;
+  /* what each home can walk to. Transit is a stop within 2 hexes — a monorail
+     station or a bus shelter. Walkable wants all three errands of an ordinary
+     day: a green space and a shop on the doorstep, and a public service within
+     the longer walk a school or clinic is worth. Both are weighted by residents
+     rather than by hex, so a tower speaks for the hundreds of people inside it.
+     Green and shops saturate above 90% on their own — services are the binding
+     constraint, so walkable falls when towers outpace the civic building. */
+  const stations=new Set(monoStationCells());
+  reachFill(rTransit,2,(c,i)=>stations.has(i)||(c.t===T.ROAD&&c.stop));
+  reachFill(rGreen,3,c=>c.t===T.PARK||c.t===T.GARDEN||c.t===T.PLAZA||c.t===T.SHOREPARK);
+  reachFill(rShop,3,c=>c.t===T.COM||c.t===T.MARKET);
+  reachFill(rServ,6,c=>c.t===T.CIVIC);
+  for(let i=0;i<cells.length;i++){
+    const c=cells[i];
+    const w=POPW[c.t]?POPW[c.t]*(c.t===T.TOWER?clamp(c.h/Math.max(c.th,1),0,1):1):0;
+    pop+=w;
     if(c.t===T.PARK||c.t===T.GARDEN)parks++;
     if(c.t===T.TOWER)towers++;
     if(c.t===T.CIVIC){civic++; if(c.kind==='school')schools++;}
     if(c.t===T.STADIUM)stad++;
     if(c.solar)solar++;
+    if(DEV.has(c.t)){dev++; if(c.h>tallH)tallH=c.h;}
+    if(HOME.has(c.t)){
+      homePop+=w;
+      if(rTransit[i]!==255)transitPop+=w;
+      if(rGreen[i]!==255&&rShop[i]!==255&&rServ[i]!==255)walkPop+=w;
+    }
   }
+  const pct=(a,b)=>b>0?clamp(Math.round(a/b*100),0,100):0;
   stats.pop=pop|0; stats.parks=parks; stats.towers=towers; stats.schools=schools; stats.stad=stad;
-  stats.civic=civic; stats.solar=solar;
+  stats.civic=civic; stats.solar=solar; stats.tallH=tallH; stats.tall=tallH?floorsOf(tallH):0;
+  stats.dev=dev; stats.density=dev>0?Math.round(pop/dev):0;
+  stats.solarPct=pct(solar,dev); stats.transitPct=pct(transitPop,homePop); stats.walkPct=pct(walkPop,homePop);
 }
 
 /* ---------------- entities ---------------- */
@@ -3930,13 +3990,14 @@ function syncSky(now){
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let playing=true, speed=1;
 const $=id=>document.getElementById(id);
-const elYear=$('stYear'),elPhase=$('stPhase'),elPop=$('stPop'),elParks=$('stParks'),elTowers=$('stTowers'),elCivic=$('stCivic'),elSolar=$('stSolar'),elRail=$('stRail'),elSeed=$('stSeed');
+const elYear=$('stYear'),elPhase=$('stPhase'),elPop=$('stPop'),elParks=$('stParks'),elTowers=$('stTowers'),elTall=$('stTall'),elDens=$('stDens'),elCivic=$('stCivic'),elSolar=$('stSolar'),elWalk=$('stWalk'),elTransit=$('stTransit'),elSeed=$('stSeed');
 /* a monorail stop counts as a real station only once its neighborhood is busy */
-function monoStationCount(){
-  let n=0;
-  for(const m of monos)m.path.forEach(([x,y],i)=>{if(m.stops.has(i)&&countAround(x,y,1,k=>DEV.has(k.t))>=3)n++;});
-  return n;
+function monoStationCells(){
+  const out=[];
+  for(const m of monos||[])m.path.forEach(([x,y],i)=>{if(m.stops.has(i)&&countAround(x,y,1,k=>DEV.has(k.t))>=3)out.push(idx(x,y));});
+  return out;
 }
+function monoStationCount(){return monoStationCells().length}
 
 function phaseWord(t){
   t=((t%1)+1)%1;
@@ -3953,9 +4014,12 @@ function syncStats(){
   elPop.textContent=(stats.pop).toLocaleString('en-US');
   elParks.textContent=stats.parks;
   elTowers.textContent=stats.towers;
+  elTall.textContent=stats.tall?stats.tall:'—';
+  elDens.textContent=stats.density|0;
   elCivic.textContent=stats.civic|0;
-  elSolar.textContent=stats.solar|0;
-  elRail.textContent=!monos.length?'planned':(monos.some(m=>m.closed)?monoStationCount()+' stops':'building');
+  elSolar.textContent=(stats.solarPct|0)+'%';
+  elWalk.textContent=(stats.walkPct|0)+'%';
+  elTransit.textContent=(stats.transitPct|0)+'%';
   elSeed.textContent=seedNum.toString(36);
 }
 $('btnPause').onclick=()=>{playing=!playing;$('btnPause').textContent=playing?'Pause':'Play';};
@@ -4068,7 +4132,7 @@ function describeTile(c){
   const est=Math.max(1974,Math.round(year-c.age*0.075));
   if(c.t===T.CIVIC||c.t===T.STADIUM)data.push(['Est.',est]);
   else if(DEV.has(c.t))data.push(['Built','~'+est]);
-  if(DEV.has(c.t))data.push(['Floors','~'+Math.max(1,Math.round(c.h/2.7))]);
+  if(DEV.has(c.t))data.push(['Floors','~'+floorsOf(c.h)]);
   if(c.t===T.TOWER&&c.h>90)data.push(['Helipad']);
   if(c.t===T.ROAD&&c.stop)data.push(['Bus stop']);
   if(c.solar)data.push(['Rooftop solar']);
@@ -4263,7 +4327,8 @@ window.__census=()=>{
     gondLines:gonds.length,gondola:gonds.reduce((a,g)=>a+(g.path&&g.path.length>1?g.cabins.length:0),0),copters:copters.length};
   return {
     G, year:year|0, seed:seedNum.toString(36),
-    pop:stats.pop|0, parks:stats.parks|0, towers:stats.towers|0,
+    pop:stats.pop|0, parks:stats.parks|0, towers:stats.towers|0, tallestFloors:stats.tall|0,
+    density:stats.density|0, solarPct:stats.solarPct|0, transitPct:stats.transitPct|0, walkPct:stats.walkPct|0,
     schools:stats.schools|0, stadiums:stats.stad|0,
     roads, bridges, developed:dev, solarRoofs, greenRoofs, towerHt:towerHt|0, tallTowers, helipads, boulevardTrees, avenues, promenade, stations, cafes,
     tileKinds:Object.values(tiles).filter(n=>n>0).length,   /* landscape variety */
