@@ -1548,3 +1548,45 @@ genuinely-absent interconnects / Polish, and treat "stop" as live.
 **Verdict:** HOLISTIC — clean, no fix needed. Redeploy pending (iters 34–69 +
 hooks + the concurrent transport/camera/shoreline/CSS commits).
 
+## Iteration 70 — vehicles light up after dark (2026-07-09)
+
+**Vector:** Transport × **Polish** — rotation pointed at Transport (least-recently
+touched non-saturated domain, last 63), and the *kind* had to change: 65–68 were
+four straight Deepens. Polish adds nothing, which suited a mature city.
+**Orient/seam finding:** `grep -i headlight` returned **nothing**, which looked
+like a clean gap — but reading the seam (`drawVehicle`, ~L3165) showed a light
+already there: one anonymous flat `2×2` warm rect at the nose, no taillight, no
+light cast on the road. Exactly the iter-34 beach-towel trap; the grep lied
+because the feature had no name. So the move was to *improve* it, not add it.
+**Change:** in `drawVehicle`, a heading basis in the squashed iso plane
+(`FX,FY` forward · `PX,PY` across-lane, both carrying the existing `*0.55`
+vertical compression) drives: (1) **paired** warm headlamps at ±1.5 across the
+nose; (2) a **beam pooled on the road** — one low-alpha (`0.14*LITAMT`) trapezoid
+fanning 11px forward from the nose to a 8.6px-wide far edge, started *at* the
+nose so it never overlaps the body and z-order stays clean; (3) **red taillights**
+at the rear. Bikes get a single warm bar lamp. All alphas scale with `LITAMT`, so
+lights fade up through dusk. Whole block gated `LITAMT>0.35`. No gradients (the
+file has zero `createRadialGradient` — flat alpha shapes only). Draw-only: no
+rng, no hashCell, no terrain, no new state, no new entity.
+**Census:** VERDICT PASS, 0 page errors. pop +3, towerHt +1, **tile histogram
+empty** — no tile changed, as a draw-only change must. (Small non-zero pop wobble
+on a draw-only change is census timing jitter, cf. iter 66's +21; the sim's last
+partial tick is wall-clock-dependent.)
+**Perf:** ran the gate even though 70 isn't a step-back lap, *because the change
+adds per-vehicle night draw work* and the header flags a creeping day floor.
+PASS ×3 by minimum: day 25.22ms (vs 25.17 @69 — untouched, the gate holds),
+night 26.66ms (vs 26.39, +0.27ms for the lights). Baselines 24 / 26.61.
+**Visual:** 4 subagent verdicts. seed 42 deep night PASS (beams align to the hex
+road axes, lie flat, attach to bodies); whole-city night PASS ("tasteful sparkle,
+not glare"; coast + dark parks still read clean); **daylight control PASS — zero
+light effects visible, confirming the night gate**. seed 7 dusk returned
+`VISUAL: FAIL`, and it was a **false negative**: I clipped a streetcar at 4×
+myself and saw lamp + beam + taillights rendering correctly. Root causes logged
+in the header — the feature is a few px at `downtown` scale, and my two
+hypotheses for the "hard white wedge" (beam spilling off asphalt onto grass) were
+both wrong: it was the **monorail support line**. Re-tested seed 7 at full night
+with a magnified clip → PASS.
+**Verdict:** POLISHED. Two harness lessons recorded (the `__ents` car blind spot;
+magnify before believing a visual FAIL). Redeploy pending (iters 34–70 + hooks +
+the concurrent transport/camera/shoreline commits).
+

@@ -1532,10 +1532,12 @@ function syncFleet(){
   const wantPeds=Math.min(130,6+(stats.pop/200|0));
   while(peds.length<wantPeds&&openCells.length){
     const[x,y]=openCells[(rng()*openCells.length)|0];
-    peds.push({x,y,ox:(rng()-0.5)*0.6,oy:(rng()-0.5)*0.6,tx:0,ty:0,tm:0,
+    peds.push({x,y,hx:x,hy:y,ox:(rng()-0.5)*0.6,oy:(rng()-0.5)*0.6,tx:0,ty:0,tm:0,
                c:PEDC[(rng()*PEDC.length)|0],
-               kid:Math.random()<0.18?1+Math.random()*6:0}); /* some walk a child;
-               Math.random AFTER the rng draws so the seeded stream is untouched */
+               kid:Math.random()<0.18?1+Math.random()*6:0, nite:Math.random()<0.5}); /* some walk a child;
+               Math.random AFTER the rng draws so the seeded stream is untouched.
+               hx,hy is the open cell they're anchored to: they may stroll onto the
+               streets around it, and re-anchor whenever they reach open ground. */
   }
   const wantDogs=Math.min(10,(stats.parks/4|0));
   while(dogs.length<wantDogs&&openCells.length){
@@ -1642,15 +1644,56 @@ function strollable(x,y){
   const n=cellAt(x,y);
   return(n&&(n.t===T.PARK||n.t===T.PLAZA||n.t===T.BEACH||n.t===T.SHOREPARK||n.t===T.MARKET||n.t===T.GARDEN||n.t===T.FIELD||n.t===T.STADIUM))||onPier(x,y);
 }
+/* ---- sidewalks ------------------------------------------------------------
+   Open ground (parks, plazas, beaches, markets) is ~100 disconnected islands by
+   2035, so a resident confined to it can never leave the one it spawned on. Peds
+   may therefore also walk STREETS, on two conditions that keep the crowd where it
+   belongs: they stay within PEDLEASH hexes of their anchor (so nobody wanders off
+   down a suburban lane), and they re-anchor on reaching open ground (so parks
+   chain together through the streets between them, halving the island count).
+   Streets are transit, not destination: on a road a ped both re-decides sooner
+   (short tm, below) and is likelier to move on (PEDSTEP_RD > PEDSTEP_OP). Those
+   compound, so street occupancy settles at ~19% time-averaged — the streets read
+   as alive while ~4 residents in 5 are still in the parks. Tuned by measurement:
+   0.45 emptied them to ~14%, 0.15 flooded them to ~28%.
+   Bridges are excluded — the deck is raised and a ground-drawn ped sinks through it. */
+const PEDLEASH=2, PEDSTEP_OP=0.18, PEDSTEP_RD=0.30;
+const PEDDEST=new Set([T.PARK,T.PLAZA,T.MARKET,T.SHOREPARK,T.GARDEN,T.COM,T.CIVIC,T.STADIUM]);
+function pedRoad(x,y){const n=cellAt(x,y);return!!n&&n.t===T.ROAD&&!n.bridge}
+function pedWalk(p,x,y){
+  return strollable(x,y)||(pedRoad(x,y)&&hexDist(x,y,p.hx,p.hy)<=PEDLEASH);
+}
+/* which way is the kerb? A ped on a street stands at its edge, facing whatever it
+   came out to see — never on the centre line where the cars are. Direction is taken
+   from ctr() deltas, never from the sign of dx (which flips with row parity). */
+function kerbDir(x,y){
+  const[cx0,cy0]=ctr(x,y); let best=0,bx=0,by=0;
+  for(const d of nbrDirs(y)){
+    const n=cellAt(x+d[0],y+d[1]); if(!n)continue;
+    const w=PEDDEST.has(n.t)?2:(n.t===T.ROAD||n.t===T.WATER||n.t===T.VOID)?-1:1;
+    if(w>best){const[ax,ay]=ctr(x+d[0],y+d[1]);best=w;bx=ax-cx0;by=ay-cy0;}
+  }
+  if(best<=0)return[0,0];                       /* mid-street: no kerb to stand on */
+  const L=Math.hypot(bx,by)||1, k=0.30*CW/L;    /* normalise in px, return cell units */
+  return[bx*k/CW,by*k/ROWY];
+}
 function stepPed(p,dt){
   p.tm-=dt;
-  const pierBound=onPier(p.x,p.y);
+  const pierBound=onPier(p.x,p.y), onRoad=!pierBound&&pedRoad(p.x,p.y);
   if(p.tm<=0){
-    p.tx=(Math.random()-0.5)*0.72; p.ty=(Math.random()-0.5)*(pierBound?0.2:0.72);
-    p.tm=2+Math.random()*4;
-    if(Math.random()<0.18){ /* stroll to a neighboring open hex */
-      const d=nbrDirs(p.y)[(Math.random()*6)|0];
-      if(strollable(p.x+d[0],p.y+d[1])){p.x+=d[0];p.y+=d[1];}
+    if(onRoad){ /* hug the kerb, with a little jitter so a pair doesn't stack */
+      const[kx,ky]=kerbDir(p.x,p.y);
+      p.tx=kx+(Math.random()-0.5)*0.2; p.ty=ky+(Math.random()-0.5)*0.2;
+      p.tm=1.4+Math.random()*2.4;
+    }else{
+      p.tx=(Math.random()-0.5)*0.72; p.ty=(Math.random()-0.5)*(pierBound?0.2:0.72);
+      p.tm=2+Math.random()*4;
+    }
+    if(Math.random()<(onRoad?PEDSTEP_RD:PEDSTEP_OP)){ /* stroll to a neighboring hex */
+      const d=nbrDirs(p.y)[(Math.random()*6)|0], nx=p.x+d[0], ny=p.y+d[1];
+      if(pedWalk(p,nx,ny)){p.x=nx;p.y=ny;
+        if(strollable(nx,ny)){p.hx=nx;p.hy=ny;} /* reached open ground: re-anchor */
+      }
     }}
   p.ox=lerp(p.ox,p.tx,dt*0.7); p.oy=lerp(p.oy,p.ty,dt*0.7);
 }
@@ -3544,7 +3587,9 @@ function drawVehicle(v){
   }
 }
 function drawPed(p){
-  if(LITAMT>0.75&&((p.x*7+p.y*3)%10)<5)return; /* crowds thin late at night */
+  if(LITAMT>0.75&&p.nite)return; /* crowds thin late at night — the coin is per
+    RESIDENT, not per cell: a positional hash made a ped blink as it changed hex,
+    which the sidewalks (peds now cross hexes far more often) would have made plain */
   const z=onPier(p.x,p.y)?5:0;
   const[cx,cy]=px(p.x+0.5+p.ox,p.y+0.5+p.oy);
   stamp(p,cx,cy-z);

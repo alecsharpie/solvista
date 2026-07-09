@@ -23,7 +23,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
-| **People & activity** | 41, 56 | 49 | 34, 64 | | | |
+| **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -55,6 +55,25 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   deck), and the spine is connected: 153 of 155 arterial hexes touch another. `__find`
   now answers `'arterial'`. Reuse `c.flow` for anything that should follow the main
   roads — don't hand-roll a second notion of "important street".
+- **Peds walk the streets now — `pedWalk`/`PEDLEASH`/`kerbDir` (iter 78).** Open ground
+  is ~100 *disconnected islands* by 2035 (parks/plazas/beaches), so a ped confined to it
+  can never leave the one it spawned on. Peds may now also walk **roads** (not bridges —
+  raised deck, they'd sink), bounded by `PEDLEASH`=2 hexes from an anchor `p.hx,p.hy`
+  that **re-anchors on reaching open ground** — so parks chain through the streets
+  between them and the walkable-island count roughly **halves** (99→46, 101→37, 95→53).
+  Streets are transit, not destination (shorter `tm` + `PEDSTEP_RD`>`PEDSTEP_OP`), so
+  occupancy settles ~19%: 4 residents in 5 are still in the parks. `kerbDir()` puts a
+  street ped on the **kerb** facing what it came to see, never the centre line.
+  **`strollable()` is unchanged, so dogs are still park-bound** — a natural follow-on.
+- **⚠ An entity-behaviour change CANNOT have a pixel-identical BEFORE control (iter 78).**
+  Entity motion (`stepVehicle`, `stepPed`, …) draws from the **shared unseeded
+  `Math.random()`**, never from seeded `rng()`. So changing *how many* `Math.random()`
+  draws happen per frame re-rolls every other moving thing — both seed-78 subagents
+  correctly saw cars/trams/a helicopter shift between BEFORE and AFTER, and one wrongly
+  concluded the "scene RNG order" had been perturbed. It had not: the seeded CA stream
+  was untouched and all 22 census metrics + every entity count came back **exactly +0**.
+  Only *terrain/draw* changes (76, 77) yield clean controls. Tell the reviewing agent to
+  look for **stationary** evidence, and don't read moving vehicles as a determinism bug.
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a
   multi-source hex BFS capped at radius `r`, walking over land only (`WETSET` blocks
   water/marsh/kelp), filling `out` with steps-to-nearest-source and 255 for "farther
@@ -248,53 +267,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 70 entries before Iteration 70 live in
+> **Archive:** the 71 entries before Iteration 71 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 70 — vehicles light up after dark (2026-07-09)
-
-**Vector:** Transport × **Polish** — rotation pointed at Transport (least-recently
-touched non-saturated domain, last 63), and the *kind* had to change: 65–68 were
-four straight Deepens. Polish adds nothing, which suited a mature city.
-**Orient/seam finding:** `grep -i headlight` returned **nothing**, which looked
-like a clean gap — but reading the seam (`drawVehicle`, ~L3165) showed a light
-already there: one anonymous flat `2×2` warm rect at the nose, no taillight, no
-light cast on the road. Exactly the iter-34 beach-towel trap; the grep lied
-because the feature had no name. So the move was to *improve* it, not add it.
-**Change:** in `drawVehicle`, a heading basis in the squashed iso plane
-(`FX,FY` forward · `PX,PY` across-lane, both carrying the existing `*0.55`
-vertical compression) drives: (1) **paired** warm headlamps at ±1.5 across the
-nose; (2) a **beam pooled on the road** — one low-alpha (`0.14*LITAMT`) trapezoid
-fanning 11px forward from the nose to a 8.6px-wide far edge, started *at* the
-nose so it never overlaps the body and z-order stays clean; (3) **red taillights**
-at the rear. Bikes get a single warm bar lamp. All alphas scale with `LITAMT`, so
-lights fade up through dusk. Whole block gated `LITAMT>0.35`. No gradients (the
-file has zero `createRadialGradient` — flat alpha shapes only). Draw-only: no
-rng, no hashCell, no terrain, no new state, no new entity.
-**Census:** VERDICT PASS, 0 page errors. pop +3, towerHt +1, **tile histogram
-empty** — no tile changed, as a draw-only change must. (Small non-zero pop wobble
-on a draw-only change is census timing jitter, cf. iter 66's +21; the sim's last
-partial tick is wall-clock-dependent.)
-**Perf:** ran the gate even though 70 isn't a step-back lap, *because the change
-adds per-vehicle night draw work* and the header flags a creeping day floor.
-PASS ×3 by minimum: day 25.22ms (vs 25.17 @69 — untouched, the gate holds),
-night 26.66ms (vs 26.39, +0.27ms for the lights). Baselines 24 / 26.61.
-**Visual:** 4 subagent verdicts. seed 42 deep night PASS (beams align to the hex
-road axes, lie flat, attach to bodies); whole-city night PASS ("tasteful sparkle,
-not glare"; coast + dark parks still read clean); **daylight control PASS — zero
-light effects visible, confirming the night gate**. seed 7 dusk returned
-`VISUAL: FAIL`, and it was a **false negative**: I clipped a streetcar at 4×
-myself and saw lamp + beam + taillights rendering correctly. Root causes logged
-in the header — the feature is a few px at `downtown` scale, and my two
-hypotheses for the "hard white wedge" (beam spilling off asphalt onto grass) were
-both wrong: it was the **monorail support line**. Re-tested seed 7 at full night
-with a magnified clip → PASS.
-**Verdict:** POLISHED. Two harness lessons recorded (the `__ents` car blind spot;
-magnify before believing a visual FAIL). Redeploy pending (iters 34–70 + hooks +
-the concurrent transport/camera/shoreline commits).
 
 ## Iteration 71 — the hovered thing wears a ring (2026-07-09)
 
@@ -798,3 +775,92 @@ the wrong streets — retarget them to `c.flow` and the trees line the trunks (T
 Deepen, a one-line change to an existing hashCell pass). Vehicles ignore `c.flow` and
 could prefer arterials. Iter 73's corner-lot lead and 76's REDWOOD closure lead are both
 still open.
+
+## Iteration 78 — the parks grow sidewalks (2026-07-10)
+
+**Vector:** People & activity × **Connect** — rotation pointed at People & activity
+(stalest live domain, untouched since 64; Sky is saturated-closed), and its × Connect
+cell was **empty across all 78 laps**. The kind also had to change after 77's New CA
+rule, 76's Deepen and 75's Polish; Connect hadn't been used since iter 47.
+
+**Orient — the flaw was structural, and one line long.** `strollable()` (L1641) admits
+PARK, PLAZA, BEACH, SHOREPARK, MARKET, GARDEN, FIELD, STADIUM and the pier — and
+**never ROAD**. So in a city with ~800 road hexes per seed and a brand-new arterial
+spine, the residents were sealed inside parkland. There were no sidewalks.
+
+**Measured before writing a line (76/77's discipline), and the first two numbers
+reframed the vector.**
+1. **Open ground is ~100 disconnected islands** at 2035 (99 / 101 / 95 over seeds
+   7 / 42 / 1234) for ~130 peds — about *one person per island*, and none of them
+   could ever leave it. That is the real defect; "peds can't walk on roads" was only
+   its symptom.
+2. **Free diffusion would have been a disaster.** Adding roads to the walk graph
+   roughly *doubles* the wander area (open 437 → union 1034 on seed 1234), so 130 peds
+   would thin to half density and smear across the suburbs. The parks would have
+   visibly emptied. A leash was mandatory, and the probe is what said so.
+
+**Change:** peds get an anchor `p.hx,p.hy` (their spawn cell) and may step onto a
+**road** hex within `PEDLEASH`=2 of it, **re-anchoring whenever they reach open
+ground** — so a ped chains park → street → next park, but can never wander off down a
+suburban lane. Bridges excluded (`!c.bridge`): the deck is raised and a ground-drawn
+ped sinks through it. `kerbDir()` puts a street ped at the **kerb**, offset toward the
+destination it fronts (`PEDDEST`), never on the centre line where the cars are —
+direction taken from `ctr()` deltas, per the header's warning that the sign of `dx`
+flips with row parity. **`strollable()` itself is untouched, so dogs stay park-bound**
+and the blast radius is peds only. No `rng()`, no `hashCell`, no terrain, no new
+tile/entity → no census-hook, `TILELABEL` or `ENTINFO` sync needed.
+
+**The tuning is the interesting part — my own model was wrong.** I wanted streets to be
+*transit* and parks *destination*, so road peds re-decide sooner **and** step on more
+often. An offline sim said `PEDSTEP_RD`=0.45 → ~15–21% street occupancy. The live city
+said **9–12%**: the sim assumed equal decision *intervals*, but road peds also carry a
+shorter `tm` (1.4–3.8s vs 2–6s), and the two effects **compound**, emptying the streets
+~1.5× faster than modelled. Snapshot sampling then lied in the other direction (24.6%
+vs 10.0% for the *same* setting on two seeds — a 130-ped binomial). Only a
+**time-averaged in-page sweep replicating the real `tm` semantics** gave a monotone,
+low-variance curve: 0.45→14%, **0.30→19%**, 0.22→24%, 0.15→28%. Shipped 0.30.
+**Lesson: an offline model of an entity rule must replicate its timing, not just its
+probabilities — and a single snapshot of 130 agents is noise, not a measurement.**
+
+**Census:** VERDICT PASS, 0 page errors. **Every one of the 22 metrics exactly +0**
+(pop 142497, roads 5754, developed 6210, arterials 876…), tile histogram **empty**,
+`peds 633` and every other entity count unchanged. Not even the usual last-partial-tick
+jitter — the exact signature of a behaviour-only change on a quiet box.
+
+**Live behaviour probe (3 seeds, `step=400`):** 0 peds on bridges, 0 leash violations,
+**0 peds standing mid-street**, no page errors. The invariants hold by construction.
+
+**Visual:** BEFORE control at identical clip coords (`git show HEAD:solvista.html`),
+`downtown` clip + un-zoomed whole-city, seeds 42 and 7, `step=900`. Two subagents,
+both **PASS**, both explicitly primed *against* the confusable pre-existing element
+(peds already exist in parks). Both isolated real new figures **on road hexes, at the
+kerb, clear of the centre line, not on vehicles, not floating** — seed 42's agent even
+rejected two candidate diffs as pre-existing (one a tram, one on a park tile). Whole-city
+frames: balanced, coherent, no tears, no darkening; parks still hold the large majority.
+
+**Both agents' caveat was a finding — and their explanation was wrong.** Each saw cars,
+trams and a helicopter shift between BEFORE and AFTER, and seed 42's concluded the change
+"perturbed the scene RNG order." It did not. `stepVehicle` calls `Math.random()` twice and
+`rng()` **zero** times: entity motion rides the *shared unseeded* stream, so altering how
+many draws happen per frame re-rolls every moving thing while leaving the seeded CA
+untouched — which is precisely why the census came back perfectly flat. **Corollary now in
+the header: an entity-behaviour change can never have a pixel-identical BEFORE control.**
+Only terrain/draw changes (76, 77) can. Ask the reviewer for *stationary* evidence.
+
+**Perf:** PASS ×3, judged by minimum on a quiet box. Day **30.17ms** (baseline 31.33,
+−3.7%), night **34.28ms** (baseline 37.22, −7.9%) — both *under* baseline and matching
+76/77 to 0.2ms. The added ~130 `cellAt`/frame is free next to the draw. Run here rather
+than deferred to 79's step-back because this lap touched the per-frame entity loop, and
+an unattributed regression is worse than an early reading.
+
+**Verdict:** SHIPPED. The city's residents are no longer prisoners of the park they were
+born in: the walkable islands roughly **halve** (99→46, 101→37, 95→53) and the largest
+connected walkable region grows **207 → 657 cells**. The lasting results are the anchor/
+leash pattern — a way to open a big graph to wanderers *without* diluting them — and the
+`Math.random` draw-order fact, which would otherwise read as a determinism bug forever.
+
+**Follow-ups worth taking:** **dogs are still park-bound** (`strollable` unchanged) — the
+obvious next Connect/Deepen, and a dog on a sidewalk is charming. `PEDDEST` could weight
+the kerb toward *open* shopfronts at day and lit windows at night. Iter 77's `treed`-on-
+`c.flow` boulevard retarget, 73's corner-lot lead and 76's REDWOOD closure lead all remain
+open. **Iteration 79 owes the holistic step-back** (74 + 5).
