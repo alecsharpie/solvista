@@ -1388,3 +1388,30 @@ full zoom, as street furniture should.
 **Verdict:** DEEPENED. Redeploy pending (iters 34–63 + hooks + polish-tile
 work).
 
+## Iteration 64 — dog walkers (2026-07-08)
+
+**Vector:** People & activity × Deepen — rotation pointed at People; its
+Deepen column had only iter 34, and the domain's two entity systems (peds,
+dogs) never related: every dog in the city roamed ownerless. Now ~45% of
+dogs walk their human.
+**Change:** `walker` flag on the dog literal (`Math.random()<0.45`, value
+doubles as animation phase — placed AFTER the rng() draws, kid-flag
+precedent from iter 56). In `drawDog`: the walker stands at the cell
+center (colored body from a new `WKC` palette, ink head, subtle sway) with
+an ink leash curving to the dog, which keeps its normal ±0.85 sniff radius
+around them — the stand-and-sniff composition falls out of the existing
+stepDog motion for free. Leash widened 0.5→0.7 after the first clips read
+too faint. Draw-only; no new entity array, no terrain, stream untouched.
+**Census:** VERDICT PASS ×2, 0 page errors, pop −3 on re-run (documented
+harness animation jitter), dogs steady at 81.
+**Visual:** A/B/C pixel proof under `playing=false` — same frame hashed
+with walkers on vs off vs dogs removed: walker effect true, dog visible
+true. Clip shows the standing figure with the dog at their feet on a park;
+whole-city frames at seeds 42 + 7 coherent. Two verification traps hit and
+resolved: (1) walker flags reshuffle every load (Math.random), so a probe
+list from one load can't aim a clip in another; (2) an A/B target behind
+the bottom-left stats panel diffs identical — occlusion, not a render bug;
+filter aim targets to sy 160–640.
+**Verdict:** DEEPENED. Redeploy pending (iters 34–64 + hooks + polish-tile
+work).
+
