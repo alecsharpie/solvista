@@ -14,8 +14,9 @@ on its rendering until it hits all three goals **at once**:
    being told. The tile carries the real-world visual language of its type.
 2. **BEAUTIFUL** — it rewards a zoomed-in look: good silhouette, house palette,
    small seeded asymmetries, and it participates in day/night lighting.
-3. **FAST** — `drawCell` runs for ~G² (≈2300) cells **every frame**. Beauty that
-   costs frame time is a regression; the perf gate below measures it.
+3. **FAST** — `drawCell` runs for every live cell on the plate (**3367** since the
+   hexagon plate landed; `G`=67 is only the bounding square) **every frame**.
+   Beauty that costs frame time is a regression; the perf gate below measures it.
 
 One invocation = one tile type, polished through up to ~3 design passes, then
 verified and logged. Loop-friendly: under `/loop`, do one tile per turn.
@@ -77,9 +78,10 @@ verified and logged. Loop-friendly: under `/loop`, do one tile per turn.
 7. **Log.** Append to `POLISH.md`: tile, passes taken, the signature cues you
    chose (so the next polish of a *different* tile doesn't reuse them and blur
    distinctions), perf numbers before/after, verdict, shots dir.
-8. **Redeploy note.** `solvista.html` is the durable source; do **not**
-   auto-redeploy the live artifact. Note in the log that redeploy is pending
-   (URL + `/bin/cp` gotcha are in project memory).
+
+   `solvista.html` **is** the deliverable — one self-contained file, served from
+   the repo by GitHub Pages. Nothing to redeploy; a pushed commit is a shipped
+   tile. Keep the file standalone (no external assets, no build step).
 
 ## Locating & shooting the tile
 

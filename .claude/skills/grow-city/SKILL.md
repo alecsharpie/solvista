@@ -213,12 +213,11 @@ both at this one.)
    reconcile rather than force it** — those are the user's changes, not yours. An
    uncommitted iteration is one stale write away from being lost, so don't leave
    the worktree dirty between iterations either.
-6. **Redeploy note.** `solvista.html` is the durable source; the live artifact is
-   a separate copy. Do **not** auto-redeploy without a nod — but don't let the
-   request rot either: at the **end of a session** (or when the user next
-   appears), explicitly **ask for the redeploy nod**, citing how many iterations
-   are pending. "Redeploy pending" logged 30 times with no ask = a live artifact
-   drifting stale forever. (Project memory has the URL + the `/bin/cp` gotcha.)
+
+   `solvista.html` **is** the deliverable — a single self-contained file, served
+   straight from the repo by GitHub Pages. There is no separate copy to sync and
+   nothing to redeploy: a pushed commit is a shipped city. Keep the file
+   standalone (no external assets, no build step) and that stays true.
 
 ## Every ~5 iterations: step back (autonomous self-check)
 
@@ -296,7 +295,7 @@ live feed rather than 40 minutes of silence:
 ```
 
 Each iteration's **final report is printed in full** — that's the one piece of prose
-worth reading, and it's where the loop asks for the redeploy nod.
+worth reading.
 
 **`caffeinate` is not optional for an overnight run.** A Mac that sleeps kills
 `claude` mid-iteration and leaves the worktree holding a half-finished — or

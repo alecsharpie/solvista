@@ -15,8 +15,11 @@ Entry format:
 - census: PASS, histogram <unchanged | delta + why>
 - shots: shots/<tile>_before/ vs shots/<tile>_after/
 - verdict + notes: <what improved; anything left for a future pass>
-- redeploy: PENDING (source-only until the artifact is redeployed)
 ```
+
+(Older entries carry a `redeploy:` line. `solvista.html` is now served straight
+from the repo by GitHub Pages, so there is nothing to redeploy and the field is
+retired — leave it on the historical entries, don't add it to new ones.)
 
 ---
 

@@ -80,8 +80,7 @@ if [ "${1:-}" = "--status" ]; then
     "$HERE/../polish-tile/perf-latest.json" 2>/dev/null
   echo
   echo "  recent iterations:"
-  grep '^## Iteration' "$HERE/GROWTH.md" 2>/dev/null | tail -3 | sed 's/^## /    /' | cut -c1-72
-  grep -o 'Pending: iters[^*]*' "$HERE/GROWTH.md" 2>/dev/null | head -1 | sed 's/^/    redeploy debt: /'
+  grep -E '^## (Iteration [0-9]+|U[0-9]+)' "$HERE/GROWTH.md" 2>/dev/null | tail -3 | sed 's/^## /    /' | cut -c1-72
   exit 0
 fi
 

@@ -118,22 +118,10 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   lead: the 27-of-74 civics that front roads on *both* sides (corner lots) still
   fall back to a hash in `frontSide` — picking the less-occluded side there is
   the natural next Civic × Polish lap (see iter 73's follow-up).
-- **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–75 (42 iterations)**
-  (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
-  perf fix · evening crowds · entity tooltips · sea fog · river flow ·
-  festival streets · field hedgerows · skybridges · city helicopter · block
-  parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
-  laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
-  school run · fairy rings · sea-fog fix · rooftop water tanks · bus
-  stops · dog walkers · tidepools · civic flags · seasonal orchards ·
-  rooftop gardens · vehicle headlights/taillights · hover focus ring ·
-  harbor freighters · civics facing their street · **windows that go dark after
-  dark** — 74 was a review lap and shipped no feature), the
-  `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
-  (iter 57), the
-  flood/step test hooks, and the concurrent polish-tile session's esplanade +
-  tile redesigns; ask for the nod at session end.
+- **Shipping:** `solvista.html` is the deliverable — one self-contained file,
+  served from the repo by GitHub Pages. A pushed commit is a shipped city, so
+  there is no redeploy step, no separate live copy, and no sync debt to track.
+  Keep the file standalone: no external assets, no build step.
 - **⚠ `__ents` blind spot (iter 70):** the `vehicles` array (private cars, buses,
   police, ambo, fireeng) has **no `ENTINFO` row** — it's a mixed-kind array, so
   one label would be wrong — which means `__ents()` never returns cars and you
