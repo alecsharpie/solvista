@@ -306,9 +306,9 @@ function colLit(name,f,litMix){ /* window glass mixing toward warm light at nigh
 }
 
 /* ---------------- world ---------------- */
-let rng, seedNum, cells, year, dayT, monorail, monoPath, monoClosed, monoG, gondPath, gondG, gond, stats, pier, hut;
+let rng, seedNum, cells, year, dayT, monorail, monoPath, monoClosed, monoG, gondPath, gondG, gond, stats, pier, hut, harborY;
 let YC=[], turbines=[], turbSet=new Map();
-let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], ferries=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
+let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], ferries=[], freighters=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
 /* debug flood (?flood=joggers:30,whales:8): overrides entity spawn counts so
    sparse features can be screenshot-verified without a source edit to revert */
 let FLOOD={};
@@ -349,7 +349,7 @@ function genWorld(seed){
   seedNum=seed; rng=mulberry32(seed);
   sAmp=1.2+rng()*1.6; sFreq=0.22+rng()*0.24; sPh=rng()*7;
   year=1974; dayT=0.30; devBudgetUsed=0;
-  vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];ferries=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
+  vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];ferries=[];freighters=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
   /* the coast highway hugs the shore in long hex-diagonal runs
      (a straight vertical column would wiggle across hex rows) */
   const coastX=new Int16Array(G);
@@ -460,6 +460,7 @@ function genWorld(seed){
   /* harbor works: a warehouse cluster somewhere along the coast highway */
   {
     let wy=clamp(fy+(rng()<0.5?-1:1)*(8+(rng()*10|0)),3,G-4)|0;
+    harborY=wy; /* remembered: the shipping stands off this row (see freighters) */
     for(let i=0;i<3;i++){
       const c=cellAt(SHOREX-1-(rng()*3|0),clamp(wy+((rng()*5)|0)-2,2,G-3)|0);
       if(c&&c.t===T.EMPTY){c.t=T.IND;c.th=10+c.v*4;}
@@ -500,6 +501,21 @@ function genWorld(seed){
      never perturbs the seeded simulation; it runs seaward of the sailboats. */
   for(let i=0;i<fl('ferries',2);i++)ferries.push({y:8+i*(G-16),off:3.4+Math.random()*1.0,
      sp:(0.18+Math.random()*0.05)*(i?-1:1),ph:Math.random()*7,c:i?'teal':'terra'});
+  /* the harbor works are fed by sea. The first ship rides at anchor in the
+     roadstead off the warehouse row, waiting on a berth; the rest steam the deep
+     lane, seaward of the ferries. Math.random, so the shipping never perturbs
+     the seeded simulation. `st` is a bitmask: which container stacks go two high. */
+  const CBOX=['coral','teal','gold','terraDk','sage','lav'];
+  for(let i=0;i<fl('freighters',2);i++){
+    const anchored=i===0;
+    freighters.push({
+      anchored,
+      y: anchored?clamp(harborY+Math.random()*2.4-1.2,7,G-7):8+Math.random()*(G-16),
+      off: 4.6+Math.random()*0.6,
+      sp: anchored?0:(0.045+Math.random()*0.022)*(Math.random()<0.5?1:-1),
+      ph: Math.random()*7, st:(Math.random()*64)|0,
+      c: Array.from({length:6},()=>CBOX[(Math.random()*CBOX.length)|0])});
+  }
   /* dolphin pods roll through the open sea. Math.random so they never perturb the
      seeded simulation; they swim well seaward of the surf. */
   for(let i=0;i<fl('dolphins',3);i++)dolphins.push({y:7+Math.random()*(G-14),off:4+Math.random()*2.2,
@@ -3286,6 +3302,46 @@ function drawFerry(f){
     }
   }
 }
+function drawFreighter(f){
+  const[cx,cy]=pxc(shoreAtF(f.y)+f.off,f.y);
+  stamp(f,cx,cy);
+  const bob=Math.sin(waveT*(f.anchored?0.55:0.75)+f.ph)*0.45;
+  /* drawn bow-to-starboard in local coords, then mirrored to the heading —
+     an anchored ship holds the heading its phase gave it */
+  const dir=f.anchored?(f.ph<3.5?1:-1):(f.sp>=0?1:-1);
+  ctx.save();ctx.translate(cx,cy+bob);ctx.scale(dir,1);
+  if(!f.anchored){ctx.fillStyle=col('foam',1); /* a long, slow wake */
+    ctx.beginPath();ctx.ellipse(-3,3.9,15,2.2,0,0,7);ctx.fill();}
+  ctx.fillStyle=col('solar',1.15); /* navy hull, raked bow */
+  ctx.beginPath();ctx.moveTo(-12.5,-0.6);ctx.lineTo(14,-0.6);
+  ctx.lineTo(11,3.9);ctx.lineTo(-11.5,3.9);ctx.closePath();ctx.fill();
+  ctx.fillStyle=col('terraDk',1); /* boot-top at the waterline */
+  ctx.beginPath();ctx.moveTo(-11.9,2.9);ctx.lineTo(12.4,2.9);
+  ctx.lineTo(11,3.9);ctx.lineTo(-11.5,3.9);ctx.closePath();ctx.fill();
+  ctx.fillStyle=col('whiteDk',0.72);ctx.fillRect(-12.5,-1.4,26.5,0.9); /* deck */
+  for(let i=0;i<6;i++){ /* container stacks, bow-ward of the house */
+    const bx=-7.4+i*3.6, n=1+((f.st>>i)&1);
+    for(let z=0;z<n;z++){
+      ctx.fillStyle=col(f.c[(i+z*3)%6],1.02-z*0.08);
+      ctx.fillRect(bx-1.6,-1.6-2.3*(z+1),3.2,2.2);
+    }
+  }
+  ctx.fillStyle=col('white',1.02);ctx.fillRect(-12.3,-6.7,3.9,5.3); /* stern house */
+  ctx.fillStyle=colLit('glass',0.8,LITAMT);ctx.fillRect(-12.3,-6.2,3.9,0.9);
+  ctx.fillStyle=col('terra',1);ctx.fillRect(-11.5,-9.5,1.9,2.9); /* funnel */
+  ctx.fillStyle=col('ink',1.1);ctx.fillRect(-11.5,-9.5,1.9,0.7);
+  ctx.strokeStyle=col('ink',1.05);ctx.lineWidth=0.5;         /* foremast */
+  ctx.beginPath();ctx.moveTo(11.8,-0.8);ctx.lineTo(11.8,-5.4);ctx.stroke();
+  if(LITAMT>0.35){ /* deck floods, a masthead light, and the port/starboard pair */
+    ctx.fillStyle='rgba(255,240,180,'+(0.85*LITAMT)+')';
+    ctx.fillRect(11.3,-5.9,1,1);ctx.fillRect(-11.9,-10.2,1,1);
+    ctx.fillStyle='rgba(255,236,190,'+(0.16*LITAMT)+')'; /* pooled deck light */
+    ctx.fillRect(-8.6,-2.2,18,1.1);
+    ctx.fillStyle='rgba(120,235,150,'+(0.9*LITAMT)+')';ctx.fillRect(12.4,-1.9,1,1);
+    ctx.fillStyle='rgba(240,110,90,'+(0.9*LITAMT)+')';ctx.fillRect(-12.6,-1.9,1,1);
+  }
+  ctx.restore();
+}
 function drawKayak(k){
   const[cx,cy]=pxc(k.x+k.ox,k.y);
   stamp(k,cx,cy);
@@ -3436,6 +3492,7 @@ function render(){
   for(const s of surfers)bucketAdd((shoreAtF(s.y)+s.off)|0,s.y|0,()=>drawSurfer(s));
   for(const b of boats)bucketAdd(b.x|0,b.y|0,()=>drawBoat(b));
   for(const f of ferries)bucketAdd((shoreAtF(f.y)+f.off)|0,f.y|0,()=>drawFerry(f));
+  for(const f of freighters)bucketAdd((shoreAtF(f.y)+f.off)|0,f.y|0,()=>drawFreighter(f));
   for(const d of dolphins)bucketAdd((shoreAtF(d.y)+d.off)|0,d.y|0,()=>drawDolphin(d));
   for(const w of whales)bucketAdd((shoreAtF(w.y)+w.off)|0,w.y|0,()=>drawWhale(w));
   for(const h of herons)bucketAdd(h.x,h.y,()=>drawHeron(h));
@@ -3844,6 +3901,7 @@ const ENTINFO=[
   [()=>whales,'Gray whale','Surfacing on a slow cruise up the bay.',12],
   [()=>dolphins,'Dolphin','Rolling through the swell.',8],
   [()=>ferries,'Harbor ferry','Working the shoreline, every stop.',10],
+  [()=>freighters,'Container ship','Serving the harbor works — at anchor in the roadstead, or steaming the deep lane.',14],
   [()=>boats,'Sailboat','Out for a day on the bay.',8],
   [()=>surfers,'Surfer','Waiting on the next set.',7],
   [()=>kayaks,'Kayaker','Paddling the river.',7],
@@ -3925,6 +3983,7 @@ function advanceEntities(dt,s){
   for(const b of boats){if(b.moored)continue; b.y+=b.sp*dt*s; if(b.y<4||b.y>G-4)b.sp*=-1; b.x=shoreAtF(b.y)+b.off;}
   for(const su of surfers){su.y+=su.drift*dt*s; if(su.y<5||su.y>G-5)su.drift*=-1;}
   for(const f of ferries){f.y+=f.sp*dt*s; if(f.y<7||f.y>G-7)f.sp*=-1;}
+  for(const f of freighters){if(f.anchored)continue; f.y+=f.sp*dt*s; if(f.y<7||f.y>G-7)f.sp*=-1;}
   for(const j of joggers){j.y+=j.sp*dt*s; if(j.y<7||j.y>G-7)j.sp*=-1;}
   for(const d of dolphins){d.y+=d.sp*dt*s; if(d.y<6||d.y>G-6)d.sp*=-1;}
   for(const w of whales){w.y+=w.sp*dt*s; if(w.y<7||w.y>G-7)w.sp*=-1;}
@@ -4006,7 +4065,7 @@ window.__census=()=>{
   let cafes=0;
   for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(cells[idx(x,y)].t===T.PARK&&countAround(x,y,1,n=>n.t===T.COM||n.t===T.MARKET||n.t===T.CIVIC)>0)cafes++;
   const transport={cars:vehicles.length,bikes:bikes.length,trams:trams.length,trucks:trucks.length,boats:boats.length,
-    ferries:ferries.length,shuttles:shuttles.length,monorail:monorail.progress>=1?monorail.trains.length:0,
+    ferries:ferries.length,freighters:freighters.length,shuttles:shuttles.length,monorail:monorail.progress>=1?monorail.trains.length:0,
     gondola:gondPath&&gondPath.length>1?gond.cabins.length:0,copters:copters.length};
   return {
     G, year:year|0, seed:seedNum.toString(36),

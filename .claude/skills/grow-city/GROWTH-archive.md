@@ -1334,3 +1334,29 @@ coherent.
 **Verdict:** FIXED. Redeploy pending (iters 34-61 + hooks + polish-tile
 work).
 
+## Iteration 62 — rooftop water tanks (2026-07-08)
+
+**Vector:** Urban fabric × New element — rotation pointed at Urban after 61's
+fix lap; the domain had only one New-element entry (32) and the mid-rise roofs
+were the blandest surface downtown (solar/green-roof/fringe only).
+**Change:** timber water tanks on the older walk-ups. In `drawBuilding`'s MID
+branch, as `else if` after the v>0.5 roof-garden fringe: gates
+`!c.solar && !c.groof && hashCell(x,y,seedNum^0x7A7E)<0.3`, so tanks land only
+on low-value stock with a bare roof. Draw-only: ink legs, timber barrel
+(`deck`), dark hoop band, terracotta conical cap, offset `tx=cx+3.1` so it
+shares the roof with nothing. No terrain, no rng(), no entities.
+**Census:** VERDICT PASS, 0 page errors, pop/developed/roads exactly +0
+(draw-only, as designed).
+**Visual:** offline hash aim was insufficient — 54 hash-gated MIDs at seed 42
+but only 15 truly fire (v>0.5 fringe + solar/groof suppress ~72%); rewrote the
+probe to evaluate the exact branch condition in-page and clip roof-centered at
+4×. Seed 42: clear tanks (legs/barrel/hoop/cap) on two walk-ups + one on the
+center turret block; seed 7: two more on adjacent roofs. Sit on the roof slab
+cleanly, no z-order tears. Whole-city frame coherent, tanks subtle at full
+zoom as intended.
+**Lesson:** when a draw gate depends on runtime cell state (v, solar, groof),
+aim clips from an in-page probe of the exact condition, not an offline
+hashCell replica — the replica overcounts and the clips point at suppressed
+candidates.
+**Verdict:** SHIP. Redeploy pending (iters 34–62 + hooks + polish-tile work).
+
