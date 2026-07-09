@@ -2447,3 +2447,72 @@ boulevard retarget, 78's dogs-on-sidewalks, 73's corner-lot lead and 76's REDWOO
 closure lead all remain open. **Iteration 84 still owes the holistic step-back**
 (79 + 5).
 
+## Iteration 82 — retail will not follow the traffic (2026-07-10)
+
+**Vector** — Urban fabric × New CA rule. (Rotation: 76–81 hit Nature/Transport/
+People/Water/Civic/Sky; Urban fabric was last touched at 75. Kind: New CA rule was
+last used in this domain at iter 23.)
+
+**Change (attempted, REVERTED)** — a new `tick()` pass, second reuse of `c.flow`
+(iter 77) after 80's forecourts. Premise: the parcels pass sites shops by a *local*
+test (`roads>=2` = "corner lot"), so shops scatter over every corner; `c.flow` knows
+which street the city actually drives down. So: a `T.RES` lot fronting an arterial
+(`flow>=ARTFLOW`, non-bridge) converts to `T.COM`, gated by a per-lot `hashCell`
+propensity vs a year-rising `push` — no `rng()` draw. Expected: a legible commercial
+street wall along the trunks.
+
+**Census** — attempt 1 PASSED and was still wrong: `COM 1246→1361 (+115)`,
+`RES −139` — the vector moved the intended tile — but `TOWER 270→355 (+31%)`,
+`towerHt +35%`, `tallTowers +41`, `pop +12.8%`. **`COM` is the tower precursor**
+(the `com>=2` quorum in the upgrades pass), so "retail follows traffic" silently
+became "+31% towers". Attempt 2 added `c.strip=1` to mark a shopfront a *terminal*
+use — strip lots neither upgrade nor count toward a neighbour's tower quorum.
+That fixed the cascade (`TOWER 253`, `pop −3.2%`, `COM +182`) at the cost of −6%
+towers and −3.2% pop.
+
+**Visual** — 3 subagents on matched BEFORE/AFTER pairs. Attempt 1: two `VISUAL: PASS`
+(both wide frames) and one `VISUAL: FAIL` from the **downtown zoom** — "no continuous
+shop street wall; conversions read as scattered extra towers and flatten the mid-rise
+height variety." The FAIL was correct and the two PASSes were wrong; confirmed by eye.
+Attempt 2 fixed the towers but the wall still did not read: **`COM` draws almost
+identically to `RES`/`MID` at city zoom**, so +182 shop tiles are numerically real and
+visually invisible.
+
+**The measurement that decided it** — a throwaway `probe-strip.mjs` (hex
+connected-components over `c.strip`) showed the shopfronts are **not a street at all**:
+
+```
+seed 7:    51 lots, 43 components, 85% singletons, longest run 3
+seed 42:   45 lots, 42 components, 87% singletons, longest run 2
+seed 1234: 37 lots, 31 components, 76% singletons, longest run 5
+```
+
+**Verdict: EXPLORED → REVERTED.** Reverted to HEAD; census re-run gives `pop/roads/
+developed` exactly **+0** (clean revert, determinism holds).
+
+**Why it failed the bar, and what NOT to re-try** — the premise is false in this city.
+*By the time a street carries arterial flow, its frontage is no longer houses* — it is
+already `COM`/`MID`/`TOWER`, so the leftover `RES` lots that the rule can convert are
+scattered singletons. No siting tweak fixes that; a high street cannot be grown by
+converting the few houses left on a built-out trunk. **Do not re-try RES→COM on
+arterial frontage.** If a future lap wants a high street it must (a) reserve the
+frontage *early* (pre-1990, before the trunk builds out) so the run is contiguous, and
+(b) **give `COM` a distinct shopfront draw first** — awnings/signage/continuous kerb
+frontage. Urban × Polish on `drawBuilding`'s `COM` case is the prerequisite, and is
+worth doing on its own merits regardless of siting.
+
+**Two transferable findings**
+- **A moved tile histogram can still be a lie.** `COM +182` looked like 182 new shops;
+  only ~45/city were actually strip lots. The rest was the seeded stream reshuffling
+  downstream of a terrain change (and `COM` no longer being consumed into `TOWER`).
+  The histogram is evidence the vector *touched* its tile, not that it *built* the
+  thing you designed. When a feature has a shape (a run, a ring, a spine), **measure
+  the shape** — a 40-line connected-components probe settled in 90s what three
+  screenshots and three subagents could not.
+- **Zoom level determines who is right.** The two wide-frame agents ratified a change
+  that the one downtown-zoom agent correctly failed. Iter 79 warned a holistic PASS is
+  weak evidence; the sharper rule is that **a reviewer can only see the change at the
+  scale the change lives at.** A street wall is a *block-scale* feature, so the
+  block-scale reviewer's FAIL outranks two city-scale PASSes. Send the zoom that
+  matches the feature's scale, and when verdicts split, believe the tighter one.
+

@@ -20,7 +20,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81, 89 |
@@ -65,8 +65,27 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 - **⚠ `COM` is the TOWER precursor (iter 82).** The upgrades pass promotes `COM` on a
   `com>=2` quorum, so **anything that makes shops makes skyscrapers**: +115 COM came
   back as +31% towers and +12.8% pop. Any future rule that mints `COM` must decide
-  whether those lots are downtown parcels or terminal shopfronts, and if the latter,
-  exclude them from both the upgrade *and* the neighbour quorum.
+  whether those lots are downtown parcels or terminal shopfronts.
+- **⚠ But do NOT make them terminal by vetoing the upgrade (iter 92).** 82's proposed fix
+  (exempt shopfronts from the tower upgrade *and* the quorum) was implemented and cost
+  **−9.8% pop / −20% towers** — a hard core collapse. **`POPW[TOWER]`=240** vs `COM`=10,
+  `MID`=28: pop in this model essentially *is* towers, so any rule that costs towers costs
+  pop and nothing buys it back (redirecting a blocked lot to `MID` recovers 12%). Worse,
+  the natural sites for a shop street — the founding crossroads, `mainX` — are **exactly
+  the value core**, so you veto the very lots that were going to tower. Displacing the
+  tower to a neighbour is *also* a trap (towers 247→**237**): a high street's neighbours are
+  houses, so the redirect finds no eligible host. **Never zone against `TOWER` near the
+  core.** Express a terminal use as a **draw property** instead — see `c.hstr` below.
+- **The high street: `c.hstr` + `HSLEN`/`HSPULL` + a retail podium (iter 92).** `genWorld`
+  has always laid a founding **main street** (`fdx`, a hex diagonal through the crossroads,
+  at init in 1974). Iter 92 reserves its flanking lots (`c.hstr`) via a deterministic scan,
+  and the parcels pass builds **shops, never houses** there (`shop||c.hstr`) — 82's
+  "reserve the frontage pre-1990" prerequisite, finally met. **The CA is touched in exactly
+  one place**; the upgrade pass is byte-identical to HEAD. Towers rise on the parade freely
+  and get a **shop podium** in `drawBuilding`'s `TOWER` case (7 of 13 wall lots are podium
+  towers by 2005 — without it the street vanishes as downtown densifies). `__find('highst')`
+  returns the reserved frontage; tooltip says *High street*. **Its tile histogram delta is
+  ≈0** (`COM −6`) — do not look for it there, use `probe-highst.mjs`.
 - **`COM` now has a shopfront, and it faces the street (iter 83 — 82's blocker is
   cleared).** 82 said `COM` had "no shopfront draw"; it had one, but the awning was a
   `bandR` **ring** and the glass ran full height, so a shop was a `MID` in a colored
@@ -130,6 +149,16 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   not four (`PLAZA 14→10` across the matrix). That is defensible urbanism and was accepted, but
   it is the one place the vector *cost* something. See open cue (d).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
+  **(e) downtown has no massed core** *(banked by iter 92's holistic agent, Urban fabric ×
+  Polish/Scale)* — at whole-city zoom the towers "are strung along the whole top edge rather
+  than massing into one skyline; the eye finds *a tall side* more than a distinct core," and
+  the interior reads as an "edge-to-edge carpet of roads + rooftops with little green
+  breathing room." The `back` term in the tower upgrade biases inland but evidently not
+  hard enough. Note the tension with iter 92: the fix is **not** to zone against towers
+  anywhere (that is a −9.8% pop trap) — it is to bias *where* they rise, and/or to thin the
+  uniform mid-block density. Same agent flagged seed 1234's long straight monorail/cable
+  lines as still reading like a "wireframe/UI stroke" — but iters 85/87 closed that with two
+  agents each, so treat this as one un-zoomed opinion, **not** a reopening of cue (c).
   **(d) the civic quarter deserves a real square** *(banked by iter 91, Civic × Polish)* — the
   quarter now reads as a knot of pale domes sharing a single forecourt hex. A proper civic
   square (2–3 contiguous `PLAZA` cells fronting several institutions, rather than one lot won
@@ -141,8 +170,8 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   **front** of the city, and moving it into the row loop would have buried it. What was
   wrong was that it drew over the **void** past the rim and **ended on a hard chord**.
   Fixed by anchoring it to the ground its shower falls on and dissolving both legs.
-  With (a), (b) and (c) all closed the cue list was empty for one iteration; **(d), above,
-  is now the only open cue**, and it was found by a *vector* rather than by a holistic pass.
+  With (a), (b) and (c) all closed the cue list was empty for one iteration; **(d) and (e),
+  above, are the open cues** — (d) found by a *vector* rather than by a holistic pass.
   ~~(b) **the asphalt floods the interior**~~ — **CLOSED by iter 86.**
   ~~(c) **the monorail beam reads as UI chrome**~~ — **CLOSED by iter 87.** Six agents on
   4 seeds across iters 79/84/85 called `drawMonoAt`'s beam a "debug overlay floating above
@@ -494,80 +523,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 84 entries before Iteration 82 live in
+> **Archive:** the 85 entries before Iteration 83 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 82 — retail will not follow the traffic (2026-07-10)
-
-**Vector** — Urban fabric × New CA rule. (Rotation: 76–81 hit Nature/Transport/
-People/Water/Civic/Sky; Urban fabric was last touched at 75. Kind: New CA rule was
-last used in this domain at iter 23.)
-
-**Change (attempted, REVERTED)** — a new `tick()` pass, second reuse of `c.flow`
-(iter 77) after 80's forecourts. Premise: the parcels pass sites shops by a *local*
-test (`roads>=2` = "corner lot"), so shops scatter over every corner; `c.flow` knows
-which street the city actually drives down. So: a `T.RES` lot fronting an arterial
-(`flow>=ARTFLOW`, non-bridge) converts to `T.COM`, gated by a per-lot `hashCell`
-propensity vs a year-rising `push` — no `rng()` draw. Expected: a legible commercial
-street wall along the trunks.
-
-**Census** — attempt 1 PASSED and was still wrong: `COM 1246→1361 (+115)`,
-`RES −139` — the vector moved the intended tile — but `TOWER 270→355 (+31%)`,
-`towerHt +35%`, `tallTowers +41`, `pop +12.8%`. **`COM` is the tower precursor**
-(the `com>=2` quorum in the upgrades pass), so "retail follows traffic" silently
-became "+31% towers". Attempt 2 added `c.strip=1` to mark a shopfront a *terminal*
-use — strip lots neither upgrade nor count toward a neighbour's tower quorum.
-That fixed the cascade (`TOWER 253`, `pop −3.2%`, `COM +182`) at the cost of −6%
-towers and −3.2% pop.
-
-**Visual** — 3 subagents on matched BEFORE/AFTER pairs. Attempt 1: two `VISUAL: PASS`
-(both wide frames) and one `VISUAL: FAIL` from the **downtown zoom** — "no continuous
-shop street wall; conversions read as scattered extra towers and flatten the mid-rise
-height variety." The FAIL was correct and the two PASSes were wrong; confirmed by eye.
-Attempt 2 fixed the towers but the wall still did not read: **`COM` draws almost
-identically to `RES`/`MID` at city zoom**, so +182 shop tiles are numerically real and
-visually invisible.
-
-**The measurement that decided it** — a throwaway `probe-strip.mjs` (hex
-connected-components over `c.strip`) showed the shopfronts are **not a street at all**:
-
-```
-seed 7:    51 lots, 43 components, 85% singletons, longest run 3
-seed 42:   45 lots, 42 components, 87% singletons, longest run 2
-seed 1234: 37 lots, 31 components, 76% singletons, longest run 5
-```
-
-**Verdict: EXPLORED → REVERTED.** Reverted to HEAD; census re-run gives `pop/roads/
-developed` exactly **+0** (clean revert, determinism holds).
-
-**Why it failed the bar, and what NOT to re-try** — the premise is false in this city.
-*By the time a street carries arterial flow, its frontage is no longer houses* — it is
-already `COM`/`MID`/`TOWER`, so the leftover `RES` lots that the rule can convert are
-scattered singletons. No siting tweak fixes that; a high street cannot be grown by
-converting the few houses left on a built-out trunk. **Do not re-try RES→COM on
-arterial frontage.** If a future lap wants a high street it must (a) reserve the
-frontage *early* (pre-1990, before the trunk builds out) so the run is contiguous, and
-(b) **give `COM` a distinct shopfront draw first** — awnings/signage/continuous kerb
-frontage. Urban × Polish on `drawBuilding`'s `COM` case is the prerequisite, and is
-worth doing on its own merits regardless of siting.
-
-**Two transferable findings**
-- **A moved tile histogram can still be a lie.** `COM +182` looked like 182 new shops;
-  only ~45/city were actually strip lots. The rest was the seeded stream reshuffling
-  downstream of a terrain change (and `COM` no longer being consumed into `TOWER`).
-  The histogram is evidence the vector *touched* its tile, not that it *built* the
-  thing you designed. When a feature has a shape (a run, a ring, a spine), **measure
-  the shape** — a 40-line connected-components probe settled in 90s what three
-  screenshots and three subagents could not.
-- **Zoom level determines who is right.** The two wide-frame agents ratified a change
-  that the one downtown-zoom agent correctly failed. Iter 79 warned a holistic PASS is
-  weak evidence; the sharper rule is that **a reviewer can only see the change at the
-  scale the change lives at.** A street wall is a *block-scale* feature, so the
-  block-scale reviewer's FAIL outranks two city-scale PASSes. Send the zoom that
-  matches the feature's scale, and when verdicts split, believe the tighter one.
 
 ## Iteration 83 — the shops get a face (2026-07-10)
 
@@ -1353,3 +1313,89 @@ on the lots downtown wanted.
   Deepens each polished a single building's relationship to its own street. Asking where buildings
   stand relative to *each other* cost ~40 lines, added no tile, no entity and no draw call, and
   lit up two systems built 45 iterations apart.
+
+## Iteration 92 — the high street (2026-07-10)
+
+**Vector** — Urban fabric × Deepen. (Rotation: 87–91 hit Transport/Nature/Sky/Water/Civic;
+Urban fabric was last touched at 86. Kind: Deepen, last used in this domain at 68.) This is
+the vector iter 82 left staked out: it failed to grow retail and named its two prerequisites —
+**(a) reserve the frontage pre-1990**, and **(b) give `COM` a shopfront draw first.** Iter 83
+shipped (b). This is (a).
+
+**Change (SHIPPED)** — the generator already lays a **founding main street**: `fdx`, a hex
+diagonal through the crossroads, drawn at init in 1974. That is frontage nobody had claimed.
+A deterministic scan (no `rng()`, in `siteQuarter`'s style) picks the `HSLEN`=12-row stretch
+of it whose flanks are most buildable, pulled toward the crossroads by `HSPULL`=0.8, and marks
+the flanking lots `c.hstr`. The parcels pass then builds **shops, never houses**, on them.
+Plus a **retail podium** under any tower that rises on a reserved lot. `__find('highst')`
+answers the reserved frontage; the tooltip says *High street*.
+
+**The measurement that mattered** — the tile histogram is **blind** to this vector: `COM 1256 →
+1250 (−6)`. Iter 82 warned that a moved histogram can lie; the converse is also true — a real
+feature can move it *not at all*, because the reserved lots were largely becoming `COM` anyway,
+just scattered. Only the shape probe sees it. `probe-highst.mjs` (union-find over `__find`,
+per iter 88's rule that a Connect claim must pass one), at 2035:
+
+```
+                    iter 82 (reverted)        iter 92
+  seed 7      51 lots, 43 comps, longest 3    wall 13, spine 5 comps, longest  8
+  seed 42     45 lots, 42 comps, longest 2    wall 14, spine 4 comps, longest  8
+  seed 1234   37 lots, 31 comps, longest 5    wall 14, spine 3 comps, longest 12
+```
+And it **thickens with the town** (seed 42 longest: 5 @1985 → 9 @2005 → 11 @2035).
+
+**Census** — `pop 152328 → 150332 (−1.3%)`, `towers −8`, `developed −29`, `roads −83`: all
+chaotic wobble off ~14 RES→COM cells/city. `pageerrors: 0`. **VERDICT: PASS.**
+
+**Visual** — 4 subagents. Three at the wall's own scale (one per seed, matched BEFORE/AFTER on
+a clip framed to the run's bbox, *not* the fixed `downtown` rect — iter 82's "a reviewer can only
+see the change at the scale it lives at"), one un-zoomed holistic. All four `VISUAL: PASS`.
+Podiums read as plinths, awnings correctly street-facing, night neon contained.
+
+**Verdict: SHIPPED.**
+
+### Two designs died first, and both are worth more than the ship
+
+**1. The no-tower parade (`!c.hstr` on the COM→TOWER upgrade) — cost −9.8% pop, a hard core
+collapse.** The reasoning was clean urbanism: a high street is a *terminal* use, so exempt it
+from the tower upgrade (iter 82 had reached for the same `c.strip` idea). It fails because
+**the founding crossroads IS the value core** — `mainX` sits where the land value peaks, so the
+lots you reserve are exactly the lots that were going to tower. Suppressing 14 prime lots/city
+deleted ~70 towers across the matrix, and at `POPW[TOWER]`=**240** (vs `COM`=10, `MID`=28)
+*nothing else can compensate*: even redirecting every blocked lot to `MID` recovers only 12% of
+the loss. **Corollary: never zone against `TOWER` anywhere near the core.** Pop in this model is
+towers; a rule that costs towers costs pop, and no amount of good urbanism buys it back.
+
+**2. Displacing the tower to a neighbour made it *worse* (towers 247 → 237).** The fix looked
+obvious — don't delete the tick's tower, promote an adjacent non-`hstr` `COM` instead, chosen by
+`hashCell` so it spends no draw. It underperformed because **a high street's neighbours are
+houses, not shops**: the redirect usually found no eligible `COM` and dropped the tower anyway,
+while the times it *did* fire merely consumed a lot that would have towered on its own. A
+displacement rule needs a *supply* of eligible hosts, and this one had none.
+
+**What actually resolved it: `c.hstr` is a DRAW property, not a zoning veto.** A real high street
+in a dense downtown does not ban towers — it puts **retail podiums under them**. Stop suppressing
+the CA and let the land use rise; carry the frontage in `drawBuilding`'s `TOWER` case instead.
+The vector then touches the simulation in exactly **one** place (parcels: `shop||c.hstr`), the
+upgrade pass is byte-identical to HEAD, and pop/towers land within wobble. By 2005 **7 of 13**
+wall lots on seeds 7/1234 are podium towers — without the podium the street would have quietly
+disappeared into blank tower bases as the city densified, which is the failure iter 82 saw and
+misattributed to `COM` drawing like `RES`.
+
+### Three transferable findings
+- **Rewarding "open ground" rewards ground that never develops.** The first siting scan scored a
+  window by counting empty flank cells, and slid the street onto the outskirts: 23 lots reserved,
+  only 15 ever built, and seed 7's longest run *fell* 8 → 6. Emptiness at founding correlates with
+  emptiness forever. The pull toward the core (`HSPULL`) is not a nicety — it is what makes the
+  reservation land on ground that will actually build. Sweeping it: 0.35 → **0.8** → 1.5 → 2.5, the
+  min-across-seeds longest run goes 6 → **8** → 8 → 8 (saturates once the window pins to the crossroads).
+- **Count the spine, not the shopfronts.** The first probe called a side street crossing the parade
+  a *break*, and scored the finished street at "50% singletons". A high street cut by a side street
+  is still one street. Scoring components over *(shops ∪ the roads that cut them)* — the **spine** —
+  is what let the real signal (3–5 comps, longest 8–12) separate from the noise. Reserve crossing
+  corridors too, so the intersections are inside the measured set.
+- **Look for the feature already latent in the generator.** No new corridor was drawn, no new tile
+  added: `fdx` — the founding main street — has been in `genWorld` the whole time, unclaimed.
+  Iter 88 failed to *invent* a corridor across ground the buildings had walled in; this one
+  succeeded by *reserving* a corridor the generator had already committed to at t=0. Before
+  drawing a line across the plate, check whether the plate already has one.

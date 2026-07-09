@@ -546,6 +546,36 @@ function genWorld(seed){
     const gx=mainX+1+(rng()*5)|0, gy=fy-3+(rng()*7)|0, c=cellAt(gx,gy);
     if(c&&c.t===T.EMPTY&&roadNear(gx,gy)){c.t=T.CIVIC;c.kind='hall';c.th=20;break}
   }
+  /* the high street: the founding main street's frontage is claimed for shops now,
+     while the town is twelve houses and a hall. Iter 82 tried to grow retail late,
+     by converting the houses left on a built-out arterial, and got 85% singletons —
+     by the time a street carries traffic its frontage is already spoken for. So a
+     shop street has to be *reserved before the town arrives*, and it is: these lots
+     flank the crossroads' diagonal, and the parcels pass will only ever build shops
+     on them. Marking is pure bookkeeping — no rng() draw, no terrain touched.
+     A fixed stretch either side of the crossroads was tried first and is wrong: the
+     diagonal takes whatever ground it lands on, and on seed 42 that is ten cells of
+     woods. So *choose* the stretch — a deterministic scan (like siteQuarter's) for the
+     run of rows whose flanks are the most buildable, pulled gently toward the founding
+     crossroads. Crossing corridors are reserved too: a side street cutting the parade
+     is an intersection, not a hole, and the shopfronts resume on its far side. */
+  const HSLEN=12, HSPULL=0.8;
+  const hsFlank=yy=>{const hx2=fdx(yy),out=[];
+    for(const dx of[-1,1]){const c=cellAt(hx2+dx,yy); if(c)out.push(c);}
+    return out;};
+  let hsBest=-1,hsTop=-1e9;
+  for(let y0=1;y0+HSLEN<G-1;y0++){
+    let s=0;
+    for(let yy=y0;yy<y0+HSLEN;yy++)for(const c of hsFlank(yy)){
+      if(c.corr)s+=0.25;                       /* an intersection: no shop, but no hole */
+      else if(c.t===T.EMPTY||c.t===T.MEADOW)s+=1;   /* open ground: a shop will build here */
+      else s-=0.8;      /* woods, rock, water, an old house: a hole the wall never closes */
+    }
+    s-=Math.abs(y0+HSLEN/2-fy)*HSPULL;         /* the high street belongs to the old town */
+    if(s>hsTop){hsTop=s;hsBest=y0;}
+  }
+  for(let yy=hsBest;yy<hsBest+HSLEN;yy++)for(const c of hsFlank(yy))
+    if(c.t===T.EMPTY||c.t===T.MEADOW||c.corr)c.hstr=true;
   /* farm clusters: wherever the soil is good this time around */
   const nFarm=ks(2)+(rng()*2|0);
   for(let i=0;i<nFarm;i++){const[ax2,ay2]=rcIn(3,SHOREX-7,3,G-3);
@@ -856,10 +886,15 @@ function tick(){
       const dev=countAround(x,y,1,n=>DEV.has(n.t));
       let p=0.22+0.06*dev+(greenNear(x,y,2)?0.12:0)+0.24*(c.val-0.5);
       if(rng()<p){
-        /* corner lots near two streets tend commercial; shops also cluster */
+        /* corner lots near two streets tend commercial; shops also cluster.
+           A reserved high-street lot is always a shop — but the roll it overrides is
+           still *rolled*, so the draw count is identical and the seeded stream past
+           this cell is untouched (iter 91: a substitution must spend the draws it
+           displaces, or 800 ticks reshuffle downstream). */
         const roads=countAround(x,y,1,n=>n.t===T.ROAD);
         const coms=countAround(x,y,1,n=>n.t===T.COM);
-        if((roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3)){c.t=T.COM;c.th=13+c.v*9;}
+        const shop=(roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3);
+        if(shop||c.hstr){c.t=T.COM;c.th=13+c.v*9;}
         else {c.t=T.RES;c.th=9+c.v*7;}
         c.age=0; devBudgetUsed++;
       }
@@ -891,6 +926,13 @@ function tick(){
     } else if(c.t===T.COM&&year>=1996&&!seaside(x)){
       const com=countAround(x,y,1,n=>n.t===T.COM||n.t===T.TOWER);
       const back=clamp((CTRX+CTRY+10-(x+y))/(G-2),0,1);   /* towers cluster inland */
+      /* The high street does NOT veto towers. Its lots sit on the founding crossroads,
+         which is exactly where the value core forms, so forbidding them cost -20% of
+         the city's towers and -9.8% pop (240 pop apiece — nothing else compensates).
+         A high street in a dense core keeps its frontage the way real ones do: retail
+         at street level, tower above. So the land use is free to rise, and `c.hstr`
+         means "this lot fronts the parade" — a DRAW property, not a zoning veto.
+         See drawBuilding's TOWER case, which gives a reserved lot a shop podium. */
       if(com>=2&&rng()<(0.14+0.20*back)*(0.5+c.val)){
         c.t=T.TOWER; c.th=(54+c.v*82)*(0.6+0.5*back); c.age=0; stats.towers++;
       }
@@ -3233,6 +3275,34 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.strokeStyle=col('ink',1);ctx.lineWidth=0.8;
       ctx.beginPath();ctx.moveTo(cx-9,cy-top);ctx.lineTo(cx-9,cy-top+8);ctx.stroke();
     }
+    if(c.hstr){
+      /* the parade runs UNDER the towers. A lot on the founding street keeps its
+         shopfront when the tower rises over it — a retail podium, which is how a real
+         high street survives its downtown. Drawn last so it paints over the tower's
+         base, and one hex-face wide (0.36 vs the tower's 0.32) so it reads as a plinth
+         the tower stands on. Without this, half the wall (7 of 13 lots by 2005) would
+         be blank tower base and the street would vanish as the city densifies. */
+      if(c.fs===undefined||c.fsY!==year){
+        c.fs=frontSide(x,y,hashCell(x,y,seedNum^0x5A0F)<0.5?-1:1);c.fsY=year;
+      }
+      const fs=c.fs,[bcx,bcy]=px(gx,gy);
+      const signN=DISTCOL[c.dist]||'coral', awnN=['coral','teal','gold'][(v*13|0)%3];
+      const pz=h<7?Math.max(2.4,h*0.8):5.4;
+      prism(gx,gy,0.36,0.32,0,pz,col('white',1),col('white',0.62),col('white',0.85));
+      kerbS(bcx,bcy,0.36,0.32,fs,2.4,col('whiteDk',0.92));
+      bandR(gx,gy,0.36,0.32,0,1.1,col('whiteDk',0.55));                  /* stallriser */
+      if(pz>3.4){
+        bandR(gx,gy,0.36,0.32,1.1,pz-1.1,colLit('glass',0.85,lit));      /* storefront */
+        slotS(bcx,bcy,0.36,0.32,fs*0.42,0.6,pz-1.6,2.2,col('ink',0.8),false);
+        awnS(bcx,bcy,0.36,0.32,fs,pz-1.0,3.0,col('white',1.02),col(awnN,1.05));
+        bandR(gx,gy,0.36,0.32,pz-0.9,pz-0.25,col(signN,0.95));           /* fascia */
+        if(LITAMT>0.4){ /* the shopfronts glow under the tower at night */
+          ctx.globalAlpha=(LITAMT-0.4)*0.9;
+          bandR(gx,gy,0.375,0.335,pz-1.0,pz-0.15,col(signN,1.55));
+          ctx.globalAlpha=1;
+        }
+      }
+    }
   } else if(c.t===T.IND){
     if(c.loft){ /* converted brick lofts: the old bones, new glass */
       prism(gx,gy,0.36,0.31,0,h,col('brick',1),col('brick',0.6),col('brick',0.85));
@@ -4601,6 +4671,7 @@ function describeTile(c){
   if(c.t===T.ROAD&&c.stop)data.push(['Bus stop']);
   if(c.solar)data.push(['Rooftop solar']);
   if(c.groof)data.push(['Green roof']);
+  if(c.hstr&&DEV.has(c.t))data.push(['High street']);
   if((c.t===T.COM||c.t===T.MARKET)&&DISTCOL[c.dist])data.push(['District',DISTCOL[c.dist]]);
   data.push(['Value',Math.round(c.val*100)+'%']);
   let h='<p class="tt">'+title+'</p>';
@@ -4745,7 +4816,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)||(n==='highst'&&c.hstr)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sand:c.sand,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 
