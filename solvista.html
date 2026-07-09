@@ -1563,6 +1563,7 @@ function syncFleet(){
   while(peds.length<wantPeds&&openCells.length){
     const[x,y]=openCells[(rng()*openCells.length)|0];
     peds.push({x,y,hx:x,hy:y,ox:(rng()-0.5)*0.6,oy:(rng()-0.5)*0.6,tx:0,ty:0,tm:0,
+               ph:peds.length*1.7, /* gait phase, index-derived: costs no random draw */
                c:PEDC[(rng()*PEDC.length)|0],
                kid:Math.random()<0.18?1+Math.random()*6:0, nite:Math.random()<0.5}); /* some walk a child;
                Math.random AFTER the rng draws so the seeded stream is untouched.
@@ -3688,13 +3689,26 @@ function drawPed(p){
   const z=onPier(p.x,p.y)?5:0;
   const[cx,cy]=px(p.x+0.5+p.ox,p.y+0.5+p.oy);
   stamp(p,cx,cy-z);
+  const gy=cy-z;
+  /* Gait. stepPed lerps ox->tx, so the residual IS this frame's velocity: a ped
+     mid-stride is still far from its target offset, one that has arrived is
+     standing at a kerb. No new state and no Math.random draw, so the seeded
+     stream and every other moving thing are untouched. */
+  const sp=Math.hypot((p.tx-p.ox)*CW,(p.ty-p.oy)*ROWY);
+  const st=Math.sin(time*6.2+p.ph)*clamp(sp*0.42,0,1.15);
+  const bob=Math.abs(st)*0.3;              /* hips rise over the planted foot */
+  ctx.strokeStyle=col('ink',1.3);ctx.lineWidth=0.7;
+  ctx.beginPath();                         /* both legs in one path: 1 stroke/ped */
+  ctx.moveTo(cx,gy-1.7-bob);ctx.lineTo(cx+st,gy-0.1);
+  ctx.moveTo(cx,gy-1.7-bob);ctx.lineTo(cx-st,gy-0.1);
+  ctx.stroke();                            /* st~0 when idle: legs close together */
   ctx.fillStyle=col(p.c,0.9);
-  ctx.fillRect(cx-0.9,cy-3.6-z,1.8,3);
+  ctx.fillRect(cx-0.9,gy-3.6-bob,1.8,2);
   ctx.fillStyle=col('ink',1.4);
-  ctx.beginPath();ctx.arc(cx,cy-4.4-z,1,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(cx,gy-4.4-bob,1,0,7);ctx.fill();
   if(p.kid&&LITAMT<0.5){ /* a little one skips alongside; home by dark */
     const sk=Math.abs(Math.sin(time*5.5+p.kid))*1.1; /* skipping bounce */
-    const kx=cx+1.9,ky=cy-z-sk;
+    const kx=cx+1.9,ky=gy-sk;
     ctx.fillStyle=col(['coral','gold','teal'][(p.kid*7|0)%3],1.1);
     ctx.fillRect(kx-0.6,ky-2.2,1.2,1.8);
     ctx.fillStyle=col('ink',1.4);

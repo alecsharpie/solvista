@@ -1866,3 +1866,36 @@ in `frontSide` and fall back to a hash; choosing the *less-occluded* side would 
 that semantic win into a visible one). Also: `slotS` sat unused by non-civics for the
 whole project — worth grepping for other primitives the building cases never adopted.
 
+## U4 — the plate becomes a hexagon; rivers, monorails and cable cars go plural (2026-07-09)
+
+**Not a loop iteration, and not written by the loop.** This landed in an interactive
+session and sat *uncommitted* in `main`'s working tree — no ledger entry, no commit —
+until a later session found it, verified it, and committed it as `41b0acd`.
+Reconstructed here from the diff; the intent below is inferred, not reported.
+
+**Vector:** Urban fabric × **Scale** (with Nature × Scale and Transport × Scale along
+for the ride). The diorama plate was a 48×48 square whose dead corners the eye never
+saw. It is now a hexagon: `HEXR`=33 rings inscribed in a `G`=67 bounding array, masked
+by `HEXOK`/`HEXI`, with a `T.VOID` tile for everything outside. Generation, growth,
+picking, drawing and the seeded random cell picks all go through the mask;
+`ROWMIN`/`ROWMAX` give each row's live span for the coastline and the craft that clamp
+to it. The plate carries ~46% more land, so per-tick development attempts scale by
+`KS`=1.46 — without it the city would fill 46% slower over the same span of years.
+Alongside it the singular networks went plural: `monorail`/`monoPath` → a `monos` list
+of independently grown lines each closing its own loop, `gond` → `gonds`, and the
+generator lays one to three rivers rather than always one.
+
+**Census:** PASS when re-run against it (that is *why* it was kept — see the skill's
+dirty-worktree rule, which this change rewrote). At seed 42/2035 the plate roughly
+doubles the city vs the old square: 73 towers vs 36, pop 36,054 vs 21,014.
+
+**Both baselines went stale and nobody noticed.** `census-baseline.json` predated the
+plate, so every run reported `VOID 0 → 10098 NEW` and inflated growth everywhere — it
+still PASSed, because census only fails on regressions, which is exactly how a stale
+baseline hides one. `perf-baseline.json` (day 24ms) predated it too, so the extra land
+read as a permanent frame-time regression and **the perf gate failed on every run**
+until re-pinned. Both are now re-pinned against the hexagon city (perf: day 31.33ms,
+night 37.22ms, pinned from the fastest of five runs because the gate *judges* by the
+minimum of three). **A scale move invalidates both gates — re-pin both, in the same
+pass, or the next ten iterations inherit a gate they learn to ignore.**
+

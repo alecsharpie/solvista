@@ -23,7 +23,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81 |
-| **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | |
+| **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | 84 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -88,6 +88,16 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   fog, same fix. *Sky × Polish.* (b) **the asphalt floods the interior** — by 2035 the
   road ground tone compounds into a dark brown smear that robs the parks of contrast.
   The kelp-coast failure mode, inland. *Urban × Polish.*
+  **Both re-confirmed independently at iter 84** by unprompted holistic agents: seed 7
+  found the rainbow offshore *with no rain cloud attached*, and **both** seeds named the
+  road tone as "the element most at risk of compounding" without being asked. Per iter 79,
+  a caveat two seeds volunteer is a finding — these two are now well past a hunch, and
+  (b) is the strongest open cue in the ledger. (c) *new:* the `drawGondAt` cable-car
+  pylons/cables (`col('whiteDk')`, L3424) have now been mistaken for a UI overlay by
+  **four** different agents across iters 79 and 84 ("stadium markings", "selection
+  overlay", "transit/route overlay"). They are legitimate geometry, so this is not a bug —
+  but a stark white line that four fresh eyes read as chrome is a legibility defect worth
+  a *Transport × Polish* lap. Do not "fix" it by deleting it.
 - **Civic forecourts are a *placement* rule, not a tile (iters 36 → 80).** Every
   `PLAZA` in the city is a forecourt; 36's random-sample rule at L909 has never
   fired even once and survives only to keep the `rng()` stream aligned — do not
@@ -107,6 +117,28 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   occupancy settles ~19%: 4 residents in 5 are still in the parks. `kerbDir()` puts a
   street ped on the **kerb** facing what it came to see, never the centre line.
   **`strollable()` is unchanged, so dogs are still park-bound** — a natural follow-on.
+- **Peds have a gait, and the velocity was already there (iter 84).** `stepPed` lerps
+  `ox→tx`, so **the residual `tx-ox` IS this frame's speed** — no new state, no
+  `Math.random()` draw, so the pixel-identical control of iter 78 is preserved. `drawPed`
+  scissors two legs with amplitude `clamp(sp*0.42,0,1.15)`, hips bobbing over the planted
+  foot; at `sp≈0` the legs close and the ped *stands*. Measured across 1560 ped-frames:
+  ~11% idle, ~49% full stride. **Any entity that lerps toward a target can be animated
+  from its own residual this way** — `stepDog` (`ox→tx`, dogs still legless) is the
+  obvious next one, and `stepShuttle` lerps too. Gait phase is `ph:peds.length*1.7`,
+  **index-derived on purpose**: a `Math.random()` at spawn would have re-rolled every
+  other mover. The old ped also **floated ~0.6px above the ground**; feet now touch it,
+  so the figure is ~0.5px taller. That is the fix, not a regression.
+- **⚠ Screenshotting a 5px entity: centring on it is NOT enough (iter 84).** Three
+  re-shoots. (a) `__ents` returns `{name,sx,sy}` with **no identity**, so "track one ped"
+  is positional, and at `zoom=14` a ped outruns any search radius — the clip photographed
+  a building. Re-pick the ped *nearest screen centre each frame* instead. (b) Entities are
+  drawn **with their row**, so buildings in the rows *below* paint straight over them: a
+  perfectly-centred ped can be entirely hidden. Filter to peds whose next two rows downhill
+  are flat (`!TALL.has(c.t)`) and that stand on open ground — `hovershot.mjs`'s `PICK=front`
+  is the same lesson, generalized. (c) At `ZMAX=14` an 80px clip is **narrower than one hex**;
+  use ~200px so the figure has context and survives a one-hex stroll. Budget ~4 shot
+  attempts for any few-px entity, and **look at the first frame yourself before spawning
+  agents** — two of the four agents in this lap's first round graded a building.
 - **⚠ An entity-behaviour change CANNOT have a pixel-identical BEFORE control (iter 78).**
   Entity motion (`stepVehicle`, `stepPed`, …) draws from the **shared unseeded
   `Math.random()`**, never from seeded `rng()`. So changing *how many* `Math.random()`
@@ -363,44 +395,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 76 entries before U4 live in
+> **Archive:** the 77 entries before U5 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## U4 — the plate becomes a hexagon; rivers, monorails and cable cars go plural (2026-07-09)
-
-**Not a loop iteration, and not written by the loop.** This landed in an interactive
-session and sat *uncommitted* in `main`'s working tree — no ledger entry, no commit —
-until a later session found it, verified it, and committed it as `41b0acd`.
-Reconstructed here from the diff; the intent below is inferred, not reported.
-
-**Vector:** Urban fabric × **Scale** (with Nature × Scale and Transport × Scale along
-for the ride). The diorama plate was a 48×48 square whose dead corners the eye never
-saw. It is now a hexagon: `HEXR`=33 rings inscribed in a `G`=67 bounding array, masked
-by `HEXOK`/`HEXI`, with a `T.VOID` tile for everything outside. Generation, growth,
-picking, drawing and the seeded random cell picks all go through the mask;
-`ROWMIN`/`ROWMAX` give each row's live span for the coastline and the craft that clamp
-to it. The plate carries ~46% more land, so per-tick development attempts scale by
-`KS`=1.46 — without it the city would fill 46% slower over the same span of years.
-Alongside it the singular networks went plural: `monorail`/`monoPath` → a `monos` list
-of independently grown lines each closing its own loop, `gond` → `gonds`, and the
-generator lays one to three rivers rather than always one.
-
-**Census:** PASS when re-run against it (that is *why* it was kept — see the skill's
-dirty-worktree rule, which this change rewrote). At seed 42/2035 the plate roughly
-doubles the city vs the old square: 73 towers vs 36, pop 36,054 vs 21,014.
-
-**Both baselines went stale and nobody noticed.** `census-baseline.json` predated the
-plate, so every run reported `VOID 0 → 10098 NEW` and inflated growth everywhere — it
-still PASSed, because census only fails on regressions, which is exactly how a stale
-baseline hides one. `perf-baseline.json` (day 24ms) predated it too, so the extra land
-read as a permanent frame-time regression and **the perf gate failed on every run**
-until re-pinned. Both are now re-pinned against the hexagon city (perf: day 31.33ms,
-night 37.22ms, pinned from the fastest of five runs because the gate *judges* by the
-minimum of three). **A scale move invalidates both gates — re-pin both, in the same
-pass, or the next ten iterations inherit a gate they learn to ignore.**
 
 ## U5 — census stats that can fall (2026-07-09)
 
@@ -1093,3 +1092,85 @@ it there.
   2. **The asphalt floods the interior.** At seed 42/2035 the road ground tone has
      compounded until the built interior reads as a dark brown smear that robs the
      parks of contrast. The kelp-coast failure mode, inland. **Urban × Polish.**
+
+## Iteration 84 — the residents learn to walk (2026-07-10)
+
+**Vector** — People & activity × **Polish**. Rotation: People was the least-recently
+touched domain (78), and **Polish was the one entirely empty cell in its row** — in 83
+laps nothing had ever been done purely to make the people *read* better. Kind varies
+from 83's Urban × Polish by domain, and from 78's Connect by kind.
+
+**The defect.** `drawPed` was a 1.8×3 torso `fillRect` plus a head `arc` — **no legs**.
+It slid across the ground like a chess piece, and its bottom edge sat 0.6px *above* the
+ground plane, so at magnification a resident visibly floated. Right below it in the same
+file, `drawJogger` has scissoring legs and a bob: the artifact already knew how to draw a
+walking person and the residents simply hadn't been given it. Iter 78 made this worse
+without meaning to — peds now walk the *streets*, crossing hexes far more often, which is
+exactly when sliding is most obvious.
+
+**Change (draw-only; no terrain, no `rng()`, no new `Math.random()` draw).**
+- **The velocity was already in the data.** `stepPed` lerps `p.ox→p.tx`, so the residual
+  `tx-ox` is this frame's speed: a ped mid-stride is still far from its target offset, one
+  that has arrived is standing at a kerb. `sp = hypot((tx-ox)*CW, (ty-oy)*ROWY)` — no new
+  per-ped state, no extra random draw, therefore no perturbation of any other mover.
+- Legs: one `beginPath` with two `moveTo/lineTo` (1 stroke per ped), amplitude
+  `clamp(sp*0.42, 0, 1.15)`, phase `sin(time*6.2 + p.ph)`. At `sp≈0` the two legs land on
+  the same point and the ped **stands** with its legs together.
+- `bob = |st|*0.3` lifts the hips and head over the planted foot; **the feet do not bob**
+  — they are at a fixed `gy-0.1`, which is what makes the figure read as walking rather
+  than hovering.
+- Legs are carved out of the *bottom* of the old torso (h 3→2), so the head and torso
+  anchors are untouched. Net silhouette is ~0.5px taller only because the feet now reach
+  the ground the old torso floated above.
+- `ph:peds.length*1.7` at spawn — **index-derived, not random, on purpose.** A
+  `Math.random()` there would have changed the draw count and re-rolled every other moving
+  thing in the city (iter 78's lesson), destroying the clean control.
+
+**Census** — `+0` on **all 22 metrics**, 0 page errors, empty tile histogram, peds 633.
+The pixel-identical control that iter 78 says only draw-only changes can have; it is the
+evidence that the gait costs the seeded stream nothing.
+
+**Probe** — a tile histogram cannot see a gait, and per iter 82 *"when a feature has a
+shape, measure the shape."* A gait's shape is its amplitude distribution. Sampled 1560
+ped-frames across seeds 42 and 7: stride `p50=0.67px`, `p90=1.15px` (the clamp ceiling),
+**idle ~11%, full-stride ~49%**, `ph` present on 130/130 peds, zero page errors. So both
+states genuinely occur — the feature is neither frozen nor permanently twitching. Probe
+deleted; finding kept.
+
+**Visual** — 6 agents over two rounds, plus a direct look.
+- **Magnified (the scale the change lives at, so the primary verdict):** `VISUAL: PASS`.
+  Legs visible, widest at frames 0/1/3 and closed at 2/4 — a real cycle. Legs attach to the
+  torso, reach the ground, correctly occlude the tree trunk behind. The agent independently
+  confirmed the BEFORE torso "does read as floating".
+- **Downtown at true 1:1:** `VISUAL: PASS`, and honestly reported the two frames as
+  *indistinguishable* — sub-pixel legs added no clutter, no smudging, no z-order fault.
+  That is the desired answer at this scale, and I asked for it explicitly so the agent
+  wouldn't invent a difference to seem useful.
+- **Whole-city, 2 seeds:** `VISUAL: PASS` both; peds correctly reported as unresolvable at
+  that zoom. Their real value was the cumulative read (see cues below).
+
+**Perf** — 3 sequential passes, minimum of each scene: `day 31.33 → 31.55ms (+0.7%)`,
+`night 37.22 → 35.55ms (−4.5%)`. PASS. One extra stroke across ≤130 peds is free.
+
+**Verdict: SHIPPED.** The city's residents no longer skate.
+
+**Findings**
+- **A lerp *is* a velocity field.** Anything stepped by `lerp(cur, target, k*dt)` carries
+  its own speed in the residual, free and needing no state. `stepDog` and `stepShuttle`
+  both lerp; **dogs are still legless**, and are the obvious next customer.
+- **Verification cost 4 shot attempts, and I nearly shipped on a lie.** The first round's
+  primary agent returned `VISUAL: FAIL` — correctly, because the capture had framed a
+  *building*. The crowd agent, given the same broken set, reported "scissoring legs" in the
+  **BEFORE** frame, which is impossible. Two agents, same artifact, incompatible stories =
+  iter 79's tell. Looking at one PNG myself settled it in seconds. **Look at the first frame
+  yourself before you spawn anybody**; a subagent handed a bad screenshot will confidently
+  grade whatever is in it.
+- **The three ways an entity screenshot lies** (all hit this lap; now in the header):
+  no identity in `__ents` → positional tracking fails at high zoom; painter's-order
+  occlusion by the rows *below* → a perfectly centred ped is invisible; and at `ZMAX=14`
+  a small clip is narrower than one hex.
+- **Two banked cues were re-confirmed by agents who were told not to look for them** — the
+  offshore rainbow (seed 7, *and* it has no rain cloud attached) and the asphalt tone, which
+  **both** seeds volunteered as the city's biggest compounding risk. Promoted in the header.
+  A third emerged: the white cable-car lines have now been misread as UI chrome by four
+  separate agents.
