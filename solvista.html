@@ -241,7 +241,7 @@ const BASE={
   conifer:[104,146,92], coniferLt:[139,173,110], /* evergreens sit out the seasons */
   water:[92,172,178], waterDk:[62,138,148], foam:[255,251,240], glint:[235,248,250],
   fog:[236,241,239],
-  road:[106,101,93], roadArt:[86,82,75], roadLine:[233,221,192],
+  road:[136,133,126], roadArt:[116,113,107], roadLine:[233,221,192],
   cream:[244,232,208], creamDk:[221,205,172],
   terra:[199,111,74], terraDk:[170,90,60],
   white:[250,246,236], whiteDk:[228,220,204],
@@ -689,6 +689,7 @@ const HOME=new Set([T.RES,T.MID,T.TOWER]);
    trunks on their own — a river crossing is a bottleneck every trip must share.
    Reads topology + val, writes only c.flow: no rng(), no hashCell, no terrain. */
 const ARTFLOW=64;                    /* trip-units above which a street is an arterial */
+const RDF=[0.93,0.965,1.0,1.035,1.07];  /* asphalt resurfacing-patch brightness steps */
 const _flQ=new Int32Array(G*G), _flD=new Uint8Array(G*G), _flA=new Float32Array(G*G);
 const _flVal=new Float32Array(G*G);
 function trafficFlow(){
@@ -2699,7 +2700,10 @@ function drawCell(x,y){
         break;
       }
       const art=c.flow>=ARTFLOW;
-      hexTile(gx,gy,1.02,col(art?'roadArt':'road',1));  /* trunks wear their asphalt darker */
+      /* trunks wear their asphalt darker. Resurfacing patches: quantized to 5
+         steps so col()'s name|f cache stays small, and drawn at 1.02 so a patch
+         laps its neighbor and the seams read as joins rather than a grid. */
+      hexTile(gx,gy,1.02,col(art?'roadArt':'road',RDF[hashCell(x,y,seedNum^0xA5FA)*RDF.length|0]));
       /* lane dashes reach toward each road neighbor; roads run on hex
          axes, so straight runs draw as straight dashed lines;
          busy streets grade up to gold-marked avenues, and where the traffic
@@ -2707,7 +2711,7 @@ function drawCell(x,y){
          edge-to-edge, so it joins up with the next trunk hex into one line */
       const[cx,cy]=px(gx,gy);
       ctx.strokeStyle=col(c.busy?'gold':'roadLine',0.9);ctx.lineWidth=1;
-      ctx.globalAlpha=0.55;
+      ctx.globalAlpha=0.62;   /* the lighter asphalt needs a firmer dash to hold contrast */
       let ewN=0,diagN=0;
       for(const[dx2,dy2]of nbrDirs(y)){
         const n=cellAt(x+dx2,y+dy2);

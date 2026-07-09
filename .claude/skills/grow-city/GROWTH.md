@@ -19,7 +19,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83 |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81 |
@@ -85,14 +85,9 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
   (a) **the rainbow floats** — `L4166`, drawn in screen space trailing a raining
   cloud; at seed 7 a leg ends mid-air over open ocean. Same defect iter 81 fixed for
-  fog, same fix. *Sky × Polish.* (b) **the asphalt floods the interior** — by 2035 the
-  road ground tone compounds into a dark brown smear that robs the parks of contrast.
-  The kelp-coast failure mode, inland. *Urban × Polish.*
-  **Both re-confirmed independently at iter 84** by unprompted holistic agents: seed 7
-  found the rainbow offshore *with no rain cloud attached*, and **both** seeds named the
-  road tone as "the element most at risk of compounding" without being asked. Per iter 79,
-  a caveat two seeds volunteer is a finding — these two are now well past a hunch, and
-  (b) is the strongest open cue in the ledger. (c) **the MONORAIL BEAM reads as UI chrome —
+  fog, same fix. Re-confirmed a **third** time at iter 86 (seed 42's agent noted it
+  unprompted, "unchanged from before"). *Sky × Polish — now the strongest open cue.*
+  ~~(b) **the asphalt floods the interior**~~ — **CLOSED by iter 86.** (c) **the MONORAIL BEAM reads as UI chrome —
   `drawMonoAt`, not `drawGondAt` (attribution corrected at iter 85).** **Six** agents across
   iters 79/84/85, on 4 seeds, have called it "stadium markings" / "selection overlay" /
   "transit route overlay" / "a debug overlay floating above the rooftops with no shadow";
@@ -417,89 +412,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 78 entries before Iteration 76 live in
+> **Archive:** the 79 entries before Iteration 77 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 76 — the woods grow a closed core and a feathered edge (2026-07-10)
-
-**Vector:** Nature × **Deepen** — rotation pointed at Nature (stalest live domain,
-untouched since 67; Sky is saturated-closed) and the kind had to change after 75's
-Polish. Deepen is the skill's stated highest-yield move once a domain has its basics.
-
-**Orient — the ledger undersells Nature, and the first idea died on a probe.**
-Nature is far richer than the header implies: forest, redwood, meadow, bloom,
-orchard, vineyard, farm, fire, logging, succession, mushrooms *and* deer all exist.
-The first vector I designed was **"forests grow up"**: `c.age` is incremented every
-tick (L996) and reset by fire, logging, redwood conversion and succession, yet
-**nothing in the sim ever reads a forest's age** and the draw ignored it — a free,
-already-maintained field. Scaling tree size by age would have made burn scars and
-logging cuts visibly regrow.
-
-**I measured it before writing a line, and it was a dead end.** Two findings:
-1. **`c.age` is in TICKS, not years — ~13.3 ticks/year** (max 681 at year 2025).
-   Any age threshold written in "years" is off by 13×.
-2. **Forest turnover is ~zero after the early years.** Forest hexes younger than 15
-   years at 2035: **0 / 1 / 0** across seeds 7 / 42 / 1234 (n=67/67/102). Counts are
-   near-static (62→67, 65→67, 98→102) because logging and succession cancel, and by
-   ~1995 there are no EMPTY cells left beside the woods to succeed into. The feature
-   would have been invisible in ~99% of cells — textbook marginal filler. **Dropped
-   at design time, zero edits.** Don't re-explore forest age; the field is dead
-   because the woods are frozen, not because the draw was lazy.
-
-Same probe turned up: **`MEADOW` is down to 1 cell at 2035**, so the wildflower-bloom
-CA (excitable media) and the deer's meadow habitat have almost nothing left to run
-on in a mature city. Worth knowing before anyone deepens blooms or deer.
-
-**The vector that survived a probe.** Every `T.FOREST` hex drew **the same three
-trees at the same offsets and sizes** — a hex in the deep interior was pixel-identical
-to a lone stand in the open. So closure, not age, is the axis with spread. Measured
-first: bucketing forest hexes by wooded-neighbour count 0..6 fills **every bucket**
-(seed 42 @2035: `[6,15,12,11,9,7,7]`) — ~40% edge (0–2), ~35% interior (3+), and
-seed 1234 has 24 hexes with *zero* wooded neighbours. Confirming the physics:
-**`REDWOOD` sits almost entirely at 4–6 neighbours** — this world already puts its
-old growth in the core, unprompted.
-
-**Change:** one draw case (~L2112). `k=countAround(x,y,1,forest||redwood)`, `m=k/6`.
-Interior hexes get taller trees (`s=0.78+0.34m`), a 4th tree at `k>=4`, a deeper
-canopy and a shaded floor (`×(1.08-0.18m)`); edge hexes get smaller trees, only 2 of
-them, low understory scrub, and a *brighter* sunlit floor. **Tree budget deliberately
-held flat** — edge loses one, interior gains one: 203 trees vs the old 201, so the
-change is perf-neutral by construction rather than by hope.
-Draw-only: no `rng()`, no `hashCell`, no terrain, no new tile/entity → no census hook,
-`TILELABEL` or `ENTINFO` sync needed. Derived per-frame from neighbours (~720 `cellAt`
-calls/frame, negligible) rather than stored in a new cell field, keeping the blast
-radius to a single `case`.
-
-**Census:** VERDICT PASS, 0 page errors. pop, roads, developed, towerHt, towers,
-tallTowers, boulevardTrees **all exactly +0**; tile histogram **empty**. `greenRoofs +1`
-is the last-partial-tick jitter documented at 74. The correct signature of a draw-only
-change.
-
-**Visual:** 3 subagents, all PASS, on **before/after pairs** (the old file shot from a
-backup at identical clip coords, 800,477 and 800,406 — a subtle draw change earns a
-control frame). Seeds 42 and 1234 *independently* described BEFORE as a "uniform
-stipple" / "flat stamp… wallpaper repetition" and AFTER as "a dense core fading to a
-softer edge." Both explicitly cleared the over-darkening risk: only true interior hexes
-deepen, and **edge hexes read a touch brighter**, so the woods gained depth, not
-muddiness — the kelp failure mode did not recur. Seed 7 whole-city: PASS, no tears, no
-floaters, nothing compounded.
-
-**Perf:** PASS ×3, judged by minimum on a quiet box. Day **30.28ms** (baseline 31.33,
-−3.4%), night **34.44ms** (baseline 37.22, −7.1%) — both *under* baseline. The flat
-tree budget did its job; a Nature draw-deepening cost nothing.
-
-**Verdict:** SHIPPED. The woods stop being wallpaper: they now have a treeline. The
-lasting result of this lap is as much the two probes as the feature — forest age is a
-dead field, meadows are nearly extinct, and **closure is the axis of variation this
-CA was already encoding in its redwoods.**
-
-**Follow-up worth taking:** iter 73's corner-lot lead is still open (27 of 74 civics
-tie in `frontSide`). Also: `REDWOOD` (18 hexes) still draws three fixed trees and
-never varies — the same closure treatment, or an age-driven one, is a natural
-follow-on now that redwoods are confirmed to be interior-only.
 
 ## Iteration 77 — the streets discover which of them is a highway (2026-07-10)
 
@@ -1257,3 +1174,67 @@ made it six, on a fresh seed, unprompted.
   have been either a wrongly-reverted iteration or a silently-ignored gate.
 - **`TALL` does not exist in `solvista.html`** — the header's iter-84 note implies it does.
   It was a set defined locally inside 84's probe. Rebuild it as `new Set([T.TOWER,T.MID,T.CIVIC,T.COM])`.
+
+## Iteration 86 — the asphalt stops being a smear (2026-07-10)
+
+**Vector** — Urban fabric × **Polish**. Rotation: cue (b) was the ledger's strongest
+open cue, volunteered *unprompted* by both holistic agents at iter 84. The other strong
+cue (c, the monorail beam) is Transport × Polish and iter 85 was Transport × Polish —
+taking it would have repeated **both** axes back-to-back. Urban was two laps back.
+The skill's own rule decides it: *if something compounded badly, fix it before adding more.*
+
+**The defect, measured** (`probe-asphalt.mjs` — **gitignored scratch** via `probe-*.mjs`,
+like `probe-forecourt.mjs`; recreate it, don't hunt for it in git — reads real canvas pixels at each
+tile's screen centre via `__find`, so it measures the *drawn* result after TINT/season/
+light, not the `BASE` entry). At 2035 the bare asphalt floor (`p10`) was **99.9** on
+*both* seeds against parks at ~170 — and there are **836 road hexes** (seed 42) vs 157
+parks, so a fifth of the plate sat at the palette's darkest large-area tone, contiguous.
+Worse: the asphalt's *internal* variation was **zero**. Its whole measured `spread` (100.7)
+came from trees and lane dashes drawn *on top*. A flat dark field of 836 tiles is exactly
+the kelp-coast failure mode, inland.
+
+**Change (draw-only: no terrain, no `rng()`, no new `Math.random()` draw).**
+- `road` `[106,101,93]`→`[136,133,126]`, `roadArt` `[86,82,75]`→`[116,113,107]`. Lighter
+  and de-browned (r−b 13→10), **preserving the 20-luminance arterial-is-darker gap** that
+  is the trunk's visual language.
+- `RDF=[0.93,0.965,1.0,1.035,1.07]`, indexed by `hashCell(x,y,seedNum^0xA5FA)` — asphalt
+  resurfacing patches. **Quantized to 5 steps on purpose:** `col()` caches on `name|f`, so
+  a *continuous* jitter would blow the cache to one entry per road hex. 5 steps × 2 names
+  = 10 entries. Drawn at the existing `1.02` bleed, so a patch laps its neighbour and the
+  seams read as joins, not as a grid.
+- lane-dash `globalAlpha` `0.55`→`0.62`: the cream dash loses contrast on lighter asphalt
+  (Δ70→Δ53 against the surface; 0.62 restores it to Δ60).
+
+**Census** — `+0` on **21 of 22** metrics, `pop +2` (iter 85's documented non-reproducible
+wobble), empty tile histogram, 0 page errors. VERDICT: PASS. Exactly the signature a
+draw-only change should have.
+
+**Probe (after)** — bare-asphalt floor `99.9 → 122.2`, *identical on both seeds*. PARK−ROAD
+mean gap `44.0 → 26.6` (seed 42) and `37.7 → 21.3` (seed 7). `PARK`, `RES` and `MEADOW`
+readings came back **byte-identical**, which is the proof the change touched only asphalt.
+The floor landing at **122.2 rather than 133** is the mottle confirming itself: that is the
+`0.93` step, not the `1.0` one. A histogram cannot see a tone — per iter 82, *measure the shape*.
+
+**Visual** — 2 agents, 6 frames, incl. a **night** frame and a **2005/sparse-road** frame
+(the two ways this change could have failed: glowing at night, or vanishing into terrain
+when roads don't yet form a mass). Both PASS. Seed 42's agent independently described the
+BEFORE as "a dark, warm brown mass that dominates the negative space" — a **third**
+unprompted confirmation of the cue. Both called the mottle "resurfacing patches", not a
+checkerboard. I read the night frame myself (the one risk case): streets stay muted
+violet-grey, clearly darker than the lit windows.
+
+**Verdict: FIXED.** The interior reads as sun-bleached asphalt; the parks have their
+contrast back. Cue (b) is closed.
+
+**Findings**
+- **`__find` returns BOTH grid and screen coords** — `{x,y,sx,sy}`. `h.x ?? h.sx` silently
+  samples grid cell `(22,0)`, not the screen, and every probe reads black. Use `sx`/`sy`.
+  (Cost me one debug round; `getImageData` on `#stage`'s own 2d context works fine.)
+- **A per-cell tone jitter must be quantized, because `col()` memoizes on `name|f`.** Any
+  future "vary this surface per hex" move (roofs, sand, grass) inherits this constraint.
+- **The palette entry is not the drawn tone.** `road` L=101.6 in `BASE`; measured floor
+  99.9 after TINT. Close here, but probe the *canvas*, not the array.
+- **`p10` is the honest read of a ground tone**, not `mean` — the mean is polluted by
+  whatever is drawn on top of the tile (trees, dashes, lamps).
+- Agents read the **`SPECIMEN nn`** caption in the UI and will report *that* as the seed
+  ("seed-16" for `seed=42`). Not confabulation — don't discount a verdict over it.
