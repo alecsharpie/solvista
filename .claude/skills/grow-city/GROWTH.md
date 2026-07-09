@@ -18,7 +18,7 @@ tooltip / kelp re-gate · U3 determinism audit).
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67 | ~~46~~ | | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65 | 22 | | U2, 44, 58 |
-| **Urban fabric** | 32, 62 | 7, 23 | 38, 54 | 47 | 8, 14, 24 | |
+| **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24 | |
 | **Transport** | 2, 9, 21, 31, 48 | | 28, 39, 55, 63 | 5, 15 | | U1, U3 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61 |
@@ -44,14 +44,15 @@ tooltip / kelp re-gate · U3 determinism audit).
   tuned-not-reverted: forecourt plazas (iter 36 — 1996 start collapsed pop 5%,
   moved to 2020).
 - **Live artifact:** last synced 2026-07-08 (label "zoom-and-pan", per project
-  memory — includes iters 1–33 + user passes). **Pending: iters 34–67**
+  memory — includes iters 1–33 + user passes). **Pending: iters 34–68**
   (joggers · rainbows · forecourt plazas · deer · cranes · station riders ·
   perf fix · evening crowds · entity tooltips · sea fog · river flow ·
   festival streets · field hedgerows · skybridges · city helicopter · block
   parties · wind · tide · Est./Built tooltip years · pasture patchwork ·
   laundry lines · ferry gulls · kids in tow · full seasons · moonglade · the
   school run · fairy rings · sea-fog fix · rooftop water tanks · bus
-  stops · dog walkers · tidepools · civic flags · seasonal orchards), the
+  stops · dog walkers · tidepools · civic flags · seasonal orchards ·
+  rooftop gardens), the
   `__ents` entity-stamp hook (iter 48), the `__setYear` season-pin hook
   (iter 57), the
   flood/step test hooks, and the concurrent polish-tile session's esplanade +
@@ -1573,3 +1574,27 @@ coherent (orchards read naturally in the farm belt; the concurrent session's
 new Dijkstra monorail traces clean).
 **Verdict:** DEEPENED (Nature × Sky/seasons interconnect). Redeploy pending
 (iters 34–67 + hooks + the concurrent transport/camera/shoreline commits).
+
+## Iteration 68 — planted rooftop gardens (2026-07-09)
+
+**Vector:** Urban fabric × Deepen (empty Polish column, last touched 62).
+**Orient/saturation finding:** rotation first pointed at Sky (last 61), but Sky
+is now confirmed SATURATED — probing turned up clouds + **cloud shadows** (drift
+ellipse under each cloud), rain, rainbows, sea-fog, wind, seasons, moon,
+moonglade, stars AND **shooting stars** all already present. Three would-be Sky
+features already exist; per the saturation rule I did not force one and rotated
+to Urban.
+**Change:** the MID (walk-up) green roofs were a bare sage box — the `groof`
+flag set the deck but nothing was planted on it (COM roofs already had café
+umbrellas + v>0.85 gate; MID had nothing). Turned the deck into an actual
+garden: two-tone sage shrub clusters + a canopyLt tuft on top of the sage
+prism, plus a warm terrace lantern after dark on ~55% (`hashCell^0x60F0`).
+Draw-only; interconnects the existing green-roof system with visible rooftop
+life. No rng, no terrain, no new state.
+**Census:** VERDICT PASS, pop/roads/developed exactly +0, greenRoofs steady 256.
+**Visual:** camera-zoomed MID green roof (seed 42, 29,7; 84 groof MIDs) — day
+shows planted shrub clusters vs the old bare box; night shows the warm terrace
+lantern glowing on the decks. Whole-city seed-7 frame coherent — roofs read as
+richer green tops, no clutter/darkness, no z-order tears.
+**Verdict:** DEEPENED. Redeploy pending (iters 34–68 + hooks + the concurrent
+session's transport/camera/shoreline/CSS commits).

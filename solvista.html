@@ -2497,8 +2497,20 @@ function drawBuilding(c,x,y,gx,gy){
     prism(gx,gy,0.36,0.32,h,h+1.6,col('creamDk',1),col('creamDk',0.6),col('creamDk',0.82));
     if(c.solar) /* rooftop solar array */
       prism(gx-0.08,gy+0.02,0.16,0.12,h+1.6,h+2.4,col('solar',1.15),col('solar',0.7),col('solar',0.9));
-    if(c.groof) /* green roof garden */
+    if(c.groof){ /* green roof garden — planted, not just a bare deck */
       prism(gx,gy,0.30,0.26,h+1.6,h+3.2,col('sage',1.06),col('sage',0.62),col('sage',0.85));
+      const[gcx,gcy]=px(gx,gy), ry=gcy-h-4;
+      ctx.fillStyle=col('sage',0.8);                                   /* planter shrubs */
+      ctx.beginPath();ctx.arc(gcx-2.4,ry+0.3,1.5,0,7);ctx.fill();
+      ctx.fillStyle=col('sage',1.16);
+      ctx.beginPath();ctx.arc(gcx+2.1,ry-0.6,1.8,0,7);ctx.fill();
+      ctx.fillStyle=col('canopyLt',0.95);
+      ctx.beginPath();ctx.arc(gcx-0.2,ry-0.2,1.2,0,7);ctx.fill();
+      if(LITAMT>0.4&&hashCell(x,y,seedNum^0x60F0)<0.55){ /* a terrace lantern after dark */
+        ctx.fillStyle='rgba(255,214,140,'+(0.55*LITAMT)+')';
+        ctx.beginPath();ctx.arc(gcx+0.5,ry-2.4,1.15,0,7);ctx.fill();
+      }
+    }
     if(v>0.5){ /* roof garden fringe */
       ctx.fillStyle=col('sage',1);
       const[cx,cy]=px(gx,gy);
