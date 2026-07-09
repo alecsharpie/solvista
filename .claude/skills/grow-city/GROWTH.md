@@ -18,7 +18,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~ | U4 | 53 |
-| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58 |
+| **Water & coast** | 6, 10, 12, 16, 20, 33 | | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23 | 38, 54, 68 | 47 | 8, 14, 24, **U4** | 75 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66 | 45 | | 73 |
@@ -87,6 +87,28 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   the stat working, not a regression. Judge them by whether the city earned the
   change, not by "up = good". `density` (residents per developed hex) rises with
   intensification and falls with sprawl.
+- **Lit vs emissive — `colA()` exists now (iter 79).** `col()` applies `TINT`, but it
+  returns `rgb(...)` with no alpha, so **every translucent highlight in the file was
+  written as a hardcoded `rgba(255,…)` literal and silently ignored the day/night tint.**
+  `colA(name,f,a)` is the tinted-rgba twin (uncached — `a` is continuous; measured free).
+  The test is **does the thing reflect light or emit it?** Foam, glints, wave sparkle
+  *reflect* → must go through `colA`. The moon (L3851+), aquarium bioluminescence (L3231),
+  window lights, and the `LITAMT`-gated shore glow *emit* → they correctly keep literals,
+  and several are deliberately gated to appear only at night. **Do not "fix" those.**
+  Remaining untinted literals that may deserve the same look: the whale spout (L3774) and
+  boat wake at L3659 — both sit next to `col('foam',1)` calls, so the file is inconsistent.
+- **⚠ A holistic VISUAL: PASS is WEAK evidence (iter 79).** Two subagents each returned
+  `VISUAL: PASS` on whole-city night frames in which the surf was rendering as a pure-white
+  neon rim around the entire coastline — a real, 79-lap-old defect. An un-primed reviewer
+  told "check if anything compounded" has **no BEFORE to compare against** and grades the
+  city against its own imagination, so it ratifies whatever it sees. Two working signals:
+  (1) **contradictory explanations of the same artifact are a finding** — both agents
+  explained away the white cable-car lines, one as "stadium pitch markings", one as "the UI
+  selection overlay" (they are `drawGondAt`'s `col('whiteDk')` pylons+cables, L3424, and
+  legitimate); (2) **a caveat both seeds volunteer is a finding** — both flagged night sand
+  as "muddy brown… acceptable", which is the tint working, but looking at *why* they both
+  reached for it surfaced the untinted foam beside it. Look at the frame yourself when two
+  agents agree in different words.
 - **⚠ Overlays drawn last FLOAT (iter 71):** the instinct to draw a highlight
   "last of all, so it can never tear" is wrong in this renderer. Rows draw
   top→bottom, so an entity in row *y* is legitimately occluded by a tower in
@@ -267,70 +289,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 71 entries before Iteration 71 live in
+> **Archive:** the 72 entries before Iteration 72 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 71 — the hovered thing wears a ring (2026-07-09)
-
-**Vector:** People & activity × **Interaction/UX** — rotation pointed at People
-(least-recently-touched non-saturated domain, last 64) and the *kind* had to
-change again: 65–68 were four Deepens and 70 was a Polish. Interaction/UX had
-gone unused since iter 52, and the header's own advice ("lean hard on
-Deepen/Polish/Interaction") pointed straight at it. People being *near*-saturated
-argued for adding no new person at all — only a better way to read the ones
-already there.
-**Orient/seam finding:** entity tooltips (iter 42) name the thing under the
-cursor, but in a dense block a `Resident` is a 1.8×5px figure among a hundred
-others — the tooltip tells you *what* without telling you *which*. That missing
-half is the feature. Also corrected a header claim in passing: cars *are* named
-on hover (via `VKIND`, not `ENTINFO`) — `__ents` can't *return* them, which is a
-different thing.
-**Change:** `pickEntity` now also returns the entity and its pick radius;
-`mousemove` parks them in `hoverEnt`/`hoverR` (cleared on tile-hover, pan, and
-mouseleave). `stamp()` — already called at the top of every entity's draw —
-draws a focus ring when it stamps the hovered entity: a squashed ellipse
-(`ry=rx*0.5`) at the entity's feet, ink stroke `1.1` under a pulsing cream
-stroke `0.7`. Scales with the pick radius, so a ped gets a small ring and a
-ferry a large one. Draw-only: no rng, no hashCell, no terrain, no new state, no
-new entity, no new ENTINFO row.
-**The bug that made this iteration worth it:** I first drew the ring *last of
-all* in `render()`, reasoning that an overlay above everything can never tear.
-A subagent passed it but flagged that it couldn't resolve a figure inside the
-ring; I assumed an iso misread and went to look myself — the ring was sitting on
-a **rooftop with no pedestrian in it**. Rows draw top→bottom, so the ped was
-legitimately hidden behind a mid-rise in the next row, and the last-drawn ring
-floated up onto the roof of the very building occluding it — highlighting the
-wrong object. Moving the draw into `stamp()` puts the ring at the entity's own
-z: it is occluded exactly when its entity is. Second bug, found by magnifying:
-`ctx.lineWidth` is in **world** units under the camera transform, so the
-original `2.2` stroke was *thicker than the 1.8px pedestrian* and read as a
-black tire. Retuned to 1.1/0.7.
-**Harness:** `hovershot.mjs` — `shoot.mjs` can't hover, so this drives Playwright
-directly (`__ents` to aim the cursor, `ZOOM=n` to wheel the artifact's real
-camera in, `PICK=front` to avoid picking an occluded back-row entity, plus a
-no-hover control frame). Both lessons + the tool are in the header.
-**Census:** VERDICT PASS, 0 page errors, **every metric exactly flat** and tile
-histogram empty — the cleanest possible signature for a draw-only change (cf.
-iter 70's ±3 pop timing jitter).
-**Perf:** ran the gate despite 71 not being a step-back lap, because the ring
-draws from `stamp()`, a hot path hit for every entity every frame. PASS ×3 by
-minimum: day **25.11ms** (25.17 @69/70 — flat, still under the ~25.5 fix-lap
-threshold), night **26.33ms**. The `e===hoverEnt` compare costs nothing.
-**Visual:** 6 subagent verdicts across two rounds. Round 1 (last-drawn ring)
-returned 3× PASS and I shipped nothing on it — the PASSes were *correct about
-what they saw* and blind to the floating-ring bug, which only a caveat plus my
-own look surfaced. Round 2 (tuned, stamped): seed 42 ped PASS (figure stands in
-the ring, ring flat on the ground plane, body draws over the rear arc, stroke
-proportionally thinner than the figure); seed 7 ferry PASS (ring scales to the
-hull, hull occludes the rear arc); whole-city control at seeds 42 and 7 PASS
-(no stray ring anywhere, no tears, city still balanced).
-**Verdict:** SHIPPED. The visual gate's real lesson this lap is the inverse of
-iter 70's: there, a FAIL was a false negative; here, three PASSes were true
-statements that missed a real bug. **A subagent's caveat is a finding.** Redeploy
-pending (iters 34–71 + hooks + the concurrent transport/camera/shoreline commits).
 
 ## Iteration 72 — the harbor gets its ships (2026-07-09)
 
@@ -864,3 +827,81 @@ obvious next Connect/Deepen, and a dog on a sidewalk is charming. `PEDDEST` coul
 the kerb toward *open* shopfronts at day and lit windows at night. Iter 77's `treed`-on-
 `c.flow` boulevard retarget, 73's corner-lot lead and 76's REDWOOD closure lead all remain
 open. **Iteration 79 owes the holistic step-back** (74 + 5).
+
+## Iteration 79 — the surf learns it is not a light source (2026-07-10) [12th lap]
+
+**Vector:** the holistic step-back (74 + 5, and iter 78 explicitly booked it) —
+which found a real defect, so the lap became **Water & coast × Polish** and fixed
+it. Verdict is therefore HOLISTIC **+ FIXED**, not a review with a TODO attached.
+
+**The step-back's own numbers, on unedited code.** Census VERDICT PASS, 0 page
+errors, **all 22 metrics exactly flat** (pop 142497, roads 5754, developed 6210,
+arterials 876), tile histogram empty — a quiet box, per 74's caveat that a flat
+table proves the machine was idle, not that anything is pure. Perf PASS ×3 by
+minimum: day **30.05ms** (baseline 31.33, −4.1%), night **34.22ms** (baseline
+37.22, −8.1%), three runs agreeing to ±0.11ms. Both scenes *under* baseline, and
+matching 77's readings — the day-floor "creep" 74 retired stays retired.
+
+**The finding, and how the gate nearly ate it.** Two subagents read whole-city
+day+night frames (seed 42 and a never-tested seed 314) and **both returned
+`VISUAL: PASS`** — while the surf was rendering as a hard white neon rim around
+the entire coastline at night. What convicted it was not their verdicts but their
+*caveats*: both volunteered that the night sand goes "muddy brown… acceptable,"
+and both explained away the same white lines with **contradictory** stories
+("stadium pitch markings" vs "the UI selection/route overlay"). Two agents
+inventing two different explanations for one artifact is the signature of
+something being rationalized. Looked at the frame myself. The white lines were
+innocent — `drawGondAt`'s `col('whiteDk')` pylons and cables (L3424), the plural
+cable-car lines from U4. Beside them, the surf was not.
+
+**Root cause — a whole class, not a typo.** `col()` applies `TINT` but returns
+`rgb(...)`, with nowhere to put an alpha. So *every translucent highlight in the
+file* had been written as a hardcoded `rgba(...)` literal, bypassing the lighting
+entirely. The surf at L2081 was `rgba(255,251,240, a2≤0.76)` — pure white, at up
+to 76% alpha, along **every beach-facing edge of the whole coast**, while each
+neighbouring surface was tinted to `[.42,.42,.58]`. Meanwhile the wakes and
+splashes ten lines away (`drawBoat`, `drawWhale`) correctly call `col('foam',1)`.
+This is the kelp failure inverted: an element ringing the entire coastline,
+structurally invisible to zoomed daytime checks, surviving **79 iterations**.
+
+**Change (draw-only).** Added `colA(name,f,a)` beside `col()` — the tinted-rgba
+twin, deliberately **uncached** because `a` is continuous per cell and per frame.
+Retargeted the three *reflective* water highlights: surf foam (L2081), river
+current glints (L2047, new `BASE.glint`), open-water sparkle (L2029). Left the
+*emissive* literals alone — the moon, aquarium bioluminescence, window lights,
+and the `LITAMT`-gated shore glow emit light and correctly ignore the tint. The
+discriminator is **reflect vs emit**, and it is now written in the header so a
+future lap doesn't "fix" the moon.
+
+**Census:** VERDICT PASS, 0 page errors. Every metric +0 except `pop -1` — the
+documented last-partial-tick jitter. Tile histogram empty, all 25 entity counts
+unchanged. The exact signature of a draw-only change.
+
+**Visual — with a BEFORE control, per 77's rule.** `git show HEAD:solvista.html`,
+identical clip coords, both seeds, and the agents were **named the confusable
+elements and forbidden to report them** (moon, moon-reflection, window lights,
+cable-car lines, boat wakes). 3/3 PASS, all citing *what differs*. Seed 314's agent
+sampled the rim: **(230,230,224) BEFORE → (99,100,133) AFTER**, against night water
+(39,72,103) — within noise of the (107,105,139) the tint predicts, so the pixels
+confirm the arithmetic rather than merely agreeing with it. Foam still reads as
+moonlit surf: brighter and cooler than the water, clean against the sand, not
+vanished. The **day control is unchanged** (midday tint ≈1.0), which is the half of
+the test that proves the fix is a tint and not a dimmer.
+
+**Perf:** a rare clean A/B — same quiet box, minutes apart, same session. Day
+30.05 → **30.11ms**, night 34.22 → **34.17ms**, against ±0.06ms run-to-run spread.
+`colA`'s per-cell arithmetic is free next to the stroke it feeds; the uncached
+call was the one thing worth measuring, and it cost nothing.
+
+**Verdict:** HOLISTIC + FIXED. The city is otherwise clean — balanced, readable at
+night, no clutter, no tears, and the coastline is now *pleasant* instead of rimmed.
+The lasting result is `colA` plus the reflect-vs-emit rule: the tinting bug was
+never one line, it was a missing primitive, and the missing primitive is why the
+literals were there in the first place.
+
+**Follow-ups worth taking:** two untinted literals of the same class remain, both
+sitting next to correct `col('foam',1)` calls — the whale spout (L3774) and a boat
+wake (L3659). Iter 77's `treed`-on-`c.flow` boulevard retarget (allées still line
+`busy`, not the arterials), 78's dogs-on-sidewalks (`strollable()` still park-bound),
+73's corner-lot lead and 76's REDWOOD closure lead all remain open. **Iteration 84
+owes the next holistic step-back** (79 + 5).

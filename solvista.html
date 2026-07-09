@@ -234,7 +234,7 @@ const BASE={
   grass:[150,181,122], grassDk:[122,155,100], meadow:[163,190,128],
   canopy:[104,146,92], canopyLt:[139,173,110], trunk:[122,90,62],
   conifer:[104,146,92], coniferLt:[139,173,110], /* evergreens sit out the seasons */
-  water:[92,172,178], waterDk:[62,138,148], foam:[255,251,240],
+  water:[92,172,178], waterDk:[62,138,148], foam:[255,251,240], glint:[235,248,250],
   road:[106,101,93], roadArt:[86,82,75], roadLine:[233,221,192],
   cream:[244,232,208], creamDk:[221,205,172],
   terra:[199,111,74], terraDk:[170,90,60],
@@ -340,6 +340,11 @@ function col(name,f){ /* f: face brightness */
   const b=BASE[name];
   c='rgb('+Math.min(255,b[0]*TINT[0]*f|0)+','+Math.min(255,b[1]*TINT[1]*f|0)+','+Math.min(255,b[2]*TINT[2]*f|0)+')';
   return CCACHE[k]=c;
+}
+function colA(name,f,a){ /* tinted rgba, for surface highlights that REFLECT light (foam, glints) rather
+                            than emit it — those keep their literal color. Uncached: a varies per cell/frame. */
+  const b=BASE[name];
+  return 'rgba('+Math.min(255,b[0]*TINT[0]*f|0)+','+Math.min(255,b[1]*TINT[1]*f|0)+','+Math.min(255,b[2]*TINT[2]*f|0)+','+a+')';
 }
 function colLit(name,f,litMix){ /* window glass mixing toward warm light at night */
   const k=name+'|'+f+'|'+(litMix*20|0);
@@ -2026,7 +2031,7 @@ function drawCell(x,y){
       if(((x*3+y*5)%7)<2){ /* sparkle */
         const[cx,cy]=px(gx,gy);
         const ph=Math.sin(waveT*1.6+x*1.7+y*2.3);
-        if(ph>0.2){ctx.strokeStyle='rgba(255,250,235,'+(0.22*ph)+')';ctx.lineWidth=1;
+        if(ph>0.2){ctx.strokeStyle=colA('foam',1,0.22*ph);ctx.lineWidth=1;
           ctx.beginPath();ctx.moveTo(cx-5,cy+ph*2);ctx.lineTo(cx+5,cy+ph*2);ctx.stroke();}
       }
       if(c.riv){ /* the current is visible: glints slide downstream */
@@ -2044,7 +2049,7 @@ function drawCell(x,y){
           const off=(p-0.5)*16, side=(hashCell(x,y,k2+57)-0.5)*7;
           const a2=Math.sin(p*Math.PI)*0.4;
           const sx2=rcx+vx*(off-2.4)-vy*side, sy2=rcy+vy*(off-2.4)+vx*side;
-          ctx.strokeStyle='rgba(235,248,250,'+a2+')';ctx.lineWidth=1.1;
+          ctx.strokeStyle=colA('glint',1,a2);ctx.lineWidth=1.1;
           ctx.beginPath();ctx.moveTo(sx2,sy2);ctx.lineTo(sx2+vx*4.8,sy2+vy*4.8);ctx.stroke();
         }
       }
@@ -2078,7 +2083,7 @@ function drawCell(x,y){
           const mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;
           let ix=cx2-mx,iy=cy2-my; const L4=Math.hypot(ix,iy)||1; ix/=L4;iy/=L4;
           const ins=0.9+(1-TIDE)*1.6+ph*0.7; /* a gentle bob at the break, no big travel */
-          ctx.strokeStyle='rgba(255,251,240,'+a2+')';
+          ctx.strokeStyle=colA('foam',1,a2);
           ctx.beginPath();
           ctx.moveTo(a[0]+ix*ins,a[1]+iy*ins);ctx.lineTo(b[0]+ix*ins,b[1]+iy*ins);ctx.stroke();
         }

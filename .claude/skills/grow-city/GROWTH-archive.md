@@ -1590,3 +1590,62 @@ with a magnified clip → PASS.
 magnify before believing a visual FAIL). Redeploy pending (iters 34–70 + hooks +
 the concurrent transport/camera/shoreline commits).
 
+## Iteration 71 — the hovered thing wears a ring (2026-07-09)
+
+**Vector:** People & activity × **Interaction/UX** — rotation pointed at People
+(least-recently-touched non-saturated domain, last 64) and the *kind* had to
+change again: 65–68 were four Deepens and 70 was a Polish. Interaction/UX had
+gone unused since iter 52, and the header's own advice ("lean hard on
+Deepen/Polish/Interaction") pointed straight at it. People being *near*-saturated
+argued for adding no new person at all — only a better way to read the ones
+already there.
+**Orient/seam finding:** entity tooltips (iter 42) name the thing under the
+cursor, but in a dense block a `Resident` is a 1.8×5px figure among a hundred
+others — the tooltip tells you *what* without telling you *which*. That missing
+half is the feature. Also corrected a header claim in passing: cars *are* named
+on hover (via `VKIND`, not `ENTINFO`) — `__ents` can't *return* them, which is a
+different thing.
+**Change:** `pickEntity` now also returns the entity and its pick radius;
+`mousemove` parks them in `hoverEnt`/`hoverR` (cleared on tile-hover, pan, and
+mouseleave). `stamp()` — already called at the top of every entity's draw —
+draws a focus ring when it stamps the hovered entity: a squashed ellipse
+(`ry=rx*0.5`) at the entity's feet, ink stroke `1.1` under a pulsing cream
+stroke `0.7`. Scales with the pick radius, so a ped gets a small ring and a
+ferry a large one. Draw-only: no rng, no hashCell, no terrain, no new state, no
+new entity, no new ENTINFO row.
+**The bug that made this iteration worth it:** I first drew the ring *last of
+all* in `render()`, reasoning that an overlay above everything can never tear.
+A subagent passed it but flagged that it couldn't resolve a figure inside the
+ring; I assumed an iso misread and went to look myself — the ring was sitting on
+a **rooftop with no pedestrian in it**. Rows draw top→bottom, so the ped was
+legitimately hidden behind a mid-rise in the next row, and the last-drawn ring
+floated up onto the roof of the very building occluding it — highlighting the
+wrong object. Moving the draw into `stamp()` puts the ring at the entity's own
+z: it is occluded exactly when its entity is. Second bug, found by magnifying:
+`ctx.lineWidth` is in **world** units under the camera transform, so the
+original `2.2` stroke was *thicker than the 1.8px pedestrian* and read as a
+black tire. Retuned to 1.1/0.7.
+**Harness:** `hovershot.mjs` — `shoot.mjs` can't hover, so this drives Playwright
+directly (`__ents` to aim the cursor, `ZOOM=n` to wheel the artifact's real
+camera in, `PICK=front` to avoid picking an occluded back-row entity, plus a
+no-hover control frame). Both lessons + the tool are in the header.
+**Census:** VERDICT PASS, 0 page errors, **every metric exactly flat** and tile
+histogram empty — the cleanest possible signature for a draw-only change (cf.
+iter 70's ±3 pop timing jitter).
+**Perf:** ran the gate despite 71 not being a step-back lap, because the ring
+draws from `stamp()`, a hot path hit for every entity every frame. PASS ×3 by
+minimum: day **25.11ms** (25.17 @69/70 — flat, still under the ~25.5 fix-lap
+threshold), night **26.33ms**. The `e===hoverEnt` compare costs nothing.
+**Visual:** 6 subagent verdicts across two rounds. Round 1 (last-drawn ring)
+returned 3× PASS and I shipped nothing on it — the PASSes were *correct about
+what they saw* and blind to the floating-ring bug, which only a caveat plus my
+own look surfaced. Round 2 (tuned, stamped): seed 42 ped PASS (figure stands in
+the ring, ring flat on the ground plane, body draws over the rear arc, stroke
+proportionally thinner than the figure); seed 7 ferry PASS (ring scales to the
+hull, hull occludes the rear arc); whole-city control at seeds 42 and 7 PASS
+(no stray ring anywhere, no tears, city still balanced).
+**Verdict:** SHIPPED. The visual gate's real lesson this lap is the inverse of
+iter 70's: there, a FAIL was a false negative; here, three PASSes were true
+statements that missed a real bug. **A subagent's caveat is a finding.** Redeploy
+pending (iters 34–71 + hooks + the concurrent transport/camera/shoreline commits).
+
