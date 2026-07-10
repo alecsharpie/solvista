@@ -5223,3 +5223,113 @@ darkening."*
   speed convicted the easing curve that both other gates had passed. **When a change is about MOTION, neither
   a still frame nor a tile histogram is a gate.** Write the probe.
 
+## Iteration 113 — the marsh answers its own tooltip (2026-07-10)
+
+**Vector** — Water & coast × **Deepen**. Rotation named the domain: Water (106) was the stalest *safe*
+pick (Sky 95 is staler and a documented trap). The header also named the content: iter 109's banked
+"Sky-feedable" list is `VINEYARD`, `MEADOW` seed-heads, **`MARSH`** — deepening another domain toward
+Sky is the sanctioned way to feed Sky without a sky feature. Kind is Deepen, not Connect: Connect had
+already paid three laps running (109/111/112).
+
+**The seam.** `T.MARSH`'s tooltip calls it a *"Reedy tidal wetland"* and — since iter 97 — prints a
+**live `Tide` reading on that very hex**. The draw was two fixed ellipses and seven reed strokes. The
+city told you the tide on a tile that had never once moved with it. Same shape as 111 (a shelter that
+never met a bus) and 112 (a platform that never met a train): *close a gap between two things that
+already exist.*
+
+**Measured before designing** (`probe-marsh.mjs`, tracked). Clock frozen (`playing=false`) so only
+`TIDE` could move a pixel:
+
+| | pristine | after |
+| --- | --- | --- |
+| marsh mean luminance, TIDE 0 → 1 | **151.5 → 151.7** | **135.0 → 153.0** (seed 42) |
+| | | **140.4 → 155.7** (seed 1234) |
+| pixels changed across the cycle | ~0 (0.7% = neighbour bleed) | **61–74%, monotone at every step** |
+
+The 0.7% pristine "movement" was the neighbouring BEACH's damp margin leaking into the sample box —
+i.e. the beach *did* answer the tide and the marsh did not.
+
+**The design was decided by geometry, not taste.** First attempt breathed the two pools with the tide.
+It moved **3.9%** of the hex at half tide, because a marsh hex is **23.4 × 15.6 screen px** and its pools
+are **~4 × 2 px**. Scaling them harder changed nothing. So the **flat** answers instead: the hex body
+lerps toward `soil` on the ebb (exposed wet mud), a permanent mud bed is laid under each pool for the
+water to shrink inside, and a thin `colA('water')` sheet is drawn over everything above TIDE 0.60.
+That is a whole-hex response, and it is what took the change from 3.9% to 72%.
+
+**Change** (`case T.MARSH`, ~30 lines, draw-only):
+1. body `= lerp(meadow, soil, ebb*0.42)`, `ebb = clamp((0.58-TIDE)/0.58)`; pools shrink to 0.34× inside a
+   fixed 1.22× mud bed; flood sheen above TIDE 0.60.
+2. reeds keep a calendar — `green` peaks midsummer and **wraps cleanly** (`1-|s-0.42|/0.34`), lerping
+   `sage → straw`, then `→ stubble` by a winter term; `rlen` drops 38% at deep winter.
+3. cue **(g)**: the three reed `hashCell` salts now mix `seedNum`. The old lean salt was
+   `hashCell(x,j,7)` — **no `y` at all**, so every marsh hex in a column leaned identically.
+4. new URL hook **`?tide=0..1`** (`__setTide`), which shifts the cycle's *phase* so the sea keeps
+   moving from there rather than freezing.
+
+**Census** — `pop/roads/developed` and all 22 metrics **exactly +0**, both before and after the salt fix.
+Tile histogram empty, as intended: this deepens a tile's draw, it does not move a tile. Draw-only, no
+`rng()`, no terrain.
+
+**Perf** (run because this lap adds per-frame draw work — iter 109's law, not the step-back's):
+min-of-3 day **33.83ms** / night **38.16ms** vs baseline 33.16/37.33 → +2.0% / +2.2%, inside the band
+109/110/111 measured for *pristine* HEAD (33.33 / 33.49 / 33.78). PASS. Not re-pinned.
+
+**Visual** — tide: **PASS** on the zoomed pair ("a genuine drained tidal mudflat… birds picking over wet
+mud"; high water "broken into per-tuft reflective patches, not a solid rectangle"). Whole-city, 3 frames,
+2 seeds: **PASS**, explicitly *"not a repeat of the kelp failure"* — the low-tide marsh reads as a natural
+estuary, and the city is no darker at dead low than at high water. Reed calendar: **two agents returned
+FAIL, and they were substantially right** — see findings.
+
+**Verdict — SHIPPED.** The tide is the feature and it is verified three ways. The reed calendar and the
+salt fix ride along at zero cost (+0 census, +0 perf) but are **below the resolution at which this loop
+can see anything**; they rest on the pixel probe alone, and I have logged that rather than dressing it up.
+
+### Findings
+
+- **⚠ THE CONSPICUOUS THING ON YOUR TILE MAY BELONG TO SOMEONE ELSE (new; extends iter 111's law).**
+  111 taught that *"not drawn"* and *"drawn but occluded"* are the same screenshot. Here: **"your ornament"
+  and "a neighbouring entity" are the same screenshot.** Two agents and *I* read the pale vertical shapes on
+  the marsh as reeds. They are a **heron** (`herons`: 54 in the census). The reeds are seven sub-pixel
+  strokes bunched around the pool. **The instrument:** back up the file, set the ornament's `strokeStyle`
+  to `'#ff00ff'`, shoot, revert (census confirms the revert). One 200×180 crop settled what four agent
+  reads and three probes could not. Do this *before* believing any account of a few-pixel ornament —
+  including your own.
+- **⚠ CUE (g)'s AUDIT GREP HAS A BLIND SPOT, AND THE CUE'S COUNT IS WRONG.** The pattern
+  `hashCell\([^)]*,[[:space:]]*(0x)?[0-9]+\)` matches only a **bare integer** salt, so every `k+90` /
+  `j+40` / `r*3+cc+50` form is invisible to it. It reported "4 remain"; the superset
+  `grep -oE 'hashCell\([^;]{0,60}' solvista.html | grep -v seedNum` finds **13 lines / 16 calls** that
+  are genuinely a function of `(x,y[,j])` alone — kelp sway (L2799), palm fronds (L2832/2834), orchard
+  fruit (L3248/3249), **park fireflies (L3423)**, L3610/3613, L5113/5117, plus the surf presence test
+  (L2747). Two of the marsh's own three offenders were never counted. **Generalizes iter 107:** an audit
+  is bounded by its instrument — a rule can be dead because nothing reaches it, and a breach can be
+  invisible because the grep can't spell it.
+- **⚠ A REED-PIXEL COUNT IS A CONTRAST MEASURE, NOT A HEIGHT MEASURE (extends iter 104).** Classifying
+  "pixels far from the body color" counted **winter highest (20.3/cell)** while winter reeds are **34%
+  shorter** — sage reeds on green meadow barely contrast; straw reeds on a muted winter body contrast
+  hard. Switching to geometry (topmost reed pixel, dpr 8) did not rescue it either: a 0.8px antialiased
+  tip is *detected only when it contrasts*, so the detector's sensitivity varies with the very quantity
+  under test, and the ordering flipped between seeds. **Height is drawn but unverifiable at this scale;
+  color is verified** (G−R: spring **+9/+12** → dry **−10/−9** → winter **−1/−2**, consistent on 2 seeds).
+  When a proxy correlates with your independent variable, it cannot grade it.
+- **⚠ MASK A TILE PROBE TO THE HEXAGON — A SQUARE BOX AROUND A 23×16 px HEX EATS ITS NEIGHBOURS.**
+  The first reed probe sampled a 14×14 box and confidently reported reed colors of `R−B ≈ +60`. That is
+  **sand**: the box spilled onto the BEACH, and beach sand is bright and tawny — indistinguishable from an
+  autumn reed by any color test. `probe-reed.mjs` (tracked) carries the point-in-hex mask
+  (`|dy| <= V-(V-E)|dx|/X`, shrunk 14% off the antialiased rim); reuse it for any per-tile pixel claim.
+- **A `hashCell` SALT *RANGE* CAN COLLIDE WITH ITSELF.** Writing `seedNum^(0x9EE1+j)`, `seedNum^(0x9EE2+j)`
+  and `seedNum^0x9EE3` looks like three independent salts and is not: at `j=2` the first *is* the third, so
+  two reed quantities became perfectly correlated. Verified by evaluating `hashCell` in-page at a fixed
+  cell across seeds. Space the bases (`0x9E01+j`, `0x9E41+j`, `0x9E81`). Note this is safe to fix after the
+  fact **only because the vector is draw-only** — iter 107's "never pick a salt after seeing the census"
+  binds terrain rules, whose salt perturbs the `rng()` stream. Here census is +0 for every salt.
+- **`?tide=` IS NOW A URL HOOK — the sea is finally testable, and every prior shot was a lie about it.**
+  Exactly iter 108's `?year=` story: a whole dimension of the diorama that no screenshot in this loop's
+  history could pin. Note the free-running default is *seeded*: `?seed=42` loads at **TIDE 0.02 — dead
+  low water** (`(seedNum%31)*0.4` → 4.4 rad). Implemented by phase-shift, not by clamping `TIDE`, so the
+  tide keeps cycling from where you put it. Use `.02 / .35 / .59 / .98` for low / mid-ebb / neutral
+  (no sheen, no mud tint — the right pin for grading anything *else* on a marsh) / high.
+- **OPEN CUE (i) — the marsh reeds do not read, and that is a `polish-tile` job.** Seven strokes in a
+  ~10×4-unit huddle around the pool contribute almost nothing to how the hex reads; the tile is "green hex
+  with a pool". Spreading/lengthening them is a tile redesign, out of scope for a growth lap. The reed
+  calendar is already wired and would pay off immediately if the reeds themselves were made legible.
+

@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113** | 22 | | U2, 44, 58, 79, **116** | **97** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
@@ -55,14 +55,16 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **115** · Water **116** · Urban **118** · People **119** · Nature **120** · Transport **121** · Civic **122**.
-  **Stalest is now Sky (115)** — but read its trap note below before taking it — then **Water (116)**, which is
-  the better pick because it holds the board's cheapest live cue: **turbine siting on `rDeep`** (116's last
-  finding). **122 took the then-stalest domain (Civic) and cashed the tell banked in the list below**, exactly
-  as 121 cashed cue (h) and 119 cashed 111's finding: three laps running where *the header told the iteration
-  what to do*. That is the loop working. **Urban also now holds a fresh banked cue from 122: ghost `c.solar` on
-  paved squares still inflates `solarRoofs` and still nudges the adoption CA** — see 122's third finding; it is
-  a metric-moving fix and wants its own lap.
+  Sky **115** · Urban **118** · People **119** · Nature **120** · Transport **121** · Civic **122** · Water **123**.
+  **Stalest is now Sky (115)** — but read its trap note below before taking it — then **Urban (118)**, which is
+  the better pick because it holds the board's cheapest live cue: **ghost `c.solar` on paved squares still
+  inflates `solarRoofs` and still nudges the adoption CA** (122's third finding). It is a metric-moving fix —
+  the only banked cue that will actually shift a census number — and wants its own lap.
+  **123 cashed the cue banked for Water, exactly as 122 cashed Civic's, 121 cue (h), and 119 cue from 111:
+  four laps running where *the header told the iteration what to do*.** That is the loop working. **But 123 also
+  found the banked cue's own description of the code was WRONG** (it said `hashCell`; the turbines were `rng()`),
+  and the implementation the cue prescribed would have reshuffled the seeded stream. **A cue is a pointer, not a
+  spec — re-grep the seam before designing to it.**
   And **Transport's next lap has cue (n)** (121, measured, pre-existing): both cable cars sit within **one span of
   the anchor tower at page load**, on every line and every seed, because the growth rescale telescopes `p→0` — so
   no cabin is ever seen riding *over* the city without `&step=`. Re-spread the cabins once `L` reaches `g.target`;
@@ -85,14 +87,21 @@ ones (U2, 42, U5) stay in the bullet.
   **Sky's twenty-lap staleness is spent** — 115 took it *without* adding anything, which is the
   documented way past its additive saturation (surveyed iter 103; its empty `New CA rule` cell remains a
   **trap, not an invitation** — sky is not cellular, and fog on terrain is already `rSea`/`fogAt`).
-  **Cue (k) is CLOSED by 116** (the sea has a depth field), but only its *field* half — 116's last
-  finding banks the **siting** half, and it is the cheapest good vector on the board: `turbSet` is
-  scattered by `hashCell` into water of any depth, and there is now an `rDeep` to found it on.
-  (Still open after 117 and 122, which went to Nature and Civic by rotation. **Water is now second-stalest
-  and Sky is a trap, so this is the next lap's most likely pick.**)
+  **Cue (k) is now FULLY CLOSED**: 116 gave the sea a bottom (the *field* half) and **123 stood the wind farm
+  on it** (the *siting* half) — 3/18 turbines were on the shelf, now 42/42 across 14 seeds, and the farm's line
+  bends around headlands because the depth is held and the row is not. **What 123 leaves banked for Water** is
+  the rest of the salted coast: the **pier** row and the **lifeguard tower** are still `rng()`-picked with
+  rejection loops, and a boardwalk should run out to a *depth*. 123's second finding makes that free — **respend
+  an object's existing `rng()` draws rather than re-drawing them**, and the stream cannot move.
   Civic's banked **cue (d)** was attempted at
   114 and **reverted**: its goal is proven (a 3-hex square reads at fit zoom) but its prescribed
   host does not exist — see the rewritten cue below before re-opening it.
+  **123 ran the tell FORWARDS**, which is a new move: rather than making the draw honor a string, it made the
+  string and the rule **share one constant** (`SHELF0`/`SHELF1` — the tooltip *names* the `Coastal shelf`, the
+  wind farm *stands* on it), so the two cannot drift apart in the first place. Prefer this to re-syncing them
+  later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
+  shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
+  **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.*
   **Iteration 125 is the next holistic step-back** (105, 110, 115, 120, …), and per 115's finding it must be
   shot **at night as well as by day**: 115's night frame failed on a defect present in every city ever
   generated, which ~114 daytime whole-city reads, the census and the perf gate had all missed. **120 also
@@ -1216,121 +1225,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 115 entries before Iteration 113 live in
+> **Archive:** the 116 entries before Iteration 114 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 113 — the marsh answers its own tooltip (2026-07-10)
-
-**Vector** — Water & coast × **Deepen**. Rotation named the domain: Water (106) was the stalest *safe*
-pick (Sky 95 is staler and a documented trap). The header also named the content: iter 109's banked
-"Sky-feedable" list is `VINEYARD`, `MEADOW` seed-heads, **`MARSH`** — deepening another domain toward
-Sky is the sanctioned way to feed Sky without a sky feature. Kind is Deepen, not Connect: Connect had
-already paid three laps running (109/111/112).
-
-**The seam.** `T.MARSH`'s tooltip calls it a *"Reedy tidal wetland"* and — since iter 97 — prints a
-**live `Tide` reading on that very hex**. The draw was two fixed ellipses and seven reed strokes. The
-city told you the tide on a tile that had never once moved with it. Same shape as 111 (a shelter that
-never met a bus) and 112 (a platform that never met a train): *close a gap between two things that
-already exist.*
-
-**Measured before designing** (`probe-marsh.mjs`, tracked). Clock frozen (`playing=false`) so only
-`TIDE` could move a pixel:
-
-| | pristine | after |
-| --- | --- | --- |
-| marsh mean luminance, TIDE 0 → 1 | **151.5 → 151.7** | **135.0 → 153.0** (seed 42) |
-| | | **140.4 → 155.7** (seed 1234) |
-| pixels changed across the cycle | ~0 (0.7% = neighbour bleed) | **61–74%, monotone at every step** |
-
-The 0.7% pristine "movement" was the neighbouring BEACH's damp margin leaking into the sample box —
-i.e. the beach *did* answer the tide and the marsh did not.
-
-**The design was decided by geometry, not taste.** First attempt breathed the two pools with the tide.
-It moved **3.9%** of the hex at half tide, because a marsh hex is **23.4 × 15.6 screen px** and its pools
-are **~4 × 2 px**. Scaling them harder changed nothing. So the **flat** answers instead: the hex body
-lerps toward `soil` on the ebb (exposed wet mud), a permanent mud bed is laid under each pool for the
-water to shrink inside, and a thin `colA('water')` sheet is drawn over everything above TIDE 0.60.
-That is a whole-hex response, and it is what took the change from 3.9% to 72%.
-
-**Change** (`case T.MARSH`, ~30 lines, draw-only):
-1. body `= lerp(meadow, soil, ebb*0.42)`, `ebb = clamp((0.58-TIDE)/0.58)`; pools shrink to 0.34× inside a
-   fixed 1.22× mud bed; flood sheen above TIDE 0.60.
-2. reeds keep a calendar — `green` peaks midsummer and **wraps cleanly** (`1-|s-0.42|/0.34`), lerping
-   `sage → straw`, then `→ stubble` by a winter term; `rlen` drops 38% at deep winter.
-3. cue **(g)**: the three reed `hashCell` salts now mix `seedNum`. The old lean salt was
-   `hashCell(x,j,7)` — **no `y` at all**, so every marsh hex in a column leaned identically.
-4. new URL hook **`?tide=0..1`** (`__setTide`), which shifts the cycle's *phase* so the sea keeps
-   moving from there rather than freezing.
-
-**Census** — `pop/roads/developed` and all 22 metrics **exactly +0**, both before and after the salt fix.
-Tile histogram empty, as intended: this deepens a tile's draw, it does not move a tile. Draw-only, no
-`rng()`, no terrain.
-
-**Perf** (run because this lap adds per-frame draw work — iter 109's law, not the step-back's):
-min-of-3 day **33.83ms** / night **38.16ms** vs baseline 33.16/37.33 → +2.0% / +2.2%, inside the band
-109/110/111 measured for *pristine* HEAD (33.33 / 33.49 / 33.78). PASS. Not re-pinned.
-
-**Visual** — tide: **PASS** on the zoomed pair ("a genuine drained tidal mudflat… birds picking over wet
-mud"; high water "broken into per-tuft reflective patches, not a solid rectangle"). Whole-city, 3 frames,
-2 seeds: **PASS**, explicitly *"not a repeat of the kelp failure"* — the low-tide marsh reads as a natural
-estuary, and the city is no darker at dead low than at high water. Reed calendar: **two agents returned
-FAIL, and they were substantially right** — see findings.
-
-**Verdict — SHIPPED.** The tide is the feature and it is verified three ways. The reed calendar and the
-salt fix ride along at zero cost (+0 census, +0 perf) but are **below the resolution at which this loop
-can see anything**; they rest on the pixel probe alone, and I have logged that rather than dressing it up.
-
-### Findings
-
-- **⚠ THE CONSPICUOUS THING ON YOUR TILE MAY BELONG TO SOMEONE ELSE (new; extends iter 111's law).**
-  111 taught that *"not drawn"* and *"drawn but occluded"* are the same screenshot. Here: **"your ornament"
-  and "a neighbouring entity" are the same screenshot.** Two agents and *I* read the pale vertical shapes on
-  the marsh as reeds. They are a **heron** (`herons`: 54 in the census). The reeds are seven sub-pixel
-  strokes bunched around the pool. **The instrument:** back up the file, set the ornament's `strokeStyle`
-  to `'#ff00ff'`, shoot, revert (census confirms the revert). One 200×180 crop settled what four agent
-  reads and three probes could not. Do this *before* believing any account of a few-pixel ornament —
-  including your own.
-- **⚠ CUE (g)'s AUDIT GREP HAS A BLIND SPOT, AND THE CUE'S COUNT IS WRONG.** The pattern
-  `hashCell\([^)]*,[[:space:]]*(0x)?[0-9]+\)` matches only a **bare integer** salt, so every `k+90` /
-  `j+40` / `r*3+cc+50` form is invisible to it. It reported "4 remain"; the superset
-  `grep -oE 'hashCell\([^;]{0,60}' solvista.html | grep -v seedNum` finds **13 lines / 16 calls** that
-  are genuinely a function of `(x,y[,j])` alone — kelp sway (L2799), palm fronds (L2832/2834), orchard
-  fruit (L3248/3249), **park fireflies (L3423)**, L3610/3613, L5113/5117, plus the surf presence test
-  (L2747). Two of the marsh's own three offenders were never counted. **Generalizes iter 107:** an audit
-  is bounded by its instrument — a rule can be dead because nothing reaches it, and a breach can be
-  invisible because the grep can't spell it.
-- **⚠ A REED-PIXEL COUNT IS A CONTRAST MEASURE, NOT A HEIGHT MEASURE (extends iter 104).** Classifying
-  "pixels far from the body color" counted **winter highest (20.3/cell)** while winter reeds are **34%
-  shorter** — sage reeds on green meadow barely contrast; straw reeds on a muted winter body contrast
-  hard. Switching to geometry (topmost reed pixel, dpr 8) did not rescue it either: a 0.8px antialiased
-  tip is *detected only when it contrasts*, so the detector's sensitivity varies with the very quantity
-  under test, and the ordering flipped between seeds. **Height is drawn but unverifiable at this scale;
-  color is verified** (G−R: spring **+9/+12** → dry **−10/−9** → winter **−1/−2**, consistent on 2 seeds).
-  When a proxy correlates with your independent variable, it cannot grade it.
-- **⚠ MASK A TILE PROBE TO THE HEXAGON — A SQUARE BOX AROUND A 23×16 px HEX EATS ITS NEIGHBOURS.**
-  The first reed probe sampled a 14×14 box and confidently reported reed colors of `R−B ≈ +60`. That is
-  **sand**: the box spilled onto the BEACH, and beach sand is bright and tawny — indistinguishable from an
-  autumn reed by any color test. `probe-reed.mjs` (tracked) carries the point-in-hex mask
-  (`|dy| <= V-(V-E)|dx|/X`, shrunk 14% off the antialiased rim); reuse it for any per-tile pixel claim.
-- **A `hashCell` SALT *RANGE* CAN COLLIDE WITH ITSELF.** Writing `seedNum^(0x9EE1+j)`, `seedNum^(0x9EE2+j)`
-  and `seedNum^0x9EE3` looks like three independent salts and is not: at `j=2` the first *is* the third, so
-  two reed quantities became perfectly correlated. Verified by evaluating `hashCell` in-page at a fixed
-  cell across seeds. Space the bases (`0x9E01+j`, `0x9E41+j`, `0x9E81`). Note this is safe to fix after the
-  fact **only because the vector is draw-only** — iter 107's "never pick a salt after seeing the census"
-  binds terrain rules, whose salt perturbs the `rng()` stream. Here census is +0 for every salt.
-- **`?tide=` IS NOW A URL HOOK — the sea is finally testable, and every prior shot was a lie about it.**
-  Exactly iter 108's `?year=` story: a whole dimension of the diorama that no screenshot in this loop's
-  history could pin. Note the free-running default is *seeded*: `?seed=42` loads at **TIDE 0.02 — dead
-  low water** (`(seedNum%31)*0.4` → 4.4 rad). Implemented by phase-shift, not by clamping `TIDE`, so the
-  tide keeps cycling from where you put it. Use `.02 / .35 / .59 / .98` for low / mid-ebb / neutral
-  (no sheen, no mud tint — the right pin for grading anything *else* on a marsh) / high.
-- **OPEN CUE (i) — the marsh reeds do not read, and that is a `polish-tile` job.** Seven strokes in a
-  ~10×4-unit huddle around the pool contribute almost nothing to how the hex reads; the tile is "green hex
-  with a pool". Spreading/lengthening them is a tile redesign, out of scope for a growth lap. The reed
-  calendar is already wired and would pay off immediately if the reeds themselves were made legible.
 
 ## Iteration 114 — the square that had nowhere to go (2026-07-10)
 
@@ -2223,3 +2122,101 @@ and harmonious"*; the whole city still *"reads as a balanced, beautiful coastal 
   renewing*: cashing it here **created** a new one — `TILEDESC[T.PLAZA]` still says only *"A paved civic
   square"* for a square that now knows its institution, and the plaza/quad `title` is still the generic
   tile label. A future lap could title them *"Town hall forecourt"* outright.
+
+## Iteration 123 — the wind farm founds itself (2026-07-11)
+
+**Vector.** Water & coast × Deepen. The header named this lap: Water was second-stalest (116), Sky is a
+documented **trap**, and Water held *"the board's cheapest live cue"* — **the siting half of cue (k)**,
+banked by 116 and left open by 117 and 122. 116 gave the sea a depth field and said outright that the
+offshore objects were *"still randomly salted… now there is a field to site them against."* This lap
+cashes it. No new tile, no new entity, no new CA pass, no new census metric.
+
+**The header was wrong about the code, and that changed the design.** 116's finding says *"`turbSet` is
+laid in `genWorld` from `hashCell` — gate it on `rDeep`."* It is **not**: turbines are laid from **nine
+`rng()` draws** (row, x-offset, blade phase, ×3). A rejection-sampling gate — the obvious implementation
+of "gate it on `rDeep`" — consumes a *variable* number of draws and would have reshuffled the entire
+downstream seeded stream, wobbling every metric in the city for three turbines nobody can see at fit
+zoom. **Grep the seam before trusting the ledger's description of it** (the skill says this about the
+*artifact*; it is equally true of the ledger's claims about the *code*).
+
+**Change.** `shoreAt(y)+5+(rng()*4|0)` is an **offset, not a depth**. It ignores every piece of coastal
+geometry `rDeep` knows.
+- **The farm is founded, not scattered.** Take the nine `rng()` draws **up front, in their original
+  order**, then spend them on: an anchor row (`R[0]`, the old formula), a **founding depth** on the shelf
+  (`R[1]`), a row spacing of 3–4 (`R[3]`), a direction up or down the coast (`R[4]`), and the three blade
+  phases (`R[2]`,`R[5]`,`R[8]` — *the same draws as before*, so even the blade angles are unchanged).
+  Each tower then takes the cell **in its own row nearest the founding depth**, ties going seaward.
+- **The contour does the work.** Because depth is held and the row is not, the line **bends around
+  headlands, stays out of the harbor, and never wades into the shoals** — for free, from the same BFS
+  that bought 116 its seabed. Rows are held `sp` apart, so three towers read as **one farm** instead of
+  three salted objects (they could share a row before: seeds 99 and 555 put two in adjacent rows at the
+  same column).
+- **`SHELF0=3, SHELF1=5` is now one shared constant.** The tooltip *names* the band (`Coastal shelf`) and
+  the farm *stands* on it. The tooltip's `d<=2 / d<=5` literals now read `d<SHELF0 / d<=SHELF1` — same
+  behavior, but the word and the siting can no longer drift apart. (This is 117/122's tell, run
+  **forwards**: don't let a string assert something the code doesn't share.)
+- `seaFill()` is called once in `genWorld`, before siting — the survey precedes the foundation. It is
+  `hashCell`-only, so it costs no `rng()`, and it also fixes the first frame, which used to draw flat
+  water until the first tick.
+
+**Probe.** `probe-turbine.mjs` (**`git add -f`'d**, per iter 101). Joins each turbine to the **live**
+`rDeep` via 116's `__deep` hook and grades the siting against the band the tooltip prints — it does not
+reimplement `seaTone`/the depth test (iter 110's law).
+
+| | on `Coastal shelf` (rDeep 3–5) | row separation | undrawable |
+| --- | --- | --- | --- |
+| HEAD | **3 / 18** (15 stood in `Open water`, rDeep 6–9) | **1 … 19** | 0 |
+| patched | **42 / 42** (14 seeds) | **3 … 4** | 0 |
+
+Within a seed the depth holds while `x` slides (seed 7: `x=50,51,52` at `rDeep 4,3,3`) — that *is* the
+contour, visible in the numbers.
+
+**Census.** PASS. `pop 154911→154915 (+4)`, `roads/developed/bridges/towers +0`, **tile histogram
+empty**, **every entity count identical**. Predicted before running: the draw count and order are
+preserved by construction, so the stream cannot move. The `+4` pop / `−3 solarRoofs` / `+1 greenRoof` is
+iter 108's load-dependent salt jitter at exactly the magnitude 116 logged for a provably-flat change.
+
+**The one real coupling, measured rather than assumed.** `turbSet` is read by exactly one non-draw site:
+the mole's `ok()`. Moving turbines inshore puts them in the breakwater's corridor, and *"a blocked step
+ends the arm"* — a truncated mole below 5 cells vanishes entirely. Probed across 8 seeds against pristine
+`HEAD`: mole length **identical on 7**, and **6→8 on seed 99**, where a turbine had been *blocking* the
+arm. Nothing lost. (`moleSet` also gates kelp, so this could have moved a tile — it did not, on any
+census seed.)
+
+**Visual.** 2/2 PASS, seeds 42 + 7, `wide` + `coast`. Both agents independently and unprompted reported
+the two things the contour was supposed to buy: *"they read as ONE grouped wind farm… parallel to the
+shelf contour, evenly spaced"* and *"bases planted in water hexes on the darker shelf band — not
+floating, not on the beach, clear of the pier and Ferris-wheel jetty."* No z-order tears, no blown-out
+color, whole frame still balanced. One agent noted the line sits *close* to shore at seeds whose founding
+depth rolled 3 — true, and correct: `rDeep 3` is the shelf's own inshore edge, one hex outside the kelp.
+
+**Perf.** Not run (123 is not a step-back). Justified rather than skipped: the change adds **zero
+per-frame work** — one extra `seaFill()` BFS per *world generation*, and the turbine draw is untouched.
+
+**Verdict — SHIPPED.** Cue (k) is now **fully closed**: 116 gave the sea a bottom, 123 stands the wind
+farm on it.
+
+**Findings for later laps.**
+- **⚠ THE LEDGER DESCRIBES INTENT; ONLY THE SOURCE DESCRIBES THE CODE (new).** A banked cue is a *pointer*,
+  not a spec. 116's finding named the wrong randomness source (`hashCell` for `rng()`), and the
+  implementation it prescribed ("gate it on `rDeep`" ⇒ reject-and-resample) would have perturbed the
+  seeded stream it was proud of leaving flat. **Re-grep the seam a banked cue names before designing to
+  it** — the cue is right about *what should be true*, not necessarily about *what is*.
+- **⚠ TO RE-SITE AN `rng()`-PLACED OBJECT WITHOUT MOVING THE STREAM, RESPEND THE DRAWS — DON'T RE-DRAW
+  THEM (new, and generally useful).** Hoist the *exact* draw count in the *exact* order into an array up
+  front, then reinterpret what each value **means**. `R[1]` went from "x-offset in a 4-wide window" to
+  "which founding depth on the shelf" — a different domain, the same draw. The stream is bit-identical by
+  construction, so `pop` is flat *before a gate is run*, and any rejection/search you need must be
+  **deterministic** (walk the rows) rather than sampled. This unlocks re-siting **any** `rng()`-placed
+  object — the pier, the lifeguard tower, the moored craft — against a field, at zero stream cost.
+- **A FIELD EARNS ITS KEEP WHEN A RULE READS IT, NOT WHEN THE DRAW SHOWS IT (new).** `rDeep` was drawn by
+  116 and *read* by nothing. Siting one object on it made the coastline's geometry — headlands, harbor,
+  river — do work it had never done. **Ask of every derived field: what places itself against this?**
+  Still unread by any rule: `rGreen`, `rShop`, `rServ` feed only the walkable stat; nothing *sites* to them.
+- **THE OFFSHORE OBJECTS THAT REMAIN SALTED** *(Water & coast)*. This lap did the turbines. The **pier**
+  row is `rng()`-picked with a rejection loop (`pyR()`, 30 tries — variable draws, already baked in), the
+  **lifeguard tower** likewise, and the **moored craft** sit off the pier. The pier is the interesting
+  one: a boardwalk should run out to a *depth*, and it now can (previous finding's trick makes it free).
+- **`turbSet`'s ONLY NON-DRAW READER IS THE MOLE'S `ok()`; THE MOLE GATES KELP.** A three-hop coupling
+  (turbine → mole path → `moleSet` → kelp CA) that no census metric names. If you move any offshore
+  object, probe `moleSet.size` against pristine `HEAD` before believing the tile histogram.

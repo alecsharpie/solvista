@@ -776,11 +776,56 @@ function genWorld(seed){
     for(let tries=0;tries<20&&Math.abs(hy-pier.y)<4;tries++)hy=SEAY0+((rng()*(SEAY1-SEAY0))|0);
     hut={y:hy};
   }
-  /* offshore wind farm sites (turn in 2020) */
+  /* offshore wind farm sites (turn in 2020). A farm is FOUNDED, not scattered:
+     monopiles stand on the coastal shelf, so the towers are sited against the
+     `rDeep` depth field the sea already carries rather than at a fixed offset
+     from the shore — which is not a depth, and left 15 of 18 towers standing in
+     water the tooltip itself calls `Open water`. Each tower takes the cell in
+     its own row nearest the farm's founding depth, so the line bends around
+     headlands, keeps out of the harbor, and never wades into the shallows; and
+     the rows are held `sp` apart so three towers read as one farm instead of
+     three salted objects (they shared a row freely before).
+     The nine rng() draws are taken up front in their original order, and the
+     blade phases still come from the 3rd of each triple, so the seeded stream —
+     and every downstream metric — is bit-for-bit what it was. */
   turbines=[];
-  for(let i=0;i<3;i++){
-    const ty=SEAY0+2+((rng()*(SEAY1-SEAY0-4))|0);
-    turbines.push({x:Math.min(ROWMAX[ty]-1,shoreAt(ty)+5+(rng()*4|0)),y:ty,ph:rng()*7});
+  {
+    seaFill();                                   /* the survey: rDeep, before anything is sited */
+    const R=[];for(let i=0;i<9;i++)R.push(rng());
+    const onPier=(x,y)=>Math.abs(y-pier.y)<=1&&x>=pier.x0-1&&x<=pier.x1+1;
+    const wet=(x,y)=>{const c=cellAt(x,y);
+      return !!c&&c.t===T.WATER&&!c.riv&&x<=ROWMAX[y]-1&&!onPier(x,y)};
+    /* the shelf cells of one row, inshore -> offshore */
+    const shelf=y=>{const out=[];
+      for(let x=shoreAt(y);x<=ROWMAX[y]-1;x++){
+        if(!wet(x,y))continue;
+        const d=rDeep[idx(x,y)];
+        if(d>=SHELF0&&d<=SHELF1)out.push(x);
+      }
+      return out};
+    const bandY=y=>y>=SEAY0+2&&y<=SEAY1-2;
+    const ay=SEAY0+2+((R[0]*(SEAY1-SEAY0-4))|0);   /* anchor row, as before */
+    const TD=SHELF0+((R[1]*(SHELF1-SHELF0+1))|0);  /* founding depth, on the shelf */
+    const sp=3+(R[3]*2|0);                          /* 3..4 rows between towers */
+    const dir=R[4]<0.5?-1:1;                        /* the farm runs up or down the coast */
+    const rows=[];
+    const take=(y0,step)=>{
+      for(let y=y0;rows.length<3&&bandY(y);y+=step){
+        if(Math.abs(y-pier.y)<3)continue;           /* not off the end of the boardwalk */
+        if(rows.some(r=>Math.abs(r-y)<sp))continue; /* hold the towers apart */
+        if(shelf(y).length)rows.push(y);
+      }
+    };
+    take(ay,dir); take(ay,-dir); take(SEAY0+2,1);   /* anchor, then back, then sweep */
+    for(let i=0;i<rows.length;i++){
+      const y=rows[i], cand=shelf(y);
+      let bx=cand[0],bd=1/0;                        /* the cell nearest the founding depth; */
+      for(const x of cand){                         /* ties go to the seaward one */
+        const d=Math.abs(rDeep[idx(x,y)]-TD);
+        if(d<bd||(d===bd&&x>bx)){bd=d;bx=x;}
+      }
+      turbines.push({x:bx,y,ph:R[i*3+2]*7});
+    }
   }
   turbSet=new Map(turbines.map(t=>[idx(t.x,t.y),t]));
   /* the harbor gets its arm: a rubble mole thrown out from the shore beside the
@@ -933,6 +978,10 @@ const FOGR=7, rSea=new Uint8Array(G*G).fill(255);
    the harbor shallow, and never lets the river run deep. Starts flat (0 = shoal)
    so the first frame draws even water rather than a depth it has not measured. */
 const DEEPR=10, rDeep=new Uint8Array(G*G); /* DEEPR is set so the MEAN sea tone lands on 0.5 (measured mean depth ~6.6) */
+/* the shelf: shallow enough to found a monopile on, deep enough not to be a shoal.
+   The tooltip NAMES this band and the wind farm STANDS on it — one constant, so the
+   word and the siting cannot drift apart. */
+const SHELF0=3, SHELF1=5;
 const SEASALT=0x5EA;
 /* The drawn tone, in eighths: 0 shoal -> 8 deep. Derived once per tick with the
    depth, never per frame — the seabed only moves when the coastline does. */
@@ -5887,7 +5936,7 @@ function describeTile(c,x,y){
   }
   /* the seabed the tile is now drawn from — hovering names the depth you can see */
   if(c.t===T.WATER&&!c.riv){const d=rDeep[idx(x,y)];
-    data.push(['Depth',d<=2?'Shoals':d<=5?'Coastal shelf':d<DEEPR?'Open water':'Deep water']);}
+    data.push(['Depth',d<SHELF0?'Shoals':d<=SHELF1?'Coastal shelf':d<DEEPR?'Open water':'Deep water']);}
   /* the sea is the one part of the diorama that changes while you look at it */
   const tidal=c.t===T.BEACH||c.t===T.DUNE||c.t===T.KELP||c.t===T.MARSH
              ||(c.t===T.WATER&&!c.riv)||pierAt(x,y);
