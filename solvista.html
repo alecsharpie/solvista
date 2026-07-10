@@ -3840,9 +3840,30 @@ function drawCell(x,y){
         if(ewN>=diagN){tree(gx,gy+0.36,0.5,1.02);tree(gx,gy-0.36,0.5,1.02);}
         else{tree(gx+0.36,gy,0.5,1.02);tree(gx-0.36,gy,0.5,1.02);}
       }
-      if(LITAMT>0.25&&((x*7+y*5)%(c.busy?2:4))===0){ /* street lamps at night */
-        ctx.fillStyle='rgba(255,200,110,'+(0.30*LITAMT)+')';
-        ctx.beginPath();ctx.arc(cx,cy-2,4.5,0,7);ctx.fill();
+      if(LITAMT>0.25){ /* street lamps at night */
+        if(art){ /* the arterial spine reads as a lit CORRIDOR: warm light pools
+                    along the trunk centre-line toward each arterial neighbor, so
+                    c.flow's network joins hex-to-hex into one continuous lit ribbon
+                    (the same neighbor-walk the gold trunk line uses above) — the
+                    main roads are the streets that stay legible at night. */
+          ctx.lineCap='round';
+          for(const[dx2,dy2]of nbrDirs(y)){
+            const n=cellAt(x+dx2,y+dy2);
+            if(!n||n.t!==T.ROAD||n.flow<ARTFLOW)continue;
+            const[nx2,ny2]=ctr(x+dx2,y+dy2);
+            const mx2=lerp(cx,nx2,0.5),my2=lerp(cy,ny2,0.5);
+            ctx.strokeStyle='rgba(255,204,120,'+(0.11*LITAMT)+')';ctx.lineWidth=9; /* soft base */
+            ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(mx2,my2);ctx.stroke();
+            ctx.strokeStyle='rgba(255,216,138,'+(0.20*LITAMT)+')';ctx.lineWidth=4.5; /* bright core: the continuous ribbon */
+            ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(mx2,my2);ctx.stroke();
+          }
+          ctx.lineCap='butt';
+          ctx.fillStyle='rgba(255,226,152,'+(0.34*LITAMT)+')'; /* the lamp head, warm and small so the ribbon reads over the beads */
+          ctx.beginPath();ctx.arc(cx,cy-2,2.4,0,7);ctx.fill();
+        }else if(((x*7+y*5)%(c.busy?2:4))===0){ /* ordinary streets keep a dimmer ambient glow, so the spine out-shines them */
+          ctx.fillStyle='rgba(255,198,108,'+(0.22*LITAMT)+')';
+          ctx.beginPath();ctx.arc(cx,cy-2,4.5,0,7);ctx.fill();
+        }
       }
       if(c.fete){ /* festival bunting strung down the civic mile between institutions */
         let rdx=0,rdy=0;

@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | **133** |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~ |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84, **137** | 71 |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **135** · Urban **133** · People **137** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
-  **Stalest is now Transport (128)**, then Nature (129) — check the last entry of the stalest domain for a banked
+  Sky **135** · Urban **133** · People **137** · Nature **129** · Transport **138** · Civic **131** · Water **132**.
+  **Stalest is now Nature (129)**, then Civic (131) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -169,10 +169,12 @@ ones (U2, 42, U5) stay in the bullet.
   Recent kinds: 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
   128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
   **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** ·
-  **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** —
+  **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** ·
+  **138 Connect (arterial spine lit as a night corridor via `c.flow`)** —
   (**130/136 were the holistic step-backs — no domain × kind lap.**)
-  **Next domain lap owes Transport (128, now stalest), then Nature (129); read its row for kinds.** Vary off
-  Polish (137) unless a banked, measured cue outranks rotation. Live/cheap: **Connect**, **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
+  **Next domain lap owes Nature (129, now stalest), then Civic (131); read its row for kinds.** Vary off
+  Connect (138) and off Polish/Deepen (both hot). Nature's banked move is a **Deepen** (VINEYARD grapes read `year`;
+  see 129). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
   *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
@@ -391,73 +393,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 130 entries before Iteration 128 live in
+> **Archive:** the 131 entries before Iteration 129 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 128 — the cable cars leave the tower (2026-07-11)
-
-**Vector.** Transport × **Deepen** (a fix). Transport was the second-stalest domain (121) and its last entry
-banked **cue (n)**, measured and pre-existing: both cabins on every line, every seed, sit within one span of
-the start tower at page load, so **no cabin is ever seen riding over the city in any screenshot without
-`&step=`**. A banked, measured finding outranks kind-rotation (Deepen has paid a lot lately — but 121 itself
-cashed a banked Transport defect on the same logic). The cue named the mechanism and the fix: `stepGond`'s
-growth rescale (`cb.p=cb.p<.5?cb.p*k:1-(1-cb.p)*k`, `k=(L-1)/L`, once per span) telescopes each cabin's `p`
-toward the anchor cell it held when the line was one span long; **re-spread the cabins once the line settles**,
-and do NOT touch the rescale, which keeps a *growing* line smooth (see the finding below for why).
-
-**What the probe found before a line was written** (`probes/probe-cabload.mjs`, new, promoted). Each cabin's
-physical fraction `t∈[0,1]` along its line at load, no stepping, seeds 7/42/1234: every one of **5/5 lines
-parked** — `t` within **0.026–0.097** of a terminal, mean spread between the two cabins **0.017** (stacked).
-Control: a hash of the path polyline, to prove any fix moves cabins and no cable.
-
-**Change.** In `stepGond`, once the line stops extending, re-spread its cabins across the current length once
-(keyed to `L` so it re-arms if the line grows on): reset `cb.p` to the artifact's own seed spread `[0.15,0.62]`
-(→ `t≈0.30/0.76`, one cabin on each leg). It fires at **three** settle points, not just the cue's `L>=target`:
-also at the plate edge (`ty>=G-3`), and when growth has clearly stalled (a new `g.stall` counter of
-growth-attempt ticks with no push crosses 90). No `rng()`, no terrain, no draw call, no new entity/tile.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**; core `+0`; `gondLines 15`/`gondola 16`
-identical; `pop −3` / `solarRoofs +2` / `greenRoofs +1` is the documented `(year*23)` salt jitter (108/121).
-Predicted before running — the vector touches no seeded stream.
-
-**Probe, after.** `5/5 → 2/5 parked`, **mean spread 0.017 → 0.259**, path hashes byte-identical (geometry
-untouched). The 2 residual parked lines are **seed 1234's**, and they are parked *correctly*: at 2035 they are
-genuinely still mid-growth (`stall:0 wait:0`, 6/tgt21 and 9/tgt14 spans) — an actively-lengthening line, the
-one state the rescale exists to keep smooth. A survey (seeds 7/42/100/2024/9/555 + seed 1234 at warp 90/120)
-confirms every line that has **reached or neared its target** now spreads; only a slow high-target line caught
-mid-growth stays telescoped, which is a true transient, not a defect.
-
-**Visual.** 2/2 PASS, seeds 42 & 7, before/after `coast` clip (the cable band) + `wide` whole-city. Asked to
-**locate** the cabins (120's law), not to judge: seed-42 agent found them "bunched at the tower" before and
-"spread along the cable, riding mid-span" after; seed-7 agent (whose cable runs inland, off the coast clip)
-found them in the wide frame "clearly spread along the cable — one mid-span over a road, a second near the far
-mast — not stacked at one tower," both hanging correctly from the rope, no tears/floaters/blowout anywhere.
-
-**Verdict — SHIPPED (DEEPENED / FIXED). Cue (n) is CLOSED** for every settled line.
-
-### Findings for later laps
-- **⚠ THE RESCALE IS RIGHT — I CHECKED WHY, SO THE NEXT LAP DOESN'T "FIX" IT (new; validates 121's caution).**
-  The tempting simpler fix is to delete the telescoping so cabins keep a constant *fraction* and ride outward
-  as the line grows — which would spread *all* lines including mid-growth ones, with no settle flag. It is
-  **wrong**: appending one span at the far end then moves a cabin at fraction `t` outward by `t` spans (~0.76
-  span ≈ 23px) *per append*, a visible hop on every span during live growth. The rescale keeps a cabin's
-  **absolute** position fixed (no hop) at the cost of drifting it to its birth cell (the anchor). Both are
-  smooth only in warp (no frames between appends); live play needs the rescale. So the right shape is exactly
-  what 121 prescribed: keep the rescale, re-spread at settle. A cue that says "do not touch X" is worth
-  *re-deriving* before obeying — here the derivation confirmed it and named the residual it cannot fix.
-- **cue (n) RESIDUAL — an actively-growing line legitimately parks its cabins (new, accepted, not a defect).**
-  Seed 1234's `tgt21` line is mid-growth across a wide era range because its shore earns spans slowly, so a
-  still frame there catches telescoped cabins. This is the rescale working. If a future lap wants even these
-  spread, the only clean way is a *warp-only* spread (during screenshot generation there are no frames between
-  appends, so constant-fraction is free) — but that is mode-dependent plumbing for a rare transient; weigh it
-  against just leaving it.
-- **THE MINSEP COSMETIC IS STILL OPEN (121's last sub).** The two cabins ride one drawn curve and pass through
-  each other once per half-trip; `[0.15,0.62]` is 0.47 apart in `p`, not antipodal, so they cross off-centre.
-  A real jig-back tram counterbalances its pair on a loop. One-line change, low value, no agent has ever
-  remarked on it — belongs after anything that matters.
 
 ## Iteration 129 — the orchard names its season (2026-07-11)
 
@@ -1007,3 +947,68 @@ vehicle already casts. Draw-only, pop provably flat, ~5 lines, reads at zoom.
   and who conspicuously doesn't?" grep is a reliable way to find the next consistency Polish (cf. the tooltip
   tell: a string that asserts what the draw ignores). People's remaining such gap: the *static* standing crowds
   (strip/stadium/amphitheatre/school-run specks) also cast no shadow — but they're a bigger, more diffuse change.
+
+## Iteration 138 — the main roads light up at night (2026-07-11)
+
+**Vector.** Transport × **Connect** (SHIPPED). Rotation named the domain — Transport was the single stalest
+(128) — and its entities are fully saturated (cars/buses/emergency/bikes/trams/trucks; vehicles already richly
+lit; cabins fixed 128, trains named 105, stations fixed 112), so 118's law forbids a New element. The one
+banked Transport cue (128's MINSEP cabin-crossing cosmetic) is explicitly low-value/"after anything that
+matters". So I took **Connect** — Transport's coldest live cell (last **15**) — whose signature is to add no
+new object and *light a relationship between two things that already exist*: the **arterial road network**
+(`c.flow>=ARTFLOW`, the documented "main roads" measure) and **night**. Varies off Polish (137) and Deepen
+(both hot).
+
+**The seam.** Street lamps existed (L3843) but keyed off `c.busy` — the LOCAL "≥3-developed-neighbours" test
+that the header itself notes calls *a third of the city* an avenue — as a scattered glow disc. So at night the
+city's actual through-network (`c.flow`, ~15% of roads, the real spine) never read as a network; only cars lit
+the roads. This is exactly the documented "reuse `c.flow` for anything that should follow the main roads —
+don't hand-roll a second notion of important street."
+
+**Change (~18 lines, draw-only).** In the ROAD draw case, the night-lamp block now branches on `art`: an
+arterial hex pools warm light along its centre-line toward each arterial neighbour (the same neighbour-walk the
+gold trunk line uses just above) — a soft wide base (w9 @ 0.11·LITAMT) + a bright continuous core (w4.5 @
+0.20) + a small lamp head — so `c.flow` joins hex-to-hex into one continuous lit ribbon. Ordinary streets keep
+a *dimmer* ambient disc (0.30→0.22) so the spine out-shines them. No tile, entity, `rng()`, `hashCell`,
+`tick()` pass or terrain; all strings pure-ASCII (134's invariant). Pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0** (first pass) / pop
+**−3** (final) is the documented `(year*·)` salt jitter. `arterials 795` unchanged. Stream-neutral by
+construction.
+
+**Probe.** `probes/probe-artlight.mjs` (new, promoted). Build-vs-build (patched vs pristine HEAD), night frame
+frozen (109's law — the sea sparkles on waveT, headlights ride v.p), seeds 7/42. Signed **Δluminance** over 60
+arterial hex boxes, with two controls the census can't express. First cut proved the effect real but weak
+(**+3.71**, and the seed-42 visual agent correctly failed it — the continuous ribbon at 0.15 was *fainter*
+per-pixel than the 0.30 ordinary disc). After tuning: arterial NIGHT **Δlum +7.26** (7.33/7.19) · **DAY
+control +0.08** (block is `LITAMT>0.25`-gated ⇒ night-only) · **far-water NIGHT control 0.00** (the spine lit,
+not a whole-frame wash). Both controls held; the signal near-doubled.
+
+**Visual.** First cut: **1/2** (seed 7 PASS located the corridors; seed 42 FAILED — "uniform scattered dots,
+no brighter continuous spine"). That FAIL was a true design signal, not a vague miss, so I measured (probe) and
+re-tuned rather than arguing. Retuned: **2/2 PASS**, both seeds. Asked to *locate* (108's law), both agents
+traced **continuous** warm ribbons — seed 42: "CONTINUOUS lit ribbons tracing the roads hex-to-hex, not
+scattered dots… distinctly brighter than the dim grey-blue side streets"; seed 7: a gold loop through the core
++ a horizontal spine + a strand to the river. Both: no z-order tears / floaters / blowout, warm light
+"tasteful… not a smeared glare wash," whole frame a balanced night coastal city with the arterials reading as
+"the connective tissue."
+
+**Verdict — SHIPPED.** The city's main roads now read as a lit network at night — `c.flow`'s spine glows as a
+continuous warm corridor while side streets stay dim, adding legible structure with no new object, provably
+flat pop. Transport's Connect cell is filled (its third: 5, 15, 138).
+
+### Findings for later laps
+- **THE NIGHT LAMPS NOW ENCODE THE ROAD HIERARCHY — arterial (`c.flow`) = bright continuous ribbon, ordinary
+  street = dim ambient disc (L3843).** Any future road-network night vector should read/extend this, not
+  re-key it: the two-tier lamp is now the one night definition of "main road vs side street," and it shares
+  `c.flow` with the daytime gold trunk line (one predicate, 112's law). The `c.busy` disc is now *only* for
+  non-arterial streets.
+- **A "READS AS SCATTERED DOTS, NO CONTINUOUS RIBBON" AGENT FAIL IS A CONTRAST-vs-CONTINUITY DEFECT, NOT A
+  DESIGN-DEAD-END — measure the SIGNED delta, then push it.** The first cut's continuous stroke (0.15·LITAMT)
+  was *dimmer per-pixel than the ordinary disc it was meant to out-shine* (0.30), so the eye read the bright
+  discrete lamp-heads as beads and missed the ribbon. The probe's signed Δlum (+3.71 → +7.26) is exactly the
+  knob the agent's complaint pointed at; a linear feature must be both continuous AND brighter than what it
+  ranks above (101's contrast×width law, applied to *relative* brightness). One re-tune closed a 1/2 to 2/2.
+- **A NIGHT-ONLY DRAW ADDS PER-ARTERIAL STROKE WORK ONLY AT NIGHT (~88 hexes × ~2 segments × 2 strokes).**
+  Cheap, but night is the frame to watch (118). Not perf-gated this lap (draw-only, and the interleave overruns
+  the 120s Bash timeout); the 141 step-back's interleaved control will grade it against the stored baseline.

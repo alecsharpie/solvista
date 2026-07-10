@@ -7439,3 +7439,65 @@ coastal city. The muted coral/lav lawns "blend in," not glaring.
   via *surfaces* (this lap). The picnic band replaced ~12% of dense-tree park tiles with open lawn + one tree —
   parks stayed balanced (both agents), so a small tree-density trade for variety is safe on PARK's large n.
 
+## Iteration 128 — the cable cars leave the tower (2026-07-11)
+
+**Vector.** Transport × **Deepen** (a fix). Transport was the second-stalest domain (121) and its last entry
+banked **cue (n)**, measured and pre-existing: both cabins on every line, every seed, sit within one span of
+the start tower at page load, so **no cabin is ever seen riding over the city in any screenshot without
+`&step=`**. A banked, measured finding outranks kind-rotation (Deepen has paid a lot lately — but 121 itself
+cashed a banked Transport defect on the same logic). The cue named the mechanism and the fix: `stepGond`'s
+growth rescale (`cb.p=cb.p<.5?cb.p*k:1-(1-cb.p)*k`, `k=(L-1)/L`, once per span) telescopes each cabin's `p`
+toward the anchor cell it held when the line was one span long; **re-spread the cabins once the line settles**,
+and do NOT touch the rescale, which keeps a *growing* line smooth (see the finding below for why).
+
+**What the probe found before a line was written** (`probes/probe-cabload.mjs`, new, promoted). Each cabin's
+physical fraction `t∈[0,1]` along its line at load, no stepping, seeds 7/42/1234: every one of **5/5 lines
+parked** — `t` within **0.026–0.097** of a terminal, mean spread between the two cabins **0.017** (stacked).
+Control: a hash of the path polyline, to prove any fix moves cabins and no cable.
+
+**Change.** In `stepGond`, once the line stops extending, re-spread its cabins across the current length once
+(keyed to `L` so it re-arms if the line grows on): reset `cb.p` to the artifact's own seed spread `[0.15,0.62]`
+(→ `t≈0.30/0.76`, one cabin on each leg). It fires at **three** settle points, not just the cue's `L>=target`:
+also at the plate edge (`ty>=G-3`), and when growth has clearly stalled (a new `g.stall` counter of
+growth-attempt ticks with no push crosses 90). No `rng()`, no terrain, no draw call, no new entity/tile.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**; core `+0`; `gondLines 15`/`gondola 16`
+identical; `pop −3` / `solarRoofs +2` / `greenRoofs +1` is the documented `(year*23)` salt jitter (108/121).
+Predicted before running — the vector touches no seeded stream.
+
+**Probe, after.** `5/5 → 2/5 parked`, **mean spread 0.017 → 0.259**, path hashes byte-identical (geometry
+untouched). The 2 residual parked lines are **seed 1234's**, and they are parked *correctly*: at 2035 they are
+genuinely still mid-growth (`stall:0 wait:0`, 6/tgt21 and 9/tgt14 spans) — an actively-lengthening line, the
+one state the rescale exists to keep smooth. A survey (seeds 7/42/100/2024/9/555 + seed 1234 at warp 90/120)
+confirms every line that has **reached or neared its target** now spreads; only a slow high-target line caught
+mid-growth stays telescoped, which is a true transient, not a defect.
+
+**Visual.** 2/2 PASS, seeds 42 & 7, before/after `coast` clip (the cable band) + `wide` whole-city. Asked to
+**locate** the cabins (120's law), not to judge: seed-42 agent found them "bunched at the tower" before and
+"spread along the cable, riding mid-span" after; seed-7 agent (whose cable runs inland, off the coast clip)
+found them in the wide frame "clearly spread along the cable — one mid-span over a road, a second near the far
+mast — not stacked at one tower," both hanging correctly from the rope, no tears/floaters/blowout anywhere.
+
+**Verdict — SHIPPED (DEEPENED / FIXED). Cue (n) is CLOSED** for every settled line.
+
+### Findings for later laps
+- **⚠ THE RESCALE IS RIGHT — I CHECKED WHY, SO THE NEXT LAP DOESN'T "FIX" IT (new; validates 121's caution).**
+  The tempting simpler fix is to delete the telescoping so cabins keep a constant *fraction* and ride outward
+  as the line grows — which would spread *all* lines including mid-growth ones, with no settle flag. It is
+  **wrong**: appending one span at the far end then moves a cabin at fraction `t` outward by `t` spans (~0.76
+  span ≈ 23px) *per append*, a visible hop on every span during live growth. The rescale keeps a cabin's
+  **absolute** position fixed (no hop) at the cost of drifting it to its birth cell (the anchor). Both are
+  smooth only in warp (no frames between appends); live play needs the rescale. So the right shape is exactly
+  what 121 prescribed: keep the rescale, re-spread at settle. A cue that says "do not touch X" is worth
+  *re-deriving* before obeying — here the derivation confirmed it and named the residual it cannot fix.
+- **cue (n) RESIDUAL — an actively-growing line legitimately parks its cabins (new, accepted, not a defect).**
+  Seed 1234's `tgt21` line is mid-growth across a wide era range because its shore earns spans slowly, so a
+  still frame there catches telescoped cabins. This is the rescale working. If a future lap wants even these
+  spread, the only clean way is a *warp-only* spread (during screenshot generation there are no frames between
+  appends, so constant-fraction is free) — but that is mode-dependent plumbing for a rare transient; weigh it
+  against just leaving it.
+- **THE MINSEP COSMETIC IS STILL OPEN (121's last sub).** The two cabins ride one drawn curve and pass through
+  each other once per half-trip; `[0.15,0.62]` is 0.47 apart in `p`, not antipodal, so they cross off-centre.
+  A real jig-back tram counterbalances its pair on a loop. One-line change, low value, no agent has ever
+  remarked on it — belongs after anything that matters.
+
