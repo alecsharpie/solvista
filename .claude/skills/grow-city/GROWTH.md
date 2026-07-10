@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103** | |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
@@ -45,17 +45,20 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
-- **ROTATION.** Last vector per domain: Sky **95** · Urban **103** · People **104** ·
-  Transport **105** · Water **106** · Civic **107** · Nature **108**. Stalest is still
+- **ROTATION.** Last vector per domain: Sky **95** · People **104** ·
+  Transport **105** · Water **106** · Civic **107** · Nature **108** · Urban **109**. Stalest is still
   **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
   cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
-  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Urban (103)**
-  is the next-stalest safe pick; People (104) after it. Note iter 108 was Nature × Deepen but its
+  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **People (104)**
+  is now the next-stalest safe pick; Transport (105) after it. Note iter 108 was Nature × Deepen but its
   *content* was a Sky interconnect (the farm calendar reads `applySeason`'s `year`) — **Sky can be
   fed by deepening another domain toward it**, which is the way out of its saturation that does not
-  require a sky feature.
-  Recent kinds: 103 Polish · 104 Deepen · 105 Interaction/UX · 106 New element · 107 New CA rule ·
-  108 Deepen — the coldest kinds are now **Connect** and **Scale**, then Polish. Note **107 was a New CA rule that
+  require a sky feature. Iter 109's leftover Sky-feedable list: `VINEYARD`, `MEADOW` seed-heads, `MARSH`.
+  Recent kinds: 104 Deepen · 105 Interaction/UX · 106 New element · 107 New CA rule ·
+  108 Deepen · 109 Connect — the coldest kind is now **Scale** (a structural lever, not a lap move), then
+  Polish and New element. **Connect just came in from the cold** after 62 iterations: its trick was that
+  it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
+  Look for that shape in People and Transport before reaching for a new entity. Note **107 was a New CA rule that
   ADDED NOTHING**: it rewrote a pass that had never fired. *Auditing an existing rule for
   reachability* is a New-CA-rule move available in every domain and it costs no new content — see
   `probe-market.mjs` and the dead-rule law below. (Iter 106 passed on Connect/CA/Scale *for Water*
@@ -68,7 +71,27 @@ ones (U2, 42, U5) stay in the bullet.
   *corridor*. **Cue (e½) is now CLOSED — iter 102 shipped the blob 101 prescribed** (the commons),
   so the interior has its lung; **do not plant a second one.** Nature's remaining cold cells are
   Connect (graveyard — leave it) and Scale.
-- **PERF BASELINE RE-PINNED 2026-07-10 (iter 105's step-back): day 33.16ms · night 37.33ms.** The
+- **⚠ RUN THE PERF GATE IN ANY LAP THAT ADDS PER-FRAME DRAW WORK — not only at the 5th-iteration
+  step-back (iter 109).** 109's first design added ~2000 `fill()`s/frame and cost **+28.5% day**. The
+  census was blind to it by construction (draw-only ⇒ `pop +0`, empty tile histogram) and **3/3 visual
+  agents called it beautiful.** Frame time was the *only* gate that knew. Had it waited for the
+  step-back, the loop would have shipped the regression and then hunted it across five iterations'
+  worth of suspects. Corollary from the same lap: **when a connector is expensive, look for the version
+  where the existing geometry reaches** — growing one block into its neighbour drew the identical
+  terrace for **zero** extra fills. *A connector you have to draw is a connector you got wrong.*
+- **⚠ TWO LAWS FOR PIXEL-PROBING A FACADE (iter 109; `probe-terrace.mjs` is the worked example).**
+  (a) **A control must live in the same frame as the thing it controls.** A pristine-vs-patched diff is
+  invalid whenever you can see *past* your change: through an un-joined gap you look at the row behind,
+  which legitimately changed, so the "unchanged" control class moves too. Compare against a reference
+  point in the *same* frame instead. (b) **On a hex prism, equal screen `y` is not equal wall height** —
+  the front face slopes `+V` (S-point) → `+E` (shoulder), so two points at one screen `y` differ by
+  ~`V/4` in `z`, enough for one to land in a 3-tall glass band and the other on plain wall. Invert it:
+  `y = cy + V + (E−V)·u − z`, and sample `z = 10+7k` (bands occupy `[5+7k, 8+7k]`, rails to `8.9+7k`).
+  And **before doubting the feature, check the facade is visible at all**: restricting to joints with no
+  `DEV` cell in the row in front took the reading from a muddy 42.6% to a decisive 64.9% vs 2.1%.
+  **When a pixel probe of a 3-D scene reads weakly, suspect occlusion first.**
+- **PERF BASELINE RE-PINNED 2026-07-10 (iter 105's step-back): day 33.16ms · night 37.33ms.** Still
+  valid at iter 109: a pristine-HEAD control run that lap read day **33.33ms** / night **37.89ms**. The
   stale-baseline warning 104 raised is **resolved** — the old pin (2026-07-09, day 31.33ms) predated
   iters 100–104 and reported ~+6% before your change existed. Do not re-chase it. The rule it taught
   survives: **a *stable* pass-over-pass offset means code, a *rising* one means load — and "code" may
@@ -970,92 +993,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 101 entries before Iteration 99 live in
+> **Archive:** the 102 entries before Iteration 100 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 99 — the walk-ups stop wearing one shade (2026-07-10) [holistic step-back]
-
-**Vector** — Urban fabric × **Polish (SHIPPED)**, plus the 5-iteration holistic step-back. Took the
-surviving half of **cue (e½)**. Rotation would have said *Civic & culture* (stalest domain, last
-vector **91**), and this is the **fifth** Urban×Polish and the **fourth Polish in six**. Overridden
-deliberately: the step-back's own agents, on both seeds, independently and unprompted named the
-mid-rise mass as the #1 thing to fix, and the skill says a holistic finding outranks the rotation
-table. **Rotation debt is real and now explicit — iter 100 should be Civic & culture, non-Polish.**
-
-**Step-back gates (run first, on pristine HEAD).** Perf, 3 sequential passes, tight readings:
-**day 31.33 → 33.72ms (+7.6%)**, **night 37.22 → 38.05ms (+2.2%)**. PASS. That day cost is iter 96's
-conifers, still standing and still inside budget. Holistic whole-city, 2 seeds, 2 agents, no
-enhancement: both **PASS**. Both volunteered that iter 98's core landed (*"the tallest glass towers
-concentrate over the founding crossroads"*; *"a distinct downtown core… not stringing along an
-edge"*). Both then named the same defect: *"a uniform carpet… same building palette and density…
-reads as noise rather than distinct neighborhoods"* (42) and *"the tan flat-topped buildings compound
-into a beige monotone"* (7).
-
-**Two hypotheses, both killed by the probe before a line shipped.** This is the iteration's real
-output; `probe-fabric.mjs` cost ~4 minutes and saved two bad ships.
-- **"RES body colour is a binary threshold on a smooth field, so it makes big beige patches."**
-  *False.* `sameNbrFrac` **52.1%** over RES–RES edges (0.5 = fine mix, 1.0 = carpet), meanPatch
-  **1.3**, maxPatch **5.3**. The houses already mix finely; RES is only ~305 of 4489 cells anyway.
-- **"Tint the fabric by `c.dist` — a district CA already exists (L1201), and COM shopfronts already
-  wear `DISTCOL[c.dist]`."** *This would have painted confetti.* Measured over the ~1100 DEV cells
-  the CA actually runs on: `distSameNbr` **45.6–50.2%** against a **25%** chance floor, **535–580
-  patches**, largest patch **12–21 cells**. Districts are noise with a faint bias, not regions —
-  the majority vote (`votes[best]>=3 && rng()<0.5`, `ks(50)`) coarsens far slower than development
-  re-injects fresh random `dist` into new cells.
-
-**The actual defect, once the tile histogram was read instead of guessed.** At 2035 the built mass is
-`ROAD ~830 · MID ~460 · RES ~305 · COM ~220 · TOWER ~74`. **MID is the dominant building tile** — the
-agents said "mid-rise" and I had been reading the RES branch. And MID (L3290) was:
-`bodyN = v>0.72 ? 'terra':'cream'`, with `c.th = 22+c.v*14`, and a roof parapet of `creamDk` for
-**100% of them**. So ~73% of the city's commonest building wore one cream, the parapet never varied,
-and **colour was a restatement of height**: measured `corr(terra, height)` = **0.76–0.79**.
-
-**Change (draw-only, 4 lines).** A walk-up's colour is now its own seed-salted hash, not a second
-reading of the value field: `mv=hashCell(x,y,seedNum^0x3D1B)`, `tone=mv*0.72+v*0.28` →
-`terra / cream / sandDk` (ochre), and the parapet varies over the same three darks, with a guard so
-a `sandDk` cap never sits on a `sandDk` block. `v` keeps a 28% pull, so tall blocks still *lean*
-terracotta — a trend, no longer an identity.
-
-| | HEAD | after |
-| --- | --- | --- |
-| MID body | cream 73% · terra 27% | cream 43% · sandDk 31% · terra 25% |
-| MID parapet | `creamDk` ×100% | 3 tones |
-| `corr(terra, height)` | **0.76 – 0.79** | **0.19 – 0.31** |
-| MID–MID `sameNbr` | — | 35–37% (chance floor 33% ⇒ grain, not clumps) |
-
-**Census** — `VERDICT: PASS`, and **provably stream-neutral** exactly as iter 98's law predicts for a
-property-of-a-thing change: `pop 150332 (+0)`, `roads +0`, `developed +0`, `towers +0`, `towerHt +0`,
-and the **tile histogram printed nothing at all**. `solarRoofs +4 / greenRoofs +1` appeared — the
-signature iter 97 documented. Ran the stash-control anyway (90s, no tokens): **pristine HEAD against
-the same baseline gives the identical +4/+1.** Not mine.
-
-**Visual** — 2 agents, 2 seeds, before/after × (wide + `--shots downtown`), told not to enhance. Both
-**VISUAL: PASS**. Seed 7's agent, fed the original complaint verbatim, returned *"the AFTER frame is
-measurably less beige… the 'beige monotone' complaint is answered."* Seed 42: *"varied grain, not
-confetti; no checkerboard… deepens richness without going garish."* Both checked parapets seat flush
-(no float, no z-fight) and found no tears anywhere in frame.
-
-**Perf — and a new control.** After: day min **34.00ms**, night **38.61ms**. That read as +0.28ms of
-day vs the pre-edit gate, and three passes drifted *monotonically upward* (34.00→34.44→34.50) — the
-signature of accumulating machine load, not code. So I **stash-controlled the perf gate the way iter
-97 stash-controlled the census**: re-ran the *pre-edit* file under the *current* load → day
-**33.83–34.83ms**, night **38.78ms**. The post-edit numbers sit **inside the pre-edit noise band**,
-and night is nominally *faster*. **Perf-neutral, confirmed.** It has to be: `col()` memoizes on
-`name|f`, so extra colours cost cache entries, not draw calls.
-
-**Verdict — SHIPPED.** The city's most common building stopped being one colour, and stopped saying
-its own height twice. Draw-only, census dead flat, two visual PASSes, perf neutral by control.
-
-**Cue bookkeeping.** **(e½) is narrowed, not closed.** Its *palette* half is answered; its
-**density/green half survives** — iter 94's "edge-to-edge carpet of roads + rooftops with little green
-breathing room" is about *uniform block density and no interior green*, and 99 changed zero tiles by
-design. **New cue (f), measured and standing:** `RES` has the identical defect MID just lost —
-`corr(cream, height)` = **0.868**, and its roof hash is `hashCell(x,y,7)`, a **literal salt**, so
-**every seed paints the same RES roof pattern** (a quiet breach of "procedural, new city every
-load"). Both are one-line fixes in the RES branch (L3249–3251) for whoever takes Urban next.
 
 ## Iteration 100 — the institutions get their grounds (2026-07-10) [holistic step-back]
 
@@ -1864,3 +1806,105 @@ brightest/darkest — see the finding; it does not affect the gate, which is abo
   a new sky feature but to make more of the ground *answer* to it. Remaining surfaces that still sit out
   the calendar: `VINEYARD` (should redden and be cut), `MEADOW` seed-heads, `MARSH`. Cheap, draw-only,
   and each one makes the existing season system worth more.
+
+## Iteration 109 — the walk-ups close ranks (2026-07-10)
+
+**Vector** — Urban fabric × **Connect**. Rotation named both axes: Urban (103) was the stalest safe
+domain (Sky 95 is staler but is a documented trap), and `Connect` is one of the two coldest kinds —
+its only prior entry is iter 47's skybridges. The recent kinds were New element / New CA rule /
+Deepen, so Connect was also un-repeated.
+
+**The seam.** A `MID` walk-up bodies out `ax=0.34` — 0.68 of a cell — so an E-W pair leaves a 0.32-cell
+gap and the mid-rise mass reads as a checkerboard of detached boxes, never as streets. This is the one
+gap that *shows*: along the two diagonal axes the row in front is drawn later and its own height covers
+the seam, which is exactly why iter 47 found diagonal skybridges "stubby/hidden". The E-W gap is the
+only visible one, and closing it is the whole of the vector. (`RES` villas are deliberately left
+detached — they have gardens, pools, palms and a washing line strung *across* the gap to the next door
+west. Villas detached, walk-ups terraced, is also the correct urbanism.)
+
+**Change.** ~6 lines in `case T.MID`. A walk-up whose **east** neighbour is also a walk-up grows east:
+centre `+0.16`, half-extent `0.34 → 0.5`. Its east face then lands exactly on that neighbour's west
+face (`gx+0.66`) and the two butt with zero overlap. Chains compose — each member grows into the next,
+so a run of *n* closes *n−1* joints — and the row's left-to-right draw order does the occlusion for
+free. Where heights differ the taller block's flank *is* the party wall, which is what a stepped
+terrace looks like; no `min()` anywhere, the geometry does it. Roof furniture (solar, green roof,
+fringe, water tank) rides the shifted deck by `+jx`. Gate `hashCell(x+1,y,seedNum^0x4E27)<0.72`, keyed
+on the **east** cell so a joint is decided once by the same hash from either side; ~1 in 4 stays open
+as a light well. Salt and probability were **typed before anything was run**, per iter 107's law.
+Draw-only: no `rng()`, no terrain, no new tile type, so nothing to add to `__census()` or the tooltip.
+
+**Census — PASS.** `pop 154918 → 154918 (+0)`, every metric `+0`, **tile histogram completely empty**,
+0 page errors. A draw-only vector must move nothing, and this one moved nothing — not even the ±3 that
+iter 108 documented as the instrument's load floor.
+
+**Perf — PASS, and it is the reason the first design was thrown away.** See the finding below. Final:
+3 sequential runs judged by the minimum of each scene, day **33.44ms**, night **37.78ms**, against a
+*pristine-HEAD control measured on the same machine minutes earlier* (day 33.33ms, night 37.89ms):
+**+0.3% / −0.3%**. The street wall costs zero fills. Baseline not re-pinned; `polish-tile` owns it and
+there is nothing to re-pin.
+
+**Probe — `probe-terrace.mjs` (`git add -f`'d), 16 seeds.** Re-applies the join predicate from inside
+the page (so it cannot disagree with the draw code), chains closed joints into terraces, and pixel-tests
+the result. **3140 eligible joints, 2246 closed = 71.5%** against the declared 72% gate. Run lengths:
+1195 pairs, 300 triples, 85 quads, 36 fives, 10 six-plus, longest 7 — so **55.2% of all walk-ups
+(3872/7011) now stand in a terrace** rather than alone. Pixel test, restricted to joints with no
+building in front to occlude them: a **closed** joint reads the west block's own facade (mean RGB
+distance **13.0**, exact match 64.9%); an **open** one reads past it to the background (**55.0**, 2.1%).
+
+**Visual — PASS, 3/3 agents**, on the shipped geometry (the first three verdicts were discarded with the
+first design). Day downtown before/after at seeds 42 and 7, a night downtown pair, and un-zoomed whole-city
+frames. All three: terraces continuous and square on the hex grid, **no lopsided blocks, no roof furniture
+overhanging a widened roof, no clipping**; at night the window ribbon runs on through the joint and still
+reads as separate panes rather than one glowing slab; no z-order tears anywhere; the whole frame still a
+balanced coastal city, the mid-rise "adds texture without flattening the skyline".
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ TO CONNECT TWO THINGS, GROW ONE INTO THE OTHER — DO NOT INSERT A THIRD THING BETWEEN THEM.** The
+  first design filled each gap with a *filler prism*: a third block, at `min(h,h_w)`, in the west
+  neighbour's colour, carrying its own glass bands and its own cornice. It passed census and 3/3 visual
+  agents — and **failed the perf gate at +28.5% day / +26.7% night**, ~2000 extra `fill()`s per frame
+  (≈14 per joint × ~140 joints). Widening the west block instead — same prism, `cx+0.16`, `ax 0.34→0.5`
+  — produces *identical* geometry for **zero** extra fills, and the window ribbon, cornice and balcony
+  rails extend across the joint for free instead of being redrawn. It also deleted the `min()` height
+  logic and a `midTone()` helper I had hoisted only so the filler could paint the neighbour's shade.
+  **A connector you have to draw is a connector you got wrong.** Look for the version where the existing
+  geometry reaches.
+- **⚠ THE PERF GATE IS THE ONLY GATE THAT CATCHES THIS, AND CENSUS + VISUAL WILL BOTH WAVE IT THROUGH.**
+  The filler prism was *invisible* to the census (draw-only ⇒ `pop +0`, empty histogram) and *beautiful*
+  to three independent visual agents. Nothing but frame time knew it was wrong. The skill runs perf only
+  at the ~5th-iteration step-back; **any vector that adds per-frame draw work should run it in its own
+  lap**, and this one was not a step-back. Had I not, the loop would have shipped a 28% frame-time
+  regression and discovered it, unattributably, five iterations later.
+- **⚠ CONTROL AGAINST PRISTINE HEAD, ON THE SAME MACHINE, WITHIN MINUTES — the baseline file cannot tell
+  you whether it is you or the room.** Iters 99/104 taught "stable offset ⇒ code, rising ⇒ load". The
+  filler's offset was stable (+33/+29/+30%) — but so is a genuinely loaded machine's. The reading that
+  actually decided it was `git show HEAD:solvista.html > solvista.html`, 3 perf runs (day min **33.33ms**,
+  flat to baseline), restore. That took four minutes and converted "probably my code" into "certainly my
+  code". Cheap; do it before you optimise, not after.
+- **⚠ A CROSS-FRAME PIXEL DIFF IS NOT A VALID CONTROL FOR A CHANGE YOU CAN SEE *PAST*.** The filler
+  version's probe compared pristine-vs-patched pixels at each joint and read closed Δ27.3 / open Δ0.2 —
+  a beautiful control. The same probe on the shipped version read open **Δ7.0**, and I nearly filed it as
+  noise. It was not: through an *open* gap you look at the row **behind**, whose walk-ups legitimately
+  widened. The control class was contaminated by correct change. **A control must live in the same frame
+  as the thing it controls** — rewritten to compare the joint against the west block's own facade, one
+  frame, no pristine load (and it runs in half the time).
+- **⚠ ON A HEX PRISM, "SAME SCREEN Y" IS NOT "SAME WALL HEIGHT".** The front face's top edge slopes from
+  `+V` at the S-point to `+E` at the shoulder, so two points sampled at one screen `y` sit ~`V/4` apart
+  in `z`. Window bands are 3 tall and repeat every 7, so one probe point kept landing in glass and the
+  other on plain wall: closed Δ35.3 vs open Δ47.0, a **null result from a geometry bug, not from the
+  feature**. Invert the face equation and pick `z`: `y = cy + V + (E−V)·u − z`, with `z = 10+7k` (bands
+  occupy `[5+7k, 8+7k]`, rails to `8.9+7k`). Any future probe that samples a facade needs this.
+- **AND THEN THE OCCLUDERS: a facade probe must first ask whether the facade is visible.** With the
+  geometry fixed the test still read only 42.6% match on closed joints. The city is dense; the row drawn
+  in front covers most walls, and it covers two nearby probe points *unequally*. Restricting to joints
+  with **no `DEV` cell at all in the row in front** (n 2246→464) moved closed joints to Δ**13.0** / 64.9%
+  match against open Δ**55.0** / 2.1% — a 31× separation. The confound was never the vector. **When a
+  pixel probe of a 3-D scene reads weakly, suspect occlusion before you suspect the feature.**
+- **The `hashCell` gate should be keyed on the ASYMMETRIC end of the relation.** A joint between `(x-1,y)`
+  and `(x,y)` is one thing, but two cells can ask about it. Keying on the **east** cell (`hashCell(x+1,y)`
+  from the west block's point of view) means both sides compute the same bit, so a probe written from the
+  other direction agrees with the draw code by construction. That is why `probe-terrace.mjs` could re-apply
+  the predicate and land on 71.5% against a 72% target with no fudge.

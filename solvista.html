@@ -3660,18 +3660,41 @@ function drawBuilding(c,x,y,gx,gy){
     const bodyN=tone>0.68?'terra':(tone>0.36?'cream':'sandDk');
     let roofN=mv<0.40?'terraDk':(mv<0.75?'creamDk':'sandDk');
     if(roofN===bodyN)roofN='terraDk'; /* a sandDk parapet on a sandDk block reads flat */
-    prism(gx,gy,0.34,0.30,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
+    /* Street wall. A walk-up bodies out 0.68 of a cell, so an E-W pair leaves a
+       0.32 gap and the mid-rise mass read as detached boxes rather than terraces.
+       (Only the E-W gap shows: along the two diagonal axes the row in front is
+       drawn later and its own height covers the seam.) A walk-up whose EAST
+       neighbour is also a walk-up therefore GROWS east into the gap — centre
+       +0.16, half-extent 0.34 -> 0.5 — so its east face lands exactly on that
+       neighbour's west face (gx+0.66) and the two butt into one terrace. Chains
+       compose: each member grows into the next, so a run of n closes n-1 joints
+       with no overlap and no z-fighting, and the row's left-to-right draw order
+       does the occlusion. Where the two heights differ the taller one's flank IS
+       the party wall, which is what a stepped terrace looks like.
+         Growing the body beats filling the gap with a third prism: the window
+       ribbon, cornice and balcony rails all stretch across the joint for free,
+       and the frame pays ZERO extra fill()s. The filler-prism version cost ~2000
+       fills and +28% frame time (iter 109 measured it and threw it away).
+       Draw-only: hashCell, no rng(), no terrain. The gate is keyed on the EAST
+       cell so a joint is decided once, by the same hash from either side; ~1 in 4
+       stays open as a light well. */
+    const en=cellAt(x+1,y);
+    const join=!!en&&en.t===T.MID&&Math.min(h,en.h)>6&&hashCell(x+1,y,seedNum^0x4E27)<0.72;
+    const jx=join?0.16:0, ab=join?0.5:0.34;
+    prism(gx+jx,gy,ab,0.30,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
     for(let z=5;z<h-4;z+=7){
-      bandR(gx,gy,0.34,0.30,z,z+3,colLit('glass',0.82,lit));
-      darkWinR(gx,gy,0.34,0.30,z,z+3,x,y,0x1DE7);
-      if(bodyN==='terra')bandR(gx,gy,0.348,0.308,z+3,z+3.9,col('white',0.95)); /* balcony rails */
+      bandR(gx+jx,gy,ab,0.30,z,z+3,colLit('glass',0.82,lit));
+      darkWinR(gx+jx,gy,ab,0.30,z,z+3,x,y,0x1DE7);
+      if(bodyN==='terra')bandR(gx+jx,gy,ab+0.008,0.308,z+3,z+3.9,col('white',0.95)); /* balcony rails */
     }
-    prism(gx,gy,0.36,0.32,h,h+1.6,col(roofN,1),col(roofN,0.6),col(roofN,0.82));
+    prism(gx+jx,gy,ab+0.02,0.32,h,h+1.6,col(roofN,1),col(roofN,0.6),col(roofN,0.82));
+    /* the roof furniture rides the shifted deck — at jx=0.16 a centred green roof
+       would hang 0.10 of a cell off the western eave */
     if(c.solar) /* rooftop solar array */
-      prism(gx-0.08,gy+0.02,0.16,0.12,h+1.6,h+2.4,col('solar',1.15),col('solar',0.7),col('solar',0.9));
+      prism(gx+jx-0.08,gy+0.02,0.16,0.12,h+1.6,h+2.4,col('solar',1.15),col('solar',0.7),col('solar',0.9));
     if(c.groof){ /* green roof garden — planted, not just a bare deck */
-      prism(gx,gy,0.30,0.26,h+1.6,h+3.2,col('sage',1.06),col('sage',0.62),col('sage',0.85));
-      const[gcx,gcy]=px(gx,gy), ry=gcy-h-4;
+      prism(gx+jx,gy,0.30,0.26,h+1.6,h+3.2,col('sage',1.06),col('sage',0.62),col('sage',0.85));
+      const[gcx,gcy]=px(gx+jx,gy), ry=gcy-h-4;
       ctx.fillStyle=col('sage',0.8);                                   /* planter shrubs */
       ctx.beginPath();ctx.arc(gcx-2.4,ry+0.3,1.5,0,7);ctx.fill();
       ctx.fillStyle=col('sage',1.16);
@@ -3685,11 +3708,11 @@ function drawBuilding(c,x,y,gx,gy){
     }
     if(v>0.5){ /* roof garden fringe */
       ctx.fillStyle=col('sage',1);
-      const[cx,cy]=px(gx,gy);
+      const[cx,cy]=px(gx+jx,gy);
       ctx.fillRect(cx-4,cy-h-3.4,8,2);
     } else if(!c.solar&&!c.groof&&hashCell(x,y,seedNum^0x7A7E)<0.3){
       /* the older walk-ups keep a timber water tank on the roof */
-      const[cx,cy]=px(gx,gy);
+      const[cx,cy]=px(gx+jx,gy);
       const tx=cx+3.1,ty=cy-h-1.6;
       ctx.strokeStyle=col('ink',0.75);ctx.lineWidth=0.6;               /* legs */
       ctx.beginPath();ctx.moveTo(tx-1.5,ty);ctx.lineTo(tx-1.5,ty-2);

@@ -3939,3 +3939,84 @@ the centre before trusting the comment above it**; and the best version of a vec
 expressed as a *property of a thing* rather than a *decision about which things exist*, because then
 the census proves it instead of merely tolerating it.
 
+## Iteration 99 — the walk-ups stop wearing one shade (2026-07-10) [holistic step-back]
+
+**Vector** — Urban fabric × **Polish (SHIPPED)**, plus the 5-iteration holistic step-back. Took the
+surviving half of **cue (e½)**. Rotation would have said *Civic & culture* (stalest domain, last
+vector **91**), and this is the **fifth** Urban×Polish and the **fourth Polish in six**. Overridden
+deliberately: the step-back's own agents, on both seeds, independently and unprompted named the
+mid-rise mass as the #1 thing to fix, and the skill says a holistic finding outranks the rotation
+table. **Rotation debt is real and now explicit — iter 100 should be Civic & culture, non-Polish.**
+
+**Step-back gates (run first, on pristine HEAD).** Perf, 3 sequential passes, tight readings:
+**day 31.33 → 33.72ms (+7.6%)**, **night 37.22 → 38.05ms (+2.2%)**. PASS. That day cost is iter 96's
+conifers, still standing and still inside budget. Holistic whole-city, 2 seeds, 2 agents, no
+enhancement: both **PASS**. Both volunteered that iter 98's core landed (*"the tallest glass towers
+concentrate over the founding crossroads"*; *"a distinct downtown core… not stringing along an
+edge"*). Both then named the same defect: *"a uniform carpet… same building palette and density…
+reads as noise rather than distinct neighborhoods"* (42) and *"the tan flat-topped buildings compound
+into a beige monotone"* (7).
+
+**Two hypotheses, both killed by the probe before a line shipped.** This is the iteration's real
+output; `probe-fabric.mjs` cost ~4 minutes and saved two bad ships.
+- **"RES body colour is a binary threshold on a smooth field, so it makes big beige patches."**
+  *False.* `sameNbrFrac` **52.1%** over RES–RES edges (0.5 = fine mix, 1.0 = carpet), meanPatch
+  **1.3**, maxPatch **5.3**. The houses already mix finely; RES is only ~305 of 4489 cells anyway.
+- **"Tint the fabric by `c.dist` — a district CA already exists (L1201), and COM shopfronts already
+  wear `DISTCOL[c.dist]`."** *This would have painted confetti.* Measured over the ~1100 DEV cells
+  the CA actually runs on: `distSameNbr` **45.6–50.2%** against a **25%** chance floor, **535–580
+  patches**, largest patch **12–21 cells**. Districts are noise with a faint bias, not regions —
+  the majority vote (`votes[best]>=3 && rng()<0.5`, `ks(50)`) coarsens far slower than development
+  re-injects fresh random `dist` into new cells.
+
+**The actual defect, once the tile histogram was read instead of guessed.** At 2035 the built mass is
+`ROAD ~830 · MID ~460 · RES ~305 · COM ~220 · TOWER ~74`. **MID is the dominant building tile** — the
+agents said "mid-rise" and I had been reading the RES branch. And MID (L3290) was:
+`bodyN = v>0.72 ? 'terra':'cream'`, with `c.th = 22+c.v*14`, and a roof parapet of `creamDk` for
+**100% of them**. So ~73% of the city's commonest building wore one cream, the parapet never varied,
+and **colour was a restatement of height**: measured `corr(terra, height)` = **0.76–0.79**.
+
+**Change (draw-only, 4 lines).** A walk-up's colour is now its own seed-salted hash, not a second
+reading of the value field: `mv=hashCell(x,y,seedNum^0x3D1B)`, `tone=mv*0.72+v*0.28` →
+`terra / cream / sandDk` (ochre), and the parapet varies over the same three darks, with a guard so
+a `sandDk` cap never sits on a `sandDk` block. `v` keeps a 28% pull, so tall blocks still *lean*
+terracotta — a trend, no longer an identity.
+
+| | HEAD | after |
+| --- | --- | --- |
+| MID body | cream 73% · terra 27% | cream 43% · sandDk 31% · terra 25% |
+| MID parapet | `creamDk` ×100% | 3 tones |
+| `corr(terra, height)` | **0.76 – 0.79** | **0.19 – 0.31** |
+| MID–MID `sameNbr` | — | 35–37% (chance floor 33% ⇒ grain, not clumps) |
+
+**Census** — `VERDICT: PASS`, and **provably stream-neutral** exactly as iter 98's law predicts for a
+property-of-a-thing change: `pop 150332 (+0)`, `roads +0`, `developed +0`, `towers +0`, `towerHt +0`,
+and the **tile histogram printed nothing at all**. `solarRoofs +4 / greenRoofs +1` appeared — the
+signature iter 97 documented. Ran the stash-control anyway (90s, no tokens): **pristine HEAD against
+the same baseline gives the identical +4/+1.** Not mine.
+
+**Visual** — 2 agents, 2 seeds, before/after × (wide + `--shots downtown`), told not to enhance. Both
+**VISUAL: PASS**. Seed 7's agent, fed the original complaint verbatim, returned *"the AFTER frame is
+measurably less beige… the 'beige monotone' complaint is answered."* Seed 42: *"varied grain, not
+confetti; no checkerboard… deepens richness without going garish."* Both checked parapets seat flush
+(no float, no z-fight) and found no tears anywhere in frame.
+
+**Perf — and a new control.** After: day min **34.00ms**, night **38.61ms**. That read as +0.28ms of
+day vs the pre-edit gate, and three passes drifted *monotonically upward* (34.00→34.44→34.50) — the
+signature of accumulating machine load, not code. So I **stash-controlled the perf gate the way iter
+97 stash-controlled the census**: re-ran the *pre-edit* file under the *current* load → day
+**33.83–34.83ms**, night **38.78ms**. The post-edit numbers sit **inside the pre-edit noise band**,
+and night is nominally *faster*. **Perf-neutral, confirmed.** It has to be: `col()` memoizes on
+`name|f`, so extra colours cost cache entries, not draw calls.
+
+**Verdict — SHIPPED.** The city's most common building stopped being one colour, and stopped saying
+its own height twice. Draw-only, census dead flat, two visual PASSes, perf neutral by control.
+
+**Cue bookkeeping.** **(e½) is narrowed, not closed.** Its *palette* half is answered; its
+**density/green half survives** — iter 94's "edge-to-edge carpet of roads + rooftops with little green
+breathing room" is about *uniform block density and no interior green*, and 99 changed zero tiles by
+design. **New cue (f), measured and standing:** `RES` has the identical defect MID just lost —
+`corr(cream, height)` = **0.868**, and its roof hash is `hashCell(x,y,7)`, a **literal salt**, so
+**every seed paints the same RES roof pattern** (a quiet breach of "procedural, new city every
+load"). Both are one-line fixes in the RES branch (L3249–3251) for whoever takes Urban next.
+
