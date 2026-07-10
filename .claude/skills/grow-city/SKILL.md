@@ -370,6 +370,20 @@ touch STOP                        # stop gracefully after the current iteration
 VERBOSE=0|1|2 ./run-loop.sh       # quiet | action feed (default) | full prose
 ```
 
+**The digest accrues as the run goes.** Every landed iteration appends one line to
+`RUNLOG.md` (`runlog.mjs`, called by the runner) — verdict read from the ledger,
+not guessed — so a finished run leaves a skimmable table instead of only a
+scrolled-away feed:
+```
+✔ Iter 121  Transport × Deepen        SHIPPED   40m06s  $2.41  eed22e4
+↩ Iter 114  Civic & culture × Polish  EXPLORED → REVERTED  31m02s  $2.05  efc62cd
+```
+For a **grouped, shareable summary of any range** — by domain, with the reverts in
+their own section — generate it from git + the ledger at any time, retroactively:
+```bash
+node notes.mjs --last 20          # or  notes.mjs Iter100..HEAD  ·  sha..sha
+```
+
 The runner streams each iteration through `fmt-stream.mjs`, which renders claude's
 `--output-format stream-json` as one line per action, so a 40-minute iteration is a
 live feed rather than 40 minutes of silence:
@@ -643,6 +657,13 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   to start on a dirty tree or a dirty worktree, `--status`, `STOP`.
 - `fmt-stream.mjs` — renders the runner's `stream-json` output as a live one-line-
   per-action feed, and lifts `rate_limit_event.resetsAt` out for the runner.
+- `runlog.mjs` / `RUNLOG.md` — one digest line per landed iteration, appended by the
+  runner. Idempotent by commit sha (a no-commit iteration appends nothing), verdict
+  and vector read from the commit + ledger, cost from the raw stream. `RUNLOG.md` is
+  the accruing table; it is not memory (the ledger is) and nothing reads it back.
+- `notes.mjs` — release notes for a range, from git + the ledger, grouped by domain
+  with an *Explored and rejected* section. `--last N`, or a `git` range; whole-file
+  numeric delta scoped to the range's dates. Invents no prose; pure selection.
 - `hovershot.mjs` — screenshots a *hover*, which `shoot.mjs` cannot do. Aims the
   real cursor at an entity via `__ents`, then clips it at three scales plus a
   no-hover control frame. `node hovershot.mjs '<url query>' '<Entity name>'

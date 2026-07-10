@@ -60,15 +60,27 @@ LOCK_DIR_EARLY="${TMPDIR:-/tmp}/solvista-growcity-$(echo "$REPO" | cksum | cut -
 # ---- --status: how is the loop doing? ---------------------------------------
 # Checking on an overnight run should not mean reading a 40MB log.
 if [ "${1:-}" = "--status" ]; then
+  running=0
   if [ -f "$LOCK_DIR_EARLY/pid" ] && kill -0 "$(cat "$LOCK_DIR_EARLY/pid")" 2>/dev/null; then
+    running=1
     echo "grow-city: RUNNING (pid $(cat "$LOCK_DIR_EARLY/pid"))"
   else
     echo "grow-city: stopped"
   fi
   echo "  repo: $(git -C "$REPO" rev-parse --short HEAD) $(git -C "$REPO" log -1 --format=%s | cut -c1-48)"
   [ -n "$(git -C "$REPO" status --porcelain)" ] && echo "  ⚠ main is DIRTY — the runner will refuse to start"
-  [ -n "$(git -C "$REPO/../solvista-grow" status --porcelain 2>/dev/null | grep -v 'census-history\.jsonl$')" ] &&
-    echo "  ⚠ worktree is DIRTY — an iteration died mid-flight; inspect before restarting"
+  # A dirty worktree means opposite things depending on whether a runner is live.
+  # This used to cry "died mid-flight" on EVERY healthy in-progress iteration —
+  # which is exactly how a real mid-flight death gets ignored.
+  if [ -n "$(git -C "$REPO/../solvista-grow" status --porcelain 2>/dev/null | grep -v 'census-history\.jsonl$')" ]; then
+    if [ "$running" = "1" ]; then
+      echo "  · worktree has uncommitted work — an iteration is in flight (expected)"
+    else
+      echo "  ⚠ worktree is DIRTY and no runner is live — an iteration died mid-flight."
+      echo "    The commit is the LAST thing an iteration does, so this may be finished,"
+      echo "    gate-passing work. Re-run census.mjs; don't reflexively discard it."
+    fi
+  fi
   echo
   echo "  last log:  $(grep -E 'iteration [0-9]+ (starting|finished|FAILED)|session limit|giving up|runner exiting' "$LOG" 2>/dev/null | tail -1 | sed 's/^[0-9-]* //')"
   if [ -f "$HERE/census-history.jsonl" ]; then
@@ -252,13 +264,16 @@ while :; do
     sleep "$wait_s"
     continue    # same iteration number — a limit grew no city
   fi
-  rm -f "$out"
 
   if [ "$rc" -eq 0 ]; then
     fails=0
     tries=0
     done_ok=$((done_ok + 1))
     log "--- iteration $done_ok finished ok in ${elapsed}s ---"
+    # One digest line per landed iteration, read from the commit + ledger it just
+    # wrote (idempotent by sha, so a no-commit iteration appends nothing). Uses the
+    # raw stream only for cost, so it must run before "$out" is removed.
+    node "$HERE/runlog.mjs" --repo "$REPO" --elapsed "$elapsed" --raw "$out" 2>&1 | tee -a "$LOG" || true
   else
     fails=$((fails + 1))
     log "--- iteration $((done_ok + 1)) FAILED (exit $rc) after ${elapsed}s [$fails/$MAX_FAILS] ---"
@@ -269,9 +284,12 @@ while :; do
     backoff=$(( BACKOFF_BASE * (1 << (fails - 1)) ))
     [ "$backoff" -gt "$BACKOFF_CAP" ] && backoff=$BACKOFF_CAP
     log "backing off ${backoff}s before retrying."
+    rm -f "$out"
     sleep "$backoff"
     continue
   fi
+
+  rm -f "$out"
 
   # Event-based: the next iteration starts now. The floor only exists so that an
   # iteration which dies instantly cannot spin the CPU.
