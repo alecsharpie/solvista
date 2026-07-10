@@ -1103,11 +1103,43 @@ function tick(){
       c.age=0;
     }
   }
-  /* a shop ringed by shops near greenery becomes a market square */
+  /* A market is open ground the shops grew around — not a shop.
+     This pass used to read `COM && >=3 COM neighbors`, and it could never fire:
+     the tower rule above takes any inland COM at *2* COM-or-TOWER neighbors, and
+     ~60 samples/cell saturate its probability, so a shop is towered long before a
+     third shop can gather beside it. The market's precondition was strictly harder
+     than the tower's, on the same cells, in a race it always lost. Measured across
+     6 seeds at 2035: COM ~210/city, COM with >=3 COM neighbors **0**. The tile —
+     stalls, string lights, its own crowd term in openCells — had never been sited
+     by this rule in the artifact's life. (probe-market.mjs.)
+     So site it on what a market actually is: a corner of a green that a road
+     reaches and that commerce has closed in around. `c.buzz` (the iter-104
+     ATTRACT field) already means exactly "how much is there to come out for,
+     seen from this hex", and on ground you can stand on it is precisely the
+     count of adjacent attractions — so `buzz>=2` is "enclosed on two sides by
+     things worth walking to". No hand-rolled second field.
+     Eligibility is `hashCell`, not `rng()`, so the pass keeps its ks(6) rc()
+     picks and adds no draw of its own.
+     The host is PARK and not EMPTY, and that is a STREAM decision, not a scenic
+     one. `T.EMPTY` hosts ~8 other rng()-gated passes (farms, industry, forest
+     succession, gardens, the civic lot search), so a market that consumes an
+     empty lot deletes every conditional draw those passes would have rolled on
+     it. Measured: an EMPTY-hosted version of this rule swung `pop` +4.6% on one
+     salt and -5.8% on another — same rule, same ~2 markets/city, a different
+     arbitrary constant, and the second would have hard-failed the census gate.
+     PARK hosts no pass, and hosting here halved that spread (+4.2 / -0.8 / -2.4
+     across three salts, all passing). The remaining wobble is not this rule's
+     doing at all: replacing the terrain write with a no-op — same predicate,
+     zero cells changed — still moves pop -0.3% and FIELD 20->14, because the
+     OLD rule's trailing `rng()<0.3` did fire in the 1992-96 window, before the
+     tower rule (year>=1996) began eating clustered shops. Deleting a dead rule's
+     draw is itself a stream perturbation. Judge this vector by MARKET, which was
+     0 in every seed and era of the artifact's life. */
   if(year>=1992)for(let k=0;k<ks(6);k++){
     const[x,y,c]=rc();
-    if(c&&c.t===T.COM&&countAround(x,y,1,n=>n.t===T.COM)>=3&&greenNear(x,y,2)
-       &&countAround(x,y,4,n=>n.t===T.MARKET)===0&&rng()<0.3){
+    if(c&&c.t===T.PARK&&!c.corr&&(c.buzz||0)>=2&&roadNear(x,y)
+       &&countAround(x,y,4,n=>n.t===T.MARKET)===0
+       &&hashCell(x,y,seedNum^0x4A17)<0.72){
       c.t=T.MARKET;c.th=0;c.h=0;c.age=0;
     }
   }
@@ -3066,7 +3098,7 @@ function drawCell(x,y){
       ctx.moveTo(cx+2.1,ty+1.5);ctx.ellipse(cx,ty+1.5,2.1,1.1,0,0,7);ctx.stroke();
       if(LITAMT<0.75){ /* match-day crowd on the concourse */
         for(let j=0;j<9;j++){const a=j*0.7+hv*6;
-          if(hashCell(x*7+j,y,seedNum^0x0C0D)<0.72){
+          if(hashCell(x*7+j,y,seedNum^0x4A17)<0.72){
             ctx.fillStyle=j&1?col(AC,1.25):col('white',1.15);
             ctx.fillRect(cx+Math.cos(a)*(RX-1.2)-0.6,ty+Math.sin(a)*(RY-0.6)-0.6,1.2,1.2);}}
       }

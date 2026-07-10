@@ -3762,3 +3762,109 @@ census dead flat, three visual PASSes, perf inside budget. Nature's saturation n
 now better evidenced: the payoff here came from *polishing what the domain already had*, not from
 a fifth plant.
 
+## Iteration 97 — the coast learns to talk (2026-07-10)
+
+**Vector** — Water & coast × **Interaction/UX (SHIPPED)**. Both axes pointed here. Water & coast
+was the stalest **domain** (last vector: 90), and Interaction/UX was by far the stalest **kind**
+— last touched at **71**, twenty-six iterations ago. It is also the kind the header's own
+saturation rule prescribes: Water & coast's additive cells are spent (6 new elements, the dune CA
+at 90, the esplanade at 22, five Deepens), and "when every domain's obvious additive moves are
+spent, steer toward Deepen / Polish / **Interaction**."
+
+**The defect (found by grep, not by the ledger — again).** `drawPierAt()` is called from **two**
+draw cases, `T.WATER` (L2434) and `T.BEACH` (L2586), because the deck crosses the waterline. But
+`describeTile()` only ever saw the **tile underneath**. So hovering the ferris wheel — the single
+most eye-catching object on the coast — reported:
+
+> **Ocean** · *The open sea.* · Value 41%
+
+The pier has been drawn since iter ~6 and the esplanade since **iter 22**; both are draw-time
+features derived from terrain, and **neither was ever told to the tooltip**. The lifeguard tower
+(`hut`) was mute too. This is the invariant "keep the hover tooltip in sync" failing quietly for
+~75 iterations, and it failed precisely *because* these features carry no tile type of their own —
+nothing in `TILELABEL` was missing, so nothing looked wrong.
+
+**Change (tooltip-only; no terrain, no `rng()`, no new draw work).**
+- **`pierAt(x,y)` factored out** (L1827). The draw condition `year>=1986&&y===pier.y&&...` was
+  written out **twice**, and disagreed with `onPier()`'s `year>=1987`. Now: `pierAt` = what is
+  *drawn* (and named); `onPier` = `year>=1987&&pierAt(x,y)` = where a ped may legally *walk*. The
+  deck exists a year before it opens, which is both true to the code and true to life. Both draw
+  sites now call `pierAt`. One predicate, three readers — the iter-94 lesson (mark a through-line,
+  not spokes; keep one source of truth) applied to logic rather than geometry.
+- **The pier names itself, before the tile under it**: `Pier` / `Snack stall` (`x===pier.x1-1`) /
+  `Ferris wheel` (`x===pier.x1`), each with `Opened 1986`, plus a `Not yet open` flag in 1986.
+- **`Esplanade`** flag on the beach hex that carries the deck — gated on the *same* `espAt(y)` the
+  draw uses, so the tooltip cannot claim a plank that isn't painted.
+- **`Lifeguard tower`** flag, gated on `c.t===T.BEACH` to match its draw case.
+- **Dune CA state surfaced**: `Sand N%` (`c.sand/DUNECAP`) and a `Marram grass` flag past
+  `DUNEMARRAM`. Iter 90's accretion was visible in the *silhouette* and nowhere in words.
+- **`Tide`** on every tidal tile — `High water` / `Low water` / `Flooding` / `Ebbing`. `TIDE` was
+  already a live global driving the damp margin; `TIDEV` (the *sign* of its derivative) is new, and
+  is computed from the **same hoisted phase** as `TIDE` so the two can never disagree. The sea is
+  the one part of the diorama that changes while you look at it, and now it says so.
+- **`Value` suppressed on open water** (`WATER`/`KELP`/`MARSH`, and on pier hexes). Land value on
+  the seabed is noise printed as data.
+
+**Census** — `pop`/`roads`/`developed` **+0**, tile histogram **empty**, `promenade` +0. VERDICT
+PASS, 0 page errors. A tooltip-only change must read exactly flat, and it did.
+
+**⚠ `solarRoofs +4` / `greenRoofs +1` moved, and it is NOT this change.** The invariant says an
+unintended metric move is a red flag, so I ran the control: `git stash` the edit, re-census
+pristine HEAD against the same baseline → **the identical +4 / +1**. Cause: those two passes salt
+their hash with `(year*23)|0` (L1126/L1136), and `year` is a *continuously advancing float*, so the
+salt quantizes differently depending on exactly where tick accumulation lands. **These two metrics
+jitter ±4 run-to-run under a null edit.** Don't chase them; do run the stash-control before
+believing any small non-core delta.
+
+**Growth signal** — `probe-coasttip.mjs` walks every hex over the 3-seed × 3-era matrix, calls the
+*real* `describeTile(c,x,y)`, and asserts the tooltip against the draw's own predicates:
+
+| | 1985 | 2005 | 2035 |
+| --- | --- | --- | --- |
+| pier hexes named | 0 (not built) | 17 | 17 |
+| dune `Sand` rows | 62 | 94 | 110 |
+| of which `Marram grass` | **0** | 55 | 83 |
+
+34 pier hexes named across the matrix (22 `Pier` · 6 `Snack stall` · 6 `Ferris wheel`), 9 lifeguard
+towers (1/city), 7,773 tide rows. Four assertions hold at **0** violations: no pier hex still says
+Ocean/Beach, no water hex prints `Value`, no dry hex *lost* `Value`, no dry hex gained `Tide`.
+The dune table is the nicest result — **marram is 0 in 1985** and climbs, because sand hasn't
+reached `DUNEMARRAM` yet. The tooltip is reading live CA state, not a static label.
+
+**The cross-check that cost nothing:** esplanade rows total **189** — and the census's independent
+`promenade` metric is **189**. The tooltip predicate and iter 22's draw agree exactly, by
+construction. Per the header's rule, **no new census metric was added**: the existing tally already
+measured this.
+
+**⚠ All four tide labels are reachable, but a 17-second sample said otherwise.** The first check
+watched a live page for 17s and saw only `Low water`, which looks exactly like a dead-label bug.
+It isn't: the tide period is ~140s (`waveT` advances ~1.0/s, `×0.045`), and seed 42 happened to
+start in the **trough**, where `sin` is flattest. Driving `waveT` across one full period and
+reading the *real* tooltip gives `Low water 70 · High water 50 · Flooding 20 · Ebbing 20` — the
+arcsine shape you'd predict (slow at the extremes, fast through the middle). **A slow signal
+sampled briefly is indistinguishable from a stuck one. Sweep the phase; don't watch the clock.**
+
+**Visual** — tooltip changes can't be shot by `shoot.mjs`, and `hovershot.mjs` aims at *entities*
+via `__ents`. So `shot-coasttip.mjs` (scratch) aims the real cursor at a **hex** chosen by the
+draw's own predicate, zooms the artifact's camera, and centres the clip on the cursor (the panel
+flips left/up near frame edges). 4 agents, no enhancement (iter 95's rule): pier/esplanade seed 42
+**PASS**, pier seed 7 **PASS**, dune+ocean **PASS** (`Sand 100%` · `Marram grass` · `Tide Low
+water`, and ocean shows `Tide` with **no** `Value`), whole-city seeds 42+7 **PASS** — coast clean,
+hills healthy, no z-tears.
+
+**⚠ The one FAIL was the shot, not the product — and it taught the real lesson.** Seed 7's
+esplanade tooltip read **`Jogger` / "Logging shoreline miles."** A jogger was standing on the deck,
+and `pickEntity()` beats the tile — *correct* behaviour, poetically apt, and it hid the row under
+test. Fixed by `&flood=joggers:0` (the debug hook exists for exactly this) plus picking the
+candidate hex with the most clearance from any stamped entity. **Any tile-tooltip gate must clear
+entities off the target hex first, or it photographs the wrong tooltip.**
+
+**Perf** — not run: no per-frame draw work added (one `Math.cos` per tick); `describeTile` runs on
+`mousemove` only. Iter 96's `tree()` +7.1% remains the open watch item.
+
+**Verdict — SHIPPED.** The most-photographed structure on the coast stopped introducing itself as
+the ocean, and the coast's live simulation state — tide, sand, marram — became legible without a
+single new pixel. Census dead flat, five visual PASSes, one honest FAIL corrected. **The header's
+warning holds a fourth time: `GROWTH.md` is the loop's memory, not the artifact's inventory —
+grep the seam, not the ledger.**
+

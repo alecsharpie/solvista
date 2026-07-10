@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93, **104** | 78 | | 84 | 71 |
 
@@ -45,18 +45,20 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
-- **ROTATION.** Last vector per domain: Sky **95** · Civic **100** · Nature **102** ·
-  Urban **103** · People **104** · Transport **105** · Water **106**. Stalest is still
+- **ROTATION.** Last vector per domain: Sky **95** · Nature **102** · Urban **103** · People **104** ·
+  Transport **105** · Water **106** · Civic **107**. Stalest is still
   **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
   cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
-  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Civic (100)** is
-  the next-stalest and the safer pick; Nature (102) after it.
-  Recent kinds: 102 New element · 103 Polish · 104 Deepen · 105 Interaction/UX · 106 New element —
-  so **do not pick New element next**; the coldest kinds are **Connect**, **New CA rule**
-  and **Scale**. (Iter 106 passed on all three *for Water* and recorded why in its entry: Connect
-  there means a corridor and iter 101's law kills those; a Water CA rule would repeat iter 90's
-  dune accretion; Scale is a structural lever, not a lap move. That reasoning is Water-specific —
-  the three kinds stay cold for **other** domains.)
+  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Nature (102)**
+  is the next-stalest safe pick; Urban (103) after it.
+  Recent kinds: 103 Polish · 104 Deepen · 105 Interaction/UX · 106 New element · 107 New CA rule —
+  the coldest kinds are now **Connect** and **Scale**, then Polish. Note **107 was a New CA rule that
+  ADDED NOTHING**: it rewrote a pass that had never fired. *Auditing an existing rule for
+  reachability* is a New-CA-rule move available in every domain and it costs no new content — see
+  `probe-market.mjs` and the dead-rule law below. (Iter 106 passed on Connect/CA/Scale *for Water*
+  and recorded why in its entry: Connect there means a corridor and iter 101's law kills those; a
+  Water CA rule would repeat iter 90's dune accretion; Scale is a structural lever, not a lap move.
+  That reasoning is Water-specific — the kinds stay cold for **other** domains.)
   Note **Nature × Connect was attempted and reverted three times** (46, 88,
   101) and is the row's graveyard: 46 found it geometrically impossible, 88 found it has no host
   draw-only, 101 found the host *and the land* and lost on **shape**. Do not re-open it as a
@@ -70,6 +72,40 @@ ones (U2, 42, U5) stay in the bullet.
   be earlier iterations' code, so control against pristine HEAD, not against the baseline file**
   (iters 99, 104). Re-pin at a step-back whenever the offset is stable and attributable to landed
   work; `polish-tile` owns the file, so say so in the entry rather than re-pinning silently.
+- **⚠ A RULE CAN BE DEAD BECAUSE ANOTHER RULE'S PRECONDITION IS STRICTLY WEAKER ON THE SAME HOST
+  (iter 107).** `T.MARKET` — a fully-drawn tile with stalls, string lights, `POPW` 14, membership in
+  `DEV`/`ATTRACT`/`PEDDEST` — read **0 in every seed and era for the artifact's entire life.** Its
+  siting rule wanted `COM` with **3** COM neighbours; the upgrade pass 40 lines above takes any inland
+  `COM` at **2** COM-or-TOWER neighbours and *saturates* (iter 98). The market's precondition was
+  strictly harder than the tower's, on the same host, in a race it always lost — **unreachable, not
+  mistuned.** Fixed by rehosting on `PARK` + `buzz>=2` (markets are the open ground shops grow around).
+  **`probe-market.mjs` (tracked) is the general instrument: it counts survivors of each successive
+  conjunct of a predicate, so the starving clause names itself.** Run it on any rule whose tile the
+  census reads ~0. Candidates worth auditing: `GARDEN` (~0.3/city), `PLAZA` (~1/city), `SOLARF` (0–1),
+  `BURNT` (0). A dead rule survived 106 iterations; assume there are others.
+- **⚠ THE NO-OP CONTROL — the terrain analogue of iter 97's stash control (iter 107).** To learn what a
+  rule's **terrain writes** did, delete the write (`c.t=T.X;…` → `void 0`), keep the predicate, and
+  census. Zero cells change, so it must read `+0`. When it doesn't, the delta you were about to blame
+  on your feature is a **stream** artifact. Iter 107's no-op moved `pop` −0.3%, `EMPTY` +30 and
+  **`FIELD` 20→14 with nothing built** — because the old dead rule's trailing `rng()<0.3` *did* fire in
+  a narrow year window, so **deleting a dead rule's draw is itself a perturbation.** A rule that never
+  changes terrain can still be load-bearing on the stream. This control is what distinguishes "my
+  feature broke X" from "the stream moved"; the stash control cannot, because both files differ.
+- **⚠ CHOOSE A CA RULE'S HOST TILE BY WHICH PASSES GATE `rng()` ON IT, NOT BY SCENERY (iter 107).**
+  `T.EMPTY` hosts ~8 `rng()`-gated passes (farms, industry, forest succession, gardens, the civic lot
+  search), so consuming an empty lot deletes every conditional draw those passes would have rolled
+  there. `T.PARK` hosts none. Same rule, same ~2 markets/city, host is the only difference: **EMPTY →
+  `pop` +4.6% on one salt, −5.8% on another** (the latter a `COLLAPSE` hard-fail); **PARK → +4.2 /
+  −0.8 / −2.4, all passing.** A stream-quiet host halves the chaos amplitude. Grep `t===T.<HOST>` for
+  `rng()`-gated passes before committing to a host.
+- **⚠ A `hashCell` SALT IS A FREE PARAMETER THAT CAN SWING A CORE METRIC 10 POINTS — NEVER PICK IT
+  AFTER SEEING THE CENSUS (iter 107).** Identical rule, three salts, `pop` from +4.6% to −5.8%: one
+  ships, one hard-fails, and *nothing about the city differs*. Ship the constant you typed **before**
+  running anything, and report the spread. Corollary, and it generalizes past salts: **on a chaotic CA
+  the `pop` delta of a terrain vector is a property of the perturbation, not of the feature.** Judge by
+  the tile histogram. Conversely the **`hashCell` *probability*** is a free, stream-neutral tuning lever
+  (107 raised coverage 0.5→0.72 with zero stream effect) — tune eligibility there, never with an
+  `rng()<p` (iter 98).
 - **`c.buzz` — the third derived field, after `c.flow` and `c.val` (iter 104, in `tick()`).** How much
   is there to come out FOR, seen from a hex: `ATTRACT.has(c.t)?2:0` plus a count of `ATTRACT`
   neighbours (`COM`/`MARKET`/`CIVIC`/`STADIUM`/`PLAZA`). Pure terrain derivation, no `rng()`,
@@ -884,117 +920,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 99 entries before Iteration 97 live in
+> **Archive:** the 100 entries before Iteration 98 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 97 — the coast learns to talk (2026-07-10)
-
-**Vector** — Water & coast × **Interaction/UX (SHIPPED)**. Both axes pointed here. Water & coast
-was the stalest **domain** (last vector: 90), and Interaction/UX was by far the stalest **kind**
-— last touched at **71**, twenty-six iterations ago. It is also the kind the header's own
-saturation rule prescribes: Water & coast's additive cells are spent (6 new elements, the dune CA
-at 90, the esplanade at 22, five Deepens), and "when every domain's obvious additive moves are
-spent, steer toward Deepen / Polish / **Interaction**."
-
-**The defect (found by grep, not by the ledger — again).** `drawPierAt()` is called from **two**
-draw cases, `T.WATER` (L2434) and `T.BEACH` (L2586), because the deck crosses the waterline. But
-`describeTile()` only ever saw the **tile underneath**. So hovering the ferris wheel — the single
-most eye-catching object on the coast — reported:
-
-> **Ocean** · *The open sea.* · Value 41%
-
-The pier has been drawn since iter ~6 and the esplanade since **iter 22**; both are draw-time
-features derived from terrain, and **neither was ever told to the tooltip**. The lifeguard tower
-(`hut`) was mute too. This is the invariant "keep the hover tooltip in sync" failing quietly for
-~75 iterations, and it failed precisely *because* these features carry no tile type of their own —
-nothing in `TILELABEL` was missing, so nothing looked wrong.
-
-**Change (tooltip-only; no terrain, no `rng()`, no new draw work).**
-- **`pierAt(x,y)` factored out** (L1827). The draw condition `year>=1986&&y===pier.y&&...` was
-  written out **twice**, and disagreed with `onPier()`'s `year>=1987`. Now: `pierAt` = what is
-  *drawn* (and named); `onPier` = `year>=1987&&pierAt(x,y)` = where a ped may legally *walk*. The
-  deck exists a year before it opens, which is both true to the code and true to life. Both draw
-  sites now call `pierAt`. One predicate, three readers — the iter-94 lesson (mark a through-line,
-  not spokes; keep one source of truth) applied to logic rather than geometry.
-- **The pier names itself, before the tile under it**: `Pier` / `Snack stall` (`x===pier.x1-1`) /
-  `Ferris wheel` (`x===pier.x1`), each with `Opened 1986`, plus a `Not yet open` flag in 1986.
-- **`Esplanade`** flag on the beach hex that carries the deck — gated on the *same* `espAt(y)` the
-  draw uses, so the tooltip cannot claim a plank that isn't painted.
-- **`Lifeguard tower`** flag, gated on `c.t===T.BEACH` to match its draw case.
-- **Dune CA state surfaced**: `Sand N%` (`c.sand/DUNECAP`) and a `Marram grass` flag past
-  `DUNEMARRAM`. Iter 90's accretion was visible in the *silhouette* and nowhere in words.
-- **`Tide`** on every tidal tile — `High water` / `Low water` / `Flooding` / `Ebbing`. `TIDE` was
-  already a live global driving the damp margin; `TIDEV` (the *sign* of its derivative) is new, and
-  is computed from the **same hoisted phase** as `TIDE` so the two can never disagree. The sea is
-  the one part of the diorama that changes while you look at it, and now it says so.
-- **`Value` suppressed on open water** (`WATER`/`KELP`/`MARSH`, and on pier hexes). Land value on
-  the seabed is noise printed as data.
-
-**Census** — `pop`/`roads`/`developed` **+0**, tile histogram **empty**, `promenade` +0. VERDICT
-PASS, 0 page errors. A tooltip-only change must read exactly flat, and it did.
-
-**⚠ `solarRoofs +4` / `greenRoofs +1` moved, and it is NOT this change.** The invariant says an
-unintended metric move is a red flag, so I ran the control: `git stash` the edit, re-census
-pristine HEAD against the same baseline → **the identical +4 / +1**. Cause: those two passes salt
-their hash with `(year*23)|0` (L1126/L1136), and `year` is a *continuously advancing float*, so the
-salt quantizes differently depending on exactly where tick accumulation lands. **These two metrics
-jitter ±4 run-to-run under a null edit.** Don't chase them; do run the stash-control before
-believing any small non-core delta.
-
-**Growth signal** — `probe-coasttip.mjs` walks every hex over the 3-seed × 3-era matrix, calls the
-*real* `describeTile(c,x,y)`, and asserts the tooltip against the draw's own predicates:
-
-| | 1985 | 2005 | 2035 |
-| --- | --- | --- | --- |
-| pier hexes named | 0 (not built) | 17 | 17 |
-| dune `Sand` rows | 62 | 94 | 110 |
-| of which `Marram grass` | **0** | 55 | 83 |
-
-34 pier hexes named across the matrix (22 `Pier` · 6 `Snack stall` · 6 `Ferris wheel`), 9 lifeguard
-towers (1/city), 7,773 tide rows. Four assertions hold at **0** violations: no pier hex still says
-Ocean/Beach, no water hex prints `Value`, no dry hex *lost* `Value`, no dry hex gained `Tide`.
-The dune table is the nicest result — **marram is 0 in 1985** and climbs, because sand hasn't
-reached `DUNEMARRAM` yet. The tooltip is reading live CA state, not a static label.
-
-**The cross-check that cost nothing:** esplanade rows total **189** — and the census's independent
-`promenade` metric is **189**. The tooltip predicate and iter 22's draw agree exactly, by
-construction. Per the header's rule, **no new census metric was added**: the existing tally already
-measured this.
-
-**⚠ All four tide labels are reachable, but a 17-second sample said otherwise.** The first check
-watched a live page for 17s and saw only `Low water`, which looks exactly like a dead-label bug.
-It isn't: the tide period is ~140s (`waveT` advances ~1.0/s, `×0.045`), and seed 42 happened to
-start in the **trough**, where `sin` is flattest. Driving `waveT` across one full period and
-reading the *real* tooltip gives `Low water 70 · High water 50 · Flooding 20 · Ebbing 20` — the
-arcsine shape you'd predict (slow at the extremes, fast through the middle). **A slow signal
-sampled briefly is indistinguishable from a stuck one. Sweep the phase; don't watch the clock.**
-
-**Visual** — tooltip changes can't be shot by `shoot.mjs`, and `hovershot.mjs` aims at *entities*
-via `__ents`. So `shot-coasttip.mjs` (scratch) aims the real cursor at a **hex** chosen by the
-draw's own predicate, zooms the artifact's camera, and centres the clip on the cursor (the panel
-flips left/up near frame edges). 4 agents, no enhancement (iter 95's rule): pier/esplanade seed 42
-**PASS**, pier seed 7 **PASS**, dune+ocean **PASS** (`Sand 100%` · `Marram grass` · `Tide Low
-water`, and ocean shows `Tide` with **no** `Value`), whole-city seeds 42+7 **PASS** — coast clean,
-hills healthy, no z-tears.
-
-**⚠ The one FAIL was the shot, not the product — and it taught the real lesson.** Seed 7's
-esplanade tooltip read **`Jogger` / "Logging shoreline miles."** A jogger was standing on the deck,
-and `pickEntity()` beats the tile — *correct* behaviour, poetically apt, and it hid the row under
-test. Fixed by `&flood=joggers:0` (the debug hook exists for exactly this) plus picking the
-candidate hex with the most clearance from any stamped entity. **Any tile-tooltip gate must clear
-entities off the target hex first, or it photographs the wrong tooltip.**
-
-**Perf** — not run: no per-frame draw work added (one `Math.cos` per tick); `describeTile` runs on
-`mousemove` only. Iter 96's `tree()` +7.1% remains the open watch item.
-
-**Verdict — SHIPPED.** The most-photographed structure on the coast stopped introducing itself as
-the ocean, and the coast's live simulation state — tide, sand, marram — became legible without a
-single new pixel. Census dead flat, five visual PASSes, one honest FAIL corrected. **The header's
-warning holds a fourth time: `GROWTH.md` is the loop's memory, not the artifact's inventory —
-grep the seam, not the ledger.**
 
 ## Iteration 98 — downtown stops being a dip (2026-07-10)
 
@@ -1754,3 +1684,91 @@ frame still reads balanced and bright with a clean coastline.
   is the right root for anything thrown out from the beach — but **guard the river mouth**: seed 3
   rooted on `riv` water until `rootOK` required `BEACH` at the root's back. The pier's own `rivRow`
   check exists for the same reason. Sand at your back is the cheap test for "am I on the coast".
+
+## Iteration 107 — the market square was never built (2026-07-10)
+
+**Vector** — Civic & culture × **New CA rule**. Rotation named both axes: Civic was the stalest domain
+(last vector 100) and the recent kinds were New element / Polish / Deepen / Interaction / New element,
+so `New CA rule` was among the three coldest. This is a *rewrite* of an existing pass, not a fresh one
+— which is what the domain needed, because the pass it rewrites had never once fired.
+
+**The seam.** `T.MARKET` is a fully-built tile: cream paving, three striped stalls, string lights after
+dark, a `POPW` of 14, membership in `DEV`, `ATTRACT` and `PEDDEST`, and its own triple weight in
+`openCells` so crowds gather on it. `TILELABEL` names it, `TILEDESC` describes it. **The census has
+read `MARKET: 0` in every seed and era for the artifact's entire recorded life** (0–3 over the 9-cell
+matrix, i.e. ~0 per city; the stragglers come from the *other*, IND→market-hall rule). Nobody has ever
+seen this tile.
+
+Its siting rule (L1106) read `COM && countAround(...,1,COM)>=3 && greenNear`. **It is not mistuned; it
+is unreachable.** The upgrade pass 40 lines above takes any inland `COM` at **2** COM-or-TOWER
+neighbours, and by iter 98's saturation arithmetic (~60 samples/cell) that test fires with probability
+≈1. A shop is towered long before a third shop can gather beside it. The market's precondition was
+strictly *harder* than the tower's, on the same host, in a race it always lost. Measured on 6 seeds at
+2035 (`probe-market.mjs`): **COM 202–228/city, COM with ≥3 COM neighbours = 0. On every seed.**
+
+**Change.** ~10 lines. A market is not a shop — it is the open ground the shops grew around. Host is
+now `PARK` with `buzz>=2` (the iter-104 `ATTRACT` field: on standable ground it *is* the count of
+adjacent attractions, so `buzz>=2` reads "enclosed on two sides by things worth walking to" — no
+hand-rolled second field), plus `roadNear`, a spacing guard, and `hashCell` eligibility. The pass keeps
+its `ks(6)` `rc()` picks and adds **no `rng()` draw of its own**.
+
+**Census — PASS.** `MARKET` **0 → 12** across the matrix; every seed now grows **1–5** markets by 2035,
+none before 1992. `PARK` 1205→**1222** and `parks` +20 — the squares did not cost the city its greens.
+`pop` +3.1%, `towers` +18. **The pop number is not growth and I am not claiming it** — see below.
+
+**Visual — PASS, 2/2 agents.** Magnified clips (day, seed 42; night, seed 7) + un-zoomed whole-city
+frames. Both: the square reads as cream paving with striped stalls, sits flush on a hex face beside
+park and shopfronts, string lights render as discrete warm dots and not blown-out blobs, no z-order
+tears, and the whole frame still reads as a balanced coastal city. Correctly *subtle* at fit zoom.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A RULE CAN BE DEAD BECAUSE ANOTHER RULE'S PRECONDITION IS STRICTLY WEAKER ON THE SAME HOST.**
+  The market wanted `COM` with 3 COM neighbours; the tower rule takes `COM` at 2, and saturates. Every
+  cell that ever approached the market's condition had already been converted. **Before tuning a rule
+  that never fires, look for an earlier pass on the same host with a weaker test** — the rule is not
+  mistuned, it is unreachable, and no amount of probability tweaking will reach it. `probe-market.mjs`
+  (**`git add -f`'d**) is the general instrument: it counts survivors of *each successive conjunct* of
+  a rule's predicate, so the starving clause names itself. It took one run to find a dead rule that had
+  survived 106 iterations.
+- **⚠ THE NO-OP CONTROL — the terrain analogue of iter 97's stash control, and this iteration's most
+  reusable finding.** To learn what your rule's *terrain writes* did, run the rule with the write
+  removed (`c.t=T.MARKET;…` → `void 0`) and census that. Same predicate, same picks, **zero cells
+  changed**. It should read `+0` everywhere. It did **not**: `pop` −0.3%, `EMPTY` +30, and **`FIELD`
+  20→14** with nothing built. Cause: the old dead rule's trailing `rng()<0.3` *did* fire in the
+  1992–96 window, before the tower rule (`year>=1996`) began eating clustered shops — so **deleting a
+  dead rule's draw is itself a stream perturbation.** A rule that never changes terrain can still be
+  load-bearing on the stream. Without this control I would have shipped `FIELD −9` as a market-caused
+  regression and "fixed" it wrongly (I tried: see below).
+- **⚠ CHOOSE A CA RULE'S HOST TILE BY WHICH PASSES GATE `rng()` ON IT, NOT BY SCENERY.** `T.EMPTY` is
+  the host of ~8 other `rng()`-gated passes (farms, industry, forest succession, gardens, the civic lot
+  search); consuming an empty lot deletes every conditional draw those passes would have rolled there.
+  `T.PARK` gates none. Same rule, same ~2 markets/city, only the host differs:
+  **EMPTY → `pop` +4.6% on one salt and −5.8% on another** (the second is a `COLLAPSE` hard-fail);
+  **PARK → +4.2 / −0.8 / −2.4 across three salts, all passing.** Hosting on a stream-quiet tile halved
+  the chaos amplitude. This is a *design* lever nobody had named.
+- **⚠ A `hashCell` SALT IS A FREE PARAMETER THAT CAN SWING A CORE METRIC BY 10 POINTS. NEVER PICK IT
+  AFTER SEEING THE CENSUS.** Three salts, identical rule: `pop` +4.6% / −5.8% (EMPTY host). One ships,
+  one hard-fails, and *nothing about the city is different*. I shipped `0x4A17` because it is the
+  constant I typed **before running anything**, and I am reporting all three deltas rather than the
+  flattering one. The corollary for every future terrain vector: **the pop delta on a chaotic CA is a
+  property of the salt, not of the feature.** The growth signal is the tile histogram — here, a tile
+  that went from *nonexistent in the artifact's whole life* to 1–5 per city.
+- **The `hashCell` probability is a stream-free tuning lever.** Coverage was raised 0.5→0.72 (every seed
+  gets ≥1 market; seed 3 had 0 at 0.5) with **zero** effect on the `rng()` stream, because `hashCell`
+  makes no draw. Tune eligibility freely; never tune an `rng()<p` for the same purpose (iter 98).
+- **Two hypotheses, both measured, both WRONG — recorded so nobody re-tries them.** (i) *"Markets eat
+  the pocket parks that ball fields need"* — fields site on `EMPTY` with `PARK within 2` and do not
+  recognize `MARKET`, so this was plausible. I added a "take only a *corner* of a green" clause
+  (`>=1 PARK neighbour`). It **did not move `FIELD` at all** (still 11) and starved markets to zero on
+  three of eight seeds. Reverted. (ii) *"`FIELD`'s drop is salt-noise"* — it is not salt-noise either
+  (−9 / −6 / −9 across three salts, sign-stable). The no-op control settled it: `FIELD` is a tiny
+  metric (n=20 over nine cities) that moves with **any** stream shift, including one that changes no
+  terrain. **When two opposed theories both survive the aggregate, the aggregate is not the instrument
+  — build the control that holds one variable at exactly zero.**
+- **`c.buzz` reused exactly as iter 104 invited.** "Somewhere worth standing" was already computed,
+  already free of `rng()`, already recomputed each tick. A market square is the argmax of that field on
+  open ground. No new field, no new census metric (census-sprawl rule: `MARKET` was already tallied in
+  the tile histogram, and the vector adds no tile type and no entity array).
