@@ -4515,11 +4515,19 @@ function buildGondSet(){gondSet.clear();if(!gonds)return;
     for(let i=0;i<L;i+=3)P.push(i);
     if(P[P.length-1]!==L-1)P.push(L-1);
     g.pyl=P; g.pylSet=new Set(P);
+    /* a cabin's p is a ROUND TRIP, so one p-unit is 2*(L-1) spans (see stepCabins) */
+    const spans=Math.max(1,L-1);
+    g.rateP=Math.min(GONDSPD/(2*spans),GONDCAP);
+    g.brakeP=Math.min(GONDBRAKE/(2*spans),0.25);
   }}
 /* rope droop, world px per cell of span: a span of 3 cells (~66px) sags ~2.9px,
    a ~4% sag ratio — what a real haul rope does. Zero AT the towers, so the cable
    always lands on the sheave head instead of floating above the mast. */
 const GONDSAG=0.95, GONDSEG=3; /* sub-steps per cell: 2 samples per span is a trapezoid, not a curve */
+const GONDSPD=0.40,    /* spans per sim-second at cruise — the same on every line, long or short */
+      GONDCAP=0.05,    /* ...but never a round trip under 20s, or a one-span line would blink */
+      GONDBRAKE=1.6,   /* spans over which a cabin eases into its terminal, and back out */
+      GONDDWELL=4.0;   /* sim-seconds hanging at the sheave while they board */
 function gondSag(g,f){
   const P=g.pyl; if(!P||P.length<2)return 0;
   let k=0; while(k<P.length-2&&P[k+1]<=f)k++;
@@ -4545,7 +4553,7 @@ function seedGond(li){
   let rs=((seedNum^0x60D0^((li+1)*0x85EBCA6B))>>>0);
   const lr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
   const pref=pier?pier.y:(G/2)|0;
-  gonds.push({rr:lr,path:null,cabins:[{p:0.15},{p:0.62}],
+  gonds.push({rr:lr,path:null,cabins:[{p:0.15,dw:0},{p:0.62,dw:0}],
     start:1990+lr()*12, target:9+(lr()*13|0), fam:lr()<0.5?1:-1,
     run:2+(lr()*5|0), ph:0, wait:0, bar:0.42+lr()*0.18, h:22+lr()*12,
     ax:clamp(SHOREX-6+(lr()*5|0),4,G-8),
@@ -4583,7 +4591,7 @@ function stepGond(g){
   if(gondSet.has(idx(nx,ny))){g.fam=-g.fam;return;} /* keep clear of the other cables */
   if(c.val<g.bar-g.wait*0.002){g.wait++;return;} /* waits for the shore to earn it */
   /* keep the cabins where they are while the line lengthens under them */
-  if(L>1){const k=(L-1)/L;for(const cb of g.cabins)cb.p=cb.p<0.5?cb.p*k:1-(1-cb.p)*k;}
+  if(L>1){const k=(L-1)/L;for(const cb of g.cabins){cb.p=cb.p<0.5?cb.p*k:1-(1-cb.p)*k;cb.dw=0;}}
   g.path.push([nx,ny]); g.wait=0;
   buildGondSet();
 }
@@ -4601,6 +4609,24 @@ function drawGondAt(x,y,e){
     for(let k=1;k<=GONDSEG;k++){const u=k/GONDSEG;
       ctx.lineTo(lerp(cx,nx,u),lerp(cy,ny,u)-H+gondSag(g,i+u));}
     ctx.stroke();}
+}
+/* A cabin's p in [0,1) is a ROUND TRIP of a ping-pong line: p=0 and p=0.5 are the two
+   terminals, and one p-unit is 2*(L-1) spans. So `p += k*dt` was a LAP rate, not a speed —
+   every line, long or short, turned round in exactly 50s, and a 16-span line therefore flew
+   its cabins at 0.64 spans/s past an 8-span line's 0.32, identical cabins in one frame.
+   Rate is spans/sec now. The ease into the terminal is sqrt, i.e. constant deceleration: a
+   linear ramp e=d/B makes the time to cover the last stretch DIVERGE, so the cabin would
+   crawl at its floor value for most of the ride (iter 112 measured that on the trains). */
+function stepCabins(g,dt){
+  if(!g.path||g.path.length<2)return;
+  for(const cb of g.cabins){
+    if(cb.dw>0){cb.dw-=dt;continue;}                     /* hanging at the sheave: they board */
+    const h=cb.p%0.5, d=Math.min(h,0.5-h);               /* p-distance to the nearer terminal */
+    const step=dt*g.rateP*clamp(Math.sqrt(d/g.brakeP),0.1,1);
+    const term=(((cb.p/0.5)|0)+1)*0.5;                   /* the terminal ahead of it */
+    if(cb.p+step>=term){cb.p=term%1; cb.dw=GONDDWELL;}   /* it stops AT the tower, never past it */
+    else cb.p+=step;
+  }
 }
 function gondPos(g,p){ /* ping-pong along one open line -> [sx,sy,cellx,celly,sag] */
   const path=g.path, L=path.length, t=p<0.5?p*2:(2-p*2), f=t*(L-1), i=Math.min(L-2,f|0), fr=f-i;
@@ -5839,7 +5865,8 @@ const ENTINFO=[
   [()=>gonds.flatMap(g=>g.path&&g.path.length>1?g.cabins:[]),'Cable car',
     cb=>{const g=cb._g; if(!g)return 'Swinging over the rooftops.';
       const body=plur(g.path.length-1,'span')+' over the low-rise strip.';
-      return gonds.length>1?'Line '+(cb._li+1)+' of '+gonds.length+' — '+body:'An aerial line — '+body;},7],
+      const head=gonds.length>1?'Line '+(cb._li+1)+' of '+gonds.length+' — '+body:'An aerial line — '+body;
+      return head+(cb.dw>0?' Standing at the terminal.':'');},7],
   [()=>trams,'Streetcar','Riding the avenues since 1985.',9],
   [()=>trucks,'Delivery truck','Stock for the shopfronts.',9],
   [()=>bikes,'Cyclist','Two wheels beat the traffic.',6],
@@ -5925,7 +5952,7 @@ function advanceEntities(dt,s){
     if((flock.dir>0&&flock.x>G+12)||(flock.dir<0&&flock.x<-12)){flock.x=flock.dir>0?-12:G+12;flock.y=CTRY-16+Math.random()*32;}}
   for(const sh of shuttles)stepShuttle(sh,dt*s);
   for(const m of monos)if(m.closed)stepTrains(m,dt*s);
-  for(const g of gonds)for(const cb of g.cabins){cb.p+=dt*s*0.02; if(cb.p>1)cb.p-=1;}
+  for(const g of gonds)stepCabins(g,dt*s);
 }
 function frame(now){
   const dt=Math.min(0.05,(now-lastT)/1000); lastT=now;

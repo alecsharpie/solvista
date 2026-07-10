@@ -5021,3 +5021,101 @@ height. Night windows read as warm lit bands, not blow-out.
   `window.__twr` call it means the probe grades the *live* rule. Pair this with iter 101's law:
   a tracked probe that reimplements what it measures is worse than no probe.
 
+## Iteration 111 — the buses stop for somebody (2026-07-10)
+
+**Vector** — People & activity × **Connect**. Rotation named the domain: People (104) was two laps
+overdue (110's step-back pre-empted it). The kind came from 109's own finding — *"Connect's trick was
+that it added no new object, it closed a gap between two that already existed; look for that shape in
+People and Transport before reaching for a new entity."* This is that shape exactly: `c.stop` road
+hexes have drawn a shelter since long before the ledger, buses have pulled into them and dwelt
+(`v.wait=1.2+…`, `v.dwell=16`) — **and the two had never met.**
+
+**The seam.** Under every shelter, `drawCell`'s `case T.ROAD` painted `1+((x+y)&1)` little figures with
+the comment *"somebody's always waiting on the day buses."* They were furniture: the same 1 or 2 people,
+in the same spots, forever, whether or not a bus had just been and gone. The city drew the *idea* of
+people waiting for a bus and never connected it to the buses.
+
+**Measured BEFORE designing, and the measurement killed the first design.** The obvious vector was to
+send *real residents* (`peds`) to the stops. `probe-stops.mjs` says they cannot get there:
+
+| | seed 7 | seed 42 | seed 1234 |
+| --- | --- | --- | --- |
+| stops | 24 | 32 | 30 |
+| within a leash of ANY strollable cell (structural ceiling) | 83% | 84% | 83% |
+| **within a leash of a live ped's ANCHOR** (real ceiling) | **25%** | **31%** | **20%** |
+| stops holding a ped at any moment, today | 6.2% | 3.1% | 3.0% |
+
+Sweeping the tether: even at radius **5**, only 56–75% of stops have a resident anchored near them —
+and `PEDLEASH` is the constant `stepPed`'s own comment says was tuned to hold street occupancy at ~19%.
+Real peds would have staffed a quarter of the shelters and **emptied the other three quarters**, which
+is strictly worse than the fakes. *Abandoned before writing a line of it.*
+
+**Change.** ~30 lines. `stopQueue(c,x,y)` — one pure function, the only definition of the rule, read by
+the draw, the tooltip **and the bus**. `stepVehicle` stamps `c.blast=time` when a bus pulls in (and
+`c.bqs`, whoever was aboard). The queue then builds while nobody comes: empty for `BUSGONE=6s`, +1
+rider every `BUSQGAP=20s`, up to a per-stop `stopCap` of **1–3** drawn from `hashCell` (never `rng()`),
+so shelters differ from one another. When a bus arrives the figures step off the sidewalk toward it
+(`-ox*bl`) and fade (`1-bl²`), and are gone. `probe-bus.mjs` set the constants: median headway at a
+served stop is **74–126 s**, so a shelter refilling in ~46 s spends real time part-full.
+
+**⚠ Held the mean (iter 98's law).** First cut used `stopCap` 2–4 and read **2.53 waiters** against the
+painted rule's flat **1.50** — ~30 extra glyphs citywide, i.e. clutter wearing variety's clothes. Retuned
+to 1–3: **1.68 / 1.83 / 1.83**. What the change buys is *variation and a story*, not more people.
+
+**Census — PASS.** Every metric `+0` (`pop -3`, `greenRoofs`/`solarRoofs` flat), **tile histogram empty**,
+entity counts unmoved, 0 page errors. Draw-only + `hashCell`: stream-neutral by construction, and the
+`pop ±3` is exactly the load jitter iter 108 documented on *identical pristine code*.
+
+**Perf — PASS, and controlled against pristine HEAD in the same session** (not against the baseline
+file — iters 99/104). Min-of-3, sequential: mine day **34.00** / night **38.55 ms**; pristine HEAD the
+same session day **33.78 ms**. **+0.22 ms (+0.65%)** — noise. The +2.5% the baseline file reports is
+today's machine load, not this code. Baseline (day 33.16 / night 37.33) **not** re-pinned.
+
+**Visual — PASS, 2/2 agents, on same-frame filmstrips.** Both described the sequence unprompted
+(3 standing → shifted toward the street and translucent → shelter empty) and both noted the frames were
+pixel-identical apart from the figures. Whole-city frames: *"balanced, beautiful coastal city… no
+clutter or darkening."*
+
+**Tooltip** (per the sync invariant): `Bus stop` now reads its live state — `3 waiting` / `boarding` /
+`nobody waiting`. Verified by driving a real hover through all three phases; no page errors.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A FILMSTRIP OF A LIVE DIORAMA NEEDS A FROZEN CLOCK, OR THE DIFF IS ALL WEATHER.** The first
+  filmstrip stepped the sim between shots. The pixel diff of "full" vs "emptied" came back **9371 px
+  (14% of the clip), bbox 139×110** — cars had moved, trees had swayed, the sea had breathed. It
+  proved nothing about a 3-pixel figure. Setting `playing=false` and driving only `c.blast` between
+  `render()` calls makes every other pixel identical **by construction**, and the same diff came back
+  **237 px in a 14×24 box.** This is iter 109's "a control must live in the same frame as the thing it
+  controls," and the *frame* means the instant, not just the viewport. Both visual agents then
+  volunteered that the frames were identical except the figures — a same-frame control makes the
+  agents better witnesses too.
+- **⚠ "NOT DRAWN" AND "DRAWN BUT HIDDEN" ARE THE SAME SCREENSHOT — AND MY OCCLUSION FILTER PICKED A
+  HIDDEN ONE.** Seed 42's first gate returned `VISUAL: FAIL`; the agent saw no figures and read the
+  neighbouring festival bunting as them. It was right: the stop I had chosen was **occluded**, and the
+  same-frame diff there is **0 px in every phase**. I had hand-rolled an occlusion filter (no `DEV` at
+  `(x±1,y+1)`) and it selected an invisible shelter anyway. Replaced by *measuring*: zoom onto each
+  candidate, diff full-vs-emptied, keep the stop whose figures actually move pixels. **Do not
+  hand-derive which instances are visible — render them and count.** (Header law: "when a pixel probe
+  of a 3-D scene reads weakly, suspect occlusion first." It applies to choosing the *subject* too.)
+- **⚠ THE AGENT'S `FAIL` WAS CORRECT AND ITS DIAGNOSIS WAS WRONG — AGAIN (iter 110's law, in the
+  visual gate).** It reported "bunting/pennants, not people," and concluded the feature didn't work.
+  The feature worked; the *stop was behind a building*. Take the observation ("I can't see figures"),
+  throw away the explanation, go measure. Note the failure mode `probe-vis.mjs` now covers: I would
+  have shipped a false `FAIL` and reverted a good iteration.
+- **THE QUEUE IS A ZOOM-IN REWARD, AND NOW THERE IS A NUMBER FOR IT.** `probe-vis.mjs` sweeps the
+  camera: figures move **2–4 px at fit zoom (0% of shelters)**, become readable at **zoom 4 (53–63%)**,
+  and **plateau at 63–73% by zoom 8** — the plateau is the ~30% that are permanently occluded. So this
+  buys nothing in the un-zoomed frame the census and the wide shots live in, and it is *not* a
+  regression either: the painted figures it replaces were equally sub-pixel. Worth knowing before the
+  next lap spends itself on ornament at this scale. **The artifact invites zoom ("scroll to zoom");
+  the whole-city gate can neither convict nor acquit anything drawn at 3 px.**
+- **A "DEEPEN" THAT MEASUREMENT TURNS INTO A DIFFERENT VECTOR IS STILL A GOOD LAP.** The intended
+  change (real peds ride buses) was structurally impossible against a tuned constant, and one probe
+  said so in ten minutes. The shipped change closes the *same* gap from the other side. Recording the
+  dead branch matters more than the live one: **`peds` cannot serve the road network — their leash is
+  anchored to open ground by design.** Any future "residents use transport" vector must either move the
+  anchor (spawn pool) or accept ~25% coverage. Don't rediscover this.
+

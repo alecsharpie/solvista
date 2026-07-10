@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113** | 22 | | U2, 44, 58, 79, **116** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118** | |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84 | 71 |
@@ -51,8 +51,15 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Transport **112** · Civic **114** · Sky **115** · Water **116** · Urban **118** · People **119** · Nature **120**.
-  **Stalest is now Transport (112)**, then Civic (114), then Sky (115). **120 broke rotation deliberately and
+  Civic **114** · Sky **115** · Water **116** · Urban **118** · People **119** · Nature **120** · Transport **121**.
+  **Stalest is now Civic (114)**, then Sky (115), then Water (116). **121 took the then-stalest domain (Transport)
+  and cashed the banked finding sitting in its last entry — cue (h) — exactly as the paragraph below tells you to.**
+  When Water comes round it has the other live banked cue: **turbine siting on `rDeep`** (116's last finding).
+  And **Transport's next lap has cue (n)** (121, measured, pre-existing): both cable cars sit within **one span of
+  the anchor tower at page load**, on every line and every seed, because the growth rescale telescopes `p→0` — so
+  no cabin is ever seen riding *over* the city without `&step=`. Re-spread the cabins once `L` reaches `g.target`;
+  do **not** touch the rescale, which is correct for a growing line.
+  **120 broke rotation deliberately and
   logged why**: it was the mandated holistic step-back, the step-back found a real defect, and the skill's own
   rule ("if something compounded badly, spend the next iteration FIXING it") outranks rotation. A step-back
   that finds a defect and then ships an unrelated vector has wasted the step-back. **Every domain except Urban and
@@ -102,9 +109,11 @@ ones (U2, 42, U5) stay in the bullet.
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
   Recent kinds: 110 Polish · 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) ·
-  115 Polish · 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen —
-  **Polish has paid 5 of the last 11; do not open with one.** **Deepen has now paid three laps running
-  (119, 120) — vary it.** The coldest kinds are **Scale** (a
+  115 Polish · 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen —
+  **Polish has paid 5 of the last 12; do not open with one.** **⚠ Deepen has now paid FOUR laps running
+  (119, 120, 121) — the next lap must vary the kind.** 121 was allowed to extend the run *only* because a
+  banked, measured defect (cue (h)) outranks kind-rotation; that licence is spent, and there is no banked
+  Deepen left. The coldest kinds are **Scale** (a
   structural lever, not a lap move) and **New element** (last: 106) — but note 118's finding that a
   *saturated* domain cannot take a New element; pick the domain first (Transport, 112) and read its
   row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
@@ -147,8 +156,11 @@ ones (U2, 42, U5) stay in the bullet.
   `e.p += k*dt` where `p` is a *fraction of its path* has a GROUND speed proportional to that path's
   length. The monorail did: every line lapped in 71s whatever its size, so seed 7's 89-span line ran
   its trains **45× faster** than its 2-span one. Fixed by making the rate `spans/sec` and capping the
-  lap. **The gondola still has it, measured: `cb.p+=dt*s*0.02` gives 0.14–0.36 spans/s, and seed 42
-  runs two cable lines at 0.36 and 0.18 — identical cabins, visibly different speeds. Open cue (h).**
+  lap. **The gondola had it too, and cue (h) is CLOSED by iter 121** — measured worse than 112 banked
+  (cruise spread **2.83×**, 0.24–0.68 spans/s, every line turning round in exactly 50.0s), now **1.00×**.
+  **Count the legs when you port the fix:** on the closed monorail loop `p=1` is one lap (`rate=SPD/L`);
+  on the open ping-pong gondola it is a **round trip** — two legs — so `rate=SPD/(2*(L-1))`. Miss the 2 and
+  you ship a uniform speed that is uniformly half of what you meant, and every gate here passes it.
   Before touching any `p`-parametrised mover, ask what `p=1` *means* on that instance.
 - **⚠ AN EASING RAMP TO ZERO MUST BE `sqrt`, NOT LINEAR (iter 112).** To slow a mover as it nears
   something (a platform, a dock, a terminal), `v = V·d/B` is the intuitive choice and it is **wrong**:
@@ -1189,109 +1201,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 113 entries before Iteration 111 live in
+> **Archive:** the 114 entries before Iteration 112 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 111 — the buses stop for somebody (2026-07-10)
-
-**Vector** — People & activity × **Connect**. Rotation named the domain: People (104) was two laps
-overdue (110's step-back pre-empted it). The kind came from 109's own finding — *"Connect's trick was
-that it added no new object, it closed a gap between two that already existed; look for that shape in
-People and Transport before reaching for a new entity."* This is that shape exactly: `c.stop` road
-hexes have drawn a shelter since long before the ledger, buses have pulled into them and dwelt
-(`v.wait=1.2+…`, `v.dwell=16`) — **and the two had never met.**
-
-**The seam.** Under every shelter, `drawCell`'s `case T.ROAD` painted `1+((x+y)&1)` little figures with
-the comment *"somebody's always waiting on the day buses."* They were furniture: the same 1 or 2 people,
-in the same spots, forever, whether or not a bus had just been and gone. The city drew the *idea* of
-people waiting for a bus and never connected it to the buses.
-
-**Measured BEFORE designing, and the measurement killed the first design.** The obvious vector was to
-send *real residents* (`peds`) to the stops. `probe-stops.mjs` says they cannot get there:
-
-| | seed 7 | seed 42 | seed 1234 |
-| --- | --- | --- | --- |
-| stops | 24 | 32 | 30 |
-| within a leash of ANY strollable cell (structural ceiling) | 83% | 84% | 83% |
-| **within a leash of a live ped's ANCHOR** (real ceiling) | **25%** | **31%** | **20%** |
-| stops holding a ped at any moment, today | 6.2% | 3.1% | 3.0% |
-
-Sweeping the tether: even at radius **5**, only 56–75% of stops have a resident anchored near them —
-and `PEDLEASH` is the constant `stepPed`'s own comment says was tuned to hold street occupancy at ~19%.
-Real peds would have staffed a quarter of the shelters and **emptied the other three quarters**, which
-is strictly worse than the fakes. *Abandoned before writing a line of it.*
-
-**Change.** ~30 lines. `stopQueue(c,x,y)` — one pure function, the only definition of the rule, read by
-the draw, the tooltip **and the bus**. `stepVehicle` stamps `c.blast=time` when a bus pulls in (and
-`c.bqs`, whoever was aboard). The queue then builds while nobody comes: empty for `BUSGONE=6s`, +1
-rider every `BUSQGAP=20s`, up to a per-stop `stopCap` of **1–3** drawn from `hashCell` (never `rng()`),
-so shelters differ from one another. When a bus arrives the figures step off the sidewalk toward it
-(`-ox*bl`) and fade (`1-bl²`), and are gone. `probe-bus.mjs` set the constants: median headway at a
-served stop is **74–126 s**, so a shelter refilling in ~46 s spends real time part-full.
-
-**⚠ Held the mean (iter 98's law).** First cut used `stopCap` 2–4 and read **2.53 waiters** against the
-painted rule's flat **1.50** — ~30 extra glyphs citywide, i.e. clutter wearing variety's clothes. Retuned
-to 1–3: **1.68 / 1.83 / 1.83**. What the change buys is *variation and a story*, not more people.
-
-**Census — PASS.** Every metric `+0` (`pop -3`, `greenRoofs`/`solarRoofs` flat), **tile histogram empty**,
-entity counts unmoved, 0 page errors. Draw-only + `hashCell`: stream-neutral by construction, and the
-`pop ±3` is exactly the load jitter iter 108 documented on *identical pristine code*.
-
-**Perf — PASS, and controlled against pristine HEAD in the same session** (not against the baseline
-file — iters 99/104). Min-of-3, sequential: mine day **34.00** / night **38.55 ms**; pristine HEAD the
-same session day **33.78 ms**. **+0.22 ms (+0.65%)** — noise. The +2.5% the baseline file reports is
-today's machine load, not this code. Baseline (day 33.16 / night 37.33) **not** re-pinned.
-
-**Visual — PASS, 2/2 agents, on same-frame filmstrips.** Both described the sequence unprompted
-(3 standing → shifted toward the street and translucent → shelter empty) and both noted the frames were
-pixel-identical apart from the figures. Whole-city frames: *"balanced, beautiful coastal city… no
-clutter or darkening."*
-
-**Tooltip** (per the sync invariant): `Bus stop` now reads its live state — `3 waiting` / `boarding` /
-`nobody waiting`. Verified by driving a real hover through all three phases; no page errors.
-
-**Verdict: SHIPPED.**
-
-### Findings
-
-- **⚠ A FILMSTRIP OF A LIVE DIORAMA NEEDS A FROZEN CLOCK, OR THE DIFF IS ALL WEATHER.** The first
-  filmstrip stepped the sim between shots. The pixel diff of "full" vs "emptied" came back **9371 px
-  (14% of the clip), bbox 139×110** — cars had moved, trees had swayed, the sea had breathed. It
-  proved nothing about a 3-pixel figure. Setting `playing=false` and driving only `c.blast` between
-  `render()` calls makes every other pixel identical **by construction**, and the same diff came back
-  **237 px in a 14×24 box.** This is iter 109's "a control must live in the same frame as the thing it
-  controls," and the *frame* means the instant, not just the viewport. Both visual agents then
-  volunteered that the frames were identical except the figures — a same-frame control makes the
-  agents better witnesses too.
-- **⚠ "NOT DRAWN" AND "DRAWN BUT HIDDEN" ARE THE SAME SCREENSHOT — AND MY OCCLUSION FILTER PICKED A
-  HIDDEN ONE.** Seed 42's first gate returned `VISUAL: FAIL`; the agent saw no figures and read the
-  neighbouring festival bunting as them. It was right: the stop I had chosen was **occluded**, and the
-  same-frame diff there is **0 px in every phase**. I had hand-rolled an occlusion filter (no `DEV` at
-  `(x±1,y+1)`) and it selected an invisible shelter anyway. Replaced by *measuring*: zoom onto each
-  candidate, diff full-vs-emptied, keep the stop whose figures actually move pixels. **Do not
-  hand-derive which instances are visible — render them and count.** (Header law: "when a pixel probe
-  of a 3-D scene reads weakly, suspect occlusion first." It applies to choosing the *subject* too.)
-- **⚠ THE AGENT'S `FAIL` WAS CORRECT AND ITS DIAGNOSIS WAS WRONG — AGAIN (iter 110's law, in the
-  visual gate).** It reported "bunting/pennants, not people," and concluded the feature didn't work.
-  The feature worked; the *stop was behind a building*. Take the observation ("I can't see figures"),
-  throw away the explanation, go measure. Note the failure mode `probe-vis.mjs` now covers: I would
-  have shipped a false `FAIL` and reverted a good iteration.
-- **THE QUEUE IS A ZOOM-IN REWARD, AND NOW THERE IS A NUMBER FOR IT.** `probe-vis.mjs` sweeps the
-  camera: figures move **2–4 px at fit zoom (0% of shelters)**, become readable at **zoom 4 (53–63%)**,
-  and **plateau at 63–73% by zoom 8** — the plateau is the ~30% that are permanently occluded. So this
-  buys nothing in the un-zoomed frame the census and the wide shots live in, and it is *not* a
-  regression either: the painted figures it replaces were equally sub-pixel. Worth knowing before the
-  next lap spends itself on ornament at this scale. **The artifact invites zoom ("scroll to zoom");
-  the whole-city gate can neither convict nor acquit anything drawn at 3 px.**
-- **A "DEEPEN" THAT MEASUREMENT TURNS INTO A DIFFERENT VECTOR IS STILL A GOOD LAP.** The intended
-  change (real peds ride buses) was structurally impossible against a tuned constant, and one probe
-  said so in ten minutes. The shipped change closes the *same* gap from the other side. Recording the
-  dead branch matters more than the live one: **`peds` cannot serve the road network — their leash is
-  anchored to open ground by design.** Any future "residents use transport" vector must either move the
-  anchor (spawn pool) or accept ~25% coverage. Don't rediscover this.
 
 ## Iteration 112 — the trains stop where the platforms are (2026-07-10)
 
@@ -2221,3 +2135,101 @@ greenest tiles, winter and golden read as two seasons of one city, night undamag
   there is no low-density streetlight or ambient moonlight on sand/parkland. A third agent, post-fix, called
   the same night frame beautiful — so **measure the luminance histogram core-vs-ring before committing a
   lap to it**; do not take the FAIL at face value (see the first finding above).
+
+## Iteration 121 — the cable cars agree on a speed (2026-07-11)
+
+**Vector.** Transport × **Deepen** (a fix). Transport was the stalest domain (112), and the header's own
+law — *"a banked, measured finding outranks both kind-rotation and cell-emptiness"* — pointed at the last
+entry of that domain, where iter 112 had measured but not fixed **cue (h)**: the gondola still carried the
+normalized-parameter bug the monorail was cured of. Deepen has now paid four laps running; a banked,
+measured defect outranks kind-rotation, but the **next lap must vary the kind** (see header).
+
+**What the probe found before a line was written** (`probe-gond.mjs`, new, `git add -f`'d; freeze `playing`,
+drive `__step()`, sample `cb.p`). Cue (h) was **understated**. At `warp=61` the lines are longer than 112
+sampled, so the spread is worse than the 0.14–0.36 it banked:
+
+| seed | line | spans | cruise spans/s | round trip | stand% |
+| --- | --- | --- | --- | --- | --- |
+| 7 | 1 | 16 | **0.64** | 50.0s | 0.0 |
+| 42 | 1 | 17 | **0.68** | 50.0s | 0.0 |
+| 42 | 2 | 8 | **0.32** | 50.0s | 0.0 |
+| 1234 | 1 | 6 | **0.24** | 50.0s | 0.0 |
+| 1234 | 2 | 9 | **0.36** | 50.0s | 0.0 |
+
+**Cruise spread 2.83×**, and seed 42 flies one cabin past an identical one at **0.68 vs 0.32 spans/s** in the
+same frame. The `roundTrip` column is the bug stated as a tautology: **every line, of every length, turns
+round in exactly 50.0s**, because `cb.p+=dt*s*0.02` is a *lap* rate. `p∈[0,1)` is a **round trip** of a
+ping-pong line, so one p-unit is `2*(L-1)` spans — the factor 2 the monorail's fix did not need.
+
+**Change.** `stepCabins(g,dt)`, in the monorail's own grammar, plus `g.rateP`/`g.brakeP` precomputed in
+`buildGondSet` (the analogue of `buildMonoSet`):
+- rate is **spans/sec** (`GONDSPD=0.40`), capped so a one-span line can't blink (`GONDCAP`, ≥20s round trip);
+- a cabin **eases into its terminal and back out** over `GONDBRAKE=1.6` spans with `sqrt(d/B)` — constant
+  deceleration. 112's law: the intuitive linear ramp diverges and pins the mover on its floor;
+- it then **dwells** `GONDDWELL=4.0` sim-seconds at the sheave, and the tooltip says so
+  (*"Standing at the terminal."*, per the sync invariant — the trains already said it);
+- `stepGond`'s growth rescale now clears `cb.dw`, so a line that lengthens under a dwelling cabin cannot
+  strand it standing mid-line.
+
+Constants were typed **before** anything was measured (107's law) and are reported as they were typed.
+
+**Probe, after.** `cruise 0.400 .. 0.400 spans/s — spread 1.00×`. Round trip now scales with the line
+(52.2s at 6 spans → 109.1s at 17). `standing anywhere but a terminal: 0.0 sim-seconds`. `mean/cruise` is
+**0.68–0.85**, which is the check that the sqrt ramp did *not* degenerate: the cabin genuinely reaches
+cruise instead of crawling on its 0.1 floor. Dwell is 7.4–15.5% of a round trip, exactly `8s / roundTrip`.
+
+**Census.** PASS. Tile histogram **empty**, every metric **+0** except `pop −3` / `greenRoofs +1` — iter 108's
+documented load-dependent `(year*23)|0` salt jitter. `gondLines 15`, `gondola 16` cabins, identical. Predicted
+before running: the vector touches no `rng()`, no terrain, and adds no draw call.
+
+**Static gate on the one thing a screenshot CAN see** (`probe-gondshot.mjs`, new): a motion change is invisible
+to a still frame, but *where a stopped cabin stops* is not. Stepping until a cabin dwells, then reading its
+screen position against its tower's: `atTerminal:"start"`, `isPylon:true`, `sag:0.000`, and **dx = 0.00 px**
+from the mast column, both seeds. It stops **on** the sheave head — where `gondSag` is zero by construction —
+not one span past it.
+
+**Perf.** PASS, free. Interleaved A/B/A/B vs pristine HEAD (117's law), min per variant: day
+**34.94 → 34.95ms (+0.03%)**, night **41.22 → 41.00ms (−0.5%)**. Zero draw calls; ≤6 cabins × one `sqrt`.
+
+**Visual.** 2/2 PASS, seeds 42 and 7, whole frame + two crops on the dwelling cabin. Both agents independently:
+the cabin hangs on the cable **at a mast head**, "not floating in mid-span, not sunk below the rope, and not
+detached"; no z-order tears, no blown-out colour; the whole frame still reads as a balanced coastal city.
+Their *perception* is the evidence; the exactness claim rests on the probe's 0.00 px, not on their eyes (120's law).
+
+**Verdict — SHIPPED (DEEPENED / FIXED). Cue (h) is CLOSED.**
+
+**Findings for later laps.**
+- **⚠ PORTING 112's FIX REQUIRES COUNTING THE LEGS (new).** 112's law is *"ask what `p=1` MEANS on that
+  instance."* On the monorail `p=1` is one lap of a closed loop, so `rate = SPD/L`. On the gondola `p=1` is a
+  **round trip** of an open line — two legs — so `rate = SPD/(2*(L-1))`, and the brake zone converts with the
+  same factor 2. Get it wrong and you ship a *uniform* speed that is uniformly half of what you intended, which
+  every gate here would have passed. The remaining `p`-parametrised movers are worth the same question.
+- **⚠ cue (n) — THE CABLE CARS ARE PARKED AT THE ANCHOR IN EVERY SHOT EVER TAKEN (new, measured, PRE-EXISTING —
+  this lap did not cause it and did not fix it).** Position along the line at page load, in spans from the start
+  terminal, `warp=61`: seed 7 `[0.72, 0.34]` of 16 spans · seed 42 `[0.77, 0.29]` of 17 and `[0.52, 0.54]` of 8 ·
+  seed 1234 `[0.45, 0.61]` of 6 and `[0.53, 0.53]` of 9. **Both cabins, every line, every seed, sit within one
+  span of the start tower** — and pristine and patched agree, so it is the *growth rescale*, not the stepper.
+  `stepGond`'s `cb.p = cb.p<0.5 ? cb.p*k : 1-(1-cb.p)*k` with `k=(L-1)/L`, applied once per span, telescopes to
+  `p₀·(L₀-1)/(L-1) → 0`: it pins each cabin to the cell it occupied when the line was **one span long**, which is
+  the anchor. Its comment — *"keep the cabins where they are while the line lengthens under them"* — describes
+  the implementation **accurately**; nobody read off the consequence. (Sharper than 120's "a comment states a
+  goal, not a measurement": here the comment is *true* and the behaviour is still wrong.) Consequence: no cabin is
+  ever seen riding **over** the city without `&step=`, so the feature's whole point is invisible at load. This is
+  the third instance of *the default URL silently pins a state* (`year` iter 108, `tide` iter 113, now cabin
+  phase). Cheap fix for the next Transport lap: re-spread the cabins once `L` reaches `g.target`. **Do not
+  "fix" the rescale itself** — it is correct for a growing line.
+- **A DWELL IS A PURE TIME DELAY, SO IT CANNOT BUNCH TWO MOVERS (new; the worry that made me check).** Both cabins
+  on a line share `rateP`/`brakeP`, the step depends only on `p`, and the pause has fixed length at a fixed point.
+  So each cabin's period is *identical* and their offset in **time** is exactly conserved — they can never merge,
+  whatever the ledger's "ratchet" instinct (119) suggests. Measured: separation wanders 0.9–4.9 spans over 300s
+  with no trend, and is in fact *wider* than pristine's, because the dwell desynchronises them.
+- **⚠ THE INTERLEAVED PERF GATE JUST EARNED ITS KEEP, ON PRISTINE CODE (new; hard evidence for 117's law).**
+  Round 1 of this lap's gate read **day 47.39ms on unmodified HEAD** — the harness printed
+  `33.16ms -> 47.39ms (42.9%) <== REGRESSION`. Round 2 of the *same bytes* read 34.94ms. A single-pass gate would
+  have convicted code that did not exist yet, and a "stable offset ⇒ code" reading (99's rule, corrected by 117)
+  would have agreed. **Only the A/B/A/B swap, min per variant, can tell a machine from a diff.**
+- **`minSep ≈ 0.00 spans`: the two cabins pass THROUGH each other, in both builds (new, pre-existing, cosmetic).**
+  They ride one drawn curve, so once per half-trip they occupy the same point. A real jig-back tram counterbalances
+  its pair on a loop and they pass side-by-side at midspan; here they are also not quite antipodal (`p` 0.15/0.62,
+  0.47 apart, not 0.50). Both are one-line changes and belong with cue (n), not before it — the crossing is a few
+  pixels and no visual agent has ever remarked on it.
