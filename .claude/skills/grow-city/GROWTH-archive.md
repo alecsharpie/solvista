@@ -7501,3 +7501,68 @@ mast — not stacked at one tower," both hanging correctly from the rope, no tea
   A real jig-back tram counterbalances its pair on a loop. One-line change, low value, no agent has ever
   remarked on it — belongs after anything that matters.
 
+
+--- Header bullets rotated out (iter 139, superseded) ---
+
+(cue (d), superseded by iter 131's CLOSED/MEASURED-DEAD finding — kept for memory:)
+  Civic's banked **cue (d)** was attempted at
+  114 and **reverted**: its goal is proven (a 3-hex square reads at fit zoom) but its prescribed
+  host does not exist — see the rewritten cue below before re-opening it.
+
+## Iteration 129 — the orchard names its season (2026-07-11)
+
+**Vector.** Nature × **Interaction/UX**. Nature was the stalest domain (last 120) and the header steered hard
+**off Deepen** (6 of the last 11) and off New element (127) — leaving the tell (117's most-reliable move) as the
+right kind. The orchard has drawn a seasonal **blossom/fruit overlay from `year` since iter 57**, but
+`describeTile` never named it: hovering an orchard showed only `Value`, while MEADOW right beside it gets a live
+`Wildflowers` row. So the DRAW knew the calendar and the tooltip stayed mute — exactly the seam 117's law names.
+
+**Change.** A shared `orchardPhase()` (near the wood helpers) returns `blossom`/`fruit`/`leaf` from
+`applySeason`'s own windows (`s2∈(0.16,0.42)` / `(0.70,0.99)`). The orchard **draw** now derives its
+`blossom`/`fruit` booleans from it (was two inline `s2>…` tests — behaviour-identical, verified), and
+`describeTile` reads the **same** function for a new `Grove` row (`In blossom` / `In fruit` / `In leaf`). One
+predicate, all readers (112's law) — the tooltip can never name a fruit the renderer didn't paint (117's law).
+No tile, entity, `rng()`, or `tick()` pass; the city's pixels are unchanged.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**; core `+0`; `greenRoofs +1` is the documented
+`(year*31)` salt jitter (127). Exactly as predicted for a describeTile-only change.
+
+**Probe.** `probes/probe-orchard.mjs` (new, promoted), two independent truths, neither trusting
+`orchardPhase()` — per 122's law that a tooltip vector needs a probe against *recomputed* truth, not a
+screenshot it renders. **(1) String:** the `Grove` row vs phase recomputed from the keyframe windows in the
+probe's own math — **72/72 orchard rows match across seeds 7/42/1234 × 4 keyframes, 0 wrong**; FOREST control
+prints a `Grove` row **0** times. **(2) Draw:** crown-box RGB shift from the winter frame, **ORCHARD minus
+FOREST** (forest eats the shared seasonal warming — 127's law that coral is un-isolable, so difference it out
+instead of colour-matching it). Excess = the overlay the orchard alone paints: **spring "In blossom" +11.83
+(largest)**, dry-peak "In leaf" +5.60 (smallest), autumn "In fruit" +8.71 — the pixels move most exactly
+where the row says blossom, least where it says leaf.
+
+**Visual.** Hover shots at three calendar pins (blossom/fruit/leaf), read by an agent: all three show
+`Orchard → Fruit groves. → Grove: <In blossom|In fruit|In leaf> → Value 56%`, mapping exact, same two-column
+style as the Value/Woods rows, no glitch. Whole-city `wide` frame (seed 42, dry peak): balanced coastal city,
+no tears/floaters/blowout — as expected, the render is untouched.
+
+**Verdict — SHIPPED.** The grove that has kept the calendar since 1974 finally says so when you point at it.
+Draw-render byte-identical, pop provably flat, the tell cashed a seventh time.
+
+### Findings for later laps
+- **THE ORCHARD/VINEYARD/GARDEN TOOLTIPS WERE ALL MUTE — only the orchard COULD be un-muted honestly (new).**
+  Of the three, only the orchard's *draw* reads `year`; VINEYARD shows ripe lav grapes year-round and GARDEN is
+  static. So their tooltips can't get an honest season row until their **draws** read the calendar first — which
+  is a **Deepen**, not a tell. `VINEYARD` is the last name on the Sky-feedable list (108/113/120): make its
+  grapes bud→green→purple→bare on `year` like the orchard, *then* its tooltip earns a row. That is the banked
+  Nature × Deepen, and it also finally cashes `TILEDESC[VINEYARD]`'s "Terraced grapevines — wine country."
+- **DIFFERENCE OUT A GLOBAL CONFOUND WITH A CONTROL TILE, DON'T COLOUR-MATCH IT (reinforces 127).** The first
+  draw-truth draft counted "pale coral" blossom pixels and the FOREST control read 30–55 of them — because
+  `applySeason` warms the *whole* frame and coral is shared with autumn foliage (127's exact trap). Switching to
+  *(orchard shift − forest shift) from winter* cancelled the season and left a clean +11.83 blossom signal. When
+  a season/light/weather global moves every tile, pick a control tile that gets the global but not your feature
+  and subtract it — same shape as probe-season's ROAD zero.
+
+
+(cue (n), CLOSED iter 128 — cable-car cabins re-spread on settle; rotated out of header iter 139:)
+  **Cue (n) is CLOSED (iter 128).** The cable cars were parked within one span of the anchor tower in every
+  still frame; 128 re-spreads a line's cabins once it **settles** (target reached, plate edge, or stalled),
+  keeping the growth rescale — which 128 re-derived and confirmed is *correct* (constant-fraction would hop a
+  cabin ~1 span per span-append during live growth). Residual, accepted: a line still *actively* mid-growth
+  (seed 1234's slow high-target line) legitimately stays telescoped — that is the rescale working, not a bug.

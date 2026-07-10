@@ -1097,6 +1097,11 @@ function deepWoods(x,y){return countAround(x,y,2,isWood)>=9
    never disagree (iter 117's law: a label may not assert what the draw left out). */
 function orchardPhase(){const s2=((year%1)+1)%1;
   return s2>0.16&&s2<0.42?'blossom':s2>0.70&&s2<0.99?'fruit':'leaf';}
+/* the vine keeps its own calendar: bare canes through winter, leafing at bud
+   break, green berries at veraison (the dry-peak summer), purple fruit at the
+   autumn harvest. Shared so the draw and a future tooltip read one predicate. */
+function vinePhase(){const s2=((year%1)+1)%1;
+  return s2<0.16||s2>=0.99?'dormant':s2<0.45?'bud':s2<0.72?'veraison':'ripe';}
 /* the contiguous stand a woodland hex belongs to (flood fill over hex neighbours) */
 function standSize(x,y){
   const start=idx(x,y); if(!isWood(cells[start]))return 0;
@@ -3560,15 +3565,19 @@ function drawCell(x,y){
       break;}
     case T.VINEYARD:{
       hexTile(gx,gy,1.02,col('meadow',0.96)); /* pale golden-green terrace */
-      ctx.strokeStyle=col('canopy',1.0);ctx.lineWidth=2.0;
-      for(let r=0;r<4;r++){ /* dark trellis rows of vines */
+      const vph=vinePhase(), leafy=vph!=='dormant';
+      /* leafy green trellis rows in season; bare brown canes in winter */
+      ctx.strokeStyle=col(leafy?'canopy':'trunk',leafy?1.0:0.9);ctx.lineWidth=leafy?2.0:1.1;
+      for(let r=0;r<4;r++){ /* trellis rows of vines */
         const a=px(x+0.13,y+0.2+r*0.18), b=px(x+0.88,y+0.2+r*0.18);
         ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();
       }
-      const[cx,cy]=px(gx,gy); /* ripe grape clusters */
-      ctx.fillStyle=col('lav',1.05);
-      ctx.fillRect(cx-4,cy-1,1.3,1.3);ctx.fillRect(cx+1,cy+1.4,1.3,1.3);
-      ctx.fillRect(cx-1,cy-3,1.3,1.3);ctx.fillRect(cx+3.2,cy-0.6,1.3,1.3);
+      const[cx,cy]=px(gx,gy);
+      if(vph==='veraison'||vph==='ripe'){ /* grape clusters: green at veraison, purple at harvest */
+        ctx.fillStyle=col(vph==='ripe'?'lav':'sage',1.05);
+        ctx.fillRect(cx-4,cy-1,1.3,1.3);ctx.fillRect(cx+1,cy+1.4,1.3,1.3);
+        ctx.fillRect(cx-1,cy-3,1.3,1.3);ctx.fillRect(cx+3.2,cy-0.6,1.3,1.3);
+      }
       if(v>0.85){ /* stone winery */
         prism(gx+0.24,gy-0.24,0.12,0.10,0,6,col('cream',1),col('terraDk',0.62),col('terraDk',0.85));
         prism(gx+0.24,gy-0.24,0.14,0.12,6,8,col('terra',1),col('terraDk',0.6),col('terraDk',0.85));

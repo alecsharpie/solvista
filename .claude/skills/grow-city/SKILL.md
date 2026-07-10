@@ -219,7 +219,14 @@ both at this one.)
        the golden dry peak / autumn — `applySeason`'s own keyframes. **Without it
        every shot is January**: `?warp=61` from `year=1974` always lands on ~2035.0,
        which is why nobody noticed for 107 iterations that the farms had no seasons
-       (iter 108). *Rare tiles/civics* (one-per-city
+       (iter 108). **But `?year=` PINS ONCE at load and the live clock then DRIFTS it
+       `+dt·s/6` (~0.167 yr/s) during the shot's `playing=true` wait — a ~1 s wait
+       drifts ~0.2 yr, a whole season (iter 139: two false-FAIL agent reads, one saw
+       the seasons "inverted").** Continuous `applySeason` color tolerates the drift;
+       a **discrete-phase** feature (orchard blossom/fruit, vineyard grapes) does not
+       — so for those, **freeze the clock in-page before the shot** exactly as a probe
+       does: `playing=false; __setYear(y); render()`. `shoot.mjs`'s `?year=` alone is
+       not enough for a discrete seasonal draw. *Rare tiles/civics* (one-per-city
        guards, hashCell thresholds) still need a temporary source edit: back up
        first (`/bin/cp`), shoot, **revert**, re-run census. See iters 11/16/19.
    - **Determinism holds** — because seeds are pinned, a metric moving that you

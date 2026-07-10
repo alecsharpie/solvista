@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
+| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94 | **105** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **135** · Urban **133** · People **137** · Nature **129** · Transport **138** · Civic **131** · Water **132**.
-  **Stalest is now Nature (129)**, then Civic (131) — check the last entry of the stalest domain for a banked
+  Sky **135** · Urban **133** · People **137** · Nature **139** · Transport **138** · Civic **131** · Water **132**.
+  **Stalest is now Civic (131)**, then Water (132) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -72,8 +72,10 @@ ones (U2, 42, U5) stay in the bullet.
   their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it (132 did:
   it took a different Water kind).** (**129 cashed the tell a 7th time for Nature**:
   the orchard drew a blossom/fruit calendar since iter 57 but its tooltip was mute; it now names the
-  season via a shared `orchardPhase()`. **129's banked Nature move is now a Deepen** — make VINEYARD's grapes
-  read `year` (last Sky-feedable item; 108/113/120), *then* its tooltip earns a row too.) (**127 took People × New element** aimed not at its spent
+  season via a shared `orchardPhase()`. **129's banked Nature Deepen is CASHED (iter 139)**: VINEYARD's
+  grapes/canes now read `year` via a shared `vinePhase()` (bare in winter → purple at harvest), the last frozen
+  agriculture tile. Its tooltip is now the un-cashable next Nature × Interaction/UX (a `Vines` season row from
+  the same `vinePhase()`, like 129's orchard `Grove` row).) (**127 took People × New element** aimed not at its spent
   *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
   "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
   and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
@@ -89,11 +91,7 @@ ones (U2, 42, U5) stay in the bullet.
   found the banked cue's own description of the code was WRONG** (it said `hashCell`; the turbines were `rng()`),
   and the implementation the cue prescribed would have reshuffled the seeded stream. **A cue is a pointer, not a
   spec — re-grep the seam before designing to it.**
-  **Cue (n) is CLOSED (iter 128).** The cable cars were parked within one span of the anchor tower in every
-  still frame; 128 re-spreads a line's cabins once it **settles** (target reached, plate edge, or stalled),
-  keeping the growth rescale — which 128 re-derived and confirmed is *correct* (constant-fraction would hop a
-  cabin ~1 span per span-append during live growth). Residual, accepted: a line still *actively* mid-growth
-  (seed 1234's slow high-target line) legitimately stays telescoped — that is the rescale working, not a bug.
+  **Cue (n) CLOSED (iter 128 — cable-car cabins re-spread on settle; full note archived iter 139).**
   **120 broke rotation deliberately and
   logged why**: it was the mandated holistic step-back, the step-back found a real defect, and the skill's own
   rule ("if something compounded badly, spend the next iteration FIXING it") outranks rotation. A step-back
@@ -117,9 +115,6 @@ ones (U2, 42, U5) stay in the bullet.
   the rest of the salted coast: the **pier** row and the **lifeguard tower** are still `rng()`-picked with
   rejection loops, and a boardwalk should run out to a *depth*. 123's second finding makes that free — **respend
   an object's existing `rng()` draws rather than re-drawing them**, and the stream cannot move.
-  Civic's banked **cue (d)** was attempted at
-  114 and **reverted**: its goal is proven (a 3-hex square reads at fit zoom) but its prescribed
-  host does not exist — see the rewritten cue below before re-opening it.
   **123 ran the tell FORWARDS**, which is a new move: rather than making the draw honor a string, it made the
   string and the rule **share one constant** (`SHELF0`/`SHELF1` — the tooltip *names* the `Coastal shelf`, the
   wind farm *stands* on it), so the two cannot drift apart in the first place. Prefer this to re-syncing them
@@ -153,7 +148,8 @@ ones (U2, 42, U5) stay in the bullet.
   now a `Grove` row) and confirmed its **limit**: of the three mute vegetation tooltips only the orchard's DRAW
   read `year`, so only it could be un-muted honestly — VINEYARD/GARDEN need a Deepen first (see 129).
   Un-cashed: `TILEDESC[T.KELP]` *"swaying in the shallows"*, `[T.IND]` *"warehouses and light industry"*,
-  `[T.VINEYARD]` *"terraced"* (needs its draw to read `year` first), and the plaza/quad **titles** (still the
+  `[T.VINEYARD]` *"terraced"* (draw now reads `year` via `vinePhase()`, iter 139 — READY to un-cash a `Vines`
+  season row), and the plaza/quad **titles** (still the
   generic tile label — they could read *"Town hall forecourt"* outright).
   **122 also warns what the tell CANNOT do alone:** its first build derived ownership from *adjacency*, named
   the wrong institution on 2 of 3 seeds, and **passed the census and would have passed both visual agents** —
@@ -165,16 +161,18 @@ ones (U2, 42, U5) stay in the bullet.
   require a sky feature. **113 did this again** (the marsh reeds now read `year`), leaving 109's
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
-  almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
+  almost no pixels. **Sky-feedable list is now EMPTY (iter 139 cashed `VINEYARD`)** — every vegetation tile
+  that can read `year` now does; a further Sky interconnect must come from a genuinely new derived field, not
+  from un-freezing another tile.
   Recent kinds: 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
   128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
   **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** ·
   **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** ·
-  **138 Connect (arterial spine lit as a night corridor via `c.flow`)** —
+  **138 Connect (arterial spine lit as a night corridor via `c.flow`)** ·
+  **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** —
   (**130/136 were the holistic step-backs — no domain × kind lap.**)
-  **Next domain lap owes Nature (129, now stalest), then Civic (131); read its row for kinds.** Vary off
-  Connect (138) and off Polish/Deepen (both hot). Nature's banked move is a **Deepen** (VINEYARD grapes read `year`;
-  see 129). The coldest kind is **Scale** (a structural lever, not a lap move);
+  **Next domain lap owes Civic (131, now stalest), then Water (132); read its row for kinds.** Vary off
+  Deepen (139) and Polish (both hot). Civic's last was 131 (Polish/Connect, reverted, cue (d) CLOSED). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
   *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
@@ -393,61 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 131 entries before Iteration 129 live in
+> **Archive:** the 132 entries before Iteration 130 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 129 — the orchard names its season (2026-07-11)
-
-**Vector.** Nature × **Interaction/UX**. Nature was the stalest domain (last 120) and the header steered hard
-**off Deepen** (6 of the last 11) and off New element (127) — leaving the tell (117's most-reliable move) as the
-right kind. The orchard has drawn a seasonal **blossom/fruit overlay from `year` since iter 57**, but
-`describeTile` never named it: hovering an orchard showed only `Value`, while MEADOW right beside it gets a live
-`Wildflowers` row. So the DRAW knew the calendar and the tooltip stayed mute — exactly the seam 117's law names.
-
-**Change.** A shared `orchardPhase()` (near the wood helpers) returns `blossom`/`fruit`/`leaf` from
-`applySeason`'s own windows (`s2∈(0.16,0.42)` / `(0.70,0.99)`). The orchard **draw** now derives its
-`blossom`/`fruit` booleans from it (was two inline `s2>…` tests — behaviour-identical, verified), and
-`describeTile` reads the **same** function for a new `Grove` row (`In blossom` / `In fruit` / `In leaf`). One
-predicate, all readers (112's law) — the tooltip can never name a fruit the renderer didn't paint (117's law).
-No tile, entity, `rng()`, or `tick()` pass; the city's pixels are unchanged.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**; core `+0`; `greenRoofs +1` is the documented
-`(year*31)` salt jitter (127). Exactly as predicted for a describeTile-only change.
-
-**Probe.** `probes/probe-orchard.mjs` (new, promoted), two independent truths, neither trusting
-`orchardPhase()` — per 122's law that a tooltip vector needs a probe against *recomputed* truth, not a
-screenshot it renders. **(1) String:** the `Grove` row vs phase recomputed from the keyframe windows in the
-probe's own math — **72/72 orchard rows match across seeds 7/42/1234 × 4 keyframes, 0 wrong**; FOREST control
-prints a `Grove` row **0** times. **(2) Draw:** crown-box RGB shift from the winter frame, **ORCHARD minus
-FOREST** (forest eats the shared seasonal warming — 127's law that coral is un-isolable, so difference it out
-instead of colour-matching it). Excess = the overlay the orchard alone paints: **spring "In blossom" +11.83
-(largest)**, dry-peak "In leaf" +5.60 (smallest), autumn "In fruit" +8.71 — the pixels move most exactly
-where the row says blossom, least where it says leaf.
-
-**Visual.** Hover shots at three calendar pins (blossom/fruit/leaf), read by an agent: all three show
-`Orchard → Fruit groves. → Grove: <In blossom|In fruit|In leaf> → Value 56%`, mapping exact, same two-column
-style as the Value/Woods rows, no glitch. Whole-city `wide` frame (seed 42, dry peak): balanced coastal city,
-no tears/floaters/blowout — as expected, the render is untouched.
-
-**Verdict — SHIPPED.** The grove that has kept the calendar since 1974 finally says so when you point at it.
-Draw-render byte-identical, pop provably flat, the tell cashed a seventh time.
-
-### Findings for later laps
-- **THE ORCHARD/VINEYARD/GARDEN TOOLTIPS WERE ALL MUTE — only the orchard COULD be un-muted honestly (new).**
-  Of the three, only the orchard's *draw* reads `year`; VINEYARD shows ripe lav grapes year-round and GARDEN is
-  static. So their tooltips can't get an honest season row until their **draws** read the calendar first — which
-  is a **Deepen**, not a tell. `VINEYARD` is the last name on the Sky-feedable list (108/113/120): make its
-  grapes bud→green→purple→bare on `year` like the orchard, *then* its tooltip earns a row. That is the banked
-  Nature × Deepen, and it also finally cashes `TILEDESC[VINEYARD]`'s "Terraced grapevines — wine country."
-- **DIFFERENCE OUT A GLOBAL CONFOUND WITH A CONTROL TILE, DON'T COLOUR-MATCH IT (reinforces 127).** The first
-  draw-truth draft counted "pale coral" blossom pixels and the FOREST control read 30–55 of them — because
-  `applySeason` warms the *whole* frame and coral is shared with autumn foliage (127's exact trap). Switching to
-  *(orchard shift − forest shift) from winter* cancelled the season and left a clean +11.83 blossom signal. When
-  a season/light/weather global moves every tile, pick a control tile that gets the global but not your feature
-  and subtract it — same shape as probe-season's ROAD zero.
 
 ## Iteration 130 — the sixth step-back finds a clean, quiet city (2026-07-11) [holistic step-back]
 
@@ -1012,3 +960,72 @@ flat pop. Transport's Connect cell is filled (its third: 5, 15, 138).
 - **A NIGHT-ONLY DRAW ADDS PER-ARTERIAL STROKE WORK ONLY AT NIGHT (~88 hexes × ~2 segments × 2 strokes).**
   Cheap, but night is the frame to watch (118). Not perf-gated this lap (draw-only, and the interleave overruns
   the 120s Bash timeout); the 141 step-back's interleaved control will grade it against the stored baseline.
+
+## Iteration 139 — the vineyard keeps the calendar (2026-07-11)
+
+**Vector.** Nature × **Deepen** (SHIPPED/DEEPENED). Rotation named the domain — Nature was the single stalest
+(129) — and the header banked the content over many laps: *"129's banked Nature move is now a Deepen — make
+VINEYARD's grapes read `year` (last Sky-feedable item; 108/113/120)."* A banked, measured cue outranks
+kind-rotation (119's law), which is why Deepen was taken despite being hot. The vineyard was the artifact's
+last frozen agriculture: its draw painted **green trellis rows + purple (`lav`) grape clusters
+UNCONDITIONALLY** — a vine stuck at perpetual harvest — while its neighbours (FARM ±88 seasonal, the orchard's
+blossom/fruit since iter 57) already turned with the year.
+
+**Change (~14 lines, draw-only).** Added a shared `vinePhase()` next to `orchardPhase()` (one predicate, one
+definition — 112's law — so a future tooltip reads the same source the draw paints): `dormant` (winter, s<0.16
+or ≥0.99) · `bud` (spring) · `veraison` (dry-peak summer) · `ripe` (autumn harvest). `case T.VINEYARD` now
+gates on it: **leafy green canes in season / bare brown thinned canes in winter**, and grape clusters
+**only at veraison (sage-green berries) and ripe (purple `lav` harvest)** — none in bud/dormant. Mirrors the
+orchard exactly. No tile, entity, `rng()`, `hashCell`, terrain or `tick()` pass; strings pure-ASCII (134).
+
+**Census.** PASS, exit 0. Draw-only and stream-neutral — tile histogram empty, all core metrics +0 (the pop −3
+seen on a re-run is the documented `(year*·)` salt jitter, present on pristine too).
+
+**Probe — two, because a seasonal draw on the fast `year` clock has TWO ways to be wrong.**
+- `probes/probe-vine.mjs` (new) — build-vs-build |ΔRGB| at vineyard hex centres, patched vs pristine HEAD,
+  clock frozen (109), per season: **winter 10.96** (grapes removed, canes browned) · **spring 3.99** · **dry-peak
+  3.74** (grapes now green not purple) · **autumn 0.00** — autumn is the *season control*: both builds draw
+  purple grapes, so my change leaves the harvest byte-identical and only fixes the three wrong seasons.
+  **ROAD control 0.46 flat every season** (the edit is only `case T.VINEYARD`). seeds 7/42/1234.
+- `probes/probe-vinerate.mjs` (new, TEMPORAL — 134's law: a claim about motion needs a running clock) —
+  `year` is the fast dev clock (~0.167 yr/s at speed 1), so the vineyard cycles in live play. Counted phase
+  flips over 12 s of real play with the **ORCHARD as the accepted-reference control**: VINEYARD **0.67 Hz** =
+  ORCHARD **0.67 Hz**, both seeds. The vineyard flickers no harder than the orchard shipped on this same clock
+  since iter 57 — it joins the diorama's existing seasonal time-lapse, it does not introduce a novel strobe.
+
+**Visual.** First reads FAILED and *both agents were right to* — but the fault was the harness, not the draw:
+`?year=` pins the calendar ONCE at load (L6357) and the live clock then drifts it `+dt·s/6` during tileshot's
+~1.4 s `playing=true` wait, so the winter pin drifted to bud (green) and the autumn pin overran past `.99` to
+dormant (brown) — the exact "seasons inverted" the seed-7 agent reported. Re-shot with the **clock frozen**
+(`playing=false; __setYear(y); render()`), the phases render as designed: I verified winter (brown bare canes),
+dry-peak (green, subtle) and autumn (green + purple clusters) myself, then a fresh agent PASSED all four seeds-42
+frames — *"winter reads bare/brown, spring/summer green, autumn green-with-purple-grapes; the four frames
+clearly differ in a sensible seasonal order,"* no z-order/floater/blowout, winery sits cleanly atop. The
+whole-city frame was confirmed balanced/beautiful/no-tears by the first seed-42 agent (that check is
+season-independent).
+
+**Verdict — DEEPENED.** The vineyard now turns through the year like its orchard and farm neighbours —
+bare in winter, laden with purple grapes at harvest — closing the last frozen agriculture tile and the last
+Sky-feedable vegetation (108/113/120). Draw-only, stream-neutral, provably scoped (autumn control 0.00, ROAD
+0.46), and no worse strobe than the orchard (0.67 Hz each).
+
+### Findings for later laps
+- **⚠ A SEASONAL SCREENSHOT MUST FREEZE THE CLOCK — `?year=` PINS ONCE, THEN THE LIVE CLOCK DRIFTS IT A FULL
+  SEASON DURING THE WAIT (new, promoted to SKILL.md).** `?year=` calls `__setYear` once at load (L6357); the
+  frame loop then runs `year += dt·s/6` (~0.167 yr/s), so a screenshot taken after a ~1 s `playing=true` wait
+  has drifted ~0.15–0.24 yr — a discrete-phase feature can be a WHOLE SEASON off. This cost two false-FAIL
+  agent reads this lap (one read the seasons "inverted"). Prior seasonal shots tolerated it because
+  `applySeason`'s color is continuous (a 0.2 drift is a small nudge); a discrete-threshold visual is not.
+  Freeze before the shot: `playing=false; __setYear(y); render()`, exactly as the probes do. (`shoot.mjs`'s
+  `?year=` alone is NOT enough for a discrete seasonal feature.)
+- **A DISCRETE-PHASE VISUAL ON THE FAST `year` CLOCK IS NOT AUTOMATICALLY A 134-STYLE STROBE — the test is
+  whether it flips WORSE than the accepted ORCHARD, not whether it flips.** 134 reverted a HUD *readout* (text
+  words at 0.7 Hz, jarring). Scenery that participates in the whole-city seasonal time-lapse (farms recolor,
+  orchard blossoms/fruits) is accepted at that same 0.67 Hz. `probe-vinerate` is the reusable instrument: run
+  the live clock, count phase flips, use the orchard as the ceiling control.
+- **THE VINEYARD TOOLTIP IS NOW UN-CASHABLE — the last banked Nature Interaction.** `TILEDESC[T.VINEYARD]`
+  ("Terraced grapevines — wine country") is now mute about a draw that knows its `vinePhase()`, exactly the
+  orchard's state before 129 gave it a `Grove` row. The next Nature × Interaction/UX lap adds a `Vines` row
+  naming the season (Dormant / Bud break / Veraison / Harvest) from the shared `vinePhase()` — one predicate,
+  already built. This retires the header's *"VINEYARD needs a Deepen first"* caveat (108/109/129): the Deepen
+  is done.
