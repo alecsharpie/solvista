@@ -2525,6 +2525,7 @@ function palm(gx,gy,s){
 let time=0, waveT=0, WINDA=0.5; /* breeze strength 0..1: seeded gust cycle */
 let TIDE=0.5; /* sea level 0..1 on a slow seeded cycle: 1=high water, 0=low */
 let TIDEV=1;  /* sign of dTIDE/dt: >0 flooding, <0 ebbing (the tooltip reads it) */
+let TIDEPH=0; /* phase offset: lets ?tide= pin the cycle without stopping it (see __setTide) */
 
 /* boardwalk pier deck; wheel drawn at the far end */
 function drawPierAt(x,y){
@@ -3338,16 +3339,40 @@ function drawCell(x,y){
       }
       break;}
     case T.MARSH:{
-      hexTile(gx,gy,1.02,col('meadow',0.82)); /* muddy estuary green */
       const[cx,cy]=px(gx,gy);
-      ctx.fillStyle=col('water',0.9); /* shallow tidal pools */
-      ctx.beginPath();ctx.ellipse(cx-3,cy+1.6,2.7,1.2,0,0,7);ctx.fill();
-      ctx.beginPath();ctx.ellipse(cx+3.2,cy-0.8,2.0,0.95,0,0,7);ctx.fill();
-      ctx.strokeStyle=col('sage',1.06);ctx.lineWidth=0.8; /* reed tufts */
-      for(let j=0;j<7;j++){
-        const rx=cx-5.2+hashCell(x,y,j+70)*10.4, ry=cy-0.6+hashCell(y,x,j+80)*3.6;
-        ctx.beginPath();ctx.moveTo(rx,ry);ctx.lineTo(rx+(hashCell(x,j,7)-0.5)*1.6,ry-3.3);ctx.stroke();
+      /* the marsh is named for a tide it never answered: this hex prints a live Tide in
+         its tooltip while every pixel of it sat still. Two pools four screen px wide can
+         never carry that at city zoom, so the FLAT answers — draining to exposed wet mud
+         as the water pulls off it, sheeted over at the top of the flood. */
+      const ebb=clamp((0.58-TIDE)/0.58,0,1);
+      const body=[0,1,2].map(i=>lerp(BASE.meadow[i],BASE.soil[i],ebb*0.42));
+      hexTile(gx,gy,1.02,colRGB(body,0.82)); /* estuary green, drying to estuary mud */
+      const wet=0.34+0.86*TIDE; /* pool radius: a trickle on the lowest ebb, brimming at the top */
+      for(const[ex,ey,rw,rh]of[[cx-3,cy+1.6,2.7,1.2],[cx+3.2,cy-0.8,2.0,0.95]]){
+        /* the pool's whole bed, laid bare as the water pulls back off it */
+        ctx.fillStyle=col('soilDk',0.95);
+        ctx.beginPath();ctx.ellipse(ex,ey,rw*1.22,rh*1.22,0,0,7);ctx.fill();
+        ctx.fillStyle=col('water',0.9);
+        ctx.beginPath();ctx.ellipse(ex,ey,rw*wet,rh*wet,0,0,7);ctx.fill();
       }
+      /* the reeds keep their own calendar — green through the spring flush, tawny at the
+         autumn die-back, bleached and storm-broken by midwinter. (The hex body already
+         follows the DRY season through BASE.meadow; straw/stubble are the crop palette,
+         which applySeason is forbidden to touch, so the two cannot double-count.) */
+      const sm=((year%1)+1)%1;
+      const green=clamp(1-Math.abs(sm-0.42)/0.34,0,1); /* peaks midsummer, wraps cleanly */
+      const wint=clamp(1-Math.min(sm,1-sm)/0.18,0,1);
+      const rcol=[0,1,2].map(i=>lerp(lerp(BASE.sage[i],BASE.straw[i],1-green),BASE.stubble[i],wint*0.7));
+      ctx.strokeStyle=colRGB(rcol,1.06);ctx.lineWidth=0.8; /* reed tufts */
+      const rlen=3.3*(1-0.38*wint); /* winter breaks them down to stubs */
+      for(let j=0;j<7;j++){ /* three salt RANGES, spaced so 0x..+j can never collide */
+        const rx=cx-5.2+hashCell(x,y,seedNum^(0x9E01+j))*10.4,
+              ry=cy-0.6+hashCell(y,x,seedNum^(0x9E41+j))*3.6;
+        ctx.beginPath();ctx.moveTo(rx,ry);
+        ctx.lineTo(rx+(hashCell(x+j*13,y,seedNum^0x9E81)-0.5)*1.6,ry-rlen);ctx.stroke();
+      }
+      /* spring high water drowns the flat: one thin sheet over mud and reeds alike */
+      if(TIDE>0.60)hexTile(gx,gy,1.02,colA('water',1.02,0.30*(TIDE-0.60)/0.40));
       break;}
     case T.PARK:{
       hexTile(gx,gy,1.02,col('lawn',1.03));
@@ -5662,7 +5687,7 @@ function advanceEntities(dt,s){
      clouds all read from this one signal so the whole scene gusts together */
   WINDA=0.25+0.75*Math.max(0,Math.sin(time*0.13+(seedNum%89)*0.5))*(0.72+0.28*Math.sin(time*0.57));
   /* ~2min ebb and flood. One phase, two readings: height and its direction. */
-  const tph=waveT*0.045+(seedNum%31)*0.4;
+  const tph=waveT*0.045+(seedNum%31)*0.4+TIDEPH;
   TIDE=0.5+0.5*Math.sin(tph); TIDEV=Math.cos(tph);
   for(const v of vehicles)stepVehicle(v,dt*s);
   for(const v of bikes)stepVehicle(v,dt*s);
@@ -5710,6 +5735,11 @@ window.__warp=n=>{const target=year+n;while(year<target){year+=0.45/6;tick();}
   for(const c of cells)if(DEV.has(c.t))c.h=c.th; recount();syncStats();};
 window.__setTime=t=>{dayT=t;};
 window.__setYear=n=>{year=n;}; /* pin the calendar (seasons) for tests */
+/* pin the TIDE (?tide=0..1) by shifting the cycle's phase, so the sea keeps moving
+   from there instead of freezing. Without it every shot lands on whatever tide the
+   page load happened to reach — the blind spot ?year= closed for the seasons. */
+window.__setTide=v=>{v=clamp(v,0,1);
+  TIDEPH=Math.asin(v*2-1)-(waveT*0.045+(seedNum%31)*0.4); TIDE=v; TIDEV=1;};
 /* test hook: advance entity motion n seconds without real time — lets warp
    screenshots catch drift-in entities (balloons, flock) and animation phases */
 window.__step=n=>{for(let r=n;r>0;r-=0.1)advanceEntities(Math.min(0.1,r),1);};
@@ -5798,6 +5828,7 @@ window.__census=()=>{
   if(q.has('warp'))window.__warp(parseFloat(q.get('warp')));
   if(q.has('year'))window.__setYear(parseFloat(q.get('year'))); /* after warp: pins the calendar (seasons) */
   if(q.has('t'))window.__setTime(parseFloat(q.get('t')));
+  if(q.has('tide'))window.__setTide(parseFloat(q.get('tide'))); /* pins high/low water */
   if(q.has('step'))window.__step(parseFloat(q.get('step')));
 }
 requestAnimationFrame(frame);

@@ -4267,3 +4267,94 @@ the commons lands **fully on land, clear of beach and river.** The deterministic
   complaint (iters 94 and 100) was scattered confetti. A second blob re-scatters. Nature's additive
   moves in this direction are now **spent** — next Nature lap should be Deepen or Polish.
 
+## Iteration 103 — the houses stop copying each other, city to city (2026-07-10)
+
+**Vector** — Urban fabric × **Polish** (a FIX). This closes open cue **(f)**, banked by iter 99
+when it fixed the identical pair of defects in `MID` and measured — but did not fix — them in `RES`.
+Rotation pointed at Sky/People, and I went looking there first; the survey below is why I turned back.
+
+**Change.** Three lines in `drawBuilding`'s `RES` branch (L3392–3400 → L3392–3409):
+- `bodyN=v<0.5?'terra':'cream'` → `mv=hashCell(x,y,seedNum^0x5C31)`, `tone=mv*0.72+v*0.28`,
+  `bodyN=tone>0.56?'cream':(tone>0.27?'terra':'sandDk')` — the same shape as iter 99's `MID` fix,
+  thresholds solved to hold a ~40/40/19 split rather than gutting cream.
+- roof `hashCell(x,y,7)` → `hashCell(x,y,seedNum^0x7A9F)`.
+- chimney `hashCell(x,y,5)` → `hashCell(x,y,seedNum^0x5C05)`.
+- The prism's front face read `col(bodyN==='terra'?'terra':'cream',1)` — a no-op ternary while
+  `bodyN` had two values, and a **latent bug the moment a third arrives** (every `sandDk` house
+  would have worn a cream face). Now `col(bodyN,1)`.
+
+Draw-only: `drawBuilding` calls no `rng()`, and `bodyN`/`roofN` feed no `rng()`-gated predicate.
+
+**Census — PASS**, and provably stream-neutral. **Every tick-derived metric is exactly +0** and the
+**tile histogram is empty**: `parks`, `towers`, `roads`, `developed`, `tileKinds`, `bridges`,
+`greenRoofs`, `tallTowers`, `helipads`, `boulevardTrees`, `avenues`, `arterials`, `promenade`,
+`stations`, `cafes`, `schools`, `stadiums`. The only movers are the three **frame-count-dependent**
+metrics, and they wander in both directions across runs of *identical* code (see finding 2):
+run 1 `pop −3 · towerHt −1 · solarRoofs +2`; run 2 `pop +6 · towerHt +1 · solarRoofs +0`.
+
+**Probe.** `probe-restone.mjs` (now `git add -f`'d — the header's rule). Two questions, both answered
+from the live page's own `hashCell`/`cells`/`seedNum` (bare-named — iter 96's law), and it scores the
+**old and new schemes in the same run**, so one pass on either revision reports before *and* after:
+- `corr(body is cream, height field v)` over every `RES` cell, era 2035:
+  **0.889 / 0.868 / 0.871 → 0.240 / 0.219 / 0.253** (seeds 7 / 42 / 1234). Iter 99's post-fix `MID`
+  band is 0.19–0.31, so `RES` now sits inside it.
+- **cross-seed agreement** on cells that are `RES` in *both* seeds — 100% means every city paints the
+  identical pattern. **Chimney: 100.0% / 100.0% / 100.0% → 59.5% / 67.9% / 57.9%.** Roof:
+  61.9 / 80.4 / 93.0% → 14.3 / 26.8 / 21.1%.
+- Body share: `terra 50/cream 50` → `terra ~41 · cream ~40 · sandDk ~19`.
+
+**Visual — PASS, 2/2.** Seeds 42 and 7, un-zoomed whole-city **before/after pairs**, one agent each,
+told not to enhance. Both found the third shade visible and warm, "blends into the existing earthy
+palette rather than muddying it"; no z-order tears, no floating tiles, no blown-out colour; houses
+still locked to the hex grid. Both independently confirmed **nothing but house body colour changed** —
+seed 7's agent read the whole stat bar identical (`2035 · 35,200 · 71 · 64 · 179 · 33 · 18 · 49% ·
+56% · 37%`), seed 42's read towers 76 / tallest 54 / parks 201 unchanged. That is the visual
+corroboration of the census's stream-neutrality claim.
+
+**Verdict: SHIPPED.** Cue (f) is **CLOSED**.
+
+### Findings
+
+- **⚠ THE CUE'S CLAIM WAS *NEARLY* RIGHT, AND THE NEAR-MISS IS THE INTERESTING PART.** Cue (f) said
+  "every seed paints the identical RES roof pattern." Measured, the roof agreed only **61.9–93.0%**
+  across seed pairs — because `roofN`'s first branch keys off `bodyN`, which keys off `v`, which
+  **is** seeded. The literal-salt draw `rv` was identical in every city; the *rendered* roof leaked
+  a little seed through its dependence on the body. **The clean demonstrator was the chimney**
+  (`hashCell(x,y,5)`, no `v` term at all): **100.0% agreement on all three seed pairs.** Lesson:
+  when auditing a seed-independence breach, **measure the term with no seeded dependency** — a
+  downstream consumer can launder a constant into something that looks seed-varying.
+- **⚠ A SINGLE STASH-CONTROL RUN CAN FRAME YOUR OWN CHANGE (corrects iter 97's recipe).** Iter 97
+  established: suspect a small non-core delta → `git stash` the edit, re-census pristine HEAD, see if
+  the delta persists. I did that; pristine read **exactly +0** on `pop`/`towerHt`/`solarRoofs` while my
+  edit read `−3/−1/+2`. By that recipe my change was guilty. It was not: **re-running the census on
+  the unchanged edited file gave `+6/+1/+0`** — the same metrics moving the *other* way. `pop` and
+  `towerHt` read `c.h`, which **grows at draw time** (iter 98), and `solarRoofs` quantizes a salt off
+  the float `year` (iter 97) — all three are functions of *how many frames rendered* in the census's
+  500ms settle, i.e. of machine load. The pristine run's `+0` was luck: it happened to match the load
+  under which the baseline was captured. **The control for a noisy metric is running the SAME code
+  twice, not one run of each.** Compare the perf gate's rule (three passes, take the minimum) — the
+  census needs the same discipline on its three draw-time metrics, and only on those.
+- **The stream-neutrality proof is a PARTITION, not a zero.** A draw-only change does not produce
+  "all +0"; it produces **+0 on every metric derived from `tick()`** and noise on exactly the three
+  derived from frame count. Reading the census as one number hides this. The partition is the proof:
+  an empty tile histogram plus 17 exact zeros says the seeded stream never moved, whatever `pop` does.
+- **⚠ SKY & ATMOSPHERE IS ADDITIVELY SATURATED, AND ITS EMPTY `New CA rule` CELL IS A TRAP.** The
+  rotation bullet sent me to Sky. Before designing anything I grepped the seams, and found Sky is the
+  most densely built domain in the artifact — most of it **unrecorded by this ledger** (step 1's law:
+  the ledger is the loop's memory, *not the artifact's inventory*). Already there: a full **marine
+  layer** (`fogDepth`/`fogAt`/`FOGR`/`rSea`, with a `reachFill` distance field off every wet cell, a
+  dawn clock *and* a seeded multi-day fog spell), showers, clouds, stars, a moon, a **shooting star**,
+  a seeded **`WINDA` gust field** that the washing lines flap to — and a **sweeping lighthouse beam**.
+  I nearly shipped, in order: sea fog (exists), a unified wind (exists), and a lighthouse beam
+  (exists — the tooltip has promised "sweeps the bay at night" all along, and it delivers). **Sky's
+  `New CA rule` cell is empty because sky is not cellular** — its state lives in screen space and in
+  time, not on the hex grid; the one grid-shaped sky idea (fog pooling on terrain) was already taken
+  by `rSea`. Do not treat that empty cell as an invitation. Sky's remaining kinds are **Deepen /
+  Polish / Interaction**, same as Water and Nature.
+- **Rotation is a tiebreaker, not a mandate.** Three of seven domains (Nature, Water, Sky) are now
+  measured-saturated on additive kinds, so "stalest domain" increasingly points at places with nothing
+  cheap left to add, while a *specified, measured, invariant-breaking bug* sat open in the hottest
+  domain. The bug won. When the rotation bullet and an open cue disagree, **prefer the cue that comes
+  with a number attached** — and log the survey that made you turn back, because that survey is the
+  expensive part and it is exactly what the next fresh process cannot re-derive cheaply.
+
