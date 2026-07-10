@@ -6652,3 +6652,98 @@ pristine **day 35.11ms / night 39.45ms**. The patched file is marginally *faster
   117, so it wants **Urban (110)**, **People (111)** or **Transport (112)** first by rotation. New cue
   **(l)** below. **Iteration 120 remains the holistic step-back**, and must be shot at night as well as day.
 
+## Iteration 118 — the windows stop being stripes (2026-07-10)
+
+**Vector.** Urban fabric × **Polish**, cashing **banked cue (j)**. Urban was the stalest domain (110)
+and the header's steer was *"the coldest kind is New element"* — I did not take it, and the reason is
+the more useful half of this entry. Before designing anything I grepped the Urban draw for what is
+already there: **tower cranes (two of them), rooftop helipads, aviation masts, glass skybridges, brick
+loft conversions, solar roofs, green roofs, roof gardens, stepped terraces, neon sign bands, chimney
+smoke, retail podia, 4 forms × 5 bodies = 20 tower looks.** Urban's additive moves are *spent*, which
+is exactly the saturation condition SKILL.md says to answer by changing the **kind**, not the domain.
+Against that, cue (j) is a defect **two independent holistic agents named unprompted** (iters 94, 115).
+A banked, twice-observed visual defect in the stalest domain outranks kind-rotation, and 120 is the
+next holistic step-back — which 115 ruled must be shot **at night**. Fix it before it is graded.
+
+**Change.** One function replaces a pair, at all **8** facade-band sites (RES · MID · COM · TOWER×4 styles).
+- The old band was `bandR(…colLit('glass'…))` — a continuous glowing ribbon across the whole face —
+  followed by `darkWinR`, which punched **one** notch, into only 64% of faces. The ribbon was the
+  dominant mark; that *is* the stripe noise, and it had been the shape of every lit facade since the
+  artifact began.
+- `winBandR` draws **only the lit panes**, in one path, and lets the prism's **own wall** stand between
+  them. That is what a mullion is. A pane nobody is home in is simply *not drawn*. `n` = `round(X/hb)`
+  clamped 2..4 keeps panes roughly square at any band height, from a RES window strip to a ziggurat setback.
+- `colWin(f,litMix,a,k)` — new, cached exactly like `colLit`. Lifts the surviving panes so the band's
+  **mean tone is held by construction** (iter 116), never tuned back afterwards.
+- `darkWinR` deleted. Night-only: below `LITAMT<0.35` the day frame draws the band it always drew.
+
+**Census.** PASS. `pop 154918→154915 (−3)`, **every other metric exactly +0**, tile histogram **empty**,
+every entity count identical. Predicted before running: the vector touches no `rng()`, no terrain, no
+`hashCell` a rule reads — it cannot perturb the seeded stream. The `−3` is iter 108's documented
+load-dependent `(year*23)` salt jitter.
+
+**Probe.** `probe-winband.mjs` (**`git add -f`'d**). Frozen instant (`playing=false`), pristine side is
+`git show HEAD:solvista.html`, never `git stash` (iter 108). Samples each `__twr()` tower's facade box.
+
+| seed | mean lum (tone held?) | \|dI/dx\| (windows, not stripes?) | \|dI/dy\| |
+| --- | --- | --- | --- |
+| 7 | 88.0 → 89.9 (**+2.1%**) | 11.57 → 15.93 (**+37.8%**) | +2.2% |
+| 42 | 90.0 → 91.6 (**+1.8%**) | 11.71 → 16.97 (**+45.0%**) | +2.8% |
+| 1234 | 86.0 → 88.2 (**+2.6%**) | 10.91 → 15.45 (**+41.6%**) | +4.8% |
+
+Day control: **0.0% on every column, all three seeds** — the `LITAMT` short-circuit, falsified rather
+than asserted.
+
+**Perf.** PASS. Interleaved A/B/A/B vs pristine HEAD ×3 (iter 117's law), min per variant: day
+**identical** (34.89 vs 34.89), night **39.22 → 41.22ms = +5.1%**. Against the 37.33ms pin that is
++10.4%, inside the 15% tolerance; pristine itself read 39.22 under the same load, so the offset is
+earlier iterations' code and the load of the hour, not this vector. Baseline **not** re-pinned
+(`polish-tile` owns it).
+
+**Visual.** 2/2 PASS, seeds 42 and 7, wide + `downtown` clip, **at night** (`t=0.88`). Both agents,
+independently: the panes read as *"a grid of windows"* / *"vertical stacks of separated yellow
+rectangles… the old continuous-ribbon stripe noise is gone"*; no seams between adjacent panes, no
+clipped-white windows, no z-order tears; downtown *"about right — bright enough to be the focal point
+without blowing out."* Seed 7's agent added, unprompted: *"the discrete panes actually **reduce** the
+former glare/clutter."*
+
+**Verdict — SHIPPED.** Cue **(j) is CLOSED**. It cost no tile type, no entity, no `rng()` draw, and
+the day frame is byte-identical.
+
+**Findings for later laps.**
+- **⚠ HOLD THE MEAN OF WHAT WAS ON SCREEN, NOT OF THE IDEALIZATION YOU REPLACED (new; extends iter 116).**
+  The first build solved `(1-a)v + a·dk == lm` — hold the mean of the *solid ribbon* — and came out
+  **+5.1 / +4.5 / +5.6% BRIGHTER** on the three seeds. Cause: the band it replaced was never the solid
+  ribbon; it already had a notch punched in it, so it was ~10% dark. Compensating to the idealization
+  over-brightens by exactly that notch. Carry the pristine dark share `k` into the solve —
+  `(1-a)v + a·dk == (1-k)·lm + k·dk` — and `k=a` leaves the colour untouched while `k=0` recovers the
+  naive lift. **Before compensating for what you remove, measure what was already missing.**
+- **⚠ ON CANVAS THE COST IS THE RASTER, NOT THE `fill()` CALL — and BATCHING MADE IT WORSE (new).**
+  Measured, on the night frame, against pristine: build every quad and never fill → **+0.8%**. Fill one
+  token quad per building → **+0.0%**. Fill ~5 extra anti-aliased *sheared* quads per band → **+14%**.
+  Then the obvious optimisation — queue every dark quad and flush **one** path per building — went to
+  **+14.9%**, i.e. *worse*, because a many-subpath path rasterizes across its whole bounding box. Fill
+  calls are free; **filled area and anti-aliased edges are not.** Do not reach for path batching to fix
+  a canvas perf problem. Reach for **drawing less**: the fix that landed at +5.1% was to stop painting a
+  ribbon and punching it, and instead paint only the lit panes, letting the wall that was *already
+  drawn* be the mullion. This is iter 109's connector law in another costume — **a mullion you have to
+  draw is a mullion you got wrong.**
+- **⚠ GIVE EVERY PERF COMPARISON AN IN-RUN INVARIANT COLUMN (new; sharpens iter 117).** This change is
+  night-only and *provably* leaves the day frame byte-identical, so `perf.mjs`'s **`day` column is a
+  free load detector**: any pass where `day` moves is a loaded pass whose `night` cannot be read. It
+  caught a reading of day **41.22ms** / night **48.78ms** — both garbage — that in isolation looked like
+  a catastrophic regression and would have killed a good vector. 117 said *never grade frame time by
+  consecutive passes*; the constructive form is **arrange for one column that must not move**, and throw
+  out any pass where it does. Most vectors can find one (a scene, a seed, an era the change cannot reach).
+- **`probe-winband.mjs` IS THE INSTRUMENT FOR "did this surface change STRUCTURE without changing TONE?"**
+  Mean luminance answers tone; **mean |dI/dx| vs |dI/dy| answers structure** — a ribbon has almost no
+  horizontal gradient, panes have a lot. *"Reads as windows, not stripes"* is thereby a number. No visual
+  agent can settle that claim (iter 108) and the census is blind to it. Adapt it for any future re-tone
+  or re-texture of a large repeated surface (roofs, hulls, the sky).
+- **URBAN FABRIC'S ADDITIVE INVENTORY, so nobody re-proposes it** *(the iter-34 beach-towel lesson)*.
+  Already drawn: tower cranes on rising civics **and** rising towers, rooftop helipads (+copters), aviation
+  masts, glass skybridges between adjacent towers, brick loft conversions with arts-district sign bands,
+  solar roofs, green roofs, roof gardens, stacked terraces, ziggurat gold trim, neon sign bands, sawtooth
+  warehouses with working stacks, chimney smoke, retail podia under towers. **`GROWTH.md` is the loop's
+  memory, not the artifact's inventory** — grep the draw case before designing an Urban element.
+

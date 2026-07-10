@@ -4669,10 +4669,19 @@ function stepGond(g){
     return;
   }
   const L=g.path.length;
-  if(L>=g.target)return;                        /* the line is done */
+  /* re-spread the cabins across the line once it settles at length L (cue n): the
+     growth rescale below telescopes their p toward the anchor span-by-span, so a line
+     that has STOPPED extending -- at its target, at the plate edge, or stalled waiting
+     for the shore to earn the next span -- would otherwise show both cabins parked at
+     the start tower in every still frame. Keyed to L so it re-arms if the line grows on;
+     do NOT touch the rescale, which is correct WHILE a line is lengthening. */
+  const settle=()=>{if(g.spread===L)return;g.spread=L;const base=[0.15,0.62],n=g.cabins.length;
+    for(let i=0;i<n;i++){const cb=g.cabins[i];cb.p=base[i]!==undefined?base[i]:(i+0.3)/n;cb.dw=0;}};
+  if(L>=g.target){settle();return;}             /* the line is done */
   if((g.ph=(g.ph+1)%3))return;                  /* a span every third tick */
+  if((g.stall=(g.stall||0)+1)>90)settle();      /* hasn't grown in ~90 attempts -> treat as done */
   const[tx,ty]=g.path[L-1];
-  if(ty>=G-3)return;
+  if(ty>=G-3){settle();return;}                 /* ran into the plate edge -- done short */
   const lo=SHOREX-6, hi=Math.min(G-5,SHOREX+4); /* stay over the low-rise strip */
   if(--g.run<0){ /* survey both seaward diagonals, follow the value */
     const[ex,ey]=axStep(tx,ty,1),[wx,wy]=axStep(tx,ty,2);
@@ -4687,7 +4696,7 @@ function stepGond(g){
   if(c.val<g.bar-g.wait*0.002){g.wait++;return;} /* waits for the shore to earn it */
   /* keep the cabins where they are while the line lengthens under them */
   if(L>1){const k=(L-1)/L;for(const cb of g.cabins){cb.p=cb.p<0.5?cb.p*k:1-(1-cb.p)*k;cb.dw=0;}}
-  g.path.push([nx,ny]); g.wait=0;
+  g.path.push([nx,ny]); g.wait=0; g.stall=0;
   buildGondSet();
 }
 function drawGondAt(x,y,e){

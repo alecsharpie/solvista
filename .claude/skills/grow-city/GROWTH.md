@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84 | 71 |
@@ -55,9 +55,12 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **126** · Urban **124** · People **127** · Nature **120** · Transport **121** · Civic **122** · Water **123**.
-  **Stalest is now Nature (120)**, then **Transport (121)** — both have banked findings; check the last entry of
-  the stalest domain for one before reading its row. (**127 took People × New element** aimed not at its spent
+  Sky **126** · Urban **124** · People **127** · Nature **120** · Transport **128** · Civic **122** · Water **123**.
+  **Stalest is now Nature (120)**, then **Civic (122)/Water (123)** — check the last entry of
+  the stalest domain for a banked finding before reading its row. (**128 cashed Transport's cue (n)** — the
+  cable cars are no longer parked at the anchor in still frames; see its entry. **Nature (120)'s banked item is
+  the soft cue (m)** — night's periphery going dark — which the header itself says to *measure* the luminance
+  core-vs-ring before spending a lap on; it may not survive the measurement.) (**127 took People × New element** aimed not at its spent
   *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
   "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
   and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
@@ -73,10 +76,11 @@ ones (U2, 42, U5) stay in the bullet.
   found the banked cue's own description of the code was WRONG** (it said `hashCell`; the turbines were `rng()`),
   and the implementation the cue prescribed would have reshuffled the seeded stream. **A cue is a pointer, not a
   spec — re-grep the seam before designing to it.**
-  And **Transport's next lap has cue (n)** (121, measured, pre-existing): both cable cars sit within **one span of
-  the anchor tower at page load**, on every line and every seed, because the growth rescale telescopes `p→0` — so
-  no cabin is ever seen riding *over* the city without `&step=`. Re-spread the cabins once `L` reaches `g.target`;
-  do **not** touch the rescale, which is correct for a growing line.
+  **Cue (n) is CLOSED (iter 128).** The cable cars were parked within one span of the anchor tower in every
+  still frame; 128 re-spreads a line's cabins once it **settles** (target reached, plate edge, or stalled),
+  keeping the growth rescale — which 128 re-derived and confirmed is *correct* (constant-fraction would hop a
+  cabin ~1 span per span-append during live growth). Residual, accepted: a line still *actively* mid-growth
+  (seed 1234's slow high-target line) legitimately stays telescoped — that is the rescale working, not a bug.
   **120 broke rotation deliberately and
   logged why**: it was the mandated holistic step-back, the step-back found a real defect, and the skill's own
   rule ("if something compounded badly, spend the next iteration FIXING it") outranks rotation. A step-back
@@ -147,10 +151,12 @@ ones (U2, 42, U5) stay in the bullet.
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
-  Recent kinds: 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen ·
-  122 Interaction/UX · 123 Deepen · 124 Polish · 126 Deepen · 127 New element —
-  **Deepen has paid 6 of the last 12 and Polish 3; vary off both.** The coldest kind is now **Scale** (a
-  structural lever, not a lap move); **New element** was just cashed at 127 (last before it: 106). Note 118's
+  Recent kinds: 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen · 122 Interaction/UX · 123 Deepen ·
+  124 Polish · 126 Deepen · 127 New element · 128 Deepen —
+  **Deepen has now paid 6 of the last 11 (128 on a banked cue); Polish 2. VARY OFF Deepen next** unless another
+  banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
+  **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
+  **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
   *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
   the domain first and read its row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
@@ -382,106 +388,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 120 entries before Iteration 118 live in
+> **Archive:** the 121 entries before Iteration 119 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 118 — the windows stop being stripes (2026-07-10)
-
-**Vector.** Urban fabric × **Polish**, cashing **banked cue (j)**. Urban was the stalest domain (110)
-and the header's steer was *"the coldest kind is New element"* — I did not take it, and the reason is
-the more useful half of this entry. Before designing anything I grepped the Urban draw for what is
-already there: **tower cranes (two of them), rooftop helipads, aviation masts, glass skybridges, brick
-loft conversions, solar roofs, green roofs, roof gardens, stepped terraces, neon sign bands, chimney
-smoke, retail podia, 4 forms × 5 bodies = 20 tower looks.** Urban's additive moves are *spent*, which
-is exactly the saturation condition SKILL.md says to answer by changing the **kind**, not the domain.
-Against that, cue (j) is a defect **two independent holistic agents named unprompted** (iters 94, 115).
-A banked, twice-observed visual defect in the stalest domain outranks kind-rotation, and 120 is the
-next holistic step-back — which 115 ruled must be shot **at night**. Fix it before it is graded.
-
-**Change.** One function replaces a pair, at all **8** facade-band sites (RES · MID · COM · TOWER×4 styles).
-- The old band was `bandR(…colLit('glass'…))` — a continuous glowing ribbon across the whole face —
-  followed by `darkWinR`, which punched **one** notch, into only 64% of faces. The ribbon was the
-  dominant mark; that *is* the stripe noise, and it had been the shape of every lit facade since the
-  artifact began.
-- `winBandR` draws **only the lit panes**, in one path, and lets the prism's **own wall** stand between
-  them. That is what a mullion is. A pane nobody is home in is simply *not drawn*. `n` = `round(X/hb)`
-  clamped 2..4 keeps panes roughly square at any band height, from a RES window strip to a ziggurat setback.
-- `colWin(f,litMix,a,k)` — new, cached exactly like `colLit`. Lifts the surviving panes so the band's
-  **mean tone is held by construction** (iter 116), never tuned back afterwards.
-- `darkWinR` deleted. Night-only: below `LITAMT<0.35` the day frame draws the band it always drew.
-
-**Census.** PASS. `pop 154918→154915 (−3)`, **every other metric exactly +0**, tile histogram **empty**,
-every entity count identical. Predicted before running: the vector touches no `rng()`, no terrain, no
-`hashCell` a rule reads — it cannot perturb the seeded stream. The `−3` is iter 108's documented
-load-dependent `(year*23)` salt jitter.
-
-**Probe.** `probe-winband.mjs` (**`git add -f`'d**). Frozen instant (`playing=false`), pristine side is
-`git show HEAD:solvista.html`, never `git stash` (iter 108). Samples each `__twr()` tower's facade box.
-
-| seed | mean lum (tone held?) | \|dI/dx\| (windows, not stripes?) | \|dI/dy\| |
-| --- | --- | --- | --- |
-| 7 | 88.0 → 89.9 (**+2.1%**) | 11.57 → 15.93 (**+37.8%**) | +2.2% |
-| 42 | 90.0 → 91.6 (**+1.8%**) | 11.71 → 16.97 (**+45.0%**) | +2.8% |
-| 1234 | 86.0 → 88.2 (**+2.6%**) | 10.91 → 15.45 (**+41.6%**) | +4.8% |
-
-Day control: **0.0% on every column, all three seeds** — the `LITAMT` short-circuit, falsified rather
-than asserted.
-
-**Perf.** PASS. Interleaved A/B/A/B vs pristine HEAD ×3 (iter 117's law), min per variant: day
-**identical** (34.89 vs 34.89), night **39.22 → 41.22ms = +5.1%**. Against the 37.33ms pin that is
-+10.4%, inside the 15% tolerance; pristine itself read 39.22 under the same load, so the offset is
-earlier iterations' code and the load of the hour, not this vector. Baseline **not** re-pinned
-(`polish-tile` owns it).
-
-**Visual.** 2/2 PASS, seeds 42 and 7, wide + `downtown` clip, **at night** (`t=0.88`). Both agents,
-independently: the panes read as *"a grid of windows"* / *"vertical stacks of separated yellow
-rectangles… the old continuous-ribbon stripe noise is gone"*; no seams between adjacent panes, no
-clipped-white windows, no z-order tears; downtown *"about right — bright enough to be the focal point
-without blowing out."* Seed 7's agent added, unprompted: *"the discrete panes actually **reduce** the
-former glare/clutter."*
-
-**Verdict — SHIPPED.** Cue **(j) is CLOSED**. It cost no tile type, no entity, no `rng()` draw, and
-the day frame is byte-identical.
-
-**Findings for later laps.**
-- **⚠ HOLD THE MEAN OF WHAT WAS ON SCREEN, NOT OF THE IDEALIZATION YOU REPLACED (new; extends iter 116).**
-  The first build solved `(1-a)v + a·dk == lm` — hold the mean of the *solid ribbon* — and came out
-  **+5.1 / +4.5 / +5.6% BRIGHTER** on the three seeds. Cause: the band it replaced was never the solid
-  ribbon; it already had a notch punched in it, so it was ~10% dark. Compensating to the idealization
-  over-brightens by exactly that notch. Carry the pristine dark share `k` into the solve —
-  `(1-a)v + a·dk == (1-k)·lm + k·dk` — and `k=a` leaves the colour untouched while `k=0` recovers the
-  naive lift. **Before compensating for what you remove, measure what was already missing.**
-- **⚠ ON CANVAS THE COST IS THE RASTER, NOT THE `fill()` CALL — and BATCHING MADE IT WORSE (new).**
-  Measured, on the night frame, against pristine: build every quad and never fill → **+0.8%**. Fill one
-  token quad per building → **+0.0%**. Fill ~5 extra anti-aliased *sheared* quads per band → **+14%**.
-  Then the obvious optimisation — queue every dark quad and flush **one** path per building — went to
-  **+14.9%**, i.e. *worse*, because a many-subpath path rasterizes across its whole bounding box. Fill
-  calls are free; **filled area and anti-aliased edges are not.** Do not reach for path batching to fix
-  a canvas perf problem. Reach for **drawing less**: the fix that landed at +5.1% was to stop painting a
-  ribbon and punching it, and instead paint only the lit panes, letting the wall that was *already
-  drawn* be the mullion. This is iter 109's connector law in another costume — **a mullion you have to
-  draw is a mullion you got wrong.**
-- **⚠ GIVE EVERY PERF COMPARISON AN IN-RUN INVARIANT COLUMN (new; sharpens iter 117).** This change is
-  night-only and *provably* leaves the day frame byte-identical, so `perf.mjs`'s **`day` column is a
-  free load detector**: any pass where `day` moves is a loaded pass whose `night` cannot be read. It
-  caught a reading of day **41.22ms** / night **48.78ms** — both garbage — that in isolation looked like
-  a catastrophic regression and would have killed a good vector. 117 said *never grade frame time by
-  consecutive passes*; the constructive form is **arrange for one column that must not move**, and throw
-  out any pass where it does. Most vectors can find one (a scene, a seed, an era the change cannot reach).
-- **`probe-winband.mjs` IS THE INSTRUMENT FOR "did this surface change STRUCTURE without changing TONE?"**
-  Mean luminance answers tone; **mean |dI/dx| vs |dI/dy| answers structure** — a ribbon has almost no
-  horizontal gradient, panes have a lot. *"Reads as windows, not stripes"* is thereby a number. No visual
-  agent can settle that claim (iter 108) and the census is blind to it. Adapt it for any future re-tone
-  or re-texture of a large repeated surface (roofs, hulls, the sky).
-- **URBAN FABRIC'S ADDITIVE INVENTORY, so nobody re-proposes it** *(the iter-34 beach-towel lesson)*.
-  Already drawn: tower cranes on rising civics **and** rising towers, rooftop helipads (+copters), aviation
-  masts, glass skybridges between adjacent towers, brick loft conversions with arts-district sign bands,
-  solar roofs, green roofs, roof gardens, stacked terraces, ziggurat gold trim, neon sign bands, sawtooth
-  warehouses with working stacks, chimney smoke, retail podia under towers. **`GROWTH.md` is the loop's
-  memory, not the artifact's inventory** — grep the draw case before designing an Urban element.
 
 ## Iteration 119 — the residents move downtown (2026-07-10)
 
@@ -1174,3 +1085,65 @@ coastal city. The muted coral/lav lawns "blend in," not glaring.
 - People's live cells remain **Deepen** and **Scale** for entities; **New element** is now re-opened for it
   via *surfaces* (this lap). The picnic band replaced ~12% of dense-tree park tiles with open lawn + one tree —
   parks stayed balanced (both agents), so a small tree-density trade for variety is safe on PARK's large n.
+
+## Iteration 128 — the cable cars leave the tower (2026-07-11)
+
+**Vector.** Transport × **Deepen** (a fix). Transport was the second-stalest domain (121) and its last entry
+banked **cue (n)**, measured and pre-existing: both cabins on every line, every seed, sit within one span of
+the start tower at page load, so **no cabin is ever seen riding over the city in any screenshot without
+`&step=`**. A banked, measured finding outranks kind-rotation (Deepen has paid a lot lately — but 121 itself
+cashed a banked Transport defect on the same logic). The cue named the mechanism and the fix: `stepGond`'s
+growth rescale (`cb.p=cb.p<.5?cb.p*k:1-(1-cb.p)*k`, `k=(L-1)/L`, once per span) telescopes each cabin's `p`
+toward the anchor cell it held when the line was one span long; **re-spread the cabins once the line settles**,
+and do NOT touch the rescale, which keeps a *growing* line smooth (see the finding below for why).
+
+**What the probe found before a line was written** (`probes/probe-cabload.mjs`, new, promoted). Each cabin's
+physical fraction `t∈[0,1]` along its line at load, no stepping, seeds 7/42/1234: every one of **5/5 lines
+parked** — `t` within **0.026–0.097** of a terminal, mean spread between the two cabins **0.017** (stacked).
+Control: a hash of the path polyline, to prove any fix moves cabins and no cable.
+
+**Change.** In `stepGond`, once the line stops extending, re-spread its cabins across the current length once
+(keyed to `L` so it re-arms if the line grows on): reset `cb.p` to the artifact's own seed spread `[0.15,0.62]`
+(→ `t≈0.30/0.76`, one cabin on each leg). It fires at **three** settle points, not just the cue's `L>=target`:
+also at the plate edge (`ty>=G-3`), and when growth has clearly stalled (a new `g.stall` counter of
+growth-attempt ticks with no push crosses 90). No `rng()`, no terrain, no draw call, no new entity/tile.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**; core `+0`; `gondLines 15`/`gondola 16`
+identical; `pop −3` / `solarRoofs +2` / `greenRoofs +1` is the documented `(year*23)` salt jitter (108/121).
+Predicted before running — the vector touches no seeded stream.
+
+**Probe, after.** `5/5 → 2/5 parked`, **mean spread 0.017 → 0.259**, path hashes byte-identical (geometry
+untouched). The 2 residual parked lines are **seed 1234's**, and they are parked *correctly*: at 2035 they are
+genuinely still mid-growth (`stall:0 wait:0`, 6/tgt21 and 9/tgt14 spans) — an actively-lengthening line, the
+one state the rescale exists to keep smooth. A survey (seeds 7/42/100/2024/9/555 + seed 1234 at warp 90/120)
+confirms every line that has **reached or neared its target** now spreads; only a slow high-target line caught
+mid-growth stays telescoped, which is a true transient, not a defect.
+
+**Visual.** 2/2 PASS, seeds 42 & 7, before/after `coast` clip (the cable band) + `wide` whole-city. Asked to
+**locate** the cabins (120's law), not to judge: seed-42 agent found them "bunched at the tower" before and
+"spread along the cable, riding mid-span" after; seed-7 agent (whose cable runs inland, off the coast clip)
+found them in the wide frame "clearly spread along the cable — one mid-span over a road, a second near the far
+mast — not stacked at one tower," both hanging correctly from the rope, no tears/floaters/blowout anywhere.
+
+**Verdict — SHIPPED (DEEPENED / FIXED). Cue (n) is CLOSED** for every settled line.
+
+### Findings for later laps
+- **⚠ THE RESCALE IS RIGHT — I CHECKED WHY, SO THE NEXT LAP DOESN'T "FIX" IT (new; validates 121's caution).**
+  The tempting simpler fix is to delete the telescoping so cabins keep a constant *fraction* and ride outward
+  as the line grows — which would spread *all* lines including mid-growth ones, with no settle flag. It is
+  **wrong**: appending one span at the far end then moves a cabin at fraction `t` outward by `t` spans (~0.76
+  span ≈ 23px) *per append*, a visible hop on every span during live growth. The rescale keeps a cabin's
+  **absolute** position fixed (no hop) at the cost of drifting it to its birth cell (the anchor). Both are
+  smooth only in warp (no frames between appends); live play needs the rescale. So the right shape is exactly
+  what 121 prescribed: keep the rescale, re-spread at settle. A cue that says "do not touch X" is worth
+  *re-deriving* before obeying — here the derivation confirmed it and named the residual it cannot fix.
+- **cue (n) RESIDUAL — an actively-growing line legitimately parks its cabins (new, accepted, not a defect).**
+  Seed 1234's `tgt21` line is mid-growth across a wide era range because its shore earns spans slowly, so a
+  still frame there catches telescoped cabins. This is the rescale working. If a future lap wants even these
+  spread, the only clean way is a *warp-only* spread (during screenshot generation there are no frames between
+  appends, so constant-fraction is free) — but that is mode-dependent plumbing for a rare transient; weigh it
+  against just leaving it.
+- **THE MINSEP COSMETIC IS STILL OPEN (121's last sub).** The two cabins ride one drawn curve and pass through
+  each other once per half-trip; `[0.15,0.62]` is 0.47 apart in `p`, not antipodal, so they cross off-centre.
+  A real jig-back tram counterbalances its pair on a loop. One-line change, low value, no agent has ever
+  remarked on it — belongs after anything that matters.
