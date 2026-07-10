@@ -4206,3 +4206,64 @@ The `c.gw` flag, the `Greenway` tooltip, the `gwTrail()` half-segment draw, and 
 (union-find with a one-cell bridge, plus a blocker histogram of what stops the walk) were all
 *correct* and are worth re-deriving; only the **shape** was wrong.
 
+## Iteration 102 — the commons: the interior gets its lung (2026-07-10)
+
+**Provenance — I did not author this change.** It was found **uncommitted in the worktree** at
+startup, left by an iteration killed between its verdict and its `git commit`. Per the skill's
+dirty-worktree rule, the **gates decide, not the ledger**: I re-ran the census (PASS), re-shot both
+seeds, and re-ran the visual gate before adopting it. Everything below the Provenance line is
+described **from the diff and from gates I ran myself**, not from the original author's intent.
+
+**Vector** — Nature × **New element** (district-scale). This is the direct execution of the
+prescription iter 101 wrote for its successor: *"Not a ribbon — **a blob.** Same ~50 cells,
+contiguous, ≥3 hexes across… Site it with `hexDist(x,y,CBDX,CBDY)` (iter 98), **not** `c.val`."*
+Cue (e½), open since iter 88 and asked for independently by iter 100's step-back agent
+("consolidate green into one or two district-scale parks"), is **now closed**.
+
+**Change.** In `genWorld`, after the high street: a deterministic survey scores every legal centre
+in the band `6 ≤ hexDist(x,y,CBDX,CBDY) ≤ 13` by how much of its r=3 core is plantable, docking −3
+per sea/void cell; the best centre gets an `r=4` disc of `PARK`. The outer ring only is nibbled by
+`hashCell(x,y,seedNum^0x10A5) >= 0.55`, so the commons has a coastline rather than the silhouette of
+a hexagon — but the **r=3 core (7 hexes across) is always solid**, which is the one property 101
+proved a corridor can never have. `corr` and `hstr` cells are stepped over, so a street may cross
+the commons and the high street keeps its shop wall. **Draws zero `rng()`** — it perturbs the seeded
+stream only through the terrain it changes.
+
+**Census — PASS.** `PARK` **943 → 1205 (+262)**, i.e. ~29 cells per seed-era. Core: `pop`
+**+1432 (+0.96%)**, `developed` **−60 (−0.98%)**, `roads` **+94 (+1.65%)** — all inside chaotic
+wobble, nothing near the −5% floor. Land came overwhelmingly from open ground, not from buildings:
+`EMPTY` −219, `FOREST` −17, `MEADOW` +9.
+
+**Visual — PASS, 2/2.** Seed 42 and seed 7, un-zoomed wide frames, one agent each. Both found **one
+large contiguous green mass in the interior**, correctly hex-aligned, no z-order tears, no floating
+tiles, no blown-out colour, and both read the whole frame as still balanced. Seed 7 — *the seed whose
+FAIL killed iter 101* — was checked specifically for the ocean mis-siting that sank the ribbon, and
+the commons lands **fully on land, clear of beach and river.** The deterministic survey did its job.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A BLOB DOES NOT COST POP — IT PAID FOR ITSELF, AND ITER 101'S PREDICTION WAS WRONG.**
+  101 predicted the blob would cost *more* pop per cell than the ribbon (which cost −2.25%), reasoning
+  that the ribbon's long frontage was what bought its `val` uplift back. **Measured: `pop` went UP
+  +0.96%** while `developed` fell 1%. Compactness did not forfeit the uplift — it **traded extent for
+  density**: `MID` −99 but `TOWER` **+18**, `tallTowers` **+8**, `RES` +30. Because `PARK` is the top
+  `valueSrc` (0.92), a solid green mass lifts `val` on everything ringing it, and the ring builds
+  *taller* instead of wider. **Do not budget green as a pop cost** (101's "~0.045% pop per cell" is
+  superseded for compact shapes); a contiguous park is close to pop-neutral-or-positive.
+- **The r=3 solid core is the load-bearing constant, not the r=4 radius.** 101's result — below ~2–3
+  hexes across a shape is untraceable at fit zoom — means the *guaranteed* width is what earns the
+  read. The ragged `hashCell` outer ring is pure ornament and can be tuned freely; the core cannot.
+  Both agents found the mass unprompted, so 7-hexes-across clears the legibility bar with margin.
+- **Survey, never coin-flip — confirmed a second time.** 101 learned this the hard way when a
+  `hashCell` coin flip aimed seed 7's ribbon out to sea. The same deterministic best-of-scan (the one
+  `hsBest` uses) put the commons on land on seed 7 **first try**. Any future placed feature should
+  score candidate centres and take the max; it costs one loop and removes a whole class of seed bug.
+- **`PARK` permanence held in practice, not just in theory.** 101 proved by inspection that no `tick()`
+  pass consumes a `PARK`. This iteration is the end-to-end confirmation: green planted in `genWorld` at
+  1974 is still standing in the 2035 census column.
+- **⚠ Don't plant a second lung.** The cue asked for *one* district-scale park precisely because the
+  complaint (iters 94 and 100) was scattered confetti. A second blob re-scatters. Nature's additive
+  moves in this direction are now **spent** — next Nature lap should be Deepen or Polish.
+

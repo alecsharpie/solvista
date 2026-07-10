@@ -1636,6 +1636,7 @@ function tick(){
   }
   recount();
   syncFleet();
+  railStations();   /* a stop earns its platform as the blocks around it fill in */
 }
 
 /* monorails grow the way the streets do. From 1988 the network opens line by
@@ -4415,6 +4416,77 @@ function buildMonoSet(){monoSet.clear();if(!monos)return;
       gap=4+(hashCell(x,y,seedNum^0x57A7)*5|0);
     }
   }
+  railStations();
+}
+/* A train runs at a GROUND speed, in spans per sim-second — not in lap-fractions.
+   The old flat `p+=0.014` made ground speed scale with loop length: seed 7's 89-span
+   line ran its trains 45x faster than its 2-span one, and every line lapped in 71s
+   whatever its size. Rates are still capped in p, so a stubby loop can't spin. */
+const MONOSPD=1.25,    /* spans per sim-second, once a line is long enough to earn it */
+      MONOCAP=0.02,    /* ...but never a lap under 50s */
+      MONODWELL=3.2,   /* sim-seconds standing at a platform */
+      MONOBRAKE=2.6,   /* spans over which it eases into a stop, and back out */
+      MONOCAR=1.0,     /* car spacing, in spans (was 0.011 of a lap, i.e. L-dependent) */
+      MONOGONE=2,      /* the platform stays empty this long after it pulls out */
+      MONOREFILL=6;    /* ...then one more rider turns up every this many sim-seconds */
+/* The platform's crowd, as a function of when a train last stood here — the same
+   shape as stopQueue (iter 111), and the only definition of the rule. `cap` is the
+   hash-fixed size of the crowd this platform gathers; `bl` is boarding progress. */
+function railQueue(c,cap){
+  const since=c&&c.mlast!==undefined?time-c.mlast:1e4;
+  if(since<MONODWELL)return{q:cap,bl:since/MONODWELL};   /* the train is in: they board */
+  const u=since-MONODWELL;
+  return{q:u<MONOGONE?0:Math.min(cap,1+((u-MONOGONE)/MONOREFILL|0)),bl:0};
+}
+/* A stop only counts as a STATION once its neighborhood is busy. That predicate used
+   to live inline in three readers that disagreed: the draw gated on it, while the
+   tooltip and the hovered-route pips counted raw `stops` — so a line claimed up to
+   twice the platforms it drew, and pipped bare track. It lives here once now.
+   `m.sta` is the set every reader shares; `m.staP` is where a train must stand. */
+function railStations(){
+  for(const m of monos||[]){
+    const L=m.path.length;
+    m.sta=new Set();
+    m.path.forEach(([x,y],i)=>{if(m.stops.has(i)&&countAround(x,y,1,k=>DEV.has(k.t))>=3)m.sta.add(i);});
+    m.gapP=Math.min(MONOCAR/L,0.02);          /* one car, in lap-fractions */
+    m.brakeP=Math.min(MONOBRAKE/L,0.3);
+    m.rateP=Math.min(MONOSPD/L,MONOCAP);
+    /* a train stands with its MIDDLE car under the canopy, so its head overshoots
+       the station cell by exactly one car gap */
+    m.staP=[...m.sta].map(i=>({p:(i/L+m.gapP)%1,i})).sort((a,b)=>a.p-b.p);
+  }
+}
+/* Every platform drew riders "waiting for the next train" and the train never came:
+   it sailed through at line speed, forever. Now it brakes in, stands, and pulls out.
+   A line with no station yet (a stubby loop, or one whose blocks haven't filled in)
+   just cruises — `staP` is empty and the easing collapses to 1. */
+function stepTrains(m,dt){
+  const S=m.staP;
+  for(const tr of m.trains){
+    if(tr.dw>0){tr.dw-=dt;continue;}                    /* standing at the canopy */
+    let e=1;
+    if(S.length){ /* ease down toward the next stop, and back up out of the last */
+      let df=1,db=1;
+      for(const st of S){
+        const a=((st.p-tr.p)%1+1)%1; if(a<df)df=a;
+        const b=((tr.p-st.p)%1+1)%1; if(b<db)db=b;
+      }
+      /* sqrt, i.e. constant deceleration (v = sqrt(2ad)) — and not merely because that
+         is what a real train does. A LINEAR ramp e=d/B makes the time to cross a brake
+         zone integral(dx / V(x/B)) DIVERGE at the platform, so the train spends nearly its
+         whole lap crawling on the floor value: it tripled the lap (210s vs 71s) while
+         still reading as three different speeds on three lines. sqrt integrates to 2B/V. */
+      e=clamp(Math.sqrt(Math.min(df,db)/m.brakeP),0.12,1);
+    }
+    const step=dt*m.rateP*e;
+    let hit=null,hd=step;                               /* the nearest stop inside this step */
+    for(const st of S){const d=((st.p-tr.p)%1+1)%1; if(d>1e-9&&d<=hd){hd=d;hit=st;}}
+    if(hit){
+      tr.p=hit.p; tr.dw=MONODWELL;
+      const[sx,sy]=m.path[hit.i];
+      const c=cells[idx(sx,sy)]; if(c)c.mlast=time;      /* the platform empties: they board */
+    } else tr.p=(tr.p+step)%1;
+  }
 }
 /* RAILH is the beam's SOFFIT (underside); the deck runs RAILH..RAILH+BEAMD above it,
    and a pylon's head tops out exactly at RAILH so the girder rests on it. */
@@ -4439,18 +4511,22 @@ function drawMonoAt(x,y,e){
     return;
   }
   if(i%2===0)monoPylon(cx,cy); /* pylon, planted under the beam */
-  if(m.stops.has(i)&&countAround(x,y,1,n=>DEV.has(n.t))>=3){ /* a station at the busy stops */
+  if(m.sta.has(i)){ /* a station at the busy stops */
     prismS(cx,cy,0.17,0.17,0,2,col('deck',1),col('deckDk',0.7),col('deckDk',0.9));       /* platform */
     prismS(cx,cy,0.02,0.02,2,RAILH-4.5,col('whiteDk',0.92),col('whiteDk',0.48),col('whiteDk',0.72)); /* post */
     prismS(cx,cy,0.15,0.15,RAILH-4.5,RAILH-3,col('teal',1),col('tealDk',0.6),col('tealDk',0.85)); /* canopy */
-    const nw=1+(hashCell(x,y,seedNum^0x9A55)*2.4|0)-(LITAMT>0.6?1:0); /* riders waiting for the next train */
+    const cap=1+(hashCell(x,y,seedNum^0x9A55)*2.4|0)-(LITAMT>0.6?1:0); /* how many this platform gathers */
+    const{q:nw,bl}=railQueue(cells[idx(x,y)],cap);
     const PC=['terra','teal','gold','coral','lav'];
     for(let j=0;j<nw;j++){
-      const ox=(hashCell(x*7+j,y,seedNum^0x77A)-0.5)*7.5, oy=(hashCell(x,y*5+j,seedNum^0x3B2)-0.5)*3;
+      /* boarding: they close on the post under the canopy and are gone by the time it pulls out */
+      const ox=(hashCell(x*7+j,y,seedNum^0x77A)-0.5)*7.5*(1-bl), oy=(hashCell(x,y*5+j,seedNum^0x3B2)-0.5)*3-bl*2.4;
+      ctx.globalAlpha=1-bl*bl;
       ctx.fillStyle=col(PC[(x+y+j)%5],0.95);
       ctx.fillRect(cx+ox-0.8,cy+oy-5.2,1.6,2.7);
       ctx.fillStyle=col('ink',1.35);
       ctx.beginPath();ctx.arc(cx+ox,cy+oy-5.9,0.85,0,7);ctx.fill();
+      ctx.globalAlpha=1;
     }
   }
   /* beam toward next+prev (half segments); an open, still-growing line
@@ -4926,7 +5002,7 @@ function render(){
     for(const tr of m.trains){
       tr._m=m; tr._li=li;   /* the hover surface reads the line off the train */
       for(let carN=0;carN<3;carN++){
-        const[tsx,tsy,alongX,cell]=trainPos(m,tr.p-carN*0.011);
+        const[tsx,tsy,alongX,cell]=trainPos(m,tr.p-carN*m.gapP);
         bucketAdd(cell[0],cell[1],()=>{
           const ax=alongX?0.26:0.10, ay=alongX?0.10:0.26;
           /* the middle car carries the stamp, so the pick point is the train's
@@ -5275,7 +5351,7 @@ function render(){
     ctx.fillStyle='rgba(255,252,240,'+(pulse*0.95)+')';
     ctx.strokeStyle=col('ink',0.5); ctx.lineWidth=0.8;
     const pip=(sx,sy)=>{ctx.beginPath();ctx.ellipse(sx,sy,2.2,1.5,0,0,7);ctx.fill();ctx.stroke();};
-    if(hoverEnt._m){for(const i of hl.stops){const[x,y]=hl.path[i];const[cx,cy]=ctr(x,y);pip(cx,cy-RAILH-BEAMD);}}
+    if(hoverEnt._m){for(const i of hl.sta){const[x,y]=hl.path[i];const[cx,cy]=ctr(x,y);pip(cx,cy-RAILH-BEAMD);}}
     else for(const[x,y]of[hl.path[0],hl.path[hl.path.length-1]]){const[cx,cy]=ctr(x,y);pip(cx,cy-hl.h);}
   }
 }
@@ -5295,10 +5371,11 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let playing=true, speed=1;
 const $=id=>document.getElementById(id);
 const elYear=$('stYear'),elPhase=$('stPhase'),elPop=$('stPop'),elParks=$('stParks'),elTowers=$('stTowers'),elTall=$('stTall'),elDens=$('stDens'),elCivic=$('stCivic'),elSolar=$('stSolar'),elWalk=$('stWalk'),elTransit=$('stTransit'),elSeed=$('stSeed');
-/* a monorail stop counts as a real station only once its neighborhood is busy */
+/* a monorail stop counts as a real station only once its neighborhood is busy —
+   railStations() decides that, once, for every reader (draw, pips, tooltip, trains) */
 function monoStationCells(){
   const out=[];
-  for(const m of monos||[])m.path.forEach(([x,y],i)=>{if(m.stops.has(i)&&countAround(x,y,1,k=>DEV.has(k.t))>=3)out.push(idx(x,y));});
+  for(const m of monos||[])for(const i of m.sta||[])out.push(idx(m.path[i][0],m.path[i][1]));
   return out;
 }
 function monoStationCount(){return monoStationCells().length}
@@ -5499,7 +5576,8 @@ function describeTile(c,x,y){
 /* hovering a moving thing names it; entities win over the tile under them.
    INVARIANT: when adding a new entity array, stamp() it in its draw and add a
    row here (same discipline as TILELABEL / the census hook). */
-/* a stubby line is real — a monorail can close its loop early and carry one stop */
+/* a stubby line is real — a monorail can close its loop early, out where nothing is
+   built yet, and so run a train around a loop with no station on it at all */
 const plur=(n,w)=>n+' '+w+(n===1?'':'s');
 const ENTINFO=[
   [()=>whales,'Gray whale','Surfacing on a slow cruise up the bay.',12],
@@ -5518,8 +5596,10 @@ const ENTINFO=[
      belongs to rather than its species. Hovering also traces the route (render). */
   [()=>monos.flatMap(m=>m.closed?m.trains:[]),'Monorail train',
     tr=>{const m=tr._m; if(!m)return 'Elevated, and never stuck in traffic.';
-      const body=m.path.length+'-span loop with '+plur(m.stops.size,'station')+'.';
-      return monos.length>1?'Line '+(tr._li+1)+' of '+monos.length+' — a '+body:'A '+body;},10],
+      /* m.sta, not m.stops: a candidate stop is only a station once it has a platform */
+      const body=m.path.length+'-span loop with '+(m.sta.size?plur(m.sta.size,'station'):'no station yet')+'.';
+      const head=monos.length>1?'Line '+(tr._li+1)+' of '+monos.length+' — a '+body:'A '+body;
+      return head+(tr.dw>0?' Standing at a platform.':'');},10],
   [()=>gonds.flatMap(g=>g.path&&g.path.length>1?g.cabins:[]),'Cable car',
     cb=>{const g=cb._g; if(!g)return 'Swinging over the rooftops.';
       const body=plur(g.path.length-1,'span')+' over the low-rise strip.';
@@ -5608,7 +5688,7 @@ function advanceEntities(dt,s){
   if(flock){flock.x+=flock.dir*flock.sp*dt*s;
     if((flock.dir>0&&flock.x>G+12)||(flock.dir<0&&flock.x<-12)){flock.x=flock.dir>0?-12:G+12;flock.y=CTRY-16+Math.random()*32;}}
   for(const sh of shuttles)stepShuttle(sh,dt*s);
-  for(const m of monos)if(m.closed)for(const tr of m.trains)tr.p+=dt*s*0.014;
+  for(const m of monos)if(m.closed)stepTrains(m,dt*s);
   for(const g of gonds)for(const cb of g.cabins){cb.p+=dt*s*0.02; if(cb.p>1)cb.p-=1;}
 }
 function frame(now){
@@ -5663,6 +5743,8 @@ window.__mono=()=>monos.map(m=>m.path.map(p=>p.slice())); /* each line's cells, 
 window.__rail=()=>({lines:monos.length,closed:monos.filter(m=>m.closed).length,
   lens:monos.map(m=>m.path.length),
   trains:monos.reduce((a,m)=>a+(m.closed?m.trains.length:0),0),
+  stations:monos.map(m=>m.sta?m.sta.size:0), stops:monos.map(m=>m.stops.size),
+  standing:monos.reduce((a,m)=>a+(m.closed?m.trains.filter(t=>t.dw>0).length:0),0),
   gondLines:gonds.length,gondSpans:gonds.map(g=>g.path?g.path.length:0),
   gondTargets:gonds.map(g=>g.target)}); /* growth state */
 

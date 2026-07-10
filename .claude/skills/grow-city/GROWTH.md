@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110** | |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93, **104** | 78, **111** | | 84 | 71 |
@@ -45,22 +45,24 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
-- **ROTATION.** Last vector per domain: Sky **95** · Transport **105** · Water **106** ·
-  Civic **107** · Nature **108** · Urban **110** · People **111**. Stalest is still
+- **ROTATION.** Last vector per domain: Sky **95** · Water **106** ·
+  Civic **107** · Nature **108** · Urban **110** · People **111** · Transport **112**. Stalest is still
   **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
   cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
-  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Transport (105)**
-  is now the next-stalest safe pick, then Water (106). Iter 111 was People × Connect and used
-  109's trick (close a gap between two existing objects); **the same trick is still unspent in
-  Transport** — 109 named both domains and only People has been cashed. Note iter 108 was Nature × Deepen but its
+  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Water (106)**
+  is now the next-stalest safe pick, then Civic (107). Iter 111 was People × Connect and used
+  109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
+  Transport** (trains ↔ their own stations), so **that shape is now spent in both domains 109 named.**
+  Note iter 108 was Nature × Deepen but its
   *content* was a Sky interconnect (the farm calendar reads `applySeason`'s `year`) — **Sky can be
   fed by deepening another domain toward it**, which is the way out of its saturation that does not
   require a sky feature. Iter 109's leftover Sky-feedable list: `VINEYARD`, `MEADOW` seed-heads, `MARSH`.
-  Recent kinds: 106 New element · 107 New CA rule ·
-  108 Deepen · 109 Connect · 110 Polish · 111 Connect — the coldest kind is now **Scale** (a structural lever, not a lap
-  move), then New element and Interaction/UX. **Connect has now paid twice** (109, 111): its trick was that
+  Recent kinds: 107 New CA rule ·
+  108 Deepen · 109 Connect · 110 Polish · 111 Connect · 112 Deepen — the coldest kind is now **Scale** (a structural lever, not a lap
+  move), then New element and Interaction/UX. **Connect paid three times** (109, 111, 112 — 112 logged as
+  Deepen, see its entry): its trick was that
   it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
-  Look for that shape in People and Transport before reaching for a new entity. Note **107 was a New CA rule that
+  Note **107 was a New CA rule that
   ADDED NOTHING**: it rewrote a pass that had never fired. *Auditing an existing rule for
   reachability* is a New-CA-rule move available in every domain and it costs no new content — see
   `probe-market.mjs` and the dead-rule law below. (Iter 106 passed on Connect/CA/Scale *for Water*
@@ -92,6 +94,32 @@ ones (U2, 42, U5) stay in the bullet.
   vectors are structurally capped at ~a quarter of any road-borne host, and would leave the rest
   *emptier* than whatever decoration they replaced. To do it properly you must move the **spawn pool**
   (`openCells` in `syncFleet`), not the leash. Don't rediscover this.
+- **⚠ A NORMALIZED PARAMETER SILENTLY ENCODES PATH LENGTH (iter 112).** Anything moving by
+  `e.p += k*dt` where `p` is a *fraction of its path* has a GROUND speed proportional to that path's
+  length. The monorail did: every line lapped in 71s whatever its size, so seed 7's 89-span line ran
+  its trains **45× faster** than its 2-span one. Fixed by making the rate `spans/sec` and capping the
+  lap. **The gondola still has it, measured: `cb.p+=dt*s*0.02` gives 0.14–0.36 spans/s, and seed 42
+  runs two cable lines at 0.36 and 0.18 — identical cabins, visibly different speeds. Open cue (h).**
+  Before touching any `p`-parametrised mover, ask what `p=1` *means* on that instance.
+- **⚠ AN EASING RAMP TO ZERO MUST BE `sqrt`, NOT LINEAR (iter 112).** To slow a mover as it nears
+  something (a platform, a dock, a terminal), `v = V·d/B` is the intuitive choice and it is **wrong**:
+  the time to cross the brake zone is `∫dx/(V·x/B)`, which **diverges**, so the mover spends nearly its
+  whole journey pinned at whatever floor you clamped to. It tripled the monorail lap (210s vs 71s) *while
+  still reading as three different speeds*. Use `v = V·sqrt(d/B)` — constant deceleration, physically
+  what a train does, and it integrates to a finite `2B/V`. **Neither the census nor three visual agents
+  can see this**; only a numeric probe of speed can (`probe-train.mjs`).
+- **⚠ A PREDICATE WITH THREE READERS WILL HAVE THREE ANSWERS (iter 112; extends 107's dead-rule law).**
+  "Is this stop a station?" was written inline in the draw (`stops.has(i) && countAround(...)>=3`), and
+  *ignored* by the tooltip and the hovered-route pips, which counted raw `stops`. So a line claimed up to
+  **twice** the platforms it drew (21–100% overstatement) and pipped bare track. 107 taught *audit a rule
+  for reachability*; the sibling move is **`grep` for a predicate's OTHER readers before trusting any one
+  of them.** Fix is iter 111's `stopQueue` shape: one function, one set (`m.sta`), every reader shares it.
+  Free regression check: the census `stations` metric was computed by a *fourth* copy, and held at 40.
+- **ELEVATED FEATURES CANNOT BE OCCLUDED — the 111 visibility law still applies, but passes trivially
+  (iter 112).** All 19 monorail stations moved **1595–3590 px** in the approach-vs-departed diff at zoom
+  3.4; not one was hidden. Contrast iter 111's street-level bus shelters, ~30% of which were permanently
+  behind a building. Anything drawn at `RAILH=40` is above the rooftops. Still *measure* — but expect a
+  pass, and expect the fit-zoom frame to show a stopping train (unlike a 3 px queue).
 - **⚠ RUN THE PERF GATE IN ANY LAP THAT ADDS PER-FRAME DRAW WORK — not only at the 5th-iteration
   step-back (iter 109).** 109's first design added ~2000 `fill()`s/frame and cost **+28.5% day**. The
   census was blind to it by construction (draw-only ⇒ `pop +0`, empty tile histogram) and **3/3 visual
@@ -1044,72 +1072,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 104 entries before Iteration 102 live in
+> **Archive:** the 105 entries before Iteration 103 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 102 — the commons: the interior gets its lung (2026-07-10)
-
-**Provenance — I did not author this change.** It was found **uncommitted in the worktree** at
-startup, left by an iteration killed between its verdict and its `git commit`. Per the skill's
-dirty-worktree rule, the **gates decide, not the ledger**: I re-ran the census (PASS), re-shot both
-seeds, and re-ran the visual gate before adopting it. Everything below the Provenance line is
-described **from the diff and from gates I ran myself**, not from the original author's intent.
-
-**Vector** — Nature × **New element** (district-scale). This is the direct execution of the
-prescription iter 101 wrote for its successor: *"Not a ribbon — **a blob.** Same ~50 cells,
-contiguous, ≥3 hexes across… Site it with `hexDist(x,y,CBDX,CBDY)` (iter 98), **not** `c.val`."*
-Cue (e½), open since iter 88 and asked for independently by iter 100's step-back agent
-("consolidate green into one or two district-scale parks"), is **now closed**.
-
-**Change.** In `genWorld`, after the high street: a deterministic survey scores every legal centre
-in the band `6 ≤ hexDist(x,y,CBDX,CBDY) ≤ 13` by how much of its r=3 core is plantable, docking −3
-per sea/void cell; the best centre gets an `r=4` disc of `PARK`. The outer ring only is nibbled by
-`hashCell(x,y,seedNum^0x10A5) >= 0.55`, so the commons has a coastline rather than the silhouette of
-a hexagon — but the **r=3 core (7 hexes across) is always solid**, which is the one property 101
-proved a corridor can never have. `corr` and `hstr` cells are stepped over, so a street may cross
-the commons and the high street keeps its shop wall. **Draws zero `rng()`** — it perturbs the seeded
-stream only through the terrain it changes.
-
-**Census — PASS.** `PARK` **943 → 1205 (+262)**, i.e. ~29 cells per seed-era. Core: `pop`
-**+1432 (+0.96%)**, `developed` **−60 (−0.98%)**, `roads` **+94 (+1.65%)** — all inside chaotic
-wobble, nothing near the −5% floor. Land came overwhelmingly from open ground, not from buildings:
-`EMPTY` −219, `FOREST` −17, `MEADOW` +9.
-
-**Visual — PASS, 2/2.** Seed 42 and seed 7, un-zoomed wide frames, one agent each. Both found **one
-large contiguous green mass in the interior**, correctly hex-aligned, no z-order tears, no floating
-tiles, no blown-out colour, and both read the whole frame as still balanced. Seed 7 — *the seed whose
-FAIL killed iter 101* — was checked specifically for the ocean mis-siting that sank the ribbon, and
-the commons lands **fully on land, clear of beach and river.** The deterministic survey did its job.
-
-**Verdict: SHIPPED.**
-
-### Findings
-
-- **⚠ A BLOB DOES NOT COST POP — IT PAID FOR ITSELF, AND ITER 101'S PREDICTION WAS WRONG.**
-  101 predicted the blob would cost *more* pop per cell than the ribbon (which cost −2.25%), reasoning
-  that the ribbon's long frontage was what bought its `val` uplift back. **Measured: `pop` went UP
-  +0.96%** while `developed` fell 1%. Compactness did not forfeit the uplift — it **traded extent for
-  density**: `MID` −99 but `TOWER` **+18**, `tallTowers` **+8**, `RES` +30. Because `PARK` is the top
-  `valueSrc` (0.92), a solid green mass lifts `val` on everything ringing it, and the ring builds
-  *taller* instead of wider. **Do not budget green as a pop cost** (101's "~0.045% pop per cell" is
-  superseded for compact shapes); a contiguous park is close to pop-neutral-or-positive.
-- **The r=3 solid core is the load-bearing constant, not the r=4 radius.** 101's result — below ~2–3
-  hexes across a shape is untraceable at fit zoom — means the *guaranteed* width is what earns the
-  read. The ragged `hashCell` outer ring is pure ornament and can be tuned freely; the core cannot.
-  Both agents found the mass unprompted, so 7-hexes-across clears the legibility bar with margin.
-- **Survey, never coin-flip — confirmed a second time.** 101 learned this the hard way when a
-  `hashCell` coin flip aimed seed 7's ribbon out to sea. The same deterministic best-of-scan (the one
-  `hsBest` uses) put the commons on land on seed 7 **first try**. Any future placed feature should
-  score candidate centres and take the max; it costs one loop and removes a whole class of seed bug.
-- **`PARK` permanence held in practice, not just in theory.** 101 proved by inspection that no `tick()`
-  pass consumes a `PARK`. This iteration is the end-to-end confirmation: green planted in `genWorld` at
-  1974 is still standing in the 2035 census column.
-- **⚠ Don't plant a second lung.** The cue asked for *one* district-scale park precisely because the
-  complaint (iters 94 and 100) was scattered confetti. A second blob re-scatters. Nature's additive
-  moves in this direction are now **spent** — next Nature lap should be Deepen or Polish.
 
 ## Iteration 103 — the houses stop copying each other, city to city (2026-07-10)
 
@@ -1962,3 +1929,107 @@ clutter or darkening."*
   dead branch matters more than the live one: **`peds` cannot serve the road network — their leash is
   anchored to open ground by design.** Any future "residents use transport" vector must either move the
   anchor (spawn pool) or accept ~25% coverage. Don't rediscover this.
+
+## Iteration 112 — the trains stop where the platforms are (2026-07-10)
+
+**Vector** — Transport × **Deepen**. Rotation named the domain: Transport (105) was the stalest safe
+pick (Sky 95 is staler but is a documented trap). The header pointed at the kind too — *"109's trick
+(close a gap between two existing objects) is still unspent in Transport"* — and this lap cashes it.
+I logged it as **Deepen, not Connect**, because Connect had already paid in 109 and 111 and the bulk of
+the change is a *motion-model fix*, not a join; calling it Connect a third time would have misreported
+the rotation the header exists to protect.
+
+**The seam.** Every monorail station drew riders under its canopy with the intent "waiting for the next
+train" — and the train never came. `stepAnim` was one line: `tr.p += dt*s*0.014`, forever, straight
+through every platform. The buses had dwelt at their stops since long before the ledger (iter 111 gave
+them somebody to wait for). The trains never had.
+
+**Two defects found by probing, not by reading.** `probe-rail.mjs` (written before any design):
+
+| seed 7 | line 0 | line 1 | line 2 |
+| --- | --- | --- | --- |
+| spans `L` | 89 | 2 | 90 |
+| `stops.size` — **what the tooltip reported** | 15 | 1 | 14 |
+| **real, drawn stations** (`countAround(...)>=3`) | **8** | **0** | **11** |
+| overstatement | 47% | 100% | 21% |
+
+1. **`p` is a fraction of the loop, so ground speed scaled with loop length.** Every line lapped in
+   exactly 71 s whatever its size: seed 7's 89-span line ran its trains at 1.25 spans/s and its 2-span
+   line at 0.028 — **45× apart, identical hardware.**
+2. **"Station" was written three times and meant three things.** The draw gated on neighborhood density;
+   the tooltip and the hovered-route pips counted raw `stops`. Lines claimed up to twice the platforms
+   they drew, and pipped bare track. A *fourth* copy lived in `monoStationCells()` (the census metric).
+
+**Change.** ~60 lines. `railStations()` computes `m.sta` (the station set) and `m.staP` (where a train
+must stand) once per tick; the draw, the pips, the tooltip, the census metric and the train all read it —
+iter 111's `stopQueue` shape. `stepTrains()` gives a train a **ground** speed (`MONOSPD=1.25` spans/s,
+capped at `MONOCAP` so a 2-span loop can't spin), brakes it into each station, stands it `MONODWELL=3.2 s`,
+and pulls it away. `railQueue()` empties the platform as the train stands — the riders slide to the post
+and fade — then refills it a rider at a time. Car spacing moved from `0.011` of a lap to `1.0` **span**,
+so the three cars no longer mush together on short lines (unchanged on long ones by construction).
+
+**⚠ The first easing curve was linear, and it was silently catastrophic.** `e = d/B` tripled the lap
+(**210 s vs 71 s**) and *still* left three lines reading as three speeds. The time to cross a brake zone
+under a linear ramp is `∫dx/(V·x/B)`, which **diverges** — the train spent its lap pinned at the 0.10
+floor. `sqrt` (constant deceleration) integrates to `2B/V`. Census: blind. Three visual agents: blind.
+Only `probe-train.mjs`, measuring spans/sec, could see it. Now, with sqrt:
+
+| | seed 7 L=89 | seed 7 L=90 | seed 1234 L=66 |
+| --- | --- | --- | --- |
+| ground speed while moving | 0.882 | 0.793 | 0.977 spans/s |
+| lap | 127 s | 150 s | 80 s |
+| standing | 20.4% | 24.4% | 15.9% of the time |
+| **middle car ↔ platform when stood** | **0.0000** | **0.0000** | **0.0000 spans** |
+| closest two trains ever | 16.1 | 23.3 | 26.1 spans |
+
+Every uncapped line now cruises at the same 1.25 spans/s; the residual spread is the deliberate lap-time
+cap on stubby loops. Trains never overlap (no signalling needed — each accrues the same dwell per lap, so
+phase is preserved). **Held the mean (iter 98's law):** riders/platform 1.88→1.65, 1.55→1.41, 2.00→1.67,
+1.75→1.54 — a 9–17% *reduction*, so the platforms breathe rather than gaining clutter.
+
+**Census — PASS.** `pop −3`, `greenRoofs −1`, **everything else `+0`**; tile histogram empty; entity counts
+unmoved; 0 page errors. Anim/draw-only, no `rng()`, no terrain. The `±3` is the load jitter iter 108
+documented on *identical pristine code*. **`stations: 40 → 40` is the real check**: the census computes that
+metric from a copy of the predicate I rewrote, and it reproduced the old set exactly.
+
+**Perf — PASS, controlled against pristine HEAD in the same session** (iters 99/104). Min-of-3, sequential:
+mine day **33.67** / night **38.05 ms**; pristine HEAD the same session day **33.89** / night **38.11 ms**.
+**−0.22 ms — free**, and plausibly real (a platform sometimes draws 0 riders where it always drew `cap`).
+The +1.5% the baseline file reports is today's machine load. Baseline (day 33.16 / night 37.33) **not** re-pinned.
+
+**Visual — PASS, 3/3 agents, on frozen-clock filmstrips.** `probe-station.mjs` staged approach → standing →
+departed → refilled by poking only `tr.p`, `tr.dw` and `c.mlast` at one instant, so every other pixel is
+identical by construction (iter 111's law). All three agents volunteered that the backgrounds were
+pixel-identical, all three confirmed the middle car lands under the canopy and the platform empties and
+refills, and all three read the whole-city frame as *"a balanced, beautiful coastal city… no clutter or
+darkening."*
+
+**Tooltip** (per the sync invariant): now reads `m.sta`, so a train says *"Line 1 of 3 — a 89-span loop with
+**8 stations**"* (was "15 stations"), a stubby loop says *"…with no station yet"*, and a standing train adds
+*"Standing at a platform."* The hovered-route pips now land only on real platforms. `__rail()` gained
+`stations`/`stops`/`standing` for probing.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A NORMALIZED PARAMETER SILENTLY ENCODES PATH LENGTH.** `p += k·dt` over a variable-length path makes
+  ground speed proportional to length. It hid for 112 iterations because *one* line looks fine — the bug is
+  only visible when you compare two instances, which no screenshot of one city ever does. **The gondola has
+  it too, measured: 0.14–0.36 spans/s, and seed 42 runs two cable lines at 0.36 and 0.18. Open cue (h).**
+- **⚠ THE INTUITIVE EASING CURVE IS THE DIVERGENT ONE.** See above. Worth stating as a rule because the next
+  "slow down as it approaches X" vector (ferries docking, cable cars at terminals — cue (h)) will reach for
+  `d/B` again. Use `sqrt(d/B)`. Any floor you add to rescue a linear ramp is a confession that it diverges.
+- **⚠ A DEAD RULE (107) AND A RULE READ BY THREE DISAGREEING CALLERS ARE THE SAME DEFECT CLASS.** 107 audited
+  a rule that never fired. This one fired, but "what is a station?" had four independent implementations and
+  two of them were wrong. `grep` for a predicate's other readers before trusting the one in front of you. The
+  cheap tell: a derived quantity (`stops.size`) being used where a *filtered* one is meant.
+- **AN ELEVATED FEATURE PASSES THE VISIBILITY LAW TRIVIALLY.** Iter 111 had to hunt for a bus shelter that
+  wasn't behind a building (~30% were). All **19** stations here moved 1595–3590 px in the approach-vs-departed
+  diff. Things drawn at `RAILH=40` are above the rooftops. Unlike 111's 3 px queue, **a stopping train is
+  legible in the un-zoomed frame** — this lap bought something the whole-city gate can actually see.
+- **THE PROBE THAT KILLED THE FIRST DESIGN WAS 40 LINES AND RAN IN 90 SECONDS.** `probe-train.mjs` reported
+  ground speed, lap time, standing fraction, middle-car offset and train separation. Every one of those
+  numbers was needed: the offset proved the snap, the separation acquitted the missing signalling, and the
+  speed convicted the easing curve that both other gates had passed. **When a change is about MOTION, neither
+  a still frame nor a tile histogram is a gate.** Write the probe.
