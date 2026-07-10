@@ -3066,8 +3066,31 @@ function drawCell(x,y){
       }
       break;}
     case T.KELP:{
-      hexTile(gx,gy,1.02,col('waterDk',0.96)); /* shaded shallows */
+      hexTile(gx,gy,1.02,col('waterDk',0.96)); /* shaded shallows — the darkest thing inshore */
       const[cx,cy]=px(gx,gy);
+      /* the canopy. A kelp forest read from above is a raft of olive frond-mats
+         floating on the dark water, not a flat dark hole — which is all the old draw
+         gave (one dark hex + four sub-pixel strokes, so a bed read as an absence).
+         Broad soft patches carry the read at fit zoom; they stay DARK (only a third
+         of the way toward `canopy`) so the bed keeps its place as the darkest thing
+         inshore, greener than the blue water but not brighter than it. hashCell-placed
+         (no rng), clipped to the hex, drifting on waveT like the fronds above them. */
+      { const X=1.02*HW, V=1.02*VR, E=1.02*ER;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(cx,cy-V);ctx.lineTo(cx+X,cy-E);ctx.lineTo(cx+X,cy+E);
+        ctx.lineTo(cx,cy+V);ctx.lineTo(cx-X,cy+E);ctx.lineTo(cx-X,cy-E);
+        ctx.closePath();ctx.clip();
+        for(let m=0;m<4;m++){
+          const mx=cx-4.5+hashCell(x,y,m+70)*9, my=cy-3+hashCell(y,x,m+70)*7,
+                drift=Math.sin(waveT*0.9+mx*0.2+m)*1.2,
+                rr=2.6+hashCell(x,y,m+80)*1.7,
+                t=0.30+((hashCell(y,x,m+80)*3)|0)*0.06;  /* quantized: colMix caches on t */
+          ctx.fillStyle=colMix('waterDk','canopy',t,0.95);
+          ctx.beginPath();ctx.ellipse(mx+drift,my,rr,rr*0.62,0,0,7);ctx.fill();
+        }
+        ctx.restore();
+      }
       ctx.strokeStyle=col('canopy',0.9);ctx.lineWidth=1.4;ctx.lineCap='round';
       for(let k=0;k<4;k++){
         const bx=cx-4+hashCell(x,y,k+90)*8, sway=Math.sin(waveT*1.3+bx*0.3+k)*1.7;

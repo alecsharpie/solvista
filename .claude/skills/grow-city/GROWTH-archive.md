@@ -7030,3 +7030,82 @@ Their *perception* is the evidence; the exactness claim rests on the probe's 0.0
   0.47 apart, not 0.50). Both are one-line changes and belong with cue (n), not before it — the crossing is a few
   pixels and no visual agent has ever remarked on it.
 
+## Iteration 122 — the institutions name themselves (2026-07-11)
+
+**Vector.** Civic & culture × **Interaction/UX**. Rotation named the domain: Civic was the stalest
+(114, and that lap *reverted*). The header named the content — its un-cashed-tell list ends with
+*"`CIVICLABEL` (every civic says only 'A public institution.' — 12 kinds, one sub)"* — and the tell
+itself is the loop's most reliable move (117's law: **look where a string already ASSERTS what the code
+knows**). Kind was forced: Deepen had paid four laps running (119–121) and its licence was spent, the
+header says *"do not open with a Polish"*, and Civic's Interaction/UX cell had one entry (52).
+
+**Change.** Hovering an institution, or the squares it earned, now reports what its own siting rule knew.
+- **`CIVICDESC`** — twelve sentences, one per kind, each written from that kind's *rule*: the hall
+  predates the streets, the school comes *"with every few thousand residents"* (`pop>3500*(schools+1)`),
+  the university *"with every fourteen thousand"*, the aquarium sits *"where the streets run out at the
+  sea"*, the observatory on *"the dark rim"*, the amphitheater *"beside the parks"*.
+- **`Civic quarter — N institutions`** on a major, counted with `siteQuarter`'s own `MAJORK`/`QFAR`.
+- **`Fronts a paved forecourt`** / **`Keeps its own grounds behind`**, and, on the squares themselves,
+  **`Forecourt of — Town hall`** / **`Grounds of — Museum`** — cashing `TILEDESC[T.QUAD]`, which has
+  always said *"Mown grounds behind an institution"* without ever naming which.
+- **`One of — 4 schools`** on the two kinds the city builds by demand.
+- **Fixed a lie the probe found on the way**: a paved square claimed **`Rooftop solar`**.
+
+**Census.** `VERDICT: PASS`, exit 0, pageerrors 0. `pop 154915 → 154911 (−4, −0.003%)`, `roads +0`,
+`developed +0`, **tile histogram empty**, `civicKinds +0`. Exactly right: no terrain write, no `rng()`
+draw. `git diff` has **zero** `ctx.`/`fillRect`/`hexTile`/`col(` lines — so per iter 109 the perf gate
+was not owed. The ±4 is iter 108's load jitter (`(year*23)|0` salt), not the feature.
+
+**Probe.** `probe-civic.mjs` (**`git add -f`'d**) hovers every civic/plaza/quad via `__find`'s screen
+coords, scrapes `#tip`, and checks each claim against cube distance recomputed in Node — a third
+implementation sharing no code with `countAround()` or `hexDist()`. **84 claims across 3 seeds: PASS.**
+`shot-civic.mjs` is `shot-woods.mjs` retargeted (hovershot aims at *entities*; civics are tiles).
+
+**Visual.** Two agents, two seeds, un-zoomed frames + five hover clips each: **VISUAL: PASS** both.
+*"All rows legible, right-aligned values line up, no clipping"*; *"no z-order tears… palette stays muted
+and harmonious"*; the whole city still *"reads as a balanced, beautiful coastal city."*
+
+**Verdict — SHIPPED.**
+
+### Findings
+
+- **⚠ ADJACENCY CANNOT ANSWER "WHOSE IS THIS?" — AND THE PROBE CAUGHT IT, NOT THE GATES (new; the
+  sharpest instance of iter 112's law yet).** The first build read ownership as *"a PLAZA/QUAD touching
+  me"*. But a quad laid behind the **town hall** also touches the **library** two hexes over, so it named
+  whichever neighbour came first in `nbrs6` order — wrong on **seeds 42 and 1234**, right on 7 — and both
+  institutions claimed the same lawn. Census was flat, the tooltip was fluent, and *both visual agents
+  would have passed it*: the text is only wrong if you know the geometry. **The placing rule is the only
+  code that ever knew the answer, so it now says so**: `n.own=idx(x,y)` stamped at conversion in both the
+  forecourt and grounds rules; `squareOwner()` reads it; `ownsSquare()` reads the same fact from the
+  institution's side, so the two can never disagree. **When a relation is many-to-one, record it at the
+  point where it is one-to-one — do not re-derive it from geometry later.**
+- **⚠ `hasQuad()` AND "DO I OWN A QUAD?" ARE DIFFERENT QUESTIONS, AND MUST KEEP DIFFERENT NAMES.** The
+  grounds rule's guard (`countAround(x,y,1,…QUAD)>0`) means *"is a quad already touching me"* — that is
+  what stops two clustered majors both getting one, and it is correct. The tooltip's question is *"is one
+  MINE"*. I nearly shared one helper between them, which is 112's law read backwards: **one predicate per
+  question, not one predicate per phrase.** They are now `hasQuad()` (tick) and `ownsSquare()` (tooltip).
+- **⚠ A PAVED SQUARE WAS CLAIMING `Rooftop solar` — AND `solarRoofs` STILL COUNTS IT (new, measured).**
+  The solar pass sets `c.solar` only on `RES/MID/COM`; the forecourt and grounds rules then pave that very
+  cell into `PLAZA`/`QUAD` **without clearing the flag**. Only `drawBuilding` paints panels and it runs
+  exactly when `DEV.has(c.t)`, so the square showed an array nobody drew. Seed 7's plaza printed it. The
+  `High street` row on the very next line **had always guarded** (`c.hstr&&DEV.has(c.t)`); the two roof
+  rows never did. Fixed on the tooltip side only. **Two live consequences remain, deliberately unfixed
+  here** (never retune a metric mid-lap, and never after reading its census):
+  (a) the census `solarRoofs`/`greenRoofs` tally is `if(c.solar)` over *all* tiles, so it **over-counts**
+  these roofless squares — a few per city;
+  (b) the diffusion itself reads `countAround(x,y,1,n=>n.solar)`, so a ghost-solar plaza **still nudges
+  its neighbours to adopt.** The clean fix is `c.solar=c.groof=false` at both conversion sites, which
+  moves a tracked metric and perturbs an adoption CA — **a lap of its own, in Urban.**
+- **⚠ "NOT DRAWN" AND "NOT READABLE" ARE NOT THE SAME OBSERVATION — iter 111's law, one level up, and it
+  bit the probe.** Pass 2 checked *"the institution claims grounds ⇔ some square names it"*. Squares that
+  could not be **hovered** — offscreen, or with a **pedestrian standing on them** (`QUAD` is in `PEDDEST`,
+  so a ped wins `pickEntity` over the tile) — silently registered as *"names nobody"*, and the probe
+  produced a **false FAIL** against a hall whose quad was on-screen, correctly owned, and simply occupied.
+  A probe must track what it **failed to read** (`unread`) and decline to assert, exactly as a visual gate
+  must not read an occluded entity as an absent one.
+- **`CIVICLABEL`'s tell is now cashed; the list left is `TILEDESC[T.KELP]` ("swaying in the shallows"),
+  `[T.IND]` ("warehouses and light industry"), `[T.VINEYARD]` ("terraced").** Note the tell is *self-
+  renewing*: cashing it here **created** a new one — `TILEDESC[T.PLAZA]` still says only *"A paved civic
+  square"* for a square that now knows its institution, and the plaza/quad `title` is still the generic
+  tile label. A future lap could title them *"Town hall forecourt"* outright.
+

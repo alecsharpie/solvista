@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116** | **97** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
@@ -55,12 +55,13 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **126** · Urban **124** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **123**.
-  **Stalest is now Water (123)** (Civic's cue (d) was explored and CLOSED at 131 — see cue (d), do not
-  re-open) — check the last entry of the stalest domain for a banked finding before reading its row.
-  **Water's banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by respending
-  their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it or pick
-  a different Water kind.** (**129 cashed the tell a 7th time for Nature**:
+  Sky **126** · Urban **124** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
+  **Stalest is now Urban (124)** — check the last entry of the stalest domain for a banked finding before reading
+  its row. (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
+  forest, not a flat dark hole, while staying the darkest thing inshore; `probe-kelp` gates it.)
+  **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by respending
+  their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it (132 did:
+  it took a different Water kind).** (**129 cashed the tell a 7th time for Nature**:
   the orchard drew a blossom/fruit calendar since iter 57 but its tooltip was mute; it now names the
   season via a shared `orchardPhase()`. **129's banked Nature move is now a Deepen** — make VINEYARD's grapes
   read `year` (last Sky-feedable item; 108/113/120), *then* its tooltip earns a row too.) (**127 took People × New element** aimed not at its spent
@@ -155,10 +156,10 @@ ones (U2, 42, U5) stay in the bullet.
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
-  Recent kinds: 121 Deepen · 122 Interaction/UX · 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
-  128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** —
-  (**130 was the holistic step-back — no domain × kind lap.**) **Deepen has paid 4 of the last 9; Interaction/UX 2.
-  Live/cheap kinds for the next Water lap: Connect (adds no new object), Polish. VARY off Deepen**
+  Recent kinds: 122 Interaction/UX · 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
+  128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** —
+  (**130 was the holistic step-back — no domain × kind lap.**) **Deepen has paid 4 of the last 9; Polish 2.
+  Next lap owes Urban (124, now stalest); live/cheap kinds there: Connect, Interaction/UX. VARY off Deepen & Polish**
   unless another banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
   **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
@@ -381,90 +382,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 124 entries before Iteration 122 live in
+> **Archive:** the 125 entries before Iteration 123 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 122 — the institutions name themselves (2026-07-11)
-
-**Vector.** Civic & culture × **Interaction/UX**. Rotation named the domain: Civic was the stalest
-(114, and that lap *reverted*). The header named the content — its un-cashed-tell list ends with
-*"`CIVICLABEL` (every civic says only 'A public institution.' — 12 kinds, one sub)"* — and the tell
-itself is the loop's most reliable move (117's law: **look where a string already ASSERTS what the code
-knows**). Kind was forced: Deepen had paid four laps running (119–121) and its licence was spent, the
-header says *"do not open with a Polish"*, and Civic's Interaction/UX cell had one entry (52).
-
-**Change.** Hovering an institution, or the squares it earned, now reports what its own siting rule knew.
-- **`CIVICDESC`** — twelve sentences, one per kind, each written from that kind's *rule*: the hall
-  predates the streets, the school comes *"with every few thousand residents"* (`pop>3500*(schools+1)`),
-  the university *"with every fourteen thousand"*, the aquarium sits *"where the streets run out at the
-  sea"*, the observatory on *"the dark rim"*, the amphitheater *"beside the parks"*.
-- **`Civic quarter — N institutions`** on a major, counted with `siteQuarter`'s own `MAJORK`/`QFAR`.
-- **`Fronts a paved forecourt`** / **`Keeps its own grounds behind`**, and, on the squares themselves,
-  **`Forecourt of — Town hall`** / **`Grounds of — Museum`** — cashing `TILEDESC[T.QUAD]`, which has
-  always said *"Mown grounds behind an institution"* without ever naming which.
-- **`One of — 4 schools`** on the two kinds the city builds by demand.
-- **Fixed a lie the probe found on the way**: a paved square claimed **`Rooftop solar`**.
-
-**Census.** `VERDICT: PASS`, exit 0, pageerrors 0. `pop 154915 → 154911 (−4, −0.003%)`, `roads +0`,
-`developed +0`, **tile histogram empty**, `civicKinds +0`. Exactly right: no terrain write, no `rng()`
-draw. `git diff` has **zero** `ctx.`/`fillRect`/`hexTile`/`col(` lines — so per iter 109 the perf gate
-was not owed. The ±4 is iter 108's load jitter (`(year*23)|0` salt), not the feature.
-
-**Probe.** `probe-civic.mjs` (**`git add -f`'d**) hovers every civic/plaza/quad via `__find`'s screen
-coords, scrapes `#tip`, and checks each claim against cube distance recomputed in Node — a third
-implementation sharing no code with `countAround()` or `hexDist()`. **84 claims across 3 seeds: PASS.**
-`shot-civic.mjs` is `shot-woods.mjs` retargeted (hovershot aims at *entities*; civics are tiles).
-
-**Visual.** Two agents, two seeds, un-zoomed frames + five hover clips each: **VISUAL: PASS** both.
-*"All rows legible, right-aligned values line up, no clipping"*; *"no z-order tears… palette stays muted
-and harmonious"*; the whole city still *"reads as a balanced, beautiful coastal city."*
-
-**Verdict — SHIPPED.**
-
-### Findings
-
-- **⚠ ADJACENCY CANNOT ANSWER "WHOSE IS THIS?" — AND THE PROBE CAUGHT IT, NOT THE GATES (new; the
-  sharpest instance of iter 112's law yet).** The first build read ownership as *"a PLAZA/QUAD touching
-  me"*. But a quad laid behind the **town hall** also touches the **library** two hexes over, so it named
-  whichever neighbour came first in `nbrs6` order — wrong on **seeds 42 and 1234**, right on 7 — and both
-  institutions claimed the same lawn. Census was flat, the tooltip was fluent, and *both visual agents
-  would have passed it*: the text is only wrong if you know the geometry. **The placing rule is the only
-  code that ever knew the answer, so it now says so**: `n.own=idx(x,y)` stamped at conversion in both the
-  forecourt and grounds rules; `squareOwner()` reads it; `ownsSquare()` reads the same fact from the
-  institution's side, so the two can never disagree. **When a relation is many-to-one, record it at the
-  point where it is one-to-one — do not re-derive it from geometry later.**
-- **⚠ `hasQuad()` AND "DO I OWN A QUAD?" ARE DIFFERENT QUESTIONS, AND MUST KEEP DIFFERENT NAMES.** The
-  grounds rule's guard (`countAround(x,y,1,…QUAD)>0`) means *"is a quad already touching me"* — that is
-  what stops two clustered majors both getting one, and it is correct. The tooltip's question is *"is one
-  MINE"*. I nearly shared one helper between them, which is 112's law read backwards: **one predicate per
-  question, not one predicate per phrase.** They are now `hasQuad()` (tick) and `ownsSquare()` (tooltip).
-- **⚠ A PAVED SQUARE WAS CLAIMING `Rooftop solar` — AND `solarRoofs` STILL COUNTS IT (new, measured).**
-  The solar pass sets `c.solar` only on `RES/MID/COM`; the forecourt and grounds rules then pave that very
-  cell into `PLAZA`/`QUAD` **without clearing the flag**. Only `drawBuilding` paints panels and it runs
-  exactly when `DEV.has(c.t)`, so the square showed an array nobody drew. Seed 7's plaza printed it. The
-  `High street` row on the very next line **had always guarded** (`c.hstr&&DEV.has(c.t)`); the two roof
-  rows never did. Fixed on the tooltip side only. **Two live consequences remain, deliberately unfixed
-  here** (never retune a metric mid-lap, and never after reading its census):
-  (a) the census `solarRoofs`/`greenRoofs` tally is `if(c.solar)` over *all* tiles, so it **over-counts**
-  these roofless squares — a few per city;
-  (b) the diffusion itself reads `countAround(x,y,1,n=>n.solar)`, so a ghost-solar plaza **still nudges
-  its neighbours to adopt.** The clean fix is `c.solar=c.groof=false` at both conversion sites, which
-  moves a tracked metric and perturbs an adoption CA — **a lap of its own, in Urban.**
-- **⚠ "NOT DRAWN" AND "NOT READABLE" ARE NOT THE SAME OBSERVATION — iter 111's law, one level up, and it
-  bit the probe.** Pass 2 checked *"the institution claims grounds ⇔ some square names it"*. Squares that
-  could not be **hovered** — offscreen, or with a **pedestrian standing on them** (`QUAD` is in `PEDDEST`,
-  so a ped wins `pickEntity` over the tile) — silently registered as *"names nobody"*, and the probe
-  produced a **false FAIL** against a hall whose quad was on-screen, correctly owned, and simply occupied.
-  A probe must track what it **failed to read** (`unread`) and decline to assert, exactly as a visual gate
-  must not read an occluded entity as an absent one.
-- **`CIVICLABEL`'s tell is now cashed; the list left is `TILEDESC[T.KELP]` ("swaying in the shallows"),
-  `[T.IND]` ("warehouses and light industry"), `[T.VINEYARD]` ("terraced").** Note the tell is *self-
-  renewing*: cashing it here **created** a new one — `TILEDESC[T.PLAZA]` still says only *"A paved civic
-  square"* for a square that now knows its institution, and the plaza/quad `title` is still the generic
-  tile label. A future lap could title them *"Town hall forecourt"* outright.
 
 ## Iteration 123 — the wind farm founds itself (2026-07-11)
 
@@ -1031,3 +953,63 @@ declining to build a measured-dead one is the same working one step earlier.
   geometry admits it at the sites that matter.** 114's 3-hex mock was genuinely legible; the error was
   generalising from a hand-placed patch to a quarter whose real cells cannot form one. Prove the *siting*, not
   just the *look*.
+## Iteration 132 — the kelp beds grow a canopy (2026-07-11)
+
+**Vector.** Water & coast × **Polish**. Rotation named the domain — Water was the single stalest (123).
+Kind was steered by two constraints: Water's banked cue (pier/lifeguard-on-depth) *repeats* 123's
+site-on-depth mechanism, and the header said to **vary it or pick a different Water kind**; and Deepen
+had paid 4 of the last 9 laps. Polish satisfies both (it varies off Deepen and off the banked cue). The
+target chose itself: the kelp bed is the artifact's own documented failure surface — *"kelp lined the
+entire coast dark for ~13 iterations"* — and the draw was a **flat `waterDk` hex + four sub-pixel fronds**,
+so a bed read as a dark absence rather than a living forest.
+
+**Change.** `case T.KELP` now floats an **olive frond-canopy** on the dark shallows: 4 broad soft
+elliptical mats per hex, `colMix('waterDk','canopy',t,·)` (only ~a third of the way toward `canopy`, `t`
+quantized so the cache stays bounded), hashCell-placed (no `rng()`), clipped to the hex, drifting on
+`waveT` like the fronds above them. The base dark fill and the four upright fronds are untouched and draw
+on top. The mats are **greener, not brighter** — the bed keeps its place as the darkest thing inshore
+(the palette's stated intent, L266–269), it just reads as canopy instead of a hole.
+
+**Census.** PASS, exit 0. Draw-only and stream-neutral (no terrain, no `rng()`) — tile histogram empty,
+all core metrics +0, as expected for a Polish. (`greenRoofs` wobbled ±1 between runs on *pristine* HEAD
+too — the roof-adoption CA ticks a load-dependent number of times during the headless warp; it is census
+timing-noise, not this edit, which lives entirely inside `drawCell`.)
+
+**Probe.** `probes/probe-kelp.mjs` (promoted). Freezes the sim (same-frame-control law — mats AND fronds
+drift on `waveT`), samples a 5×5 disc at every KELP hex centre on patched vs `git show HEAD:`, seeds
+7/42/1234 at neutral tide / dry-peak / midday. Result: **KELP moved, mean |ΔRGB| 4.56**; olive index
+**(g−b) 18.0 → 26.5** (the mats add green, not blue); luminance **116.5 → 117.4** (+0.9, so the bed did NOT
+brighten — hold-the-mean holds, it stays darkest inshore). **WATER control: mean |ΔRGB| 0.20** (≈0, just
+hex-edge antialiasing where a water hex abuts a kelp hex) — the edit touched only `case T.KELP` and the
+control proves the rest of the sea did not move. VERDICT: PASS.
+
+**Visual.** Two agents, one per seed, coast-zoom + a whole-city wide (seed 7). Seed 42 **located the
+olive kelp beds** hugging the beach edge on the lower-left, reading as *"dark olive/green smudges on the
+darker teal — the darkest inshore element, greener rather than a flat black hole,"* inside the water hexes,
+no spill onto sand or open sea. Seed 7 PASSED with the olive read *marginal at that zoom* (it saw the
+darker inshore patches but could not confirm the tint) — which the probe's control-checked +8.5 olive shift
+settles quantitatively. Both: no z-order tears, no floaters, no blowout anywhere; the whole-city frame
+still reads as a balanced, beautiful coast, nothing compounded into darkness. Both `VISUAL: PASS`.
+
+**Verdict — SHIPPED.** The kelp bed reads as a kelp forest from above, not a dark hole, and the change is
+provably confined to kelp hexes (control 0.20) without darkening the coast (Δlum +0.9). Draw-only,
+stream-neutral, ~25 lines.
+
+### Findings
+- **THE KELP TILE'S DRAW NOW READS `waterDk`/`canopy` AS A CANOPY, BUT ITS TOOLTIP IS STILL MUTE** —
+  `TILEDESC[T.KELP]` says only *"Seaweed swaying in the shallows"* and `describeTile` prints nothing of the
+  bed. The un-cashed KELP tell (header) is still open, and now *richer*: a bed knows its extent (a flood
+  fill of KELP neighbours, exactly the woods' `Stand — N hexes`, iter 117) and its depth (`rDeep`). That is
+  the next Water × Interaction/UX lap when Water comes round again — but it needs a probe that recomputes
+  bed size independently (122's law: a tooltip vector needs truth checked against recomputation, not a
+  screenshot that it renders).
+- **A "re-tone a small surface" Polish gets the same instrument as a large one** — `probe-kelp` is
+  `probe-seatone`'s shape (freeze, sample the hex-centre disc on patched vs `git show HEAD:`, join by key)
+  narrowed to a sparse tile with a **same-domain control** (open WATER). The control is what makes a draw-only
+  Polish gate-able at all: |ΔRGB| 4.56 on the target vs 0.20 on the control is a verdict a screenshot cannot
+  give, and it caught nothing wrong here only because the edit was correctly scoped — that is the point.
+- **⚠ `probe-seatone.mjs` RESOLVES `REPO` AS `dirname(import.meta.url)`, which is `probes/`, NOT the repo
+  root** — so `join(REPO,'solvista.html')` and `git -C REPO` only work if you happen to run it from a cwd
+  where that path resolves, and it violates the skill's own law (resolve `../../../../solvista.html` from the
+  probe's location). `probe-kelp` does it right (`resolve(HERE,'../../../..')`) and runs from any cwd; the
+  older probes that copied the `dirname` form should be fixed the next time one is touched.
