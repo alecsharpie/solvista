@@ -21,7 +21,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const PW = join(homedir(), '.claude/skills/screenshot-verify/node_modules/playwright/index.js');
 const { chromium } = (await import(pathToFileURL(PW).href)).default;
 const HERE = dirname(fileURLToPath(import.meta.url));
-const PAGE = pathToFileURL(join(HERE, '../../../solvista.html')).href;
+const PAGE = pathToFileURL(join(HERE, '../../../../solvista.html')).href;
 
 const SEEDS = [7, 42, 1234];
 const WARP = 61; /* 2035 */

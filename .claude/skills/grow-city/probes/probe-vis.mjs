@@ -20,8 +20,10 @@
  *   node probe-vis.mjs
  */
 import { chromium } from '/Users/alec/.claude/skills/screenshot-verify/node_modules/playwright/index.mjs';
-import { pathToFileURL } from 'node:url';
-const PAGE = pathToFileURL('/Users/alec/me/solvista-grow/solvista.html').href;
+import { pathToFileURL, fileURLToPath } from 'node:url';
+import { join, dirname } from 'node:path';
+const HERE = dirname(fileURLToPath(import.meta.url));
+const PAGE = pathToFileURL(join(HERE, '../../../../solvista.html')).href;
 const ZOOMS = [1, 2, 4, 8, 14];
 const b = await chromium.launch();
 console.log('changed px at the shelter (full vs emptied), median over on-screen stops; "vis%" = stops with >=20 px');

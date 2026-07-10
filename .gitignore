@@ -9,6 +9,12 @@ shots/
 # iteration scratch: the /bin/cp backup taken before a big swing, and the ad-hoc
 # probe/shot scripts an iteration writes to verify itself. Ignored so a killed
 # iteration's leftovers can't make run-loop.sh refuse to start on a "dirty" tree.
-before.html
-probe-*.mjs
-shot-*.mjs
+#
+# Anchored to the repo root ON PURPOSE. Unanchored (`probe-*.mjs`) these matched at
+# every depth, so a probe that earned its keep could only be committed with `git add
+# -f` — and the ledger spent ~20 iterations citing probes the repo did not contain
+# (iter 101). Scratch is born at the root and ignored; a probe graduates by moving
+# into `.claude/skills/grow-city/probes/`, which is tracked like any other source.
+/before.html
+/probe-*.mjs
+/shot-*.mjs

@@ -1,5 +1,9 @@
 import { chromium } from '/Users/alec/.claude/skills/screenshot-verify/node_modules/playwright/index.mjs';
-const url = p => 'file:///Users/alec/me/solvista-grow/solvista.html?' + p;
+import { pathToFileURL, fileURLToPath } from 'node:url';
+import { join, dirname } from 'node:path';
+const HERE = dirname(fileURLToPath(import.meta.url));
+const PAGE = pathToFileURL(join(HERE, '../../../../solvista.html')).href;
+const url = p => `${PAGE}?${p}`;
 const b = await chromium.launch();
 let bad = 0, none = 0;
 const NB_E = [[1,0],[-1,0],[0,-1],[-1,-1],[0,1],[-1,1]];

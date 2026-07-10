@@ -115,6 +115,36 @@ both at this one.)
        `transport`/`life` counts the `__census()` hook already returns; add a new
        tracked metric only when a feature moves *nothing* the hook already reports
        and you genuinely need a number to point at.
+     - **A draw-only iteration makes the census nearly vacuous — expect that, and
+       reach for a probe.** Most late-game vectors (Polish, Deepen, Interaction)
+       touch no terrain and no `rng()`, so a PASS reads `every metric +0, tile
+       histogram empty`. That is the *correct* result and it proves only that the
+       page did not throw. It says nothing about whether your change worked.
+   - **Probe gate — write the measurement that can FAIL.** When the census is +0
+     and the screenshots are a judgement call, the iteration rests on a **probe**:
+     a small headless script that measures the one quantity your change was about,
+     on ≥2 seeds, with a **control** that must not move. This is the strongest gate
+     the loop has, and it is what repeatedly overturned the visual agents.
+     ```bash
+     node .claude/skills/grow-city/probes/probe-season.mjs   # e.g. per-tile seasonal pixel shift
+     ```
+     Good probes state a number and a control in one line of output: `corr(luminance,
+     depth) = -0.87` (iter 116) · `|dI/dx| +38..45%, day control 0.0%` (118) ·
+     `cruise spread 2.83x -> 1.00x` (121) · `PARK 0.0 shift in all four seasons,
+     ROAD control ~0` (120, which found 878 frozen hexes three agents had missed).
+     - **Probes live in `probes/`, and they are source, not scratch.** Ad-hoc probes
+       are born at the repo root, where `.gitignore` ignores them so a killed
+       iteration can't dirty the tree. The moment a probe backs a claim in your
+       ledger entry, **`git mv` it into `.claude/skills/grow-city/probes/` and commit
+       it** — that directory is tracked normally, no `git add -f`. For ~20 iterations
+       the ledger cited probes the repo did not contain (iter 101 found this).
+     - Resolve the artifact **relative to the probe's own location**
+       (`join(HERE, '../../../../solvista.html')`), never an absolute path — two
+       probes hardcoded `../solvista-grow/...` and silently measured the worktree
+       when run from the main checkout.
+     - Freeze the clock before any two-render diff (`playing=false`). Cars, waves and
+       clouds move between frames; a diff of *those* is ~14% of the canvas and proves
+       nothing (iter 109's same-frame-control law, encoded in `probes/probe-vis.mjs`).
    - **Visual gate** — screenshot the change at a couple of seeds/eras and *look*:
      ```bash
      node ~/.claude/skills/screenshot-verify/shoot.mjs 'solvista.html?seed=42&warp=61&t=0.3' --shots wide --out .claude/skills/grow-city/shots/after
@@ -145,6 +175,25 @@ both at this one.)
      Any `VISUAL: FAIL` fails the gate. If a verdict is vague or you have reason
      to doubt it, look at *that one* PNG yourself — the budget exists to be spent
      when it matters, not to be defended.
+
+     **ASK AN AGENT TO LOCATE, NOT TO JUDGE (iter 108's law).** A visual agent asked
+     "is downtown brighter?" will confidently say yes about a frame where nothing
+     changed. Asked "*where* is downtown, by light alone?" it must actually look, and
+     its answer is checkable against ground truth you already hold. Iter 115 asked
+     two agents, blind, to point at the CBD; both landed within ~33px of the true
+     `CBDX/CBDY`, which is worth more than any number of PASSes. Phrase the question
+     so a wrong answer is *visibly* wrong: point at it, count them, name which of
+     these two frames is the dry season.
+
+     **Agents fail confidently, not vaguely — so a FAIL is a cue to MEASURE, never
+     to redesign on their say-so.** The instruction above ("if a verdict is vague")
+     under-describes the real failure. At iter 120 three agents failed the seasonal
+     frame: two named the wrong cause and one invented a defect that was not there;
+     a twenty-line probe found the actual bug (878 permanently-green hexes) in one
+     command. At iter 113 an agent asked point-blank the question designed to prevent
+     a specific error made exactly that error. **When agents disagree, or when a FAIL
+     names a cause you cannot see in the code, write a probe and let it settle the
+     question.** Their verdict is evidence; a number is the verdict.
      - **Zooming in:** `shoot.config.json` has named clip framings — `--shots coast`
        (the beach/ocean band) and `--shots downtown` (the dense core) — so you
        don't hand-compute clip rectangles. For an arbitrary tile/civic, the
@@ -187,11 +236,33 @@ both at this one.)
    from re-exploring the same dead end, and it is the record of the *exploration
    itself* — which is a valuable result even when nothing ships. Prefer a short
    structured shape (`**Vector** / **Change** / **Census** / **Visual** /
-   **Verdict**`) so the log stays skimmable at 40+ entries. **Also update the
-   State of the city header** at the top of `GROWTH.md` (add the iteration number
-   to its domain × kind cell; refresh the saturation/deploy lines) — that header
-   is what step 1 reads instead of the whole archive, so a stale header
-   silently breaks rotation.
+   **Verdict**`) so the log stays skimmable at 40+ entries. Verdicts are a closed
+   vocabulary — `SHIPPED`, `DEEPENED`, `FIXED`, `EXPLORED → REVERTED` — because
+   tools read them. **Also update the State of the city header** at the top of
+   `GROWTH.md` (add the iteration number to its domain × kind cell; refresh the
+   saturation/deploy lines) — that header is what step 1 reads instead of the whole
+   archive, so a stale header silently breaks rotation.
+
+   **The header is a FIXED BUDGET (400 lines), not a scratchpad — to add a line,
+   cut a line.** This step used to say only "add" and "refresh", never "cut", and
+   the predictable happened: by iter 122 the header had reached **1224 lines
+   (~27k tokens)**, a third of the archive it exists to spare you, re-read on every
+   single iteration, still carrying a sea-fog watch item it noted as *fixed sixty
+   iterations earlier*. `rotate-ledger.mjs` now measures it and warns (it will not
+   fail your commit). When it warns, **the next iteration's first job is the trim,
+   before its vector**: `MOVE` superseded bullets — closed cues, watch items long
+   since fixed, findings a later law subsumes — down into `GROWTH-archive.md`.
+   **Never delete.** The loop's memory is the one thing it cannot re-derive; the
+   entries rotate rather than vanish, and so must the header.
+
+   **Promote a law, don't just log it.** If a finding is *general* — true of the next
+   vector, not just this one — it belongs in `SKILL.md`, not only in an entry that
+   will rotate into the archive and never be read again. `GROWTH.md` is where you
+   record *what happened*; `SKILL.md` is where you record *what to do differently
+   next time*. Several hard-won laws (locate-don't-judge; one predicate, one
+   definition; probe before you design; the interleaved perf control) sat in ledger
+   entries for dozens of iterations, being independently rediscovered, before they
+   were written down here. Editing this file is a legitimate use of an iteration.
 
    Then **rotate the ledger** so it can't grow without bound — this loop is meant
    to run for hundreds of iterations, and step 1 has to stay cheap:
@@ -251,16 +322,29 @@ node .claude/skills/polish-tile/perf.mjs
 The census and screenshots are both blind to *performance* drift, and this loop
 only ever adds entities and draw work — dozens of individually-cheap features
 can compound into a slow frame exactly the way kelp compounded into a dark
-coast. PASS = mean frame time within 15% of baseline in both day/night scenes.
-Log the number in the holistic entry; if it regressed, the next iteration is a
-perf-fix iteration. Headless timing on this shared machine swings ±30% with
-load — **run the gate 3× and judge by the minimum of each scene**, not a single
-reading (iter 40 saw 23ms and 35ms for the same code minutes apart). Run those
-three passes **sequentially, and never alongside a subagent that is doing
-anything** — the gate measures frame time on a loaded shared machine, so
-concurrency doesn't just slow it, it *corrupts the reading*. (The visual gate
-parallelizes safely because reading a PNG has no timing semantics. The perf gate
-does not.)
+coast. Log the number in the holistic entry; if it regressed, the next iteration
+is a perf-fix iteration. Run the passes **sequentially, and never alongside a
+subagent that is doing anything** — the gate measures frame time on a loaded
+shared machine, so concurrency doesn't just slow it, it *corrupts the reading*.
+(The visual gate parallelizes safely because reading a PNG has no timing
+semantics. The perf gate does not.)
+
+**Judge against a same-session PRISTINE CONTROL, not `perf-baseline.json`.**
+Headless timing on this box swings ±30% with load — iter 40 saw 23ms and 35ms for
+the same code minutes apart — so a number recorded on some other day, under some
+other load, cannot answer "did *my change* cost anything." A stored baseline also
+goes stale silently the moment the plate changes size, and this skill already
+documents what that cost: the hexagon plate (`41b0acd`) left it stale and the perf
+gate failed on every later iteration until it was re-pinned, because *a failing
+gate nobody trusts is worse than no gate*.
+
+So: `/bin/cp` the pristine `HEAD` file beside your patched one and **interleave**
+them — `A/B/A/B`, at least two rounds, taking the **minimum per variant**. Both
+variants then eat the same machine load, and the comparison is the only thing you
+report. This is what iters 115/116/118/119/120/121 actually did, and it is what let
+121 claim "free (day +0.03%, night −0.5%)" and 118 own up to "night +5.1%" with a
+straight face. Absolute numbers still go in the ledger — they are the long-run
+drift record — but the **verdict comes from the interleaved delta.**
 
 The whole-city read in this step-back is the same job as the visual gate, so
 delegate it the same way: one `Agent` per seed, each reading its own un-zoomed
@@ -468,6 +552,47 @@ even if the census looks fine:
   from `shoreAtF(y)` (unrounded), NOT `shoreAt(y)` — the rounded version snaps the
   craft column-to-column and reads jumpy. (Terrain tiles keep the rounded coast.)
 
+## Laws the loop derived (promoted from the ledger — obey these)
+
+Each of these was learned the expensive way, then re-learned because it lived in an
+entry that rotated into the archive. They are general: they apply to the *next*
+vector, whatever it is.
+
+- **Probe before you design.** Measure the thing you believe is broken *before*
+  writing a line of the fix. Iters 112 and 115 both opened by probing and both found
+  the real defect was not the assumed one — 112 discovered monorail trains advanced
+  by a *fraction of the loop* (so a 2-span line and an 89-span line lapped in the
+  same 71s), 115 discovered `c.lit` was per-cell white noise with `corr(lit,
+  dist-from-CBD) = +0.008`. Neither was guessable from reading the draw code.
+- **One predicate, one definition, all readers share it.** "Is this stop a station?"
+  had **four** independent implementations and two were wrong — the draw gated on
+  neighbourhood density, the tooltip counted raw `stops` — so lines claimed up to
+  twice the platforms they drew (iter 112, fixed by `railStations()` computing `m.sta`
+  once). Iter 119 hit the same shape: a spawn pool (`openCells`) and its re-entry
+  test (`strollable`) were two readers of one idea, asymmetric, and the asymmetry was
+  a one-way ratchet that decayed the feature to nothing over 20 sim-minutes. **When
+  you add a rule, grep for every other place that already answers the same question.**
+- **A label that asserts a relationship the draw ignores is a bug, and it is the
+  richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
+  and printed a live `Tide` for 16 iterations over a tile that never moved a pixel
+  (113). `TILEDESC[REDWOOD]` said "Old-growth redwoods" while `describeTile` printed
+  nothing of the `age`/`fire`/`bloom` the CA had tracked all along (117). Look for
+  the seam where a tooltip already claims something the pixels don't do.
+- **Dead code renders zero.** Before wiring to a host, confirm it exists *at scale* in
+  the census tile histogram. `T.MARKET` — stalls, string lights, fully drawn — read
+  **0 in every seed and era of the artifact's entire life** because its siting rule
+  wanted a condition the upgrade pass saturates past (107). Plazas were ~0 the same
+  way (30).
+- **Contrast is not traceability; for a linear feature, legibility ≈ contrast ×
+  width.** A 1–2 hex ribbon is one screen pixel at fit zoom, however bright. Iter 101's
+  greenway passed the census with a good trade and still failed 7 of 9 agent reads.
+- **Ask an agent to LOCATE, not to JUDGE** (108) — see the visual gate. And when
+  agents disagree, **a probe is the verdict, not a rerun**.
+- **Reverting a passing-but-weak change is the system working.** The census can pass a
+  change that isn't worth its cost. Iters 82, 88, 101 and 114 all explored, failed a
+  bar the census could not express, and reverted to byte-identical. That is a *result*
+  — log it as carefully as a ship.
+
 ## "Small and shippable" — with a counterweight
 
 The default bias (small, additive, low-risk) is right *most* of the time and keeps
@@ -502,7 +627,17 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   don't read it.
 - `rotate-ledger.mjs` — moves all but the last 10 entries from `GROWTH.md` into
   the archive. Idempotent, no-op below the threshold, refuses to write unless
-  every entry is accounted for exactly once. `--keep N`, `--dry-run`.
+  every entry is accounted for exactly once. `--keep N`, `--dry-run`. Also
+  **measures the maintained header against a 400-line budget** and warns (exit 0,
+  never blocks a commit) when it is over — see step 5. `--header-max N`, `0` to skip.
+- `probes/` — **tracked source, not scratch.** The per-feature measurement scripts
+  that gate a draw-only iteration, one per cue closed: `probe-seatone.mjs` (luminance
+  vs. sea depth), `probe-winband.mjs` (facade `|dI/dx|` with a day control),
+  `probe-season.mjs` (per-tile seasonal pixel shift, `ROAD` as control),
+  `probe-vis.mjs` (can this ornament be *seen*, and from what zoom — freezes the
+  clock first). Each resolves the artifact as `join(HERE, '../../../../solvista.html')`.
+  Ad-hoc probes are born at the repo root (gitignored); `git mv` one here the moment
+  your ledger entry cites it.
 - `run-loop.sh` — the headless event-based runner (one fresh `claude -p` per
   iteration, next starts when the previous exits). Handles rate limits, refuses
   to start on a dirty tree or a dirty worktree, `--status`, `STOP`.
