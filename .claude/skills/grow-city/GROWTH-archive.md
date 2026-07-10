@@ -2673,3 +2673,99 @@ deleted; finding kept.
   A third emerged: the white cable-car lines have now been misread as UI chrome by four
   separate agents.
 
+## Iteration 85 — the cable car stops looking like a UI overlay (2026-07-10)
+
+**Vector** — Transport × **Polish**. Rotation: Transport was the least-recently-touched
+domain after Nature (last real lap 77; last Polish 70). Kind repeats 83/84's Polish, and
+I took it anyway: all three banked cues were Polish cues, and the ledger says a cue two
+seeds volunteer is a finding. Shipping a shallow Nature element to satisfy the
+kind-rotation rule would have been exactly the "one more shallow feature" the skill warns
+against.
+
+**The defect, measured.** Cue (c) said four agents across iters 79/84 read the cable car
+as UI chrome. A probe said why, in numbers: the pylon is `prismS(...,0.028,0.028,0,H,...)`
+→ `ax*2*HW` = **1.8 world px wide and ~30 px tall**, a 17:1 uniform stick in `whiteDk` at
+**full alpha — the brightest structural tone in the palette** — with no head, no footing,
+just terminating on the asphalt. The cable was a dead-straight chord at constant `H`.
+Straight + uniform + unsupported + maximally bright *is* the visual grammar of a vector
+overlay. The agents were right; the artifact was drawing a ruler.
+
+**Change (draw-only: no terrain, no `rng()`, no new `Math.random()` draw).**
+- **The rope sags.** `gondSag(g,f)` = `GONDSAG*(b-a)*4u(1-u)` over the span between the
+  towers bracketing fractional path index `f`; `GONDSAG=0.95` px/cell → **2.81px over a
+  3-cell (~66px) span, a ~4% sag ratio**, which is what a real haul rope does. It is
+  **exactly 0 at every tower**, so the cable always lands on the sheave head.
+- **The towers are `buildGondSet`'s job now.** It computes `g.pyl` (the span list, which
+  `gondSag` needs) and `g.pylSet` (the draw test). The set is identical to the old
+  `i%3===0||i===L-1`, so **the pylon count did not change** — only what one looks like.
+- **The pylon has three parts**: a `creamDk` concrete footing (`ax .075`), a `whiteDk`
+  mast at `.045/.040` with real lit/shadowed faces (**and dimmed 1/0.6/0.85 → 0.95/0.5/0.75**
+  — the old one was brighter than the buildings it stood among), and a sheave head
+  (`.105/.055`) whose **top face sits exactly at `H`** so the cable emerges from it.
+- **`GONDSEG=3` sub-samples per cell.** The first cut sampled the parabola only at cell
+  centres, and the probe printed `0 2.533 2.533 0` — a 3-cell span has two interior points,
+  and a symmetric parabola puts them at the *same* height. It was a trapezoid with a flat
+  bottom, not a curve. Sub-sampling gives `0 1.13 1.97 2.53 2.81 2.81 2.53 1.97 1.13 0`.
+- Cabins ride the curve: `gondPos` returns the sag as a 5th element, cabin body/hanger/band
+  all offset by it.
+
+**Census** — `+0` on **all 22 metrics**, empty tile histogram, 0 page errors,
+`gondLines 15 · gondola 16` unchanged. The pixel-identical control that iter 78 says only
+draw-only changes can have.
+
+**⚠ …except `pop` turned out NOT to be bit-reproducible.** A later gate run on the *same*
+source printed `pop +2`. I re-ran it twice more **without touching a byte**: `+2`, then `+0`.
+So `pop` wobbles by ±2 (≈0.0014%) run-to-run on identical code — a tick lands, or doesn't,
+before the snapshot. **A tiny non-zero delta on a draw-only change is therefore NOT evidence
+that the seeded stream was perturbed.** The way to tell is to re-run the gate on unchanged
+source (90s); do not go hunting for a CA bug over a `+2`.
+
+**Probe** — a histogram cannot see a catenary; per iter 82, *measure the shape.* Across 5
+lines × 3 seeds: sag **0 at all 20 towers**, max **2.81px**, cabin-off-cable error ≤ **0.034px**,
+0 page errors. Probe deleted.
+
+**Visual** — 6 agents + a 7th attribution agent, and I looked at the tower crop myself first.
+- **Tower zoom, ~10× real camera magnification, seeds 42 & 7 (the scale the change lives at
+  → the primary verdict):** `VISUAL: PASS` ×2. "Reads as a physical steel tower, not a UI
+  line." Footing plants on both asphalt and a green terrace; cable emerges from the head.
+- **Downtown at 1:1:** `VISUAL: PASS`, and honestly reported the sag as "present but
+  genuinely subtle, 1–2px… I would not swear to it in a blind test." That is the correct
+  answer at that scale and I asked for it explicitly.
+- **Night (t=0.8):** `VISUAL: PASS`. Towers take the tint; nothing non-emissive outshines
+  the windows or the moon.
+- **Whole-city, 2 unprimed seeds: `VISUAL: FAIL` ×2** — both flagged "white angular
+  polygons / a closed loop floating above the rooftops with no shadow" as a debug overlay.
+
+**The FAILs were not this change — and they correct the ledger.** My cable is `col('ink')`;
+theirs was *white*, and *closed*. A closed loop is a **monorail** line. A BEFORE/AFTER
+attribution pass confirmed the white loops are **pixel-identical in BEFORE** and that the
+only deltas anywhere in the frame are the cable's sag and the masts' new base/cap. So
+cue (c)'s attribution to `drawGondAt` was **wrong**: the thing four agents have been calling
+UI chrome is `drawMonoAt`'s beam — a **2px pure-`white` (1.02) stroke over a 3.4px `whiteDk`
+one, at `RAILH=40`**, straight, unshaded, floating over every roof. Two more agents just
+made it six, on a fresh seed, unprompted.
+
+**Perf** — 3 sequential passes, minimum of each scene: `day 31.33 → 31.67ms (+1.1%)`,
+`night 37.22 → 35.72ms (−4.0%)`. PASS. Two extra prisms per tower (~21 towers) is free.
+
+**Verdict: SHIPPED.** The cable car is infrastructure now, not chrome.
+
+**Findings**
+- **`drawMonoAt`'s beam is the real chrome, and it is now the strongest open cue** (6 agents,
+  4 seeds, 3 iterations). The fix vocabulary is already written and proven in this lap:
+  dim the stroke off maximum, give the deck an underside, and plant the pylons. Do NOT
+  delete it — it is legitimate geometry, same as the gondola was. *Transport × Polish.*
+- **A straight line at constant height is the grammar of an overlay.** Sag, taper, a footing
+  and a cap are what separate "geometry" from "chrome" — and sag is the cheapest of the four.
+  Anything the artifact draws as a long uniform stroke (mono beams, bridge cables, string
+  lights) inherits this defect by construction.
+- **A parabola sampled at 2 interior points is a trapezoid.** Any curve drawn per-cell in a
+  hex renderer needs sub-sampling, because a 3-cell span *only has* two interior cells and
+  symmetry forces them equal. The probe caught this; no screenshot at 1:1 would have.
+- **Scale-matched verdicts outranked the wide ones again (iter 82's rule), and this time the
+  wide agents were right about something else.** Don't discard a FAIL you can't reproduce —
+  *attribute* it. A BEFORE/AFTER attribution agent settled in 2 minutes what would otherwise
+  have been either a wrongly-reverted iteration or a silently-ignored gate.
+- **`TALL` does not exist in `solvista.html`** — the header's iter-84 note implies it does.
+  It was a set defined locally inside 84's probe. Rebuild it as `new Set([T.TOWER,T.MID,T.CIVIC,T.COM])`.
+

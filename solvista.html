@@ -4537,12 +4537,35 @@ function render(){
   /* drifting clouds + their shade */
   for(const cl of clouds){
     const[cx,cy]=pxc(cl.x,cl.y);
+    const py2=cy-185-cy*0.52; /* keep puffs in the sky even for front cells */
+    /* how far downwind the drops trail on their way down. The wet ground has to
+       know this too, or it pools where no rain is falling. */
+    const rlean=cl.rain?(cy-(py2+6*cl.s))*(0.06+0.08*WINDA):0;
     if(inB(cl.x|0,cl.y|0)){ /* shade only falls where there is ground to catch it */
       ctx.fillStyle='rgba(36,30,20,'+(0.05*(1-LITAMT*0.6))+')';
       ctx.beginPath();ctx.ellipse(cx,cy,30*cl.s,12*cl.s,0,0,7);ctx.fill();
+      if(cl.rain){
+        /* ground the shower has already crossed stays wet, and dries off behind it.
+           The cloud drifts +x at a steady speed, so "how long since this spot was
+           rained on" is just how far it lies behind the cloud — the wet trail needs
+           no per-cell state, only an offset tail. It is centred on the veil's FOOT
+           (cx-rlean), not on the cloud: a damp patch that does not sit under the
+           falling drops is a smudge with no visible cause. Soft-edged, or it reads
+           as a decal rather than as wet ground. */
+        const R=48*cl.s, wa=0.10*(1-LITAMT*0.6);
+        ctx.save();
+        ctx.translate(cx-rlean*0.55,cy+1);ctx.scale(1,0.30);
+        const wg=ctx.createRadialGradient(0,0,0,0,0,R);
+        wg.addColorStop(0,'rgba(58,76,96,'+wa+')');
+        wg.addColorStop(0.55,'rgba(58,76,96,'+(wa*0.6)+')');
+        wg.addColorStop(1,'rgba(58,76,96,0)');
+        ctx.fillStyle=wg;
+        ctx.beginPath();ctx.arc(0,0,R,0,7);ctx.fill();
+        ctx.restore();
+      }
     }
     const a=0.5*(1-LITAMT*0.72);
-    const py2r=cy-185-cy*0.52;
+    const py2r=py2;
     if(cl.rain&&LITAMT<0.15){ /* sun + rain = an occasional rainbow trailing the shower */
       const osc=Math.sin(time*0.12+cl.y*1.7);
       const ra=Math.min(1,Math.max(0,(osc-0.5)/0.25));
@@ -4581,18 +4604,71 @@ function render(){
         }
       }
     }
-    const py2=cy-185-cy*0.52; /* keep puffs in the sky even for front cells */
-    ctx.fillStyle='rgba(255,254,250,'+a+')';
-    ctx.beginPath();ctx.ellipse(cx,py2,24*cl.s,8.5*cl.s,0,0,7);ctx.fill();
-    ctx.beginPath();ctx.ellipse(cx-14*cl.s,py2+5,14*cl.s,6*cl.s,0,0,7);ctx.fill();
-    ctx.beginPath();ctx.ellipse(cx+15*cl.s,py2+4,15*cl.s,6.5*cl.s,0,0,7);ctx.fill();
-    if(cl.rain){ /* a shower trailing beneath */
-      ctx.strokeStyle='rgba(120,150,180,'+(0.35*(1-LITAMT*0.5))+')';ctx.lineWidth=1;
-      for(let j=0;j<6;j++){
-        const rx=cx-18*cl.s+j*7*cl.s, off=(time*36+j*7)%16;
-        ctx.beginPath();ctx.moveTo(rx,py2+10+off);ctx.lineTo(rx-2,py2+16+off);ctx.stroke();
+    if(cl.rain){
+      /* The shower falls the whole way to the ground it is watering. It used to be
+         six 6px ticks hanging under the belly — ~200px of clear air short of the
+         city — which left iter 89's rainbow standing in drops that never arrived.
+         Drawn BEFORE the puffs so the veil's head tucks under the cloud, and faded
+         at both ends and near the rim so it never terminates on a hard chord (the
+         grammar of a UI overlay — cf. the bow below, whose legs dissolve).
+         Ten dashed columns, not ~180 short strokes: one setLineDash and a scrolling
+         lineDashOffset per column buys the same drop field for ten stroke calls.
+         Drops are LONG (9px) and few rather than short and many — a 4px dash is
+         below a pixel once the whole city is fitted to a screen, and a veil of them
+         averages into a causeless grey haze instead of resolving into rain. */
+      const gy2=cl.y|0;
+      const inset=(gy2>=0&&gy2<G)?Math.min(cl.x-ROWMIN[gy2],ROWMAX[gy2]-cl.x):-1;
+      const pa=clamp(inset/2,0,1); /* spent 2 hexes short of the rim, as the bow is */
+      if(pa>0){
+        const top=py2+6*cl.s, foot=cx-rlean, lit=1-LITAMT*0.5;
+        /* A shaft first, drops second. Seen from across a city a shower is not drops
+           at all — it is a column of air DARKER than what stands behind it, and only
+           close up does it resolve into streaks. Drawing only the streaks gave a veil
+           whose colour matched the sunlit city in luminance: it moved the frame less
+           than the pedestrians did (probe-rainink.mjs, 0.79x the animation noise
+           floor) and every wide-frame reviewer called it invisible. Contrast, not ink. */
+        const shaft=(k,al)=>{
+          const g=ctx.createLinearGradient(0,top,0,cy);
+          g.addColorStop(0,'rgba(96,116,142,0)');
+          g.addColorStop(0.16,'rgba(96,116,142,'+al+')');
+          g.addColorStop(0.82,'rgba(96,116,142,'+al+')');
+          g.addColorStop(1,'rgba(96,116,142,0)');
+          ctx.fillStyle=g;
+          ctx.beginPath();
+          ctx.moveTo(cx-26*cl.s*k,top);ctx.lineTo(cx+26*cl.s*k,top);
+          ctx.lineTo(foot+36*cl.s*k,cy);ctx.lineTo(foot-36*cl.s*k,cy);
+          ctx.closePath();ctx.fill();
+        };
+        shaft(1,0.13*pa*lit);    /* the soft skirt, so the column has no cut edge */
+        shaft(0.62,0.16*pa*lit); /* the denser core */
+        /* the drops themselves: pale, and legible because the shaft behind them is dark */
+        const SA=0.34*pa*lit;
+        const g2=ctx.createLinearGradient(0,top,0,cy);
+        g2.addColorStop(0,'rgba(206,220,236,0)');
+        g2.addColorStop(0.18,'rgba(206,220,236,'+SA+')');
+        g2.addColorStop(0.80,'rgba(206,220,236,'+SA+')');
+        g2.addColorStop(1,'rgba(206,220,236,0)');
+        ctx.save();
+        ctx.strokeStyle=g2;ctx.lineWidth=1.2;ctx.setLineDash([9,13]);
+        for(let j=0;j<10;j++){
+          const u=(j+0.5)/10-0.5;
+          const ph=Math.abs(Math.sin(j*12.9898+cl.y*7.13+cl.s*31.7)*43758.5453%1);
+          ctx.lineDashOffset=-((time*150+ph*22)%22);
+          ctx.beginPath();
+          ctx.moveTo(cx+u*46*cl.s,top);
+          ctx.lineTo(foot+u*64*cl.s,cy);
+          ctx.stroke();
+        }
+        ctx.restore();
       }
     }
+    ctx.fillStyle='rgba(255,254,250,'+a+')';
+    ctx.beginPath();ctx.ellipse(cx,py2,24*cl.s,8.5*cl.s,0,0,7);ctx.fill();
+    /* a shower carries its belly grey — at whole-city scale this, not the drops,
+       is what tells the eye which cloud is the one that is raining */
+    if(cl.rain)ctx.fillStyle='rgba(196,205,216,'+a+')';
+    ctx.beginPath();ctx.ellipse(cx-14*cl.s,py2+5,14*cl.s,6*cl.s,0,0,7);ctx.fill();
+    ctx.beginPath();ctx.ellipse(cx+15*cl.s,py2+4,15*cl.s,6.5*cl.s,0,0,7);ctx.fill();
   }
   /* hot-air balloons drift over on fair days */
   if(LITAMT<0.5)for(const b of balloons){

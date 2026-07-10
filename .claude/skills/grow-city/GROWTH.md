@@ -23,7 +23,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81, 89 |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93 | 78 | | 84 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -33,6 +33,35 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
+- **⚠ Nature is ADDITIVELY SATURATED (surveyed iter 95).** Before reaching for a new plant or a
+  new nature CA, know what is already there: forest succession + logging, `REDWOOD` canopy closure,
+  **wildfire** (`c.fire` → `T.BURNT` → `EMPTY`), meadow `bloom` as excitable media, `VINEYARD`,
+  `ORCHARD`, fairy rings (`c.shroom`), `c.hedge` field rims, and `EMPTY` already draws a patchwork
+  with saplings and flecks (iter 53). `T.BURNT` reads **0** at all nine census points — fires are
+  rare and decay in 6 ticks, so the whole fire ecology is *invisible* in any snapshot; deepening it
+  buys a thing nobody sees. Nature's next real move is **Deepen or Polish**, not a new element.
+- **⚠ Alpha cannot rescue a colour that matches its background (iter 95).** A rain veil at
+  `rgba(120,146,176)` (lum 143) over a sunlit city (lum 150–190) was **invisible**, and two rounds
+  of more ink (α .30→.52, 9→12 columns, 1→1.4px) moved it from 0.79× to **0.98× of the animation
+  noise floor** — i.e. it perturbed the frame exactly as much as the pedestrians did. Legibility at
+  distance is **luminance contrast, not coverage**. It shipped only once given a *dark shaft*
+  (lum 114) behind pale drops. Any new translucent atmosphere — haze, spray, smoke, dust, godrays —
+  must clear its background in luminance, and **`probe-rainink.mjs` is the way to check**: diff the
+  canvas against HEAD inside the feature's bbox *and* inside a control box (this city animates, so
+  two loads always differ). Signature matters as much as the mean — a coherent shape at Δ8 is
+  obvious; scattered pixels at Δ25 are not. **Measure before you tune a third time.**
+- **⚠ The wide gate and the zoom gate can disagree, and both be right (iter 95).** Zoom passed all
+  three tunings; wide failed the first two. Iter 94 said *zoom before you fix*; the complement is
+  **the wide frame is the product** — the camera renders at `scale ≈ 0.59`, so a 1.2px stroke is
+  sub-pixel on screen and a feature that only exists at 3× does not exist. When the gates split,
+  don't pick a side: give the feature a cue at **each** scale. And tell wide reviewers **"no
+  enhancement"** — an agent that contrast-boosts will confirm any feature you like.
+- **Showers: clouds are `rng()`-spawned, never `?flood=` them (iter 95).** ~2 of 7 clouds rain per
+  city. `probe-rain.mjs` reports which, and the `&step=` that walks one clear of the rim
+  (seed 42 → 600, seed 7 → 600, seed 1234 → 560); `shot-rain.mjs <seed> <step> <out>` clips the
+  cloud→ground column. A shower is rim-faded by `pa` on `ROWMIN`/`ROWMAX` (iter 89's grammar) so it
+  never rains into the void, and its damp ground patch is centred on the shaft's **foot**
+  (`cx-rlean`), not the cloud — see the next bullet.
 - **⚠ Placing one entity NEXT TO another? Size the gap in PIXELS (iter 93).** A hex is
   `CW`=32px wide and `ROWY`=16px tall, so an offset expressed in *hex units* separates
   half as far vertically as horizontally: iter 93's dogs orbited their owners at `r`
@@ -569,107 +598,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 87 entries before Iteration 85 live in
+> **Archive:** the 88 entries before Iteration 86 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 85 — the cable car stops looking like a UI overlay (2026-07-10)
-
-**Vector** — Transport × **Polish**. Rotation: Transport was the least-recently-touched
-domain after Nature (last real lap 77; last Polish 70). Kind repeats 83/84's Polish, and
-I took it anyway: all three banked cues were Polish cues, and the ledger says a cue two
-seeds volunteer is a finding. Shipping a shallow Nature element to satisfy the
-kind-rotation rule would have been exactly the "one more shallow feature" the skill warns
-against.
-
-**The defect, measured.** Cue (c) said four agents across iters 79/84 read the cable car
-as UI chrome. A probe said why, in numbers: the pylon is `prismS(...,0.028,0.028,0,H,...)`
-→ `ax*2*HW` = **1.8 world px wide and ~30 px tall**, a 17:1 uniform stick in `whiteDk` at
-**full alpha — the brightest structural tone in the palette** — with no head, no footing,
-just terminating on the asphalt. The cable was a dead-straight chord at constant `H`.
-Straight + uniform + unsupported + maximally bright *is* the visual grammar of a vector
-overlay. The agents were right; the artifact was drawing a ruler.
-
-**Change (draw-only: no terrain, no `rng()`, no new `Math.random()` draw).**
-- **The rope sags.** `gondSag(g,f)` = `GONDSAG*(b-a)*4u(1-u)` over the span between the
-  towers bracketing fractional path index `f`; `GONDSAG=0.95` px/cell → **2.81px over a
-  3-cell (~66px) span, a ~4% sag ratio**, which is what a real haul rope does. It is
-  **exactly 0 at every tower**, so the cable always lands on the sheave head.
-- **The towers are `buildGondSet`'s job now.** It computes `g.pyl` (the span list, which
-  `gondSag` needs) and `g.pylSet` (the draw test). The set is identical to the old
-  `i%3===0||i===L-1`, so **the pylon count did not change** — only what one looks like.
-- **The pylon has three parts**: a `creamDk` concrete footing (`ax .075`), a `whiteDk`
-  mast at `.045/.040` with real lit/shadowed faces (**and dimmed 1/0.6/0.85 → 0.95/0.5/0.75**
-  — the old one was brighter than the buildings it stood among), and a sheave head
-  (`.105/.055`) whose **top face sits exactly at `H`** so the cable emerges from it.
-- **`GONDSEG=3` sub-samples per cell.** The first cut sampled the parabola only at cell
-  centres, and the probe printed `0 2.533 2.533 0` — a 3-cell span has two interior points,
-  and a symmetric parabola puts them at the *same* height. It was a trapezoid with a flat
-  bottom, not a curve. Sub-sampling gives `0 1.13 1.97 2.53 2.81 2.81 2.53 1.97 1.13 0`.
-- Cabins ride the curve: `gondPos` returns the sag as a 5th element, cabin body/hanger/band
-  all offset by it.
-
-**Census** — `+0` on **all 22 metrics**, empty tile histogram, 0 page errors,
-`gondLines 15 · gondola 16` unchanged. The pixel-identical control that iter 78 says only
-draw-only changes can have.
-
-**⚠ …except `pop` turned out NOT to be bit-reproducible.** A later gate run on the *same*
-source printed `pop +2`. I re-ran it twice more **without touching a byte**: `+2`, then `+0`.
-So `pop` wobbles by ±2 (≈0.0014%) run-to-run on identical code — a tick lands, or doesn't,
-before the snapshot. **A tiny non-zero delta on a draw-only change is therefore NOT evidence
-that the seeded stream was perturbed.** The way to tell is to re-run the gate on unchanged
-source (90s); do not go hunting for a CA bug over a `+2`.
-
-**Probe** — a histogram cannot see a catenary; per iter 82, *measure the shape.* Across 5
-lines × 3 seeds: sag **0 at all 20 towers**, max **2.81px**, cabin-off-cable error ≤ **0.034px**,
-0 page errors. Probe deleted.
-
-**Visual** — 6 agents + a 7th attribution agent, and I looked at the tower crop myself first.
-- **Tower zoom, ~10× real camera magnification, seeds 42 & 7 (the scale the change lives at
-  → the primary verdict):** `VISUAL: PASS` ×2. "Reads as a physical steel tower, not a UI
-  line." Footing plants on both asphalt and a green terrace; cable emerges from the head.
-- **Downtown at 1:1:** `VISUAL: PASS`, and honestly reported the sag as "present but
-  genuinely subtle, 1–2px… I would not swear to it in a blind test." That is the correct
-  answer at that scale and I asked for it explicitly.
-- **Night (t=0.8):** `VISUAL: PASS`. Towers take the tint; nothing non-emissive outshines
-  the windows or the moon.
-- **Whole-city, 2 unprimed seeds: `VISUAL: FAIL` ×2** — both flagged "white angular
-  polygons / a closed loop floating above the rooftops with no shadow" as a debug overlay.
-
-**The FAILs were not this change — and they correct the ledger.** My cable is `col('ink')`;
-theirs was *white*, and *closed*. A closed loop is a **monorail** line. A BEFORE/AFTER
-attribution pass confirmed the white loops are **pixel-identical in BEFORE** and that the
-only deltas anywhere in the frame are the cable's sag and the masts' new base/cap. So
-cue (c)'s attribution to `drawGondAt` was **wrong**: the thing four agents have been calling
-UI chrome is `drawMonoAt`'s beam — a **2px pure-`white` (1.02) stroke over a 3.4px `whiteDk`
-one, at `RAILH=40`**, straight, unshaded, floating over every roof. Two more agents just
-made it six, on a fresh seed, unprompted.
-
-**Perf** — 3 sequential passes, minimum of each scene: `day 31.33 → 31.67ms (+1.1%)`,
-`night 37.22 → 35.72ms (−4.0%)`. PASS. Two extra prisms per tower (~21 towers) is free.
-
-**Verdict: SHIPPED.** The cable car is infrastructure now, not chrome.
-
-**Findings**
-- **`drawMonoAt`'s beam is the real chrome, and it is now the strongest open cue** (6 agents,
-  4 seeds, 3 iterations). The fix vocabulary is already written and proven in this lap:
-  dim the stroke off maximum, give the deck an underside, and plant the pylons. Do NOT
-  delete it — it is legitimate geometry, same as the gondola was. *Transport × Polish.*
-- **A straight line at constant height is the grammar of an overlay.** Sag, taper, a footing
-  and a cap are what separate "geometry" from "chrome" — and sag is the cheapest of the four.
-  Anything the artifact draws as a long uniform stroke (mono beams, bridge cables, string
-  lights) inherits this defect by construction.
-- **A parabola sampled at 2 interior points is a trapezoid.** Any curve drawn per-cell in a
-  hex renderer needs sub-sampling, because a 3-cell span *only has* two interior cells and
-  symmetry forces them equal. The probe caught this; no screenshot at 1:1 would have.
-- **Scale-matched verdicts outranked the wide ones again (iter 82's rule), and this time the
-  wide agents were right about something else.** Don't discard a FAIL you can't reproduce —
-  *attribute* it. A BEFORE/AFTER attribution agent settled in 2 minutes what would otherwise
-  have been either a wrongly-reverted iteration or a silently-ignored gate.
-- **`TALL` does not exist in `solvista.html`** — the header's iter-84 note implies it does.
-  It was a set defined locally inside 84's probe. Rebuild it as `new Set([T.TOWER,T.MID,T.CIVIC,T.COM])`.
 
 ## Iteration 86 — the asphalt stops being a smear (2026-07-10)
 
@@ -1480,3 +1413,102 @@ removed by construction rather than by tuning.)
 - **Let the probe pick between candidate rules before you write the draw code.** The
   through-axis histogram vetoed my first rule (it would have blanked 169 bends) for the cost of
   one extra column in a table. Two rules, one measurement, no revert.
+
+## Iteration 95 — the showers reach the ground (2026-07-10)
+
+**Vector** — Sky & atmosphere × Deepen/interconnect.
+
+**How it was found.** Nature was the stalest domain (last real vector: iter 76; 88 reverted),
+but it is **additively saturated** — forest succession, redwoods, wildfire→`BURNT`, blooms,
+vineyards, orchards, fairy rings, hedges and a patchworked `EMPTY` all already exist, and
+`BURNT` reads **0** at all nine census points, so its fire ecology is invisible anyway. Rotating
+to Sky instead: `cl.rain` was referenced in exactly **two** places — seeding meadow blooms
+(L1182) and spawning iter 89's **rainbow** (L4546).
+
+**The defect.** Rain *was* drawn: six 6px ticks at `py2+10..py2+22`. But the cloud sits at
+`py2 = cy-185-cy*0.52`, so the shower stopped **~200px of clear air short of the city**. Iter 89's
+comment calls its bow "refracted light standing in this shower's own drops" — standing in drops
+that never arrived. The rain watered meadows it never touched.
+
+**Change (draw-only).** A shower now falls the whole way to the ground it is watering:
+- a **grey belly** on raining clouds (the two lower puffs only) — at whole-city scale this, not
+  the drops, is what tells the eye which of seven clouds is the one raining;
+- a soft **dark shaft** from belly to ground, two nested trapezoids (skirt + core) under one
+  vertical gradient, so the column has no cut edge and fades at both ends;
+- **pale drop-streaks** over the shaft — 10 dashed columns, one `setLineDash` and a scrolling
+  `lineDashOffset` each, so a whole drop field costs ten stroke calls;
+- a **damp ground patch** centred on the shaft's **foot** (`cx-rlean`), not on the cloud.
+`rlean` (the downwind lean) is hoisted above the shadow block precisely so the wet ground can
+know where the drops actually land. Rim-faded by `pa` on `ROWMIN`/`ROWMAX`, reusing 89's grammar,
+so a shower is spent 2 hexes before the plate edge and never rains into the void.
+
+**The measurement that turned the iteration around.** Two tunings shipped a streak-only veil;
+the zoom gate passed both and **every wide-frame reviewer called it invisible**, twice. Rather
+than tune a third time, `probe-rainink.mjs` diffed the canvas against HEAD inside the veil's
+bbox, against an equal box elsewhere as the **animation noise floor** (peds, boats, shimmer move
+between two loads). Seed 42, `dsf=1`, tight bbox:
+
+| veil | shower Δlum mean | control (noise) | ratio |
+| --- | --- | --- | --- |
+| streaks only, α .52, 10×1.4px | 2.27 | 2.33 | **0.98×** |
+| + dark shaft, α .09/.11 | 4.29 | 2.14 | 2.01× |
+| **shipped** — shaft α .13/.16 | **5.73** | 2.35 | **2.44×** |
+
+The veil at its *heaviest* streak tuning perturbed the frame **exactly as much as the
+pedestrians did**. The bug was never density: `rgba(120,146,176)` has lum ≈143 and the sunlit
+city it fell on is lum ≈150–190. **Alpha cannot rescue a colour that matches its background.**
+Cloud belly, by contrast, always landed: `232,224,206 → 204,200,189`.
+
+**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
+`roads 5706 +0`, `developed 6174 +0`); tile histogram empty by construction. A draw-only change
+that touches no terrain and draws no `rng()` must not move the seeded stream, and it didn't.
+
+**Visual** — `VISUAL: PASS` ×3 on the final build (the two earlier tunings each drew
+`VISUAL: FAIL` ×3 on the wide frames, un-enhanced). Wide seeds 42/7/1234 "faint-but-findable…
+they read as RAIN… not too dark, buildings keep their colour"; downtown 3× clip — the highest-risk
+frame, dark shaft over dense towers — "tower stripes, streets and roof detail stay fully legible…
+reads as weather, not a dirty rectangle"; night `t=0.9` restrained, lit windows intact; zoom 3×
+resolves into wind-slanted drops with soft ends and the damp patch under the foot. Seed 1234's
+reviewer, unprompted: the bow **"now reads as a bow standing in a real shower"** — the coherence
+this vector existed to buy. One agent: "if anything it errs slightly toward faint" — the safe
+side of the darkening risk, so it ships there.
+
+**Perf** — PASS ×3 sequential, judged on the minimum: day **33.11ms** (baseline 31.33, +5.7%),
+night **37.22ms** (+0.0%). Iter 94 left day at 32.44ms, so the shower costs ~0.7ms/frame:
+two trapezoid fills and three gradients per raining cloud, ~2 clouds a city.
+
+**Verdict — DEEPENED.**
+
+### Four transferable findings
+- **Alpha cannot rescue a colour that matches its background.** The single most useful result of
+  the lap, and it inverts the instinct. Two rounds of "more ink" (α .30→.52, 9→12 columns, 1→1.4px)
+  moved the measured signal from 0.79× to 0.98× of the noise floor — *nothing*. Legibility at
+  distance is **luminance contrast**, not coverage. A shower reads from across a city as a column
+  **darker** than what stands behind it; drops resolve only up close. Body first, drops second.
+- **`probe-rainink.mjs`: diff the canvas against HEAD, and diff a control box too.** A raw pixel
+  delta means nothing without a noise floor — this city animates, so two loads differ by peds and
+  boats regardless. Shower-box Δ vs control-box Δ is the honest question. Note the *signature*
+  matters as much as the mean: the shower moves every pixel moderately (p99 29) while the noise
+  moves a few pixels hugely (p99 46). A coherent shape at Δ8 is obvious; scattered pixels at Δ25
+  are not. **Measure before you tune a third time.**
+- **The wide gate and the zoom gate can disagree, and both be right.** Zoom passed all three
+  tunings; wide failed the first two. Iter 94 taught "zoom before you fix"; the complement is
+  **the wide frame is the product** — the camera renders at `scale ≈ 0.59`, so a 1.2px stroke is
+  sub-pixel on screen and a feature that only exists at 3× does not exist. When the two gates
+  split, don't pick a side: build the feature so it has a cue at *each* scale (dark shaft for the
+  wide frame, pale drops for the zoom). And ask wide reviewers for **no enhancement** — an agent
+  that contrast-boosts will confirm any feature you like.
+- **An entity attached to another must be sited from where the first one LANDS, not where it is.**
+  The damp patch first sat at `cx-16*s` while the drops landed at `cx-rlean` (27–63px away): a
+  causeless grey smudge on the ground, which a reviewer duly reported as "fog greying out the
+  central city". Same family as iter 93's dogs (reuse the host's *legality*) and iter 94's dashes
+  (mark the through-line): **derive the dependent thing from the parent's geometry, not its
+  origin.** Hoisting `rlean` above both draw sites is what made that possible.
+
+### Shower scratch (gitignored, recreate)
+`probe-rain.mjs` — which clouds rain, and the `&step=` that walks one clear of the rim
+(seed 42 → `step=600`, seed 7 → `600`, seed 1234 → `560`). Clouds are **`rng()`-spawned, so they
+must never be `?flood=`ed** — the shot would lie. `shot-rain.mjs <seed> <step> <out>` clips the
+cloud→ground column in CSS screen coords (`world*scale+off`, the transform `__find`/`__ents`
+publish). `probe-rainink.mjs <seed> <step>` is the ink/noise-floor measurement above; it reads
+luminance straight off the live canvas, so it needs no image decoder.
