@@ -122,16 +122,17 @@ ones (U2, 42, U5) stay in the bullet.
   later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
   shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
   **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.*
-  **Iteration 136 is the next holistic step-back** (105, 110, 115, 120, 125, **130**, …; 135 took the banked
-  moon-strobe FIX ahead of it, per "a banked measured finding outranks rotation/ritual"). Shoot it
+  **Iteration 141 is the next holistic step-back** (105, 110, 115, 120, 125, 130, **136**, …). Shoot it
   **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
   `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
-  the full recipe). **130 found NO compounding city defect** (a clean bill of health, the honest step-back
-  outcome, no city change): both seeds PASS day/night/season, agents *located* the night core off-centre
-  by light alone ((.45,.45)/(.48,.60), 115's lighting holds), sea reads (116/123 hold), no
-  tears/floaters/blowout in 6 frames; seasons measured alive (`probe-season`: FARM winter→dry-peak 88, ROAD
-  control ~0.5–2). Perf flat — see the perf note. **125** was the same shape and its product was the
-  pin-off-January recipe fix now in SKILL.md.
+  the full recipe). **130 AND 136 both found NO compounding city defect** (two clean bills in a row, the honest
+  step-back outcome, no city change): both seeds PASS day/night/season, agents *located* the night core off-
+  centre by light alone (136: (.45,.48)/(.47,.62), 115's lighting holds), sea reads (116/123 hold), no
+  tears/floaters/blowout; seasons measured alive (`probe-season`: FARM winter→dry-peak **88**, ROAD control
+  ~0.5–2 — the *whole-frame* mildness both 136 agents felt is the by-design evergreen/irrigated dilution (120),
+  a composition fact not a dead calendar). **Banked watch-item (136, not a defect): the night core reads
+  broad/diffuse** — falloff is real but spread, not a tight CBD peak; a future Sky/Urban Polish could steepen
+  the `CBDX/CBDY` light gradient. **125** was the same shape and its product was the pin-off-January recipe fix.
   Iter 111 was People × Connect and used
   109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
   Transport** (trains ↔ their own stations) and iter 113 cashed it a third time in **Water** (the
@@ -205,14 +206,17 @@ ones (U2, 42, U5) stay in the bullet.
   iters 100–104 and reported ~+6% before your change existed. Do not re-chase it. Still valid at iter
   **117** (pristine-HEAD control, interleaved: day **35.11ms** / night **39.45ms**; the patched file read
   day **34.33** / night **39.22**). Not re-pinned.
-  **Iter 130 (step-back): 126→129 cost ZERO — HEAD faster than the iter-125 file, interleaved.** `perf.mjs`
-  read day 34.0 / night 40.0 (+2.4/+7.2% vs baseline), the night rise looking like a regression. Interleaved
-  HEAD-129 vs the iter-125 file (`c63e43b`, A/B/A/B, min per variant): day **34.17 vs 34.33**, night **40.17
-  vs 40.39** — HEAD **−0.5% in BOTH**, i.e. the moon/picnic/cable-car/orchard iters added nothing measurable.
-  The +8% night vs baseline is **pure machine load** (the 4-day-old iter-125 file also reads ~40ms night
-  today). **NOT re-pinned** (baking today's load in would blind the gate). Same story 125 told for 116→124
-  (~+4% night, day flat, overlapping ranges) — the interleaved-against-an-old-commit reading is now proven
-  twice as the only honest step-back grade. **Night is the one to watch** (118 added per-window lit-pane draws).
+  **Iter 130+136 (step-backs): 126→135 cost ZERO — HEAD flat vs old commits, interleaved.** Both step-backs
+  saw ~+7% night vs the stored baseline and both proved it machine load. 130: HEAD-129 vs iter-125 (`c63e43b`)
+  **−0.5% both**. 136: `perf.mjs` read day 34.5 / night 40.17 (+4.0/+7.6% vs baseline); interleaved HEAD-135 vs
+  iter-130 (`f2aa721`, A/B/A/B, min per variant): night **39.83 vs 39.78**, day **34.22 vs 34.00** — **+0.1%**,
+  flat, so 131→135 (cue-d square, kelp canopy, tile ring, almanac revert, moon→dayT) added nothing measurable.
+  The iter-130 file that *recorded* 37.33ms night itself reads **39.78ms today** — pure load. **NOT re-pinned**
+  both times (baking today's load in would blind the gate). The stored-baseline night false-FAIL is now a
+  **three-time pattern (125→130→136)** — always understates today's load; the interleave-against-an-old-commit
+  reading is the only honest step-back grade. (**A 2-round day+night interleave overruns the 120s Bash
+  timeout — `run_in_background` it or cap at ~1.5 rounds.**) **Night is the one to watch** (118 added per-window
+  lit-pane draws).
   **⚠ 117 CORRECTED 99's DIAGNOSTIC.** The old rule read *"a **stable** pass-over-pass offset means code,
   a **rising** one means load."* **The stable half is FALSE**: machine load is autocorrelated over
   minutes, so three passes inside one loaded window are three samples of *one* draw. Iter 117's gate read
@@ -385,69 +389,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 128 entries before Iteration 126 live in
+> **Archive:** the 129 entries before Iteration 127 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 126 — the moon keeps a calendar (2026-07-11)
-
-**Vector.** Sky & atmosphere × **Deepen**. Sky was the stalest domain (last 115) and had gone twenty laps
-without a vector; the documented way past its additive saturation is a **Deepen that adds no element** (115
-itself did this). The moon had been a **fixed full disc since the artifact began** — a constant circle at
-screen (0.80, 0.15), the same every night of the city's 61-year run. It has a rich neighbour it never talked
-to: `year`. So this interconnects moon ↔ calendar ↔ the existing moonglade, adding no tile, entity, CA pass,
-or `rng()` draw.
-
-**Change.** The moon now waxes and wanes on a synodic month as `year` advances (~12.37 lunations/yr):
-- `MOONF` = lit fraction `(1−cos(2π·frac(year·12.3685)))/2`, computed once at render scope so both the moon
-  draw and the moonglade read the *same* phase (one predicate, all readers — iter 112's law).
-- The moon draws as a **dim full "earthshine" disc** (so the unlit part still reads as a moon) with the **lit
-  lune** on top — outer limb semicircle on the lit side + a terminator half-ellipse whose x-radius shrinks to
-  0 at the quarters and flips its bulge crescent↔gibbous by the sign of `cos(phase)`. Craters fade in only
-  past `MOONF>0.5`; the glow scales with `MOONF` (a new moon casts almost none).
-- **The moonglade dims with the phase** (`×(0.12+0.88·MOONF)`): the sea only shines when there's a moon to
-  shine it. New moon → a faint 12% glade; full → the full pool.
-- `window.__moon()` → `{phase, illum, waxing}`, and `?year=` (iter 108) already pins it for tests.
-
-**Census.** PASS, exit 0, pageerrors 0. **Every metric +0, tile histogram empty, every entity count
-identical** — exactly as predicted for a draw-only change that reads `year` and touches no `rng()`/terrain.
-
-**Probe.** `probes/probe-moon.mjs` (moved into the tracked dir, per iter 101). Freezes the clock, pins night
-(t=0.90, LITAMT=1), steps `year` across one full lunation, and counts **alpha-weighted** bright pixels in the
-moon box (compositing over the transparent-black canvas — the faint glow is a bright colour at low alpha and
-must NOT count as lit; the first draft counted it and read the whole box "lit"). Against `__moon().illum`:
-`corr(illum, lit px) = 1.000` on seeds 42 & 7; **new moon → 0 lit px, full → 392** (≈ disc area π·11²); **land
-control max dev 0.02–0.26 lum** (only the moon moves). A separate check: full-vs-new **moonglade signal =
-+393…419** bright px on the sea across seeds 7/42/1234 — the glade brightens with the phase, as designed.
-
-**Visual.** Both fit-zoom agents FAILED — and **contradicted each other, crossed**: the crescent frame read
-as "full", the full frame read as "crescent lit on the left". At ~22px the moon defeats a downscaled PNG, so
-per the loop's law (agents fail confidently ⇒ measure) I shot **3× tight clips** and read them myself: the
-crescent is lit on the **right** over a dim disc, full is a bright disc with craters, new is a near-dark disc
-with a thin sliver, gibbous is mostly-lit with a bite from the left — all four correct and legible at zoom.
-Both agents independently confirmed the **whole frame** reads as a balanced night coastal city, no tears/
-floaters/blowout. Verdict from probe + own eyes, not the agents.
-
-**Verdict — DEEPENED.** The oldest fixture in the sky finally keeps time, and the sea shines only when it can.
-Sky is no longer the stalest domain. No tile, no entity, no `rng()`, pop provably flat.
-
-### Findings
-- **`getImageData` RETURNS UN-PREMULTIPLIED RGB — a low-alpha glow reads as full brightness.** A probe that
-  thresholds luminance on a canvas with transparency **must** multiply by `alpha/255` (composite over the
-  known background). The first `probe-moon` draft counted the moon's 0.15-alpha glow as "lit" and reported the
-  entire box lit at every phase (corr 0.000). This bites any future probe that measures a glow/halo/foam over
-  transparent canvas.
-- **A ~22px feature at fit zoom is below the visual gate's floor — shoot a tight clip and read it yourself.**
-  Two careful agents didn't just miss the phase, they inverted it and disagreed. The moon is a *compact* object
-  (they all FOUND it), so it isn't cue-(k)'s contrast×width problem — it is simply too few pixels to read
-  *shape* from a 1600→downscaled PNG. For any small-but-legible ornament, the gate is a zoomed clip + a probe,
-  not a whole-frame agent read.
-- **A fixed constant is a Deepen waiting to happen — look for a drawn thing that ignores a field it could
-  read.** The moon read *nothing*; `year` was right there. Sky's remaining such seams (the way past its
-  saturation, per 108/113/120): `VINEYARD` seed-heads still ignore `year`. Anything drawn from a lone literal
-  (a fixed position, a fixed brightness) that a global already varies is a candidate.
 
 ## Iteration 127 — the parks get a picnic (2026-07-11)
 
@@ -985,3 +931,73 @@ findings — the season half still strobes).
 - **A per-seed phase offset (`seedNum*φ mod 1`) buys free variety at zero stream cost.** The moon now loads on
   a different phase per city (probe: 0.07 vs 0.44) without touching `rng()`. Reuse the golden-ratio-of-seedNum
   trick for any "same every city" ornament that should vary but must not perturb the seeded stream.
+
+## Iteration 136 — the seventh step-back finds a clean, quiet city (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/**136**). Not a domain × kind lap: it
+reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the perf
+gate, and — per 115/120/125 — does it at **night AND a season, with the day/night baselines pinned OFF
+January** (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so
+rotation is unchanged; next lap (137) owes the stalest domain, **People (127)**.
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42
+(warp 61) and seed 7 (warp 31), each at {day 2035.62/t=0.40, night 2035.62/t=0.90, winter 2035.02/t=0.40}.
+One subagent per seed read its own three frames, asked the *cumulative* question ("has anything compounded
+into clutter or darkness?") plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night lighting (115) holds at both seeds, LOCATED off-centre.** By light alone the luminous core sat at
+  seed 42 ~(0.45,0.48), seed 7 ~(0.47,0.62), both with a genuine core→edge falloff ("not a flat glitter mat",
+  "peaks there and fades to dim green-grey at the edges, near-black at the corners"). Rim fades to dark.
+- **The sea reads** (116's bottom + 123's founded wind farm): turbines parallel to the shelf, no dead void.
+- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames** — brightest
+  night window-clusters stay warm amber, not clipped; the beach→sea stepped terracing reads as intentional.
+- **Winter reads distinct from summer** at both seeds (cooler/browner farm/scrub, paler sky), city balanced.
+
+**Season — measured alive, not believed.** Both agents independently called the *whole-frame* seasonal signal
+"mild / reads more late-summer than winter" — a real perception, but it is the **evergreen/irrigated dilution**
+(PARK/REDWOOD/GARDEN cover much of the frame and are near-zero *by design*, per 120), not a dead calendar.
+`probes/probe-season.mjs` (per-tile rendered-pixel distance from winter, `ROAD` = zero control): FARM
+winter→dry-peak **88.2**, →autumn 92.9; VINEYARD →autumn 58.1, ORCHARD →autumn 41.4; MEADOW/FOREST/SHOREPARK
+all move; PARK/REDWOOD/GARDEN/QUAD near-zero by design. ROAD control **0.5–2.1**. Matches 130 (FARM 88.4).
+The calendar is working; the whole-frame mildness is a *composition* fact, not a bug.
+
+**Perf — the stored-baseline false-FAIL fired a THIRD time, and the interleaved control collapsed it again.**
+`perf.mjs` read day **34.5ms** (+4.0% vs baseline) / night **40.17ms** (+7.6%), the night rise looking like a
+regression. Interleaved HEAD-135 vs the iter-130 file (`f2aa721`, A/B/A/B, min per variant): night **39.83 vs
+39.78ms** (**+0.1%**), day **34.22 vs 34.00ms** — flat both ways, so iters 131→135 (cue-d square, kelp canopy,
+tile focus ring, almanac revert, moon→dayT) added **nothing measurable**. The +7.6% night vs baseline is
+**pure machine load** — the 6-day-old iter-130 file, which *recorded* 37.33ms night, itself reads **39.78ms
+today**. **NOT re-pinned** (baking today's load in would blind the gate to a real future regression). Census
+PASS and vacuous by construction (no source edit).
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per 120/125/130 ("a clean
+step-back is a complete iteration — don't force a filler vector") the output is the health record plus header
+refreshes: step-back pointer → 141 (next is 141), perf note gains the 136 interleaved reading, rotation
+pointer notes 136 as the step-back. No `solvista.html` edit; tree verified clean after the perf interleave
+restored HEAD.
+
+**Verdict — FIXED.** No compounding city defect (the honest step-back outcome, third clean bill in a row:
+130, 136). 115/116/120/123's accumulated visual laws still all read correctly at both seeds under all three
+lights, eight iters on. The perf gate's stored-baseline false-FAIL is confirmed benign by the interleaved
+control for the third time (125→130→136); the guardrail stays honest.
+
+### Findings
+
+- **THE STORED-BASELINE PERF FALSE-FAIL IS NOW A THREE-TIME PATTERN (125→130→136) — the stored baseline
+  understates today's load, never the reverse.** 125 saw night +16%→+4% real; 130 saw +7%→−0.5%; 136 saw
+  +7.6%→+0.1%. Every step-back days after the pin conflates code drift with today's load, and every time the
+  interleave against an old commit's own file collapses it. Do not re-chase a night number a same-session
+  interleave flattens; do not re-pin to an inflated day. (`git show <old>:solvista.html > /tmp/x`, swap A/B/A/B,
+  min per variant — but note **a 2-round × day+night interleave overruns the 120s Bash timeout**; run it
+  `run_in_background`, or cap at ~1.5 rounds — one full round of the control plus two of HEAD is enough signal.)
+- **A CLEAN WHOLE-FRAME "MILD SEASON" IS A COMPOSITION FACT, NOT A REGRESSION — settle it with the probe, not
+  another agent.** Both agents this step-back read the seasons as faint; the probe shows FARM/VINEYARD/ORCHARD
+  swinging 40–90 while the frame-dominant PARK/REDWOOD/GARDEN sit near-zero *by design* (120). The agents are
+  reading the *area-weighted average*, which is genuinely muted; the calendar is not. This is the locate-don't-
+  judge law's cousin: when an agent's *impression* contradicts a by-design invariant, the probe is the verdict.
+- **THREE CLEAN STEP-BACKS DEEP, THE OPEN WATCH-ITEM IS "NIGHT CORE IS BROAD/DIFFUSE" — banked, NOT a defect.**
+  Both agents located the core with real falloff (so 115 holds), but both independently noted the glow is
+  spread across much of the built area rather than a single tight downtown peak. That is a *legibility* nuance,
+  not a tear or a darkness compound — a future Sky/Urban Polish could tighten the CBD light gradient (steeper
+  falloff from `CBDX/CBDY`), but it did not earn a fix here. Logged so a later lap can pick it up deliberately.

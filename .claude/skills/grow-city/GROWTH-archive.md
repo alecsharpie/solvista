@@ -7319,3 +7319,61 @@ in the recipe so it stops recurring (108 → 120 → 125). The city grows by kee
   (here, the recipe fix) — not a Sky feature invented to have shipped something. "One more shallow feature is
   not automatically worth it" (the skill). The next lap still owes the stalest domain (Sky, then People/Nature).
 
+## Iteration 126 — the moon keeps a calendar (2026-07-11)
+
+**Vector.** Sky & atmosphere × **Deepen**. Sky was the stalest domain (last 115) and had gone twenty laps
+without a vector; the documented way past its additive saturation is a **Deepen that adds no element** (115
+itself did this). The moon had been a **fixed full disc since the artifact began** — a constant circle at
+screen (0.80, 0.15), the same every night of the city's 61-year run. It has a rich neighbour it never talked
+to: `year`. So this interconnects moon ↔ calendar ↔ the existing moonglade, adding no tile, entity, CA pass,
+or `rng()` draw.
+
+**Change.** The moon now waxes and wanes on a synodic month as `year` advances (~12.37 lunations/yr):
+- `MOONF` = lit fraction `(1−cos(2π·frac(year·12.3685)))/2`, computed once at render scope so both the moon
+  draw and the moonglade read the *same* phase (one predicate, all readers — iter 112's law).
+- The moon draws as a **dim full "earthshine" disc** (so the unlit part still reads as a moon) with the **lit
+  lune** on top — outer limb semicircle on the lit side + a terminator half-ellipse whose x-radius shrinks to
+  0 at the quarters and flips its bulge crescent↔gibbous by the sign of `cos(phase)`. Craters fade in only
+  past `MOONF>0.5`; the glow scales with `MOONF` (a new moon casts almost none).
+- **The moonglade dims with the phase** (`×(0.12+0.88·MOONF)`): the sea only shines when there's a moon to
+  shine it. New moon → a faint 12% glade; full → the full pool.
+- `window.__moon()` → `{phase, illum, waxing}`, and `?year=` (iter 108) already pins it for tests.
+
+**Census.** PASS, exit 0, pageerrors 0. **Every metric +0, tile histogram empty, every entity count
+identical** — exactly as predicted for a draw-only change that reads `year` and touches no `rng()`/terrain.
+
+**Probe.** `probes/probe-moon.mjs` (moved into the tracked dir, per iter 101). Freezes the clock, pins night
+(t=0.90, LITAMT=1), steps `year` across one full lunation, and counts **alpha-weighted** bright pixels in the
+moon box (compositing over the transparent-black canvas — the faint glow is a bright colour at low alpha and
+must NOT count as lit; the first draft counted it and read the whole box "lit"). Against `__moon().illum`:
+`corr(illum, lit px) = 1.000` on seeds 42 & 7; **new moon → 0 lit px, full → 392** (≈ disc area π·11²); **land
+control max dev 0.02–0.26 lum** (only the moon moves). A separate check: full-vs-new **moonglade signal =
++393…419** bright px on the sea across seeds 7/42/1234 — the glade brightens with the phase, as designed.
+
+**Visual.** Both fit-zoom agents FAILED — and **contradicted each other, crossed**: the crescent frame read
+as "full", the full frame read as "crescent lit on the left". At ~22px the moon defeats a downscaled PNG, so
+per the loop's law (agents fail confidently ⇒ measure) I shot **3× tight clips** and read them myself: the
+crescent is lit on the **right** over a dim disc, full is a bright disc with craters, new is a near-dark disc
+with a thin sliver, gibbous is mostly-lit with a bite from the left — all four correct and legible at zoom.
+Both agents independently confirmed the **whole frame** reads as a balanced night coastal city, no tears/
+floaters/blowout. Verdict from probe + own eyes, not the agents.
+
+**Verdict — DEEPENED.** The oldest fixture in the sky finally keeps time, and the sea shines only when it can.
+Sky is no longer the stalest domain. No tile, no entity, no `rng()`, pop provably flat.
+
+### Findings
+- **`getImageData` RETURNS UN-PREMULTIPLIED RGB — a low-alpha glow reads as full brightness.** A probe that
+  thresholds luminance on a canvas with transparency **must** multiply by `alpha/255` (composite over the
+  known background). The first `probe-moon` draft counted the moon's 0.15-alpha glow as "lit" and reported the
+  entire box lit at every phase (corr 0.000). This bites any future probe that measures a glow/halo/foam over
+  transparent canvas.
+- **A ~22px feature at fit zoom is below the visual gate's floor — shoot a tight clip and read it yourself.**
+  Two careful agents didn't just miss the phase, they inverted it and disagreed. The moon is a *compact* object
+  (they all FOUND it), so it isn't cue-(k)'s contrast×width problem — it is simply too few pixels to read
+  *shape* from a 1600→downscaled PNG. For any small-but-legible ornament, the gate is a zoomed clip + a probe,
+  not a whole-frame agent read.
+- **A fixed constant is a Deepen waiting to happen — look for a drawn thing that ignores a field it could
+  read.** The moon read *nothing*; `year` was right there. Sky's remaining such seams (the way past its
+  saturation, per 108/113/120): `VINEYARD` seed-heads still ignore `year`. Anything drawn from a lone literal
+  (a fixed position, a fixed brightness) that a global already varies is a candidate.
+
