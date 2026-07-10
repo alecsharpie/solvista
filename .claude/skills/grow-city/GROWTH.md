@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113** | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93, **104** | 78, **111** | | 84 | 71 |
 
@@ -46,12 +46,14 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain: Sky **95** · Water **106** ·
-  Civic **107** · Nature **108** · Urban **110** · People **111** · Transport **112** · Water **113**. Stalest is still
+  Nature **108** · Urban **110** · People **111** · Transport **112** · Water **113** · Civic **114**. Stalest is still
   **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
   cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
-  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Civic (107)**
-  is now the next-stalest safe pick, then Nature (108) — and Civic has a **banked cue (d)** waiting
-  (a real civic square). Iter 111 was People × Connect and used
+  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Nature (108)**
+  is now the next-stalest safe pick, then Urban (110). Civic's banked **cue (d)** was attempted at
+  114 and **reverted**: its goal is proven (a 3-hex square reads at fit zoom) but its prescribed
+  host does not exist — see the rewritten cue below before re-opening it.
+  **Iteration 115 is a holistic step-back** (105, 110, …). Iter 111 was People × Connect and used
   109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
   Transport** (trains ↔ their own stations) and iter 113 cashed it a third time in **Water** (the
   marsh ↔ the tide its own tooltip printed). **That shape has now paid in four domains — assume it is
@@ -63,8 +65,8 @@ ones (U2, 42, U5) stay in the bullet.
   require a sky feature. **113 did this again** (the marsh reeds now read `year`), leaving 109's
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads.
   Recent kinds: 107 New CA rule ·
-  108 Deepen · 109 Connect · 110 Polish · 111 Connect · 112 Deepen · 113 Deepen — **Deepen has now paid 3 of the last 6; stop
-  reaching for it.** The coldest kind is **Scale** (a structural lever, not a lap
+  108 Deepen · 109 Connect · 110 Polish · 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) —
+  **Deepen has paid 3 of the last 7; stop reaching for it.** The coldest kind is **Scale** (a structural lever, not a lap
   move), then **New element** and **Interaction/UX**. **Connect paid three times** (109, 111, 112 — 112 logged as
   Deepen, see its entry): its trick was that
   it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
@@ -736,12 +738,26 @@ ones (U2, 42, U5) stay in the bullet.
   fit zoom. (Verified by marking them magenta — see 113's findings; the striking pale figure on a marsh
   hex is a **heron**, not a reed.) Spreading/lengthening them is a tile redesign, out of scope for a
   growth lap, and it would pay off immediately because the seasonal color is already computed.
-  **(d) the civic quarter deserves a real square** *(banked by iter 91, Civic × Polish)* — the
-  quarter now reads as a knot of pale domes sharing a single forecourt hex. A proper civic
-  square (2–3 contiguous `PLAZA` cells fronting several institutions, rather than one lot won
-  by the loudest street) would repay the clustering. Do **not** implement it by loosening the
-  radius-2 guard globally — that would pave forecourts city-wide; scope it to `MAJORK` cells
-  that have ≥2 other `MAJORK` within 4 hexes.
+  **(d) the civic quarter deserves a real square — STILL OPEN, BUT ITS PRESCRIPTION IS DEAD**
+  *(banked by iter 91; attempted and **reverted** by iter 114, Civic × Polish — read 114 before re-trying)*.
+  The goal is confirmed and **measured**: every `PLAZA` patch in every seed is exactly **one hex**
+  (`[1,1,1]/[1,1]/[1,1,1]`), so the quarter is a knot of pale domes each hugging its own private
+  forecourt — and a throwaway build proved a **3-hex square is beautiful and legible at fit zoom**
+  (both agents, 2 seeds), where iter 101's 1-hex ribbon was not. **Minimum viable size is 3**; a
+  2-hex square sits on the edge of 101's contrast×width law.
+  What is dead is 91's *implementation*: "annex an adjoining `FORECOURT_LOT`". **There is no such
+  lot.** A forecourt is sited to front the loudest street, so it is a **road junction** — of the 6
+  quarter-member heads' 36 neighbour slots, **ROAD 16 (44%)**, pavable lot **2 (5.6%)**, of which
+  **one** fronts a street. Iter 100's `QUAD` grounds pass eats the back lot besides. The rule fired
+  **zero** times in three cities. Do not "fix" this by loosening the gate — with the gate at 1.0 it
+  fires **once, in one city, on one institution.**
+  So: **the square must take the ROAD**, which is also the honest reading of iter 100 (the cell
+  between two majors *is* the street they both front — pedestrianise it). Two things a taker must
+  carry: (i) a **demote-on-merge** step — a per-head size cap does **not** stop two squares joining,
+  and iter 114's throwaway produced a 5-hex patch with **two centrepieces**; (ii) the **hazard list**
+  in 114's findings — cars are provably safe, but trams/monorail draw along roads, and `c.stop`,
+  `c.bridge`, `c.flow`/`ARTFLOW`, `frontSide()`, boulevard trees and `c.hstr` all read `ROAD` and are
+  unaudited. `roads` is a **core** census metric. Budget a lap for the audit; don't do it on the side.
   ~~(a) **the rainbow floats**~~ — **CLOSED by iter 89.** Not by 81's fog fix, though the
   cue predicted it would be: a bow forms in *nearby* drops, so it may legitimately hang in
   **front** of the city, and moving it into the row loop would have buried it. What was
@@ -1100,122 +1116,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 106 entries before Iteration 104 live in
+> **Archive:** the 107 entries before Iteration 105 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 104 — the crowds find the shopfronts (2026-07-10)
-
-**Vector** — People & activity × **Deepen**. Rotation pointed here on both axes at once: People was
-the stalest domain (last vector 93) and Deepen the coldest kind (last at 95), with 103 warning off
-Polish. No cue was open on People, so this is a seam-led vector, not a cue-led one.
-
-**The seam.** `PEDDEST` — a Set literally named "pedestrian destinations" (shops, markets, plazas,
-institutions, greens) — existed for one purpose: `kerbDir` used it to decide which way a ped standing
-on a kerb turned to **face**. No resident had ever *walked* toward one. Peds random-walked over open
-ground, re-anchoring wherever they landed. The city had a notion of what its people wanted and never
-let them go and get it.
-
-**Change.** Two edits, ~35 lines.
-- **`c.buzz`, a new derived field** (`tick()`, beside the bus-stop pass): `ATTRACT.has(c.t)?2:0` plus
-  a count of `ATTRACT` neighbours, where `ATTRACT = {COM, MARKET, CIVIC, STADIUM, PLAZA}`. Pure
-  terrain derivation — no `rng()`, no terrain change — recomputed each tick as shopfronts open.
-  Generalizes the `cafes` stat (a park hex facing a shop) from one tile type to the whole plate.
-- **`stepPed` climbs it.** Among the neighbours a ped may *legally* enter, it now picks one with
-  weight `1+BUZZW*buzz` (biased, not routed — nobody pathfinds). Two terms then hold it there: on a
-  lively hex it re-decides more slowly (`BUZZDWELL`) and steps on less often (`BUZZSTILL`). That is
-  what turns a market or a parade of shopfronts into a *standing crowd* rather than a place peds
-  merely pass through. `BUZZMAX=3, BUZZW=1.6, BUZZSTILL=0.55, BUZZDWELL=1.3`.
-- **The `legal/6` factor is load-bearing.** See the finding below — without it the tuned street
-  occupancy blows out.
-- **Dogs came along for free.** A leashed dog rides its owner's hex (iter 93), so residents now walk
-  their dogs to the shops with no code at all.
-
-**Census — PASS**, and provably stream-neutral by iter 103's **partition**: **every tick-derived
-metric is exactly +0** and the **tile histogram is empty** (`parks`, `towers`, `roads`, `developed`,
-`bridges`, `tileKinds`, `civicKinds`, `transportModes`, `solarRoofs`, `greenRoofs`, `towerHt`,
-`tallTowers`, `helipads`, `boulevardTrees`, `avenues`, `arterials`, `promenade`, `stations`, `cafes`,
-`schools`, `stadiums`). Only `pop` moved: **+3 of 150,206** (0.002%), the frame-count metric. 0 page
-errors. The buzz pass reads terrain and writes only `c.buzz`; `stepPed` draws only `Math.random()`.
-
-**Probe.** `probe-buzz.mjs` (`git add -f`'d). Re-implements HEAD's `stepPed` as `stepOld` and runs
-**both policies on one page load from the same ped snapshot**, stepped a **fixed number of steps**
-(not a fixed wall time), so machine load cannot skew it. Both policies run **twice** and are averaged
-— the control is stochastic (see findings). Time-averaged over 3 seeds, era 2035:
-
-| | before | after | |
-| --- | --- | --- | --- |
-| street occupancy, kerbs **fronting a shop** | 8.5% | **14.0%** | **+64%** |
-| street occupancy, **dull lanes** | 10.3% | **8.1%** | **−22%** (down on all 3 seeds) |
-| peds with an attraction in their ring | 16.7% | **26.2%** | **+57%** |
-| mean `c.buzz` of the hex a ped stands on | 0.22 | **0.39** | **+74%** |
-| street occupancy, **total** | 18.8% | 22.0% | *noise — see findings* |
-
-**Visual — PASS, 2/2.** Seeds 42 and 7, **before/after pairs** at `warp=61&t=0.3&step=300` (`__step`
-runs `advanceEntities`, so the crowd gets 300 sim-seconds to settle — a static shot of a
-*distribution* change is meaningless without it). Zoomed `--shots downtown` per iter 93's law that
-entity-vs-entity vectors are invisible wide, plus un-zoomed wide frames. One agent per seed, told not
-to enhance. Both independently reported denser knots on the market rows, the plaza/civic dome, and
-shop-fronted kerbs, with **emptier park interiors and residential lanes** — i.e. they described
-`st:dull −22%` without being told it existed. Both found no z-order tears, no floating tiles, no
-figures on rooftops or water, no blown-out colour. Both confirmed the wide frames were otherwise
-**pixel-identical**, reading the whole HUD stat bar unchanged (seed 7: `2035 · 35,200 · 71 · 64 · 179
-· 33 · 18 · 49% · 56% · 37%`) — the visual corroboration of the census's stream-neutrality claim.
-
-**Perf — PASS, and the gate is lying by +5.5%.** 3 sequential passes: day 33.16/33.11/33.17ms,
-night ~37.3ms — a **stable** offset (no rising trend), which by iter 99's rule means code, not load.
-So I ran iter 99's stash-control on **pristine HEAD** under the same load: day **33.00/33.06/34.17ms**.
-Taking the minimum of each, **this vector costs +0.11ms (+0.3%)**; the other +5.3% is a **stale
-baseline** pinned 2026-07-09, before iters 100–103 landed. Logged in the header rather than silently
-re-pinned — `polish-tile` owns that file.
-
-**Verdict: SHIPPED.**
-
-### Findings
-
-- **⚠ THE PLAUSIBLE NAME WAS THE WRONG LIST — and it made the feature actively worse.** The first
-  build counted `PEDDEST` neighbours. The probe read street occupancy **18.3%→15.4%**: it *drained*
-  the streets. `PEDDEST` is mostly the open ground the ped is standing on, and **parks are large and
-  adjacent to themselves**, so a park *interior* outscored a kerb outside a row of shops — the field's
-  argmax was the middle of a lawn, and the walk dutifully climbed to it. The two questions look
-  identical and are not: `kerbDir` asks *"what do I turn to face"* (a park, correctly); an attraction
-  field asks *"what do I cross a block to reach"*. `ATTRACT` is the second list, and it works
-  precisely **because most of it cannot be stood on** — a building can only ever raise the buzz of the
-  ground around it, which is the café edge and the shopfront kerb where a crowd belongs. **Check what
-  a Set's existing call sites ask of it before reusing it; the name is not the specification.** The
-  probe caught this in one run, before any screenshot.
-- **⚠ WHEN A METRIC IS TOO NOISY TO GRADE A VECTOR, PARTITION IT — DON'T AVERAGE IT HARDER.** Street
-  occupancy is stochastic (130 peds × `Math.random`): `stepOld` read **21.4%** and **17.4%** on
-  identical bytes and the same seed, a **3.0–5.3 point** control spread — wider than this change's
-  whole aggregate effect (+3.2). The total could neither convict nor acquit. Splitting it along the
-  *mechanism I was claiming* dissolved the problem: shopfront kerbs **+64%**, dull lanes **−22%**,
-  both sign-consistent across all three seeds. The scary aggregate ("streets 19%→22%, you flooded
-  them") and the true result ("peds left the lanes for the shops") are the same number. This extends
-  iter 103's law — *run the same code twice* — from **machine-load** noise to **sampling** noise, and
-  `probe-buzz.mjs` now runs each policy twice by default and prints the control spread with the
-  warning that a smaller delta is not a result.
-- **A random walk can be biased without changing how often it moves.** `stepPed` used reject
-  sampling: draw 1 of 6 directions blind, stay put if it's a wall. So `P(move) = step·(legal/6)`,
-  quietly. The obvious way to add a bias — pick from the *legal* set — makes every ped move 2–3×
-  more and would have blown the occupancy the PEDLEASH comment says was tuned by measurement
-  (0.45→14%, 0.15→28%). Multiplying the step roll by `legal/6` restores the original marginal
-  **exactly**, so the field changes only **where** peds go, never **how often**. Compare iter 98's
-  law (express a vector as a *property* of a thing, not a *decision* about which things exist): here
-  the same discipline applied to a *rate* is what let a behaviour change stay provably neutral.
-- **A stale perf baseline spends the next iteration's budget.** The gate read +5.7% day for a change
-  that costs +0.11ms, because pristine HEAD already reads +5.3% against a baseline pinned four
-  iterations ago. A gate that has drifted a third of the way to its own threshold will eventually
-  fail on innocent code, and then nobody will trust it (the hexagon-plate lesson, arrived at from the
-  other direction — that one left the baseline stale by *scaling the plate*; this one left it stale by
-  simple accumulation). **Control against pristine HEAD, not against the baseline file** — a stable
-  offset means code, but it may be *earlier iterations'* code.
-- **The interconnect was free where the ledger promised it would be.** Iter 93 established that a
-  leashed dog rides its owner's hex and inherits `pedWalk`'s legality. Nothing in this vector mentions
-  dogs, and residents now walk them to the shops. That is the payoff of the Deepen kind, and the
-  reason the header calls it the highest-yield move: the third and fourth systems come for free once
-  two are wired together.
 
 ## Iteration 105 — the lines name themselves (2026-07-10) [holistic step-back]
 
@@ -2080,3 +1985,99 @@ can see anything**; they rest on the pixel probe alone, and I have logged that r
   ~10×4-unit huddle around the pool contribute almost nothing to how the hex reads; the tile is "green hex
   with a pool". Spreading/lengthening them is a tile redesign, out of scope for a growth lap. The reed
   calendar is already wired and would pay off immediately if the reeds themselves were made legible.
+
+## Iteration 114 — the square that had nowhere to go (2026-07-10)
+
+**Vector** — Civic & culture × **Polish**. Rotation named the domain (Civic 107 was the stalest *safe*
+pick; Sky 95 is staler and a documented trap) and the header named the content: **banked cue (d)**,
+"the civic quarter deserves a real square", open since iter 91. Kind is Polish, not Deepen — Deepen had
+paid 3 of the last 6 laps.
+
+**The seam.** Cue (d) prescribed the implementation: *"2–3 contiguous `PLAZA` cells fronting several
+institutions… scope it to `MAJORK` cells that have ≥2 other `MAJORK` within 4 hexes."* I built exactly
+that: a 2024+ pass that finds a quarter member's forecourt and annexes one adjoining `FORECOURT_LOT`
+that fronts a street; a `plazaPatch()` used by rule *and* tooltip (iter 112's one-predicate law); a
+`c.sq` head/annex role so the head keeps the rosette, statue and bunting while the annex draws open
+paving, benches and a night lamp; and a tooltip that names the square and the institutions it fronts.
+
+**Census said the rule never fired.** `pop −3`, tile histogram **empty**. (The `−3` is iter 108's load
+jitter: after reverting, the same code re-censused at `pop +0` exactly.)
+
+**Measured why** (`probe-square.mjs`, tracked — conjunct-survivor method from `probe-market.mjs`):
+
+| | seed 7 | seed 42 | seed 1234 |
+| --- | --- | --- | --- |
+| `PLAZA` patch sizes | **[1, 1, 1]** | **[1, 1]** | **[1, 1, 1]** |
+| majors · quarter members | 6 · 4 | 6 · 3 | 6 · 4 |
+| quarter members **with a forecourt** | 2 | 1 | 3 |
+| …of those, with an **eligible annex lot** | **0** | **1** | **0** |
+
+Every plaza in the artifact's entire life has been a **single hex**. And the annex has no host, because
+a forecourt is **a road junction**. Across the 6 quarter-member heads, their 36 neighbour slots are
+**ROAD 16 (44%)** · CIVIC 7 · QUAD 4 · PARK 3 · ROCK 2 · TOWER 2 · MID 1 · COM 1. Only **2 of 36** are a
+pavable `FORECOURT_LOT`, and only **one** of those fronts a street — seed 42's town hall, which then
+lost the `hashCell < 0.85` roll. The rule fired **zero** times in three cities.
+
+**Then I asked the next lap's question before closing.** A throwaway build (ROAD allowed as an annex,
+gate wide open, backed up + reverted) grew real squares: `PLAZA 8 → 19`, `ROAD −9`, `COM −1`,
+`pop −810` (−0.52% for 11 cells — matching iter 101's measured 0.045%/cell almost exactly). Two visual
+agents on two seeds: **PASS** both. The 3-hex square reads as *"one coherent paved square… annexes look
+like plaza, not blank"*, no street dead-ends into it, whole-city frames clean. At **fit zoom** it is
+*"findable but modest — a distinct pale patch… though it could be missed on a fast scan."*
+
+**Verdict — EXPLORED → REVERTED.** Cue (d)'s *goal* is sound and now demonstrated; cue (d)'s
+*prescription* is dead. Shipping the lot-based rule would have shipped a pass that fires on one
+institution in one of three cities. Retuning the gate to `0.95` to rescue that one host is precisely the
+move iter 107 forbids (never pick a salt or probability after seeing the census), and it would have
+bought noise, not a feature. The road-based version works and is beautiful — but it is a **different,
+unvalidated rule with an unaudited blast radius**, and choosing it after reading a census is the same
+forbidden move one level up. It belongs to a lap that starts from the hazard list below, not to this one.
+
+`solvista.html` is byte-identical to HEAD. Pristine control census: `pop`, `roads`, `developed` **+0**,
+tile histogram empty.
+
+### Findings
+
+- **⚠ A FORECOURT IS A ROAD JUNCTION — THERE IS NO LOT BESIDE IT (new; extends iter 100).** Iter 100
+  proved *the cell between two clustered majors is the street they both front*. The sharper fact: the
+  forecourt's **entire neighbourhood** is street. It is sited to front the loudest one (`c.flow`), so by
+  construction it is ringed by roads — **44% of its neighbours**, against **5.6%** pavable lots. Worse,
+  the two rules are **eating each other's hosts**: the grounds pass (iter 100) takes the back lot for its
+  `QUAD` (4 of 36 slots), so the forecourt's only non-street neighbours are the green its own institution
+  earned. **Any "extend the civic square" vector must take the ROAD, or it has no host at all.**
+- **⚠ A 3-HEX PAVED BLOB *DOES* READ AT FIT ZOOM — iter 101's law, confirmed from the positive side for
+  the first time.** 101 established that below ~2–3 hexes a corridor is untraceable *at any ΔL*, and it
+  died proving the negative (a 1-hex greenway ribbon, ΔL 22–35, nine agents could not trace it). Here a
+  3-hex **blob** of the same paving was found unprompted by both agents at fit zoom. Width, not contrast,
+  was always the variable. **The corollary matters for planning: cue (d) is worth a lap, and its minimum
+  viable size is 3 — a 2-hex square would sit on the edge of the law.**
+- **⚠ A PER-HEAD "GROW TO N" GUARD DOES NOT PREVENT A MERGE — AND A MERGED SQUARE HAS TWO CENTREPIECES
+  (new).** `if(plazaPatch(head).length>=3)continue;` is evaluated per institution, so two majors 2–3
+  hexes apart each grow toward the other and their patches **join**. Measured on the throwaway: seed 1234
+  produced a **5-hex patch carrying 2 heads** — two fountains, two rosettes, two sets of bunting inside
+  one square. Any future patch-growing rule needs a **demote-on-merge** step (keep the lowest-idx head,
+  set the rest to annex), not just a size cap.
+- **⚠ THE AGENT CREDITED A NEIGHBOUR'S ORNAMENT — AGAIN, AND ON A DIRECT YES/NO QUESTION (iter 113's law
+  fires unprompted).** Asked point-blank *"do you see more than one fountain/statue/rosette in this
+  square?"* on the frame that **provably had two**, the agent answered *"only ONE centrepiece region — the
+  orange dome"*. The dome is an **institution**, not a plaza centrepiece. A 20-line `page.evaluate` that
+  flood-fills each patch and counts `!c.sq` settled it in one command (`3hex/1head · 5hex/2head`). 113
+  said agents mistake a neighbour's entity for your ornament; add: **they will do it while answering the
+  exact question you asked to prevent it.** Never accept an agent's *count* of anything.
+- **A RULE WITH ONE HOST ACROSS THREE SEEDS IS NOISE, NOT A FEATURE.** The temptation on reading
+  `annexLots: 0/1/0` is to loosen a threshold until it fires. That inverts the census's purpose: the
+  histogram was reporting *the design is starved*, not *the gate is too tight*. The `hashCell<0.85` roll
+  that killed seed 42's only host is a red herring — with the gate at 1.0 the rule still fires **once**,
+  in **one** city, on **one** institution.
+- **HAZARD LIST FOR THE ROAD PIVOT (for whoever takes cue (d)).** Cars are **safe**: `stepVehicle` picks
+  from `roadNbrOpts` each hop and reverses at a dead end (`if(!opts.length){v.nx=lx;v.ny=ly}`) — there is
+  no global path to break. Unaudited, and all of them read `ROAD`: **trams and the monorail/gondola lines**
+  (drawn along road cells), **`c.stop`** (bus stops — the throwaway already excluded these and `c.bridge`),
+  **`c.flow`** drainage and the `ARTFLOW` arterial classification, **`frontSide()`** (reads ROAD neighbours,
+  so paving one can flip an institution's front on a later tick), **boulevard trees**, **`c.hstr`**.
+  Budget a lap for the audit, not an afternoon. `roads` is a **core** census metric — the throwaway's
+  `−9 / 5786` (−0.16%) is comfortable, but a wider rule could approach the 5% collapse gate.
+- **`probe-square.mjs` and `shot-square.mjs` are `git add -f`'d** (iter 101's law: an untracked probe the
+  ledger cites does not exist). The probe reports plaza patch sizes, per-major forecourt status and the
+  head's neighbour composition; the shooter finds the **largest patch** by flood fill and wheels the
+  artifact's own camera onto its centroid — reuse it for any *"does this multi-hex patch read?"* claim.

@@ -4358,3 +4358,114 @@ corroboration of the census's stream-neutrality claim.
   with a number attached** — and log the survey that made you turn back, because that survey is the
   expensive part and it is exactly what the next fresh process cannot re-derive cheaply.
 
+## Iteration 104 — the crowds find the shopfronts (2026-07-10)
+
+**Vector** — People & activity × **Deepen**. Rotation pointed here on both axes at once: People was
+the stalest domain (last vector 93) and Deepen the coldest kind (last at 95), with 103 warning off
+Polish. No cue was open on People, so this is a seam-led vector, not a cue-led one.
+
+**The seam.** `PEDDEST` — a Set literally named "pedestrian destinations" (shops, markets, plazas,
+institutions, greens) — existed for one purpose: `kerbDir` used it to decide which way a ped standing
+on a kerb turned to **face**. No resident had ever *walked* toward one. Peds random-walked over open
+ground, re-anchoring wherever they landed. The city had a notion of what its people wanted and never
+let them go and get it.
+
+**Change.** Two edits, ~35 lines.
+- **`c.buzz`, a new derived field** (`tick()`, beside the bus-stop pass): `ATTRACT.has(c.t)?2:0` plus
+  a count of `ATTRACT` neighbours, where `ATTRACT = {COM, MARKET, CIVIC, STADIUM, PLAZA}`. Pure
+  terrain derivation — no `rng()`, no terrain change — recomputed each tick as shopfronts open.
+  Generalizes the `cafes` stat (a park hex facing a shop) from one tile type to the whole plate.
+- **`stepPed` climbs it.** Among the neighbours a ped may *legally* enter, it now picks one with
+  weight `1+BUZZW*buzz` (biased, not routed — nobody pathfinds). Two terms then hold it there: on a
+  lively hex it re-decides more slowly (`BUZZDWELL`) and steps on less often (`BUZZSTILL`). That is
+  what turns a market or a parade of shopfronts into a *standing crowd* rather than a place peds
+  merely pass through. `BUZZMAX=3, BUZZW=1.6, BUZZSTILL=0.55, BUZZDWELL=1.3`.
+- **The `legal/6` factor is load-bearing.** See the finding below — without it the tuned street
+  occupancy blows out.
+- **Dogs came along for free.** A leashed dog rides its owner's hex (iter 93), so residents now walk
+  their dogs to the shops with no code at all.
+
+**Census — PASS**, and provably stream-neutral by iter 103's **partition**: **every tick-derived
+metric is exactly +0** and the **tile histogram is empty** (`parks`, `towers`, `roads`, `developed`,
+`bridges`, `tileKinds`, `civicKinds`, `transportModes`, `solarRoofs`, `greenRoofs`, `towerHt`,
+`tallTowers`, `helipads`, `boulevardTrees`, `avenues`, `arterials`, `promenade`, `stations`, `cafes`,
+`schools`, `stadiums`). Only `pop` moved: **+3 of 150,206** (0.002%), the frame-count metric. 0 page
+errors. The buzz pass reads terrain and writes only `c.buzz`; `stepPed` draws only `Math.random()`.
+
+**Probe.** `probe-buzz.mjs` (`git add -f`'d). Re-implements HEAD's `stepPed` as `stepOld` and runs
+**both policies on one page load from the same ped snapshot**, stepped a **fixed number of steps**
+(not a fixed wall time), so machine load cannot skew it. Both policies run **twice** and are averaged
+— the control is stochastic (see findings). Time-averaged over 3 seeds, era 2035:
+
+| | before | after | |
+| --- | --- | --- | --- |
+| street occupancy, kerbs **fronting a shop** | 8.5% | **14.0%** | **+64%** |
+| street occupancy, **dull lanes** | 10.3% | **8.1%** | **−22%** (down on all 3 seeds) |
+| peds with an attraction in their ring | 16.7% | **26.2%** | **+57%** |
+| mean `c.buzz` of the hex a ped stands on | 0.22 | **0.39** | **+74%** |
+| street occupancy, **total** | 18.8% | 22.0% | *noise — see findings* |
+
+**Visual — PASS, 2/2.** Seeds 42 and 7, **before/after pairs** at `warp=61&t=0.3&step=300` (`__step`
+runs `advanceEntities`, so the crowd gets 300 sim-seconds to settle — a static shot of a
+*distribution* change is meaningless without it). Zoomed `--shots downtown` per iter 93's law that
+entity-vs-entity vectors are invisible wide, plus un-zoomed wide frames. One agent per seed, told not
+to enhance. Both independently reported denser knots on the market rows, the plaza/civic dome, and
+shop-fronted kerbs, with **emptier park interiors and residential lanes** — i.e. they described
+`st:dull −22%` without being told it existed. Both found no z-order tears, no floating tiles, no
+figures on rooftops or water, no blown-out colour. Both confirmed the wide frames were otherwise
+**pixel-identical**, reading the whole HUD stat bar unchanged (seed 7: `2035 · 35,200 · 71 · 64 · 179
+· 33 · 18 · 49% · 56% · 37%`) — the visual corroboration of the census's stream-neutrality claim.
+
+**Perf — PASS, and the gate is lying by +5.5%.** 3 sequential passes: day 33.16/33.11/33.17ms,
+night ~37.3ms — a **stable** offset (no rising trend), which by iter 99's rule means code, not load.
+So I ran iter 99's stash-control on **pristine HEAD** under the same load: day **33.00/33.06/34.17ms**.
+Taking the minimum of each, **this vector costs +0.11ms (+0.3%)**; the other +5.3% is a **stale
+baseline** pinned 2026-07-09, before iters 100–103 landed. Logged in the header rather than silently
+re-pinned — `polish-tile` owns that file.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ THE PLAUSIBLE NAME WAS THE WRONG LIST — and it made the feature actively worse.** The first
+  build counted `PEDDEST` neighbours. The probe read street occupancy **18.3%→15.4%**: it *drained*
+  the streets. `PEDDEST` is mostly the open ground the ped is standing on, and **parks are large and
+  adjacent to themselves**, so a park *interior* outscored a kerb outside a row of shops — the field's
+  argmax was the middle of a lawn, and the walk dutifully climbed to it. The two questions look
+  identical and are not: `kerbDir` asks *"what do I turn to face"* (a park, correctly); an attraction
+  field asks *"what do I cross a block to reach"*. `ATTRACT` is the second list, and it works
+  precisely **because most of it cannot be stood on** — a building can only ever raise the buzz of the
+  ground around it, which is the café edge and the shopfront kerb where a crowd belongs. **Check what
+  a Set's existing call sites ask of it before reusing it; the name is not the specification.** The
+  probe caught this in one run, before any screenshot.
+- **⚠ WHEN A METRIC IS TOO NOISY TO GRADE A VECTOR, PARTITION IT — DON'T AVERAGE IT HARDER.** Street
+  occupancy is stochastic (130 peds × `Math.random`): `stepOld` read **21.4%** and **17.4%** on
+  identical bytes and the same seed, a **3.0–5.3 point** control spread — wider than this change's
+  whole aggregate effect (+3.2). The total could neither convict nor acquit. Splitting it along the
+  *mechanism I was claiming* dissolved the problem: shopfront kerbs **+64%**, dull lanes **−22%**,
+  both sign-consistent across all three seeds. The scary aggregate ("streets 19%→22%, you flooded
+  them") and the true result ("peds left the lanes for the shops") are the same number. This extends
+  iter 103's law — *run the same code twice* — from **machine-load** noise to **sampling** noise, and
+  `probe-buzz.mjs` now runs each policy twice by default and prints the control spread with the
+  warning that a smaller delta is not a result.
+- **A random walk can be biased without changing how often it moves.** `stepPed` used reject
+  sampling: draw 1 of 6 directions blind, stay put if it's a wall. So `P(move) = step·(legal/6)`,
+  quietly. The obvious way to add a bias — pick from the *legal* set — makes every ped move 2–3×
+  more and would have blown the occupancy the PEDLEASH comment says was tuned by measurement
+  (0.45→14%, 0.15→28%). Multiplying the step roll by `legal/6` restores the original marginal
+  **exactly**, so the field changes only **where** peds go, never **how often**. Compare iter 98's
+  law (express a vector as a *property* of a thing, not a *decision* about which things exist): here
+  the same discipline applied to a *rate* is what let a behaviour change stay provably neutral.
+- **A stale perf baseline spends the next iteration's budget.** The gate read +5.7% day for a change
+  that costs +0.11ms, because pristine HEAD already reads +5.3% against a baseline pinned four
+  iterations ago. A gate that has drifted a third of the way to its own threshold will eventually
+  fail on innocent code, and then nobody will trust it (the hexagon-plate lesson, arrived at from the
+  other direction — that one left the baseline stale by *scaling the plate*; this one left it stale by
+  simple accumulation). **Control against pristine HEAD, not against the baseline file** — a stable
+  offset means code, but it may be *earlier iterations'* code.
+- **The interconnect was free where the ledger promised it would be.** Iter 93 established that a
+  leashed dog rides its owner's hex and inherits `pedWalk`'s legality. Nothing in this vector mentions
+  dogs, and residents now walk them to the shops. That is the payoff of the Deepen kind, and the
+  reason the header calls it the highest-yield move: the third and fourth systems come for free once
+  two are wired together.
+
