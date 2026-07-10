@@ -114,17 +114,15 @@ ones (U2, 42, U5) stay in the bullet.
   later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
   shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
   **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.*
-  **Iteration 130 is the next holistic step-back** (105, 110, 115, 120, **125**, …). Per 115 it is shot
-  **at night as well as by day** (115's night frame failed on a defect ~114 daytime reads had missed) and
-  per 120 **at a season too** (`&year=`; a January read can never see a seasonal bug). **125 added the third
-  rule: PIN THE DAY FRAME OFF JANUARY.** `?warp=61` lands on ~2035.0 = winter, so a default "day" frame and a
-  `year=2035.02` winter frame *are the same instant* — 125's seed-42 agent duly read "winter barely differs
-  from summer," comparing winter to winter. Shoot the day/night baselines at `year=2035.62` (dry peak) and keep
-  `2035.02` as the seasonal-contrast frame. (Now promoted into SKILL.md's step-back section.) **125 itself
-  found NO compounding city defect**: both seeds PASS day/night/season, night core reads at both (115's
-  lighting holds — agents located it at (.48,.47)/(.50,.62), the latter off-centre), sea reads (116/123 hold),
-  no tears/floaters/blowout in 6 frames; seasons measured alive (`probe-season`: FARM winter→dry-peak 88,
-  ROAD control ~0). The step-back's product was the recipe fix above, not a city change.
+  **Iteration 135 is the next holistic step-back** (105, 110, 115, 120, 125, **130**, …). Shoot it
+  **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
+  `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
+  the full recipe). **130 found NO compounding city defect** (a clean bill of health, the honest step-back
+  outcome, no city change): both seeds PASS day/night/season, agents *located* the night core off-centre
+  by light alone ((.45,.45)/(.48,.60), 115's lighting holds), sea reads (116/123 hold), no
+  tears/floaters/blowout in 6 frames; seasons measured alive (`probe-season`: FARM winter→dry-peak 88, ROAD
+  control ~0.5–2). Perf flat — see the perf note. **125** was the same shape and its product was the
+  pin-off-January recipe fix now in SKILL.md.
   Iter 111 was People × Connect and used
   109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
   Transport** (trains ↔ their own stations) and iter 113 cashed it a third time in **Water** (the
@@ -156,8 +154,9 @@ ones (U2, 42, U5) stay in the bullet.
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
   Recent kinds: 120 Deepen · 121 Deepen · 122 Interaction/UX · 123 Deepen ·
   124 Polish · 126 Deepen · 127 New element · 128 Deepen · 129 Interaction/UX —
-  **Deepen has paid 5 of the last 10; Interaction/UX 2 (122, 129). VARY OFF both next** unless another
-  banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
+  (**130 was the holistic step-back — no domain × kind lap, rotation unchanged; next lap 131 owes the stalest
+  domain, Civic (122) / Water (123).**) **Deepen has paid 5 of the last 10; Interaction/UX 2 (122, 129). VARY
+  OFF both next** unless another banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
   **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
@@ -194,15 +193,14 @@ ones (U2, 42, U5) stay in the bullet.
   iters 100–104 and reported ~+6% before your change existed. Do not re-chase it. Still valid at iter
   **117** (pristine-HEAD control, interleaved: day **35.11ms** / night **39.45ms**; the patched file read
   day **34.33** / night **39.22**). Not re-pinned.
-  **⚠ 125's step-back gate cried FALSE FAIL (night +16%), and the interleaved control caught it** — exactly
-  the "a failing gate nobody trusts is worse than none" scenario. The iter-115 file's *own bytes* read
-  **41.3ms night** today vs its recorded 37.3 = **~+10% pure machine load**. Interleaved HEAD-125 vs the
-  iter-115 file (min of 3 rounds, A/B/A/B): night **43.06 vs 41.28 (+4.3%)**, day **36.44 vs 38.06 (~flat,
-  HEAD faster)** — sample ranges *overlap* (HEAD-night min 43.06 < 115-night max 43.44). So the real
-  accumulated cost of iters 116→124 is **~+4% night, day flat** — minor and within noise. **NOT re-pinned**
-  (today's load is elevated; re-pinning to 43ms would bake in the load and blind the gate to a real future
-  regression). **Night is the one to watch** (118 added per-window lit-pane draws). Grade any future
-  step-back FAIL by interleaving against an old commit's file, never by the stored baseline alone.
+  **Iter 130 (step-back): 126→129 cost ZERO — HEAD faster than the iter-125 file, interleaved.** `perf.mjs`
+  read day 34.0 / night 40.0 (+2.4/+7.2% vs baseline), the night rise looking like a regression. Interleaved
+  HEAD-129 vs the iter-125 file (`c63e43b`, A/B/A/B, min per variant): day **34.17 vs 34.33**, night **40.17
+  vs 40.39** — HEAD **−0.5% in BOTH**, i.e. the moon/picnic/cable-car/orchard iters added nothing measurable.
+  The +8% night vs baseline is **pure machine load** (the 4-day-old iter-125 file also reads ~40ms night
+  today). **NOT re-pinned** (baking today's load in would blind the gate). Same story 125 told for 116→124
+  (~+4% night, day flat, overlapping ranges) — the interleaved-against-an-old-commit reading is now proven
+  twice as the only honest step-back grade. **Night is the one to watch** (118 added per-window lit-pane draws).
   **⚠ 117 CORRECTED 99's DIAGNOSTIC.** The old rule read *"a **stable** pass-over-pass offset means code,
   a **rising** one means load."* **The stable half is FALSE**: machine load is autocorrelated over
   minutes, so three passes inside one loaded window are three samples of *one* draw. Iter 117's gate read
@@ -391,104 +389,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 122 entries before Iteration 120 live in
+> **Archive:** the 123 entries before Iteration 121 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 120 — the parks rejoin the year (2026-07-11)
-
-**Vector.** Nature × **Deepen** (content is a Sky interconnect — the 108/113 pattern), taken as the
-**holistic step-back** the header mandated. Rotation said Transport (112); the step-back found a real
-defect first, and *"if something compounded badly, spend the next iteration FIXING it"* outranks
-rotation. A step-back that finds a defect and then ships an unrelated vector has wasted the step-back.
-
-**The step-back itself.** 5 un-zoomed whole-city frames — seeds 42 and 7, **day and night** (115's law),
-plus a **seasonal** frame (`&year=2035.62`, the golden dry peak) — read by 3 parallel agents, all told to
-hunt cumulative drift, not to look for a feature. `&step=300` so the crowd was settled (119's law).
-**All three returned VISUAL: FAIL.** Two of the three were wrong, and finding that out was the work:
-
-- **Season agent:** *"season only tints farm tiles; meadow, forest, parks and grass stay green — the
-  golden frame reads as blighted brown patches in a green city."* Its **diagnosis was false** (the code
-  plainly tints `grass`/`meadow`/`canopy`) but its **perception was true**. Resolved by probe, not argument.
-- **Seed-7 agent:** *"rain shafts render as a floating grey smudge off the west edge, a z-order tear."*
-  **False positive — I looked at that one PNG myself.** It is a rain cloud sitting over the western hills
-  with its shaft landing on terrain. Nothing floats, nothing tears. **Not banked as a cue.**
-- **Seed-42 agent:** night periphery (east beach/parkland) goes dead-dark while the core blazes; seed-7
-  agent independently flagged the same shape (dim NW quadrant). Two independent sightings ⇒ **banked as
-  cue (m)**, below. Note the *post-fix* night agent called night "legible and beautiful", so (m) is a
-  soft cue about core-vs-periphery *balance*, not a black hole. Verify before spending a lap on it.
-
-**What the probe found** (`probe-season.mjs`, new; clock frozen per 109's same-frame law, `ROAD` as the
-null control). Mean rendered-pixel distance from winter, at tile centres, seeds 7/42/1234:
-
-| | MEADOW | FOREST | **PARK** | **SHOREPARK** | FARM | QUAD | ROAD *(control)* |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| n | 6 | 231 | **584** | **294** | 120 | 24 | 1200 |
-| dry-peak, before | 26.6 | 19.7 | **0.0** | **0.0** | 88.4 | **0.0** | 0.5 |
-| dry-peak, after | 26.6 | 19.7 | **9.9** | **17.9** | 88.4 | **5.2** | 0.5 |
-
-The season did **not** stop at the farms — it stopped at the **irrigated** greens, and those are the
-overwhelming majority of the city's green area: **878 park/shorepark hexes against 231 forest and 6
-meadow.** So the dry season painted 120 brown farms onto 878 permanently-emerald hexes. `PARK`,
-`SHOREPARK`, `QUAD`, `GARDEN`, `FIELD` all read **exactly 0.0 in all four seasons**.
-
-**Change.** Palette only. `applySeason` now tints `BASE.lawn` and `BASE.turf` on a **muted** share of the
-same `dry`/`winter` curve it already drove `grass`/`meadow` with (`LAWN0`/`TURF0` pinned beside the other
-`*0` originals). Every one of the ~14 `col('lawn',k)` / `col('turf',k)` draw sites picks it up through
-`CCACHE`, which `applySeason` already invalidates — **zero new draw calls, no `rng()`, no terrain.**
-Ordering is now `FARM 88 > MEADOW 27 > FOREST 20 > SHOREPARK 18 > PARK 10 > QUAD 5`: parks remain the
-lushest thing on the plate. *Irrigated buys amplitude, not immunity.*
-
-**Census.** PASS. Tile histogram **empty**, every metric **+0**, entity counts identical — predicted
-before running, since a palette change touches no seeded draw.
-
-**Perf.** PASS, free. Min-of-3, interleaved: day **33.94 → 33.94ms**, night **39.94 → 39.83ms**. Two extra
-`mixA` calls per frame. (Pristine HEAD read night +7.0% against the 37.33ms pin under this session's load —
-that offset is earlier code, matching 119's identical observation. Not re-pinned; `polish-tile` owns it.)
-
-**Visual.** 2/2 PASS on the fix, seeds 42 and 7, A/B before-vs-after at the golden peak plus a winter
-frame plus a night frame. Both agents independently: the farms *"are no longer orphaned"* / *"no isolated
-brown blight patches"*, parks *"muted toward olive but did NOT go brown/dead"* and stay clearly the
-greenest tiles, winter and golden read as two seasons of one city, night undamaged.
-
-**Verdict — SHIPPED (FIXED).**
-
-**Findings for later laps.**
-- **⚠ A VISUAL AGENT'S PERCEPTION AND ITS DIAGNOSIS ARE TWO DIFFERENT CLAIMS, AND ONLY ONE IS ITS JOB
-  (new; the central lesson of this lap).** All three agents failed the frame; the two that named a *cause*
-  named the wrong one, and one invented a defect (the "floating rain shaft") that does not exist. An agent
-  looking at a PNG can tell you **that** a frame is ugly and **where**; it cannot tell you **why**, because
-  the cause lives in code it never read. Treat the *where* as evidence and the *why* as a hypothesis to
-  probe. Had 120 trusted the season agent's diagnosis it would have "fixed" `canopy` — which was never
-  broken — and left all 878 frozen hexes in place. **Never ship an agent's causal claim; probe it.**
-- **⚠ AND NEVER BANK ONE EITHER.** The rain-shaft FAIL would have entered this header as a cue and sent
-  some future lap hunting a z-order tear in correct code. One image read killed it. The skill says the
-  budget "exists to be spent when it matters" — **a cue you are about to write into the ledger is exactly
-  when it matters**, because a false cue outlives the iteration that invented it.
-- **⚠ EVERY WHOLE-CITY SHOT THIS LOOP HAS EVER TAKEN WAS IN JANUARY (new, and it explains 108).** `?warp=61`
-  from `year=1974` always lands on ~2035.0, so without `&year=` the season term is ~0 and *a seasonal defect
-  is invisible to the gate by construction*. This is the second time that has bitten (108: the farms had no
-  seasons at all, unnoticed for 107 laps). Both were found only by pinning `&year=`. **A step-back now shoots
-  a seasonal frame** (header updated). Ask what else the default URL silently pins: `tide` is the obvious next
-  one — `&tide=` exists, and no gate has ever moved it.
-- **⚠ "INTENTIONAL" IN A COMMENT IS NOT THE SAME AS "MEASURED" (new).** `BASE.lawn`'s comment reads
-  *"irrigated green: parks stay lush when the hills go gold"* — a real design intent, and it is why I nearly
-  dismissed the agent. But the code did not implement *lush*; it implemented **frozen**, in all four seasons,
-  including autumn and winter where the intent says nothing. A comment stating a *goal* is not evidence the
-  goal was hit. `grep`ping the comment made the defect look like a decision. The probe made it a number.
-- **THE CITY'S GREEN MASS IS PARK, NOT NATURE (new; sizes for any future vegetation vector).** `PARK` 584
-  + `SHOREPARK` 294 = 878 hexes, vs `FOREST` 231, `REDWOOD` 34, `VINEYARD` 26, `ORCHARD` 18, `MEADOW` **6**,
-  `GARDEN` **6**, `FIELD` **8**. Any Nature vector aimed at meadow/garden/field is aimed at ~20 tiles and
-  **cannot move a whole-city frame** (cf. 111's law: the whole-city gate cannot convict anything drawn at
-  3 px). If you want the city to *look* different, the lever is `PARK`.
-- **cue (m) — NIGHT'S PERIPHERY (new, soft, two independent sightings).** Downtown blazes; the outer ring
-  (east beach + parkland on 42, NW farms + low residential on 7) falls to near-unlit olive at `t=0.8`, losing
-  detail the day frame shows. The named candidates: the **pier/ferris wheel/boardwalk read as unlit**, and
-  there is no low-density streetlight or ambient moonlight on sand/parkland. A third agent, post-fix, called
-  the same night frame beautiful — so **measure the luminance histogram core-vs-ring before committing a
-  lap to it**; do not take the FAIL at face value (see the first finding above).
 
 ## Iteration 121 — the cable cars agree on a speed (2026-07-11)
 
@@ -1108,3 +1013,66 @@ Draw-render byte-identical, pop provably flat, the tell cashed a seventh time.
   *(orchard shift − forest shift) from winter* cancelled the season and left a clean +11.83 blossom signal. When
   a season/light/weather global moves every tile, pick a control tile that gets the global but not your feature
   and subtract it — same shape as probe-season's ROAD zero.
+
+## Iteration 130 — the sixth step-back finds a clean, quiet city (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/**130**). Not a domain × kind lap: it
+reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the perf
+gate, and — per 115/120/125 — does it at **night AND a season, with the day/night baselines pinned OFF
+January** (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector was taken, so
+rotation is unchanged; next lap (131) owes the stalest domain, Civic (122) / Water (123).
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42
+(warp 61) and seed 7 (warp 31), each at {day 2035.62, night 2035.62/t=0.90, winter 2035.02}. One subagent
+per seed read its own three frames and was asked the *cumulative* question ("has anything compounded into
+clutter or darkness?") plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night lighting (115) holds at both seeds, LOCATED off-centre.** Asked to point at the luminous core by
+  light alone, seed 42 landed at ~(.45,.45), seed 7 at ~(.48,.60) — the latter a discriminating off-centre
+  hit — both with a genuine core→edge falloff ("not a flat glitter mat"), rim fading to dark.
+- **The sea reads** (116's bottom + 123's founded wind farm): "grouped features on a clean graded
+  teal/navy," turbines parallel to the shelf, night water "dim but legibly lit, not a dead void."
+- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames.**
+- **Winter reads distinct from summer** at both seeds (browner farm/scrub, cooler sky), city balanced.
+
+**Season — measured alive, not believed.** `probes/probe-season.mjs` (per-tile rendered-pixel distance from
+winter, `ROAD` as the zero control): FARM winter→dry-peak **88.4**, →autumn **93.1**; VINEYARD/ORCHARD/
+FOREST/MEADOW/SHOREPARK all move; PARK/REDWOOD/GARDEN near-zero *by design* (irrigated/evergreen, per 120).
+ROAD control **0.5–2.1**. The calendar is working.
+
+**Perf — the gate cried the same false alarm as 125, and the interleaved control caught it again.** `perf.mjs`
+read day **34.0ms** (+2.4% vs baseline) / night **40.0ms** (+7.2%), the night rise looking like a regression.
+Interleaved HEAD-129 vs the iter-125 file (`c63e43b`, A/B/A/B, min per variant): day **34.17 vs 34.33**, night
+**40.17 vs 40.39** — HEAD is **−0.5% in BOTH**, so iters 126→129 (moon calendar, park picnics, cable-car
+re-spread, orchard tooltip) added **nothing measurable**. The +8% night vs baseline is **pure machine load**:
+the 4-day-old iter-125 file also reads ~40ms night today. **NOT re-pinned** (baking today's load in would
+blind the gate to a real future regression). Census PASS and vacuous by construction (no source edit).
+
+**Change (the step-back's product — none to the city).** The read found no compounding defect, so per 120/125
+("a clean step-back is a complete iteration — don't force a filler vector onto it") the output is the health
+record itself plus the header refreshes: step-back pointer → 135, perf note gains the 130 interleaved reading,
+rotation pointer notes 130 as the step-back. No `solvista.html` edit; tree verified clean after the perf
+interleave restored HEAD.
+
+**Verdict — FIXED.** No compounding city defect (the rarer, honest step-back outcome). The perf gate's
+stored-baseline false-FAIL — the one drift the step-back *did* re-surface — is confirmed benign by the
+interleaved control, exactly as 125 predicted; the guardrail stays honest.
+
+### Findings
+
+- **THE STORED-BASELINE PERF FALSE-FAIL IS NOW A RECURRING, PREDICTED EVENT — grade every step-back FAIL by
+  interleaving against an old commit's file (125's law, confirmed twice).** 125 saw night +16% vs baseline and
+  proved it ~+4% real; 130 saw night +7% and proved it −0.5% real. The stored baseline is pinned to one day's
+  load; a step-back days later conflates code drift with today's load. `git show <old>:solvista.html > /tmp/x`
+  and swap it in, A/B/A/B, min per variant — the delta is the only honest reading. Do not re-pin to an inflated
+  day, and do not re-chase a night number that an interleaved control collapses.
+- **A CLEAN STEP-BACK CONFIRMS THE ACCUMULATED VISUAL LAWS ARE STILL LOAD-BEARING, seven iters on.** 115's
+  night lighting, 116's sea bottom, 120's by-design evergreen/irrigated seasonal freeze, and 123's founded
+  wind farm all still read correctly at both seeds under all three lights — nothing has quietly eroded them.
+  The value of a no-change step-back is exactly this: proof that the earlier fixes have not been undone by
+  later additions.
+- **`cp` is `-i` here and `grep` is `ugrep` — a perf interleave loop that shells `cp`/`grep` will hang on the
+  overwrite prompt or choke on `->`/`>` in the timing line.** Use `/bin/cp -f` and `command grep -E '^  (day|
+  night) '`; don't `grep -v '>'` the timing line (it contains `>60fps-budget`). A small tooling snag that ate
+  two perf runs this iteration; noted so 135 doesn't re-lose them.

@@ -6839,3 +6839,96 @@ with a ~15% reduction rather than an emptying.
   joggers, block parties, evening crowds, stadium/market crowd terms, pier crowds, hover focus ring.
   The domain's live cells are **Deepen** (this one) and **Scale**; `Connect` paid at 78 and 111.
 
+## Iteration 120 — the parks rejoin the year (2026-07-11)
+
+**Vector.** Nature × **Deepen** (content is a Sky interconnect — the 108/113 pattern), taken as the
+**holistic step-back** the header mandated. Rotation said Transport (112); the step-back found a real
+defect first, and *"if something compounded badly, spend the next iteration FIXING it"* outranks
+rotation. A step-back that finds a defect and then ships an unrelated vector has wasted the step-back.
+
+**The step-back itself.** 5 un-zoomed whole-city frames — seeds 42 and 7, **day and night** (115's law),
+plus a **seasonal** frame (`&year=2035.62`, the golden dry peak) — read by 3 parallel agents, all told to
+hunt cumulative drift, not to look for a feature. `&step=300` so the crowd was settled (119's law).
+**All three returned VISUAL: FAIL.** Two of the three were wrong, and finding that out was the work:
+
+- **Season agent:** *"season only tints farm tiles; meadow, forest, parks and grass stay green — the
+  golden frame reads as blighted brown patches in a green city."* Its **diagnosis was false** (the code
+  plainly tints `grass`/`meadow`/`canopy`) but its **perception was true**. Resolved by probe, not argument.
+- **Seed-7 agent:** *"rain shafts render as a floating grey smudge off the west edge, a z-order tear."*
+  **False positive — I looked at that one PNG myself.** It is a rain cloud sitting over the western hills
+  with its shaft landing on terrain. Nothing floats, nothing tears. **Not banked as a cue.**
+- **Seed-42 agent:** night periphery (east beach/parkland) goes dead-dark while the core blazes; seed-7
+  agent independently flagged the same shape (dim NW quadrant). Two independent sightings ⇒ **banked as
+  cue (m)**, below. Note the *post-fix* night agent called night "legible and beautiful", so (m) is a
+  soft cue about core-vs-periphery *balance*, not a black hole. Verify before spending a lap on it.
+
+**What the probe found** (`probe-season.mjs`, new; clock frozen per 109's same-frame law, `ROAD` as the
+null control). Mean rendered-pixel distance from winter, at tile centres, seeds 7/42/1234:
+
+| | MEADOW | FOREST | **PARK** | **SHOREPARK** | FARM | QUAD | ROAD *(control)* |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| n | 6 | 231 | **584** | **294** | 120 | 24 | 1200 |
+| dry-peak, before | 26.6 | 19.7 | **0.0** | **0.0** | 88.4 | **0.0** | 0.5 |
+| dry-peak, after | 26.6 | 19.7 | **9.9** | **17.9** | 88.4 | **5.2** | 0.5 |
+
+The season did **not** stop at the farms — it stopped at the **irrigated** greens, and those are the
+overwhelming majority of the city's green area: **878 park/shorepark hexes against 231 forest and 6
+meadow.** So the dry season painted 120 brown farms onto 878 permanently-emerald hexes. `PARK`,
+`SHOREPARK`, `QUAD`, `GARDEN`, `FIELD` all read **exactly 0.0 in all four seasons**.
+
+**Change.** Palette only. `applySeason` now tints `BASE.lawn` and `BASE.turf` on a **muted** share of the
+same `dry`/`winter` curve it already drove `grass`/`meadow` with (`LAWN0`/`TURF0` pinned beside the other
+`*0` originals). Every one of the ~14 `col('lawn',k)` / `col('turf',k)` draw sites picks it up through
+`CCACHE`, which `applySeason` already invalidates — **zero new draw calls, no `rng()`, no terrain.**
+Ordering is now `FARM 88 > MEADOW 27 > FOREST 20 > SHOREPARK 18 > PARK 10 > QUAD 5`: parks remain the
+lushest thing on the plate. *Irrigated buys amplitude, not immunity.*
+
+**Census.** PASS. Tile histogram **empty**, every metric **+0**, entity counts identical — predicted
+before running, since a palette change touches no seeded draw.
+
+**Perf.** PASS, free. Min-of-3, interleaved: day **33.94 → 33.94ms**, night **39.94 → 39.83ms**. Two extra
+`mixA` calls per frame. (Pristine HEAD read night +7.0% against the 37.33ms pin under this session's load —
+that offset is earlier code, matching 119's identical observation. Not re-pinned; `polish-tile` owns it.)
+
+**Visual.** 2/2 PASS on the fix, seeds 42 and 7, A/B before-vs-after at the golden peak plus a winter
+frame plus a night frame. Both agents independently: the farms *"are no longer orphaned"* / *"no isolated
+brown blight patches"*, parks *"muted toward olive but did NOT go brown/dead"* and stay clearly the
+greenest tiles, winter and golden read as two seasons of one city, night undamaged.
+
+**Verdict — SHIPPED (FIXED).**
+
+**Findings for later laps.**
+- **⚠ A VISUAL AGENT'S PERCEPTION AND ITS DIAGNOSIS ARE TWO DIFFERENT CLAIMS, AND ONLY ONE IS ITS JOB
+  (new; the central lesson of this lap).** All three agents failed the frame; the two that named a *cause*
+  named the wrong one, and one invented a defect (the "floating rain shaft") that does not exist. An agent
+  looking at a PNG can tell you **that** a frame is ugly and **where**; it cannot tell you **why**, because
+  the cause lives in code it never read. Treat the *where* as evidence and the *why* as a hypothesis to
+  probe. Had 120 trusted the season agent's diagnosis it would have "fixed" `canopy` — which was never
+  broken — and left all 878 frozen hexes in place. **Never ship an agent's causal claim; probe it.**
+- **⚠ AND NEVER BANK ONE EITHER.** The rain-shaft FAIL would have entered this header as a cue and sent
+  some future lap hunting a z-order tear in correct code. One image read killed it. The skill says the
+  budget "exists to be spent when it matters" — **a cue you are about to write into the ledger is exactly
+  when it matters**, because a false cue outlives the iteration that invented it.
+- **⚠ EVERY WHOLE-CITY SHOT THIS LOOP HAS EVER TAKEN WAS IN JANUARY (new, and it explains 108).** `?warp=61`
+  from `year=1974` always lands on ~2035.0, so without `&year=` the season term is ~0 and *a seasonal defect
+  is invisible to the gate by construction*. This is the second time that has bitten (108: the farms had no
+  seasons at all, unnoticed for 107 laps). Both were found only by pinning `&year=`. **A step-back now shoots
+  a seasonal frame** (header updated). Ask what else the default URL silently pins: `tide` is the obvious next
+  one — `&tide=` exists, and no gate has ever moved it.
+- **⚠ "INTENTIONAL" IN A COMMENT IS NOT THE SAME AS "MEASURED" (new).** `BASE.lawn`'s comment reads
+  *"irrigated green: parks stay lush when the hills go gold"* — a real design intent, and it is why I nearly
+  dismissed the agent. But the code did not implement *lush*; it implemented **frozen**, in all four seasons,
+  including autumn and winter where the intent says nothing. A comment stating a *goal* is not evidence the
+  goal was hit. `grep`ping the comment made the defect look like a decision. The probe made it a number.
+- **THE CITY'S GREEN MASS IS PARK, NOT NATURE (new; sizes for any future vegetation vector).** `PARK` 584
+  + `SHOREPARK` 294 = 878 hexes, vs `FOREST` 231, `REDWOOD` 34, `VINEYARD` 26, `ORCHARD` 18, `MEADOW` **6**,
+  `GARDEN` **6**, `FIELD` **8**. Any Nature vector aimed at meadow/garden/field is aimed at ~20 tiles and
+  **cannot move a whole-city frame** (cf. 111's law: the whole-city gate cannot convict anything drawn at
+  3 px). If you want the city to *look* different, the lever is `PARK`.
+- **cue (m) — NIGHT'S PERIPHERY (new, soft, two independent sightings).** Downtown blazes; the outer ring
+  (east beach + parkland on 42, NW farms + low residential on 7) falls to near-unlit olive at `t=0.8`, losing
+  detail the day frame shows. The named candidates: the **pier/ferris wheel/boardwalk read as unlit**, and
+  there is no low-density streetlight or ambient moonlight on sand/parkland. A third agent, post-fix, called
+  the same night frame beautiful — so **measure the luminance histogram core-vs-ring before committing a
+  lap to it**; do not take the FAIL at face value (see the first finding above).
+
