@@ -3473,3 +3473,109 @@ across 3 seeds, ~800 samples/rule:
   found both real bugs here; neither was visible at native resolution, and **neither moved a
   single census metric**. A gate that only reads whole frames cannot see a 4px animal.
 
+## Iteration 94 — the streets stop crosshatching (2026-07-10) [holistic step-back]
+
+**Vector** — Transport × Polish. A **FIX**, chosen by the step-back rather than by rotation:
+the holistic pass ran *first*, and what it found set the vector.
+
+**How it was found.** Three agents read un-zoomed frames (seed 42 day, seed 7 day, seed 1234
+at `t=0.72`). Two of them, on *different seeds*, unprompted, named the **same** element: the
+core's roads had "merged into busy speckly static", "cross-hatched intersection marks tile
+after tile", "a muddy grey web". That convergence is the whole value of the step-back — no
+single vector's gate would ever have looked at roads.
+
+**Both wide agents then mis-diagnosed it, and the zoom overruled them.** They blamed *value*
+("roads too close in lightness to roofs, everything mushes into one grey mass"). Two zoomed
+downtown adjudicators independently found value separation was **fine** — roads are distinctly
+darker than ground and roofs — and located the real cause: the **dash geometry**. A wide frame
+is good at *localizing* a complaint and bad at *explaining* it. Had I fixed the reported
+problem (re-tone the asphalt, again — that was iter 86) I would have darkened a coast that was
+never too light, and left the actual defect untouched.
+
+**The defect.** The `T.ROAD` draw case dashed from the hex centre toward **every** road
+neighbour. On a straight run (two opposite neighbours) that reads as a dashed centre line —
+which is why it looked right for 93 iterations, while roads were sparse. As downtown densified,
+hexes acquired 3–6 road neighbours, and six axes meeting at 60° draw an **asterisk**.
+`probe-dash.mjs` measured it: **1856 of 3400 road hexes — 54.6% — were painting an X.**
+
+**Change.** A lane marking marks a lane **through** the hex, never a spoke toward each
+neighbour:
+- `nn === 2` → draw both spokes. Two neighbours is *one path* — a straight run or a bend — and
+  a path cannot cross itself.
+- `nn >= 3` → a junction: draw **only the busiest through-axis** (by summed `c.flow`, reusing
+  iter 77's traffic tree rather than inventing a second notion of "main street"). Side roads
+  stop at the kerb, as they do in life.
+- `nn <= 1` → a dead end draws nothing (180 lone ticks pointing nowhere, gone).
+
+At most one line crosses a hex, so **two dashed lines can never meet — X-hexes are 0 by
+construction**, not by tuning. The gold arterial trunk loop is untouched.
+
+**The probe changed the design.** My first rule was "busiest through-axis, always" (strict).
+The probe's through-axis histogram showed **~10% of road hexes have zero through-axis** — those
+are *bends*, and strict would have blanked every corner in the city, trading one defect for a
+subtler one. Lenient keeps 169 bends for 4% more ink and is equally X-free. Measured, not assumed:
+
+| rule | dash spokes | share of old ink | bends kept | hexes painting an X |
+| --- | --- | --- | --- | --- |
+| old (spoke per neighbour) | 8401 | 100% | 169 | **1856 (54.6% of roads)** |
+| strict (through-axis only) | 5301 | 63.1% | 0 | 0 |
+| **shipped (lenient)** | **5628** | **67.0%** | **169** | **0** |
+
+**A correctness trap, caught before it shipped.** The three hex axes are the *collinear-opposite*
+neighbour pairs `(0,1) (2,5) (3,4)` — and they are the **same for both row parities**, now frozen
+as `NBR_OPP`. The obvious pairing — "which move walks back to where I came from" — gives
+`(0,1) (2,3) (4,5)`, because index 2 means *up-right* on even rows and *up-left* on odd ones.
+Those are **inverse steps, not opposite neighbours**; a "through line" drawn across them bends.
+Verified numerically (`cross === 0 && dot < 0` on `px()` coords, both parities) before a line of
+draw code was written.
+
+**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
+`roads 5706 +0`, `developed 6174 +0`), as a draw-only change must be. Tile histogram empty by
+construction. Note `boulevardTrees 1210 +0` is a real check, not a formality: street trees are
+gated on `ewN`/`diagN`, which the rewrite recomputes — flat proves the rewrite preserved them.
+
+**⚠ `solarRoofs` is a flaky census metric (±1).** It read `+1` on the first post-change run and
+`+0` on two identical re-runs of the same bytes. `c.solar` is set by a `hashCell` salted with
+`year` (L1126), and `year` advances with ticks, so the metric appears to race the tick count.
+**It is not a growth signal and a ±1 on it is not evidence of anything.** Don't chase it; do
+re-run before believing any single-unit move on it.
+
+**Visual** — `VISUAL: PASS` ×3. Before/after downtown clips at seeds 42 and 7: "the X/asterisk
+crosshatch is gone", "through-streets now read as continuous single lines running across the
+core", "the grid is MORE legible, not less", gold arterials intact, bends render as one path,
+no new defects. One agent ran a pixel diff unprompted: **1.7% of pixels changed, confined to the
+lane dashes and arterial marks** — independent proof the change is scoped. Whole-frame pass over
+seed 42 day, seed 7 day, seed 1234 **true night**: coherent, no z-tears, no floating tiles, and
+the core "reads as a street *hierarchy* instead of uniform speckle."
+
+**Perf** — PASS, and *faster*, which is the point of deleting 33% of the stroke calls. Measured
+3× before and 3× after in the same session under the same load; judged on the minimum:
+day **32.72 → 32.44 ms**, night **37.00 → 36.55 ms**. Baseline day 31.33 / night 37.22.
+
+**Holistic step-back (the other half of this iteration).** The night "no lights" alarm was a
+**false positive worth recording**: an agent read `t=0.72`, which the HUD calls *SUNSET*, and
+reported "no emissive night lighting, unlit pier". Night lighting is extensive (`LITAMT`,
+`colLit('glass',…)`, unlit-pane punching, neon, floodlit pitches, uplit civics). A true-night
+frame (`t=0.9`) came back "60–70% of built area carries lit windows… the pier is NOT unlit…
+coherent, no bloom or firefly speckle." **`t=0.72` is dusk, not night — shoot `t≈0.9` to gate
+lighting.** Otherwise the city reads as balanced and beautiful at all three frames.
+
+**Verdict — FIXED.** (A compounding regression, found by the step-back, measured by a probe,
+removed by construction rather than by tuning.)
+
+### Four transferable findings
+- **A wide frame localizes a complaint; it does not diagnose it.** Two agents agreed on the
+  symptom *and* on the wrong cause. Zoom before you fix — the cheap zoom clip (`--shots downtown`)
+  saved this lap from re-toning asphalt that was already correctly toned.
+- **"Reach toward each neighbour" is a junction asterisk waiting to happen.** In a hex grid,
+  any per-neighbour radial draw — dashes, wires, hedges, desire paths, power lines — is fine
+  while the network is sparse and becomes crosshatch exactly where the network gets *interesting*.
+  Mark a **through-line**, not spokes. The bug was invisible for 93 iterations because it was
+  seeded by density the loop itself added.
+- **`NBR_OPP = [[0,1],[2,5],[3,4]]`, parity-free** — the collinear axes. The intuitive
+  "walk-back" pairing `(2,3) (4,5)` is inverse *steps* and will bend any line drawn through it.
+  Anything that wants "the street that runs through this hex" should use `NBR_OPP`.
+- **Let the probe pick between candidate rules before you write the draw code.** The
+  through-axis histogram vetoed my first rule (it would have blanked 169 bends) for the cost of
+  one extra column in a table. Two rules, one measurement, no revert.
+

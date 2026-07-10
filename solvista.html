@@ -212,6 +212,12 @@ const DEV=new Set([T.RES,T.MID,T.COM,T.TOWER,T.CIVIC,T.IND,T.MARKET]);
    front of its parliament; it does not take down a tower, and it does not pave
    a park. */
 const FORECOURT_LOT=new Set([T.EMPTY,T.RES,T.COM,T.MID]);
+/* what a resident crosses a block to reach — the shopfronts, the market, the
+   institutions, the formal squares. Feeds the `c.buzz` field in tick(). NOT the
+   same list as PEDDEST (which is "what do I turn to face" and includes the green
+   a ped is already standing on): see the buzz pass for why the distinction is
+   load-bearing rather than pedantic. */
+const ATTRACT=new Set([T.COM,T.MARKET,T.CIVIC,T.STADIUM,T.PLAZA]);
 const SHOREX=CTRX+11; /* the coast highway column */
 /* The founding crossroads, published by genWorld: every seed lays a main street
    through one hex and the old town grows around it, so this — not the plate's
@@ -1503,6 +1509,28 @@ function tick(){
     if(countAround(x,y,1,n=>DEV.has(n.t))<2)continue;
     if(hashCell(x,y,seedNum^0xB5B5)<0.05)c.stop=1;
   }
+  /* the buzz field: how much is there to come out FOR, seen from this hex?
+     Pure terrain derivation (no rng(), no terrain change), recomputed each tick
+     as shopfronts open. Read by stepPed, never written there. It generalizes the
+     `cafes` stat — a park hex that faces a shop — from one tile type to the
+     whole plate.
+     ⚠ This is deliberately NOT PEDDEST. PEDDEST answers "what does a ped on a
+     kerb turn to face", and it is mostly the open ground the ped is standing on
+     (PARK, GARDEN, QUAD, SHOREPARK). Counting *that* around a hex scores a park
+     INTERIOR above a kerb outside a row of shops — parks are large and adjacent
+     to themselves — so a walk climbing it drains the streets into the middle of
+     the lawn (measured: street occupancy 18.3%→15.4%, probe-buzz.mjs). ATTRACT
+     is the other question: the things you cross a block to reach. Most are
+     buildings you cannot stand on, so they can only ever raise the buzz of the
+     ground AROUND them — which is exactly the café edge and the shopfront kerb
+     where a crowd belongs. The three you *can* stand on get a self term. */
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const c=cells[idx(x,y)]; c.buzz=0;
+    if(c.t===T.VOID)continue;
+    let b=ATTRACT.has(c.t)?2:0;
+    nbrs6(x,y,(nx,ny)=>{const n=cellAt(nx,ny); if(n&&ATTRACT.has(n.t))b++});
+    c.buzz=b;
+  }
   recount();
   syncFleet();
 }
@@ -1964,6 +1992,12 @@ function strollable(x,y){
    compound, so street occupancy settles at ~19% time-averaged — the streets read
    as alive while ~4 residents in 5 are still in the parks. Tuned by measurement:
    0.45 emptied them to ~14%, 0.15 flooded them to ~28%.
+   ⚠ Since the buzz field (iter 104) that aggregate reads ~22%, and it is now the
+   WRONG number to tune against, because the streets peds stand on are sorted:
+   kerbs fronting a shop went 8.5%→14.0% while dull lanes went 10.3%→8.1%. Grade
+   any change to stepPed on that SPLIT (probe-buzz.mjs), never on the total —
+   whose run-to-run control spread (3.0–5.3 points) is wider than most real
+   effects, so the total can neither convict nor acquit you.
    Bridges are excluded — the deck is raised and a ground-drawn ped sinks through it. */
 const PEDLEASH=2, PEDSTEP_OP=0.18, PEDSTEP_RD=0.30;
 const PEDDEST=new Set([T.PARK,T.PLAZA,T.MARKET,T.SHOREPARK,T.GARDEN,T.COM,T.CIVIC,T.STADIUM,T.QUAD]);
@@ -1998,10 +2032,28 @@ function kerbDir(x,y){
   const L=Math.hypot(bx,by)||1, k=0.30*CW/L;    /* normalise in px, return cell units */
   return[bx*k/CW,by*k/ROWY];
 }
+/* Residents drift toward the buzz, and linger once they get there.
+   The walk is BIASED, not routed: a ped keeps the same re-decide clock and the
+   same marginal chance of moving, but among the neighbours it may legally enter
+   it picks one with weight 1+BUZZW*buzz — so a crowd accumulates on the lively
+   side of a block without anybody pathfinding. Two things then hold it there:
+   on a lively hex it re-decides more slowly (BUZZDWELL) and steps on less often
+   (BUZZSTILL), which is what turns a market or a parade of shopfronts into a
+   standing crowd rather than somewhere peds merely pass through.
+   ⚠ The `legal/6` factor is load-bearing, not a flourish. The old code drew 1 of
+   6 directions blind and simply stayed put when it drew a wall, so P(move) was
+   already step*(legal/6); picking directly from the legal set would have moved
+   every ped 2-3x more and blown the street occupancy the comment above tuned to
+   ~19%. Scaling the roll restores the original marginal exactly, leaving the
+   field to change only WHERE they go, never HOW OFTEN.
+   All Math.random(), like the rest of stepPed: the seeded stream is untouched. */
+const BUZZMAX=3, BUZZW=1.6, BUZZSTILL=0.55, BUZZDWELL=1.3;
+const buzzN=(x,y)=>{const n=cellAt(x,y);return n?Math.min(1,(n.buzz||0)/BUZZMAX):0};
 function stepPed(p,dt){
   p.tm-=dt;
   const pierBound=onPier(p.x,p.y), onRoad=!pierBound&&pedRoad(p.x,p.y);
   if(p.tm<=0){
+    const bn=buzzN(p.x,p.y);
     if(onRoad){ /* hug the kerb, with a little jitter so a pair doesn't stack */
       const[kx,ky]=kerbDir(p.x,p.y);
       p.tx=kx+(Math.random()-0.5)*0.2; p.ty=ky+(Math.random()-0.5)*0.2;
@@ -2010,11 +2062,21 @@ function stepPed(p,dt){
       p.tx=(Math.random()-0.5)*0.72; p.ty=(Math.random()-0.5)*(pierBound?0.2:0.72);
       p.tm=2+Math.random()*4;
     }
-    if(Math.random()<(onRoad?PEDSTEP_RD:PEDSTEP_OP)){ /* stroll to a neighboring hex */
-      const d=nbrDirs(p.y)[(Math.random()*6)|0], nx=p.x+d[0], ny=p.y+d[1];
-      if(pedWalk(p,nx,ny)){p.x=nx;p.y=ny;
-        if(strollable(nx,ny)){p.hx=nx;p.hy=ny;} /* reached open ground: re-anchor */
-      }
+    p.tm*=1+BUZZDWELL*bn;              /* somewhere worth standing: stay a while */
+    const dirs=nbrDirs(p.y), wt=[0,0,0,0,0,0];
+    let legal=0, wsum=0;
+    for(let i=0;i<6;i++){
+      const nx=p.x+dirs[i][0], ny=p.y+dirs[i][1];
+      if(!pedWalk(p,nx,ny))continue;
+      legal++; wt[i]=1+BUZZW*buzzN(nx,ny); wsum+=wt[i];
+    }
+    const step=(onRoad?PEDSTEP_RD:PEDSTEP_OP)*(1-BUZZSTILL*bn)*(legal/6);
+    if(legal&&Math.random()<step){ /* stroll on, drawn toward whatever there is to see */
+      let r=Math.random()*wsum, i=0;
+      while(i<5&&r>=wt[i]){r-=wt[i];i++}   /* r<wt[i] on exit, so wt[i]>0: the pick is legal */
+      const nx=p.x+dirs[i][0], ny=p.y+dirs[i][1];
+      p.x=nx;p.y=ny;
+      if(strollable(nx,ny)){p.hx=nx;p.hy=ny;} /* reached open ground: re-anchor */
     }}
   p.ox=lerp(p.ox,p.tx,dt*0.7); p.oy=lerp(p.oy,p.ty,dt*0.7);
 }

@@ -29,7 +29,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
-| **People & activity** | 41, 56 | 49 | 34, 64, 93 | 78 | | 84 | 71 |
+| **People & activity** | 41, 56 | 49 | 34, 64, 93, **104** | 78 | | 84 | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -40,19 +40,64 @@ ones (U2, 42, U5) stay in the bullet.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
-- **ROTATION.** Stalest domain is **People & activity** (last vector 93; it has no Scale). **Sky &
-  atmosphere** (95) is staler still by number, but iter 103 surveyed it and found it **additively
-  saturated** — and its **empty `New CA rule` cell is a trap, not an invitation** (sky is not
-  cellular; the one grid-shaped sky idea, fog on terrain, is already `rSea`/`fogAt`). See 103's
-  findings before spending a lap there. Recent kinds: 99 Polish · 100 New element ·
-  101 Connect(reverted) · 102 New element · 103 Polish — so **Deepen is the coldest kind** (last at
-  95) and **Polish has just run twice in three laps; do not pick it next.** Note **Nature × Connect
-  was attempted and reverted three times** (46, 88,
+- **ROTATION.** Last vector per domain: Transport **94** · Sky **95** · Water **97** · Civic **100** ·
+  Nature **102** · Urban **103** · People **104**. Stalest is **Transport (94)**; its cold cells are
+  `New CA rule` (77), `Connect` (5, 15 — both ancient) and an **empty `Interaction/UX`**. Next-stalest
+  **Sky (95)** is **additively saturated** (surveyed iter 103) and its **empty `New CA rule` cell is a
+  trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on terrain, is
+  already `rSea`/`fogAt`. Read 103's survey before spending a lap there.
+  Recent kinds: 100 New element · 101 Connect(reverted) · 102 New element · 103 Polish · 104 Deepen —
+  so **do not pick Deepen or Polish next**; the coldest kinds are **Connect**, **Interaction/UX** and
+  **New CA rule**. Note **Nature × Connect was attempted and reverted three times** (46, 88,
   101) and is the row's graveyard: 46 found it geometrically impossible, 88 found it has no host
   draw-only, 101 found the host *and the land* and lost on **shape**. Do not re-open it as a
   *corridor*. **Cue (e½) is now CLOSED — iter 102 shipped the blob 101 prescribed** (the commons),
   so the interior has its lung; **do not plant a second one.** Nature's remaining cold cells are
   Connect (graveyard — leave it) and Scale.
+- **⚠ THE PERF BASELINE IS STALE — it reads ~+5.5% day on code that costs nothing (iter 104).**
+  `polish-tile/perf-baseline.json` was pinned **2026-07-09** (day 31.33ms); iters 100–103 have landed
+  since. Measured with iter 99's stash-control, **pristine HEAD reads day 33.00–34.17ms** under the
+  same load — i.e. the gate reports **+5.3% before your change exists**, eating a third of its 15%
+  budget with drift that is not code. Iter 104's own cost, isolated against that control, was
+  **+0.11ms (+0.3%)**. Do **not** chase this; it is not a regression. **The next step-back should
+  re-pin the baseline** (`node .claude/skills/polish-tile/perf.mjs --save-baseline`) — `polish-tile`
+  owns it, which is why 104 logged it instead of silently re-pinning. Corollary to iter 99's rule:
+  a *stable* pass-over-pass offset means code, a *rising* one means load — but "code" may be
+  **earlier iterations'** code, so control against pristine HEAD, not against the baseline file.
+- **`c.buzz` — the third derived field, after `c.flow` and `c.val` (iter 104, in `tick()`).** How much
+  is there to come out FOR, seen from a hex: `ATTRACT.has(c.t)?2:0` plus a count of `ATTRACT`
+  neighbours (`COM`/`MARKET`/`CIVIC`/`STADIUM`/`PLAZA`). Pure terrain derivation, no `rng()`,
+  recomputed each tick. It is sparse — **mean 0.54–0.59 over standable hexes, and mostly 0** — so a
+  rule keyed to it changes behaviour *only* near attractions and is a no-op across the rest of the
+  city. Reuse it for anything meaning "somewhere worth standing"; don't hand-roll a second one.
+  **⚠ `c.buzz` is NOT `PEDDEST`** — see the trap bullet below.
+- **⚠ AN ATTRACTION FIELD MUST EXCLUDE THE GROUND YOU STAND ON (iter 104).** The buzz field was first
+  built by counting `PEDDEST` neighbours — the list already named "pedestrian destinations". It made
+  peds *worse*: street occupancy fell **18.3%→15.4%**, draining the streets. Cause: `PEDDEST` is mostly
+  **open ground** (`PARK`/`GARDEN`/`QUAD`/`SHOREPARK`), and parks are large and **adjacent to
+  themselves**, so a park *interior* scored above a kerb outside a row of shops — the field's argmax
+  was the middle of a lawn. `PEDDEST` answers *"what do I turn to face"* (its only prior use was
+  `kerbDir`); an attraction field answers *"what do I cross a block to reach"*. Those are different
+  questions and **the plausible name was the wrong list.** Fixed by `ATTRACT` — things you mostly
+  *cannot stand on*, so they can only raise the buzz of the ground **around** them, which is exactly
+  the café edge and the shopfront kerb. **Before reusing a Set, check what its existing call sites
+  ask of it, not what it is called.**
+- **⚠ A STOCHASTIC CONTROL NEEDS TWO RUNS TOO — and the aggregate can be unreadable (iter 104).**
+  Iter 103 said: for load-dependent metrics, run the *same* code twice. The same law holds for any
+  metric whose noise is **sampling** rather than machine load. `stepOld`'s street occupancy read
+  **21.4%** and **17.4%** on identical bytes and the same seed (130 peds, Math.random): a **3.0–5.3
+  point** run-to-run spread, wider than iter 104's whole effect. So the aggregate could neither
+  convict nor acquit the change. What *could*: **splitting the metric by the hypothesis.** Street
+  occupancy decomposed into *kerbs fronting a shop* (**8.5%→14.0%**) and *dull lanes*
+  (**10.3%→8.1%**, down on all three seeds) — two large, sign-consistent effects hiding inside a
+  noise-dominated sum that moved +3.2 points. **When a metric is too noisy to grade a vector, don't
+  average it harder — partition it along the mechanism you claim.**
+- **A random walk can be biased WITHOUT changing how often it moves (iter 104).** `stepPed` drew 1 of
+  6 directions blind and stayed put on a wall, so `P(move) = step·(legal/6)`. Picking directly from
+  the *legal* set — the obvious way to add a bias — silently moves every ped 2–3× more and blows a
+  tuned occupancy. Multiplying the step roll by `legal/6` restores the original marginal **exactly**,
+  leaving the field to change only **where** they go, never **how often**. Any future "make entity X
+  prefer Y" vector on a reject-sampled walk has this trap.
 - **⚠ NO `probe-*.mjs` IS TRACKED BY GIT — the ledger cites tools the repo does not carry (iter 101).**
   `.gitignore` ignores `probe-*.mjs` and `shot-*.mjs` so a killed iteration can't dirty the tree. The
   side effect: **every probe this ledger tells you to reuse exists only as an untracked leftover in
@@ -808,117 +853,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 96 entries before Iteration 94 live in
+> **Archive:** the 97 entries before Iteration 95 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 94 — the streets stop crosshatching (2026-07-10) [holistic step-back]
-
-**Vector** — Transport × Polish. A **FIX**, chosen by the step-back rather than by rotation:
-the holistic pass ran *first*, and what it found set the vector.
-
-**How it was found.** Three agents read un-zoomed frames (seed 42 day, seed 7 day, seed 1234
-at `t=0.72`). Two of them, on *different seeds*, unprompted, named the **same** element: the
-core's roads had "merged into busy speckly static", "cross-hatched intersection marks tile
-after tile", "a muddy grey web". That convergence is the whole value of the step-back — no
-single vector's gate would ever have looked at roads.
-
-**Both wide agents then mis-diagnosed it, and the zoom overruled them.** They blamed *value*
-("roads too close in lightness to roofs, everything mushes into one grey mass"). Two zoomed
-downtown adjudicators independently found value separation was **fine** — roads are distinctly
-darker than ground and roofs — and located the real cause: the **dash geometry**. A wide frame
-is good at *localizing* a complaint and bad at *explaining* it. Had I fixed the reported
-problem (re-tone the asphalt, again — that was iter 86) I would have darkened a coast that was
-never too light, and left the actual defect untouched.
-
-**The defect.** The `T.ROAD` draw case dashed from the hex centre toward **every** road
-neighbour. On a straight run (two opposite neighbours) that reads as a dashed centre line —
-which is why it looked right for 93 iterations, while roads were sparse. As downtown densified,
-hexes acquired 3–6 road neighbours, and six axes meeting at 60° draw an **asterisk**.
-`probe-dash.mjs` measured it: **1856 of 3400 road hexes — 54.6% — were painting an X.**
-
-**Change.** A lane marking marks a lane **through** the hex, never a spoke toward each
-neighbour:
-- `nn === 2` → draw both spokes. Two neighbours is *one path* — a straight run or a bend — and
-  a path cannot cross itself.
-- `nn >= 3` → a junction: draw **only the busiest through-axis** (by summed `c.flow`, reusing
-  iter 77's traffic tree rather than inventing a second notion of "main street"). Side roads
-  stop at the kerb, as they do in life.
-- `nn <= 1` → a dead end draws nothing (180 lone ticks pointing nowhere, gone).
-
-At most one line crosses a hex, so **two dashed lines can never meet — X-hexes are 0 by
-construction**, not by tuning. The gold arterial trunk loop is untouched.
-
-**The probe changed the design.** My first rule was "busiest through-axis, always" (strict).
-The probe's through-axis histogram showed **~10% of road hexes have zero through-axis** — those
-are *bends*, and strict would have blanked every corner in the city, trading one defect for a
-subtler one. Lenient keeps 169 bends for 4% more ink and is equally X-free. Measured, not assumed:
-
-| rule | dash spokes | share of old ink | bends kept | hexes painting an X |
-| --- | --- | --- | --- | --- |
-| old (spoke per neighbour) | 8401 | 100% | 169 | **1856 (54.6% of roads)** |
-| strict (through-axis only) | 5301 | 63.1% | 0 | 0 |
-| **shipped (lenient)** | **5628** | **67.0%** | **169** | **0** |
-
-**A correctness trap, caught before it shipped.** The three hex axes are the *collinear-opposite*
-neighbour pairs `(0,1) (2,5) (3,4)` — and they are the **same for both row parities**, now frozen
-as `NBR_OPP`. The obvious pairing — "which move walks back to where I came from" — gives
-`(0,1) (2,3) (4,5)`, because index 2 means *up-right* on even rows and *up-left* on odd ones.
-Those are **inverse steps, not opposite neighbours**; a "through line" drawn across them bends.
-Verified numerically (`cross === 0 && dot < 0` on `px()` coords, both parities) before a line of
-draw code was written.
-
-**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
-`roads 5706 +0`, `developed 6174 +0`), as a draw-only change must be. Tile histogram empty by
-construction. Note `boulevardTrees 1210 +0` is a real check, not a formality: street trees are
-gated on `ewN`/`diagN`, which the rewrite recomputes — flat proves the rewrite preserved them.
-
-**⚠ `solarRoofs` is a flaky census metric (±1).** It read `+1` on the first post-change run and
-`+0` on two identical re-runs of the same bytes. `c.solar` is set by a `hashCell` salted with
-`year` (L1126), and `year` advances with ticks, so the metric appears to race the tick count.
-**It is not a growth signal and a ±1 on it is not evidence of anything.** Don't chase it; do
-re-run before believing any single-unit move on it.
-
-**Visual** — `VISUAL: PASS` ×3. Before/after downtown clips at seeds 42 and 7: "the X/asterisk
-crosshatch is gone", "through-streets now read as continuous single lines running across the
-core", "the grid is MORE legible, not less", gold arterials intact, bends render as one path,
-no new defects. One agent ran a pixel diff unprompted: **1.7% of pixels changed, confined to the
-lane dashes and arterial marks** — independent proof the change is scoped. Whole-frame pass over
-seed 42 day, seed 7 day, seed 1234 **true night**: coherent, no z-tears, no floating tiles, and
-the core "reads as a street *hierarchy* instead of uniform speckle."
-
-**Perf** — PASS, and *faster*, which is the point of deleting 33% of the stroke calls. Measured
-3× before and 3× after in the same session under the same load; judged on the minimum:
-day **32.72 → 32.44 ms**, night **37.00 → 36.55 ms**. Baseline day 31.33 / night 37.22.
-
-**Holistic step-back (the other half of this iteration).** The night "no lights" alarm was a
-**false positive worth recording**: an agent read `t=0.72`, which the HUD calls *SUNSET*, and
-reported "no emissive night lighting, unlit pier". Night lighting is extensive (`LITAMT`,
-`colLit('glass',…)`, unlit-pane punching, neon, floodlit pitches, uplit civics). A true-night
-frame (`t=0.9`) came back "60–70% of built area carries lit windows… the pier is NOT unlit…
-coherent, no bloom or firefly speckle." **`t=0.72` is dusk, not night — shoot `t≈0.9` to gate
-lighting.** Otherwise the city reads as balanced and beautiful at all three frames.
-
-**Verdict — FIXED.** (A compounding regression, found by the step-back, measured by a probe,
-removed by construction rather than by tuning.)
-
-### Four transferable findings
-- **A wide frame localizes a complaint; it does not diagnose it.** Two agents agreed on the
-  symptom *and* on the wrong cause. Zoom before you fix — the cheap zoom clip (`--shots downtown`)
-  saved this lap from re-toning asphalt that was already correctly toned.
-- **"Reach toward each neighbour" is a junction asterisk waiting to happen.** In a hex grid,
-  any per-neighbour radial draw — dashes, wires, hedges, desire paths, power lines — is fine
-  while the network is sparse and becomes crosshatch exactly where the network gets *interesting*.
-  Mark a **through-line**, not spokes. The bug was invisible for 93 iterations because it was
-  seeded by density the loop itself added.
-- **`NBR_OPP = [[0,1],[2,5],[3,4]]`, parity-free** — the collinear axes. The intuitive
-  "walk-back" pairing `(2,3) (4,5)` is inverse *steps* and will bend any line drawn through it.
-  Anything that wants "the street that runs through this hex" should use `NBR_OPP`.
-- **Let the probe pick between candidate rules before you write the draw code.** The
-  through-axis histogram vetoed my first rule (it would have blanked 169 bends) for the cost of
-  one extra column in a table. Two rules, one measurement, no revert.
 
 ## Iteration 95 — the showers reach the ground (2026-07-10)
 
@@ -1698,3 +1637,114 @@ corroboration of the census's stream-neutrality claim.
   domain. The bug won. When the rotation bullet and an open cue disagree, **prefer the cue that comes
   with a number attached** — and log the survey that made you turn back, because that survey is the
   expensive part and it is exactly what the next fresh process cannot re-derive cheaply.
+
+## Iteration 104 — the crowds find the shopfronts (2026-07-10)
+
+**Vector** — People & activity × **Deepen**. Rotation pointed here on both axes at once: People was
+the stalest domain (last vector 93) and Deepen the coldest kind (last at 95), with 103 warning off
+Polish. No cue was open on People, so this is a seam-led vector, not a cue-led one.
+
+**The seam.** `PEDDEST` — a Set literally named "pedestrian destinations" (shops, markets, plazas,
+institutions, greens) — existed for one purpose: `kerbDir` used it to decide which way a ped standing
+on a kerb turned to **face**. No resident had ever *walked* toward one. Peds random-walked over open
+ground, re-anchoring wherever they landed. The city had a notion of what its people wanted and never
+let them go and get it.
+
+**Change.** Two edits, ~35 lines.
+- **`c.buzz`, a new derived field** (`tick()`, beside the bus-stop pass): `ATTRACT.has(c.t)?2:0` plus
+  a count of `ATTRACT` neighbours, where `ATTRACT = {COM, MARKET, CIVIC, STADIUM, PLAZA}`. Pure
+  terrain derivation — no `rng()`, no terrain change — recomputed each tick as shopfronts open.
+  Generalizes the `cafes` stat (a park hex facing a shop) from one tile type to the whole plate.
+- **`stepPed` climbs it.** Among the neighbours a ped may *legally* enter, it now picks one with
+  weight `1+BUZZW*buzz` (biased, not routed — nobody pathfinds). Two terms then hold it there: on a
+  lively hex it re-decides more slowly (`BUZZDWELL`) and steps on less often (`BUZZSTILL`). That is
+  what turns a market or a parade of shopfronts into a *standing crowd* rather than a place peds
+  merely pass through. `BUZZMAX=3, BUZZW=1.6, BUZZSTILL=0.55, BUZZDWELL=1.3`.
+- **The `legal/6` factor is load-bearing.** See the finding below — without it the tuned street
+  occupancy blows out.
+- **Dogs came along for free.** A leashed dog rides its owner's hex (iter 93), so residents now walk
+  their dogs to the shops with no code at all.
+
+**Census — PASS**, and provably stream-neutral by iter 103's **partition**: **every tick-derived
+metric is exactly +0** and the **tile histogram is empty** (`parks`, `towers`, `roads`, `developed`,
+`bridges`, `tileKinds`, `civicKinds`, `transportModes`, `solarRoofs`, `greenRoofs`, `towerHt`,
+`tallTowers`, `helipads`, `boulevardTrees`, `avenues`, `arterials`, `promenade`, `stations`, `cafes`,
+`schools`, `stadiums`). Only `pop` moved: **+3 of 150,206** (0.002%), the frame-count metric. 0 page
+errors. The buzz pass reads terrain and writes only `c.buzz`; `stepPed` draws only `Math.random()`.
+
+**Probe.** `probe-buzz.mjs` (`git add -f`'d). Re-implements HEAD's `stepPed` as `stepOld` and runs
+**both policies on one page load from the same ped snapshot**, stepped a **fixed number of steps**
+(not a fixed wall time), so machine load cannot skew it. Both policies run **twice** and are averaged
+— the control is stochastic (see findings). Time-averaged over 3 seeds, era 2035:
+
+| | before | after | |
+| --- | --- | --- | --- |
+| street occupancy, kerbs **fronting a shop** | 8.5% | **14.0%** | **+64%** |
+| street occupancy, **dull lanes** | 10.3% | **8.1%** | **−22%** (down on all 3 seeds) |
+| peds with an attraction in their ring | 16.7% | **26.2%** | **+57%** |
+| mean `c.buzz` of the hex a ped stands on | 0.22 | **0.39** | **+74%** |
+| street occupancy, **total** | 18.8% | 22.0% | *noise — see findings* |
+
+**Visual — PASS, 2/2.** Seeds 42 and 7, **before/after pairs** at `warp=61&t=0.3&step=300` (`__step`
+runs `advanceEntities`, so the crowd gets 300 sim-seconds to settle — a static shot of a
+*distribution* change is meaningless without it). Zoomed `--shots downtown` per iter 93's law that
+entity-vs-entity vectors are invisible wide, plus un-zoomed wide frames. One agent per seed, told not
+to enhance. Both independently reported denser knots on the market rows, the plaza/civic dome, and
+shop-fronted kerbs, with **emptier park interiors and residential lanes** — i.e. they described
+`st:dull −22%` without being told it existed. Both found no z-order tears, no floating tiles, no
+figures on rooftops or water, no blown-out colour. Both confirmed the wide frames were otherwise
+**pixel-identical**, reading the whole HUD stat bar unchanged (seed 7: `2035 · 35,200 · 71 · 64 · 179
+· 33 · 18 · 49% · 56% · 37%`) — the visual corroboration of the census's stream-neutrality claim.
+
+**Perf — PASS, and the gate is lying by +5.5%.** 3 sequential passes: day 33.16/33.11/33.17ms,
+night ~37.3ms — a **stable** offset (no rising trend), which by iter 99's rule means code, not load.
+So I ran iter 99's stash-control on **pristine HEAD** under the same load: day **33.00/33.06/34.17ms**.
+Taking the minimum of each, **this vector costs +0.11ms (+0.3%)**; the other +5.3% is a **stale
+baseline** pinned 2026-07-09, before iters 100–103 landed. Logged in the header rather than silently
+re-pinned — `polish-tile` owns that file.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ THE PLAUSIBLE NAME WAS THE WRONG LIST — and it made the feature actively worse.** The first
+  build counted `PEDDEST` neighbours. The probe read street occupancy **18.3%→15.4%**: it *drained*
+  the streets. `PEDDEST` is mostly the open ground the ped is standing on, and **parks are large and
+  adjacent to themselves**, so a park *interior* outscored a kerb outside a row of shops — the field's
+  argmax was the middle of a lawn, and the walk dutifully climbed to it. The two questions look
+  identical and are not: `kerbDir` asks *"what do I turn to face"* (a park, correctly); an attraction
+  field asks *"what do I cross a block to reach"*. `ATTRACT` is the second list, and it works
+  precisely **because most of it cannot be stood on** — a building can only ever raise the buzz of the
+  ground around it, which is the café edge and the shopfront kerb where a crowd belongs. **Check what
+  a Set's existing call sites ask of it before reusing it; the name is not the specification.** The
+  probe caught this in one run, before any screenshot.
+- **⚠ WHEN A METRIC IS TOO NOISY TO GRADE A VECTOR, PARTITION IT — DON'T AVERAGE IT HARDER.** Street
+  occupancy is stochastic (130 peds × `Math.random`): `stepOld` read **21.4%** and **17.4%** on
+  identical bytes and the same seed, a **3.0–5.3 point** control spread — wider than this change's
+  whole aggregate effect (+3.2). The total could neither convict nor acquit. Splitting it along the
+  *mechanism I was claiming* dissolved the problem: shopfront kerbs **+64%**, dull lanes **−22%**,
+  both sign-consistent across all three seeds. The scary aggregate ("streets 19%→22%, you flooded
+  them") and the true result ("peds left the lanes for the shops") are the same number. This extends
+  iter 103's law — *run the same code twice* — from **machine-load** noise to **sampling** noise, and
+  `probe-buzz.mjs` now runs each policy twice by default and prints the control spread with the
+  warning that a smaller delta is not a result.
+- **A random walk can be biased without changing how often it moves.** `stepPed` used reject
+  sampling: draw 1 of 6 directions blind, stay put if it's a wall. So `P(move) = step·(legal/6)`,
+  quietly. The obvious way to add a bias — pick from the *legal* set — makes every ped move 2–3×
+  more and would have blown the occupancy the PEDLEASH comment says was tuned by measurement
+  (0.45→14%, 0.15→28%). Multiplying the step roll by `legal/6` restores the original marginal
+  **exactly**, so the field changes only **where** peds go, never **how often**. Compare iter 98's
+  law (express a vector as a *property* of a thing, not a *decision* about which things exist): here
+  the same discipline applied to a *rate* is what let a behaviour change stay provably neutral.
+- **A stale perf baseline spends the next iteration's budget.** The gate read +5.7% day for a change
+  that costs +0.11ms, because pristine HEAD already reads +5.3% against a baseline pinned four
+  iterations ago. A gate that has drifted a third of the way to its own threshold will eventually
+  fail on innocent code, and then nobody will trust it (the hexagon-plate lesson, arrived at from the
+  other direction — that one left the baseline stale by *scaling the plate*; this one left it stale by
+  simple accumulation). **Control against pristine HEAD, not against the baseline file** — a stable
+  offset means code, but it may be *earlier iterations'* code.
+- **The interconnect was free where the ledger promised it would be.** Iter 93 established that a
+  leashed dog rides its owner's hex and inherits `pedWalk`'s legality. Nothing in this vector mentions
+  dogs, and residents now walk them to the shops. That is the payoff of the Deepen kind, and the
+  reason the header calls it the highest-yield move: the third and fourth systems come for free once
+  two are wired together.
