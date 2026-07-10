@@ -4715,3 +4715,116 @@ tears, and the whole frame still reads as a balanced coastal city. Correctly *su
   open ground. No new field, no new census metric (census-sprawl rule: `MARKET` was already tallied in
   the tile histogram, and the vector adds no tile type and no entity array).
 
+## Iteration 108 — the fields keep the calendar (2026-07-10)
+
+**Vector** — Nature × **Deepen / interconnect**. Rotation named the domain: Sky (95) is staler but
+additively saturated and its `New CA rule` cell is a documented trap, so Nature (102) was the
+next-stalest safe pick. Kind was chosen against the two most recent (New element, New CA rule), and
+`Deepen` is the skill's stated highest-yield move once a domain has its basics — Nature has had its
+basics since iter 60. The interconnect is Nature × **Sky**: the fields now read `applySeason`'s
+calendar. Draw-only by construction, so `pop` could not move.
+
+**The seam.** `applySeason()` (L293) drives `grass`, `grassDk`, `meadow`, `canopy`, `canopyLt` through
+the year — the hills go gold at `s≈0.62`, deciduous canopies amber at `s≈0.87`, evergreens sit it out.
+**`T.FARM` was not in that list.** Its draw case painted a soil hex and three crop rows in one of three
+*static* colors picked from `c.v` (`sage`/`gold`/`meadow`), at a fixed `lineWidth` of 2.1. So the wild
+grass around a farm went gold in August while the cultivated field — the most seasonal surface in any
+real landscape — did not change all year. Orchards already keep the calendar (iter 57's grove); the
+farmland, which outnumbers them, never did.
+
+**Change.** ~20 lines, all in `drawCell`'s `case T.FARM` plus one helper pair. Each field derives a
+phase `ph` from the calendar `s=year%1`, offset by up to ±5 weeks from `c.v`, and runs a chain:
+ploughed `soilDk` → `sprout` → the crop's own color → `straw` → cut `stubble` → ploughed under. Both
+ends of the chain are `soilDk`, so it is continuous across the new year *and* winter rows read as dark
+furrows on the lighter soil hex. `veg` swells `lineWidth` 0.9→2.4, so the rows are furrows in winter
+and heavy growth at midsummer. Fruit dots (the `v>0.66` variety) now appear **only** in the weeks
+before the cut. Four palette entries added (`sprout`/`crop`/`straw`/`stubble`); `applySeason` must not
+touch them or the two would double-count — which is why the third crop variety moved off `meadow`
+(season-driven) onto a dedicated `crop`. No terrain, no `rng()`, no `hashCell`, no new tile type.
+
+**The ground carries the year, not just the rows.** First pass modulated only the rows and the two
+visual agents *disagreed about which frame was greenest* — the tell that the effect was under-powered.
+Three ~2px rows are a thin ornament on a wide hex, so the tile's mean tone at city zoom is the
+**ground** (iter 100's law, and the reason iter 101's one-hex greenway failed). Fixed by blending 34%
+of the crop color into the soil hex. That is the whole difference between "visible if you lean in" and
+"the belt turns with the year".
+
+**Census — PASS.** `pop 154915 → 154918 (+3)`, `roads/developed/parks/towers +0`, **tile histogram
+completely empty** — as a draw-only vector must be. The residual ±3 is *not* mine: see the finding
+below; identical pristine code recaptures at ±3 too.
+
+**Probe — the year moves the belt, and the belt is a patchwork.** `probe-farmtone.mjs` samples real
+canvas pixels at every `__find('FARM')` centre. Mean farm luminance, seed 42 / seed 7:
+Jan **112.9 / 107.4** → Apr **147.7 / 148.2** → Aug **160.8 / 159.8** → Nov **137.3 / 140.7**.
+A **48-point** luminance swing, against the ledger's own ΔL 7–11 reference for "obviously
+distinguishable". Hue (G−R) is `−20 → −2 → −26 → −25`: April is the only green frame, August the
+golden one, exactly as designed. Field-to-field spread is **±21.4 in January and ±18.7 in November,
+but only ±9–11 at midsummer** — the stagger is most visible where the chain is steepest (ploughing,
+cutting) and least where every field is simply mature. That is the patchwork, measured.
+
+**Perf — PASS.** 3 sequential runs, judged by the minimum of each scene: day **33.22ms** (+0.2% vs the
+iter-105 baseline 33.16ms), night **37.61ms** (+0.8% vs 37.33ms). The two uncached `rgb()` strings per
+farm per frame (~150 farms) cost nothing measurable. Baseline **not** re-pinned — `polish-tile` owns it
+and there is nothing to re-pin.
+
+**Visual — PASS, 2/2 agents, on the strengthened version.** Four frames × two seeds, un-zoomed whole
+city. Both: no blow-out or neon, the rows still read as distinct lines against the tinted ground, no
+z-order tears or floating tiles anywhere in the frame, January reads as *ploughed farmland* rather than
+mud or scarring, and all four frames still read as a balanced coastal city. (One agent inverted
+brightest/darkest — see the finding; it does not affect the gate, which is about damage, not ordering.)
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ THE CENSUS IS LOAD-DEPENDENT, AND "CHAOTIC-CA NOISE" HAS BEEN COVERING FOR IT.** A draw-only
+  vector — no `rng()`, no terrain, an empty tile histogram — still printed `solarRoofs −3`. The
+  invariant the ledger reaches for ("terrain-gated `rng()` reshuffling") **logically cannot apply**.
+  Cause: `frame()` advances `year` off real elapsed time and keeps ticking while Playwright drives the
+  page; `c.solar`/`c.groof` salt their `hashCell` on `(year*23)|0` / `(year*31)|0`, so milliseconds of
+  machine load flip roofs, and an extra `tick()` moves `pop`. **Two captures of identical pristine code:
+  `pop` 154915 vs 154918, `solarRoofs` 1474 vs 1471.** The instrument's floor is ±3, not 0. Corollary
+  that cost me twenty minutes: **running your edited code twice proves only that the edited side is
+  deterministic.** To attribute a small delta you must re-capture the **baseline**. Freezing the sim
+  before `__census()` would remove the floor entirely and sharpen every future gate — an open vector.
+- **⚠ `git stash` IS A CONTAMINATED CONTROL HERE, AND IT CAN EAT YOUR ITERATION.** `census-baseline.json`
+  is tracked and `--save-baseline` dirties it, so `git stash` silently reverts your fresh baseline to
+  the last committed one. My "pristine control" printed `pop +4712` and read like a catastrophe; it was
+  pristine code scored against **iter 107's** matrix. Read the absolute latest column, never the delta,
+  when the stash control runs. Then `git stash pop` **refused** — `census-history.jsonl` had been
+  appended to by the control run — and left the whole iteration sitting in the stash. Recovery:
+  `git checkout -- .claude/skills/grow-city/census-history.jsonl && git stash pop`. The no-op control
+  (iter 107) does not have this failure mode; prefer it when the question is about terrain writes.
+- **⚠ AGENTS GRADE DAMAGE WELL AND ORDERINGS BADLY — MEASURE THE ORDERING.** Both seeds' agents agreed
+  perfectly on every *defect* question (no tears, no blow-out, rows legible, city coherent) across two
+  rounds. Asked *"which frame is brightest"*, one answered "August, deep chocolate-brown, darkest" —
+  twice, confidently — while the probe puts August at **lum 160.8** and January at **112.9**. It was
+  reading the wrong hexes. The first round's disagreement about *which frame was greenest* is what told
+  me the effect was under-powered and sent me to strengthen the ground, so **a disagreement between
+  agents is signal even when both say PASS**. But never resolve it with a third agent: `__find(TILE)` →
+  `getImageData` → mean RGB + spread is one command and it is dispositive. `probe-farmtone.mjs` is
+  `git add -f`'d (per iter 101, `.gitignore` eats `probe-*.mjs`), and its **spread** column is the
+  reusable half — it measures *variation across instances*, which is how you prove a patchwork rather
+  than a mere change.
+- **AN UNREACHABLE TEST HOOK IS THE SAME DEFECT AS AN UNREACHABLE RULE (iter 107's shape, in the
+  harness).** `window.__setYear` has existed since the seasons landed, commented *"pin the calendar
+  (seasons) for tests"*, and was **never wired into the URL block** — while `?t=`, `?warp=`, `?step=`
+  and `?flood=` all were. Consequence: `?warp=61` from `year=1974` always lands near 2035.0, so **every
+  screenshot in this loop's entire history was taken in January**, and nobody could have seen a seasonal
+  farm even if one had existed. One line added. Iter 107 found a rule nobody could reach; this is a hook
+  nobody could reach. **Grep the URL block before assuming a hook you can see is a hook you can use.**
+- **DEAD-RULE TRIAGE: divide 107's candidate list by *why* the tile reads 0.** `GARDEN` is gated
+  `year>=2008` and the matrix's eras are 1985/2005/2035 — it is 0 in two of three eras **by
+  construction** (~2 per 2035 city). `BURNT` reverts to `EMPTY` at `age>6` — a **transient** a snapshot
+  will nearly always miss. Neither is dead; neither should be "fixed". **An era-averaged census cannot
+  tell "dead" from "late", and a snapshot cannot tell "dead" from "short-lived."** Of 107's four
+  candidates only `SOLARF` is still genuinely open — and an earlier solar-farm vector was reverted as a
+  bad trade, so reaching it may not be worth wanting. 107's rule ("assume there are others") stands; its
+  *list* was three-quarters explained by measurement artifacts.
+- **A DOMAIN CAN BE FED BY DEEPENING ANOTHER DOMAIN TOWARD IT.** This is filed under Nature, but its
+  content is a **Sky** interconnect — the farms consume `applySeason`'s `year`. Sky has been the stalest
+  domain for 13 iterations precisely because its own additive cells are spent. The way to grow it is not
+  a new sky feature but to make more of the ground *answer* to it. Remaining surfaces that still sit out
+  the calendar: `VINEYARD` (should redden and be cut), `MEADOW` seed-heads, `MARSH`. Cheap, draw-only,
+  and each one makes the existing season system worth more.
+

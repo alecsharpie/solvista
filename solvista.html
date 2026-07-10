@@ -427,6 +427,29 @@ function colLit(name,f,litMix){ /* window glass mixing toward warm light at nigh
   c='rgb('+Math.min(255,r|0)+','+Math.min(255,g|0)+','+Math.min(255,bl|0)+')';
   return CCACHE[k]=c;
 }
+/* The colour a PANED window band must wear so its mean tone is UNCHANGED. A share `a`
+   of the band is about to be punched out to dark glass, so the surviving panes must
+   carry the whole band's light: lift them, and the band's mean holds by CONSTRUCTION
+   (iter 116) rather than being tuned back afterwards.
+     The mean to hold is the one that was ON SCREEN, not the ideal ribbon's. The band
+   this replaces was already `k` dark -- it had a notch punched in it -- so lifting to
+   the solid ribbon's mean over-brightens by exactly that notch: measured +5.1/+4.5/+5.6%
+   on the three seeds before `k` was carried in. Solving
+   `(1-a)v + a*dk == (1-k)*lm + k*dk` for v gives the line below; k=a leaves the colour
+   untouched, k=0 recovers the naive lift. Where v clips at 255 the panes simply run
+   hotter and whiter, which is what a lit window does. Cached exactly like colLit. */
+function colWin(f,litMix,a,k){
+  const key='win|'+f+'|'+(litMix*20|0)+'|'+(a*50|0)+'|'+(k*50|0);
+  let c=CCACHE[key]; if(c)return c;
+  const b=BASE['glass'];
+  let s='rgb(';
+  for(let i=0;i<3;i++){
+    const lm=lerp(b[i]*TINT[i]*f,LIT[i],litMix), dk=b[i]*TINT[i]*WINDK;
+    const v=Math.min(255,Math.max(0,((1-k)*lm-(a-k)*dk)/(1-a)))|0;
+    s+=(i?',':'')+v;
+  }
+  return CCACHE[key]=s+')';
+}
 
 /* ---------------- world ---------------- */
 let rng, seedNum, cells, year, dayT, monos, monoPlan, gonds, gondPlan, stats, pier, hut, harborY;
@@ -2462,20 +2485,48 @@ function bandS(cx,cy,ax,ay,z0,z1,fill){ /* horizontal band on both front faces
 function bandR(gx,gy,ax,ay,z0,z1,fill){
   const[cx,cy]=px(gx,gy); bandS(cx,cy,ax,ay,z0,z1,fill);
 }
-/* After dark, not everyone is home. Punch an unlit pane into a glass band so a
-   facade reads as separate windows instead of one glowing ribbon. Each front
-   face rolls independently; a lit face is left alone, so most glass stays lit
-   and downtown does not darken. Night-only — the day frame pays nothing. */
-function darkWinR(gx,gy,ax,ay,z0,z1,x,y,salt){
-  if(LITAMT<0.35)return;
+/* A lit facade band. The old one was a single glowing ribbon across the whole face
+   with one small notch punched in it, so after dark a tower read as horizontal
+   stripe noise rather than as windows (cue (j): holistic agents, iters 94 and 115).
+   A curtain wall is discrete panes divided by mullions — so draw ONLY the lit panes,
+   in one path, and let the prism's own wall stand between them. That is what a
+   mullion is, it costs no extra geometry, and a pane nobody is home in simply is not
+   drawn. A half-face is 7.5 css px at fit zoom (15 image px at dsf 2) and a band is
+   5.3, so n keeps the panes roughly square: real detail, not subpixel mush.
+     PERF IS WHY IT IS SHAPED THIS WAY, and the cost is the RASTER, not the fills.
+   The first build kept the solid ribbon and punched dark quads over it: same fill
+   count, ~5 extra anti-aliased sheared quads a band, and it cost +14% of the night
+   frame. Building those quads and never filling them cost +0.8%; filling one cost
+   nothing. Painting only what is lit draws FEWER quads than the band + darkWinR pair
+   it replaces, and lands at +4.6% night / +0.0% day.
+   Night-only: below the cut this is byte-for-byte the band it always was. */
+const WINDK=0.42, WINDARK=0.16;   /* unlit-glass shade; share of panes with nobody home */
+function winBandR(gx,gy,ax,ay,z0,z1,x,y,salt,f,litMix){
+  const hb=z1-z0;
+  if(LITAMT<0.35||hb<=0.4){bandR(gx,gy,ax,ay,z0,z1,colLit('glass',f,litMix));return;}
   const[cx,cy]=px(gx,gy);
-  const dk=col('glass',0.42), w=Math.min(1.9,(z1-z0)*0.8);
-  const inset=Math.min(0.35,(z1-z0)*0.16);
-  for(let s=-1;s<=1;s+=2){
-    const hb=hashCell(x*13+(s+1)*3,y*7+(z0|0),seedNum^salt);
-    if(hb<0.36)continue;                       /* this face keeps its lights on */
-    slotS(cx,cy,ax,ay,s*(0.24+hb*0.5),z0+inset,z1-inset,w,dk,false);
-  }
+  const X=ax*2*HW, V=ay*2*VR, E=ay*2*ER;
+  const n=clamp(Math.round(X/hb),2,4);   /* panes across one face, ~square */
+  const mt=Math.min(0.09,0.62/X);        /* mullion width, in face parameter t */
+  const pt=(1-(n-1)*mt)/n;               /* pane width, likewise */
+  const a=(n-1)*mt+WINDARK*(1-(n-1)*mt); /* share of the band left to the wall */
+  /* ...and the share the band it replaces already had: one notch, on the 64% of faces
+     that rolled one. Holding THAT mean is what keeps downtown's tone where it was. */
+  const k=0.64*(Math.min(1.9,hb*0.8)/X)*(1-2*Math.min(0.35,hb*0.16)/hb);
+  ctx.fillStyle=colWin(f,litMix,a,k);
+  ctx.beginPath();
+  for(let s=-1;s<=1;s+=2)for(let i=0;i<n;i++)
+    if(hashCell(x*13+(s+1)*3+i*29,y*7+(z0|0),seedNum^salt)>=WINDARK){
+      const t0=i*(pt+mt);                                /* the rest is nobody home */
+      winQuad(cx,cy,s,X,V,E,z0,z1,t0,t0+pt);
+    }
+  ctx.fill();
+}
+/* one pane-shaped quad on a prism front face, t measured from the front corner out;
+   `y = cy + V + (E-V)*t` is the wall line — equal screen y is NOT equal height. */
+function winQuad(cx,cy,s,X,V,E,z0,z1,t0,t1){
+  const x0=cx+s*X*t0, y0=cy+V+(E-V)*t0, x1=cx+s*X*t1, y1=cy+V+(E-V)*t1;
+  ctx.moveTo(x0,y0-z1);ctx.lineTo(x1,y1-z1);ctx.lineTo(x1,y1-z0);ctx.lineTo(x0,y0-z0);ctx.closePath();
 }
 /* vertical slot (window/column) on a prism front face; u in (-1,1): sign picks
    the left/right face, |u| the position along it; w = slot width, arch tops it */
@@ -3778,8 +3829,7 @@ function drawBuilding(c,x,y,gx,gy){
     const roofN=rv<0.45?(bodyN==='terra'?'terraDk':'terra'):(rv<0.72?'creamDk':(rv<0.9?'sage':'coral'));
     prism(gx,gy-0.06,0.30,0.26,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
     prism(gx,gy-0.06,0.34,0.30,h,h+2,col(roofN,1.02),col(roofN,0.6),col(roofN,0.82));
-    bandR(gx,gy-0.06,0.30,0.26,h*0.35,h*0.62,colLit('glass',0.8,lit*0.8)); /* window strip */
-    darkWinR(gx,gy-0.06,0.30,0.26,h*0.35,h*0.62,x,y,0x1DE7);
+    winBandR(gx,gy-0.06,0.30,0.26,h*0.35,h*0.62,x,y,0x1DE7,0.8,lit*0.8); /* window strip */
     if(hashCell(x,y,seedNum^0x5C05)<0.3) /* brick chimney */
       prism(gx+0.15,gy-0.24,0.045,0.04,h+2,h+6,col('brick',1),col('brick',0.6),col('brick',0.85));
     if(c.solar) /* rooftop solar — adopted by the diffusion CA */
@@ -3848,8 +3898,7 @@ function drawBuilding(c,x,y,gx,gy){
     const jx=join?0.16:0, ab=join?0.5:0.34;
     prism(gx+jx,gy,ab,0.30,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
     for(let z=5;z<h-4;z+=7){
-      bandR(gx+jx,gy,ab,0.30,z,z+3,colLit('glass',0.82,lit));
-      darkWinR(gx+jx,gy,ab,0.30,z,z+3,x,y,0x1DE7);
+      winBandR(gx+jx,gy,ab,0.30,z,z+3,x,y,0x1DE7,0.82,lit);
       if(bodyN==='terra')bandR(gx+jx,gy,ab+0.008,0.308,z+3,z+3.9,col('white',0.95)); /* balcony rails */
     }
     prism(gx+jx,gy,ab+0.02,0.32,h,h+1.6,col(roofN,1),col(roofN,0.6),col(roofN,0.82));
@@ -3907,8 +3956,7 @@ function drawBuilding(c,x,y,gx,gy){
     bandR(gx,gy,0.36,0.32,1.3,6.4,colLit('glass',0.85,lit));     /* storefront glass */
     slotS(bcx,bcy,0.36,0.32,fs*0.42,0.6,4.4,2.2,col('ink',0.8),false); /* the door */
     if(h>=17){ /* offices over the shop */
-      bandR(gx,gy,0.36,0.32,h-9,h-6.4,colLit('glass',0.8,lit*0.85));
-      darkWinR(gx,gy,0.36,0.32,h-9,h-6.4,x,y,0x1DE7);
+      winBandR(gx,gy,0.36,0.32,h-9,h-6.4,x,y,0x1DE7,0.8,lit*0.85);
     }
     bandR(gx,gy,0.36,0.32,h-4,h-1,col(signN,0.95)); /* sign band */
     awnS(bcx,bcy,0.36,0.32,fs,6.6,3.0,col('white',1.02),col(awnN,1.05));
@@ -3966,28 +4014,24 @@ function drawBuilding(c,x,y,gx,gy){
     if(style===0){ /* slab + fins, roof garden */
       prism(gx,gy,0.32,0.28,0,h,col(bodyN,1),col(bodyN,0.6),col(bodyN,0.84));
       for(let z=4;z<h-6;z+=8){
-        bandR(gx,gy,0.32,0.28,z,z+3.6,colLit('glass',0.8,lit*(0.5+0.5*hashCell(x,z|0,seedNum^3))));
-        darkWinR(gx,gy,0.32,0.28,z,z+3.6,x,y,0x1DE7);
+        winBandR(gx,gy,0.32,0.28,z,z+3.6,x,y,0x1DE7,0.8,lit*(0.5+0.5*hashCell(x,z|0,seedNum^3)));
       }
       prism(gx,gy,0.2,0.17,h,h+3,col('sage',1),col('sage',0.62),col('sage',0.85)); /* roof garden */
     } else if(style===1){ /* glass slab with a capped setback */
       const h1=h*0.7;
       prism(gx,gy,0.33,0.29,0,h1,col(bodyN,1),col(bodyN,0.6),col(bodyN,0.84));
       for(let z=4;z<h1-4;z+=6){
-        bandR(gx,gy,0.33,0.29,z,z+2.4,colLit('glass',0.95,lit*(0.5+0.5*hashCell(x+3,z|0,seedNum^5))));
-        darkWinR(gx,gy,0.33,0.29,z,z+2.4,x,y,0x1DE7);
+        winBandR(gx,gy,0.33,0.29,z,z+2.4,x,y,0x1DE7,0.95,lit*(0.5+0.5*hashCell(x+3,z|0,seedNum^5)));
       }
       prism(gx,gy,0.24,0.21,h1,h,col(capN,1),col(capN,0.6),col(capN,0.84));
       for(let z=h1+3;z<h-3;z+=6){
-        bandR(gx,gy,0.24,0.21,z,z+2.2,colLit('glass',0.85,lit));
-        darkWinR(gx,gy,0.24,0.21,z,z+2.2,x,y,0x1DE7);
+        winBandR(gx,gy,0.24,0.21,z,z+2.2,x,y,0x1DE7,0.85,lit);
       }
       bandR(gx,gy,0.26,0.23,h1,h1+2,col('sage',1)); /* terrace */
     } else if(style===2){ /* garden tower: stacked terraces */
       prism(gx,gy,0.31,0.27,0,h,col(bodyN,1),col(bodyN,0.6),col(bodyN,0.84));
       for(let z=6;z<h-4;z+=10){
-        bandR(gx,gy,0.31,0.27,z,z+3.4,colLit('glass',0.82,lit*(0.5+0.5*hashCell(x,z|0,seedNum^9))));
-        darkWinR(gx,gy,0.31,0.27,z,z+3.4,x,y,0x1DE7);
+        winBandR(gx,gy,0.31,0.27,z,z+3.4,x,y,0x1DE7,0.82,lit*(0.5+0.5*hashCell(x,z|0,seedNum^9)));
         bandR(gx,gy,0.325,0.285,z+3.4,z+4.8,col('sage',1));
       }
       prism(gx,gy,0.18,0.15,h,h+2.6,col('sage',1),col('sage',0.6),col('sage',0.84));
@@ -3998,8 +4042,7 @@ function drawBuilding(c,x,y,gx,gy){
       prism(gx,gy,0.19,0.16,h2,h,col(capN,1),col(capN,0.6),col(capN,0.84));
       for(let z=4;z<h-4;z+=7){
         const wx2=z<h1?0.34:(z<h2?0.27:0.19), wy2=z<h1?0.30:(z<h2?0.23:0.16);
-        bandR(gx,gy,wx2,wy2,z,z+2.6,colLit('glass',0.85,lit*(0.5+0.5*hashCell(x,z|0,seedNum^13))));
-        darkWinR(gx,gy,wx2,wy2,z,z+2.6,x,y,0x1DE7);
+        winBandR(gx,gy,wx2,wy2,z,z+2.6,x,y,0x1DE7,0.85,lit*(0.5+0.5*hashCell(x,z|0,seedNum^13)));
       }
       bandR(gx,gy,0.28,0.24,h1,h1+1.6,col('gold',1));
       bandR(gx,gy,0.20,0.17,h2,h2+1.6,col('gold',1));
