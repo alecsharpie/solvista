@@ -29,7 +29,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | |
-| **People & activity** | 41, 56 | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84 | 71 |
+| **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84 | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -55,9 +55,11 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **126** · Urban **124** · People **119** · Nature **120** · Transport **121** · Civic **122** · Water **123**.
-  **Stalest is now People (119)**, then **Nature (120)** — both have banked findings; check the last entry of
-  the stalest domain for one before reading its row. (**126 took Sky × Deepen** — the moon now keeps a calendar
+  Sky **126** · Urban **124** · People **127** · Nature **120** · Transport **121** · Civic **122** · Water **123**.
+  **Stalest is now Nature (120)**, then **Transport (121)** — both have banked findings; check the last entry of
+  the stalest domain for one before reading its row. (**127 took People × New element** aimed not at its spent
+  *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
+  "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
   and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
   that adds no element. Sky is no longer stale, and its empty `New CA rule` cell is still a trap, not an invitation.)
   **124 cashed Urban's banked ghost-`c.solar` cue and it is now CLOSED:** `c.solar`/`c.groof` persist after a
@@ -146,11 +148,12 @@ ones (U2, 42, U5) stay in the bullet.
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
   Recent kinds: 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen ·
-  122 Interaction/UX · 123 Deepen · 124 Polish · 126 Deepen —
-  **Deepen has now paid 6 of the last 11 and Polish 3; vary off both.** The coldest kinds are **Scale** (a
-  structural lever, not a lap move) and **New element** (last: 106) — but note 118's finding that a
-  *saturated* domain cannot take a New element; pick the domain first (Water, 116) and read its
-  row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
+  122 Interaction/UX · 123 Deepen · 124 Polish · 126 Deepen · 127 New element —
+  **Deepen has paid 6 of the last 12 and Polish 3; vary off both.** The coldest kind is now **Scale** (a
+  structural lever, not a lap move); **New element** was just cashed at 127 (last before it: 106). Note 118's
+  finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
+  *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
+  the domain first and read its row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
   **Connect paid three times** (109, 111, 112 — 112 logged as
   Deepen, see its entry): its trick was that
   it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
@@ -379,131 +382,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 119 entries before Iteration 117 live in
+> **Archive:** the 120 entries before Iteration 118 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 117 — the woods keep books nobody could read
-
-**Vector.** Nature × **Interaction/UX**. Nature was the stalest domain (last touched 108) and its
-Interaction/UX cell was **empty**; Interaction/UX was a cold kind (last 105) while the header warned
-Polish had paid 4 of the last 7 and Deepen 3 of the last 9. The tell the header prescribes for a
-gap-closing vector — *"look for the seam only where a tooltip/label already ASSERTS a relationship the
-draw ignores"* — is met exactly here: `TILEDESC[REDWOOD]` says **"Old-growth redwoods"** and
-`TILEDESC[MEADOW]` says **"Wild grass and wildflowers"**, and the CA has always tracked `c.age`,
-`c.fire`, `c.bloom` and `c.shroom` per cell while `describeTile` printed **`Value` and nothing else**.
-
-**Change.** Hovering a woodland or meadow hex now reports the state the diorama was already
-simulating. In the 105 lineage (a thing's interest is its *membership*, computed live):
-- **`Stand — N hexes`** on FOREST/REDWOOD: the contiguous wood it belongs to, flood-filled on hover.
-- **`Canopy — Closed / Thickening / Open edge`** on FOREST, read from the **same `k`** the draw uses to
-  decide scrub-at-the-edge and the 3rd/4th tree.
-- **`Undisturbed — ~N yr`** on FOREST; **`Old growth since <year>`** on REDWOOD.
-- **`Deep woods — sheltered enough for old growth`** when the succession precondition holds.
-- **`Mushrooms up`** (`c.shroom>0`), **`Burning`** (`c.fire>0`), and on MEADOW
-  **`Wildflowers — In bloom / Gone over / Not in flower`** (`c.bloom`, live like `Tide`).
-- `T.BURNT` gained the `TILEDESC` it never had, plus `Burnt — ~N yr ago`.
-
-Three inline predicates were extracted so one definition has all readers (iter 112's `stopQueue`
-shape): `isWood`, `canopyK(x,y)` (draw + tooltip), `deepWoods(x,y)` (`tick()`'s old-growth pass +
-tooltip). **No draw code was added.** `git diff` contains *zero* lines with a `ctx.`/`fillRect`/
-`hexTile`/`col(` call.
-
-**Census.** `VERDICT: PASS`, exit 0, pageerrors 0. `pop 154915 → 154911 (−4, −0.003%)`, `roads +0`,
-`developed +0`, **tile histogram empty**. Exactly right: no terrain write, no `rng()` draw, no new
-`hashCell`. The ±4 is iter 108's load-jitter (`(year*23)|0` salts), not the feature — a first census
-run on the same code read `pop +0 / greenRoofs −1`, the second `pop −4 / towerHt −1`.
-
-**Probes.** `probe-woods.mjs` (**`git add -f`'d**) hovers real tiles via `__find`'s screen coords,
-scrapes `#tip`, and checks every claim against ground truth — including an **independent Node-side
-flood fill** of the stands, so the tooltip's `Stand` number is graded by different code than produces
-it. **415 wood hexes across seeds 7/42/99/1234/3: 0 disagreements.** Canopy tiers spread on every seed
-(seed 42: Closed 24 / Thickening 28 / Open edge 17). `shot-woods.mjs` (**`git add -f`'d**) is the tile
-analogue of `hovershot.mjs`, which can only aim at entities.
-
-**Visual.** 2 seeds × (redwood + forest + meadow hover, zoom 4) + un-zoomed whole city.
-Seed 1234 `VISUAL: PASS`. Seed 42 first returned `VISUAL: FAIL` on **two claims, both wrong** — see
-findings. Re-shot with a corrected prompt: `VISUAL: PASS`. Both agents independently called the
-whole-city frame balanced and the woodland stands coherent.
-
-**Perf.** Interleaved A/B against pristine HEAD, min-of-3: patched **day 34.33ms / night 39.22ms**,
-pristine **day 35.11ms / night 39.45ms**. The patched file is marginally *faster* (sharing one
-`isWood` arrow removes a per-hex closure allocation in `countAround`). Baseline **not re-pinned**.
-
-**Verdict — SHIPPED.** The oldest CA in the artifact finally says what it has been computing since
-1974. Zero pixels, zero tiles, zero pop.
-
-### Findings
-
-- **⚠ A STABLE PASS-OVER-PASS OFFSET DOES *NOT* MEAN CODE — it means the load was stable too (iter 117
-  corrects iter 99's law).** 99 taught: *"a **stable** pass-over-pass offset means code, a **rising** one
-  means load."* The perf gate here read **+25.5% / +26.0% / +26.5%** day across three passes — textbook
-  "stable ⇒ code" — and it was **pure load**. Minutes later the **identical bytes** read day
-  **34.2/35.0/35.3ms** instead of **41.6/41.8/41.9ms**. Load on a shared machine is *autocorrelated over
-  minutes*, so three passes inside one loaded window are three samples of one draw, not three draws.
-  **Three consecutive passes are not an independent control at any spread.** The only sound reading is
-  **interleaved A/B/A/B against pristine HEAD** — swap the file between every pass, take the min per
-  variant. 99's own remedy (control against pristine HEAD) was right; its *diagnostic* was wrong and
-  would have sent this iteration hunting a nonexistent +26% regression in a diff containing no draw calls.
-- **⚠ `for v in patched pristine; do cp /tmp/$v117.html …` SILENTLY MEASURES ONE VARIANT SIX TIMES.**
-  `$v117` parses as the variable `v117`, not `${v}117` — every `cp` failed, `solvista.html` was never
-  swapped, and the A/B printed six plausible, subtly-different numbers for the *same file*. It looked
-  like a clean result. Brace your interpolations, and **make the swap fail loudly** (`|| exit 1`);
-  a perf harness that silently compares a thing to itself is worse than no harness. (The accident is
-  what exposed the load finding above, but only because the numbers disagreed with the earlier window.)
-- **⚠ A LEADING QUESTION IN THE VISUAL PROMPT MANUFACTURES A `VISUAL: FAIL`.** I asked the agents
-  *"does the tile under the cursor visibly show a focus/hover ring?"* — a feature that **has never
-  existed for tiles**. The ring at L367 keys off `hoverEnt`, which `pickEntity` sets to `null` on a bare
-  tile; iter 71 gave the ring to *stamped entities* only. Seed 42's agent dutifully failed the gate on
-  its absence. **The gate can only answer questions about what is in the frame; a prompt that presumes a
-  feature will get that feature reported as missing, or hallucinated as present.** Re-prompted without
-  the presumption, the same PNGs passed.
-- **⚠ AND THE SAME AGENT'S "STRAY FLOATING SPRITES" WERE 4×-MAGNIFIED WILDFLOWERS — measured, per iter
-  106.** Seed 42 reported *"small floating orange+purple squares … a minor z-order/floating-tile
-  artifact"*; seed 1234, on the same change, reported *"no z-order tears, no floating tiles."* Two agents
-  in direct contradiction ⇒ settle it with a number (iter 108). `probe-fleck.mjs` counted pixels matching
-  `col('gold',1.1)` = **rgb(255,174,59)** and `col('lav',1.05)` = **rgb(189,153,191)** on a frozen,
-  un-hovered canvas: **pristine HEAD gold 11 px / lav 11 px, patched gold 11 / lav 10** — and **272
-  `EMPTY` lots** request a fleck (`default:` draw case, `c.age>12 && c.v<0.2`). They are the succession
-  wildflowers that have always been there, resolved into squares by the camera. **At zoom ≥4 every 1–2 px
-  ornament in this artifact becomes a square, and an agent will call squares an artifact.** Say so in the
-  prompt, or shoot the hover at zoom ≤2.
-- **A PIXEL DIFF CANNOT VALIDATE A REFACTOR HERE — but a NUMERIC one can, and it is strictly better.**
-  PNG bytes of pristine vs patched differ; so do **pristine vs pristine** (entities move during the
-  1.2 s load, iter 111's ~14%-of-canvas law), so byte-equality is not a test. Instead, prove the
-  *extracted predicate* equals the *inline expression it replaced*, in-page, over the whole grid:
-  `canopyK(x,y) === countAround(x,y,1,n=>n.t===T.FOREST||n.t===T.REDWOOD)` and the same for `deepWoods`.
-  **0 mismatches over 3367 in-bounds cells × 2 seeds.** That, plus a `git diff` containing no `ctx.` line,
-  proves the frame is unchanged *by construction* — no screenshot required. **Reach for this whenever a
-  lap extracts a predicate; it is cheaper, decisive, and immune to entity motion.**
-- **`deepWoods` on FOREST is an EARLY row, not a dead one — a third case for iter 108's triage.** 108
-  divided ~0-reading rules into *dead* (`MARKET`, unreachable), *late* (`GARDEN`, gated `year>=2008`) and
-  *transient* (`BURNT`, `age>6`). This is the mirror of *late*: measured on seed 42, forest hexes passing
-  `deepWoods` go **11 (1985) → 6 (2005) → 0 (2035)** — not because the rule starves, but because the deep
-  hexes **mature away into `REDWOOD`**. A snapshot at the census's newest era reads 0 and looks dead. The
-  page loads at `year=1974` and runs forward, so the row is alive exactly where a *user* is. **Before
-  deleting a row that reads 0 at 2035, check whether its host is being consumed by a downstream rule.**
-- **`c.age` MEANS "since last turnover", AND `genWorld` STARTS EVERY CELL AT `age:0`.** The first draft
-  labelled the forest row `Regrown ~61 yr ago`, which is a **lie about the woods that never turned over**:
-  61 yr is simply the age of the world (1974→2035), and an original `genWorld` forest hex has never
-  regrown. Relabelled `Undisturbed ~N yr`, which is true whether the hex is primeval, logged-and-regrown,
-  or newly matured — all three reset `age`. Any future vector printing `c.age` on a *natural* tile has
-  this trap; `describeTile`'s own `est` comment ("age dates the CURRENT structure") only ever contemplated
-  buildings.
-- **VERIFY A CONDITIONAL ROW BY *INJECTING* ITS STATE — the CA's own luck is not a test.** `Mushrooms up`,
-  `Burning`, `In bloom` and `Gone over` never fired under `__warp`: blooms are seeded by **rain clouds**,
-  and clouds are advanced in `frame()`, not `tick()`, so **no amount of warping ever rains**; mushrooms
-  live 3 ticks inside a `year%1 ∈ (0.76,0.98)` window. `?year=` + hand-driven `tick()`s still produced
-  0 of each. What iter 117 ships is the **state→row mapping**, not the CA — so set `c.bloom=7` /
-  `c.shroom=3` / `c.fire=3` on a known on-screen hex, `render()`, hover, and assert the row appears
-  (4/4 ok). **A row you cannot make fire is a row you have not tested**, and reaching for a rarer seed or
-  a longer warp is the slow way to not test it.
-- **NEXT.** Cue **(k)'s siting half** is still the cheapest good vector on the board (gate `turbSet` on
-  `rDeep` 3–5 so the wind farm sites itself on the coastal shelf) — but Water was 116 and Nature is now
-  117, so it wants **Urban (110)**, **People (111)** or **Transport (112)** first by rotation. New cue
-  **(l)** below. **Iteration 120 remains the holistic step-back**, and must be shot at night as well as day.
 
 ## Iteration 118 — the windows stop being stripes (2026-07-10)
 
@@ -1229,3 +1112,65 @@ Sky is no longer the stalest domain. No tile, no entity, no `rng()`, pop provabl
   read.** The moon read *nothing*; `year` was right there. Sky's remaining such seams (the way past its
   saturation, per 108/113/120): `VINEYARD` seed-heads still ignore `year`. Anything drawn from a lone literal
   (a fixed position, a fixed brightness) that a global already varies is a candidate.
+
+## Iteration 127 — the parks get a picnic (2026-07-11)
+
+**Vector.** People & activity × **New element**. People was the stalest domain (last 119) and its additive
+inventory was declared spent (119's finding: only Deepen/Scale live) — but that inventory was of *entities*;
+its live cells and the domain's biggest **untouched surface** are two different things. Iter 120's step-back
+had already sized that surface: **PARK is the city's real green mass (878 hexes)** and *"if you want the city
+to look different, the lever is PARK."* The parks had ponds, fountains, cafés, sculptures, fireflies — but no
+one *at rest* on the grass (SHOREPARK has a picnic blanket; PARK never did). New element was also the coldest
+kind (last 106, twenty laps), and the header said vary off Deepen/Polish. Draw-only + `hashCell`, so pop is
+provably flat.
+
+**Change.** A new `v`-band in the PARK draw (`v∈[0.32,0.44)`, ~12% of parks, carved between the fountain and
+tree branches): an **open sunny lawn** — one shade tree instead of three — with, **by day only** (`LITAMT<0.5`,
+mirroring the kid/day logic and complementing the night fireflies), a **coral-or-lav checkered blanket**
+(`hashCell` picks the colour), two white check squares, a `trunk` picnic basket, and **two seated figures**
+(a short colour torso + an `ink` head dot, in the ped house style). No new tile, entity array, `rng()` draw,
+or `tick()` pass — so no census hook, `TILELABEL`, or `ENTINFO` change (it is still a `PARK`).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, every core metric **+0**, entity counts
+identical (`greenRoofs +1` is the documented `(year*31)` salt jitter). Exactly as predicted for a draw-only
+`hashCell` change that touches no terrain and no seeded stream.
+
+**Probe.** `probes/probe-picnic.mjs`. Freezes the clock (109's same-frame law) and counts **LAV** blanket
+pixels in each park tile's lower box, by day and by night, with **FOREST** as the null control. Lav is the
+signal because it is the *only unique colour*: **coral is shared with terracotta/`coral` building roofs**
+(a park next to one reads as a picnic — the first probe draft's headline "112 hits" was a neighbour's roof,
+and a coral roof dims below threshold at night so it even fakes the day-only test). Result, seeds 7/42/1234:
+**park lav px day 20/17/9 = 46 → night 0/0/0**, **FOREST control 0/0 every seed**. A picnic appears by day,
+is gone by night, and nowhere but a park.
+
+**Visual.** My own read of a 5×-zoomed clip (the blanket is ~5px, below the fit-zoom floor — iter 126's law):
+a coral blanket with two seated figures + a white check, sitting cleanly on the open lawn beside one tree,
+unmistakably a picnic. Then 2/2 whole-frame agents (seeds 42 & 7, `wide`, day `year=2035.62` off-January per
+125): parks read as balanced green space (trees + ponds + fountains + **open lawns as legible clearings, not
+bare holes**), no z-order tears / floating tiles / blown-out colour anywhere, whole frame a cohesive beautiful
+coastal city. The muted coral/lav lawns "blend in," not glaring.
+
+**Verdict — SHIPPED.** People's stalest streak is broken by aiming a New element at its biggest *surface*
+(PARK) rather than its spent *entity* list. Draw-only, pop provably flat, day-gated, visible up close.
+
+### Findings for later laps
+- **⚠ PICK A PROBE'S SIGNAL COLOUR FROM THE PALETTE'S *UNIQUE* ENTRIES, NOT THE OBVIOUS ONE (new; the lap's
+  central lesson).** `coral` was the natural blanket colour and it is **shared by building roofs** (`roofN`
+  can be `coral`/`terra`), so the coral probe conflated picnics with the roofs of buildings *adjacent to
+  parks* — and because a roof dims at night, it even survived the day-only cancellation. `lav` is used by
+  nothing structural (no roof/body/car/road tone), so it is a clean tracer. **Before trusting a colour probe,
+  grep the palette for every other draw that uses that colour name.** (Extends 120's "a car dims below
+  threshold and reads as day-only" — same trap, different static object.)
+- **DAYLIGHT DESATURATES A COLOUR TOWARD GREY — a probe matcher tuned to the BASE rgb will miss it (new).**
+  `lav` base `[178,148,198]` renders `~[192,168,184]` at `t=0.30`: B pulled 210→184, the blue-over-green gap
+  shrunk from ~+50 to ~+14. The first matcher (`bl>gr+22`) scored **0** on real blankets. Sample the
+  *rendered* pixel and tune to that, never to the palette literal.
+- **A DOMAIN'S "ADDITIVE INVENTORY IS SPENT" IS A CLAIM ABOUT ITS ENTITIES, NOT ITS SURFACES (new).** 119
+  retired People as additively done, and for peds/dogs/joggers/crowds it was right. But the parks — 878 hexes,
+  the single biggest tile class — had no people at rest, because "People" had only ever been read as *moving
+  entities*. When a domain's entity list is exhausted, look at what large *static surface* it could still
+  populate before declaring it saturated. People's remaining such surfaces: plazas/quads (buskers, market
+  stalls beyond the café), stadium/amphitheatre seating.
+- People's live cells remain **Deepen** and **Scale** for entities; **New element** is now re-opened for it
+  via *surfaces* (this lap). The picnic band replaced ~12% of dense-tree park tiles with open lawn + one tree —
+  parks stayed balanced (both agents), so a small tree-density trade for variety is safe on PARK's large n.
