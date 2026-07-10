@@ -7248,3 +7248,74 @@ baseline, the `?year=`/`?tide=` hooks). Header now **386/400**; all 10 ledger en
 **Verdict** FIXED — undid a compounding count/CA bug that had over-reported rooftop solar since forecourts
 and quad-grounds began carving squares from solar-bearing lots, and trimmed the header back under budget.
 
+## Iteration 125 — the step-back finds a clean city, and a January in its own eye (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/**125**). Not a domain × kind lap: its job is
+to read the WHOLE city for *cumulative* drift the census and per-feature visual gates are blind to, run the
+perf gate, and — new since 115/120 — do it at **night and a season**, not just a daylit January. No city
+domain vector was taken (see the verdict), so rotation is unchanged.
+
+**What was read.** Un-zoomed whole-city frames at **2 seeds × 3 lights/calendars** (42 and 7; day, night,
+and a season each), one subagent per seed reading its own three frames and asked the *cumulative* question
+("has anything compounded into clutter or darkness?"), never "is the new feature there."
+
+**Result: the city is healthy.** Both agents **VISUAL: PASS**.
+- **Night lighting (115) holds across both seeds.** Asked to *locate* the luminous core by light alone
+  (108's locate-don't-judge law), both hit near the true CBD — seed 42 at (.48,.47), seed 7 at (.50,.62),
+  the latter a discriminating **off-centre** hit. Neither read a flat glitter mat; the rim fades to dark.
+- **The sea reads** (116's bottom + 123's founded wind farm): "reads as ONE grouped wind farm parallel to
+  the shelf," night sea "deep desaturated blue, not a dead void."
+- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames.** Day frames
+  balanced, core→edge density gradient intact, open water alive not empty.
+
+**Perf — the gate cried a FALSE FAIL, and the interleaved control caught it.** `perf.mjs` reported night
+**+16%** (43.3 vs baseline 37.3) and FAILed, stable across two runs. But the stored baseline is a day old
+under a different load: the **iter-115 file's own bytes read 41.3ms night today** (~+10% pure load).
+Interleaved HEAD-125 vs the iter-115 file (A/B/A/B, min of 3): night **43.06 vs 41.28 (+4.3%)**, day
+**36.44 vs 38.06 (~flat, HEAD faster)** — sample ranges *overlap*. So the real cost of iters 116→124 is
+**~+4% night, day flat** — minor. **Not re-pinned** (re-pinning to today's inflated 43ms would blind the
+gate to a real future regression); night is the one to watch (118 added per-window lit-pane draws). Header
+perf note updated.
+
+**Season — measured alive; the one "defect" an agent named was an artifact of MY shot.** Seed 42's agent
+independently reported "winter barely differs from summer." Per 108's law (agents invert "which is more X"),
+this was measured, not believed: `probes/probe-season.mjs` (per-tile rendered-pixel distance from winter,
+`ROAD` as the zero control) reads **FARM winter→dry-peak 88, winter→autumn 93**, with FOREST/VINEYARD/
+ORCHARD/MEADOW/SHOREPARK all moving and PARK/REDWOOD near-zero *by design* (irrigated / evergreen, per 120).
+ROAD control **~0–2.2**. The seasons are working. The agent was fooled because I shot the "day" baseline at
+the **default** year — which is **~2035.0 ≈ winter (January is the default)** — so it compared the winter
+frame to a frame that was *also* winter. Exactly the January-blindness the header has warned about since
+108/120, walked into again.
+
+**Change (the step-back's product — a recipe fix, not a city change).** Promoted the lesson into
+**SKILL.md**'s step-back section and refreshed the header's step-back pointer: **pin the day/night baseline
+frames off January** (`year=2035.62`, dry peak) and keep `2035.02` as the seasonal-contrast frame, so the
+two baseline frames sit at different calendar points and seasonal drift can surface on the primary reads.
+No `solvista.html` edit; census unchanged and vacuous by construction (tree verified clean after the perf
+interleave restored HEAD).
+
+**Verdict — FIXED.** No compounding city defect found (a clean bill of health is the rarer, and the honest,
+step-back outcome). The compounding problem that *was* found is in the loop's own guardrail — a step-back
+that shoots its "day" frame in January cannot see a seasonal bug and mis-reads winter — and it is now fixed
+in the recipe so it stops recurring (108 → 120 → 125). The city grows by keeping its instruments honest.
+
+### Findings
+
+- **⚠ A DEFAULT-CALENDAR "DAY" FRAME IS A WINTER FRAME (new; the third recurrence of the January blind spot).**
+  `?warp=61` from `year=1974` lands on ~2035.0, and `applySeason`'s winter keyframe is 0.02 — so an un-pinned
+  day shot and a `year=2035.02` "winter" shot are the *same instant*. An agent handed both will report the
+  season "doesn't read," comparing winter to winter, and a real seasonal regression on the primary frame is
+  invisible. Pin the day/night baselines to a non-winter `year=`; the seasonal frame is the contrast, not the
+  day frame. (108 wired `?year=`, 120 shot a season, 125 fixed the *day* frame — the same blind spot, closed
+  one layer deeper each time.)
+- **⚠ GRADE A STEP-BACK PERF FAIL BY INTERLEAVING AGAINST AN OLD COMMIT'S FILE, NEVER BY THE STORED BASELINE
+  (sharpens 117's law).** The baseline is pinned on a specific day's load; a step-back runs days later on a
+  different load, so `current vs baseline` conflates code drift with today's load. The clean reading is
+  `current-file vs old-commit-file`, interleaved under *the same* load — here it collapsed a +16% FAIL to a
+  +4% real delta with overlapping ranges. `git show <old>:solvista.html > /tmp/x.html` and swap it in.
+- **A CLEAN STEP-BACK IS A COMPLETE ITERATION — DON'T FORCE A FILLER VECTOR ONTO IT (reinforces 120).** 120's
+  law says a step-back that finds a defect then ships an *unrelated* vector wastes the step-back. The corollary:
+  when it finds *no* city defect, the honest output is the health record + whatever the read itself surfaced
+  (here, the recipe fix) — not a Sky feature invented to have shipped something. "One more shallow feature is
+  not automatically worth it" (the skill). The next lap still owes the stalest domain (Sky, then People/Nature).
+

@@ -365,6 +365,16 @@ function daylight(t){
          tint:mix(a[3],b[3]),lit:lerp(a[4],b[4],f)};
 }
 
+/* the moon's phase (0 new .. 0.5 full .. 1 new). Iter 126 drove this off `year`,
+   but `year` is a fast DEVELOPMENT clock (~0.17 yr/sec) so the disc strobed ~2 Hz
+   at night (iter 134/135). `dayT` is the real day counter (~110 s/cycle, wrapped
+   only for time-of-day) — one synodic month every MOONSYN day-cycles reads as a
+   slow, legible moon: near-fixed across a single night, visibly waxing across the
+   run. Offset per city so each loads on its own phase. One predicate: the disc,
+   the moonglade and __moon() all read this. */
+const MOONSYN=8;
+function moonPhase(){ return ((dayT/MOONSYN + seedNum*0.61803398875)%1+1)%1; }
+
 /* per-frame tinted color cache */
 let TINT=[1,1,1], LITAMT=0, CCACHE={};
 /* entity screen-position stamps: each draw records where it drew this frame so
@@ -5316,11 +5326,12 @@ function render(){
   ctx.setTransform(1,0,0,1,0,0);
   ctx.clearRect(0,0,cvs.width,cvs.height);
 
-  /* the moon keeps a calendar (iter 126): it waxes and wanes on a synodic month
-     as `year` advances (~12.37 lunations/yr), so pinning ?year= sets its phase.
-     `MOONF` is the lit fraction (0 new .. 1 full); the moon disc and the
-     moonglade below both read it, so the sea only shines when the moon is up. */
-  const moonL=((year*12.3685)%1+1)%1, moonAng=moonL*6.2832;
+  /* the moon keeps a calendar (iter 126, re-clocked iter 135): it waxes and wanes
+     on a synodic month as the DAY clock advances (see moonPhase — dayT, not the
+     fast `year`, so it no longer strobes). `MOONF` is the lit fraction (0 new .. 1
+     full); the moon disc and the moonglade below both read it, so the sea only
+     shines when the moon is up. */
+  const moonL=moonPhase(), moonAng=moonL*6.2832;
   const MOONF=(1-Math.cos(moonAng))/2, moonTerm=Math.cos(moonAng), moonWax=moonL<0.5;
 
   /* night sky: stars + moon behind the slab */
@@ -6198,9 +6209,10 @@ function frame(now){
 window.__warp=n=>{const target=year+n;while(year<target){year+=0.45/6;tick();}
   for(const c of cells)if(DEV.has(c.t))c.h=c.th; recount();syncStats();};
 window.__setTime=t=>{dayT=t;};
-window.__setYear=n=>{year=n;}; /* pin the calendar (seasons + moon phase) for tests */
-/* the moon's phase for the current `year`: {phase 0..1 (0=new,.5=full), illum lit fraction, waxing} */
-window.__moon=()=>{const l=((year*12.3685)%1+1)%1;return{phase:l,illum:(1-Math.cos(l*6.2832))/2,waxing:l<0.5};};
+window.__setYear=n=>{year=n;}; /* pin the calendar (seasons) for tests; moon phase is on dayT now (iter 135) */
+/* the moon's phase for the current dayT: {phase 0..1 (0=new,.5=full), illum lit fraction, waxing}.
+   Pin it with __setTime(day) — an integer step of dayT advances one lunation-eighth at fixed time-of-day. */
+window.__moon=()=>{const l=moonPhase();return{phase:l,illum:(1-Math.cos(l*6.2832))/2,waxing:l<0.5};};
 /* pin the TIDE (?tide=0..1) by shifting the cycle's phase, so the sea keeps moving
    from there instead of freezing. Without it every shot lands on whatever tide the
    page load happened to reach — the blind spot ?year= closed for the seasons. */

@@ -28,7 +28,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | ~~**134**~~ |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~ |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84 | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -55,15 +55,14 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **134** (reverted) · Urban **133** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
+  Sky **135** · Urban **133** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
   **Stalest is now People (127)** — check the last entry of the stalest domain for a banked finding before reading
-  its row. (**Sky's Interaction/UX was ATTEMPTED at 134 and REVERTED** — a HUD readout naming the season + moon
-  phase from `year` STROBES, because `year` is a fast development clock, not a wall calendar: **~0.17 yr/sec at speed 1**,
-  so the season word flips ~0.7 Hz and the moon phase ~2 Hz in normal play. Static frames — every visual gate this
-  loop takes — are blind to it. **A Sky/season/moon readout is banked behind a rate fix: iter 126's DRAWN moon also
-  strobes ~2 Hz at night** (a latent defect its frozen-frame gate missed); decouple the moon's synodic phase from the
-  sprinting `year` — e.g. tie lunations to `dayT` days — and BOTH the disc and a readout become readable. That is the
-  next Sky vector. Sky's additive/CA cells are still traps, see below.) (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
+  its row. (**Sky's moon strobe is FIXED (135)** — the moon's synodic phase now reads `dayT` (the slow ~110 s/cycle
+  day counter) not the fast `year` dev clock, so the disc reads as a slow legible moon, not a ~2 Hz flicker
+  (`probe-moonrate`: 12→0 strobe-crossings/3 s). **Banked next for Sky: the SEASON still reads `year` and would
+  still strobe** (~0.7 Hz, 134), so a moon-only HUD card is now viable but a season word needs its own slow clock
+  first (135). **134's full almanac was REVERTED** — don't re-ship it assuming 135 unblocked it. Sky's additive/CA
+  cells are still traps, see below.) (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
   forest, not a flat dark hole, while staying the darkest thing inshore; `probe-kelp` gates it.)
   **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by respending
   their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it (132 did:
@@ -123,7 +122,8 @@ ones (U2, 42, U5) stay in the bullet.
   later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
   shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
   **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.*
-  **Iteration 135 is the next holistic step-back** (105, 110, 115, 120, 125, **130**, …). Shoot it
+  **Iteration 136 is the next holistic step-back** (105, 110, 115, 120, 125, **130**, …; 135 took the banked
+  moon-strobe FIX ahead of it, per "a banked measured finding outranks rotation/ritual"). Shoot it
   **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
   `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
   the full recipe). **130 found NO compounding city defect** (a clean bill of health, the honest step-back
@@ -163,9 +163,11 @@ ones (U2, 42, U5) stay in the bullet.
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
   Recent kinds: 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
   128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
-  **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** —
+  **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** ·
+  **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** —
   (**130 was the holistic step-back — no domain × kind lap.**)
-  **Next lap owes People (127, now stalest); live/cheap kinds there: Polish, Interaction/UX** (Connect paid at 111).
+  **Next domain lap owes People (127, still stalest); live/cheap kinds there: Polish, Interaction/UX** (Connect paid at 111).
+  (**136 is the holistic step-back** — see the pointer above.)
   Vary off Interaction/UX (2 of last 4). Unless another banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
   **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
@@ -383,82 +385,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 127 entries before Iteration 125 live in
+> **Archive:** the 128 entries before Iteration 126 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 125 — the step-back finds a clean city, and a January in its own eye (2026-07-11) [holistic step-back]
-
-**Vector.** The mandated holistic step-back (105/110/115/120/**125**). Not a domain × kind lap: its job is
-to read the WHOLE city for *cumulative* drift the census and per-feature visual gates are blind to, run the
-perf gate, and — new since 115/120 — do it at **night and a season**, not just a daylit January. No city
-domain vector was taken (see the verdict), so rotation is unchanged.
-
-**What was read.** Un-zoomed whole-city frames at **2 seeds × 3 lights/calendars** (42 and 7; day, night,
-and a season each), one subagent per seed reading its own three frames and asked the *cumulative* question
-("has anything compounded into clutter or darkness?"), never "is the new feature there."
-
-**Result: the city is healthy.** Both agents **VISUAL: PASS**.
-- **Night lighting (115) holds across both seeds.** Asked to *locate* the luminous core by light alone
-  (108's locate-don't-judge law), both hit near the true CBD — seed 42 at (.48,.47), seed 7 at (.50,.62),
-  the latter a discriminating **off-centre** hit. Neither read a flat glitter mat; the rim fades to dark.
-- **The sea reads** (116's bottom + 123's founded wind farm): "reads as ONE grouped wind farm parallel to
-  the shelf," night sea "deep desaturated blue, not a dead void."
-- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames.** Day frames
-  balanced, core→edge density gradient intact, open water alive not empty.
-
-**Perf — the gate cried a FALSE FAIL, and the interleaved control caught it.** `perf.mjs` reported night
-**+16%** (43.3 vs baseline 37.3) and FAILed, stable across two runs. But the stored baseline is a day old
-under a different load: the **iter-115 file's own bytes read 41.3ms night today** (~+10% pure load).
-Interleaved HEAD-125 vs the iter-115 file (A/B/A/B, min of 3): night **43.06 vs 41.28 (+4.3%)**, day
-**36.44 vs 38.06 (~flat, HEAD faster)** — sample ranges *overlap*. So the real cost of iters 116→124 is
-**~+4% night, day flat** — minor. **Not re-pinned** (re-pinning to today's inflated 43ms would blind the
-gate to a real future regression); night is the one to watch (118 added per-window lit-pane draws). Header
-perf note updated.
-
-**Season — measured alive; the one "defect" an agent named was an artifact of MY shot.** Seed 42's agent
-independently reported "winter barely differs from summer." Per 108's law (agents invert "which is more X"),
-this was measured, not believed: `probes/probe-season.mjs` (per-tile rendered-pixel distance from winter,
-`ROAD` as the zero control) reads **FARM winter→dry-peak 88, winter→autumn 93**, with FOREST/VINEYARD/
-ORCHARD/MEADOW/SHOREPARK all moving and PARK/REDWOOD near-zero *by design* (irrigated / evergreen, per 120).
-ROAD control **~0–2.2**. The seasons are working. The agent was fooled because I shot the "day" baseline at
-the **default** year — which is **~2035.0 ≈ winter (January is the default)** — so it compared the winter
-frame to a frame that was *also* winter. Exactly the January-blindness the header has warned about since
-108/120, walked into again.
-
-**Change (the step-back's product — a recipe fix, not a city change).** Promoted the lesson into
-**SKILL.md**'s step-back section and refreshed the header's step-back pointer: **pin the day/night baseline
-frames off January** (`year=2035.62`, dry peak) and keep `2035.02` as the seasonal-contrast frame, so the
-two baseline frames sit at different calendar points and seasonal drift can surface on the primary reads.
-No `solvista.html` edit; census unchanged and vacuous by construction (tree verified clean after the perf
-interleave restored HEAD).
-
-**Verdict — FIXED.** No compounding city defect found (a clean bill of health is the rarer, and the honest,
-step-back outcome). The compounding problem that *was* found is in the loop's own guardrail — a step-back
-that shoots its "day" frame in January cannot see a seasonal bug and mis-reads winter — and it is now fixed
-in the recipe so it stops recurring (108 → 120 → 125). The city grows by keeping its instruments honest.
-
-### Findings
-
-- **⚠ A DEFAULT-CALENDAR "DAY" FRAME IS A WINTER FRAME (new; the third recurrence of the January blind spot).**
-  `?warp=61` from `year=1974` lands on ~2035.0, and `applySeason`'s winter keyframe is 0.02 — so an un-pinned
-  day shot and a `year=2035.02` "winter" shot are the *same instant*. An agent handed both will report the
-  season "doesn't read," comparing winter to winter, and a real seasonal regression on the primary frame is
-  invisible. Pin the day/night baselines to a non-winter `year=`; the seasonal frame is the contrast, not the
-  day frame. (108 wired `?year=`, 120 shot a season, 125 fixed the *day* frame — the same blind spot, closed
-  one layer deeper each time.)
-- **⚠ GRADE A STEP-BACK PERF FAIL BY INTERLEAVING AGAINST AN OLD COMMIT'S FILE, NEVER BY THE STORED BASELINE
-  (sharpens 117's law).** The baseline is pinned on a specific day's load; a step-back runs days later on a
-  different load, so `current vs baseline` conflates code drift with today's load. The clean reading is
-  `current-file vs old-commit-file`, interleaved under *the same* load — here it collapsed a +16% FAIL to a
-  +4% real delta with overlapping ranges. `git show <old>:solvista.html > /tmp/x.html` and swap it in.
-- **A CLEAN STEP-BACK IS A COMPLETE ITERATION — DON'T FORCE A FILLER VECTOR ONTO IT (reinforces 120).** 120's
-  law says a step-back that finds a defect then ships an *unrelated* vector wastes the step-back. The corollary:
-  when it finds *no* city defect, the honest output is the health record + whatever the read itself surfaced
-  (here, the recipe fix) — not a Sky feature invented to have shipped something. "One more shallow feature is
-  not automatically worth it" (the skill). The next lap still owes the stalest domain (Sky, then People/Nature).
 
 ## Iteration 126 — the moon keeps a calendar (2026-07-11)
 
@@ -998,3 +929,59 @@ right when frozen (82/88/101/114/131 — now 134). Reverting it is the system wo
   In JS strings use the escape (`'·'`, and `'\u{1F311}'`… for the moon glyphs, which I DID get right); in
   HTML use `&middot;`/`&mdash;`/`&times;` — exactly as the rest of the file does (every glyph was ASCII-safe
   before this). Promoted to SKILL.md (Invariants).
+
+## Iteration 135 — the moon slows down (2026-07-11)
+
+**Vector.** Sky & atmosphere × **Deepen** (a FIX). Rotation did not name Sky (People 127 was stalest), but
+iter 134 banked a **measured, shipped defect** as "the real banked Sky vector," and a banked measured finding
+outranks kind-rotation (the loop's own law) — doubly so when it is a *fix* for a compounding problem (120's
+rule). The defect: iter 126 drove the moon's synodic phase off `year`, a fast **development** clock (~0.17
+yr/sec at speed 1), so `year*12.3685` sweeps ~2 lunations/sec and the disc **strobes ~2 Hz at night**. Every
+gate this loop owns is frozen, so it shipped invisibly (134 caught it only by letting the clock run).
+
+**What the temporal probe found first** (`probes/probe-moonrate.mjs`, promoted — 134's law: a *cadence* claim
+needs a running clock, the mirror of freeze-the-clock). playing=true, sampled `__moon().illum` at 20 Hz over
+3 s, counted 0.5-crossings (a lunation crosses twice); control = the day/dev clocks must advance. **HEAD: 12
+crossings, max |Δillum| 0.74/step**, control healthy (Δyear 0.49/3 s). Confirmed 134's analytic strobe before
+a line was written.
+
+**Change (~10 lines, draw-only).** A shared `moonPhase()` (by `daylight()`) returns the lunation fraction from
+**`dayT`** — the real day counter (~110 s/cycle; monotonic, wrapped only for time-of-day) — one synodic month
+every `MOONSYN=8` day-cycles, offset per city by `seedNum*φ` so each loads on its own phase. The render-scope
+`moonL`, the moonglade, and `__moon()` all read it (one predicate, 112's law). `dayT`-driven, it is near-fixed
+across a single night (0.5 day → ≤0.1 ΔMOONF) and visibly waxes across the ~6-min run (~3.3 day-cycles → ~0.4
+lunation). No tile, entity, `rng()`, `tick()`, or terrain — pop provably flat.
+
+**Census.** PASS, exit 0. Tile histogram empty, core +0; `greenRoofs −2` is the documented roof-adoption
+headless-timing wobble (127/132/133).
+
+**Probe, after.** `probe-moonrate`: **12 → 0 crossings, max |Δillum| 0.74 → 0.0002**, control still running —
+the strobe is gone and the page is not merely frozen. And the re-clocked iter-126 `probe-moon` (now stepping
+`dayT` by whole day-cycles at fixed night — an integer dayT step = exactly 1/8 lunation, time-of-day held):
+**corr(illum, lit px) = 1.000** both seeds, new→full 11→374 / 13→372, land control dev 0.00 — the disc still
+draws every phase correctly, and seeds 42/7 now load on *different* phases (0.07 vs 0.44), the per-seed offset
+working.
+
+**Visual.** 2/2 whole-frame night agents PASS (seeds 42 & 7, off-January `year=2035.62`, t=0.90). Both located
+a clean single moon — seed 42 a crescent at (0.74,0.15), seed 7 a near-full disc at (0.91,0.15), two distinct
+phases both rendering cleanly — no tears/doubling/blowout anywhere, each frame a balanced night city with
+core→edge falloff.
+
+**Verdict — FIXED.** The moon 126 gave a calendar now keeps it on the *day* clock, so it reads as a slow,
+legible moon instead of a 2 Hz flicker. The banked defect is closed; a moon-phase HUD card is now viable (see
+findings — the season half still strobes).
+
+### Findings for later laps
+- **⚠ THE MOON STROBE IS FIXED — but a SEASON readout still strobes (the almanac is only half-unblocked).**
+  134's almanac welded `seasonWord(year)` + a moon card to the HUD; 135 slowed the MOON (now on `dayT`), but
+  the SEASON still reads `year`, the fast dev clock (~0.7 Hz word-flip, 134). So a **moon-only** HUD card is
+  now viable; a **season** word is not, until the season also reads a slow clock (or is quantized/held). Don't
+  re-ship the full almanac assuming 135 unblocked it.
+- **`dayT` IS A MONOTONIC DAY COUNTER, not just time-of-day.** `daylight()` wraps it `%1` internally, so `dayT`
+  itself accumulates unbounded (~110 s/cycle). It is the loop's one **slow** clock: anything that "should
+  advance over minutes, not seconds" and must not flicker in a static frame should read `dayT`, never `year`
+  (the moon now does). And an **integer `dayT` step advances the moon exactly 1/8 lunation while holding
+  time-of-day fixed** — the clean way to sweep the moon at fixed night in a probe (probe-moon uses it).
+- **A per-seed phase offset (`seedNum*φ mod 1`) buys free variety at zero stream cost.** The moon now loads on
+  a different phase per city (probe: 0.07 vs 0.44) without touching `rng()`. Reuse the golden-ratio-of-seedNum
+  trick for any "same every city" ornament that should vary but must not perturb the seeded stream.

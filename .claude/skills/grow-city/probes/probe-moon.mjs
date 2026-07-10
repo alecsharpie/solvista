@@ -7,10 +7,13 @@
  * moon disc must track `__moon().illum`, and a land patch must NOT move as the
  * phase sweeps (only the moon and its glade may change).
  *
- * Method: freeze the clock (playing=false, iter 109's same-frame law), pin the
- * night (t=0.90, LITAMT=1), then step `year` across one full lunation. At each
- * step read the ground-truth `illum` from the hook and count lit pixels in the
- * moon box from the RENDERED canvas — different code than computes the phase.
+ * Method: freeze the clock (playing=false, iter 109's same-frame law), then step
+ * `dayT` by whole day-cycles from a night base (0.90) — iter 135 re-clocked the
+ * moon onto `dayT` (MOONSYN=8 day-cycles per lunation), so an integer dayT step
+ * advances exactly 1/8 lunation while holding time-of-day fixed at night (frac
+ * unchanged ⇒ LITAMT stays high ⇒ the moon stays drawn). Eight steps = one full
+ * lunation. At each step read the ground-truth `illum` from the hook and count lit
+ * pixels in the moon box from the RENDERED canvas — different code than the phase.
  *
  *   node probe-moon.mjs
  */
@@ -24,8 +27,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const PAGE = pathToFileURL(join(HERE, '../../../../solvista.html')).href;
 
 const SEEDS = [42, 7];
-const LUN = 1 / 12.3685;               /* one synodic month, in years */
-const STEPS = 8;
+const STEPS = 8;                       /* MOONSYN=8 day-cycles = one lunation (iter 135) */
+const NIGHT = 0.90;                    /* fractional time-of-day held fixed at night */
 
 const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: 1600, height: 1000 } });
@@ -41,7 +44,7 @@ for (const seed of SEEDS) {
   await p.goto(`${PAGE}?seed=${seed}&warp=61&t=0.90`);
   await p.waitForTimeout(500);
 
-  const res = await p.evaluate(({ LUN, STEPS }) => {
+  const res = await p.evaluate(({ STEPS, NIGHT }) => {
     playing = false;
     const dpr = cvs.width / cvs.clientWidth;
     /* moon box, in device px (moon drawn at 0.80,0.15 in CSS px, r=11) */
@@ -69,16 +72,15 @@ for (const seed of SEEDS) {
       return s / n;
     };
 
-    const base = 2035.0;
     const rows = [];
     for (let k = 0; k < STEPS; k++) {
-      window.__setYear(base + (k / STEPS) * LUN);
+      window.__setTime(NIGHT + k);        /* +1 day-cycle: 1/8 lunation on, night held */
       render();
       const m = window.__moon();
       rows.push({ phase: m.phase, illum: m.illum, lit: litCount(), land: landLum() });
     }
     return rows;
-  }, { LUN, STEPS });
+  }, { STEPS, NIGHT });
 
   const illum = res.map(r => r.illum), lit = res.map(r => r.lit), land = res.map(r => r.land);
   const c = corr(illum, lit);
