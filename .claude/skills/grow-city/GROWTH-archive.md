@@ -2769,3 +2769,67 @@ made it six, on a fresh seed, unprompted.
 - **`TALL` does not exist in `solvista.html`** — the header's iter-84 note implies it does.
   It was a set defined locally inside 84's probe. Rebuild it as `new Set([T.TOWER,T.MID,T.CIVIC,T.COM])`.
 
+## Iteration 86 — the asphalt stops being a smear (2026-07-10)
+
+**Vector** — Urban fabric × **Polish**. Rotation: cue (b) was the ledger's strongest
+open cue, volunteered *unprompted* by both holistic agents at iter 84. The other strong
+cue (c, the monorail beam) is Transport × Polish and iter 85 was Transport × Polish —
+taking it would have repeated **both** axes back-to-back. Urban was two laps back.
+The skill's own rule decides it: *if something compounded badly, fix it before adding more.*
+
+**The defect, measured** (`probe-asphalt.mjs` — **gitignored scratch** via `probe-*.mjs`,
+like `probe-forecourt.mjs`; recreate it, don't hunt for it in git — reads real canvas pixels at each
+tile's screen centre via `__find`, so it measures the *drawn* result after TINT/season/
+light, not the `BASE` entry). At 2035 the bare asphalt floor (`p10`) was **99.9** on
+*both* seeds against parks at ~170 — and there are **836 road hexes** (seed 42) vs 157
+parks, so a fifth of the plate sat at the palette's darkest large-area tone, contiguous.
+Worse: the asphalt's *internal* variation was **zero**. Its whole measured `spread` (100.7)
+came from trees and lane dashes drawn *on top*. A flat dark field of 836 tiles is exactly
+the kelp-coast failure mode, inland.
+
+**Change (draw-only: no terrain, no `rng()`, no new `Math.random()` draw).**
+- `road` `[106,101,93]`→`[136,133,126]`, `roadArt` `[86,82,75]`→`[116,113,107]`. Lighter
+  and de-browned (r−b 13→10), **preserving the 20-luminance arterial-is-darker gap** that
+  is the trunk's visual language.
+- `RDF=[0.93,0.965,1.0,1.035,1.07]`, indexed by `hashCell(x,y,seedNum^0xA5FA)` — asphalt
+  resurfacing patches. **Quantized to 5 steps on purpose:** `col()` caches on `name|f`, so
+  a *continuous* jitter would blow the cache to one entry per road hex. 5 steps × 2 names
+  = 10 entries. Drawn at the existing `1.02` bleed, so a patch laps its neighbour and the
+  seams read as joins, not as a grid.
+- lane-dash `globalAlpha` `0.55`→`0.62`: the cream dash loses contrast on lighter asphalt
+  (Δ70→Δ53 against the surface; 0.62 restores it to Δ60).
+
+**Census** — `+0` on **21 of 22** metrics, `pop +2` (iter 85's documented non-reproducible
+wobble), empty tile histogram, 0 page errors. VERDICT: PASS. Exactly the signature a
+draw-only change should have.
+
+**Probe (after)** — bare-asphalt floor `99.9 → 122.2`, *identical on both seeds*. PARK−ROAD
+mean gap `44.0 → 26.6` (seed 42) and `37.7 → 21.3` (seed 7). `PARK`, `RES` and `MEADOW`
+readings came back **byte-identical**, which is the proof the change touched only asphalt.
+The floor landing at **122.2 rather than 133** is the mottle confirming itself: that is the
+`0.93` step, not the `1.0` one. A histogram cannot see a tone — per iter 82, *measure the shape*.
+
+**Visual** — 2 agents, 6 frames, incl. a **night** frame and a **2005/sparse-road** frame
+(the two ways this change could have failed: glowing at night, or vanishing into terrain
+when roads don't yet form a mass). Both PASS. Seed 42's agent independently described the
+BEFORE as "a dark, warm brown mass that dominates the negative space" — a **third**
+unprompted confirmation of the cue. Both called the mottle "resurfacing patches", not a
+checkerboard. I read the night frame myself (the one risk case): streets stay muted
+violet-grey, clearly darker than the lit windows.
+
+**Verdict: FIXED.** The interior reads as sun-bleached asphalt; the parks have their
+contrast back. Cue (b) is closed.
+
+**Findings**
+- **`__find` returns BOTH grid and screen coords** — `{x,y,sx,sy}`. `h.x ?? h.sx` silently
+  samples grid cell `(22,0)`, not the screen, and every probe reads black. Use `sx`/`sy`.
+  (Cost me one debug round; `getImageData` on `#stage`'s own 2d context works fine.)
+- **A per-cell tone jitter must be quantized, because `col()` memoizes on `name|f`.** Any
+  future "vary this surface per hex" move (roofs, sand, grass) inherits this constraint.
+- **The palette entry is not the drawn tone.** `road` L=101.6 in `BASE`; measured floor
+  99.9 after TINT. Close here, but probe the *canvas*, not the array.
+- **`p10` is the honest read of a ground tone**, not `mean` — the mean is polluted by
+  whatever is drawn on top of the tile (trees, dashes, lamps).
+- Agents read the **`SPECIMEN nn`** caption in the UI and will report *that* as the seed
+  ("seed-16" for `seed=42`). Not confabulation — don't discount a verdict over it.
+

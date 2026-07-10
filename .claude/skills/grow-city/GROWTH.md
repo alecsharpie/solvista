@@ -18,7 +18,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53 |
+| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53, 96 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 |
@@ -33,13 +33,31 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
-- **⚠ Nature is ADDITIVELY SATURATED (surveyed iter 95).** Before reaching for a new plant or a
+- **⚠ Nature is ADDITIVELY SATURATED (surveyed iter 95; Polish taken by iter 96).** Before reaching
+  for a new plant or a
   new nature CA, know what is already there: forest succession + logging, `REDWOOD` canopy closure,
   **wildfire** (`c.fire` → `T.BURNT` → `EMPTY`), meadow `bloom` as excitable media, `VINEYARD`,
-  `ORCHARD`, fairy rings (`c.shroom`), `c.hedge` field rims, and `EMPTY` already draws a patchwork
+  `ORCHARD`, fairy rings (`c.shroom`), `c.hedge` field rims, **street trees + a boulevard allée**
+  (`c.treed`, L1143 — iter 96 nearly re-shipped these), and `EMPTY` already draws a patchwork
   with saplings and flecks (iter 53). `T.BURNT` reads **0** at all nine census points — fires are
   rare and decay in 6 ticks, so the whole fire ecology is *invisible* in any snapshot; deepening it
   buys a thing nobody sees. Nature's next real move is **Deepen or Polish**, not a new element.
+- **Trees have three species now: `treeSp()` → broadleaf / conifer / poplar (iter 96, L2135).**
+  Hashed from the tree's **sub-hex** position (`round(gx*8),round(gy*8)`), so a clump mixes;
+  conifers weighted inland (`0.08+0.30*inland`, `inland=clamp((SHOREX-gx)/30,0,1)`), poplar a flat
+  ~6% accent. Realized mix **68 / 25.5 / 6.3%**; conifer share **14.7% coast → 34.3% hills**.
+  Species does **not** depend on `year`, so a tree never changes kind as the city ages.
+  `ORCHARD`/`VINEYARD` don't call `tree()` (own draws) — their rows stay uniform. `probe-species.mjs`
+  is the shape probe. **⚠ `tree()` is the hottest draw call in the renderer (~2,700/frame): iter 96
+  cost +7.1% day frame time on its own.** Don't put the next Nature vector inside `tree()` too.
+- **⚠ A top-level `const` is NOT on `window` (iter 96).** `SHOREX`/`CTRX`/`HEXR`/`G` are `const`s:
+  they live in the global **lexical** env, so inside `page.evaluate` they resolve **by bare name**
+  but `window.SHOREX` is `undefined`. Function declarations (`tree`, `treeSp`, `cellAt`) *do* land
+  on `window`. Iter 96's probe read `window.SHOREX`, got `undefined`, and computed `NaN` — and
+  because **`NaN < x` is `false`, every value silently fell through a bucketing chain into the last
+  bucket**, reporting a dead gradient for a feature that was working. A probe that reports a
+  suspiciously *uniform* result is more likely broken than the feature. Bare-name it, like
+  `probe-dash.mjs` does.
 - **⚠ Alpha cannot rescue a colour that matches its background (iter 95).** A rain veil at
   `rgba(120,146,176)` (lum 143) over a sunlit city (lum 150–190) was **invisible**, and two rounds
   of more ink (α .30→.52, 9→12 columns, 1→1.4px) moved it from 0.79× to **0.98× of the animation
@@ -598,75 +616,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 88 entries before Iteration 86 live in
+> **Archive:** the 89 entries before Iteration 87 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 86 — the asphalt stops being a smear (2026-07-10)
-
-**Vector** — Urban fabric × **Polish**. Rotation: cue (b) was the ledger's strongest
-open cue, volunteered *unprompted* by both holistic agents at iter 84. The other strong
-cue (c, the monorail beam) is Transport × Polish and iter 85 was Transport × Polish —
-taking it would have repeated **both** axes back-to-back. Urban was two laps back.
-The skill's own rule decides it: *if something compounded badly, fix it before adding more.*
-
-**The defect, measured** (`probe-asphalt.mjs` — **gitignored scratch** via `probe-*.mjs`,
-like `probe-forecourt.mjs`; recreate it, don't hunt for it in git — reads real canvas pixels at each
-tile's screen centre via `__find`, so it measures the *drawn* result after TINT/season/
-light, not the `BASE` entry). At 2035 the bare asphalt floor (`p10`) was **99.9** on
-*both* seeds against parks at ~170 — and there are **836 road hexes** (seed 42) vs 157
-parks, so a fifth of the plate sat at the palette's darkest large-area tone, contiguous.
-Worse: the asphalt's *internal* variation was **zero**. Its whole measured `spread` (100.7)
-came from trees and lane dashes drawn *on top*. A flat dark field of 836 tiles is exactly
-the kelp-coast failure mode, inland.
-
-**Change (draw-only: no terrain, no `rng()`, no new `Math.random()` draw).**
-- `road` `[106,101,93]`→`[136,133,126]`, `roadArt` `[86,82,75]`→`[116,113,107]`. Lighter
-  and de-browned (r−b 13→10), **preserving the 20-luminance arterial-is-darker gap** that
-  is the trunk's visual language.
-- `RDF=[0.93,0.965,1.0,1.035,1.07]`, indexed by `hashCell(x,y,seedNum^0xA5FA)` — asphalt
-  resurfacing patches. **Quantized to 5 steps on purpose:** `col()` caches on `name|f`, so
-  a *continuous* jitter would blow the cache to one entry per road hex. 5 steps × 2 names
-  = 10 entries. Drawn at the existing `1.02` bleed, so a patch laps its neighbour and the
-  seams read as joins, not as a grid.
-- lane-dash `globalAlpha` `0.55`→`0.62`: the cream dash loses contrast on lighter asphalt
-  (Δ70→Δ53 against the surface; 0.62 restores it to Δ60).
-
-**Census** — `+0` on **21 of 22** metrics, `pop +2` (iter 85's documented non-reproducible
-wobble), empty tile histogram, 0 page errors. VERDICT: PASS. Exactly the signature a
-draw-only change should have.
-
-**Probe (after)** — bare-asphalt floor `99.9 → 122.2`, *identical on both seeds*. PARK−ROAD
-mean gap `44.0 → 26.6` (seed 42) and `37.7 → 21.3` (seed 7). `PARK`, `RES` and `MEADOW`
-readings came back **byte-identical**, which is the proof the change touched only asphalt.
-The floor landing at **122.2 rather than 133** is the mottle confirming itself: that is the
-`0.93` step, not the `1.0` one. A histogram cannot see a tone — per iter 82, *measure the shape*.
-
-**Visual** — 2 agents, 6 frames, incl. a **night** frame and a **2005/sparse-road** frame
-(the two ways this change could have failed: glowing at night, or vanishing into terrain
-when roads don't yet form a mass). Both PASS. Seed 42's agent independently described the
-BEFORE as "a dark, warm brown mass that dominates the negative space" — a **third**
-unprompted confirmation of the cue. Both called the mottle "resurfacing patches", not a
-checkerboard. I read the night frame myself (the one risk case): streets stay muted
-violet-grey, clearly darker than the lit windows.
-
-**Verdict: FIXED.** The interior reads as sun-bleached asphalt; the parks have their
-contrast back. Cue (b) is closed.
-
-**Findings**
-- **`__find` returns BOTH grid and screen coords** — `{x,y,sx,sy}`. `h.x ?? h.sx` silently
-  samples grid cell `(22,0)`, not the screen, and every probe reads black. Use `sx`/`sy`.
-  (Cost me one debug round; `getImageData` on `#stage`'s own 2d context works fine.)
-- **A per-cell tone jitter must be quantized, because `col()` memoizes on `name|f`.** Any
-  future "vary this surface per hex" move (roofs, sand, grass) inherits this constraint.
-- **The palette entry is not the drawn tone.** `road` L=101.6 in `BASE`; measured floor
-  99.9 after TINT. Close here, but probe the *canvas*, not the array.
-- **`p10` is the honest read of a ground tone**, not `mean` — the mean is polluted by
-  whatever is drawn on top of the tile (trees, dashes, lamps).
-- Agents read the **`SPECIMEN nn`** caption in the UI and will report *that* as the seed
-  ("seed-16" for `seed=42`). Not confabulation — don't discount a verdict over it.
 
 ## Iteration 87 — the monorail stops looking like a UI overlay (2026-07-10)
 
@@ -1512,3 +1466,87 @@ must never be `?flood=`ed** — the shot would lie. `shot-rain.mjs <seed> <step>
 cloud→ground column in CSS screen coords (`world*scale+off`, the transform `__find`/`__ents`
 publish). `probe-rainink.mjs <seed> <step>` is the ink/noise-floor measurement above; it reads
 luminance straight off the live canvas, so it needs no image decoder.
+
+## Iteration 96 — the woods grow a second species (2026-07-10)
+
+**Vector** — Nature × **Polish (SHIPPED)**. Rotation picked the domain, saturation picked the
+kind. Nature is the stalest domain (last ship: **76**; 88 was reverted) *and* the header calls it
+**additively saturated** — "Nature's next real move is Deepen or Polish, not a new element." This
+is that move: it adds no tile, no entity, no CA pass, and no `hashCell` *placement*. It changes
+only how an existing glyph draws.
+
+**The defect (found by grep, not by the ledger).** `tree()` (L2135) was **one glyph** — a trunk
+plus two overlapping circles — and it was called from **18 sites**: `FOREST`, `PARK`, `GARDEN`,
+`MEADOW`, `SHOREPARK`, `PLAZA`, the boulevard allée, and `EMPTY` succession. Every tree in
+Solvista, from the hill woods to the civic forecourt, was the same species at a different scale.
+~2,700 crowns per frame, one silhouette. This is the third time the header's warning has bitten:
+**`GROWTH.md` is the loop's memory, not the artifact's inventory.** The first idea this lap was
+*street trees* — which turned out to already exist (`c.treed`, L1143, a tree-lined boulevard with
+an allée down both sides). Grep the seam before designing.
+
+**Change (draw-only).** `treeSp(gx,gy)` → `0` broadleaf / `1` conifer / `2` poplar, and `tree()`
+branches on it:
+- **conifer** — three stacked triangular tiers over a short trunk, each tier leaning further
+  downwind than the one below (`lean = w*(0.3+i*0.35)`), so the spire bends with the same
+  `WINDA` gust the round crowns ride;
+- **poplar** — one narrow upright plume, a tall ellipse with a lighter inner highlight;
+- **broadleaf** — the original two-blob crown, byte-for-byte.
+Species is hashed from the tree's **own sub-hex position** (`hashCell(round(gx*8),round(gy*8),
+seedNum^0x7A3E)`), not its cell, so the four trees in one forest hex mix rather than parroting
+each other. Conifers are weighted **inland**: `p = 0.08 + 0.30*inland`, where
+`inland = clamp((SHOREX-gx)/30, 0, 1)`. Poplar is a flat ~6% accent at any distance. The strand
+stays broadleaf-and-palm; the hills go coniferous. `ORCHARD` and `VINEYARD` were checked and do
+**not** call `tree()` — they have their own draws — so the mixed species cannot break the one
+place uniform rows are correct.
+
+**Census** — every metric **+0**, tile histogram **empty**. That is not a null result, it is the
+proof: a draw-only change that touches no terrain and consumes no `rng()` draw *must* read exactly
+flat, and it did, on the first run. (Contrast iter 91, where a "safe" substitution cost −22% pop.)
+
+**Growth signal** — `probe-species.mjs` (gitignored scratch) wraps the real `window.tree` and
+tallies **one rendered frame**, so it counts crowns actually painted, not cells that could host
+one. Over the 3-seed × 2-era matrix, **6,976 trees**: broadleaf **68.2%** · conifer **25.5%** ·
+poplar **6.3%**. The inland gradient is real and monotonic:
+
+| band | n | conifer | poplar |
+| --- | --- | --- | --- |
+| coast (0–.4) | 2200 | **14.7%** | 6.5% |
+| mid (.4–.75) | 2118 | **25.5%** | 6.3% |
+| hills (.75–1) | 2658 | **34.3%** | 6.1% |
+
+Species is **STABLE across eras** (same coords, 1985 vs 2035 → identical): a tree does not change
+kind as the city ages, because `year` is not in the hash. The probe asserts this.
+
+**⚠ The probe lied first, and the shape of the lie is reusable.** Its first run put **100% of
+trees in the `hills` band** — a dead gradient. The feature was fine; the *probe* was broken.
+`SHOREX` is a top-level **`const`**, so it lives in the global **lexical** environment: it
+resolves by bare name inside `page.evaluate`, but it is **NOT** a property of `window`.
+`window.SHOREX` was `undefined` → `(undefined-gx)/22` → `NaN` → and `NaN < 0.33` is `false`, so
+every tree silently fell through to the last band. **`NaN` in a bucketing chain does not throw,
+it picks the final bucket.** Note `window.tree` and `window.treeSp` *do* resolve — function
+declarations become `window` properties, `const`/`let` do not. That asymmetry is why
+`probe-dash.mjs` can call `cellAt`/`T`/`G` by bare name and must.
+Fixing the probe also exposed a real (if minor) miss: `/22` clamped the inner **quarter** of the
+plate flat (trees run `gx` 1.5→47.5 against `SHOREX`=44). Widened to `/30` so the gradient uses
+the whole landmass. **Measure the range before you pick a divisor.**
+
+**Visual** — 3 agents, 3 framings, no enhancement (iter 95's rule). Wide seed 42 + wide seed 7:
+both PASS, both saw varied silhouettes, no z-order tears, no blown-out color, and specifically
+reported the forests are **not** darker than a sunlit city warrants — the kelp failure mode, asked
+for by name. Magnified `tileshot` on a FOREST and a PARK: PASS — all three species identifiable,
+conifer tiers read as "a coherent stacked spire, not floating triangles," crowns rooted to trunks,
+greens inside the existing palette. It called the wood *"conifer interior, broadleaf edge."* That
+is emergent — species is positional, not edge-aware — but it is what a real wood looks like.
+
+**Perf** — `tree()` is the single hottest draw call in the renderer, so the frame-time gate was
+run despite this not being a step-back. 3 sequential passes, and the readings are **tight**
+(day 33.55 / 33.56 / 33.55ms), so this is signal, not the ±30% load noise iter 40 warned about:
+**day 31.33 → 33.55ms (+7.1%)**, **night 37.22 → 37.83ms (+1.6%)**. PASS (budget 15%), but
+**+7.1% is the largest single-iteration day cost in recent memory** and it is honest: a conifer
+spends 4 `col()` calls and 3 filled paths where a broadleaf spends 3 and 2, on ~2,700 trees/frame.
+Banked as a watch item, not a problem — but the next Nature vector should not also be in `tree()`.
+
+**Verdict — SHIPPED.** The most-repeated glyph in the city stopped being one glyph. Draw-only,
+census dead flat, three visual PASSes, perf inside budget. Nature's saturation note stands, and is
+now better evidenced: the payoff here came from *polishing what the domain already had*, not from
+a fifth plant.
