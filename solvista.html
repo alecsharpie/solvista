@@ -2058,22 +2058,34 @@ function syncFleet(){
     const[nx,ny]=opts[(Math.random()*opts.length)|0];
     trucks.push({x,y,nx,ny,p:Math.random(),sp:0.7+Math.random()*0.25,kind:'truck',c:TRKC[(Math.random()*TRKC.length)|0]});
   }
-  const openCells=[];
+  const openCells=[], kerbCells=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){const t=cells[idx(x,y)].t;
     if(t===T.PARK||t===T.PLAZA||t===T.BEACH||t===T.DUNE||t===T.SHOREPARK||t===T.GARDEN||t===T.FIELD||t===T.QUAD)openCells.push([x,y]);
-    if(t===T.MARKET||t===T.STADIUM){openCells.push([x,y],[x,y],[x,y]);}} /* markets & matches draw a crowd */
+    if(t===T.MARKET||t===T.STADIUM){openCells.push([x,y],[x,y],[x,y]);} /* markets & matches draw a crowd */
+    if(livelyKerb(x,y))kerbCells.push([x,y]);}
   if(year>=1987)for(let x=pier.x0+1;x<=pier.x1;x++)openCells.push([x,pier.y]);
+  /* Where residents LIVE. Open ground alone is 54% coastline by area, so a uniform
+     draw houses the whole city at the seaside: measured, 62-69% of residents anchored
+     on sand and 4 of 130 downtown, across 6075 developed cells and 5786 roads
+     (probe-anchor.mjs). A kerb fronting shops or institutions is somewhere to live
+     too. `buzz>=2` is the lively kerb -- buzz is sparse (mean 0.54 over standable
+     hexes), so this is its tail: ~110 hexes against ~510 of open ground.
+     Dogs keep the open-ground pool: an owned dog heels to its human and so reaches
+     the kerb through them, while a stray keeps the park-bound roam stepDog gives it.
+     Peds draw the same NUMBER of rng() values from a longer array, so every seeded
+     draw downstream (dogs, boats, birds, shuttles) is untouched. */
+  const homeCells=openCells.concat(kerbCells);
   const PEDC=['terra','teal','gold','coral','sage','lav','white'];
   const wantPeds=Math.min(130,6+(stats.pop/200|0));
-  while(peds.length<wantPeds&&openCells.length){
-    const[x,y]=openCells[(rng()*openCells.length)|0];
+  while(peds.length<wantPeds&&homeCells.length){
+    const[x,y]=homeCells[(rng()*homeCells.length)|0];
     peds.push({x,y,hx:x,hy:y,ox:(rng()-0.5)*0.6,oy:(rng()-0.5)*0.6,tx:0,ty:0,tm:0,
                ph:peds.length*1.7, /* gait phase, index-derived: costs no random draw */
                c:PEDC[(rng()*PEDC.length)|0],
                kid:Math.random()<0.18?1+Math.random()*6:0, nite:Math.random()<0.5}); /* some walk a child;
                Math.random AFTER the rng draws so the seeded stream is untouched.
-               hx,hy is the open cell they're anchored to: they may stroll onto the
-               streets around it, and re-anchor whenever they reach open ground. */
+               hx,hy is the cell they're anchored to: they may stroll onto the
+               streets around it, and re-anchor whenever they reach home ground. */
   }
   const wantDogs=Math.min(10,(stats.parks/4|0));
   while(dogs.length<wantDogs&&openCells.length){
@@ -2251,6 +2263,23 @@ function strollable(x,y){
 const PEDLEASH=2, PEDSTEP_OP=0.18, PEDSTEP_RD=0.30;
 const PEDDEST=new Set([T.PARK,T.PLAZA,T.MARKET,T.SHOREPARK,T.GARDEN,T.COM,T.CIVIC,T.STADIUM,T.QUAD]);
 function pedRoad(x,y){const n=cellAt(x,y);return!!n&&n.t===T.ROAD&&!n.bridge}
+/* ---- home ground ----------------------------------------------------------
+   An anchor is the cell a resident LIVES on, and syncFleet's home pool decides
+   what may be one: open ground, or a kerb with something to come out for. So
+   re-anchoring must ask the SAME question the pool asked. Asking `strollable`
+   instead makes it a ONE-WAY RATCHET -- open ground captures a kerb resident and
+   never gives one back -- and the whole downtown population drains into the parks
+   within minutes of watching: measured, 10.0% of residents on a kerb at spawn,
+   3.8% twenty sim-minutes later, monotone all the way down (probe-anchor.mjs).
+   Neither the census nor a screenshot can see that; both are taken at load.
+   Symmetric, the flow runs both ways and settles: a park resident who reaches a
+   lively high street moves onto it, which is the dynamic the spawn ratio was only
+   ever approximating. KERBBUZZ is the one definition of "lively kerb" -- syncFleet
+   sites residents by it, this re-anchors by it (iter 112's law: a predicate with
+   two readers will otherwise have two answers). */
+const KERBBUZZ=2;
+function livelyKerb(x,y){return pedRoad(x,y)&&cellAt(x,y).buzz>=KERBBUZZ}
+function homeGround(x,y){return strollable(x,y)||livelyKerb(x,y)}
 function pedWalk(p,x,y){
   return strollable(x,y)||(pedRoad(x,y)&&hexDist(x,y,p.hx,p.hy)<=PEDLEASH);
 }
@@ -2325,7 +2354,7 @@ function stepPed(p,dt){
       while(i<5&&r>=wt[i]){r-=wt[i];i++}   /* r<wt[i] on exit, so wt[i]>0: the pick is legal */
       const nx=p.x+dirs[i][0], ny=p.y+dirs[i][1];
       p.x=nx;p.y=ny;
-      if(strollable(nx,ny)){p.hx=nx;p.hy=ny;} /* reached open ground: re-anchor */
+      if(homeGround(nx,ny)){p.hx=nx;p.hy=ny;} /* reached somewhere to live: re-anchor */
     }}
   p.ox=lerp(p.ox,p.tx,dt*0.7); p.oy=lerp(p.oy,p.ty,dt*0.7);
 }

@@ -4828,3 +4828,105 @@ brightest/darkest — see the finding; it does not affect the gate, which is abo
   the calendar: `VINEYARD` (should redden and be cut), `MEADOW` seed-heads, `MARSH`. Cheap, draw-only,
   and each one makes the existing season system worth more.
 
+## Iteration 109 — the walk-ups close ranks (2026-07-10)
+
+**Vector** — Urban fabric × **Connect**. Rotation named both axes: Urban (103) was the stalest safe
+domain (Sky 95 is staler but is a documented trap), and `Connect` is one of the two coldest kinds —
+its only prior entry is iter 47's skybridges. The recent kinds were New element / New CA rule /
+Deepen, so Connect was also un-repeated.
+
+**The seam.** A `MID` walk-up bodies out `ax=0.34` — 0.68 of a cell — so an E-W pair leaves a 0.32-cell
+gap and the mid-rise mass reads as a checkerboard of detached boxes, never as streets. This is the one
+gap that *shows*: along the two diagonal axes the row in front is drawn later and its own height covers
+the seam, which is exactly why iter 47 found diagonal skybridges "stubby/hidden". The E-W gap is the
+only visible one, and closing it is the whole of the vector. (`RES` villas are deliberately left
+detached — they have gardens, pools, palms and a washing line strung *across* the gap to the next door
+west. Villas detached, walk-ups terraced, is also the correct urbanism.)
+
+**Change.** ~6 lines in `case T.MID`. A walk-up whose **east** neighbour is also a walk-up grows east:
+centre `+0.16`, half-extent `0.34 → 0.5`. Its east face then lands exactly on that neighbour's west
+face (`gx+0.66`) and the two butt with zero overlap. Chains compose — each member grows into the next,
+so a run of *n* closes *n−1* joints — and the row's left-to-right draw order does the occlusion for
+free. Where heights differ the taller block's flank *is* the party wall, which is what a stepped
+terrace looks like; no `min()` anywhere, the geometry does it. Roof furniture (solar, green roof,
+fringe, water tank) rides the shifted deck by `+jx`. Gate `hashCell(x+1,y,seedNum^0x4E27)<0.72`, keyed
+on the **east** cell so a joint is decided once by the same hash from either side; ~1 in 4 stays open
+as a light well. Salt and probability were **typed before anything was run**, per iter 107's law.
+Draw-only: no `rng()`, no terrain, no new tile type, so nothing to add to `__census()` or the tooltip.
+
+**Census — PASS.** `pop 154918 → 154918 (+0)`, every metric `+0`, **tile histogram completely empty**,
+0 page errors. A draw-only vector must move nothing, and this one moved nothing — not even the ±3 that
+iter 108 documented as the instrument's load floor.
+
+**Perf — PASS, and it is the reason the first design was thrown away.** See the finding below. Final:
+3 sequential runs judged by the minimum of each scene, day **33.44ms**, night **37.78ms**, against a
+*pristine-HEAD control measured on the same machine minutes earlier* (day 33.33ms, night 37.89ms):
+**+0.3% / −0.3%**. The street wall costs zero fills. Baseline not re-pinned; `polish-tile` owns it and
+there is nothing to re-pin.
+
+**Probe — `probe-terrace.mjs` (`git add -f`'d), 16 seeds.** Re-applies the join predicate from inside
+the page (so it cannot disagree with the draw code), chains closed joints into terraces, and pixel-tests
+the result. **3140 eligible joints, 2246 closed = 71.5%** against the declared 72% gate. Run lengths:
+1195 pairs, 300 triples, 85 quads, 36 fives, 10 six-plus, longest 7 — so **55.2% of all walk-ups
+(3872/7011) now stand in a terrace** rather than alone. Pixel test, restricted to joints with no
+building in front to occlude them: a **closed** joint reads the west block's own facade (mean RGB
+distance **13.0**, exact match 64.9%); an **open** one reads past it to the background (**55.0**, 2.1%).
+
+**Visual — PASS, 3/3 agents**, on the shipped geometry (the first three verdicts were discarded with the
+first design). Day downtown before/after at seeds 42 and 7, a night downtown pair, and un-zoomed whole-city
+frames. All three: terraces continuous and square on the hex grid, **no lopsided blocks, no roof furniture
+overhanging a widened roof, no clipping**; at night the window ribbon runs on through the joint and still
+reads as separate panes rather than one glowing slab; no z-order tears anywhere; the whole frame still a
+balanced coastal city, the mid-rise "adds texture without flattening the skyline".
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ TO CONNECT TWO THINGS, GROW ONE INTO THE OTHER — DO NOT INSERT A THIRD THING BETWEEN THEM.** The
+  first design filled each gap with a *filler prism*: a third block, at `min(h,h_w)`, in the west
+  neighbour's colour, carrying its own glass bands and its own cornice. It passed census and 3/3 visual
+  agents — and **failed the perf gate at +28.5% day / +26.7% night**, ~2000 extra `fill()`s per frame
+  (≈14 per joint × ~140 joints). Widening the west block instead — same prism, `cx+0.16`, `ax 0.34→0.5`
+  — produces *identical* geometry for **zero** extra fills, and the window ribbon, cornice and balcony
+  rails extend across the joint for free instead of being redrawn. It also deleted the `min()` height
+  logic and a `midTone()` helper I had hoisted only so the filler could paint the neighbour's shade.
+  **A connector you have to draw is a connector you got wrong.** Look for the version where the existing
+  geometry reaches.
+- **⚠ THE PERF GATE IS THE ONLY GATE THAT CATCHES THIS, AND CENSUS + VISUAL WILL BOTH WAVE IT THROUGH.**
+  The filler prism was *invisible* to the census (draw-only ⇒ `pop +0`, empty histogram) and *beautiful*
+  to three independent visual agents. Nothing but frame time knew it was wrong. The skill runs perf only
+  at the ~5th-iteration step-back; **any vector that adds per-frame draw work should run it in its own
+  lap**, and this one was not a step-back. Had I not, the loop would have shipped a 28% frame-time
+  regression and discovered it, unattributably, five iterations later.
+- **⚠ CONTROL AGAINST PRISTINE HEAD, ON THE SAME MACHINE, WITHIN MINUTES — the baseline file cannot tell
+  you whether it is you or the room.** Iters 99/104 taught "stable offset ⇒ code, rising ⇒ load". The
+  filler's offset was stable (+33/+29/+30%) — but so is a genuinely loaded machine's. The reading that
+  actually decided it was `git show HEAD:solvista.html > solvista.html`, 3 perf runs (day min **33.33ms**,
+  flat to baseline), restore. That took four minutes and converted "probably my code" into "certainly my
+  code". Cheap; do it before you optimise, not after.
+- **⚠ A CROSS-FRAME PIXEL DIFF IS NOT A VALID CONTROL FOR A CHANGE YOU CAN SEE *PAST*.** The filler
+  version's probe compared pristine-vs-patched pixels at each joint and read closed Δ27.3 / open Δ0.2 —
+  a beautiful control. The same probe on the shipped version read open **Δ7.0**, and I nearly filed it as
+  noise. It was not: through an *open* gap you look at the row **behind**, whose walk-ups legitimately
+  widened. The control class was contaminated by correct change. **A control must live in the same frame
+  as the thing it controls** — rewritten to compare the joint against the west block's own facade, one
+  frame, no pristine load (and it runs in half the time).
+- **⚠ ON A HEX PRISM, "SAME SCREEN Y" IS NOT "SAME WALL HEIGHT".** The front face's top edge slopes from
+  `+V` at the S-point to `+E` at the shoulder, so two points sampled at one screen `y` sit ~`V/4` apart
+  in `z`. Window bands are 3 tall and repeat every 7, so one probe point kept landing in glass and the
+  other on plain wall: closed Δ35.3 vs open Δ47.0, a **null result from a geometry bug, not from the
+  feature**. Invert the face equation and pick `z`: `y = cy + V + (E−V)·u − z`, with `z = 10+7k` (bands
+  occupy `[5+7k, 8+7k]`, rails to `8.9+7k`). Any future probe that samples a facade needs this.
+- **AND THEN THE OCCLUDERS: a facade probe must first ask whether the facade is visible.** With the
+  geometry fixed the test still read only 42.6% match on closed joints. The city is dense; the row drawn
+  in front covers most walls, and it covers two nearby probe points *unequally*. Restricting to joints
+  with **no `DEV` cell at all in the row in front** (n 2246→464) moved closed joints to Δ**13.0** / 64.9%
+  match against open Δ**55.0** / 2.1% — a 31× separation. The confound was never the vector. **When a
+  pixel probe of a 3-D scene reads weakly, suspect occlusion before you suspect the feature.**
+- **The `hashCell` gate should be keyed on the ASYMMETRIC end of the relation.** A joint between `(x-1,y)`
+  and `(x,y)` is one thing, but two cells can ask about it. Keying on the **east** cell (`hashCell(x+1,y)`
+  from the west block's point of view) means both sides compute the same bit, so a probe written from the
+  other direction agrees with the draw code by construction. That is why `probe-terrace.mjs` could re-apply
+  the predicate and land on 71.5% against a 72% target with no fudge.
+
