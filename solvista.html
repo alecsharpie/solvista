@@ -2935,6 +2935,7 @@ function drawDog(d){
   const z=onPier(d.x,d.y)?5:0;
   const[cx,cy0]=px(d.x+0.5+d.ox,d.y+0.5+d.oy), cy=cy0-z;
   stamp(d,cx,cy);
+  shadS(cx,cy,0.11,0.15); /* low, long contact shadow — grounds the dog like the peds/vehicles */
   const f=d.f||1;   /* facing: leashed dogs look back at their human; strays face right */
   if(p){ /* the leash: owner's hand to the dog's collar, sagging under its own
             weight — a taut straight stroke would read as UI chrome (iter 85).
@@ -5025,6 +5026,10 @@ function drawPed(p){
   const[cx,cy]=px(p.x+0.5+p.ox,p.y+0.5+p.oy);
   stamp(p,cx,cy-z);
   const gy=cy-z;
+  shadS(cx,gy,0.10,0.17); /* a contact shadow seats the ped on the pavement — the
+     same ambient smudge every vehicle already casts (bikes/cars: shadS). It sits at
+     the feet (gy), not under the bobbing head, so the figure walks over a fixed
+     shadow. Draw-only, before the legs so the figure reads on top. */
   /* Gait. stepPed lerps ox->tx, so the residual IS this frame's velocity: a ped
      mid-stride is still far from its target offset, one that has arrived is
      standing at a kerb. No new state and no Math.random draw, so the seeded
@@ -5044,6 +5049,7 @@ function drawPed(p){
   if(p.kid&&LITAMT<0.5){ /* a little one skips alongside; home by dark */
     const sk=Math.abs(Math.sin(time*5.5+p.kid))*1.1; /* skipping bounce */
     const kx=cx+1.9,ky=gy-sk;
+    shadS(kx,gy,0.06,0.15); /* the little one's shadow stays on the ground it skips over */
     ctx.fillStyle=col(['coral','gold','teal'][(p.kid*7|0)%3],1.1);
     ctx.fillRect(kx-0.6,ky-2.2,1.2,1.8);
     ctx.fillStyle=col('ink',1.4);
@@ -5054,6 +5060,7 @@ function drawJogger(j){
   if(LITAMT>0.75&&(((j.ph*97)|0)%10)<6)return; /* only a few night runners */
   const[cx,cy]=pxc(seaXF(j.y,j.off),j.y);
   stamp(j,cx,cy);
+  shadS(cx,cy,0.09,0.16); /* seats the runner on the strand, matching peds/vehicles */
   const st=Math.sin(waveT*7+j.ph), bob=Math.abs(st)*0.6;
   ctx.strokeStyle=col('ink',1.3);ctx.lineWidth=0.7; /* scissoring legs */
   ctx.beginPath();ctx.moveTo(cx,cy-1.6-bob);ctx.lineTo(cx+st*1.3,cy+0.2);ctx.stroke();

@@ -29,7 +29,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~ |
-| **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84 | 71 |
+| **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84, **137** | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -55,9 +55,13 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **135** · Urban **133** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
-  **Stalest is now People (127)** — check the last entry of the stalest domain for a banked finding before reading
-  its row. (**Sky's moon strobe is FIXED (135)** — the moon's synodic phase now reads `dayT` (the slow ~110 s/cycle
+  Sky **135** · Urban **133** · People **137** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
+  **Stalest is now Transport (128)**, then Nature (129) — check the last entry of the stalest domain for a banked
+  finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
+  the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
+  feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
+  *static* standing crowds still cast no shadow. **⚠ The live ped/dog system is non-reproducible across page
+  loads — probe figure DRAW changes by controlled placement, not a build-vs-build diff (137's findings).**) (**Sky's moon strobe is FIXED (135)** — the moon's synodic phase now reads `dayT` (the slow ~110 s/cycle
   day counter) not the fast `year` dev clock, so the disc reads as a slow legible moon, not a ~2 Hz flicker
   (`probe-moonrate`: 12→0 strobe-crossings/3 s). **Banked next for Sky: the SEASON still reads `year` and would
   still strobe** (~0.7 Hz, 134), so a moon-only HUD card is now viable but a season word needs its own slow clock
@@ -165,12 +169,10 @@ ones (U2, 42, U5) stay in the bullet.
   Recent kinds: 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
   128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
   **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** ·
-  **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** —
-  (**130 was the holistic step-back — no domain × kind lap.**)
-  **Next domain lap owes People (127, still stalest); live/cheap kinds there: Polish, Interaction/UX** (Connect paid at 111).
-  (**136 is the holistic step-back** — see the pointer above.)
-  Vary off Interaction/UX (2 of last 4). Unless another banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
-  **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
+  **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** —
+  (**130/136 were the holistic step-backs — no domain × kind lap.**)
+  **Next domain lap owes Transport (128, now stalest), then Nature (129); read its row for kinds.** Vary off
+  Polish (137) unless a banked, measured cue outranks rotation. Live/cheap: **Connect**, **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
   *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
@@ -389,73 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 129 entries before Iteration 127 live in
+> **Archive:** the 130 entries before Iteration 128 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 127 — the parks get a picnic (2026-07-11)
-
-**Vector.** People & activity × **New element**. People was the stalest domain (last 119) and its additive
-inventory was declared spent (119's finding: only Deepen/Scale live) — but that inventory was of *entities*;
-its live cells and the domain's biggest **untouched surface** are two different things. Iter 120's step-back
-had already sized that surface: **PARK is the city's real green mass (878 hexes)** and *"if you want the city
-to look different, the lever is PARK."* The parks had ponds, fountains, cafés, sculptures, fireflies — but no
-one *at rest* on the grass (SHOREPARK has a picnic blanket; PARK never did). New element was also the coldest
-kind (last 106, twenty laps), and the header said vary off Deepen/Polish. Draw-only + `hashCell`, so pop is
-provably flat.
-
-**Change.** A new `v`-band in the PARK draw (`v∈[0.32,0.44)`, ~12% of parks, carved between the fountain and
-tree branches): an **open sunny lawn** — one shade tree instead of three — with, **by day only** (`LITAMT<0.5`,
-mirroring the kid/day logic and complementing the night fireflies), a **coral-or-lav checkered blanket**
-(`hashCell` picks the colour), two white check squares, a `trunk` picnic basket, and **two seated figures**
-(a short colour torso + an `ink` head dot, in the ped house style). No new tile, entity array, `rng()` draw,
-or `tick()` pass — so no census hook, `TILELABEL`, or `ENTINFO` change (it is still a `PARK`).
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, every core metric **+0**, entity counts
-identical (`greenRoofs +1` is the documented `(year*31)` salt jitter). Exactly as predicted for a draw-only
-`hashCell` change that touches no terrain and no seeded stream.
-
-**Probe.** `probes/probe-picnic.mjs`. Freezes the clock (109's same-frame law) and counts **LAV** blanket
-pixels in each park tile's lower box, by day and by night, with **FOREST** as the null control. Lav is the
-signal because it is the *only unique colour*: **coral is shared with terracotta/`coral` building roofs**
-(a park next to one reads as a picnic — the first probe draft's headline "112 hits" was a neighbour's roof,
-and a coral roof dims below threshold at night so it even fakes the day-only test). Result, seeds 7/42/1234:
-**park lav px day 20/17/9 = 46 → night 0/0/0**, **FOREST control 0/0 every seed**. A picnic appears by day,
-is gone by night, and nowhere but a park.
-
-**Visual.** My own read of a 5×-zoomed clip (the blanket is ~5px, below the fit-zoom floor — iter 126's law):
-a coral blanket with two seated figures + a white check, sitting cleanly on the open lawn beside one tree,
-unmistakably a picnic. Then 2/2 whole-frame agents (seeds 42 & 7, `wide`, day `year=2035.62` off-January per
-125): parks read as balanced green space (trees + ponds + fountains + **open lawns as legible clearings, not
-bare holes**), no z-order tears / floating tiles / blown-out colour anywhere, whole frame a cohesive beautiful
-coastal city. The muted coral/lav lawns "blend in," not glaring.
-
-**Verdict — SHIPPED.** People's stalest streak is broken by aiming a New element at its biggest *surface*
-(PARK) rather than its spent *entity* list. Draw-only, pop provably flat, day-gated, visible up close.
-
-### Findings for later laps
-- **⚠ PICK A PROBE'S SIGNAL COLOUR FROM THE PALETTE'S *UNIQUE* ENTRIES, NOT THE OBVIOUS ONE (new; the lap's
-  central lesson).** `coral` was the natural blanket colour and it is **shared by building roofs** (`roofN`
-  can be `coral`/`terra`), so the coral probe conflated picnics with the roofs of buildings *adjacent to
-  parks* — and because a roof dims at night, it even survived the day-only cancellation. `lav` is used by
-  nothing structural (no roof/body/car/road tone), so it is a clean tracer. **Before trusting a colour probe,
-  grep the palette for every other draw that uses that colour name.** (Extends 120's "a car dims below
-  threshold and reads as day-only" — same trap, different static object.)
-- **DAYLIGHT DESATURATES A COLOUR TOWARD GREY — a probe matcher tuned to the BASE rgb will miss it (new).**
-  `lav` base `[178,148,198]` renders `~[192,168,184]` at `t=0.30`: B pulled 210→184, the blue-over-green gap
-  shrunk from ~+50 to ~+14. The first matcher (`bl>gr+22`) scored **0** on real blankets. Sample the
-  *rendered* pixel and tune to that, never to the palette literal.
-- **A DOMAIN'S "ADDITIVE INVENTORY IS SPENT" IS A CLAIM ABOUT ITS ENTITIES, NOT ITS SURFACES (new).** 119
-  retired People as additively done, and for peds/dogs/joggers/crowds it was right. But the parks — 878 hexes,
-  the single biggest tile class — had no people at rest, because "People" had only ever been read as *moving
-  entities*. When a domain's entity list is exhausted, look at what large *static surface* it could still
-  populate before declaring it saturated. People's remaining such surfaces: plazas/quads (buskers, market
-  stalls beyond the café), stadium/amphitheatre seating.
-- People's live cells remain **Deepen** and **Scale** for entities; **New element** is now re-opened for it
-  via *surfaces* (this lap). The picnic band replaced ~12% of dense-tree park tiles with open lawn + one tree —
-  parks stayed balanced (both agents), so a small tree-density trade for variety is safe on PARK's large n.
 
 ## Iteration 128 — the cable cars leave the tower (2026-07-11)
 
@@ -1001,3 +941,69 @@ control for the third time (125→130→136); the guardrail stays honest.
   spread across much of the built area rather than a single tight downtown peak. That is a *legibility* nuance,
   not a tear or a darkness compound — a future Sky/Urban Polish could tighten the CBD light gradient (steeper
   falloff from `CBDX/CBDY`), but it did not earn a fix here. Logged so a later lap can pick it up deliberately.
+
+## Iteration 137 — the people cast a shadow (2026-07-11)
+
+**Vector.** People & activity × **Polish** (SHIPPED). Rotation named the domain — 136's step-back said 137 owes
+People (still stalest, last 127) — and steered the kind to Polish/Interaction-UX while warning to **vary off
+Interaction/UX** (3 of the last 5 laps: 129/133/134). People's Polish cell was the stalest kind there (last **84**).
+The target chose itself by a house-style **inconsistency**: `shadS()` is the shared ground-contact-shadow helper,
+and every *vehicle* has cast one for many iterations (`drawVehicle`: bikes L4951 `shadS(...,0.08)`, cars L4967
+`shadS(...,0.16)`) — but the **walking figures** (peds/dogs/joggers, the only other *movers*) had **none**, so
+they read as floating a hair off the pavement. (Surveyed first: the figure and crowd draws are otherwise richly
+polished — gait/bob/kids, leash+wag, scissoring joggers, stadium/amphitheatre/strip crowds — the missing shadow
+was the one clear gap.)
+
+**Change (~5 lines, draw-only).** A `shadS(feet)` contact shadow, drawn right after `stamp()` and *before* the
+legs so the figure reads on top, at the FEET (`gy`, not the bobbing head — so the figure walks/skips over a fixed
+shadow): `drawPed` `shadS(cx,gy,0.10,0.17)` + the skipping kid `shadS(kx,gy,0.06,0.15)`; `drawDog`
+`shadS(cx,cy,0.11,0.15)` (low/long); `drawJogger` `shadS(cx,cy,0.09,0.16)`. Sizes are ~⅔ the car's (0.16), the
+figures being ~⅔ a car's footprint; ungated by light, exactly as the vehicle shadow is (it's ambient contact, not
+a sun cast). No tile, entity array, `rng()`, `tick()` pass or terrain — pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity counts
+identical (peds 664 · dogs 90 · joggers 31). `greenRoofs −1` is the documented roof-adoption headless-timing
+wobble (127/132/133/135). Exactly as predicted for a draw-only change touching no seeded stream.
+
+**Probe.** `probes/probe-figshadow.mjs` (new, promoted), patched vs pristine HEAD, seeds 7/42. **The live figures
+could not be probed** — peds/dogs are a frame-timing-dependent system whose array *composition, order AND
+positions* drift a nondeterministic ~20px between two page loads of the same seed (HEAD-vs-HEAD noise floor
+alone was |Δ|~9–13 at fixed coords; `ped[0]` isn't even the same resident twice). So the probe tests the DRAW
+FUNCTIONS deterministically: clear all live movers (incl. vehicles, which drift over roads and poison a
+fixed-coord diff), **place a fixed set of 30 peds at chosen ROAD-cell centres** — identical objects in both
+builds — freeze/pin the clocks, render, and diff a **tight feet-row band** (the shadow is a flat ~2px-wide,
+1px-tall iso-squashed smudge; `TW/TH=16/8`, so a wide box dilutes it to nothing). Result: **feet mean Δlum
+−1.16** (a *uniform* darkening — |ΔRGB| 1.14 ≈ |Δlum|, a shadow not a hue shift), consistent (−1.06/−1.27),
+**bare-road control 0.047** (≈0, >20× separation). The darkening is confined to figure feet.
+
+**Visual.** The shadow is a ~2–3px contact patch — **invisible at fit zoom, visible at zoom** (133's ring law).
+Self-read of a `hovershot` ZOOM=9 / dsf-4 no-hover crop (seed 42): a soft, flat, iso-squashed olive shadow sits
+directly under the ped's feet, correctly centred and below the legs, figure drawn on top, no spill — it grounds
+the figure exactly as intended. Whole-city `wide` frames (seeds 42 & 7, day `year=2035.62`), one agent each:
+both **VISUAL: PASS** — balanced coherent coastal city, no z-order tears / floaters / hard seams / blown-out
+colour, and — the cumulative question — **no muddy or over-darkened pavement** (the shadows correctly invisible
+at that zoom, causing no darkening).
+
+**Verdict — SHIPPED.** The walking figures now sit on the pavement with the same house-style contact shadow every
+vehicle already casts. Draw-only, pop provably flat, ~5 lines, reads at zoom.
+
+### Findings for later laps
+- **⚠ THE LIVE PED/DOG SYSTEM IS NON-REPRODUCIBLE ACROSS PAGE LOADS — a build-vs-build pixel diff on live
+  figures is hopeless; PLACE a controlled set instead (new; the lap's central probe lesson).** Peds spawn/despawn
+  and step over a nondeterministic number of real-time frames before you can freeze, so the array's composition,
+  order and positions all differ between two loads of the same seed (~20px drift, |Δ|~9 HEAD-vs-HEAD). Pinning
+  `Math.random` and zeroing gait were *necessary but not sufficient* — the positions themselves had already
+  drifted. The clean gate for any figure-DRAW change is: freeze, clear the live movers (incl. **vehicles**, which
+  drift over roads and poison a bare-ground control), and push a fixed set of figures at chosen cell centres with
+  every field set by hand — the draw code is identical whether a figure is live or placed. This is the figure
+  analogue of the terrain probes' `git show HEAD:` diff.
+- **A ~5px SPRITE'S ORNAMENT IS A ~2px MARK — size the probe band and the visual read to it, not the sprite
+  (reinforces 133).** `TW/TH=16/8` at `scale≈0.66` makes even the car's `0.16` shadow only ~3px; a per-row
+  luminance profile showed the ped shadow lands on **exactly one pixel row** (Δlum −0.81 there, 0.00 everywhere
+  else). A default 8×8 sample box diluted a real −0.8 signal to −0.1 and read as noise. Sample the one row; look
+  at a ≥9× crop. Anything the size of a person's foot is invisible at fit zoom by construction, and that is fine.
+- **THE HOUSE-STYLE HELPER IS THE TELL FOR A POLISH — grep who ELSE calls it.** `shadS`/`shadowEl` grounded
+  buildings, domes and every vehicle; the walking figures were the lone omission. A "who uses this shared helper,
+  and who conspicuously doesn't?" grep is a reliable way to find the next consistency Polish (cf. the tooltip
+  tell: a string that asserts what the draw ignores). People's remaining such gap: the *static* standing crowds
+  (strip/stadium/amphitheatre/school-run specks) also cast no shadow — but they're a bigger, more diffuse change.

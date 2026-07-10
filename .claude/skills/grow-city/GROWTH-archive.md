@@ -7377,3 +7377,65 @@ Sky is no longer the stalest domain. No tile, no entity, no `rng()`, pop provabl
   saturation, per 108/113/120): `VINEYARD` seed-heads still ignore `year`. Anything drawn from a lone literal
   (a fixed position, a fixed brightness) that a global already varies is a candidate.
 
+## Iteration 127 — the parks get a picnic (2026-07-11)
+
+**Vector.** People & activity × **New element**. People was the stalest domain (last 119) and its additive
+inventory was declared spent (119's finding: only Deepen/Scale live) — but that inventory was of *entities*;
+its live cells and the domain's biggest **untouched surface** are two different things. Iter 120's step-back
+had already sized that surface: **PARK is the city's real green mass (878 hexes)** and *"if you want the city
+to look different, the lever is PARK."* The parks had ponds, fountains, cafés, sculptures, fireflies — but no
+one *at rest* on the grass (SHOREPARK has a picnic blanket; PARK never did). New element was also the coldest
+kind (last 106, twenty laps), and the header said vary off Deepen/Polish. Draw-only + `hashCell`, so pop is
+provably flat.
+
+**Change.** A new `v`-band in the PARK draw (`v∈[0.32,0.44)`, ~12% of parks, carved between the fountain and
+tree branches): an **open sunny lawn** — one shade tree instead of three — with, **by day only** (`LITAMT<0.5`,
+mirroring the kid/day logic and complementing the night fireflies), a **coral-or-lav checkered blanket**
+(`hashCell` picks the colour), two white check squares, a `trunk` picnic basket, and **two seated figures**
+(a short colour torso + an `ink` head dot, in the ped house style). No new tile, entity array, `rng()` draw,
+or `tick()` pass — so no census hook, `TILELABEL`, or `ENTINFO` change (it is still a `PARK`).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, every core metric **+0**, entity counts
+identical (`greenRoofs +1` is the documented `(year*31)` salt jitter). Exactly as predicted for a draw-only
+`hashCell` change that touches no terrain and no seeded stream.
+
+**Probe.** `probes/probe-picnic.mjs`. Freezes the clock (109's same-frame law) and counts **LAV** blanket
+pixels in each park tile's lower box, by day and by night, with **FOREST** as the null control. Lav is the
+signal because it is the *only unique colour*: **coral is shared with terracotta/`coral` building roofs**
+(a park next to one reads as a picnic — the first probe draft's headline "112 hits" was a neighbour's roof,
+and a coral roof dims below threshold at night so it even fakes the day-only test). Result, seeds 7/42/1234:
+**park lav px day 20/17/9 = 46 → night 0/0/0**, **FOREST control 0/0 every seed**. A picnic appears by day,
+is gone by night, and nowhere but a park.
+
+**Visual.** My own read of a 5×-zoomed clip (the blanket is ~5px, below the fit-zoom floor — iter 126's law):
+a coral blanket with two seated figures + a white check, sitting cleanly on the open lawn beside one tree,
+unmistakably a picnic. Then 2/2 whole-frame agents (seeds 42 & 7, `wide`, day `year=2035.62` off-January per
+125): parks read as balanced green space (trees + ponds + fountains + **open lawns as legible clearings, not
+bare holes**), no z-order tears / floating tiles / blown-out colour anywhere, whole frame a cohesive beautiful
+coastal city. The muted coral/lav lawns "blend in," not glaring.
+
+**Verdict — SHIPPED.** People's stalest streak is broken by aiming a New element at its biggest *surface*
+(PARK) rather than its spent *entity* list. Draw-only, pop provably flat, day-gated, visible up close.
+
+### Findings for later laps
+- **⚠ PICK A PROBE'S SIGNAL COLOUR FROM THE PALETTE'S *UNIQUE* ENTRIES, NOT THE OBVIOUS ONE (new; the lap's
+  central lesson).** `coral` was the natural blanket colour and it is **shared by building roofs** (`roofN`
+  can be `coral`/`terra`), so the coral probe conflated picnics with the roofs of buildings *adjacent to
+  parks* — and because a roof dims at night, it even survived the day-only cancellation. `lav` is used by
+  nothing structural (no roof/body/car/road tone), so it is a clean tracer. **Before trusting a colour probe,
+  grep the palette for every other draw that uses that colour name.** (Extends 120's "a car dims below
+  threshold and reads as day-only" — same trap, different static object.)
+- **DAYLIGHT DESATURATES A COLOUR TOWARD GREY — a probe matcher tuned to the BASE rgb will miss it (new).**
+  `lav` base `[178,148,198]` renders `~[192,168,184]` at `t=0.30`: B pulled 210→184, the blue-over-green gap
+  shrunk from ~+50 to ~+14. The first matcher (`bl>gr+22`) scored **0** on real blankets. Sample the
+  *rendered* pixel and tune to that, never to the palette literal.
+- **A DOMAIN'S "ADDITIVE INVENTORY IS SPENT" IS A CLAIM ABOUT ITS ENTITIES, NOT ITS SURFACES (new).** 119
+  retired People as additively done, and for peds/dogs/joggers/crowds it was right. But the parks — 878 hexes,
+  the single biggest tile class — had no people at rest, because "People" had only ever been read as *moving
+  entities*. When a domain's entity list is exhausted, look at what large *static surface* it could still
+  populate before declaring it saturated. People's remaining such surfaces: plazas/quads (buskers, market
+  stalls beyond the café), stadium/amphitheatre seating.
+- People's live cells remain **Deepen** and **Scale** for entities; **New element** is now re-opened for it
+  via *surfaces* (this lap). The picnic band replaced ~12% of dense-tree park tiles with open lawn + one tree —
+  parks stayed balanced (both agents), so a small tree-density trade for variety is safe on PARK's large n.
+
