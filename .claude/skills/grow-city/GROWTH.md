@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53, 96 | |
+| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
@@ -40,11 +40,29 @@ ones (U2, 42, U5) stay in the bullet.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
-- **ROTATION: debt discharged by iter 100** (Civic × New element, the row's first additive vector
-  since iter 30). Stalest domains are now **Sky & atmosphere** (last vector 95) and **People &
+- **ROTATION.** Stalest domains are **Sky & atmosphere** (last vector 95) and **People &
   activity** (93); Sky has an **empty New CA rule cell** and no Connect/Scale, People has no Scale.
-  Recent kinds: 96 Polish · 97 Interaction · 98 Polish · 99 Polish · 100 New element — so **Deepen and
-  Connect are both cold**, and another Polish would be a 5th in seven.
+  Recent kinds: 97 Interaction · 98 Polish · 99 Polish · 100 New element · 101 Connect(reverted) —
+  so **Deepen is the coldest kind** (last at 95). Note **Nature × Connect has now been attempted and
+  reverted three times** (46, 88, 101) and is the row's graveyard: 46 found it geometrically
+  impossible, 88 found it has no host draw-only, 101 found the host *and the land* and lost on
+  **shape** (see its findings). Do not re-open it as a *corridor*; cue (e½) wants a **blob**.
+- **⚠ NO `probe-*.mjs` IS TRACKED BY GIT — the ledger cites tools the repo does not carry (iter 101).**
+  `.gitignore` ignores `probe-*.mjs` and `shot-*.mjs` so a killed iteration can't dirty the tree. The
+  side effect: **every probe this ledger tells you to reuse exists only as an untracked leftover in
+  whoever's worktree wrote it.** `git ls-files` shows *zero* tracked probes; `probe-quadtone.mjs` —
+  which iter 100 called "the shape probe for any *does this tile read at city zoom?* claim" — **is not
+  in the repo at all.** So: describe a probe's *method* in the entry (that survives), and if a probe
+  is genuinely meant to outlive its iteration, **`git add -f` it** and say so. Do not write "keep it"
+  and assume git kept it.
+- **⚠ CONTRAST IS NOT TRACEABILITY — for a LINEAR feature, legibility ≈ contrast × WIDTH (iter 101).**
+  Iter 95 says legibility at distance is luminance contrast, not coverage. True, and **it does not
+  imply a high-ΔL line can be followed.** Iter 101's greenway spine measured **ΔL 22–35 above ordinary
+  `PARK`** — against a `PARK`-vs-`MID` reference of **ΔL 7–11**, a pair everyone calls obviously
+  distinguishable — and **nine agent reads still could not trace it**, because at fit zoom a one-hex
+  ribbon is ~1 screen pixel: contrast *without a shape*. **Below ~2–3 hexes across, a corridor is
+  untraceable at any ΔL.** `probe-gwtone.mjs` answers "does it separate?"; it **cannot** answer "can
+  it be followed?" — that one needs width, and an un-zoomed frame. Don't grade a line with a tone probe.
 - **⚠ ORNAMENT YOU CANNOT SEE AT DISTANCE STILL AVERAGES INTO THE TILE'S TONE (iter 100).** Iter 95
   established that legibility at distance is luminance contrast, not coverage. The corollary: **coverage
   destroys it.** `QUAD` was given a `turf` base of lum **144** to separate it from `PARK`; the tile
@@ -380,6 +398,15 @@ ones (U2, 42, U5) stay in the bullet.
   **consolidate green into one or two district-scale parks/greenways** instead of more scatter.
   That, plus mid-block density, is exactly what remains. Note iter 100 spent −1.03% pop for 23
   cells, so a district-scale park is affordable but not free.
+  **Iter 101 attacked this and REVERTED — read its findings before re-trying.** It settled three
+  things and cost nothing: (i) **`PARK` is permanent** — nothing in `tick()` consumes one, so green
+  planted in `genWorld` survives to 2035, and the "plant it early" host iter 88 hoped for is real;
+  (ii) green costs about **0.045% pop per cell** and partly repays it, because `PARK` is the top
+  `valueSrc` (0.92) and lifts the frontage it faces (`cafes` +141, `COM` +51); (iii) **the lung must
+  be a BLOB, not a ribbon** — a 1–2 hex corridor is untraceable at frame scale whatever its contrast
+  (see the law at the top). So: ~50 contiguous cells, **≥3 hexes across**, sited by
+  `hexDist(x,y,CBDX,CBDY)`, not by `c.val`. The greenway's flag/tooltip/half-segment path draw and
+  its contiguity probe were all correct — only the shape was wrong.
   Heed iter 92 (never zone against `TOWER` near the core: −9.8% pop) **and** iter 98
   (the upgrade probability *saturates*, so leaning on `p` is a weak lever that costs towers at 240
   pop each). A `MID`/`RES` thinning rule, or interior parks, is likelier than anything touching
@@ -760,128 +787,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 93 entries before Iteration 91 live in
+> **Archive:** the 94 entries before Iteration 92 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 91 — the institutions find each other (2026-07-10)
-
-**Vector** — Civic & culture × **Deepen / interconnect (SHIPPED)**. Both axes pointed here.
-Civic was the most-lagged domain (last touched at 80), and the last five kinds were
-Polish ×3 + Connect + New CA, so a Deepen lap was clean. Civic's Deepen cell was already
-the busiest in its row (36, 59, 66, 80) — but every one of those had deepened *one civic
-building* (its forecourt, its flag, its facing, its school run). **Nothing had ever asked
-where institutions stand relative to each other.**
-
-**Probed the host before designing** (`probe-civic.mjs`, gitignored — iters 88/90's lesson).
-The answer was stark: at 2035 a city has 16–18 civics whose **mean nearest-civic distance is
-6.6–7.6 hexes**, only **1–2 pairs within 3 hexes**, and a mean distance from the town hall of
-**~20 hexes on a plate of radius 33**. Every institution is sited by an independent scan that
-ignores every other institution. There was no civic centre — the museum was as likely to open
-on a farm at the rim as beside the hall.
-
-**Change.**
-- `MAJORK` — the five monumental kinds (`hall museum parliament university library`). The
-  2020+ forecourt rule already inlined exactly this five-way test; it now shares the set.
-- `QUARTER` — the three that *seek* the quarter (`library` 1982, `museum` 1997, `parliament`
-  2034). Services (school, police, firehouse, hospital, aquarium, amphitheater) stay sited by
-  need; **`observatory` is deliberately excluded** — it belongs at the dark rim.
-- `siteQuarter(kind)` — a deterministic scan over `HEXI` that hugs the **nearest standing
-  major** at `QNEAR..QFAR` = **2–4 hexes**: near enough to share a street, far enough to leave
-  one between. (Adjacency would have killed the payoff — bunting needs a `ROAD` cell reachable
-  from two civics.) Score = hug the nearest, prefer the valuable ground a core sits on, and let
-  `hashCell` break the ties that leaves. It widens to 7 hexes once if walled in, then **falls
-  back to the old scattered search**, so `civicKinds` can never drop.
-- The scattered `rcIn()` search now **runs first and always**, even for a kind the quarter will
-  claim, and its result is discarded when the quarter takes it. See below — this is the whole
-  iteration.
-
-**The measurement that saved the vector.** The first build was the obvious one: skip the
-`rcIn()` loop for quarter kinds, since `siteQuarter` is deterministic and the house style says
-a `hashCell` rule "perturbs nothing it doesn't touch". Census came back a **collapse**:
-`pop −12.9% (seed 42) / −22.2% (seed 1234)`, `towers −23% / −47%`. Rather than tune the siting
-I asked *which half* was to blame, since the two demand opposite fixes. `before.html` was
-regenerated from `git show HEAD` (my first copy was taken **after** editing and silently made
-the baseline row identical to the test row — caught only because the deltas were exactly 0),
-and a `&burn` flag re-consumed the draws the old loop would have made, so the **only** remaining
-difference was where the building stood:
-
-| seed | pop, baseline | quarter + skipped draws | quarter + draws burned |
-| --- | --- | --- | --- |
-| 7 | 35024 | 35418 (+1.1%) | **40112 (+14.5%)** |
-| 42 | 35236 | 30688 (**−12.9%**) | **37524 (+6.5%)** |
-| 1234 | 32168 | 25042 (**−22.2%**) | **32936 (+2.4%)** |
-
-The siting was never the problem. **The three skipped `rng()` draws were** — they reshuffled
-800 ticks of terrain-gated stream. Clustering the institutions is in fact worth *up to +14% pop*,
-because three civics squatting on three random prime lots choke three separate `COM` quorums,
-and one quarter chokes one. Shipped form orders the code so the draw count is **provably**
-independent of the quarter's terrain edit: search, then site, then place only if the quarter
-declined. Promoted to the header as a law.
-
-**Census:** VERDICT **PASS**, 0 page errors. `pop 144404 → 152328 (+5.5%)`, `towers 270 → 308`,
-`towerHt +3201`, `tallTowers +26`, `helipads +27`, `stations +13`, `cafes +24`. Core structurals
-flat: `developed 6198→6203`, `roads 5752→5789`. **`civicKinds +0`** — the walled-in fallback
-works; no institution was lost. `CIVIC 86→83` and `schools 23→20` are the same three tiles:
-downstream chaos moved the rng-gated "every ~3500 residents earns a school" rule, not a defect.
-`PLAZA 14→10` is real and structural — see below.
-
-**Interconnect payoff (the actual point), measured per-city at 2035:**
-
-| seed | majors within 260px of hall | festival bunting (`fete` cells) |
-| --- | --- | --- |
-| 42 | 2 → **4** | 9 → **16** |
-| 1234 | 3 → **4** | 6 → **18** |
-
-Pairs of civics within 3 hexes went 2→5, 2→8, 1→8 across the matrix. Two systems built by
-earlier iterations (45's festival streets, 36/80's forecourts) light up with **no new code**.
-
-**The cost, accepted.** `PLAZA 14→10`. The forecourt rule skips a civic with a `PLAZA` within
-2 hexes, and quarter members sit 2–4 apart, so the quarter earns **one** shared square rather
-than four private ones. Defensible urbanism, and arguably the correct reading — but it is the
-one place the vector took something away, so it is **banked as open cue (d)** rather than
-quietly pocketed.
-
-**Visual:** **4/4 `VISUAL: PASS`.** The town hall is placed at founding, before any quarter code
-runs, so it occupies the **same cell in both builds** — which makes a rect centred on it an
-honest A/B (asserted in the shot script, not assumed). Two agents on before/after clips at seeds
-42 and 1234, two on un-zoomed whole frames at seeds 42 (2035) and 7 (2005). Both A/B agents
-reported the cluster **and, unprompted, the bunting**: "festival bunting visible spanning the
-streets between the clustered institutions". Seed 1234's agent volunteered that the monorail
-correctly passes *over* buildings and is not a z-tear (iter 87 holding). Whole-frame agents:
-"the civic quarter adds a legible focal point", towers "distributed… not walling off into a
-monolithic slab", coastline "bright… readable surf edge". No z-order tears, floating tiles or
-blown-out colour on any frame. Grouped "but airy", not a white blob.
-
-**Perf — run because the vector *grew* the city, not because it was due.** The step-back is not
-owed until 94, but +38 towers / +3201 `towerHt` / +27 helipads is exactly the added draw work the
-census cannot see. 3× sequential, judged on the minimum: day **32.5ms (+3.7%)**, night **36.5ms
-(−1.9%)**, PASS. Unusually tight spread (32.50/32.55/32.67) — the +3.7% is not noise, it is the
-honest cost of drawing a taller downtown, and it is well inside the 15% gate.
-
-**Verdict:** **SHIPPED.** The city acquires a civic centre, and its institutions stop squatting
-on the lots downtown wanted.
-
-**Lessons.**
-- **Removing an `rng()` draw is a far bigger perturbation than moving a building.** The header
-  law. `hashCell` is safe for an *additive* rule; a rule that *substitutes* for an existing
-  `rng()` search must still spend that search's draws. The codebase already knew this once —
-  the 1996 plaza rule survives purely to keep its draws aligned — but it was filed as a quirk
-  of that rule rather than as a law, so I rediscovered it at the cost of a −22% census.
-- **When a change fails, first ask which *half* of it failed.** Siting and stream-shift were
-  confounded, demanded opposite fixes, and the wrong guess (tune the siting scores) would have
-  chased a phantom for hours and probably reverted a good vector. One flag and one control run
-  separated them in ten minutes. *A failing census is a question, not a verdict.*
-- **Regenerate the baseline from `git`, never from the working tree.** My `before.html` was copied
-  after the first edit. It produced a perfectly plausible table in which the baseline and the test
-  agreed to the digit — which is *itself* the tell. Deltas of exactly 0.0% across three seeds mean
-  you are diffing a file against itself.
-- **The best Deepen asks how existing things relate, not how one thing looks.** Four prior Civic
-  Deepens each polished a single building's relationship to its own street. Asking where buildings
-  stand relative to *each other* cost ~40 lines, added no tile, no entity and no draw call, and
-  lit up two systems built 45 iterations apart.
 
 ## Iteration 92 — the high street (2026-07-10)
 
@@ -1689,3 +1599,101 @@ added *earned* green (7–10 hexes); it did not add a lung.
 **Verdict — SHIPPED.** The institutions have grounds, the tooltip names them, peds stroll them, and the
 mid-rise carpet gave up ~23 cells to green that a city actually earns. Three visual failures on one
 seed were worth more than the ship: they produced `probe-quadtone.mjs` and the law above.
+
+## Iteration 101 — the greenway that could not be traced (2026-07-10)
+
+**Vector** — Nature × **Connect**. Rotation forced the kind: 96/97/98/99/100 ran
+Polish · Interaction · Polish · Polish · New element, so **Connect and Deepen were both
+cold** and a sixth Polish-ish lap was off the table. The vector itself was *prescribed*,
+twice over: iter 88 died proving "Nature × Connect is not reachable draw-only" and left an
+explicit design for its successor — *"the reachable Connect hosts are the greens the city
+already protects; a PARK↔PARK↔FOREST greenway is the version with an actual host, **if one
+plants it as terrain early enough to survive**"* — and iter 100's step-back agent independently
+asked to **"consolidate green into one or two district-scale parks/greenways."** Same feature,
+found from two directions. Cue (e½).
+
+**Change (reverted).** A `GWK`/`GWFAM` line on the diagonal family the main street did *not*
+take, surveyed in `genWorld` after the high street: walk the axis, convert `EMPTY`/`MEADOW`
+to `PARK` with a `c.gw` flag, skipping `corr` so crossing streets stay whole; ~40% of spine
+cells bulge one hex sideways. Plus `gwTrail()` (a cream footpath), a `Greenway` tooltip, and
+`__find('greenway'|'gwspine')`. **Zero `rng()` draws** — offset, side and bulges all from
+`hashCell` — so `genWorld`'s seeded stream stayed byte-identical; only the terrain perturbed
+downstream ticks.
+
+**Census** — PASS, and the trade was *good*: `pop` −3346 (**−2.25%**) and `developed` −43
+for ~52 green cells per seed, i.e. roughly **half the pop-per-cell cost of iter 100's QUAD**,
+because `PARK` is the top `valueSrc` (0.92) and the ribbon lifts `val` along its whole
+frontage — `cafes` **+141**, `COM` **+51**, `tallTowers` **+6**. `PARK` **+344** (not +470:
+the late park pass fires less, because the greenway already satisfies its "no PARK within 3"
+test — the ribbon *replaces* confetti, exactly what cue (e½) asked for).
+
+**Visual — the gate, and the reason for the revert.** `VISUAL: FAIL` **7 of 9** agent reads.
+Final version: seed 42 PASS (traced it on one axis, no tears), **seed 7 FAIL — could not
+trace it.** Seed 7 is also the seed with the weakest measured contrast, so that FAIL is
+*corroborated by the number*, not contradicted by it. A change must hold across seeds.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` is byte-identical to HEAD; census on the
+reverted tree is **+0 on all 22 metrics**, empty tile histogram, 0 page errors. Reverted
+because it cost 2.25% of the population and 27% of the stations for a feature you must zoom
+one step in to see — the solar-farm trade — and because a 1–2 hex ribbon **is not the
+district-scale lung cue (e½) asked for.** Cue (e½) stays **open**.
+
+### Findings — what iteration 102+ should lift from this
+
+- **⚠ CONTRAST IS NOT TRACEABILITY. For a LINEAR feature, legibility ≈ contrast × WIDTH.**
+  This is the load-bearing result, and it *refines* iter 95 ("legibility at distance is
+  luminance contrast, not coverage"). A tone probe (sample a 3×3 disc at each tile centre off the
+  live canvas via `getImageData`, at **default fit zoom**, and compare mean sRGB luminance against a
+  `PARK`-vs-`MID` scale reference) measured the spine at **ΔL 22–35 above ordinary PARK**,
+  against a `PARK`-vs-`MID` reference of only **ΔL 7–11** — the ribbon out-contrasted a pair
+  everybody calls obviously distinguishable, **and agents still could not follow it.** A
+  one-hex-wide line at fit zoom is ~1 screen pixel: that is contrast *without a shape*.
+  Below ~2–3 hexes across, a corridor cannot be traced no matter its ΔL. **Do not answer
+  "can it be followed?" with a tone probe** — tone answers "does it separate", which is a
+  different question. Iter 95's rule and this one are both true and neither implies the other.
+- **PARK IS PERMANENT — the host iter 88 wanted exists, and is confirmed.** No pass in
+  `tick()` ever consumes a `PARK`: development takes only `EMPTY`/`MEADOW`/`FARM` (L907/928/936),
+  and roads pave only `c.corr` (L899/1192). Measured `survive == gw` on 3 seeds × 1985/2035.
+  **So terrain planted in `genWorld` survives to 2035.** Any future green vector should plant
+  early and stop worrying about the city eating it.
+- **Green is not just affordable, it partly pays for itself.** `valueSrc` scores `PARK` **0.92**,
+  the highest in the game (L813), so park frontage raises neighbours' `val`, which raises
+  development probability (L909's `greenNear`) and height. −2.25% pop for 52 cells/seed, vs
+  iter 100's −1.03% for 23. Budget green at **~0.045% pop per cell**, not more.
+- **Survey a line's offset; never coin-flip it.** A `hashCell` coin flip aimed seed 7's ribbon
+  out to sea — 17 cells planted, its walk blocked by `WATER:18` and `BEACH:6`. Scoring both
+  sides by plantable cells (the same deterministic scan `hsBest` uses for the high street) took
+  seed 7 to **58 cells** and fixed the seed spread. **Reusable for any future axis feature.**
+- **Union-find must BRIDGE one cell, or it condemns a correct corridor.** A greenway crossed by
+  streets is still one greenway. Strict adjacency called the ribbon **13/14/16 patches**;
+  bridging a single non-green cell called it **4/6/4**, with `fullSpan` **56–59 hexes**. Iter 88's
+  "mark paths, not cells" rule stands, but its *measurement* needs this amendment.
+- **Drawing a continuous line across tiles under top→bottom row order: stroke HALF a segment
+  from each tile to the shared hex edge.** The lower half is overpainted by the next row's tile,
+  then redrawn by that tile's own upward half. Produced **zero z-order tears** across 9 reads.
+  Worth re-deriving for any future path/greenway/route. (`px(x+0.5,y+0.5) === ctr(x,y)` exactly,
+  so either is safe for integer cells.)
+- **⚠ `stations` falls whenever you de-densify a band, and it is not a break.** `monoStationCells()`
+  only counts a stop with `countAround(x,y,1,DEV)>=3`, and `PARK ∉ DEV` — so green beside a line
+  drops its stops below quorum. `stations` **−17 (−27%)** while `monoLines` stayed **11**. Check
+  `monoLines` before believing you severed transit.
+- **⚠ Agent verdicts were unreliable AGAIN, and the tell is corroboration.** Nine wide-frame reads
+  produced "a debug-chrome lattice", "an L-shaped kink", and "the trail rides over rooftops" —
+  **all three factually false**: `px()≡ctr()` for integer cells, and stepping the SW family moves
+  the centre exactly **−0.5·CW per row**, a straight screen line. But seed 7's FAIL *was* true, and
+  the tell was that a number agreed with it. **Trust a verdict a measurement corroborates; verify
+  one it contradicts.** (Iter 100 said the same and it keeps paying.)
+- **⚠ Aim clips at DEFAULT fit zoom.** `shot-gw.mjs` wheel-zoomed first, then read `scale`/`offX`
+  via `__find` — but the camera is still easing, so the clip landed on towers and I nearly
+  believed the trail was not drawn at all. Shoot at fit zoom, or wait for the camera to settle.
+
+### The prescription for a real lung (cue (e½) is still open)
+
+Not a ribbon — **a blob.** Same ~50 cells, contiguous, **≥3 hexes across** so it has a shape at
+frame scale; that is the one thing this iteration proves a 1–2 hex corridor can never have.
+Expect it to cost *more* pop per cell than the ribbon did (the ribbon's long frontage was what
+bought the `val` uplift back), so budget nearer iter 100's rate. Site it with
+`hexDist(x,y,CBDX,CBDY)` (iter 98), **not** `c.val` — whose peaks already sit on parks and water.
+The `c.gw` flag, the `Greenway` tooltip, the `gwTrail()` half-segment draw, and the contiguity probe
+(union-find with a one-cell bridge, plus a blocker histogram of what stops the walk) were all
+*correct* and are worth re-deriving; only the **shape** was wrong.

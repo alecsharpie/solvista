@@ -3184,3 +3184,120 @@ that is the CA working (mid-succession, mean sand 13/30), not a defect.
 - **Preset framings lie about small features.** `--shots coast` is ocean-heavy and misses the sand on
   some seeds; two separate agents flagged it unprompted. Aim clips with `__find`, not with a preset.
 
+## Iteration 91 — the institutions find each other (2026-07-10)
+
+**Vector** — Civic & culture × **Deepen / interconnect (SHIPPED)**. Both axes pointed here.
+Civic was the most-lagged domain (last touched at 80), and the last five kinds were
+Polish ×3 + Connect + New CA, so a Deepen lap was clean. Civic's Deepen cell was already
+the busiest in its row (36, 59, 66, 80) — but every one of those had deepened *one civic
+building* (its forecourt, its flag, its facing, its school run). **Nothing had ever asked
+where institutions stand relative to each other.**
+
+**Probed the host before designing** (`probe-civic.mjs`, gitignored — iters 88/90's lesson).
+The answer was stark: at 2035 a city has 16–18 civics whose **mean nearest-civic distance is
+6.6–7.6 hexes**, only **1–2 pairs within 3 hexes**, and a mean distance from the town hall of
+**~20 hexes on a plate of radius 33**. Every institution is sited by an independent scan that
+ignores every other institution. There was no civic centre — the museum was as likely to open
+on a farm at the rim as beside the hall.
+
+**Change.**
+- `MAJORK` — the five monumental kinds (`hall museum parliament university library`). The
+  2020+ forecourt rule already inlined exactly this five-way test; it now shares the set.
+- `QUARTER` — the three that *seek* the quarter (`library` 1982, `museum` 1997, `parliament`
+  2034). Services (school, police, firehouse, hospital, aquarium, amphitheater) stay sited by
+  need; **`observatory` is deliberately excluded** — it belongs at the dark rim.
+- `siteQuarter(kind)` — a deterministic scan over `HEXI` that hugs the **nearest standing
+  major** at `QNEAR..QFAR` = **2–4 hexes**: near enough to share a street, far enough to leave
+  one between. (Adjacency would have killed the payoff — bunting needs a `ROAD` cell reachable
+  from two civics.) Score = hug the nearest, prefer the valuable ground a core sits on, and let
+  `hashCell` break the ties that leaves. It widens to 7 hexes once if walled in, then **falls
+  back to the old scattered search**, so `civicKinds` can never drop.
+- The scattered `rcIn()` search now **runs first and always**, even for a kind the quarter will
+  claim, and its result is discarded when the quarter takes it. See below — this is the whole
+  iteration.
+
+**The measurement that saved the vector.** The first build was the obvious one: skip the
+`rcIn()` loop for quarter kinds, since `siteQuarter` is deterministic and the house style says
+a `hashCell` rule "perturbs nothing it doesn't touch". Census came back a **collapse**:
+`pop −12.9% (seed 42) / −22.2% (seed 1234)`, `towers −23% / −47%`. Rather than tune the siting
+I asked *which half* was to blame, since the two demand opposite fixes. `before.html` was
+regenerated from `git show HEAD` (my first copy was taken **after** editing and silently made
+the baseline row identical to the test row — caught only because the deltas were exactly 0),
+and a `&burn` flag re-consumed the draws the old loop would have made, so the **only** remaining
+difference was where the building stood:
+
+| seed | pop, baseline | quarter + skipped draws | quarter + draws burned |
+| --- | --- | --- | --- |
+| 7 | 35024 | 35418 (+1.1%) | **40112 (+14.5%)** |
+| 42 | 35236 | 30688 (**−12.9%**) | **37524 (+6.5%)** |
+| 1234 | 32168 | 25042 (**−22.2%**) | **32936 (+2.4%)** |
+
+The siting was never the problem. **The three skipped `rng()` draws were** — they reshuffled
+800 ticks of terrain-gated stream. Clustering the institutions is in fact worth *up to +14% pop*,
+because three civics squatting on three random prime lots choke three separate `COM` quorums,
+and one quarter chokes one. Shipped form orders the code so the draw count is **provably**
+independent of the quarter's terrain edit: search, then site, then place only if the quarter
+declined. Promoted to the header as a law.
+
+**Census:** VERDICT **PASS**, 0 page errors. `pop 144404 → 152328 (+5.5%)`, `towers 270 → 308`,
+`towerHt +3201`, `tallTowers +26`, `helipads +27`, `stations +13`, `cafes +24`. Core structurals
+flat: `developed 6198→6203`, `roads 5752→5789`. **`civicKinds +0`** — the walled-in fallback
+works; no institution was lost. `CIVIC 86→83` and `schools 23→20` are the same three tiles:
+downstream chaos moved the rng-gated "every ~3500 residents earns a school" rule, not a defect.
+`PLAZA 14→10` is real and structural — see below.
+
+**Interconnect payoff (the actual point), measured per-city at 2035:**
+
+| seed | majors within 260px of hall | festival bunting (`fete` cells) |
+| --- | --- | --- |
+| 42 | 2 → **4** | 9 → **16** |
+| 1234 | 3 → **4** | 6 → **18** |
+
+Pairs of civics within 3 hexes went 2→5, 2→8, 1→8 across the matrix. Two systems built by
+earlier iterations (45's festival streets, 36/80's forecourts) light up with **no new code**.
+
+**The cost, accepted.** `PLAZA 14→10`. The forecourt rule skips a civic with a `PLAZA` within
+2 hexes, and quarter members sit 2–4 apart, so the quarter earns **one** shared square rather
+than four private ones. Defensible urbanism, and arguably the correct reading — but it is the
+one place the vector took something away, so it is **banked as open cue (d)** rather than
+quietly pocketed.
+
+**Visual:** **4/4 `VISUAL: PASS`.** The town hall is placed at founding, before any quarter code
+runs, so it occupies the **same cell in both builds** — which makes a rect centred on it an
+honest A/B (asserted in the shot script, not assumed). Two agents on before/after clips at seeds
+42 and 1234, two on un-zoomed whole frames at seeds 42 (2035) and 7 (2005). Both A/B agents
+reported the cluster **and, unprompted, the bunting**: "festival bunting visible spanning the
+streets between the clustered institutions". Seed 1234's agent volunteered that the monorail
+correctly passes *over* buildings and is not a z-tear (iter 87 holding). Whole-frame agents:
+"the civic quarter adds a legible focal point", towers "distributed… not walling off into a
+monolithic slab", coastline "bright… readable surf edge". No z-order tears, floating tiles or
+blown-out colour on any frame. Grouped "but airy", not a white blob.
+
+**Perf — run because the vector *grew* the city, not because it was due.** The step-back is not
+owed until 94, but +38 towers / +3201 `towerHt` / +27 helipads is exactly the added draw work the
+census cannot see. 3× sequential, judged on the minimum: day **32.5ms (+3.7%)**, night **36.5ms
+(−1.9%)**, PASS. Unusually tight spread (32.50/32.55/32.67) — the +3.7% is not noise, it is the
+honest cost of drawing a taller downtown, and it is well inside the 15% gate.
+
+**Verdict:** **SHIPPED.** The city acquires a civic centre, and its institutions stop squatting
+on the lots downtown wanted.
+
+**Lessons.**
+- **Removing an `rng()` draw is a far bigger perturbation than moving a building.** The header
+  law. `hashCell` is safe for an *additive* rule; a rule that *substitutes* for an existing
+  `rng()` search must still spend that search's draws. The codebase already knew this once —
+  the 1996 plaza rule survives purely to keep its draws aligned — but it was filed as a quirk
+  of that rule rather than as a law, so I rediscovered it at the cost of a −22% census.
+- **When a change fails, first ask which *half* of it failed.** Siting and stream-shift were
+  confounded, demanded opposite fixes, and the wrong guess (tune the siting scores) would have
+  chased a phantom for hours and probably reverted a good vector. One flag and one control run
+  separated them in ten minutes. *A failing census is a question, not a verdict.*
+- **Regenerate the baseline from `git`, never from the working tree.** My `before.html` was copied
+  after the first edit. It produced a perfectly plausible table in which the baseline and the test
+  agreed to the digit — which is *itself* the tell. Deltas of exactly 0.0% across three seeds mean
+  you are diffing a file against itself.
+- **The best Deepen asks how existing things relate, not how one thing looks.** Four prior Civic
+  Deepens each polished a single building's relationship to its own street. Asking where buildings
+  stand relative to *each other* cost ~40 lines, added no tile, no entity and no draw call, and
+  lit up two systems built 45 iterations apart.
+
