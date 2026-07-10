@@ -58,6 +58,8 @@ ones (U2, 42, U5) stay in the bullet.
   Sky **115** · Urban **124** · People **119** · Nature **120** · Transport **121** · Civic **122** · Water **123**.
   **Stalest is now Sky (115)** — read its trap note below before taking it (sky is not cellular; its empty
   `New CA rule` cell is a trap, and additive sky is saturated) — then **People (119)** or **Nature (120)**.
+  (**125 was the holistic step-back and took NO city domain vector** — a recipe/doc fix only — so this
+  standings picture is unchanged: the next lap still owes Sky, then People/Nature.)
   **124 cashed Urban's banked ghost-`c.solar` cue and it is now CLOSED:** `c.solar`/`c.groof` persist after a
   building is cleared for a paved square, so the census counted panels on `PLAZA`/`QUAD`/`PARK`/`GARDEN`/`STADIUM`
   (probe-solghost: 27 ghost solar + 4 ghost green across 8 seeds) and the adoption CA counted them as neighbours.
@@ -106,11 +108,17 @@ ones (U2, 42, U5) stay in the bullet.
   later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
   shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
   **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.*
-  **Iteration 125 is the next holistic step-back** (105, 110, 115, 120, …), and per 115's finding it must be
-  shot **at night as well as by day**: 115's night frame failed on a defect present in every city ever
-  generated, which ~114 daytime whole-city reads, the census and the perf gate had all missed. **120 also
-  shot the SEASON** (`&year=`) and that is what caught its defect — a whole-city read in January can never
-  see a seasonal bug, and January is the default. **Add a seasonal frame to every step-back.**
+  **Iteration 130 is the next holistic step-back** (105, 110, 115, 120, **125**, …). Per 115 it is shot
+  **at night as well as by day** (115's night frame failed on a defect ~114 daytime reads had missed) and
+  per 120 **at a season too** (`&year=`; a January read can never see a seasonal bug). **125 added the third
+  rule: PIN THE DAY FRAME OFF JANUARY.** `?warp=61` lands on ~2035.0 = winter, so a default "day" frame and a
+  `year=2035.02` winter frame *are the same instant* — 125's seed-42 agent duly read "winter barely differs
+  from summer," comparing winter to winter. Shoot the day/night baselines at `year=2035.62` (dry peak) and keep
+  `2035.02` as the seasonal-contrast frame. (Now promoted into SKILL.md's step-back section.) **125 itself
+  found NO compounding city defect**: both seeds PASS day/night/season, night core reads at both (115's
+  lighting holds — agents located it at (.48,.47)/(.50,.62), the latter off-centre), sea reads (116/123 hold),
+  no tears/floaters/blowout in 6 frames; seasons measured alive (`probe-season`: FARM winter→dry-peak 88,
+  ROAD control ~0). The step-back's product was the recipe fix above, not a city change.
   Iter 111 was People × Connect and used
   109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
   Transport** (trains ↔ their own stations) and iter 113 cashed it a third time in **Water** (the
@@ -176,6 +184,15 @@ ones (U2, 42, U5) stay in the bullet.
   iters 100–104 and reported ~+6% before your change existed. Do not re-chase it. Still valid at iter
   **117** (pristine-HEAD control, interleaved: day **35.11ms** / night **39.45ms**; the patched file read
   day **34.33** / night **39.22**). Not re-pinned.
+  **⚠ 125's step-back gate cried FALSE FAIL (night +16%), and the interleaved control caught it** — exactly
+  the "a failing gate nobody trusts is worse than none" scenario. The iter-115 file's *own bytes* read
+  **41.3ms night** today vs its recorded 37.3 = **~+10% pure machine load**. Interleaved HEAD-125 vs the
+  iter-115 file (min of 3 rounds, A/B/A/B): night **43.06 vs 41.28 (+4.3%)**, day **36.44 vs 38.06 (~flat,
+  HEAD faster)** — sample ranges *overlap* (HEAD-night min 43.06 < 115-night max 43.44). So the real
+  accumulated cost of iters 116→124 is **~+4% night, day flat** — minor and within noise. **NOT re-pinned**
+  (today's load is elevated; re-pinning to 43ms would bake in the load and blind the gate to a real future
+  regression). **Night is the one to watch** (118 added per-window lit-pane draws). Grade any future
+  step-back FAIL by interleaving against an old commit's file, never by the stored baseline alone.
   **⚠ 117 CORRECTED 99's DIAGNOSTIC.** The old rule read *"a **stable** pass-over-pass offset means code,
   a **rising** one means load."* **The stable half is FALSE**: machine load is autocorrelated over
   minutes, so three passes inside one loaded window are three samples of *one* draw. Iter 117's gate read
@@ -282,11 +299,6 @@ ones (U2, 42, U5) stay in the bullet.
   texture or tone in the water field itself*, **not another floating object**. Note iter 106 passed on Water
   × Connect/CA/Scale for reasons recorded in its entry; this is Water × **Polish**, which is untouched by
   that reasoning.
-  **~~(j) the night windows verge on stripe-noise~~ — CLOSED BY ITER 118.** The band was a continuous glowing
-  ribbon with one notch punched in it; it now draws only its lit panes and lets the prism's own wall be the
-  mullion. Horizontal gradient energy **+38…45%**, mean tone held **+1.8…2.6%**, night frame **+5.1%**, day frame
-  byte-identical. Two night agents independently confirmed *"a grid of windows"* and *"the stripe noise is gone."*
-  Grade any successor with `probe-winband.mjs` (|dI/dx| vs |dI/dy|), not `probe-litdiff.mjs`.
   **(e½) the interior is an edge-to-edge carpet — now DENSITY-ONLY** *(cue (e)'s skyline half was
   **CLOSED by iter 98**; its **palette** half was **CLOSED by iter 99**)* Urban fabric — iter 94's
   holistic agent called the landmass "too uniform… little breathing room between core and edge,"
@@ -315,10 +327,6 @@ ones (U2, 42, U5) stay in the bullet.
   The same agent flagged seed 1234's long straight monorail/cable
   lines as still reading like a "wireframe/UI stroke" — but iters 85/87 closed that with two
   agents each, so treat this as one un-zoomed opinion, **not** a reopening of cue (c).
-  **(f) `RES` says its height twice, and its roofs ignore the seed** — **CLOSED by iter 103**
-  (`corr` 0.87–0.89 → 0.22–0.25; chimney cross-seed agreement 100% → ~60%; a third body shade).
-  (RES body is *not* clumped — measured `sameNbr` **52.1%**, maxPatch **5.3** — so do **not** "fix"
-  patchiness that isn't there.)
   **(g) THIRTEEN lines / SIXTEEN seedless `hashCell` calls remain** — **iter 103's audit grep undercounted,
   and iter 113 corrected it.** The old pattern
   (`grep -nE 'hashCell\([^)]*,[[:space:]]*(0x)?[0-9]+\)' … | grep -v seedNum`) matches only a **bare integer**
@@ -383,133 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 117 entries before Iteration 115 live in
+> **Archive:** the 118 entries before Iteration 116 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 115 — the city keeps its lights on downtown (2026-07-10) [holistic step-back]
-
-**Vector** — Sky & atmosphere × **Polish**. Rotation named the domain: Sky was the stalest (95) and had
-been stalest for twenty laps, parked because it is *additively* saturated. This lap is the way past that —
-it adds nothing. Kind is Polish (make what exists read better), not Deepen: Deepen had paid 3 of the
-last 7 laps. The content was chosen by the step-back's own agents, not by me.
-
-**The step-back found it.** Three un-zoomed whole-city agents (seeds 42/7 day, seed 42 night). Both day
-frames PASS. **The night frame FAILED**: *"lighting has no hierarchy — uniform window-light density
-everywhere makes the city read as one flat glittering mat instead of a skyline with a luminous core
-fading to dark residential edges."* Independently, the seed-7 **day** agent reached the same place from
-the other side: *"87 towers sprinkled almost evenly across the whole landmass with no skyline logic…
-the skyline has no focal massing."* Two agents, two frames, one claim: **the city has no centre.**
-
-**But that is a "which is more X" claim, and iter 108's law says agents invert those.** So it was measured
-before a line was written (`probe-nightcore.mjs`, `git add -f`'d).
-
-**The cause was in the source, not the pixels.** `drawBuilding`'s only window-light term is
-`lit=LITAMT*(0.35+0.65*c.lit)`, and `c.lit` had **exactly one writer** — `genWorld`'s
-`lit:hashCell(y,x,seed)`. Per-cell white noise. The night light field was, by construction, independent
-of downtown, density, value and height:
-
-| | seed 7 | seed 42 | seed 1234 |
-| --- | --- | --- | --- |
-| `corr(c.lit, dist-from-CBD)` **before** | **+0.008** | **−0.013** | **+0.056** |
-| mean `c.lit`, rings 0-4 → 22-40 | 0.42 → 0.52 | 0.62 → 0.51 | 0.46 → 0.50 |
-| `corr(c.lit, dist)` **after** | **−0.806** | **−0.827** | **−0.776** |
-| mean `c.lit`, rings 0-4 → 22-40 | **0.81 → 0.27** | **0.90 → 0.26** | **0.83 → 0.25** |
-| `corr(c.lit, th)` before → after | −0.008 → **0.088** | 0.015 → **0.068** | −0.071 → **0.052** |
-
-**Change.** Once the founding fixes `CBDX,CBDY`, one pass over the grid moves the **mean** of `c.lit`
-along a smoothstep falloff and keeps the existing seeded draw as the **variance**:
-`c.lit = clamp(0.18 + 0.70·smoothstep(1−d/LITR) + (c.lit−0.5)·0.5, 0, 1)`.
-Driven by **position alone** — never height or type, so a building still does not wear its height twice
-(iters 103/110); the guard is `corr(lit, th)`, which stayed at 0.05–0.09, far below the 0.35 decoupling
-line. New constant `LITR=34`, deliberately **not** `CORER=16`: over half of every city's buildings stand
-beyond hex 22 from the CBD, so reusing the tower-siting radius would have pinned the whole outer city at
-one dim value and merely moved the flatness outward. No new `hashCell`, no new salt, no `rng()` draw.
-
-**Census** — `pop`, `roads`, `developed`, `towers`, `parks` all **+0**; tile histogram **empty**;
-`greenRoofs −1` is iter 108's documented load jitter (salted on `(year*31)|0`), not this vector. Exactly
-the draw-only signature. VERDICT: PASS.
-
-**Visual** — 3 agents, all PASS. Rather than ask "is the core brighter?" (the question 108 says they
-invert), each night agent was asked to **locate downtown by light alone** and the answer checked against
-ground truth. Blind, both hit it within ~2% of the frame:
-
-| | agent's centre | true CBD | error |
-| --- | --- | --- | --- |
-| seed 42 | (0.47, 0.50) | (0.49, 0.51) | ~33 px |
-| seed 7 | (0.50, 0.62) | (0.48, 0.63) | ~33 px |
-
-Seed 7's core is **not** at frame centre (y=0.63), so that is a discriminating hit, not "guess the middle".
-Both confirmed the rim still reads as buildings (no black void) and that light still varies
-building-to-building — *"dark unlit blocks sit right beside brightly lit towers even in the core"* — so it
-reads as a city, not a painted vignette. The day agent confirmed **no** lighting effect at midday.
-
-**Perf** (step-back gate, min-of-3, sequential): day **33.83ms** · night **38.55ms** vs baseline
-33.16/37.33. Day is *identical* to the pristine control taken at the head of this same session (33.83ms).
-The bake is one-time in `genWorld`; `drawBuilding` is untouched, so per-frame work is unchanged. Readings
-rose monotonically across the three passes (33.83→34.44→34.89) — load, not code (iters 99/104). Not re-pinned.
-
-**Verdict — SHIPPED.** The stalest domain in the city was fixed by *removing* a defect, not adding a feature.
-
-### Findings
-
-- **⚠ TWO PAGE LOADS ARE NOT THE SAME INSTANT — the same-frame law has a second half (new; extends 109).**
-  109 said: freeze the sim, toggle only your feature, and every other pixel is identical *by construction*.
-  What it did not say is **where** the two frames must live. The first cut of `probe-litdiff.mjs` diffed a
-  pristine build against the patched one across two `page.goto`s and reported **5.6% of DAY pixels changed**
-  — including at `t=0.44`, where `LITAMT` is *exactly 0* and the feature provably cannot draw. The probe was
-  lying: `frame()` runs on rAF from the moment of load, so between `goto` and `evaluate` a variable number of
-  frames tick the sim, drift the clouds (`syncSky` takes `performance.now()`) and step every vehicle. **The
-  tell was self-contradiction: re-running the identical comparison gave 89408 px, then 89633 px.** A
-  deterministic diff that changes between runs is measuring the harness. Fixed by doing the A/B **inside one
-  page**: render, mutate the field in place, render again, restore. Day went to **0 px changed, exactly**,
-  and night to 6.6% (dusk 4.9%). *If a probe of a frozen scene is not bit-exact, do not reach for a
-  tolerance — find what is still moving.*
-- **⚠ A SINGLE-READER, SINGLE-WRITER DRAW FIELD IS THE SAFEST THING IN THIS ARTIFACT TO CHANGE (new).**
-  `grep -n '\.lit'` returned three lines total: the write, the read, and an unrelated `dl.lit`. That
-  three-line grep is what licensed the whole vector — a field no CA pass reads cannot perturb the seeded
-  stream, so `pop` was *guaranteed* flat before the census ran, and it was. The mirror of 107's dead-rule
-  law: **107 says grep a rule's writers before trusting it; this says grep a field's readers before fearing
-  it.** Combined with `LITAMT=0` at midday, the change was provably day-invariant *and* census-invariant
-  before a single gate was run. Look for the other one-reader draw fields (`c.v`, `c.dist`) when a Polish
-  lap needs a guaranteed-clean ship.
-- **⚠ ASK AN AGENT TO *LOCATE*, NOT TO *COMPARE* — and check it against ground truth (new; the practical
-  answer to 108's law).** 108 established agents are reliable for "is it broken" and unreliable for "which
-  is more X", and left the loop with no way to visually grade a *magnitude*. There is one: convert the
-  comparison into a **localization**, then verify it numerically. "Is the core brighter?" is unanswerable
-  and invites flattery; "point at the brightest concentration, in fractional coords, or say NO CENTRE" is
-  gradeable against `ctr(CBDX,CBDY)·scale+off`. Two agents landed within 33 px of a CBD they were never
-  told. **Give the agent an escape hatch** ("NO CENTRE is a completely acceptable answer") or the hit means
-  nothing — an agent that must name a point will always name one. This generalizes to any vector with a
-  known location: a square, a lung, a depot, a line.
-- **THE NIGHT WAS THE ONLY FRAME THAT KNEW.** Two day agents passed the same city the night agent failed,
-  and the census, the tile histogram and the perf gate were all blind to a defect present in every city
-  ever generated. The loop has taken ~114 whole-city reads and, until this one, **essentially all of them
-  were by day** — the same blind spot that hid the January-only shots until iter 108 and the dead-low-water
-  shots until 113. **Shoot the step-back at night too; it is a different city.**
-- **Banked cue (j) — the night windows verge on stripe-noise** *(Urban fabric, or a `polish-tile` job)*. The
-  same night agent, second complaint: across the dense core the yellow window rows are *"extremely dense and
-  repetitive — they buzz as horizontal-stripe noise rather than individual lit windows, especially on the mid
-  towers."* This lap dimmed the periphery, which relieves it at the rim but **not downtown, where the fix
-  made rows brighter**. Distinct from this vector (per-window density inside `drawBuilding`'s band draw, not
-  the light field), so it was left alone. Take it with `probe-litdiff.mjs`'s in-page A/B.
-- **~~Banked cue (k)~~ — CLOSED BY ITER 116 (the field half). The SITING half is still open** — see 116's
-  last finding: the turbines/boats are still salted into water of any depth, and `rDeep` now exists to
-  found them on the `Coastal shelf`. Original cue, kept because its wording is what made it actionable:
-- **Banked cue (k) — the open water is the least-resolved third of the frame** *(Water & coast)*. **Both**
-  day agents, unprompted and independently, named the sea: *"a large flat teal wedge — no wave detail, reefs,
-  wake trails, or depth gradient… it carries a disproportionate share of canvas for how little it resolves"*
-  and *"the entire right third is flat teal… compared to the hyper-dense land it reads as dead space."* Two
-  independent agents converging unprompted is the strongest cue signal this ledger has. Note both also called
-  the scattered offshore turbines/boats *"randomly salted rather than sited"* — so the answer is likely
-  **depth/texture in the water field**, not another floating object.
-- **`probe-nightcore.mjs` and `probe-litdiff.mjs` are `git add -f`'d** (iter 101's law). `probe-nightcore`
-  reports, per seed, `corr(lit,dist)`, `corr(lit,th)` and mean `c.lit` + mean sampled luminance per distance
-  ring — reuse it for *any* "does this field follow the city's structure?" claim. `probe-litdiff` is the
-  general **same-instant A/B**: freeze, render, mutate in place, render, diff. It is the right instrument for
-  any change whose blast radius you want to bound in pixels rather than argue about.
 
 ## Iteration 116 — the sea gets a bottom (2026-07-10)
 
@@ -1323,3 +1209,74 @@ baseline, the `?year=`/`?tide=` hooks). Header now **386/400**; all 10 ledger en
 
 **Verdict** FIXED — undid a compounding count/CA bug that had over-reported rooftop solar since forecourts
 and quad-grounds began carving squares from solar-bearing lots, and trimmed the header back under budget.
+
+## Iteration 125 — the step-back finds a clean city, and a January in its own eye (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/**125**). Not a domain × kind lap: its job is
+to read the WHOLE city for *cumulative* drift the census and per-feature visual gates are blind to, run the
+perf gate, and — new since 115/120 — do it at **night and a season**, not just a daylit January. No city
+domain vector was taken (see the verdict), so rotation is unchanged.
+
+**What was read.** Un-zoomed whole-city frames at **2 seeds × 3 lights/calendars** (42 and 7; day, night,
+and a season each), one subagent per seed reading its own three frames and asked the *cumulative* question
+("has anything compounded into clutter or darkness?"), never "is the new feature there."
+
+**Result: the city is healthy.** Both agents **VISUAL: PASS**.
+- **Night lighting (115) holds across both seeds.** Asked to *locate* the luminous core by light alone
+  (108's locate-don't-judge law), both hit near the true CBD — seed 42 at (.48,.47), seed 7 at (.50,.62),
+  the latter a discriminating **off-centre** hit. Neither read a flat glitter mat; the rim fades to dark.
+- **The sea reads** (116's bottom + 123's founded wind farm): "reads as ONE grouped wind farm parallel to
+  the shelf," night sea "deep desaturated blue, not a dead void."
+- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames.** Day frames
+  balanced, core→edge density gradient intact, open water alive not empty.
+
+**Perf — the gate cried a FALSE FAIL, and the interleaved control caught it.** `perf.mjs` reported night
+**+16%** (43.3 vs baseline 37.3) and FAILed, stable across two runs. But the stored baseline is a day old
+under a different load: the **iter-115 file's own bytes read 41.3ms night today** (~+10% pure load).
+Interleaved HEAD-125 vs the iter-115 file (A/B/A/B, min of 3): night **43.06 vs 41.28 (+4.3%)**, day
+**36.44 vs 38.06 (~flat, HEAD faster)** — sample ranges *overlap*. So the real cost of iters 116→124 is
+**~+4% night, day flat** — minor. **Not re-pinned** (re-pinning to today's inflated 43ms would blind the
+gate to a real future regression); night is the one to watch (118 added per-window lit-pane draws). Header
+perf note updated.
+
+**Season — measured alive; the one "defect" an agent named was an artifact of MY shot.** Seed 42's agent
+independently reported "winter barely differs from summer." Per 108's law (agents invert "which is more X"),
+this was measured, not believed: `probes/probe-season.mjs` (per-tile rendered-pixel distance from winter,
+`ROAD` as the zero control) reads **FARM winter→dry-peak 88, winter→autumn 93**, with FOREST/VINEYARD/
+ORCHARD/MEADOW/SHOREPARK all moving and PARK/REDWOOD near-zero *by design* (irrigated / evergreen, per 120).
+ROAD control **~0–2.2**. The seasons are working. The agent was fooled because I shot the "day" baseline at
+the **default** year — which is **~2035.0 ≈ winter (January is the default)** — so it compared the winter
+frame to a frame that was *also* winter. Exactly the January-blindness the header has warned about since
+108/120, walked into again.
+
+**Change (the step-back's product — a recipe fix, not a city change).** Promoted the lesson into
+**SKILL.md**'s step-back section and refreshed the header's step-back pointer: **pin the day/night baseline
+frames off January** (`year=2035.62`, dry peak) and keep `2035.02` as the seasonal-contrast frame, so the
+two baseline frames sit at different calendar points and seasonal drift can surface on the primary reads.
+No `solvista.html` edit; census unchanged and vacuous by construction (tree verified clean after the perf
+interleave restored HEAD).
+
+**Verdict — FIXED.** No compounding city defect found (a clean bill of health is the rarer, and the honest,
+step-back outcome). The compounding problem that *was* found is in the loop's own guardrail — a step-back
+that shoots its "day" frame in January cannot see a seasonal bug and mis-reads winter — and it is now fixed
+in the recipe so it stops recurring (108 → 120 → 125). The city grows by keeping its instruments honest.
+
+### Findings
+
+- **⚠ A DEFAULT-CALENDAR "DAY" FRAME IS A WINTER FRAME (new; the third recurrence of the January blind spot).**
+  `?warp=61` from `year=1974` lands on ~2035.0, and `applySeason`'s winter keyframe is 0.02 — so an un-pinned
+  day shot and a `year=2035.02` "winter" shot are the *same instant*. An agent handed both will report the
+  season "doesn't read," comparing winter to winter, and a real seasonal regression on the primary frame is
+  invisible. Pin the day/night baselines to a non-winter `year=`; the seasonal frame is the contrast, not the
+  day frame. (108 wired `?year=`, 120 shot a season, 125 fixed the *day* frame — the same blind spot, closed
+  one layer deeper each time.)
+- **⚠ GRADE A STEP-BACK PERF FAIL BY INTERLEAVING AGAINST AN OLD COMMIT'S FILE, NEVER BY THE STORED BASELINE
+  (sharpens 117's law).** The baseline is pinned on a specific day's load; a step-back runs days later on a
+  different load, so `current vs baseline` conflates code drift with today's load. The clean reading is
+  `current-file vs old-commit-file`, interleaved under *the same* load — here it collapsed a +16% FAIL to a
+  +4% real delta with overlapping ranges. `git show <old>:solvista.html > /tmp/x.html` and swap it in.
+- **A CLEAN STEP-BACK IS A COMPLETE ITERATION — DON'T FORCE A FILLER VECTOR ONTO IT (reinforces 120).** 120's
+  law says a step-back that finds a defect then ships an *unrelated* vector wastes the step-back. The corollary:
+  when it finds *no* city defect, the honest output is the health record + whatever the read itself surfaced
+  (here, the recipe fix) — not a Sky feature invented to have shipped something. "One more shallow feature is
+  not automatically worth it" (the skill). The next lap still owes the stalest domain (Sky, then People/Nature).

@@ -5342,6 +5342,17 @@ can see anything**; they rest on the pixel probe alone, and I have logged that r
 Superseded / closed / promoted-to-SKILL.md bullets, moved verbatim to keep the
 maintained header under its 400-line budget. Nothing reads these by default.
 
+(iter 125 trim, 2026-07-11 — closed cue (j), CLOSED BY ITER 118:)
+- **~~(j) the night windows verge on stripe-noise~~ — CLOSED BY ITER 118.** The band was a continuous glowing
+  ribbon with one notch punched in it; it now draws only its lit panes and lets the prism's own wall be the
+  mullion. Horizontal gradient energy **+38…45%**, mean tone held **+1.8…2.6%**, night frame **+5.1%**, day frame
+  byte-identical. Two night agents independently confirmed *"a grid of windows"* and *"the stripe noise is gone."*
+  Grade any successor with `probe-winband.mjs` (|dI/dx| vs |dI/dy|), not `probe-litdiff.mjs`.
+- **(f) `RES` says its height twice, and its roofs ignore the seed** — **CLOSED by iter 103**
+  (`corr` 0.87–0.89 → 0.22–0.25; chimney cross-seed agreement 100% → ~60%; a third body shade).
+  (RES body is *not* clumped — measured `sameNbr` **52.1%**, maxPatch **5.3** — so do **not** "fix"
+  patchiness that isn't there.)
+
 - **⚠ FREEZE THE CLOCK BEFORE YOU DIFF A LIVE DIORAMA, AND MEASURE WHICH INSTANCES ARE VISIBLE
   (iter 111; `probe-vis.mjs` is the worked example).** (a) Two shots of this city at different sim
   times differ by ~14% of the canvas — cars, waves, swaying trees — so a pixel diff across time can
@@ -6285,4 +6296,126 @@ tile histogram empty.
   ledger cites does not exist). The probe reports plaza patch sizes, per-major forecourt status and the
   head's neighbour composition; the shooter finds the **largest patch** by flood fill and wheels the
   artifact's own camera onto its centroid — reuse it for any *"does this multi-hex patch read?"* claim.
+
+## Iteration 115 — the city keeps its lights on downtown (2026-07-10) [holistic step-back]
+
+**Vector** — Sky & atmosphere × **Polish**. Rotation named the domain: Sky was the stalest (95) and had
+been stalest for twenty laps, parked because it is *additively* saturated. This lap is the way past that —
+it adds nothing. Kind is Polish (make what exists read better), not Deepen: Deepen had paid 3 of the
+last 7 laps. The content was chosen by the step-back's own agents, not by me.
+
+**The step-back found it.** Three un-zoomed whole-city agents (seeds 42/7 day, seed 42 night). Both day
+frames PASS. **The night frame FAILED**: *"lighting has no hierarchy — uniform window-light density
+everywhere makes the city read as one flat glittering mat instead of a skyline with a luminous core
+fading to dark residential edges."* Independently, the seed-7 **day** agent reached the same place from
+the other side: *"87 towers sprinkled almost evenly across the whole landmass with no skyline logic…
+the skyline has no focal massing."* Two agents, two frames, one claim: **the city has no centre.**
+
+**But that is a "which is more X" claim, and iter 108's law says agents invert those.** So it was measured
+before a line was written (`probe-nightcore.mjs`, `git add -f`'d).
+
+**The cause was in the source, not the pixels.** `drawBuilding`'s only window-light term is
+`lit=LITAMT*(0.35+0.65*c.lit)`, and `c.lit` had **exactly one writer** — `genWorld`'s
+`lit:hashCell(y,x,seed)`. Per-cell white noise. The night light field was, by construction, independent
+of downtown, density, value and height:
+
+| | seed 7 | seed 42 | seed 1234 |
+| --- | --- | --- | --- |
+| `corr(c.lit, dist-from-CBD)` **before** | **+0.008** | **−0.013** | **+0.056** |
+| mean `c.lit`, rings 0-4 → 22-40 | 0.42 → 0.52 | 0.62 → 0.51 | 0.46 → 0.50 |
+| `corr(c.lit, dist)` **after** | **−0.806** | **−0.827** | **−0.776** |
+| mean `c.lit`, rings 0-4 → 22-40 | **0.81 → 0.27** | **0.90 → 0.26** | **0.83 → 0.25** |
+| `corr(c.lit, th)` before → after | −0.008 → **0.088** | 0.015 → **0.068** | −0.071 → **0.052** |
+
+**Change.** Once the founding fixes `CBDX,CBDY`, one pass over the grid moves the **mean** of `c.lit`
+along a smoothstep falloff and keeps the existing seeded draw as the **variance**:
+`c.lit = clamp(0.18 + 0.70·smoothstep(1−d/LITR) + (c.lit−0.5)·0.5, 0, 1)`.
+Driven by **position alone** — never height or type, so a building still does not wear its height twice
+(iters 103/110); the guard is `corr(lit, th)`, which stayed at 0.05–0.09, far below the 0.35 decoupling
+line. New constant `LITR=34`, deliberately **not** `CORER=16`: over half of every city's buildings stand
+beyond hex 22 from the CBD, so reusing the tower-siting radius would have pinned the whole outer city at
+one dim value and merely moved the flatness outward. No new `hashCell`, no new salt, no `rng()` draw.
+
+**Census** — `pop`, `roads`, `developed`, `towers`, `parks` all **+0**; tile histogram **empty**;
+`greenRoofs −1` is iter 108's documented load jitter (salted on `(year*31)|0`), not this vector. Exactly
+the draw-only signature. VERDICT: PASS.
+
+**Visual** — 3 agents, all PASS. Rather than ask "is the core brighter?" (the question 108 says they
+invert), each night agent was asked to **locate downtown by light alone** and the answer checked against
+ground truth. Blind, both hit it within ~2% of the frame:
+
+| | agent's centre | true CBD | error |
+| --- | --- | --- | --- |
+| seed 42 | (0.47, 0.50) | (0.49, 0.51) | ~33 px |
+| seed 7 | (0.50, 0.62) | (0.48, 0.63) | ~33 px |
+
+Seed 7's core is **not** at frame centre (y=0.63), so that is a discriminating hit, not "guess the middle".
+Both confirmed the rim still reads as buildings (no black void) and that light still varies
+building-to-building — *"dark unlit blocks sit right beside brightly lit towers even in the core"* — so it
+reads as a city, not a painted vignette. The day agent confirmed **no** lighting effect at midday.
+
+**Perf** (step-back gate, min-of-3, sequential): day **33.83ms** · night **38.55ms** vs baseline
+33.16/37.33. Day is *identical* to the pristine control taken at the head of this same session (33.83ms).
+The bake is one-time in `genWorld`; `drawBuilding` is untouched, so per-frame work is unchanged. Readings
+rose monotonically across the three passes (33.83→34.44→34.89) — load, not code (iters 99/104). Not re-pinned.
+
+**Verdict — SHIPPED.** The stalest domain in the city was fixed by *removing* a defect, not adding a feature.
+
+### Findings
+
+- **⚠ TWO PAGE LOADS ARE NOT THE SAME INSTANT — the same-frame law has a second half (new; extends 109).**
+  109 said: freeze the sim, toggle only your feature, and every other pixel is identical *by construction*.
+  What it did not say is **where** the two frames must live. The first cut of `probe-litdiff.mjs` diffed a
+  pristine build against the patched one across two `page.goto`s and reported **5.6% of DAY pixels changed**
+  — including at `t=0.44`, where `LITAMT` is *exactly 0* and the feature provably cannot draw. The probe was
+  lying: `frame()` runs on rAF from the moment of load, so between `goto` and `evaluate` a variable number of
+  frames tick the sim, drift the clouds (`syncSky` takes `performance.now()`) and step every vehicle. **The
+  tell was self-contradiction: re-running the identical comparison gave 89408 px, then 89633 px.** A
+  deterministic diff that changes between runs is measuring the harness. Fixed by doing the A/B **inside one
+  page**: render, mutate the field in place, render again, restore. Day went to **0 px changed, exactly**,
+  and night to 6.6% (dusk 4.9%). *If a probe of a frozen scene is not bit-exact, do not reach for a
+  tolerance — find what is still moving.*
+- **⚠ A SINGLE-READER, SINGLE-WRITER DRAW FIELD IS THE SAFEST THING IN THIS ARTIFACT TO CHANGE (new).**
+  `grep -n '\.lit'` returned three lines total: the write, the read, and an unrelated `dl.lit`. That
+  three-line grep is what licensed the whole vector — a field no CA pass reads cannot perturb the seeded
+  stream, so `pop` was *guaranteed* flat before the census ran, and it was. The mirror of 107's dead-rule
+  law: **107 says grep a rule's writers before trusting it; this says grep a field's readers before fearing
+  it.** Combined with `LITAMT=0` at midday, the change was provably day-invariant *and* census-invariant
+  before a single gate was run. Look for the other one-reader draw fields (`c.v`, `c.dist`) when a Polish
+  lap needs a guaranteed-clean ship.
+- **⚠ ASK AN AGENT TO *LOCATE*, NOT TO *COMPARE* — and check it against ground truth (new; the practical
+  answer to 108's law).** 108 established agents are reliable for "is it broken" and unreliable for "which
+  is more X", and left the loop with no way to visually grade a *magnitude*. There is one: convert the
+  comparison into a **localization**, then verify it numerically. "Is the core brighter?" is unanswerable
+  and invites flattery; "point at the brightest concentration, in fractional coords, or say NO CENTRE" is
+  gradeable against `ctr(CBDX,CBDY)·scale+off`. Two agents landed within 33 px of a CBD they were never
+  told. **Give the agent an escape hatch** ("NO CENTRE is a completely acceptable answer") or the hit means
+  nothing — an agent that must name a point will always name one. This generalizes to any vector with a
+  known location: a square, a lung, a depot, a line.
+- **THE NIGHT WAS THE ONLY FRAME THAT KNEW.** Two day agents passed the same city the night agent failed,
+  and the census, the tile histogram and the perf gate were all blind to a defect present in every city
+  ever generated. The loop has taken ~114 whole-city reads and, until this one, **essentially all of them
+  were by day** — the same blind spot that hid the January-only shots until iter 108 and the dead-low-water
+  shots until 113. **Shoot the step-back at night too; it is a different city.**
+- **Banked cue (j) — the night windows verge on stripe-noise** *(Urban fabric, or a `polish-tile` job)*. The
+  same night agent, second complaint: across the dense core the yellow window rows are *"extremely dense and
+  repetitive — they buzz as horizontal-stripe noise rather than individual lit windows, especially on the mid
+  towers."* This lap dimmed the periphery, which relieves it at the rim but **not downtown, where the fix
+  made rows brighter**. Distinct from this vector (per-window density inside `drawBuilding`'s band draw, not
+  the light field), so it was left alone. Take it with `probe-litdiff.mjs`'s in-page A/B.
+- **~~Banked cue (k)~~ — CLOSED BY ITER 116 (the field half). The SITING half is still open** — see 116's
+  last finding: the turbines/boats are still salted into water of any depth, and `rDeep` now exists to
+  found them on the `Coastal shelf`. Original cue, kept because its wording is what made it actionable:
+- **Banked cue (k) — the open water is the least-resolved third of the frame** *(Water & coast)*. **Both**
+  day agents, unprompted and independently, named the sea: *"a large flat teal wedge — no wave detail, reefs,
+  wake trails, or depth gradient… it carries a disproportionate share of canvas for how little it resolves"*
+  and *"the entire right third is flat teal… compared to the hyper-dense land it reads as dead space."* Two
+  independent agents converging unprompted is the strongest cue signal this ledger has. Note both also called
+  the scattered offshore turbines/boats *"randomly salted rather than sited"* — so the answer is likely
+  **depth/texture in the water field**, not another floating object.
+- **`probe-nightcore.mjs` and `probe-litdiff.mjs` are `git add -f`'d** (iter 101's law). `probe-nightcore`
+  reports, per seed, `corr(lit,dist)`, `corr(lit,th)` and mean `c.lit` + mean sampled luminance per distance
+  ring — reuse it for *any* "does this field follow the city's structure?" claim. `probe-litdiff` is the
+  general **same-instant A/B**: freeze, render, mutate in place, render, diff. It is the right instrument for
+  any change whose blast radius you want to bound in pixels rather than argue about.
 

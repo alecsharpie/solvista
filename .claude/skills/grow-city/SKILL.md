@@ -314,6 +314,21 @@ and never re-read the coastline.) **If something compounded badly, spend the nex
 iteration FIXING it instead of adding more.** This holistic pass is the main
 guardrail that lets the loop scale to long unattended runs.
 
+**Shoot the step-back at three lights AND two calendars, and PIN the day frame off
+January** — night (iter 115: the night frame failed on a defect every day frame had
+passed) and a season (iter 120: a January whole-city read can never see a seasonal
+bug). But note the trap iter 125 walked straight into: `?warp=61` lands the calendar
+on ~2035.0, i.e. **the default "day" frame is already winter**, so a day frame and a
+`year=2035.02` winter frame *collapse to the same instant* and an agent reads "winter
+barely differs from summer" when it is really comparing winter to winter. So pin the
+**day/night baseline frames to a non-winter `year=` (e.g. `2035.62`, the golden dry
+peak)** and use `2035.02` for the explicit seasonal-contrast frame — then the two
+baseline frames sit at different calendar points and seasonal drift can show on the
+primary reads. (Whether the seasons are alive at all is a probe question, not an
+agent one: `probes/probe-season.mjs` prints each keyframe's per-tile pixel distance
+from winter with `ROAD` as the zero control — FARM winter→dry-peak ≈ 88 is the tell
+that the calendar is working.)
+
 **Also run the frame-time gate** as part of this step-back (borrowed from the
 polish-tile skill, which owns the baseline):
 ```bash
