@@ -21,7 +21,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53 |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87 |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81, 89 |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93 | 78 | | 84 |
@@ -48,6 +48,33 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   per hand). A leashed dog rides its owner's hex, so it inherits `pedWalk`'s street/bridge
   legality free — anything that changes where peds may walk moves the dogs too. Strays
   (`own<0`) keep the park roam. `probe-dogs.mjs` is the shape probe.
+- **⚠ "Reach toward each neighbour" is a junction asterisk waiting to happen (iter 94).** The
+  road draw dashed from the hex centre toward *every* road neighbour. Correct on a straight run;
+  at a dense junction, six axes meeting at 60° draw a star, and **54.6% of all road hexes were
+  painting an X** by the time anyone looked. It survived 93 iterations because the density that
+  triggers it is density *the loop itself added*. Any per-cell radial draw — dashes, wires,
+  hedges, desire paths, power lines — has this failure mode. **Mark a through-line, not spokes.**
+  Now: 2 road neighbours = one path (straight run or bend), keep both; 3+ = a junction, mark only
+  the busiest through-axis by `c.flow`; ≤1 = draw nothing. X-hexes are **0 by construction**.
+  `probe-dash.mjs` is the shape probe.
+- **`NBR_OPP=[[0,1],[2,5],[3,4]]` — the three hex axes, parity-free (iter 94, L207).** These are
+  the *collinear-opposite* neighbour index pairs into `nbrDirs(y)`: same indices for even and odd
+  rows. **The intuitive pairing is wrong.** "Which move walks back to where I came from" gives
+  `(0,1) (2,3) (4,5)`, because index 2 is *up-right* on even rows and *up-left* on odd ones —
+  those are inverse **steps**, not opposite **neighbours**, and a line drawn through them bends.
+  Anything asking "what street runs *through* this hex?" must use `NBR_OPP`.
+- **⚠ A wide frame localizes a complaint; it does not diagnose it (iter 94).** Two agents on two
+  seeds independently reported the core's roads as grime — *and both blamed the wrong cause*
+  ("roads too close in value to the roofs, one grey mass"). Zoomed adjudicators found value
+  separation was fine and the defect was dash geometry. Acting on the wide verdict would have
+  re-toned asphalt that iter 86 had already toned correctly. **Zoom (`--shots downtown`) before
+  you fix anything a whole-frame agent reports.** Corollary for gating lighting: **`t=0.72` is
+  *sunset*, not night** — an agent there reported "no night lights" for a city whose windows are
+  60–70% lit at `t=0.9`. Shoot `t≈0.9`.
+- **⚠ `solarRoofs` is a flaky census metric (±1) (iter 94).** It moved `+1` on one run and `+0`
+  on two re-runs of identical bytes: `c.solar` is a `hashCell` salted by `year` (L1126), and
+  `year` advances with the tick count. A ±1 on it is evidence of nothing — re-run before
+  believing it, and never read it as a growth signal.
 - **⚠ The plate is a HEXAGON, not a square (U4):** `G` (=67) is only the bounding
   box the `cells` array lives in; the live plate is the `HEXR`=33 rings masked by
   `HEXOK`, and everything outside it is `T.VOID`. So: never loop `0..G` and assume
@@ -164,8 +191,12 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   not four (`PLAZA 14→10` across the matrix). That is defensible urbanism and was accepted, but
   it is the one place the vector *cost* something. See open cue (d).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
-  **(e) downtown has no massed core** *(banked by iter 92's holistic agent, Urban fabric ×
-  Polish/Scale)* — at whole-city zoom the towers "are strung along the whole top edge rather
+  **(e) downtown has no massed core** *(banked by iter 92's holistic agent; **independently
+  corroborated by iter 94's**, which called the landmass "too uniform… little breathing room
+  between core and edge, the whole thing reads at one continuous loud level" — two holistic
+  passes, two seeds, same complaint. This is now the oldest standing cue and the strongest
+  candidate for the next Urban fabric lap.)* Urban fabric × Polish/Scale —
+  at whole-city zoom the towers "are strung along the whole top edge rather
   than massing into one skyline; the eye finds *a tall side* more than a distinct core," and
   the interior reads as an "edge-to-edge carpet of roads + rooftops with little green
   breathing room." The `back` term in the tower upgrade biases inland but evidently not
@@ -538,93 +569,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 86 entries before Iteration 84 live in
+> **Archive:** the 87 entries before Iteration 85 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 84 — the residents learn to walk (2026-07-10)
-
-**Vector** — People & activity × **Polish**. Rotation: People was the least-recently
-touched domain (78), and **Polish was the one entirely empty cell in its row** — in 83
-laps nothing had ever been done purely to make the people *read* better. Kind varies
-from 83's Urban × Polish by domain, and from 78's Connect by kind.
-
-**The defect.** `drawPed` was a 1.8×3 torso `fillRect` plus a head `arc` — **no legs**.
-It slid across the ground like a chess piece, and its bottom edge sat 0.6px *above* the
-ground plane, so at magnification a resident visibly floated. Right below it in the same
-file, `drawJogger` has scissoring legs and a bob: the artifact already knew how to draw a
-walking person and the residents simply hadn't been given it. Iter 78 made this worse
-without meaning to — peds now walk the *streets*, crossing hexes far more often, which is
-exactly when sliding is most obvious.
-
-**Change (draw-only; no terrain, no `rng()`, no new `Math.random()` draw).**
-- **The velocity was already in the data.** `stepPed` lerps `p.ox→p.tx`, so the residual
-  `tx-ox` is this frame's speed: a ped mid-stride is still far from its target offset, one
-  that has arrived is standing at a kerb. `sp = hypot((tx-ox)*CW, (ty-oy)*ROWY)` — no new
-  per-ped state, no extra random draw, therefore no perturbation of any other mover.
-- Legs: one `beginPath` with two `moveTo/lineTo` (1 stroke per ped), amplitude
-  `clamp(sp*0.42, 0, 1.15)`, phase `sin(time*6.2 + p.ph)`. At `sp≈0` the two legs land on
-  the same point and the ped **stands** with its legs together.
-- `bob = |st|*0.3` lifts the hips and head over the planted foot; **the feet do not bob**
-  — they are at a fixed `gy-0.1`, which is what makes the figure read as walking rather
-  than hovering.
-- Legs are carved out of the *bottom* of the old torso (h 3→2), so the head and torso
-  anchors are untouched. Net silhouette is ~0.5px taller only because the feet now reach
-  the ground the old torso floated above.
-- `ph:peds.length*1.7` at spawn — **index-derived, not random, on purpose.** A
-  `Math.random()` there would have changed the draw count and re-rolled every other moving
-  thing in the city (iter 78's lesson), destroying the clean control.
-
-**Census** — `+0` on **all 22 metrics**, 0 page errors, empty tile histogram, peds 633.
-The pixel-identical control that iter 78 says only draw-only changes can have; it is the
-evidence that the gait costs the seeded stream nothing.
-
-**Probe** — a tile histogram cannot see a gait, and per iter 82 *"when a feature has a
-shape, measure the shape."* A gait's shape is its amplitude distribution. Sampled 1560
-ped-frames across seeds 42 and 7: stride `p50=0.67px`, `p90=1.15px` (the clamp ceiling),
-**idle ~11%, full-stride ~49%**, `ph` present on 130/130 peds, zero page errors. So both
-states genuinely occur — the feature is neither frozen nor permanently twitching. Probe
-deleted; finding kept.
-
-**Visual** — 6 agents over two rounds, plus a direct look.
-- **Magnified (the scale the change lives at, so the primary verdict):** `VISUAL: PASS`.
-  Legs visible, widest at frames 0/1/3 and closed at 2/4 — a real cycle. Legs attach to the
-  torso, reach the ground, correctly occlude the tree trunk behind. The agent independently
-  confirmed the BEFORE torso "does read as floating".
-- **Downtown at true 1:1:** `VISUAL: PASS`, and honestly reported the two frames as
-  *indistinguishable* — sub-pixel legs added no clutter, no smudging, no z-order fault.
-  That is the desired answer at this scale, and I asked for it explicitly so the agent
-  wouldn't invent a difference to seem useful.
-- **Whole-city, 2 seeds:** `VISUAL: PASS` both; peds correctly reported as unresolvable at
-  that zoom. Their real value was the cumulative read (see cues below).
-
-**Perf** — 3 sequential passes, minimum of each scene: `day 31.33 → 31.55ms (+0.7%)`,
-`night 37.22 → 35.55ms (−4.5%)`. PASS. One extra stroke across ≤130 peds is free.
-
-**Verdict: SHIPPED.** The city's residents no longer skate.
-
-**Findings**
-- **A lerp *is* a velocity field.** Anything stepped by `lerp(cur, target, k*dt)` carries
-  its own speed in the residual, free and needing no state. `stepDog` and `stepShuttle`
-  both lerp; **dogs are still legless**, and are the obvious next customer.
-- **Verification cost 4 shot attempts, and I nearly shipped on a lie.** The first round's
-  primary agent returned `VISUAL: FAIL` — correctly, because the capture had framed a
-  *building*. The crowd agent, given the same broken set, reported "scissoring legs" in the
-  **BEFORE** frame, which is impossible. Two agents, same artifact, incompatible stories =
-  iter 79's tell. Looking at one PNG myself settled it in seconds. **Look at the first frame
-  yourself before you spawn anybody**; a subagent handed a bad screenshot will confidently
-  grade whatever is in it.
-- **The three ways an entity screenshot lies** (all hit this lap; now in the header):
-  no identity in `__ents` → positional tracking fails at high zoom; painter's-order
-  occlusion by the rows *below* → a perfectly centred ped is invisible; and at `ZMAX=14`
-  a small clip is narrower than one hex.
-- **Two banked cues were re-confirmed by agents who were told not to look for them** — the
-  offshore rainbow (seed 7, *and* it has no rain cloud attached) and the asphalt tone, which
-  **both** seeds volunteered as the city's biggest compounding risk. Promoted in the header.
-  A third emerged: the white cable-car lines have now been misread as UI chrome by four
-  separate agents.
 
 ## Iteration 85 — the cable car stops looking like a UI overlay (2026-07-10)
 
@@ -1425,3 +1374,109 @@ across 3 seeds, ~800 samples/rule:
   failed on a genuine stacked pair that three wide-frame PASSes had missed. The zoomed gate
   found both real bugs here; neither was visible at native resolution, and **neither moved a
   single census metric**. A gate that only reads whole frames cannot see a 4px animal.
+
+## Iteration 94 — the streets stop crosshatching (2026-07-10) [holistic step-back]
+
+**Vector** — Transport × Polish. A **FIX**, chosen by the step-back rather than by rotation:
+the holistic pass ran *first*, and what it found set the vector.
+
+**How it was found.** Three agents read un-zoomed frames (seed 42 day, seed 7 day, seed 1234
+at `t=0.72`). Two of them, on *different seeds*, unprompted, named the **same** element: the
+core's roads had "merged into busy speckly static", "cross-hatched intersection marks tile
+after tile", "a muddy grey web". That convergence is the whole value of the step-back — no
+single vector's gate would ever have looked at roads.
+
+**Both wide agents then mis-diagnosed it, and the zoom overruled them.** They blamed *value*
+("roads too close in lightness to roofs, everything mushes into one grey mass"). Two zoomed
+downtown adjudicators independently found value separation was **fine** — roads are distinctly
+darker than ground and roofs — and located the real cause: the **dash geometry**. A wide frame
+is good at *localizing* a complaint and bad at *explaining* it. Had I fixed the reported
+problem (re-tone the asphalt, again — that was iter 86) I would have darkened a coast that was
+never too light, and left the actual defect untouched.
+
+**The defect.** The `T.ROAD` draw case dashed from the hex centre toward **every** road
+neighbour. On a straight run (two opposite neighbours) that reads as a dashed centre line —
+which is why it looked right for 93 iterations, while roads were sparse. As downtown densified,
+hexes acquired 3–6 road neighbours, and six axes meeting at 60° draw an **asterisk**.
+`probe-dash.mjs` measured it: **1856 of 3400 road hexes — 54.6% — were painting an X.**
+
+**Change.** A lane marking marks a lane **through** the hex, never a spoke toward each
+neighbour:
+- `nn === 2` → draw both spokes. Two neighbours is *one path* — a straight run or a bend — and
+  a path cannot cross itself.
+- `nn >= 3` → a junction: draw **only the busiest through-axis** (by summed `c.flow`, reusing
+  iter 77's traffic tree rather than inventing a second notion of "main street"). Side roads
+  stop at the kerb, as they do in life.
+- `nn <= 1` → a dead end draws nothing (180 lone ticks pointing nowhere, gone).
+
+At most one line crosses a hex, so **two dashed lines can never meet — X-hexes are 0 by
+construction**, not by tuning. The gold arterial trunk loop is untouched.
+
+**The probe changed the design.** My first rule was "busiest through-axis, always" (strict).
+The probe's through-axis histogram showed **~10% of road hexes have zero through-axis** — those
+are *bends*, and strict would have blanked every corner in the city, trading one defect for a
+subtler one. Lenient keeps 169 bends for 4% more ink and is equally X-free. Measured, not assumed:
+
+| rule | dash spokes | share of old ink | bends kept | hexes painting an X |
+| --- | --- | --- | --- | --- |
+| old (spoke per neighbour) | 8401 | 100% | 169 | **1856 (54.6% of roads)** |
+| strict (through-axis only) | 5301 | 63.1% | 0 | 0 |
+| **shipped (lenient)** | **5628** | **67.0%** | **169** | **0** |
+
+**A correctness trap, caught before it shipped.** The three hex axes are the *collinear-opposite*
+neighbour pairs `(0,1) (2,5) (3,4)` — and they are the **same for both row parities**, now frozen
+as `NBR_OPP`. The obvious pairing — "which move walks back to where I came from" — gives
+`(0,1) (2,3) (4,5)`, because index 2 means *up-right* on even rows and *up-left* on odd ones.
+Those are **inverse steps, not opposite neighbours**; a "through line" drawn across them bends.
+Verified numerically (`cross === 0 && dot < 0` on `px()` coords, both parities) before a line of
+draw code was written.
+
+**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
+`roads 5706 +0`, `developed 6174 +0`), as a draw-only change must be. Tile histogram empty by
+construction. Note `boulevardTrees 1210 +0` is a real check, not a formality: street trees are
+gated on `ewN`/`diagN`, which the rewrite recomputes — flat proves the rewrite preserved them.
+
+**⚠ `solarRoofs` is a flaky census metric (±1).** It read `+1` on the first post-change run and
+`+0` on two identical re-runs of the same bytes. `c.solar` is set by a `hashCell` salted with
+`year` (L1126), and `year` advances with ticks, so the metric appears to race the tick count.
+**It is not a growth signal and a ±1 on it is not evidence of anything.** Don't chase it; do
+re-run before believing any single-unit move on it.
+
+**Visual** — `VISUAL: PASS` ×3. Before/after downtown clips at seeds 42 and 7: "the X/asterisk
+crosshatch is gone", "through-streets now read as continuous single lines running across the
+core", "the grid is MORE legible, not less", gold arterials intact, bends render as one path,
+no new defects. One agent ran a pixel diff unprompted: **1.7% of pixels changed, confined to the
+lane dashes and arterial marks** — independent proof the change is scoped. Whole-frame pass over
+seed 42 day, seed 7 day, seed 1234 **true night**: coherent, no z-tears, no floating tiles, and
+the core "reads as a street *hierarchy* instead of uniform speckle."
+
+**Perf** — PASS, and *faster*, which is the point of deleting 33% of the stroke calls. Measured
+3× before and 3× after in the same session under the same load; judged on the minimum:
+day **32.72 → 32.44 ms**, night **37.00 → 36.55 ms**. Baseline day 31.33 / night 37.22.
+
+**Holistic step-back (the other half of this iteration).** The night "no lights" alarm was a
+**false positive worth recording**: an agent read `t=0.72`, which the HUD calls *SUNSET*, and
+reported "no emissive night lighting, unlit pier". Night lighting is extensive (`LITAMT`,
+`colLit('glass',…)`, unlit-pane punching, neon, floodlit pitches, uplit civics). A true-night
+frame (`t=0.9`) came back "60–70% of built area carries lit windows… the pier is NOT unlit…
+coherent, no bloom or firefly speckle." **`t=0.72` is dusk, not night — shoot `t≈0.9` to gate
+lighting.** Otherwise the city reads as balanced and beautiful at all three frames.
+
+**Verdict — FIXED.** (A compounding regression, found by the step-back, measured by a probe,
+removed by construction rather than by tuning.)
+
+### Four transferable findings
+- **A wide frame localizes a complaint; it does not diagnose it.** Two agents agreed on the
+  symptom *and* on the wrong cause. Zoom before you fix — the cheap zoom clip (`--shots downtown`)
+  saved this lap from re-toning asphalt that was already correctly toned.
+- **"Reach toward each neighbour" is a junction asterisk waiting to happen.** In a hex grid,
+  any per-neighbour radial draw — dashes, wires, hedges, desire paths, power lines — is fine
+  while the network is sparse and becomes crosshatch exactly where the network gets *interesting*.
+  Mark a **through-line**, not spokes. The bug was invisible for 93 iterations because it was
+  seeded by density the loop itself added.
+- **`NBR_OPP = [[0,1],[2,5],[3,4]]`, parity-free** — the collinear axes. The intuitive
+  "walk-back" pairing `(2,3) (4,5)` is inverse *steps* and will bend any line drawn through it.
+  Anything that wants "the street that runs through this hex" should use `NBR_OPP`.
+- **Let the probe pick between candidate rules before you write the draw code.** The
+  through-axis histogram vetoed my first rule (it would have blanked 169 bends) for the cost of
+  one extra column in a table. Two rules, one measurement, no revert.

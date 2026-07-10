@@ -199,6 +199,12 @@ const HW=TW;          /* half hex width */
 const NBR_E=[[1,0],[-1,0],[0,-1],[0,1],[-1,-1],[-1,1]]; /* even rows */
 const NBR_O=[[1,0],[-1,0],[0,-1],[0,1],[1,-1],[1,1]];   /* odd rows */
 const nbrDirs=y=>(y&1)?NBR_O:NBR_E;
+/* The three hex axes, as index pairs into nbrDirs(y): the two neighbors of each
+   pair sit on a straight line through the cell. Parity-free — the indices hold for
+   both NBR_E and NBR_O. NOT the same as "the move that walks back", which pairs
+   (2,3) and (4,5): those are inverse steps, not opposite neighbors, and a line
+   drawn through them bends. */
+const NBR_OPP=[[0,1],[2,5],[3,4]];
 const T={EMPTY:0,ROAD:1,RES:2,MID:3,COM:4,TOWER:5,CIVIC:6,PARK:7,BEACH:8,WATER:9,PLAZA:10,MEADOW:11,SHOREPARK:12,FARM:13,IND:14,MARKET:15,GARDEN:16,BURNT:17,FOREST:18,ROCK:19,SOLARF:20,FIELD:21,STADIUM:22,VINEYARD:23,MARSH:24,LIGHTHOUSE:25,KELP:26,ORCHARD:27,REDWOOD:28,VOID:29,DUNE:30};
 const DEV=new Set([T.RES,T.MID,T.COM,T.TOWER,T.CIVIC,T.IND,T.MARKET]);
 /* lots a great institution may clear to open its forecourt. A city demolishes a
@@ -2966,27 +2972,52 @@ function drawCell(x,y){
          steps so col()'s name|f cache stays small, and drawn at 1.02 so a patch
          laps its neighbor and the seams read as joins rather than a grid. */
       hexTile(gx,gy,1.02,col(art?'roadArt':'road',RDF[hashCell(x,y,seedNum^0xA5FA)*RDF.length|0]));
-      /* lane dashes reach toward each road neighbor; roads run on hex
-         axes, so straight runs draw as straight dashed lines;
-         busy streets grade up to gold-marked avenues, and where the traffic
+      /* busy streets grade up to gold-marked avenues, and where the traffic
          tree collects into an arterial the marking runs solid and doubled —
          edge-to-edge, so it joins up with the next trunk hex into one line */
       const[cx,cy]=px(gx,gy);
-      ctx.strokeStyle=col(c.busy?'gold':'roadLine',0.9);ctx.lineWidth=1;
-      ctx.globalAlpha=0.62;   /* the lighter asphalt needs a firmer dash to hold contrast */
+      const D=nbrDirs(y);
       let ewN=0,diagN=0;
-      for(const[dx2,dy2]of nbrDirs(y)){
-        const n=cellAt(x+dx2,y+dy2);
-        if(!n||n.t!==T.ROAD)continue;
-        if(dy2===0)ewN++; else diagN++;
-        const[nx2,ny2]=ctr(x+dx2,y+dy2);
-        if(art&&n.flow>=ARTFLOW)continue;               /* the trunk is drawn solid below */
-        ctx.beginPath();
-        ctx.moveTo(lerp(cx,nx2,0.10),lerp(cy,ny2,0.10));
-        ctx.lineTo(lerp(cx,nx2,0.42),lerp(cy,ny2,0.42));
-        ctx.stroke();
+      const rn=[];                                       /* the six neighbors: the ROAD ones, else null */
+      for(let i=0;i<6;i++){
+        const n=cellAt(x+D[i][0],y+D[i][1]);
+        rn.push(n&&n.t===T.ROAD?n:null);
+        if(rn[i]){if(D[i][1]===0)ewN++;else diagN++}
       }
-      ctx.globalAlpha=1;
+      /* A lane marking marks a lane THROUGH the hex — never a spoke toward every
+         road neighbor. Six axes meeting at 60 degrees drew an asterisk, and by 2035
+         over half of all road hexes were painting an X into the asphalt: the dense
+         core read as crosshatched grime rather than as streets. So a hex with two
+         road neighbors is a single path (a straight run, or a bend) and keeps both
+         spokes; a junction of three or more marks only its busiest through-axis and
+         lets the side roads stop at the kerb, as they do in life; a dead end draws
+         no lone tick at all. At most one line ever crosses a hex, so two dashed
+         lines can never meet. */
+      const nn=ewN+diagN;
+      let spokes=null;
+      if(nn===2){spokes=[];for(let i=0;i<6;i++)if(rn[i])spokes.push(i)}
+      else if(nn>2){
+        let bf=-1;
+        for(let a=0;a<3;a++){                            /* the through street wins the centre line */
+          const[i,j]=NBR_OPP[a];
+          if(!rn[i]||!rn[j])continue;
+          const f=(rn[i].flow||0)+(rn[j].flow||0);
+          if(f>bf){bf=f;spokes=NBR_OPP[a]}
+        }
+      }
+      if(spokes){
+        ctx.strokeStyle=col(c.busy?'gold':'roadLine',0.9);ctx.lineWidth=1;
+        ctx.globalAlpha=0.62; /* the lighter asphalt needs a firmer dash to hold contrast */
+        for(const i of spokes){
+          if(art&&rn[i].flow>=ARTFLOW)continue;          /* the trunk is drawn solid below */
+          const[nx2,ny2]=ctr(x+D[i][0],y+D[i][1]);
+          ctx.beginPath();
+          ctx.moveTo(lerp(cx,nx2,0.10),lerp(cy,ny2,0.10));
+          ctx.lineTo(lerp(cx,nx2,0.42),lerp(cy,ny2,0.42));
+          ctx.stroke();
+        }
+        ctx.globalAlpha=1;
+      }
       if(art){ /* the arterial's centre line, edge-to-edge toward each trunk neighbor.
                   A hex is only ~23 screen px at rest, so a doubled line is below the
                   resolution ceiling: it draws as ONE crisp line, and only splits into

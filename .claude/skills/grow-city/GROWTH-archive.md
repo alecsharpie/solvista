@@ -2591,3 +2591,85 @@ it there.
      compounded until the built interior reads as a dark brown smear that robs the
      parks of contrast. The kelp-coast failure mode, inland. **Urban × Polish.**
 
+## Iteration 84 — the residents learn to walk (2026-07-10)
+
+**Vector** — People & activity × **Polish**. Rotation: People was the least-recently
+touched domain (78), and **Polish was the one entirely empty cell in its row** — in 83
+laps nothing had ever been done purely to make the people *read* better. Kind varies
+from 83's Urban × Polish by domain, and from 78's Connect by kind.
+
+**The defect.** `drawPed` was a 1.8×3 torso `fillRect` plus a head `arc` — **no legs**.
+It slid across the ground like a chess piece, and its bottom edge sat 0.6px *above* the
+ground plane, so at magnification a resident visibly floated. Right below it in the same
+file, `drawJogger` has scissoring legs and a bob: the artifact already knew how to draw a
+walking person and the residents simply hadn't been given it. Iter 78 made this worse
+without meaning to — peds now walk the *streets*, crossing hexes far more often, which is
+exactly when sliding is most obvious.
+
+**Change (draw-only; no terrain, no `rng()`, no new `Math.random()` draw).**
+- **The velocity was already in the data.** `stepPed` lerps `p.ox→p.tx`, so the residual
+  `tx-ox` is this frame's speed: a ped mid-stride is still far from its target offset, one
+  that has arrived is standing at a kerb. `sp = hypot((tx-ox)*CW, (ty-oy)*ROWY)` — no new
+  per-ped state, no extra random draw, therefore no perturbation of any other mover.
+- Legs: one `beginPath` with two `moveTo/lineTo` (1 stroke per ped), amplitude
+  `clamp(sp*0.42, 0, 1.15)`, phase `sin(time*6.2 + p.ph)`. At `sp≈0` the two legs land on
+  the same point and the ped **stands** with its legs together.
+- `bob = |st|*0.3` lifts the hips and head over the planted foot; **the feet do not bob**
+  — they are at a fixed `gy-0.1`, which is what makes the figure read as walking rather
+  than hovering.
+- Legs are carved out of the *bottom* of the old torso (h 3→2), so the head and torso
+  anchors are untouched. Net silhouette is ~0.5px taller only because the feet now reach
+  the ground the old torso floated above.
+- `ph:peds.length*1.7` at spawn — **index-derived, not random, on purpose.** A
+  `Math.random()` there would have changed the draw count and re-rolled every other moving
+  thing in the city (iter 78's lesson), destroying the clean control.
+
+**Census** — `+0` on **all 22 metrics**, 0 page errors, empty tile histogram, peds 633.
+The pixel-identical control that iter 78 says only draw-only changes can have; it is the
+evidence that the gait costs the seeded stream nothing.
+
+**Probe** — a tile histogram cannot see a gait, and per iter 82 *"when a feature has a
+shape, measure the shape."* A gait's shape is its amplitude distribution. Sampled 1560
+ped-frames across seeds 42 and 7: stride `p50=0.67px`, `p90=1.15px` (the clamp ceiling),
+**idle ~11%, full-stride ~49%**, `ph` present on 130/130 peds, zero page errors. So both
+states genuinely occur — the feature is neither frozen nor permanently twitching. Probe
+deleted; finding kept.
+
+**Visual** — 6 agents over two rounds, plus a direct look.
+- **Magnified (the scale the change lives at, so the primary verdict):** `VISUAL: PASS`.
+  Legs visible, widest at frames 0/1/3 and closed at 2/4 — a real cycle. Legs attach to the
+  torso, reach the ground, correctly occlude the tree trunk behind. The agent independently
+  confirmed the BEFORE torso "does read as floating".
+- **Downtown at true 1:1:** `VISUAL: PASS`, and honestly reported the two frames as
+  *indistinguishable* — sub-pixel legs added no clutter, no smudging, no z-order fault.
+  That is the desired answer at this scale, and I asked for it explicitly so the agent
+  wouldn't invent a difference to seem useful.
+- **Whole-city, 2 seeds:** `VISUAL: PASS` both; peds correctly reported as unresolvable at
+  that zoom. Their real value was the cumulative read (see cues below).
+
+**Perf** — 3 sequential passes, minimum of each scene: `day 31.33 → 31.55ms (+0.7%)`,
+`night 37.22 → 35.55ms (−4.5%)`. PASS. One extra stroke across ≤130 peds is free.
+
+**Verdict: SHIPPED.** The city's residents no longer skate.
+
+**Findings**
+- **A lerp *is* a velocity field.** Anything stepped by `lerp(cur, target, k*dt)` carries
+  its own speed in the residual, free and needing no state. `stepDog` and `stepShuttle`
+  both lerp; **dogs are still legless**, and are the obvious next customer.
+- **Verification cost 4 shot attempts, and I nearly shipped on a lie.** The first round's
+  primary agent returned `VISUAL: FAIL` — correctly, because the capture had framed a
+  *building*. The crowd agent, given the same broken set, reported "scissoring legs" in the
+  **BEFORE** frame, which is impossible. Two agents, same artifact, incompatible stories =
+  iter 79's tell. Looking at one PNG myself settled it in seconds. **Look at the first frame
+  yourself before you spawn anybody**; a subagent handed a bad screenshot will confidently
+  grade whatever is in it.
+- **The three ways an entity screenshot lies** (all hit this lap; now in the header):
+  no identity in `__ents` → positional tracking fails at high zoom; painter's-order
+  occlusion by the rows *below* → a perfectly centred ped is invisible; and at `ZMAX=14`
+  a small clip is narrower than one hex.
+- **Two banked cues were re-confirmed by agents who were told not to look for them** — the
+  offshore rainbow (seed 7, *and* it has no rain cloud attached) and the asphalt tone, which
+  **both** seeds volunteered as the city's biggest compounding risk. Promoted in the header.
+  A third emerged: the white cable-car lines have now been misread as UI chrome by four
+  separate agents.
+
