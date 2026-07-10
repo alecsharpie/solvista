@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
+| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
@@ -42,11 +42,14 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free.
 - **ROTATION.** Stalest domains are **Sky & atmosphere** (last vector 95) and **People &
   activity** (93); Sky has an **empty New CA rule cell** and no Connect/Scale, People has no Scale.
-  Recent kinds: 97 Interaction · 98 Polish · 99 Polish · 100 New element · 101 Connect(reverted) —
-  so **Deepen is the coldest kind** (last at 95). Note **Nature × Connect has now been attempted and
-  reverted three times** (46, 88, 101) and is the row's graveyard: 46 found it geometrically
-  impossible, 88 found it has no host draw-only, 101 found the host *and the land* and lost on
-  **shape** (see its findings). Do not re-open it as a *corridor*; cue (e½) wants a **blob**.
+  Recent kinds: 98 Polish · 99 Polish · 100 New element · 101 Connect(reverted) · 102 New element —
+  so **Deepen is the coldest kind** (last at 95), and **New element has now run twice in three laps
+  — do not pick it next.** Note **Nature × Connect was attempted and reverted three times** (46, 88,
+  101) and is the row's graveyard: 46 found it geometrically impossible, 88 found it has no host
+  draw-only, 101 found the host *and the land* and lost on **shape**. Do not re-open it as a
+  *corridor*. **Cue (e½) is now CLOSED — iter 102 shipped the blob 101 prescribed** (the commons),
+  so the interior has its lung; **do not plant a second one.** Nature's remaining cold cells are
+  Connect (graveyard — leave it) and Scale.
 - **⚠ NO `probe-*.mjs` IS TRACKED BY GIT — the ledger cites tools the repo does not carry (iter 101).**
   `.gitignore` ignores `probe-*.mjs` and `shot-*.mjs` so a killed iteration can't dirty the tree. The
   side effect: **every probe this ledger tells you to reuse exists only as an untracked leftover in
@@ -787,97 +790,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 94 entries before Iteration 92 live in
+> **Archive:** the 95 entries before Iteration 93 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 92 — the high street (2026-07-10)
-
-**Vector** — Urban fabric × Deepen. (Rotation: 87–91 hit Transport/Nature/Sky/Water/Civic;
-Urban fabric was last touched at 86. Kind: Deepen, last used in this domain at 68.) This is
-the vector iter 82 left staked out: it failed to grow retail and named its two prerequisites —
-**(a) reserve the frontage pre-1990**, and **(b) give `COM` a shopfront draw first.** Iter 83
-shipped (b). This is (a).
-
-**Change (SHIPPED)** — the generator already lays a **founding main street**: `fdx`, a hex
-diagonal through the crossroads, drawn at init in 1974. That is frontage nobody had claimed.
-A deterministic scan (no `rng()`, in `siteQuarter`'s style) picks the `HSLEN`=12-row stretch
-of it whose flanks are most buildable, pulled toward the crossroads by `HSPULL`=0.8, and marks
-the flanking lots `c.hstr`. The parcels pass then builds **shops, never houses**, on them.
-Plus a **retail podium** under any tower that rises on a reserved lot. `__find('highst')`
-answers the reserved frontage; the tooltip says *High street*.
-
-**The measurement that mattered** — the tile histogram is **blind** to this vector: `COM 1256 →
-1250 (−6)`. Iter 82 warned that a moved histogram can lie; the converse is also true — a real
-feature can move it *not at all*, because the reserved lots were largely becoming `COM` anyway,
-just scattered. Only the shape probe sees it. `probe-highst.mjs` (union-find over `__find`,
-per iter 88's rule that a Connect claim must pass one), at 2035:
-
-```
-                    iter 82 (reverted)        iter 92
-  seed 7      51 lots, 43 comps, longest 3    wall 13, spine 5 comps, longest  8
-  seed 42     45 lots, 42 comps, longest 2    wall 14, spine 4 comps, longest  8
-  seed 1234   37 lots, 31 comps, longest 5    wall 14, spine 3 comps, longest 12
-```
-And it **thickens with the town** (seed 42 longest: 5 @1985 → 9 @2005 → 11 @2035).
-
-**Census** — `pop 152328 → 150332 (−1.3%)`, `towers −8`, `developed −29`, `roads −83`: all
-chaotic wobble off ~14 RES→COM cells/city. `pageerrors: 0`. **VERDICT: PASS.**
-
-**Visual** — 4 subagents. Three at the wall's own scale (one per seed, matched BEFORE/AFTER on
-a clip framed to the run's bbox, *not* the fixed `downtown` rect — iter 82's "a reviewer can only
-see the change at the scale it lives at"), one un-zoomed holistic. All four `VISUAL: PASS`.
-Podiums read as plinths, awnings correctly street-facing, night neon contained.
-
-**Verdict: SHIPPED.**
-
-### Two designs died first, and both are worth more than the ship
-
-**1. The no-tower parade (`!c.hstr` on the COM→TOWER upgrade) — cost −9.8% pop, a hard core
-collapse.** The reasoning was clean urbanism: a high street is a *terminal* use, so exempt it
-from the tower upgrade (iter 82 had reached for the same `c.strip` idea). It fails because
-**the founding crossroads IS the value core** — `mainX` sits where the land value peaks, so the
-lots you reserve are exactly the lots that were going to tower. Suppressing 14 prime lots/city
-deleted ~70 towers across the matrix, and at `POPW[TOWER]`=**240** (vs `COM`=10, `MID`=28)
-*nothing else can compensate*: even redirecting every blocked lot to `MID` recovers only 12% of
-the loss. **Corollary: never zone against `TOWER` anywhere near the core.** Pop in this model is
-towers; a rule that costs towers costs pop, and no amount of good urbanism buys it back.
-
-**2. Displacing the tower to a neighbour made it *worse* (towers 247 → 237).** The fix looked
-obvious — don't delete the tick's tower, promote an adjacent non-`hstr` `COM` instead, chosen by
-`hashCell` so it spends no draw. It underperformed because **a high street's neighbours are
-houses, not shops**: the redirect usually found no eligible `COM` and dropped the tower anyway,
-while the times it *did* fire merely consumed a lot that would have towered on its own. A
-displacement rule needs a *supply* of eligible hosts, and this one had none.
-
-**What actually resolved it: `c.hstr` is a DRAW property, not a zoning veto.** A real high street
-in a dense downtown does not ban towers — it puts **retail podiums under them**. Stop suppressing
-the CA and let the land use rise; carry the frontage in `drawBuilding`'s `TOWER` case instead.
-The vector then touches the simulation in exactly **one** place (parcels: `shop||c.hstr`), the
-upgrade pass is byte-identical to HEAD, and pop/towers land within wobble. By 2005 **7 of 13**
-wall lots on seeds 7/1234 are podium towers — without the podium the street would have quietly
-disappeared into blank tower bases as the city densified, which is the failure iter 82 saw and
-misattributed to `COM` drawing like `RES`.
-
-### Three transferable findings
-- **Rewarding "open ground" rewards ground that never develops.** The first siting scan scored a
-  window by counting empty flank cells, and slid the street onto the outskirts: 23 lots reserved,
-  only 15 ever built, and seed 7's longest run *fell* 8 → 6. Emptiness at founding correlates with
-  emptiness forever. The pull toward the core (`HSPULL`) is not a nicety — it is what makes the
-  reservation land on ground that will actually build. Sweeping it: 0.35 → **0.8** → 1.5 → 2.5, the
-  min-across-seeds longest run goes 6 → **8** → 8 → 8 (saturates once the window pins to the crossroads).
-- **Count the spine, not the shopfronts.** The first probe called a side street crossing the parade
-  a *break*, and scored the finished street at "50% singletons". A high street cut by a side street
-  is still one street. Scoring components over *(shops ∪ the roads that cut them)* — the **spine** —
-  is what let the real signal (3–5 comps, longest 8–12) separate from the noise. Reserve crossing
-  corridors too, so the intersections are inside the measured set.
-- **Look for the feature already latent in the generator.** No new corridor was drawn, no new tile
-  added: `fdx` — the founding main street — has been in `genWorld` the whole time, unclaimed.
-  Iter 88 failed to *invent* a corridor across ground the buildings had walled in; this one
-  succeeded by *reserving* a corridor the generator had already committed to at t=0. Before
-  drawing a line across the plate, check whether the plate already has one.
 
 ## Iteration 93 — the dogs get owners (2026-07-10)
 
@@ -1697,3 +1614,64 @@ bought the `val` uplift back), so budget nearer iter 100's rate. Site it with
 The `c.gw` flag, the `Greenway` tooltip, the `gwTrail()` half-segment draw, and the contiguity probe
 (union-find with a one-cell bridge, plus a blocker histogram of what stops the walk) were all
 *correct* and are worth re-deriving; only the **shape** was wrong.
+
+## Iteration 102 — the commons: the interior gets its lung (2026-07-10)
+
+**Provenance — I did not author this change.** It was found **uncommitted in the worktree** at
+startup, left by an iteration killed between its verdict and its `git commit`. Per the skill's
+dirty-worktree rule, the **gates decide, not the ledger**: I re-ran the census (PASS), re-shot both
+seeds, and re-ran the visual gate before adopting it. Everything below the Provenance line is
+described **from the diff and from gates I ran myself**, not from the original author's intent.
+
+**Vector** — Nature × **New element** (district-scale). This is the direct execution of the
+prescription iter 101 wrote for its successor: *"Not a ribbon — **a blob.** Same ~50 cells,
+contiguous, ≥3 hexes across… Site it with `hexDist(x,y,CBDX,CBDY)` (iter 98), **not** `c.val`."*
+Cue (e½), open since iter 88 and asked for independently by iter 100's step-back agent
+("consolidate green into one or two district-scale parks"), is **now closed**.
+
+**Change.** In `genWorld`, after the high street: a deterministic survey scores every legal centre
+in the band `6 ≤ hexDist(x,y,CBDX,CBDY) ≤ 13` by how much of its r=3 core is plantable, docking −3
+per sea/void cell; the best centre gets an `r=4` disc of `PARK`. The outer ring only is nibbled by
+`hashCell(x,y,seedNum^0x10A5) >= 0.55`, so the commons has a coastline rather than the silhouette of
+a hexagon — but the **r=3 core (7 hexes across) is always solid**, which is the one property 101
+proved a corridor can never have. `corr` and `hstr` cells are stepped over, so a street may cross
+the commons and the high street keeps its shop wall. **Draws zero `rng()`** — it perturbs the seeded
+stream only through the terrain it changes.
+
+**Census — PASS.** `PARK` **943 → 1205 (+262)**, i.e. ~29 cells per seed-era. Core: `pop`
+**+1432 (+0.96%)**, `developed` **−60 (−0.98%)**, `roads` **+94 (+1.65%)** — all inside chaotic
+wobble, nothing near the −5% floor. Land came overwhelmingly from open ground, not from buildings:
+`EMPTY` −219, `FOREST` −17, `MEADOW` +9.
+
+**Visual — PASS, 2/2.** Seed 42 and seed 7, un-zoomed wide frames, one agent each. Both found **one
+large contiguous green mass in the interior**, correctly hex-aligned, no z-order tears, no floating
+tiles, no blown-out colour, and both read the whole frame as still balanced. Seed 7 — *the seed whose
+FAIL killed iter 101* — was checked specifically for the ocean mis-siting that sank the ribbon, and
+the commons lands **fully on land, clear of beach and river.** The deterministic survey did its job.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A BLOB DOES NOT COST POP — IT PAID FOR ITSELF, AND ITER 101'S PREDICTION WAS WRONG.**
+  101 predicted the blob would cost *more* pop per cell than the ribbon (which cost −2.25%), reasoning
+  that the ribbon's long frontage was what bought its `val` uplift back. **Measured: `pop` went UP
+  +0.96%** while `developed` fell 1%. Compactness did not forfeit the uplift — it **traded extent for
+  density**: `MID` −99 but `TOWER` **+18**, `tallTowers` **+8**, `RES` +30. Because `PARK` is the top
+  `valueSrc` (0.92), a solid green mass lifts `val` on everything ringing it, and the ring builds
+  *taller* instead of wider. **Do not budget green as a pop cost** (101's "~0.045% pop per cell" is
+  superseded for compact shapes); a contiguous park is close to pop-neutral-or-positive.
+- **The r=3 solid core is the load-bearing constant, not the r=4 radius.** 101's result — below ~2–3
+  hexes across a shape is untraceable at fit zoom — means the *guaranteed* width is what earns the
+  read. The ragged `hashCell` outer ring is pure ornament and can be tuned freely; the core cannot.
+  Both agents found the mass unprompted, so 7-hexes-across clears the legibility bar with margin.
+- **Survey, never coin-flip — confirmed a second time.** 101 learned this the hard way when a
+  `hashCell` coin flip aimed seed 7's ribbon out to sea. The same deterministic best-of-scan (the one
+  `hsBest` uses) put the commons on land on seed 7 **first try**. Any future placed feature should
+  score candidate centres and take the max; it costs one loop and removes a whole class of seed bug.
+- **`PARK` permanence held in practice, not just in theory.** 101 proved by inspection that no `tick()`
+  pass consumes a `PARK`. This iteration is the end-to-end confirmation: green planted in `genWorld` at
+  1974 is still standing in the 2035 census column.
+- **⚠ Don't plant a second lung.** The cue asked for *one* district-scale park precisely because the
+  complaint (iters 94 and 100) was scattered confetti. A second blob re-scatters. Nature's additive
+  moves in this direction are now **spent** — next Nature lap should be Deepen or Polish.

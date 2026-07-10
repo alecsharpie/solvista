@@ -3301,3 +3301,89 @@ on the lots downtown wanted.
   stand relative to *each other* cost ~40 lines, added no tile, no entity and no draw call, and
   lit up two systems built 45 iterations apart.
 
+## Iteration 92 — the high street (2026-07-10)
+
+**Vector** — Urban fabric × Deepen. (Rotation: 87–91 hit Transport/Nature/Sky/Water/Civic;
+Urban fabric was last touched at 86. Kind: Deepen, last used in this domain at 68.) This is
+the vector iter 82 left staked out: it failed to grow retail and named its two prerequisites —
+**(a) reserve the frontage pre-1990**, and **(b) give `COM` a shopfront draw first.** Iter 83
+shipped (b). This is (a).
+
+**Change (SHIPPED)** — the generator already lays a **founding main street**: `fdx`, a hex
+diagonal through the crossroads, drawn at init in 1974. That is frontage nobody had claimed.
+A deterministic scan (no `rng()`, in `siteQuarter`'s style) picks the `HSLEN`=12-row stretch
+of it whose flanks are most buildable, pulled toward the crossroads by `HSPULL`=0.8, and marks
+the flanking lots `c.hstr`. The parcels pass then builds **shops, never houses**, on them.
+Plus a **retail podium** under any tower that rises on a reserved lot. `__find('highst')`
+answers the reserved frontage; the tooltip says *High street*.
+
+**The measurement that mattered** — the tile histogram is **blind** to this vector: `COM 1256 →
+1250 (−6)`. Iter 82 warned that a moved histogram can lie; the converse is also true — a real
+feature can move it *not at all*, because the reserved lots were largely becoming `COM` anyway,
+just scattered. Only the shape probe sees it. `probe-highst.mjs` (union-find over `__find`,
+per iter 88's rule that a Connect claim must pass one), at 2035:
+
+```
+                    iter 82 (reverted)        iter 92
+  seed 7      51 lots, 43 comps, longest 3    wall 13, spine 5 comps, longest  8
+  seed 42     45 lots, 42 comps, longest 2    wall 14, spine 4 comps, longest  8
+  seed 1234   37 lots, 31 comps, longest 5    wall 14, spine 3 comps, longest 12
+```
+And it **thickens with the town** (seed 42 longest: 5 @1985 → 9 @2005 → 11 @2035).
+
+**Census** — `pop 152328 → 150332 (−1.3%)`, `towers −8`, `developed −29`, `roads −83`: all
+chaotic wobble off ~14 RES→COM cells/city. `pageerrors: 0`. **VERDICT: PASS.**
+
+**Visual** — 4 subagents. Three at the wall's own scale (one per seed, matched BEFORE/AFTER on
+a clip framed to the run's bbox, *not* the fixed `downtown` rect — iter 82's "a reviewer can only
+see the change at the scale it lives at"), one un-zoomed holistic. All four `VISUAL: PASS`.
+Podiums read as plinths, awnings correctly street-facing, night neon contained.
+
+**Verdict: SHIPPED.**
+
+### Two designs died first, and both are worth more than the ship
+
+**1. The no-tower parade (`!c.hstr` on the COM→TOWER upgrade) — cost −9.8% pop, a hard core
+collapse.** The reasoning was clean urbanism: a high street is a *terminal* use, so exempt it
+from the tower upgrade (iter 82 had reached for the same `c.strip` idea). It fails because
+**the founding crossroads IS the value core** — `mainX` sits where the land value peaks, so the
+lots you reserve are exactly the lots that were going to tower. Suppressing 14 prime lots/city
+deleted ~70 towers across the matrix, and at `POPW[TOWER]`=**240** (vs `COM`=10, `MID`=28)
+*nothing else can compensate*: even redirecting every blocked lot to `MID` recovers only 12% of
+the loss. **Corollary: never zone against `TOWER` anywhere near the core.** Pop in this model is
+towers; a rule that costs towers costs pop, and no amount of good urbanism buys it back.
+
+**2. Displacing the tower to a neighbour made it *worse* (towers 247 → 237).** The fix looked
+obvious — don't delete the tick's tower, promote an adjacent non-`hstr` `COM` instead, chosen by
+`hashCell` so it spends no draw. It underperformed because **a high street's neighbours are
+houses, not shops**: the redirect usually found no eligible `COM` and dropped the tower anyway,
+while the times it *did* fire merely consumed a lot that would have towered on its own. A
+displacement rule needs a *supply* of eligible hosts, and this one had none.
+
+**What actually resolved it: `c.hstr` is a DRAW property, not a zoning veto.** A real high street
+in a dense downtown does not ban towers — it puts **retail podiums under them**. Stop suppressing
+the CA and let the land use rise; carry the frontage in `drawBuilding`'s `TOWER` case instead.
+The vector then touches the simulation in exactly **one** place (parcels: `shop||c.hstr`), the
+upgrade pass is byte-identical to HEAD, and pop/towers land within wobble. By 2005 **7 of 13**
+wall lots on seeds 7/1234 are podium towers — without the podium the street would have quietly
+disappeared into blank tower bases as the city densified, which is the failure iter 82 saw and
+misattributed to `COM` drawing like `RES`.
+
+### Three transferable findings
+- **Rewarding "open ground" rewards ground that never develops.** The first siting scan scored a
+  window by counting empty flank cells, and slid the street onto the outskirts: 23 lots reserved,
+  only 15 ever built, and seed 7's longest run *fell* 8 → 6. Emptiness at founding correlates with
+  emptiness forever. The pull toward the core (`HSPULL`) is not a nicety — it is what makes the
+  reservation land on ground that will actually build. Sweeping it: 0.35 → **0.8** → 1.5 → 2.5, the
+  min-across-seeds longest run goes 6 → **8** → 8 → 8 (saturates once the window pins to the crossroads).
+- **Count the spine, not the shopfronts.** The first probe called a side street crossing the parade
+  a *break*, and scored the finished street at "50% singletons". A high street cut by a side street
+  is still one street. Scoring components over *(shops ∪ the roads that cut them)* — the **spine** —
+  is what let the real signal (3–5 comps, longest 8–12) separate from the noise. Reserve crossing
+  corridors too, so the intersections are inside the measured set.
+- **Look for the feature already latent in the generator.** No new corridor was drawn, no new tile
+  added: `fdx` — the founding main street — has been in `genWorld` the whole time, unclaimed.
+  Iter 88 failed to *invent* a corridor across ground the buildings had walled in; this one
+  succeeded by *reserving* a corridor the generator had already committed to at t=0. Before
+  drawing a line across the plate, check whether the plate already has one.
+

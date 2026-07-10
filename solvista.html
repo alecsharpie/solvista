@@ -592,6 +592,52 @@ function genWorld(seed){
   }
   for(let yy=hsBest;yy<hsBest+HSLEN;yy++)for(const c of hsFlank(yy))
     if(c.t===T.EMPTY||c.t===T.MEADOW||c.corr)c.hstr=true;
+  /* the commons: the interior's one lung ---------------------------------
+     Iters 94 and 100 both read the whole frame and both called the interior an
+     edge-to-edge carpet of roads and rooftops; 100's ask was to consolidate green
+     into ONE district-scale park rather than scatter more patches. Iter 101 tried
+     exactly that as a greenway ribbon and reverted: a 1-2 hex corridor is ~1 screen
+     pixel at fit zoom, so it cannot be traced whatever its contrast. A lung needs a
+     SHAPE. Hence a blob, never thinner than the r=3 core (7 hexes across).
+     Planted here in genWorld and then simply left alone: no pass in tick() ever
+     consumes a PARK (development takes EMPTY/MEADOW/FARM, roads pave only c.corr),
+     so 1974's green is still standing in 2035 — measured by iter 101.
+     Sited by hexDist to the founding crossroads (iter 98), never by c.val, whose
+     peaks already sit on parks and water. The scan draws no rng(): it perturbs the
+     seeded stream only through the terrain it changes, which is unavoidable here.
+     Corridors and the high street's frontage are stepped over rather than paved
+     green — a street may cross the commons (that is what a transverse road is) and
+     the shop wall keeps its wall. */
+  const CMR=4, cmOpen=c=>c.t===T.EMPTY||c.t===T.MEADOW;
+  {
+    /* deterministic survey, the same shape hsBest uses: score every legal centre in
+       the interior band by how much of its core is actually plantable, and dock it
+       for sea and void. Coin-flipping a centre is what sent iter 101's ribbon out
+       to sea on seed 7. */
+    let bx=-1,by=-1,best=-1e9;
+    for(const i of HEXI){
+      const x=i%G, y=(i/G)|0, d=hexDist(x,y,CBDX,CBDY);
+      if(d<6||d>13)continue;                     /* clear of downtown, inside the future carpet */
+      let s=0;
+      for(let dy=-3;dy<=3;dy++)for(let dx=-3;dx<=3;dx++){
+        const nx=x+dx, ny=y+dy;
+        if(hexDist(nx,ny,x,y)>3)continue;
+        const c=cellAt(nx,ny);
+        if(!c||c.t===T.VOID||c.t===T.WATER||c.t===T.BEACH){s-=3;continue}
+        if(cmOpen(c))s++;
+      }
+      if(s>best){best=s;bx=x;by=y;}
+    }
+    if(best>0)for(let dy=-CMR;dy<=CMR;dy++)for(let dx=-CMR;dx<=CMR;dx++){
+      const x=bx+dx, y=by+dy, d=hexDist(x,y,bx,by);
+      if(d>CMR)continue;
+      /* the outer ring is nibbled by the spatial hash, so the commons has a coastline
+         rather than the silhouette of a hexagon. The r=3 core is always solid. */
+      if(d===CMR&&hashCell(x,y,seedNum^0x10A5)>=0.55)continue;
+      const c=cellAt(x,y);
+      if(c&&cmOpen(c)&&!c.corr&&!c.hstr){c.t=T.PARK;c.h=0;c.th=0;}
+    }
+  }
   /* farm clusters: wherever the soil is good this time around */
   const nFarm=ks(2)+(rng()*2|0);
   for(let i=0;i<nFarm;i++){const[ax2,ay2]=rcIn(3,SHOREX-7,3,G-3);
