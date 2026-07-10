@@ -6747,3 +6747,95 @@ the day frame is byte-identical.
   warehouses with working stacks, chimney smoke, retail podia under towers. **`GROWTH.md` is the loop's
   memory, not the artifact's inventory** — grep the draw case before designing an Urban element.
 
+## Iteration 119 — the residents move downtown (2026-07-10)
+
+**Vector.** People & activity × **Deepen**. People was the stalest domain (111) and the header steered
+away from Polish (5 of the last 9). Iter 111 had already *measured* and banked the vector: residents
+structurally cannot serve the road network, *"to do it properly you must move the **spawn pool**
+(`openCells` in `syncFleet`), not the leash."* Nobody had measured what moving it buys, or costs.
+It adds no new object, no tile, no `rng()` draw — the Connect trick applied to a system, not a pair.
+
+**What the probe found before a line was written** (`probe-anchor.mjs`, `git add -f`'d):
+- `openCells` is **54% coastline by area** (BEACH+DUNE+SHOREPARK), so a uniform draw houses the
+  population at the seaside. Seed 7 anchors **81 of 130 residents on sand and exactly 4 downtown**
+  (3 MARKET, 1 QUAD) — across **6075 developed cells and 5786 roads**. The city Solvista builds is
+  not the city its people live in.
+- The crowd is also a **fossil**: `syncFleet` is called from `tick()` (L1758), so peds spawn
+  progressively as the city grows and **never re-site**. A resident anchored to the 1985 beach is
+  still on it in 2035.
+- The probe reproduces 111's headline number exactly (stopCov **25.0 / 31.3 / 20.0%** vs its
+  "20–31%"), which is what licenses trusting its other columns.
+
+**Change.** Two edits, one idea: *an anchor is the cell a resident lives on.*
+- `syncFleet` builds `kerbCells` beside `openCells` — ROAD, not a bridge, `buzz>=KERBBUZZ(2)`. That is
+  buzz's sparse tail (~110 hexes against ~510 of open ground): a kerb fronting shops or institutions.
+  Residents draw from `openCells.concat(kerbCells)`; **dogs keep the open-ground pool**, since an owned
+  dog heels to its human and reaches the kerb through them while a stray keeps `stepDog`'s park roam.
+- `stepPed`'s re-anchor test `strollable` → `homeGround` = `strollable || livelyKerb`.
+
+**Census.** PASS. `pop 154918→154915 (−3)`, **every other metric exactly +0**, tile histogram **empty**,
+`dogs 90` identical. Predicted before running: peds draw the same *number* of `rng()` values from a
+longer array, so no seeded draw downstream (dogs, boats, birds, shuttles) moves. The `−3` is iter 108's
+documented load-dependent `(year*23)` salt jitter.
+
+**Probe.** Pristine side is `git show HEAD:solvista.html`, never `git stash` (iter 108).
+
+| seed | coast% | kerb% | stopCov | anchorBuzz | street% *open-ground residents* |
+| --- | --- | --- | --- | --- | --- |
+| 7 | 62.3 → **51.5** | 0 → **17.7** | 29.2 → **50.0** | 0.292 → **0.685** | 20.0 → 19.6 |
+| 42 | 66.9 → **47.7** | 0 → **14.6** | 31.3 → **53.1** | 0.292 → **0.577** | 19.1 → 24.2 |
+| 1234 | 69.2 → **56.2** | 0 → **16.9** | 20.0 → **36.7** | 0.231 → **0.562** | 21.4 → 19.4 |
+
+Kerb residents stand on their own street 76.0 / 77.8 / 82.6% of the time. **111's structural cap on
+bus-stop coverage is broken: it roughly doubles.**
+
+**Perf.** PASS. Interleaved A/B/A/B vs pristine HEAD (iter 117's law), min per variant: day
+**33.78 → 34.01ms (+0.7%)**, night **39.89 → 40.00ms (+0.3%)**. Zero draw calls added — entity counts
+are identical — so the only cost is one predicate in `stepPed`. Pristine itself read night +6.9% against
+the 37.33ms pin under this load, so that offset is earlier code, not this vector. Not re-pinned
+(`polish-tile` owns the file).
+
+**Visual.** 2/2 PASS, seeds 42 and 7, `wide` + `downtown` clip, `&step=300` so the crowd is at its
+*settled* distribution rather than its spawn state. Both agents independently: pedestrians stand at the
+kerb **edges** of road hexes, "not centered in the traffic lane or sunk into buildings"; no z-order
+tears, no blown-out colour; and — asked specifically — **the beach is still well populated**, consistent
+with a ~15% reduction rather than an emptying.
+
+**Verdict — SHIPPED (DEEPENED).**
+
+**Findings for later laps.**
+- **⚠ A SPAWN POOL AND ITS RE-ENTRY TEST ARE TWO READERS OF ONE PREDICATE (new; extends iter 112's law).**
+  The pool said *"open ground **or** a lively kerb"*; `stepPed`'s re-anchor still said *"open ground"*.
+  That asymmetry is a **one-way ratchet** — open ground captures a kerb resident and never gives one
+  back — and it silently ate the entire feature: kerb residents decayed **10.0% → 3.8%** (seed 7),
+  10.0 → 4.6 (42), 6.2 → 2.3 (1234), **monotone**, over 20 sim-minutes. Symmetric (`homeGround`), the
+  flow runs both ways and mean-reverts: over **80** sim-minutes it wanders 11–26% with no collapse and
+  no runaway. 112 said *grep for a predicate's other readers*; the sharper form is **a pool is a
+  predicate, and whatever lets an agent RE-ENTER the pool is its second reader.** Look for this wherever
+  a thing has a home it can leave and return to.
+- **⚠ NEITHER THE CENSUS NOR A SCREENSHOT CAN SEE A RATCHET — BOTH ARE TAKEN AT LOAD (new).** The
+  ratcheted build passed the census with every metric `+0` and would have passed the visual gate
+  outright: at `t=0` the kerbs are full. It only fails after minutes of *watching*, which nothing in
+  this harness does. When a vector changes a **distribution that evolves**, the gate is a time series,
+  not a snapshot — step the sim and check the quantity is **stationary**. `probe-anchor.mjs` +
+  `__step(600)` in a loop is the instrument; it costs one page load.
+- **⚠ AN AGGREGATE THAT MIXES TWO POPULATIONS CANNOT CONVICT ANYTHING (new; sharpens iter 104).** The
+  headline `street%` jumped 16.8 → 30.7%, straight into the range `stepPed`'s comment says it rejected
+  ("0.15 flooded them to ~28%") — and it is **fine**. Split by anchor class: open-ground residents are
+  *unchanged* (20.0/19.1/21.4 → 19.6/24.2/19.4%, inside the documented 3.0–5.3 pt control spread) and
+  the whole rise is a **new subpopulation standing where it lives**. The rejected 0.15 tuning drained
+  parks *into* the streets; this adds residents *to* the streets. Same aggregate, opposite meaning. Per
+  iter 118, this split is also the **in-run invariant column**: open-ground street% must not move.
+- **`syncFleet` IS CALLED FROM `tick()`, SO THE CROWD IS A FOSSIL OF THE CITY'S PAST (new).** Peds top
+  up to `wantPeds` as `pop` grows and **never re-site**, so the anchor histogram records where open
+  ground *was* when each resident spawned, not where it is now. Two consequences: any "where do people
+  live" vector is really about the **growth history**, not the 2035 map; and a counterfactual that
+  resamples the 2035 pool (this probe's first draft did) is an idealization the progressive spawn never
+  reaches — **A/B two live builds instead.** Also note `?warp=61` alone leaves only ~92 of 130 residents
+  spawned; the rest arrive over ~2.5s of real frames. **Any shot of peds taken at load is missing 30% of
+  the crowd** — `shoot.mjs`'s settle time has been hiding this.
+- **People's additive inventory, so nobody re-proposes it** *(the iter-34 beach-towel lesson)*: peds with
+  gait + colour + kids in tow + night thinning, dogs with exclusive owners and leashes and strays,
+  joggers, block parties, evening crowds, stadium/market crowd terms, pier crowds, hover focus ring.
+  The domain's live cells are **Deepen** (this one) and **Scale**; `Connect` paid at 78 and 111.
+

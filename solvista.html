@@ -1081,6 +1081,12 @@ const isWood=c=>c.t===T.FOREST||c.t===T.REDWOOD;
 function canopyK(x,y){return countAround(x,y,1,isWood)}
 function deepWoods(x,y){return countAround(x,y,2,isWood)>=9
   &&countAround(x,y,2,n=>n.t===T.ROAD||DEV.has(n.t))===0}
+/* the orchard keeps the calendar (iter 57): blossom in spring, fruit at harvest,
+   in leaf otherwise. The DRAW turns its blossom/fruit overlays on the SAME two
+   windows, so both the renderer and the tooltip read this one predicate and can
+   never disagree (iter 117's law: a label may not assert what the draw left out). */
+function orchardPhase(){const s2=((year%1)+1)%1;
+  return s2>0.16&&s2<0.42?'blossom':s2>0.70&&s2<0.99?'fruit':'leaf';}
 /* the contiguous stand a woodland hex belongs to (flood fill over hex neighbours) */
 function standSize(x,y){
   const start=idx(x,y); if(!isWood(cells[start]))return 0;
@@ -3501,8 +3507,8 @@ function drawCell(x,y){
          it flowers in spring, hangs bare through summer, and comes in laden with
          fruit at harvest. The canopy color already shifts seasonally; the
          blossom/fruit is what the year actually turns on. */
-      const s2=((year%1)+1)%1;
-      const blossom=s2>0.16&&s2<0.42, fruit=s2>0.70&&s2<0.99;
+      const ph=orchardPhase();
+      const blossom=ph==='blossom', fruit=ph==='fruit';
       for(let r=0;r<3;r++)for(let cc=0;cc<3;cc++){ /* neat rows of round fruit trees */
         const tx=cx-5+cc*5+(r&1)*2.4, ty=cy-4+r*3.6;
         ctx.fillStyle=col('trunk',0.95);ctx.fillRect(tx-0.35,ty,0.7,2);
@@ -5963,6 +5969,9 @@ function describeTile(c,x,y){
   }
   if(c.t===T.MEADOW)data.push(['Wildflowers',
     c.bloom>0?'In bloom':c.bloom<0?'Gone over':'Not in flower']);
+  /* the grove tells the same calendar the draw paints (shared orchardPhase) */
+  if(c.t===T.ORCHARD){const ph=orchardPhase();
+    data.push(['Grove',ph==='blossom'?'In blossom':ph==='fruit'?'In fruit':'In leaf']);}
   if(c.t===T.BURNT)data.push(['Burnt','~'+Math.round(c.age*0.075)+' yr ago']);
   if(c.fire>0)data.push(['Burning']);   /* live, and drawn: drawFire paints this cell */
   /* a roof row needs a roof: the forecourt and grounds rules pave over a MID or a

@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117** |
+| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
@@ -55,12 +55,12 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **126** · Urban **124** · People **127** · Nature **120** · Transport **128** · Civic **122** · Water **123**.
-  **Stalest is now Nature (120)**, then **Civic (122)/Water (123)** — check the last entry of
-  the stalest domain for a banked finding before reading its row. (**128 cashed Transport's cue (n)** — the
-  cable cars are no longer parked at the anchor in still frames; see its entry. **Nature (120)'s banked item is
-  the soft cue (m)** — night's periphery going dark — which the header itself says to *measure* the luminance
-  core-vs-ring before spending a lap on; it may not survive the measurement.) (**127 took People × New element** aimed not at its spent
+  Sky **126** · Urban **124** · People **127** · Nature **129** · Transport **128** · Civic **122** · Water **123**.
+  **Stalest is now Civic (122)/Water (123)** — check the last entry of
+  the stalest domain for a banked finding before reading its row. (**129 cashed the tell a 7th time for Nature**:
+  the orchard drew a blossom/fruit calendar since iter 57 but its tooltip was mute; it now names the
+  season via a shared `orchardPhase()`. **129's banked Nature move is now a Deepen** — make VINEYARD's grapes
+  read `year` (last Sky-feedable item; 108/113/120), *then* its tooltip earns a row too.) (**127 took People × New element** aimed not at its spent
   *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
   "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
   and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
@@ -137,9 +137,12 @@ ones (U2, 42, U5) stay in the bullet.
   assert what the code already knows?** **122 cashed it a sixth time** (`CIVICLABEL`'s one sub for twelve
   institutions) and found the tell is **self-renewing**: cashing it *created* a new one, since
   `TILEDESC[T.PLAZA]` still says only *"A paved civic square"* for a square that now knows its institution.
+  **129 cashed it a seventh time** (the orchard's blossom/fruit calendar, mute in `describeTile` since iter 57 —
+  now a `Grove` row) and confirmed its **limit**: of the three mute vegetation tooltips only the orchard's DRAW
+  read `year`, so only it could be un-muted honestly — VINEYARD/GARDEN need a Deepen first (see 129).
   Un-cashed: `TILEDESC[T.KELP]` *"swaying in the shallows"*, `[T.IND]` *"warehouses and light industry"*,
-  `[T.VINEYARD]` *"terraced"*, and the plaza/quad **titles** (still the generic tile label — they could
-  read *"Town hall forecourt"* outright).
+  `[T.VINEYARD]` *"terraced"* (needs its draw to read `year` first), and the plaza/quad **titles** (still the
+  generic tile label — they could read *"Town hall forecourt"* outright).
   **122 also warns what the tell CANNOT do alone:** its first build derived ownership from *adjacency*, named
   the wrong institution on 2 of 3 seeds, and **passed the census and would have passed both visual agents** —
   the prose is only wrong if you know the geometry. **A tooltip vector needs a probe that checks the claim
@@ -151,9 +154,9 @@ ones (U2, 42, U5) stay in the bullet.
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
-  Recent kinds: 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen · 122 Interaction/UX · 123 Deepen ·
-  124 Polish · 126 Deepen · 127 New element · 128 Deepen —
-  **Deepen has now paid 6 of the last 11 (128 on a banked cue); Polish 2. VARY OFF Deepen next** unless another
+  Recent kinds: 120 Deepen · 121 Deepen · 122 Interaction/UX · 123 Deepen ·
+  124 Polish · 126 Deepen · 127 New element · 128 Deepen · 129 Interaction/UX —
+  **Deepen has paid 5 of the last 10; Interaction/UX 2 (122, 129). VARY OFF both next** unless another
   banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
   **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
@@ -388,103 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 121 entries before Iteration 119 live in
+> **Archive:** the 122 entries before Iteration 120 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 119 — the residents move downtown (2026-07-10)
-
-**Vector.** People & activity × **Deepen**. People was the stalest domain (111) and the header steered
-away from Polish (5 of the last 9). Iter 111 had already *measured* and banked the vector: residents
-structurally cannot serve the road network, *"to do it properly you must move the **spawn pool**
-(`openCells` in `syncFleet`), not the leash."* Nobody had measured what moving it buys, or costs.
-It adds no new object, no tile, no `rng()` draw — the Connect trick applied to a system, not a pair.
-
-**What the probe found before a line was written** (`probe-anchor.mjs`, `git add -f`'d):
-- `openCells` is **54% coastline by area** (BEACH+DUNE+SHOREPARK), so a uniform draw houses the
-  population at the seaside. Seed 7 anchors **81 of 130 residents on sand and exactly 4 downtown**
-  (3 MARKET, 1 QUAD) — across **6075 developed cells and 5786 roads**. The city Solvista builds is
-  not the city its people live in.
-- The crowd is also a **fossil**: `syncFleet` is called from `tick()` (L1758), so peds spawn
-  progressively as the city grows and **never re-site**. A resident anchored to the 1985 beach is
-  still on it in 2035.
-- The probe reproduces 111's headline number exactly (stopCov **25.0 / 31.3 / 20.0%** vs its
-  "20–31%"), which is what licenses trusting its other columns.
-
-**Change.** Two edits, one idea: *an anchor is the cell a resident lives on.*
-- `syncFleet` builds `kerbCells` beside `openCells` — ROAD, not a bridge, `buzz>=KERBBUZZ(2)`. That is
-  buzz's sparse tail (~110 hexes against ~510 of open ground): a kerb fronting shops or institutions.
-  Residents draw from `openCells.concat(kerbCells)`; **dogs keep the open-ground pool**, since an owned
-  dog heels to its human and reaches the kerb through them while a stray keeps `stepDog`'s park roam.
-- `stepPed`'s re-anchor test `strollable` → `homeGround` = `strollable || livelyKerb`.
-
-**Census.** PASS. `pop 154918→154915 (−3)`, **every other metric exactly +0**, tile histogram **empty**,
-`dogs 90` identical. Predicted before running: peds draw the same *number* of `rng()` values from a
-longer array, so no seeded draw downstream (dogs, boats, birds, shuttles) moves. The `−3` is iter 108's
-documented load-dependent `(year*23)` salt jitter.
-
-**Probe.** Pristine side is `git show HEAD:solvista.html`, never `git stash` (iter 108).
-
-| seed | coast% | kerb% | stopCov | anchorBuzz | street% *open-ground residents* |
-| --- | --- | --- | --- | --- | --- |
-| 7 | 62.3 → **51.5** | 0 → **17.7** | 29.2 → **50.0** | 0.292 → **0.685** | 20.0 → 19.6 |
-| 42 | 66.9 → **47.7** | 0 → **14.6** | 31.3 → **53.1** | 0.292 → **0.577** | 19.1 → 24.2 |
-| 1234 | 69.2 → **56.2** | 0 → **16.9** | 20.0 → **36.7** | 0.231 → **0.562** | 21.4 → 19.4 |
-
-Kerb residents stand on their own street 76.0 / 77.8 / 82.6% of the time. **111's structural cap on
-bus-stop coverage is broken: it roughly doubles.**
-
-**Perf.** PASS. Interleaved A/B/A/B vs pristine HEAD (iter 117's law), min per variant: day
-**33.78 → 34.01ms (+0.7%)**, night **39.89 → 40.00ms (+0.3%)**. Zero draw calls added — entity counts
-are identical — so the only cost is one predicate in `stepPed`. Pristine itself read night +6.9% against
-the 37.33ms pin under this load, so that offset is earlier code, not this vector. Not re-pinned
-(`polish-tile` owns the file).
-
-**Visual.** 2/2 PASS, seeds 42 and 7, `wide` + `downtown` clip, `&step=300` so the crowd is at its
-*settled* distribution rather than its spawn state. Both agents independently: pedestrians stand at the
-kerb **edges** of road hexes, "not centered in the traffic lane or sunk into buildings"; no z-order
-tears, no blown-out colour; and — asked specifically — **the beach is still well populated**, consistent
-with a ~15% reduction rather than an emptying.
-
-**Verdict — SHIPPED (DEEPENED).**
-
-**Findings for later laps.**
-- **⚠ A SPAWN POOL AND ITS RE-ENTRY TEST ARE TWO READERS OF ONE PREDICATE (new; extends iter 112's law).**
-  The pool said *"open ground **or** a lively kerb"*; `stepPed`'s re-anchor still said *"open ground"*.
-  That asymmetry is a **one-way ratchet** — open ground captures a kerb resident and never gives one
-  back — and it silently ate the entire feature: kerb residents decayed **10.0% → 3.8%** (seed 7),
-  10.0 → 4.6 (42), 6.2 → 2.3 (1234), **monotone**, over 20 sim-minutes. Symmetric (`homeGround`), the
-  flow runs both ways and mean-reverts: over **80** sim-minutes it wanders 11–26% with no collapse and
-  no runaway. 112 said *grep for a predicate's other readers*; the sharper form is **a pool is a
-  predicate, and whatever lets an agent RE-ENTER the pool is its second reader.** Look for this wherever
-  a thing has a home it can leave and return to.
-- **⚠ NEITHER THE CENSUS NOR A SCREENSHOT CAN SEE A RATCHET — BOTH ARE TAKEN AT LOAD (new).** The
-  ratcheted build passed the census with every metric `+0` and would have passed the visual gate
-  outright: at `t=0` the kerbs are full. It only fails after minutes of *watching*, which nothing in
-  this harness does. When a vector changes a **distribution that evolves**, the gate is a time series,
-  not a snapshot — step the sim and check the quantity is **stationary**. `probe-anchor.mjs` +
-  `__step(600)` in a loop is the instrument; it costs one page load.
-- **⚠ AN AGGREGATE THAT MIXES TWO POPULATIONS CANNOT CONVICT ANYTHING (new; sharpens iter 104).** The
-  headline `street%` jumped 16.8 → 30.7%, straight into the range `stepPed`'s comment says it rejected
-  ("0.15 flooded them to ~28%") — and it is **fine**. Split by anchor class: open-ground residents are
-  *unchanged* (20.0/19.1/21.4 → 19.6/24.2/19.4%, inside the documented 3.0–5.3 pt control spread) and
-  the whole rise is a **new subpopulation standing where it lives**. The rejected 0.15 tuning drained
-  parks *into* the streets; this adds residents *to* the streets. Same aggregate, opposite meaning. Per
-  iter 118, this split is also the **in-run invariant column**: open-ground street% must not move.
-- **`syncFleet` IS CALLED FROM `tick()`, SO THE CROWD IS A FOSSIL OF THE CITY'S PAST (new).** Peds top
-  up to `wantPeds` as `pop` grows and **never re-site**, so the anchor histogram records where open
-  ground *was* when each resident spawned, not where it is now. Two consequences: any "where do people
-  live" vector is really about the **growth history**, not the 2035 map; and a counterfactual that
-  resamples the 2035 pool (this probe's first draft did) is an idealization the progressive spawn never
-  reaches — **A/B two live builds instead.** Also note `?warp=61` alone leaves only ~92 of 130 residents
-  spawned; the rest arrive over ~2.5s of real frames. **Any shot of peds taken at load is missing 30% of
-  the crowd** — `shoot.mjs`'s settle time has been hiding this.
-- **People's additive inventory, so nobody re-proposes it** *(the iter-34 beach-towel lesson)*: peds with
-  gait + colour + kids in tow + night thinning, dogs with exclusive owners and leashes and strays,
-  joggers, block parties, evening crowds, stadium/market crowd terms, pier crowds, hover focus ring.
-  The domain's live cells are **Deepen** (this one) and **Scale**; `Connect` paid at 78 and 111.
 
 ## Iteration 120 — the parks rejoin the year (2026-07-11)
 
@@ -1147,3 +1058,53 @@ mast — not stacked at one tower," both hanging correctly from the rope, no tea
   each other once per half-trip; `[0.15,0.62]` is 0.47 apart in `p`, not antipodal, so they cross off-centre.
   A real jig-back tram counterbalances its pair on a loop. One-line change, low value, no agent has ever
   remarked on it — belongs after anything that matters.
+
+## Iteration 129 — the orchard names its season (2026-07-11)
+
+**Vector.** Nature × **Interaction/UX**. Nature was the stalest domain (last 120) and the header steered hard
+**off Deepen** (6 of the last 11) and off New element (127) — leaving the tell (117's most-reliable move) as the
+right kind. The orchard has drawn a seasonal **blossom/fruit overlay from `year` since iter 57**, but
+`describeTile` never named it: hovering an orchard showed only `Value`, while MEADOW right beside it gets a live
+`Wildflowers` row. So the DRAW knew the calendar and the tooltip stayed mute — exactly the seam 117's law names.
+
+**Change.** A shared `orchardPhase()` (near the wood helpers) returns `blossom`/`fruit`/`leaf` from
+`applySeason`'s own windows (`s2∈(0.16,0.42)` / `(0.70,0.99)`). The orchard **draw** now derives its
+`blossom`/`fruit` booleans from it (was two inline `s2>…` tests — behaviour-identical, verified), and
+`describeTile` reads the **same** function for a new `Grove` row (`In blossom` / `In fruit` / `In leaf`). One
+predicate, all readers (112's law) — the tooltip can never name a fruit the renderer didn't paint (117's law).
+No tile, entity, `rng()`, or `tick()` pass; the city's pixels are unchanged.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**; core `+0`; `greenRoofs +1` is the documented
+`(year*31)` salt jitter (127). Exactly as predicted for a describeTile-only change.
+
+**Probe.** `probes/probe-orchard.mjs` (new, promoted), two independent truths, neither trusting
+`orchardPhase()` — per 122's law that a tooltip vector needs a probe against *recomputed* truth, not a
+screenshot it renders. **(1) String:** the `Grove` row vs phase recomputed from the keyframe windows in the
+probe's own math — **72/72 orchard rows match across seeds 7/42/1234 × 4 keyframes, 0 wrong**; FOREST control
+prints a `Grove` row **0** times. **(2) Draw:** crown-box RGB shift from the winter frame, **ORCHARD minus
+FOREST** (forest eats the shared seasonal warming — 127's law that coral is un-isolable, so difference it out
+instead of colour-matching it). Excess = the overlay the orchard alone paints: **spring "In blossom" +11.83
+(largest)**, dry-peak "In leaf" +5.60 (smallest), autumn "In fruit" +8.71 — the pixels move most exactly
+where the row says blossom, least where it says leaf.
+
+**Visual.** Hover shots at three calendar pins (blossom/fruit/leaf), read by an agent: all three show
+`Orchard → Fruit groves. → Grove: <In blossom|In fruit|In leaf> → Value 56%`, mapping exact, same two-column
+style as the Value/Woods rows, no glitch. Whole-city `wide` frame (seed 42, dry peak): balanced coastal city,
+no tears/floaters/blowout — as expected, the render is untouched.
+
+**Verdict — SHIPPED.** The grove that has kept the calendar since 1974 finally says so when you point at it.
+Draw-render byte-identical, pop provably flat, the tell cashed a seventh time.
+
+### Findings for later laps
+- **THE ORCHARD/VINEYARD/GARDEN TOOLTIPS WERE ALL MUTE — only the orchard COULD be un-muted honestly (new).**
+  Of the three, only the orchard's *draw* reads `year`; VINEYARD shows ripe lav grapes year-round and GARDEN is
+  static. So their tooltips can't get an honest season row until their **draws** read the calendar first — which
+  is a **Deepen**, not a tell. `VINEYARD` is the last name on the Sky-feedable list (108/113/120): make its
+  grapes bud→green→purple→bare on `year` like the orchard, *then* its tooltip earns a row. That is the banked
+  Nature × Deepen, and it also finally cashes `TILEDESC[VINEYARD]`'s "Terraced grapevines — wine country."
+- **DIFFERENCE OUT A GLOBAL CONFOUND WITH A CONTROL TILE, DON'T COLOUR-MATCH IT (reinforces 127).** The first
+  draw-truth draft counted "pale coral" blossom pixels and the FOREST control read 30–55 of them — because
+  `applySeason` warms the *whole* frame and coral is shared with autumn foliage (127's exact trap). Switching to
+  *(orchard shift − forest shift) from winter* cancelled the season and left a clean +11.83 blossom signal. When
+  a season/light/weather global moves every tile, pick a control tile that gets the global but not your feature
+  and subtract it — same shape as probe-season's ROAD zero.
