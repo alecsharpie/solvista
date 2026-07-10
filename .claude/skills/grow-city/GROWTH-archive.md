@@ -7109,3 +7109,101 @@ and harmonious"*; the whole city still *"reads as a balanced, beautiful coastal 
   square"* for a square that now knows its institution, and the plaza/quad `title` is still the generic
   tile label. A future lap could title them *"Town hall forecourt"* outright.
 
+## Iteration 123 — the wind farm founds itself (2026-07-11)
+
+**Vector.** Water & coast × Deepen. The header named this lap: Water was second-stalest (116), Sky is a
+documented **trap**, and Water held *"the board's cheapest live cue"* — **the siting half of cue (k)**,
+banked by 116 and left open by 117 and 122. 116 gave the sea a depth field and said outright that the
+offshore objects were *"still randomly salted… now there is a field to site them against."* This lap
+cashes it. No new tile, no new entity, no new CA pass, no new census metric.
+
+**The header was wrong about the code, and that changed the design.** 116's finding says *"`turbSet` is
+laid in `genWorld` from `hashCell` — gate it on `rDeep`."* It is **not**: turbines are laid from **nine
+`rng()` draws** (row, x-offset, blade phase, ×3). A rejection-sampling gate — the obvious implementation
+of "gate it on `rDeep`" — consumes a *variable* number of draws and would have reshuffled the entire
+downstream seeded stream, wobbling every metric in the city for three turbines nobody can see at fit
+zoom. **Grep the seam before trusting the ledger's description of it** (the skill says this about the
+*artifact*; it is equally true of the ledger's claims about the *code*).
+
+**Change.** `shoreAt(y)+5+(rng()*4|0)` is an **offset, not a depth**. It ignores every piece of coastal
+geometry `rDeep` knows.
+- **The farm is founded, not scattered.** Take the nine `rng()` draws **up front, in their original
+  order**, then spend them on: an anchor row (`R[0]`, the old formula), a **founding depth** on the shelf
+  (`R[1]`), a row spacing of 3–4 (`R[3]`), a direction up or down the coast (`R[4]`), and the three blade
+  phases (`R[2]`,`R[5]`,`R[8]` — *the same draws as before*, so even the blade angles are unchanged).
+  Each tower then takes the cell **in its own row nearest the founding depth**, ties going seaward.
+- **The contour does the work.** Because depth is held and the row is not, the line **bends around
+  headlands, stays out of the harbor, and never wades into the shoals** — for free, from the same BFS
+  that bought 116 its seabed. Rows are held `sp` apart, so three towers read as **one farm** instead of
+  three salted objects (they could share a row before: seeds 99 and 555 put two in adjacent rows at the
+  same column).
+- **`SHELF0=3, SHELF1=5` is now one shared constant.** The tooltip *names* the band (`Coastal shelf`) and
+  the farm *stands* on it. The tooltip's `d<=2 / d<=5` literals now read `d<SHELF0 / d<=SHELF1` — same
+  behavior, but the word and the siting can no longer drift apart. (This is 117/122's tell, run
+  **forwards**: don't let a string assert something the code doesn't share.)
+- `seaFill()` is called once in `genWorld`, before siting — the survey precedes the foundation. It is
+  `hashCell`-only, so it costs no `rng()`, and it also fixes the first frame, which used to draw flat
+  water until the first tick.
+
+**Probe.** `probe-turbine.mjs` (**`git add -f`'d**, per iter 101). Joins each turbine to the **live**
+`rDeep` via 116's `__deep` hook and grades the siting against the band the tooltip prints — it does not
+reimplement `seaTone`/the depth test (iter 110's law).
+
+| | on `Coastal shelf` (rDeep 3–5) | row separation | undrawable |
+| --- | --- | --- | --- |
+| HEAD | **3 / 18** (15 stood in `Open water`, rDeep 6–9) | **1 … 19** | 0 |
+| patched | **42 / 42** (14 seeds) | **3 … 4** | 0 |
+
+Within a seed the depth holds while `x` slides (seed 7: `x=50,51,52` at `rDeep 4,3,3`) — that *is* the
+contour, visible in the numbers.
+
+**Census.** PASS. `pop 154911→154915 (+4)`, `roads/developed/bridges/towers +0`, **tile histogram
+empty**, **every entity count identical**. Predicted before running: the draw count and order are
+preserved by construction, so the stream cannot move. The `+4` pop / `−3 solarRoofs` / `+1 greenRoof` is
+iter 108's load-dependent salt jitter at exactly the magnitude 116 logged for a provably-flat change.
+
+**The one real coupling, measured rather than assumed.** `turbSet` is read by exactly one non-draw site:
+the mole's `ok()`. Moving turbines inshore puts them in the breakwater's corridor, and *"a blocked step
+ends the arm"* — a truncated mole below 5 cells vanishes entirely. Probed across 8 seeds against pristine
+`HEAD`: mole length **identical on 7**, and **6→8 on seed 99**, where a turbine had been *blocking* the
+arm. Nothing lost. (`moleSet` also gates kelp, so this could have moved a tile — it did not, on any
+census seed.)
+
+**Visual.** 2/2 PASS, seeds 42 + 7, `wide` + `coast`. Both agents independently and unprompted reported
+the two things the contour was supposed to buy: *"they read as ONE grouped wind farm… parallel to the
+shelf contour, evenly spaced"* and *"bases planted in water hexes on the darker shelf band — not
+floating, not on the beach, clear of the pier and Ferris-wheel jetty."* No z-order tears, no blown-out
+color, whole frame still balanced. One agent noted the line sits *close* to shore at seeds whose founding
+depth rolled 3 — true, and correct: `rDeep 3` is the shelf's own inshore edge, one hex outside the kelp.
+
+**Perf.** Not run (123 is not a step-back). Justified rather than skipped: the change adds **zero
+per-frame work** — one extra `seaFill()` BFS per *world generation*, and the turbine draw is untouched.
+
+**Verdict — SHIPPED.** Cue (k) is now **fully closed**: 116 gave the sea a bottom, 123 stands the wind
+farm on it.
+
+**Findings for later laps.**
+- **⚠ THE LEDGER DESCRIBES INTENT; ONLY THE SOURCE DESCRIBES THE CODE (new).** A banked cue is a *pointer*,
+  not a spec. 116's finding named the wrong randomness source (`hashCell` for `rng()`), and the
+  implementation it prescribed ("gate it on `rDeep`" ⇒ reject-and-resample) would have perturbed the
+  seeded stream it was proud of leaving flat. **Re-grep the seam a banked cue names before designing to
+  it** — the cue is right about *what should be true*, not necessarily about *what is*.
+- **⚠ TO RE-SITE AN `rng()`-PLACED OBJECT WITHOUT MOVING THE STREAM, RESPEND THE DRAWS — DON'T RE-DRAW
+  THEM (new, and generally useful).** Hoist the *exact* draw count in the *exact* order into an array up
+  front, then reinterpret what each value **means**. `R[1]` went from "x-offset in a 4-wide window" to
+  "which founding depth on the shelf" — a different domain, the same draw. The stream is bit-identical by
+  construction, so `pop` is flat *before a gate is run*, and any rejection/search you need must be
+  **deterministic** (walk the rows) rather than sampled. This unlocks re-siting **any** `rng()`-placed
+  object — the pier, the lifeguard tower, the moored craft — against a field, at zero stream cost.
+- **A FIELD EARNS ITS KEEP WHEN A RULE READS IT, NOT WHEN THE DRAW SHOWS IT (new).** `rDeep` was drawn by
+  116 and *read* by nothing. Siting one object on it made the coastline's geometry — headlands, harbor,
+  river — do work it had never done. **Ask of every derived field: what places itself against this?**
+  Still unread by any rule: `rGreen`, `rShop`, `rServ` feed only the walkable stat; nothing *sites* to them.
+- **THE OFFSHORE OBJECTS THAT REMAIN SALTED** *(Water & coast)*. This lap did the turbines. The **pier**
+  row is `rng()`-picked with a rejection loop (`pyR()`, 30 tries — variable draws, already baked in), the
+  **lifeguard tower** likewise, and the **moored craft** sit off the pier. The pier is the interesting
+  one: a boardwalk should run out to a *depth*, and it now can (previous finding's trick makes it free).
+- **`turbSet`'s ONLY NON-DRAW READER IS THE MOLE'S `ok()`; THE MOLE GATES KELP.** A three-hop coupling
+  (turbine → mole path → `moleSet` → kelp CA) that no census metric names. If you move any offshore
+  object, probe `moleSet.size` against pristine `HEAD` before believing the tile histogram.
+

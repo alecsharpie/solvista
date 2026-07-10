@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | |
@@ -50,14 +50,14 @@ ones (U2, 42, U5) stay in the bullet.
   back with `Forecourt of — Town hall` / `Grounds of — Museum`; `One of — 4 schools`)**.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
-  so any stamped entity is ringable for free — **but a TILE has no ring, see cue (l)**.
+  so any stamped entity is ringable for free — **and since iter 133 a hovered TILE is ringed too (cue l closed)**.
   **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **126** · Urban **124** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
-  **Stalest is now Urban (124)** — check the last entry of the stalest domain for a banked finding before reading
-  its row. (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
+  Sky **126** · Urban **133** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
+  **Stalest is now Sky (126)** — check the last entry of the stalest domain for a banked finding before reading
+  its row. (Sky is the ONE domain still lacking an Interaction/UX vector; its additive/CA cells are traps, see below.) (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
   forest, not a flat dark hole, while staying the darkest thing inshore; `probe-kelp` gates it.)
   **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by respending
   their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it (132 did:
@@ -88,9 +88,8 @@ ones (U2, 42, U5) stay in the bullet.
   **120 broke rotation deliberately and
   logged why**: it was the mandated holistic step-back, the step-back found a real defect, and the skill's own
   rule ("if something compounded badly, spend the next iteration FIXING it") outranks rotation. A step-back
-  that finds a defect and then ships an unrelated vector has wasted the step-back. **Every domain except Urban and
-  Sky now has an Interaction/UX vector**; Urban's remaining Interaction/UX territory is cue **(l)**, since
-  **118 closed cue (j)**.
+  that finds a defect and then ships an unrelated vector has wasted the step-back. **Every domain except Sky now
+  has an Interaction/UX vector** (133 filled Urban's via cue (l); 118 had closed cue (j)).
   **119 took People × Deepen, its FULLEST cell, and was right to** — because 111 had already *measured*
   and banked the vector there (move the ped spawn pool). **A banked, measured finding outranks both
   kind-rotation and cell-emptiness**; the grid says what is *untried*, not what is *most wanted*. Check
@@ -292,15 +291,10 @@ ones (U2, 42, U5) stay in the bullet.
   not four (`PLAZA 14→10` across the matrix). That is defensible urbanism and was accepted, but
   it is the one place the vector *cost* something. See open cue (d).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
-  **(l) a hovered TILE gets no focus ring, only entities do** *(Interaction/UX — banked iter 117)*.
-  The ring at L367 is drawn from `stamp()` and keys off `hoverEnt`, which `pickEntity` leaves `null`
-  whenever the cursor is over bare ground: iter 71 gave the ring to *stamped entities* only. So every
-  tile tooltip in the artifact's history — U2's, 97's coast, 117's woods — names a hex the frame never
-  points at, and on a dense grid at fit zoom you cannot tell which hex it means. Two agents noticed
-  independently once asked. A hex-outline ring (reuse `hexTile`'s path at `1.02`, stroke, no fill) is
-  the obvious shape and it is **draw-per-frame**, so it needs the perf gate — but it is one stroke.
-  Beware the false positive: 117's first visual gate *asked* for a tile ring and got a `VISUAL: FAIL`
-  for its absence, which is a prompt bug, not evidence the ring is owed. Take this only as its own vector.
+  **(l) CLOSED (iter 133)** — a hovered TILE now wears a hex-outline focus ring (`hoverTile`→`render()`,
+  1.06 of the footprint, ink-under/cream-pulse matching `stamp()`). `window.__hover(x,y)` sets it for probes;
+  `probe-tilering.mjs` gates it. Legibility note carried forward: a thin hover stroke is INVISIBLE in a wide
+  downscaled shot (both agents FAILed the fit-zoom read) — re-shoot tight (2×/R55) before doubting the draw.
   **(e½) the interior is an edge-to-edge carpet — now DENSITY-ONLY** *(cue (e)'s skyline half was
   **CLOSED by iter 98**; its **palette** half was **CLOSED by iter 99**)* Urban fabric — iter 94's
   holistic agent called the landmass "too uniform… little breathing room between core and edge,"
@@ -382,109 +376,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 125 entries before Iteration 123 live in
+> **Archive:** the 126 entries before Iteration 124 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 123 — the wind farm founds itself (2026-07-11)
-
-**Vector.** Water & coast × Deepen. The header named this lap: Water was second-stalest (116), Sky is a
-documented **trap**, and Water held *"the board's cheapest live cue"* — **the siting half of cue (k)**,
-banked by 116 and left open by 117 and 122. 116 gave the sea a depth field and said outright that the
-offshore objects were *"still randomly salted… now there is a field to site them against."* This lap
-cashes it. No new tile, no new entity, no new CA pass, no new census metric.
-
-**The header was wrong about the code, and that changed the design.** 116's finding says *"`turbSet` is
-laid in `genWorld` from `hashCell` — gate it on `rDeep`."* It is **not**: turbines are laid from **nine
-`rng()` draws** (row, x-offset, blade phase, ×3). A rejection-sampling gate — the obvious implementation
-of "gate it on `rDeep`" — consumes a *variable* number of draws and would have reshuffled the entire
-downstream seeded stream, wobbling every metric in the city for three turbines nobody can see at fit
-zoom. **Grep the seam before trusting the ledger's description of it** (the skill says this about the
-*artifact*; it is equally true of the ledger's claims about the *code*).
-
-**Change.** `shoreAt(y)+5+(rng()*4|0)` is an **offset, not a depth**. It ignores every piece of coastal
-geometry `rDeep` knows.
-- **The farm is founded, not scattered.** Take the nine `rng()` draws **up front, in their original
-  order**, then spend them on: an anchor row (`R[0]`, the old formula), a **founding depth** on the shelf
-  (`R[1]`), a row spacing of 3–4 (`R[3]`), a direction up or down the coast (`R[4]`), and the three blade
-  phases (`R[2]`,`R[5]`,`R[8]` — *the same draws as before*, so even the blade angles are unchanged).
-  Each tower then takes the cell **in its own row nearest the founding depth**, ties going seaward.
-- **The contour does the work.** Because depth is held and the row is not, the line **bends around
-  headlands, stays out of the harbor, and never wades into the shoals** — for free, from the same BFS
-  that bought 116 its seabed. Rows are held `sp` apart, so three towers read as **one farm** instead of
-  three salted objects (they could share a row before: seeds 99 and 555 put two in adjacent rows at the
-  same column).
-- **`SHELF0=3, SHELF1=5` is now one shared constant.** The tooltip *names* the band (`Coastal shelf`) and
-  the farm *stands* on it. The tooltip's `d<=2 / d<=5` literals now read `d<SHELF0 / d<=SHELF1` — same
-  behavior, but the word and the siting can no longer drift apart. (This is 117/122's tell, run
-  **forwards**: don't let a string assert something the code doesn't share.)
-- `seaFill()` is called once in `genWorld`, before siting — the survey precedes the foundation. It is
-  `hashCell`-only, so it costs no `rng()`, and it also fixes the first frame, which used to draw flat
-  water until the first tick.
-
-**Probe.** `probe-turbine.mjs` (**`git add -f`'d**, per iter 101). Joins each turbine to the **live**
-`rDeep` via 116's `__deep` hook and grades the siting against the band the tooltip prints — it does not
-reimplement `seaTone`/the depth test (iter 110's law).
-
-| | on `Coastal shelf` (rDeep 3–5) | row separation | undrawable |
-| --- | --- | --- | --- |
-| HEAD | **3 / 18** (15 stood in `Open water`, rDeep 6–9) | **1 … 19** | 0 |
-| patched | **42 / 42** (14 seeds) | **3 … 4** | 0 |
-
-Within a seed the depth holds while `x` slides (seed 7: `x=50,51,52` at `rDeep 4,3,3`) — that *is* the
-contour, visible in the numbers.
-
-**Census.** PASS. `pop 154911→154915 (+4)`, `roads/developed/bridges/towers +0`, **tile histogram
-empty**, **every entity count identical**. Predicted before running: the draw count and order are
-preserved by construction, so the stream cannot move. The `+4` pop / `−3 solarRoofs` / `+1 greenRoof` is
-iter 108's load-dependent salt jitter at exactly the magnitude 116 logged for a provably-flat change.
-
-**The one real coupling, measured rather than assumed.** `turbSet` is read by exactly one non-draw site:
-the mole's `ok()`. Moving turbines inshore puts them in the breakwater's corridor, and *"a blocked step
-ends the arm"* — a truncated mole below 5 cells vanishes entirely. Probed across 8 seeds against pristine
-`HEAD`: mole length **identical on 7**, and **6→8 on seed 99**, where a turbine had been *blocking* the
-arm. Nothing lost. (`moleSet` also gates kelp, so this could have moved a tile — it did not, on any
-census seed.)
-
-**Visual.** 2/2 PASS, seeds 42 + 7, `wide` + `coast`. Both agents independently and unprompted reported
-the two things the contour was supposed to buy: *"they read as ONE grouped wind farm… parallel to the
-shelf contour, evenly spaced"* and *"bases planted in water hexes on the darker shelf band — not
-floating, not on the beach, clear of the pier and Ferris-wheel jetty."* No z-order tears, no blown-out
-color, whole frame still balanced. One agent noted the line sits *close* to shore at seeds whose founding
-depth rolled 3 — true, and correct: `rDeep 3` is the shelf's own inshore edge, one hex outside the kelp.
-
-**Perf.** Not run (123 is not a step-back). Justified rather than skipped: the change adds **zero
-per-frame work** — one extra `seaFill()` BFS per *world generation*, and the turbine draw is untouched.
-
-**Verdict — SHIPPED.** Cue (k) is now **fully closed**: 116 gave the sea a bottom, 123 stands the wind
-farm on it.
-
-**Findings for later laps.**
-- **⚠ THE LEDGER DESCRIBES INTENT; ONLY THE SOURCE DESCRIBES THE CODE (new).** A banked cue is a *pointer*,
-  not a spec. 116's finding named the wrong randomness source (`hashCell` for `rng()`), and the
-  implementation it prescribed ("gate it on `rDeep`" ⇒ reject-and-resample) would have perturbed the
-  seeded stream it was proud of leaving flat. **Re-grep the seam a banked cue names before designing to
-  it** — the cue is right about *what should be true*, not necessarily about *what is*.
-- **⚠ TO RE-SITE AN `rng()`-PLACED OBJECT WITHOUT MOVING THE STREAM, RESPEND THE DRAWS — DON'T RE-DRAW
-  THEM (new, and generally useful).** Hoist the *exact* draw count in the *exact* order into an array up
-  front, then reinterpret what each value **means**. `R[1]` went from "x-offset in a 4-wide window" to
-  "which founding depth on the shelf" — a different domain, the same draw. The stream is bit-identical by
-  construction, so `pop` is flat *before a gate is run*, and any rejection/search you need must be
-  **deterministic** (walk the rows) rather than sampled. This unlocks re-siting **any** `rng()`-placed
-  object — the pier, the lifeguard tower, the moored craft — against a field, at zero stream cost.
-- **A FIELD EARNS ITS KEEP WHEN A RULE READS IT, NOT WHEN THE DRAW SHOWS IT (new).** `rDeep` was drawn by
-  116 and *read* by nothing. Siting one object on it made the coastline's geometry — headlands, harbor,
-  river — do work it had never done. **Ask of every derived field: what places itself against this?**
-  Still unread by any rule: `rGreen`, `rShop`, `rServ` feed only the walkable stat; nothing *sites* to them.
-- **THE OFFSHORE OBJECTS THAT REMAIN SALTED** *(Water & coast)*. This lap did the turbines. The **pier**
-  row is `rng()`-picked with a rejection loop (`pyR()`, 30 tries — variable draws, already baked in), the
-  **lifeguard tower** likewise, and the **moored craft** sit off the pier. The pier is the interesting
-  one: a boardwalk should run out to a *depth*, and it now can (previous finding's trick makes it free).
-- **`turbSet`'s ONLY NON-DRAW READER IS THE MOLE'S `ok()`; THE MOLE GATES KELP.** A three-hop coupling
-  (turbine → mole path → `moleSet` → kelp CA) that no census metric names. If you move any offshore
-  object, probe `moleSet.size` against pristine `HEAD` before believing the tile histogram.
 
 ## Iteration 124 — the panels come off the plazas (2026-07-11)
 
@@ -1013,3 +909,59 @@ stream-neutral, ~25 lines.
   where that path resolves, and it violates the skill's own law (resolve `../../../../solvista.html` from the
   probe's location). `probe-kelp` does it right (`resolve(HERE,'../../../..')`) and runs from any cwd; the
   older probes that copied the `dirname` form should be fixed the next time one is touched.
+
+## Iteration 133 — the hovered tile gets its ring, and cue (l) closes (2026-07-11)
+
+**Vector.** Urban fabric × **Interaction/UX** (SHIPPED). Rotation named the domain — Urban was the single
+stalest (last 124) — and the header named the content twice over: Urban's *additive* moves are surveyed
+**spent** (118), its Interaction/UX cell was **empty**, and banked **cue (l)** was waiting there. Kind was
+forced off Deepen (4 of last 9) and off the site-on-depth mechanism; Interaction/UX satisfies both and fills
+the last empty Urban cell.
+
+**The defect (cue l, banked iter 117).** Entities have worn a `stamp()` focus ring since iter 71, but a bare
+hovered **TILE** got none: `hoverEnt` is `null` whenever the cursor is over ground, and the only ring keyed
+off it. So every tile tooltip in the artifact's history — U2's, 97's coast, 117's woods, 122's institutions —
+**named a hex the frame never pointed at**, and on a dense grid at fit zoom you cannot tell which one it means.
+
+**Change (~20 lines, draw-only).** A new `hoverTile` is set by the `mousemove` handler in the same branch that
+already resolves the tile for the tooltip (and cleared on entity-hover, off-plate, pan, and `mouseleave` — one
+predicate, every reader). `render()` draws it last, as an affordance: a hex-outline ring at `ctr(hoverTile)`,
+scale **1.06** of the footprint (`hexTile`'s own path, no fill, so terrain and anything standing on it read
+through), with the **same ink-under (2.6px) / cream-pulse (1.1px) stroke as the focus ring and the transit
+trace** — the whole hover language is now one voice. Added `window.__hover(x,y)` (mirrors `__find`/`__ents`;
+`shoot.mjs` can't hover) for probes/screenshots.
+
+**Census.** PASS, exit 0. Draw-only, stream-neutral (no terrain, no `rng()`) — tile histogram empty, core
+metrics +0. (`greenRoofs` +1 is the roof-adoption CA's known headless-timing wobble, ±1 on pristine HEAD too.)
+
+**Probe** `probes/probe-tilering.mjs` (promoted). One patched build compared against ITSELF in two hover
+states (the ring is a new *state*, not a re-tone — no pristine build needed). Freezes the sim (the ring pulses
+on `time`), then drives a **real `page.mouse.move`** onto a PARK's screen coords (tests the true handler, not
+just the `__hover` hook) and diffs a hex-box against the hover-off frame, with a far-off WATER hex as control:
+seeds 7 & 42, **target |ΔRGB| 8.73** (ring drawn on the hovered hex) · **control 0.000** (it is one hex, not
+a wash) · **cleared residual 0.000** (move to void ⇒ ring vanishes, no sticky ring). VERDICT: PASS.
+
+**Visual.** Both fit-zoom agents FAILED — *and the probe + my own eyes overturned them*, the loop's law
+exactly (agents fail confidently ⇒ measure, then look at that one PNG). At R=130 the 1.1px cream stroke
+downscales away, so both agents (correctly, on their evidence) could not *see* it — while **both independently
+confirmed the WHOLE frame is clean**: no z-order tears, floaters, doubled rings, or blowout, city reads
+balanced. A **tight R=55 / 2× clip** settled the legibility question I could not delegate: a crisp
+black+cream hexagon outline hugging **exactly one** hex — the green PARK (seed 42) and the hospital hex (seed
+7) — sitting correctly on the hex grid, tracing one hexagon cleanly. Bold and legible where the cursor is (=
+where the user looks). VISUAL: PASS on the tight reads + the delegated whole-frame reads.
+
+**Verdict — SHIPPED. Cue (l) is CLOSED.** Every tile tooltip in the artifact now points at the hex it names.
+Urban's Interaction/UX cell is filled; only Sky now lacks an Interaction/UX vector.
+
+### Findings
+- **A "hover ring is invisible" agent FAIL is a ZOOM artifact, not a defect — the stroke is 1.1px and dies in
+  a downscaled wide clip.** The probe (`|ΔRGB| 8.73` hex-local, control 0.000) and a tight 2×/R55 clip both
+  show it crisp. When a thin *linear* affordance "can't be seen," re-shoot tighter before touching the draw
+  (101's contrast×width law, read the other way: at fit zoom width is fixed, so magnify the *shot*).
+- **`shoot.mjs`/`hovershot.mjs` cannot screenshot a TILE hover** — `hovershot` aims at entities via `__ents`.
+  `window.__hover(x,y)` (this iter) is the tile analogue; a tiny custom shot script that calls it + clips
+  tight is the pattern for any future tooltip/hover/selection vector on a *tile* (122's institutions, 117's
+  woods, 97's coast could all now be re-shot with their hex marked).
+- **The next tooltip lap can reuse this ring for free.** 132's banked KELP-tooltip cue and any future
+  `describeTile` enrichment now land on a hex the frame *marks* — the legibility half of every tile-tooltip
+  vector is done; only the *words* remain.

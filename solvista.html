@@ -5743,6 +5743,28 @@ function render(){
     if(hoverEnt._m){for(const i of hl.sta){const[x,y]=hl.path[i];const[cx,cy]=ctr(x,y);pip(cx,cy-RAILH-BEAMD);}}
     else for(const[x,y]of[hl.path[0],hl.path[hl.path.length-1]]){const[cx,cy]=ctr(x,y);pip(cx,cy-hl.h);}
   }
+
+  /* HOVERED TILE: a hex-outline ring on the ground the tooltip is naming.
+     Entities have worn a focus ring from stamp() since iter 71, but a bare
+     hovered TILE got none — so every tile tooltip in the artifact's history
+     (U2, the coast at 97, the woods at 117, the institutions at 122) named a
+     hex the frame never marked, and on a dense grid at fit zoom you cannot tell
+     which one it means (cue l). Drawn last as an affordance, not a structure:
+     an outline at 1.06 of the hex footprint (ctr = the tile's own center), no
+     fill, so terrain and anything standing on it still read through — and the
+     same ink-under/cream-pulse as the focus ring (stamp()) and the transit
+     trace, so the whole hover language is one voice. */
+  if(hoverTile&&!hoverEnt){
+    const[cx,cy]=ctr(hoverTile.x,hoverTile.y);
+    const X=HW*1.06,V=VR*1.06,E=ER*1.06;
+    const ring=()=>{ctx.beginPath();
+      ctx.moveTo(cx,cy-V);ctx.lineTo(cx+X,cy-E);ctx.lineTo(cx+X,cy+E);
+      ctx.lineTo(cx,cy+V);ctx.lineTo(cx-X,cy+E);ctx.lineTo(cx-X,cy-E);
+      ctx.closePath();ctx.stroke();};
+    ctx.lineJoin='round';
+    ctx.strokeStyle=col('ink',0.34);ctx.lineWidth=2.6;ring();
+    ctx.strokeStyle='rgba(255,252,240,'+(0.74+0.18*Math.sin(time*3.2))+')';ctx.lineWidth=1.1;ring();
+  }
 }
 
 /* ---------------- sky sync ---------------- */
@@ -6079,7 +6101,7 @@ const ENTINFO=[
 const VKIND={fireeng:['Fire engine','Lights on, heading to the smoke.'],
   ambo:['Ambulance','On a call.'],police:['Police cruiser','On patrol.']};
 /* the entity the cursor is naming right now (null when hovering a tile) */
-let hoverEnt=null,hoverR=0;
+let hoverEnt=null,hoverR=0,hoverTile=null;
 function pickEntity(wx,wy){
   let best=null,bd=1e9;
   const consider=(e,name,sub,r)=>{
@@ -6093,12 +6115,12 @@ function pickEntity(wx,wy){
 }
 const tipEl=$('tip');
 cvs.addEventListener('mousemove',e=>{
-  if(panning&&dragMoved>4){tipEl.style.display='none';hoverEnt=null;return;}
+  if(panning&&dragMoved>4){tipEl.style.display='none';hoverEnt=null;hoverTile=null;return;}
   const wx=(e.clientX-offX)/scale, wy=(e.clientY-offY)/scale;
   const pe=pickEntity(wx,wy);
   hoverEnt=pe?pe[2]:null; hoverR=pe?pe[3]:0;
   let html;
-  if(pe)html='<p class="tt">'+pe[0]+'</p><p class="td">'+pe[1]+'</p>';
+  if(pe){html='<p class="tt">'+pe[0]+'</p><p class="td">'+pe[1]+'</p>';hoverTile=null;}
   else{
     const y0=Math.round(wy/ROWY-0.5), x0=Math.round(wx/CW-1);
     let x=-1,y=-1,bd=1e9;
@@ -6108,7 +6130,8 @@ cvs.addEventListener('mousemove',e=>{
       const d=dx2*dx2+dy2*dy2; if(d<bd){bd=d;x=xx;y=yy;}
     }
     const c=cellAt(x,y);
-    if(!c){tipEl.style.display='none';return;}
+    if(!c){tipEl.style.display='none';hoverTile=null;return;}
+    hoverTile={x,y};
     html=describeTile(c,x,y);
   }
   tipEl.innerHTML=html;
@@ -6117,7 +6140,7 @@ cvs.addEventListener('mousemove',e=>{
   tipEl.style.left=e.clientX+'px'; tipEl.style.top=e.clientY+'px';
   tipEl.style.display='block';
 });
-cvs.addEventListener('mouseleave',()=>{tipEl.style.display='none';hoverEnt=null;});
+cvs.addEventListener('mouseleave',()=>{tipEl.style.display='none';hoverEnt=null;hoverTile=null;});
 
 let tickAcc=0,lastT=performance.now();
 /* entity motion + animation clocks, factored out of frame() so the __step test
@@ -6206,6 +6229,10 @@ window.__find=n=>{
     if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)||(n==='highst'&&c.hstr)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sand:c.sand,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
+/* test hook: pin the hovered-tile focus ring by grid coords (cue l), so a probe
+   or screenshot can mark a hex the way a real mousemove does — shoot.mjs can't
+   hover. null/out-of-bounds clears it; setting a tile clears any hovered entity. */
+window.__hover=(x,y)=>{hoverTile=(x!=null&&inB(x,y))?{x,y}:null;if(hoverTile)hoverEnt=null;};
 
 /* test hook: stamped screen coords of live entities (by ENTINFO name, or all) —
    lets the verification loop aim clips at movers without sweeping the mouse. */
