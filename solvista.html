@@ -1697,9 +1697,31 @@ function syncFleet(){
   const wantDogs=Math.min(10,(stats.parks/4|0));
   while(dogs.length<wantDogs&&openCells.length){
     const[x,y]=openCells[(rng()*openCells.length)|0];
-    dogs.push({x,y,ox:0,oy:0,tx:0,ty:0,tm:0,c:rng()<0.5?'trunk':'white',
-               walker:Math.random()<0.45?0.1+Math.random()*7:0}); /* some dogs walk
-               their human; Math.random AFTER the rng draws, stream untouched */
+    const c=rng()<0.5?'trunk':'white';
+    /* Most dogs are walked by an actual resident: `own` indexes peds, and the dog
+       then rides its owner's hex, inheriting pedWalk's streets, leash and bridge
+       veto for free. The rest are strays, and keep the park-bound roam. The coin
+       and the nearest-owner scan both come AFTER the two rng() draws and spend
+       none of their own, so the seeded stream is untouched. */
+    /* One leash per hand. Dogs share the peds' open-ground spawn pool AND the
+       street-access filter shrinks the candidate set, so an unguarded nearest-ped
+       scan hands the same resident four dogs and draws a fan of leashes from one
+       fist. Owners are therefore exclusive; a dog that can't get its own human
+       stays a stray rather than doubling up. */
+    let own=-1;
+    if(Math.random()<0.65&&peds.length){
+      const taken=new Set(); for(const o of dogs)if(o.own>=0)taken.add(o.own);
+      let bd=1e9,fb=-1,fbd=1e9;
+      for(let i=0;i<peds.length;i++){
+        if(taken.has(i))continue;
+        const dd=hexDist(x,y,peds[i].x,peds[i].y);
+        if(dd<fbd){fbd=dd;fb=i;}                       /* nearest free hand */
+        if(dd<bd&&streetAccess(peds[i])){bd=dd;own=i;} /* nearest who walks a block */
+      }
+      if(own<0)own=fb;                                 /* -1 if every hand is full */
+    }
+    dogs.push({x,y,ox:0,oy:0,tx:0,ty:0,tm:0,c,own,
+               ph:dogs.length*2.3}); /* gait phase, index-derived: costs no draw */
   }
   /* herons wade in the estuary marsh. Math.random (not rng) so they don't perturb
      the seeded simulation; count follows how much marsh formed. */
@@ -1818,6 +1840,19 @@ function pedRoad(x,y){const n=cellAt(x,y);return!!n&&n.t===T.ROAD&&!n.bridge}
 function pedWalk(p,x,y){
   return strollable(x,y)||(pedRoad(x,y)&&hexDist(x,y,p.hx,p.hy)<=PEDLEASH);
 }
+/* Can this resident's leash radius reach a street at all? A ped anchored deep in
+   a park has no road within PEDLEASH and so can never step onto one. It matters
+   for choosing a dog's owner: dogs and peds spawn from the SAME open-ground pool,
+   so the ped nearest a dog is almost always a park-interior one — binding to it
+   gave the dog an owner who walked a street 0% of the time, against 12-16% for the
+   ped population. Nearest-with-street-access instead. (Measured, not assumed.) */
+function streetAccess(p){
+  for(let dy=-PEDLEASH;dy<=PEDLEASH;dy++)for(let dx=-PEDLEASH;dx<=PEDLEASH;dx++){
+    const x=p.hx+dx,y=p.hy+dy;
+    if(hexDist(x,y,p.hx,p.hy)<=PEDLEASH&&pedRoad(x,y))return true;
+  }
+  return false;
+}
 /* which way is the kerb? A ped on a street stands at its edge, facing whatever it
    came out to see — never on the centre line where the cars are. Direction is taken
    from ctr() deltas, never from the sign of dx (which flips with row parity). */
@@ -1852,9 +1887,58 @@ function stepPed(p,dt){
     }}
   p.ox=lerp(p.ox,p.tx,dt*0.7); p.oy=lerp(p.oy,p.ty,dt*0.7);
 }
+/* A leashed dog does not path: it takes its owner's hex outright and only chooses
+   its own sub-hex offset, orbiting them within a leash length. That is what makes
+   the interconnect free — the ped already decided where it may legally stand
+   (parks, kerbs, no bridges), so the dog cannot walk anywhere its owner couldn't.
+   `own` is resolved every step because peds may be re-filled by syncFleet; a dog
+   whose owner has gone falls back to the stray roam rather than dangling. */
+function ownerOf(d){return d.own>=0?peds[d.own]:null}
 function stepDog(d,dt){
   d.tm-=dt;
-  if(d.tm<=0){d.tx=(Math.random()-0.5)*0.85;d.ty=(Math.random()-0.5)*0.85;d.tm=0.8+Math.random()*1.6;
+  const p=ownerOf(d);
+  if(p){
+    d.x=p.x; d.y=p.y;                       /* heel */
+    if(d.tm<=0){                            /* sniff a new spot beside them */
+      /* Sit the dog BESIDE its human, never on them: a free angle*radius orbit
+         collapses to zero gap whenever it points up/down, and the pair drew as one
+         unreadable blob joined by a 5px leash.
+         Offset PERPENDICULAR to the ped's own outward vector, in pixel space (a hex
+         is CW wide but only ROWY tall, so a hex-unit offset is not isotropic). That
+         choice matters on streets: kerbDir() stands a ped 0.30 hex out along the
+         kerb normal, precisely so it is off the centre line where the cars are —
+         so stepping the dog toward the hex interior would park it in the traffic
+         lane. Going perpendicular walks it ALONG the kerb at its human's depth.
+         On open ground the vector is arbitrary and any perpendicular serves. */
+      const D=12+Math.random()*6;           /* leash, in PIXELS: a hex is CW wide but
+                                               only ROWY tall, so hex units separate
+                                               far less vertically than horizontally */
+      let dx,dy;
+      if(pedRoad(p.x,p.y)){
+        /* On a street the dog goes ALONG the kerb. kerbDir() stands its human 0.30
+           hex out on the kerb normal precisely to keep them off the centre line
+           where the cars are, so nudging the dog inward would park it in the
+           traffic lane. Perpendicular to that normal holds their kerb depth. */
+        const ux=p.ox*CW, uy=p.oy*ROWY, L=Math.hypot(ux,uy);
+        const nx=L>2?-uy/L:1, ny=L>2?ux/L:0, side=Math.random()<0.5?-1:1;
+        dx=side*nx*D; dy=side*ny*D;
+      }else{
+        /* On open ground nothing can run the dog over, so separate along x, where
+           the projection is widest and the pair always reads as two. Step toward
+           the hex INTERIOR: a human near the tile edge would otherwise sling the
+           dog over the neighbouring tile, and the clamp would haul it back onto
+           their feet. A purely perpendicular offset here can point straight up the
+           screen, which stacks dog on human — the blob this replaced. */
+        const side=p.ox>0.02?-1:p.ox<-0.02?1:(Math.random()<0.5?-1:1);
+        dx=side*D; dy=(Math.random()-0.5)*5;
+      }
+      d.tx=clamp(p.ox+dx/CW,-0.50,0.50);
+      d.ty=clamp(p.oy+dy/ROWY,-0.62,0.62);  /* .62 = the kerb's own reach */
+      d.f=d.tx<p.ox?1:-1;                   /* look back at the hand on the leash */
+      d.tm=0.7+Math.random()*1.3;           /* keener than a stray: shorter dwell */
+    }
+  }else if(d.tm<=0){
+    d.tx=(Math.random()-0.5)*0.85;d.ty=(Math.random()-0.5)*0.85;d.tm=0.8+Math.random()*1.6;
     if(Math.random()<0.25){
       const q=nbrDirs(d.y)[(Math.random()*6)|0];
       if(strollable(d.x+q[0],d.y+q[1])){d.x+=q[0];d.y+=q[1];}
@@ -2170,24 +2254,44 @@ function drawEspAt(x,y){
       ctx.beginPath();ctx.arc(x1-w-1.1,y1-lift-7.5,2.3,0,7);ctx.fill();}
   }
 }
-const WKC=['terra','teal','gold','coral','lav'];
+/* crowds thin late at night (drawPed). A leashed dog goes home when its human
+   does, so both draws consult the same coin rather than stranding a dog on a
+   leash held by nobody. */
+const pedHidden=p=>LITAMT>0.75&&!!p.nite;
 function drawDog(d){
-  const[cx,cy]=px(d.x+0.5+d.ox,d.y+0.5+d.oy);
-  if(d.walker){ /* somebody's on the other end of the leash; they stand while
-                   the dog sniffs out the whole radius */
-    const[wx,wy]=px(d.x+0.5,d.y+0.5);
-    const sway=Math.sin(time*1.7+d.walker)*0.3;
-    ctx.strokeStyle=col('ink',0.7);ctx.lineWidth=0.7;
-    ctx.beginPath();ctx.moveTo(wx+sway*0.4,wy-2.4);
-    ctx.quadraticCurveTo((wx+cx)/2,(wy+cy)/2-0.6,cx,cy-1.8);ctx.stroke();
-    ctx.strokeStyle=col(WKC[(d.walker*5|0)%5],1);ctx.lineWidth=1.3;
-    ctx.beginPath();ctx.moveTo(wx,wy);ctx.lineTo(wx+sway*0.4,wy-3.1);ctx.stroke();
-    ctx.fillStyle=col('ink',0.9);
-    ctx.beginPath();ctx.arc(wx+sway*0.4,wy-3.8,0.7,0,7);ctx.fill();
+  const p=ownerOf(d);
+  if(p&&pedHidden(p))return;
+  const z=onPier(d.x,d.y)?5:0;
+  const[cx,cy0]=px(d.x+0.5+d.ox,d.y+0.5+d.oy), cy=cy0-z;
+  stamp(d,cx,cy);
+  const f=d.f||1;   /* facing: leashed dogs look back at their human; strays face right */
+  if(p){ /* the leash: owner's hand to the dog's collar, sagging under its own
+            weight — a taut straight stroke would read as UI chrome (iter 85).
+            It lands on the neck (the head end, mirrored by f), so it never has to
+            cross the dog's own body to get there. */
+    const[wx,wy0]=px(p.x+0.5+p.ox,p.y+0.5+p.oy), wy=wy0-z;
+    ctx.strokeStyle=col('ink',0.6);ctx.lineWidth=0.6;
+    ctx.beginPath();ctx.moveTo(wx,wy-2.6);
+    ctx.quadraticCurveTo((wx+cx)/2,(wy+cy)/2-0.6,cx+1.1*f,cy-3.0);ctx.stroke();
   }
+  /* Gait, from the residual: stepDog lerps ox->tx, so tx-ox IS this frame's
+     velocity (iter 84). Fore and hind pairs scissor in opposition; a dog that
+     has arrived at its sniffing spot stands with its legs closed. */
+  const sp=Math.hypot((d.tx-d.ox)*CW,(d.ty-d.oy)*ROWY);
+  const st=Math.sin(time*7.4+d.ph)*clamp(sp*0.5,0,0.9);
+  ctx.strokeStyle=col('ink',1.15);ctx.lineWidth=0.55;
+  ctx.beginPath();
+  ctx.moveTo(cx-1.1,cy-1.3);ctx.lineTo(cx-1.1+st,cy-0.05);
+  ctx.moveTo(cx+1.1,cy-1.3);ctx.lineTo(cx+1.1-st,cy-0.05);
+  ctx.stroke();
   ctx.fillStyle=col(d.c,0.95);
-  ctx.fillRect(cx-1.6,cy-2.2,3.2,1.7);
-  ctx.fillRect(cx+1.2,cy-3.1,1.4,1.4);
+  ctx.fillRect(cx-1.6,cy-2.9,3.2,1.7);        /* body */
+  ctx.fillRect(cx+(f>0?1.2:-2.6),cy-3.9,1.4,1.4); /* head, at the leash end */
+  /* the tail wags faster the more excited the dog is (i.e. the faster it moves) */
+  const wag=Math.sin(time*(5.5+sp*7)+d.ph)*0.9;
+  ctx.strokeStyle=col(d.c,0.95);ctx.lineWidth=0.6;
+  ctx.beginPath();ctx.moveTo(cx-1.5*f,cy-2.7);
+  ctx.quadraticCurveTo(cx-2.4*f,cy-3.2,(cx-2.3*f)+wag*0.6,cy-4.1);ctx.stroke();
 }
 function drawKite(k){
   if(LITAMT>0.6)return; /* kites come down at night */
@@ -3914,7 +4018,7 @@ function drawVehicle(v){
   }
 }
 function drawPed(p){
-  if(LITAMT>0.75&&p.nite)return; /* crowds thin late at night — the coin is per
+  if(pedHidden(p))return; /* crowds thin late at night — the coin is per
     RESIDENT, not per cell: a positional hash made a ped blink as it changed hex,
     which the sidewalks (peds now cross hexes far more often) would have made plain */
   const z=onPier(p.x,p.y)?5:0;

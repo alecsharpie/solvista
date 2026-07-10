@@ -24,7 +24,7 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87 |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57 | | | 61, 81, 89 |
-| **People & activity** | 41, 56 | 49 | 34, 64 | 78 | | 84 |
+| **People & activity** | 41, 56 | 49 | 34, 64, 93 | 78 | | 84 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -33,6 +33,21 @@ rivers/monorails/cable cars · U5 census stats that can fall).
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
+- **⚠ Placing one entity NEXT TO another? Size the gap in PIXELS (iter 93).** A hex is
+  `CW`=32px wide and `ROWY`=16px tall, so an offset expressed in *hex units* separates
+  half as far vertically as horizontally: iter 93's dogs orbited their owners at `r`
+  hex and drew as one blob whenever the angle pointed up the screen. Compute the offset
+  in px, then divide by `CW`/`ROWY`. And pick the **direction from the ground, not the
+  geometry** — `kerbDir()` stands a street ped 0.30 hex out on the kerb normal to keep
+  it off the centre line, so nudging its dog "toward the hex interior" put the dog in
+  the traffic lane. An entity attached to a host should reuse the host's *legality*
+  (`pedWalk`/`strollable`/`kerbDir`), not just its hex. **Neither bug moved any census
+  metric, and neither was visible in a whole-frame shot** — entity-vs-entity vectors
+  need a zoomed gate (`hovershot.mjs ZOOM=6`).
+- **Dogs belong to residents (iter 93).** `d.own` indexes `peds`, exclusively (one leash
+  per hand). A leashed dog rides its owner's hex, so it inherits `pedWalk`'s street/bridge
+  legality free — anything that changes where peds may walk moves the dogs too. Strays
+  (`own<0`) keep the park roam. `probe-dogs.mjs` is the shape probe.
 - **⚠ The plate is a HEXAGON, not a square (U4):** `G` (=67) is only the bounding
   box the `cells` array lives in; the live plate is the `HEXR`=33 rings masked by
   `HEXOK`, and everything outside it is `T.VOID`. So: never loop `0..G` and assume
@@ -523,86 +538,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 85 entries before Iteration 83 live in
+> **Archive:** the 86 entries before Iteration 84 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 83 — the shops get a face (2026-07-10)
-
-**Vector** — Urban fabric × Polish. Iter 82 reverted its retail CA rule and named
-this iteration twice, in its own entry and in the header: *"give `COM` a distinct
-shopfront draw first — awnings/signage/continuous kerb frontage. Urban × Polish on
-`drawBuilding`'s `COM` case is the prerequisite, and is worth doing on its own
-merits regardless of siting."* Rotation agrees: Urban has shipped nothing since 75
-(82 reverted), and Polish varies the kind from 82's New CA rule.
-
-**82's premise was half wrong, and grepping the seam first caught it.** `COM` did
-*not* lack a shopfront draw — it already had an awning band and a district-colored
-sign band (old L2926-2928). The actual defect was subtler and worth stating
-precisely: **the awning was a *ring*, and the glass ran full height.** `bandR`
-wraps both visible faces, so the awning was a flat stripe with no projection, and
-`bandR(...,8,h-5,glass)` gave every shop a tall glass band — which is exactly what
-`MID` draws (repeated glass bands). A shop was a mid-rise wearing a colored belt.
-Retail is a **ground-floor, one-sided** thing, and the draw code encoded neither.
-
-**Change (draw-only; no `rng()`, no terrain, no new tile).**
-- Two new face-local primitives beside `slotS`/`darkWinR`: `faceOutS()` returns a
-  prism face's outward screen normal, and `awnS()` / `kerbS()` draw a projecting
-  striped canopy and a kerb apron on **one** face. `awnS` is 3 fills (canopy, all
-  accent stripes batched into one path, valance).
-- The `COM` case now picks a **front**: `fs = frontSide(x,y, hashed fallback)` —
-  the third reuse of iter 73's `frontSide` after 80's forecourts. Glass drops to
-  street level (z 1.3→6.4) over a dark stallriser; a `slotS` doorway, the kerb
-  apron and the projecting awning all land on `fs`. Taller shops (`h>=17`) get one
-  upper office band with `darkWinR`. Sign band + neon glow unchanged.
-- The awning projects **3px along the face normal**, and the prism is `ax=0.36`
-  against a `0.5` hex, so the canopy stays inside its own tile — it cannot tear
-  against the row drawn after it. That margin is why this is safe at all.
-- `frontSide` is 6 neighbour probes and there are ~1250 shops **per frame**, so it
-  is cached on the cell (`c.fs`/`c.fsY`) and refreshed when `year` advances — a
-  street built later still turns the shop around.
-
-**Census** — `+0` on **all 22 metrics**, 0 page errors, empty tile histogram.
-Correct and expected: a draw-only change that adds no `Math.random()` draw has a
-pixel-identical control, so this is the clean-determinism case iter 78 described.
-
-**Visual** — 4 subagents. Per 82 ("a reviewer only sees the change at the scale the
-change lives at"), the primary verdicts are the two **downtown-zoom** BEFORE/AFTER
-pairs; both `VISUAL: PASS`, both independently reporting that shops are now
-distinguishable at a glance from houses/mid-rises where in BEFORE they were not,
-that awnings stay inside their hex with no z-order tears, and that no awning fronts
-a roadless face. A night-downtown agent scanned all 2.9M pixels: **zero pixels above
-235** — the awning takes `TINT` through `col()` and reads reflective, not emissive
-(iter 79's test). A wide 2-seed holistic agent also passed.
-
-**Perf** — 3 sequential passes, judged by the minimum of each scene:
-`day 31.33 → 32.33ms (+3.2%)`, `night 37.22 → 36.61ms (−1.6%)`. PASS. The +3.2% is
-the added fills on the city's most numerous building; the `c.fs` cache is what kept
-it there.
-
-**Verdict: SHIPPED.** The prerequisite 82 asked for now exists.
-
-**Findings**
-- **`bandR` is a ring, and rings cannot express frontage.** Every band in
-  `drawBuilding` wraps both visible faces, which is right for a tower's window
-  courses and wrong for anything a building does *toward a street*. The new
-  `awnS`/`kerbS`/`faceOutS` + the existing `slotS` are the one-sided vocabulary;
-  reach for them for porches, loading docks, stoops, café spill-out.
-- **The `0.5 − ax` margin is a real drawing surface.** A prism at `ax=0.36` leaves
-  ~4.5px of its own hex unused on every side. Things drawn there project over the
-  pavement and read as depth *without* crossing into the next row — the constraint
-  that makes overhangs safe in a painter's-order renderer.
-- **Two cumulative cues the holistic agent volunteered** (neither caused by this
-  lap; both worth a future iteration):
-  1. **The rainbow floats.** `L4166` (`cl.rain && LITAMT<0.15`) draws it in screen
-     space trailing a shower; at seed 7 it arcs over open ocean with one leg ending
-     mid-air. This is precisely iter 81's fog defect — an overlay on the lens
-     instead of a field on the plate — and 81's fix is the template. **Sky × Polish.**
-  2. **The asphalt floods the interior.** At seed 42/2035 the road ground tone has
-     compounded until the built interior reads as a dark brown smear that robs the
-     parks of contrast. The kelp-coast failure mode, inland. **Urban × Polish.**
 
 ## Iteration 84 — the residents learn to walk (2026-07-10)
 
@@ -1399,3 +1339,89 @@ misattributed to `COM` drawing like `RES`.
   Iter 88 failed to *invent* a corridor across ground the buildings had walled in; this one
   succeeded by *reserving* a corridor the generator had already committed to at t=0. Before
   drawing a line across the plate, check whether the plate already has one.
+
+## Iteration 93 — the dogs get owners (2026-07-10)
+
+**Vector** — People & activity × Deepen/interconnect.
+
+**Provenance.** The interconnect itself (ownership, leash, gait, tail, `pedHidden`
+sharing) was **found uncommitted in the worktree**, authored by an iteration killed
+between its verdict and its `git commit` — the exact failure mode the skill's *"If you
+find the worktree dirty"* section describes. It had no ledger entry, but census passed
+and the diff read as one coherent change, and it left a purpose-built `probe-dogs.mjs`
+naming itself "iter 93". Per the rule (**the gates decide, not the ledger**) it was kept.
+The *placement* fix below is this pass's own work; everything above the fix is described
+from the diff, not from its author's intent.
+
+**Change (inherited).** Dogs stop being park furniture and become *somebody's dog*.
+`syncFleet` binds ~65% of dogs to a `peds` index (`d.own`), preferring the nearest
+resident with `streetAccess()` — a leash-radius reachability test, because dogs and peds
+spawn from the same open-ground pool, so the merely-*nearest* ped is almost always a
+park-interior one who walks a street 0% of the time. Owners are **exclusive** (one leash
+per hand; an unguarded scan gave one resident four dogs and drew a fan of leashes).
+A leashed dog then takes its owner's hex outright (`d.x=p.x`) and inherits `pedWalk`'s
+streets, leash and bridge veto **for free** — so it can now leave the park (`offPark`
+0% → 1-15%) without a single new legality rule. Strays keep the old roam. Draw gains a
+sagging leash, scissoring legs off the lerp residual, and a tail that wags faster the
+faster the dog moves. Costs **zero** `rng()` draws — every coin is `Math.random` after
+the seeded draws, so the stream is untouched.
+
+**Fix (this pass).** The visual gate failed the inherited code: at 5× the dog and its
+owner drew as **one unreadable blob** joined by a ~5px leash. Cause: the sniff target was
+a free `angle × radius` orbit in **hex units** — but a hex is `CW=32`px wide and only
+`ROWY=16`px tall, so a vertical angle separated the pair by ~2.5px, and any angle gave a
+leash too short to read. Two rewrites were needed, because the obvious fix bought the blob
+back as a worse bug:
+- *Attempt 1 — push the dog toward the hex interior.* Guarantees separation, and **parks
+  the dog in the traffic lane**: `kerbDir()` stands a street ped 0.30 hex out on the kerb
+  normal *precisely* to keep it off the centre line where the cars drive, so "inward" is
+  "into traffic". Measured, not assumed: street dogs sat 5.3-8.2px from centre, *inside*
+  their owners at 7.5-9.2px, 19 samples in-lane across 3 seeds.
+- *Shipped — branch on the terrain.* On a **road**, offset perpendicular to the ped's own
+  outward vector: that runs the dog *along the kerb* at its human's exact depth. On **open
+  ground** nothing can run it over, so offset along **x**, where the projection is widest
+  and the pair always reads as two — and step toward the interior so a human near the tile
+  edge doesn't sling the dog over the neighbour and onto the clamp. Offsets are computed in
+  **pixels**, then divided back into hex units. The dog's head, tail and collar mirror on
+  `d.f` so the leash lands on the neck and never crosses the body.
+
+**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
+`roads 5706 +0`, `developed 6174 +0`, `life.dogs 90`), which is the point: a draw-only /
+`Math.random` vector must not move the seeded stream, and it didn't. Tile histogram
+empty by construction — this vector touches no terrain. `probe-dogs.mjs`: heeling exact
+**100%**, one leash per hand **yes** (`shared 0`), dogs reach the street **yes**, stamped
+**10/10** (tooltip names them *Good dog*).
+
+**Visual** — `VISUAL: PASS` on wide seed 42 + seed 7 (agents asked the *cumulative*
+question: do the new dark strokes compound into dirt/noise on grass and sand? — "sparse,
+never clustered, always attached to a person"). Zoomed 6×: dog stands clearly beside its
+human, head turned back toward the hand, tail curling away, four legs on the ground,
+leash sagging. The seed-1234 pair that a subagent caught **stacked** under the
+perpendicular-everywhere rule reads cleanly under the shipped rule. Placement measured
+across 3 seeds, ~800 samples/rule:
+
+| rule | park leash gap | street dog vs owner, from centre | in-lane |
+| --- | --- | --- | --- |
+| inherited free orbit | 6.7px *(and ~0 when vertical)* | 8.2-11.9 vs 4.9-9.3px | 9 |
+| perpendicular everywhere | 9.6px | 11.2-11.9 vs 7.5-8.1px | 1 |
+| **shipped (branch on terrain)** | **13.6px** | **11.2-12.3 vs 8.4-9.6px** | **0-1** |
+
+**Verdict — SHIPPED** (inherited work, re-gated and repaired).
+
+### Three transferable findings
+- **A hex-unit offset is not isotropic, and a diorama is drawn in pixels.** The blob was
+  not a logic error; it was `r` meaning 32px across and 16px down. Anything that positions
+  one entity *relative to another* — leashes, hand-holding, a queue, a conversation —
+  must size its gap in **screen pixels** and divide back, or it will read at one angle and
+  collapse at another. The old draw code sidestepped this by never separating two entities.
+- **The safe direction is a property of the ground, not of the geometry.** "Push toward the
+  interior" and "hold the kerb depth" are both correct — on different tiles. Peds already
+  encode where it is safe to stand (`kerbDir`, `pedWalk`, `strollable`); an entity that
+  attaches to a ped should read those decisions rather than invent a placement rule that is
+  right in a park and lethal on a street. **Reuse the host's legality, not just its hex.**
+- **A subagent's `VISUAL: FAIL` is evidence, not a verdict — read its *reason*.** One agent
+  failed the downtown clip for "dogs are below this clip's resolution": inconclusive, not a
+  defect, and it cost nothing to overrule *after* answering the question at 6×. Another
+  failed on a genuine stacked pair that three wide-frame PASSes had missed. The zoomed gate
+  found both real bugs here; neither was visible at native resolution, and **neither moved a
+  single census metric**. A gate that only reads whole frames cannot see a 4px animal.

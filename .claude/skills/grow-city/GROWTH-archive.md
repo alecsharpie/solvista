@@ -2516,3 +2516,78 @@ worth doing on its own merits regardless of siting.
   block-scale reviewer's FAIL outranks two city-scale PASSes. Send the zoom that
   matches the feature's scale, and when verdicts split, believe the tighter one.
 
+## Iteration 83 — the shops get a face (2026-07-10)
+
+**Vector** — Urban fabric × Polish. Iter 82 reverted its retail CA rule and named
+this iteration twice, in its own entry and in the header: *"give `COM` a distinct
+shopfront draw first — awnings/signage/continuous kerb frontage. Urban × Polish on
+`drawBuilding`'s `COM` case is the prerequisite, and is worth doing on its own
+merits regardless of siting."* Rotation agrees: Urban has shipped nothing since 75
+(82 reverted), and Polish varies the kind from 82's New CA rule.
+
+**82's premise was half wrong, and grepping the seam first caught it.** `COM` did
+*not* lack a shopfront draw — it already had an awning band and a district-colored
+sign band (old L2926-2928). The actual defect was subtler and worth stating
+precisely: **the awning was a *ring*, and the glass ran full height.** `bandR`
+wraps both visible faces, so the awning was a flat stripe with no projection, and
+`bandR(...,8,h-5,glass)` gave every shop a tall glass band — which is exactly what
+`MID` draws (repeated glass bands). A shop was a mid-rise wearing a colored belt.
+Retail is a **ground-floor, one-sided** thing, and the draw code encoded neither.
+
+**Change (draw-only; no `rng()`, no terrain, no new tile).**
+- Two new face-local primitives beside `slotS`/`darkWinR`: `faceOutS()` returns a
+  prism face's outward screen normal, and `awnS()` / `kerbS()` draw a projecting
+  striped canopy and a kerb apron on **one** face. `awnS` is 3 fills (canopy, all
+  accent stripes batched into one path, valance).
+- The `COM` case now picks a **front**: `fs = frontSide(x,y, hashed fallback)` —
+  the third reuse of iter 73's `frontSide` after 80's forecourts. Glass drops to
+  street level (z 1.3→6.4) over a dark stallriser; a `slotS` doorway, the kerb
+  apron and the projecting awning all land on `fs`. Taller shops (`h>=17`) get one
+  upper office band with `darkWinR`. Sign band + neon glow unchanged.
+- The awning projects **3px along the face normal**, and the prism is `ax=0.36`
+  against a `0.5` hex, so the canopy stays inside its own tile — it cannot tear
+  against the row drawn after it. That margin is why this is safe at all.
+- `frontSide` is 6 neighbour probes and there are ~1250 shops **per frame**, so it
+  is cached on the cell (`c.fs`/`c.fsY`) and refreshed when `year` advances — a
+  street built later still turns the shop around.
+
+**Census** — `+0` on **all 22 metrics**, 0 page errors, empty tile histogram.
+Correct and expected: a draw-only change that adds no `Math.random()` draw has a
+pixel-identical control, so this is the clean-determinism case iter 78 described.
+
+**Visual** — 4 subagents. Per 82 ("a reviewer only sees the change at the scale the
+change lives at"), the primary verdicts are the two **downtown-zoom** BEFORE/AFTER
+pairs; both `VISUAL: PASS`, both independently reporting that shops are now
+distinguishable at a glance from houses/mid-rises where in BEFORE they were not,
+that awnings stay inside their hex with no z-order tears, and that no awning fronts
+a roadless face. A night-downtown agent scanned all 2.9M pixels: **zero pixels above
+235** — the awning takes `TINT` through `col()` and reads reflective, not emissive
+(iter 79's test). A wide 2-seed holistic agent also passed.
+
+**Perf** — 3 sequential passes, judged by the minimum of each scene:
+`day 31.33 → 32.33ms (+3.2%)`, `night 37.22 → 36.61ms (−1.6%)`. PASS. The +3.2% is
+the added fills on the city's most numerous building; the `c.fs` cache is what kept
+it there.
+
+**Verdict: SHIPPED.** The prerequisite 82 asked for now exists.
+
+**Findings**
+- **`bandR` is a ring, and rings cannot express frontage.** Every band in
+  `drawBuilding` wraps both visible faces, which is right for a tower's window
+  courses and wrong for anything a building does *toward a street*. The new
+  `awnS`/`kerbS`/`faceOutS` + the existing `slotS` are the one-sided vocabulary;
+  reach for them for porches, loading docks, stoops, café spill-out.
+- **The `0.5 − ax` margin is a real drawing surface.** A prism at `ax=0.36` leaves
+  ~4.5px of its own hex unused on every side. Things drawn there project over the
+  pavement and read as depth *without* crossing into the next row — the constraint
+  that makes overhangs safe in a painter's-order renderer.
+- **Two cumulative cues the holistic agent volunteered** (neither caused by this
+  lap; both worth a future iteration):
+  1. **The rainbow floats.** `L4166` (`cl.rain && LITAMT<0.15`) draws it in screen
+     space trailing a shower; at seed 7 it arcs over open ocean with one leg ending
+     mid-air. This is precisely iter 81's fog defect — an overlay on the lens
+     instead of a field on the plate — and 81's fix is the template. **Sky × Polish.**
+  2. **The asphalt floods the interior.** At seed 42/2035 the road ground tone has
+     compounded until the built interior reads as a dark brown smear that robs the
+     parks of contrast. The kelp-coast failure mode, inland. **Urban × Polish.**
+
