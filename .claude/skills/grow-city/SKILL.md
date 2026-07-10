@@ -569,6 +569,11 @@ even if the census looks fine:
   your target tile move?) plus the **screenshots**, not from every ±1.
 - **Canvas sizing gotcha:** the canvas needs explicit `width/height:100%`;
   `position:fixed;inset:0` alone does NOT stretch it.
+- **The file has NO `<meta charset>` — keep JS string literals pure-ASCII (iter 134).** A raw non-ASCII
+  byte (e.g. `·` U+00B7) renders as mojibake (`Â·`) when `shoot.mjs` serves the file over http, because
+  Chromium falls back to windows-1252; a `file://` load sniffs UTF-8 and HIDES the bug, so tight `file://`
+  clips look clean while the http wide shots are corrupt. In JS strings use the escape (`'·'`,
+  `'\u{1F311}'`); in HTML use `&middot;`/`&mdash;`/`&times;` — as the rest of the file already does.
 - Keep the census hook (`window.__census()`, near `__warp`/`__setTime` ~L1929)
   in sync if you add tile types or entity arrays — add them to its tallies so the
   metric keeps measuring the right things.
@@ -593,6 +598,16 @@ vector, whatever it is.
   by a *fraction of the loop* (so a 2-span line and an 89-span line lapped in the
   same 71s), 115 discovered `c.lit` was per-cell white noise with `corr(lit,
   dist-from-CBD) = +0.008`. Neither was guessable from reading the draw code.
+- **Every gate this loop owns is FROZEN — a claim about MOTION needs a TEMPORAL probe (iter 134).** The
+  census, the standard probe (freezes the clock for a two-render diff), and the visual gate (single
+  screenshots) are all blind to *cadence*: a readout or animation can be provably *correct* (134's almanac
+  passed its probe 48/48) and *pretty* in every static frame, and still be flickering noise in play. 134's
+  season/moon HUD readout strobed because `year` is a fast **development** clock (~0.17 yr/sec at speed 1,
+  so a city grows over minutes), NOT a wall calendar — the season word flipped ~0.7 Hz and the moon ~2 Hz.
+  It was caught only by letting the clock RUN (`playing=true`) and **counting distinct states over N
+  seconds**. This is the mirror of the freeze-the-clock law: a *diff* needs a frozen clock; a *rate* needs
+  a running one. Match a readout to its clock's speed (`stPhase` correctly reads the slow `dayT`, ~110 s/cycle,
+  not the sprinting `year`), and when correctness is about cadence, sample over time — don't trust a frame.
 - **One predicate, one definition, all readers share it.** "Is this stop a station?"
   had **four** independent implementations and two were wrong — the draw gated on
   neighbourhood density, the tooltip counted raw `stops` — so lines claimed up to

@@ -7207,3 +7207,44 @@ farm on it.
   (turbine → mole path → `moleSet` → kelp CA) that no census metric names. If you move any offshore
   object, probe `moleSet.size` against pristine `HEAD` before believing the tile histogram.
 
+## Iteration 124 — the panels come off the plazas (2026-07-11)
+
+**Vector** Urban fabric × Polish (FIXED) — cash the banked ghost-`c.solar` cue (122's third finding).
+Also: the mandated **header trim** (see below), done first.
+
+**Change** `c.solar` / `c.groof` are set by the rooftop-adoption diffusion CA only on `RES`/`MID`/`COM`
+(L1564/1574), but the flag **persists when that building is later cleared for a paved square** — a civic
+forecourt (`FORECOURT_LOT`={EMPTY,RES,COM,MID}) or the iter-100 `QUAD` grounds pass eats a solar-bearing
+lot and leaves the panel flag behind on the `PLAZA`/`QUAD`. The draw (`drawBuilding`, dispatched only when
+`DEV.has(c.t)`, L3859) and the tooltip (`c.solar&&DEV.has(c.t)`, L5924) already gated on tile type, so the
+ghosts never *rendered* — but two census readers (`solar` stat L2064, `solarRoofs` L6162) and both adoption
+neighbour-counts (`countAround(...,n=>n.solar)` L1565, green L1575) counted them. Classic *one predicate,
+several readers, some wrong* (the SKILL law): the tooltip was right, the census + CA were not. Routed all
+four wrong readers through the same `DEV.has(c.t)` predicate the tooltip uses — no new predicate, no
+conversion-site hunting, no flag-clearing (which would have meant editing every place a building is overwritten).
+
+**Census** PASS. Core flat: **pop −3** (documented year-salt jitter, my change touches no terrain),
+**roads/developed +0**. `solarRoofs` **1471→1451 (−20)** — the ghosts, gone from the 9-cell matrix.
+`greenRoofs` **397→405 (+8)** — knock-on: solar/green are mutually exclusive (L1574), so slightly fewer
+solar adoptions free cells for green. Tile histogram **empty**, as expected for a count/draw-only fix.
+
+**Probe** `probes/probe-solghost.mjs` (tracked) — counts, in-page at 2035 over 8 seeds, solar/green flags
+split by `DEV.has(c.t)`. **27 ghost solar + 4 ghost green**, sitting on exactly `PLAZA / QUAD / PARK /
+GARDEN / STADIUM` — every one a square or grounds carved from a former building. Control: **real** building
+roofs (~423–549/seed) are unchanged and still counted. This is the mechanism, independently recomputed.
+
+**Visual** PASS — one whole-city + one downtown shot (seed 42, 2035); agent confirmed every solar array
+sits on a real roof, none floating on plaza/park/road, no tears/floaters/blowout, city reads coherent.
+(The fix is invisible by construction — ghosts never drew — so this was a regression check, not a feature check.)
+
+**Header trim (done first, per SKILL step 5).** The maintained header had reached **1234 lines (~27k
+tokens)**, 3× its 400-line budget — re-read on every iteration. Moved **848 lines** of superseded /
+closed / promoted-to-`SKILL.md` law-bullets (closed cues a/b/c, the 70–110 methodology bullets now living
+as laws in `SKILL.md`, old perf-gate history, fixed watch-items) **verbatim** into `GROWTH-archive.md`
+under a dated "Retired header bullets" section — never deleted. Kept: the rotation grid, saturation notes,
+the OPEN cues, live-reference constants (CBD, `c.buzz`, `c.flow`, plate/plural U4, reach maps, the perf
+baseline, the `?year=`/`?tide=` hooks). Header now **386/400**; all 10 ledger entries + 114 archive entries intact.
+
+**Verdict** FIXED — undid a compounding count/CA bug that had over-reported rooftop solar since forecourts
+and quad-grounds began carving squares from solar-bearing lots, and trimmed the header back under budget.
+

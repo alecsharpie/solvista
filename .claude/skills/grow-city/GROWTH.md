@@ -28,7 +28,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | ~~**134**~~ |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84 | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -55,9 +55,15 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **126** · Urban **133** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
-  **Stalest is now Sky (126)** — check the last entry of the stalest domain for a banked finding before reading
-  its row. (Sky is the ONE domain still lacking an Interaction/UX vector; its additive/CA cells are traps, see below.) (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
+  Sky **134** (reverted) · Urban **133** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **132**.
+  **Stalest is now People (127)** — check the last entry of the stalest domain for a banked finding before reading
+  its row. (**Sky's Interaction/UX was ATTEMPTED at 134 and REVERTED** — a HUD readout naming the season + moon
+  phase from `year` STROBES, because `year` is a fast development clock, not a wall calendar: **~0.17 yr/sec at speed 1**,
+  so the season word flips ~0.7 Hz and the moon phase ~2 Hz in normal play. Static frames — every visual gate this
+  loop takes — are blind to it. **A Sky/season/moon readout is banked behind a rate fix: iter 126's DRAWN moon also
+  strobes ~2 Hz at night** (a latent defect its frozen-frame gate missed); decouple the moon's synodic phase from the
+  sprinting `year` — e.g. tie lunations to `dayT` days — and BOTH the disc and a readout become readable. That is the
+  next Sky vector. Sky's additive/CA cells are still traps, see below.) (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
   forest, not a flat dark hole, while staying the darkest thing inshore; `probe-kelp` gates it.)
   **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by respending
   their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it (132 did:
@@ -155,11 +161,12 @@ ones (U2, 42, U5) stay in the bullet.
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
-  Recent kinds: 122 Interaction/UX · 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
-  128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** —
-  (**130 was the holistic step-back — no domain × kind lap.**) **Deepen has paid 4 of the last 9; Polish 2.
-  Next lap owes Urban (124, now stalest); live/cheap kinds there: Connect, Interaction/UX. VARY off Deepen & Polish**
-  unless another banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
+  Recent kinds: 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
+  128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
+  **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** —
+  (**130 was the holistic step-back — no domain × kind lap.**)
+  **Next lap owes People (127, now stalest); live/cheap kinds there: Polish, Interaction/UX** (Connect paid at 111).
+  Vary off Interaction/UX (2 of last 4). Unless another banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
   **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
@@ -376,52 +383,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 126 entries before Iteration 124 live in
+> **Archive:** the 127 entries before Iteration 125 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 124 — the panels come off the plazas (2026-07-11)
-
-**Vector** Urban fabric × Polish (FIXED) — cash the banked ghost-`c.solar` cue (122's third finding).
-Also: the mandated **header trim** (see below), done first.
-
-**Change** `c.solar` / `c.groof` are set by the rooftop-adoption diffusion CA only on `RES`/`MID`/`COM`
-(L1564/1574), but the flag **persists when that building is later cleared for a paved square** — a civic
-forecourt (`FORECOURT_LOT`={EMPTY,RES,COM,MID}) or the iter-100 `QUAD` grounds pass eats a solar-bearing
-lot and leaves the panel flag behind on the `PLAZA`/`QUAD`. The draw (`drawBuilding`, dispatched only when
-`DEV.has(c.t)`, L3859) and the tooltip (`c.solar&&DEV.has(c.t)`, L5924) already gated on tile type, so the
-ghosts never *rendered* — but two census readers (`solar` stat L2064, `solarRoofs` L6162) and both adoption
-neighbour-counts (`countAround(...,n=>n.solar)` L1565, green L1575) counted them. Classic *one predicate,
-several readers, some wrong* (the SKILL law): the tooltip was right, the census + CA were not. Routed all
-four wrong readers through the same `DEV.has(c.t)` predicate the tooltip uses — no new predicate, no
-conversion-site hunting, no flag-clearing (which would have meant editing every place a building is overwritten).
-
-**Census** PASS. Core flat: **pop −3** (documented year-salt jitter, my change touches no terrain),
-**roads/developed +0**. `solarRoofs` **1471→1451 (−20)** — the ghosts, gone from the 9-cell matrix.
-`greenRoofs` **397→405 (+8)** — knock-on: solar/green are mutually exclusive (L1574), so slightly fewer
-solar adoptions free cells for green. Tile histogram **empty**, as expected for a count/draw-only fix.
-
-**Probe** `probes/probe-solghost.mjs` (tracked) — counts, in-page at 2035 over 8 seeds, solar/green flags
-split by `DEV.has(c.t)`. **27 ghost solar + 4 ghost green**, sitting on exactly `PLAZA / QUAD / PARK /
-GARDEN / STADIUM` — every one a square or grounds carved from a former building. Control: **real** building
-roofs (~423–549/seed) are unchanged and still counted. This is the mechanism, independently recomputed.
-
-**Visual** PASS — one whole-city + one downtown shot (seed 42, 2035); agent confirmed every solar array
-sits on a real roof, none floating on plaza/park/road, no tears/floaters/blowout, city reads coherent.
-(The fix is invisible by construction — ghosts never drew — so this was a regression check, not a feature check.)
-
-**Header trim (done first, per SKILL step 5).** The maintained header had reached **1234 lines (~27k
-tokens)**, 3× its 400-line budget — re-read on every iteration. Moved **848 lines** of superseded /
-closed / promoted-to-`SKILL.md` law-bullets (closed cues a/b/c, the 70–110 methodology bullets now living
-as laws in `SKILL.md`, old perf-gate history, fixed watch-items) **verbatim** into `GROWTH-archive.md`
-under a dated "Retired header bullets" section — never deleted. Kept: the rotation grid, saturation notes,
-the OPEN cues, live-reference constants (CBD, `c.buzz`, `c.flow`, plate/plural U4, reach maps, the perf
-baseline, the `?year=`/`?tide=` hooks). Header now **386/400**; all 10 ledger entries + 114 archive entries intact.
-
-**Verdict** FIXED — undid a compounding count/CA bug that had over-reported rooftop solar since forecourts
-and quad-grounds began carving squares from solar-bearing lots, and trimmed the header back under budget.
 
 ## Iteration 125 — the step-back finds a clean city, and a January in its own eye (2026-07-11) [holistic step-back]
 
@@ -965,3 +931,70 @@ Urban's Interaction/UX cell is filled; only Sky now lacks an Interaction/UX vect
 - **The next tooltip lap can reuse this ring for free.** 132's banked KELP-tooltip cue and any future
   `describeTile` enrichment now land on a hex the frame *marks* — the legibility half of every tile-tooltip
   vector is done; only the *words* remain.
+
+## Iteration 134 — the almanac that strobed (2026-07-11)
+
+**Vector.** Sky & atmosphere × **Interaction/UX** (an EXPLORE → REVERTED). Rotation named the domain
+twice over: Sky was the single stalest (last 126) *and* the one domain the grid showed lacking an
+Interaction/UX vector (133's own closing line). The content chose itself by the loop's most reliable
+tell — *a thing the code knows and no readout names*: the HUD stat strip prints the **year** integer
+and the **time of day** (`phaseWord`), but never the **season** (hidden inside the year) nor the **moon
+phase** (iter 126 gave the moon a synodic calendar and `__moon()`, surfaced NOWHERE in the UI). Kind
+varied off Deepen (4 of the last 9) and off the site-on-depth mechanism.
+
+**Change (built, then reverted).** `stPhase` → `seasonWord(year)+' · '+phaseWord(dayT)` (e.g. "summer ·
+golden hour"), season anchored to `applySeason`'s own peaks so word and palette can't drift; plus a new
+`.stat.moon.opt.sm` card between the year and the residents count — a moon glyph (`\u{1F311}`…`\u{1F318}`,
+eight phases) + a phase word ("waxing gibbous"), read from `moonReadout()` which calls `__moon()` (one
+predicate, shared with the drawn disc). `__setYear`/`__setTime` were made to refresh the readout.
+
+**Census.** PASS, exit 0. Draw/DOM-only, stream-neutral — tile histogram empty, all core metrics +0.
+(Vacuous by construction, as every readout iteration is.)
+
+**Probe (`probe-almanac.mjs`, written, ran, then deleted with the feature).** Pinned `?year=` across a
+season/phase spread on seeds 7 & 42; read `stPhase`/`stMoonLbl` from the live DOM and compared to an
+independently-recomputed season & moon (122's law — check the claim against recomputed truth, not a
+screenshot that it renders). **48/48 pass**, control held (changing `?t=` moved neither season nor moon).
+So the mapping was *correct*. The probe proved the wrong thing.
+
+**Visual — and where it turned.** Static tight HUD clips (day/night/frozen-crescent) read beautifully:
+"AUTUMN · DAYTIME", 🌕 "FULL MOON", and the crescent glyph rendered as a distinct dark disc with a thin
+lune. But **two whole-frame agents (one per seed) both FAILED**, and both were RIGHT: (a) the raw `·`
+byte rendered as mojibake **"Â·"** over the http-served shot — the file has **no `<meta charset>`**, so
+Chromium fell back to windows-1252 (my `file://` clips sniffed UTF-8 and hid it); (b) the night agent
+caught the drawn crescent contradicting the HUD's "FULL MOON". (b) sent me to **measure the calendar's
+rate in normal play** — the one thing a static frame cannot show — and that measurement **killed the
+vector**: `year` advances **0.170 yr/sec at speed 1** (it is a fast *development* clock so a city grows
+over minutes, NOT a wall calendar). In 3 s of play the **season word cycled through 3 values (~0.7 Hz)**
+and the **moon phase through 5 (~2 Hz strobe)**. As a text readout that is flickering noise — and it
+*degrades* the previously-readable time-of-day line (driven by the slow `dayT`, ~110 s/cycle) by welding
+it to the sprinting year clock.
+
+**Verdict — EXPLORED → REVERTED.** `solvista.html` restored byte-identical to HEAD. The readout was
+*correct* (probe 48/48) and *pretty* (static clips) and still failed the bar the moment it moved. The
+census can pass a change that isn't worth its cost, and a frozen visual gate can pass one that only reads
+right when frozen (82/88/101/114/131 — now 134). Reverting it is the system working.
+
+### Findings
+- **⚠ `year` IS A FAST DEVELOPMENT CLOCK (~0.17 yr/sec = 1/6 at speed 1), NOT A WALL CALENDAR.** Anything
+  that names the **season** or the **moon phase** from `year` in a live text readout STROBES (season ~0.7 Hz,
+  moon ~2 Hz, measured over 3 s of play). This is why `stPhase` correctly showed only time-of-day, off the
+  SLOW `dayT` (~110 s/cycle): a readout must be matched to its clock's speed. Do not re-surface season/moon
+  as text until the clock they read is slowed.
+- **⚠ iter 126's DRAWN MOON ALSO STROBES ~2 Hz at night** — a latent defect its frozen-frame visual gate
+  could not catch (a single screenshot is blind to a 2 Hz cycle). **This is the real banked Sky vector:** a
+  Polish/Fix that decouples the moon's synodic phase from the sprinting `year` (e.g. tie lunations to `dayT`
+  days, or to a slowed calendar), so the disc reads as a slow, legible moon — and ONLY THEN does a
+  season/moon HUD readout become viable. The almanac is banked behind this fix.
+- **A STATIC SCREENSHOT GATE IS BLIND TO STROBE/FLICKER — a "does it read in MOTION?" claim needs a TEMPORAL
+  probe** (sample the DOM/canvas over N seconds of real play, `playing=true`, and count distinct states).
+  This is the mirror of the freeze-the-clock law (which is for two-render *diffs*): a diff needs a frozen
+  clock; a *rate* needs a running one. Every gate this loop owns — census, probe (frozen), visual (frozen) —
+  was blind here until I let the clock run and counted states. Reach for this for any readout/animation whose
+  correctness is about *cadence*, not a single frame.
+- **⚠ THE FILE HAS NO `<meta charset>` — KEEP JS STRING LITERALS PURE-ASCII.** A raw `·` (U+00B7) renders as
+  mojibake **"Â·"** when `shoot.mjs` serves over http (Chromium falls back to windows-1252); a `file://` load
+  sniffs UTF-8 and HIDES the bug, so my own tight clips looked clean and only the http wide shots caught it.
+  In JS strings use the escape (`'·'`, and `'\u{1F311}'`… for the moon glyphs, which I DID get right); in
+  HTML use `&middot;`/`&mdash;`/`&times;` — exactly as the rest of the file does (every glyph was ASCII-safe
+  before this). Promoted to SKILL.md (Invariants).
