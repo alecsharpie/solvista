@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117** |
+| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113** | 22 | | U2, 44, 58, 79, **116** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
@@ -51,8 +51,11 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Transport **112** · Civic **114** · Sky **115** · Water **116** · Nature **117** · Urban **118** · People **119**.
-  **Stalest is now Transport (112)**, then Civic (114), then Sky (115). **Every domain except Urban and
+  Transport **112** · Civic **114** · Sky **115** · Water **116** · Urban **118** · People **119** · Nature **120**.
+  **Stalest is now Transport (112)**, then Civic (114), then Sky (115). **120 broke rotation deliberately and
+  logged why**: it was the mandated holistic step-back, the step-back found a real defect, and the skill's own
+  rule ("if something compounded badly, spend the next iteration FIXING it") outranks rotation. A step-back
+  that finds a defect and then ships an unrelated vector has wasted the step-back. **Every domain except Urban and
   Sky now has an Interaction/UX vector**; Urban's remaining Interaction/UX territory is cue **(l)**, since
   **118 closed cue (j)**.
   **119 took People × Deepen, its FULLEST cell, and was right to** — because 111 had already *measured*
@@ -74,10 +77,11 @@ ones (U2, 42, U5) stay in the bullet.
   Civic's banked **cue (d)** was attempted at
   114 and **reverted**: its goal is proven (a 3-hex square reads at fit zoom) but its prescribed
   host does not exist — see the rewritten cue below before re-opening it.
-  **Iteration 120 is the next holistic step-back** (105, 110, 115, …), and per 115's finding it must be
+  **Iteration 125 is the next holistic step-back** (105, 110, 115, 120, …), and per 115's finding it must be
   shot **at night as well as by day**: 115's night frame failed on a defect present in every city ever
-  generated, which ~114 daytime whole-city reads, the census and the perf gate had all missed. (118 cashed
-  the other night defect 115 banked, so 120's night read starts clean.)
+  generated, which ~114 daytime whole-city reads, the census and the perf gate had all missed. **120 also
+  shot the SEASON** (`&year=`) and that is what caught its defect — a whole-city read in January can never
+  see a seasonal bug, and January is the default. **Add a seasonal frame to every step-back.**
   Iter 111 was People × Connect and used
   109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
   Transport** (trains ↔ their own stations) and iter 113 cashed it a third time in **Water** (the
@@ -94,16 +98,16 @@ ones (U2, 42, U5) stay in the bullet.
   *content* was a Sky interconnect (the farm calendar reads `applySeason`'s `year`) — **Sky can be
   fed by deepening another domain toward it**, which is the way out of its saturation that does not
   require a sky feature. **113 did this again** (the marsh reeds now read `year`), leaving 109's
-  Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads.
-  Recent kinds: 109 Connect ·
-  110 Polish · 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) ·
-  115 Polish · 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen —
-  **Polish has paid 5 of the last 10; do not open with one.** The coldest kinds are **Scale** (a
+  Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
+  now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
+  almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
+  Recent kinds: 110 Polish · 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) ·
+  115 Polish · 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen —
+  **Polish has paid 5 of the last 11; do not open with one.** **Deepen has now paid three laps running
+  (119, 120) — vary it.** The coldest kinds are **Scale** (a
   structural lever, not a lap move) and **New element** (last: 106) — but note 118's finding that a
   *saturated* domain cannot take a New element; pick the domain first (Transport, 112) and read its
   row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
-  **⚠ 120 is a holistic step-back** — take it before any new vector, and shoot it **at night as well as
-  by day** (115's law).
   **Connect paid three times** (109, 111, 112 — 112 logged as
   Deepen, see its entry): its trick was that
   it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
@@ -1185,102 +1189,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 112 entries before Iteration 110 live in
+> **Archive:** the 113 entries before Iteration 111 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 110 — the towers stop wearing their height (2026-07-10) [holistic step-back]
-
-**Vector** — Urban fabric × **Polish**. Rotation would have said People (104). The **step-back
-overrode it**: this is the 5th-iteration holistic pass, and it found something, so the skill's rule
-("if something compounded badly, spend the next iteration FIXING it") took precedence. Two
-independent whole-frame agents, on two seeds, converged on *the same* complaint — seed 42:
-"hundreds of similar blue-grey/red-capped blocks… a monotonous tower carpet"; seed 7: "tower colors
-repeat so consistently that massing becomes hard to parse." Seed 42 returned `VISUAL: FAIL`.
-
-**Triage first — most of what the agents PRESCRIBED was already a closed dead end.** Worth recording,
-because a future step-back will hear the same three suggestions:
-- *"thin density, add parks"* → cue (e½), **closed by iter 102**; the header says do not plant a
-  second lung.
-- *"stray floating district lines read as tears"* (seed 42) → the monorail/cable beam, **closed by
-  iter 87** with six agents. The header pre-registers this exact false positive; it fired again.
-- *"give the roads hierarchy so downtown reads as blocks"* (seed 7) → a **trap on both branches**.
-  Contrast-only is dead by iter 101's law (below ~2–3 hexes across a corridor is untraceable at *any*
-  ΔL, and a road is a 1-hex ribbon); the width branch re-opens cue (b), "the asphalt floods the
-  interior", closed by iter 86. **Do not spend a lap on road hierarchy.**
-  What survived triage was not their diagnosis but their *observation*: the buildings repeat.
-
-**The seam.** `drawBuilding`'s `case T.TOWER` opened with `const style=v<0.35?0:(v<0.62?1:(v<0.85?2:3))`
-while the upgrade pass sets `c.th=(54+c.v*82)*(0.70+0.66*core)` (L1104). **Both read `c.v`.** So the
-silhouette was a restatement of height — the third and most visible instance of the defect iter 99
-took out of `MID` and iter 103 out of `RES`. And colour restated the silhouette: every teal slab wore
-the one `teal`, every ziggurat the one `terra`. Downtown had exactly **four looks**.
-
-**Measured before designing** (`probe-towertone.mjs`, now `git add -f`'d, reading a new permanent
-`window.__twr` hook):
-
-| | corr(style,th) | distinct looks | commonest body | tallest is ziggurat |
-| --- | --- | --- | --- | --- |
-| before | 0.695 / 0.757 / 0.695 — **mean 0.727** | **4** | 36.8–47.9% | **2/3 seeds** |
-| after | 0.179 / 0.325 / 0.267 — **mean 0.257** | **19 of 20** | 27.3–28.8% | 0/3 seeds |
-
-0.727 sits inside MID's *pre-fix* band (0.76–0.79); 0.257 sits inside the MID/RES *post-fix*
-reference band (0.19–0.31 / 0.22–0.25). Mean height per style climbed monotonically before
-(58 → 84 → 95 → 121): the four "styles" were four **height classes**.
-
-**Change.** `towerLook(x,y,v)` — one pure function, the *only* definition of the rule — draws two
-independent seed-salted hashes: `form=fv*0.72+v*0.28` picks the massing (keeping a **mild** height
-link, because a tall tower genuinely should step back — ziggurats are still the tallest style on
-average, 98 vs 79), and `cv` picks the body outright from 5 shades (white/cream/sand/teal/terra),
-with a light `capN` on setbacks. 4 forms × 5 bodies = 20 looks. Also closed the **most visible half of
-open cue (g)**: the four `hashCell(x,z|0,3|5|9|13)` per-storey window-light salts were literals, so
-*every city's towers lit identically at night*; they now mix `seedNum`.
-
-**⚠ The mixed selector is TRAPEZOIDAL, not uniform — re-solve the cuts or you silently delete the
-rare form.** `0.72·A+0.28·B` on two uniforms has a trapezoid density, so keeping the old
-`0.35/0.62/0.85` cuts would have cut ziggurats from 15% to **5.6%** — a two-thirds cull of the most
-characterful tower, dressed up as a variety win. Solving the trapezoid CDF for the original mix gives
-`0.39/0.59/0.75`; measured after, the mix is **37.6 / 24.9 / 24.5 / 13.1** against a pre-change
-35 / 27 / 23 / 15. This is iter 98's hold-the-mean law applied to a *distribution* rather than a mean.
-
-**Census** — PASS. Tile histogram **completely empty**; `towers`/`towerHt`/`tallTowers`/`helipads`/
-`roads`/`developed`/`parks` all **+0**. `pop -3`, `greenRoofs -1` — precisely the load jitter iter 108
-documented on *identical pristine code* (154915 vs 154918). `style` is cosmetic: it feeds no
-`rng()`-gated predicate, and `pop`/`towerHt` read `c.h`/`c.th`, never the style. Draw-only ⇒
-stream-neutral by construction, and the census signature proves it.
-
-**Perf** — PASS, and run *because* iter 109 said to, not because it was the step-back: the style mix
-moved and per-tower draw work varies by style. Pristine-HEAD control taken the same session, 3 passes,
-min-of-three: day **33.49 → 33.61ms** (+0.12), night **37.72 → 37.72ms** (+0.00). One pass read
-35.16ms day; min-of-three exists for exactly that spike. `col()` memoizes on `name|f`, so the fifth
-body shade buys a cache entry, not a draw call — palette variety remains the cheapest beauty here.
-
-**Visual** — PASS on both seeds, day + downtown + a night clip. Seed 7, unprompted: *"the added tower
-variety lightens the core rather than darkening it into clutter."* Both confirmed the tallest tower
-still reads as a landmark rather than a featureless box — the one real risk of decoupling form from
-height. Night windows read as warm lit bands, not blow-out.
-
-**Verdict — FIXED.** The step-back's own `VISUAL: FAIL` is cleared. Perf baseline (2026-07-10, day
-33.16 / night 37.33) still valid; not re-pinned.
-
-**Durable findings**
-- **The step-back's job is to name the vector, and its agents are good witnesses but bad doctors.**
-  Both correctly saw *repetition*; both prescribed fixes the ledger had already closed. **Take the
-  observation, throw away the prescription, then go find the mechanism in the source.** The mechanism
-  here was one `const` on one line, and no agent could have seen it.
-- **`corr(colour-field, height-field)` is a defect *class*, and the class is now exhausted.** MID
-  (99), RES (103), TOWER (110) — all three of the city's building types drew colour from the field
-  that drives height. If a fourth type is ever added, measure it on day one: `probe-towertone.mjs`
-  generalises (recover the field that picks colour, the field that picks height, report Pearson).
-- **When a decorative selector also chooses GEOMETRY, decoupling it is not free — check the
-  distribution, not just the correlation.** The naive iter-99 copy would have passed a `corr` check
-  and quietly culled the ziggurats. The tell was the trapezoid; the guard was re-solving the cuts.
-- **A probe must read the rule, not re-derive it.** `probe-towertone.mjs` first duplicated the
-  selector with an "edit BOTH together" comment — a drift bomb. Extracting `towerLook()` and having
-  `window.__twr` call it means the probe grades the *live* rule. Pair this with iter 101's law:
-  a tracked probe that reimplements what it measures is worse than no probe.
 
 ## Iteration 111 — the buses stop for somebody (2026-07-10)
 
@@ -2215,3 +2128,96 @@ with a ~15% reduction rather than an emptying.
   gait + colour + kids in tow + night thinning, dogs with exclusive owners and leashes and strays,
   joggers, block parties, evening crowds, stadium/market crowd terms, pier crowds, hover focus ring.
   The domain's live cells are **Deepen** (this one) and **Scale**; `Connect` paid at 78 and 111.
+
+## Iteration 120 — the parks rejoin the year (2026-07-11)
+
+**Vector.** Nature × **Deepen** (content is a Sky interconnect — the 108/113 pattern), taken as the
+**holistic step-back** the header mandated. Rotation said Transport (112); the step-back found a real
+defect first, and *"if something compounded badly, spend the next iteration FIXING it"* outranks
+rotation. A step-back that finds a defect and then ships an unrelated vector has wasted the step-back.
+
+**The step-back itself.** 5 un-zoomed whole-city frames — seeds 42 and 7, **day and night** (115's law),
+plus a **seasonal** frame (`&year=2035.62`, the golden dry peak) — read by 3 parallel agents, all told to
+hunt cumulative drift, not to look for a feature. `&step=300` so the crowd was settled (119's law).
+**All three returned VISUAL: FAIL.** Two of the three were wrong, and finding that out was the work:
+
+- **Season agent:** *"season only tints farm tiles; meadow, forest, parks and grass stay green — the
+  golden frame reads as blighted brown patches in a green city."* Its **diagnosis was false** (the code
+  plainly tints `grass`/`meadow`/`canopy`) but its **perception was true**. Resolved by probe, not argument.
+- **Seed-7 agent:** *"rain shafts render as a floating grey smudge off the west edge, a z-order tear."*
+  **False positive — I looked at that one PNG myself.** It is a rain cloud sitting over the western hills
+  with its shaft landing on terrain. Nothing floats, nothing tears. **Not banked as a cue.**
+- **Seed-42 agent:** night periphery (east beach/parkland) goes dead-dark while the core blazes; seed-7
+  agent independently flagged the same shape (dim NW quadrant). Two independent sightings ⇒ **banked as
+  cue (m)**, below. Note the *post-fix* night agent called night "legible and beautiful", so (m) is a
+  soft cue about core-vs-periphery *balance*, not a black hole. Verify before spending a lap on it.
+
+**What the probe found** (`probe-season.mjs`, new; clock frozen per 109's same-frame law, `ROAD` as the
+null control). Mean rendered-pixel distance from winter, at tile centres, seeds 7/42/1234:
+
+| | MEADOW | FOREST | **PARK** | **SHOREPARK** | FARM | QUAD | ROAD *(control)* |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| n | 6 | 231 | **584** | **294** | 120 | 24 | 1200 |
+| dry-peak, before | 26.6 | 19.7 | **0.0** | **0.0** | 88.4 | **0.0** | 0.5 |
+| dry-peak, after | 26.6 | 19.7 | **9.9** | **17.9** | 88.4 | **5.2** | 0.5 |
+
+The season did **not** stop at the farms — it stopped at the **irrigated** greens, and those are the
+overwhelming majority of the city's green area: **878 park/shorepark hexes against 231 forest and 6
+meadow.** So the dry season painted 120 brown farms onto 878 permanently-emerald hexes. `PARK`,
+`SHOREPARK`, `QUAD`, `GARDEN`, `FIELD` all read **exactly 0.0 in all four seasons**.
+
+**Change.** Palette only. `applySeason` now tints `BASE.lawn` and `BASE.turf` on a **muted** share of the
+same `dry`/`winter` curve it already drove `grass`/`meadow` with (`LAWN0`/`TURF0` pinned beside the other
+`*0` originals). Every one of the ~14 `col('lawn',k)` / `col('turf',k)` draw sites picks it up through
+`CCACHE`, which `applySeason` already invalidates — **zero new draw calls, no `rng()`, no terrain.**
+Ordering is now `FARM 88 > MEADOW 27 > FOREST 20 > SHOREPARK 18 > PARK 10 > QUAD 5`: parks remain the
+lushest thing on the plate. *Irrigated buys amplitude, not immunity.*
+
+**Census.** PASS. Tile histogram **empty**, every metric **+0**, entity counts identical — predicted
+before running, since a palette change touches no seeded draw.
+
+**Perf.** PASS, free. Min-of-3, interleaved: day **33.94 → 33.94ms**, night **39.94 → 39.83ms**. Two extra
+`mixA` calls per frame. (Pristine HEAD read night +7.0% against the 37.33ms pin under this session's load —
+that offset is earlier code, matching 119's identical observation. Not re-pinned; `polish-tile` owns it.)
+
+**Visual.** 2/2 PASS on the fix, seeds 42 and 7, A/B before-vs-after at the golden peak plus a winter
+frame plus a night frame. Both agents independently: the farms *"are no longer orphaned"* / *"no isolated
+brown blight patches"*, parks *"muted toward olive but did NOT go brown/dead"* and stay clearly the
+greenest tiles, winter and golden read as two seasons of one city, night undamaged.
+
+**Verdict — SHIPPED (FIXED).**
+
+**Findings for later laps.**
+- **⚠ A VISUAL AGENT'S PERCEPTION AND ITS DIAGNOSIS ARE TWO DIFFERENT CLAIMS, AND ONLY ONE IS ITS JOB
+  (new; the central lesson of this lap).** All three agents failed the frame; the two that named a *cause*
+  named the wrong one, and one invented a defect (the "floating rain shaft") that does not exist. An agent
+  looking at a PNG can tell you **that** a frame is ugly and **where**; it cannot tell you **why**, because
+  the cause lives in code it never read. Treat the *where* as evidence and the *why* as a hypothesis to
+  probe. Had 120 trusted the season agent's diagnosis it would have "fixed" `canopy` — which was never
+  broken — and left all 878 frozen hexes in place. **Never ship an agent's causal claim; probe it.**
+- **⚠ AND NEVER BANK ONE EITHER.** The rain-shaft FAIL would have entered this header as a cue and sent
+  some future lap hunting a z-order tear in correct code. One image read killed it. The skill says the
+  budget "exists to be spent when it matters" — **a cue you are about to write into the ledger is exactly
+  when it matters**, because a false cue outlives the iteration that invented it.
+- **⚠ EVERY WHOLE-CITY SHOT THIS LOOP HAS EVER TAKEN WAS IN JANUARY (new, and it explains 108).** `?warp=61`
+  from `year=1974` always lands on ~2035.0, so without `&year=` the season term is ~0 and *a seasonal defect
+  is invisible to the gate by construction*. This is the second time that has bitten (108: the farms had no
+  seasons at all, unnoticed for 107 laps). Both were found only by pinning `&year=`. **A step-back now shoots
+  a seasonal frame** (header updated). Ask what else the default URL silently pins: `tide` is the obvious next
+  one — `&tide=` exists, and no gate has ever moved it.
+- **⚠ "INTENTIONAL" IN A COMMENT IS NOT THE SAME AS "MEASURED" (new).** `BASE.lawn`'s comment reads
+  *"irrigated green: parks stay lush when the hills go gold"* — a real design intent, and it is why I nearly
+  dismissed the agent. But the code did not implement *lush*; it implemented **frozen**, in all four seasons,
+  including autumn and winter where the intent says nothing. A comment stating a *goal* is not evidence the
+  goal was hit. `grep`ping the comment made the defect look like a decision. The probe made it a number.
+- **THE CITY'S GREEN MASS IS PARK, NOT NATURE (new; sizes for any future vegetation vector).** `PARK` 584
+  + `SHOREPARK` 294 = 878 hexes, vs `FOREST` 231, `REDWOOD` 34, `VINEYARD` 26, `ORCHARD` 18, `MEADOW` **6**,
+  `GARDEN` **6**, `FIELD` **8**. Any Nature vector aimed at meadow/garden/field is aimed at ~20 tiles and
+  **cannot move a whole-city frame** (cf. 111's law: the whole-city gate cannot convict anything drawn at
+  3 px). If you want the city to *look* different, the lever is `PARK`.
+- **cue (m) — NIGHT'S PERIPHERY (new, soft, two independent sightings).** Downtown blazes; the outer ring
+  (east beach + parkland on 42, NW farms + low residential on 7) falls to near-unlit olive at `t=0.8`, losing
+  detail the day frame shows. The named candidates: the **pier/ferris wheel/boardwalk read as unlit**, and
+  there is no low-density streetlight or ambient moonlight on sand/parkland. A third agent, post-fix, called
+  the same night frame beautiful — so **measure the luminance histogram core-vs-ring before committing a
+  lap to it**; do not take the FAIL at face value (see the first finding above).

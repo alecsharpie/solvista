@@ -4930,3 +4930,94 @@ balanced coastal city, the mid-rise "adds texture without flattening the skyline
   other direction agrees with the draw code by construction. That is why `probe-terrace.mjs` could re-apply
   the predicate and land on 71.5% against a 72% target with no fudge.
 
+## Iteration 110 — the towers stop wearing their height (2026-07-10) [holistic step-back]
+
+**Vector** — Urban fabric × **Polish**. Rotation would have said People (104). The **step-back
+overrode it**: this is the 5th-iteration holistic pass, and it found something, so the skill's rule
+("if something compounded badly, spend the next iteration FIXING it") took precedence. Two
+independent whole-frame agents, on two seeds, converged on *the same* complaint — seed 42:
+"hundreds of similar blue-grey/red-capped blocks… a monotonous tower carpet"; seed 7: "tower colors
+repeat so consistently that massing becomes hard to parse." Seed 42 returned `VISUAL: FAIL`.
+
+**Triage first — most of what the agents PRESCRIBED was already a closed dead end.** Worth recording,
+because a future step-back will hear the same three suggestions:
+- *"thin density, add parks"* → cue (e½), **closed by iter 102**; the header says do not plant a
+  second lung.
+- *"stray floating district lines read as tears"* (seed 42) → the monorail/cable beam, **closed by
+  iter 87** with six agents. The header pre-registers this exact false positive; it fired again.
+- *"give the roads hierarchy so downtown reads as blocks"* (seed 7) → a **trap on both branches**.
+  Contrast-only is dead by iter 101's law (below ~2–3 hexes across a corridor is untraceable at *any*
+  ΔL, and a road is a 1-hex ribbon); the width branch re-opens cue (b), "the asphalt floods the
+  interior", closed by iter 86. **Do not spend a lap on road hierarchy.**
+  What survived triage was not their diagnosis but their *observation*: the buildings repeat.
+
+**The seam.** `drawBuilding`'s `case T.TOWER` opened with `const style=v<0.35?0:(v<0.62?1:(v<0.85?2:3))`
+while the upgrade pass sets `c.th=(54+c.v*82)*(0.70+0.66*core)` (L1104). **Both read `c.v`.** So the
+silhouette was a restatement of height — the third and most visible instance of the defect iter 99
+took out of `MID` and iter 103 out of `RES`. And colour restated the silhouette: every teal slab wore
+the one `teal`, every ziggurat the one `terra`. Downtown had exactly **four looks**.
+
+**Measured before designing** (`probe-towertone.mjs`, now `git add -f`'d, reading a new permanent
+`window.__twr` hook):
+
+| | corr(style,th) | distinct looks | commonest body | tallest is ziggurat |
+| --- | --- | --- | --- | --- |
+| before | 0.695 / 0.757 / 0.695 — **mean 0.727** | **4** | 36.8–47.9% | **2/3 seeds** |
+| after | 0.179 / 0.325 / 0.267 — **mean 0.257** | **19 of 20** | 27.3–28.8% | 0/3 seeds |
+
+0.727 sits inside MID's *pre-fix* band (0.76–0.79); 0.257 sits inside the MID/RES *post-fix*
+reference band (0.19–0.31 / 0.22–0.25). Mean height per style climbed monotonically before
+(58 → 84 → 95 → 121): the four "styles" were four **height classes**.
+
+**Change.** `towerLook(x,y,v)` — one pure function, the *only* definition of the rule — draws two
+independent seed-salted hashes: `form=fv*0.72+v*0.28` picks the massing (keeping a **mild** height
+link, because a tall tower genuinely should step back — ziggurats are still the tallest style on
+average, 98 vs 79), and `cv` picks the body outright from 5 shades (white/cream/sand/teal/terra),
+with a light `capN` on setbacks. 4 forms × 5 bodies = 20 looks. Also closed the **most visible half of
+open cue (g)**: the four `hashCell(x,z|0,3|5|9|13)` per-storey window-light salts were literals, so
+*every city's towers lit identically at night*; they now mix `seedNum`.
+
+**⚠ The mixed selector is TRAPEZOIDAL, not uniform — re-solve the cuts or you silently delete the
+rare form.** `0.72·A+0.28·B` on two uniforms has a trapezoid density, so keeping the old
+`0.35/0.62/0.85` cuts would have cut ziggurats from 15% to **5.6%** — a two-thirds cull of the most
+characterful tower, dressed up as a variety win. Solving the trapezoid CDF for the original mix gives
+`0.39/0.59/0.75`; measured after, the mix is **37.6 / 24.9 / 24.5 / 13.1** against a pre-change
+35 / 27 / 23 / 15. This is iter 98's hold-the-mean law applied to a *distribution* rather than a mean.
+
+**Census** — PASS. Tile histogram **completely empty**; `towers`/`towerHt`/`tallTowers`/`helipads`/
+`roads`/`developed`/`parks` all **+0**. `pop -3`, `greenRoofs -1` — precisely the load jitter iter 108
+documented on *identical pristine code* (154915 vs 154918). `style` is cosmetic: it feeds no
+`rng()`-gated predicate, and `pop`/`towerHt` read `c.h`/`c.th`, never the style. Draw-only ⇒
+stream-neutral by construction, and the census signature proves it.
+
+**Perf** — PASS, and run *because* iter 109 said to, not because it was the step-back: the style mix
+moved and per-tower draw work varies by style. Pristine-HEAD control taken the same session, 3 passes,
+min-of-three: day **33.49 → 33.61ms** (+0.12), night **37.72 → 37.72ms** (+0.00). One pass read
+35.16ms day; min-of-three exists for exactly that spike. `col()` memoizes on `name|f`, so the fifth
+body shade buys a cache entry, not a draw call — palette variety remains the cheapest beauty here.
+
+**Visual** — PASS on both seeds, day + downtown + a night clip. Seed 7, unprompted: *"the added tower
+variety lightens the core rather than darkening it into clutter."* Both confirmed the tallest tower
+still reads as a landmark rather than a featureless box — the one real risk of decoupling form from
+height. Night windows read as warm lit bands, not blow-out.
+
+**Verdict — FIXED.** The step-back's own `VISUAL: FAIL` is cleared. Perf baseline (2026-07-10, day
+33.16 / night 37.33) still valid; not re-pinned.
+
+**Durable findings**
+- **The step-back's job is to name the vector, and its agents are good witnesses but bad doctors.**
+  Both correctly saw *repetition*; both prescribed fixes the ledger had already closed. **Take the
+  observation, throw away the prescription, then go find the mechanism in the source.** The mechanism
+  here was one `const` on one line, and no agent could have seen it.
+- **`corr(colour-field, height-field)` is a defect *class*, and the class is now exhausted.** MID
+  (99), RES (103), TOWER (110) — all three of the city's building types drew colour from the field
+  that drives height. If a fourth type is ever added, measure it on day one: `probe-towertone.mjs`
+  generalises (recover the field that picks colour, the field that picks height, report Pearson).
+- **When a decorative selector also chooses GEOMETRY, decoupling it is not free — check the
+  distribution, not just the correlation.** The naive iter-99 copy would have passed a `corr` check
+  and quietly culled the ziggurats. The tell was the trapezoid; the guard was re-solving the cuts.
+- **A probe must read the rule, not re-derive it.** `probe-towertone.mjs` first duplicated the
+  selector with an "edit BOTH together" comment — a drift bomb. Extracting `towerLook()` and having
+  `window.__twr` call it means the probe grades the *live* rule. Pair this with iter 101's law:
+  a tracked probe that reimplements what it measures is worse than no probe.
+

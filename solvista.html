@@ -302,7 +302,8 @@ const BASE={
    (s≈0.87). Evergreens (conifer/coniferLt) sit it out. California coast:
    winter means cool light and deep dull greens, never snow. */
 const GRASS0=BASE.grass.slice(), GRASSDK0=BASE.grassDk.slice(), MEAD0=BASE.meadow.slice(),
-      CAN0=BASE.canopy.slice(), CANL0=BASE.canopyLt.slice();
+      CAN0=BASE.canopy.slice(), CANL0=BASE.canopyLt.slice(),
+      LAWN0=BASE.lawn.slice(), TURF0=BASE.turf.slice();
 function applySeason(){
   const s=((year%1)+1)%1;
   const dry=clamp(1-Math.abs(s-0.62)/0.34,0,1)*0.55;
@@ -319,10 +320,22 @@ function applySeason(){
   let cl=mixA(CANL0,[201,158,84],autumn*0.75);
   cl=mixA(cl,[158,199,114],spring*0.5);
   BASE.canopyLt=mixA(cl,[112,142,102],winter*0.45);
+  /* the managed greens — park lawn, institutional turf — are IRRIGATED, so they
+     keep their colour when the hills go gold. But irrigated is not immune: they
+     were mathematically FROZEN (0.0 rendered-pixel shift in every season, all
+     878 of them, probe-season.mjs) while meadow/forest/farm swung 20-88, so the
+     dry season read as brown blight on a permanently-emerald city rather than as
+     a season. They now take a MUTED share of the same curve — still the lushest
+     thing on the plate, but part of the year. Amplitude, not presence, is what
+     "irrigated" buys. */
+  BASE.lawn=mixA(LAWN0,[186,188,116],dry*0.55);
+  BASE.turf=mixA(TURF0,[132,150,100],dry*0.42);
   if(winter>0){ /* the cool months also mute the open ground */
     BASE.grass=mixA(BASE.grass,[132,152,118],winter*0.4);
     BASE.grassDk=mixA(BASE.grassDk,[106,128,96],winter*0.4);
     BASE.meadow=mixA(BASE.meadow,[142,162,120],winter*0.4);
+    BASE.lawn=mixA(BASE.lawn,[126,158,116],winter*0.30);
+    BASE.turf=mixA(BASE.turf,[92,124,96],winter*0.30);
   }
   const sq=(s*48)|0; /* refresh the color cache as the season drifts (48/yr) */
   if(sq!==applySeason.q){applySeason.q=sq;CCACHE={};}
