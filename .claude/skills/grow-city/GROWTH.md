@@ -55,11 +55,11 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **115** · Urban **124** · People **119** · Nature **120** · Transport **121** · Civic **122** · Water **123**.
-  **Stalest is now Sky (115)** — read its trap note below before taking it (sky is not cellular; its empty
-  `New CA rule` cell is a trap, and additive sky is saturated) — then **People (119)** or **Nature (120)**.
-  (**125 was the holistic step-back and took NO city domain vector** — a recipe/doc fix only — so this
-  standings picture is unchanged: the next lap still owes Sky, then People/Nature.)
+  Sky **126** · Urban **124** · People **119** · Nature **120** · Transport **121** · Civic **122** · Water **123**.
+  **Stalest is now People (119)**, then **Nature (120)** — both have banked findings; check the last entry of
+  the stalest domain for one before reading its row. (**126 took Sky × Deepen** — the moon now keeps a calendar
+  and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
+  that adds no element. Sky is no longer stale, and its empty `New CA rule` cell is still a trap, not an invitation.)
   **124 cashed Urban's banked ghost-`c.solar` cue and it is now CLOSED:** `c.solar`/`c.groof` persist after a
   building is cleared for a paved square, so the census counted panels on `PLAZA`/`QUAD`/`PARK`/`GARDEN`/`STADIUM`
   (probe-solghost: 27 ghost solar + 4 ghost green across 8 seeds) and the adoption CA counted them as neighbours.
@@ -145,11 +145,9 @@ ones (U2, 42, U5) stay in the bullet.
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
-  Recent kinds: 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) ·
-  115 Polish · 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen ·
-  122 Interaction/UX — **122 broke Deepen's four-lap run, as the header demanded.**
-  **Polish has paid 5 of the last 12; do not open with one**, and Interaction/UX has now paid twice in
-  six. The coldest kinds are **Scale** (a
+  Recent kinds: 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen ·
+  122 Interaction/UX · 123 Deepen · 124 Polish · 126 Deepen —
+  **Deepen has now paid 6 of the last 11 and Polish 3; vary off both.** The coldest kinds are **Scale** (a
   structural lever, not a lap move) and **New element** (last: 106) — but note 118's finding that a
   *saturated* domain cannot take a New element; pick the domain first (Water, 116) and read its
   row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
@@ -289,16 +287,6 @@ ones (U2, 42, U5) stay in the bullet.
   the obvious shape and it is **draw-per-frame**, so it needs the perf gate — but it is one stroke.
   Beware the false positive: 117's first visual gate *asked* for a tile ring and got a `VISUAL: FAIL`
   for its absence, which is a prompt bug, not evidence the ring is owed. Take this only as its own vector.
-  **(k) the open water is the least-resolved third of the frame** *(Water & coast — banked iter 115; the
-  STRONGEST cue here, and Water is the stalest domain)*. **Both** day agents at 115's step-back named the sea
-  unprompted and independently: *"a large flat teal wedge — no wave detail, reefs, wake trails, or depth
-  gradient… it carries a disproportionate share of canvas for how little it resolves"* / *"the entire right
-  third is flat teal… compared to the hyper-dense land it reads as dead space."* Two independent agents
-  converging with no prompt is the strongest cue signal in this ledger. **Both also called the offshore
-  turbines and boats "randomly salted rather than sited"** — so the answer is almost certainly *depth,
-  texture or tone in the water field itself*, **not another floating object**. Note iter 106 passed on Water
-  × Connect/CA/Scale for reasons recorded in its entry; this is Water × **Polish**, which is untouched by
-  that reasoning.
   **(e½) the interior is an edge-to-edge carpet — now DENSITY-ONLY** *(cue (e)'s skyline half was
   **CLOSED by iter 98**; its **palette** half was **CLOSED by iter 99**)* Urban fabric — iter 94's
   holistic agent called the landmass "too uniform… little breathing room between core and edge,"
@@ -391,108 +379,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 118 entries before Iteration 116 live in
+> **Archive:** the 119 entries before Iteration 117 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 116 — the sea gets a bottom (2026-07-10)
-
-**Vector.** Water & coast × Polish. The stalest domain (106/113), cashing **banked cue (k)** — the
-strongest signal in this ledger, two independent day agents at 115's step-back naming the open sea
-unprompted: *"a large flat teal wedge — no wave detail, reefs, wake trails, or depth gradient"* and
-*"the entire right third is flat teal… it reads as dead space."* Both also called the scattered
-offshore objects *"randomly salted rather than sited"*, so the cue prescribed **depth/texture in the
-water field, not another floating object.** That prescription was taken literally: this vector adds
-**no new object, no tile type, no entity, no CA pass.**
-
-**Change.** The sea was drawn `hexTile(gx,gy,1.02,col('water',1))` — one constant, every hex, since
-the artifact began.
-- **`rDeep` — a new derived field, and `rSea`'s exact mirror.** `rSea` floods *from* wet cells *into*
-  land (the fog's gate); `seaFill()` floods **from land into water**. So a hex's value is its true
-  distance offshore: it bends around headlands, keeps the harbor and the bay shallow, and never lets
-  the river run deep — **all three for free, from one BFS, with no special-casing.** Filled beside
-  `reachFill(rSea,…)` at tick cadence. Uncapped, deliberately: a cell left at 0 would read as *shoal*,
-  not as far-offshore (the capped first draft did exactly that).
-- `seaT` caches the drawn tone (eighths) alongside the depth, so the two-octave `hashCell` seabed is
-  computed **once per tick, not once per hex per frame**.
-- `colMix(n1,n2,t,f)` — a tinted blend of two palette colors, sharing `col()`'s cache. New, reusable.
-- Tooltip: open water now prints **`Depth: Shoals / Coastal shelf / Open water / Deep water`**, beside
-  the live `Tide` iter 97 gave it. The draw shows the field; the hover names it.
-
-**The tuning failure, which is the transferable part.** The first build blended `water→waterDk` and
-darkened the sea's mean luminance **153.4 → 139.8 (−8.9%)**. Every gate would have shipped it: census
-flat, and three visual agents would have called a darker sea *"moody"*. **That is the kelp failure mode
-exactly** — a third of the canvas, drifted dark, one iteration at a time. Two causes, both worth knowing:
-- **A clamped depth ramp is not a centered one.** `DEEPR=9` against a measured **mean depth of 6.6**
-  (range 1..19) pinned most of the sea at *fully deep*. Measure the field's distribution **before**
-  choosing the constant that normalizes it; `DEEPR=10` puts mean tone on 0.50.
-- **Hold the mean by CONSTRUCTION, not by tuning** (iter 98's law, applied to a surface). Rather than
-  blend `water→waterDk` and hand-tune a brightness ramp back up, place the two endpoints
-  **symmetrically about `water`**: `waterSh/waterDp = water ± 0.8·(water−waterDk)`. Their midpoint *is*
-  `water`, so at mean tone 0.5 the mean is unchanged **algebraically** — only the variance can grow.
-  Result: mean **153.4 → 152.4 (−0.62%)**, spread **6.8 → 19.1 (×2.8)**. `waterDp` is kept a shade
-  lighter than `waterDk` so the kelp beds stay the darkest thing inshore.
-
-**Census.** PASS. `pop 154918→154915 (−3)`, `roads +0`, `developed +0`, tile histogram **empty**, every
-entity count identical. Exactly as predicted before running it: `grep -n rDeep` returns one writer and
-only draw-side readers, so by iter 115's single-reader law the vector **could not** perturb the seeded
-stream. The `−3` pop / `+1` greenRoof are iter 108's documented load-dependent salt jitter, not this change.
-
-**Probe.** `probe-seatone.mjs` (**`git add -f`'d**, per iter 101). Samples the real canvas at every
-open-sea hex centre (3×3 disc) and joins the **live** `rDeep` via a new `window.__deep` hook — it grades
-the tone against the field that picks it rather than reimplementing `seaTone()` (iter 110's law).
-Pristine control is `git show HEAD:solvista.html`, **never `git stash`** (iter 108).
-
-| seed | n | mean lum | spread (sd) | corr(lum, depth) |
-| --- | --- | --- | --- | --- |
-| 7 | 644 | 153.5 → 151.8 | 8.22 → 19.81 | **−0.874** |
-| 42 | 655 | 153.3 → 153.1 | 5.72 → 18.71 | **−0.903** |
-| 1234 | 662 | 153.2 → 152.3 | 6.14 → 18.71 | **−0.897** |
-
-**Visual.** 3/3 PASS across 6 frames — seed 42 + seed 7 (wide + `coast` clip), **seed 42 at night**, and
-seed 1234 at **high tide** in spring. Agents independently and unprompted confirmed the two things the
-BFS was supposed to buy and that no probe can see: the gradient *"bends correctly around the
-pier/headland and the harbor"* and *"stays shallow up the river."* No banding, no contour lines, no
-blocky patches, no hex seams. Night: *"deep desaturated navy, not a dead black void… stays distinctly
-bluer than the night sky, so the horizon separation holds."*
-
-**Perf.** PASS, and **perf-neutral**. Min-of-3, patched: day **34.61ms** / night **39.11ms**. But the
-absolute numbers rose between batches, so per the ledger's law a rising offset was controlled against
-**pristine HEAD under the same load, measured immediately after**: day **33.89ms** / night **38.55ms**.
-The +0.72ms residual is *smaller than pristine's own 1.05ms drift within its own batch* — noise, not code.
-Baseline **not** re-pinned. Caching `seaT` at tick cadence is what keeps this flat: the per-frame draw is
-still exactly one `hexTile` fill, now from a 9-entry color cache.
-
-**Verdict — SHIPPED.** Cue (k) is **CLOSED**: the sea has a bottom. Note what it did *not* cost —
-no tile type, no entity, no `rng()` draw, `pop` provably flat before a gate was run.
-
-**Findings for later laps.**
-- **⚠ HOLD A SURFACE'S MEAN BY GEOMETRY, NOT BY A BRIGHTNESS RAMP (new; iter 98's law, generalized).**
-  To add contrast to a large surface without drifting its tone, do **not** blend `base→dark` and correct
-  with a per-step brightness factor — that is a two-parameter fit you will tune against a probe until it
-  passes. Place the endpoints **symmetrically about the original color** (`base ± A·(base−dark)`) and the
-  mean holds *algebraically*, for any amplitude `A`, with `f=1` at every step. One free knob (`A`), zero
-  fitting, and the cache stays tiny. This applies to any future re-tone of the sky, the forest, or the roofs.
-- **⚠ NORMALIZE A FIELD BY ITS MEASURED DISTRIBUTION, NOT BY ITS NAME (new).** `DEEPR` looks like "how
-  deep the deep is" and invites a guessed constant. It is really *the divisor that decides where the mean
-  lands*, and a wrong guess saturated 60% of the sea against the clamp — a **−8.9%** mean shift, invisible
-  to census and flattering to agents. **Histogram the field first** (`/tmp/dhist.mjs` shape: `__deep()` →
-  bin by `d`), then solve for the constant. Any future `(v−a)/K` tone map has this trap.
-- **`rSea` HAD A MIRROR NOBODY HAD WRITTEN (new).** The BFS that measures "how far inland am I" run
-  backwards measures "how far offshore am I", and *the second one respects every piece of coastal geometry
-  the first one does* — headlands, harbors, the bay, the river — because it is the same flood. Before
-  hand-rolling a distance heuristic (`x − shoreAt(y)` was the obvious wrong answer: it ignores headlands
-  and would have run the **river** to full depth), check whether an existing `reachFill` inverts.
-  `reachFill()` itself could **not** be reused — it hardcodes `WETSET.has → skip` as its wall.
-- **`window.__deep` IS A PERMANENT HOOK** — every wet hex with `{x,y,d,tone,riv,sx,sy}`. Use it for any
-  "does this tone/entity/rule follow depth?" claim, and as the histogram source for the law above.
-- **THE OFFSHORE OBJECTS ARE STILL "RANDOMLY SALTED" — cue (k) closed only the *field* half** *(Water &
-  coast)*. Both 115 agents said it; this lap answered the tone and left the siting. **Now there is a field
-  to site them against**: turbines belong on the `Coastal shelf` (`rDeep` 3–5, where they are actually
-  founded), not scattered into `Deep water`. `turbSet` is laid in `genWorld` from `hashCell` — gate it on
-  `rDeep` and the wind farm sites itself. Cheap, draw-adjacent, and it makes the new field *mean* something.
 
 ## Iteration 117 — the woods keep books nobody could read
 
@@ -1280,3 +1171,61 @@ in the recipe so it stops recurring (108 → 120 → 125). The city grows by kee
   when it finds *no* city defect, the honest output is the health record + whatever the read itself surfaced
   (here, the recipe fix) — not a Sky feature invented to have shipped something. "One more shallow feature is
   not automatically worth it" (the skill). The next lap still owes the stalest domain (Sky, then People/Nature).
+
+## Iteration 126 — the moon keeps a calendar (2026-07-11)
+
+**Vector.** Sky & atmosphere × **Deepen**. Sky was the stalest domain (last 115) and had gone twenty laps
+without a vector; the documented way past its additive saturation is a **Deepen that adds no element** (115
+itself did this). The moon had been a **fixed full disc since the artifact began** — a constant circle at
+screen (0.80, 0.15), the same every night of the city's 61-year run. It has a rich neighbour it never talked
+to: `year`. So this interconnects moon ↔ calendar ↔ the existing moonglade, adding no tile, entity, CA pass,
+or `rng()` draw.
+
+**Change.** The moon now waxes and wanes on a synodic month as `year` advances (~12.37 lunations/yr):
+- `MOONF` = lit fraction `(1−cos(2π·frac(year·12.3685)))/2`, computed once at render scope so both the moon
+  draw and the moonglade read the *same* phase (one predicate, all readers — iter 112's law).
+- The moon draws as a **dim full "earthshine" disc** (so the unlit part still reads as a moon) with the **lit
+  lune** on top — outer limb semicircle on the lit side + a terminator half-ellipse whose x-radius shrinks to
+  0 at the quarters and flips its bulge crescent↔gibbous by the sign of `cos(phase)`. Craters fade in only
+  past `MOONF>0.5`; the glow scales with `MOONF` (a new moon casts almost none).
+- **The moonglade dims with the phase** (`×(0.12+0.88·MOONF)`): the sea only shines when there's a moon to
+  shine it. New moon → a faint 12% glade; full → the full pool.
+- `window.__moon()` → `{phase, illum, waxing}`, and `?year=` (iter 108) already pins it for tests.
+
+**Census.** PASS, exit 0, pageerrors 0. **Every metric +0, tile histogram empty, every entity count
+identical** — exactly as predicted for a draw-only change that reads `year` and touches no `rng()`/terrain.
+
+**Probe.** `probes/probe-moon.mjs` (moved into the tracked dir, per iter 101). Freezes the clock, pins night
+(t=0.90, LITAMT=1), steps `year` across one full lunation, and counts **alpha-weighted** bright pixels in the
+moon box (compositing over the transparent-black canvas — the faint glow is a bright colour at low alpha and
+must NOT count as lit; the first draft counted it and read the whole box "lit"). Against `__moon().illum`:
+`corr(illum, lit px) = 1.000` on seeds 42 & 7; **new moon → 0 lit px, full → 392** (≈ disc area π·11²); **land
+control max dev 0.02–0.26 lum** (only the moon moves). A separate check: full-vs-new **moonglade signal =
++393…419** bright px on the sea across seeds 7/42/1234 — the glade brightens with the phase, as designed.
+
+**Visual.** Both fit-zoom agents FAILED — and **contradicted each other, crossed**: the crescent frame read
+as "full", the full frame read as "crescent lit on the left". At ~22px the moon defeats a downscaled PNG, so
+per the loop's law (agents fail confidently ⇒ measure) I shot **3× tight clips** and read them myself: the
+crescent is lit on the **right** over a dim disc, full is a bright disc with craters, new is a near-dark disc
+with a thin sliver, gibbous is mostly-lit with a bite from the left — all four correct and legible at zoom.
+Both agents independently confirmed the **whole frame** reads as a balanced night coastal city, no tears/
+floaters/blowout. Verdict from probe + own eyes, not the agents.
+
+**Verdict — DEEPENED.** The oldest fixture in the sky finally keeps time, and the sea shines only when it can.
+Sky is no longer the stalest domain. No tile, no entity, no `rng()`, pop provably flat.
+
+### Findings
+- **`getImageData` RETURNS UN-PREMULTIPLIED RGB — a low-alpha glow reads as full brightness.** A probe that
+  thresholds luminance on a canvas with transparency **must** multiply by `alpha/255` (composite over the
+  known background). The first `probe-moon` draft counted the moon's 0.15-alpha glow as "lit" and reported the
+  entire box lit at every phase (corr 0.000). This bites any future probe that measures a glow/halo/foam over
+  transparent canvas.
+- **A ~22px feature at fit zoom is below the visual gate's floor — shoot a tight clip and read it yourself.**
+  Two careful agents didn't just miss the phase, they inverted it and disagreed. The moon is a *compact* object
+  (they all FOUND it), so it isn't cue-(k)'s contrast×width problem — it is simply too few pixels to read
+  *shape* from a 1600→downscaled PNG. For any small-but-legible ornament, the gate is a zoomed clip + a probe,
+  not a whole-frame agent read.
+- **A fixed constant is a Deepen waiting to happen — look for a drawn thing that ignores a field it could
+  read.** The moon read *nothing*; `year` was right there. Sky's remaining such seams (the way past its
+  saturation, per 108/113/120): `VINEYARD` seed-heads still ignore `year`. Anything drawn from a lone literal
+  (a fixed position, a fixed brightness) that a global already varies is a candidate.

@@ -5260,6 +5260,13 @@ function render(){
   ctx.setTransform(1,0,0,1,0,0);
   ctx.clearRect(0,0,cvs.width,cvs.height);
 
+  /* the moon keeps a calendar (iter 126): it waxes and wanes on a synodic month
+     as `year` advances (~12.37 lunations/yr), so pinning ?year= sets its phase.
+     `MOONF` is the lit fraction (0 new .. 1 full); the moon disc and the
+     moonglade below both read it, so the sea only shines when the moon is up. */
+  const moonL=((year*12.3685)%1+1)%1, moonAng=moonL*6.2832;
+  const MOONF=(1-Math.cos(moonAng))/2, moonTerm=Math.cos(moonAng), moonWax=moonL<0.5;
+
   /* night sky: stars + moon behind the slab */
   if(LITAMT>0.15){
     ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -5268,14 +5275,29 @@ function render(){
       ctx.fillStyle='rgba(250,248,238,'+a+')';
       ctx.fillRect(u*innerWidth,v*innerHeight,1.3,1.3);
     }
-    const mx=innerWidth*0.80, my=innerHeight*0.15;
-    ctx.fillStyle='rgba(248,244,226,'+(LITAMT*0.16)+')';
+    const mx=innerWidth*0.80, my=innerHeight*0.15, mr=11;
+    /* the glow follows the lit fraction — a new moon casts almost none */
+    ctx.fillStyle='rgba(248,244,226,'+(LITAMT*0.16*(0.3+0.7*MOONF))+')';
     ctx.beginPath();ctx.arc(mx,my,26,0,7);ctx.fill();
-    ctx.fillStyle='rgba(250,247,232,'+(LITAMT*0.9)+')';
-    ctx.beginPath();ctx.arc(mx,my,11,0,7);ctx.fill();
-    ctx.fillStyle='rgba(222,216,196,'+(LITAMT*0.5)+')';
-    ctx.beginPath();ctx.arc(mx-3,my+2,2.4,0,7);ctx.fill();
-    ctx.beginPath();ctx.arc(mx+4,my-3,1.7,0,7);ctx.fill();
+    /* the dark limb (earthshine): the whole disc, dim, so the unlit part still reads as moon */
+    ctx.fillStyle='rgba(150,151,170,'+(LITAMT*0.22)+')';
+    ctx.beginPath();ctx.arc(mx,my,mr,0,7);ctx.fill();
+    if(MOONF>0.015){
+      /* the lit lune: outer limb semicircle on the lit side + the terminator
+         half-ellipse (x-radius shrinks to 0 at the quarters, bulging toward the
+         lit side while a crescent, away while gibbous) */
+      const s=moonWax?1:-1, ccw=(s>0)===(moonTerm>0);
+      ctx.fillStyle='rgba(250,247,232,'+(LITAMT*0.9)+')';
+      ctx.beginPath();
+      ctx.arc(mx,my,mr,-Math.PI/2,Math.PI/2,s<0);
+      ctx.ellipse(mx,my,mr*Math.abs(moonTerm),mr,0,Math.PI/2,-Math.PI/2,ccw);
+      ctx.fill();
+    }
+    if(MOONF>0.5){ /* craters, only once the near side is lit enough to carry them */
+      ctx.fillStyle='rgba(222,216,196,'+(LITAMT*0.5*(MOONF-0.5)*2)+')';
+      ctx.beginPath();ctx.arc(mx-3,my+2,2.4,0,7);ctx.fill();
+      ctx.beginPath();ctx.arc(mx+4,my-3,1.7,0,7);ctx.fill();
+    }
     /* a shooting star, every so often */
     const met=(time*0.13)%1;
     if(met<0.06&&LITAMT>0.6){
@@ -5398,7 +5420,7 @@ function render(){
         for(let k=0;k<2;k++){
           const hx=hashCell(x,y,k+977);
           const tw=Math.pow(Math.sin(waveT*1.5+hx*9+x+y),2);
-          const a=LITAMT*0.5*fall*tw;
+          const a=LITAMT*0.5*fall*tw*(0.12+0.88*MOONF);
           if(a<0.03)continue;
           const ox=(hx-0.5)*CW*0.8, oy=(hashCell(y,x,k+31)-0.5)*ROWY*0.8;
           ctx.strokeStyle='rgba(242,240,222,'+a+')';
@@ -6094,7 +6116,9 @@ function frame(now){
 window.__warp=n=>{const target=year+n;while(year<target){year+=0.45/6;tick();}
   for(const c of cells)if(DEV.has(c.t))c.h=c.th; recount();syncStats();};
 window.__setTime=t=>{dayT=t;};
-window.__setYear=n=>{year=n;}; /* pin the calendar (seasons) for tests */
+window.__setYear=n=>{year=n;}; /* pin the calendar (seasons + moon phase) for tests */
+/* the moon's phase for the current `year`: {phase 0..1 (0=new,.5=full), illum lit fraction, waxing} */
+window.__moon=()=>{const l=((year*12.3685)%1+1)%1;return{phase:l,illum:(1-Math.cos(l*6.2832))/2,waxing:l<0.5};};
 /* pin the TIDE (?tide=0..1) by shifting the cycle's phase, so the sea keeps moving
    from there instead of freezing. Without it every shot lands on whatever tide the
    page load happened to reach — the blind spot ?year= closed for the seasons. */
