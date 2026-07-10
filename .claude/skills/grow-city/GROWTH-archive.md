@@ -3032,3 +3032,88 @@ from the city. A −0-visibility feature for either price is the solar-farm trad
 cumulative-drift question is exactly as open as 87 left it. The rainbow (cue (a), `L4166`,
 Sky × Polish) remains the only strong open cue.
 
+## Iteration 89 — the rainbow lands (2026-07-10) [holistic step-back]
+
+**Vector** — Sky & atmosphere × **Polish (FIXED)**. Both axes agreed for once: Sky was
+the most-lagged domain (last touched at 81), and the rainbow was the *only* strong open
+cue, banked by three separate holistic passes (79/84/86 — at 86 seed 42's agent raised it
+unprompted). 88 had just broken the five-Polish streak with a Connect, so a Polish lap was
+clean again. **Iteration 89 also owed the holistic step-back (84 + 5); it is discharged
+below**, since the gate frames were read un-zoomed at three seeds.
+
+**Measured the defect before designing the fix** (`probe-rainbow.mjs`, gitignored scratch).
+The bow is `arc(bx,by,r0, PI, 2PI)` in the cloud loop. For each raining cloud over a sweep
+of 6 seeds × 10 `__step`s, the probe reported both feet's distance to the nearest **live**
+cell. Two faults, and only one of them was the one the cue named:
+
+1. **It draws over the void.** Seed 7 step 0 — the exact frame the agents kept reporting —
+   puts the bow's feet **52px and 205px** from any live cell: the whole arc hangs past the
+   plate's right rim, over empty background. Seed 1234 step 180 reaches **277px**, seed 2
+   step 180 **354px**, seed 1234 step 900 **451px**.
+2. **It ENDS.** `PI..2PI` stops dead on a horizontal chord at full alpha. Even the bows that
+   sit squarely over the city are sliced flat across the bottom — which is iter 85's lesson
+   restated: *a stroke that terminates on a hard edge is the grammar of a UI overlay.* No
+   agent had named this one; the probe found it by asking where the feet were.
+
+**The cue's prescribed fix was wrong, and the probe is why I noticed.** The header said
+"same defect iter 81 fixed for fog, same fix" — i.e. move it inside the row loop for depth.
+But a rainbow forms in the drops of *this* shower, a few hundred metres off, so it
+legitimately passes **in front of** distant scenery. Drawn behind the rows it would have
+been swallowed by the plate and the feature would have quietly died. Fog piles *on* the
+world; a bow hangs *in front of* it. **Same symptom, opposite remedy.**
+
+**Change (draw-only, `L4225`).**
+- **Anchored to the ground its rain falls on.** `pa` fades the bow out over the last 2 hexes
+  before the rim, reusing the cloud shade's own rule from one line above ("shade only falls
+  where there is ground to catch it"). Critically the gate tests the **legs, not the cloud**:
+  the arc reaches ±`r0`≈108px ≈ 3 cells sideways, so a shower still safely inland can hang a
+  leg past the rim. Gating on `cl.x` alone left bows with a foot 190px into the void at
+  `pa=1`; gating on `fl`/`fr` (the feet's columns, via `CW`) cut the worst drawn foot from
+  **451px → ~20px**. Suppressed 9→16 of 41 sampled bows; seed 7 step 0 is now dark.
+- **Both legs dissolve.** The crown stays **one unbroken arc per band** (no seams where it is
+  brightest), and only the bottom `asin(0.45)`≈27° of each leg is drawn as 8 alpha-ramped
+  segments, smoothstepped to 0. So the bow fades into haze and never terminates — over city,
+  sea or void alike.
+
+**Census:** VERDICT **PASS**, 0 page errors. **All 22 metrics exactly +0**, tile histogram
+empty, all 25 entity counts unchanged. The draw-only signature (cf. 79, 81).
+
+**Visual:** **3/3 `VISUAL: PASS`**, before/after on identical clips (`before.html` =
+`git show HEAD`), one agent per seed. Seed 7: "hangs entirely over the void beyond the slab
+edge… terminating on a hard, abrupt cut-off" → gone in AFTER. Seeds 42 and 1234 keep their
+bows and report the legs "dissolve into the sea haze instead of ending on a flat line",
+**with no banding, seams or beads** — the one risk I could not reason away, since consecutive
+alpha-ramped arc segments can bead at the joints. Splitting core-from-legs is what avoided it.
+Seed 42's agent, unprompted: it now reads "MORE like an atmospheric rainbow and LESS like a
+pasted-on UI/debug graphic."
+
+**Perf — and this time the gate is NOT blind.** 3× sequential; day **31.89ms (+1.8%)**,
+night **35.83ms (−3.7%)**, PASS. Worth recording *why* that number is trustworthy where 81's
+was not: I checked, rather than assumed, and the perf day scene (seed 42, `t=0.35`,
+`LITAMT=0.017`) **draws exactly one rainbow**, so the +1.8% is the real cost of 5 core arcs +
+80 leg segments. The night scene draws none (`LITAMT=0.892`), so its −3.7% is pure noise.
+
+**Holistic step-back (84 + 5), discharged.** The three un-zoomed whole-city frames were read
+for *cumulative* drift, not for the feature: all three report no z-order tears, no floating
+tiles, no blown-out color, and that the city still reads as balanced and beautiful. Nothing
+has compounded since 87. Perf is flat against a baseline pinned 2026-07-09. **No new cue was
+found** — and with (a) now closed, the cue list is empty for the first time.
+
+**Verdict:** **FIXED.** The bow floated for 88 iterations; it now belongs to its shower.
+
+**Lessons.**
+- **A banked cue records a symptom reliably and a diagnosis unreliably.** Three passes
+  correctly saw the rainbow floating; the fix they prescribed (81's) would have deleted the
+  feature. Re-derive the *cause* when you take a cue off the shelf — the symptom is evidence,
+  the proposed fix is a guess made without the code open.
+- **Probe the thing you are about to change, even for a "look at it" polish job.** The hard
+  chord was invisible to eight iterations of agents *looking at screenshots of it*, because a
+  sliced arc looks fine at 0.38 alpha until you ask "where exactly does this stroke stop?"
+  Two lines of geometry in a probe found what six agent-readings missed.
+- **When a gate is blind, say so; when it isn't, prove it.** 81 warned the perf gate never
+  sees the fog. The reflex is to write "gate blind here" again — but one 20-line probe showed
+  it *does* see the rainbow. Inherited caveats need re-checking too.
+- **An overlay can be fixed by anchoring rather than by reordering.** Reaching for depth
+  (`z`) is not the only cure for something that floats; giving it a reason to *stop existing*
+  where it has no business being (`pa`) is cheaper and, here, the only one that keeps it.
+

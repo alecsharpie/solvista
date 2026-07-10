@@ -3288,14 +3288,23 @@ function drawBuilding(c,x,y,gx,gy){
       }
     }
   } else if(c.t===T.MID){
-    const bodyN=v>0.72?'terra':'cream'; /* some walk-ups wear terracotta */
+    /* A walk-up's colour is its OWN hash, not a second reading of the value field.
+       Body used to be v>0.72 while th is 22+c.v*14, so every terracotta block was
+       also the tallest block (measured corr 0.76-0.79) and ~73% of the city's most
+       common building wore one shade of cream. Mixing an independent, seed-salted
+       draw in decouples height from colour and gives the mid-rise mass its grain.
+       Colour only — no extra paths, and col() memoizes on name|f, so this is free. */
+    const mv=hashCell(x,y,seedNum^0x3D1B), tone=mv*0.72+v*0.28;
+    const bodyN=tone>0.68?'terra':(tone>0.36?'cream':'sandDk');
+    let roofN=mv<0.40?'terraDk':(mv<0.75?'creamDk':'sandDk');
+    if(roofN===bodyN)roofN='terraDk'; /* a sandDk parapet on a sandDk block reads flat */
     prism(gx,gy,0.34,0.30,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
     for(let z=5;z<h-4;z+=7){
       bandR(gx,gy,0.34,0.30,z,z+3,colLit('glass',0.82,lit));
       darkWinR(gx,gy,0.34,0.30,z,z+3,x,y,0x1DE7);
       if(bodyN==='terra')bandR(gx,gy,0.348,0.308,z+3,z+3.9,col('white',0.95)); /* balcony rails */
     }
-    prism(gx,gy,0.36,0.32,h,h+1.6,col('creamDk',1),col('creamDk',0.6),col('creamDk',0.82));
+    prism(gx,gy,0.36,0.32,h,h+1.6,col(roofN,1),col(roofN,0.6),col(roofN,0.82));
     if(c.solar) /* rooftop solar array */
       prism(gx-0.08,gy+0.02,0.16,0.12,h+1.6,h+2.4,col('solar',1.15),col('solar',0.7),col('solar',0.9));
     if(c.groof){ /* green roof garden — planted, not just a bare deck */

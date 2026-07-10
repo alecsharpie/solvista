@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98** | |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
@@ -40,6 +40,32 @@ ones (U2, 42, U5) stay in the bullet.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
+- **⚠ ROTATION DEBT: Civic & culture is stale since iter 91, and Polish is 4 of the last 6.** Iter 99
+  knowingly spent a 5th Urban×Polish because the step-back's agents named the mid-rise carpet on both
+  seeds. **Iter 100 should be Civic & culture, and NOT Polish.**
+- **⚠ `c.dist` IS CONFETTI, NOT NEIGHBOURHOODS — do not build anything on it (iter 99).** The district
+  majority-vote CA (L1201) looks like it partitions the city into 4 quarters; measured over the ~1100
+  `DEV` cells it runs on, `sameNbr` is **45.6–50.2%** against a **25%** chance floor, with **535–580
+  patches** and a largest patch of **12–21 cells**. It coarsens far slower than development re-injects
+  fresh random `dist` into new cells. `DISTCOL[c.dist]` is therefore ~random per building — harmless
+  on COM's tiny shopfront signs, but **tinting any large surface by district paints noise.** Fixing
+  the CA is a real (stream-perturbing) vector; until then, treat `c.dist` as decoration.
+- **⚠ COLOUR KEYED TO THE SAME FIELD AS HEIGHT IS NOT VARIATION (iter 99).** MID drew
+  `bodyN=v>0.72?'terra':'cream'` while `th=22+c.v*14` — so colour was a restatement of height
+  (`corr` **0.76–0.79**), ~73% of the city's commonest building wore one cream, and its parapet was
+  `creamDk` **100%** of the time. Mixing in an independent seed-salted hash (`tone=mv*0.72+v*0.28`)
+  dropped `corr` to **0.19–0.31** and cost nothing: **`col()` memoizes on `name|f`, so extra colours
+  buy cache entries, not draw calls.** Palette variety is the cheapest beauty in the renderer.
+  **`RES` still has this exact defect — see open cue (f).**
+- **Stash-control the PERF gate, not just the census (iter 99).** Iter 97 established the census
+  stash-control. The same trick settles frame time, which is otherwise unreadable on a loaded shared
+  machine: iter 99's change read **+0.28ms day** and three passes drifted *monotonically upward*
+  (34.00→34.44→34.50) — load, not code. Re-running the **pre-edit** file under the **same** load gave
+  day **33.83–34.83ms**, i.e. the post-edit number sits *inside the pre-edit band*. A rising
+  pass-over-pass trend within one gate run is the tell. Costs 3 minutes and no tokens.
+- **The gitignored backup name is `before.html`** (`.gitignore`, alongside `probe-*.mjs` /
+  `shot-*.mjs`). Iter 99 used `_before.html` for a before/after shot and got lucky deleting it — any
+  other name is untracked scratch that makes `run-loop.sh` refuse to start on a "dirty" tree.
 - **⚠ THE UPGRADE PASS SATURATES — its probability is a weak, expensive lever (iter 98).** `tick()`
   runs ~813 times to 2035 and each runs `ks(240)`=350 `rc()` picks over 4489 cells, so **every cell
   is sampled ~60 times**. A test like `rng()<p` with p≈0.14 fires with probability `1-0.86^60 ≈ 1.0`:
@@ -322,20 +348,28 @@ ones (U2, 42, U5) stay in the bullet.
   not four (`PLAZA 14→10` across the matrix). That is defensible urbanism and was accepted, but
   it is the one place the vector *cost* something. See open cue (d).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
-  **(e½) the interior is an edge-to-edge carpet** *(the surviving HALF of cue (e); its skyline
-  half was **CLOSED by iter 98**)* Urban fabric × Polish — iter 94's holistic agent called the
-  landmass "too uniform… little breathing room between core and edge, the whole thing reads at
-  one continuous loud level," and the interior an "edge-to-edge carpet of roads + rooftops with
-  little green breathing room." **98 fixed the skyline, not the carpet:** it re-keyed tower
-  *height* to a radial core, so the tall buildings now mass at the founding crossroads — but it
-  deliberately left *siting* and every land-use rule untouched, so mid-block density is exactly
-  as uniform as before. What remains is thinning that density / winning interior green. Heed
-  iter 92 (never zone against `TOWER` near the core: −9.8% pop) **and** iter 98 (the upgrade
-  probability *saturates*, so leaning on `p` is a weak lever that costs towers at 240 pop each).
-  A `MID`/`RES` thinning rule, or interior parks, is likelier than anything touching towers.
+  **(e½) the interior is an edge-to-edge carpet — now DENSITY-ONLY** *(cue (e)'s skyline half was
+  **CLOSED by iter 98**; its **palette** half was **CLOSED by iter 99**)* Urban fabric — iter 94's
+  holistic agent called the landmass "too uniform… little breathing room between core and edge,"
+  and the interior an "edge-to-edge carpet of roads + rooftops with little green breathing room."
+  **98 fixed the skyline; 99 fixed the colour; neither touched a tile.** What remains is strictly
+  the *density/green* half: mid-block density is exactly as uniform as it ever was, and there is no
+  interior green. Heed iter 92 (never zone against `TOWER` near the core: −9.8% pop) **and** iter 98
+  (the upgrade probability *saturates*, so leaning on `p` is a weak lever that costs towers at 240
+  pop each). A `MID`/`RES` thinning rule, or interior parks, is likelier than anything touching
+  towers. **This is the first (e½) move that must change tiles, so it cannot be stream-neutral —
+  budget for a few % of chaotic wobble and judge it on the tile histogram.**
   The same agent flagged seed 1234's long straight monorail/cable
   lines as still reading like a "wireframe/UI stroke" — but iters 85/87 closed that with two
   agents each, so treat this as one un-zoomed opinion, **not** a reopening of cue (c).
+  **(f) `RES` says its height twice, and its roofs ignore the seed** *(measured by iter 99,
+  Urban × Polish, two one-line fixes at L3249–3251)* — `bodyN=v<0.5?'terra':'cream'` against
+  `th=9+c.v*7` gives `corr(cream, height)` = **0.868**, the exact defect 99 removed from `MID`;
+  and the roof hash is `hashCell(x,y,7)` — a **literal salt**, so **every seed paints the identical
+  RES roof pattern**, a quiet breach of the "procedural, new city every load" invariant. Fix by
+  salting with `seedNum^…` and mixing an independent draw into the body tone. Draw-only ⇒
+  provably stream-neutral. (RES body is *not* clumped — measured `sameNbr` **52.1%**, maxPatch
+  **5.3** — so do **not** "fix" patchiness that isn't there.)
   **(d) the civic quarter deserves a real square** *(banked by iter 91, Civic × Polish)* — the
   quarter now reads as a knot of pale domes sharing a single forecourt hex. A proper civic
   square (2–3 contiguous `PLAZA` cells fronting several institutions, rather than one lot won
@@ -700,96 +734,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 91 entries before Iteration 89 live in
+> **Archive:** the 92 entries before Iteration 90 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 89 — the rainbow lands (2026-07-10) [holistic step-back]
-
-**Vector** — Sky & atmosphere × **Polish (FIXED)**. Both axes agreed for once: Sky was
-the most-lagged domain (last touched at 81), and the rainbow was the *only* strong open
-cue, banked by three separate holistic passes (79/84/86 — at 86 seed 42's agent raised it
-unprompted). 88 had just broken the five-Polish streak with a Connect, so a Polish lap was
-clean again. **Iteration 89 also owed the holistic step-back (84 + 5); it is discharged
-below**, since the gate frames were read un-zoomed at three seeds.
-
-**Measured the defect before designing the fix** (`probe-rainbow.mjs`, gitignored scratch).
-The bow is `arc(bx,by,r0, PI, 2PI)` in the cloud loop. For each raining cloud over a sweep
-of 6 seeds × 10 `__step`s, the probe reported both feet's distance to the nearest **live**
-cell. Two faults, and only one of them was the one the cue named:
-
-1. **It draws over the void.** Seed 7 step 0 — the exact frame the agents kept reporting —
-   puts the bow's feet **52px and 205px** from any live cell: the whole arc hangs past the
-   plate's right rim, over empty background. Seed 1234 step 180 reaches **277px**, seed 2
-   step 180 **354px**, seed 1234 step 900 **451px**.
-2. **It ENDS.** `PI..2PI` stops dead on a horizontal chord at full alpha. Even the bows that
-   sit squarely over the city are sliced flat across the bottom — which is iter 85's lesson
-   restated: *a stroke that terminates on a hard edge is the grammar of a UI overlay.* No
-   agent had named this one; the probe found it by asking where the feet were.
-
-**The cue's prescribed fix was wrong, and the probe is why I noticed.** The header said
-"same defect iter 81 fixed for fog, same fix" — i.e. move it inside the row loop for depth.
-But a rainbow forms in the drops of *this* shower, a few hundred metres off, so it
-legitimately passes **in front of** distant scenery. Drawn behind the rows it would have
-been swallowed by the plate and the feature would have quietly died. Fog piles *on* the
-world; a bow hangs *in front of* it. **Same symptom, opposite remedy.**
-
-**Change (draw-only, `L4225`).**
-- **Anchored to the ground its rain falls on.** `pa` fades the bow out over the last 2 hexes
-  before the rim, reusing the cloud shade's own rule from one line above ("shade only falls
-  where there is ground to catch it"). Critically the gate tests the **legs, not the cloud**:
-  the arc reaches ±`r0`≈108px ≈ 3 cells sideways, so a shower still safely inland can hang a
-  leg past the rim. Gating on `cl.x` alone left bows with a foot 190px into the void at
-  `pa=1`; gating on `fl`/`fr` (the feet's columns, via `CW`) cut the worst drawn foot from
-  **451px → ~20px**. Suppressed 9→16 of 41 sampled bows; seed 7 step 0 is now dark.
-- **Both legs dissolve.** The crown stays **one unbroken arc per band** (no seams where it is
-  brightest), and only the bottom `asin(0.45)`≈27° of each leg is drawn as 8 alpha-ramped
-  segments, smoothstepped to 0. So the bow fades into haze and never terminates — over city,
-  sea or void alike.
-
-**Census:** VERDICT **PASS**, 0 page errors. **All 22 metrics exactly +0**, tile histogram
-empty, all 25 entity counts unchanged. The draw-only signature (cf. 79, 81).
-
-**Visual:** **3/3 `VISUAL: PASS`**, before/after on identical clips (`before.html` =
-`git show HEAD`), one agent per seed. Seed 7: "hangs entirely over the void beyond the slab
-edge… terminating on a hard, abrupt cut-off" → gone in AFTER. Seeds 42 and 1234 keep their
-bows and report the legs "dissolve into the sea haze instead of ending on a flat line",
-**with no banding, seams or beads** — the one risk I could not reason away, since consecutive
-alpha-ramped arc segments can bead at the joints. Splitting core-from-legs is what avoided it.
-Seed 42's agent, unprompted: it now reads "MORE like an atmospheric rainbow and LESS like a
-pasted-on UI/debug graphic."
-
-**Perf — and this time the gate is NOT blind.** 3× sequential; day **31.89ms (+1.8%)**,
-night **35.83ms (−3.7%)**, PASS. Worth recording *why* that number is trustworthy where 81's
-was not: I checked, rather than assumed, and the perf day scene (seed 42, `t=0.35`,
-`LITAMT=0.017`) **draws exactly one rainbow**, so the +1.8% is the real cost of 5 core arcs +
-80 leg segments. The night scene draws none (`LITAMT=0.892`), so its −3.7% is pure noise.
-
-**Holistic step-back (84 + 5), discharged.** The three un-zoomed whole-city frames were read
-for *cumulative* drift, not for the feature: all three report no z-order tears, no floating
-tiles, no blown-out color, and that the city still reads as balanced and beautiful. Nothing
-has compounded since 87. Perf is flat against a baseline pinned 2026-07-09. **No new cue was
-found** — and with (a) now closed, the cue list is empty for the first time.
-
-**Verdict:** **FIXED.** The bow floated for 88 iterations; it now belongs to its shower.
-
-**Lessons.**
-- **A banked cue records a symptom reliably and a diagnosis unreliably.** Three passes
-  correctly saw the rainbow floating; the fix they prescribed (81's) would have deleted the
-  feature. Re-derive the *cause* when you take a cue off the shelf — the symptom is evidence,
-  the proposed fix is a guess made without the code open.
-- **Probe the thing you are about to change, even for a "look at it" polish job.** The hard
-  chord was invisible to eight iterations of agents *looking at screenshots of it*, because a
-  sliced arc looks fine at 0.38 alpha until you ask "where exactly does this stroke stop?"
-  Two lines of geometry in a probe found what six agent-readings missed.
-- **When a gate is blind, say so; when it isn't, prove it.** 81 warned the perf gate never
-  sees the fog. The reflex is to write "gate blind here" again — but one 20-line probe showed
-  it *does* see the rainbow. Inherited caveats need re-checking too.
-- **An overlay can be fixed by anchoring rather than by reordering.** Reaching for depth
-  (`z`) is not the only cure for something that floats; giving it a reason to *stop existing*
-  where it has no business being (`pa`) is cheaper and, here, the only one that keeps it.
 
 ## Iteration 90 — the back beach grows dunes (2026-07-10)
 
@@ -1612,3 +1561,84 @@ draw time (**hold a height field's mean**); a linear ramp has no centre — **ch
 the centre before trusting the comment above it**; and the best version of a vector is often the one
 expressed as a *property of a thing* rather than a *decision about which things exist*, because then
 the census proves it instead of merely tolerating it.
+
+## Iteration 99 — the walk-ups stop wearing one shade (2026-07-10) [holistic step-back]
+
+**Vector** — Urban fabric × **Polish (SHIPPED)**, plus the 5-iteration holistic step-back. Took the
+surviving half of **cue (e½)**. Rotation would have said *Civic & culture* (stalest domain, last
+vector **91**), and this is the **fifth** Urban×Polish and the **fourth Polish in six**. Overridden
+deliberately: the step-back's own agents, on both seeds, independently and unprompted named the
+mid-rise mass as the #1 thing to fix, and the skill says a holistic finding outranks the rotation
+table. **Rotation debt is real and now explicit — iter 100 should be Civic & culture, non-Polish.**
+
+**Step-back gates (run first, on pristine HEAD).** Perf, 3 sequential passes, tight readings:
+**day 31.33 → 33.72ms (+7.6%)**, **night 37.22 → 38.05ms (+2.2%)**. PASS. That day cost is iter 96's
+conifers, still standing and still inside budget. Holistic whole-city, 2 seeds, 2 agents, no
+enhancement: both **PASS**. Both volunteered that iter 98's core landed (*"the tallest glass towers
+concentrate over the founding crossroads"*; *"a distinct downtown core… not stringing along an
+edge"*). Both then named the same defect: *"a uniform carpet… same building palette and density…
+reads as noise rather than distinct neighborhoods"* (42) and *"the tan flat-topped buildings compound
+into a beige monotone"* (7).
+
+**Two hypotheses, both killed by the probe before a line shipped.** This is the iteration's real
+output; `probe-fabric.mjs` cost ~4 minutes and saved two bad ships.
+- **"RES body colour is a binary threshold on a smooth field, so it makes big beige patches."**
+  *False.* `sameNbrFrac` **52.1%** over RES–RES edges (0.5 = fine mix, 1.0 = carpet), meanPatch
+  **1.3**, maxPatch **5.3**. The houses already mix finely; RES is only ~305 of 4489 cells anyway.
+- **"Tint the fabric by `c.dist` — a district CA already exists (L1201), and COM shopfronts already
+  wear `DISTCOL[c.dist]`."** *This would have painted confetti.* Measured over the ~1100 DEV cells
+  the CA actually runs on: `distSameNbr` **45.6–50.2%** against a **25%** chance floor, **535–580
+  patches**, largest patch **12–21 cells**. Districts are noise with a faint bias, not regions —
+  the majority vote (`votes[best]>=3 && rng()<0.5`, `ks(50)`) coarsens far slower than development
+  re-injects fresh random `dist` into new cells.
+
+**The actual defect, once the tile histogram was read instead of guessed.** At 2035 the built mass is
+`ROAD ~830 · MID ~460 · RES ~305 · COM ~220 · TOWER ~74`. **MID is the dominant building tile** — the
+agents said "mid-rise" and I had been reading the RES branch. And MID (L3290) was:
+`bodyN = v>0.72 ? 'terra':'cream'`, with `c.th = 22+c.v*14`, and a roof parapet of `creamDk` for
+**100% of them**. So ~73% of the city's commonest building wore one cream, the parapet never varied,
+and **colour was a restatement of height**: measured `corr(terra, height)` = **0.76–0.79**.
+
+**Change (draw-only, 4 lines).** A walk-up's colour is now its own seed-salted hash, not a second
+reading of the value field: `mv=hashCell(x,y,seedNum^0x3D1B)`, `tone=mv*0.72+v*0.28` →
+`terra / cream / sandDk` (ochre), and the parapet varies over the same three darks, with a guard so
+a `sandDk` cap never sits on a `sandDk` block. `v` keeps a 28% pull, so tall blocks still *lean*
+terracotta — a trend, no longer an identity.
+
+| | HEAD | after |
+| --- | --- | --- |
+| MID body | cream 73% · terra 27% | cream 43% · sandDk 31% · terra 25% |
+| MID parapet | `creamDk` ×100% | 3 tones |
+| `corr(terra, height)` | **0.76 – 0.79** | **0.19 – 0.31** |
+| MID–MID `sameNbr` | — | 35–37% (chance floor 33% ⇒ grain, not clumps) |
+
+**Census** — `VERDICT: PASS`, and **provably stream-neutral** exactly as iter 98's law predicts for a
+property-of-a-thing change: `pop 150332 (+0)`, `roads +0`, `developed +0`, `towers +0`, `towerHt +0`,
+and the **tile histogram printed nothing at all**. `solarRoofs +4 / greenRoofs +1` appeared — the
+signature iter 97 documented. Ran the stash-control anyway (90s, no tokens): **pristine HEAD against
+the same baseline gives the identical +4/+1.** Not mine.
+
+**Visual** — 2 agents, 2 seeds, before/after × (wide + `--shots downtown`), told not to enhance. Both
+**VISUAL: PASS**. Seed 7's agent, fed the original complaint verbatim, returned *"the AFTER frame is
+measurably less beige… the 'beige monotone' complaint is answered."* Seed 42: *"varied grain, not
+confetti; no checkerboard… deepens richness without going garish."* Both checked parapets seat flush
+(no float, no z-fight) and found no tears anywhere in frame.
+
+**Perf — and a new control.** After: day min **34.00ms**, night **38.61ms**. That read as +0.28ms of
+day vs the pre-edit gate, and three passes drifted *monotonically upward* (34.00→34.44→34.50) — the
+signature of accumulating machine load, not code. So I **stash-controlled the perf gate the way iter
+97 stash-controlled the census**: re-ran the *pre-edit* file under the *current* load → day
+**33.83–34.83ms**, night **38.78ms**. The post-edit numbers sit **inside the pre-edit noise band**,
+and night is nominally *faster*. **Perf-neutral, confirmed.** It has to be: `col()` memoizes on
+`name|f`, so extra colours cost cache entries, not draw calls.
+
+**Verdict — SHIPPED.** The city's most common building stopped being one colour, and stopped saying
+its own height twice. Draw-only, census dead flat, two visual PASSes, perf neutral by control.
+
+**Cue bookkeeping.** **(e½) is narrowed, not closed.** Its *palette* half is answered; its
+**density/green half survives** — iter 94's "edge-to-edge carpet of roads + rooftops with little green
+breathing room" is about *uniform block density and no interior green*, and 99 changed zero tiles by
+design. **New cue (f), measured and standing:** `RES` has the identical defect MID just lost —
+`corr(cream, height)` = **0.868**, and its roof hash is `hashCell(x,y,7)`, a **literal salt**, so
+**every seed paints the same RES roof pattern** (a quiet breach of "procedural, new city every
+load"). Both are one-line fixes in the RES branch (L3249–3251) for whoever takes Urban next.
