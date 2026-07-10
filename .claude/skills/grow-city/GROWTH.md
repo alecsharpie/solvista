@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
+| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
@@ -45,14 +45,17 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
-- **ROTATION.** Last vector per domain: Sky **95** · Nature **102** · Urban **103** · People **104** ·
-  Transport **105** · Water **106** · Civic **107**. Stalest is still
+- **ROTATION.** Last vector per domain: Sky **95** · Urban **103** · People **104** ·
+  Transport **105** · Water **106** · Civic **107** · Nature **108**. Stalest is still
   **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
   cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
-  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Nature (102)**
-  is the next-stalest safe pick; Urban (103) after it.
-  Recent kinds: 103 Polish · 104 Deepen · 105 Interaction/UX · 106 New element · 107 New CA rule —
-  the coldest kinds are now **Connect** and **Scale**, then Polish. Note **107 was a New CA rule that
+  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Urban (103)**
+  is the next-stalest safe pick; People (104) after it. Note iter 108 was Nature × Deepen but its
+  *content* was a Sky interconnect (the farm calendar reads `applySeason`'s `year`) — **Sky can be
+  fed by deepening another domain toward it**, which is the way out of its saturation that does not
+  require a sky feature.
+  Recent kinds: 103 Polish · 104 Deepen · 105 Interaction/UX · 106 New element · 107 New CA rule ·
+  108 Deepen — the coldest kinds are now **Connect** and **Scale**, then Polish. Note **107 was a New CA rule that
   ADDED NOTHING**: it rewrote a pass that had never fired. *Auditing an existing rule for
   reachability* is a New-CA-rule move available in every domain and it costs no new content — see
   `probe-market.mjs` and the dead-rule law below. (Iter 106 passed on Connect/CA/Scale *for Water*
@@ -72,6 +75,53 @@ ones (U2, 42, U5) stay in the bullet.
   be earlier iterations' code, so control against pristine HEAD, not against the baseline file**
   (iters 99, 104). Re-pin at a step-back whenever the offset is stable and attributable to landed
   work; `polish-tile` owns the file, so say so in the entry rather than re-pinning silently.
+- **`?year=` IS NOW A URL HOOK (iter 108) — the seasons are finally testable.** `window.__setYear`
+  had existed since the season pass but was **never wired to the query string**, so no screenshot in
+  this loop's history could pin a *calendar* position: `?warp=61` from `year=1974` always lands on
+  ~2035.0, i.e. **every shot ever taken of this city was in January.** Now
+  `?seed=42&warp=61&year=2035.62` pins high summer. Applied *after* `warp` (warp advances `year`).
+  Use `.02 / .30 / .62 / .87` for winter / spring / the golden dry peak / autumn — those are
+  `applySeason`'s own keyframes. An unreachable test hook is the same defect class as iter 107's
+  unreachable rule: **grep the URL block before assuming a hook you can see is a hook you can use.**
+- **⚠ THE CENSUS IS LOAD-DEPENDENT, AND THE LEDGER HAS BEEN MIS-ATTRIBUTING ITS JITTER (iter 108).**
+  `frame()` does `year+=dt*s/6` and fires `tick()` off *real elapsed time*, and it keeps running while
+  Playwright is talking to the page. So the wall-clock gap between page load and the harness's
+  `__census()` call lands in `year` — and `c.solar` / `c.groof` salt their `hashCell` on
+  **`(year*23)|0`** / `(year*31)|0`. A few stray milliseconds tick that integer over and a few roofs
+  flip. Measured: **two captures of *identical pristine code* gave `pop` 154915 vs 154918,
+  `solarRoofs` 1474 vs 1471, `greenRoofs` 398 vs 397.** This matters because the ledger's stock
+  explanation for small wobble is "terrain-gated `rng()` reshuffling" (the chaotic-CA invariant) —
+  and **that cannot explain wobble on a draw-only vector, which touches no `rng()` at all.** Iter 108
+  was draw-only and still showed `solarRoofs −3`. Before blaming your feature for a ±3, **re-capture
+  the BASELINE, not just the latest** — running the same edited code twice only proves the edited side
+  is stable. A real fix (freeze the sim before `__census()`) is an open harness vector.
+- **⚠ `git stash` IS NOT A CLEAN PRISTINE CONTROL IN THIS LOOP (iter 108).** `census-baseline.json` is
+  **tracked**, and `--save-baseline` modifies it — so `git stash` reverts your fresh baseline to the
+  last *committed* one, and the "pristine" census you then run is scored against an iteration-old
+  matrix. Iter 108's control printed `pop +4712` and looked catastrophic; it was comparing pristine
+  code to iter 107's committed baseline. Read the **absolute** latest column, not the delta, when the
+  stash control runs. Worse, `git stash pop` then **fails** on the appended `census-history.jsonl`
+  (`local changes would be overwritten`) and leaves your work in the stash — `git checkout --
+  .claude/skills/grow-city/census-history.jsonl && git stash pop` recovers it. Do not panic and reset.
+- **⚠ A VISUAL AGENT WILL CONFIDENTLY INVERT A TONE ORDERING — MEASURE IT (iter 108).** Asked which of
+  four frames had the brightest farm belt, one agent answered "August, deep chocolate-brown = darkest"
+  across two independent runs; the other answered "August = brightest". A 40-line pixel probe settled
+  it in one command: August **lum 160.8**, January **112.9** — the first agent had been reading the
+  wrong hexes. Agents are reliable for *"is it broken"* (tears, blow-out, clutter — both passed those,
+  and agreed) and unreliable for *"which is more X"*. **`probe-farmtone.mjs` (`git add -f`'d) is the
+  general instrument:** `__find(TILE)` → screen coords → `getImageData` at each centre → mean RGB,
+  luminance, and the **field-to-field spread**, which is how you prove *variation* (patchwork) rather
+  than just *change*. Adapt it for any "does this tile's tone move across condition X?" claim.
+- **DEAD-RULE TRIAGE, one lap on (iter 108 revisiting 107's candidate list).** 107 queued `GARDEN`
+  (~0.3/city), `PLAZA`, `SOLARF` (0), `BURNT` (0) as suspected dead rules. Two are now **explained and
+  should not be "fixed"**: `GARDEN` is gated `year>=2008`, and the census matrix's eras are
+  1985/2005/2035, so it reads 0 in **two of three eras by construction** — ~2 per *2035* city, sparse
+  but alive. `BURNT` is a **transient** (`age>6` → `EMPTY`), so a snapshot census will almost always
+  miss it. **A census average across eras cannot distinguish "dead" from "late", and a snapshot cannot
+  distinguish "dead" from "short-lived".** Only `SOLARF` (`FARM` + no `DEV` within 2 + `rng()<0.02`,
+  2012+) remains a genuine open question — and note iter's earlier solar-farm attempt was reverted as a
+  bad trade, so reaching it is not obviously desirable. Divide 107's list by *why* a tile reads 0
+  before spending a lap on it.
 - **⚠ A RULE CAN BE DEAD BECAUSE ANOTHER RULE'S PRECONDITION IS STRICTLY WEAKER ON THE SAME HOST
   (iter 107).** `T.MARKET` — a fully-drawn tile with stalls, string lights, `POPW` 14, membership in
   `DEV`/`ATTRACT`/`PEDDEST` — read **0 in every seed and era for the artifact's entire life.** Its
@@ -920,82 +970,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 100 entries before Iteration 98 live in
+> **Archive:** the 101 entries before Iteration 99 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 98 — downtown stops being a dip (2026-07-10)
-
-**Vector** — Urban fabric × Polish. Took **cue (e)**, the oldest standing cue, banked by iter 92's
-holistic agent and independently corroborated by iter 94's: *"the towers are strung along the whole
-top edge rather than massing into one skyline; the eye finds a tall side more than a distinct core."*
-Two holistic passes, two seeds, same complaint — and no vector had ever answered it.
-
-**Diagnosis (the whole iteration is here).** Wrote `probe-core.mjs` first, because "did it mass?" is
-a measurement, not a vibe — the way iter 88 demanded a union-find patch count of any Connect claim.
-On HEAD, at 2035, across seeds 7/42/1234: mean pairwise tower distance **24.8 hexes** on a radius-33
-plate, only **18%** of towers within 8 hexes of the densest disc, and **the tallest tower standing
-33 hexes from the founding crossroads on all three seeds.** Then the number that explained
-everything: core towers averaged **0.87×** the height of rim towers (seed 7: **0.72×**). Downtown
-was not merely un-massed, it was a **dip**.
-
-Cause: both the siting probability *and* the height multiplier were keyed to
-`back = (CTRX+CTRY+10-(x+y))/(G-2)` — a linear ramp down the x+y diagonal. **A ramp is a half-plane,
-not a place**: it reads high across an entire band, so it has no peak for a skyline to sit on. And
-because the founding crossroads sits *coastward* (large `x`), `back` scored the core **0.677 against
-its own 0.782 mean** — the rule labelled "towers cluster inland" was actively making downtown short.
-
-**Change** — Published the founding crossroads as `CBDX`/`CBDY` (+ `CORER`=16) from `genWorld`;
-after 97 iterations no rule knew where downtown was, and `c.val` is no substitute (it diffuses
-`valueSrc`, which peaks on **parks and water**, not the core). Then keyed **tower height, and only
-height,** to `core = clamp(1-hexDist(x,y,CBDX,CBDY)/CORER,0,1)`:
-`c.th=(54+c.v*82)*(0.70+0.66*core)`. Siting is byte-identical to HEAD.
-
-Two failed attempts got there, and both are worth more than the ship:
-- **Steepening the probability toward the core is a weak, expensive lever.** `tick()` runs ~813×,
-  each with `ks(240)`=350 picks over 4489 cells → **every cell is sampled ~60 times**, so
-  `rng()<0.14` fires with probability ≈1.0 and the test **saturates**: nearly any lasting `COM`
-  with a quorum towers regardless. `0.05+0.40*core` bought **5 points** of core share and cost
-  **21% of the city's towers** at 240 pop apiece. Reverted.
-- **Raising `th` silently costs pop.** `pop` weights a tower by `h/th` and `h` only creeps up at
-  *draw* time (L3215), so a taller target is a smaller realized fraction. A first height field
-  averaging 0.62× (vs the ramp's 0.78×) passed the census yet cost **half** the city's
-  `tallTowers` (118→56) and helipads (76→38). That is shrinking a city, not massing it. Fixed by
-  measuring `mean(back)=0.363` and `mean(core)=0.125` over cells that actually tower, and solving
-  `0.70+0.66*core` to **hold the mean at 0.783** while peaking 1.36 downtown vs 0.70 at the rim.
-
-The probe lied once too: anchored on its own densest disc it called seed 42 a FAIL (ratio 0.90) for
-a change that worked, because that seed's densest knot sits 29 hexes from downtown. Re-anchored on
-`CBDX/CBDY`, the same frames read **1.75**. A concentration metric must be anchored on what the
-change concentrates *around*, never on where things ended up.
-
-**Census** — `VERDICT: PASS`, and better than pass: **provably stream-neutral.** `pop 150332 → 150332
-(+0)`, `roads +0`, `developed +0`, `towers 300 → 300 (+0)`, and the tile histogram printed **not one
-changed type**. `c.th` feeds no `rng()`-gated predicate (the 2022 growth rule's `rng()<0.02&&c.th<160`
-draws first, then tests), so nothing downstream moved. What did move is exactly the vector:
-`towerHt 22643 → 23701 (+4.7%)`, `tallTowers 118 → 133 (+12.7%)`, `helipads 76 → 94 (+23.7%)`.
-Probe, CBD-anchored: `tallD 33.0 → 4.0` hexes, height ratio `0.87 → 1.56`, `hNear 70.3 → 113.4`
-against `hFar 80.4 → 72.5`.
-
-**Visual** — Before/after, wide + `--shots downtown`, seeds 42 and 7, two agents, told explicitly not
-to enhance. Both **VISUAL: PASS**, and both volunteered the intended reading without being fed it:
-seed 42 *"the tallest glass towers concentrate over the founding crossroads, tapering outward,
-whereas before they were a fairly even row of equal-height spikes strung across the whole top edge…
-outlying towers visibly shorter, giving the edges breathing room"*; seed 7 *"the two tallest spikes
-stand isolated along the top edge; in the after the height mass migrates into one coherent
-cluster… downtown gains a genuine focal skyline."* No z-order tears despite taller towers — both
-checked tops and occlusion against the row in front. No blown colour, no darkening.
-
-**Verdict — SHIPPED.** Cue (e)'s **skyline half is closed**; its *carpet* half (uniform mid-block
-density, no interior green) survives as **cue (e½)** and is explicitly *not* addressed — 98 changed
-zero tiles by design. Durable results, all promoted to the header: the upgrade pass **saturates**
-(shape it with a set-once quantity, never with its rate); `pop` weights towers by `h/th` growing at
-draw time (**hold a height field's mean**); a linear ramp has no centre — **check a field's value at
-the centre before trusting the comment above it**; and the best version of a vector is often the one
-expressed as a *property of a thing* rather than a *decision about which things exist*, because then
-the census proves it instead of merely tolerating it.
 
 ## Iteration 99 — the walk-ups stop wearing one shade (2026-07-10) [holistic step-back]
 
@@ -1772,3 +1751,116 @@ tears, and the whole frame still reads as a balanced coastal city. Correctly *su
   already free of `rng()`, already recomputed each tick. A market square is the argmax of that field on
   open ground. No new field, no new census metric (census-sprawl rule: `MARKET` was already tallied in
   the tile histogram, and the vector adds no tile type and no entity array).
+
+## Iteration 108 — the fields keep the calendar (2026-07-10)
+
+**Vector** — Nature × **Deepen / interconnect**. Rotation named the domain: Sky (95) is staler but
+additively saturated and its `New CA rule` cell is a documented trap, so Nature (102) was the
+next-stalest safe pick. Kind was chosen against the two most recent (New element, New CA rule), and
+`Deepen` is the skill's stated highest-yield move once a domain has its basics — Nature has had its
+basics since iter 60. The interconnect is Nature × **Sky**: the fields now read `applySeason`'s
+calendar. Draw-only by construction, so `pop` could not move.
+
+**The seam.** `applySeason()` (L293) drives `grass`, `grassDk`, `meadow`, `canopy`, `canopyLt` through
+the year — the hills go gold at `s≈0.62`, deciduous canopies amber at `s≈0.87`, evergreens sit it out.
+**`T.FARM` was not in that list.** Its draw case painted a soil hex and three crop rows in one of three
+*static* colors picked from `c.v` (`sage`/`gold`/`meadow`), at a fixed `lineWidth` of 2.1. So the wild
+grass around a farm went gold in August while the cultivated field — the most seasonal surface in any
+real landscape — did not change all year. Orchards already keep the calendar (iter 57's grove); the
+farmland, which outnumbers them, never did.
+
+**Change.** ~20 lines, all in `drawCell`'s `case T.FARM` plus one helper pair. Each field derives a
+phase `ph` from the calendar `s=year%1`, offset by up to ±5 weeks from `c.v`, and runs a chain:
+ploughed `soilDk` → `sprout` → the crop's own color → `straw` → cut `stubble` → ploughed under. Both
+ends of the chain are `soilDk`, so it is continuous across the new year *and* winter rows read as dark
+furrows on the lighter soil hex. `veg` swells `lineWidth` 0.9→2.4, so the rows are furrows in winter
+and heavy growth at midsummer. Fruit dots (the `v>0.66` variety) now appear **only** in the weeks
+before the cut. Four palette entries added (`sprout`/`crop`/`straw`/`stubble`); `applySeason` must not
+touch them or the two would double-count — which is why the third crop variety moved off `meadow`
+(season-driven) onto a dedicated `crop`. No terrain, no `rng()`, no `hashCell`, no new tile type.
+
+**The ground carries the year, not just the rows.** First pass modulated only the rows and the two
+visual agents *disagreed about which frame was greenest* — the tell that the effect was under-powered.
+Three ~2px rows are a thin ornament on a wide hex, so the tile's mean tone at city zoom is the
+**ground** (iter 100's law, and the reason iter 101's one-hex greenway failed). Fixed by blending 34%
+of the crop color into the soil hex. That is the whole difference between "visible if you lean in" and
+"the belt turns with the year".
+
+**Census — PASS.** `pop 154915 → 154918 (+3)`, `roads/developed/parks/towers +0`, **tile histogram
+completely empty** — as a draw-only vector must be. The residual ±3 is *not* mine: see the finding
+below; identical pristine code recaptures at ±3 too.
+
+**Probe — the year moves the belt, and the belt is a patchwork.** `probe-farmtone.mjs` samples real
+canvas pixels at every `__find('FARM')` centre. Mean farm luminance, seed 42 / seed 7:
+Jan **112.9 / 107.4** → Apr **147.7 / 148.2** → Aug **160.8 / 159.8** → Nov **137.3 / 140.7**.
+A **48-point** luminance swing, against the ledger's own ΔL 7–11 reference for "obviously
+distinguishable". Hue (G−R) is `−20 → −2 → −26 → −25`: April is the only green frame, August the
+golden one, exactly as designed. Field-to-field spread is **±21.4 in January and ±18.7 in November,
+but only ±9–11 at midsummer** — the stagger is most visible where the chain is steepest (ploughing,
+cutting) and least where every field is simply mature. That is the patchwork, measured.
+
+**Perf — PASS.** 3 sequential runs, judged by the minimum of each scene: day **33.22ms** (+0.2% vs the
+iter-105 baseline 33.16ms), night **37.61ms** (+0.8% vs 37.33ms). The two uncached `rgb()` strings per
+farm per frame (~150 farms) cost nothing measurable. Baseline **not** re-pinned — `polish-tile` owns it
+and there is nothing to re-pin.
+
+**Visual — PASS, 2/2 agents, on the strengthened version.** Four frames × two seeds, un-zoomed whole
+city. Both: no blow-out or neon, the rows still read as distinct lines against the tinted ground, no
+z-order tears or floating tiles anywhere in the frame, January reads as *ploughed farmland* rather than
+mud or scarring, and all four frames still read as a balanced coastal city. (One agent inverted
+brightest/darkest — see the finding; it does not affect the gate, which is about damage, not ordering.)
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ THE CENSUS IS LOAD-DEPENDENT, AND "CHAOTIC-CA NOISE" HAS BEEN COVERING FOR IT.** A draw-only
+  vector — no `rng()`, no terrain, an empty tile histogram — still printed `solarRoofs −3`. The
+  invariant the ledger reaches for ("terrain-gated `rng()` reshuffling") **logically cannot apply**.
+  Cause: `frame()` advances `year` off real elapsed time and keeps ticking while Playwright drives the
+  page; `c.solar`/`c.groof` salt their `hashCell` on `(year*23)|0` / `(year*31)|0`, so milliseconds of
+  machine load flip roofs, and an extra `tick()` moves `pop`. **Two captures of identical pristine code:
+  `pop` 154915 vs 154918, `solarRoofs` 1474 vs 1471.** The instrument's floor is ±3, not 0. Corollary
+  that cost me twenty minutes: **running your edited code twice proves only that the edited side is
+  deterministic.** To attribute a small delta you must re-capture the **baseline**. Freezing the sim
+  before `__census()` would remove the floor entirely and sharpen every future gate — an open vector.
+- **⚠ `git stash` IS A CONTAMINATED CONTROL HERE, AND IT CAN EAT YOUR ITERATION.** `census-baseline.json`
+  is tracked and `--save-baseline` dirties it, so `git stash` silently reverts your fresh baseline to
+  the last committed one. My "pristine control" printed `pop +4712` and read like a catastrophe; it was
+  pristine code scored against **iter 107's** matrix. Read the absolute latest column, never the delta,
+  when the stash control runs. Then `git stash pop` **refused** — `census-history.jsonl` had been
+  appended to by the control run — and left the whole iteration sitting in the stash. Recovery:
+  `git checkout -- .claude/skills/grow-city/census-history.jsonl && git stash pop`. The no-op control
+  (iter 107) does not have this failure mode; prefer it when the question is about terrain writes.
+- **⚠ AGENTS GRADE DAMAGE WELL AND ORDERINGS BADLY — MEASURE THE ORDERING.** Both seeds' agents agreed
+  perfectly on every *defect* question (no tears, no blow-out, rows legible, city coherent) across two
+  rounds. Asked *"which frame is brightest"*, one answered "August, deep chocolate-brown, darkest" —
+  twice, confidently — while the probe puts August at **lum 160.8** and January at **112.9**. It was
+  reading the wrong hexes. The first round's disagreement about *which frame was greenest* is what told
+  me the effect was under-powered and sent me to strengthen the ground, so **a disagreement between
+  agents is signal even when both say PASS**. But never resolve it with a third agent: `__find(TILE)` →
+  `getImageData` → mean RGB + spread is one command and it is dispositive. `probe-farmtone.mjs` is
+  `git add -f`'d (per iter 101, `.gitignore` eats `probe-*.mjs`), and its **spread** column is the
+  reusable half — it measures *variation across instances*, which is how you prove a patchwork rather
+  than a mere change.
+- **AN UNREACHABLE TEST HOOK IS THE SAME DEFECT AS AN UNREACHABLE RULE (iter 107's shape, in the
+  harness).** `window.__setYear` has existed since the seasons landed, commented *"pin the calendar
+  (seasons) for tests"*, and was **never wired into the URL block** — while `?t=`, `?warp=`, `?step=`
+  and `?flood=` all were. Consequence: `?warp=61` from `year=1974` always lands near 2035.0, so **every
+  screenshot in this loop's entire history was taken in January**, and nobody could have seen a seasonal
+  farm even if one had existed. One line added. Iter 107 found a rule nobody could reach; this is a hook
+  nobody could reach. **Grep the URL block before assuming a hook you can see is a hook you can use.**
+- **DEAD-RULE TRIAGE: divide 107's candidate list by *why* the tile reads 0.** `GARDEN` is gated
+  `year>=2008` and the matrix's eras are 1985/2005/2035 — it is 0 in two of three eras **by
+  construction** (~2 per 2035 city). `BURNT` reverts to `EMPTY` at `age>6` — a **transient** a snapshot
+  will nearly always miss. Neither is dead; neither should be "fixed". **An era-averaged census cannot
+  tell "dead" from "late", and a snapshot cannot tell "dead" from "short-lived."** Of 107's four
+  candidates only `SOLARF` is still genuinely open — and an earlier solar-farm vector was reverted as a
+  bad trade, so reaching it may not be worth wanting. 107's rule ("assume there are others") stands; its
+  *list* was three-quarters explained by measurement artifacts.
+- **A DOMAIN CAN BE FED BY DEEPENING ANOTHER DOMAIN TOWARD IT.** This is filed under Nature, but its
+  content is a **Sky** interconnect — the farms consume `applySeason`'s `year`. Sky has been the stalest
+  domain for 13 iterations precisely because its own additive cells are spent. The way to grow it is not
+  a new sky feature but to make more of the ground *answer* to it. Remaining surfaces that still sit out
+  the calendar: `VINEYARD` (should redden and be cut), `MEADOW` seed-heads, `MARSH`. Cheap, draw-only,
+  and each one makes the existing season system worth more.

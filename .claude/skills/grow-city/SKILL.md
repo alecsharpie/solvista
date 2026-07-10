@@ -164,7 +164,13 @@ both at this one.)
        300 sim-seconds so drift-ins are on-screen and animation phases vary
        (`__warp` alone doesn't run the frame loop). Don't flood `rng()`-spawned
        entities (boats, peds, dogs, shuttles, birds) — that would perturb the
-       seeded stream and the shot would lie. *Rare tiles/civics* (one-per-city
+       seeded stream and the shot would lie.
+     - *Seasonal* features: `&year=2035.62` pins the calendar (applied after
+       `warp`, which advances `year`). Use `.02/.30/.62/.87` for winter / spring /
+       the golden dry peak / autumn — `applySeason`'s own keyframes. **Without it
+       every shot is January**: `?warp=61` from `year=1974` always lands on ~2035.0,
+       which is why nobody noticed for 107 iterations that the farms had no seasons
+       (iter 108). *Rare tiles/civics* (one-per-city
        guards, hashCell thresholds) still need a temporary source edit: back up
        first (`/bin/cp`), shoot, **revert**, re-run census. See iters 11/16/19.
    - **Determinism holds** — because seeds are pinned, a metric moving that you

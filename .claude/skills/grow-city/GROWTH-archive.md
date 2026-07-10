@@ -3868,3 +3868,74 @@ single new pixel. Census dead flat, five visual PASSes, one honest FAIL correcte
 warning holds a fourth time: `GROWTH.md` is the loop's memory, not the artifact's inventory —
 grep the seam, not the ledger.**
 
+## Iteration 98 — downtown stops being a dip (2026-07-10)
+
+**Vector** — Urban fabric × Polish. Took **cue (e)**, the oldest standing cue, banked by iter 92's
+holistic agent and independently corroborated by iter 94's: *"the towers are strung along the whole
+top edge rather than massing into one skyline; the eye finds a tall side more than a distinct core."*
+Two holistic passes, two seeds, same complaint — and no vector had ever answered it.
+
+**Diagnosis (the whole iteration is here).** Wrote `probe-core.mjs` first, because "did it mass?" is
+a measurement, not a vibe — the way iter 88 demanded a union-find patch count of any Connect claim.
+On HEAD, at 2035, across seeds 7/42/1234: mean pairwise tower distance **24.8 hexes** on a radius-33
+plate, only **18%** of towers within 8 hexes of the densest disc, and **the tallest tower standing
+33 hexes from the founding crossroads on all three seeds.** Then the number that explained
+everything: core towers averaged **0.87×** the height of rim towers (seed 7: **0.72×**). Downtown
+was not merely un-massed, it was a **dip**.
+
+Cause: both the siting probability *and* the height multiplier were keyed to
+`back = (CTRX+CTRY+10-(x+y))/(G-2)` — a linear ramp down the x+y diagonal. **A ramp is a half-plane,
+not a place**: it reads high across an entire band, so it has no peak for a skyline to sit on. And
+because the founding crossroads sits *coastward* (large `x`), `back` scored the core **0.677 against
+its own 0.782 mean** — the rule labelled "towers cluster inland" was actively making downtown short.
+
+**Change** — Published the founding crossroads as `CBDX`/`CBDY` (+ `CORER`=16) from `genWorld`;
+after 97 iterations no rule knew where downtown was, and `c.val` is no substitute (it diffuses
+`valueSrc`, which peaks on **parks and water**, not the core). Then keyed **tower height, and only
+height,** to `core = clamp(1-hexDist(x,y,CBDX,CBDY)/CORER,0,1)`:
+`c.th=(54+c.v*82)*(0.70+0.66*core)`. Siting is byte-identical to HEAD.
+
+Two failed attempts got there, and both are worth more than the ship:
+- **Steepening the probability toward the core is a weak, expensive lever.** `tick()` runs ~813×,
+  each with `ks(240)`=350 picks over 4489 cells → **every cell is sampled ~60 times**, so
+  `rng()<0.14` fires with probability ≈1.0 and the test **saturates**: nearly any lasting `COM`
+  with a quorum towers regardless. `0.05+0.40*core` bought **5 points** of core share and cost
+  **21% of the city's towers** at 240 pop apiece. Reverted.
+- **Raising `th` silently costs pop.** `pop` weights a tower by `h/th` and `h` only creeps up at
+  *draw* time (L3215), so a taller target is a smaller realized fraction. A first height field
+  averaging 0.62× (vs the ramp's 0.78×) passed the census yet cost **half** the city's
+  `tallTowers` (118→56) and helipads (76→38). That is shrinking a city, not massing it. Fixed by
+  measuring `mean(back)=0.363` and `mean(core)=0.125` over cells that actually tower, and solving
+  `0.70+0.66*core` to **hold the mean at 0.783** while peaking 1.36 downtown vs 0.70 at the rim.
+
+The probe lied once too: anchored on its own densest disc it called seed 42 a FAIL (ratio 0.90) for
+a change that worked, because that seed's densest knot sits 29 hexes from downtown. Re-anchored on
+`CBDX/CBDY`, the same frames read **1.75**. A concentration metric must be anchored on what the
+change concentrates *around*, never on where things ended up.
+
+**Census** — `VERDICT: PASS`, and better than pass: **provably stream-neutral.** `pop 150332 → 150332
+(+0)`, `roads +0`, `developed +0`, `towers 300 → 300 (+0)`, and the tile histogram printed **not one
+changed type**. `c.th` feeds no `rng()`-gated predicate (the 2022 growth rule's `rng()<0.02&&c.th<160`
+draws first, then tests), so nothing downstream moved. What did move is exactly the vector:
+`towerHt 22643 → 23701 (+4.7%)`, `tallTowers 118 → 133 (+12.7%)`, `helipads 76 → 94 (+23.7%)`.
+Probe, CBD-anchored: `tallD 33.0 → 4.0` hexes, height ratio `0.87 → 1.56`, `hNear 70.3 → 113.4`
+against `hFar 80.4 → 72.5`.
+
+**Visual** — Before/after, wide + `--shots downtown`, seeds 42 and 7, two agents, told explicitly not
+to enhance. Both **VISUAL: PASS**, and both volunteered the intended reading without being fed it:
+seed 42 *"the tallest glass towers concentrate over the founding crossroads, tapering outward,
+whereas before they were a fairly even row of equal-height spikes strung across the whole top edge…
+outlying towers visibly shorter, giving the edges breathing room"*; seed 7 *"the two tallest spikes
+stand isolated along the top edge; in the after the height mass migrates into one coherent
+cluster… downtown gains a genuine focal skyline."* No z-order tears despite taller towers — both
+checked tops and occlusion against the row in front. No blown colour, no darkening.
+
+**Verdict — SHIPPED.** Cue (e)'s **skyline half is closed**; its *carpet* half (uniform mid-block
+density, no interior green) survives as **cue (e½)** and is explicitly *not* addressed — 98 changed
+zero tiles by design. Durable results, all promoted to the header: the upgrade pass **saturates**
+(shape it with a set-once quantity, never with its rate); `pop` weights towers by `h/th` growing at
+draw time (**hold a height field's mean**); a linear ramp has no centre — **check a field's value at
+the centre before trusting the comment above it**; and the best version of a vector is often the one
+expressed as a *property of a thing* rather than a *decision about which things exist*, because then
+the census proves it instead of merely tolerating it.
+
