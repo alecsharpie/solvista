@@ -4108,3 +4108,101 @@ added *earned* green (7–10 hexes); it did not add a lung.
 mid-rise carpet gave up ~23 cells to green that a city actually earns. Three visual failures on one
 seed were worth more than the ship: they produced `probe-quadtone.mjs` and the law above.
 
+## Iteration 101 — the greenway that could not be traced (2026-07-10)
+
+**Vector** — Nature × **Connect**. Rotation forced the kind: 96/97/98/99/100 ran
+Polish · Interaction · Polish · Polish · New element, so **Connect and Deepen were both
+cold** and a sixth Polish-ish lap was off the table. The vector itself was *prescribed*,
+twice over: iter 88 died proving "Nature × Connect is not reachable draw-only" and left an
+explicit design for its successor — *"the reachable Connect hosts are the greens the city
+already protects; a PARK↔PARK↔FOREST greenway is the version with an actual host, **if one
+plants it as terrain early enough to survive**"* — and iter 100's step-back agent independently
+asked to **"consolidate green into one or two district-scale parks/greenways."** Same feature,
+found from two directions. Cue (e½).
+
+**Change (reverted).** A `GWK`/`GWFAM` line on the diagonal family the main street did *not*
+take, surveyed in `genWorld` after the high street: walk the axis, convert `EMPTY`/`MEADOW`
+to `PARK` with a `c.gw` flag, skipping `corr` so crossing streets stay whole; ~40% of spine
+cells bulge one hex sideways. Plus `gwTrail()` (a cream footpath), a `Greenway` tooltip, and
+`__find('greenway'|'gwspine')`. **Zero `rng()` draws** — offset, side and bulges all from
+`hashCell` — so `genWorld`'s seeded stream stayed byte-identical; only the terrain perturbed
+downstream ticks.
+
+**Census** — PASS, and the trade was *good*: `pop` −3346 (**−2.25%**) and `developed` −43
+for ~52 green cells per seed, i.e. roughly **half the pop-per-cell cost of iter 100's QUAD**,
+because `PARK` is the top `valueSrc` (0.92) and the ribbon lifts `val` along its whole
+frontage — `cafes` **+141**, `COM` **+51**, `tallTowers` **+6**. `PARK` **+344** (not +470:
+the late park pass fires less, because the greenway already satisfies its "no PARK within 3"
+test — the ribbon *replaces* confetti, exactly what cue (e½) asked for).
+
+**Visual — the gate, and the reason for the revert.** `VISUAL: FAIL` **7 of 9** agent reads.
+Final version: seed 42 PASS (traced it on one axis, no tears), **seed 7 FAIL — could not
+trace it.** Seed 7 is also the seed with the weakest measured contrast, so that FAIL is
+*corroborated by the number*, not contradicted by it. A change must hold across seeds.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` is byte-identical to HEAD; census on the
+reverted tree is **+0 on all 22 metrics**, empty tile histogram, 0 page errors. Reverted
+because it cost 2.25% of the population and 27% of the stations for a feature you must zoom
+one step in to see — the solar-farm trade — and because a 1–2 hex ribbon **is not the
+district-scale lung cue (e½) asked for.** Cue (e½) stays **open**.
+
+### Findings — what iteration 102+ should lift from this
+
+- **⚠ CONTRAST IS NOT TRACEABILITY. For a LINEAR feature, legibility ≈ contrast × WIDTH.**
+  This is the load-bearing result, and it *refines* iter 95 ("legibility at distance is
+  luminance contrast, not coverage"). A tone probe (sample a 3×3 disc at each tile centre off the
+  live canvas via `getImageData`, at **default fit zoom**, and compare mean sRGB luminance against a
+  `PARK`-vs-`MID` scale reference) measured the spine at **ΔL 22–35 above ordinary PARK**,
+  against a `PARK`-vs-`MID` reference of only **ΔL 7–11** — the ribbon out-contrasted a pair
+  everybody calls obviously distinguishable, **and agents still could not follow it.** A
+  one-hex-wide line at fit zoom is ~1 screen pixel: that is contrast *without a shape*.
+  Below ~2–3 hexes across, a corridor cannot be traced no matter its ΔL. **Do not answer
+  "can it be followed?" with a tone probe** — tone answers "does it separate", which is a
+  different question. Iter 95's rule and this one are both true and neither implies the other.
+- **PARK IS PERMANENT — the host iter 88 wanted exists, and is confirmed.** No pass in
+  `tick()` ever consumes a `PARK`: development takes only `EMPTY`/`MEADOW`/`FARM` (L907/928/936),
+  and roads pave only `c.corr` (L899/1192). Measured `survive == gw` on 3 seeds × 1985/2035.
+  **So terrain planted in `genWorld` survives to 2035.** Any future green vector should plant
+  early and stop worrying about the city eating it.
+- **Green is not just affordable, it partly pays for itself.** `valueSrc` scores `PARK` **0.92**,
+  the highest in the game (L813), so park frontage raises neighbours' `val`, which raises
+  development probability (L909's `greenNear`) and height. −2.25% pop for 52 cells/seed, vs
+  iter 100's −1.03% for 23. Budget green at **~0.045% pop per cell**, not more.
+- **Survey a line's offset; never coin-flip it.** A `hashCell` coin flip aimed seed 7's ribbon
+  out to sea — 17 cells planted, its walk blocked by `WATER:18` and `BEACH:6`. Scoring both
+  sides by plantable cells (the same deterministic scan `hsBest` uses for the high street) took
+  seed 7 to **58 cells** and fixed the seed spread. **Reusable for any future axis feature.**
+- **Union-find must BRIDGE one cell, or it condemns a correct corridor.** A greenway crossed by
+  streets is still one greenway. Strict adjacency called the ribbon **13/14/16 patches**;
+  bridging a single non-green cell called it **4/6/4**, with `fullSpan` **56–59 hexes**. Iter 88's
+  "mark paths, not cells" rule stands, but its *measurement* needs this amendment.
+- **Drawing a continuous line across tiles under top→bottom row order: stroke HALF a segment
+  from each tile to the shared hex edge.** The lower half is overpainted by the next row's tile,
+  then redrawn by that tile's own upward half. Produced **zero z-order tears** across 9 reads.
+  Worth re-deriving for any future path/greenway/route. (`px(x+0.5,y+0.5) === ctr(x,y)` exactly,
+  so either is safe for integer cells.)
+- **⚠ `stations` falls whenever you de-densify a band, and it is not a break.** `monoStationCells()`
+  only counts a stop with `countAround(x,y,1,DEV)>=3`, and `PARK ∉ DEV` — so green beside a line
+  drops its stops below quorum. `stations` **−17 (−27%)** while `monoLines` stayed **11**. Check
+  `monoLines` before believing you severed transit.
+- **⚠ Agent verdicts were unreliable AGAIN, and the tell is corroboration.** Nine wide-frame reads
+  produced "a debug-chrome lattice", "an L-shaped kink", and "the trail rides over rooftops" —
+  **all three factually false**: `px()≡ctr()` for integer cells, and stepping the SW family moves
+  the centre exactly **−0.5·CW per row**, a straight screen line. But seed 7's FAIL *was* true, and
+  the tell was that a number agreed with it. **Trust a verdict a measurement corroborates; verify
+  one it contradicts.** (Iter 100 said the same and it keeps paying.)
+- **⚠ Aim clips at DEFAULT fit zoom.** `shot-gw.mjs` wheel-zoomed first, then read `scale`/`offX`
+  via `__find` — but the camera is still easing, so the clip landed on towers and I nearly
+  believed the trail was not drawn at all. Shoot at fit zoom, or wait for the camera to settle.
+
+### The prescription for a real lung (cue (e½) is still open)
+
+Not a ribbon — **a blob.** Same ~50 cells, contiguous, **≥3 hexes across** so it has a shape at
+frame scale; that is the one thing this iteration proves a 1–2 hex corridor can never have.
+Expect it to cost *more* pop per cell than the ribbon did (the ribbon's long frontage was what
+bought the `val` uplift back), so budget nearer iter 100's rate. Site it with
+`hexDist(x,y,CBDX,CBDY)` (iter 98), **not** `c.val` — whose peaks already sit on parks and water.
+The `c.gw` flag, the `Greenway` tooltip, the `gwTrail()` half-segment draw, and the contiguity probe
+(union-find with a one-cell bridge, plus a blocker histogram of what stops the walk) were all
+*correct* and are worth re-deriving; only the **shape** was wrong.
+

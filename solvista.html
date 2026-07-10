@@ -2050,6 +2050,29 @@ function syncFleet(){
     copters.push({a,b,t:Math.random()*0.8,sp:0.09+Math.random()*0.04,ph:Math.random()*7});
   }
 }
+/* The shelter's clock. A bus stop drew a shelter, and buses pulled into it, and
+   the two never met: the figures under the canopy were painted furniture that
+   stood there whether or not a bus had just taken them away. `c.blast` is the
+   sim-time the last bus pulled in (stamped by stepVehicle below), so the queue
+   builds while nobody comes and empties when one does.
+   ONE definition, read by the draw, the tooltip and the bus — three copies of
+   this arithmetic would drift (iter 110). Deterministic per stop: `stopCap`
+   draws from the spatial hash, never rng(), so shelters differ from each other
+   without perturbing the seeded stream. Timings are set against probe-bus.mjs:
+   median headway at a served stop is 74-126s, so a shelter refilling over ~46s
+   spends real time part-full and still reads as emptied often enough to see.
+   ⚠ The constants HOLD THE OLD MEAN (iter 98's law): the painted rule drew
+   `1+((x+y)&1)` = 1.50 figures always and everywhere, and these time-average to
+   ~1.5 as well. What the change buys is VARIATION, not more people — a queue
+   that empties is the feature; +1 glyph under every canopy would be clutter. */
+const BUSBRD=1.9, BUSGONE=6.0, BUSQGAP=20;
+const stopCap=(x,y)=>1+((hashCell(x,y,seedNum^0x5B05)*3)|0);   /* 1..3 wait here */
+function stopQueue(c,x,y){
+  const since=c.blast===undefined?1e4:time-c.blast;
+  if(since<BUSBRD)return{q:c.bqs||0,bl:since/BUSBRD};   /* the bus is in: they board */
+  const u=since-BUSBRD;
+  return{q:u<BUSGONE?0:Math.min(stopCap(x,y),1+((u-BUSGONE)/BUSQGAP|0)),bl:0};
+}
 function stepVehicle(v,dt){
   if(v.wait>0){v.wait-=dt;return;}   /* a bus pulled in at its stop */
   if(v.dwell>0)v.dwell-=dt;
@@ -2058,7 +2081,8 @@ function stepVehicle(v,dt){
     v.p-=1;
     const lx=v.x,ly=v.y; v.x=v.nx; v.y=v.ny;
     const cc=cellAt(v.x,v.y);
-    if(v.kind==='bus'&&cc&&cc.stop&&!(v.dwell>0)){v.wait=1.2+Math.random()*0.9;v.dwell=16;}
+    if(v.kind==='bus'&&cc&&cc.stop&&!(v.dwell>0)){v.wait=1.2+Math.random()*0.9;v.dwell=16;
+      cc.bqs=stopQueue(cc,v.x,v.y).q; cc.blast=time;}   /* whoever was waiting gets on */
     const opts=roadNbrOpts(v.x,v.y,lx,ly);
     if(!opts.length){v.nx=lx;v.ny=ly;continue}
     /* prefer whichever neighbor keeps the heading straightest */
@@ -3513,15 +3537,21 @@ function drawCell(x,y){
           ctx.beginPath();ctx.moveTo(x1-ax*0.8,y1-4.4);ctx.lineTo(x2+ax*0.8,y2-4.4);ctx.stroke();
           ctx.fillStyle=col('gold',1.1);                      /* route sign */
           ctx.fillRect(x2+ax*1.2-0.8,y2-3.4,1.6,1.3);
-          if(LITAMT<0.55){ /* somebody's always waiting on the day buses */
+          if(LITAMT<0.55){ /* the day buses: a queue builds, and a bus takes it away */
             const WC=['coral','teal','lav'];
-            for(let j=0;j<1+((x+y)&1);j++){
-              const fx2=lerp(x1,x2,0.3+j*0.4),fy2=lerp(y1,y2,0.3+j*0.4);
+            const{q,bl}=stopQueue(c,x,y);
+            for(let j=0;j<q;j++){
+              const u=(j+1)/(q+1);                         /* spread along the canopy */
+              /* boarding: they step off the sidewalk toward the bus on the centre
+                 line and are gone by the time it pulls out */
+              const fx2=lerp(x1,x2,u)-ox*bl,fy2=lerp(y1,y2,u)-oy*bl;
               const bob=Math.sin(time*1.3+j*2.1+x)*0.25;
+              ctx.globalAlpha=1-bl*bl;
               ctx.strokeStyle=col(WC[(x*3+y+j)%3],1);ctx.lineWidth=1.1;
               ctx.beginPath();ctx.moveTo(fx2,fy2);ctx.lineTo(fx2,fy2-2.2+bob);ctx.stroke();
               ctx.fillStyle=col('ink',0.9);
               ctx.beginPath();ctx.arc(fx2,fy2-2.8+bob,0.55,0,7);ctx.fill();
+              ctx.globalAlpha=1;
             }
           }
         }
@@ -5431,7 +5461,8 @@ function describeTile(c,x,y){
   if(DEV.has(c.t))data.push(['Floors','~'+floorsOf(c.h)]);
   if(c.t===T.TOWER&&c.h>90)data.push(['Helipad']);
   if(c.t===T.ROAD)data.push(['Traffic',Math.round(c.flow)]);
-  if(c.t===T.ROAD&&c.stop)data.push(['Bus stop']);
+  if(c.t===T.ROAD&&c.stop){const{q,bl}=stopQueue(c,x,y);   /* live, like Tide (iter 97) */
+    data.push(['Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);}
   if(c.solar)data.push(['Rooftop solar']);
   if(c.groof)data.push(['Green roof']);
   if(c.hstr&&DEV.has(c.t))data.push(['High street']);

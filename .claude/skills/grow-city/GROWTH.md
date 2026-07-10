@@ -29,7 +29,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
-| **People & activity** | 41, 56 | 49 | 34, 64, 93, **104** | 78 | | 84 | 71 |
+| **People & activity** | 41, 56 | 49 | 34, 64, 93, **104** | 78, **111** | | 84 | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -45,19 +45,20 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
-- **ROTATION.** Last vector per domain: Sky **95** · People **104** ·
-  Transport **105** · Water **106** · Civic **107** · Nature **108** · Urban **110**. Stalest is still
+- **ROTATION.** Last vector per domain: Sky **95** · Transport **105** · Water **106** ·
+  Civic **107** · Nature **108** · Urban **110** · People **111**. Stalest is still
   **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
   cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
-  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **People (104)**
-  is the next-stalest safe pick and is now TWO laps overdue (110's step-back pre-empted it);
-  Transport (105) after it. Note iter 108 was Nature × Deepen but its
+  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Transport (105)**
+  is now the next-stalest safe pick, then Water (106). Iter 111 was People × Connect and used
+  109's trick (close a gap between two existing objects); **the same trick is still unspent in
+  Transport** — 109 named both domains and only People has been cashed. Note iter 108 was Nature × Deepen but its
   *content* was a Sky interconnect (the farm calendar reads `applySeason`'s `year`) — **Sky can be
   fed by deepening another domain toward it**, which is the way out of its saturation that does not
   require a sky feature. Iter 109's leftover Sky-feedable list: `VINEYARD`, `MEADOW` seed-heads, `MARSH`.
-  Recent kinds: 105 Interaction/UX · 106 New element · 107 New CA rule ·
-  108 Deepen · 109 Connect · 110 Polish — the coldest kind is now **Scale** (a structural lever, not a lap
-  move), then New element and Interaction/UX. **Connect just came in from the cold** after 62 iterations: its trick was that
+  Recent kinds: 106 New element · 107 New CA rule ·
+  108 Deepen · 109 Connect · 110 Polish · 111 Connect — the coldest kind is now **Scale** (a structural lever, not a lap
+  move), then New element and Interaction/UX. **Connect has now paid twice** (109, 111): its trick was that
   it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
   Look for that shape in People and Transport before reaching for a new entity. Note **107 was a New CA rule that
   ADDED NOTHING**: it rewrote a pass that had never fired. *Auditing an existing rule for
@@ -72,6 +73,25 @@ ones (U2, 42, U5) stay in the bullet.
   *corridor*. **Cue (e½) is now CLOSED — iter 102 shipped the blob 101 prescribed** (the commons),
   so the interior has its lung; **do not plant a second one.** Nature's remaining cold cells are
   Connect (graveyard — leave it) and Scale.
+- **⚠ FREEZE THE CLOCK BEFORE YOU DIFF A LIVE DIORAMA, AND MEASURE WHICH INSTANCES ARE VISIBLE
+  (iter 111; `probe-vis.mjs` is the worked example).** (a) Two shots of this city at different sim
+  times differ by ~14% of the canvas — cars, waves, swaying trees — so a pixel diff across time can
+  never isolate a small ornament. Set `playing=false` and re-`render()` with only your feature
+  toggled: every other pixel is then identical *by construction* (iter 109's same-frame law, where
+  "frame" means the **instant**, not just the viewport). The same diff went 9371 px → 237 px.
+  (b) **"Not drawn" and "drawn but occluded" are the same screenshot.** A hand-rolled occlusion
+  filter picked a hidden bus shelter and the visual agent duly returned a false `VISUAL: FAIL`. Never
+  hand-derive which instances are visible — render each and count changed pixels. Sweeping the
+  camera also tells you *from what zoom* a thing reads: the bus queue is 0% at fit zoom, 53–63% at
+  zoom 4, plateauing at 63–73% (the plateau is the permanently-occluded remainder). **The whole-city
+  gate can neither convict nor acquit anything drawn at 3 px.**
+- **⚠ `peds` CANNOT SERVE THE ROAD NETWORK (iter 111, measured, before writing any code).** A resident
+  is leashed to the open cell it is anchored to (`PEDLEASH=2`, and `stepPed`'s comment says that
+  constant was tuned to hold street occupancy at ~19%). Only **20–31%** of bus stops have a live ped's
+  anchor within a leash — even at radius 5 it is 56–75%. So "residents walk to / wait at / ride the X"
+  vectors are structurally capped at ~a quarter of any road-borne host, and would leave the rest
+  *emptier* than whatever decoration they replaced. To do it properly you must move the **spawn pool**
+  (`openCells` in `syncFleet`), not the leash. Don't rediscover this.
 - **⚠ RUN THE PERF GATE IN ANY LAP THAT ADDS PER-FRAME DRAW WORK — not only at the 5th-iteration
   step-back (iter 109).** 109's first design added ~2000 `fill()`s/frame and cost **+28.5% day**. The
   census was blind to it by construction (draw-only ⇒ `pop +0`, empty tile histogram) and **3/3 visual
@@ -92,7 +112,8 @@ ones (U2, 42, U5) stay in the bullet.
   `DEV` cell in the row in front took the reading from a muddy 42.6% to a decisive 64.9% vs 2.1%.
   **When a pixel probe of a 3-D scene reads weakly, suspect occlusion first.**
 - **PERF BASELINE RE-PINNED 2026-07-10 (iter 105's step-back): day 33.16ms · night 37.33ms.** Still
-  valid at iter **110**: a pristine-HEAD control read day **33.49ms** / night **37.72ms** (min-of-3),
+  valid at iter **111** (pristine-HEAD control that session read day **33.78ms**; the change added
+  +0.22ms). Also valid at iter **110**: a pristine-HEAD control read day **33.49ms** / night **37.72ms** (min-of-3),
   and iter 109's read day **33.33ms** / night **37.89ms**. Not re-pinned. The
   stale-baseline warning 104 raised is **resolved** — the old pin (2026-07-09, day 31.33ms) predated
   iters 100–104 and reported ~+6% before your change existed. Do not re-chase it. The rule it taught
@@ -1023,109 +1044,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 103 entries before Iteration 101 live in
+> **Archive:** the 104 entries before Iteration 102 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 101 — the greenway that could not be traced (2026-07-10)
-
-**Vector** — Nature × **Connect**. Rotation forced the kind: 96/97/98/99/100 ran
-Polish · Interaction · Polish · Polish · New element, so **Connect and Deepen were both
-cold** and a sixth Polish-ish lap was off the table. The vector itself was *prescribed*,
-twice over: iter 88 died proving "Nature × Connect is not reachable draw-only" and left an
-explicit design for its successor — *"the reachable Connect hosts are the greens the city
-already protects; a PARK↔PARK↔FOREST greenway is the version with an actual host, **if one
-plants it as terrain early enough to survive**"* — and iter 100's step-back agent independently
-asked to **"consolidate green into one or two district-scale parks/greenways."** Same feature,
-found from two directions. Cue (e½).
-
-**Change (reverted).** A `GWK`/`GWFAM` line on the diagonal family the main street did *not*
-take, surveyed in `genWorld` after the high street: walk the axis, convert `EMPTY`/`MEADOW`
-to `PARK` with a `c.gw` flag, skipping `corr` so crossing streets stay whole; ~40% of spine
-cells bulge one hex sideways. Plus `gwTrail()` (a cream footpath), a `Greenway` tooltip, and
-`__find('greenway'|'gwspine')`. **Zero `rng()` draws** — offset, side and bulges all from
-`hashCell` — so `genWorld`'s seeded stream stayed byte-identical; only the terrain perturbed
-downstream ticks.
-
-**Census** — PASS, and the trade was *good*: `pop` −3346 (**−2.25%**) and `developed` −43
-for ~52 green cells per seed, i.e. roughly **half the pop-per-cell cost of iter 100's QUAD**,
-because `PARK` is the top `valueSrc` (0.92) and the ribbon lifts `val` along its whole
-frontage — `cafes` **+141**, `COM` **+51**, `tallTowers` **+6**. `PARK` **+344** (not +470:
-the late park pass fires less, because the greenway already satisfies its "no PARK within 3"
-test — the ribbon *replaces* confetti, exactly what cue (e½) asked for).
-
-**Visual — the gate, and the reason for the revert.** `VISUAL: FAIL` **7 of 9** agent reads.
-Final version: seed 42 PASS (traced it on one axis, no tears), **seed 7 FAIL — could not
-trace it.** Seed 7 is also the seed with the weakest measured contrast, so that FAIL is
-*corroborated by the number*, not contradicted by it. A change must hold across seeds.
-
-**Verdict: EXPLORED → REVERTED.** `solvista.html` is byte-identical to HEAD; census on the
-reverted tree is **+0 on all 22 metrics**, empty tile histogram, 0 page errors. Reverted
-because it cost 2.25% of the population and 27% of the stations for a feature you must zoom
-one step in to see — the solar-farm trade — and because a 1–2 hex ribbon **is not the
-district-scale lung cue (e½) asked for.** Cue (e½) stays **open**.
-
-### Findings — what iteration 102+ should lift from this
-
-- **⚠ CONTRAST IS NOT TRACEABILITY. For a LINEAR feature, legibility ≈ contrast × WIDTH.**
-  This is the load-bearing result, and it *refines* iter 95 ("legibility at distance is
-  luminance contrast, not coverage"). A tone probe (sample a 3×3 disc at each tile centre off the
-  live canvas via `getImageData`, at **default fit zoom**, and compare mean sRGB luminance against a
-  `PARK`-vs-`MID` scale reference) measured the spine at **ΔL 22–35 above ordinary PARK**,
-  against a `PARK`-vs-`MID` reference of only **ΔL 7–11** — the ribbon out-contrasted a pair
-  everybody calls obviously distinguishable, **and agents still could not follow it.** A
-  one-hex-wide line at fit zoom is ~1 screen pixel: that is contrast *without a shape*.
-  Below ~2–3 hexes across, a corridor cannot be traced no matter its ΔL. **Do not answer
-  "can it be followed?" with a tone probe** — tone answers "does it separate", which is a
-  different question. Iter 95's rule and this one are both true and neither implies the other.
-- **PARK IS PERMANENT — the host iter 88 wanted exists, and is confirmed.** No pass in
-  `tick()` ever consumes a `PARK`: development takes only `EMPTY`/`MEADOW`/`FARM` (L907/928/936),
-  and roads pave only `c.corr` (L899/1192). Measured `survive == gw` on 3 seeds × 1985/2035.
-  **So terrain planted in `genWorld` survives to 2035.** Any future green vector should plant
-  early and stop worrying about the city eating it.
-- **Green is not just affordable, it partly pays for itself.** `valueSrc` scores `PARK` **0.92**,
-  the highest in the game (L813), so park frontage raises neighbours' `val`, which raises
-  development probability (L909's `greenNear`) and height. −2.25% pop for 52 cells/seed, vs
-  iter 100's −1.03% for 23. Budget green at **~0.045% pop per cell**, not more.
-- **Survey a line's offset; never coin-flip it.** A `hashCell` coin flip aimed seed 7's ribbon
-  out to sea — 17 cells planted, its walk blocked by `WATER:18` and `BEACH:6`. Scoring both
-  sides by plantable cells (the same deterministic scan `hsBest` uses for the high street) took
-  seed 7 to **58 cells** and fixed the seed spread. **Reusable for any future axis feature.**
-- **Union-find must BRIDGE one cell, or it condemns a correct corridor.** A greenway crossed by
-  streets is still one greenway. Strict adjacency called the ribbon **13/14/16 patches**;
-  bridging a single non-green cell called it **4/6/4**, with `fullSpan` **56–59 hexes**. Iter 88's
-  "mark paths, not cells" rule stands, but its *measurement* needs this amendment.
-- **Drawing a continuous line across tiles under top→bottom row order: stroke HALF a segment
-  from each tile to the shared hex edge.** The lower half is overpainted by the next row's tile,
-  then redrawn by that tile's own upward half. Produced **zero z-order tears** across 9 reads.
-  Worth re-deriving for any future path/greenway/route. (`px(x+0.5,y+0.5) === ctr(x,y)` exactly,
-  so either is safe for integer cells.)
-- **⚠ `stations` falls whenever you de-densify a band, and it is not a break.** `monoStationCells()`
-  only counts a stop with `countAround(x,y,1,DEV)>=3`, and `PARK ∉ DEV` — so green beside a line
-  drops its stops below quorum. `stations` **−17 (−27%)** while `monoLines` stayed **11**. Check
-  `monoLines` before believing you severed transit.
-- **⚠ Agent verdicts were unreliable AGAIN, and the tell is corroboration.** Nine wide-frame reads
-  produced "a debug-chrome lattice", "an L-shaped kink", and "the trail rides over rooftops" —
-  **all three factually false**: `px()≡ctr()` for integer cells, and stepping the SW family moves
-  the centre exactly **−0.5·CW per row**, a straight screen line. But seed 7's FAIL *was* true, and
-  the tell was that a number agreed with it. **Trust a verdict a measurement corroborates; verify
-  one it contradicts.** (Iter 100 said the same and it keeps paying.)
-- **⚠ Aim clips at DEFAULT fit zoom.** `shot-gw.mjs` wheel-zoomed first, then read `scale`/`offX`
-  via `__find` — but the camera is still easing, so the clip landed on towers and I nearly
-  believed the trail was not drawn at all. Shoot at fit zoom, or wait for the camera to settle.
-
-### The prescription for a real lung (cue (e½) is still open)
-
-Not a ribbon — **a blob.** Same ~50 cells, contiguous, **≥3 hexes across** so it has a shape at
-frame scale; that is the one thing this iteration proves a 1–2 hex corridor can never have.
-Expect it to cost *more* pop per cell than the ribbon did (the ribbon's long frontage was what
-bought the `val` uplift back), so budget nearer iter 100's rate. Site it with
-`hexDist(x,y,CBDX,CBDY)` (iter 98), **not** `c.val` — whose peaks already sit on parks and water.
-The `c.gw` flag, the `Greenway` tooltip, the `gwTrail()` half-segment draw, and the contiguity probe
-(union-find with a one-cell bridge, plus a blocker histogram of what stops the walk) were all
-*correct* and are worth re-deriving; only the **shape** was wrong.
 
 ## Iteration 102 — the commons: the interior gets its lung (2026-07-10)
 
@@ -1941,3 +1864,101 @@ height. Night windows read as warm lit bands, not blow-out.
   selector with an "edit BOTH together" comment — a drift bomb. Extracting `towerLook()` and having
   `window.__twr` call it means the probe grades the *live* rule. Pair this with iter 101's law:
   a tracked probe that reimplements what it measures is worse than no probe.
+
+## Iteration 111 — the buses stop for somebody (2026-07-10)
+
+**Vector** — People & activity × **Connect**. Rotation named the domain: People (104) was two laps
+overdue (110's step-back pre-empted it). The kind came from 109's own finding — *"Connect's trick was
+that it added no new object, it closed a gap between two that already existed; look for that shape in
+People and Transport before reaching for a new entity."* This is that shape exactly: `c.stop` road
+hexes have drawn a shelter since long before the ledger, buses have pulled into them and dwelt
+(`v.wait=1.2+…`, `v.dwell=16`) — **and the two had never met.**
+
+**The seam.** Under every shelter, `drawCell`'s `case T.ROAD` painted `1+((x+y)&1)` little figures with
+the comment *"somebody's always waiting on the day buses."* They were furniture: the same 1 or 2 people,
+in the same spots, forever, whether or not a bus had just been and gone. The city drew the *idea* of
+people waiting for a bus and never connected it to the buses.
+
+**Measured BEFORE designing, and the measurement killed the first design.** The obvious vector was to
+send *real residents* (`peds`) to the stops. `probe-stops.mjs` says they cannot get there:
+
+| | seed 7 | seed 42 | seed 1234 |
+| --- | --- | --- | --- |
+| stops | 24 | 32 | 30 |
+| within a leash of ANY strollable cell (structural ceiling) | 83% | 84% | 83% |
+| **within a leash of a live ped's ANCHOR** (real ceiling) | **25%** | **31%** | **20%** |
+| stops holding a ped at any moment, today | 6.2% | 3.1% | 3.0% |
+
+Sweeping the tether: even at radius **5**, only 56–75% of stops have a resident anchored near them —
+and `PEDLEASH` is the constant `stepPed`'s own comment says was tuned to hold street occupancy at ~19%.
+Real peds would have staffed a quarter of the shelters and **emptied the other three quarters**, which
+is strictly worse than the fakes. *Abandoned before writing a line of it.*
+
+**Change.** ~30 lines. `stopQueue(c,x,y)` — one pure function, the only definition of the rule, read by
+the draw, the tooltip **and the bus**. `stepVehicle` stamps `c.blast=time` when a bus pulls in (and
+`c.bqs`, whoever was aboard). The queue then builds while nobody comes: empty for `BUSGONE=6s`, +1
+rider every `BUSQGAP=20s`, up to a per-stop `stopCap` of **1–3** drawn from `hashCell` (never `rng()`),
+so shelters differ from one another. When a bus arrives the figures step off the sidewalk toward it
+(`-ox*bl`) and fade (`1-bl²`), and are gone. `probe-bus.mjs` set the constants: median headway at a
+served stop is **74–126 s**, so a shelter refilling in ~46 s spends real time part-full.
+
+**⚠ Held the mean (iter 98's law).** First cut used `stopCap` 2–4 and read **2.53 waiters** against the
+painted rule's flat **1.50** — ~30 extra glyphs citywide, i.e. clutter wearing variety's clothes. Retuned
+to 1–3: **1.68 / 1.83 / 1.83**. What the change buys is *variation and a story*, not more people.
+
+**Census — PASS.** Every metric `+0` (`pop -3`, `greenRoofs`/`solarRoofs` flat), **tile histogram empty**,
+entity counts unmoved, 0 page errors. Draw-only + `hashCell`: stream-neutral by construction, and the
+`pop ±3` is exactly the load jitter iter 108 documented on *identical pristine code*.
+
+**Perf — PASS, and controlled against pristine HEAD in the same session** (not against the baseline
+file — iters 99/104). Min-of-3, sequential: mine day **34.00** / night **38.55 ms**; pristine HEAD the
+same session day **33.78 ms**. **+0.22 ms (+0.65%)** — noise. The +2.5% the baseline file reports is
+today's machine load, not this code. Baseline (day 33.16 / night 37.33) **not** re-pinned.
+
+**Visual — PASS, 2/2 agents, on same-frame filmstrips.** Both described the sequence unprompted
+(3 standing → shifted toward the street and translucent → shelter empty) and both noted the frames were
+pixel-identical apart from the figures. Whole-city frames: *"balanced, beautiful coastal city… no
+clutter or darkening."*
+
+**Tooltip** (per the sync invariant): `Bus stop` now reads its live state — `3 waiting` / `boarding` /
+`nobody waiting`. Verified by driving a real hover through all three phases; no page errors.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A FILMSTRIP OF A LIVE DIORAMA NEEDS A FROZEN CLOCK, OR THE DIFF IS ALL WEATHER.** The first
+  filmstrip stepped the sim between shots. The pixel diff of "full" vs "emptied" came back **9371 px
+  (14% of the clip), bbox 139×110** — cars had moved, trees had swayed, the sea had breathed. It
+  proved nothing about a 3-pixel figure. Setting `playing=false` and driving only `c.blast` between
+  `render()` calls makes every other pixel identical **by construction**, and the same diff came back
+  **237 px in a 14×24 box.** This is iter 109's "a control must live in the same frame as the thing it
+  controls," and the *frame* means the instant, not just the viewport. Both visual agents then
+  volunteered that the frames were identical except the figures — a same-frame control makes the
+  agents better witnesses too.
+- **⚠ "NOT DRAWN" AND "DRAWN BUT HIDDEN" ARE THE SAME SCREENSHOT — AND MY OCCLUSION FILTER PICKED A
+  HIDDEN ONE.** Seed 42's first gate returned `VISUAL: FAIL`; the agent saw no figures and read the
+  neighbouring festival bunting as them. It was right: the stop I had chosen was **occluded**, and the
+  same-frame diff there is **0 px in every phase**. I had hand-rolled an occlusion filter (no `DEV` at
+  `(x±1,y+1)`) and it selected an invisible shelter anyway. Replaced by *measuring*: zoom onto each
+  candidate, diff full-vs-emptied, keep the stop whose figures actually move pixels. **Do not
+  hand-derive which instances are visible — render them and count.** (Header law: "when a pixel probe
+  of a 3-D scene reads weakly, suspect occlusion first." It applies to choosing the *subject* too.)
+- **⚠ THE AGENT'S `FAIL` WAS CORRECT AND ITS DIAGNOSIS WAS WRONG — AGAIN (iter 110's law, in the
+  visual gate).** It reported "bunting/pennants, not people," and concluded the feature didn't work.
+  The feature worked; the *stop was behind a building*. Take the observation ("I can't see figures"),
+  throw away the explanation, go measure. Note the failure mode `probe-vis.mjs` now covers: I would
+  have shipped a false `FAIL` and reverted a good iteration.
+- **THE QUEUE IS A ZOOM-IN REWARD, AND NOW THERE IS A NUMBER FOR IT.** `probe-vis.mjs` sweeps the
+  camera: figures move **2–4 px at fit zoom (0% of shelters)**, become readable at **zoom 4 (53–63%)**,
+  and **plateau at 63–73% by zoom 8** — the plateau is the ~30% that are permanently occluded. So this
+  buys nothing in the un-zoomed frame the census and the wide shots live in, and it is *not* a
+  regression either: the painted figures it replaces were equally sub-pixel. Worth knowing before the
+  next lap spends itself on ornament at this scale. **The artifact invites zoom ("scroll to zoom");
+  the whole-city gate can neither convict nor acquit anything drawn at 3 px.**
+- **A "DEEPEN" THAT MEASUREMENT TURNS INTO A DIFFERENT VECTOR IS STILL A GOOD LAP.** The intended
+  change (real peds ride buses) was structurally impossible against a tuned constant, and one probe
+  said so in ten minutes. The shipped change closes the *same* gap from the other side. Recording the
+  dead branch matters more than the live one: **`peds` cannot serve the road network — their leash is
+  anchored to open ground by design.** Any future "residents use transport" vector must either move the
+  anchor (spawn pool) or accept ~25% coverage. Don't rediscover this.
