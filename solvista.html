@@ -205,11 +205,12 @@ const nbrDirs=y=>(y&1)?NBR_O:NBR_E;
    (2,3) and (4,5): those are inverse steps, not opposite neighbors, and a line
    drawn through them bends. */
 const NBR_OPP=[[0,1],[2,5],[3,4]];
-const T={EMPTY:0,ROAD:1,RES:2,MID:3,COM:4,TOWER:5,CIVIC:6,PARK:7,BEACH:8,WATER:9,PLAZA:10,MEADOW:11,SHOREPARK:12,FARM:13,IND:14,MARKET:15,GARDEN:16,BURNT:17,FOREST:18,ROCK:19,SOLARF:20,FIELD:21,STADIUM:22,VINEYARD:23,MARSH:24,LIGHTHOUSE:25,KELP:26,ORCHARD:27,REDWOOD:28,VOID:29,DUNE:30};
+const T={EMPTY:0,ROAD:1,RES:2,MID:3,COM:4,TOWER:5,CIVIC:6,PARK:7,BEACH:8,WATER:9,PLAZA:10,MEADOW:11,SHOREPARK:12,FARM:13,IND:14,MARKET:15,GARDEN:16,BURNT:17,FOREST:18,ROCK:19,SOLARF:20,FIELD:21,STADIUM:22,VINEYARD:23,MARSH:24,LIGHTHOUSE:25,KELP:26,ORCHARD:27,REDWOOD:28,VOID:29,DUNE:30,QUAD:31};
 const DEV=new Set([T.RES,T.MID,T.COM,T.TOWER,T.CIVIC,T.IND,T.MARKET]);
-/* lots a great institution may clear to open its forecourt. A city demolishes a
-   shop or a mid-rise for the square in front of its parliament; it does not take
-   down a tower, and it does not pave a park. */
+/* lots a great institution may clear — to open its forecourt, or to lay out the
+   grounds behind it. A city demolishes a shop or a mid-rise for the square in
+   front of its parliament; it does not take down a tower, and it does not pave
+   a park. */
 const FORECOURT_LOT=new Set([T.EMPTY,T.RES,T.COM,T.MID]);
 const SHOREX=CTRX+11; /* the coast highway column */
 /* The founding crossroads, published by genWorld: every seed lays a main street
@@ -269,6 +270,9 @@ const BASE={
   brick:[168,92,64], brickDk:[134,70,50],
   lav:[178,148,198],
   lawn:[150,181,122], /* irrigated green: parks stay lush when the hills go gold */
+  turf:[101,137,97],  /* mown institutional grounds: deeper and COOLER than park lawn
+                         (which is yellow-green), so a quad separates from a park at
+                         city zoom by luminance AND hue, and from forest by hue */
 };
 /* the seasons, calendar-aligned on s=year%1: winter cools (~Jan, s≈0),
    spring freshens (~Apr, s≈0.28), the hills go gold in late summer (s≈0.62,
@@ -806,7 +810,7 @@ function frontSide(x,y,fallback){
 const valBuf=new Float32Array(G*G);
 function valueSrc(t){
   switch(t){
-    case T.PARK: case T.GARDEN: return 0.92;
+    case T.PARK: case T.GARDEN: case T.QUAD: return 0.92;
     case T.PLAZA: return 0.85;
     case T.FIELD: return 0.8;
     case T.STADIUM: return 0.6;
@@ -835,6 +839,12 @@ function updateValue(){
    aquarium, amphitheater, observatory) are sited by need, not by rank. */
 const MAJORK=new Set(['hall','museum','parliament','university','library']);
 const QUARTER=new Set(['library','museum','parliament']);
+/* the institutions that keep grounds: the monuments, plus the two services whose
+   real-world plan is a building set back in its own green — a hospital in its
+   lawns, a school behind its playing field. A firehouse has an apron, not a
+   lawn; the amphitheater already sits in parkland; the observatory wants the
+   dark rim. Those keep the bare lot they stand on. */
+const GROUNDS=new Set(['hall','museum','parliament','university','library','hospital','school']);
 const QNEAR=2, QFAR=4;   /* hexes to the nearest standing institution: near enough
                             to share a street, far enough to leave one between */
 
@@ -1073,6 +1083,43 @@ function tick(){
     }
     if(best&&hashCell(best[0],best[1],seedNum^0xF04C)<0.9){
       const n=best[2];n.t=T.PLAZA;n.h=0;n.th=0;n.age=0;}
+  }
+  /* institutional grounds (2022+): an institution fronts a paved square and BACKS
+     onto a green quad. The forecourt above takes the loud side — it scores on
+     c.flow, the arterial — so the quad takes the quiet one: the lot behind,
+     fronting no street. Runs after the forecourt, so PLAZA is already claimed and
+     falls outside FORECOURT_LOT; the two squares can never contend for one lot.
+
+     Two institutions cannot share a quad between them. Iter 91 spaced the quarter
+     at QNEAR=2 to "leave one between", but the cell between two clustered majors
+     was measured to be the street they both front (ROAD 10/16, PLAZA 4/16, a bare
+     lot 3/16 on one seed of three) — siteQuarter requires roadNear(), so they
+     meet on a road by construction. Greening it would sever the civic mile the
+     bunting is strung along. The grounds go behind, where the carpet is.
+
+     hashCell-gated (no rng()), but this DOES convert a lot — mostly MID — so it
+     perturbs the downstream stream like any terrain rule. That is the point: it
+     is the only interior green the fabric earns rather than is given. */
+  if(year>=2022)for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const c=cells[idx(x,y)];
+    if(c.t!==T.CIVIC||!GROUNDS.has(c.kind))continue;
+    if(countAround(x,y,1,n=>n.t===T.QUAD)>0)continue;      /* one quad per institution */
+    /* the same front the forecourt picked, so the quad is genuinely its back */
+    const fx=frontSide(x,y,hashCell(x,y,seedNum^0x7C3D)<0.5?1:-1),[cx0]=ctr(x,y);
+    let best=null,bestScore=-1;
+    for(const d of nbrDirs(y)){
+      const nx=x+d[0],ny=y+d[1],n=cellAt(nx,ny);
+      if(!n||!FORECOURT_LOT.has(n.t))continue;
+      let street=0;
+      nbrs6(nx,ny,(mx,my)=>{const m=cellAt(mx,my); if(m&&m.t===T.ROAD)street=1;});
+      /* behind dominates; among the back lots prefer the one off the street; the
+         spatial hash breaks the ties that leaves */
+      const behind=((ctr(nx,ny)[0]-cx0>0?1:-1)===-fx)?1e6:0;
+      const score=behind+(street?0:1e3)+hashCell(nx,ny,seedNum^0x51AD)*100;
+      if(score>bestScore){bestScore=score;best=[nx,ny,n];}
+    }
+    if(best&&hashCell(best[0],best[1],seedNum^0xB09D)<0.85){
+      const n=best[2];n.t=T.QUAD;n.h=0;n.th=0;n.age=0;}
   }
   /* far fields quietly go solar (2012+) */
   if(year>=2012)for(let k=0;k<ks(6);k++){
@@ -1613,7 +1660,7 @@ function recount(){
      constraint, so walkable falls when towers outpace the civic building. */
   const stations=new Set(monoStationCells());
   reachFill(rTransit,2,(c,i)=>stations.has(i)||(c.t===T.ROAD&&c.stop));
-  reachFill(rGreen,3,c=>c.t===T.PARK||c.t===T.GARDEN||c.t===T.PLAZA||c.t===T.SHOREPARK);
+  reachFill(rGreen,3,c=>c.t===T.PARK||c.t===T.GARDEN||c.t===T.PLAZA||c.t===T.SHOREPARK||c.t===T.QUAD);
   reachFill(rShop,3,c=>c.t===T.COM||c.t===T.MARKET);
   reachFill(rServ,6,c=>c.t===T.CIVIC);
   reachFill(rSea,FOGR,c=>WETSET.has(c.t));
@@ -1714,7 +1761,7 @@ function syncFleet(){
   }
   const openCells=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){const t=cells[idx(x,y)].t;
-    if(t===T.PARK||t===T.PLAZA||t===T.BEACH||t===T.DUNE||t===T.SHOREPARK||t===T.GARDEN||t===T.FIELD)openCells.push([x,y]);
+    if(t===T.PARK||t===T.PLAZA||t===T.BEACH||t===T.DUNE||t===T.SHOREPARK||t===T.GARDEN||t===T.FIELD||t===T.QUAD)openCells.push([x,y]);
     if(t===T.MARKET||t===T.STADIUM){openCells.push([x,y],[x,y],[x,y]);}} /* markets & matches draw a crowd */
   if(year>=1987)for(let x=pier.x0+1;x<=pier.x1;x++)openCells.push([x,pier.y]);
   const PEDC=['terra','teal','gold','coral','sage','lav','white'];
@@ -1857,7 +1904,7 @@ function pierAt(x,y){return year>=1986&&y===pier.y&&x>pier.x0&&x<=pier.x1}
 function onPier(x,y){return year>=1987&&pierAt(x,y)}
 function strollable(x,y){
   const n=cellAt(x,y);
-  return(n&&(n.t===T.PARK||n.t===T.PLAZA||n.t===T.BEACH||n.t===T.DUNE||n.t===T.SHOREPARK||n.t===T.MARKET||n.t===T.GARDEN||n.t===T.FIELD||n.t===T.STADIUM))||onPier(x,y);
+  return(n&&(n.t===T.PARK||n.t===T.PLAZA||n.t===T.BEACH||n.t===T.DUNE||n.t===T.SHOREPARK||n.t===T.MARKET||n.t===T.GARDEN||n.t===T.FIELD||n.t===T.STADIUM||n.t===T.QUAD))||onPier(x,y);
 }
 /* ---- sidewalks ------------------------------------------------------------
    Open ground (parks, plazas, beaches, markets) is ~100 disconnected islands by
@@ -1873,7 +1920,7 @@ function strollable(x,y){
    0.45 emptied them to ~14%, 0.15 flooded them to ~28%.
    Bridges are excluded — the deck is raised and a ground-drawn ped sinks through it. */
 const PEDLEASH=2, PEDSTEP_OP=0.18, PEDSTEP_RD=0.30;
-const PEDDEST=new Set([T.PARK,T.PLAZA,T.MARKET,T.SHOREPARK,T.GARDEN,T.COM,T.CIVIC,T.STADIUM]);
+const PEDDEST=new Set([T.PARK,T.PLAZA,T.MARKET,T.SHOREPARK,T.GARDEN,T.COM,T.CIVIC,T.STADIUM,T.QUAD]);
 function pedRoad(x,y){const n=cellAt(x,y);return!!n&&n.t===T.ROAD&&!n.bridge}
 function pedWalk(p,x,y){
   return strollable(x,y)||(pedRoad(x,y)&&hexDist(x,y,p.hx,p.hy)<=PEDLEASH);
@@ -2683,6 +2730,56 @@ function drawCell(x,y){
       prism(gx+0.3,gy+0.3,0.05,0.045,0,3,col('white',1),col('whiteDk',0.6),col('whiteDk',0.85)); /* inverter hut */
       if(LITAMT>0.3){ctx.fillStyle='rgba(240,120,90,'+LITAMT+')';
         const[ix,iy]=px(gx+0.3,gy+0.3);ctx.fillRect(ix-0.6,iy-4,1.2,1.2);}}
+      break;}
+    case T.QUAD:{
+      /* institutional grounds: a mown lawn, not a park. The tells are all
+         maintenance — alternating mower passes, a straight path corner to
+         corner, a clipped hedge on the rim. PARK is lusher (lawn,1.03) and
+         wanders; the quad is kept. Orientation is seed-salted, so a quad does
+         not restate anything the value field already says (iter 99). */
+      /* Turf, not park lawn. At city zoom a tile is ~14px and every ornament here
+         is ~1 world unit, so NOTHING but the base tone and the rim survive the
+         distance (iter 95: legibility is luminance contrast, not coverage). Drawn
+         in PARK's own `lawn` it was correctly judged "a generic grass hex" twice.
+         So the quad gets its own deeper turf, and a hedge around its whole rim —
+         at distance an enclosed, kept green; up close a clipped hedge. The
+         stripes and path below are for the near view only. */
+      hexTile(gx,gy,1.02,col('turf',0.98+hashCell(x,y,seedNum^0x2B7E)*0.07));
+      {const[cx,cy]=px(gx,gy);
+      const flip=hashCell(x,y,seedNum^0x2B7E)<0.5?1:-1;
+      /* Clip to the TILE'S OWN HEXAGON, not an ellipse. An elliptical clip cuts
+         the mower passes into a lens and lets the path slab out over the
+         neighbours — both read as blobs rather than groundskeeping. */
+      const X=HW,V=VR,E=ER;
+      const hex=()=>{ctx.beginPath();
+        ctx.moveTo(cx,cy-V);ctx.lineTo(cx+X,cy-E);ctx.lineTo(cx+X,cy+E);
+        ctx.lineTo(cx,cy+V);ctx.lineTo(cx-X,cy+E);ctx.lineTo(cx-X,cy-E);
+        ctx.closePath();};
+      ctx.save(); hex(); ctx.clip();
+      /* Alternating mower passes. Deliberately LOW contrast: they cover most of
+         the face, so a bright stripe averages the tile's apparent tone back up
+         and cancels the darker base that carries the distance read. Measured:
+         at turf*1.12 the tile sampled 16 lum ABOVE its own base fill, collapsing
+         QUAD-vs-PARK to ΔL 2.9. Ornament cannot create legibility at distance
+         (iter 95) but it can destroy it. */
+      ctx.fillStyle=col('turf',1.05);
+      for(let s=-3;s<=3;s++)if(s&1)ctx.fillRect(cx-X,cy+s*1.9-0.95,2*X,1.9);
+      /* the path: a thin straight line, corner to corner */
+      ctx.strokeStyle=col('cream',0.90);ctx.lineWidth=0.9;
+      ctx.beginPath();ctx.moveTo(cx-X,cy+E*0.40*flip);ctx.lineTo(cx+X,cy-E*0.40*flip);ctx.stroke();
+      /* a bench on the path, drawn over it */
+      ctx.fillStyle=col('trunk',1.0);
+      ctx.fillRect(cx+1.4*flip,cy+1.9,2.4,0.8);
+      if(LITAMT>0.3){ /* one lamp on the path */
+        ctx.fillStyle='rgba(255,226,158,'+(0.24*LITAMT)+')';
+        ctx.beginPath();ctx.ellipse(cx,cy-0.2,4.8,2.8,0,0,7);ctx.fill();}
+      /* the clipped hedge, run round the whole rim. Stroked inside the clip, so
+         only its inner half shows: a crisp dark keyline at any zoom. */
+      ctx.strokeStyle=col('canopy',0.70);ctx.lineWidth=3.2;
+      hex(); ctx.stroke();
+      ctx.restore();
+      }
+      tree(gx-0.20,gy-0.14,0.62,1);   /* a specimen tree, one per quad */
       break;}
     case T.PLAZA:{
       hexTile(gx,gy,1.02,col('cream',0.97));
@@ -4910,7 +5007,7 @@ cvs.addEventListener('click',e=>{
 /* ---- hover tooltip: name + data for the tile under the cursor ---- */
 const TILELABEL={[T.EMPTY]:'Vacant lot',[T.ROAD]:'Street',[T.RES]:'Homes',[T.MID]:'Mid-rise',
   [T.COM]:'Shops',[T.TOWER]:'Tower',[T.CIVIC]:'Civic building',[T.PARK]:'Park',[T.BEACH]:'Beach',
-  [T.WATER]:'Ocean',[T.PLAZA]:'Plaza',[T.MEADOW]:'Meadow',[T.SHOREPARK]:'Coastal park',[T.FARM]:'Farm',
+  [T.WATER]:'Ocean',[T.PLAZA]:'Plaza',[T.QUAD]:'Quad',[T.MEADOW]:'Meadow',[T.SHOREPARK]:'Coastal park',[T.FARM]:'Farm',
   [T.IND]:'Industry',[T.MARKET]:'Market',[T.GARDEN]:'Community garden',[T.BURNT]:'Burnt lot',
   [T.FOREST]:'Woods',[T.ROCK]:'Rocks',[T.SOLARF]:'Solar field',[T.FIELD]:'Ball field',
   [T.STADIUM]:'Stadium',[T.VINEYARD]:'Vineyard',[T.MARSH]:'Salt marsh',[T.LIGHTHOUSE]:'Lighthouse',
@@ -4930,6 +5027,7 @@ const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats 
   [T.STADIUM]:'Home of the local side.',[T.FIELD]:'A neighborhood sports pitch.',
   [T.IND]:'Warehouses and light industry.',[T.MEADOW]:'Wild grass and wildflowers.',
   [T.SHOREPARK]:'A palm-lined park by the water.',[T.PLAZA]:'A paved civic square.',
+  [T.QUAD]:'Mown grounds behind an institution.',
   [T.ROCK]:'A rocky outcrop.',[T.EMPTY]:'Undeveloped — click to plant a park.'};
 function describeTile(c,x,y){
   let title,sub,data=[];

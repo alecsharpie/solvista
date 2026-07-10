@@ -3117,3 +3117,70 @@ found** — and with (a) now closed, the cue list is empty for the first time.
   (`z`) is not the only cure for something that floats; giving it a reason to *stop existing*
   where it has no business being (`pa`) is cheaper and, here, the only one that keeps it.
 
+## Iteration 90 — the back beach grows dunes (2026-07-10)
+
+**Vector** — Water & coast × **New CA rule (SHIPPED)**. Both axes pointed here. Water & coast
+was the most-lagged domain (last touched at 79), and its **New CA rule cell was empty after 89
+iterations** — the only domain with none. The last five kinds were Polish ×4 + 88's Connect, so
+an additive CA also broke a long Polish streak.
+
+**Probed the host before designing** (`probe-dune.mjs`, gitignored) — iter 88's lesson, applied.
+Terrain gen makes the beach **three columns wide** (`x>=sh-3`, L460), so a landward band exists.
+The radius-1 back beach (no `WETSET` neighbour, no road/dev neighbour) is **83–93 cells in 2–4
+long connected runs** — exactly a ridge. Two facts made the vector safe: that band is
+**era-invariant** (identical at 1985/2005/2035; the beach never develops), and a radius-**2** band
+is far too strict — 21–36 cells shattered into 1–2 cell fragments, no ridge at all.
+
+**Change.** A new tile `T.DUNE` (30) and one `tick()` pass beside the KELP/MARSH rules.
+- **Accretion, not placement.** Each tick a dry back-beach cell gains
+  `(hashCell(x,y,seed^0x5D17) − DUNEEXP)*DUNEGAIN + min(shelter,3)*DUNESH` sand, where `shelter` is
+  its count of DUNE neighbours. Exposed cells (low hash) **deflate to 0 and stay bare**; sheltered
+  ones accrete. Sand traps where sand is, so ridges thicken outward from their seeds and the hollows
+  between them stay beach. `c.sand` crosses `DUNESEED` → BEACH becomes DUNE; crosses `DUNEMARRAM` →
+  marram grass roots. A dune that gets a road/dev neighbour is **walked back to BEACH**.
+- **The shelter bonus is capped** (`DUNESHMAX`=3). Uncapped at 0.30/neighbour it *overwhelmed* the
+  exposure term (min −0.595), so any cell with 2 dune neighbours grew regardless of exposure — and in
+  a 1–2 cell wide band nearly everything has 2. First attempt: **83 of 93 host cells were dune by 1985**.
+- **Draw**: a dome — shaded dome-profile + ground-contact arc, with a lit cap sagging back from the
+  apex; marram tufts (`sage`/`grassDk`) once `sand>=DUNEMARRAM`. See the header lesson; it took four
+  goes and the first three were a pancake, a flat egg and a drum.
+- `__find` now returns `sand` per cell (it is the debug hook; that is its job).
+
+**Census:** VERDICT **PASS**, 0 page errors. `BEACH 1650 → 1384 (−266)` / `DUNE 0 → 266 (+266)`,
+`tileKinds +9` (one new kind × 9 matrix cells). **All 22 metrics exactly +0** — `pop`, `developed`
+and `roads` bit-exact — because DUNE was added to every passive predicate BEACH answered
+(`valueSrc`=0.74, `greenNear`, `openCells`, `strollable`, aquarium adjacency). A 266-cell terrain
+rewrite that perturbed the seeded stream **not at all**; see the header lesson.
+
+**Succession (`probe-dune2.mjs`), the payoff and the thing that was nearly missed:**
+
+| era | dunes | mean sand | grassed |
+| --- | --- | --- | --- |
+| 1985 | ~20 | 6.0 | **0** |
+| 2005 | ~31 | 13.6 | ~18 |
+| 2035 | ~37 | 21.0 | ~28 |
+
+Consistent across all three seeds; beach holds at 141–159 cells, so the sand is not swallowed.
+
+**Visual:** **3/3 `VISUAL: PASS`**, un-zoomed whole-frame at seeds 42/1234 (2035) and 7 (2005).
+Both mature frames read the mounds as *raised sand domes with a lit cap and shaded contact*, correctly
+landward, never in the water; all three report no z-order tears, no floating tiles, no blown-out colour,
+and **no coastal darkening or clutter**. Seed 7 at 2005 calls them "barely perceptible" un-zoomed —
+that is the CA working (mid-succession, mean sand 13/30), not a defect.
+
+**Verdict:** **SHIPPED.** The coast gains a landward edge that grows for fifty years.
+
+**Lessons.**
+- **A tick is 0.075 years.** The single most expensive mistake of the lap: rates tuned as if `warp=11`
+  meant 11 ticks were ~13× too fast, and the ridge was mature and grassed before the first visible era.
+  Promoted to the header — it will bite any future `tick()` pass meant to evolve.
+- **Positive feedback needs a brake.** "Sand traps where sand is" is the whole physics of a dune, and
+  uncapped it fills the band in one era. The cap that lets *exposure veto shelter* is what turns a
+  spread into a **ridge with hollows between it**.
+- **Verify the load-bearing claim yourself.** The first-round agent called the succession "subtle" — its
+  `coast` framing had sliced the beach off the left edge. Re-aiming the clip via `__find('DUNE')` +
+  the artifact's own camera zoom (`shot-dune.mjs`, ZOOM=n, both eras on the **same rect**) showed the
+  draw was a fried egg. Six agent-readings would not have caught it; iter 89 said the same thing.
+- **Preset framings lie about small features.** `--shots coast` is ocean-heavy and misses the sand on
+  some seeds; two separate agents flagged it unprompted. Aim clips with `__find`, not with a preset.
+

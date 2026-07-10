@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
-| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93 | 78 | | 84 | 71 |
 
@@ -40,9 +40,30 @@ ones (U2, 42, U5) stay in the bullet.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
-- **⚠ ROTATION DEBT: Civic & culture is stale since iter 91, and Polish is 4 of the last 6.** Iter 99
-  knowingly spent a 5th Urban×Polish because the step-back's agents named the mid-rise carpet on both
-  seeds. **Iter 100 should be Civic & culture, and NOT Polish.**
+- **ROTATION: debt discharged by iter 100** (Civic × New element, the row's first additive vector
+  since iter 30). Stalest domains are now **Sky & atmosphere** (last vector 95) and **People &
+  activity** (93); Sky has an **empty New CA rule cell** and no Connect/Scale, People has no Scale.
+  Recent kinds: 96 Polish · 97 Interaction · 98 Polish · 99 Polish · 100 New element — so **Deepen and
+  Connect are both cold**, and another Polish would be a 5th in seven.
+- **⚠ ORNAMENT YOU CANNOT SEE AT DISTANCE STILL AVERAGES INTO THE TILE'S TONE (iter 100).** Iter 95
+  established that legibility at distance is luminance contrast, not coverage. The corollary: **coverage
+  destroys it.** `QUAD` was given a `turf` base of lum **144** to separate it from `PARK`; the tile
+  *measured* **160**, because its own mower stripes (`turf×1.12`, most of the face) and cream path
+  averaged the sampled tone **+16 back toward park**, collapsing QUAD-vs-PARK to **ΔL 2.9** on seed 42.
+  Damping the ornament (stripes ×1.05) and re-cutting the base restored **ΔL 19–23**. **Measure the tile
+  as RENDERED, not as specified** — `probe-quadtone.mjs` samples the real canvas at default fit zoom
+  (3×3 disc per tile centre) and reports per-type mean sRGB/luminance, with `PARK vs FOREST` (ΔL 31–36,
+  obviously distinguishable) and `PARK vs MEADOW` as built-in scale references. **It is the shape probe
+  for any "does this tile read at city zoom?" claim** — and it settled a dispute three rounds of agent
+  opinion could not. Two agent verdicts were outright unreliable (one described a tower facade inside a
+  quad clip); a number was not.
+- **⚠ THE CELL BETWEEN TWO CLUSTERED MAJORS IS THE STREET THEY BOTH FRONT — there is nothing to build
+  there (iter 100).** Iter 91's `QNEAR=2` comment ("far enough to leave one between") reads like a hook
+  for a shared civic square. Measured across 3 seeds, that gap cell is **ROAD 10/16 · PLAZA 4/16 · bare
+  lot 3/16**, and *shared* lot cells adjacent to two institutions number **0, 0, 3** — `siteQuarter`
+  requires `roadNear()`, so majors meet on a road **by construction**. Greening/paving it would sever
+  the civic mile the iter-45 bunting is strung along. Institutional space goes **behind** an institution
+  (`probe-grounds.mjs`), where its neighbours are overwhelmingly `MID`.
 - **⚠ `c.dist` IS CONFETTI, NOT NEIGHBOURHOODS — do not build anything on it (iter 99).** The district
   majority-vote CA (L1201) looks like it partitions the city into 4 quarters; measured over the ~1100
   `DEV` cells it runs on, `sameNbr` is **45.6–50.2%** against a **25%** chance floor, with **535–580
@@ -352,9 +373,14 @@ ones (U2, 42, U5) stay in the bullet.
   **CLOSED by iter 98**; its **palette** half was **CLOSED by iter 99**)* Urban fabric — iter 94's
   holistic agent called the landmass "too uniform… little breathing room between core and edge,"
   and the interior an "edge-to-edge carpet of roads + rooftops with little green breathing room."
-  **98 fixed the skyline; 99 fixed the colour; neither touched a tile.** What remains is strictly
-  the *density/green* half: mid-block density is exactly as uniform as it ever was, and there is no
-  interior green. Heed iter 92 (never zone against `TOWER` near the core: −9.8% pop) **and** iter 98
+  **98 fixed the skyline; 99 fixed the colour; 100 put the first *earned* green in the interior
+  (7–10 `QUAD` hexes behind the institutions) — but it did NOT add a lung.** Iter 100's step-back
+  agent, reading the whole frame: the interior *"does breathe… but green is fragmented into small
+  patches rather than any real district-scale lung,"* and its top recommendation was to
+  **consolidate green into one or two district-scale parks/greenways** instead of more scatter.
+  That, plus mid-block density, is exactly what remains. Note iter 100 spent −1.03% pop for 23
+  cells, so a district-scale park is affordable but not free.
+  Heed iter 92 (never zone against `TOWER` near the core: −9.8% pop) **and** iter 98
   (the upgrade probability *saturates*, so leaning on `p` is a weak lever that costs towers at 240
   pop each). A `MID`/`RES` thinning rule, or interior parks, is likelier than anything touching
   towers. **This is the first (e½) move that must change tiles, so it cannot be stream-neutral —
@@ -734,78 +760,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 92 entries before Iteration 90 live in
+> **Archive:** the 93 entries before Iteration 91 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 90 — the back beach grows dunes (2026-07-10)
-
-**Vector** — Water & coast × **New CA rule (SHIPPED)**. Both axes pointed here. Water & coast
-was the most-lagged domain (last touched at 79), and its **New CA rule cell was empty after 89
-iterations** — the only domain with none. The last five kinds were Polish ×4 + 88's Connect, so
-an additive CA also broke a long Polish streak.
-
-**Probed the host before designing** (`probe-dune.mjs`, gitignored) — iter 88's lesson, applied.
-Terrain gen makes the beach **three columns wide** (`x>=sh-3`, L460), so a landward band exists.
-The radius-1 back beach (no `WETSET` neighbour, no road/dev neighbour) is **83–93 cells in 2–4
-long connected runs** — exactly a ridge. Two facts made the vector safe: that band is
-**era-invariant** (identical at 1985/2005/2035; the beach never develops), and a radius-**2** band
-is far too strict — 21–36 cells shattered into 1–2 cell fragments, no ridge at all.
-
-**Change.** A new tile `T.DUNE` (30) and one `tick()` pass beside the KELP/MARSH rules.
-- **Accretion, not placement.** Each tick a dry back-beach cell gains
-  `(hashCell(x,y,seed^0x5D17) − DUNEEXP)*DUNEGAIN + min(shelter,3)*DUNESH` sand, where `shelter` is
-  its count of DUNE neighbours. Exposed cells (low hash) **deflate to 0 and stay bare**; sheltered
-  ones accrete. Sand traps where sand is, so ridges thicken outward from their seeds and the hollows
-  between them stay beach. `c.sand` crosses `DUNESEED` → BEACH becomes DUNE; crosses `DUNEMARRAM` →
-  marram grass roots. A dune that gets a road/dev neighbour is **walked back to BEACH**.
-- **The shelter bonus is capped** (`DUNESHMAX`=3). Uncapped at 0.30/neighbour it *overwhelmed* the
-  exposure term (min −0.595), so any cell with 2 dune neighbours grew regardless of exposure — and in
-  a 1–2 cell wide band nearly everything has 2. First attempt: **83 of 93 host cells were dune by 1985**.
-- **Draw**: a dome — shaded dome-profile + ground-contact arc, with a lit cap sagging back from the
-  apex; marram tufts (`sage`/`grassDk`) once `sand>=DUNEMARRAM`. See the header lesson; it took four
-  goes and the first three were a pancake, a flat egg and a drum.
-- `__find` now returns `sand` per cell (it is the debug hook; that is its job).
-
-**Census:** VERDICT **PASS**, 0 page errors. `BEACH 1650 → 1384 (−266)` / `DUNE 0 → 266 (+266)`,
-`tileKinds +9` (one new kind × 9 matrix cells). **All 22 metrics exactly +0** — `pop`, `developed`
-and `roads` bit-exact — because DUNE was added to every passive predicate BEACH answered
-(`valueSrc`=0.74, `greenNear`, `openCells`, `strollable`, aquarium adjacency). A 266-cell terrain
-rewrite that perturbed the seeded stream **not at all**; see the header lesson.
-
-**Succession (`probe-dune2.mjs`), the payoff and the thing that was nearly missed:**
-
-| era | dunes | mean sand | grassed |
-| --- | --- | --- | --- |
-| 1985 | ~20 | 6.0 | **0** |
-| 2005 | ~31 | 13.6 | ~18 |
-| 2035 | ~37 | 21.0 | ~28 |
-
-Consistent across all three seeds; beach holds at 141–159 cells, so the sand is not swallowed.
-
-**Visual:** **3/3 `VISUAL: PASS`**, un-zoomed whole-frame at seeds 42/1234 (2035) and 7 (2005).
-Both mature frames read the mounds as *raised sand domes with a lit cap and shaded contact*, correctly
-landward, never in the water; all three report no z-order tears, no floating tiles, no blown-out colour,
-and **no coastal darkening or clutter**. Seed 7 at 2005 calls them "barely perceptible" un-zoomed —
-that is the CA working (mid-succession, mean sand 13/30), not a defect.
-
-**Verdict:** **SHIPPED.** The coast gains a landward edge that grows for fifty years.
-
-**Lessons.**
-- **A tick is 0.075 years.** The single most expensive mistake of the lap: rates tuned as if `warp=11`
-  meant 11 ticks were ~13× too fast, and the ridge was mature and grassed before the first visible era.
-  Promoted to the header — it will bite any future `tick()` pass meant to evolve.
-- **Positive feedback needs a brake.** "Sand traps where sand is" is the whole physics of a dune, and
-  uncapped it fills the band in one era. The cap that lets *exposure veto shelter* is what turns a
-  spread into a **ridge with hollows between it**.
-- **Verify the load-bearing claim yourself.** The first-round agent called the succession "subtle" — its
-  `coast` framing had sliced the beach off the left edge. Re-aiming the clip via `__find('DUNE')` +
-  the artifact's own camera zoom (`shot-dune.mjs`, ZOOM=n, both eras on the **same rect**) showed the
-  draw was a fried egg. Six agent-readings would not have caught it; iter 89 said the same thing.
-- **Preset framings lie about small features.** `--shots coast` is ocean-heavy and misses the sand on
-  some seeds; two separate agents flagged it unprompted. Aim clips with `__find`, not with a preset.
 
 ## Iteration 91 — the institutions find each other (2026-07-10)
 
@@ -1642,3 +1601,91 @@ design. **New cue (f), measured and standing:** `RES` has the identical defect M
 `corr(cream, height)` = **0.868**, and its roof hash is `hashCell(x,y,7)`, a **literal salt**, so
 **every seed paints the same RES roof pattern** (a quiet breach of "procedural, new city every
 load"). Both are one-line fixes in the RES branch (L3249–3251) for whoever takes Urban next.
+
+## Iteration 100 — the institutions get their grounds (2026-07-10) [holistic step-back]
+
+**Vector** — Civic & culture × **New element (SHIPPED)**, plus the 5-iteration holistic step-back.
+Both axes were forced and both were right: iter 99 left an explicit instruction (*"iter 100 should be
+Civic & culture, and NOT Polish"*), Civic's **New element** cell had been cold since **iter 30** — 70
+iterations — while its Deepen cell was the row's busiest (36/59/66/80/91), and no **New element** had
+shipped anywhere for five iterations. It also takes a bite out of standing cue **(e½)**: institutions
+are what earns interior green in a real city.
+
+**Change.** A new tile `T.QUAD` (31) — *mown institutional grounds*. `GROUNDS` = the five `MAJORK`
+monuments **+ hospital + school** (the two services whose real plan is a building set back in its own
+green; a firehouse has an apron, the amphitheater already sits in parkland, the observatory wants the
+dark rim). At **2022+**, each such institution takes the lot **behind** it: the forecourt rule (2020)
+scores on `c.flow` and takes the *loud* side, so the quad inverts it and takes the quiet one — the
+back lot fronting no street. Runs after the forecourt, so `PLAZA` is already claimed and sits outside
+`FORECOURT_LOT`; the two squares can never contend for a lot. `hashCell`-gated, no `rng()`.
+Registered in all seven seams a ground tile touches: `valueSrc` (0.92, as park), `reachFill(rGreen)`,
+`openCells`, `strollable`, `PEDDEST` (peds now stroll the quad), the draw case, and
+`TILELABEL`/`TILEDESC` — hovering one says **"Quad / Mown grounds behind an institution."**
+
+**The probe killed half the design before a line shipped.** The obvious feature was a *shared* quad on
+the cell between two clustered majors — iter 91 spaced the quarter at `QNEAR=2` explicitly to "leave
+one between," which reads like a hook left for exactly this. `probe-grounds.mjs` measured what is
+actually on that cell across three seeds: **ROAD 10/16 · PLAZA 4/16 · a bare lot 3/16 (one seed).**
+`siteQuarter` requires `roadNear()`, so **two institutions meet on the street they both front, by
+construction** — greening it would have severed the civic mile iter 45's bunting is strung along.
+Shared gap cells: **0, 0, 3.** The back-lot design was the supported one: **8/10, 11/12, 11/12**
+institutions have a convertible neighbour, and those neighbours are overwhelmingly **MID** — the exact
+"edge-to-edge carpet" tile cue (e½) complains about.
+
+**⚠ THE FINDING: ORNAMENT YOU CANNOT SEE AT DISTANCE STILL AVERAGES INTO THE TILE'S TONE, AND CAN
+CANCEL THE BASE COLOUR YOU ADDED TO CARRY IT.** The visual gate **failed three times on seed 7**, always
+with one sentence: *"grid-correct and well-placed, but reads as a generic grass hex."* Rounds 1–2 I
+treated it as an ornament problem (clip to the true hexagon — an ellipse clip had cut the mower passes
+into a lens and let the path slab out over the neighbours; replace two floating dark blobs with a
+shrub row). Those were real bugs and fixed real ugliness **up close**, and changed nothing at city
+zoom. The cause was that `QUAD` was drawn in **PARK's own `lawn`**. So I gave it a `turf` of its own —
+and it *still* failed. `probe-quadtone.mjs` (samples the real canvas at default fit zoom, 3×3 disc at
+each tile centre) said why:
+
+| | before | after | reference |
+| --- | --- | --- | --- |
+| QUAD vs PARK `ΔL` | **6.9 / 2.9 / 9.3** | **20.7 / 19.3 / 22.5** | PARK vs FOREST (obvious): 31–36 |
+| QUAD vs PARK `ΔRGB` | 12.2 / 15.2 / 25.0 | 30.8 / 31.3 / 37.9 | PARK vs FOREST: 60–66 |
+| QUAD sampled lum | **160** (base fill was 144) | 144–146 | PARK 163–168 · MID 157 · FOREST 131 |
+
+`turf` had luminance 144, but the tile **measured 160** — the mower stripes (`turf×1.12`, covering
+most of the face) and the cream path were lifting the sampled tone **+16 back toward park**. Iter 95's
+law is that coverage cannot *create* legibility at distance; the corollary, unowned until now, is that
+**coverage can destroy it.** Fix: stripes `1.12→1.05`, path `cream .95→.90` and thinner, rim hedge
+darker/thicker (`canopy .82→.70`, lw `2.6→3.2`), `turf` re-cut deeper *and cooler* ([101,137,97]) so
+it separates from PARK by luminance **and** hue, and from FOREST by hue. QUAD now sits as a third
+green between forest and park, and **slightly darker than the MID carpet (145 vs 157)** — green
+relief, not a dark hole. **Measure the tile as rendered, not as specified.**
+
+**Census** — `VERDICT: PASS`. `QUAD 0 → 23` (the rule is 2022+, so only the 2035 era of the matrix has
+them: ~7–10 per city, matching the probe). `pop 150332 → 148777 (−1.03%)`, `developed −29`,
+`roads −2`, `TOWER −4`, `MID −17 · RES −10`. A terrain rule, so it perturbs the stream by design and
+this is the low end of the few-percent the invariants predict — a far better trade than the reverted
+solar farm (−4% for a barely-visible feature). `schools 23→21` is the pop-gated school rule
+(`pop>3500*(schools+1)`) crossing its threshold on a 1% pop dip, not a bug. The three later
+draw-only rounds moved the histogram **not one cell** — an implicit control that the turf/hedge/palette
+work was purely draw-side.
+
+**Visual** — 4 rounds, 2 seeds, no enhancement. Final: both **PASS**. Seed 7 — the reviewer that
+failed it three times — returned *"YES — this is the real change… they no longer blend into ordinary
+parks,"* found 3–4 quads unaided, and confirmed not-too-dark. Two agent verdicts proved unreliable in
+the middle rounds (one described a tower facade in a quad clip), which is why the **pixel probe, not a
+fourth opinion, is what settled it.**
+
+**Perf (step-back gate)** — 3 sequential passes, day **34.17 / 34.61 / 34.94ms**, night **38.83 /
+39.55 / 39.78ms**; PASS (min day +9.1%, night +4.3% vs baseline). The monotonic pass-over-pass rise is
+iter 99's documented load signature, and iter 99's published HEAD-under-load band (day 33.83–34.83ms)
+contains my minimum — so the quad's ~8 extra tiles of draw cost nothing measurable, as expected
+(`col()` memoizes, so `turf` buys a cache entry).
+
+**Holistic whole-city (2 seeds, un-zoomed).** Both PASS, no bugs, no compounding. Coastline explicitly
+healthy — *"one of the strongest parts of the frame,"* kelp restrained. Night warm and legible.
+Skyline: iter 98's core is *"readable… but a loose band rather than a tight core."*
+**Cue (e½) survives, narrowed again:** the interior *"does breathe… but green is fragmented into small
+patches rather than any real district-scale lung."* Both the agent's top recommendation and mine:
+**consolidate green into one or two district-scale parks/greenways** rather than more scatter. Iter 100
+added *earned* green (7–10 hexes); it did not add a lung.
+
+**Verdict — SHIPPED.** The institutions have grounds, the tooltip names them, peds stroll them, and the
+mid-rise carpet gave up ~23 cells to green that a city actually earns. Three visual failures on one
+seed were worth more than the ship: they produced `probe-quadtone.mjs` and the law above.
