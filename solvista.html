@@ -4694,25 +4694,33 @@ function render(){
   for(const d of deer)bucketAdd(d.x,d.y,()=>drawDeer(d));
   for(const k of kayaks)bucketAdd(k.x,k.y,()=>drawKayak(k));
   for(const s of shuttles)bucketAdd(s.x|0,s.y|0,()=>drawShuttle(s));
-  for(const m of monos)if(m.closed){ /* trains, once a loop is running */
+  for(let li=0;li<monos.length;li++){const m=monos[li]; if(!m.closed)continue; /* trains, once a loop is running */
     for(const tr of m.trains){
+      tr._m=m; tr._li=li;   /* the hover surface reads the line off the train */
       for(let carN=0;carN<3;carN++){
         const[tsx,tsy,alongX,cell]=trainPos(m,tr.p-carN*0.011);
         bucketAdd(cell[0],cell[1],()=>{
           const ax=alongX?0.26:0.10, ay=alongX?0.10:0.26;
+          /* the middle car carries the stamp, so the pick point is the train's
+             center rather than its nose; its ring rides the beam deck */
+          if(carN===1)stamp(tr,tsx,tsy-RAILH-2.6);
           prismS(tsx,tsy,ax,ay,RAILH+2.6,RAILH+8.6,col('white',1.06),col('teal',0.7),col('teal',0.95));
           bandS(tsx,tsy,ax,ay,RAILH+4.6,RAILH+7,colLit('glass',0.95,Math.max(0.25,LITAMT*0.8)));
         });
       }
     }
   }
-  for(const g of gonds)if(g.path&&g.path.length>1)for(const cb of g.cabins){ /* cable-car cabins */
+  for(let li=0;li<gonds.length;li++){const g=gonds[li]; if(!(g.path&&g.path.length>1))continue;
+   for(const cb of g.cabins){ /* cable-car cabins */
+    cb._g=g; cb._li=li;
     const H=g.h, [gsx,gsy,ccx,ccy,sg]=gondPos(g,cb.p), Hs=H-sg; /* the cabin rides the rope down into the span */
     bucketAdd(ccx,ccy,()=>{
+      stamp(cb,gsx,gsy-Hs+7.5);   /* ring hangs just under the cabin floor */
       ctx.strokeStyle=col('ink',1);ctx.lineWidth=0.7;ctx.beginPath();ctx.moveTo(gsx,gsy-Hs);ctx.lineTo(gsx,gsy-Hs+3);ctx.stroke();
       prismS(gsx,gsy,0.11,0.085,Hs-6.5,Hs-3,col('coral',1.05),col('coral',0.62),col('coral',0.88));
       bandS(gsx,gsy,0.11,0.085,Hs-5.5,Hs-4,colLit('glass',0.9,Math.max(0.25,LITAMT*0.8)));
     });
+   }
   }
 
   /* cells back-to-front: hex rows top to bottom */
@@ -5002,6 +5010,46 @@ function render(){
       ctx.fillStyle='rgba(255,90,70,'+(0.9*LITAMT)+')';
       ctx.beginPath();ctx.arc(cx-6.8,cy-2.8,1,0,7);ctx.fill();}
   }
+
+  /* HOVERED TRANSIT: trace the whole line the car runs on.
+     The two aerial systems are the only things in the city whose EXTENT you
+     cannot read off any single hex — a monorail loop wanders fifty spans, and a
+     cable climbs away over the rooftops. Hovering one car answers "where does
+     this go?" by lighting its route end to end, and pipping the stops.
+     Drawn last, over the scene, because it is an affordance, not a structure:
+     it deliberately reads across towers the way a route highlight reads across
+     a map. That is why the pulse and the ink under-stroke match the focus ring
+     (stamp()) rather than any building material. */
+  const hl=hoverEnt&&(hoverEnt._m||hoverEnt._g);
+  if(hl){
+    const pulse=0.74+0.18*Math.sin(time*3.2), pts=[];
+    if(hoverEnt._m){ /* monorail: the beam deck, closed back onto its tail */
+      for(const[x,y]of hl.path){const[cx,cy]=ctr(x,y);pts.push([cx,cy-RAILH-BEAMD]);}
+      pts.push(pts[0]);
+    }else{ /* cable: sub-sample the catenary so the trace lies ON the rope, not on its chord */
+      const L=hl.path.length, NS=(L-1)*4;
+      for(let k=0;k<=NS;k++){
+        const f=k/4, i=Math.min(L-2,f|0), u=f-i;
+        const A=ctr(hl.path[i][0],hl.path[i][1]), B=ctr(hl.path[i+1][0],hl.path[i+1][1]);
+        pts.push([lerp(A[0],B[0],u), lerp(A[1],B[1],u)-hl.h+gondSag(hl,f)]);
+      }
+    }
+    ctx.lineJoin='round'; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
+    for(let k=1;k<pts.length;k++)ctx.lineTo(pts[k][0],pts[k][1]);
+    /* iter 101's law — for a LINEAR feature legibility is contrast x WIDTH. A
+       2.8px halo under a 1.2px core made the trace read as a dark line with a
+       pale seam; the halo must stay only wide enough to hold the core off the
+       sand and the sky. The cream carries the route, the ink only backs it. */
+    ctx.strokeStyle=col('ink',0.34); ctx.lineWidth=3.4; ctx.stroke();
+    ctx.strokeStyle='rgba(255,252,240,'+pulse+')'; ctx.lineWidth=1.9; ctx.stroke();
+    /* the stops: a monorail names its stations, a cable its two terminals */
+    ctx.fillStyle='rgba(255,252,240,'+(pulse*0.95)+')';
+    ctx.strokeStyle=col('ink',0.5); ctx.lineWidth=0.8;
+    const pip=(sx,sy)=>{ctx.beginPath();ctx.ellipse(sx,sy,2.2,1.5,0,0,7);ctx.fill();ctx.stroke();};
+    if(hoverEnt._m){for(const i of hl.stops){const[x,y]=hl.path[i];const[cx,cy]=ctr(x,y);pip(cx,cy-RAILH-BEAMD);}}
+    else for(const[x,y]of[hl.path[0],hl.path[hl.path.length-1]]){const[cx,cy]=ctr(x,y);pip(cx,cy-hl.h);}
+  }
 }
 
 /* ---------------- sky sync ---------------- */
@@ -5216,6 +5264,8 @@ function describeTile(c,x,y){
 /* hovering a moving thing names it; entities win over the tile under them.
    INVARIANT: when adding a new entity array, stamp() it in its draw and add a
    row here (same discipline as TILELABEL / the census hook). */
+/* a stubby line is real — a monorail can close its loop early and carry one stop */
+const plur=(n,w)=>n+' '+w+(n===1?'':'s');
 const ENTINFO=[
   [()=>whales,'Gray whale','Surfacing on a slow cruise up the bay.',12],
   [()=>dolphins,'Dolphin','Rolling through the swell.',8],
@@ -5229,6 +5279,16 @@ const ENTINFO=[
   [()=>joggers,'Jogger','Logging shoreline miles.',7],
   [()=>balloons,'Hot-air balloon','Drifting over on the fair-day breeze.',13],
   [()=>copters,'City helicopter','Hopping between the rooftop helipads.',10],
+  /* the two aerial lines: `sub` is a function, so each car describes the LINE it
+     belongs to rather than its species. Hovering also traces the route (render). */
+  [()=>monos.flatMap(m=>m.closed?m.trains:[]),'Monorail train',
+    tr=>{const m=tr._m; if(!m)return 'Elevated, and never stuck in traffic.';
+      const body=m.path.length+'-span loop with '+plur(m.stops.size,'station')+'.';
+      return monos.length>1?'Line '+(tr._li+1)+' of '+monos.length+' — a '+body:'A '+body;},10],
+  [()=>gonds.flatMap(g=>g.path&&g.path.length>1?g.cabins:[]),'Cable car',
+    cb=>{const g=cb._g; if(!g)return 'Swinging over the rooftops.';
+      const body=plur(g.path.length-1,'span')+' over the low-rise strip.';
+      return gonds.length>1?'Line '+(cb._li+1)+' of '+gonds.length+' — '+body:'An aerial line — '+body;},7],
   [()=>trams,'Streetcar','Riding the avenues since 1985.',9],
   [()=>trucks,'Delivery truck','Stock for the shopfronts.',9],
   [()=>bikes,'Cyclist','Two wheels beat the traffic.',6],
@@ -5244,7 +5304,7 @@ function pickEntity(wx,wy){
   const consider=(e,name,sub,r)=>{
     if(e._sf===undefined||FRAMEN-e._sf>2)return;
     const dx=wx-e._sx, dy=wy-(e._sy-3), d=dx*dx+dy*dy;
-    if(d<r*r&&d<bd){bd=d;best=[name,sub,e,r];}
+    if(d<r*r&&d<bd){bd=d;best=[name,typeof sub==='function'?sub(e):sub,e,r];}
   };
   for(const[g,name,sub,r]of ENTINFO)for(const e of g())consider(e,name,sub,r);
   for(const v of vehicles){const k=VKIND[v.kind]||['Car',"Somebody's errand."];consider(v,k[0],k[1],6);}

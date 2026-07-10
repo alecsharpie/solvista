@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103** | |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93, **104** | 78 | | 84 | 71 |
@@ -36,34 +36,36 @@ ones (U2, 42, U5) stay in the bullet.
   + **hover focus ring (iter 71, People-led)** + **census stats that can fall
   (U5: tallest / density / solar share / transit reach / walkable)**
   + **the coast names itself (iter 97, Water-led: pier/stall/ferris wheel,
-  esplanade, lifeguard tower, dune `Sand`+`Marram grass`, live `Tide`)**.
+  esplanade, lifeguard tower, dune `Sand`+`Marram grass`, live `Tide`)**
+  + **the transit lines name themselves (iter 105, Transport-led: hovering a monorail train or
+  cable-car cabin names its LINE — "Line 3 of 3 — a 183-span loop with 30 stations" — and traces the
+  whole route across the city, pipped at its stops)**.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
-  so any stamped entity is ringable for free.
-- **ROTATION.** Last vector per domain: Transport **94** · Sky **95** · Water **97** · Civic **100** ·
-  Nature **102** · Urban **103** · People **104**. Stalest is **Transport (94)**; its cold cells are
-  `New CA rule` (77), `Connect` (5, 15 — both ancient) and an **empty `Interaction/UX`**. Next-stalest
-  **Sky (95)** is **additively saturated** (surveyed iter 103) and its **empty `New CA rule` cell is a
-  trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on terrain, is
-  already `rSea`/`fogAt`. Read 103's survey before spending a lap there.
-  Recent kinds: 100 New element · 101 Connect(reverted) · 102 New element · 103 Polish · 104 Deepen —
-  so **do not pick Deepen or Polish next**; the coldest kinds are **Connect**, **Interaction/UX** and
-  **New CA rule**. Note **Nature × Connect was attempted and reverted three times** (46, 88,
+  so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
+  FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
+  *membership* (which line / route / depot), computed live, not a stored string.
+- **ROTATION.** Last vector per domain: Sky **95** · Water **97** · Civic **100** ·
+  Nature **102** · Urban **103** · People **104** · Transport **105**. Stalest is now
+  **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
+  cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
+  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Water (97)** is
+  the next-stalest and the safer pick; Civic (100) after it.
+  Recent kinds: 101 Connect(reverted) · 102 New element · 103 Polish · 104 Deepen · 105 Interaction/UX —
+  so **do not pick Interaction/UX or Deepen next**; the coldest kinds are **Connect**, **New CA rule**
+  and **Scale**. Note **Nature × Connect was attempted and reverted three times** (46, 88,
   101) and is the row's graveyard: 46 found it geometrically impossible, 88 found it has no host
   draw-only, 101 found the host *and the land* and lost on **shape**. Do not re-open it as a
   *corridor*. **Cue (e½) is now CLOSED — iter 102 shipped the blob 101 prescribed** (the commons),
   so the interior has its lung; **do not plant a second one.** Nature's remaining cold cells are
   Connect (graveyard — leave it) and Scale.
-- **⚠ THE PERF BASELINE IS STALE — it reads ~+5.5% day on code that costs nothing (iter 104).**
-  `polish-tile/perf-baseline.json` was pinned **2026-07-09** (day 31.33ms); iters 100–103 have landed
-  since. Measured with iter 99's stash-control, **pristine HEAD reads day 33.00–34.17ms** under the
-  same load — i.e. the gate reports **+5.3% before your change exists**, eating a third of its 15%
-  budget with drift that is not code. Iter 104's own cost, isolated against that control, was
-  **+0.11ms (+0.3%)**. Do **not** chase this; it is not a regression. **The next step-back should
-  re-pin the baseline** (`node .claude/skills/polish-tile/perf.mjs --save-baseline`) — `polish-tile`
-  owns it, which is why 104 logged it instead of silently re-pinning. Corollary to iter 99's rule:
-  a *stable* pass-over-pass offset means code, a *rising* one means load — but "code" may be
-  **earlier iterations'** code, so control against pristine HEAD, not against the baseline file.
+- **PERF BASELINE RE-PINNED 2026-07-10 (iter 105's step-back): day 33.16ms · night 37.33ms.** The
+  stale-baseline warning 104 raised is **resolved** — the old pin (2026-07-09, day 31.33ms) predated
+  iters 100–104 and reported ~+6% before your change existed. Do not re-chase it. The rule it taught
+  survives: **a *stable* pass-over-pass offset means code, a *rising* one means load — and "code" may
+  be earlier iterations' code, so control against pristine HEAD, not against the baseline file**
+  (iters 99, 104). Re-pin at a step-back whenever the offset is stable and attributable to landed
+  work; `polish-tile` owns the file, so say so in the entry rather than re-pinning silently.
 - **`c.buzz` — the third derived field, after `c.flow` and `c.val` (iter 104, in `tick()`).** How much
   is there to come out FOR, seen from a hex: `ATTRACT.has(c.t)?2:0` plus a count of `ATTRACT`
   neighbours (`COM`/`MARKET`/`CIVIC`/`STADIUM`/`PLAZA`). Pure terrain derivation, no `rng()`,
@@ -853,110 +855,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 97 entries before Iteration 95 live in
+> **Archive:** the 98 entries before Iteration 96 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 95 — the showers reach the ground (2026-07-10)
-
-**Vector** — Sky & atmosphere × Deepen/interconnect.
-
-**How it was found.** Nature was the stalest domain (last real vector: iter 76; 88 reverted),
-but it is **additively saturated** — forest succession, redwoods, wildfire→`BURNT`, blooms,
-vineyards, orchards, fairy rings, hedges and a patchworked `EMPTY` all already exist, and
-`BURNT` reads **0** at all nine census points, so its fire ecology is invisible anyway. Rotating
-to Sky instead: `cl.rain` was referenced in exactly **two** places — seeding meadow blooms
-(L1182) and spawning iter 89's **rainbow** (L4546).
-
-**The defect.** Rain *was* drawn: six 6px ticks at `py2+10..py2+22`. But the cloud sits at
-`py2 = cy-185-cy*0.52`, so the shower stopped **~200px of clear air short of the city**. Iter 89's
-comment calls its bow "refracted light standing in this shower's own drops" — standing in drops
-that never arrived. The rain watered meadows it never touched.
-
-**Change (draw-only).** A shower now falls the whole way to the ground it is watering:
-- a **grey belly** on raining clouds (the two lower puffs only) — at whole-city scale this, not
-  the drops, is what tells the eye which of seven clouds is the one raining;
-- a soft **dark shaft** from belly to ground, two nested trapezoids (skirt + core) under one
-  vertical gradient, so the column has no cut edge and fades at both ends;
-- **pale drop-streaks** over the shaft — 10 dashed columns, one `setLineDash` and a scrolling
-  `lineDashOffset` each, so a whole drop field costs ten stroke calls;
-- a **damp ground patch** centred on the shaft's **foot** (`cx-rlean`), not on the cloud.
-`rlean` (the downwind lean) is hoisted above the shadow block precisely so the wet ground can
-know where the drops actually land. Rim-faded by `pa` on `ROWMIN`/`ROWMAX`, reusing 89's grammar,
-so a shower is spent 2 hexes before the plate edge and never rains into the void.
-
-**The measurement that turned the iteration around.** Two tunings shipped a streak-only veil;
-the zoom gate passed both and **every wide-frame reviewer called it invisible**, twice. Rather
-than tune a third time, `probe-rainink.mjs` diffed the canvas against HEAD inside the veil's
-bbox, against an equal box elsewhere as the **animation noise floor** (peds, boats, shimmer move
-between two loads). Seed 42, `dsf=1`, tight bbox:
-
-| veil | shower Δlum mean | control (noise) | ratio |
-| --- | --- | --- | --- |
-| streaks only, α .52, 10×1.4px | 2.27 | 2.33 | **0.98×** |
-| + dark shaft, α .09/.11 | 4.29 | 2.14 | 2.01× |
-| **shipped** — shaft α .13/.16 | **5.73** | 2.35 | **2.44×** |
-
-The veil at its *heaviest* streak tuning perturbed the frame **exactly as much as the
-pedestrians did**. The bug was never density: `rgba(120,146,176)` has lum ≈143 and the sunlit
-city it fell on is lum ≈150–190. **Alpha cannot rescue a colour that matches its background.**
-Cloud belly, by contrast, always landed: `232,224,206 → 204,200,189`.
-
-**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
-`roads 5706 +0`, `developed 6174 +0`); tile histogram empty by construction. A draw-only change
-that touches no terrain and draws no `rng()` must not move the seeded stream, and it didn't.
-
-**Visual** — `VISUAL: PASS` ×3 on the final build (the two earlier tunings each drew
-`VISUAL: FAIL` ×3 on the wide frames, un-enhanced). Wide seeds 42/7/1234 "faint-but-findable…
-they read as RAIN… not too dark, buildings keep their colour"; downtown 3× clip — the highest-risk
-frame, dark shaft over dense towers — "tower stripes, streets and roof detail stay fully legible…
-reads as weather, not a dirty rectangle"; night `t=0.9` restrained, lit windows intact; zoom 3×
-resolves into wind-slanted drops with soft ends and the damp patch under the foot. Seed 1234's
-reviewer, unprompted: the bow **"now reads as a bow standing in a real shower"** — the coherence
-this vector existed to buy. One agent: "if anything it errs slightly toward faint" — the safe
-side of the darkening risk, so it ships there.
-
-**Perf** — PASS ×3 sequential, judged on the minimum: day **33.11ms** (baseline 31.33, +5.7%),
-night **37.22ms** (+0.0%). Iter 94 left day at 32.44ms, so the shower costs ~0.7ms/frame:
-two trapezoid fills and three gradients per raining cloud, ~2 clouds a city.
-
-**Verdict — DEEPENED.**
-
-### Four transferable findings
-- **Alpha cannot rescue a colour that matches its background.** The single most useful result of
-  the lap, and it inverts the instinct. Two rounds of "more ink" (α .30→.52, 9→12 columns, 1→1.4px)
-  moved the measured signal from 0.79× to 0.98× of the noise floor — *nothing*. Legibility at
-  distance is **luminance contrast**, not coverage. A shower reads from across a city as a column
-  **darker** than what stands behind it; drops resolve only up close. Body first, drops second.
-- **`probe-rainink.mjs`: diff the canvas against HEAD, and diff a control box too.** A raw pixel
-  delta means nothing without a noise floor — this city animates, so two loads differ by peds and
-  boats regardless. Shower-box Δ vs control-box Δ is the honest question. Note the *signature*
-  matters as much as the mean: the shower moves every pixel moderately (p99 29) while the noise
-  moves a few pixels hugely (p99 46). A coherent shape at Δ8 is obvious; scattered pixels at Δ25
-  are not. **Measure before you tune a third time.**
-- **The wide gate and the zoom gate can disagree, and both be right.** Zoom passed all three
-  tunings; wide failed the first two. Iter 94 taught "zoom before you fix"; the complement is
-  **the wide frame is the product** — the camera renders at `scale ≈ 0.59`, so a 1.2px stroke is
-  sub-pixel on screen and a feature that only exists at 3× does not exist. When the two gates
-  split, don't pick a side: build the feature so it has a cue at *each* scale (dark shaft for the
-  wide frame, pale drops for the zoom). And ask wide reviewers for **no enhancement** — an agent
-  that contrast-boosts will confirm any feature you like.
-- **An entity attached to another must be sited from where the first one LANDS, not where it is.**
-  The damp patch first sat at `cx-16*s` while the drops landed at `cx-rlean` (27–63px away): a
-  causeless grey smudge on the ground, which a reviewer duly reported as "fog greying out the
-  central city". Same family as iter 93's dogs (reuse the host's *legality*) and iter 94's dashes
-  (mark the through-line): **derive the dependent thing from the parent's geometry, not its
-  origin.** Hoisting `rlean` above both draw sites is what made that possible.
-
-### Shower scratch (gitignored, recreate)
-`probe-rain.mjs` — which clouds rain, and the `&step=` that walks one clear of the rim
-(seed 42 → `step=600`, seed 7 → `600`, seed 1234 → `560`). Clouds are **`rng()`-spawned, so they
-must never be `?flood=`ed** — the shot would lie. `shot-rain.mjs <seed> <step> <out>` clips the
-cloud→ground column in CSS screen coords (`world*scale+off`, the transform `__find`/`__ents`
-publish). `probe-rainink.mjs <seed> <step>` is the ink/noise-floor measurement above; it reads
-luminance straight off the live canvas, so it needs no image decoder.
 
 ## Iteration 96 — the woods grow a second species (2026-07-10)
 
@@ -1748,3 +1651,86 @@ re-pinned — `polish-tile` owns that file.
   dogs, and residents now walk them to the shops. That is the payoff of the Deepen kind, and the
   reason the header calls it the highest-yield move: the third and fourth systems come for free once
   two are wired together.
+
+## Iteration 105 — the lines name themselves (2026-07-10) [holistic step-back]
+
+**Vector** — Transport × **Interaction/UX**. Rotation pointed at both axes at once: Transport was the
+stalest domain (last vector 94) and its `Interaction/UX` cell was **empty**, while 104 warned off
+Deepen and 103 off Polish. The cell was empty for a reason worth recording — see the seam.
+
+**The seam.** `ENTINFO` — the hover surface — carried streetcars, trucks, cyclists, ferries, whales,
+dogs. It did **not** carry the **monorail trains** or the **cable-car cabins**. Nor did `TILELABEL`
+carry the guideway or the cable. So the city's two flagship transit systems, the ones U4 went to the
+trouble of making *plural*, were the only moving things in Solvista that **could not be named by
+pointing at them.** And nothing anywhere could answer the question those systems actually raise: a
+183-span loop leaves the frame — *where does it go?* Extent is the one property of a transit line you
+cannot read off any single hex.
+
+**Change.** Draw-only, ~45 lines, three edits.
+- **Two `ENTINFO` rows**, with flattening getters (`monos.flatMap(m=>m.closed?m.trains:[])`,
+  gondolas likewise gated on `path.length>1`, so a line that hasn't broken ground yields no cabins).
+- **`sub` may now be a function.** `consider()` resolves `typeof sub==='function'?sub(e):sub`, so a car
+  describes **the line it belongs to** rather than its species: *"Line 3 of 3 — a 183-span loop with 30
+  stations."* / *"An aerial line — 9 spans over the low-rise strip."* Counts are read live off
+  `m.path`/`m.stops`, never stored. A `plur()` helper handles the stubby lines that really occur.
+- **The route trace.** Hovering a train or cabin strokes its whole line, drawn last (beside the
+  copters, the existing "over the scene" precedent): monorail along the beam deck and closed onto its
+  tail; cable **sub-sampled 4× per span through `gondSag`** so the trace lies on the rope's catenary
+  rather than its chord. Station pips at `m.stops`; terminal pips at the cable's two ends. `stamp()` on
+  the **middle** car — so the pick point is the train's center, not its nose — buys the focus ring free.
+
+**Census — PASS, and stream-neutral by iter 103's partition.** **Every metric +0**, including `pop`
+(150,206 → 150,206), and the **tile histogram is empty**. 0 page errors. The vector draws no `rng()`,
+touches no terrain, adds no entity array — so `__census()` needed no new tally, per the
+census-sprawl rule. Nothing to add, nothing added.
+
+**Visual — PASS, 3/3 agents.** Full-frame **hover-vs-control pairs** at seeds 7 and 42, both systems.
+Two agents (one per seed) independently confirmed: no trace in the control, trace on hover, routes
+locked to the hex axes, pips on the line, no z-order tears, and — the step-back's cumulative question
+— the city still reads balanced and bright, coast and downtown clean. **Both then volunteered the same
+complaint unprompted:** the trace "reads as a dark line with a faint pale seam." Fixed by iter 101's
+law and re-verified by a third agent (below).
+
+**Perf — PASS, and the baseline is re-pinned.** 3 sequential passes, day 33.28/33.22/33.39ms. Against
+iter 104's pristine-HEAD control (min 33.00ms) this vector costs **+0.22ms (+0.7%)** — and costs
+*nothing* headless, since `hoverEnt` is null with no cursor and the trace block never runs. The gate's
++6% was the stale 2026-07-09 baseline the header flagged. **This step-back re-pinned it**
+(`perf.mjs --save-baseline` → day **33.16ms**, night **37.33ms**), closing that warning.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A "LINEAR FEATURE" POLISH LAW JUST GOT ITS SECOND CONFIRMATION — and two agents found it before
+  I did.** The trace shipped as a 2.8px ink halo (α.40) under a 1.2px cream core. Both visual agents,
+  independently, reported the line read *dark*. That is exactly iter 101: **for a linear feature,
+  legibility ≈ contrast × WIDTH** — the halo was 2.3× the width of the thing it was backing, so the
+  halo *was* the line. Fixed by inverting the ratio's intent, not the colors: halo to 3.4px @ α**.34**
+  (softer, wider) and the **core to 1.9px @ α.74–.92**. A third agent confirmed C-vs-A now reads as
+  "a pale cream ribbon with a dark backing" and that nothing was smothered. **When two independent
+  reviewers volunteer the same unrequested complaint, that is data, not taste** — spend the extra
+  agent.
+- **A MOVING ENTITY CANNOT BE HOVER-TESTED FROM STALE COORDS.** The first probe hovered a *Street* on
+  both seeds and looked like a total feature failure. Two causes, both in the probe: (1) `__ents`
+  returns **screen** coords (`e._sx*scale+offX`) — `e._sx` alone is **world**, and I'd used it; (2)
+  trains and cabins *move*, so coords sampled before the control screenshot are ~1s stale by the time
+  the cursor arrives. The fix is the general one for any hover test on a moving target: **re-sample,
+  move, then VERIFY the tooltip title equals the entity name, and retry on fresh coords** (8 tries).
+  Do not screenshot a hover you have not confirmed landed — a missed hover and a broken feature
+  produce the identical frame.
+- **`sub`-as-a-function is the reusable half of this vector.** Any future entity whose interest is its
+  *membership* (a ferry's route, a truck's depot, a bus's line) can now describe itself from live
+  state with no new mechanism — one `typeof` check in `consider()` bought it. Static strings still work
+  unchanged; nothing else in `ENTINFO` moved.
+- **The empty grid cell was empty because the tooltip is `ENTINFO`-shaped.** Transport's Interaction/UX
+  cell stayed cold for 100 iterations not because transit was uninteresting but because the two systems
+  worth interrogating were **not entities in any array the hover surface walked** — they are nested
+  inside `monos[].trains` / `gonds[].cabins`. **A cold rotation cell can mark a structural gap, not a
+  lack of ideas.** Worth checking, next time a cell resists.
+- **`probe-lineshot.mjs` is `git add -f`'d** (per iter 101: `probe-*.mjs` is gitignored, so ledgers that
+  say "reuse the probe" cite tools the repo doesn't carry). It shoots full-frame hover/control pairs
+  with the verify-retry loop above; `--longest` picks a car on the line with the most spans, because
+  a stubby 2-span loop proves nothing about a trace.
+- **Stubby lines are real.** Seed 7's three loops are 89, **2**, and 183 spans; a 2-span "loop" would
+  have rendered *"1 stations"*. `plur()` exists for that. A closed monorail loop is **not** guaranteed
+  to reach `minLen` — `homing` closes it early — so never assume a generated line is large.

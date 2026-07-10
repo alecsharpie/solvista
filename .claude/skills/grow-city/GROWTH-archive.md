@@ -3579,3 +3579,102 @@ removed by construction rather than by tuning.)
   through-axis histogram vetoed my first rule (it would have blanked 169 bends) for the cost of
   one extra column in a table. Two rules, one measurement, no revert.
 
+## Iteration 95 — the showers reach the ground (2026-07-10)
+
+**Vector** — Sky & atmosphere × Deepen/interconnect.
+
+**How it was found.** Nature was the stalest domain (last real vector: iter 76; 88 reverted),
+but it is **additively saturated** — forest succession, redwoods, wildfire→`BURNT`, blooms,
+vineyards, orchards, fairy rings, hedges and a patchworked `EMPTY` all already exist, and
+`BURNT` reads **0** at all nine census points, so its fire ecology is invisible anyway. Rotating
+to Sky instead: `cl.rain` was referenced in exactly **two** places — seeding meadow blooms
+(L1182) and spawning iter 89's **rainbow** (L4546).
+
+**The defect.** Rain *was* drawn: six 6px ticks at `py2+10..py2+22`. But the cloud sits at
+`py2 = cy-185-cy*0.52`, so the shower stopped **~200px of clear air short of the city**. Iter 89's
+comment calls its bow "refracted light standing in this shower's own drops" — standing in drops
+that never arrived. The rain watered meadows it never touched.
+
+**Change (draw-only).** A shower now falls the whole way to the ground it is watering:
+- a **grey belly** on raining clouds (the two lower puffs only) — at whole-city scale this, not
+  the drops, is what tells the eye which of seven clouds is the one raining;
+- a soft **dark shaft** from belly to ground, two nested trapezoids (skirt + core) under one
+  vertical gradient, so the column has no cut edge and fades at both ends;
+- **pale drop-streaks** over the shaft — 10 dashed columns, one `setLineDash` and a scrolling
+  `lineDashOffset` each, so a whole drop field costs ten stroke calls;
+- a **damp ground patch** centred on the shaft's **foot** (`cx-rlean`), not on the cloud.
+`rlean` (the downwind lean) is hoisted above the shadow block precisely so the wet ground can
+know where the drops actually land. Rim-faded by `pa` on `ROWMIN`/`ROWMAX`, reusing 89's grammar,
+so a shower is spent 2 hexes before the plate edge and never rains into the void.
+
+**The measurement that turned the iteration around.** Two tunings shipped a streak-only veil;
+the zoom gate passed both and **every wide-frame reviewer called it invisible**, twice. Rather
+than tune a third time, `probe-rainink.mjs` diffed the canvas against HEAD inside the veil's
+bbox, against an equal box elsewhere as the **animation noise floor** (peds, boats, shimmer move
+between two loads). Seed 42, `dsf=1`, tight bbox:
+
+| veil | shower Δlum mean | control (noise) | ratio |
+| --- | --- | --- | --- |
+| streaks only, α .52, 10×1.4px | 2.27 | 2.33 | **0.98×** |
+| + dark shaft, α .09/.11 | 4.29 | 2.14 | 2.01× |
+| **shipped** — shaft α .13/.16 | **5.73** | 2.35 | **2.44×** |
+
+The veil at its *heaviest* streak tuning perturbed the frame **exactly as much as the
+pedestrians did**. The bug was never density: `rgba(120,146,176)` has lum ≈143 and the sunlit
+city it fell on is lum ≈150–190. **Alpha cannot rescue a colour that matches its background.**
+Cloud belly, by contrast, always landed: `232,224,206 → 204,200,189`.
+
+**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
+`roads 5706 +0`, `developed 6174 +0`); tile histogram empty by construction. A draw-only change
+that touches no terrain and draws no `rng()` must not move the seeded stream, and it didn't.
+
+**Visual** — `VISUAL: PASS` ×3 on the final build (the two earlier tunings each drew
+`VISUAL: FAIL` ×3 on the wide frames, un-enhanced). Wide seeds 42/7/1234 "faint-but-findable…
+they read as RAIN… not too dark, buildings keep their colour"; downtown 3× clip — the highest-risk
+frame, dark shaft over dense towers — "tower stripes, streets and roof detail stay fully legible…
+reads as weather, not a dirty rectangle"; night `t=0.9` restrained, lit windows intact; zoom 3×
+resolves into wind-slanted drops with soft ends and the damp patch under the foot. Seed 1234's
+reviewer, unprompted: the bow **"now reads as a bow standing in a real shower"** — the coherence
+this vector existed to buy. One agent: "if anything it errs slightly toward faint" — the safe
+side of the darkening risk, so it ships there.
+
+**Perf** — PASS ×3 sequential, judged on the minimum: day **33.11ms** (baseline 31.33, +5.7%),
+night **37.22ms** (+0.0%). Iter 94 left day at 32.44ms, so the shower costs ~0.7ms/frame:
+two trapezoid fills and three gradients per raining cloud, ~2 clouds a city.
+
+**Verdict — DEEPENED.**
+
+### Four transferable findings
+- **Alpha cannot rescue a colour that matches its background.** The single most useful result of
+  the lap, and it inverts the instinct. Two rounds of "more ink" (α .30→.52, 9→12 columns, 1→1.4px)
+  moved the measured signal from 0.79× to 0.98× of the noise floor — *nothing*. Legibility at
+  distance is **luminance contrast**, not coverage. A shower reads from across a city as a column
+  **darker** than what stands behind it; drops resolve only up close. Body first, drops second.
+- **`probe-rainink.mjs`: diff the canvas against HEAD, and diff a control box too.** A raw pixel
+  delta means nothing without a noise floor — this city animates, so two loads differ by peds and
+  boats regardless. Shower-box Δ vs control-box Δ is the honest question. Note the *signature*
+  matters as much as the mean: the shower moves every pixel moderately (p99 29) while the noise
+  moves a few pixels hugely (p99 46). A coherent shape at Δ8 is obvious; scattered pixels at Δ25
+  are not. **Measure before you tune a third time.**
+- **The wide gate and the zoom gate can disagree, and both be right.** Zoom passed all three
+  tunings; wide failed the first two. Iter 94 taught "zoom before you fix"; the complement is
+  **the wide frame is the product** — the camera renders at `scale ≈ 0.59`, so a 1.2px stroke is
+  sub-pixel on screen and a feature that only exists at 3× does not exist. When the two gates
+  split, don't pick a side: build the feature so it has a cue at *each* scale (dark shaft for the
+  wide frame, pale drops for the zoom). And ask wide reviewers for **no enhancement** — an agent
+  that contrast-boosts will confirm any feature you like.
+- **An entity attached to another must be sited from where the first one LANDS, not where it is.**
+  The damp patch first sat at `cx-16*s` while the drops landed at `cx-rlean` (27–63px away): a
+  causeless grey smudge on the ground, which a reviewer duly reported as "fog greying out the
+  central city". Same family as iter 93's dogs (reuse the host's *legality*) and iter 94's dashes
+  (mark the through-line): **derive the dependent thing from the parent's geometry, not its
+  origin.** Hoisting `rlean` above both draw sites is what made that possible.
+
+### Shower scratch (gitignored, recreate)
+`probe-rain.mjs` — which clouds rain, and the `&step=` that walks one clear of the rim
+(seed 42 → `step=600`, seed 7 → `600`, seed 1234 → `560`). Clouds are **`rng()`-spawned, so they
+must never be `?flood=`ed** — the shot would lie. `shot-rain.mjs <seed> <step> <out>` clips the
+cloud→ground column in CSS screen coords (`world*scale+off`, the transform `__find`/`__ents`
+publish). `probe-rainink.mjs <seed> <step>` is the ink/noise-floor measurement above; it reads
+luminance straight off the live canvas, so it needs no image decoder.
+
