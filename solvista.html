@@ -1822,7 +1822,10 @@ function stepVehicle(v,dt){
     v.nx=pick[0];v.ny=pick[1];
   }
 }
-function onPier(x,y){return year>=1987&&y===pier.y&&x>pier.x0&&x<=pier.x1}
+/* the deck exists from 1986 (pierAt: what is DRAWN, and what the tooltip names);
+   it opens to the public a year later (onPier: where a ped may legally walk) */
+function pierAt(x,y){return year>=1986&&y===pier.y&&x>pier.x0&&x<=pier.x1}
+function onPier(x,y){return year>=1987&&pierAt(x,y)}
 function strollable(x,y){
   const n=cellAt(x,y);
   return(n&&(n.t===T.PARK||n.t===T.PLAZA||n.t===T.BEACH||n.t===T.DUNE||n.t===T.SHOREPARK||n.t===T.MARKET||n.t===T.GARDEN||n.t===T.FIELD||n.t===T.STADIUM))||onPier(x,y);
@@ -2209,6 +2212,7 @@ function palm(gx,gy,s){
 
 let time=0, waveT=0, WINDA=0.5; /* breeze strength 0..1: seeded gust cycle */
 let TIDE=0.5; /* sea level 0..1 on a slow seeded cycle: 1=high water, 0=low */
+let TIDEV=1;  /* sign of dTIDE/dt: >0 flooding, <0 ebbing (the tooltip reads it) */
 
 /* boardwalk pier deck; wheel drawn at the far end */
 function drawPierAt(x,y){
@@ -2427,7 +2431,7 @@ function drawCell(x,y){
         }
         ctx.lineCap='butt';
       }
-      if(year>=1986&&y===pier.y&&x>pier.x0&&x<=pier.x1)drawPierAt(x,y);
+      if(pierAt(x,y))drawPierAt(x,y);
       const tb=turbSet.get(idx(x,y));
       if(tb&&year>=2020){ /* offshore wind */
         const[cx,cy]=px(gx,gy);
@@ -2579,7 +2583,7 @@ function drawCell(x,y){
         prism(gx,gy,0.10,0.09,4,9,col('coral',1),col('coral',0.65),col('coral',0.85));
         prism(gx,gy,0.14,0.13,9,10.5,col('white',1),col('white',0.6),col('white',0.85));
       }
-      if(year>=1986&&y===pier.y&&x>pier.x0&&x<=pier.x1)drawPierAt(x,y);
+      if(pierAt(x,y))drawPierAt(x,y);
       break;}
     case T.FOREST:{
       /* canopy closure: a hex ringed by woods closes its canopy — taller, denser,
@@ -4889,9 +4893,20 @@ const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats 
   [T.IND]:'Warehouses and light industry.',[T.MEADOW]:'Wild grass and wildflowers.',
   [T.SHOREPARK]:'A palm-lined park by the water.',[T.PLAZA]:'A paved civic square.',
   [T.ROCK]:'A rocky outcrop.',[T.EMPTY]:'Undeveloped — click to plant a park.'};
-function describeTile(c){
+function describeTile(c,x,y){
   let title,sub,data=[];
-  if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';sub='A public institution.';}
+  /* the pier is DRAWN over whatever tile it crosses (water, then beach), so it
+     must be named before the tile under it — else the deck reports 'Ocean' */
+  if(pierAt(x,y)){
+    const head=x===pier.x1, stall=x===pier.x1-1;
+    title=head?'Ferris wheel':stall?'Snack stall':'Pier';
+    sub=head?'Turning at the pier head — the whole bay from the top car.'
+       :stall?'Hot dogs and salt-water taffy, out over the water.'
+       :'A boardwalk on posts, running out from the beach.';
+    data.push(['Opened',1986]);
+    if(year<1987)data.push(['Not yet open']);
+  }
+  else if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';sub='A public institution.';}
   else if(c.t===T.ROAD){const art=c.flow>=ARTFLOW;
     title=c.bridge?'Bridge':(art?'Arterial':(c.busy?'Avenue':'Street'));
     sub=c.bridge?'Carries the street across the water.'
@@ -4915,7 +4930,24 @@ function describeTile(c){
   if(c.groof)data.push(['Green roof']);
   if(c.hstr&&DEV.has(c.t))data.push(['High street']);
   if((c.t===T.COM||c.t===T.MARKET)&&DISTCOL[c.dist])data.push(['District',DISTCOL[c.dist]]);
-  data.push(['Value',Math.round(c.val*100)+'%']);
+  /* the coast: structures the terrain doesn't know it carries, and CA state the
+     eye can already see. Both predicates are the ones the DRAW uses, so a
+     tooltip can never claim a deck or a dune that isn't painted there. */
+  if(c.t===T.BEACH&&espAt(y)&&x===shoreAt(y)-1)data.push(['Esplanade']);
+  if(c.t===T.BEACH&&hut&&y===hut.y&&x===shoreAt(y)-2)data.push(['Lifeguard tower']);
+  if(c.t===T.DUNE){
+    data.push(['Sand',Math.round(clamp(c.sand/DUNECAP,0,1)*100)+'%']);
+    if(c.sand>=DUNEMARRAM)data.push(['Marram grass']);
+  }
+  /* the sea is the one part of the diorama that changes while you look at it */
+  const tidal=c.t===T.BEACH||c.t===T.DUNE||c.t===T.KELP||c.t===T.MARSH
+             ||(c.t===T.WATER&&!c.riv)||pierAt(x,y);
+  if(tidal)data.push(['Tide',TIDE>0.72?'High water':TIDE<0.28?'Low water'
+                             :(TIDEV>0?'Flooding':'Ebbing')]);
+  /* land value is meaningless on open water — don't print noise as data. (A pier
+     hex would otherwise quote the value of the seabed under half its deck.) */
+  const wet=c.t===T.WATER||c.t===T.KELP||c.t===T.MARSH;
+  if(!wet&&!pierAt(x,y))data.push(['Value',Math.round(c.val*100)+'%']);
   let h='<p class="tt">'+title+'</p>';
   if(sub)h+='<p class="td">'+sub+'</p>';
   if(data.length){
@@ -4982,7 +5014,7 @@ cvs.addEventListener('mousemove',e=>{
     }
     const c=cellAt(x,y);
     if(!c){tipEl.style.display='none';return;}
-    html=describeTile(c);
+    html=describeTile(c,x,y);
   }
   tipEl.innerHTML=html;
   const flipX=e.clientX>innerWidth-260, flipY=e.clientY>innerHeight-120;
@@ -5000,7 +5032,9 @@ function advanceEntities(dt,s){
   /* the breeze: slow seeded gust cycle with genuine lulls; trees, palms and
      clouds all read from this one signal so the whole scene gusts together */
   WINDA=0.25+0.75*Math.max(0,Math.sin(time*0.13+(seedNum%89)*0.5))*(0.72+0.28*Math.sin(time*0.57));
-  TIDE=0.5+0.5*Math.sin(waveT*0.045+(seedNum%31)*0.4); /* ~2min ebb and flood */
+  /* ~2min ebb and flood. One phase, two readings: height and its direction. */
+  const tph=waveT*0.045+(seedNum%31)*0.4;
+  TIDE=0.5+0.5*Math.sin(tph); TIDEV=Math.cos(tph);
   for(const v of vehicles)stepVehicle(v,dt*s);
   for(const v of bikes)stepVehicle(v,dt*s);
   for(const v of trams)stepVehicle(v,dt*s);

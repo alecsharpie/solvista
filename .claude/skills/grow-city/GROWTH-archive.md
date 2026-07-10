@@ -2833,3 +2833,102 @@ contrast back. Cue (b) is closed.
 - Agents read the **`SPECIMEN nn`** caption in the UI and will report *that* as the seed
   ("seed-16" for `seed=42`). Not confabulation — don't discount a verdict over it.
 
+## Iteration 87 — the monorail stops looking like a UI overlay (2026-07-10)
+
+**Vector** — Transport × **Polish**. Cue (c) was the best-evidenced open cue in the
+ledger: **six agents, four seeds, three iterations** (79/84/85), unprimed, calling
+`drawMonoAt`'s beam "stadium markings" / "a selection overlay" / "a debug overlay
+floating above the rooftops with no shadow." Iter 85 proved the attribution with a
+BEFORE/AFTER pass and deferred the fix only because it had just spent its lap on the
+gondola; iter 86 deferred it again to avoid repeating both axes. Urban intervened, so
+Transport is no longer back-to-back.
+
+**On the kind repeating a fifth time.** 83/84/85/86 were all Polish and so is this. I
+took it deliberately: **both** remaining strong cues (the monorail beam, the floating
+rainbow) are Polish cues, so there is no cue-driven lap that isn't. The skill's own
+tiebreak decides it — *if something compounded badly, fix it before adding more* — and
+shipping a shallow Nature element purely to rotate the kind is exactly the "one more
+shallow feature" it warns against. The kind axis should rotate at **88**; the city has
+now closed both of the defects that were disfiguring it at city scale.
+
+**The defect, already measured by iter 85.** The beam was a **2px pure-`white`(1.02)
+stroke over a 3.4px `whiteDk`(0.85) one** at constant `RAILH=40` — dead straight,
+unshaded, uniform, floating over every roof, and **brighter than any building in the
+city**. Its closed loops are what agents kept calling "outlined polygons". The pylons
+were `prismS(...,0.045,0.045,0,RAILH,...)`: uniform full-bright sticks terminating on
+the asphalt with no footing and no head. Straight + uniform + unsupported + maximally
+bright *is* the grammar of a vector overlay. The artifact was drawing a ruler.
+
+**Change (draw-only: no terrain, no `rng()`, no `hashCell`, no new `Math.random()` draw).**
+Applied iter 85's proven gondola recipe — *dim off maximum, give the deck an underside,
+plant the pylons* — with one deliberate departure.
+- **`RAILH` is now defined as the beam's SOFFIT**, not a vague reference height, and
+  `BEAMD=3.4` is the girder depth. Stating the datum is what makes the pylon head and
+  the beam underside meet by construction rather than by tuning.
+- **The beam is a solid, not an outline.** One wide `whiteDk(0.5)` body stroke spanning
+  soffit→deck (the shadowed side *and* the underside read as one dark mass), capped by a
+  1.6-world `whiteDk(0.95)` deck. Peak tone drops **255 → 217**, so it is no longer the
+  brightest thing in the frame; the buildings win again.
+- **`monoPylon()`**: `creamDk` footing (`ax .072`) → `whiteDk` mast at `.046/.040` with
+  real lit/shadowed faces → a wider `.10/.052` pier head **whose top face sits exactly at
+  `RAILH`**, so the girder rests on it. The station post was dimmed to the same mast tones.
+- **No sag** — and that is the departure. A haul rope sags; a **rigid box girder does
+  not**. Iter 85's header note ("sag is the cheapest of the four") is true of *cables*;
+  transplanting it here would have drawn a wrong bridge. For a rigid span the other three
+  cues — thickness with an underside, shading, a footing and a cap — must carry the whole
+  load, and they do.
+- Resolution check first, per iter 77: deck `1.6 world × 0.73 = 1.17 device px`. Above the
+  ceiling. The 3.4-world body is 2.5 device px.
+
+**Census** — `+0` on **all 22 metrics** (pop 144403, roads 5752, arterials 856…), empty
+tile histogram, 0 page errors, `monoLines 11 · monorail 19` unchanged. VERDICT: PASS. The
+pixel-identical control that iter 78 says only a draw-only change can have — and it came
+back exactly flat, without even iter 85's ±2 `pop` wobble.
+
+**Visual** — BEFORE control from `git show HEAD:solvista.html` at identical clip coords
+(iter 77's rule for any line-weight/colour change), 3 agents, both seeds, and I read the
+downtown crop myself before spawning any of them. All named the confusable elements
+(gondola cables, gold arterial centre lines, the rainbow) and were forbidden to report them.
+- **Downtown zoom, the scale the pylons live at → the primary verdict** (iter 82's rule):
+  `VISUAL: PASS`. Footing/mast/head all read; "the beam underside sits on the pier heads
+  with no visible floating gap and no head poking up through the deck."
+- **Whole-city, seeds 42 and 7:** `VISUAL: PASS` ×2, and this is the line that closes the
+  cue — both said, in their own words, that the AFTER beam reads as **elevated
+  infrastructure rather than UI chrome**. Seed 7's agent volunteered the diagnosis
+  unasked: *"the worst blowout (the white line) was the thing fixed."*
+
+**Perf** — 3 sequential passes, minimum of each scene: day `31.33 → 31.78ms (+1.4%)`,
+night `37.22 → 35.89ms (−3.6%)`. PASS, and within 0.2ms of iter 85's reading for the
+structurally identical change (two extra prisms on ~40 pylons is free). Run this lap
+rather than deferred to 89's step-back because the lap touched the per-frame draw loop.
+
+**Verdict: SHIPPED.** Cue (c) is **CLOSED**. Both of the city-scale defects the holistic
+passes kept surfacing — the dark asphalt (86) and the chrome beam (87) — are now fixed,
+and the aerial systems finally share one visual language: the gondola sags because it is a
+rope, the monorail does not because it is a girder, and both are planted.
+
+**Findings**
+- **The "overlay grammar" checklist generalizes, but its items are not interchangeable.**
+  Sag / shading / footing / cap separate geometry from chrome — however **sag is a property
+  of the member, not of the fix.** Ask what the thing *is* before borrowing the previous
+  lap's recipe wholesale. The remaining long uniform strokes (bridge cables, string lights)
+  each need this question asked separately.
+- **Name the datum in a constant.** Renaming `RAILH` from "the height the beam is near" to
+  "the height of the beam's soffit" turned a two-magic-number junction (`-RAILH-1.2`,
+  `-RAILH-2`) into one that closes by construction. The old code's pylon top at `RAILH` sat
+  *inside* the beam it was supposed to support, which is precisely why nothing looked planted.
+- **Two brightest-object bugs in three laps** (86's asphalt floor, 87's beam ceiling) were
+  both found by asking *what is the extreme tone in this frame, and has it earned that*.
+  That question is cheap and neither the census nor a primed screenshot agent asks it.
+- **A cue's attribution can be wrong while the cue is right.** Cue (c) blamed the gondola
+  for three iterations; 85 corrected it to the monorail and 87 fixed it. Six agents were
+  right about *what they saw* and wrong about *what it was* — which is the argument for
+  BEFORE/AFTER attribution passes over verdicts.
+
+**Follow-ups:** cue (a), **the floating rainbow** (`L4166`, drawn in screen space; a leg
+ends mid-air over open ocean at seed 7), is now the **only** strong open cue and the
+obvious Sky × Polish lap. Standing leads, all still open: 77's `treed`-on-`c.flow`
+boulevard retarget (allées still line `busy`, not the arterials — Transport × Deepen),
+78's dogs-on-sidewalks (`strollable()` still park-bound), 73's corner-lot side choice,
+76's REDWOOD closure. **Iteration 89 owes the holistic step-back** (84 + 5).
+

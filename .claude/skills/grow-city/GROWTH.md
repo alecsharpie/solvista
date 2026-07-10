@@ -16,23 +16,62 @@ cell is *attempted*, not *filled* — read its entry before re-trying it); `U1`�
 tooltip / kelp re-gate · U3 determinism audit · U4 hexagon plate + plural
 rivers/monorails/cable cars · U5 census stats that can fall).
 
-| Domain | New element | New CA rule | Deepen | Connect | Scale | Polish |
-| --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53, 96 |
-| **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86 |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 |
-| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 |
-| **People & activity** | 41, 56 | 49 | 34, 64, 93 | 78 | | 84 |
+**Interaction/UX is now a column** (added iter 97). It was a documented *kind* that lived only in
+the bullet below, so a domain touched by an Interaction vector still looked untouched to step 1's
+rotation scan. Cells hold only vectors the ledger explicitly attributes to a domain; cross-cutting
+ones (U2, 42, U5) stay in the bullet.
+
+| Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53, 96 | |
+| **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86 | |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
+| **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
+| **People & activity** | 41, 56 | 49 | 34, 64, 93 | 78 | | 84 | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
   + **hover focus ring (iter 71, People-led)** + **census stats that can fall
-  (U5: tallest / density / solar share / transit reach / walkable)**.
+  (U5: tallest / density / solar share / transit reach / walkable)**
+  + **the coast names itself (iter 97, Water-led: pier/stall/ferris wheel,
+  esplanade, lifeguard tower, dune `Sand`+`Marram grass`, live `Tide`)**.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
+- **⚠ A DRAW-TIME structure with no tile type of its own is invisible to the tooltip (iter 97).**
+  Nothing in `TILELABEL` looks missing, so nothing looks wrong — the pier reported **"Ocean"** for
+  ~75 iterations, and the iter-22 esplanade and the lifeguard tower were mute the same way. The
+  invariant "keep the tooltip in sync" is usually read as *new tile type → new label*; it also
+  means **anything you paint over a tile must be named before that tile.** `pierAt(x,y)` (L1827,
+  what is *drawn*, 1986) vs `onPier(x,y)` (where a ped may *walk*, 1987) are now one predicate with
+  two readers. When you add a draw-time overlay, hover it before you ship it.
+- **⚠ `solarRoofs` / `greenRoofs` JITTER ±4 UNDER A NULL EDIT (iter 97).** They salt their hash
+  with `(year*23)|0` / `(year*31)|0` (L1126/L1136) and `year` is a continuously-advancing float, so
+  the salt quantizes differently depending on where tick accumulation lands. Iter 97 saw +4/+1,
+  suspected its own change, and ran the control: **`git stash` the edit, re-census pristine HEAD
+  against the same baseline → identical +4/+1.** Before believing any small non-core delta, run
+  that stash-control. It costs 90s and needs no tokens.
+- **⚠ A slow signal sampled briefly looks exactly like a stuck one (iter 97).** `TIDE` has a ~140s
+  period (`waveT` advances ~1.0/s, `×0.045`) and spends most of its time near the extremes (arcsine).
+  Watching a live page for 17s showed **only** `Low water` and looked like a dead-label bug; the
+  feature was fine — seed 42 simply started in the trough, where `sin` is flattest. **Sweep the
+  phase (assign `waveT` in `page.evaluate` and read the real function), don't watch the clock.**
+  `TIDEV` (sign of `dTIDE/dt`) is derived from the *same hoisted phase* as `TIDE`, so they cannot
+  disagree — do that whenever a value and its derivative are both consumed.
+- **⚠ Gating a TILE tooltip? Clear entities off the target hex first (iter 97).** `pickEntity()`
+  beats the tile, by design. Seed 7's esplanade shot returned **"Jogger / Logging shoreline
+  miles."** — a correct tooltip for the wrong subject, and a visual FAIL for a feature that worked.
+  Use `&flood=joggers:0` (the debug hook exists for this) and pick the candidate hex with the most
+  clearance from any stamped entity. `shot-coasttip.mjs` is the tile-side sibling of
+  `hovershot.mjs` (which aims at *entities* via `__ents` and cannot target a hex).
+- **⚠ Water & coast is ADDITIVELY SATURATED too (surveyed iter 97).** 6 new elements, the dune CA
+  (90), the esplanade (22), five Deepens, four Polishes. Already there: beach, dunes+marram, kelp,
+  marsh, rocks, lighthouse, boardwalk pier (deck/stall/ferris wheel), esplanade, lifeguard tower,
+  harbor works + freighters, ferries, boats, kayaks, surfers, whales, dolphins, herons, tidepools,
+  a live `TIDE`, and offshore wind. Its remaining moves are **Deepen / Polish / Interaction**;
+  97 took Interaction.
 - **⚠ Nature is ADDITIVELY SATURATED (surveyed iter 95; Polish taken by iter 96).** Before reaching
   for a new plant or a
   new nature CA, know what is already there: forest succession + logging, `REDWOOD` canopy closure,
@@ -616,110 +655,11 @@ rivers/monorails/cable cars · U5 census stats that can fall).
 
 <!-- rotated -->
 
-> **Archive:** the 89 entries before Iteration 87 live in
+> **Archive:** the 90 entries before Iteration 88 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 87 — the monorail stops looking like a UI overlay (2026-07-10)
-
-**Vector** — Transport × **Polish**. Cue (c) was the best-evidenced open cue in the
-ledger: **six agents, four seeds, three iterations** (79/84/85), unprimed, calling
-`drawMonoAt`'s beam "stadium markings" / "a selection overlay" / "a debug overlay
-floating above the rooftops with no shadow." Iter 85 proved the attribution with a
-BEFORE/AFTER pass and deferred the fix only because it had just spent its lap on the
-gondola; iter 86 deferred it again to avoid repeating both axes. Urban intervened, so
-Transport is no longer back-to-back.
-
-**On the kind repeating a fifth time.** 83/84/85/86 were all Polish and so is this. I
-took it deliberately: **both** remaining strong cues (the monorail beam, the floating
-rainbow) are Polish cues, so there is no cue-driven lap that isn't. The skill's own
-tiebreak decides it — *if something compounded badly, fix it before adding more* — and
-shipping a shallow Nature element purely to rotate the kind is exactly the "one more
-shallow feature" it warns against. The kind axis should rotate at **88**; the city has
-now closed both of the defects that were disfiguring it at city scale.
-
-**The defect, already measured by iter 85.** The beam was a **2px pure-`white`(1.02)
-stroke over a 3.4px `whiteDk`(0.85) one** at constant `RAILH=40` — dead straight,
-unshaded, uniform, floating over every roof, and **brighter than any building in the
-city**. Its closed loops are what agents kept calling "outlined polygons". The pylons
-were `prismS(...,0.045,0.045,0,RAILH,...)`: uniform full-bright sticks terminating on
-the asphalt with no footing and no head. Straight + uniform + unsupported + maximally
-bright *is* the grammar of a vector overlay. The artifact was drawing a ruler.
-
-**Change (draw-only: no terrain, no `rng()`, no `hashCell`, no new `Math.random()` draw).**
-Applied iter 85's proven gondola recipe — *dim off maximum, give the deck an underside,
-plant the pylons* — with one deliberate departure.
-- **`RAILH` is now defined as the beam's SOFFIT**, not a vague reference height, and
-  `BEAMD=3.4` is the girder depth. Stating the datum is what makes the pylon head and
-  the beam underside meet by construction rather than by tuning.
-- **The beam is a solid, not an outline.** One wide `whiteDk(0.5)` body stroke spanning
-  soffit→deck (the shadowed side *and* the underside read as one dark mass), capped by a
-  1.6-world `whiteDk(0.95)` deck. Peak tone drops **255 → 217**, so it is no longer the
-  brightest thing in the frame; the buildings win again.
-- **`monoPylon()`**: `creamDk` footing (`ax .072`) → `whiteDk` mast at `.046/.040` with
-  real lit/shadowed faces → a wider `.10/.052` pier head **whose top face sits exactly at
-  `RAILH`**, so the girder rests on it. The station post was dimmed to the same mast tones.
-- **No sag** — and that is the departure. A haul rope sags; a **rigid box girder does
-  not**. Iter 85's header note ("sag is the cheapest of the four") is true of *cables*;
-  transplanting it here would have drawn a wrong bridge. For a rigid span the other three
-  cues — thickness with an underside, shading, a footing and a cap — must carry the whole
-  load, and they do.
-- Resolution check first, per iter 77: deck `1.6 world × 0.73 = 1.17 device px`. Above the
-  ceiling. The 3.4-world body is 2.5 device px.
-
-**Census** — `+0` on **all 22 metrics** (pop 144403, roads 5752, arterials 856…), empty
-tile histogram, 0 page errors, `monoLines 11 · monorail 19` unchanged. VERDICT: PASS. The
-pixel-identical control that iter 78 says only a draw-only change can have — and it came
-back exactly flat, without even iter 85's ±2 `pop` wobble.
-
-**Visual** — BEFORE control from `git show HEAD:solvista.html` at identical clip coords
-(iter 77's rule for any line-weight/colour change), 3 agents, both seeds, and I read the
-downtown crop myself before spawning any of them. All named the confusable elements
-(gondola cables, gold arterial centre lines, the rainbow) and were forbidden to report them.
-- **Downtown zoom, the scale the pylons live at → the primary verdict** (iter 82's rule):
-  `VISUAL: PASS`. Footing/mast/head all read; "the beam underside sits on the pier heads
-  with no visible floating gap and no head poking up through the deck."
-- **Whole-city, seeds 42 and 7:** `VISUAL: PASS` ×2, and this is the line that closes the
-  cue — both said, in their own words, that the AFTER beam reads as **elevated
-  infrastructure rather than UI chrome**. Seed 7's agent volunteered the diagnosis
-  unasked: *"the worst blowout (the white line) was the thing fixed."*
-
-**Perf** — 3 sequential passes, minimum of each scene: day `31.33 → 31.78ms (+1.4%)`,
-night `37.22 → 35.89ms (−3.6%)`. PASS, and within 0.2ms of iter 85's reading for the
-structurally identical change (two extra prisms on ~40 pylons is free). Run this lap
-rather than deferred to 89's step-back because the lap touched the per-frame draw loop.
-
-**Verdict: SHIPPED.** Cue (c) is **CLOSED**. Both of the city-scale defects the holistic
-passes kept surfacing — the dark asphalt (86) and the chrome beam (87) — are now fixed,
-and the aerial systems finally share one visual language: the gondola sags because it is a
-rope, the monorail does not because it is a girder, and both are planted.
-
-**Findings**
-- **The "overlay grammar" checklist generalizes, but its items are not interchangeable.**
-  Sag / shading / footing / cap separate geometry from chrome — however **sag is a property
-  of the member, not of the fix.** Ask what the thing *is* before borrowing the previous
-  lap's recipe wholesale. The remaining long uniform strokes (bridge cables, string lights)
-  each need this question asked separately.
-- **Name the datum in a constant.** Renaming `RAILH` from "the height the beam is near" to
-  "the height of the beam's soffit" turned a two-magic-number junction (`-RAILH-1.2`,
-  `-RAILH-2`) into one that closes by construction. The old code's pylon top at `RAILH` sat
-  *inside* the beam it was supposed to support, which is precisely why nothing looked planted.
-- **Two brightest-object bugs in three laps** (86's asphalt floor, 87's beam ceiling) were
-  both found by asking *what is the extreme tone in this frame, and has it earned that*.
-  That question is cheap and neither the census nor a primed screenshot agent asks it.
-- **A cue's attribution can be wrong while the cue is right.** Cue (c) blamed the gondola
-  for three iterations; 85 corrected it to the monorail and 87 fixed it. Six agents were
-  right about *what they saw* and wrong about *what it was* — which is the argument for
-  BEFORE/AFTER attribution passes over verdicts.
-
-**Follow-ups:** cue (a), **the floating rainbow** (`L4166`, drawn in screen space; a leg
-ends mid-air over open ocean at seed 7), is now the **only** strong open cue and the
-obvious Sky × Polish lap. Standing leads, all still open: 77's `treed`-on-`c.flow`
-boulevard retarget (allées still line `busy`, not the arterials — Transport × Deepen),
-78's dogs-on-sidewalks (`strollable()` still park-bound), 73's corner-lot side choice,
-76's REDWOOD closure. **Iteration 89 owes the holistic step-back** (84 + 5).
 
 ## Iteration 88 — the woods refuse to be connected (2026-07-10)
 
@@ -1550,3 +1490,109 @@ Banked as a watch item, not a problem — but the next Nature vector should not 
 census dead flat, three visual PASSes, perf inside budget. Nature's saturation note stands, and is
 now better evidenced: the payoff here came from *polishing what the domain already had*, not from
 a fifth plant.
+
+## Iteration 97 — the coast learns to talk (2026-07-10)
+
+**Vector** — Water & coast × **Interaction/UX (SHIPPED)**. Both axes pointed here. Water & coast
+was the stalest **domain** (last vector: 90), and Interaction/UX was by far the stalest **kind**
+— last touched at **71**, twenty-six iterations ago. It is also the kind the header's own
+saturation rule prescribes: Water & coast's additive cells are spent (6 new elements, the dune CA
+at 90, the esplanade at 22, five Deepens), and "when every domain's obvious additive moves are
+spent, steer toward Deepen / Polish / **Interaction**."
+
+**The defect (found by grep, not by the ledger — again).** `drawPierAt()` is called from **two**
+draw cases, `T.WATER` (L2434) and `T.BEACH` (L2586), because the deck crosses the waterline. But
+`describeTile()` only ever saw the **tile underneath**. So hovering the ferris wheel — the single
+most eye-catching object on the coast — reported:
+
+> **Ocean** · *The open sea.* · Value 41%
+
+The pier has been drawn since iter ~6 and the esplanade since **iter 22**; both are draw-time
+features derived from terrain, and **neither was ever told to the tooltip**. The lifeguard tower
+(`hut`) was mute too. This is the invariant "keep the hover tooltip in sync" failing quietly for
+~75 iterations, and it failed precisely *because* these features carry no tile type of their own —
+nothing in `TILELABEL` was missing, so nothing looked wrong.
+
+**Change (tooltip-only; no terrain, no `rng()`, no new draw work).**
+- **`pierAt(x,y)` factored out** (L1827). The draw condition `year>=1986&&y===pier.y&&...` was
+  written out **twice**, and disagreed with `onPier()`'s `year>=1987`. Now: `pierAt` = what is
+  *drawn* (and named); `onPier` = `year>=1987&&pierAt(x,y)` = where a ped may legally *walk*. The
+  deck exists a year before it opens, which is both true to the code and true to life. Both draw
+  sites now call `pierAt`. One predicate, three readers — the iter-94 lesson (mark a through-line,
+  not spokes; keep one source of truth) applied to logic rather than geometry.
+- **The pier names itself, before the tile under it**: `Pier` / `Snack stall` (`x===pier.x1-1`) /
+  `Ferris wheel` (`x===pier.x1`), each with `Opened 1986`, plus a `Not yet open` flag in 1986.
+- **`Esplanade`** flag on the beach hex that carries the deck — gated on the *same* `espAt(y)` the
+  draw uses, so the tooltip cannot claim a plank that isn't painted.
+- **`Lifeguard tower`** flag, gated on `c.t===T.BEACH` to match its draw case.
+- **Dune CA state surfaced**: `Sand N%` (`c.sand/DUNECAP`) and a `Marram grass` flag past
+  `DUNEMARRAM`. Iter 90's accretion was visible in the *silhouette* and nowhere in words.
+- **`Tide`** on every tidal tile — `High water` / `Low water` / `Flooding` / `Ebbing`. `TIDE` was
+  already a live global driving the damp margin; `TIDEV` (the *sign* of its derivative) is new, and
+  is computed from the **same hoisted phase** as `TIDE` so the two can never disagree. The sea is
+  the one part of the diorama that changes while you look at it, and now it says so.
+- **`Value` suppressed on open water** (`WATER`/`KELP`/`MARSH`, and on pier hexes). Land value on
+  the seabed is noise printed as data.
+
+**Census** — `pop`/`roads`/`developed` **+0**, tile histogram **empty**, `promenade` +0. VERDICT
+PASS, 0 page errors. A tooltip-only change must read exactly flat, and it did.
+
+**⚠ `solarRoofs +4` / `greenRoofs +1` moved, and it is NOT this change.** The invariant says an
+unintended metric move is a red flag, so I ran the control: `git stash` the edit, re-census
+pristine HEAD against the same baseline → **the identical +4 / +1**. Cause: those two passes salt
+their hash with `(year*23)|0` (L1126/L1136), and `year` is a *continuously advancing float*, so the
+salt quantizes differently depending on exactly where tick accumulation lands. **These two metrics
+jitter ±4 run-to-run under a null edit.** Don't chase them; do run the stash-control before
+believing any small non-core delta.
+
+**Growth signal** — `probe-coasttip.mjs` walks every hex over the 3-seed × 3-era matrix, calls the
+*real* `describeTile(c,x,y)`, and asserts the tooltip against the draw's own predicates:
+
+| | 1985 | 2005 | 2035 |
+| --- | --- | --- | --- |
+| pier hexes named | 0 (not built) | 17 | 17 |
+| dune `Sand` rows | 62 | 94 | 110 |
+| of which `Marram grass` | **0** | 55 | 83 |
+
+34 pier hexes named across the matrix (22 `Pier` · 6 `Snack stall` · 6 `Ferris wheel`), 9 lifeguard
+towers (1/city), 7,773 tide rows. Four assertions hold at **0** violations: no pier hex still says
+Ocean/Beach, no water hex prints `Value`, no dry hex *lost* `Value`, no dry hex gained `Tide`.
+The dune table is the nicest result — **marram is 0 in 1985** and climbs, because sand hasn't
+reached `DUNEMARRAM` yet. The tooltip is reading live CA state, not a static label.
+
+**The cross-check that cost nothing:** esplanade rows total **189** — and the census's independent
+`promenade` metric is **189**. The tooltip predicate and iter 22's draw agree exactly, by
+construction. Per the header's rule, **no new census metric was added**: the existing tally already
+measured this.
+
+**⚠ All four tide labels are reachable, but a 17-second sample said otherwise.** The first check
+watched a live page for 17s and saw only `Low water`, which looks exactly like a dead-label bug.
+It isn't: the tide period is ~140s (`waveT` advances ~1.0/s, `×0.045`), and seed 42 happened to
+start in the **trough**, where `sin` is flattest. Driving `waveT` across one full period and
+reading the *real* tooltip gives `Low water 70 · High water 50 · Flooding 20 · Ebbing 20` — the
+arcsine shape you'd predict (slow at the extremes, fast through the middle). **A slow signal
+sampled briefly is indistinguishable from a stuck one. Sweep the phase; don't watch the clock.**
+
+**Visual** — tooltip changes can't be shot by `shoot.mjs`, and `hovershot.mjs` aims at *entities*
+via `__ents`. So `shot-coasttip.mjs` (scratch) aims the real cursor at a **hex** chosen by the
+draw's own predicate, zooms the artifact's camera, and centres the clip on the cursor (the panel
+flips left/up near frame edges). 4 agents, no enhancement (iter 95's rule): pier/esplanade seed 42
+**PASS**, pier seed 7 **PASS**, dune+ocean **PASS** (`Sand 100%` · `Marram grass` · `Tide Low
+water`, and ocean shows `Tide` with **no** `Value`), whole-city seeds 42+7 **PASS** — coast clean,
+hills healthy, no z-tears.
+
+**⚠ The one FAIL was the shot, not the product — and it taught the real lesson.** Seed 7's
+esplanade tooltip read **`Jogger` / "Logging shoreline miles."** A jogger was standing on the deck,
+and `pickEntity()` beats the tile — *correct* behaviour, poetically apt, and it hid the row under
+test. Fixed by `&flood=joggers:0` (the debug hook exists for exactly this) plus picking the
+candidate hex with the most clearance from any stamped entity. **Any tile-tooltip gate must clear
+entities off the target hex first, or it photographs the wrong tooltip.**
+
+**Perf** — not run: no per-frame draw work added (one `Math.cos` per tick); `describeTile` runs on
+`mousemove` only. Iter 96's `tree()` +7.1% remains the open watch item.
+
+**Verdict — SHIPPED.** The most-photographed structure on the coast stopped introducing itself as
+the ocean, and the coast's live simulation state — tide, sand, marram — became legible without a
+single new pixel. Census dead flat, five visual PASSes, one honest FAIL corrected. **The header's
+warning holds a fourth time: `GROWTH.md` is the loop's memory, not the artifact's inventory —
+grep the seam, not the ledger.**
