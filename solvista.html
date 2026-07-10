@@ -212,6 +212,11 @@ const DEV=new Set([T.RES,T.MID,T.COM,T.TOWER,T.CIVIC,T.IND,T.MARKET]);
    down a tower, and it does not pave a park. */
 const FORECOURT_LOT=new Set([T.EMPTY,T.RES,T.COM,T.MID]);
 const SHOREX=CTRX+11; /* the coast highway column */
+/* The founding crossroads, published by genWorld: every seed lays a main street
+   through one hex and the old town grows around it, so this — not the plate's
+   centre, and not the land-value field, whose peaks sit on parks and water — is
+   where downtown actually is. CORER is how far out the core's pull reaches. */
+let CBDX=CTRX, CBDY=CTRY; const CORER=16;
 const SHORE0=SHOREX+5; /* nominal water's edge, five lots seaward of the highway */
 
 /* the plate mask. HEXOK gates inB(), so world generation, growth, picking and
@@ -527,6 +532,7 @@ function genWorld(seed){
   /* it wants the plate's broad middle, not a tapering point */
   for(let tries=0;tries<24&&(Math.abs(fy-ry0)<5||Math.abs(fy-CTRY)>14);tries++)fy=YC[(rng()*YC.length)|0];
   const mainX=SHOREX-14+(rng()*11|0);
+  CBDX=mainX; CBDY=fy;                          /* downtown is wherever the founding was */
   const act=(x,y)=>{const c=cellAt(x,y);
     if(!c||c.t===T.FOREST||c.t===T.ROCK)return;
     if(c.t===T.WATER){if(c.corr){c.t=T.ROAD;c.bridge=true;c.corr=false;}return}
@@ -932,6 +938,16 @@ function tick(){
     } else if(c.t===T.COM&&year>=1996&&!seaside(x)){
       const com=countAround(x,y,1,n=>n.t===T.COM||n.t===T.TOWER);
       const back=clamp((CTRX+CTRY+10-(x+y))/(G-2),0,1);   /* towers cluster inland */
+      /* WHERE a tower may rise stays exactly as it was — `back` gates land use, and
+         land use is where the population lives. Two reasons not to touch it. It is a
+         weak lever: ~800 ticks x ks(240) picks sample every cell ~60 times, so this
+         test SATURATES, and nearly any lasting COM with a quorum towers eventually
+         whatever p is. Steepening it toward the core moved mean tower spread by 0.9
+         hexes and core share by 1 point — and cost 21% of the city's towers at 240
+         pop each. It is also a dear one: any edit here reshuffles the seeded stream.
+         So siting is untouched, and the SKYLINE is shaped by height instead, which is
+         set once per tower and cannot saturate. */
+      const core=clamp(1-hexDist(x,y,CBDX,CBDY)/CORER,0,1);
       /* The high street does NOT veto towers. Its lots sit on the founding crossroads,
          which is exactly where the value core forms, so forbidding them cost -20% of
          the city's towers and -9.8% pop (240 pop apiece — nothing else compensates).
@@ -940,7 +956,20 @@ function tick(){
          means "this lot fronts the parade" — a DRAW property, not a zoning veto.
          See drawBuilding's TOWER case, which gives a reserved lot a shop podium. */
       if(com>=2&&rng()<(0.14+0.20*back)*(0.5+c.val)){
-        c.t=T.TOWER; c.th=(54+c.v*82)*(0.6+0.5*back); c.age=0; stats.towers++;
+        /* Height was keyed to `back` too, and that is what strung the towers along
+           the whole inland edge: a linear ramp down the x+y diagonal is a HALF-PLANE,
+           not a place, so it has no peak for a skyline to sit on. Worse, the founding
+           crossroads sits coastward, where `back` is SMALL — it scored the core 0.677
+           against its own 0.782 mean, so downtown was literally a DIP. Measured: tall
+           towers averaged 0.92x the height of rim towers, and the tallest tower stood
+           ~30 hexes from the densest cluster on all three seeds.
+           `0.70+0.66*core` is solved to HOLD THE MEAN, not cut it: mean core over
+           tower sites is 0.125, so this averages 0.783 against the ramp's 0.782 while
+           peaking at 1.36 downtown against 0.70 at the rim. Holding the mean is the
+           whole trick — an earlier 0.52+0.72*core averaged 0.62 and cost HALF the
+           city's tall towers and helipads. That is shrinking a city, not massing it.
+           See probe-core.mjs. */
+        c.t=T.TOWER; c.th=(54+c.v*82)*(0.70+0.66*core); c.age=0; stats.towers++;
       }
     } else if(c.t===T.TOWER&&year>=2022&&rng()<0.02&&c.th<160){
       c.th+=9+c.v*12;                             /* the downtown keeps rising */

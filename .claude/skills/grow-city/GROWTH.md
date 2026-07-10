@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29 | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86 | |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
 | **Civic & culture** | 3, 11, 18, 30 | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
@@ -40,6 +40,51 @@ ones (U2, 42, U5) stay in the bullet.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
+- **⚠ THE UPGRADE PASS SATURATES — its probability is a weak, expensive lever (iter 98).** `tick()`
+  runs ~813 times to 2035 and each runs `ks(240)`=350 `rc()` picks over 4489 cells, so **every cell
+  is sampled ~60 times**. A test like `rng()<p` with p≈0.14 fires with probability `1-0.86^60 ≈ 1.0`:
+  nearly any lasting `COM` with a quorum *will* tower, whatever `p` says. Consequence: tuning `p` to
+  shape the city barely shapes it (steepening it toward the core moved mean tower spread 0.9 hexes
+  and core share 1 point) while **costing 21% of the city's towers at 240 pop each**. Before you
+  reach for a probability in `tick()`, ask whether ~60 samples have already saturated it. **Shape a
+  saturating rule with a quantity that is set ONCE (height, kind, a flag), not with its rate.**
+- **⚠ `pop` weights a tower by `h/th`, and `h` grows at DRAW time (iter 98, L3215/L1593).** So
+  **raising `c.th` silently costs population and `towerHt`** — the tower gets taller but reaches a
+  smaller fraction of its target in the frames the census samples. Iter 98's first height field
+  averaged 0.62× where the old one averaged 0.78× and cost **half the city's `tallTowers` (118→56)
+  and helipads (76→38)** while looking like a "massing" win. If you re-key a height field, **solve
+  its coefficients to hold the old mean** (measure the mean of the old field over the cells that
+  actually become towers — `/tmp`-style one-off `page.evaluate`), then redistribute. Holding the
+  mean is what turns a shrink into a massing.
+- **The CBD is published: `CBDX`/`CBDY` + `CORER`=16 (iter 98, L215).** `genWorld` has always laid a
+  founding crossroads (`mainX`,`fy`) and grown the old town around it; it stayed local for 97
+  iterations, so **no rule knew where downtown was**. Note `c.val` is *not* a centrality field — it
+  diffuses `valueSrc`, whose peaks sit on **parks and water** (0.92/0.74), not on the core. Anything
+  that means "near downtown" should use `hexDist(x,y,CBDX,CBDY)`, not `c.val` and not `CTRX/CTRY`
+  (the plate's centre, which is not the city's).
+- **⚠ A linear ramp is a HALF-PLANE, not a place (iter 98).** The tower rule's `back` =
+  `(CTRX+CTRY+10-(x+y))/(G-2)` read high across an entire diagonal *band*, so it could never mass
+  anything — hence "the eye finds *a tall side* more than a distinct core". Worse, the founding
+  crossroads sits **coastward**, where `x+y` is large and `back` is *small*: it scored the core
+  **0.677 against its own 0.782 mean**, so downtown was a literal **dip** in the skyline. Measured
+  on HEAD: core towers averaged **0.87×** the height of rim towers and the tallest tower stood
+  **33 hexes** from the crossroads on all three seeds. **If a field is supposed to have a centre,
+  it must be radial; check its value AT the centre before trusting the comment above it.**
+- **⚠ A massing statistic anchored on its own argmax is self-referential (iter 98).** `probe-core.mjs`
+  first measured tall-vs-short around the *densest radius-4 disc*, and reported seed 42 as a FAIL
+  (ratio 0.90) for a change that worked — because that seed's densest knot of towers is 29 hexes
+  from downtown, so the tall core towers counted as "far". Re-anchored on `CBDX/CBDY` the same
+  frames read 1.75. **Anchor a "did it concentrate" metric on the thing it was supposed to
+  concentrate *around*, never on where it actually ended up.** `probe-core.mjs` now reports both
+  (`tallD`, `discD`) and is the shape probe for any future skyline/massing claim.
+- **A pure DRAW/height change can be provably stream-neutral (iter 98).** Keying only `c.th` to the
+  new field — and leaving the `rng()<p` siting test byte-identical — left `pop`, `roads`,
+  `developed`, `towers` at **exactly +0** and moved **zero** tiles in the histogram, while
+  `towerHt` +4.7%, `tallTowers` +12.7%, `helipads` +23.7%. Compare iter 91's law: `rng()` draw
+  *count* is the invariant. `c.th` feeds no `rng()`-gated predicate (the 2022 growth rule's
+  `rng()<0.02 && c.th<160` short-circuits with the draw **first**), so it perturbs nothing. **When
+  a vector can be expressed as a property of a thing rather than a decision about which things
+  exist, express it that way — the census then proves the change instead of tolerating it.**
 - **⚠ A DRAW-TIME structure with no tile type of its own is invisible to the tooltip (iter 97).**
   Nothing in `TILELABEL` looks missing, so nothing looks wrong — the pier reported **"Ocean"** for
   ~75 iterations, and the iter-22 esplanade and the lifeguard tower were mute the same way. The
@@ -277,18 +322,18 @@ ones (U2, 42, U5) stay in the bullet.
   not four (`PLAZA 14→10` across the matrix). That is defensible urbanism and was accepted, but
   it is the one place the vector *cost* something. See open cue (d).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
-  **(e) downtown has no massed core** *(banked by iter 92's holistic agent; **independently
-  corroborated by iter 94's**, which called the landmass "too uniform… little breathing room
-  between core and edge, the whole thing reads at one continuous loud level" — two holistic
-  passes, two seeds, same complaint. This is now the oldest standing cue and the strongest
-  candidate for the next Urban fabric lap.)* Urban fabric × Polish/Scale —
-  at whole-city zoom the towers "are strung along the whole top edge rather
-  than massing into one skyline; the eye finds *a tall side* more than a distinct core," and
-  the interior reads as an "edge-to-edge carpet of roads + rooftops with little green
-  breathing room." The `back` term in the tower upgrade biases inland but evidently not
-  hard enough. Note the tension with iter 92: the fix is **not** to zone against towers
-  anywhere (that is a −9.8% pop trap) — it is to bias *where* they rise, and/or to thin the
-  uniform mid-block density. Same agent flagged seed 1234's long straight monorail/cable
+  **(e½) the interior is an edge-to-edge carpet** *(the surviving HALF of cue (e); its skyline
+  half was **CLOSED by iter 98**)* Urban fabric × Polish — iter 94's holistic agent called the
+  landmass "too uniform… little breathing room between core and edge, the whole thing reads at
+  one continuous loud level," and the interior an "edge-to-edge carpet of roads + rooftops with
+  little green breathing room." **98 fixed the skyline, not the carpet:** it re-keyed tower
+  *height* to a radial core, so the tall buildings now mass at the founding crossroads — but it
+  deliberately left *siting* and every land-use rule untouched, so mid-block density is exactly
+  as uniform as before. What remains is thinning that density / winning interior green. Heed
+  iter 92 (never zone against `TOWER` near the core: −9.8% pop) **and** iter 98 (the upgrade
+  probability *saturates*, so leaning on `p` is a weak lever that costs towers at 240 pop each).
+  A `MID`/`RES` thinning rule, or interior parks, is likelier than anything touching towers.
+  The same agent flagged seed 1234's long straight monorail/cable
   lines as still reading like a "wireframe/UI stroke" — but iters 85/87 closed that with two
   agents each, so treat this as one un-zoomed opinion, **not** a reopening of cue (c).
   **(d) the civic quarter deserves a real square** *(banked by iter 91, Civic × Polish)* — the
@@ -655,111 +700,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 90 entries before Iteration 88 live in
+> **Archive:** the 91 entries before Iteration 89 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 88 — the woods refuse to be connected (2026-07-10)
-
-**Vector** — Nature × **Connect**. Rotation forced both axes: 83/84/85/86/87 were
-*five straight Polish laps* (87 took the fifth deliberately and said "the kind axis
-should rotate at 88"), and Nature was the most-lagged domain at 12 iterations cold
-(last touched at 76). **Connect was the one empty cell in the Nature row.** The only
-strong open cue (the floating rainbow) is Sky × Polish, so taking it would have made
-the kind repeat a sixth time.
-
-**Hypothesis.** Forest spreads *only* by adjacency (L896) and along the river (L914),
-so the fragments the city leaves behind stay islands forever. A **shelterbelt** — a
-file of trees across open ground linking two stands of woods along one of the three
-hex axes — would stitch them back together. Draw-only (a `c.belt` flag on `EMPTY`/
-`MEADOW`, never a terrain conversion), exactly like the existing `c.hedge`, so the
-seeded `rng()` stream is untouched and pop stays flat.
-
-**Grepped first, and it paid.** `c.hedge` (L1206) already exists — *scrub lines rimming
-the farm fields*. Nearly shipped a second hedgerow onto a city that has them (iter 34's
-beach-towel trap). Belts were kept distinct: they cross **open ground between woods**,
-skip any cell the hedgerow owns, and are the only thing drawn along an axis.
-
-**Built.** `AXSTEP` (below), the `c.belt=1+axis` derivation pass beside the hedgerow
-pass, a `belt()` draw of three `treeAt()` trees strung along the axis, `tree()` split
-into a screen-space `treeAt(cx,cy,s,shade)`, and `__find('belt')`.
-
-**Measured — and the measurement killed it, twice.** `probe-belt.mjs` union-finds the
-wood patches with and without the belt cells; a real corridor network *merges* patches.
-
-1. **A per-cell test fragments; it does not connect.** v1 marked each open cell that
-   independently had woods on both sides within `BELTR`. At `BELTR=8`, seed 1234:
-   47 belt cells and patches **39 → 43**. It went *up*. Because each cell qualifies
-   alone, a corridor is only continuous where every cell happens to pass — so it draws
-   a **dotted** line, and the dots are new one-cell islands. Rewrote it to mark whole
-   **paths** (walk out from each wood; on landing, mark every cell in the run). Patches
-   then always fall: `25→19`, `17→14`, `39→32`. **The algorithm was fixed.**
-2. **The mature city has nowhere to put a corridor.** Belt cells by era, all three seeds:
-   `1985: 14 / 6 / 16` → `2005: 3 / 6 / 7` → **`2035: 1 / 0 / 1`**. `BELTR` 4 vs 6 vs 8
-   does not move 2035. `probe-beltblock.mjs` histograms what stops each axis walk:
-   at 1985 it is `WATER 100 · (too far) 52 · RES 45`; at 2035 it is **`RES 122 · MID 75 ·
-   COM 46 · PARK 30`**. By 2035 the woods are not separated by *open ground* — they are
-   **walled by buildings**, and the walks that still land are wood-adjacent-to-wood
-   (zero-length gaps, nothing to plant). A draw-only corridor has no canvas.
-   Widening the endpoints *and* the pass-through set to include `PARK`/`GARDEN`/
-   `SHOREPARK` (a "green network" rather than a wood network) changes 2035 to
-   **4 / 1 / 3**. Same answer.
-
-**Visual** — 1 agent on the `tileshot.mjs belt` magnified clip at seed 1234 / 1985, the
-feature's *best* era and scale. `VISUAL: FAIL`. Unprompted, it landed on the same defect
-the numbers imply: "the belt trees are the SAME size, colour and canopy style as the
-ordinary scattered meadow trees, so the only cue that it's a line is their spacing… it
-reads as *slightly aligned scatter*… a viewer who wasn't told wouldn't spot it." Grounding
-and z-order were clean. Wide 1985/2035 frames were shot but not spent on agents once the
-zoom failed — the zoom is the scale the feature lives at (iter 82's rule).
-
-**Census** — run on the reverted tree: `+0` on **all 22 metrics**, empty tile histogram,
-0 page errors. VERDICT: PASS. The working tree is byte-identical to HEAD.
-
-**Verdict: EXPLORED → REVERTED.** Tunable (bigger/darker/tighter trees would fix the
-"aligned scatter") — but tuning cannot reach the real defect, which is that the feature
-is **1 cell at 2035 and 0 on seed 42**. The city as it matures is the state a viewer
-looks at, and every gate shoots it. Two ways to force it, both rejected: convert the
-corridor to `FOREST` (terrain-altering → pop wobble, and it *still* doesn't land,
-because at 2035 the walks are blocked by `RES`/`MID`, not by open ground), or take land
-from the city. A −0-visibility feature for either price is the solar-farm trade again.
-
-**Findings — what iteration 89+ should lift from this**
-- **⚠ Nature × Connect is NOT reachable draw-only.** This is the load-bearing result.
-  "Link the woods" needs land the city has already taken. Do not re-try a wood-to-wood
-  corridor as a `c.flag` + draw. The *reachable* Connect hosts in a mature Solvista are
-  the greens the city already protects — and note `PARK` blocks 30 wood-walks at 2035,
-  so a **PARK↔PARK↔FOREST greenway that treats `PARK` as an endpoint** is the version
-  with an actual host, if one plants it as terrain early enough to survive.
-- **Corridors must be marked as PATHS, not as cells that each independently qualify.**
-  A per-cell test yields a dotted line and *raises* the patch count (39→43). Measured,
-  not argued. This generalises to any future network vector (greenways, view corridors,
-  bike routes): find the endpoints, walk between them, mark the whole run.
-- **`AXSTEP` — parity-free walking along the three hex axes.** Worth re-adding whenever
-  something must run along the grain of the plate. Reverted with the rest, so here it is;
-  the diagonals are walked in *axial* form, so row parity never appears:
-  ```js
-  const AXSTEP=[
-    (x,y,k)=>[x+k,y],                                              /* E-W row    */
-    (x,y,k)=>{const q=x-(y>>1),ny=y+k;return[q+(ny>>1),ny]},       /* SE: q const */
-    (x,y,k)=>{const s=x+((y+1)>>1),ny=y+k;return[s-((ny+1)>>1),ny]},/* SW: s const */
-  ];
-  ```
-  Verified against `NBR_E`/`NBR_O` at both row parities: `k=1` is always a true neighbour.
-- **`c.hedge` already rims the farm fields** (L1206) and `hedge()` draws it. Any future
-  "line of scrub/trees" vector must say how it differs from the hedgerow *before* drawing.
-- **A patch-count union-find is the honest test of a "Connect" claim**, and it is ~30 lines
-  over `__find`. Any Connect iteration should have to pass one. It is what turned "the
-  belts look like they connect things" into "the belts raised the patch count."
-- **`probe-*.mjs` at the repo root is gitignored scratch** (as iter 86 noted). `probe-belt.mjs`
-  and `probe-beltblock.mjs` are left in the worktree, uncommitted, for whoever takes the
-  greenway.
-
-**Iteration 89 still owes the holistic step-back** (84 + 5) — 88 shipped no pixels, so the
-cumulative-drift question is exactly as open as 87 left it. The rainbow (cue (a), `L4166`,
-Sky × Polish) remains the only strong open cue.
 
 ## Iteration 89 — the rainbow lands (2026-07-10) [holistic step-back]
 
@@ -1596,3 +1541,74 @@ the ocean, and the coast's live simulation state — tide, sand, marram — beca
 single new pixel. Census dead flat, five visual PASSes, one honest FAIL corrected. **The header's
 warning holds a fourth time: `GROWTH.md` is the loop's memory, not the artifact's inventory —
 grep the seam, not the ledger.**
+
+## Iteration 98 — downtown stops being a dip (2026-07-10)
+
+**Vector** — Urban fabric × Polish. Took **cue (e)**, the oldest standing cue, banked by iter 92's
+holistic agent and independently corroborated by iter 94's: *"the towers are strung along the whole
+top edge rather than massing into one skyline; the eye finds a tall side more than a distinct core."*
+Two holistic passes, two seeds, same complaint — and no vector had ever answered it.
+
+**Diagnosis (the whole iteration is here).** Wrote `probe-core.mjs` first, because "did it mass?" is
+a measurement, not a vibe — the way iter 88 demanded a union-find patch count of any Connect claim.
+On HEAD, at 2035, across seeds 7/42/1234: mean pairwise tower distance **24.8 hexes** on a radius-33
+plate, only **18%** of towers within 8 hexes of the densest disc, and **the tallest tower standing
+33 hexes from the founding crossroads on all three seeds.** Then the number that explained
+everything: core towers averaged **0.87×** the height of rim towers (seed 7: **0.72×**). Downtown
+was not merely un-massed, it was a **dip**.
+
+Cause: both the siting probability *and* the height multiplier were keyed to
+`back = (CTRX+CTRY+10-(x+y))/(G-2)` — a linear ramp down the x+y diagonal. **A ramp is a half-plane,
+not a place**: it reads high across an entire band, so it has no peak for a skyline to sit on. And
+because the founding crossroads sits *coastward* (large `x`), `back` scored the core **0.677 against
+its own 0.782 mean** — the rule labelled "towers cluster inland" was actively making downtown short.
+
+**Change** — Published the founding crossroads as `CBDX`/`CBDY` (+ `CORER`=16) from `genWorld`;
+after 97 iterations no rule knew where downtown was, and `c.val` is no substitute (it diffuses
+`valueSrc`, which peaks on **parks and water**, not the core). Then keyed **tower height, and only
+height,** to `core = clamp(1-hexDist(x,y,CBDX,CBDY)/CORER,0,1)`:
+`c.th=(54+c.v*82)*(0.70+0.66*core)`. Siting is byte-identical to HEAD.
+
+Two failed attempts got there, and both are worth more than the ship:
+- **Steepening the probability toward the core is a weak, expensive lever.** `tick()` runs ~813×,
+  each with `ks(240)`=350 picks over 4489 cells → **every cell is sampled ~60 times**, so
+  `rng()<0.14` fires with probability ≈1.0 and the test **saturates**: nearly any lasting `COM`
+  with a quorum towers regardless. `0.05+0.40*core` bought **5 points** of core share and cost
+  **21% of the city's towers** at 240 pop apiece. Reverted.
+- **Raising `th` silently costs pop.** `pop` weights a tower by `h/th` and `h` only creeps up at
+  *draw* time (L3215), so a taller target is a smaller realized fraction. A first height field
+  averaging 0.62× (vs the ramp's 0.78×) passed the census yet cost **half** the city's
+  `tallTowers` (118→56) and helipads (76→38). That is shrinking a city, not massing it. Fixed by
+  measuring `mean(back)=0.363` and `mean(core)=0.125` over cells that actually tower, and solving
+  `0.70+0.66*core` to **hold the mean at 0.783** while peaking 1.36 downtown vs 0.70 at the rim.
+
+The probe lied once too: anchored on its own densest disc it called seed 42 a FAIL (ratio 0.90) for
+a change that worked, because that seed's densest knot sits 29 hexes from downtown. Re-anchored on
+`CBDX/CBDY`, the same frames read **1.75**. A concentration metric must be anchored on what the
+change concentrates *around*, never on where things ended up.
+
+**Census** — `VERDICT: PASS`, and better than pass: **provably stream-neutral.** `pop 150332 → 150332
+(+0)`, `roads +0`, `developed +0`, `towers 300 → 300 (+0)`, and the tile histogram printed **not one
+changed type**. `c.th` feeds no `rng()`-gated predicate (the 2022 growth rule's `rng()<0.02&&c.th<160`
+draws first, then tests), so nothing downstream moved. What did move is exactly the vector:
+`towerHt 22643 → 23701 (+4.7%)`, `tallTowers 118 → 133 (+12.7%)`, `helipads 76 → 94 (+23.7%)`.
+Probe, CBD-anchored: `tallD 33.0 → 4.0` hexes, height ratio `0.87 → 1.56`, `hNear 70.3 → 113.4`
+against `hFar 80.4 → 72.5`.
+
+**Visual** — Before/after, wide + `--shots downtown`, seeds 42 and 7, two agents, told explicitly not
+to enhance. Both **VISUAL: PASS**, and both volunteered the intended reading without being fed it:
+seed 42 *"the tallest glass towers concentrate over the founding crossroads, tapering outward,
+whereas before they were a fairly even row of equal-height spikes strung across the whole top edge…
+outlying towers visibly shorter, giving the edges breathing room"*; seed 7 *"the two tallest spikes
+stand isolated along the top edge; in the after the height mass migrates into one coherent
+cluster… downtown gains a genuine focal skyline."* No z-order tears despite taller towers — both
+checked tops and occlusion against the row in front. No blown colour, no darkening.
+
+**Verdict — SHIPPED.** Cue (e)'s **skyline half is closed**; its *carpet* half (uniform mid-block
+density, no interior green) survives as **cue (e½)** and is explicitly *not* addressed — 98 changed
+zero tiles by design. Durable results, all promoted to the header: the upgrade pass **saturates**
+(shape it with a set-once quantity, never with its rate); `pop` weights towers by `h/th` growing at
+draw time (**hold a height field's mean**); a linear ramp has no centre — **check a field's value at
+the centre before trusting the comment above it**; and the best version of a vector is often the one
+expressed as a *property of a thing* rather than a *decision about which things exist*, because then
+the census proves it instead of merely tolerating it.
