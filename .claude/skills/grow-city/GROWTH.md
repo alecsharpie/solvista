@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
-| **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
@@ -45,15 +45,19 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
-- **ROTATION.** Last vector per domain: Sky **95** · Water **97** · Civic **100** ·
-  Nature **102** · Urban **103** · People **104** · Transport **105**. Stalest is now
+- **ROTATION.** Last vector per domain: Sky **95** · Civic **100** · Nature **102** ·
+  Urban **103** · People **104** · Transport **105** · Water **106**. Stalest is still
   **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
   cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
-  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Water (97)** is
-  the next-stalest and the safer pick; Civic (100) after it.
-  Recent kinds: 101 Connect(reverted) · 102 New element · 103 Polish · 104 Deepen · 105 Interaction/UX —
-  so **do not pick Interaction/UX or Deepen next**; the coldest kinds are **Connect**, **New CA rule**
-  and **Scale**. Note **Nature × Connect was attempted and reverted three times** (46, 88,
+  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Civic (100)** is
+  the next-stalest and the safer pick; Nature (102) after it.
+  Recent kinds: 102 New element · 103 Polish · 104 Deepen · 105 Interaction/UX · 106 New element —
+  so **do not pick New element next**; the coldest kinds are **Connect**, **New CA rule**
+  and **Scale**. (Iter 106 passed on all three *for Water* and recorded why in its entry: Connect
+  there means a corridor and iter 101's law kills those; a Water CA rule would repeat iter 90's
+  dune accretion; Scale is a structural lever, not a lap move. That reasoning is Water-specific —
+  the three kinds stay cold for **other** domains.)
+  Note **Nature × Connect was attempted and reverted three times** (46, 88,
   101) and is the row's graveyard: 46 found it geometrically impossible, 88 found it has no host
   draw-only, 101 found the host *and the land* and lost on **shape**. Do not re-open it as a
   *corridor*. **Cue (e½) is now CLOSED — iter 102 shipped the blob 101 prescribed** (the commons),
@@ -100,6 +104,15 @@ ones (U2, 42, U5) stay in the bullet.
   tuned occupancy. Multiplying the step roll by `legal/6` restores the original marginal **exactly**,
   leaving the field to change only **where** they go, never **how often**. Any future "make entity X
   prefer Y" vector on a reject-sampled walk has this trap.
+- **BUILD IN THE SEA WITHOUT A TILE TYPE (iter 106; the pier/turbine pattern).** A `Map` keyed by
+  `idx`, laid in `genWorld` from `hashCell` only, drawn from `case T.WATER`, and named in
+  `describeTile` **before** the tile under it. No `T.*` constant, no entity array, no `rng()` draw —
+  `pop` came back **exactly +0**. `moleSet` (the breakwater) joins `pier`/`turbSet`. Reach for this
+  before adding a tile type. Note `shoreAt(y)` **is** the first ocean cell of the row (`x>=sh` →
+  WATER, `sh-3..sh-1` → BEACH), so it is the correct root for anything thrown out from the beach —
+  but require `BEACH` at the root's back, or you will root on the **river mouth** (seed 3 did).
+  `probe-mole.mjs` (tracked) checks hex-neighbour contiguity, root-on-sand, single head, and whether
+  the anchored freighter lands inside the arm; adapt it for any coastal structure.
 - **⚠ NO `probe-*.mjs` IS TRACKED BY GIT — the ledger cites tools the repo does not carry (iter 101).**
   `.gitignore` ignores `probe-*.mjs` and `shot-*.mjs` so a killed iteration can't dirty the tree. The
   side effect: **every probe this ledger tells you to reuse exists only as an untracked leftover in
@@ -116,6 +129,22 @@ ones (U2, 42, U5) stay in the bullet.
   ribbon is ~1 screen pixel: contrast *without a shape*. **Below ~2–3 hexes across, a corridor is
   untraceable at any ΔL.** `probe-gwtone.mjs` answers "does it separate?"; it **cannot** answer "can
   it be followed?" — that one needs width, and an un-zoomed frame. Don't grade a line with a tone probe.
+- **⚠ A STRUCTURE'S TONE MUST CLEAR EVERY SURFACE IT CROSSES (iter 106).** Third law in the family
+  after 100 (ornament averages into tone) and 101 (contrast × width). The breakwater drew in
+  `whiteDk` — copied from `ROCK`, which sits on **grass** — but the mole spans **sand then sea**, and
+  `whiteDk` (lum 220) against `sand` (221) is invisible. A visual agent failed it as *"floats
+  detached in open water"*; `probe-mole.mjs` proved the root cell abutted `BEACH` all along. **The
+  defect was tonal and the report was geometric.** Fixed with `stone`/`stoneDk` (lum **122/92**),
+  clearing sea (155) and sand (221) both. Two corollaries: **(i)** pick a tone against the background
+  it will *actually* sit on, and if it spans two, clear both; **(ii)** when an agent says "floating"
+  or "detached", **measure the geometry before rewriting it** — "invisible" looks exactly like
+  "not connected" from the outside.
+- **A MULTI-SEGMENT PATH BUILT BY "ADVANCE, THEN TEST" SKIPS A CELL AT THE JOINT (iter 106).** The
+  mole's straight run ended `path.push([x,y]); x++`, leaving the cursor one *past* the last cell, and
+  the diagonal hook then added its own `dx` on top. Seeds 5 and 99 laid arms with a one-cell hole;
+  seeds 7 and 42 were saved only by row parity making `dx=0`, **so the two seeds under test looked
+  perfect.** Keep the cursor on the last cell laid; test each step before taking it. Any jetty /
+  causeway / spit has this trap and **it hides behind parity** — check contiguity on ≥8 seeds.
 - **⚠ ORNAMENT YOU CANNOT SEE AT DISTANCE STILL AVERAGES INTO THE TILE'S TONE (iter 100).** Iter 95
   established that legibility at distance is luminance contrast, not coverage. The corollary: **coverage
   destroys it.** `QUAD` was given a `turf` base of lum **144** to separate it from `PARK`; the tile
@@ -855,95 +884,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 98 entries before Iteration 96 live in
+> **Archive:** the 99 entries before Iteration 97 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 96 — the woods grow a second species (2026-07-10)
-
-**Vector** — Nature × **Polish (SHIPPED)**. Rotation picked the domain, saturation picked the
-kind. Nature is the stalest domain (last ship: **76**; 88 was reverted) *and* the header calls it
-**additively saturated** — "Nature's next real move is Deepen or Polish, not a new element." This
-is that move: it adds no tile, no entity, no CA pass, and no `hashCell` *placement*. It changes
-only how an existing glyph draws.
-
-**The defect (found by grep, not by the ledger).** `tree()` (L2135) was **one glyph** — a trunk
-plus two overlapping circles — and it was called from **18 sites**: `FOREST`, `PARK`, `GARDEN`,
-`MEADOW`, `SHOREPARK`, `PLAZA`, the boulevard allée, and `EMPTY` succession. Every tree in
-Solvista, from the hill woods to the civic forecourt, was the same species at a different scale.
-~2,700 crowns per frame, one silhouette. This is the third time the header's warning has bitten:
-**`GROWTH.md` is the loop's memory, not the artifact's inventory.** The first idea this lap was
-*street trees* — which turned out to already exist (`c.treed`, L1143, a tree-lined boulevard with
-an allée down both sides). Grep the seam before designing.
-
-**Change (draw-only).** `treeSp(gx,gy)` → `0` broadleaf / `1` conifer / `2` poplar, and `tree()`
-branches on it:
-- **conifer** — three stacked triangular tiers over a short trunk, each tier leaning further
-  downwind than the one below (`lean = w*(0.3+i*0.35)`), so the spire bends with the same
-  `WINDA` gust the round crowns ride;
-- **poplar** — one narrow upright plume, a tall ellipse with a lighter inner highlight;
-- **broadleaf** — the original two-blob crown, byte-for-byte.
-Species is hashed from the tree's **own sub-hex position** (`hashCell(round(gx*8),round(gy*8),
-seedNum^0x7A3E)`), not its cell, so the four trees in one forest hex mix rather than parroting
-each other. Conifers are weighted **inland**: `p = 0.08 + 0.30*inland`, where
-`inland = clamp((SHOREX-gx)/30, 0, 1)`. Poplar is a flat ~6% accent at any distance. The strand
-stays broadleaf-and-palm; the hills go coniferous. `ORCHARD` and `VINEYARD` were checked and do
-**not** call `tree()` — they have their own draws — so the mixed species cannot break the one
-place uniform rows are correct.
-
-**Census** — every metric **+0**, tile histogram **empty**. That is not a null result, it is the
-proof: a draw-only change that touches no terrain and consumes no `rng()` draw *must* read exactly
-flat, and it did, on the first run. (Contrast iter 91, where a "safe" substitution cost −22% pop.)
-
-**Growth signal** — `probe-species.mjs` (gitignored scratch) wraps the real `window.tree` and
-tallies **one rendered frame**, so it counts crowns actually painted, not cells that could host
-one. Over the 3-seed × 2-era matrix, **6,976 trees**: broadleaf **68.2%** · conifer **25.5%** ·
-poplar **6.3%**. The inland gradient is real and monotonic:
-
-| band | n | conifer | poplar |
-| --- | --- | --- | --- |
-| coast (0–.4) | 2200 | **14.7%** | 6.5% |
-| mid (.4–.75) | 2118 | **25.5%** | 6.3% |
-| hills (.75–1) | 2658 | **34.3%** | 6.1% |
-
-Species is **STABLE across eras** (same coords, 1985 vs 2035 → identical): a tree does not change
-kind as the city ages, because `year` is not in the hash. The probe asserts this.
-
-**⚠ The probe lied first, and the shape of the lie is reusable.** Its first run put **100% of
-trees in the `hills` band** — a dead gradient. The feature was fine; the *probe* was broken.
-`SHOREX` is a top-level **`const`**, so it lives in the global **lexical** environment: it
-resolves by bare name inside `page.evaluate`, but it is **NOT** a property of `window`.
-`window.SHOREX` was `undefined` → `(undefined-gx)/22` → `NaN` → and `NaN < 0.33` is `false`, so
-every tree silently fell through to the last band. **`NaN` in a bucketing chain does not throw,
-it picks the final bucket.** Note `window.tree` and `window.treeSp` *do* resolve — function
-declarations become `window` properties, `const`/`let` do not. That asymmetry is why
-`probe-dash.mjs` can call `cellAt`/`T`/`G` by bare name and must.
-Fixing the probe also exposed a real (if minor) miss: `/22` clamped the inner **quarter** of the
-plate flat (trees run `gx` 1.5→47.5 against `SHOREX`=44). Widened to `/30` so the gradient uses
-the whole landmass. **Measure the range before you pick a divisor.**
-
-**Visual** — 3 agents, 3 framings, no enhancement (iter 95's rule). Wide seed 42 + wide seed 7:
-both PASS, both saw varied silhouettes, no z-order tears, no blown-out color, and specifically
-reported the forests are **not** darker than a sunlit city warrants — the kelp failure mode, asked
-for by name. Magnified `tileshot` on a FOREST and a PARK: PASS — all three species identifiable,
-conifer tiers read as "a coherent stacked spire, not floating triangles," crowns rooted to trunks,
-greens inside the existing palette. It called the wood *"conifer interior, broadleaf edge."* That
-is emergent — species is positional, not edge-aware — but it is what a real wood looks like.
-
-**Perf** — `tree()` is the single hottest draw call in the renderer, so the frame-time gate was
-run despite this not being a step-back. 3 sequential passes, and the readings are **tight**
-(day 33.55 / 33.56 / 33.55ms), so this is signal, not the ±30% load noise iter 40 warned about:
-**day 31.33 → 33.55ms (+7.1%)**, **night 37.22 → 37.83ms (+1.6%)**. PASS (budget 15%), but
-**+7.1% is the largest single-iteration day cost in recent memory** and it is honest: a conifer
-spends 4 `col()` calls and 3 filled paths where a broadleaf spends 3 and 2, on ~2,700 trees/frame.
-Banked as a watch item, not a problem — but the next Nature vector should not also be in `tree()`.
-
-**Verdict — SHIPPED.** The most-repeated glyph in the city stopped being one glyph. Draw-only,
-census dead flat, three visual PASSes, perf inside budget. Nature's saturation note stands, and is
-now better evidenced: the payoff here came from *polishing what the domain already had*, not from
-a fifth plant.
 
 ## Iteration 97 — the coast learns to talk (2026-07-10)
 
@@ -1734,3 +1679,78 @@ iter 104's pristine-HEAD control (min 33.00ms) this vector costs **+0.22ms (+0.7
 - **Stubby lines are real.** Seed 7's three loops are 89, **2**, and 183 spans; a 2-span "loop" would
   have rendered *"1 stations"*. `plur()` exists for that. A closed monorail loop is **not** guaranteed
   to reach `minLen` — `homing` closes it early — so never assume a generated line is large.
+
+## Iteration 106 — the harbor gets its arm (2026-07-10)
+
+**Vector** — Water & coast × **New element**. Water was the stalest safe domain (last vector 97; Sky
+is staler but 103 surveyed it as additively saturated and its empty CA cell as a trap). I passed on
+Water's three cold *kinds* and should say why: **Connect** in this domain means a corridor, and iter
+101's law kills 1-hex corridors; **New CA rule** would have been a sediment/accretion pass, which is
+the same shape as iter 90's dunes; **Scale** is a structural lever, not a lap move.
+
+**The seam.** `genWorld` sites harbor works — three `IND` warehouses on the coast highway at
+`harborY` — and then anchors a container ship off them, with the comment *"rides at anchor in the
+roadstead, **waiting on a berth**"*. There was no berth, and no shelter: the city's shipping lay in
+open swell. A harbor is the one coastal structure Solvista named in its own source and never built.
+
+**Change.** Draw-only, ~40 lines. The pier and the wind turbines showed the pattern: a structure in
+the sea need not be a *tile*. `moleSet` (a `Map` keyed by `idx`) is laid in `genWorld` after the
+turbines — straight seaward along a hex row for 6–8 cells from the first ocean cell of the row, then
+hooking 3–4 cells across the harbor mouth on a SE/SW diagonal (`dx = y&1`, never a square column) —
+and `case T.WATER` draws it. Rooted on the side of `harborY` the pier is *not* on; `hashCell` for
+length and side, **no `rng()`**. A dark wet-stone mound under a pale cap walk, armour blocks tumbled
+at the foot, surf breaking along the front, and a white **harbor light** with a red lamp at the head.
+`Breakwater` / `Harbor light` added to the hover surface (it is drawn *over* the ocean, so like the
+pier it must be named before the tile under it). New palette pair `stone`/`stoneDk`.
+
+**Census — PASS.** `pop` **+0** (150,208), `roads`/`developed`/`towers`/all others **+0**, 0 page
+errors. Tile histogram: **KELP 108→105, WATER +3** — the mole's root cells are beach-adjacent, which
+is exactly where kelp seeds, so the kelp pass now skips `moleSet` (nothing takes root under rubble).
+That is the vector's only terrain touch and the only intended histogram move. No new census metric:
+no tile type, no entity array, so `__census()` needed nothing (census-sprawl rule).
+
+**Shape probe — 16 seeds.** `probe-mole.mjs` (**`git add -f`'d**) checks every consecutive pair of
+mole cells is a true hex neighbour, that the root's west neighbour is `BEACH`, that there is exactly
+one head, and that the anchored freighter's `seaXFr` lands inside the arm. **16/16 contiguous,
+16/16 rooted on sand, 12/16 ship-inside** (the other 4 are short arms that never reach the ship's
+row, so the test is undefined, not failed). Both defects below were caught by it or by a zoom.
+
+**Visual — PASS, 2/2 agents**, after one **FAIL** and a fix (below). Tight clips on the mole (day +
+night) plus un-zoomed whole-city frames at seeds 7 and 42. Both agents: arm touches the sand, reads
+as one unbroken run, no z-order tears, harbor light present, red lamp lit at night, and the whole
+frame still reads balanced and bright with a clean coastline.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A STRUCTURE'S TONE MUST SEPARATE FROM EVERY SURFACE IT CROSSES — not just the one you pictured
+  it on.** The mole first drew in `whiteDk`, copied from `ROCK`'s granite. `ROCK` sits on **grass**;
+  the mole spans **sand then sea**. `whiteDk` (lum 220) against `sand` (221) is invisible, so the arm
+  dissolved into the beach and appeared to *begin* where it reached blue water — the seed-7 agent
+  failed it as **"floats detached in open water, not thrown out from shore."** It was attached the
+  whole time; `probe-mole.mjs` proved the root cell abutted `BEACH`. The bug was tonal, not
+  geometric. Fixed with a `stone`/`stoneDk` pair (lum **122/92**) chosen to clear **both** backgrounds
+  — sea 155, sand 221 — plus a pale cap walk for internal contrast. This is the third law in the
+  family after iter 100 (ornament averages into tone) and 101 (contrast × width): **check a new
+  element's tone against every background it will actually cross, and if it spans two, it must clear
+  both.** A palette name that reads beautifully in one biome is not a palette choice.
+- **⚠ AN AGENT REPORTING A GEOMETRIC DEFECT MAY BE REPORTING A TONAL ONE.** "Detached", "floating",
+  "not connected" is what *invisible* looks like from the outside. Before you rewrite the geometry,
+  **measure it** — the probe took 3 minutes and no tokens, and said the geometry was already right.
+  Had I trusted the verdict's literal words I would have moved the root inland and broken it.
+- **A PATH BUILT BY "ADVANCE, THEN TEST" SKIPS A CELL AT EVERY JOINT.** The straight run ended with
+  `path.push([x,y]); x++` — leaving `x` one **past** the last cell laid — and the hook then added its
+  own `dx` on top of that. Seeds 5 and 99 laid arms with a one-cell hole (`[56,27]→[58,26]`); seeds 7
+  and 42 were saved only by row parity making `dx=0`, so the two seeds I was watching looked perfect.
+  **Keep the cursor on the last cell you laid, and test each step before taking it.** Any future
+  multi-segment path (a jetty, a causeway, a spit) has this trap, and it hides behind parity.
+- **The pier/turbine pattern is the cheapest way to build in the sea.** A `Map` keyed by `idx`, laid
+  in `genWorld` with `hashCell` only, drawn from `case T.WATER`, named in `describeTile` before the
+  tile under it. No tile type, no entity array, no `rng()` draw — `pop` came back **exactly +0**.
+  Reach for it before adding a `T.*` constant. (It is not *quite* stream-neutral here only because
+  the kelp guard changes 3 cells; a structure that avoids beach-adjacent water would be exactly 0.)
+- **`shoreAt(y)` is the first ocean cell of the row** (`x>=sh` → WATER, `sh-3..sh-1` → BEACH), so it
+  is the right root for anything thrown out from the beach — but **guard the river mouth**: seed 3
+  rooted on `riv` water until `rootOK` required `BEACH` at the root's back. The pier's own `rivRow`
+  check exists for the same reason. Sand at your back is the cheap test for "am I on the coast".

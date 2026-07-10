@@ -3678,3 +3678,87 @@ cloud→ground column in CSS screen coords (`world*scale+off`, the transform `__
 publish). `probe-rainink.mjs <seed> <step>` is the ink/noise-floor measurement above; it reads
 luminance straight off the live canvas, so it needs no image decoder.
 
+## Iteration 96 — the woods grow a second species (2026-07-10)
+
+**Vector** — Nature × **Polish (SHIPPED)**. Rotation picked the domain, saturation picked the
+kind. Nature is the stalest domain (last ship: **76**; 88 was reverted) *and* the header calls it
+**additively saturated** — "Nature's next real move is Deepen or Polish, not a new element." This
+is that move: it adds no tile, no entity, no CA pass, and no `hashCell` *placement*. It changes
+only how an existing glyph draws.
+
+**The defect (found by grep, not by the ledger).** `tree()` (L2135) was **one glyph** — a trunk
+plus two overlapping circles — and it was called from **18 sites**: `FOREST`, `PARK`, `GARDEN`,
+`MEADOW`, `SHOREPARK`, `PLAZA`, the boulevard allée, and `EMPTY` succession. Every tree in
+Solvista, from the hill woods to the civic forecourt, was the same species at a different scale.
+~2,700 crowns per frame, one silhouette. This is the third time the header's warning has bitten:
+**`GROWTH.md` is the loop's memory, not the artifact's inventory.** The first idea this lap was
+*street trees* — which turned out to already exist (`c.treed`, L1143, a tree-lined boulevard with
+an allée down both sides). Grep the seam before designing.
+
+**Change (draw-only).** `treeSp(gx,gy)` → `0` broadleaf / `1` conifer / `2` poplar, and `tree()`
+branches on it:
+- **conifer** — three stacked triangular tiers over a short trunk, each tier leaning further
+  downwind than the one below (`lean = w*(0.3+i*0.35)`), so the spire bends with the same
+  `WINDA` gust the round crowns ride;
+- **poplar** — one narrow upright plume, a tall ellipse with a lighter inner highlight;
+- **broadleaf** — the original two-blob crown, byte-for-byte.
+Species is hashed from the tree's **own sub-hex position** (`hashCell(round(gx*8),round(gy*8),
+seedNum^0x7A3E)`), not its cell, so the four trees in one forest hex mix rather than parroting
+each other. Conifers are weighted **inland**: `p = 0.08 + 0.30*inland`, where
+`inland = clamp((SHOREX-gx)/30, 0, 1)`. Poplar is a flat ~6% accent at any distance. The strand
+stays broadleaf-and-palm; the hills go coniferous. `ORCHARD` and `VINEYARD` were checked and do
+**not** call `tree()` — they have their own draws — so the mixed species cannot break the one
+place uniform rows are correct.
+
+**Census** — every metric **+0**, tile histogram **empty**. That is not a null result, it is the
+proof: a draw-only change that touches no terrain and consumes no `rng()` draw *must* read exactly
+flat, and it did, on the first run. (Contrast iter 91, where a "safe" substitution cost −22% pop.)
+
+**Growth signal** — `probe-species.mjs` (gitignored scratch) wraps the real `window.tree` and
+tallies **one rendered frame**, so it counts crowns actually painted, not cells that could host
+one. Over the 3-seed × 2-era matrix, **6,976 trees**: broadleaf **68.2%** · conifer **25.5%** ·
+poplar **6.3%**. The inland gradient is real and monotonic:
+
+| band | n | conifer | poplar |
+| --- | --- | --- | --- |
+| coast (0–.4) | 2200 | **14.7%** | 6.5% |
+| mid (.4–.75) | 2118 | **25.5%** | 6.3% |
+| hills (.75–1) | 2658 | **34.3%** | 6.1% |
+
+Species is **STABLE across eras** (same coords, 1985 vs 2035 → identical): a tree does not change
+kind as the city ages, because `year` is not in the hash. The probe asserts this.
+
+**⚠ The probe lied first, and the shape of the lie is reusable.** Its first run put **100% of
+trees in the `hills` band** — a dead gradient. The feature was fine; the *probe* was broken.
+`SHOREX` is a top-level **`const`**, so it lives in the global **lexical** environment: it
+resolves by bare name inside `page.evaluate`, but it is **NOT** a property of `window`.
+`window.SHOREX` was `undefined` → `(undefined-gx)/22` → `NaN` → and `NaN < 0.33` is `false`, so
+every tree silently fell through to the last band. **`NaN` in a bucketing chain does not throw,
+it picks the final bucket.** Note `window.tree` and `window.treeSp` *do* resolve — function
+declarations become `window` properties, `const`/`let` do not. That asymmetry is why
+`probe-dash.mjs` can call `cellAt`/`T`/`G` by bare name and must.
+Fixing the probe also exposed a real (if minor) miss: `/22` clamped the inner **quarter** of the
+plate flat (trees run `gx` 1.5→47.5 against `SHOREX`=44). Widened to `/30` so the gradient uses
+the whole landmass. **Measure the range before you pick a divisor.**
+
+**Visual** — 3 agents, 3 framings, no enhancement (iter 95's rule). Wide seed 42 + wide seed 7:
+both PASS, both saw varied silhouettes, no z-order tears, no blown-out color, and specifically
+reported the forests are **not** darker than a sunlit city warrants — the kelp failure mode, asked
+for by name. Magnified `tileshot` on a FOREST and a PARK: PASS — all three species identifiable,
+conifer tiers read as "a coherent stacked spire, not floating triangles," crowns rooted to trunks,
+greens inside the existing palette. It called the wood *"conifer interior, broadleaf edge."* That
+is emergent — species is positional, not edge-aware — but it is what a real wood looks like.
+
+**Perf** — `tree()` is the single hottest draw call in the renderer, so the frame-time gate was
+run despite this not being a step-back. 3 sequential passes, and the readings are **tight**
+(day 33.55 / 33.56 / 33.55ms), so this is signal, not the ±30% load noise iter 40 warned about:
+**day 31.33 → 33.55ms (+7.1%)**, **night 37.22 → 37.83ms (+1.6%)**. PASS (budget 15%), but
+**+7.1% is the largest single-iteration day cost in recent memory** and it is honest: a conifer
+spends 4 `col()` calls and 3 filled paths where a broadleaf spends 3 and 2, on ~2,700 trees/frame.
+Banked as a watch item, not a problem — but the next Nature vector should not also be in `tree()`.
+
+**Verdict — SHIPPED.** The most-repeated glyph in the city stopped being one glyph. Draw-only,
+census dead flat, three visual PASSes, perf inside budget. Nature's saturation note stands, and is
+now better evidenced: the payoff here came from *polishing what the domain already had*, not from
+a fifth plant.
+

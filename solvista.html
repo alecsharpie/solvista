@@ -270,6 +270,9 @@ const BASE={
   soil:[139,107,80], soilDk:[103,76,55],
   coral:[226,124,96],
   ink:[52,48,42],
+  stone:[128,122,112], stoneDk:[96,91,83], /* wet armour rock: dark enough to separate
+                        from the SEA (lum 122 vs 155) as well as from the SAND it springs
+                        from (221) — pale granite reads against grass, but dissolves into beach */
   pool:[120,206,214],
   solar:[62,82,120],
   deck:[196,164,118], deckDk:[164,132,92],
@@ -384,7 +387,7 @@ function colLit(name,f,litMix){ /* window glass mixing toward warm light at nigh
 
 /* ---------------- world ---------------- */
 let rng, seedNum, cells, year, dayT, monos, monoPlan, gonds, gondPlan, stats, pier, hut, harborY;
-let YC=[], turbines=[], turbSet=new Map();
+let YC=[], turbines=[], turbSet=new Map(), moleSet=new Map();
 let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], ferries=[], freighters=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
 /* debug flood (?flood=joggers:30,whales:8): overrides entity spawn counts so
    sparse features can be screenshot-verified without a source edit to revert */
@@ -685,6 +688,50 @@ function genWorld(seed){
     turbines.push({x:Math.min(ROWMAX[ty]-1,shoreAt(ty)+5+(rng()*4|0)),y:ty,ph:rng()*7});
   }
   turbSet=new Map(turbines.map(t=>[idx(t.x,t.y),t]));
+  /* the harbor gets its arm: a rubble mole thrown out from the shore beside the
+     warehouse row, hooking back across the roadstead so the ship at anchor rides
+     in still water instead of the open swell. Drawn OVER the ocean like the pier
+     and the turbines rather than laid as a tile, so it perturbs no seeded stream;
+     its length and side come from hashCell. The hook runs a SE/SW hex diagonal
+     (dx = y&1), never a square column. */
+  moleSet=new Map();
+  {
+    const onPier=(x,y)=>y===pier.y&&x>=pier.x0-1&&x<=pier.x1+1;
+    const ok=(x,y)=>{const c=cellAt(x,y);
+      return !!c&&c.t===T.WATER&&!c.riv&&x<=ROWMAX[y]-1&&!turbSet.has(idx(x,y))&&!onPier(x,y)};
+    /* a mole is thrown FROM somewhere: the root must be ocean with sand at its back,
+       which also keeps the arm off the river mouth (that water is `riv`, and its
+       bank is marsh, not beach) and clear of the pier's row */
+    const rootOK=ry=>{const w=cellAt(shoreAt(ry)-1,ry);
+      return ok(shoreAt(ry),ry)&&!!w&&w.t===T.BEACH&&Math.abs(ry-pier.y)>=3};
+    /* throw the arm from whichever side of the harbor row the pier is not on, and
+       walk outward until a row will take it */
+    const side=Math.abs(pier.y-harborY)<6?(pier.y>harborY?-1:1)
+                                         :(hashCell(3,harborY,seedNum^0x3A1)<0.5?-1:1);
+    let ry=0,away=0;
+    for(const[s,d]of[[side,3],[side,4],[side,2],[-side,3],[-side,4],[side,5],[-side,2]]){
+      const cand=clamp(harborY+s*d,SEAY0+1,SEAY1-1)|0;
+      if(rootOK(cand)){ry=cand;away=s;break;}   /* hook back toward harborY: dy = -away */
+    }
+    const len=6+(hashCell(7,ry,seedNum^0x3A2)*3|0);   /* 6..8 cells straight out to sea */
+    const hook=3+(hashCell(9,ry,seedNum^0x3A3)*2|0);  /* 3..4 cells bending across the mouth */
+    /* (x,y) always names the last cell laid, so the arm can never jump a gap:
+       every step is tested before it is taken, and a blocked step ends the arm */
+    const path=[];
+    let x=shoreAt(ry),y=ry;   /* the first ocean cell of the row — the arm's root, against the sand */
+    if(ry&&ok(x,y)){
+      path.push([x,y]);
+      for(let i=1;i<len&&ok(x+1,y);i++)path.push([++x,y]);
+      for(let i=0;i<hook;i++){
+        const nx=x+((y&1)?1:0), ny=y-away;
+        if(!ok(nx,ny))break;
+        path.push([x=nx,y=ny]);
+      }
+    }
+    /* a stub two cells long is not a breakwater — leave those seeds unsheltered */
+    if(path.length>=5)path.forEach(([mx,my],i)=>
+      moleSet.set(idx(mx,my),{i,head:i===path.length-1,root:i===0}));
+  }
   /* boats & birds & sky; a few craft stay moored off the pier */
   const SEAH=SEAY1-SEAY0;
   /* sailboats scatter across the whole bay — near the break to far offshore */
@@ -1208,7 +1255,8 @@ function tick(){
      Coarse band gate (y>>2) picks which stretches are kelpy; per-cell gate thins it. */
   for(let i=0;i<G*G;i++){
     const x=i%G,y=(i/G)|0,c=cells[i];
-    if(c.t===T.WATER&&!c.riv&&countAround(x,y,1,n=>n.t===T.BEACH)>0
+    if(c.t===T.WATER&&!c.riv&&!moleSet.has(i)  /* nothing takes root under the rubble */
+       &&countAround(x,y,1,n=>n.t===T.BEACH)>0
        &&countAround(x,y,1,n=>n.t===T.WATER&&n.riv)===0
        &&hashCell(5,y>>2,seedNum^0x4E1F)<0.34
        &&hashCell(x,y,seedNum^0x4E1F)<0.62){c.t=T.KELP;c.h=0;c.th=0;c.age=0;}
@@ -2441,6 +2489,39 @@ function drawPierAt(x,y){
     }
   }
 }
+/* the harbor mole: a rubble mound under a cap walk, armour blocks tumbled along
+   its foot, and a harbor light at the head. The swell breaks white on the outer
+   face and dies inside the basin — which is the whole point of the thing. */
+function drawMoleAt(x,y,m){
+  const gx=x+0.5, gy=y+0.5;
+  const r=hashCell(x,y,seedNum^0x3A7);
+  const top=7+r*2.2;                 /* the cap rides a little above the swell */
+  /* dark wet mound, then a pale cap walk: the internal contrast is what makes an
+     11-cell arm read as a structure rather than a stain on the water */
+  prism(gx,gy,0.54,0.46,-3,top-2.6,col('stone',0.95),col('stoneDk',0.60),col('stoneDk',0.80));
+  prism(gx,gy,0.40,0.34,top-2.6,top,col('cream',0.98),col('stone',0.70),col('stone',0.92));
+  const[cx,cy]=px(gx,gy);
+  for(let k=0;k<3;k++){ /* armour blocks, tumbled along the foot */
+    const h2=hashCell(x*3+k,y,seedNum^0x3B1);
+    ctx.fillStyle=col('stoneDk',0.62+h2*0.20);
+    ctx.fillRect(cx-8+k*5.6+h2*2.2,cy+1.6+h2*1.5,2.6+h2,2.1);
+  }
+  const ph=Math.sin(waveT*1.6-y*0.9), a=0.30+0.26*ph;
+  if(a>0.06){ /* the break, travelling along the arm like the shore surf does */
+    ctx.strokeStyle=colA('foam',1,a);ctx.lineWidth=1.6;ctx.lineCap='round';
+    ctx.beginPath();
+    ctx.moveTo(cx-HW*0.92,cy+ER*0.94+1.4);ctx.lineTo(cx+HW*0.92,cy+ER*0.94+1.4);
+    ctx.stroke();ctx.lineCap='butt';
+  }
+  if(m.head){ /* the harbor light, red over the entrance after dark */
+    prism(gx,gy,0.10,0.09,top,top+9.5,col('white',1),col('white',0.62),col('white',0.86));
+    prism(gx,gy,0.13,0.11,top+9.5,top+11.6,col('coral',1),col('coral',0.66),col('coral',0.88));
+    if(LITAMT>0.25){
+      ctx.fillStyle='rgba(242,112,92,'+(0.9*LITAMT)+')';
+      ctx.fillRect(cx-1.1,cy-top-12.2,2.2,2.2);
+    }
+  }
+}
 /* waterfront esplanade: a raised boardwalk follows the smooth shoreline
    (shoreAtF, same line the joggers run) so row segments join into one deck
    instead of reading as beached canoes. Later rows repaint anything under
@@ -2616,6 +2697,8 @@ function drawCell(x,y){
         ctx.lineCap='butt';
       }
       if(pierAt(x,y))drawPierAt(x,y);
+      const mo=moleSet.get(idx(x,y));
+      if(mo)drawMoleAt(x,y,mo);
       const tb=turbSet.get(idx(x,y));
       if(tb&&year>=2020){ /* offshore wind */
         const[cx,cy]=px(gx,gy);
@@ -5207,6 +5290,12 @@ function describeTile(c,x,y){
        :'A boardwalk on posts, running out from the beach.';
     data.push(['Opened',1986]);
     if(year<1987)data.push(['Not yet open']);
+  }
+  else if(moleSet.has(idx(x,y))){ /* also drawn over the ocean — name the rubble, not the sea */
+    const m=moleSet.get(idx(x,y));
+    title=m.head?'Harbor light':'Breakwater';
+    sub=m.head?'Marking the harbor mouth — red over the entrance after dark.'
+       :'A rubble arm thrown out from the shore. The swell breaks on it, and the roadstead behind lies still.';
   }
   else if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';sub='A public institution.';}
   else if(c.t===T.ROAD){const art=c.flow>=ARTFLOW;
