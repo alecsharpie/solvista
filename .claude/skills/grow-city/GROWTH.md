@@ -55,9 +55,12 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **126** · Urban **124** · People **127** · Nature **129** · Transport **128** · Civic **122** · Water **123**.
-  **Stalest is now Civic (122)/Water (123)** — check the last entry of
-  the stalest domain for a banked finding before reading its row. (**129 cashed the tell a 7th time for Nature**:
+  Sky **126** · Urban **124** · People **127** · Nature **129** · Transport **128** · Civic **131** · Water **123**.
+  **Stalest is now Water (123)** (Civic's cue (d) was explored and CLOSED at 131 — see cue (d), do not
+  re-open) — check the last entry of the stalest domain for a banked finding before reading its row.
+  **Water's banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by respending
+  their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it or pick
+  a different Water kind.** (**129 cashed the tell a 7th time for Nature**:
   the orchard drew a blossom/fruit calendar since iter 57 but its tooltip was mute; it now names the
   season via a shared `orchardPhase()`. **129's banked Nature move is now a Deepen** — make VINEYARD's grapes
   read `year` (last Sky-feedable item; 108/113/120), *then* its tooltip earns a row too.) (**127 took People × New element** aimed not at its spent
@@ -152,11 +155,11 @@ ones (U2, 42, U5) stay in the bullet.
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
-  Recent kinds: 120 Deepen · 121 Deepen · 122 Interaction/UX · 123 Deepen ·
-  124 Polish · 126 Deepen · 127 New element · 128 Deepen · 129 Interaction/UX —
-  (**130 was the holistic step-back — no domain × kind lap, rotation unchanged; next lap 131 owes the stalest
-  domain, Civic (122) / Water (123).**) **Deepen has paid 5 of the last 10; Interaction/UX 2 (122, 129). VARY
-  OFF both next** unless another banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
+  Recent kinds: 121 Deepen · 122 Interaction/UX · 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
+  128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** —
+  (**130 was the holistic step-back — no domain × kind lap.**) **Deepen has paid 4 of the last 9; Interaction/UX 2.
+  Live/cheap kinds for the next Water lap: Connect (adds no new object), Polish. VARY off Deepen**
+  unless another banked, measured cue outranks rotation. Live/cheap: **Connect** (last 111, adds no new object),
   **Interaction/UX**, **Polish**. The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
@@ -352,26 +355,15 @@ ones (U2, 42, U5) stay in the bullet.
   fit zoom. (Verified by marking them magenta — see 113's findings; the striking pale figure on a marsh
   hex is a **heron**, not a reed.) Spreading/lengthening them is a tile redesign, out of scope for a
   growth lap, and it would pay off immediately because the seasonal color is already computed.
-  **(d) the civic quarter deserves a real square — STILL OPEN, BUT ITS PRESCRIPTION IS DEAD**
-  *(banked by iter 91; attempted and **reverted** by iter 114, Civic × Polish — read 114 before re-trying)*.
-  The goal is confirmed and **measured**: every `PLAZA` patch in every seed is exactly **one hex**
-  (`[1,1,1]/[1,1]/[1,1,1]`), so the quarter is a knot of pale domes each hugging its own private
-  forecourt — and a throwaway build proved a **3-hex square is beautiful and legible at fit zoom**
-  (both agents, 2 seeds), where iter 101's 1-hex ribbon was not. **Minimum viable size is 3**; a
-  2-hex square sits on the edge of 101's contrast×width law.
-  What is dead is 91's *implementation*: "annex an adjoining `FORECOURT_LOT`". **There is no such
-  lot.** A forecourt is sited to front the loudest street, so it is a **road junction** — of the 6
-  quarter-member heads' 36 neighbour slots, **ROAD 16 (44%)**, pavable lot **2 (5.6%)**, of which
-  **one** fronts a street. Iter 100's `QUAD` grounds pass eats the back lot besides. The rule fired
-  **zero** times in three cities. Do not "fix" this by loosening the gate — with the gate at 1.0 it
-  fires **once, in one city, on one institution.**
-  So: **the square must take the ROAD**, which is also the honest reading of iter 100 (the cell
-  between two majors *is* the street they both front — pedestrianise it). Two things a taker must
-  carry: (i) a **demote-on-merge** step — a per-head size cap does **not** stop two squares joining,
-  and iter 114's throwaway produced a 5-hex patch with **two centrepieces**; (ii) the **hazard list**
-  in 114's findings — cars are provably safe, but trams/monorail draw along roads, and `c.stop`,
-  `c.bridge`, `c.flow`/`ARTFLOW`, `frontSide()`, boulevard trees and `c.hstr` all read `ROAD` and are
-  unaudited. `roads` is a **core** census metric. Budget a lap for the audit; don't do it on the side.
+  **(d) the civic quarter's real square — CLOSED, MEASURED DEAD (iter 131; do not re-open).** cue (d)'s
+  two goals are severable and each is settled: the **connective** goal (the quarter reads as one precinct,
+  not isolated domes) is **already shipped** by the fete "civic mile" bunting (`c.fete`, L1764). The **≥3-hex
+  pedestrian-square** goal is **geometrically impossible at the quarter** (`probe-quarter.mjs`, seeds
+  7/42/1234): taking the shared road yields **2 hex max** (it bridges a forecourt and a *building*, not two
+  forecourts) and every candidate road is the **arterial/monorail/boulevard/bus-stop spine** the invariants
+  forbid; growing a forecourt by annexing lots reaches 3 only at the **lone (non-quarter) majors**, never the
+  quarter's own (0–1 pavable neighbours, boxed in). So a 3-hex square can exist only where there is no quarter
+  to make it *civic*. 114 reverted this; 131 proved it dead in 4s/seed with a geometry probe. Leave it closed.
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a
   multi-source hex BFS capped at radius `r`, walking over land only (`WETSET` blocks
   water/marsh/kelp), filling `out` with steps-to-nearest-source and 255 for "farther
@@ -389,109 +381,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 123 entries before Iteration 121 live in
+> **Archive:** the 124 entries before Iteration 122 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 121 — the cable cars agree on a speed (2026-07-11)
-
-**Vector.** Transport × **Deepen** (a fix). Transport was the stalest domain (112), and the header's own
-law — *"a banked, measured finding outranks both kind-rotation and cell-emptiness"* — pointed at the last
-entry of that domain, where iter 112 had measured but not fixed **cue (h)**: the gondola still carried the
-normalized-parameter bug the monorail was cured of. Deepen has now paid four laps running; a banked,
-measured defect outranks kind-rotation, but the **next lap must vary the kind** (see header).
-
-**What the probe found before a line was written** (`probe-gond.mjs`, new, `git add -f`'d; freeze `playing`,
-drive `__step()`, sample `cb.p`). Cue (h) was **understated**. At `warp=61` the lines are longer than 112
-sampled, so the spread is worse than the 0.14–0.36 it banked:
-
-| seed | line | spans | cruise spans/s | round trip | stand% |
-| --- | --- | --- | --- | --- | --- |
-| 7 | 1 | 16 | **0.64** | 50.0s | 0.0 |
-| 42 | 1 | 17 | **0.68** | 50.0s | 0.0 |
-| 42 | 2 | 8 | **0.32** | 50.0s | 0.0 |
-| 1234 | 1 | 6 | **0.24** | 50.0s | 0.0 |
-| 1234 | 2 | 9 | **0.36** | 50.0s | 0.0 |
-
-**Cruise spread 2.83×**, and seed 42 flies one cabin past an identical one at **0.68 vs 0.32 spans/s** in the
-same frame. The `roundTrip` column is the bug stated as a tautology: **every line, of every length, turns
-round in exactly 50.0s**, because `cb.p+=dt*s*0.02` is a *lap* rate. `p∈[0,1)` is a **round trip** of a
-ping-pong line, so one p-unit is `2*(L-1)` spans — the factor 2 the monorail's fix did not need.
-
-**Change.** `stepCabins(g,dt)`, in the monorail's own grammar, plus `g.rateP`/`g.brakeP` precomputed in
-`buildGondSet` (the analogue of `buildMonoSet`):
-- rate is **spans/sec** (`GONDSPD=0.40`), capped so a one-span line can't blink (`GONDCAP`, ≥20s round trip);
-- a cabin **eases into its terminal and back out** over `GONDBRAKE=1.6` spans with `sqrt(d/B)` — constant
-  deceleration. 112's law: the intuitive linear ramp diverges and pins the mover on its floor;
-- it then **dwells** `GONDDWELL=4.0` sim-seconds at the sheave, and the tooltip says so
-  (*"Standing at the terminal."*, per the sync invariant — the trains already said it);
-- `stepGond`'s growth rescale now clears `cb.dw`, so a line that lengthens under a dwelling cabin cannot
-  strand it standing mid-line.
-
-Constants were typed **before** anything was measured (107's law) and are reported as they were typed.
-
-**Probe, after.** `cruise 0.400 .. 0.400 spans/s — spread 1.00×`. Round trip now scales with the line
-(52.2s at 6 spans → 109.1s at 17). `standing anywhere but a terminal: 0.0 sim-seconds`. `mean/cruise` is
-**0.68–0.85**, which is the check that the sqrt ramp did *not* degenerate: the cabin genuinely reaches
-cruise instead of crawling on its 0.1 floor. Dwell is 7.4–15.5% of a round trip, exactly `8s / roundTrip`.
-
-**Census.** PASS. Tile histogram **empty**, every metric **+0** except `pop −3` / `greenRoofs +1` — iter 108's
-documented load-dependent `(year*23)|0` salt jitter. `gondLines 15`, `gondola 16` cabins, identical. Predicted
-before running: the vector touches no `rng()`, no terrain, and adds no draw call.
-
-**Static gate on the one thing a screenshot CAN see** (`probe-gondshot.mjs`, new): a motion change is invisible
-to a still frame, but *where a stopped cabin stops* is not. Stepping until a cabin dwells, then reading its
-screen position against its tower's: `atTerminal:"start"`, `isPylon:true`, `sag:0.000`, and **dx = 0.00 px**
-from the mast column, both seeds. It stops **on** the sheave head — where `gondSag` is zero by construction —
-not one span past it.
-
-**Perf.** PASS, free. Interleaved A/B/A/B vs pristine HEAD (117's law), min per variant: day
-**34.94 → 34.95ms (+0.03%)**, night **41.22 → 41.00ms (−0.5%)**. Zero draw calls; ≤6 cabins × one `sqrt`.
-
-**Visual.** 2/2 PASS, seeds 42 and 7, whole frame + two crops on the dwelling cabin. Both agents independently:
-the cabin hangs on the cable **at a mast head**, "not floating in mid-span, not sunk below the rope, and not
-detached"; no z-order tears, no blown-out colour; the whole frame still reads as a balanced coastal city.
-Their *perception* is the evidence; the exactness claim rests on the probe's 0.00 px, not on their eyes (120's law).
-
-**Verdict — SHIPPED (DEEPENED / FIXED). Cue (h) is CLOSED.**
-
-**Findings for later laps.**
-- **⚠ PORTING 112's FIX REQUIRES COUNTING THE LEGS (new).** 112's law is *"ask what `p=1` MEANS on that
-  instance."* On the monorail `p=1` is one lap of a closed loop, so `rate = SPD/L`. On the gondola `p=1` is a
-  **round trip** of an open line — two legs — so `rate = SPD/(2*(L-1))`, and the brake zone converts with the
-  same factor 2. Get it wrong and you ship a *uniform* speed that is uniformly half of what you intended, which
-  every gate here would have passed. The remaining `p`-parametrised movers are worth the same question.
-- **⚠ cue (n) — THE CABLE CARS ARE PARKED AT THE ANCHOR IN EVERY SHOT EVER TAKEN (new, measured, PRE-EXISTING —
-  this lap did not cause it and did not fix it).** Position along the line at page load, in spans from the start
-  terminal, `warp=61`: seed 7 `[0.72, 0.34]` of 16 spans · seed 42 `[0.77, 0.29]` of 17 and `[0.52, 0.54]` of 8 ·
-  seed 1234 `[0.45, 0.61]` of 6 and `[0.53, 0.53]` of 9. **Both cabins, every line, every seed, sit within one
-  span of the start tower** — and pristine and patched agree, so it is the *growth rescale*, not the stepper.
-  `stepGond`'s `cb.p = cb.p<0.5 ? cb.p*k : 1-(1-cb.p)*k` with `k=(L-1)/L`, applied once per span, telescopes to
-  `p₀·(L₀-1)/(L-1) → 0`: it pins each cabin to the cell it occupied when the line was **one span long**, which is
-  the anchor. Its comment — *"keep the cabins where they are while the line lengthens under them"* — describes
-  the implementation **accurately**; nobody read off the consequence. (Sharper than 120's "a comment states a
-  goal, not a measurement": here the comment is *true* and the behaviour is still wrong.) Consequence: no cabin is
-  ever seen riding **over** the city without `&step=`, so the feature's whole point is invisible at load. This is
-  the third instance of *the default URL silently pins a state* (`year` iter 108, `tide` iter 113, now cabin
-  phase). Cheap fix for the next Transport lap: re-spread the cabins once `L` reaches `g.target`. **Do not
-  "fix" the rescale itself** — it is correct for a growing line.
-- **A DWELL IS A PURE TIME DELAY, SO IT CANNOT BUNCH TWO MOVERS (new; the worry that made me check).** Both cabins
-  on a line share `rateP`/`brakeP`, the step depends only on `p`, and the pause has fixed length at a fixed point.
-  So each cabin's period is *identical* and their offset in **time** is exactly conserved — they can never merge,
-  whatever the ledger's "ratchet" instinct (119) suggests. Measured: separation wanders 0.9–4.9 spans over 300s
-  with no trend, and is in fact *wider* than pristine's, because the dwell desynchronises them.
-- **⚠ THE INTERLEAVED PERF GATE JUST EARNED ITS KEEP, ON PRISTINE CODE (new; hard evidence for 117's law).**
-  Round 1 of this lap's gate read **day 47.39ms on unmodified HEAD** — the harness printed
-  `33.16ms -> 47.39ms (42.9%) <== REGRESSION`. Round 2 of the *same bytes* read 34.94ms. A single-pass gate would
-  have convicted code that did not exist yet, and a "stable offset ⇒ code" reading (99's rule, corrected by 117)
-  would have agreed. **Only the A/B/A/B swap, min per variant, can tell a machine from a diff.**
-- **`minSep ≈ 0.00 spans`: the two cabins pass THROUGH each other, in both builds (new, pre-existing, cosmetic).**
-  They ride one drawn curve, so once per half-trip they occupy the same point. A real jig-back tram counterbalances
-  its pair on a loop and they pass side-by-side at midspan; here they are also not quite antipodal (`p` 0.15/0.62,
-  0.47 apart, not 0.50). Both are one-line changes and belong with cue (n), not before it — the crossing is a few
-  pixels and no visual agent has ever remarked on it.
 
 ## Iteration 122 — the institutions name themselves (2026-07-11)
 
@@ -1076,3 +970,64 @@ interleaved control, exactly as 125 predicted; the guardrail stays honest.
   overwrite prompt or choke on `->`/`>` in the timing line.** Use `/bin/cp -f` and `command grep -E '^  (day|
   night) '`; don't `grep -v '>'` the timing line (it contains `>60fps-budget`). A small tooling snag that ate
   two perf runs this iteration; noted so 135 doesn't re-lose them.
+
+## Iteration 131 — the civic square is measured dead, and cue (d) closes (2026-07-11)
+
+**Vector.** Civic & culture × **Polish/Connect** (an EXPLORE). Rotation named the domain — Civic was the
+single stalest (122, older than Water 123) — and the header's own law (*a banked, measured cue outranks
+kind-rotation*) named the content: **cue (d)**, the loop's most-flagged open cue, banked by 91, attempted
+and reverted by 114, and re-listed "STILL OPEN" ever since. Its goal: the civic quarter's knot of private
+1-hex forecourts should become **one legible ≥3-hex pedestrian square** (114 proved 3 reads at fit zoom, a
+1-hex ribbon does not — 101's contrast×width law). Kind was forced away from Deepen (5 of last 10) and
+Interaction/UX (2 of last 10), which Polish/Connect satisfies. Per *probe before you design*, I measured
+the geometry before writing a line — and the measurement **closes the cue** instead.
+
+**What the probe found** (`probes/probe-quarter.mjs`, promoted). In-page, seeds 7/42/1234 at warp 61:
+- **Every city has exactly ONE multi-major quarter** (3–4 majors); the other majors are lone and scattered.
+  Forecourts are **all 1-hex** (confirms 114's `[1,1,1]` measurement, now across the annex geometry too).
+- **Reading A — take the shared road → a 3-hex square: IMPOSSIBLE.** Pedestrianising a single shared-street
+  ROAD yields a **2-hex patch at most, never 3** — the bridgeable road touches a forecourt PLAZA and a
+  *building* (CIVIC, which does not extend a PLAZA patch), not two forecourts. And **every** such candidate
+  road is the **arterial + monorail + boulevard-tree + bus-stop spine**: haz=[ARTERIAL], [ARTERIAL,treed,MONO],
+  [stop,busy,treed] — precisely the network the invariants forbid severing. 114's "take the ROAD" is dead:
+  it is insufficient (2 hex) *and* it is the spine.
+- **Reading B — grow a forecourt to 3 by annexing pavable lots: ALSO IMPOSSIBLE at the quarter.** Of 11
+  forecourts, only **2** have ≥2 pavable-lot (`FORECOURT_LOT`) neighbours to annex — and both are the
+  **isolated lone-major** forecourts (seed 42 `(27,1)` [MID,MID], seed 1234 `(42,1)` [RES,RES,RES]), NOT the
+  quarter's. **The quarter's own forecourts have 0–1 pavable neighbours** (boxed in by civics, the mile, and
+  each other). So a 3-hex square can be grown only where there is *no quarter* to make it a **civic** square —
+  a contradiction. (And annexing RES/MID costs pop for a barely-visible tile — 100's ~0.045%/cell, 92's
+  never-zone-near-TOWER.)
+- **Reading C — the connective goal is ALREADY SHIPPED.** cue (d)'s deeper intent (the quarter reads as one
+  connected precinct, not isolated domes) is delivered by the fete **"civic mile"** (`c.fete`, L1764): a
+  pure-derivation BFS strings bunting along the ROAD stretch where two civics' road-regions meet — the
+  district is already tied together along the street the square wanted to be.
+
+**Census.** PASS, exit 0. `solvista.html` **byte-identical to HEAD** (`git diff --stat` empty) — no source
+edit, so the census is vacuous by construction (this is an EXPLORE that rejected its design *before*
+implementation, cheaper than 101/114 which built then reverted). No visual gate is owed — nothing draws
+differently. The probe **is** the gate: a measurement that could have found a 3-hex opening and instead
+found none, on ≥2 seeds, with the hazard list as its own control.
+
+**Verdict — EXPLORED → REVERTED. Cue (d) is CLOSED.** Its ≥3-hex-square goal is geometrically unreachable at
+the quarter (2 hex max on the arterial/mono spine; the only 3-annexable forecourts are lone non-quarter
+majors), and its connective goal is already met by the civic-mile bunting. Building anything here would be
+marginal filler on a hazard — the census can pass a change that isn't worth its cost (82/88/101/114), and
+this one fails the bar *before* a pixel is drawn. Reverting a passing-but-weak change is the system working;
+declining to build a measured-dead one is the same working one step earlier.
+
+### Findings
+- **⚠ CUE (d) IS DEAD IN BOTH READINGS — DO NOT RE-OPEN IT (new; supersedes 91/114 and every "STILL OPEN"
+  header note).** Road-take → 2 hex on the spine; lot-annex → only lone (non-civic) forecourts can reach 3.
+  The two goals of cue (d) are severable: the **connective** one (precinct reads as one) is *shipped* (civic
+  mile); the **square** one is *impossible* without either severing the arterial/monorail spine or building
+  the square where there is no quarter. `probe-quarter.mjs` is the proof and re-runs in ~4s per seed.
+- **MEASURE A CUE'S GEOMETRY BEFORE ITS DRAW (sharpens "probe before you design").** 114 built a throwaway
+  square, saw it was pretty, reverted on the *host* being wrong, and banked "take the ROAD." One probe that
+  floods the hypothetical patch and reads the hazard flags would have shown in 4s that the road-take yields 2
+  hex on the spine — no build needed. When a cue is about *where a thing can go*, the first artefact is a
+  geometry probe, not a draw.
+- **A "beautiful in a throwaway" proof is necessary, not sufficient — it says nothing about whether the
+  geometry admits it at the sites that matter.** 114's 3-hex mock was genuinely legible; the error was
+  generalising from a hand-placed patch to a quarter whose real cells cannot form one. Prove the *siting*, not
+  just the *look*.

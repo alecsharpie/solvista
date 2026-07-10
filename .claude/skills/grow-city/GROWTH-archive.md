@@ -6932,3 +6932,101 @@ greenest tiles, winter and golden read as two seasons of one city, night undamag
   the same night frame beautiful — so **measure the luminance histogram core-vs-ring before committing a
   lap to it**; do not take the FAIL at face value (see the first finding above).
 
+## Iteration 121 — the cable cars agree on a speed (2026-07-11)
+
+**Vector.** Transport × **Deepen** (a fix). Transport was the stalest domain (112), and the header's own
+law — *"a banked, measured finding outranks both kind-rotation and cell-emptiness"* — pointed at the last
+entry of that domain, where iter 112 had measured but not fixed **cue (h)**: the gondola still carried the
+normalized-parameter bug the monorail was cured of. Deepen has now paid four laps running; a banked,
+measured defect outranks kind-rotation, but the **next lap must vary the kind** (see header).
+
+**What the probe found before a line was written** (`probe-gond.mjs`, new, `git add -f`'d; freeze `playing`,
+drive `__step()`, sample `cb.p`). Cue (h) was **understated**. At `warp=61` the lines are longer than 112
+sampled, so the spread is worse than the 0.14–0.36 it banked:
+
+| seed | line | spans | cruise spans/s | round trip | stand% |
+| --- | --- | --- | --- | --- | --- |
+| 7 | 1 | 16 | **0.64** | 50.0s | 0.0 |
+| 42 | 1 | 17 | **0.68** | 50.0s | 0.0 |
+| 42 | 2 | 8 | **0.32** | 50.0s | 0.0 |
+| 1234 | 1 | 6 | **0.24** | 50.0s | 0.0 |
+| 1234 | 2 | 9 | **0.36** | 50.0s | 0.0 |
+
+**Cruise spread 2.83×**, and seed 42 flies one cabin past an identical one at **0.68 vs 0.32 spans/s** in the
+same frame. The `roundTrip` column is the bug stated as a tautology: **every line, of every length, turns
+round in exactly 50.0s**, because `cb.p+=dt*s*0.02` is a *lap* rate. `p∈[0,1)` is a **round trip** of a
+ping-pong line, so one p-unit is `2*(L-1)` spans — the factor 2 the monorail's fix did not need.
+
+**Change.** `stepCabins(g,dt)`, in the monorail's own grammar, plus `g.rateP`/`g.brakeP` precomputed in
+`buildGondSet` (the analogue of `buildMonoSet`):
+- rate is **spans/sec** (`GONDSPD=0.40`), capped so a one-span line can't blink (`GONDCAP`, ≥20s round trip);
+- a cabin **eases into its terminal and back out** over `GONDBRAKE=1.6` spans with `sqrt(d/B)` — constant
+  deceleration. 112's law: the intuitive linear ramp diverges and pins the mover on its floor;
+- it then **dwells** `GONDDWELL=4.0` sim-seconds at the sheave, and the tooltip says so
+  (*"Standing at the terminal."*, per the sync invariant — the trains already said it);
+- `stepGond`'s growth rescale now clears `cb.dw`, so a line that lengthens under a dwelling cabin cannot
+  strand it standing mid-line.
+
+Constants were typed **before** anything was measured (107's law) and are reported as they were typed.
+
+**Probe, after.** `cruise 0.400 .. 0.400 spans/s — spread 1.00×`. Round trip now scales with the line
+(52.2s at 6 spans → 109.1s at 17). `standing anywhere but a terminal: 0.0 sim-seconds`. `mean/cruise` is
+**0.68–0.85**, which is the check that the sqrt ramp did *not* degenerate: the cabin genuinely reaches
+cruise instead of crawling on its 0.1 floor. Dwell is 7.4–15.5% of a round trip, exactly `8s / roundTrip`.
+
+**Census.** PASS. Tile histogram **empty**, every metric **+0** except `pop −3` / `greenRoofs +1` — iter 108's
+documented load-dependent `(year*23)|0` salt jitter. `gondLines 15`, `gondola 16` cabins, identical. Predicted
+before running: the vector touches no `rng()`, no terrain, and adds no draw call.
+
+**Static gate on the one thing a screenshot CAN see** (`probe-gondshot.mjs`, new): a motion change is invisible
+to a still frame, but *where a stopped cabin stops* is not. Stepping until a cabin dwells, then reading its
+screen position against its tower's: `atTerminal:"start"`, `isPylon:true`, `sag:0.000`, and **dx = 0.00 px**
+from the mast column, both seeds. It stops **on** the sheave head — where `gondSag` is zero by construction —
+not one span past it.
+
+**Perf.** PASS, free. Interleaved A/B/A/B vs pristine HEAD (117's law), min per variant: day
+**34.94 → 34.95ms (+0.03%)**, night **41.22 → 41.00ms (−0.5%)**. Zero draw calls; ≤6 cabins × one `sqrt`.
+
+**Visual.** 2/2 PASS, seeds 42 and 7, whole frame + two crops on the dwelling cabin. Both agents independently:
+the cabin hangs on the cable **at a mast head**, "not floating in mid-span, not sunk below the rope, and not
+detached"; no z-order tears, no blown-out colour; the whole frame still reads as a balanced coastal city.
+Their *perception* is the evidence; the exactness claim rests on the probe's 0.00 px, not on their eyes (120's law).
+
+**Verdict — SHIPPED (DEEPENED / FIXED). Cue (h) is CLOSED.**
+
+**Findings for later laps.**
+- **⚠ PORTING 112's FIX REQUIRES COUNTING THE LEGS (new).** 112's law is *"ask what `p=1` MEANS on that
+  instance."* On the monorail `p=1` is one lap of a closed loop, so `rate = SPD/L`. On the gondola `p=1` is a
+  **round trip** of an open line — two legs — so `rate = SPD/(2*(L-1))`, and the brake zone converts with the
+  same factor 2. Get it wrong and you ship a *uniform* speed that is uniformly half of what you intended, which
+  every gate here would have passed. The remaining `p`-parametrised movers are worth the same question.
+- **⚠ cue (n) — THE CABLE CARS ARE PARKED AT THE ANCHOR IN EVERY SHOT EVER TAKEN (new, measured, PRE-EXISTING —
+  this lap did not cause it and did not fix it).** Position along the line at page load, in spans from the start
+  terminal, `warp=61`: seed 7 `[0.72, 0.34]` of 16 spans · seed 42 `[0.77, 0.29]` of 17 and `[0.52, 0.54]` of 8 ·
+  seed 1234 `[0.45, 0.61]` of 6 and `[0.53, 0.53]` of 9. **Both cabins, every line, every seed, sit within one
+  span of the start tower** — and pristine and patched agree, so it is the *growth rescale*, not the stepper.
+  `stepGond`'s `cb.p = cb.p<0.5 ? cb.p*k : 1-(1-cb.p)*k` with `k=(L-1)/L`, applied once per span, telescopes to
+  `p₀·(L₀-1)/(L-1) → 0`: it pins each cabin to the cell it occupied when the line was **one span long**, which is
+  the anchor. Its comment — *"keep the cabins where they are while the line lengthens under them"* — describes
+  the implementation **accurately**; nobody read off the consequence. (Sharper than 120's "a comment states a
+  goal, not a measurement": here the comment is *true* and the behaviour is still wrong.) Consequence: no cabin is
+  ever seen riding **over** the city without `&step=`, so the feature's whole point is invisible at load. This is
+  the third instance of *the default URL silently pins a state* (`year` iter 108, `tide` iter 113, now cabin
+  phase). Cheap fix for the next Transport lap: re-spread the cabins once `L` reaches `g.target`. **Do not
+  "fix" the rescale itself** — it is correct for a growing line.
+- **A DWELL IS A PURE TIME DELAY, SO IT CANNOT BUNCH TWO MOVERS (new; the worry that made me check).** Both cabins
+  on a line share `rateP`/`brakeP`, the step depends only on `p`, and the pause has fixed length at a fixed point.
+  So each cabin's period is *identical* and their offset in **time** is exactly conserved — they can never merge,
+  whatever the ledger's "ratchet" instinct (119) suggests. Measured: separation wanders 0.9–4.9 spans over 300s
+  with no trend, and is in fact *wider* than pristine's, because the dwell desynchronises them.
+- **⚠ THE INTERLEAVED PERF GATE JUST EARNED ITS KEEP, ON PRISTINE CODE (new; hard evidence for 117's law).**
+  Round 1 of this lap's gate read **day 47.39ms on unmodified HEAD** — the harness printed
+  `33.16ms -> 47.39ms (42.9%) <== REGRESSION`. Round 2 of the *same bytes* read 34.94ms. A single-pass gate would
+  have convicted code that did not exist yet, and a "stable offset ⇒ code" reading (99's rule, corrected by 117)
+  would have agreed. **Only the A/B/A/B swap, min per variant, can tell a machine from a diff.**
+- **`minSep ≈ 0.00 spans`: the two cabins pass THROUGH each other, in both builds (new, pre-existing, cosmetic).**
+  They ride one drawn curve, so once per half-trip they occupy the same point. A real jig-back tram counterbalances
+  its pair on a loop and they pass side-by-side at midspan; here they are also not quite antipodal (`p` 0.15/0.62,
+  0.47 apart, not 0.50). Both are one-line changes and belong with cue (n), not before it — the crossing is a few
+  pixels and no visual agent has ever remarked on it.
+
