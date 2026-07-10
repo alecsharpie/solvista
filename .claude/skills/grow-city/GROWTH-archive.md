@@ -4020,3 +4020,91 @@ design. **New cue (f), measured and standing:** `RES` has the identical defect M
 **every seed paints the same RES roof pattern** (a quiet breach of "procedural, new city every
 load"). Both are one-line fixes in the RES branch (L3249–3251) for whoever takes Urban next.
 
+## Iteration 100 — the institutions get their grounds (2026-07-10) [holistic step-back]
+
+**Vector** — Civic & culture × **New element (SHIPPED)**, plus the 5-iteration holistic step-back.
+Both axes were forced and both were right: iter 99 left an explicit instruction (*"iter 100 should be
+Civic & culture, and NOT Polish"*), Civic's **New element** cell had been cold since **iter 30** — 70
+iterations — while its Deepen cell was the row's busiest (36/59/66/80/91), and no **New element** had
+shipped anywhere for five iterations. It also takes a bite out of standing cue **(e½)**: institutions
+are what earns interior green in a real city.
+
+**Change.** A new tile `T.QUAD` (31) — *mown institutional grounds*. `GROUNDS` = the five `MAJORK`
+monuments **+ hospital + school** (the two services whose real plan is a building set back in its own
+green; a firehouse has an apron, the amphitheater already sits in parkland, the observatory wants the
+dark rim). At **2022+**, each such institution takes the lot **behind** it: the forecourt rule (2020)
+scores on `c.flow` and takes the *loud* side, so the quad inverts it and takes the quiet one — the
+back lot fronting no street. Runs after the forecourt, so `PLAZA` is already claimed and sits outside
+`FORECOURT_LOT`; the two squares can never contend for a lot. `hashCell`-gated, no `rng()`.
+Registered in all seven seams a ground tile touches: `valueSrc` (0.92, as park), `reachFill(rGreen)`,
+`openCells`, `strollable`, `PEDDEST` (peds now stroll the quad), the draw case, and
+`TILELABEL`/`TILEDESC` — hovering one says **"Quad / Mown grounds behind an institution."**
+
+**The probe killed half the design before a line shipped.** The obvious feature was a *shared* quad on
+the cell between two clustered majors — iter 91 spaced the quarter at `QNEAR=2` explicitly to "leave
+one between," which reads like a hook left for exactly this. `probe-grounds.mjs` measured what is
+actually on that cell across three seeds: **ROAD 10/16 · PLAZA 4/16 · a bare lot 3/16 (one seed).**
+`siteQuarter` requires `roadNear()`, so **two institutions meet on the street they both front, by
+construction** — greening it would have severed the civic mile iter 45's bunting is strung along.
+Shared gap cells: **0, 0, 3.** The back-lot design was the supported one: **8/10, 11/12, 11/12**
+institutions have a convertible neighbour, and those neighbours are overwhelmingly **MID** — the exact
+"edge-to-edge carpet" tile cue (e½) complains about.
+
+**⚠ THE FINDING: ORNAMENT YOU CANNOT SEE AT DISTANCE STILL AVERAGES INTO THE TILE'S TONE, AND CAN
+CANCEL THE BASE COLOUR YOU ADDED TO CARRY IT.** The visual gate **failed three times on seed 7**, always
+with one sentence: *"grid-correct and well-placed, but reads as a generic grass hex."* Rounds 1–2 I
+treated it as an ornament problem (clip to the true hexagon — an ellipse clip had cut the mower passes
+into a lens and let the path slab out over the neighbours; replace two floating dark blobs with a
+shrub row). Those were real bugs and fixed real ugliness **up close**, and changed nothing at city
+zoom. The cause was that `QUAD` was drawn in **PARK's own `lawn`**. So I gave it a `turf` of its own —
+and it *still* failed. `probe-quadtone.mjs` (samples the real canvas at default fit zoom, 3×3 disc at
+each tile centre) said why:
+
+| | before | after | reference |
+| --- | --- | --- | --- |
+| QUAD vs PARK `ΔL` | **6.9 / 2.9 / 9.3** | **20.7 / 19.3 / 22.5** | PARK vs FOREST (obvious): 31–36 |
+| QUAD vs PARK `ΔRGB` | 12.2 / 15.2 / 25.0 | 30.8 / 31.3 / 37.9 | PARK vs FOREST: 60–66 |
+| QUAD sampled lum | **160** (base fill was 144) | 144–146 | PARK 163–168 · MID 157 · FOREST 131 |
+
+`turf` had luminance 144, but the tile **measured 160** — the mower stripes (`turf×1.12`, covering
+most of the face) and the cream path were lifting the sampled tone **+16 back toward park**. Iter 95's
+law is that coverage cannot *create* legibility at distance; the corollary, unowned until now, is that
+**coverage can destroy it.** Fix: stripes `1.12→1.05`, path `cream .95→.90` and thinner, rim hedge
+darker/thicker (`canopy .82→.70`, lw `2.6→3.2`), `turf` re-cut deeper *and cooler* ([101,137,97]) so
+it separates from PARK by luminance **and** hue, and from FOREST by hue. QUAD now sits as a third
+green between forest and park, and **slightly darker than the MID carpet (145 vs 157)** — green
+relief, not a dark hole. **Measure the tile as rendered, not as specified.**
+
+**Census** — `VERDICT: PASS`. `QUAD 0 → 23` (the rule is 2022+, so only the 2035 era of the matrix has
+them: ~7–10 per city, matching the probe). `pop 150332 → 148777 (−1.03%)`, `developed −29`,
+`roads −2`, `TOWER −4`, `MID −17 · RES −10`. A terrain rule, so it perturbs the stream by design and
+this is the low end of the few-percent the invariants predict — a far better trade than the reverted
+solar farm (−4% for a barely-visible feature). `schools 23→21` is the pop-gated school rule
+(`pop>3500*(schools+1)`) crossing its threshold on a 1% pop dip, not a bug. The three later
+draw-only rounds moved the histogram **not one cell** — an implicit control that the turf/hedge/palette
+work was purely draw-side.
+
+**Visual** — 4 rounds, 2 seeds, no enhancement. Final: both **PASS**. Seed 7 — the reviewer that
+failed it three times — returned *"YES — this is the real change… they no longer blend into ordinary
+parks,"* found 3–4 quads unaided, and confirmed not-too-dark. Two agent verdicts proved unreliable in
+the middle rounds (one described a tower facade in a quad clip), which is why the **pixel probe, not a
+fourth opinion, is what settled it.**
+
+**Perf (step-back gate)** — 3 sequential passes, day **34.17 / 34.61 / 34.94ms**, night **38.83 /
+39.55 / 39.78ms**; PASS (min day +9.1%, night +4.3% vs baseline). The monotonic pass-over-pass rise is
+iter 99's documented load signature, and iter 99's published HEAD-under-load band (day 33.83–34.83ms)
+contains my minimum — so the quad's ~8 extra tiles of draw cost nothing measurable, as expected
+(`col()` memoizes, so `turf` buys a cache entry).
+
+**Holistic whole-city (2 seeds, un-zoomed).** Both PASS, no bugs, no compounding. Coastline explicitly
+healthy — *"one of the strongest parts of the frame,"* kelp restrained. Night warm and legible.
+Skyline: iter 98's core is *"readable… but a loose band rather than a tight core."*
+**Cue (e½) survives, narrowed again:** the interior *"does breathe… but green is fragmented into small
+patches rather than any real district-scale lung."* Both the agent's top recommendation and mine:
+**consolidate green into one or two district-scale parks/greenways** rather than more scatter. Iter 100
+added *earned* green (7–10 hexes); it did not add a lung.
+
+**Verdict — SHIPPED.** The institutions have grounds, the tooltip names them, peds stroll them, and the
+mid-rise carpet gave up ~23 cells to green that a city actually earns. Three visual failures on one
+seed were worth more than the ship: they produced `probe-quadtone.mjs` and the law above.
+

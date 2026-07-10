@@ -3591,6 +3591,17 @@ function drawFire(x,y,c,gx,gy){
     ctx.beginPath();ctx.arc(cx+Math.sin(time*2+j*2)*2.5,cy-hh-9-sm,1.8+sm*0.35,0,7);ctx.fill();}
 }
 
+/* A tower's massing and its palette, from two independent seed-salted draws.
+   Pure and cheap (col() memoizes downstream), and the ONLY definition of the rule —
+   window.__twr and probe-towertone.mjs read it rather than re-deriving it, so the
+   probe cannot silently drift from the code it grades (iter 101's law). */
+function towerLook(x,y,v){
+  const fv=hashCell(x,y,seedNum^0x6E11), form=fv*0.72+v*0.28;
+  const style=form<0.39?0:(form<0.59?1:(form<0.75?2:3));
+  const cv=hashCell(x,y,seedNum^0x2C77);
+  const bodyN=cv<0.26?'white':(cv<0.46?'cream':(cv<0.60?'sand':(cv<0.84?'teal':'terra')));
+  return{style,bodyN,capN:bodyN==='white'?'sand':'white'}; /* setbacks stay light on any body */
+}
 function drawBuilding(c,x,y,gx,gy){
   /* animate growth */
   if(c.h<c.th)c.h=Math.min(c.th,c.h+0.35+(c.th-c.h)*0.012);
@@ -3779,44 +3790,61 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.globalAlpha=1;
     }
   } else if(c.t===T.TOWER){
-    const style=v<0.35?0:(v<0.62?1:(v<0.85?2:3));
+    /* The third and most visible sibling of the defect iter 99 took out of MID and
+       103 out of RES. `style` was v<0.35?0:... while th=(54+c.v*82)*(0.70+0.66*core),
+       so the SILHOUETTE merely restated height: measured corr(style,th) 0.695-0.757,
+       mean 0.727 — inside MID's *pre-fix* band. Mean height climbed monotonically with
+       style (58 -> 84 -> 95 -> 121), so the four forms were four height classes, and
+       the tallest tower was a terracotta ziggurat in 2 of 3 cities. Worse, colour
+       restated the silhouette: every teal slab wore the one 'teal', every ziggurat the
+       one 'terra'. Downtown therefore had exactly FOUR looks — which is what two
+       holistic agents independently called a "monotonous tower carpet" (iter 110).
+       Two independent seed-salted draws: `form` picks the massing and keeps a MILD
+       height link (a tall tower should step back), `cv` picks the palette outright.
+       4 forms x 5 bodies = 20 looks. Style is cosmetic — it feeds no rng()-gated
+       predicate and neither pop nor towerHt read it — so this is stream-neutral, and
+       col() memoizes on name|f, so the extra shades buy cache entries, not draws.
+       Cuts re-solved: fv*0.72+v*0.28 is TRAPEZOIDAL, not uniform, so the old
+       0.35/0.62/0.85 would have cut ziggurats from 15% to 5.6%. 0.39/0.59/0.75
+       reproduces the original 35/27/23/15 mix (iter 98's hold-the-mean law). */
+    const{style,bodyN,capN}=towerLook(x,y,v);
     const under=c.h<c.th-3;
-    if(style===0){ /* white fins + teal glass bands */
-      prism(gx,gy,0.32,0.28,0,h,col('white',1),col('white',0.6),col('white',0.84));
+    if(style===0){ /* slab + fins, roof garden */
+      prism(gx,gy,0.32,0.28,0,h,col(bodyN,1),col(bodyN,0.6),col(bodyN,0.84));
       for(let z=4;z<h-6;z+=8){
-        bandR(gx,gy,0.32,0.28,z,z+3.6,colLit('glass',0.8,lit*(0.5+0.5*hashCell(x,z|0,3))));
+        bandR(gx,gy,0.32,0.28,z,z+3.6,colLit('glass',0.8,lit*(0.5+0.5*hashCell(x,z|0,seedNum^3))));
         darkWinR(gx,gy,0.32,0.28,z,z+3.6,x,y,0x1DE7);
       }
       prism(gx,gy,0.2,0.17,h,h+3,col('sage',1),col('sage',0.62),col('sage',0.85)); /* roof garden */
-    } else if(style===1){ /* teal glass slab with white cap + setback */
+    } else if(style===1){ /* glass slab with a capped setback */
       const h1=h*0.7;
-      prism(gx,gy,0.33,0.29,0,h1,col('teal',1),col('teal',0.6),col('teal',0.84));
+      prism(gx,gy,0.33,0.29,0,h1,col(bodyN,1),col(bodyN,0.6),col(bodyN,0.84));
       for(let z=4;z<h1-4;z+=6){
-        bandR(gx,gy,0.33,0.29,z,z+2.4,colLit('glass',0.95,lit*(0.5+0.5*hashCell(x+3,z|0,5))));
+        bandR(gx,gy,0.33,0.29,z,z+2.4,colLit('glass',0.95,lit*(0.5+0.5*hashCell(x+3,z|0,seedNum^5))));
         darkWinR(gx,gy,0.33,0.29,z,z+2.4,x,y,0x1DE7);
       }
-      prism(gx,gy,0.24,0.21,h1,h,col('white',1),col('white',0.6),col('white',0.84));
+      prism(gx,gy,0.24,0.21,h1,h,col(capN,1),col(capN,0.6),col(capN,0.84));
       for(let z=h1+3;z<h-3;z+=6){
         bandR(gx,gy,0.24,0.21,z,z+2.2,colLit('glass',0.85,lit));
         darkWinR(gx,gy,0.24,0.21,z,z+2.2,x,y,0x1DE7);
       }
       bandR(gx,gy,0.26,0.23,h1,h1+2,col('sage',1)); /* terrace */
     } else if(style===2){ /* garden tower: stacked terraces */
-      prism(gx,gy,0.31,0.27,0,h,col('cream',1),col('cream',0.6),col('cream',0.84));
+      prism(gx,gy,0.31,0.27,0,h,col(bodyN,1),col(bodyN,0.6),col(bodyN,0.84));
       for(let z=6;z<h-4;z+=10){
-        bandR(gx,gy,0.31,0.27,z,z+3.4,colLit('glass',0.82,lit*(0.5+0.5*hashCell(x,z|0,9))));
+        bandR(gx,gy,0.31,0.27,z,z+3.4,colLit('glass',0.82,lit*(0.5+0.5*hashCell(x,z|0,seedNum^9))));
         darkWinR(gx,gy,0.31,0.27,z,z+3.4,x,y,0x1DE7);
         bandR(gx,gy,0.325,0.285,z+3.4,z+4.8,col('sage',1));
       }
       prism(gx,gy,0.18,0.15,h,h+2.6,col('sage',1),col('sage',0.6),col('sage',0.84));
-    } else { /* terracotta ziggurat: stepped setbacks with gold bands */
+    } else { /* ziggurat: stepped setbacks with gold bands */
       const h1=h*0.45,h2=h*0.75;
-      prism(gx,gy,0.34,0.30,0,h1,col('terra',1),col('terra',0.6),col('terra',0.84));
-      prism(gx,gy,0.27,0.23,h1,h2,col('terra',0.95),col('terra',0.57),col('terra',0.8));
-      prism(gx,gy,0.19,0.16,h2,h,col('cream',1),col('cream',0.6),col('cream',0.84));
+      prism(gx,gy,0.34,0.30,0,h1,col(bodyN,1),col(bodyN,0.6),col(bodyN,0.84));
+      prism(gx,gy,0.27,0.23,h1,h2,col(bodyN,0.95),col(bodyN,0.57),col(bodyN,0.8));
+      prism(gx,gy,0.19,0.16,h2,h,col(capN,1),col(capN,0.6),col(capN,0.84));
       for(let z=4;z<h-4;z+=7){
         const wx2=z<h1?0.34:(z<h2?0.27:0.19), wy2=z<h1?0.30:(z<h2?0.23:0.16);
-        bandR(gx,gy,wx2,wy2,z,z+2.6,colLit('glass',0.85,lit*(0.5+0.5*hashCell(x,z|0,13))));
+        bandR(gx,gy,wx2,wy2,z,z+2.6,colLit('glass',0.85,lit*(0.5+0.5*hashCell(x,z|0,seedNum^13))));
         darkWinR(gx,gy,wx2,wy2,z,z+2.6,x,y,0x1DE7);
       }
       bandR(gx,gy,0.28,0.24,h1,h1+1.6,col('gold',1));
@@ -5591,6 +5619,14 @@ window.__find=n=>{
 window.__ents=n=>{const out=[];
   for(const[g,name]of ENTINFO)if(!n||name===n)
     for(const e of g())if(e._sf!==undefined)out.push({name,sx:e._sx*scale+offX,sy:e._sy*scale+offY});
+  return out;};
+/* test hook: every tower with the fields that decide how it looks — height (th/h),
+   and towerLook's own verdict, so probe-towertone.mjs grades the live rule. */
+window.__twr=()=>{const out=[];
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const c=cells[idx(x,y)];
+    if(c&&c.t===T.TOWER){const[cx,cy]=ctr(x,y),L=towerLook(x,y,c.v);
+      out.push({x,y,v:c.v,th:c.th,h:c.h,style:L.style,bodyN:L.bodyN,
+        sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 window.__mono=()=>monos.map(m=>m.path.map(p=>p.slice())); /* each line's cells, path order */
 window.__rail=()=>({lines:monos.length,closed:monos.filter(m=>m.closed).length,
