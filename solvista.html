@@ -263,6 +263,11 @@ const BASE={
   canopy:[104,146,92], canopyLt:[139,173,110], trunk:[122,90,62],
   conifer:[104,146,92], coniferLt:[139,173,110], /* evergreens sit out the seasons */
   water:[92,172,178], waterDk:[62,138,148], foam:[255,251,240], glint:[235,248,250],
+  /* the seabed's two ends, placed SYMMETRICALLY about `water` (each is water
+     ±0.8·(water−waterDk)), so a depth blend between them has water as its exact
+     midpoint and cannot drift the sea's mean tone. waterDp stays a shade lighter
+     than waterDk, which keeps the kelp beds the darkest thing inshore. */
+  waterSh:[116,199,202], waterDp:[68,145,154],
   fog:[236,241,239],
   road:[136,133,126], roadArt:[116,113,107], roadLine:[233,221,192],
   cream:[244,232,208], creamDk:[221,205,172],
@@ -383,6 +388,16 @@ function colA(name,f,a){ /* tinted rgba, for surface highlights that REFLECT lig
                             than emit it — those keep their literal color. Uncached: a varies per cell/frame. */
   const b=BASE[name];
   return 'rgba('+Math.min(255,b[0]*TINT[0]*f|0)+','+Math.min(255,b[1]*TINT[1]*f|0)+','+Math.min(255,b[2]*TINT[2]*f|0)+','+a+')';
+}
+function colMix(n1,n2,t,f){ /* tinted blend of two palette colors. Shares col()'s cache, so t and f
+                               must be QUANTIZED by the caller or the cache grows without bound. */
+  const k=n1+'~'+n2+'|'+t+'|'+f;
+  let c=CCACHE[k]; if(c)return c;
+  const a=BASE[n1],b=BASE[n2];
+  c='rgb('+Math.min(255,(a[0]+(b[0]-a[0])*t)*TINT[0]*f|0)+','+
+           Math.min(255,(a[1]+(b[1]-a[1])*t)*TINT[1]*f|0)+','+
+           Math.min(255,(a[2]+(b[2]-a[2])*t)*TINT[2]*f|0)+')';
+  return CCACHE[k]=c;
 }
 /* a field's color on the day you look at it. ph is the field's own phase through the
    year (0≈Jan): ploughed -> shoots -> the crop -> ripe -> cut stubble -> ploughed under.
@@ -876,6 +891,51 @@ const rTransit=new Uint8Array(G*G), rGreen=new Uint8Array(G*G),
    Starts "far from the sea" so the first frame can't fog a city it hasn't
    measured yet. */
 const FOGR=7, rSea=new Uint8Array(G*G).fill(255);
+/* how far each WET hex lies from the nearest land — rSea's mirror image, and the
+   seabed's only input. Land is the source and the flood runs only through water,
+   so a hex's value is its true distance offshore: it bends around headlands, keeps
+   the harbor shallow, and never lets the river run deep. Starts flat (0 = shoal)
+   so the first frame draws even water rather than a depth it has not measured. */
+const DEEPR=10, rDeep=new Uint8Array(G*G); /* DEEPR is set so the MEAN sea tone lands on 0.5 (measured mean depth ~6.6) */
+const SEASALT=0x5EA;
+/* The drawn tone, in eighths: 0 shoal -> 8 deep. Derived once per tick with the
+   depth, never per frame — the seabed only moves when the coastline does. */
+const seaT=new Uint8Array(G*G);
+function seaFill(){
+  rDeep.fill(0);
+  let head=0,tail=0;
+  for(const i of HEXI){
+    if(WETSET.has(cells[i].t))continue;
+    const x=i%G, y=(i/G)|0;
+    for(const[dx,dy]of nbrDirs(y)){
+      const n=cellAt(x+dx,y+dy); if(!n||!WETSET.has(n.t))continue;
+      const j=idx(x+dx,y+dy); if(rDeep[j])continue;
+      rDeep[j]=1;_reachQ[tail++]=j;
+    }
+  }
+  while(head<tail){ /* uncapped: a cell left at 0 would read as SHOAL, not as far-offshore */
+    const i=_reachQ[head++], d=rDeep[i], x=i%G, y=(i/G)|0;
+    for(const[dx,dy]of nbrDirs(y)){
+      const n=cellAt(x+dx,y+dy); if(!n||!WETSET.has(n.t))continue;
+      const j=idx(x+dx,y+dy); if(rDeep[j])continue;
+      rDeep[j]=Math.min(255,d+1);_reachQ[tail++]=j;
+    }
+  }
+  /* mottle the depth with a two-octave seabed, so the bands read as shoals and
+     channels rather than as contour lines around the coast */
+  for(const i of HEXI){
+    if(!rDeep[i]){seaT[i]=0;continue}
+    const x=i%G, y=(i/G)|0;
+    const n=0.62*hashCell(x>>1,y>>1,SEASALT)+0.38*hashCell(x>>2,y>>2,SEASALT^0x9E3);
+    seaT[i]=Math.round(clamp((rDeep[i]-1)/DEEPR+(n-0.5)*0.30,0,1)*8);
+  }
+}
+function seaTone(i){return seaT[i]/8} /* quantized to eighths: colMix shares col()'s cache */
+/* Deep water is darker and bluer, the shoals lighter and greener — but the two ends
+   straddle `water`, so only the sea's VARIANCE grows and its mean tone is unchanged
+   (iter 98's hold-the-mean law: a third of the canvas is sea, and drifting its mean
+   is exactly how kelp darkened the coast for 13 iterations). */
+function seaFace(d){return colMix('waterSh','waterDp',d,1)}
 const HOME=new Set([T.RES,T.MID,T.TOWER]);
 /* Traffic, as flow accumulation — the rule that turns rain into rivers.
    Every developed block generates trips; every trip drains downhill along the
@@ -1863,6 +1923,7 @@ function recount(){
   reachFill(rShop,3,c=>c.t===T.COM||c.t===T.MARKET);
   reachFill(rServ,6,c=>c.t===T.CIVIC);
   reachFill(rSea,FOGR,c=>WETSET.has(c.t));
+  seaFill();
   for(let i=0;i<cells.length;i++){
     const c=cells[i];
     const w=POPW[c.t]?POPW[c.t]*(c.t===T.TOWER?clamp(c.h/Math.max(c.th,1),0,1):1):0;
@@ -2736,7 +2797,7 @@ function drawCell(x,y){
   const v=c.v;
   switch(c.t){
     case T.WATER:{
-      hexTile(gx,gy,1.02,col('water',1));
+      hexTile(gx,gy,1.02,seaFace(seaTone(idx(x,y))));
       if(((x*3+y*5)%7)<2){ /* sparkle */
         const[cx,cy]=px(gx,gy);
         const ph=Math.sin(waveT*1.6+x*1.7+y*2.3);
@@ -5599,6 +5660,9 @@ function describeTile(c,x,y){
     data.push(['Sand',Math.round(clamp(c.sand/DUNECAP,0,1)*100)+'%']);
     if(c.sand>=DUNEMARRAM)data.push(['Marram grass']);
   }
+  /* the seabed the tile is now drawn from — hovering names the depth you can see */
+  if(c.t===T.WATER&&!c.riv){const d=rDeep[idx(x,y)];
+    data.push(['Depth',d<=2?'Shoals':d<=5?'Coastal shelf':d<DEEPR?'Open water':'Deep water']);}
   /* the sea is the one part of the diorama that changes while you look at it */
   const tidal=c.t===T.BEACH||c.t===T.DUNE||c.t===T.KELP||c.t===T.MARSH
              ||(c.t===T.WATER&&!c.riv)||pierAt(x,y);
@@ -5765,6 +5829,15 @@ window.__setTide=v=>{v=clamp(v,0,1);
    screenshots catch drift-in entities (balloons, flock) and animation phases */
 window.__step=n=>{for(let r=n;r>0;r-=0.1)advanceEntities(Math.min(0.1,r),1);};
 
+/* test hook: the live seabed. Every wet hex with its distance offshore, its drawn
+   tone, and clip-ready screen coords — so a probe can grade the tone AGAINST the
+   field that picks it instead of reimplementing seaTone(). */
+window.__deep=()=>{const out=[];
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const i=idx(x,y),c=cells[i];
+    if(!c||!WETSET.has(c.t))continue;
+    const[cx,cy]=ctr(x,y);
+    out.push({x,y,t:c.t,riv:!!c.riv,d:rDeep[i],tone:seaTone(i),sx:cx*scale+offX,sy:cy*scale+offY});}
+  return out;};
 /* test hook: locate all cells of a tile type for zoomed screenshots (polish-tile
    skill). n = a T enum name ('PARK','STADIUM',…) or a CIVIC kind ('hospital',…).
    sx/sy are CSS-pixel screen coords of the cell center (clip-ready). */

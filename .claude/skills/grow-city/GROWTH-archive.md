@@ -4552,3 +4552,78 @@ iter 104's pristine-HEAD control (min 33.00ms) this vector costs **+0.22ms (+0.7
   have rendered *"1 stations"*. `plur()` exists for that. A closed monorail loop is **not** guaranteed
   to reach `minLen` — `homing` closes it early — so never assume a generated line is large.
 
+## Iteration 106 — the harbor gets its arm (2026-07-10)
+
+**Vector** — Water & coast × **New element**. Water was the stalest safe domain (last vector 97; Sky
+is staler but 103 surveyed it as additively saturated and its empty CA cell as a trap). I passed on
+Water's three cold *kinds* and should say why: **Connect** in this domain means a corridor, and iter
+101's law kills 1-hex corridors; **New CA rule** would have been a sediment/accretion pass, which is
+the same shape as iter 90's dunes; **Scale** is a structural lever, not a lap move.
+
+**The seam.** `genWorld` sites harbor works — three `IND` warehouses on the coast highway at
+`harborY` — and then anchors a container ship off them, with the comment *"rides at anchor in the
+roadstead, **waiting on a berth**"*. There was no berth, and no shelter: the city's shipping lay in
+open swell. A harbor is the one coastal structure Solvista named in its own source and never built.
+
+**Change.** Draw-only, ~40 lines. The pier and the wind turbines showed the pattern: a structure in
+the sea need not be a *tile*. `moleSet` (a `Map` keyed by `idx`) is laid in `genWorld` after the
+turbines — straight seaward along a hex row for 6–8 cells from the first ocean cell of the row, then
+hooking 3–4 cells across the harbor mouth on a SE/SW diagonal (`dx = y&1`, never a square column) —
+and `case T.WATER` draws it. Rooted on the side of `harborY` the pier is *not* on; `hashCell` for
+length and side, **no `rng()`**. A dark wet-stone mound under a pale cap walk, armour blocks tumbled
+at the foot, surf breaking along the front, and a white **harbor light** with a red lamp at the head.
+`Breakwater` / `Harbor light` added to the hover surface (it is drawn *over* the ocean, so like the
+pier it must be named before the tile under it). New palette pair `stone`/`stoneDk`.
+
+**Census — PASS.** `pop` **+0** (150,208), `roads`/`developed`/`towers`/all others **+0**, 0 page
+errors. Tile histogram: **KELP 108→105, WATER +3** — the mole's root cells are beach-adjacent, which
+is exactly where kelp seeds, so the kelp pass now skips `moleSet` (nothing takes root under rubble).
+That is the vector's only terrain touch and the only intended histogram move. No new census metric:
+no tile type, no entity array, so `__census()` needed nothing (census-sprawl rule).
+
+**Shape probe — 16 seeds.** `probe-mole.mjs` (**`git add -f`'d**) checks every consecutive pair of
+mole cells is a true hex neighbour, that the root's west neighbour is `BEACH`, that there is exactly
+one head, and that the anchored freighter's `seaXFr` lands inside the arm. **16/16 contiguous,
+16/16 rooted on sand, 12/16 ship-inside** (the other 4 are short arms that never reach the ship's
+row, so the test is undefined, not failed). Both defects below were caught by it or by a zoom.
+
+**Visual — PASS, 2/2 agents**, after one **FAIL** and a fix (below). Tight clips on the mole (day +
+night) plus un-zoomed whole-city frames at seeds 7 and 42. Both agents: arm touches the sand, reads
+as one unbroken run, no z-order tears, harbor light present, red lamp lit at night, and the whole
+frame still reads balanced and bright with a clean coastline.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A STRUCTURE'S TONE MUST SEPARATE FROM EVERY SURFACE IT CROSSES — not just the one you pictured
+  it on.** The mole first drew in `whiteDk`, copied from `ROCK`'s granite. `ROCK` sits on **grass**;
+  the mole spans **sand then sea**. `whiteDk` (lum 220) against `sand` (221) is invisible, so the arm
+  dissolved into the beach and appeared to *begin* where it reached blue water — the seed-7 agent
+  failed it as **"floats detached in open water, not thrown out from shore."** It was attached the
+  whole time; `probe-mole.mjs` proved the root cell abutted `BEACH`. The bug was tonal, not
+  geometric. Fixed with a `stone`/`stoneDk` pair (lum **122/92**) chosen to clear **both** backgrounds
+  — sea 155, sand 221 — plus a pale cap walk for internal contrast. This is the third law in the
+  family after iter 100 (ornament averages into tone) and 101 (contrast × width): **check a new
+  element's tone against every background it will actually cross, and if it spans two, it must clear
+  both.** A palette name that reads beautifully in one biome is not a palette choice.
+- **⚠ AN AGENT REPORTING A GEOMETRIC DEFECT MAY BE REPORTING A TONAL ONE.** "Detached", "floating",
+  "not connected" is what *invisible* looks like from the outside. Before you rewrite the geometry,
+  **measure it** — the probe took 3 minutes and no tokens, and said the geometry was already right.
+  Had I trusted the verdict's literal words I would have moved the root inland and broken it.
+- **A PATH BUILT BY "ADVANCE, THEN TEST" SKIPS A CELL AT EVERY JOINT.** The straight run ended with
+  `path.push([x,y]); x++` — leaving `x` one **past** the last cell laid — and the hook then added its
+  own `dx` on top of that. Seeds 5 and 99 laid arms with a one-cell hole (`[56,27]→[58,26]`); seeds 7
+  and 42 were saved only by row parity making `dx=0`, so the two seeds I was watching looked perfect.
+  **Keep the cursor on the last cell you laid, and test each step before taking it.** Any future
+  multi-segment path (a jetty, a causeway, a spit) has this trap, and it hides behind parity.
+- **The pier/turbine pattern is the cheapest way to build in the sea.** A `Map` keyed by `idx`, laid
+  in `genWorld` with `hashCell` only, drawn from `case T.WATER`, named in `describeTile` before the
+  tile under it. No tile type, no entity array, no `rng()` draw — `pop` came back **exactly +0**.
+  Reach for it before adding a `T.*` constant. (It is not *quite* stream-neutral here only because
+  the kelp guard changes 3 cells; a structure that avoids beach-adjacent water would be exactly 0.)
+- **`shoreAt(y)` is the first ocean cell of the row** (`x>=sh` → WATER, `sh-3..sh-1` → BEACH), so it
+  is the right root for anything thrown out from the beach — but **guard the river mouth**: seed 3
+  rooted on `riv` water until `rootOK` required `BEACH` at the root's back. The pier's own `rivRow`
+  check exists for the same reason. Sand at your back is the cheap test for "am I on the coast".
+

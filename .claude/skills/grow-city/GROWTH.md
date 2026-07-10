@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113** | 22 | | U2, 44, 58, 79 | **97** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113** | 22 | | U2, 44, 58, 79, **116** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52 |
@@ -45,13 +45,15 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
-- **ROTATION.** Last vector per domain: Water **106** ·
-  Nature **108** · Urban **110** · People **111** · Transport **112** · Water **113** · Civic **114** · Sky **115**.
-  **Sky's twenty-lap staleness is now spent** — 115 took it *without* adding anything, which is the
+- **ROTATION.** Last vector per domain:
+  Nature **108** · Urban **110** · People **111** · Transport **112** · Civic **114** · Sky **115** · Water **116**.
+  **Sky's twenty-lap staleness is spent** — 115 took it *without* adding anything, which is the
   documented way past its additive saturation (surveyed iter 103; its empty `New CA rule` cell remains a
   **trap, not an invitation** — sky is not cellular, and fog on terrain is already `rSea`/`fogAt`).
-  Stalest is now **Water (106/113)** — and it has the strongest cue in the ledger waiting for it, new
-  **cue (k)**, raised by two independent agents at 115's step-back. Then **Nature (108)**, then Urban (110).
+  **Cue (k) is CLOSED by 116** (the sea has a depth field), but only its *field* half — 116's last
+  finding banks the **siting** half, and it is the cheapest good vector on the board: `turbSet` is
+  scattered by `hashCell` into water of any depth, and there is now an `rDeep` to found it on.
+  Stalest is now **Nature (108)**, then **Urban (110)**, then People (111).
   Civic's banked **cue (d)** was attempted at
   114 and **reverted**: its goal is proven (a 3-hex square reads at fit zoom) but its prescribed
   host does not exist — see the rewritten cue below before re-opening it.
@@ -71,9 +73,10 @@ ones (U2, 42, U5) stay in the bullet.
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads.
   Recent kinds: 107 New CA rule ·
   108 Deepen · 109 Connect · 110 Polish · 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) ·
-  115 Polish —
-  **Deepen has paid 3 of the last 8; stop reaching for it.** **Polish has now paid 3 of the last 6, so it is
-  no longer cold either.** The coldest kind is **Scale** (a structural lever, not a lap
+  115 Polish · 116 Polish —
+  **Deepen has paid 3 of the last 9; stop reaching for it.** **Polish has now paid 4 of the last 7 (and the
+  last two in a row) — it is the HOTTEST kind, not a safe default. Do not open 117 with a Polish.**
+  The coldest kind is **Scale** (a structural lever, not a lap
   move), then **New element** and **Interaction/UX**. **Connect paid three times** (109, 111, 112 — 112 logged as
   Deepen, see its entry): its trick was that
   it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
@@ -1139,86 +1142,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 108 entries before Iteration 106 live in
+> **Archive:** the 109 entries before Iteration 107 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 106 — the harbor gets its arm (2026-07-10)
-
-**Vector** — Water & coast × **New element**. Water was the stalest safe domain (last vector 97; Sky
-is staler but 103 surveyed it as additively saturated and its empty CA cell as a trap). I passed on
-Water's three cold *kinds* and should say why: **Connect** in this domain means a corridor, and iter
-101's law kills 1-hex corridors; **New CA rule** would have been a sediment/accretion pass, which is
-the same shape as iter 90's dunes; **Scale** is a structural lever, not a lap move.
-
-**The seam.** `genWorld` sites harbor works — three `IND` warehouses on the coast highway at
-`harborY` — and then anchors a container ship off them, with the comment *"rides at anchor in the
-roadstead, **waiting on a berth**"*. There was no berth, and no shelter: the city's shipping lay in
-open swell. A harbor is the one coastal structure Solvista named in its own source and never built.
-
-**Change.** Draw-only, ~40 lines. The pier and the wind turbines showed the pattern: a structure in
-the sea need not be a *tile*. `moleSet` (a `Map` keyed by `idx`) is laid in `genWorld` after the
-turbines — straight seaward along a hex row for 6–8 cells from the first ocean cell of the row, then
-hooking 3–4 cells across the harbor mouth on a SE/SW diagonal (`dx = y&1`, never a square column) —
-and `case T.WATER` draws it. Rooted on the side of `harborY` the pier is *not* on; `hashCell` for
-length and side, **no `rng()`**. A dark wet-stone mound under a pale cap walk, armour blocks tumbled
-at the foot, surf breaking along the front, and a white **harbor light** with a red lamp at the head.
-`Breakwater` / `Harbor light` added to the hover surface (it is drawn *over* the ocean, so like the
-pier it must be named before the tile under it). New palette pair `stone`/`stoneDk`.
-
-**Census — PASS.** `pop` **+0** (150,208), `roads`/`developed`/`towers`/all others **+0**, 0 page
-errors. Tile histogram: **KELP 108→105, WATER +3** — the mole's root cells are beach-adjacent, which
-is exactly where kelp seeds, so the kelp pass now skips `moleSet` (nothing takes root under rubble).
-That is the vector's only terrain touch and the only intended histogram move. No new census metric:
-no tile type, no entity array, so `__census()` needed nothing (census-sprawl rule).
-
-**Shape probe — 16 seeds.** `probe-mole.mjs` (**`git add -f`'d**) checks every consecutive pair of
-mole cells is a true hex neighbour, that the root's west neighbour is `BEACH`, that there is exactly
-one head, and that the anchored freighter's `seaXFr` lands inside the arm. **16/16 contiguous,
-16/16 rooted on sand, 12/16 ship-inside** (the other 4 are short arms that never reach the ship's
-row, so the test is undefined, not failed). Both defects below were caught by it or by a zoom.
-
-**Visual — PASS, 2/2 agents**, after one **FAIL** and a fix (below). Tight clips on the mole (day +
-night) plus un-zoomed whole-city frames at seeds 7 and 42. Both agents: arm touches the sand, reads
-as one unbroken run, no z-order tears, harbor light present, red lamp lit at night, and the whole
-frame still reads balanced and bright with a clean coastline.
-
-**Verdict: SHIPPED.**
-
-### Findings
-
-- **⚠ A STRUCTURE'S TONE MUST SEPARATE FROM EVERY SURFACE IT CROSSES — not just the one you pictured
-  it on.** The mole first drew in `whiteDk`, copied from `ROCK`'s granite. `ROCK` sits on **grass**;
-  the mole spans **sand then sea**. `whiteDk` (lum 220) against `sand` (221) is invisible, so the arm
-  dissolved into the beach and appeared to *begin* where it reached blue water — the seed-7 agent
-  failed it as **"floats detached in open water, not thrown out from shore."** It was attached the
-  whole time; `probe-mole.mjs` proved the root cell abutted `BEACH`. The bug was tonal, not
-  geometric. Fixed with a `stone`/`stoneDk` pair (lum **122/92**) chosen to clear **both** backgrounds
-  — sea 155, sand 221 — plus a pale cap walk for internal contrast. This is the third law in the
-  family after iter 100 (ornament averages into tone) and 101 (contrast × width): **check a new
-  element's tone against every background it will actually cross, and if it spans two, it must clear
-  both.** A palette name that reads beautifully in one biome is not a palette choice.
-- **⚠ AN AGENT REPORTING A GEOMETRIC DEFECT MAY BE REPORTING A TONAL ONE.** "Detached", "floating",
-  "not connected" is what *invisible* looks like from the outside. Before you rewrite the geometry,
-  **measure it** — the probe took 3 minutes and no tokens, and said the geometry was already right.
-  Had I trusted the verdict's literal words I would have moved the root inland and broken it.
-- **A PATH BUILT BY "ADVANCE, THEN TEST" SKIPS A CELL AT EVERY JOINT.** The straight run ended with
-  `path.push([x,y]); x++` — leaving `x` one **past** the last cell laid — and the hook then added its
-  own `dx` on top of that. Seeds 5 and 99 laid arms with a one-cell hole (`[56,27]→[58,26]`); seeds 7
-  and 42 were saved only by row parity making `dx=0`, so the two seeds I was watching looked perfect.
-  **Keep the cursor on the last cell you laid, and test each step before taking it.** Any future
-  multi-segment path (a jetty, a causeway, a spit) has this trap, and it hides behind parity.
-- **The pier/turbine pattern is the cheapest way to build in the sea.** A `Map` keyed by `idx`, laid
-  in `genWorld` with `hashCell` only, drawn from `case T.WATER`, named in `describeTile` before the
-  tile under it. No tile type, no entity array, no `rng()` draw — `pop` came back **exactly +0**.
-  Reach for it before adding a `T.*` constant. (It is not *quite* stream-neutral here only because
-  the kelp guard changes 3 cells; a structure that avoids beach-adjacent water would be exactly 0.)
-- **`shoreAt(y)` is the first ocean cell of the row** (`x>=sh` → WATER, `sh-3..sh-1` → BEACH), so it
-  is the right root for anything thrown out from the beach — but **guard the river mouth**: seed 3
-  rooted on `riv` water until `rootOK` required `BEACH` at the root's back. The pier's own `rivRow`
-  check exists for the same reason. Sand at your back is the cheap test for "am I on the coast".
 
 ## Iteration 107 — the market square was never built (2026-07-10)
 
@@ -2128,6 +2056,9 @@ rose monotonically across the three passes (33.83→34.44→34.89) — load, not
   towers."* This lap dimmed the periphery, which relieves it at the rim but **not downtown, where the fix
   made rows brighter**. Distinct from this vector (per-window density inside `drawBuilding`'s band draw, not
   the light field), so it was left alone. Take it with `probe-litdiff.mjs`'s in-page A/B.
+- **~~Banked cue (k)~~ — CLOSED BY ITER 116 (the field half). The SITING half is still open** — see 116's
+  last finding: the turbines/boats are still salted into water of any depth, and `rDeep` now exists to
+  found them on the `Coastal shelf`. Original cue, kept because its wording is what made it actionable:
 - **Banked cue (k) — the open water is the least-resolved third of the frame** *(Water & coast)*. **Both**
   day agents, unprompted and independently, named the sea: *"a large flat teal wedge — no wave detail, reefs,
   wake trails, or depth gradient… it carries a disproportionate share of canvas for how little it resolves"*
@@ -2140,3 +2071,100 @@ rose monotonically across the three passes (33.83→34.44→34.89) — load, not
   ring — reuse it for *any* "does this field follow the city's structure?" claim. `probe-litdiff` is the
   general **same-instant A/B**: freeze, render, mutate in place, render, diff. It is the right instrument for
   any change whose blast radius you want to bound in pixels rather than argue about.
+
+## Iteration 116 — the sea gets a bottom (2026-07-10)
+
+**Vector.** Water & coast × Polish. The stalest domain (106/113), cashing **banked cue (k)** — the
+strongest signal in this ledger, two independent day agents at 115's step-back naming the open sea
+unprompted: *"a large flat teal wedge — no wave detail, reefs, wake trails, or depth gradient"* and
+*"the entire right third is flat teal… it reads as dead space."* Both also called the scattered
+offshore objects *"randomly salted rather than sited"*, so the cue prescribed **depth/texture in the
+water field, not another floating object.** That prescription was taken literally: this vector adds
+**no new object, no tile type, no entity, no CA pass.**
+
+**Change.** The sea was drawn `hexTile(gx,gy,1.02,col('water',1))` — one constant, every hex, since
+the artifact began.
+- **`rDeep` — a new derived field, and `rSea`'s exact mirror.** `rSea` floods *from* wet cells *into*
+  land (the fog's gate); `seaFill()` floods **from land into water**. So a hex's value is its true
+  distance offshore: it bends around headlands, keeps the harbor and the bay shallow, and never lets
+  the river run deep — **all three for free, from one BFS, with no special-casing.** Filled beside
+  `reachFill(rSea,…)` at tick cadence. Uncapped, deliberately: a cell left at 0 would read as *shoal*,
+  not as far-offshore (the capped first draft did exactly that).
+- `seaT` caches the drawn tone (eighths) alongside the depth, so the two-octave `hashCell` seabed is
+  computed **once per tick, not once per hex per frame**.
+- `colMix(n1,n2,t,f)` — a tinted blend of two palette colors, sharing `col()`'s cache. New, reusable.
+- Tooltip: open water now prints **`Depth: Shoals / Coastal shelf / Open water / Deep water`**, beside
+  the live `Tide` iter 97 gave it. The draw shows the field; the hover names it.
+
+**The tuning failure, which is the transferable part.** The first build blended `water→waterDk` and
+darkened the sea's mean luminance **153.4 → 139.8 (−8.9%)**. Every gate would have shipped it: census
+flat, and three visual agents would have called a darker sea *"moody"*. **That is the kelp failure mode
+exactly** — a third of the canvas, drifted dark, one iteration at a time. Two causes, both worth knowing:
+- **A clamped depth ramp is not a centered one.** `DEEPR=9` against a measured **mean depth of 6.6**
+  (range 1..19) pinned most of the sea at *fully deep*. Measure the field's distribution **before**
+  choosing the constant that normalizes it; `DEEPR=10` puts mean tone on 0.50.
+- **Hold the mean by CONSTRUCTION, not by tuning** (iter 98's law, applied to a surface). Rather than
+  blend `water→waterDk` and hand-tune a brightness ramp back up, place the two endpoints
+  **symmetrically about `water`**: `waterSh/waterDp = water ± 0.8·(water−waterDk)`. Their midpoint *is*
+  `water`, so at mean tone 0.5 the mean is unchanged **algebraically** — only the variance can grow.
+  Result: mean **153.4 → 152.4 (−0.62%)**, spread **6.8 → 19.1 (×2.8)**. `waterDp` is kept a shade
+  lighter than `waterDk` so the kelp beds stay the darkest thing inshore.
+
+**Census.** PASS. `pop 154918→154915 (−3)`, `roads +0`, `developed +0`, tile histogram **empty**, every
+entity count identical. Exactly as predicted before running it: `grep -n rDeep` returns one writer and
+only draw-side readers, so by iter 115's single-reader law the vector **could not** perturb the seeded
+stream. The `−3` pop / `+1` greenRoof are iter 108's documented load-dependent salt jitter, not this change.
+
+**Probe.** `probe-seatone.mjs` (**`git add -f`'d**, per iter 101). Samples the real canvas at every
+open-sea hex centre (3×3 disc) and joins the **live** `rDeep` via a new `window.__deep` hook — it grades
+the tone against the field that picks it rather than reimplementing `seaTone()` (iter 110's law).
+Pristine control is `git show HEAD:solvista.html`, **never `git stash`** (iter 108).
+
+| seed | n | mean lum | spread (sd) | corr(lum, depth) |
+| --- | --- | --- | --- | --- |
+| 7 | 644 | 153.5 → 151.8 | 8.22 → 19.81 | **−0.874** |
+| 42 | 655 | 153.3 → 153.1 | 5.72 → 18.71 | **−0.903** |
+| 1234 | 662 | 153.2 → 152.3 | 6.14 → 18.71 | **−0.897** |
+
+**Visual.** 3/3 PASS across 6 frames — seed 42 + seed 7 (wide + `coast` clip), **seed 42 at night**, and
+seed 1234 at **high tide** in spring. Agents independently and unprompted confirmed the two things the
+BFS was supposed to buy and that no probe can see: the gradient *"bends correctly around the
+pier/headland and the harbor"* and *"stays shallow up the river."* No banding, no contour lines, no
+blocky patches, no hex seams. Night: *"deep desaturated navy, not a dead black void… stays distinctly
+bluer than the night sky, so the horizon separation holds."*
+
+**Perf.** PASS, and **perf-neutral**. Min-of-3, patched: day **34.61ms** / night **39.11ms**. But the
+absolute numbers rose between batches, so per the ledger's law a rising offset was controlled against
+**pristine HEAD under the same load, measured immediately after**: day **33.89ms** / night **38.55ms**.
+The +0.72ms residual is *smaller than pristine's own 1.05ms drift within its own batch* — noise, not code.
+Baseline **not** re-pinned. Caching `seaT` at tick cadence is what keeps this flat: the per-frame draw is
+still exactly one `hexTile` fill, now from a 9-entry color cache.
+
+**Verdict — SHIPPED.** Cue (k) is **CLOSED**: the sea has a bottom. Note what it did *not* cost —
+no tile type, no entity, no `rng()` draw, `pop` provably flat before a gate was run.
+
+**Findings for later laps.**
+- **⚠ HOLD A SURFACE'S MEAN BY GEOMETRY, NOT BY A BRIGHTNESS RAMP (new; iter 98's law, generalized).**
+  To add contrast to a large surface without drifting its tone, do **not** blend `base→dark` and correct
+  with a per-step brightness factor — that is a two-parameter fit you will tune against a probe until it
+  passes. Place the endpoints **symmetrically about the original color** (`base ± A·(base−dark)`) and the
+  mean holds *algebraically*, for any amplitude `A`, with `f=1` at every step. One free knob (`A`), zero
+  fitting, and the cache stays tiny. This applies to any future re-tone of the sky, the forest, or the roofs.
+- **⚠ NORMALIZE A FIELD BY ITS MEASURED DISTRIBUTION, NOT BY ITS NAME (new).** `DEEPR` looks like "how
+  deep the deep is" and invites a guessed constant. It is really *the divisor that decides where the mean
+  lands*, and a wrong guess saturated 60% of the sea against the clamp — a **−8.9%** mean shift, invisible
+  to census and flattering to agents. **Histogram the field first** (`/tmp/dhist.mjs` shape: `__deep()` →
+  bin by `d`), then solve for the constant. Any future `(v−a)/K` tone map has this trap.
+- **`rSea` HAD A MIRROR NOBODY HAD WRITTEN (new).** The BFS that measures "how far inland am I" run
+  backwards measures "how far offshore am I", and *the second one respects every piece of coastal geometry
+  the first one does* — headlands, harbors, the bay, the river — because it is the same flood. Before
+  hand-rolling a distance heuristic (`x − shoreAt(y)` was the obvious wrong answer: it ignores headlands
+  and would have run the **river** to full depth), check whether an existing `reachFill` inverts.
+  `reachFill()` itself could **not** be reused — it hardcodes `WETSET.has → skip` as its wall.
+- **`window.__deep` IS A PERMANENT HOOK** — every wet hex with `{x,y,d,tone,riv,sx,sy}`. Use it for any
+  "does this tone/entity/rule follow depth?" claim, and as the histogram source for the law above.
+- **THE OFFSHORE OBJECTS ARE STILL "RANDOMLY SALTED" — cue (k) closed only the *field* half** *(Water &
+  coast)*. Both 115 agents said it; this lap answered the tone and left the siting. **Now there is a field
+  to site them against**: turbines belong on the `Coastal shelf` (`rDeep` 3–5, where they are actually
+  founded), not scattered into `Deep water`. `turbSet` is laid in `genWorld` from `hashCell` — gate it on
+  `rDeep` and the wind farm sites itself. Cheap, draw-adjacent, and it makes the new field *mean* something.
