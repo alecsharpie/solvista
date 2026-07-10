@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76 | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | |
 | **Water & coast** | 6, 10, 12, 16, 20, 33 | 90 | 17, 25, 51, 65, 72 | 22 | | U2, 44, 58, 79 | **97** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99** | |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47 | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63 | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36 | 36, 59, 66, 80, 91 | 45 | | 73 | 52 |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
@@ -40,11 +40,14 @@ ones (U2, 42, U5) stay in the bullet.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free.
-- **ROTATION.** Stalest domains are **Sky & atmosphere** (last vector 95) and **People &
-  activity** (93); Sky has an **empty New CA rule cell** and no Connect/Scale, People has no Scale.
-  Recent kinds: 98 Polish · 99 Polish · 100 New element · 101 Connect(reverted) · 102 New element —
-  so **Deepen is the coldest kind** (last at 95), and **New element has now run twice in three laps
-  — do not pick it next.** Note **Nature × Connect was attempted and reverted three times** (46, 88,
+- **ROTATION.** Stalest domain is **People & activity** (last vector 93; it has no Scale). **Sky &
+  atmosphere** (95) is staler still by number, but iter 103 surveyed it and found it **additively
+  saturated** — and its **empty `New CA rule` cell is a trap, not an invitation** (sky is not
+  cellular; the one grid-shaped sky idea, fog on terrain, is already `rSea`/`fogAt`). See 103's
+  findings before spending a lap there. Recent kinds: 99 Polish · 100 New element ·
+  101 Connect(reverted) · 102 New element · 103 Polish — so **Deepen is the coldest kind** (last at
+  95) and **Polish has just run twice in three laps; do not pick it next.** Note **Nature × Connect
+  was attempted and reverted three times** (46, 88,
   101) and is the row's graveyard: 46 found it geometrically impossible, 88 found it has no host
   draw-only, 101 found the host *and the land* and lost on **shape**. Do not re-open it as a
   *corridor*. **Cue (e½) is now CLOSED — iter 102 shipped the blob 101 prescribed** (the commons),
@@ -166,6 +169,13 @@ ones (U2, 42, U5) stay in the bullet.
   suspected its own change, and ran the control: **`git stash` the edit, re-census pristine HEAD
   against the same baseline → identical +4/+1.** Before believing any small non-core delta, run
   that stash-control. It costs 90s and needs no tokens.
+  **⚠ AMENDED BY ITER 103 — one pristine run is NOT a control.** `pop`, `towerHt` and `solarRoofs`
+  are all functions of **how many frames rendered** in the census's 500ms settle (the first two read
+  `c.h`, which grows at *draw* time; the third quantizes a salt off the float `year`), so they track
+  **machine load**, and a pristine run can read exactly `+0` *by luck* — framing your change. Iter
+  103 saw pristine `+0` against its edit's `−3/−1/+2`, then re-ran the **unchanged edited file** and
+  got `+6/+1/+0`. **Run the SAME code twice; a delta that flips sign is noise.** These three metrics
+  only, and never mind them if the tile histogram is empty.
 - **⚠ A slow signal sampled briefly looks exactly like a stuck one (iter 97).** `TIDE` has a ~140s
   period (`waveT` advances ~1.0/s, `×0.045`) and spends most of its time near the extremes (arcsine).
   Watching a live page for 17s showed **only** `Low water` and looked like a dead-label bug; the
@@ -418,14 +428,22 @@ ones (U2, 42, U5) stay in the bullet.
   The same agent flagged seed 1234's long straight monorail/cable
   lines as still reading like a "wireframe/UI stroke" — but iters 85/87 closed that with two
   agents each, so treat this as one un-zoomed opinion, **not** a reopening of cue (c).
-  **(f) `RES` says its height twice, and its roofs ignore the seed** *(measured by iter 99,
-  Urban × Polish, two one-line fixes at L3249–3251)* — `bodyN=v<0.5?'terra':'cream'` against
-  `th=9+c.v*7` gives `corr(cream, height)` = **0.868**, the exact defect 99 removed from `MID`;
-  and the roof hash is `hashCell(x,y,7)` — a **literal salt**, so **every seed paints the identical
-  RES roof pattern**, a quiet breach of the "procedural, new city every load" invariant. Fix by
-  salting with `seedNum^…` and mixing an independent draw into the body tone. Draw-only ⇒
-  provably stream-neutral. (RES body is *not* clumped — measured `sameNbr` **52.1%**, maxPatch
-  **5.3** — so do **not** "fix" patchiness that isn't there.)
+  **(f) `RES` says its height twice, and its roofs ignore the seed** — **CLOSED by iter 103**
+  (`corr` 0.87–0.89 → 0.22–0.25; chimney cross-seed agreement 100% → ~60%; a third body shade).
+  (RES body is *not* clumped — measured `sameNbr` **52.1%**, maxPatch **5.3** — so do **not** "fix"
+  patchiness that isn't there.)
+  **(g) SEVEN literal-salt `hashCell` calls remain** *(audited by iter 103;
+  `grep -nE 'hashCell\([^)]*,[[:space:]]*(0x)?[0-9]+\)' solvista.html | grep -v seedNum`)* — each is
+  a function of `(x,y)` alone, so it paints the identical pattern in every city. They split into two
+  stakes, and **only the first class is an invariant breach worth a vector**:
+  - **Presence decisions** (something is there, or isn't, in the same place in every city):
+    **L2523** `hashCell(x,y,77)<0.28` — which surf cells catch the city's light-smear at night.
+  - **Ornament jitter** (a detail's lean/length/brightness, not its existence): **L2608** ×2
+    (`lean`/`ln`), **L3115** (marsh reed tufts), and **L3555/3563/3575/3587** (`hashCell(x,z|0,N)` —
+    per-storey window-light brightness, so **every city's towers light identically at night**; the
+    most *visible* of the ornament class and the one worth folding into a future Urban/Sky Polish).
+  Note `darkWinR` is **not** a breach: it takes a literal `salt` argument but mixes `seedNum^salt`
+  internally (L2188) — check the callee before indicting a call site.
   **(d) the civic quarter deserves a real square** *(banked by iter 91, Civic × Polish)* — the
   quarter now reads as a knot of pale domes sharing a single forecourt hex. A proper civic
   square (2–3 contiguous `PLAZA` cells fronting several institutions, rather than one lot won
@@ -790,97 +808,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 95 entries before Iteration 93 live in
+> **Archive:** the 96 entries before Iteration 94 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 93 — the dogs get owners (2026-07-10)
-
-**Vector** — People & activity × Deepen/interconnect.
-
-**Provenance.** The interconnect itself (ownership, leash, gait, tail, `pedHidden`
-sharing) was **found uncommitted in the worktree**, authored by an iteration killed
-between its verdict and its `git commit` — the exact failure mode the skill's *"If you
-find the worktree dirty"* section describes. It had no ledger entry, but census passed
-and the diff read as one coherent change, and it left a purpose-built `probe-dogs.mjs`
-naming itself "iter 93". Per the rule (**the gates decide, not the ledger**) it was kept.
-The *placement* fix below is this pass's own work; everything above the fix is described
-from the diff, not from its author's intent.
-
-**Change (inherited).** Dogs stop being park furniture and become *somebody's dog*.
-`syncFleet` binds ~65% of dogs to a `peds` index (`d.own`), preferring the nearest
-resident with `streetAccess()` — a leash-radius reachability test, because dogs and peds
-spawn from the same open-ground pool, so the merely-*nearest* ped is almost always a
-park-interior one who walks a street 0% of the time. Owners are **exclusive** (one leash
-per hand; an unguarded scan gave one resident four dogs and drew a fan of leashes).
-A leashed dog then takes its owner's hex outright (`d.x=p.x`) and inherits `pedWalk`'s
-streets, leash and bridge veto **for free** — so it can now leave the park (`offPark`
-0% → 1-15%) without a single new legality rule. Strays keep the old roam. Draw gains a
-sagging leash, scissoring legs off the lerp residual, and a tail that wags faster the
-faster the dog moves. Costs **zero** `rng()` draws — every coin is `Math.random` after
-the seeded draws, so the stream is untouched.
-
-**Fix (this pass).** The visual gate failed the inherited code: at 5× the dog and its
-owner drew as **one unreadable blob** joined by a ~5px leash. Cause: the sniff target was
-a free `angle × radius` orbit in **hex units** — but a hex is `CW=32`px wide and only
-`ROWY=16`px tall, so a vertical angle separated the pair by ~2.5px, and any angle gave a
-leash too short to read. Two rewrites were needed, because the obvious fix bought the blob
-back as a worse bug:
-- *Attempt 1 — push the dog toward the hex interior.* Guarantees separation, and **parks
-  the dog in the traffic lane**: `kerbDir()` stands a street ped 0.30 hex out on the kerb
-  normal *precisely* to keep it off the centre line where the cars drive, so "inward" is
-  "into traffic". Measured, not assumed: street dogs sat 5.3-8.2px from centre, *inside*
-  their owners at 7.5-9.2px, 19 samples in-lane across 3 seeds.
-- *Shipped — branch on the terrain.* On a **road**, offset perpendicular to the ped's own
-  outward vector: that runs the dog *along the kerb* at its human's exact depth. On **open
-  ground** nothing can run it over, so offset along **x**, where the projection is widest
-  and the pair always reads as two — and step toward the interior so a human near the tile
-  edge doesn't sling the dog over the neighbour and onto the clamp. Offsets are computed in
-  **pixels**, then divided back into hex units. The dog's head, tail and collar mirror on
-  `d.f` so the leash lands on the neck and never crosses the body.
-
-**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
-`roads 5706 +0`, `developed 6174 +0`, `life.dogs 90`), which is the point: a draw-only /
-`Math.random` vector must not move the seeded stream, and it didn't. Tile histogram
-empty by construction — this vector touches no terrain. `probe-dogs.mjs`: heeling exact
-**100%**, one leash per hand **yes** (`shared 0`), dogs reach the street **yes**, stamped
-**10/10** (tooltip names them *Good dog*).
-
-**Visual** — `VISUAL: PASS` on wide seed 42 + seed 7 (agents asked the *cumulative*
-question: do the new dark strokes compound into dirt/noise on grass and sand? — "sparse,
-never clustered, always attached to a person"). Zoomed 6×: dog stands clearly beside its
-human, head turned back toward the hand, tail curling away, four legs on the ground,
-leash sagging. The seed-1234 pair that a subagent caught **stacked** under the
-perpendicular-everywhere rule reads cleanly under the shipped rule. Placement measured
-across 3 seeds, ~800 samples/rule:
-
-| rule | park leash gap | street dog vs owner, from centre | in-lane |
-| --- | --- | --- | --- |
-| inherited free orbit | 6.7px *(and ~0 when vertical)* | 8.2-11.9 vs 4.9-9.3px | 9 |
-| perpendicular everywhere | 9.6px | 11.2-11.9 vs 7.5-8.1px | 1 |
-| **shipped (branch on terrain)** | **13.6px** | **11.2-12.3 vs 8.4-9.6px** | **0-1** |
-
-**Verdict — SHIPPED** (inherited work, re-gated and repaired).
-
-### Three transferable findings
-- **A hex-unit offset is not isotropic, and a diorama is drawn in pixels.** The blob was
-  not a logic error; it was `r` meaning 32px across and 16px down. Anything that positions
-  one entity *relative to another* — leashes, hand-holding, a queue, a conversation —
-  must size its gap in **screen pixels** and divide back, or it will read at one angle and
-  collapse at another. The old draw code sidestepped this by never separating two entities.
-- **The safe direction is a property of the ground, not of the geometry.** "Push toward the
-  interior" and "hold the kerb depth" are both correct — on different tiles. Peds already
-  encode where it is safe to stand (`kerbDir`, `pedWalk`, `strollable`); an entity that
-  attaches to a ped should read those decisions rather than invent a placement rule that is
-  right in a park and lethal on a street. **Reuse the host's legality, not just its hex.**
-- **A subagent's `VISUAL: FAIL` is evidence, not a verdict — read its *reason*.** One agent
-  failed the downtown clip for "dogs are below this clip's resolution": inconclusive, not a
-  defect, and it cost nothing to overrule *after* answering the question at 6×. Another
-  failed on a genuine stacked pair that three wide-frame PASSes had missed. The zoomed gate
-  found both real bugs here; neither was visible at native resolution, and **neither moved a
-  single census metric**. A gate that only reads whole frames cannot see a 4px animal.
 
 ## Iteration 94 — the streets stop crosshatching (2026-07-10) [holistic step-back]
 
@@ -1675,3 +1607,94 @@ the commons lands **fully on land, clear of beach and river.** The deterministic
 - **⚠ Don't plant a second lung.** The cue asked for *one* district-scale park precisely because the
   complaint (iters 94 and 100) was scattered confetti. A second blob re-scatters. Nature's additive
   moves in this direction are now **spent** — next Nature lap should be Deepen or Polish.
+
+## Iteration 103 — the houses stop copying each other, city to city (2026-07-10)
+
+**Vector** — Urban fabric × **Polish** (a FIX). This closes open cue **(f)**, banked by iter 99
+when it fixed the identical pair of defects in `MID` and measured — but did not fix — them in `RES`.
+Rotation pointed at Sky/People, and I went looking there first; the survey below is why I turned back.
+
+**Change.** Three lines in `drawBuilding`'s `RES` branch (L3392–3400 → L3392–3409):
+- `bodyN=v<0.5?'terra':'cream'` → `mv=hashCell(x,y,seedNum^0x5C31)`, `tone=mv*0.72+v*0.28`,
+  `bodyN=tone>0.56?'cream':(tone>0.27?'terra':'sandDk')` — the same shape as iter 99's `MID` fix,
+  thresholds solved to hold a ~40/40/19 split rather than gutting cream.
+- roof `hashCell(x,y,7)` → `hashCell(x,y,seedNum^0x7A9F)`.
+- chimney `hashCell(x,y,5)` → `hashCell(x,y,seedNum^0x5C05)`.
+- The prism's front face read `col(bodyN==='terra'?'terra':'cream',1)` — a no-op ternary while
+  `bodyN` had two values, and a **latent bug the moment a third arrives** (every `sandDk` house
+  would have worn a cream face). Now `col(bodyN,1)`.
+
+Draw-only: `drawBuilding` calls no `rng()`, and `bodyN`/`roofN` feed no `rng()`-gated predicate.
+
+**Census — PASS**, and provably stream-neutral. **Every tick-derived metric is exactly +0** and the
+**tile histogram is empty**: `parks`, `towers`, `roads`, `developed`, `tileKinds`, `bridges`,
+`greenRoofs`, `tallTowers`, `helipads`, `boulevardTrees`, `avenues`, `arterials`, `promenade`,
+`stations`, `cafes`, `schools`, `stadiums`. The only movers are the three **frame-count-dependent**
+metrics, and they wander in both directions across runs of *identical* code (see finding 2):
+run 1 `pop −3 · towerHt −1 · solarRoofs +2`; run 2 `pop +6 · towerHt +1 · solarRoofs +0`.
+
+**Probe.** `probe-restone.mjs` (now `git add -f`'d — the header's rule). Two questions, both answered
+from the live page's own `hashCell`/`cells`/`seedNum` (bare-named — iter 96's law), and it scores the
+**old and new schemes in the same run**, so one pass on either revision reports before *and* after:
+- `corr(body is cream, height field v)` over every `RES` cell, era 2035:
+  **0.889 / 0.868 / 0.871 → 0.240 / 0.219 / 0.253** (seeds 7 / 42 / 1234). Iter 99's post-fix `MID`
+  band is 0.19–0.31, so `RES` now sits inside it.
+- **cross-seed agreement** on cells that are `RES` in *both* seeds — 100% means every city paints the
+  identical pattern. **Chimney: 100.0% / 100.0% / 100.0% → 59.5% / 67.9% / 57.9%.** Roof:
+  61.9 / 80.4 / 93.0% → 14.3 / 26.8 / 21.1%.
+- Body share: `terra 50/cream 50` → `terra ~41 · cream ~40 · sandDk ~19`.
+
+**Visual — PASS, 2/2.** Seeds 42 and 7, un-zoomed whole-city **before/after pairs**, one agent each,
+told not to enhance. Both found the third shade visible and warm, "blends into the existing earthy
+palette rather than muddying it"; no z-order tears, no floating tiles, no blown-out colour; houses
+still locked to the hex grid. Both independently confirmed **nothing but house body colour changed** —
+seed 7's agent read the whole stat bar identical (`2035 · 35,200 · 71 · 64 · 179 · 33 · 18 · 49% ·
+56% · 37%`), seed 42's read towers 76 / tallest 54 / parks 201 unchanged. That is the visual
+corroboration of the census's stream-neutrality claim.
+
+**Verdict: SHIPPED.** Cue (f) is **CLOSED**.
+
+### Findings
+
+- **⚠ THE CUE'S CLAIM WAS *NEARLY* RIGHT, AND THE NEAR-MISS IS THE INTERESTING PART.** Cue (f) said
+  "every seed paints the identical RES roof pattern." Measured, the roof agreed only **61.9–93.0%**
+  across seed pairs — because `roofN`'s first branch keys off `bodyN`, which keys off `v`, which
+  **is** seeded. The literal-salt draw `rv` was identical in every city; the *rendered* roof leaked
+  a little seed through its dependence on the body. **The clean demonstrator was the chimney**
+  (`hashCell(x,y,5)`, no `v` term at all): **100.0% agreement on all three seed pairs.** Lesson:
+  when auditing a seed-independence breach, **measure the term with no seeded dependency** — a
+  downstream consumer can launder a constant into something that looks seed-varying.
+- **⚠ A SINGLE STASH-CONTROL RUN CAN FRAME YOUR OWN CHANGE (corrects iter 97's recipe).** Iter 97
+  established: suspect a small non-core delta → `git stash` the edit, re-census pristine HEAD, see if
+  the delta persists. I did that; pristine read **exactly +0** on `pop`/`towerHt`/`solarRoofs` while my
+  edit read `−3/−1/+2`. By that recipe my change was guilty. It was not: **re-running the census on
+  the unchanged edited file gave `+6/+1/+0`** — the same metrics moving the *other* way. `pop` and
+  `towerHt` read `c.h`, which **grows at draw time** (iter 98), and `solarRoofs` quantizes a salt off
+  the float `year` (iter 97) — all three are functions of *how many frames rendered* in the census's
+  500ms settle, i.e. of machine load. The pristine run's `+0` was luck: it happened to match the load
+  under which the baseline was captured. **The control for a noisy metric is running the SAME code
+  twice, not one run of each.** Compare the perf gate's rule (three passes, take the minimum) — the
+  census needs the same discipline on its three draw-time metrics, and only on those.
+- **The stream-neutrality proof is a PARTITION, not a zero.** A draw-only change does not produce
+  "all +0"; it produces **+0 on every metric derived from `tick()`** and noise on exactly the three
+  derived from frame count. Reading the census as one number hides this. The partition is the proof:
+  an empty tile histogram plus 17 exact zeros says the seeded stream never moved, whatever `pop` does.
+- **⚠ SKY & ATMOSPHERE IS ADDITIVELY SATURATED, AND ITS EMPTY `New CA rule` CELL IS A TRAP.** The
+  rotation bullet sent me to Sky. Before designing anything I grepped the seams, and found Sky is the
+  most densely built domain in the artifact — most of it **unrecorded by this ledger** (step 1's law:
+  the ledger is the loop's memory, *not the artifact's inventory*). Already there: a full **marine
+  layer** (`fogDepth`/`fogAt`/`FOGR`/`rSea`, with a `reachFill` distance field off every wet cell, a
+  dawn clock *and* a seeded multi-day fog spell), showers, clouds, stars, a moon, a **shooting star**,
+  a seeded **`WINDA` gust field** that the washing lines flap to — and a **sweeping lighthouse beam**.
+  I nearly shipped, in order: sea fog (exists), a unified wind (exists), and a lighthouse beam
+  (exists — the tooltip has promised "sweeps the bay at night" all along, and it delivers). **Sky's
+  `New CA rule` cell is empty because sky is not cellular** — its state lives in screen space and in
+  time, not on the hex grid; the one grid-shaped sky idea (fog pooling on terrain) was already taken
+  by `rSea`. Do not treat that empty cell as an invitation. Sky's remaining kinds are **Deepen /
+  Polish / Interaction**, same as Water and Nature.
+- **Rotation is a tiebreaker, not a mandate.** Three of seven domains (Nature, Water, Sky) are now
+  measured-saturated on additive kinds, so "stalest domain" increasingly points at places with nothing
+  cheap left to add, while a *specified, measured, invariant-breaking bug* sat open in the hottest
+  domain. The bug won. When the rotation bullet and an open cue disagree, **prefer the cue that comes
+  with a number attached** — and log the survey that made you turn back, because that survey is the
+  expensive part and it is exactly what the next fresh process cannot re-derive cheaply.

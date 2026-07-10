@@ -3389,14 +3389,24 @@ function drawBuilding(c,x,y,gx,gy){
   const lit=LITAMT*(0.35+0.65*c.lit);
   shadowEl(gx,gy,0.42,0.13);
   if(c.t===T.RES){
-    const bodyN=v<0.5?'terra':'cream';
-    const rv=hashCell(x,y,7);
+    /* The two defects iter 99 took out of MID, plus a worse one. Body was v<0.5
+       while th is 9+c.v*7, so colour merely restated height (corr 0.87-0.89);
+       and BOTH the roof and the chimney drew on a LITERAL salt — a function of
+       (x,y) alone — so every city, in every seed, grew its chimneys on exactly
+       the same houses (measured: 100% agreement across all three seed pairs).
+       That is a quiet breach of "procedural, new city every load". An
+       independent seed-salted draw mixed into the tone decouples colour from
+       height and gives the terraces a third shade. Colour only, and col()
+       memoizes on name|f, so the extra shade buys cache entries, not draws. */
+    const mv=hashCell(x,y,seedNum^0x5C31), tone=mv*0.72+v*0.28;
+    const bodyN=tone>0.56?'cream':(tone>0.27?'terra':'sandDk');
+    const rv=hashCell(x,y,seedNum^0x7A9F);
     const roofN=rv<0.45?(bodyN==='terra'?'terraDk':'terra'):(rv<0.72?'creamDk':(rv<0.9?'sage':'coral'));
-    prism(gx,gy-0.06,0.30,0.26,0,h,col(bodyN==='terra'?'terra':'cream',1),col(bodyN,0.62),col(bodyN,0.85));
+    prism(gx,gy-0.06,0.30,0.26,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
     prism(gx,gy-0.06,0.34,0.30,h,h+2,col(roofN,1.02),col(roofN,0.6),col(roofN,0.82));
     bandR(gx,gy-0.06,0.30,0.26,h*0.35,h*0.62,colLit('glass',0.8,lit*0.8)); /* window strip */
     darkWinR(gx,gy-0.06,0.30,0.26,h*0.35,h*0.62,x,y,0x1DE7);
-    if(hashCell(x,y,5)<0.3) /* brick chimney */
+    if(hashCell(x,y,seedNum^0x5C05)<0.3) /* brick chimney */
       prism(gx+0.15,gy-0.24,0.045,0.04,h+2,h+6,col('brick',1),col('brick',0.6),col('brick',0.85));
     if(c.solar) /* rooftop solar — adopted by the diffusion CA */
       prism(gx+0.04,gy-0.12,0.13,0.09,h+2,h+3,col('solar',1.15),col('solar',0.7),col('solar',0.9));

@@ -3387,3 +3387,89 @@ misattributed to `COM` drawing like `RES`.
   succeeded by *reserving* a corridor the generator had already committed to at t=0. Before
   drawing a line across the plate, check whether the plate already has one.
 
+## Iteration 93 — the dogs get owners (2026-07-10)
+
+**Vector** — People & activity × Deepen/interconnect.
+
+**Provenance.** The interconnect itself (ownership, leash, gait, tail, `pedHidden`
+sharing) was **found uncommitted in the worktree**, authored by an iteration killed
+between its verdict and its `git commit` — the exact failure mode the skill's *"If you
+find the worktree dirty"* section describes. It had no ledger entry, but census passed
+and the diff read as one coherent change, and it left a purpose-built `probe-dogs.mjs`
+naming itself "iter 93". Per the rule (**the gates decide, not the ledger**) it was kept.
+The *placement* fix below is this pass's own work; everything above the fix is described
+from the diff, not from its author's intent.
+
+**Change (inherited).** Dogs stop being park furniture and become *somebody's dog*.
+`syncFleet` binds ~65% of dogs to a `peds` index (`d.own`), preferring the nearest
+resident with `streetAccess()` — a leash-radius reachability test, because dogs and peds
+spawn from the same open-ground pool, so the merely-*nearest* ped is almost always a
+park-interior one who walks a street 0% of the time. Owners are **exclusive** (one leash
+per hand; an unguarded scan gave one resident four dogs and drew a fan of leashes).
+A leashed dog then takes its owner's hex outright (`d.x=p.x`) and inherits `pedWalk`'s
+streets, leash and bridge veto **for free** — so it can now leave the park (`offPark`
+0% → 1-15%) without a single new legality rule. Strays keep the old roam. Draw gains a
+sagging leash, scissoring legs off the lerp residual, and a tail that wags faster the
+faster the dog moves. Costs **zero** `rng()` draws — every coin is `Math.random` after
+the seeded draws, so the stream is untouched.
+
+**Fix (this pass).** The visual gate failed the inherited code: at 5× the dog and its
+owner drew as **one unreadable blob** joined by a ~5px leash. Cause: the sniff target was
+a free `angle × radius` orbit in **hex units** — but a hex is `CW=32`px wide and only
+`ROWY=16`px tall, so a vertical angle separated the pair by ~2.5px, and any angle gave a
+leash too short to read. Two rewrites were needed, because the obvious fix bought the blob
+back as a worse bug:
+- *Attempt 1 — push the dog toward the hex interior.* Guarantees separation, and **parks
+  the dog in the traffic lane**: `kerbDir()` stands a street ped 0.30 hex out on the kerb
+  normal *precisely* to keep it off the centre line where the cars drive, so "inward" is
+  "into traffic". Measured, not assumed: street dogs sat 5.3-8.2px from centre, *inside*
+  their owners at 7.5-9.2px, 19 samples in-lane across 3 seeds.
+- *Shipped — branch on the terrain.* On a **road**, offset perpendicular to the ped's own
+  outward vector: that runs the dog *along the kerb* at its human's exact depth. On **open
+  ground** nothing can run it over, so offset along **x**, where the projection is widest
+  and the pair always reads as two — and step toward the interior so a human near the tile
+  edge doesn't sling the dog over the neighbour and onto the clamp. Offsets are computed in
+  **pixels**, then divided back into hex units. The dog's head, tail and collar mirror on
+  `d.f` so the leash lands on the neck and never crosses the body.
+
+**Census** — PASS, `pageerrors: 0`. Every metric **exactly flat** (`pop 150332 +0`,
+`roads 5706 +0`, `developed 6174 +0`, `life.dogs 90`), which is the point: a draw-only /
+`Math.random` vector must not move the seeded stream, and it didn't. Tile histogram
+empty by construction — this vector touches no terrain. `probe-dogs.mjs`: heeling exact
+**100%**, one leash per hand **yes** (`shared 0`), dogs reach the street **yes**, stamped
+**10/10** (tooltip names them *Good dog*).
+
+**Visual** — `VISUAL: PASS` on wide seed 42 + seed 7 (agents asked the *cumulative*
+question: do the new dark strokes compound into dirt/noise on grass and sand? — "sparse,
+never clustered, always attached to a person"). Zoomed 6×: dog stands clearly beside its
+human, head turned back toward the hand, tail curling away, four legs on the ground,
+leash sagging. The seed-1234 pair that a subagent caught **stacked** under the
+perpendicular-everywhere rule reads cleanly under the shipped rule. Placement measured
+across 3 seeds, ~800 samples/rule:
+
+| rule | park leash gap | street dog vs owner, from centre | in-lane |
+| --- | --- | --- | --- |
+| inherited free orbit | 6.7px *(and ~0 when vertical)* | 8.2-11.9 vs 4.9-9.3px | 9 |
+| perpendicular everywhere | 9.6px | 11.2-11.9 vs 7.5-8.1px | 1 |
+| **shipped (branch on terrain)** | **13.6px** | **11.2-12.3 vs 8.4-9.6px** | **0-1** |
+
+**Verdict — SHIPPED** (inherited work, re-gated and repaired).
+
+### Three transferable findings
+- **A hex-unit offset is not isotropic, and a diorama is drawn in pixels.** The blob was
+  not a logic error; it was `r` meaning 32px across and 16px down. Anything that positions
+  one entity *relative to another* — leashes, hand-holding, a queue, a conversation —
+  must size its gap in **screen pixels** and divide back, or it will read at one angle and
+  collapse at another. The old draw code sidestepped this by never separating two entities.
+- **The safe direction is a property of the ground, not of the geometry.** "Push toward the
+  interior" and "hold the kerb depth" are both correct — on different tiles. Peds already
+  encode where it is safe to stand (`kerbDir`, `pedWalk`, `strollable`); an entity that
+  attaches to a ped should read those decisions rather than invent a placement rule that is
+  right in a park and lethal on a street. **Reuse the host's legality, not just its hex.**
+- **A subagent's `VISUAL: FAIL` is evidence, not a verdict — read its *reason*.** One agent
+  failed the downtown clip for "dogs are below this clip's resolution": inconclusive, not a
+  defect, and it cost nothing to overrule *after* answering the question at 6×. Another
+  failed on a genuine stacked pair that three wide-frame PASSes had missed. The zoomed gate
+  found both real bugs here; neither was visible at native resolution, and **neither moved a
+  single census metric**. A gate that only reads whole frames cannot see a 4px animal.
+
