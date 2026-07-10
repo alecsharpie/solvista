@@ -1104,6 +1104,34 @@ const GROUNDS=new Set(['hall','museum','parliament','university','library','hosp
 const QNEAR=2, QFAR=4;   /* hexes to the nearest standing institution: near enough
                             to share a street, far enough to leave one between */
 
+/* The grounds rule's guard: "is a quad already touching me" — an ADJACENCY
+   question, and the reason two institutions a hex apart never both get one. It
+   is NOT the question the tooltip asks (see squareOwner), and iter 112's law is
+   that one name must not answer two questions. */
+function hasQuad(x,y){return countAround(x,y,1,n=>n.t===T.QUAD)>0}
+/* siteQuarter drew every monument toward the ones already standing, so a major
+   with peers inside its own QFAR is, by that rule's definition, in the quarter. */
+function quarterPeers(x,y){return countAround(x,y,QFAR,n=>n.t===T.CIVIC&&MAJORK.has(n.kind))}
+/* Whose square is this? Adjacency cannot answer it: a quad laid behind the town
+   hall may also touch the library, and a probe caught exactly that (seeds 42 and
+   1234) naming the neighbour rather than the owner. The placing rule is the only
+   thing that ever knew, so it now says so — c.own is the index of the
+   institution the square was laid for, stamped at conversion. */
+function squareOwner(x,y){
+  const c=cells[idx(x,y)];
+  if(c.own===undefined)return null;                  /* not laid by a civic rule */
+  const o=cells[c.own];
+  return o&&o.t===T.CIVIC?o.kind:null;               /* owner may have been rebuilt */
+}
+/* ...and the same fact read from the institution's side, so the two can never
+   disagree: exactly the squares stamped with my own index. */
+function ownsSquare(x,y,t){
+  const me=idx(x,y); let has=false;
+  nbrs6(x,y,(nx,ny)=>{const n=cellAt(nx,ny);
+    if(n&&n.t===t&&n.own===me)has=true;});
+  return has;
+}
+
 /* The civic quarter. A monumental institution is drawn to the ones already
    standing rather than dropped wherever the dice land, so state and culture
    accrete into one readable district instead of scattering to the plate's rim.
@@ -1369,7 +1397,7 @@ function tick(){
       if(score>bestScore){bestScore=score;best=[nx,ny,n];}
     }
     if(best&&hashCell(best[0],best[1],seedNum^0xF04C)<0.9){
-      const n=best[2];n.t=T.PLAZA;n.h=0;n.th=0;n.age=0;}
+      const n=best[2];n.t=T.PLAZA;n.h=0;n.th=0;n.age=0;n.own=idx(x,y);}
   }
   /* institutional grounds (2022+): an institution fronts a paved square and BACKS
      onto a green quad. The forecourt above takes the loud side — it scores on
@@ -1390,7 +1418,7 @@ function tick(){
   if(year>=2022)for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];
     if(c.t!==T.CIVIC||!GROUNDS.has(c.kind))continue;
-    if(countAround(x,y,1,n=>n.t===T.QUAD)>0)continue;      /* one quad per institution */
+    if(hasQuad(x,y))continue;                              /* one quad per institution */
     /* the same front the forecourt picked, so the quad is genuinely its back */
     const fx=frontSide(x,y,hashCell(x,y,seedNum^0x7C3D)<0.5?1:-1),[cx0]=ctr(x,y);
     let best=null,bestScore=-1;
@@ -1406,7 +1434,7 @@ function tick(){
       if(score>bestScore){bestScore=score;best=[nx,ny,n];}
     }
     if(best&&hashCell(best[0],best[1],seedNum^0xB09D)<0.85){
-      const n=best[2];n.t=T.QUAD;n.h=0;n.th=0;n.age=0;}
+      const n=best[2];n.t=T.QUAD;n.h=0;n.th=0;n.age=0;n.own=idx(x,y);}
   }
   /* far fields quietly go solar (2012+) */
   if(year>=2012)for(let k=0;k<ks(6);k++){
@@ -5720,6 +5748,24 @@ const TILELABEL={[T.EMPTY]:'Vacant lot',[T.ROAD]:'Street',[T.RES]:'Homes',[T.MID
 const CIVICLABEL={hall:'Town hall',school:'School',library:'Library',police:'Police station',
   firehouse:'Firehouse',museum:'Museum',hospital:'Hospital',observatory:'Observatory',
   parliament:'Parliament',university:'University',aquarium:'Aquarium',amphitheater:'Amphitheater'};
+/* Twelve institutions shared one sentence — 'A public institution.' — while each
+   was sited by a rule that knew exactly what it was. Each line below is that
+   rule's own story: the hall predates the streets, the schools come by the
+   thousand residents, the aquarium wants the shoreline, the observatory the dark
+   rim, the amphitheater the parkland. */
+const CIVICDESC={
+  hall:'Council chambers and the clerk\'s office. The town was laid out around it.',
+  school:'Classrooms and a playground. The district opens another with every few thousand residents.',
+  library:'Stacks, reading rooms, and a quiet floor above.',
+  police:'The precinct house. Cruisers idle in the yard.',
+  firehouse:'Engines behind roll-up doors, ready for the fires on the hill.',
+  museum:'Galleries of the coast and the people who worked it.',
+  hospital:'Emergency, wards, and the ambulance bay that never closes.',
+  observatory:'A dome out on the dark rim of the city, open to the night.',
+  parliament:'The seat of the region, and the tallest civic roof in Solvista.',
+  university:'Lecture halls and laboratories. Another opens with every fourteen thousand residents.',
+  aquarium:'Tanks of kelp forest and open water, where the streets run out at the sea.',
+  amphitheater:'An open-air bowl beside the parks. Concerts through the summer.'};
 const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats and offices.',
   [T.COM]:'Street-level shops and cafés.',[T.TOWER]:'A high-rise in the downtown core.',
   [T.PARK]:'Public green space.',[T.BEACH]:'Golden sand along the Pacific.',[T.WATER]:'The open sea.',
@@ -5754,7 +5800,8 @@ function describeTile(c,x,y){
     sub=m.head?'Marking the harbor mouth — red over the entrance after dark.'
        :'A rubble arm thrown out from the shore. The swell breaks on it, and the roadstead behind lies still.';
   }
-  else if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';sub='A public institution.';}
+  else if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';
+    sub=CIVICDESC[c.kind]||'A public institution.';}
   else if(c.t===T.ROAD){const art=c.flow>=ARTFLOW;
     title=c.bridge?'Bridge':(art?'Arterial':(c.busy?'Avenue':'Street'));
     sub=c.bridge?'Carries the street across the water.'
@@ -5772,6 +5819,27 @@ function describeTile(c,x,y){
   else if(DEV.has(c.t))data.push(['Built','~'+est]);
   if(DEV.has(c.t))data.push(['Floors','~'+floorsOf(c.h)]);
   if(c.t===T.TOWER&&c.h>90)data.push(['Helipad']);
+  /* the institution's own district and grounds, read from the rules that built
+     them: siteQuarter's MAJORK/QFAR, the forecourt's plaza, the grounds' quad.
+     Every predicate is the placing rule's, so the tooltip cannot describe a
+     square, a lawn or a quarter that isn't standing on the plate. */
+  if(c.t===T.CIVIC){
+    if(MAJORK.has(c.kind)){
+      const peers=quarterPeers(x,y);
+      if(peers>0)data.push(['Civic quarter',(peers+1)+' institutions']);
+    }
+    if(ownsSquare(x,y,T.PLAZA))data.push(['Fronts a paved forecourt']);
+    if(ownsSquare(x,y,T.QUAD))data.push(['Keeps its own grounds behind']);
+    /* schools and universities are the two the city builds by demand, so they
+       are the two that ever answer more than one */
+    let n=0; for(const m of cells)if(m.t===T.CIVIC&&m.kind===c.kind)n++;
+    if(n>1)data.push(['One of',n+' '+CIVICLABEL[c.kind].toLowerCase()+'s']);
+  }
+  /* TILEDESC has always called a quad "grounds behind an institution" and a plaza
+     "a paved civic square" without ever naming which — the cells adjoin, so both
+     rules already knew. */
+  if(c.t===T.PLAZA||c.t===T.QUAD){const k=squareOwner(x,y);
+    if(k)data.push([c.t===T.PLAZA?'Forecourt of':'Grounds of',CIVICLABEL[k]]);}
   if(c.t===T.ROAD)data.push(['Traffic',Math.round(c.flow)]);
   if(c.t===T.ROAD&&c.stop){const{q,bl}=stopQueue(c,x,y);   /* live, like Tide (iter 97) */
     data.push(['Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);}
@@ -5799,8 +5867,13 @@ function describeTile(c,x,y){
     c.bloom>0?'In bloom':c.bloom<0?'Gone over':'Not in flower']);
   if(c.t===T.BURNT)data.push(['Burnt','~'+Math.round(c.age*0.075)+' yr ago']);
   if(c.fire>0)data.push(['Burning']);   /* live, and drawn: drawFire paints this cell */
-  if(c.solar)data.push(['Rooftop solar']);
-  if(c.groof)data.push(['Green roof']);
+  /* a roof row needs a roof: the forecourt and grounds rules pave over a MID or a
+     COM that had already gone solar, and the flag rides along. Only drawBuilding
+     paints panels, and it runs exactly when DEV.has(c.t) — so a paved square was
+     claiming an array nobody ever drew on it. The High street row below had
+     always known to ask; these two never did. */
+  if(c.solar&&DEV.has(c.t))data.push(['Rooftop solar']);
+  if(c.groof&&DEV.has(c.t))data.push(['Green roof']);
   if(c.hstr&&DEV.has(c.t))data.push(['High street']);
   if((c.t===T.COM||c.t===T.MARKET)&&DISTCOL[c.dist])data.push(['District',DISTCOL[c.dist]]);
   /* the coast: structures the terrain doesn't know it carries, and CA state the

@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113** | 22 | | U2, 44, 58, 79, **116** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52 |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84 | 71 |
 
@@ -43,7 +43,11 @@ ones (U2, 42, U5) stay in the bullet.
   + **the woods name their own stand (iter 117, Nature-led: `Stand — N hexes` by live flood fill,
   `Canopy Closed/Thickening/Open edge` read from the draw's own `k`, `Undisturbed ~N yr`,
   `Old growth since`, `Deep woods`, `Mushrooms up`, `Burning`, and a live
-  `Wildflowers In bloom/Gone over/Not in flower`)**.
+  `Wildflowers In bloom/Gone over/Not in flower`)**
+  + **the institutions name themselves (iter 122, Civic-led: `CIVICDESC` gives all 12 kinds their own
+  sentence, drawn from each one's siting rule; `Civic quarter — N institutions` by `siteQuarter`'s own
+  `MAJORK`/`QFAR`; `Fronts a paved forecourt` / `Keeps its own grounds behind`, and the squares answer
+  back with `Forecourt of — Town hall` / `Grounds of — Museum`; `One of — 4 schools`)**.
   When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
   (same discipline as the census hook). `stamp()` now also draws the focus ring,
   so any stamped entity is ringable for free — **but a TILE has no ring, see cue (l)**.
@@ -51,10 +55,14 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Civic **114** · Sky **115** · Water **116** · Urban **118** · People **119** · Nature **120** · Transport **121**.
-  **Stalest is now Civic (114)**, then Sky (115), then Water (116). **121 took the then-stalest domain (Transport)
-  and cashed the banked finding sitting in its last entry — cue (h) — exactly as the paragraph below tells you to.**
-  When Water comes round it has the other live banked cue: **turbine siting on `rDeep`** (116's last finding).
+  Sky **115** · Water **116** · Urban **118** · People **119** · Nature **120** · Transport **121** · Civic **122**.
+  **Stalest is now Sky (115)** — but read its trap note below before taking it — then **Water (116)**, which is
+  the better pick because it holds the board's cheapest live cue: **turbine siting on `rDeep`** (116's last
+  finding). **122 took the then-stalest domain (Civic) and cashed the tell banked in the list below**, exactly
+  as 121 cashed cue (h) and 119 cashed 111's finding: three laps running where *the header told the iteration
+  what to do*. That is the loop working. **Urban also now holds a fresh banked cue from 122: ghost `c.solar` on
+  paved squares still inflates `solarRoofs` and still nudges the adoption CA** — see 122's third finding; it is
+  a metric-moving fix and wants its own lap.
   And **Transport's next lap has cue (n)** (121, measured, pre-existing): both cable cars sit within **one span of
   the anchor tower at page load**, on every line and every seed, because the growth rescale telescopes `p→0` — so
   no cabin is ever seen riding *over* the city without `&step=`. Re-spread the cabins once `L` reaches `g.target`;
@@ -80,7 +88,8 @@ ones (U2, 42, U5) stay in the bullet.
   **Cue (k) is CLOSED by 116** (the sea has a depth field), but only its *field* half — 116's last
   finding banks the **siting** half, and it is the cheapest good vector on the board: `turbSet` is
   scattered by `hashCell` into water of any depth, and there is now an `rDeep` to found it on.
-  (Still open after 117, which went to Nature by rotation — take it when Water comes round.)
+  (Still open after 117 and 122, which went to Nature and Civic by rotation. **Water is now second-stalest
+  and Sky is a trap, so this is the next lap's most likely pick.**)
   Civic's banked **cue (d)** was attempted at
   114 and **reverted**: its goal is proven (a 3-hex square reads at fit zoom) but its prescribed
   host does not exist — see the rewritten cue below before re-opening it.
@@ -98,9 +107,16 @@ ones (U2, 42, U5) stay in the bullet.
   **117 cashed the tell a fifth time and it is now the loop's most reliable move**: `TILEDESC` claimed
   *"Old-growth redwoods"* and *"Wild grass and wildflowers"* while `describeTile` printed only `Value`,
   though the CA had tracked `c.age`/`c.fire`/`c.bloom`/`c.shroom` since 1974. **Where else does a string
-  assert what the code already knows?** Un-cashed: `TILEDESC[T.KELP]` *"swaying in the shallows"*,
-  `[T.IND]` *"warehouses and light industry"*, `[T.VINEYARD]` *"terraced"*, `CIVICLABEL` (every civic
-  says only *"A public institution."* — 12 kinds, one sub).
+  assert what the code already knows?** **122 cashed it a sixth time** (`CIVICLABEL`'s one sub for twelve
+  institutions) and found the tell is **self-renewing**: cashing it *created* a new one, since
+  `TILEDESC[T.PLAZA]` still says only *"A paved civic square"* for a square that now knows its institution.
+  Un-cashed: `TILEDESC[T.KELP]` *"swaying in the shallows"*, `[T.IND]` *"warehouses and light industry"*,
+  `[T.VINEYARD]` *"terraced"*, and the plaza/quad **titles** (still the generic tile label — they could
+  read *"Town hall forecourt"* outright).
+  **122 also warns what the tell CANNOT do alone:** its first build derived ownership from *adjacency*, named
+  the wrong institution on 2 of 3 seeds, and **passed the census and would have passed both visual agents** —
+  the prose is only wrong if you know the geometry. **A tooltip vector needs a probe that checks the claim
+  against independently recomputed truth, not just a screenshot that it renders.**
   Note iter 108 was Nature × Deepen but its
   *content* was a Sky interconnect (the farm calendar reads `applySeason`'s `year`) — **Sky can be
   fed by deepening another domain toward it**, which is the way out of its saturation that does not
@@ -108,14 +124,13 @@ ones (U2, 42, U5) stay in the bullet.
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
   almost no pixels. Sky-feedable list is now effectively `VINEYARD` seed-heads alone.
-  Recent kinds: 110 Polish · 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) ·
-  115 Polish · 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen —
-  **Polish has paid 5 of the last 12; do not open with one.** **⚠ Deepen has now paid FOUR laps running
-  (119, 120, 121) — the next lap must vary the kind.** 121 was allowed to extend the run *only* because a
-  banked, measured defect (cue (h)) outranks kind-rotation; that licence is spent, and there is no banked
-  Deepen left. The coldest kinds are **Scale** (a
+  Recent kinds: 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) ·
+  115 Polish · 116 Polish · 117 Interaction/UX · 118 Polish · 119 Deepen · 120 Deepen · 121 Deepen ·
+  122 Interaction/UX — **122 broke Deepen's four-lap run, as the header demanded.**
+  **Polish has paid 5 of the last 12; do not open with one**, and Interaction/UX has now paid twice in
+  six. The coldest kinds are **Scale** (a
   structural lever, not a lap move) and **New element** (last: 106) — but note 118's finding that a
-  *saturated* domain cannot take a New element; pick the domain first (Transport, 112) and read its
+  *saturated* domain cannot take a New element; pick the domain first (Water, 116) and read its
   row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
   **Connect paid three times** (109, 111, 112 — 112 logged as
   Deepen, see its entry): its trick was that
@@ -1201,115 +1216,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 114 entries before Iteration 112 live in
+> **Archive:** the 115 entries before Iteration 113 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 112 — the trains stop where the platforms are (2026-07-10)
-
-**Vector** — Transport × **Deepen**. Rotation named the domain: Transport (105) was the stalest safe
-pick (Sky 95 is staler but is a documented trap). The header pointed at the kind too — *"109's trick
-(close a gap between two existing objects) is still unspent in Transport"* — and this lap cashes it.
-I logged it as **Deepen, not Connect**, because Connect had already paid in 109 and 111 and the bulk of
-the change is a *motion-model fix*, not a join; calling it Connect a third time would have misreported
-the rotation the header exists to protect.
-
-**The seam.** Every monorail station drew riders under its canopy with the intent "waiting for the next
-train" — and the train never came. `stepAnim` was one line: `tr.p += dt*s*0.014`, forever, straight
-through every platform. The buses had dwelt at their stops since long before the ledger (iter 111 gave
-them somebody to wait for). The trains never had.
-
-**Two defects found by probing, not by reading.** `probe-rail.mjs` (written before any design):
-
-| seed 7 | line 0 | line 1 | line 2 |
-| --- | --- | --- | --- |
-| spans `L` | 89 | 2 | 90 |
-| `stops.size` — **what the tooltip reported** | 15 | 1 | 14 |
-| **real, drawn stations** (`countAround(...)>=3`) | **8** | **0** | **11** |
-| overstatement | 47% | 100% | 21% |
-
-1. **`p` is a fraction of the loop, so ground speed scaled with loop length.** Every line lapped in
-   exactly 71 s whatever its size: seed 7's 89-span line ran its trains at 1.25 spans/s and its 2-span
-   line at 0.028 — **45× apart, identical hardware.**
-2. **"Station" was written three times and meant three things.** The draw gated on neighborhood density;
-   the tooltip and the hovered-route pips counted raw `stops`. Lines claimed up to twice the platforms
-   they drew, and pipped bare track. A *fourth* copy lived in `monoStationCells()` (the census metric).
-
-**Change.** ~60 lines. `railStations()` computes `m.sta` (the station set) and `m.staP` (where a train
-must stand) once per tick; the draw, the pips, the tooltip, the census metric and the train all read it —
-iter 111's `stopQueue` shape. `stepTrains()` gives a train a **ground** speed (`MONOSPD=1.25` spans/s,
-capped at `MONOCAP` so a 2-span loop can't spin), brakes it into each station, stands it `MONODWELL=3.2 s`,
-and pulls it away. `railQueue()` empties the platform as the train stands — the riders slide to the post
-and fade — then refills it a rider at a time. Car spacing moved from `0.011` of a lap to `1.0` **span**,
-so the three cars no longer mush together on short lines (unchanged on long ones by construction).
-
-**⚠ The first easing curve was linear, and it was silently catastrophic.** `e = d/B` tripled the lap
-(**210 s vs 71 s**) and *still* left three lines reading as three speeds. The time to cross a brake zone
-under a linear ramp is `∫dx/(V·x/B)`, which **diverges** — the train spent its lap pinned at the 0.10
-floor. `sqrt` (constant deceleration) integrates to `2B/V`. Census: blind. Three visual agents: blind.
-Only `probe-train.mjs`, measuring spans/sec, could see it. Now, with sqrt:
-
-| | seed 7 L=89 | seed 7 L=90 | seed 1234 L=66 |
-| --- | --- | --- | --- |
-| ground speed while moving | 0.882 | 0.793 | 0.977 spans/s |
-| lap | 127 s | 150 s | 80 s |
-| standing | 20.4% | 24.4% | 15.9% of the time |
-| **middle car ↔ platform when stood** | **0.0000** | **0.0000** | **0.0000 spans** |
-| closest two trains ever | 16.1 | 23.3 | 26.1 spans |
-
-Every uncapped line now cruises at the same 1.25 spans/s; the residual spread is the deliberate lap-time
-cap on stubby loops. Trains never overlap (no signalling needed — each accrues the same dwell per lap, so
-phase is preserved). **Held the mean (iter 98's law):** riders/platform 1.88→1.65, 1.55→1.41, 2.00→1.67,
-1.75→1.54 — a 9–17% *reduction*, so the platforms breathe rather than gaining clutter.
-
-**Census — PASS.** `pop −3`, `greenRoofs −1`, **everything else `+0`**; tile histogram empty; entity counts
-unmoved; 0 page errors. Anim/draw-only, no `rng()`, no terrain. The `±3` is the load jitter iter 108
-documented on *identical pristine code*. **`stations: 40 → 40` is the real check**: the census computes that
-metric from a copy of the predicate I rewrote, and it reproduced the old set exactly.
-
-**Perf — PASS, controlled against pristine HEAD in the same session** (iters 99/104). Min-of-3, sequential:
-mine day **33.67** / night **38.05 ms**; pristine HEAD the same session day **33.89** / night **38.11 ms**.
-**−0.22 ms — free**, and plausibly real (a platform sometimes draws 0 riders where it always drew `cap`).
-The +1.5% the baseline file reports is today's machine load. Baseline (day 33.16 / night 37.33) **not** re-pinned.
-
-**Visual — PASS, 3/3 agents, on frozen-clock filmstrips.** `probe-station.mjs` staged approach → standing →
-departed → refilled by poking only `tr.p`, `tr.dw` and `c.mlast` at one instant, so every other pixel is
-identical by construction (iter 111's law). All three agents volunteered that the backgrounds were
-pixel-identical, all three confirmed the middle car lands under the canopy and the platform empties and
-refills, and all three read the whole-city frame as *"a balanced, beautiful coastal city… no clutter or
-darkening."*
-
-**Tooltip** (per the sync invariant): now reads `m.sta`, so a train says *"Line 1 of 3 — a 89-span loop with
-**8 stations**"* (was "15 stations"), a stubby loop says *"…with no station yet"*, and a standing train adds
-*"Standing at a platform."* The hovered-route pips now land only on real platforms. `__rail()` gained
-`stations`/`stops`/`standing` for probing.
-
-**Verdict: SHIPPED.**
-
-### Findings
-
-- **⚠ A NORMALIZED PARAMETER SILENTLY ENCODES PATH LENGTH.** `p += k·dt` over a variable-length path makes
-  ground speed proportional to length. It hid for 112 iterations because *one* line looks fine — the bug is
-  only visible when you compare two instances, which no screenshot of one city ever does. **The gondola has
-  it too, measured: 0.14–0.36 spans/s, and seed 42 runs two cable lines at 0.36 and 0.18. Open cue (h).**
-- **⚠ THE INTUITIVE EASING CURVE IS THE DIVERGENT ONE.** See above. Worth stating as a rule because the next
-  "slow down as it approaches X" vector (ferries docking, cable cars at terminals — cue (h)) will reach for
-  `d/B` again. Use `sqrt(d/B)`. Any floor you add to rescue a linear ramp is a confession that it diverges.
-- **⚠ A DEAD RULE (107) AND A RULE READ BY THREE DISAGREEING CALLERS ARE THE SAME DEFECT CLASS.** 107 audited
-  a rule that never fired. This one fired, but "what is a station?" had four independent implementations and
-  two of them were wrong. `grep` for a predicate's other readers before trusting the one in front of you. The
-  cheap tell: a derived quantity (`stops.size`) being used where a *filtered* one is meant.
-- **AN ELEVATED FEATURE PASSES THE VISIBILITY LAW TRIVIALLY.** Iter 111 had to hunt for a bus shelter that
-  wasn't behind a building (~30% were). All **19** stations here moved 1595–3590 px in the approach-vs-departed
-  diff. Things drawn at `RAILH=40` are above the rooftops. Unlike 111's 3 px queue, **a stopping train is
-  legible in the un-zoomed frame** — this lap bought something the whole-city gate can actually see.
-- **THE PROBE THAT KILLED THE FIRST DESIGN WAS 40 LINES AND RAN IN 90 SECONDS.** `probe-train.mjs` reported
-  ground speed, lap time, standing fraction, middle-car offset and train separation. Every one of those
-  numbers was needed: the offset proved the snap, the separation acquitted the missing signalling, and the
-  speed convicted the easing curve that both other gates had passed. **When a change is about MOTION, neither
-  a still frame nor a tile histogram is a gate.** Write the probe.
 
 ## Iteration 113 — the marsh answers its own tooltip (2026-07-10)
 
@@ -2233,3 +2144,82 @@ Their *perception* is the evidence; the exactness claim rests on the probe's 0.0
   its pair on a loop and they pass side-by-side at midspan; here they are also not quite antipodal (`p` 0.15/0.62,
   0.47 apart, not 0.50). Both are one-line changes and belong with cue (n), not before it — the crossing is a few
   pixels and no visual agent has ever remarked on it.
+
+## Iteration 122 — the institutions name themselves (2026-07-11)
+
+**Vector.** Civic & culture × **Interaction/UX**. Rotation named the domain: Civic was the stalest
+(114, and that lap *reverted*). The header named the content — its un-cashed-tell list ends with
+*"`CIVICLABEL` (every civic says only 'A public institution.' — 12 kinds, one sub)"* — and the tell
+itself is the loop's most reliable move (117's law: **look where a string already ASSERTS what the code
+knows**). Kind was forced: Deepen had paid four laps running (119–121) and its licence was spent, the
+header says *"do not open with a Polish"*, and Civic's Interaction/UX cell had one entry (52).
+
+**Change.** Hovering an institution, or the squares it earned, now reports what its own siting rule knew.
+- **`CIVICDESC`** — twelve sentences, one per kind, each written from that kind's *rule*: the hall
+  predates the streets, the school comes *"with every few thousand residents"* (`pop>3500*(schools+1)`),
+  the university *"with every fourteen thousand"*, the aquarium sits *"where the streets run out at the
+  sea"*, the observatory on *"the dark rim"*, the amphitheater *"beside the parks"*.
+- **`Civic quarter — N institutions`** on a major, counted with `siteQuarter`'s own `MAJORK`/`QFAR`.
+- **`Fronts a paved forecourt`** / **`Keeps its own grounds behind`**, and, on the squares themselves,
+  **`Forecourt of — Town hall`** / **`Grounds of — Museum`** — cashing `TILEDESC[T.QUAD]`, which has
+  always said *"Mown grounds behind an institution"* without ever naming which.
+- **`One of — 4 schools`** on the two kinds the city builds by demand.
+- **Fixed a lie the probe found on the way**: a paved square claimed **`Rooftop solar`**.
+
+**Census.** `VERDICT: PASS`, exit 0, pageerrors 0. `pop 154915 → 154911 (−4, −0.003%)`, `roads +0`,
+`developed +0`, **tile histogram empty**, `civicKinds +0`. Exactly right: no terrain write, no `rng()`
+draw. `git diff` has **zero** `ctx.`/`fillRect`/`hexTile`/`col(` lines — so per iter 109 the perf gate
+was not owed. The ±4 is iter 108's load jitter (`(year*23)|0` salt), not the feature.
+
+**Probe.** `probe-civic.mjs` (**`git add -f`'d**) hovers every civic/plaza/quad via `__find`'s screen
+coords, scrapes `#tip`, and checks each claim against cube distance recomputed in Node — a third
+implementation sharing no code with `countAround()` or `hexDist()`. **84 claims across 3 seeds: PASS.**
+`shot-civic.mjs` is `shot-woods.mjs` retargeted (hovershot aims at *entities*; civics are tiles).
+
+**Visual.** Two agents, two seeds, un-zoomed frames + five hover clips each: **VISUAL: PASS** both.
+*"All rows legible, right-aligned values line up, no clipping"*; *"no z-order tears… palette stays muted
+and harmonious"*; the whole city still *"reads as a balanced, beautiful coastal city."*
+
+**Verdict — SHIPPED.**
+
+### Findings
+
+- **⚠ ADJACENCY CANNOT ANSWER "WHOSE IS THIS?" — AND THE PROBE CAUGHT IT, NOT THE GATES (new; the
+  sharpest instance of iter 112's law yet).** The first build read ownership as *"a PLAZA/QUAD touching
+  me"*. But a quad laid behind the **town hall** also touches the **library** two hexes over, so it named
+  whichever neighbour came first in `nbrs6` order — wrong on **seeds 42 and 1234**, right on 7 — and both
+  institutions claimed the same lawn. Census was flat, the tooltip was fluent, and *both visual agents
+  would have passed it*: the text is only wrong if you know the geometry. **The placing rule is the only
+  code that ever knew the answer, so it now says so**: `n.own=idx(x,y)` stamped at conversion in both the
+  forecourt and grounds rules; `squareOwner()` reads it; `ownsSquare()` reads the same fact from the
+  institution's side, so the two can never disagree. **When a relation is many-to-one, record it at the
+  point where it is one-to-one — do not re-derive it from geometry later.**
+- **⚠ `hasQuad()` AND "DO I OWN A QUAD?" ARE DIFFERENT QUESTIONS, AND MUST KEEP DIFFERENT NAMES.** The
+  grounds rule's guard (`countAround(x,y,1,…QUAD)>0`) means *"is a quad already touching me"* — that is
+  what stops two clustered majors both getting one, and it is correct. The tooltip's question is *"is one
+  MINE"*. I nearly shared one helper between them, which is 112's law read backwards: **one predicate per
+  question, not one predicate per phrase.** They are now `hasQuad()` (tick) and `ownsSquare()` (tooltip).
+- **⚠ A PAVED SQUARE WAS CLAIMING `Rooftop solar` — AND `solarRoofs` STILL COUNTS IT (new, measured).**
+  The solar pass sets `c.solar` only on `RES/MID/COM`; the forecourt and grounds rules then pave that very
+  cell into `PLAZA`/`QUAD` **without clearing the flag**. Only `drawBuilding` paints panels and it runs
+  exactly when `DEV.has(c.t)`, so the square showed an array nobody drew. Seed 7's plaza printed it. The
+  `High street` row on the very next line **had always guarded** (`c.hstr&&DEV.has(c.t)`); the two roof
+  rows never did. Fixed on the tooltip side only. **Two live consequences remain, deliberately unfixed
+  here** (never retune a metric mid-lap, and never after reading its census):
+  (a) the census `solarRoofs`/`greenRoofs` tally is `if(c.solar)` over *all* tiles, so it **over-counts**
+  these roofless squares — a few per city;
+  (b) the diffusion itself reads `countAround(x,y,1,n=>n.solar)`, so a ghost-solar plaza **still nudges
+  its neighbours to adopt.** The clean fix is `c.solar=c.groof=false` at both conversion sites, which
+  moves a tracked metric and perturbs an adoption CA — **a lap of its own, in Urban.**
+- **⚠ "NOT DRAWN" AND "NOT READABLE" ARE NOT THE SAME OBSERVATION — iter 111's law, one level up, and it
+  bit the probe.** Pass 2 checked *"the institution claims grounds ⇔ some square names it"*. Squares that
+  could not be **hovered** — offscreen, or with a **pedestrian standing on them** (`QUAD` is in `PEDDEST`,
+  so a ped wins `pickEntity` over the tile) — silently registered as *"names nobody"*, and the probe
+  produced a **false FAIL** against a hall whose quad was on-screen, correctly owned, and simply occupied.
+  A probe must track what it **failed to read** (`unread`) and decline to assert, exactly as a visual gate
+  must not read an occluded entity as an absent one.
+- **`CIVICLABEL`'s tell is now cashed; the list left is `TILEDESC[T.KELP]` ("swaying in the shallows"),
+  `[T.IND]` ("warehouses and light industry"), `[T.VINEYARD]` ("terraced").** Note the tell is *self-
+  renewing*: cashing it here **created** a new one — `TILEDESC[T.PLAZA]` still says only *"A paved civic
+  square"* for a square that now knows its institution, and the plaza/quad `title` is still the generic
+  tile label. A future lap could title them *"Town hall forecourt"* outright.
