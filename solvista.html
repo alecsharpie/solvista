@@ -990,6 +990,23 @@ function trafficFlow(){
 }
 function roadNear(x,y){return countAround(x,y,1,c=>c.t===T.ROAD)>0}
 function greenNear(x,y,r){return countAround(x,y,r,c=>c.t===T.PARK||c.t===T.MEADOW||c.t===T.SHOREPARK||c.t===T.BEACH||c.t===T.DUNE)>0}
+/* the woods, defined once. The draw shades a canopy by canopyK, tick() matures
+   old growth on deepWoods, and the tooltip names both — one rule, three readers. */
+const isWood=c=>c.t===T.FOREST||c.t===T.REDWOOD;
+function canopyK(x,y){return countAround(x,y,1,isWood)}
+function deepWoods(x,y){return countAround(x,y,2,isWood)>=9
+  &&countAround(x,y,2,n=>n.t===T.ROAD||DEV.has(n.t))===0}
+/* the contiguous stand a woodland hex belongs to (flood fill over hex neighbours) */
+function standSize(x,y){
+  const start=idx(x,y); if(!isWood(cells[start]))return 0;
+  const seen=new Set([start]), stack=[[x,y]]; let n=0;
+  while(stack.length){
+    const[a,b]=stack.pop(); n++;
+    nbrs6(a,b,(p,q)=>{const m=cellAt(p,q); if(!m||!isWood(m))return;
+      const j=idx(p,q); if(seen.has(j))return; seen.add(j); stack.push([p,q]);});
+  }
+  return n;
+}
 /* which way a lot's public face should turn: +1 if the street it fronts lies east,
    -1 if west. Civics are sited by roadNear, so one usually does; a lot fronting
    roads evenly both ways (or none) falls back to the caller's per-city hash.
@@ -1269,8 +1286,7 @@ function tick(){
      (no rng); needs a thick forest all around and no development nearby. */
   for(let i=0;i<G*G;i++){
     const x=i%G,y=(i/G)|0,c=cells[i];
-    if(c.t===T.FOREST&&countAround(x,y,2,n=>n.t===T.FOREST||n.t===T.REDWOOD)>=9
-       &&countAround(x,y,2,n=>n.t===T.ROAD||DEV.has(n.t))===0
+    if(c.t===T.FOREST&&deepWoods(x,y)
        &&hashCell(x,y,seedNum^0x2ED0)<0.5){c.t=T.REDWOOD;c.age=0;}
   }
   /* riparian greenway: wild riverbanks (away from streets) grow gallery forest,
@@ -3019,7 +3035,7 @@ function drawCell(x,y){
       /* canopy closure: a hex ringed by woods closes its canopy — taller, denser,
          a shaded floor. A stand at the wood's edge stays open, keeps the light,
          and carries the scrub that only grows where the canopy never met. */
-      const k=countAround(x,y,1,n=>n.t===T.FOREST||n.t===T.REDWOOD), m=k/6, s=0.78+0.34*m, sh=1.04-0.10*m;
+      const k=canopyK(x,y), m=k/6, s=0.78+0.34*m, sh=1.04-0.10*m;
       hexTile(gx,gy,1.02,col('grassDk',(0.95+0.05*Math.sin(x*0.9+y*0.7))*(1.08-0.18*m)));
       if(k<=1){ /* sunlit edge: low scrub between the trunks */
         const[sx2,sy2]=px(gx+0.16,gy+0.24);
@@ -5606,7 +5622,8 @@ const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats 
   [T.IND]:'Warehouses and light industry.',[T.MEADOW]:'Wild grass and wildflowers.',
   [T.SHOREPARK]:'A palm-lined park by the water.',[T.PLAZA]:'A paved civic square.',
   [T.QUAD]:'Mown grounds behind an institution.',
-  [T.ROCK]:'A rocky outcrop.',[T.EMPTY]:'Undeveloped — click to plant a park.'};
+  [T.ROCK]:'A rocky outcrop.',[T.BURNT]:'Scorched ground after a wildfire. The scrub takes it back.',
+  [T.EMPTY]:'Undeveloped — click to plant a park.'};
 function describeTile(c,x,y){
   let title,sub,data=[];
   /* the pier is DRAWN over whatever tile it crosses (water, then beach), so it
@@ -5647,6 +5664,30 @@ function describeTile(c,x,y){
   if(c.t===T.ROAD)data.push(['Traffic',Math.round(c.flow)]);
   if(c.t===T.ROAD&&c.stop){const{q,bl}=stopQueue(c,x,y);   /* live, like Tide (iter 97) */
     data.push(['Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);}
+  /* the woods keep books the diorama never showed: how big a stand is, how far
+     its canopy has closed, whether it is sheltered enough to turn old-growth.
+     Every predicate here is the one the DRAW or tick() uses, so the tooltip can
+     never claim a closed canopy the renderer left open. */
+  if(isWood(c)){
+    const n=standSize(x,y);
+    data.push(['Stand',n+(n===1?' hex':' hexes')]);
+    if(c.t===T.FOREST){
+      const k=canopyK(x,y);
+      data.push(['Canopy',k>=4?'Closed':k<=1?'Open edge':'Thickening']);
+      /* age dates the CURRENT stand: logging, regrowth and maturation all reset
+         it, and genWorld starts every cell at 0 — so this is "undisturbed for",
+         never "regrown", which would be a lie about the woods that never turned over */
+      data.push(['Undisturbed','~'+Math.round(c.age*0.075)+' yr']);
+      /* fires early and thins out: the deep hexes mature away into redwood
+         (11 -> 6 -> 0 forest hexes across 1985/2005/2035, seed 42) */
+      if(deepWoods(x,y))data.push(['Deep woods — sheltered enough for old growth']);
+    } else data.push(['Old growth since',est]);
+    if(c.shroom>0)data.push(['Mushrooms up']);
+  }
+  if(c.t===T.MEADOW)data.push(['Wildflowers',
+    c.bloom>0?'In bloom':c.bloom<0?'Gone over':'Not in flower']);
+  if(c.t===T.BURNT)data.push(['Burnt','~'+Math.round(c.age*0.075)+' yr ago']);
+  if(c.fire>0)data.push(['Burning']);   /* live, and drawn: drawFire paints this cell */
   if(c.solar)data.push(['Rooftop solar']);
   if(c.groof)data.push(['Green roof']);
   if(c.hstr&&DEV.has(c.t))data.push(['High street']);

@@ -4627,3 +4627,91 @@ frame still reads balanced and bright with a clean coastline.
   rooted on `riv` water until `rootOK` required `BEACH` at the root's back. The pier's own `rivRow`
   check exists for the same reason. Sand at your back is the cheap test for "am I on the coast".
 
+## Iteration 107 — the market square was never built (2026-07-10)
+
+**Vector** — Civic & culture × **New CA rule**. Rotation named both axes: Civic was the stalest domain
+(last vector 100) and the recent kinds were New element / Polish / Deepen / Interaction / New element,
+so `New CA rule` was among the three coldest. This is a *rewrite* of an existing pass, not a fresh one
+— which is what the domain needed, because the pass it rewrites had never once fired.
+
+**The seam.** `T.MARKET` is a fully-built tile: cream paving, three striped stalls, string lights after
+dark, a `POPW` of 14, membership in `DEV`, `ATTRACT` and `PEDDEST`, and its own triple weight in
+`openCells` so crowds gather on it. `TILELABEL` names it, `TILEDESC` describes it. **The census has
+read `MARKET: 0` in every seed and era for the artifact's entire recorded life** (0–3 over the 9-cell
+matrix, i.e. ~0 per city; the stragglers come from the *other*, IND→market-hall rule). Nobody has ever
+seen this tile.
+
+Its siting rule (L1106) read `COM && countAround(...,1,COM)>=3 && greenNear`. **It is not mistuned; it
+is unreachable.** The upgrade pass 40 lines above takes any inland `COM` at **2** COM-or-TOWER
+neighbours, and by iter 98's saturation arithmetic (~60 samples/cell) that test fires with probability
+≈1. A shop is towered long before a third shop can gather beside it. The market's precondition was
+strictly *harder* than the tower's, on the same host, in a race it always lost. Measured on 6 seeds at
+2035 (`probe-market.mjs`): **COM 202–228/city, COM with ≥3 COM neighbours = 0. On every seed.**
+
+**Change.** ~10 lines. A market is not a shop — it is the open ground the shops grew around. Host is
+now `PARK` with `buzz>=2` (the iter-104 `ATTRACT` field: on standable ground it *is* the count of
+adjacent attractions, so `buzz>=2` reads "enclosed on two sides by things worth walking to" — no
+hand-rolled second field), plus `roadNear`, a spacing guard, and `hashCell` eligibility. The pass keeps
+its `ks(6)` `rc()` picks and adds **no `rng()` draw of its own**.
+
+**Census — PASS.** `MARKET` **0 → 12** across the matrix; every seed now grows **1–5** markets by 2035,
+none before 1992. `PARK` 1205→**1222** and `parks` +20 — the squares did not cost the city its greens.
+`pop` +3.1%, `towers` +18. **The pop number is not growth and I am not claiming it** — see below.
+
+**Visual — PASS, 2/2 agents.** Magnified clips (day, seed 42; night, seed 7) + un-zoomed whole-city
+frames. Both: the square reads as cream paving with striped stalls, sits flush on a hex face beside
+park and shopfronts, string lights render as discrete warm dots and not blown-out blobs, no z-order
+tears, and the whole frame still reads as a balanced coastal city. Correctly *subtle* at fit zoom.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A RULE CAN BE DEAD BECAUSE ANOTHER RULE'S PRECONDITION IS STRICTLY WEAKER ON THE SAME HOST.**
+  The market wanted `COM` with 3 COM neighbours; the tower rule takes `COM` at 2, and saturates. Every
+  cell that ever approached the market's condition had already been converted. **Before tuning a rule
+  that never fires, look for an earlier pass on the same host with a weaker test** — the rule is not
+  mistuned, it is unreachable, and no amount of probability tweaking will reach it. `probe-market.mjs`
+  (**`git add -f`'d**) is the general instrument: it counts survivors of *each successive conjunct* of
+  a rule's predicate, so the starving clause names itself. It took one run to find a dead rule that had
+  survived 106 iterations.
+- **⚠ THE NO-OP CONTROL — the terrain analogue of iter 97's stash control, and this iteration's most
+  reusable finding.** To learn what your rule's *terrain writes* did, run the rule with the write
+  removed (`c.t=T.MARKET;…` → `void 0`) and census that. Same predicate, same picks, **zero cells
+  changed**. It should read `+0` everywhere. It did **not**: `pop` −0.3%, `EMPTY` +30, and **`FIELD`
+  20→14** with nothing built. Cause: the old dead rule's trailing `rng()<0.3` *did* fire in the
+  1992–96 window, before the tower rule (`year>=1996`) began eating clustered shops — so **deleting a
+  dead rule's draw is itself a stream perturbation.** A rule that never changes terrain can still be
+  load-bearing on the stream. Without this control I would have shipped `FIELD −9` as a market-caused
+  regression and "fixed" it wrongly (I tried: see below).
+- **⚠ CHOOSE A CA RULE'S HOST TILE BY WHICH PASSES GATE `rng()` ON IT, NOT BY SCENERY.** `T.EMPTY` is
+  the host of ~8 other `rng()`-gated passes (farms, industry, forest succession, gardens, the civic lot
+  search); consuming an empty lot deletes every conditional draw those passes would have rolled there.
+  `T.PARK` gates none. Same rule, same ~2 markets/city, only the host differs:
+  **EMPTY → `pop` +4.6% on one salt and −5.8% on another** (the second is a `COLLAPSE` hard-fail);
+  **PARK → +4.2 / −0.8 / −2.4 across three salts, all passing.** Hosting on a stream-quiet tile halved
+  the chaos amplitude. This is a *design* lever nobody had named.
+- **⚠ A `hashCell` SALT IS A FREE PARAMETER THAT CAN SWING A CORE METRIC BY 10 POINTS. NEVER PICK IT
+  AFTER SEEING THE CENSUS.** Three salts, identical rule: `pop` +4.6% / −5.8% (EMPTY host). One ships,
+  one hard-fails, and *nothing about the city is different*. I shipped `0x4A17` because it is the
+  constant I typed **before running anything**, and I am reporting all three deltas rather than the
+  flattering one. The corollary for every future terrain vector: **the pop delta on a chaotic CA is a
+  property of the salt, not of the feature.** The growth signal is the tile histogram — here, a tile
+  that went from *nonexistent in the artifact's whole life* to 1–5 per city.
+- **The `hashCell` probability is a stream-free tuning lever.** Coverage was raised 0.5→0.72 (every seed
+  gets ≥1 market; seed 3 had 0 at 0.5) with **zero** effect on the `rng()` stream, because `hashCell`
+  makes no draw. Tune eligibility freely; never tune an `rng()<p` for the same purpose (iter 98).
+- **Two hypotheses, both measured, both WRONG — recorded so nobody re-tries them.** (i) *"Markets eat
+  the pocket parks that ball fields need"* — fields site on `EMPTY` with `PARK within 2` and do not
+  recognize `MARKET`, so this was plausible. I added a "take only a *corner* of a green" clause
+  (`>=1 PARK neighbour`). It **did not move `FIELD` at all** (still 11) and starved markets to zero on
+  three of eight seeds. Reverted. (ii) *"`FIELD`'s drop is salt-noise"* — it is not salt-noise either
+  (−9 / −6 / −9 across three salts, sign-stable). The no-op control settled it: `FIELD` is a tiny
+  metric (n=20 over nine cities) that moves with **any** stream shift, including one that changes no
+  terrain. **When two opposed theories both survive the aggregate, the aggregate is not the instrument
+  — build the control that holds one variable at exactly zero.**
+- **`c.buzz` reused exactly as iter 104 invited.** "Somewhere worth standing" was already computed,
+  already free of `rng()`, already recomputed each tick. A market square is the argmax of that field on
+  open ground. No new field, no new census metric (census-sprawl rule: `MARKET` was already tallied in
+  the tile histogram, and the vector adds no tile type and no entity array).
+
