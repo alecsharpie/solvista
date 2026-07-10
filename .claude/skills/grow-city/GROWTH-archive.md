@@ -7566,3 +7566,71 @@ Draw-render byte-identical, pop provably flat, the tell cashed a seventh time.
   keeping the growth rescale — which 128 re-derived and confirmed is *correct* (constant-fraction would hop a
   cabin ~1 span per span-append during live growth). Residual, accepted: a line still *actively* mid-growth
   (seed 1234's slow high-target line) legitimately stays telescoped — that is the rescale working, not a bug.
+
+## Iteration 130 — the sixth step-back finds a clean, quiet city (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/**130**). Not a domain × kind lap: it
+reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the perf
+gate, and — per 115/120/125 — does it at **night AND a season, with the day/night baselines pinned OFF
+January** (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector was taken, so
+rotation is unchanged; next lap (131) owes the stalest domain, Civic (122) / Water (123).
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42
+(warp 61) and seed 7 (warp 31), each at {day 2035.62, night 2035.62/t=0.90, winter 2035.02}. One subagent
+per seed read its own three frames and was asked the *cumulative* question ("has anything compounded into
+clutter or darkness?") plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night lighting (115) holds at both seeds, LOCATED off-centre.** Asked to point at the luminous core by
+  light alone, seed 42 landed at ~(.45,.45), seed 7 at ~(.48,.60) — the latter a discriminating off-centre
+  hit — both with a genuine core→edge falloff ("not a flat glitter mat"), rim fading to dark.
+- **The sea reads** (116's bottom + 123's founded wind farm): "grouped features on a clean graded
+  teal/navy," turbines parallel to the shelf, night water "dim but legibly lit, not a dead void."
+- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames.**
+- **Winter reads distinct from summer** at both seeds (browner farm/scrub, cooler sky), city balanced.
+
+**Season — measured alive, not believed.** `probes/probe-season.mjs` (per-tile rendered-pixel distance from
+winter, `ROAD` as the zero control): FARM winter→dry-peak **88.4**, →autumn **93.1**; VINEYARD/ORCHARD/
+FOREST/MEADOW/SHOREPARK all move; PARK/REDWOOD/GARDEN near-zero *by design* (irrigated/evergreen, per 120).
+ROAD control **0.5–2.1**. The calendar is working.
+
+**Perf — the gate cried the same false alarm as 125, and the interleaved control caught it again.** `perf.mjs`
+read day **34.0ms** (+2.4% vs baseline) / night **40.0ms** (+7.2%), the night rise looking like a regression.
+Interleaved HEAD-129 vs the iter-125 file (`c63e43b`, A/B/A/B, min per variant): day **34.17 vs 34.33**, night
+**40.17 vs 40.39** — HEAD is **−0.5% in BOTH**, so iters 126→129 (moon calendar, park picnics, cable-car
+re-spread, orchard tooltip) added **nothing measurable**. The +8% night vs baseline is **pure machine load**:
+the 4-day-old iter-125 file also reads ~40ms night today. **NOT re-pinned** (baking today's load in would
+blind the gate to a real future regression). Census PASS and vacuous by construction (no source edit).
+
+**Change (the step-back's product — none to the city).** The read found no compounding defect, so per 120/125
+("a clean step-back is a complete iteration — don't force a filler vector onto it") the output is the health
+record itself plus the header refreshes: step-back pointer → 135, perf note gains the 130 interleaved reading,
+rotation pointer notes 130 as the step-back. No `solvista.html` edit; tree verified clean after the perf
+interleave restored HEAD.
+
+**Verdict — FIXED.** No compounding city defect (the rarer, honest step-back outcome). The perf gate's
+stored-baseline false-FAIL — the one drift the step-back *did* re-surface — is confirmed benign by the
+interleaved control, exactly as 125 predicted; the guardrail stays honest.
+
+### Findings
+
+- **THE STORED-BASELINE PERF FALSE-FAIL IS NOW A RECURRING, PREDICTED EVENT — grade every step-back FAIL by
+  interleaving against an old commit's file (125's law, confirmed twice).** 125 saw night +16% vs baseline and
+  proved it ~+4% real; 130 saw night +7% and proved it −0.5% real. The stored baseline is pinned to one day's
+  load; a step-back days later conflates code drift with today's load. `git show <old>:solvista.html > /tmp/x`
+  and swap it in, A/B/A/B, min per variant — the delta is the only honest reading. Do not re-pin to an inflated
+  day, and do not re-chase a night number that an interleaved control collapses.
+- **A CLEAN STEP-BACK CONFIRMS THE ACCUMULATED VISUAL LAWS ARE STILL LOAD-BEARING, seven iters on.** 115's
+  night lighting, 116's sea bottom, 120's by-design evergreen/irrigated seasonal freeze, and 123's founded
+  wind farm all still read correctly at both seeds under all three lights — nothing has quietly eroded them.
+  The value of a no-change step-back is exactly this: proof that the earlier fixes have not been undone by
+  later additions.
+- **`cp` is `-i` here and `grep` is `ugrep` — a perf interleave loop that shells `cp`/`grep` will hang on the
+  overwrite prompt or choke on `->`/`>` in the timing line.** Use `/bin/cp -f` and `command grep -E '^  (day|
+  night) '`; don't `grep -v '>'` the timing line (it contains `>60fps-budget`). A small tooling snag that ate
+  two perf runs this iteration; noted so 135 doesn't re-lose them.
+
+
+<!-- header breadcrumbs trimmed to budget at iter 140 (content preserved here) -->
+- Cue (n) CLOSED (iter 128 — cable-car cabins re-spread on settle; full note archived iter 139).
+- PERF (iter 117, pristine-HEAD control, interleaved): day 35.11ms / night 39.45ms; the patched file read day 34.33 / night 39.22. Not re-pinned.

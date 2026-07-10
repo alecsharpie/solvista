@@ -8,7 +8,8 @@
  *   - "Fronts a paved forecourt"       vs a PLAZA on a direct neighbour
  *   - "Keeps its own grounds behind"   vs a QUAD on a direct neighbour
  *   - "One of N schools"               vs the count of that kind
- *   - "Forecourt of X" / "Grounds of X" vs the adjoining eligible institution
+ *   - title "<X> forecourt" / "<X> grounds" vs the adjoining eligible institution
+ *     (iter 140 moved the owner from a 'Forecourt of X' data row into the headline)
  *   - and: no civic still answers the old flat 'A public institution.'
  * A tooltip that claims a quarter, a square or a lawn the geometry disagrees
  * with is a lie — that is the whole point (iter 112: a predicate with three
@@ -86,25 +87,30 @@ const namedBy = new Map();          // "x,y" of square -> label it printed
    as "no square names this institution": iter 111's law, one level up — "not
    drawn" and "not readable" are not the same observation. */
 const unread = new Set();
-for (const [arr, name, re, set, tname] of
-     [[plaza, 'Plaza', /Forecourt of\s*\|?\s*(.+?)(\s*\||$)/, MAJORK, 'forecourt'],
-      [quad,  'Quad',  /Grounds of\s*\|?\s*(.+?)(\s*\||$)/,   GROUNDS, 'grounds']]) {
+for (const [arr, name, suffix, set, tname] of
+     [[plaza, 'Plaza', ' forecourt', MAJORK, 'forecourt'],
+      [quad,  'Quad',  ' grounds',   GROUNDS, 'grounds']]) {
   for (const s of arr) {
     if (!onScreen(s)) { skipped++; unread.add(s.x + ',' + s.y); continue; }
     const tip = await tipOf(s.sx, s.sy);
-    if (!tip || !tip.startsWith(name)) { skipped++; unread.add(s.x + ',' + s.y); continue; }
+    /* the headline is the first segment; a square reads either the generic label
+       (ownerless / owner rebuilt) or '<Institution> forecourt|grounds'. Anything
+       else means a ped/entity on the square won the hover pick — tells us nothing. */
+    const title = tip ? tip.split(' | ')[0].trim() : null;
+    const owned = title && title.endsWith(suffix);
+    if (!title || (title !== name && !owned)) { skipped++; unread.add(s.x + ',' + s.y); continue; }
     checked++;
-    const m = tip.match(re);
     const nbrs = all.filter(c => adj(s.x, s.y, c.x, c.y));
     const eligible = nbrs.filter(c => set.has(c.kind));
-    if (!m) {
+    if (!owned) {   // generic label — names nobody
       if (eligible.length) console.log(`    · ${name} (${s.x},${s.y}) names nobody `
-        + `(adjoins ${eligible.map(e => e.kind)}) — laid by the pre-2020 rule, or not by a civic rule`);
+        + `(adjoins ${eligible.map(e => e.kind)}) — laid by the pre-2020 rule, or owner rebuilt`);
       continue;
     }
-    namedBy.set(s.x + ',' + s.y, { label: m[1].trim(), tname });
-    const owner = eligible.find(c => LABEL[c.kind] === m[1].trim());
-    if (!owner) fail(`${name} (${s.x},${s.y}) names '${m[1].trim()}' — not an eligible neighbour `
+    const label = title.slice(0, -suffix.length).trim();
+    namedBy.set(s.x + ',' + s.y, { label, tname });
+    const owner = eligible.find(c => LABEL[c.kind] === label);
+    if (!owner) fail(`${name} (${s.x},${s.y}) headline names '${label}' — not an eligible neighbour `
                    + `(adjoins ${nbrs.map(c => c.kind).join(',') || 'nothing'})`);
     /* a paved square has no roof: only drawBuilding paints panels, and it never
        runs on PLAZA/QUAD. The flag survives the conversion; the tooltip must not. */

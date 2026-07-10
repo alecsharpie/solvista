@@ -6005,6 +6005,17 @@ function describeTile(c,x,y){
        :art?'A trunk route — traffic from half the district drains through here.'
        :(c.busy?'A busy street between built-up blocks.':'A quiet local street.');}
   else if(c.t===T.WATER&&c.riv){title='River';sub='Fresh water winding down to the sea.';}
+  /* a paved square knows the institution it was laid for (squareOwner reads the
+     c.own the placing rule stamped, not adjacency — 122's law), so it names it
+     outright in the headline rather than falling back to a generic 'Plaza' with
+     the owner buried in a data row. A square whose owner was rebuilt away keeps
+     the generic label. */
+  else if((c.t===T.PLAZA||c.t===T.QUAD)&&squareOwner(x,y)){
+    const inst=CIVICLABEL[squareOwner(x,y)].toLowerCase();
+    if(c.t===T.PLAZA){title=CIVICLABEL[squareOwner(x,y)]+' forecourt';
+      sub='The paved public square that fronts the '+inst+'.';}
+    else{title=CIVICLABEL[squareOwner(x,y)]+' grounds';
+      sub='Mown lawns kept behind the '+inst+'.';}}
   else{title=TILELABEL[c.t]||'Land';sub=TILEDESC[c.t]||'';}
   /* the CA already remembers when every parcel last changed: age ticks up
      once per tick (0.075yr), and siting/upgrades reset it — so age dates the
@@ -6032,11 +6043,8 @@ function describeTile(c,x,y){
     let n=0; for(const m of cells)if(m.t===T.CIVIC&&m.kind===c.kind)n++;
     if(n>1)data.push(['One of',n+' '+CIVICLABEL[c.kind].toLowerCase()+'s']);
   }
-  /* TILEDESC has always called a quad "grounds behind an institution" and a plaza
-     "a paved civic square" without ever naming which — the cells adjoin, so both
-     rules already knew. */
-  if(c.t===T.PLAZA||c.t===T.QUAD){const k=squareOwner(x,y);
-    if(k)data.push([c.t===T.PLAZA?'Forecourt of':'Grounds of',CIVICLABEL[k]]);}
+  /* the owning institution now leads the square's headline (see the title above),
+     so it no longer needs its own data row here. */
   if(c.t===T.ROAD)data.push(['Traffic',Math.round(c.flow)]);
   if(c.t===T.ROAD&&c.stop){const{q,bl}=stopQueue(c,x,y);   /* live, like Tide (iter 97) */
     data.push(['Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);}

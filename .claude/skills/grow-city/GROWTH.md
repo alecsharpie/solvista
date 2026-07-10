@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94 | **105** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, **122** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~ |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84, **137** | 71 |
 
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **135** · Urban **133** · People **137** · Nature **139** · Transport **138** · Civic **131** · Water **132**.
-  **Stalest is now Civic (131)**, then Water (132) — check the last entry of the stalest domain for a banked
+  Sky **135** · Urban **133** · People **137** · Nature **139** · Transport **138** · Civic **140** · Water **132**.
+  **Stalest is now Water (132)**, then Urban (133) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -91,7 +91,6 @@ ones (U2, 42, U5) stay in the bullet.
   found the banked cue's own description of the code was WRONG** (it said `hashCell`; the turbines were `rng()`),
   and the implementation the cue prescribed would have reshuffled the seeded stream. **A cue is a pointer, not a
   spec — re-grep the seam before designing to it.**
-  **Cue (n) CLOSED (iter 128 — cable-car cabins re-spread on settle; full note archived iter 139).**
   **120 broke rotation deliberately and
   logged why**: it was the mandated holistic step-back, the step-back found a real defect, and the skill's own
   rule ("if something compounded badly, spend the next iteration FIXING it") outranks rotation. A step-back
@@ -149,8 +148,8 @@ ones (U2, 42, U5) stay in the bullet.
   read `year`, so only it could be un-muted honestly — VINEYARD/GARDEN need a Deepen first (see 129).
   Un-cashed: `TILEDESC[T.KELP]` *"swaying in the shallows"*, `[T.IND]` *"warehouses and light industry"*,
   `[T.VINEYARD]` *"terraced"* (draw now reads `year` via `vinePhase()`, iter 139 — READY to un-cash a `Vines`
-  season row), and the plaza/quad **titles** (still the
-  generic tile label — they could read *"Town hall forecourt"* outright).
+  season row). The plaza/quad **titles** are now **CASHED (iter 140)** — an owned square's headline reads
+  *"Town hall forecourt"* / *"Museum grounds"* outright.
   **122 also warns what the tell CANNOT do alone:** its first build derived ownership from *adjacency*, named
   the wrong institution on 2 of 3 seeds, and **passed the census and would have passed both visual agents** —
   the prose is only wrong if you know the geometry. **A tooltip vector needs a probe that checks the claim
@@ -164,15 +163,17 @@ ones (U2, 42, U5) stay in the bullet.
   almost no pixels. **Sky-feedable list is now EMPTY (iter 139 cashed `VINEYARD`)** — every vegetation tile
   that can read `year` now does; a further Sky interconnect must come from a genuinely new derived field, not
   from un-freezing another tile.
-  Recent kinds: 123 Deepen · 124 Polish · 126 Deepen · 127 New element ·
+  Recent kinds: 126 Deepen · 127 New element ·
   128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
   **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** ·
   **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** ·
   **138 Connect (arterial spine lit as a night corridor via `c.flow`)** ·
-  **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** —
-  (**130/136 were the holistic step-backs — no domain × kind lap.**)
-  **Next domain lap owes Civic (131, now stalest), then Water (132); read its row for kinds.** Vary off
-  Deepen (139) and Polish (both hot). Civic's last was 131 (Polish/Connect, reverted, cue (d) CLOSED). The coldest kind is **Scale** (a structural lever, not a lap move);
+  **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
+  **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** —
+  (**130/136 were the holistic step-backs — no domain × kind lap.**) Interaction/UX is now hot (133/134/140).
+  **Next domain lap owes Water (132, now stalest), then Urban (133); read its row for kinds.** Vary off
+  Interaction/UX (140), Deepen (139) and Polish (all hot). Civic's last was 140 (Interaction/UX, plaza/quad headlines
+  name their institution — cue cashed); Water's was 132 (Polish, kelp canopy). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
   *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
@@ -205,9 +206,8 @@ ones (U2, 42, U5) stay in the bullet.
   +0.22ms). Also valid at iter **110**: a pristine-HEAD control read day **33.49ms** / night **37.72ms** (min-of-3),
   and iter 109's read day **33.33ms** / night **37.89ms**. Not re-pinned. The
   stale-baseline warning 104 raised is **resolved** — the old pin (2026-07-09, day 31.33ms) predated
-  iters 100–104 and reported ~+6% before your change existed. Do not re-chase it. Still valid at iter
-  **117** (pristine-HEAD control, interleaved: day **35.11ms** / night **39.45ms**; the patched file read
-  day **34.33** / night **39.22**). Not re-pinned.
+  iters 100–104 and reported ~+6% before your change existed. Do not re-chase it. (Still valid at iter 117; that
+  breadcrumb archived at 140.)
   **Iter 130+136 (step-backs): 126→135 cost ZERO — HEAD flat vs old commits, interleaved.** Both step-backs
   saw ~+7% night vs the stored baseline and both proved it machine load. 130: HEAD-129 vs iter-125 (`c63e43b`)
   **−0.5% both**. 136: `perf.mjs` read day 34.5 / night 40.17 (+4.0/+7.6% vs baseline); interleaved HEAD-135 vs
@@ -391,74 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 132 entries before Iteration 130 live in
+> **Archive:** the 133 entries before Iteration 131 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 130 — the sixth step-back finds a clean, quiet city (2026-07-11) [holistic step-back]
-
-**Vector.** The mandated holistic step-back (105/110/115/120/125/**130**). Not a domain × kind lap: it
-reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the perf
-gate, and — per 115/120/125 — does it at **night AND a season, with the day/night baselines pinned OFF
-January** (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector was taken, so
-rotation is unchanged; next lap (131) owes the stalest domain, Civic (122) / Water (123).
-
-**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42
-(warp 61) and seed 7 (warp 31), each at {day 2035.62, night 2035.62/t=0.90, winter 2035.02}. One subagent
-per seed read its own three frames and was asked the *cumulative* question ("has anything compounded into
-clutter or darkness?") plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
-
-**Result: the city is healthy — both agents VISUAL: PASS.**
-- **Night lighting (115) holds at both seeds, LOCATED off-centre.** Asked to point at the luminous core by
-  light alone, seed 42 landed at ~(.45,.45), seed 7 at ~(.48,.60) — the latter a discriminating off-centre
-  hit — both with a genuine core→edge falloff ("not a flat glitter mat"), rim fading to dark.
-- **The sea reads** (116's bottom + 123's founded wind farm): "grouped features on a clean graded
-  teal/navy," turbines parallel to the shelf, night water "dim but legibly lit, not a dead void."
-- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames.**
-- **Winter reads distinct from summer** at both seeds (browner farm/scrub, cooler sky), city balanced.
-
-**Season — measured alive, not believed.** `probes/probe-season.mjs` (per-tile rendered-pixel distance from
-winter, `ROAD` as the zero control): FARM winter→dry-peak **88.4**, →autumn **93.1**; VINEYARD/ORCHARD/
-FOREST/MEADOW/SHOREPARK all move; PARK/REDWOOD/GARDEN near-zero *by design* (irrigated/evergreen, per 120).
-ROAD control **0.5–2.1**. The calendar is working.
-
-**Perf — the gate cried the same false alarm as 125, and the interleaved control caught it again.** `perf.mjs`
-read day **34.0ms** (+2.4% vs baseline) / night **40.0ms** (+7.2%), the night rise looking like a regression.
-Interleaved HEAD-129 vs the iter-125 file (`c63e43b`, A/B/A/B, min per variant): day **34.17 vs 34.33**, night
-**40.17 vs 40.39** — HEAD is **−0.5% in BOTH**, so iters 126→129 (moon calendar, park picnics, cable-car
-re-spread, orchard tooltip) added **nothing measurable**. The +8% night vs baseline is **pure machine load**:
-the 4-day-old iter-125 file also reads ~40ms night today. **NOT re-pinned** (baking today's load in would
-blind the gate to a real future regression). Census PASS and vacuous by construction (no source edit).
-
-**Change (the step-back's product — none to the city).** The read found no compounding defect, so per 120/125
-("a clean step-back is a complete iteration — don't force a filler vector onto it") the output is the health
-record itself plus the header refreshes: step-back pointer → 135, perf note gains the 130 interleaved reading,
-rotation pointer notes 130 as the step-back. No `solvista.html` edit; tree verified clean after the perf
-interleave restored HEAD.
-
-**Verdict — FIXED.** No compounding city defect (the rarer, honest step-back outcome). The perf gate's
-stored-baseline false-FAIL — the one drift the step-back *did* re-surface — is confirmed benign by the
-interleaved control, exactly as 125 predicted; the guardrail stays honest.
-
-### Findings
-
-- **THE STORED-BASELINE PERF FALSE-FAIL IS NOW A RECURRING, PREDICTED EVENT — grade every step-back FAIL by
-  interleaving against an old commit's file (125's law, confirmed twice).** 125 saw night +16% vs baseline and
-  proved it ~+4% real; 130 saw night +7% and proved it −0.5% real. The stored baseline is pinned to one day's
-  load; a step-back days later conflates code drift with today's load. `git show <old>:solvista.html > /tmp/x`
-  and swap it in, A/B/A/B, min per variant — the delta is the only honest reading. Do not re-pin to an inflated
-  day, and do not re-chase a night number that an interleaved control collapses.
-- **A CLEAN STEP-BACK CONFIRMS THE ACCUMULATED VISUAL LAWS ARE STILL LOAD-BEARING, seven iters on.** 115's
-  night lighting, 116's sea bottom, 120's by-design evergreen/irrigated seasonal freeze, and 123's founded
-  wind farm all still read correctly at both seeds under all three lights — nothing has quietly eroded them.
-  The value of a no-change step-back is exactly this: proof that the earlier fixes have not been undone by
-  later additions.
-- **`cp` is `-i` here and `grep` is `ugrep` — a perf interleave loop that shells `cp`/`grep` will hang on the
-  overwrite prompt or choke on `->`/`>` in the timing line.** Use `/bin/cp -f` and `command grep -E '^  (day|
-  night) '`; don't `grep -v '>'` the timing line (it contains `>60fps-budget`). A small tooling snag that ate
-  two perf runs this iteration; noted so 135 doesn't re-lose them.
 
 ## Iteration 131 — the civic square is measured dead, and cue (d) closes (2026-07-11)
 
@@ -1029,3 +966,56 @@ Sky-feedable vegetation (108/113/120). Draw-only, stream-neutral, provably scope
   naming the season (Dormant / Bud break / Veraison / Harvest) from the shared `vinePhase()` — one predicate,
   already built. This retires the header's *"VINEYARD needs a Deepen first"* caveat (108/109/129): the Deepen
   is done.
+
+## Iteration 140 — the squares say whose they are (2026-07-11)
+
+**Vector.** Civic & culture × **Interaction/UX** (SHIPPED). Rotation named the domain — Civic was the single
+stalest (its last SHIP was 122; 131 was an explore that shipped nothing) — and the header banked the content
+over three laps: the plaza/quad tooltip **titles** still read the generic tile label ("Plaza"/"Quad") while a
+data row buried the owner as "Forecourt of — Town hall". Kind was forced off Deepen (139) and Polish (both hot,
+131/132/137); Civic's entities/ornaments are saturated (flags already fly on hall/library/parliament, banners on
+the museum — I grepped `windFlag` and confirmed it before proposing a New element), so 118's law forbids a New
+element, leaving Interaction/UX — and the tell ("a string generic where the code already knows the specific")
+is the loop's most reliable move (117/122/129).
+
+**The seam.** `describeTile` (L5981) set a paved square's title from the generic `TILELABEL` and only appended
+`['Forecourt of', CIVICLABEL[k]]` as a data row. `squareOwner(x,y)` (L1190) already answers whose square it is
+from `c.own` — the index the placing rule STAMPS (not adjacency, which 122 measured wrong on 2/3 seeds).
+
+**Change (~11 lines, tooltip text only).** Added a PLAZA/QUAD branch to the title/sub chain: when `squareOwner`
+resolves, the headline reads `<Institution> forecourt` / `<Institution> grounds` (e.g. "Museum forecourt",
+"University grounds") and the sub is prose ("The paved public square that fronts the museum." / "Mown lawns kept
+behind the university."). Removed the now-redundant "Forecourt of/Grounds of" data row. Squares whose owner was
+rebuilt away keep the generic "Plaza"/"Quad". No draw, tile, entity, rng()/hashCell, tick() pass or terrain;
+strings pure-ASCII (134).
+
+**Census.** PASS, exit 0. Draw-only tooltip text — tile histogram empty, all core metrics +0, stream-neutral by
+construction. Vacuous by design (the probe is the gate).
+
+**Probe.** `probes/probe-civic.mjs` — **updated** to the new headline contract, not forked (one predicate, one
+probe — 112's law applied to the gate itself; the claim moved from a data-row regex to a headline parse, so the
+probe's parse moved with it). It hovers every PLAZA/QUAD, reads the HEADLINE, and checks the named institution
+is an adjacent ELIGIBLE civic (MAJORK for forecourts, GROUNDS for quads) recomputed in Node from cube distance
+— a third implementation sharing no code with the page — then PASS 2 checks the institution agrees from its own
+side. seeds 7/42/1234: **PASS · PASS · PASS** (checked 30/25/29 tooltips, plaza 4/3/4 · quad 10/8/8, pageerrors
+0). Squares fire at scale (dead-code law) and every headline named the owner the geometry confirms.
+
+**Visual.** Hover clips at seeds 7/1234, agent read: **PASS**. Transcribed "Museum forecourt / The paved public
+square that fronts the museum.", "Hospital grounds / Mown lawns kept behind the hospital.", "University forecourt
+/ …the university." — all the new format, none generic; text legible, no overlap/clipping/blowout.
+
+**Verdict — SHIPPED.** A paved civic square's tooltip now leads with the institution it belongs to instead of a
+generic "Plaza" with the owner buried below — the headline (the most-read line) is now the specific fact. Closes
+the plaza/quad-title tell banked by 122/129. Civic's Interaction/UX cell gains its third (52, 122, 140).
+
+### Findings for later laps
+- **THE PLAZA/QUAD-TITLE TELL IS CASHED — do not re-open it.** `TILEDESC[T.PLAZA]`/`[T.QUAD]` and the generic
+  `TILELABEL` are now bypassed for OWNED squares; only ownerless/rebuilt squares fall through to them. The
+  headline names the owner and there is no longer a "Forecourt of" data row.
+- **A TOOLTIP HEADLINE IS A STRONGER SEAM THAN A DATA ROW — the fact the eye reads first should be the specific
+  one.** The owner was already correct in a buried row since 122; promoting it to the title added no new truth,
+  only legibility. When a tooltip already KNOWS the specific but leads with the generic, promoting it to the
+  headline is a clean Interaction/UX lap with zero draw risk.
+- **UPDATE THE PROBE, DON'T FORK IT.** probe-civic already owned the plaza/quad claim, so the change moved the
+  claim's *reader* (data-row regex → headline parse) rather than adding a second reader. A new probe would have
+  been two readers of one claim — the exact anti-pattern 112 warns about, applied to the harness.
