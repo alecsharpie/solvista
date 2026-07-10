@@ -1562,7 +1562,7 @@ function tick(){
   if(year>=2010)for(let i=0;i<G*G;i++){
     const x=i%G,y=(i/G)|0,c=cells[i];
     if(!c.solar&&(c.t===T.RES||c.t===T.MID||c.t===T.COM)){
-      const adopt=countAround(x,y,1,n=>n.solar);
+      const adopt=countAround(x,y,1,n=>n.solar&&DEV.has(n.t));
       const p=Math.min(0.05,0.0004+0.009*adopt);
       if(hashCell(x,y,(seedNum^0x501A^((year*23)|0))>>>0)<p)c.solar=true;
     }
@@ -1572,7 +1572,7 @@ function tick(){
   if(year>=2015)for(let i=0;i<G*G;i++){
     const x=i%G,y=(i/G)|0,c=cells[i];
     if(!c.groof&&!c.solar&&(c.t===T.MID||c.t===T.COM)){
-      const adopt=countAround(x,y,1,n=>n.groof);
+      const adopt=countAround(x,y,1,n=>n.groof&&DEV.has(n.t));
       const p=Math.min(0.05,0.0004+0.01*adopt);
       if(hashCell(x,y,(seedNum^0x6807^((year*31)|0))>>>0)<p)c.groof=true;
     }
@@ -2061,7 +2061,7 @@ function recount(){
     if(c.t===T.TOWER)towers++;
     if(c.t===T.CIVIC){civic++; if(c.kind==='school')schools++;}
     if(c.t===T.STADIUM)stad++;
-    if(c.solar)solar++;
+    if(c.solar&&DEV.has(c.t))solar++;
     if(DEV.has(c.t)){dev++; if(c.h>tallH)tallH=c.h;}
     if(HOME.has(c.t)){
       homePop+=w;
@@ -6159,8 +6159,8 @@ window.__census=()=>{
     if(c.t===T.ROAD){roads++; if(c.bridge)bridges++; if(c.flow>=ARTFLOW)arterials++;}
     if(c.t===T.CIVIC)civic[c.kind||'?']=(civic[c.kind||'?']||0)+1;
     if(DEV.has(c.t))dev++;
-    if(c.solar)solarRoofs++;
-    if(c.groof)greenRoofs++;
+    if(c.solar&&DEV.has(c.t))solarRoofs++;
+    if(c.groof&&DEV.has(c.t))greenRoofs++;
     if(c.t===T.TOWER){towerHt+=c.h; if(c.h>80)tallTowers++; if(c.h>90)helipads++;}
     if(c.treed)boulevardTrees++;
     if(c.t===T.ROAD&&c.busy)avenues++;
