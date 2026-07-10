@@ -224,6 +224,11 @@ const SHOREX=CTRX+11; /* the coast highway column */
    centre, and not the land-value field, whose peaks sit on parks and water — is
    where downtown actually is. CORER is how far out the core's pull reaches. */
 let CBDX=CTRX, CBDY=CTRY; const CORER=16;
+/* How far downtown's glow carries at night. NOT CORER: that is a tower-siting
+   radius, and over half of a city's buildings stand beyond hex 22 from the CBD, so
+   reusing 16 would pin the whole outer city at one dim value and merely move the
+   flatness outward. 34 spans the populated range (probe-nightcore.mjs). */
+const LITR=34;
 const SHORE0=SHOREX+5; /* nominal water's edge, five lots seaward of the highway */
 
 /* the plate mask. HEXOK gates inB(), so world generation, growth, picking and
@@ -569,6 +574,22 @@ function genWorld(seed){
   for(let tries=0;tries<24&&(Math.abs(fy-ry0)<5||Math.abs(fy-CTRY)>14);tries++)fy=YC[(rng()*YC.length)|0];
   const mainX=SHOREX-14+(rng()*11|0);
   CBDX=mainX; CBDY=fy;                          /* downtown is wherever the founding was */
+  /* Now downtown is known, give the night a centre. `c.lit` (drawBuilding's only
+     window-light term) was seeded white noise, so every city lit uniformly from
+     rim to core: measured corr(lit, dist-from-CBD) = +0.008/-0.013/+0.056 over
+     three seeds, and mean lit ~0.50 in EVERY distance ring. The frame read as one
+     flat glittering mat with no downtown.
+     Keep the per-building draw as the variance — a dark tower downtown and a
+     blazing house on the rim are what stop this reading as a radial vignette —
+     and move only its MEAN along a smoothstep falloff. Driven by POSITION alone,
+     never by height or type: a building must not wear its height twice (iters
+     103, 110). The existing hashCell already mixes `seed`, so no new salt, no new
+     draw, and nothing here touches `rng()` or terrain — this is draw-only, and
+     LITAMT is 0 by day, so it is night-only too. */
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const c=cells[idx(x,y)], u=clamp(1-hexDist(x,y,CBDX,CBDY)/LITR,0,1);
+    c.lit=clamp(0.18+0.70*(u*u*(3-2*u))+(c.lit-0.5)*0.5,0,1);
+  }
   const act=(x,y)=>{const c=cellAt(x,y);
     if(!c||c.t===T.FOREST||c.t===T.ROCK)return;
     if(c.t===T.WATER){if(c.corr){c.t=T.ROAD;c.bridge=true;c.corr=false;}return}

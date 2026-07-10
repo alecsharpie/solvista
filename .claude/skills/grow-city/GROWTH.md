@@ -28,7 +28,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110** | |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112** | 5, 15 | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52 |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89 | |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95 | | | 61, 81, 89, **115** | |
 | **People & activity** | 41, 56 | 49 | 34, 64, 93, **104** | 78, **111** | | 84 | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -45,15 +45,20 @@ ones (U2, 42, U5) stay in the bullet.
   so any stamped entity is ringable for free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
-- **ROTATION.** Last vector per domain: Sky **95** · Water **106** ·
-  Nature **108** · Urban **110** · People **111** · Transport **112** · Water **113** · Civic **114**. Stalest is still
-  **Sky (95)**, but it is **additively saturated** (surveyed iter 103) and its **empty `New CA rule`
-  cell is a trap, not an invitation** — sky is not cellular; the one grid-shaped sky idea, fog on
-  terrain, is already `rSea`/`fogAt`. Read 103's survey before spending a lap there. **Nature (108)**
-  is now the next-stalest safe pick, then Urban (110). Civic's banked **cue (d)** was attempted at
+- **ROTATION.** Last vector per domain: Water **106** ·
+  Nature **108** · Urban **110** · People **111** · Transport **112** · Water **113** · Civic **114** · Sky **115**.
+  **Sky's twenty-lap staleness is now spent** — 115 took it *without* adding anything, which is the
+  documented way past its additive saturation (surveyed iter 103; its empty `New CA rule` cell remains a
+  **trap, not an invitation** — sky is not cellular, and fog on terrain is already `rSea`/`fogAt`).
+  Stalest is now **Water (106/113)** — and it has the strongest cue in the ledger waiting for it, new
+  **cue (k)**, raised by two independent agents at 115's step-back. Then **Nature (108)**, then Urban (110).
+  Civic's banked **cue (d)** was attempted at
   114 and **reverted**: its goal is proven (a 3-hex square reads at fit zoom) but its prescribed
   host does not exist — see the rewritten cue below before re-opening it.
-  **Iteration 115 is a holistic step-back** (105, 110, …). Iter 111 was People × Connect and used
+  **Iteration 120 is the next holistic step-back** (105, 110, 115, …), and per 115's finding it must be
+  shot **at night as well as by day**: 115's night frame failed on a defect present in every city ever
+  generated, which ~114 daytime whole-city reads, the census and the perf gate had all missed.
+  Iter 111 was People × Connect and used
   109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
   Transport** (trains ↔ their own stations) and iter 113 cashed it a third time in **Water** (the
   marsh ↔ the tide its own tooltip printed). **That shape has now paid in four domains — assume it is
@@ -65,8 +70,10 @@ ones (U2, 42, U5) stay in the bullet.
   require a sky feature. **113 did this again** (the marsh reeds now read `year`), leaving 109's
   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads.
   Recent kinds: 107 New CA rule ·
-  108 Deepen · 109 Connect · 110 Polish · 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) —
-  **Deepen has paid 3 of the last 7; stop reaching for it.** The coldest kind is **Scale** (a structural lever, not a lap
+  108 Deepen · 109 Connect · 110 Polish · 111 Connect · 112 Deepen · 113 Deepen · 114 Polish (reverted) ·
+  115 Polish —
+  **Deepen has paid 3 of the last 8; stop reaching for it.** **Polish has now paid 3 of the last 6, so it is
+  no longer cold either.** The coldest kind is **Scale** (a structural lever, not a lap
   move), then **New element** and **Interaction/UX**. **Connect paid three times** (109, 111, 112 — 112 logged as
   Deepen, see its entry): its trick was that
   it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
@@ -679,6 +686,22 @@ ones (U2, 42, U5) stay in the bullet.
   not four (`PLAZA 14→10` across the matrix). That is defensible urbanism and was accepted, but
   it is the one place the vector *cost* something. See open cue (d).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
+  **(k) the open water is the least-resolved third of the frame** *(Water & coast — banked iter 115; the
+  STRONGEST cue here, and Water is the stalest domain)*. **Both** day agents at 115's step-back named the sea
+  unprompted and independently: *"a large flat teal wedge — no wave detail, reefs, wake trails, or depth
+  gradient… it carries a disproportionate share of canvas for how little it resolves"* / *"the entire right
+  third is flat teal… compared to the hyper-dense land it reads as dead space."* Two independent agents
+  converging with no prompt is the strongest cue signal in this ledger. **Both also called the offshore
+  turbines and boats "randomly salted rather than sited"** — so the answer is almost certainly *depth,
+  texture or tone in the water field itself*, **not another floating object**. Note iter 106 passed on Water
+  × Connect/CA/Scale for reasons recorded in its entry; this is Water × **Polish**, which is untouched by
+  that reasoning.
+  **(j) the night windows verge on stripe-noise** *(Urban fabric, or a `polish-tile` job — banked iter 115)*.
+  115's night agent, second complaint: across the dense core the yellow window rows are *"extremely dense and
+  repetitive — they buzz as horizontal-stripe noise rather than individual lit windows, especially on the mid
+  towers."* Distinct from 115's vector (this is per-window density inside `drawBuilding`'s band draw, not the
+  light field), and **115 made it marginally worse downtown** while relieving it at the rim. Grade it with
+  `probe-litdiff.mjs`'s same-instant A/B.
   **(e½) the interior is an edge-to-edge carpet — now DENSITY-ONLY** *(cue (e)'s skyline half was
   **CLOSED by iter 98**; its **palette** half was **CLOSED by iter 99**)* Urban fabric — iter 94's
   holistic agent called the landmass "too uniform… little breathing room between core and edge,"
@@ -1116,94 +1139,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 107 entries before Iteration 105 live in
+> **Archive:** the 108 entries before Iteration 106 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 105 — the lines name themselves (2026-07-10) [holistic step-back]
-
-**Vector** — Transport × **Interaction/UX**. Rotation pointed at both axes at once: Transport was the
-stalest domain (last vector 94) and its `Interaction/UX` cell was **empty**, while 104 warned off
-Deepen and 103 off Polish. The cell was empty for a reason worth recording — see the seam.
-
-**The seam.** `ENTINFO` — the hover surface — carried streetcars, trucks, cyclists, ferries, whales,
-dogs. It did **not** carry the **monorail trains** or the **cable-car cabins**. Nor did `TILELABEL`
-carry the guideway or the cable. So the city's two flagship transit systems, the ones U4 went to the
-trouble of making *plural*, were the only moving things in Solvista that **could not be named by
-pointing at them.** And nothing anywhere could answer the question those systems actually raise: a
-183-span loop leaves the frame — *where does it go?* Extent is the one property of a transit line you
-cannot read off any single hex.
-
-**Change.** Draw-only, ~45 lines, three edits.
-- **Two `ENTINFO` rows**, with flattening getters (`monos.flatMap(m=>m.closed?m.trains:[])`,
-  gondolas likewise gated on `path.length>1`, so a line that hasn't broken ground yields no cabins).
-- **`sub` may now be a function.** `consider()` resolves `typeof sub==='function'?sub(e):sub`, so a car
-  describes **the line it belongs to** rather than its species: *"Line 3 of 3 — a 183-span loop with 30
-  stations."* / *"An aerial line — 9 spans over the low-rise strip."* Counts are read live off
-  `m.path`/`m.stops`, never stored. A `plur()` helper handles the stubby lines that really occur.
-- **The route trace.** Hovering a train or cabin strokes its whole line, drawn last (beside the
-  copters, the existing "over the scene" precedent): monorail along the beam deck and closed onto its
-  tail; cable **sub-sampled 4× per span through `gondSag`** so the trace lies on the rope's catenary
-  rather than its chord. Station pips at `m.stops`; terminal pips at the cable's two ends. `stamp()` on
-  the **middle** car — so the pick point is the train's center, not its nose — buys the focus ring free.
-
-**Census — PASS, and stream-neutral by iter 103's partition.** **Every metric +0**, including `pop`
-(150,206 → 150,206), and the **tile histogram is empty**. 0 page errors. The vector draws no `rng()`,
-touches no terrain, adds no entity array — so `__census()` needed no new tally, per the
-census-sprawl rule. Nothing to add, nothing added.
-
-**Visual — PASS, 3/3 agents.** Full-frame **hover-vs-control pairs** at seeds 7 and 42, both systems.
-Two agents (one per seed) independently confirmed: no trace in the control, trace on hover, routes
-locked to the hex axes, pips on the line, no z-order tears, and — the step-back's cumulative question
-— the city still reads balanced and bright, coast and downtown clean. **Both then volunteered the same
-complaint unprompted:** the trace "reads as a dark line with a faint pale seam." Fixed by iter 101's
-law and re-verified by a third agent (below).
-
-**Perf — PASS, and the baseline is re-pinned.** 3 sequential passes, day 33.28/33.22/33.39ms. Against
-iter 104's pristine-HEAD control (min 33.00ms) this vector costs **+0.22ms (+0.7%)** — and costs
-*nothing* headless, since `hoverEnt` is null with no cursor and the trace block never runs. The gate's
-+6% was the stale 2026-07-09 baseline the header flagged. **This step-back re-pinned it**
-(`perf.mjs --save-baseline` → day **33.16ms**, night **37.33ms**), closing that warning.
-
-**Verdict: SHIPPED.**
-
-### Findings
-
-- **⚠ A "LINEAR FEATURE" POLISH LAW JUST GOT ITS SECOND CONFIRMATION — and two agents found it before
-  I did.** The trace shipped as a 2.8px ink halo (α.40) under a 1.2px cream core. Both visual agents,
-  independently, reported the line read *dark*. That is exactly iter 101: **for a linear feature,
-  legibility ≈ contrast × WIDTH** — the halo was 2.3× the width of the thing it was backing, so the
-  halo *was* the line. Fixed by inverting the ratio's intent, not the colors: halo to 3.4px @ α**.34**
-  (softer, wider) and the **core to 1.9px @ α.74–.92**. A third agent confirmed C-vs-A now reads as
-  "a pale cream ribbon with a dark backing" and that nothing was smothered. **When two independent
-  reviewers volunteer the same unrequested complaint, that is data, not taste** — spend the extra
-  agent.
-- **A MOVING ENTITY CANNOT BE HOVER-TESTED FROM STALE COORDS.** The first probe hovered a *Street* on
-  both seeds and looked like a total feature failure. Two causes, both in the probe: (1) `__ents`
-  returns **screen** coords (`e._sx*scale+offX`) — `e._sx` alone is **world**, and I'd used it; (2)
-  trains and cabins *move*, so coords sampled before the control screenshot are ~1s stale by the time
-  the cursor arrives. The fix is the general one for any hover test on a moving target: **re-sample,
-  move, then VERIFY the tooltip title equals the entity name, and retry on fresh coords** (8 tries).
-  Do not screenshot a hover you have not confirmed landed — a missed hover and a broken feature
-  produce the identical frame.
-- **`sub`-as-a-function is the reusable half of this vector.** Any future entity whose interest is its
-  *membership* (a ferry's route, a truck's depot, a bus's line) can now describe itself from live
-  state with no new mechanism — one `typeof` check in `consider()` bought it. Static strings still work
-  unchanged; nothing else in `ENTINFO` moved.
-- **The empty grid cell was empty because the tooltip is `ENTINFO`-shaped.** Transport's Interaction/UX
-  cell stayed cold for 100 iterations not because transit was uninteresting but because the two systems
-  worth interrogating were **not entities in any array the hover surface walked** — they are nested
-  inside `monos[].trains` / `gonds[].cabins`. **A cold rotation cell can mark a structural gap, not a
-  lack of ideas.** Worth checking, next time a cell resists.
-- **`probe-lineshot.mjs` is `git add -f`'d** (per iter 101: `probe-*.mjs` is gitignored, so ledgers that
-  say "reuse the probe" cite tools the repo doesn't carry). It shoots full-frame hover/control pairs
-  with the verify-retry loop above; `--longest` picks a car on the line with the most spans, because
-  a stubby 2-span loop proves nothing about a trace.
-- **Stubby lines are real.** Seed 7's three loops are 89, **2**, and 183 spans; a 2-span "loop" would
-  have rendered *"1 stations"*. `plur()` exists for that. A closed monorail loop is **not** guaranteed
-  to reach `minLen` — `homing` closes it early — so never assume a generated line is large.
 
 ## Iteration 106 — the harbor gets its arm (2026-07-10)
 
@@ -2081,3 +2021,122 @@ tile histogram empty.
   ledger cites does not exist). The probe reports plaza patch sizes, per-major forecourt status and the
   head's neighbour composition; the shooter finds the **largest patch** by flood fill and wheels the
   artifact's own camera onto its centroid — reuse it for any *"does this multi-hex patch read?"* claim.
+
+## Iteration 115 — the city keeps its lights on downtown (2026-07-10) [holistic step-back]
+
+**Vector** — Sky & atmosphere × **Polish**. Rotation named the domain: Sky was the stalest (95) and had
+been stalest for twenty laps, parked because it is *additively* saturated. This lap is the way past that —
+it adds nothing. Kind is Polish (make what exists read better), not Deepen: Deepen had paid 3 of the
+last 7 laps. The content was chosen by the step-back's own agents, not by me.
+
+**The step-back found it.** Three un-zoomed whole-city agents (seeds 42/7 day, seed 42 night). Both day
+frames PASS. **The night frame FAILED**: *"lighting has no hierarchy — uniform window-light density
+everywhere makes the city read as one flat glittering mat instead of a skyline with a luminous core
+fading to dark residential edges."* Independently, the seed-7 **day** agent reached the same place from
+the other side: *"87 towers sprinkled almost evenly across the whole landmass with no skyline logic…
+the skyline has no focal massing."* Two agents, two frames, one claim: **the city has no centre.**
+
+**But that is a "which is more X" claim, and iter 108's law says agents invert those.** So it was measured
+before a line was written (`probe-nightcore.mjs`, `git add -f`'d).
+
+**The cause was in the source, not the pixels.** `drawBuilding`'s only window-light term is
+`lit=LITAMT*(0.35+0.65*c.lit)`, and `c.lit` had **exactly one writer** — `genWorld`'s
+`lit:hashCell(y,x,seed)`. Per-cell white noise. The night light field was, by construction, independent
+of downtown, density, value and height:
+
+| | seed 7 | seed 42 | seed 1234 |
+| --- | --- | --- | --- |
+| `corr(c.lit, dist-from-CBD)` **before** | **+0.008** | **−0.013** | **+0.056** |
+| mean `c.lit`, rings 0-4 → 22-40 | 0.42 → 0.52 | 0.62 → 0.51 | 0.46 → 0.50 |
+| `corr(c.lit, dist)` **after** | **−0.806** | **−0.827** | **−0.776** |
+| mean `c.lit`, rings 0-4 → 22-40 | **0.81 → 0.27** | **0.90 → 0.26** | **0.83 → 0.25** |
+| `corr(c.lit, th)` before → after | −0.008 → **0.088** | 0.015 → **0.068** | −0.071 → **0.052** |
+
+**Change.** Once the founding fixes `CBDX,CBDY`, one pass over the grid moves the **mean** of `c.lit`
+along a smoothstep falloff and keeps the existing seeded draw as the **variance**:
+`c.lit = clamp(0.18 + 0.70·smoothstep(1−d/LITR) + (c.lit−0.5)·0.5, 0, 1)`.
+Driven by **position alone** — never height or type, so a building still does not wear its height twice
+(iters 103/110); the guard is `corr(lit, th)`, which stayed at 0.05–0.09, far below the 0.35 decoupling
+line. New constant `LITR=34`, deliberately **not** `CORER=16`: over half of every city's buildings stand
+beyond hex 22 from the CBD, so reusing the tower-siting radius would have pinned the whole outer city at
+one dim value and merely moved the flatness outward. No new `hashCell`, no new salt, no `rng()` draw.
+
+**Census** — `pop`, `roads`, `developed`, `towers`, `parks` all **+0**; tile histogram **empty**;
+`greenRoofs −1` is iter 108's documented load jitter (salted on `(year*31)|0`), not this vector. Exactly
+the draw-only signature. VERDICT: PASS.
+
+**Visual** — 3 agents, all PASS. Rather than ask "is the core brighter?" (the question 108 says they
+invert), each night agent was asked to **locate downtown by light alone** and the answer checked against
+ground truth. Blind, both hit it within ~2% of the frame:
+
+| | agent's centre | true CBD | error |
+| --- | --- | --- | --- |
+| seed 42 | (0.47, 0.50) | (0.49, 0.51) | ~33 px |
+| seed 7 | (0.50, 0.62) | (0.48, 0.63) | ~33 px |
+
+Seed 7's core is **not** at frame centre (y=0.63), so that is a discriminating hit, not "guess the middle".
+Both confirmed the rim still reads as buildings (no black void) and that light still varies
+building-to-building — *"dark unlit blocks sit right beside brightly lit towers even in the core"* — so it
+reads as a city, not a painted vignette. The day agent confirmed **no** lighting effect at midday.
+
+**Perf** (step-back gate, min-of-3, sequential): day **33.83ms** · night **38.55ms** vs baseline
+33.16/37.33. Day is *identical* to the pristine control taken at the head of this same session (33.83ms).
+The bake is one-time in `genWorld`; `drawBuilding` is untouched, so per-frame work is unchanged. Readings
+rose monotonically across the three passes (33.83→34.44→34.89) — load, not code (iters 99/104). Not re-pinned.
+
+**Verdict — SHIPPED.** The stalest domain in the city was fixed by *removing* a defect, not adding a feature.
+
+### Findings
+
+- **⚠ TWO PAGE LOADS ARE NOT THE SAME INSTANT — the same-frame law has a second half (new; extends 109).**
+  109 said: freeze the sim, toggle only your feature, and every other pixel is identical *by construction*.
+  What it did not say is **where** the two frames must live. The first cut of `probe-litdiff.mjs` diffed a
+  pristine build against the patched one across two `page.goto`s and reported **5.6% of DAY pixels changed**
+  — including at `t=0.44`, where `LITAMT` is *exactly 0* and the feature provably cannot draw. The probe was
+  lying: `frame()` runs on rAF from the moment of load, so between `goto` and `evaluate` a variable number of
+  frames tick the sim, drift the clouds (`syncSky` takes `performance.now()`) and step every vehicle. **The
+  tell was self-contradiction: re-running the identical comparison gave 89408 px, then 89633 px.** A
+  deterministic diff that changes between runs is measuring the harness. Fixed by doing the A/B **inside one
+  page**: render, mutate the field in place, render again, restore. Day went to **0 px changed, exactly**,
+  and night to 6.6% (dusk 4.9%). *If a probe of a frozen scene is not bit-exact, do not reach for a
+  tolerance — find what is still moving.*
+- **⚠ A SINGLE-READER, SINGLE-WRITER DRAW FIELD IS THE SAFEST THING IN THIS ARTIFACT TO CHANGE (new).**
+  `grep -n '\.lit'` returned three lines total: the write, the read, and an unrelated `dl.lit`. That
+  three-line grep is what licensed the whole vector — a field no CA pass reads cannot perturb the seeded
+  stream, so `pop` was *guaranteed* flat before the census ran, and it was. The mirror of 107's dead-rule
+  law: **107 says grep a rule's writers before trusting it; this says grep a field's readers before fearing
+  it.** Combined with `LITAMT=0` at midday, the change was provably day-invariant *and* census-invariant
+  before a single gate was run. Look for the other one-reader draw fields (`c.v`, `c.dist`) when a Polish
+  lap needs a guaranteed-clean ship.
+- **⚠ ASK AN AGENT TO *LOCATE*, NOT TO *COMPARE* — and check it against ground truth (new; the practical
+  answer to 108's law).** 108 established agents are reliable for "is it broken" and unreliable for "which
+  is more X", and left the loop with no way to visually grade a *magnitude*. There is one: convert the
+  comparison into a **localization**, then verify it numerically. "Is the core brighter?" is unanswerable
+  and invites flattery; "point at the brightest concentration, in fractional coords, or say NO CENTRE" is
+  gradeable against `ctr(CBDX,CBDY)·scale+off`. Two agents landed within 33 px of a CBD they were never
+  told. **Give the agent an escape hatch** ("NO CENTRE is a completely acceptable answer") or the hit means
+  nothing — an agent that must name a point will always name one. This generalizes to any vector with a
+  known location: a square, a lung, a depot, a line.
+- **THE NIGHT WAS THE ONLY FRAME THAT KNEW.** Two day agents passed the same city the night agent failed,
+  and the census, the tile histogram and the perf gate were all blind to a defect present in every city
+  ever generated. The loop has taken ~114 whole-city reads and, until this one, **essentially all of them
+  were by day** — the same blind spot that hid the January-only shots until iter 108 and the dead-low-water
+  shots until 113. **Shoot the step-back at night too; it is a different city.**
+- **Banked cue (j) — the night windows verge on stripe-noise** *(Urban fabric, or a `polish-tile` job)*. The
+  same night agent, second complaint: across the dense core the yellow window rows are *"extremely dense and
+  repetitive — they buzz as horizontal-stripe noise rather than individual lit windows, especially on the mid
+  towers."* This lap dimmed the periphery, which relieves it at the rim but **not downtown, where the fix
+  made rows brighter**. Distinct from this vector (per-window density inside `drawBuilding`'s band draw, not
+  the light field), so it was left alone. Take it with `probe-litdiff.mjs`'s in-page A/B.
+- **Banked cue (k) — the open water is the least-resolved third of the frame** *(Water & coast)*. **Both**
+  day agents, unprompted and independently, named the sea: *"a large flat teal wedge — no wave detail, reefs,
+  wake trails, or depth gradient… it carries a disproportionate share of canvas for how little it resolves"*
+  and *"the entire right third is flat teal… compared to the hyper-dense land it reads as dead space."* Two
+  independent agents converging unprompted is the strongest cue signal this ledger has. Note both also called
+  the scattered offshore turbines/boats *"randomly salted rather than sited"* — so the answer is likely
+  **depth/texture in the water field**, not another floating object.
+- **`probe-nightcore.mjs` and `probe-litdiff.mjs` are `git add -f`'d** (iter 101's law). `probe-nightcore`
+  reports, per seed, `corr(lit,dist)`, `corr(lit,th)` and mean `c.lit` + mean sampled luminance per distance
+  ring — reuse it for *any* "does this field follow the city's structure?" claim. `probe-litdiff` is the
+  general **same-instant A/B**: freeze, render, mutate in place, render, diff. It is the right instrument for
+  any change whose blast radius you want to bound in pixels rather than argue about.

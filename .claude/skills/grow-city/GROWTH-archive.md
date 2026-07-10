@@ -4469,3 +4469,86 @@ re-pinned — `polish-tile` owns that file.
   reason the header calls it the highest-yield move: the third and fourth systems come for free once
   two are wired together.
 
+## Iteration 105 — the lines name themselves (2026-07-10) [holistic step-back]
+
+**Vector** — Transport × **Interaction/UX**. Rotation pointed at both axes at once: Transport was the
+stalest domain (last vector 94) and its `Interaction/UX` cell was **empty**, while 104 warned off
+Deepen and 103 off Polish. The cell was empty for a reason worth recording — see the seam.
+
+**The seam.** `ENTINFO` — the hover surface — carried streetcars, trucks, cyclists, ferries, whales,
+dogs. It did **not** carry the **monorail trains** or the **cable-car cabins**. Nor did `TILELABEL`
+carry the guideway or the cable. So the city's two flagship transit systems, the ones U4 went to the
+trouble of making *plural*, were the only moving things in Solvista that **could not be named by
+pointing at them.** And nothing anywhere could answer the question those systems actually raise: a
+183-span loop leaves the frame — *where does it go?* Extent is the one property of a transit line you
+cannot read off any single hex.
+
+**Change.** Draw-only, ~45 lines, three edits.
+- **Two `ENTINFO` rows**, with flattening getters (`monos.flatMap(m=>m.closed?m.trains:[])`,
+  gondolas likewise gated on `path.length>1`, so a line that hasn't broken ground yields no cabins).
+- **`sub` may now be a function.** `consider()` resolves `typeof sub==='function'?sub(e):sub`, so a car
+  describes **the line it belongs to** rather than its species: *"Line 3 of 3 — a 183-span loop with 30
+  stations."* / *"An aerial line — 9 spans over the low-rise strip."* Counts are read live off
+  `m.path`/`m.stops`, never stored. A `plur()` helper handles the stubby lines that really occur.
+- **The route trace.** Hovering a train or cabin strokes its whole line, drawn last (beside the
+  copters, the existing "over the scene" precedent): monorail along the beam deck and closed onto its
+  tail; cable **sub-sampled 4× per span through `gondSag`** so the trace lies on the rope's catenary
+  rather than its chord. Station pips at `m.stops`; terminal pips at the cable's two ends. `stamp()` on
+  the **middle** car — so the pick point is the train's center, not its nose — buys the focus ring free.
+
+**Census — PASS, and stream-neutral by iter 103's partition.** **Every metric +0**, including `pop`
+(150,206 → 150,206), and the **tile histogram is empty**. 0 page errors. The vector draws no `rng()`,
+touches no terrain, adds no entity array — so `__census()` needed no new tally, per the
+census-sprawl rule. Nothing to add, nothing added.
+
+**Visual — PASS, 3/3 agents.** Full-frame **hover-vs-control pairs** at seeds 7 and 42, both systems.
+Two agents (one per seed) independently confirmed: no trace in the control, trace on hover, routes
+locked to the hex axes, pips on the line, no z-order tears, and — the step-back's cumulative question
+— the city still reads balanced and bright, coast and downtown clean. **Both then volunteered the same
+complaint unprompted:** the trace "reads as a dark line with a faint pale seam." Fixed by iter 101's
+law and re-verified by a third agent (below).
+
+**Perf — PASS, and the baseline is re-pinned.** 3 sequential passes, day 33.28/33.22/33.39ms. Against
+iter 104's pristine-HEAD control (min 33.00ms) this vector costs **+0.22ms (+0.7%)** — and costs
+*nothing* headless, since `hoverEnt` is null with no cursor and the trace block never runs. The gate's
++6% was the stale 2026-07-09 baseline the header flagged. **This step-back re-pinned it**
+(`perf.mjs --save-baseline` → day **33.16ms**, night **37.33ms**), closing that warning.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **⚠ A "LINEAR FEATURE" POLISH LAW JUST GOT ITS SECOND CONFIRMATION — and two agents found it before
+  I did.** The trace shipped as a 2.8px ink halo (α.40) under a 1.2px cream core. Both visual agents,
+  independently, reported the line read *dark*. That is exactly iter 101: **for a linear feature,
+  legibility ≈ contrast × WIDTH** — the halo was 2.3× the width of the thing it was backing, so the
+  halo *was* the line. Fixed by inverting the ratio's intent, not the colors: halo to 3.4px @ α**.34**
+  (softer, wider) and the **core to 1.9px @ α.74–.92**. A third agent confirmed C-vs-A now reads as
+  "a pale cream ribbon with a dark backing" and that nothing was smothered. **When two independent
+  reviewers volunteer the same unrequested complaint, that is data, not taste** — spend the extra
+  agent.
+- **A MOVING ENTITY CANNOT BE HOVER-TESTED FROM STALE COORDS.** The first probe hovered a *Street* on
+  both seeds and looked like a total feature failure. Two causes, both in the probe: (1) `__ents`
+  returns **screen** coords (`e._sx*scale+offX`) — `e._sx` alone is **world**, and I'd used it; (2)
+  trains and cabins *move*, so coords sampled before the control screenshot are ~1s stale by the time
+  the cursor arrives. The fix is the general one for any hover test on a moving target: **re-sample,
+  move, then VERIFY the tooltip title equals the entity name, and retry on fresh coords** (8 tries).
+  Do not screenshot a hover you have not confirmed landed — a missed hover and a broken feature
+  produce the identical frame.
+- **`sub`-as-a-function is the reusable half of this vector.** Any future entity whose interest is its
+  *membership* (a ferry's route, a truck's depot, a bus's line) can now describe itself from live
+  state with no new mechanism — one `typeof` check in `consider()` bought it. Static strings still work
+  unchanged; nothing else in `ENTINFO` moved.
+- **The empty grid cell was empty because the tooltip is `ENTINFO`-shaped.** Transport's Interaction/UX
+  cell stayed cold for 100 iterations not because transit was uninteresting but because the two systems
+  worth interrogating were **not entities in any array the hover surface walked** — they are nested
+  inside `monos[].trains` / `gonds[].cabins`. **A cold rotation cell can mark a structural gap, not a
+  lack of ideas.** Worth checking, next time a cell resists.
+- **`probe-lineshot.mjs` is `git add -f`'d** (per iter 101: `probe-*.mjs` is gitignored, so ledgers that
+  say "reuse the probe" cite tools the repo doesn't carry). It shoots full-frame hover/control pairs
+  with the verify-retry loop above; `--longest` picks a car on the line with the most spans, because
+  a stubby 2-span loop proves nothing about a trace.
+- **Stubby lines are real.** Seed 7's three loops are 89, **2**, and 183 spans; a 2-span "loop" would
+  have rendered *"1 stations"*. `plur()` exists for that. A closed monorail loop is **not** guaranteed
+  to reach `minLen` — `homing` closes it early — so never assume a generated line is large.
+
