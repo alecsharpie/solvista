@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **135** · Urban **133** · People **137** · Nature **139** · Transport **138** · Civic **140** · Water **132**.
-  **Stalest is now Water (132)**, then Urban (133) — check the last entry of the stalest domain for a banked
+  Sky **135** · Urban **133** · People **137** · Nature **139** · Transport **138** · Civic **140** · Water **141**.
+  **Stalest is now Urban (133)**, then Sky (135) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -69,8 +69,7 @@ ones (U2, 42, U5) stay in the bullet.
   cells are still traps, see below.) (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
   forest, not a flat dark hole, while staying the darkest thing inshore; `probe-kelp` gates it.)
   **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by respending
-  their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it (132 did:
-  it took a different Water kind).** (**129 cashed the tell a 7th time for Nature**:
+  their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it.** (**129 cashed the tell a 7th time for Nature**:
   the orchard drew a blossom/fruit calendar since iter 57 but its tooltip was mute; it now names the
   season via a shared `orchardPhase()`. **129's banked Nature Deepen is CASHED (iter 139)**: VINEYARD's
   grapes/canes now read `year` via a shared `vinePhase()` (bare in winter → purple at harvest), the last frozen
@@ -120,7 +119,7 @@ ones (U2, 42, U5) stay in the bullet.
   later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
   shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
   **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.*
-  **Iteration 141 is the next holistic step-back** (105, 110, 115, 120, 125, 130, **136**, …). Shoot it
+  **Iteration 142 is the next holistic step-back** (105, 110, 115, 120, 125, 130, **136**, …; 141 slipped it one). Shoot it
   **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
   `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
   the full recipe). **130 AND 136 both found NO compounding city defect** (two clean bills in a row, the honest
@@ -146,7 +145,7 @@ ones (U2, 42, U5) stay in the bullet.
   **129 cashed it a seventh time** (the orchard's blossom/fruit calendar, mute in `describeTile` since iter 57 —
   now a `Grove` row) and confirmed its **limit**: of the three mute vegetation tooltips only the orchard's DRAW
   read `year`, so only it could be un-muted honestly — VINEYARD/GARDEN need a Deepen first (see 129).
-  Un-cashed: `TILEDESC[T.KELP]` *"swaying in the shallows"*, `[T.IND]` *"warehouses and light industry"*,
+  Un-cashed: `[T.IND]` *"warehouses and light industry"*,
   `[T.VINEYARD]` *"terraced"* (draw now reads `year` via `vinePhase()`, iter 139 — READY to un-cash a `Vines`
   season row). The plaza/quad **titles** are now **CASHED (iter 140)** — an owned square's headline reads
   *"Town hall forecourt"* / *"Museum grounds"* outright.
@@ -163,17 +162,18 @@ ones (U2, 42, U5) stay in the bullet.
   almost no pixels. **Sky-feedable list is now EMPTY (iter 139 cashed `VINEYARD`)** — every vegetation tile
   that can read `year` now does; a further Sky interconnect must come from a genuinely new derived field, not
   from un-freezing another tile.
-  Recent kinds: 126 Deepen · 127 New element ·
-  128 Deepen · 129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
+  Recent kinds: 128 Deepen ·
+  129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
   **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** ·
   **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** ·
   **138 Connect (arterial spine lit as a night corridor via `c.flow`)** ·
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
-  **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** —
-  (**130/136 were the holistic step-backs — no domain × kind lap.**) Interaction/UX is now hot (133/134/140).
-  **Next domain lap owes Water (132, now stalest), then Urban (133); read its row for kinds.** Vary off
-  Interaction/UX (140), Deepen (139) and Polish (all hot). Civic's last was 140 (Interaction/UX, plaza/quad headlines
-  name their institution — cue cashed); Water's was 132 (Polish, kelp canopy). The coldest kind is **Scale** (a structural lever, not a lap move);
+  **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
+  **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** —
+  (**130/136 were the holistic step-backs — no domain × kind lap.**) Interaction/UX is now VERY hot (133/134/140/141).
+  **Next domain lap owes Urban (133, now stalest), then Sky (135); read its row for kinds.** Vary HARD off
+  Interaction/UX (last four laps) — reach for Deepen/Connect/Polish. Urban's additive cell is spent (118); Sky
+  is post-saturation (Deepen/Fix only). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
   *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
@@ -391,72 +391,12 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 133 entries before Iteration 131 live in
+> **Archive:** the 134 entries before Iteration 132 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
 
-## Iteration 131 — the civic square is measured dead, and cue (d) closes (2026-07-11)
-
-**Vector.** Civic & culture × **Polish/Connect** (an EXPLORE). Rotation named the domain — Civic was the
-single stalest (122, older than Water 123) — and the header's own law (*a banked, measured cue outranks
-kind-rotation*) named the content: **cue (d)**, the loop's most-flagged open cue, banked by 91, attempted
-and reverted by 114, and re-listed "STILL OPEN" ever since. Its goal: the civic quarter's knot of private
-1-hex forecourts should become **one legible ≥3-hex pedestrian square** (114 proved 3 reads at fit zoom, a
-1-hex ribbon does not — 101's contrast×width law). Kind was forced away from Deepen (5 of last 10) and
-Interaction/UX (2 of last 10), which Polish/Connect satisfies. Per *probe before you design*, I measured
-the geometry before writing a line — and the measurement **closes the cue** instead.
-
-**What the probe found** (`probes/probe-quarter.mjs`, promoted). In-page, seeds 7/42/1234 at warp 61:
-- **Every city has exactly ONE multi-major quarter** (3–4 majors); the other majors are lone and scattered.
-  Forecourts are **all 1-hex** (confirms 114's `[1,1,1]` measurement, now across the annex geometry too).
-- **Reading A — take the shared road → a 3-hex square: IMPOSSIBLE.** Pedestrianising a single shared-street
-  ROAD yields a **2-hex patch at most, never 3** — the bridgeable road touches a forecourt PLAZA and a
-  *building* (CIVIC, which does not extend a PLAZA patch), not two forecourts. And **every** such candidate
-  road is the **arterial + monorail + boulevard-tree + bus-stop spine**: haz=[ARTERIAL], [ARTERIAL,treed,MONO],
-  [stop,busy,treed] — precisely the network the invariants forbid severing. 114's "take the ROAD" is dead:
-  it is insufficient (2 hex) *and* it is the spine.
-- **Reading B — grow a forecourt to 3 by annexing pavable lots: ALSO IMPOSSIBLE at the quarter.** Of 11
-  forecourts, only **2** have ≥2 pavable-lot (`FORECOURT_LOT`) neighbours to annex — and both are the
-  **isolated lone-major** forecourts (seed 42 `(27,1)` [MID,MID], seed 1234 `(42,1)` [RES,RES,RES]), NOT the
-  quarter's. **The quarter's own forecourts have 0–1 pavable neighbours** (boxed in by civics, the mile, and
-  each other). So a 3-hex square can be grown only where there is *no quarter* to make it a **civic** square —
-  a contradiction. (And annexing RES/MID costs pop for a barely-visible tile — 100's ~0.045%/cell, 92's
-  never-zone-near-TOWER.)
-- **Reading C — the connective goal is ALREADY SHIPPED.** cue (d)'s deeper intent (the quarter reads as one
-  connected precinct, not isolated domes) is delivered by the fete **"civic mile"** (`c.fete`, L1764): a
-  pure-derivation BFS strings bunting along the ROAD stretch where two civics' road-regions meet — the
-  district is already tied together along the street the square wanted to be.
-
-**Census.** PASS, exit 0. `solvista.html` **byte-identical to HEAD** (`git diff --stat` empty) — no source
-edit, so the census is vacuous by construction (this is an EXPLORE that rejected its design *before*
-implementation, cheaper than 101/114 which built then reverted). No visual gate is owed — nothing draws
-differently. The probe **is** the gate: a measurement that could have found a 3-hex opening and instead
-found none, on ≥2 seeds, with the hazard list as its own control.
-
-**Verdict — EXPLORED → REVERTED. Cue (d) is CLOSED.** Its ≥3-hex-square goal is geometrically unreachable at
-the quarter (2 hex max on the arterial/mono spine; the only 3-annexable forecourts are lone non-quarter
-majors), and its connective goal is already met by the civic-mile bunting. Building anything here would be
-marginal filler on a hazard — the census can pass a change that isn't worth its cost (82/88/101/114), and
-this one fails the bar *before* a pixel is drawn. Reverting a passing-but-weak change is the system working;
-declining to build a measured-dead one is the same working one step earlier.
-
-### Findings
-- **⚠ CUE (d) IS DEAD IN BOTH READINGS — DO NOT RE-OPEN IT (new; supersedes 91/114 and every "STILL OPEN"
-  header note).** Road-take → 2 hex on the spine; lot-annex → only lone (non-civic) forecourts can reach 3.
-  The two goals of cue (d) are severable: the **connective** one (precinct reads as one) is *shipped* (civic
-  mile); the **square** one is *impossible* without either severing the arterial/monorail spine or building
-  the square where there is no quarter. `probe-quarter.mjs` is the proof and re-runs in ~4s per seed.
-- **MEASURE A CUE'S GEOMETRY BEFORE ITS DRAW (sharpens "probe before you design").** 114 built a throwaway
-  square, saw it was pretty, reverted on the *host* being wrong, and banked "take the ROAD." One probe that
-  floods the hypothetical patch and reads the hazard flags would have shown in 4s that the road-take yields 2
-  hex on the spine — no build needed. When a cue is about *where a thing can go*, the first artefact is a
-  geometry probe, not a draw.
-- **A "beautiful in a throwaway" proof is necessary, not sufficient — it says nothing about whether the
-  geometry admits it at the sites that matter.** 114's 3-hex mock was genuinely legible; the error was
-  generalising from a hand-placed patch to a quarter whose real cells cannot form one. Prove the *siting*, not
-  just the *look*.
 ## Iteration 132 — the kelp beds grow a canopy (2026-07-11)
 
 **Vector.** Water & coast × **Polish**. Rotation named the domain — Water was the single stalest (123).
@@ -1019,3 +959,55 @@ the plaza/quad-title tell banked by 122/129. Civic's Interaction/UX cell gains i
 - **UPDATE THE PROBE, DON'T FORK IT.** probe-civic already owned the plaza/quad claim, so the change moved the
   claim's *reader* (data-row regex → headline parse) rather than adding a second reader. A new probe would have
   been two readers of one claim — the exact anti-pattern 112 warns about, applied to the harness.
+
+## Iteration 141 — the kelp bed names its extent (2026-07-11)
+
+**Vector.** Water & coast × **Interaction/UX** (SHIPPED). Rotation named the domain — Water was the single
+stalest (last 132) — and the header named the content: the **un-cashed KELP tell**. `TILEDESC[T.KELP]` said
+only *"Seaweed swaying in the shallows"* while `describeTile` printed nothing of the bed, though the woods had
+named their `Stand — N hexes` by flood fill since iter 117 and iter 132 gave the kelp its own drawn canopy. A
+banked, measured cue outranks kind-rotation (the loop's law), even with Interaction/UX hot (133/134/140).
+
+**Adopted from a killed process.** I did **not** author this — the prior iteration ran the vector, passed its
+own gates, and was killed (rate limit / sleep) *between* its verdict and `git commit`, leaving a clean,
+coherent, uncommitted change + its probe in the worktree (the iter-72 shape). Per the skill's dirty-worktree
+rule I re-ran the gates myself; they decide, not the missing ledger entry. Described below from the diff.
+
+**Change (~15 lines, tooltip + refactor, zero draw code).** `standSize` (the woods' flood fill) generalized
+to `floodSize(x,y,pred)`; `standSize`/`bedSize` now both delegate to it — **one definition, so the stand and
+the bed count contiguity the same way and cannot drift (112's one-predicate law)**. `describeTile` gains a
+`Bed — N hexes` row for KELP by `bedSize`; the `TILEDESC[T.KELP]` sub rewritten to *"A bed of kelp rooted in
+the cold, shallow water off the beach."* Depth is deliberately **left off** (invariantly shoal here → constant
+noise), extent is the one honest datum. Kelp carries no CA state, so the bed is pure geometry.
+
+**Census.** PASS, exit 0. Tooltip/refactor-only, stream-neutral — tile histogram empty, core metrics +0.
+(`solarRoofs` −2 / `greenRoofs` −1 is the roof-adoption CA's known headless-timing wobble, ±1–2 on pristine
+HEAD; this change touches no terrain and no `rng()`.)
+
+**Probe** `probes/probe-kelptip.mjs` (already present, promoted). Hovers every KELP hex via `__find('KELP')`
+screen coords, scrapes `#tip`'s `Bed` row, and checks the count against ground truth recomputed **in Node** by
+a flood fill over the kelp set using odd-r cube adjacency — a **third** implementation sharing no code with the
+page's `floodSize`/`nbrs6` (122's law: check a tooltip claim against independent recomputation, not a shot that
+renders it). Freezes the sim first. Controls: a WATER hex must print no `Bed` row; bed sizes partition the kelp
+set. **seed 42:** 10 kelp / ~6 beds, checked 9, control 12 water — **PROBE: PASS**. **seed 7:** 17 kelp / ~7
+beds, checked 15, control 12 — **PROBE: PASS**. Sample scrape reads clean: `Kelp bed | A bed of kelp… | Bed |
+2 hexes | Tide | Ebbing`.
+
+**Visual.** No draw code changed, so scene pixels are identical to HEAD; the tooltip's rendered text is already
+verified by the probe's DOM scrape. One defensive whole-city wide read (seed 42, `year=2035.62`) delegated to
+an agent: balanced coastal city, no z-order tears / floaters / blowout, coastline & kelp shallows read clean,
+nothing compounded. VISUAL: PASS.
+
+**Verdict — SHIPPED. The KELP tell is CASHED.** The un-cashed-tooltip list loses its longest-standing entry;
+KELP joins the woods, orchard, vineyard and institutions in naming what its own code already knows.
+
+### Findings
+- **Depth is correctly OMITTED where it is invariant.** The header's banked cue named *"extent AND depth"*, but
+  every kelp hex abuts the beach at shoal depth, so a `Depth` row would print constant noise. The adopted change
+  showed only extent — the honest datum. **A tooltip row earns its place by VARYING; a constant field is noise,
+  not data** (cf. iter 120's frozen-green hexes: sameness masquerading as information).
+- **`floodSize(x,y,pred)` is now the shared contiguity primitive** — reuse it for any "how big is the contiguous
+  patch this hex belongs to" question (marsh, a district, a water body) rather than forking a fourth flood fill.
+- **A killed iteration's PROBE is its self-grade — re-run it, don't re-derive it.** The prior process left a
+  complete, independent-recomputation probe; running it (both seeds) plus census settled adoption in ~3 minutes
+  without re-designing anything. The probe *is* the missing ledger entry's evidence.

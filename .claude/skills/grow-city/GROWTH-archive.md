@@ -7634,3 +7634,64 @@ interleaved control, exactly as 125 predicted; the guardrail stays honest.
 <!-- header breadcrumbs trimmed to budget at iter 140 (content preserved here) -->
 - Cue (n) CLOSED (iter 128 — cable-car cabins re-spread on settle; full note archived iter 139).
 - PERF (iter 117, pristine-HEAD control, interleaved): day 35.11ms / night 39.45ms; the patched file read day 34.33 / night 39.22. Not re-pinned.
+
+## Iteration 131 — the civic square is measured dead, and cue (d) closes (2026-07-11)
+
+**Vector.** Civic & culture × **Polish/Connect** (an EXPLORE). Rotation named the domain — Civic was the
+single stalest (122, older than Water 123) — and the header's own law (*a banked, measured cue outranks
+kind-rotation*) named the content: **cue (d)**, the loop's most-flagged open cue, banked by 91, attempted
+and reverted by 114, and re-listed "STILL OPEN" ever since. Its goal: the civic quarter's knot of private
+1-hex forecourts should become **one legible ≥3-hex pedestrian square** (114 proved 3 reads at fit zoom, a
+1-hex ribbon does not — 101's contrast×width law). Kind was forced away from Deepen (5 of last 10) and
+Interaction/UX (2 of last 10), which Polish/Connect satisfies. Per *probe before you design*, I measured
+the geometry before writing a line — and the measurement **closes the cue** instead.
+
+**What the probe found** (`probes/probe-quarter.mjs`, promoted). In-page, seeds 7/42/1234 at warp 61:
+- **Every city has exactly ONE multi-major quarter** (3–4 majors); the other majors are lone and scattered.
+  Forecourts are **all 1-hex** (confirms 114's `[1,1,1]` measurement, now across the annex geometry too).
+- **Reading A — take the shared road → a 3-hex square: IMPOSSIBLE.** Pedestrianising a single shared-street
+  ROAD yields a **2-hex patch at most, never 3** — the bridgeable road touches a forecourt PLAZA and a
+  *building* (CIVIC, which does not extend a PLAZA patch), not two forecourts. And **every** such candidate
+  road is the **arterial + monorail + boulevard-tree + bus-stop spine**: haz=[ARTERIAL], [ARTERIAL,treed,MONO],
+  [stop,busy,treed] — precisely the network the invariants forbid severing. 114's "take the ROAD" is dead:
+  it is insufficient (2 hex) *and* it is the spine.
+- **Reading B — grow a forecourt to 3 by annexing pavable lots: ALSO IMPOSSIBLE at the quarter.** Of 11
+  forecourts, only **2** have ≥2 pavable-lot (`FORECOURT_LOT`) neighbours to annex — and both are the
+  **isolated lone-major** forecourts (seed 42 `(27,1)` [MID,MID], seed 1234 `(42,1)` [RES,RES,RES]), NOT the
+  quarter's. **The quarter's own forecourts have 0–1 pavable neighbours** (boxed in by civics, the mile, and
+  each other). So a 3-hex square can be grown only where there is *no quarter* to make it a **civic** square —
+  a contradiction. (And annexing RES/MID costs pop for a barely-visible tile — 100's ~0.045%/cell, 92's
+  never-zone-near-TOWER.)
+- **Reading C — the connective goal is ALREADY SHIPPED.** cue (d)'s deeper intent (the quarter reads as one
+  connected precinct, not isolated domes) is delivered by the fete **"civic mile"** (`c.fete`, L1764): a
+  pure-derivation BFS strings bunting along the ROAD stretch where two civics' road-regions meet — the
+  district is already tied together along the street the square wanted to be.
+
+**Census.** PASS, exit 0. `solvista.html` **byte-identical to HEAD** (`git diff --stat` empty) — no source
+edit, so the census is vacuous by construction (this is an EXPLORE that rejected its design *before*
+implementation, cheaper than 101/114 which built then reverted). No visual gate is owed — nothing draws
+differently. The probe **is** the gate: a measurement that could have found a 3-hex opening and instead
+found none, on ≥2 seeds, with the hazard list as its own control.
+
+**Verdict — EXPLORED → REVERTED. Cue (d) is CLOSED.** Its ≥3-hex-square goal is geometrically unreachable at
+the quarter (2 hex max on the arterial/mono spine; the only 3-annexable forecourts are lone non-quarter
+majors), and its connective goal is already met by the civic-mile bunting. Building anything here would be
+marginal filler on a hazard — the census can pass a change that isn't worth its cost (82/88/101/114), and
+this one fails the bar *before* a pixel is drawn. Reverting a passing-but-weak change is the system working;
+declining to build a measured-dead one is the same working one step earlier.
+
+### Findings
+- **⚠ CUE (d) IS DEAD IN BOTH READINGS — DO NOT RE-OPEN IT (new; supersedes 91/114 and every "STILL OPEN"
+  header note).** Road-take → 2 hex on the spine; lot-annex → only lone (non-civic) forecourts can reach 3.
+  The two goals of cue (d) are severable: the **connective** one (precinct reads as one) is *shipped* (civic
+  mile); the **square** one is *impossible* without either severing the arterial/monorail spine or building
+  the square where there is no quarter. `probe-quarter.mjs` is the proof and re-runs in ~4s per seed.
+- **MEASURE A CUE'S GEOMETRY BEFORE ITS DRAW (sharpens "probe before you design").** 114 built a throwaway
+  square, saw it was pretty, reverted on the *host* being wrong, and banked "take the ROAD." One probe that
+  floods the hypothetical patch and reads the hazard flags would have shown in 4s that the road-take yields 2
+  hex on the spine — no build needed. When a cue is about *where a thing can go*, the first artefact is a
+  geometry probe, not a draw.
+- **A "beautiful in a throwaway" proof is necessary, not sufficient — it says nothing about whether the
+  geometry admits it at the sites that matter.** 114's 3-hex mock was genuinely legible; the error was
+  generalising from a hand-placed patch to a quarter whose real cells cannot form one. Prove the *siting*, not
+  just the *look*.

@@ -1102,17 +1102,21 @@ function orchardPhase(){const s2=((year%1)+1)%1;
    autumn harvest. Shared so the draw and a future tooltip read one predicate. */
 function vinePhase(){const s2=((year%1)+1)%1;
   return s2<0.16||s2>=0.99?'dormant':s2<0.45?'bud':s2<0.72?'veraison':'ripe';}
-/* the contiguous stand a woodland hex belongs to (flood fill over hex neighbours) */
-function standSize(x,y){
-  const start=idx(x,y); if(!isWood(cells[start]))return 0;
+/* the contiguous patch a hex belongs to, flood-filled over hex neighbours under a
+   shared predicate — one definition, so the woods' stand and the kelp bed count
+   contiguity the same way and cannot drift apart (112's one-predicate law). */
+function floodSize(x,y,pred){
+  const start=idx(x,y); if(!pred(cells[start]))return 0;
   const seen=new Set([start]), stack=[[x,y]]; let n=0;
   while(stack.length){
     const[a,b]=stack.pop(); n++;
-    nbrs6(a,b,(p,q)=>{const m=cellAt(p,q); if(!m||!isWood(m))return;
+    nbrs6(a,b,(p,q)=>{const m=cellAt(p,q); if(!m||!pred(m))return;
       const j=idx(p,q); if(seen.has(j))return; seen.add(j); stack.push([p,q]);});
   }
   return n;
 }
+function standSize(x,y){return floodSize(x,y,isWood)}         /* woodland stand */
+function bedSize(x,y){return floodSize(x,y,m=>m.t===T.KELP)}  /* kelp bed */
 /* which way a lot's public face should turn: +1 if the street it fronts lies east,
    -1 if west. Civics are sited by roadNear, so one usually does; a lot fronting
    roads evenly both ways (or none) falls back to the caller's per-city hash.
@@ -5968,7 +5972,7 @@ const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats 
   [T.PARK]:'Public green space.',[T.BEACH]:'Golden sand along the Pacific.',[T.WATER]:'The open sea.',
   [T.FARM]:'Row crops on the golden hills.',[T.VINEYARD]:'Terraced grapevines — wine country.',
   [T.ORCHARD]:'Fruit groves.',[T.FOREST]:'Coastal woodland.',[T.REDWOOD]:'Old-growth redwoods, deep in the hills.',
-  [T.MARSH]:'Reedy tidal wetland where the river meets the sea.',[T.KELP]:'Seaweed swaying in the shallows.',
+  [T.MARSH]:'Reedy tidal wetland where the river meets the sea.',[T.KELP]:'A bed of kelp rooted in the cold, shallow water off the beach.',
   [T.DUNE]:'Wind-piled sand along the back beach, held down by marram grass.',
   [T.SOLARF]:'A field of solar panels.',[T.LIGHTHOUSE]:'Guards the headland; sweeps the bay at night.',
   [T.MARKET]:'Open-air market stalls.',[T.GARDEN]:'Allotments tucked between the houses.',
@@ -6068,6 +6072,14 @@ function describeTile(c,x,y){
     } else data.push(['Old growth since',est]);
     if(c.shroom>0)data.push(['Mushrooms up']);
   }
+  /* the kelp bed names its own extent, exactly as the woods name their stand
+     (iter 117) — a bed is contiguous KELP by the SAME flood fill (floodSize). Kelp
+     carries no CA state (placed once in genWorld, never ticked) and every hex abuts
+     the beach, so extent is the one honest datum: depth is invariantly shoal here,
+     which would print as constant noise, so it is left off (the sub already says
+     shallows). This turns a run of dark hexes into one named bed. */
+  if(c.t===T.KELP){const n=bedSize(x,y);
+    data.push(['Bed',n+(n===1?' hex':' hexes')]);}
   if(c.t===T.MEADOW)data.push(['Wildflowers',
     c.bloom>0?'In bloom':c.bloom<0?'Gone over':'Not in flower']);
   /* the grove tells the same calendar the draw paints (shared orchardPhase) */
