@@ -9575,3 +9575,69 @@ where the ambient sky is cool. The effect is by-design mild — a golden-hour to
   probe (not the agent) is the verdict for "did the warmth apply." Don't crank the strength to force every cloud
   gold — seed 42's agent already warned the current strength is at the "natural, not dirty" edge.
 
+## Iteration 162 — the twelfth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/136/142/147/152/157/**162**). Not a domain ×
+kind lap: it reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the
+season probe + interleaved perf gate, at night AND a season with the day/night baselines pinned OFF January
+(`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so rotation is
+unchanged — the next lap (163) owes the stalest domain, **People (154)**, then Transport (155).
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42 (warp 61) &
+seed 7 (warp 31), each at {day 2035.62/t=0.35, night 2035.62/t=0.90, winter 2035.02/t=0.35}. One subagent per
+seed read its own three frames: the cumulative question ("has anything compounded into clutter or darkness?")
+plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night core (115/143) LOCATED off-centre both seeds** — seed 42 ~(0.48,0.53) (agent range x0.45–0.52,
+  y0.45–0.62), seed 7 ~(0.45,0.62) — matching 157 ((.48,.52)/(.48,.60)), 152, 147, each with a genuine
+  core→edge falloff to a dark rim, not a flat wash. Both agents named a secondary lit lobe too (42's river
+  pocket ~(.44,.78) + a north cluster ~(.42,.22); 7's north cluster ~(.55,.23) + the lit pier ~(.85,.55)).
+- **158's observatory, 159's surf biolum and 161's warm cloud bellies all sit correctly** in the whole frame;
+  138's arterial night-corridors read as continuous warm ribbons distinct from dim side streets both seeds; the
+  sea reads (116's bottom + 123's founded wind farm). **No z-order tears / floaters / hard seams / blown-out
+  white** in any of the 6 frames. **Winter reads distinct** from summer at both seeds (cooler/duller vegetation,
+  cooler flatter light, cooler ocean) — mildest of the three deltas at seed 42, clearer at seed 7, by-design
+  (120's evergreen/irrigated dilution).
+
+**Season — measured alive.** `probes/probe-season.mjs`: FARM winter→dry-peak **88.4** (matches
+130/136/142/147/152/157), VINEYARD 44.6/36.7/42.7 (139), FOREST 20.1/19.5/24.4 (156's spring understory + canopy
+shift both read), ORCHARD 25.3/17.8/41.4, MEADOW/SHOREPARK all move, PARK/REDWOOD/GARDEN/QUAD near-zero by design
+(120), ROAD control **0.5–2.1**. Calendar working; the whole-frame mildness is the by-design dilution, not a dead
+calendar.
+
+**Perf — 157→161 cost ~ZERO; the stored-baseline read fired its SEVENTH+ false-FAIL.** `perf.mjs` vs stored
+baseline read day **+5.9%** / night **+11.3%**, looking like a regression. Interleaved HEAD-161 vs the iter-157
+file (`ae93fd4`, A/B/A/B, **min per variant**): day **35.00 vs 35.05** (**−0.1%, flat**) and night **41.45 vs
+41.00** (**+1.1%, small**). So 158 (observatory dome, day+night draw) + 159 (surf biolum, night-only) + 161 (warm
+cloud bellies, day-only, ~0 at night) added ~nothing measurable; the +1.1% night is 158's dome + 159's biolum
+landing at night, well inside budget (night >30fps ~49–52%, ≈50fps). NOT re-pinned. **The day column was UNUSUALLY
+steady this run** — all four day reads clustered 35.0–35.3ms (contrast 157's ±9ms swing), so the day delta is
+trustworthy here; night was steady as always. Census PASS, vacuous (no source edit); tree verified clean after
+the interleave restored HEAD.
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per 120/130/136/142/147/152/157
+("a clean step-back is a complete iteration — don't force a filler vector") the output is the health record +
+header refreshes: step-back pointer 157→162 (next 167), the seventh clean bill, and the 162 interleaved perf
+reading. No `solvista.html` edit.
+
+**Verdict — FIXED.** No compounding city defect — the SEVENTH clean step-back in a row (130, 136, 142, 147, 152,
+157, 162). All accumulated visual laws (115/116/120/123 + 138 arterials + 143 CBD peak) still read at both seeds
+under all three lights; the season is alive (156's understory shows in FOREST, 139's vineyard moving); perf is
+flat against the honest interleaved control.
+
+### Findings
+- **SEVENTH CONSECUTIVE CLEAN STEP-BACK, and the stored-baseline false-FAIL is now a habit — trust ONLY the
+  interleave.** The stored baseline (day 33.16 / night 37.33, pinned 2026-07-10) read +5.9% day / +11.3% night on
+  a diff the interleave proves flat/tiny; the 5-day-old iter-157 file reads the same inflated numbers today. The
+  pattern is now 125→130→136→142→147→152→157→162. Re-pin only if an interleave *itself* shows a persistent offset
+  (it has not since 142's real +2.2%).
+- **The day column is USUALLY the noisy one, but not this run — check the round-to-round spread before trusting a
+  day delta.** 157 saw the identical HEAD bytes read 43.2 then 37.7ms (a 15% load swing); 162's four day reads all
+  landed 35.0–35.3ms, so the −0.1% day delta is real, not luck. The lesson stands (grade day by min-of-≥2-rounds),
+  but "day is always ±9ms" is not a law — measure the spread, don't assume it.
+- **Night is the accumulating column, and it accumulates SLOWLY — three night-drawing features across five
+  iterations (158 dome + 159 biolum) cost +1.1%.** Every night-only draw (per-window glow 118, arterial lamps 138,
+  stars 153, biolum 159, dome 158) lands on night alone, so night is where the loop's draw work quietly compounds.
+  +1.1% over 5 iters is fine, but this is the column a future step-back should watch first.
+
