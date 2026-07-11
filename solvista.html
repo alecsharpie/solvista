@@ -5959,11 +5959,18 @@ function render(){
    for(const cb of g.cabins){ /* cable-car cabins */
     cb._g=g; cb._li=li;
     const H=g.h, [gsx,gsy,ccx,ccy,sg]=gondPos(g,cb.p), Hs=H-sg; /* the cabin rides the rope down into the span */
+    /* the cabin rocks on its hanger in the breeze — the same wind that raises the
+       whitecaps (185) and flies the kites. It PIVOTS about the fixed cable point
+       (gsx,gsy-Hs): the hanger top stays on the rope, the cabin swings under it.
+       Two out-of-phase sines (a gust over a slow swell) per-cabin-phased so no two
+       cars sway in lockstep. Pure draw off `time`, no rng/state — pop+stream flat. */
+    const sway=Math.sin(time*1.15+cb.p*39+li*1.7)*1.7+Math.sin(time*0.63+li)*0.7;
+    const sx=gsx+sway;
     bucketAdd(ccx,ccy,()=>{
-      stamp(cb,gsx,gsy-Hs+7.5);   /* ring hangs just under the cabin floor */
-      ctx.strokeStyle=col('ink',1);ctx.lineWidth=0.7;ctx.beginPath();ctx.moveTo(gsx,gsy-Hs);ctx.lineTo(gsx,gsy-Hs+3);ctx.stroke();
-      prismS(gsx,gsy,0.11,0.085,Hs-6.5,Hs-3,col('coral',1.05),col('coral',0.62),col('coral',0.88));
-      bandS(gsx,gsy,0.11,0.085,Hs-5.5,Hs-4,colLit('glass',0.9,Math.max(0.25,LITAMT*0.8)));
+      stamp(cb,sx,gsy-Hs+7.5);   /* ring hangs just under the cabin floor, and swings with it */
+      ctx.strokeStyle=col('ink',1);ctx.lineWidth=0.7;ctx.beginPath();ctx.moveTo(gsx,gsy-Hs);ctx.lineTo(sx,gsy-Hs+3);ctx.stroke();
+      prismS(sx,gsy,0.11,0.085,Hs-6.5,Hs-3,col('coral',1.05),col('coral',0.62),col('coral',0.88));
+      bandS(sx,gsy,0.11,0.085,Hs-5.5,Hs-4,colLit('glass',0.9,Math.max(0.25,LITAMT*0.8)));
     });
    }
   }

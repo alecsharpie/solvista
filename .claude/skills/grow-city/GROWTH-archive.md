@@ -10607,3 +10607,69 @@ vineyard moving); perf is flat against the honest interleaved control.
   Night remains the column a future step-back watches first (≈40.5ms/24fps at today's load), but there is no drift
   to act on. No perf-fix iteration owed.
 
+## Iteration 178 — the festival streets fill with people (2026-07-12) [People & activity × Deepen]
+
+**Vector.** People & activity × **Deepen** (SHIPPED). Rotation named the stalest domain: 178 owed **People (170)**
+or **Transport (171)**; People is staler by number. Kind varied off People's recent run — New element (170), Polish
+(163), Interaction/UX (154) — to a **Deepen** that *interconnects* People with an existing **Civic** system (the
+highest-yield move per the skill). Last People Deepen was 145 (beach furniture sun); Deepen is globally hot but the
+domain rotation is what's binding here.
+
+**The seam — a drawn Civic system that no person ever used.** Since long before the ledger, `tick()` (L1853)
+computes `c.fete`: where two civic institutions front the same short stretch of street, the blocks between them
+string up **bunting** (a "civic mile"), drawn as pennants + evening lights (L4133). But the festival street stood
+**empty for the artifact's whole life** — bunting over a lifeless road. Populating it is a clean People×Civic
+interconnect. Confirmed at scale first (dead-code law): `c.fete` = **10/16/19 cells** on seeds 42/7/1234 (`node -e`
+count), a real host, not dead code.
+
+**Change (~24-line draw, all draw-only).** Inside the `if(c.fete)` block, after the bunting: a small crowd of
+festival-goers on each fete cell. Up to 5 figures, `hashCell`-gated (`seedNum^0x3F1A>0.68` skip) so counts vary,
+scattered in an ellipse around the cell centre (`hashCell` angle + radius 2.0–5.6px) with a gentle `Math.sin(time)`
+sway; body colour from `coral/gold/teal/lav/sage`; house-style `shadS` contact shadow at the feet (137/163). Day
+fade `faa=clamp((0.82-LITAMT)/0.28,0,1)` on the slow light clock — the crowd is out by **day and into the dusk**
+(when the strand lights up), then **home by deep night** (a rhythm, not a strobe; matches the anglers/umbrellas).
+No tile, entity array, `rng()`, `hashCell`-terrain, `tick()` pass or terrain change; strings pure-ASCII (134). Pop
++ stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity counts identical
+(`towerHt +1` = documented RAF tick-count jitter). Vacuous by construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-fetecrowd.mjs` (new, promoted).** Diffs PATCH vs HEAD over the `c.fete` ROAD cells' screen
+boxes at a frozen frame, day + night, with non-fete ROAD cells as the control. seeds 7/42/1234: **FETE crowd DAY
+2.92% / 3.10% / 3.62% → NIGHT 0.00% / 0.00% / 0.00%** (faa→0, byte-identical); **ROAD control 0.00–0.01%** at both
+frames. **PASS (3 seeds).** First cut of the probe read the night control at **77–88%** — the **163 load-timing
+law**: the RAF loop runs a variable number of `tick()`s between load and freeze, so the *loaded* developed city
+differs run to run. Rebuilding in-page (`genWorld(seed)` + `__warp(61)`) plus clearing the unseeded `STARS` field
+and stubbing `Math.random` (163 law d) made the night frame byte-identical and collapsed the control to ~0 — the
+crowd's absence at night is now proven, not swamped by non-reproducibility.
+
+**Visual.** Downtown clip + whole-city `wide`, day, seeds 42 & 7. Two agents, both **PASS**: festival bunting found
+in the civic core with **little standing figures clustered on the road beneath it**, feet grounded on the hex grid,
+contact shadows reading; **no z-order tears, floaters, or blown-out color** anywhere; whole frame still a balanced,
+bright coastal city (towers/parks/river/beach/pier all coherent), the crowds adding life without clutter.
+
+**Verdict — SHIPPED.** The civic mile — bunting-strung but deserted for the artifact's whole life — now fills with a
+day-and-dusk crowd milling under the pennants, and empties by deep night. A People×Civic interconnect on a drawn
+system nobody used: draw-only, pop + stream flat, ~24 lines + a probe. People's Deepen cell gains its next (34, 64,
+93, **104**, **119**, **145**, **178**); People is no longer stalest (Transport 171 now is). The next domain lap
+(179) owes **Transport (171)**, then the step-back at **182**.
+
+### Findings for later laps
+- **A DRAWN CA-DERIVED SURFACE CAN BE FULLY RENDERED YET NEVER *INHABITED* — that gap is a clean People×domain
+  interconnect.** `c.fete` had bunting, evening lights, its own tick-pass derivation, and a census stat, but no
+  person had ever stood on it. Populating a *drawn-but-lifeless* surface (like 127's PARK picnics on 878 empty
+  hexes) is the surface-not-entities move aimed at an existing SYSTEM rather than raw terrain — and it's a Deepen,
+  not a New element, because it enriches something already there. Look for other drawn-but-empty surfaces: does
+  anyone ever *use* the amphitheater stage (168), the observatory terrace, the market stalls?
+- **THE 163 LOAD-TIMING LAW BITES ANY PATCH-vs-HEAD DIFF AT A DEVELOPED, NIGHT FRAME — rebuild in-page BY DEFAULT.**
+  The first probe cut read a 77–88% *control* at night purely because the two loads had ticked a different number
+  of times. Day happened to be clean (control 0.02%), which is a trap: a probe that passes its day control but not
+  its night one is not "half working," it is *non-reproducible* and its day number is luck. Start every build-vs-
+  build probe with `genWorld(seed); __warp(N); STARS.length=0; Math.random=()=>0.5` — don't wait for the night
+  control to expose the non-determinism.
+- **171 BANKED the fete-street TOOLTIP as a future Interaction vector (`c.fete` drawn but unnamed in `describeTile`)
+  — STILL OPEN and now more worth cashing**, since the street it names is no longer empty. A treed road became a
+  `Boulevard`; a fete road could name itself the festival mile with a `Festival — links <A> and <B>` row (the two
+  institutions its `feteId` chain runs between). Deliberately left out of 178 to keep this a pure People Deepen and
+  not poach 171's banked Interaction seam.
+
