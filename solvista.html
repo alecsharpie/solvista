@@ -1354,6 +1354,34 @@ function tick(){
       if(countAround(x,y,1,n=>n.t===T.TOWER)>=1){c.t=T.MID;c.th=22+c.v*14;c.age=0;}
     }
   }
+  /* corner shops: a block of houses too deep in the fabric to reach a shop opens
+     its own. When a built-up block has NO COM or MARKET within a 2-hex walk (a
+     retail gap — a tighter twin of the walkable stat's rShop, which saturates >90%
+     so a full r3 desert is rare), one house on it opens a store on its ground
+     floor. It stays a HOME (mixed-use, like the loft / solar / green-roof flags),
+     so this changes no tile type: the gap test is read LOCALLY (recount's rShop is
+     stale inside tick — it only refreshes on warp/load) and the choice of WHICH
+     house is by hashCell, so the pass calls NO rng() AND flips no terrain a later
+     pass tests. c.corner is read only by the draw + tooltip, never by an rng()-gated
+     pass, so both setting AND clearing it are stream-neutral (iter 151; a RES->COM
+     conversion was tried first and reshuffled the stream via the fire/upgrade
+     passes' branch counts). The pass RE-VALIDATES: a store is absorbed (c.corner
+     cleared) once the growing city reaches a real shop within 2 of it, so the
+     "no shop within 2" claim holds at every tick, not just at placement. One store
+     per gap falls out for free: the fixed-order live-mutating pass lets the first
+     qualifying house claim the corner and veto any other within 2 hexes (~3 apart). */
+  if(year>=1990)for(const i of HEXI){
+    const c=cells[i];
+    if(c.t!==T.RES)continue;
+    const x=i%G,y=(i/G)|0;
+    const nearShop=countAround(x,y,2,n=>n.t===T.COM||n.t===T.MARKET)>0;
+    if(c.corner){if(nearShop)c.corner=false; continue;}              /* absorbed when the shops reach it */
+    if(nearShop||!roadNear(x,y))continue;                            /* only where there's a retail gap */
+    if(countAround(x,y,1,n=>DEV.has(n.t))<3)continue;                /* a real built-up block */
+    if(hashCell(x,y,seedNum^0x5C09)<0.45)continue;                   /* the block's higher corners */
+    if(countAround(x,y,2,n=>n.corner)>0)continue;                    /* one store per block: space them */
+    c.corner=true;
+  }
   /* harbor works: the warehouse cluster grows while shipping pays */
   if(year<1996)for(let k=0;k<6;k++){
     const y=1+(rng()*(G-2))|0, x=SHOREX-1-(rng()*4|0); const c=cellAt(x,y);
@@ -4125,6 +4153,24 @@ function drawBuilding(c,x,y,gx,gy){
         }
       }
     }
+    if(c.corner){ /* a store on the ground floor — the block's own corner shop (iter 151).
+        Grafted onto the house's road-facing face with the same shopfront helpers the
+        COM draw uses, sized to the RES body (0.30/0.26 at gy-0.06) and kept below the
+        upper-floor windows, so the house reads as a home over a shop. Green grocer's
+        awning marks it apart from a downtown retail front. */
+      const[bcx,bcy]=px(gx,gy-0.06);
+      const fs=frontSide(x,y,hashCell(x,y,seedNum^0x5A0F)<0.5?-1:1);
+      bandR(gx,gy-0.06,0.30,0.26,0,1.0,col('whiteDk',0.55));            /* stallriser */
+      bandR(gx,gy-0.06,0.30,0.26,1.0,3.6,colLit('glass',0.85,lit));     /* shopfront glass */
+      slotS(bcx,bcy,0.30,0.26,fs*0.42,0.5,3.2,1.8,col('ink',0.8),false); /* the door */
+      bandR(gx,gy-0.06,0.30,0.26,3.6,4.6,col('sage',0.95));             /* green fascia sign */
+      awnS(bcx,bcy,0.30,0.26,fs,4.1,2.4,col('white',1.02),col('sage',1.05)); /* grocer's awning */
+      if(LITAMT>0.4){ /* the shop stays lit after the terraces dim */
+        ctx.globalAlpha=(LITAMT-0.4)*0.85;
+        bandR(gx,gy-0.06,0.305,0.265,3.6,4.6,col('sage',1.5));
+        ctx.globalAlpha=1;
+      }
+    }
   } else if(c.t===T.MID){
     /* A walk-up's colour is its OWN hash, not a second reading of the value field.
        Body used to be v>0.72 while th is 22+c.v*14, so every terracotta block was
@@ -6101,6 +6147,8 @@ function describeTile(c,x,y){
       sub='The paved public square that fronts the '+inst+'.';}
     else{title=CIVICLABEL[squareOwner(x,y)]+' grounds';
       sub='Mown lawns kept behind the '+inst+'.';}}
+  else if(c.t===T.RES&&c.corner){title='Corner shop';
+    sub="A home with a store on its ground floor — the neighbourhood's own, on a block that had no other shop within a short walk.";}
   else{title=TILELABEL[c.t]||'Land';sub=TILEDESC[c.t]||'';}
   /* the CA already remembers when every parcel last changed: age ticks up
      once per tick (0.075yr), and siting/upgrades reset it — so age dates the

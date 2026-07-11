@@ -8280,3 +8280,60 @@ the plaza/quad-title tell banked by 122/129. Civic's Interaction/UX cell gains i
   claim's *reader* (data-row regex → headline parse) rather than adding a second reader. A new probe would have
   been two readers of one claim — the exact anti-pattern 112 warns about, applied to the harness.
 
+## Iteration 141 — the kelp bed names its extent (2026-07-11)
+
+**Vector.** Water & coast × **Interaction/UX** (SHIPPED). Rotation named the domain — Water was the single
+stalest (last 132) — and the header named the content: the **un-cashed KELP tell**. `TILEDESC[T.KELP]` said
+only *"Seaweed swaying in the shallows"* while `describeTile` printed nothing of the bed, though the woods had
+named their `Stand — N hexes` by flood fill since iter 117 and iter 132 gave the kelp its own drawn canopy. A
+banked, measured cue outranks kind-rotation (the loop's law), even with Interaction/UX hot (133/134/140).
+
+**Adopted from a killed process.** I did **not** author this — the prior iteration ran the vector, passed its
+own gates, and was killed (rate limit / sleep) *between* its verdict and `git commit`, leaving a clean,
+coherent, uncommitted change + its probe in the worktree (the iter-72 shape). Per the skill's dirty-worktree
+rule I re-ran the gates myself; they decide, not the missing ledger entry. Described below from the diff.
+
+**Change (~15 lines, tooltip + refactor, zero draw code).** `standSize` (the woods' flood fill) generalized
+to `floodSize(x,y,pred)`; `standSize`/`bedSize` now both delegate to it — **one definition, so the stand and
+the bed count contiguity the same way and cannot drift (112's one-predicate law)**. `describeTile` gains a
+`Bed — N hexes` row for KELP by `bedSize`; the `TILEDESC[T.KELP]` sub rewritten to *"A bed of kelp rooted in
+the cold, shallow water off the beach."* Depth is deliberately **left off** (invariantly shoal here → constant
+noise), extent is the one honest datum. Kelp carries no CA state, so the bed is pure geometry.
+
+**Census.** PASS, exit 0. Tooltip/refactor-only, stream-neutral — tile histogram empty, core metrics +0.
+(`solarRoofs` −2 / `greenRoofs` −1 is the roof-adoption CA's known headless-timing wobble, ±1–2 on pristine
+HEAD; this change touches no terrain and no `rng()`.)
+
+**Probe** `probes/probe-kelptip.mjs` (already present, promoted). Hovers every KELP hex via `__find('KELP')`
+screen coords, scrapes `#tip`'s `Bed` row, and checks the count against ground truth recomputed **in Node** by
+a flood fill over the kelp set using odd-r cube adjacency — a **third** implementation sharing no code with the
+page's `floodSize`/`nbrs6` (122's law: check a tooltip claim against independent recomputation, not a shot that
+renders it). Freezes the sim first. Controls: a WATER hex must print no `Bed` row; bed sizes partition the kelp
+set. **seed 42:** 10 kelp / ~6 beds, checked 9, control 12 water — **PROBE: PASS**. **seed 7:** 17 kelp / ~7
+beds, checked 15, control 12 — **PROBE: PASS**. Sample scrape reads clean: `Kelp bed | A bed of kelp… | Bed |
+2 hexes | Tide | Ebbing`.
+
+**Visual.** No draw code changed, so scene pixels are identical to HEAD; the tooltip's rendered text is already
+verified by the probe's DOM scrape. One defensive whole-city wide read (seed 42, `year=2035.62`) delegated to
+an agent: balanced coastal city, no z-order tears / floaters / blowout, coastline & kelp shallows read clean,
+nothing compounded. VISUAL: PASS.
+
+**Verdict — SHIPPED. The KELP tell is CASHED.** The un-cashed-tooltip list loses its longest-standing entry;
+KELP joins the woods, orchard, vineyard and institutions in naming what its own code already knows.
+
+### Findings
+- **Depth is correctly OMITTED where it is invariant.** The header's banked cue named *"extent AND depth"*, but
+  every kelp hex abuts the beach at shoal depth, so a `Depth` row would print constant noise. The adopted change
+  showed only extent — the honest datum. **A tooltip row earns its place by VARYING; a constant field is noise,
+  not data** (cf. iter 120's frozen-green hexes: sameness masquerading as information).
+- **`floodSize(x,y,pred)` is now the shared contiguity primitive** — reuse it for any "how big is the contiguous
+  patch this hex belongs to" question (marsh, a district, a water body) rather than forking a fourth flood fill.
+- **A killed iteration's PROBE is its self-grade — re-run it, don't re-derive it.** The prior process left a
+  complete, independent-recomputation probe; running it (both seeds) plus census settled adoption in ~3 minutes
+  without re-designing anything. The probe *is* the missing ledger entry's evidence.
+
+
+<!-- header trim, iter 151: full detail of closed cue (l), condensed to a stub in the header -->
+> **Cue (l) CLOSED (iter 133), full detail:** a hovered TILE wears a hex-outline focus ring
+> (`hoverTile`→`render()`, 1.06 of the footprint, ink-under/cream-pulse matching `stamp()`).
+> `window.__hover(x,y)` sets it for probes; `probe-tilering.mjs` gates it.

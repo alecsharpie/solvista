@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **144** · Urban **143** · People **145** · Nature **148** · Transport **146** · Civic **149** · Water **150**.
-  **Stalest is now Urban (143)**, then Sky (144), then People (145) — check the last entry of the stalest domain for a banked
+  Sky **144** · Urban **151** · People **145** · Nature **148** · Transport **146** · Civic **149** · Water **150**.
+  **Stalest is now Sky (144)** (post-saturation — Deepen/Fix only, its additive/CA cells are traps), then People (145), then Nature (148) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -116,7 +116,10 @@ ones (U2, 42, U5) stay in the bullet.
   wind farm *stands* on it), so the two cannot drift apart in the first place. Prefer this to re-syncing them
   later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
   shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
-  **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.*
+  **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.* **⚠ And a
+  tick-rule CAN'T read them directly (iter 151): `recount()` runs only at init/warp/manual, never in the sim loop
+  (L6342), so the reach maps are STALE inside `tick()`** — 151 cashed the seam's *shape* (a shop-distance rule)
+  but recomputed it LOCALLY (`countAround` r2), so `rShop` per se is still unread (recompute it, or pay a recount).
   **Iteration 152 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, **142**, **147**, …).
   Shoot it **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
   `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
@@ -171,11 +174,12 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150 broke it to Polish/Deepen/Polish/Deepen/Polish.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA.
   **⚠ Iteration 152 is the next holistic STEP-BACK** (…/136/142/**147 done**/**152**) — not a domain lap; see the recipe
-  below (night + season, day frame off January, interleaved perf). **151 owes the stalest domain, Urban (143)**,
-  then Sky (144); vary off Polish (150) and Deepen (149) — Connect/New-CA fresh. Sky
-  is post-saturation (Deepen/Fix only — its additive/CA cells are traps); Urban's additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
+  below (night + season, day frame off January, interleaved perf). **153 owes the stalest domain, Sky (144)**,
+  then People (145), then Nature (148). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
+  the banked Sky move is the SEASON word, which needs a slow clock FIRST — see the moon note above). Urban's
+  additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
   New element — but 127 sharpens it: saturation is of a domain's *entities*, and a New element can still land on a
   large untouched **surface** (127 put picnics on PARK, 145 a daily rhythm on the beach). Pick the domain first and
@@ -311,10 +315,8 @@ ones (U2, 42, U5) stay in the bullet.
   not four (`PLAZA 14→10` across the matrix). That is defensible urbanism and was accepted, but
   it is the one place the vector *cost* something. See open cue (d).
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
-  **(l) CLOSED (iter 133)** — a hovered TILE now wears a hex-outline focus ring (`hoverTile`→`render()`,
-  1.06 of the footprint, ink-under/cream-pulse matching `stamp()`). `window.__hover(x,y)` sets it for probes;
-  `probe-tilering.mjs` gates it. Legibility note carried forward: a thin hover stroke is INVISIBLE in a wide
-  downscaled shot (both agents FAILed the fit-zoom read) — re-shoot tight (2×/R55) before doubting the draw.
+  **(l) CLOSED (iter 133)** — a hovered TILE wears a hex-outline focus ring (`probe-tilering`; detail archived).
+  **Legibility law:** a thin hover stroke is INVISIBLE in a wide downscaled shot — re-shoot tight (2×/R55) first.
   **(e½) the interior is an edge-to-edge carpet — now DENSITY-ONLY** *(cue (e)'s skyline half was
   **CLOSED by iter 98**; its **palette** half was **CLOSED by iter 99**)* Urban fabric — iter 94's
   holistic agent called the landmass "too uniform… little breathing room between core and edge,"
@@ -370,9 +372,8 @@ ones (U2, 42, U5) stay in the bullet.
   fit zoom. (Verified by marking them magenta — see 113's findings; the striking pale figure on a marsh
   hex is a **heron**, not a reed.) Spreading/lengthening them is a tile redesign, out of scope for a
   growth lap, and it would pay off immediately because the seasonal color is already computed.
-  **(d) the civic quarter's real square — CLOSED, MEASURED DEAD (iter 131; do not re-open).** A ≥3-hex civic
-  square is geometrically impossible at the quarter (proven dead by `probe-quarter.mjs`), and its connective
-  goal already ships via the fete bunting. Full reasoning moved to `GROWTH-archive.md` at iter 142.
+  **(d) the civic quarter's real square — CLOSED, MEASURED DEAD (iter 131; do not re-open — a ≥3-hex civic
+  square is geometrically impossible at the quarter, `probe-quarter.mjs`; full reasoning archived at iter 142).**
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a
   multi-source hex BFS capped at radius `r`, walking over land only (`WETSET` blocks
   water/marsh/kelp), filling `out` with steps-to-nearest-source and 255 for "farther
@@ -390,63 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 143 entries before Iteration 141 live in
+> **Archive:** the 144 entries before Iteration 142 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 141 — the kelp bed names its extent (2026-07-11)
-
-**Vector.** Water & coast × **Interaction/UX** (SHIPPED). Rotation named the domain — Water was the single
-stalest (last 132) — and the header named the content: the **un-cashed KELP tell**. `TILEDESC[T.KELP]` said
-only *"Seaweed swaying in the shallows"* while `describeTile` printed nothing of the bed, though the woods had
-named their `Stand — N hexes` by flood fill since iter 117 and iter 132 gave the kelp its own drawn canopy. A
-banked, measured cue outranks kind-rotation (the loop's law), even with Interaction/UX hot (133/134/140).
-
-**Adopted from a killed process.** I did **not** author this — the prior iteration ran the vector, passed its
-own gates, and was killed (rate limit / sleep) *between* its verdict and `git commit`, leaving a clean,
-coherent, uncommitted change + its probe in the worktree (the iter-72 shape). Per the skill's dirty-worktree
-rule I re-ran the gates myself; they decide, not the missing ledger entry. Described below from the diff.
-
-**Change (~15 lines, tooltip + refactor, zero draw code).** `standSize` (the woods' flood fill) generalized
-to `floodSize(x,y,pred)`; `standSize`/`bedSize` now both delegate to it — **one definition, so the stand and
-the bed count contiguity the same way and cannot drift (112's one-predicate law)**. `describeTile` gains a
-`Bed — N hexes` row for KELP by `bedSize`; the `TILEDESC[T.KELP]` sub rewritten to *"A bed of kelp rooted in
-the cold, shallow water off the beach."* Depth is deliberately **left off** (invariantly shoal here → constant
-noise), extent is the one honest datum. Kelp carries no CA state, so the bed is pure geometry.
-
-**Census.** PASS, exit 0. Tooltip/refactor-only, stream-neutral — tile histogram empty, core metrics +0.
-(`solarRoofs` −2 / `greenRoofs` −1 is the roof-adoption CA's known headless-timing wobble, ±1–2 on pristine
-HEAD; this change touches no terrain and no `rng()`.)
-
-**Probe** `probes/probe-kelptip.mjs` (already present, promoted). Hovers every KELP hex via `__find('KELP')`
-screen coords, scrapes `#tip`'s `Bed` row, and checks the count against ground truth recomputed **in Node** by
-a flood fill over the kelp set using odd-r cube adjacency — a **third** implementation sharing no code with the
-page's `floodSize`/`nbrs6` (122's law: check a tooltip claim against independent recomputation, not a shot that
-renders it). Freezes the sim first. Controls: a WATER hex must print no `Bed` row; bed sizes partition the kelp
-set. **seed 42:** 10 kelp / ~6 beds, checked 9, control 12 water — **PROBE: PASS**. **seed 7:** 17 kelp / ~7
-beds, checked 15, control 12 — **PROBE: PASS**. Sample scrape reads clean: `Kelp bed | A bed of kelp… | Bed |
-2 hexes | Tide | Ebbing`.
-
-**Visual.** No draw code changed, so scene pixels are identical to HEAD; the tooltip's rendered text is already
-verified by the probe's DOM scrape. One defensive whole-city wide read (seed 42, `year=2035.62`) delegated to
-an agent: balanced coastal city, no z-order tears / floaters / blowout, coastline & kelp shallows read clean,
-nothing compounded. VISUAL: PASS.
-
-**Verdict — SHIPPED. The KELP tell is CASHED.** The un-cashed-tooltip list loses its longest-standing entry;
-KELP joins the woods, orchard, vineyard and institutions in naming what its own code already knows.
-
-### Findings
-- **Depth is correctly OMITTED where it is invariant.** The header's banked cue named *"extent AND depth"*, but
-  every kelp hex abuts the beach at shoal depth, so a `Depth` row would print constant noise. The adopted change
-  showed only extent — the honest datum. **A tooltip row earns its place by VARYING; a constant field is noise,
-  not data** (cf. iter 120's frozen-green hexes: sameness masquerading as information).
-- **`floodSize(x,y,pred)` is now the shared contiguity primitive** — reuse it for any "how big is the contiguous
-  patch this hex belongs to" question (marsh, a district, a water body) rather than forking a fourth flood fill.
-- **A killed iteration's PROBE is its self-grade — re-run it, don't re-derive it.** The prior process left a
-  complete, independent-recomputation probe; running it (both seeds) plus census settled adoption in ~3 minutes
-  without re-designing anything. The probe *is* the missing ledger entry's evidence.
 
 ## Iteration 142 — the eighth step-back finds a clean city, and the first real perf delta (2026-07-11) [holistic step-back]
 
@@ -1016,3 +965,81 @@ flat. Water's Polish cell gains its next (U2, 44, 58, 79, 116, 132, **150**).
   over a full day** (iter 98's law): it only ever *adds* brightness, and only by day, so the night frame is
   byte-identical (glit=0) and the sea's tone returns to base by dusk. This is the clean template for "the sun
   does X to the sea/sky" without a permanent tone drift.
+
+## Iteration 151 — the block grows its own corner shop (2026-07-11) [Urban fabric × New CA rule]
+
+**Vector.** Urban fabric × **New CA rule** — Urban was the single stalest domain (last SHIP 143), 118's law
+forbids a New element there (additive inventory surveyed spent), and the header steered the kind: vary off
+Polish (150) and Deepen (149), *"Connect/New-CA fresh."* The content came from the banked reach-field seam
+(*"nothing sites itself against `rShop`/`rGreen`/`rServ` — a derived field earns its keep when a RULE reads
+it"*): a rule keyed to shop-distance. The city has no **neighbourhood retail** — a house too deep in the
+fabric to reach a shop had nowhere to buy milk; the walkable stat measured the gap (rShop) but nothing filled it.
+
+**The seam, and the recount trap.** `recount()` populates `rShop` (r3 to COM/MARKET, L2086) but is **NOT called
+inside the per-tick sim loop** (L6342) — only at init/warp/manual — so `rShop` is *stale during `tick()`* and a
+tick-rule can't read it without a per-tick `recount()` (the reason the seam sat banked). The fresh equivalent
+is **local**: `countAround(x,y,r, COM||MARKET)`. Shops saturate >90% (the U5 note), so a full r3 desert is rare
+(2–5/city); I used **r2** ("no shop within a short walk") for coverage (8–9 mid-century).
+
+**Change (~14-line tick pass + ~13-line draw + 3-line tooltip).** A house on a built-up block (`≥3 DEV`
+neighbours) with **no COM/MARKET within 2** opens a store on its ground floor: `c.corner=true`. It **stays
+`T.RES`** — mixed-use, exactly like the `c.loft`/`c.solar`/`c.groof` flag idiom — so *no tile type changes*.
+The decision is `hashCell`-gated (no `rng()`), and `c.corner` is read only by the draw + tooltip, never by an
+rng()-gated pass, so both **setting AND clearing** it are stream-neutral. The pass **re-validates**: a store is
+absorbed (`c.corner=false`) once the growing city plants a real shop within 2, so *"in a retail gap"* holds at
+every tick, not just at placement. One store per gap falls out of the fixed-order live-mutating pass (first
+qualifier vetoes any other within 2). The RES draw grafts a storefront on the road face with the COM draw's own
+helpers (`bandR` glass, `slotS` door, `awnS` awning) sized to the RES body, a **green grocer's awning** ('sage')
+to mark it apart, and a night-lit fascia. `describeTile` titles it *"Corner shop"*.
+
+**A `RES→COM` conversion was tried FIRST and REVERTED.** The obvious form — flip the house to `T.COM` — passed
+the census but the tile histogram swung hard (TOWER **−32**, MID **+33**, FOREST/MEADOW −13, …): changing `c.t`
+flips which branch of the **fire** pass (`RES||COM && age>26 && rng()<…`) and the **upgrade** pass runs, changing
+their `rng()` **call counts** and reshuffling the whole downstream stream — even though the *decision* used
+`hashCell`. The flag-on-RES form moves the histogram by **nothing** (all core +0, empty histogram). See findings.
+
+**Census.** PASS, exit 0, pageerrors 0. Fully vacuous — every core metric **+0**, tile histogram **empty**,
+entity counts identical. Stream-neutral AND pop-neutral by construction (no `c.t` change).
+
+**Probe** `probes/probe-cornershop.mjs` (new, promoted). Per 122's law it checks placement against truth
+**recomputed independently in Node** (its own odd-r cube hex-distance, not the page's `countAround`): every
+corner shop's nearest real COM/MARKET is **> 2** hexes (control: `nearShop` must be 0), no two corners within 2
+(spacing), all title *"Corner shop"* with **0** false hits over 200 plain-RES, none before the rule's 1990 start,
+and identical count+positions on reload (determinism). **3/3 seeds PASS:** 2035 counts 5/5/4, all in a gap, min
+pair 3–7, naming 5/5·5/5·4/4, plain false-hits 0. Caught two real bugs on the way: the first `RES→COM` build
+(histogram swing) and encroachment — an early r3 non-revalidating form let the growing city plant a COM beside an
+old corner (seed 42: 2 of 4 within 3), fixed by the re-validating clear.
+
+**Visual.** `probes/shot-cornershop.mjs` (new) camera-zooms onto a corner shop (found via `__find('RES')` filtered
+by `c.corner`) day + night, clipped against the plain terraces; plus whole-city `wide` at seeds 42 & 7. One agent
+per seed, locate-don't-judge (108): **both VISUAL: PASS** — the green-awning glass storefront reads clearly as a
+small shop grafted onto a house, distinct from the plain pitched-roof terraces, awning projecting to the street
+(grounded on its hex, not stabbing a neighbour), night storefront lit; no z-order tears/floaters/blowout; both
+whole-city frames balanced and coherent. Both noted the night fascia is lit-but-not-strongly-emissive — a minor
+legibility nuance, not a fault (over-brightening one hex risks a blown dot).
+
+**Verdict — SHIPPED.** The city grows its own neighbourhood retail: a house in a shop desert opens a corner
+store on its ground floor, and it's absorbed when the shops reach it — a living urban process, guaranteed clean
+(stream + pop neutral). Urban's `New CA rule` cell gains its next (7, 23, ~~82~~, **151**); Urban is no longer
+stalest. `rShop` per se stays banked (I read a local r2 twin, not `rShop`), but the *shape* — a rule keyed to
+shop-distance — is now cashed.
+
+### Findings for later laps
+- **A TYPE CHANGE (`c.t=…`) IS NEVER STREAM-NEUTRAL, EVEN WITH A `hashCell` DECISION — a FLAG on the existing
+  tile is.** The reshuffle isn't from *your* pass calling `rng()`; it's that flipping `c.t` changes which
+  rng()-gated BRANCH a *later* pass takes (the fire pass keys on `RES||COM`, the upgrade pass branches by type),
+  so their `rng()` **call counts** shift and the downstream stream reshuffles. The file's own idiom
+  (`c.loft`/`c.solar`/`c.groof`) is the escape: set a boolean on a tile whose type never changes, read it only in
+  the draw/tooltip, and the census is vacuous. Reach for a flag before a conversion whenever the feature can be
+  mixed-use rather than a demolition.
+- **A REACH FIELD (`rShop`/`rGreen`/`rServ`) IS STALE INSIDE `tick()` — `recount()` runs only at init/warp/manual,
+  never in the sim loop.** A tick-rule that wants "distance to nearest X" must recompute it LOCALLY
+  (`countAround`), or pay a per-tick `recount()` (~1ms × hundreds of warp ticks). This is *why* the "nothing sites
+  itself against the reach fields" seam sat banked — the fields aren't available where a rule would read them. The
+  local `countAround` twin is the practical substitute; note it's your chosen radius, not necessarily rShop's 3.
+- **A RE-VALIDATING FLAG PASS KEEPS ITS OWN INVARIANT TRUE FOREVER, which lets the probe's control stay strict.**
+  Because setting *and clearing* `c.corner` are both stream-neutral, the pass can clear the flag when the world
+  grows past the condition (a shop reaches within 2 → the store is absorbed). So "every corner sits in a gap"
+  holds at 2035, not just at placement — the encroachment bug (a persistent flag the city outgrows) simply cannot
+  occur, and the probe can assert the clean control on final state. Do this for any flag whose siting condition
+  the evolving city can later violate.
