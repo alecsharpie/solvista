@@ -9284,3 +9284,63 @@ shared predicate. Nature's New element cell gains its next (4, 26, 29, 102, **15
   fine for a CONTINUOUS alpha (drift tolerated, like `applySeason`), but a DISCRETE spring/not-spring readout off it
   would strobe (134) — quantize or slow-clock first, exactly as the banked SEASON word still needs.
 
+## Iteration 157 — the eleventh step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/136/142/147/152/**157**). Not a domain × kind
+lap: it reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the season
+probe + interleaved perf gate, at night AND a season with the day/night baselines pinned OFF January
+(`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so rotation is
+unchanged — the next lap (158) owes the stalest domain, **Civic (149)**, then Water (150).
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42 (warp 61) &
+seed 7 (warp 31), each at {day 2035.62/t=0.35, night 2035.62/t=0.90, winter 2035.02/t=0.35}. One subagent per
+seed read its own three frames: the cumulative question ("has anything compounded into clutter or darkness?")
+plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night core (115/143) LOCATED off-centre both seeds** — seed 42 ~(0.48,0.52), seed 7 ~(0.48,0.60) — matching
+  152 ((.47,.55)/(.44,.62)), 147 and 142, each with a genuine core→edge falloff to a dark rim, not a flat wash.
+  Both agents also named a secondary lit lobe (42 ~(.42,.38), 7 ~(.42,.48)) — the old-town crossroads reading
+  distinct from the CBD, as intended.
+- **138's arterial night-corridors** read as *continuous* warm ribbons distinct from dim side streets both seeds;
+  the sea reads (116's bottom + 123's founded wind farm). **No z-order tears / floaters / hard seams /
+  blown-out white** in any of the 6 frames. **Winter reads distinct** from summer (farm/scrub tan/dormant, cooler
+  flatter light, cooler ocean) at both seeds — the mildest of the three deltas, by-design (120's dilution).
+
+**Season — measured alive.** `probes/probe-season.mjs`: FARM winter→dry-peak **88.4** (matches 130/136/142/147/152),
+VINEYARD 44.6/36.7/42.7 (139), **FOREST now 20.6/19.7/24.6** (156's spring understory + canopy shift both read),
+ORCHARD/MEADOW/SHOREPARK all move, PARK/REDWOOD/GARDEN/QUAD near-zero by design (120), ROAD control **0.5–2.2**.
+Calendar working; the whole-frame mildness is the by-design evergreen/irrigated dilution.
+
+**Perf — 152→156 cost ZERO; the stored-baseline read fired its SIXTH+ false-FAIL.** `perf.mjs` vs stored baseline
+read day **+30%** / night **+39%**, looking like a regression. Interleaved HEAD-156 vs the iter-152 file
+(`be84b49`, A/B/A/B, **min per variant**): day **37.66 vs 36.39** (**+3.5%**, inside the ±9ms round-to-round noise
+floor the day column swung across — 43.2/37.7 for the same HEAD bytes) and night **42.83 vs 42.66** (**+0.4%,
+flat**). So 153 (per-star magnitude, night-only draw) + 154 (tooltip-only) + 155 (tram catenary, day+night stroke)
++ 156 (spring understory, OFF at the perf frame's ~January year) added nothing measurable. NOT re-pinned. Census
+PASS, vacuous (no source edit); tree verified clean after the interleave restored HEAD.
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per 120/130/136/142/147/152 ("a
+clean step-back is a complete iteration — don't force a filler vector") the output is the health record + header
+refreshes: step-back pointer 152→157 (next 162), the sixth clean bill, and the 157 interleaved perf reading. No
+`solvista.html` edit.
+
+**Verdict — FIXED.** No compounding city defect — the SIXTH clean step-back in a row (130, 136, 142, 147, 152,
+157). All accumulated visual laws (115/116/120/123 + 138 arterials + 143 CBD peak) still read at both seeds under
+all three lights; the season is alive (156's understory now shows in the FOREST column); perf is flat against the
+honest interleaved control.
+
+### Findings
+- **SIXTH CONSECUTIVE CLEAN STEP-BACK, and the stored-baseline false-FAIL is now habitual — trust ONLY the
+  interleave.** The stored baseline (day 33.16 / night 37.33, pinned 2026-07-10) read +30% day / +39% night on a
+  diff the interleave proves free; the 5-day-old iter-152 file reads the same inflated numbers today. Re-pin only
+  if an interleave *itself* shows a persistent offset (it has not since 142's real +2.2%).
+- **THE DAY COLUMN IS NOISIER THAN NIGHT ON THIS BOX — grade day only by the min-of-≥2-rounds interleave.** Round 1
+  read the identical HEAD bytes at 43.2ms day and round 2 at 37.7ms (a 15% swing from load alone), so a single-round
+  day delta is meaningless; night was steady (42.8/42.9). Take at least two rounds and the min per variant, exactly
+  as the skill says — a one-round day number will invent a regression or hide one.
+- **156's spring understory correctly reads ZERO perf at the standard perf frame** (year 2035 ≈ January, bloom
+  gate off) yet MOVES the season probe's FOREST column (spring 20.6) — the two gates see it at different calendars,
+  which is the intended design (season-gated draws are free out of season). Don't read "perf flat" as "the feature
+  isn't drawing"; read the probe at the season the gate is on.
+
