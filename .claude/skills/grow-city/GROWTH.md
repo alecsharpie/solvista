@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137**, **163** | 71, **154** |
 
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · Urban **165** · People **163** · Nature **166** (Deepen; SHIP) · Transport **164** · Civic **158** · Water **159**. (162, **167** = step-backs, no domain lap.)
-  **Stalest is now Civic (158)**, then Water (159) — 167 was the mandated STEP-BACK (EIGHTH consecutive clean bill; whole city balanced at 2 seeds × 3 lights, season alive, perf flat vs 162), so the next lap (**168 owes Civic**), then Water; next step-back at **172**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
+  Sky **161** · Urban **165** · People **163** · Nature **166** · Transport **164** · Civic **168** (Polish; SHIP) · Water **159**. (162, **167** = step-backs, no domain lap.)
+  **Stalest is now Water (159)**, then Transport (164) — 168 took Civic × Polish (the amphitheater's empty lit stage now stages a spotlit swaying performer at night — the "Concerts" its CIVICDESC always promised; `probe-amphi`, the asserts-more-than-it-draws tell in its Polish form). So the next lap (**169 owes Water**), then Transport; next step-back at **172**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -391,80 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 160 entries before Iteration 158 live in
+> **Archive:** the 161 entries before Iteration 159 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 158 — the observatory dome opens and turns with the night sky (2026-07-11) [Civic & culture × Deepen]
-
-**Vector.** Civic & culture × **Deepen** (SHIPPED). Rotation named the domain — after the 157 step-back the lap
-owed the stalest domain, **Civic** (last SHIP 149). Kind stayed Deepen (149's own cell) because 149 explicitly
-*banked* the seam: the asserts-more-than-it-shows tell has a **draw** form, and 149's richest banked candidate was
-*"a frozen sundial/gauge/vane that should track a clock."* The observatory is exactly that — and it feeds Sky by
-deepening Civic toward it (108's law, "Sky can be fed by deepening another domain"). A banked, named finding
-outranks kind-rotation (the header's own law), so Deepen it is; content varies from 149 (a clock hand) and 155/153
-(tram/stars).
-
-**The seam.** `case 'observatory'` (L4650) drew the teal dome with a **slit at a FIXED azimuth** — `sd` (a per-city
-hashCell) flipped which side it sat, but it never moved through the night — while its own `CIVICDESC` promised
-*"A dome out on the dark rim of the city, open to the night."* A real observatory dome **rotates** to keep a target
-in the aperture and is buttoned up by day. The observatory is one-per-city, sited from 2018 (present in the 2035
-census slices) — a zoom-reward landmark like the hall clock (149), not dead code (census tile histogram confirms 1/city).
-
-**Change (~13 lines, draw-only).** Replaced the static slit with an aperture whose azimuth reads the slow day clock
-(`dayT`, the same one the hall clock (149) and moon (135) read): `nd = dayT>0.5?dayT-1:dayT` (signed offset from
-midnight), `phi = clamp(nd*4.887,-1.4,1.4)*openAmt*sd`. So the slit points at the **zenith (straight up) at midnight**
-and leans toward the east/west horizons through dusk and dawn — and at midnight it looks UP while the 149 clock hand
-points DOWN, complementary readers of one clock. `openAmt = clamp((LITAMT-0.15)/0.45,0,1)` gates the aperture
-open after dark and shut by day (thin seam → wide bright glowing slit); the instrument glow rides the open slit.
-`sd` kept as per-city handedness. No tile, entity, `rng()`, `hashCell` spawn, `tick()` pass or terrain; strings
-pure-ASCII (134). Stream + pop provably flat. Added a test-only `__obs()` locator hook (dome center/radius on
-screen + `sd`/`openAmt`/`phi`), mirroring `__clock` (149).
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
-(`greenRoofs +1` is documented chaotic-CA wobble). Vacuous by construction (a draw reading globals) — the probe is
-the gate.
-
-**Probe — `probes/probe-obsdome.mjs` (new, promoted).** Zooms the camera onto the dome (149: camera-set beats
-wheel) and measures the aperture from pixels, locate-don't-judge (108); recomputes the expected sweep itself, never
-gates on `__obs().phi`. Two measurements: **azimuth** = centroid of near-white slit ink (L>235 — clean at night,
-when the dome is dark); **open/shut** = local contrast `p95−median` in the aperture band (lighting-robust, unlike
-absolute luminance which daylight confounds — my first cut read noon "brighter" than midnight). seeds 7/42/1234/3/88,
-all with an observatory: at 5 night dayT the slit azimuth sweeps **monotonic** and **midnight sits at the zenith
-(−1°)** — seed 42 (sd=1) −39°→−20°→−1°→+8°→+12°, seed 3 (sd=−1) mirrors it +38°→…→−13°; aperture **open at midnight
-(contrast 156) vs shut at noon (70)**; control (a night frame twice) pixel-identical. **VERDICT: PASS (5 seeds).**
-
-**Visual.** `probes/shot-obsdome.mjs` (new) camera-zooms the dome at dusk/midnight/dawn/noon, 2 seeds. One agent,
-blind locate (108): midnight slit **UP** both seeds; dusk vs dawn lean to **opposite sides** (mirrored between seeds
-by `sd`, as designed); noon aperture a faint shut sliver vs the vivid midnight glow; dome seated on its drum, proper
-z-order (a front tower correctly occludes) — **VISUAL: PASS**. Whole-city `wide` night (seed 42) + day (seed 7),
-one agent each: both balanced coherent coast, lit core → dark rim, no tears/floaters/blowout, nothing compounded —
-**VISUAL: PASS** both.
-
-**Verdict — DEEPENED.** The observatory dome now opens after dark and rotates to track the night sky, where for the
-artifact's whole life its slit sat frozen — finally honoring the `CIVICDESC` that always called it "open to the
-night." Draw-only, stream + pop flat, ~13 lines + a locator hook + a probe + a shot script. Civic's Deepen cell
-gains its next (36, 59, 66, 80, 91, 149, **158**); Civic is no longer stalest (Water 150 now is).
-
-### Findings for later laps
-- **149'S DRAW-TELL PAYS AGAIN — its banked candidate list is a to-do list.** 149 named the seam ("a frozen
-  vane/gauge/dome that should track a clock") AND named the candidates; 158 just cashed the richest one. Still
-  banked from 149: the **firehouse bell** (static gold disc — but no natural clock tie, weaker) and the
-  **museum/parliament** floodlights. The observatory was the strongest because its own tooltip already asserted the
-  behavior ("open to the night"). Where else does a DRAWN ornament's comment/shape promise motion the draw ignores?
-- **OPEN/SHUT IS MEASURED BY LOCAL CONTRAST (peak−median), NOT ABSOLUTE LUMINANCE — daylight confounds the latter.**
-  My first probe counted pixels over a fixed luminance threshold and read NOON as *more* open than midnight, because
-  the whole daylit dome exceeds the threshold. The fix: within the aperture band, `p95−median` — a bright slit on a
-  dark night dome gives high contrast; a shut seam on a uniformly-lit day dome gives low contrast — regardless of
-  ambient light. Absolute-threshold centroid is still fine for the AZIMUTH *at night* (dome dark, only the slit is
-  near-white). Two metrics, two lighting regimes: contrast for open/shut across day↔night, luminance-centroid for
-  direction within the night.
-- **A SWEEP THAT PIVOTS ON `dayT>0.5?dayT-1:dayT` IS SYMMETRIC IN CODE BUT NOT IN THE OPEN WINDOW.** The aperture is
-  full-open by dusk (dayT 0.90 → openAmt 1.0) but drops fast on the dawn side (dayT 0.10 → 0.21), so a naive
-  symmetric ±0.10 night sample set put one frame outside the open window (ink=0). Pick night probe samples by
-  checking `openAmt`, not by assuming the dusk/dawn edges are mirror images — the daylight model isn't.
 
 ## Iteration 159 — the surf glows at night (2026-07-11) [Water & coast × Deepen]
 
@@ -993,3 +924,59 @@ vineyard moving); perf is flat against the honest interleaved control.
   plant is the only draw of 163–166 that lands at night, and night moved +1.0% while day stayed flat.** Confirms
   162's read: every night-only/day+night draw compounds on night alone. +1.0% over 4 iters is fine; night stays
   the column a future step-back watches first (night >30fps-budget ~50%, ≈45ms/22fps under today's load).
+
+## Iteration 168 — the amphitheater's stage gets its concert (2026-07-11) [Civic & culture × Polish]
+
+**Vector.** Civic & culture × **Polish** (SHIPPED). Rotation named the domain — after the 167 step-back the lap
+owed the stalest domain, **Civic** (last SHIP 158). Kind varied OFF Deepen deliberately: Deepen has run hot
+globally (155/158/159/165/166 all Deepen), and Civic's own last kind was Deepen (158). **Polish** is Civic's most
+under-used cell (last 73; 114 reverted) and globally cold (last Polish 163). Content fits the night-mood run the
+last laps built (moon 135, stars 153, observatory 158, biolum surf 159).
+
+**The seam.** `case 'amphitheater'` (L4745) lit an EMPTY stage at showtime — a warm wash ellipse + 3 footlight
+dots under `if(LITAMT>0.3)` — while its own `CIVICDESC` promised *"An open-air bowl beside the parks. Concerts
+through the summer."* A label asserting a performance the pixels never showed: the same asserts-more-than-it-draws
+tell that has paid seven times (117/122/129/148/158…), here in its **Polish** form — make the existing draw read
+as what its label already claims. Amphitheater is 1/city, sited from 2004 (present in the 2035 census slices), a
+zoom-reward landmark like the observatory (158) and hall clock (149) — census tile histogram confirms 1/city.
+
+**Change (~14 lines, draw-only).** Inside the existing `LITAMT>0.3` showtime block: a soft warm **beam** cone
+spilling from over the stage onto the apron; a centre-stage **performer** — a lavender body + a warm-lit head —
+that **sways** to the music (`sin(time*1.5+x*1.3)`); the warm apron wash and 3 footlights kept. No tile, entity,
+`rng()`, `hashCell` spawn, `tick()` pass or terrain; strings pure-ASCII (134). Stream + pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical.
+Vacuous by construction (a night-only draw at the t=0.35 daytime census frame draws nothing) — the probe is the gate.
+
+**Probe — `probes/probe-amphi.mjs` (new, promoted).** Diffs PATCHED vs pristine HEAD at the SAME frozen frame
+(`time` pinned, every mover cleared per tramwire's law), camera-zoomed onto the 1/city amphitheater hex so the
+stage is unoccluded (obsdome's method), ROAD as the zero control. seeds 42/1234/88: **STAGE changed 8.1–8.25% at
+NIGHT → 0.00% in DAY** (gate off → byte-identical), **ROAD ~0** both frames. seeds 3/7 skipped: their
+amphitheater is **occluded** behind foreground downtown towers (byte-identical even at night — the draw fires but
+is overpainted; verified visually), so unmeasurable here, not a failure. **VERDICT: PASS (3 seeds).**
+
+**Visual.** `probes/shot-amphi.mjs` (new) camera-zooms the amphitheater, night + a day control. seed 42 (mine) &
+seed 1234 (agent, blind): the NIGHT frame reads as a soloist under a spotlight — lavender figure, glowing head,
+warm beam, footlights, centre-stage on the hex bowl, no float/tear/blowout; the DAY frame an empty stone cavea
+(the flat coloured audience specks are the pre-existing `LITAMT<0.75` daytime crowd, untouched) — **VISUAL: PASS**
+both. Whole-city `wide` night (seed 42), one agent: balanced coherent coast, lit core (x~0.48,y~0.52, matching
+162/167's reads) → dark rim, sea reads, nothing compounded — **VISUAL: PASS**.
+
+**Verdict — SHIPPED.** The amphitheater stage, lit-but-empty for the artifact's whole life, now stages a spotlit
+performer at night — honoring the "Concerts through the summer" the label always promised, and adding a Civic
+entry to the night-life run. Draw-only, stream + pop flat, ~14 lines + a probe + a shot script. Civic's Polish
+cell gains its next (73, ~~114~~, **168**); Civic is no longer stalest (Water 159 now is).
+
+### Findings for later laps
+- **THE ASSERTS-MORE-THAN-IT-DRAWS TELL HAS A POLISH FORM, not only Deepen/Interaction.** 117/122/129/148 cashed it
+  in *tooltips* (a string vs `describeTile`); 158 cashed a *draw* comment ("open to the night") as a Deepen. 168 is
+  the same tell as a **Polish**: `CIVICDESC` (a tooltip string) asserted "Concerts", and the *draw* showed an empty
+  lit stage — so making the draw honor the string is a legibility fix, not a new system. Where else does a label
+  promise activity the tile draws as empty?
+- **A CAMERA-ZOOM PROBE ON A 1/CITY LANDMARK MUST TREAT OCCLUSION AS SKIP, NOT FAIL.** 2 of 5 seeds sited the
+  amphitheater where downtown towers overpaint it from the diorama's fixed camera — byte-identical patched-vs-
+  pristine even at night. That is the draw firing and being overdrawn, not a defect; the probe skips a
+  night≈0 seed and requires ≥2 measurable seeds passing (obsdome's "only seeds with the feature on-screen count").
+- **STILL BANKED from 158's draw-tell list:** the firehouse bell (static gold disc, no natural clock tie — weaker)
+  and museum/parliament floodlights (the museum already floodlights at dusk; parliament does not). Next Civic
+  Deepen candidate; 168 took the Polish path to the same tell instead.

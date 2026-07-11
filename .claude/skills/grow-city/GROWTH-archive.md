@@ -9344,3 +9344,72 @@ honest interleaved control.
   which is the intended design (season-gated draws are free out of season). Don't read "perf flat" as "the feature
   isn't drawing"; read the probe at the season the gate is on.
 
+## Iteration 158 — the observatory dome opens and turns with the night sky (2026-07-11) [Civic & culture × Deepen]
+
+**Vector.** Civic & culture × **Deepen** (SHIPPED). Rotation named the domain — after the 157 step-back the lap
+owed the stalest domain, **Civic** (last SHIP 149). Kind stayed Deepen (149's own cell) because 149 explicitly
+*banked* the seam: the asserts-more-than-it-shows tell has a **draw** form, and 149's richest banked candidate was
+*"a frozen sundial/gauge/vane that should track a clock."* The observatory is exactly that — and it feeds Sky by
+deepening Civic toward it (108's law, "Sky can be fed by deepening another domain"). A banked, named finding
+outranks kind-rotation (the header's own law), so Deepen it is; content varies from 149 (a clock hand) and 155/153
+(tram/stars).
+
+**The seam.** `case 'observatory'` (L4650) drew the teal dome with a **slit at a FIXED azimuth** — `sd` (a per-city
+hashCell) flipped which side it sat, but it never moved through the night — while its own `CIVICDESC` promised
+*"A dome out on the dark rim of the city, open to the night."* A real observatory dome **rotates** to keep a target
+in the aperture and is buttoned up by day. The observatory is one-per-city, sited from 2018 (present in the 2035
+census slices) — a zoom-reward landmark like the hall clock (149), not dead code (census tile histogram confirms 1/city).
+
+**Change (~13 lines, draw-only).** Replaced the static slit with an aperture whose azimuth reads the slow day clock
+(`dayT`, the same one the hall clock (149) and moon (135) read): `nd = dayT>0.5?dayT-1:dayT` (signed offset from
+midnight), `phi = clamp(nd*4.887,-1.4,1.4)*openAmt*sd`. So the slit points at the **zenith (straight up) at midnight**
+and leans toward the east/west horizons through dusk and dawn — and at midnight it looks UP while the 149 clock hand
+points DOWN, complementary readers of one clock. `openAmt = clamp((LITAMT-0.15)/0.45,0,1)` gates the aperture
+open after dark and shut by day (thin seam → wide bright glowing slit); the instrument glow rides the open slit.
+`sd` kept as per-city handedness. No tile, entity, `rng()`, `hashCell` spawn, `tick()` pass or terrain; strings
+pure-ASCII (134). Stream + pop provably flat. Added a test-only `__obs()` locator hook (dome center/radius on
+screen + `sd`/`openAmt`/`phi`), mirroring `__clock` (149).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
+(`greenRoofs +1` is documented chaotic-CA wobble). Vacuous by construction (a draw reading globals) — the probe is
+the gate.
+
+**Probe — `probes/probe-obsdome.mjs` (new, promoted).** Zooms the camera onto the dome (149: camera-set beats
+wheel) and measures the aperture from pixels, locate-don't-judge (108); recomputes the expected sweep itself, never
+gates on `__obs().phi`. Two measurements: **azimuth** = centroid of near-white slit ink (L>235 — clean at night,
+when the dome is dark); **open/shut** = local contrast `p95−median` in the aperture band (lighting-robust, unlike
+absolute luminance which daylight confounds — my first cut read noon "brighter" than midnight). seeds 7/42/1234/3/88,
+all with an observatory: at 5 night dayT the slit azimuth sweeps **monotonic** and **midnight sits at the zenith
+(−1°)** — seed 42 (sd=1) −39°→−20°→−1°→+8°→+12°, seed 3 (sd=−1) mirrors it +38°→…→−13°; aperture **open at midnight
+(contrast 156) vs shut at noon (70)**; control (a night frame twice) pixel-identical. **VERDICT: PASS (5 seeds).**
+
+**Visual.** `probes/shot-obsdome.mjs` (new) camera-zooms the dome at dusk/midnight/dawn/noon, 2 seeds. One agent,
+blind locate (108): midnight slit **UP** both seeds; dusk vs dawn lean to **opposite sides** (mirrored between seeds
+by `sd`, as designed); noon aperture a faint shut sliver vs the vivid midnight glow; dome seated on its drum, proper
+z-order (a front tower correctly occludes) — **VISUAL: PASS**. Whole-city `wide` night (seed 42) + day (seed 7),
+one agent each: both balanced coherent coast, lit core → dark rim, no tears/floaters/blowout, nothing compounded —
+**VISUAL: PASS** both.
+
+**Verdict — DEEPENED.** The observatory dome now opens after dark and rotates to track the night sky, where for the
+artifact's whole life its slit sat frozen — finally honoring the `CIVICDESC` that always called it "open to the
+night." Draw-only, stream + pop flat, ~13 lines + a locator hook + a probe + a shot script. Civic's Deepen cell
+gains its next (36, 59, 66, 80, 91, 149, **158**); Civic is no longer stalest (Water 150 now is).
+
+### Findings for later laps
+- **149'S DRAW-TELL PAYS AGAIN — its banked candidate list is a to-do list.** 149 named the seam ("a frozen
+  vane/gauge/dome that should track a clock") AND named the candidates; 158 just cashed the richest one. Still
+  banked from 149: the **firehouse bell** (static gold disc — but no natural clock tie, weaker) and the
+  **museum/parliament** floodlights. The observatory was the strongest because its own tooltip already asserted the
+  behavior ("open to the night"). Where else does a DRAWN ornament's comment/shape promise motion the draw ignores?
+- **OPEN/SHUT IS MEASURED BY LOCAL CONTRAST (peak−median), NOT ABSOLUTE LUMINANCE — daylight confounds the latter.**
+  My first probe counted pixels over a fixed luminance threshold and read NOON as *more* open than midnight, because
+  the whole daylit dome exceeds the threshold. The fix: within the aperture band, `p95−median` — a bright slit on a
+  dark night dome gives high contrast; a shut seam on a uniformly-lit day dome gives low contrast — regardless of
+  ambient light. Absolute-threshold centroid is still fine for the AZIMUTH *at night* (dome dark, only the slit is
+  near-white). Two metrics, two lighting regimes: contrast for open/shut across day↔night, luminance-centroid for
+  direction within the night.
+- **A SWEEP THAT PIVOTS ON `dayT>0.5?dayT-1:dayT` IS SYMMETRIC IN CODE BUT NOT IN THE OPEN WINDOW.** The aperture is
+  full-open by dusk (dayT 0.90 → openAmt 1.0) but drops fast on the dawn side (dayT 0.10 → 0.21), so a naive
+  symmetric ±0.10 night sample set put one frame outside the open window (ink=0). Pick night probe samples by
+  checking `openAmt`, not by assuming the dusk/dawn edges are mirror images — the daylight model isn't.
+

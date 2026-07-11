@@ -4759,9 +4759,22 @@ function drawBuilding(c,x,y,gx,gy){
           ctx.fillStyle=col(j&1?'coral':(j&2?'gold':'lav'),1.1);
           ctx.fillRect(cx+Math.cos(a)*(2.6+r2*2.0)-0.6,cy+1.5+Math.sin(a)*(1.4+r2*1.05)-0.6,1.2,1.2);}
       }
-      if(LITAMT>0.3){ /* showtime: warm stage wash + footlights */
+      if(LITAMT>0.3){ /* showtime: a spotlit performer under the beam, footlights
+         — the concert the CIVICDESC promised, over the empty lit stage it drew */
+        const sway=Math.sin(time*1.5+x*1.3)*0.35;   /* sways to the music */
+        /* the beam: a soft cone spilling down from over the stage onto the apron */
+        ctx.fillStyle='rgba(255,226,172,'+(0.14*LITAMT)+')';
+        ctx.beginPath();ctx.moveTo(cx-0.8,cy-1.8);ctx.lineTo(cx+0.8,cy-1.8);
+        ctx.lineTo(cx+3.4,cy+2.2);ctx.lineTo(cx-3.4,cy+2.2);ctx.closePath();ctx.fill();
+        /* warm wash pooling on the apron */
         ctx.fillStyle='rgba(255,214,150,'+(0.35*LITAMT)+')';
-        ctx.beginPath();ctx.ellipse(cx,cy+0.8,4.6,2.4,0,0,7);ctx.fill();
+        ctx.beginPath();ctx.ellipse(cx,cy+0.9,4.6,2.4,0,0,7);ctx.fill();
+        /* the performer, centre stage under the beam */
+        ctx.fillStyle=col('lav',1.25);
+        ctx.fillRect(cx-0.55+sway,cy-0.4,1.1,2.0);
+        ctx.fillStyle='rgba(255,238,208,0.95)';
+        ctx.beginPath();ctx.arc(cx+sway*1.1,cy-0.8,0.68,0,7);ctx.fill();
+        /* footlights along the stage lip */
         ctx.fillStyle='rgba(255,214,150,'+(0.85*LITAMT)+')';
         for(let j=0;j<3;j++)ctx.fillRect(cx-3+j*3-0.5,cy+2.6,1,1);
       }
