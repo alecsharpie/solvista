@@ -9997,3 +9997,62 @@ cell gains its next (73, ~~114~~, **168**); Civic is no longer stalest (Water 15
   and museum/parliament floodlights (the museum already floodlights at dusk; parliament does not). Next Civic
   Deepen candidate; 168 took the Polish path to the same tell instead.
 
+## Iteration 169 — the tideline gets its gulls (2026-07-11) [Water & coast × New element]
+
+**Vector.** Water & coast × **New element** (SHIPPED). Rotation named the stalest domain, **Water** (last SHIP
+150; 159 Deepen). Kind varied off 159's Deepen and the recent night-feature run (135/153/158/159) to a **New
+element** on a genuinely fresh **surface** — 127's law (saturation is of a domain's *entities*, not its surfaces):
+Water's entity list is spent (boats, ferries, freighters, kayaks, herons, surfers, whales, gulls-on-the-ferry-wake),
+but **no bird has ever landed** — the damp sand at the waterline had no life at all. A daytime feature, deliberately
+breaking the five-lap night streak.
+
+**The seam.** `case T.BEACH` (L3265) already walks every sea-facing hex edge to lay the tide's damp margin and its
+tidepools — `edges` (the water-facing vertex pairs), `cx,cy` and the inshore geometry are all in scope. The exact
+host for birds standing on the wet band, inshore of the waterline.
+
+**Change (~30 lines + a `drawGull` helper, draw-only).** A `LITAMT<0.58`-gated block after the tidepools scatters a
+small group of **1-3 gulls** on the damp margin of beach hexes that face open water, `hashCell`-gated
+(`seedNum^0x6011 < 0.32`) so only ~a third of shore stretches hold a group — sparse, irregular, never a wall of
+birds. Each gull is `hashCell`-placed along the chosen edge and a little inshore, most facing the sea, one per group
+with its head down feeding; a slow `waveT` idle bob. They fade in through the morning and lift off to roost by dusk
+(`ga=clamp((0.58-LITAMT)/0.22,0,1)`, the same slow day-clock the beach umbrellas ride, so a daily rhythm not a
+strobe). `drawGull` is a side-on herring gull: pale-grey `whiteDk` back, `white` breast/head, `gold` bill+legs,
+`ink` wingtip+eye, a `shadS` contact shadow (house style, 137/163). No tile, entity array, `rng()`, `tick()` pass or
+terrain; strings pure-ASCII (134). Stream + pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0, entity counts identical. Vacuous by
+construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-gulls.mjs` (new, promoted).** Diffs PATCHED vs pristine HEAD at the SAME frozen frame
+(waveT pinned, every mover cleared, tramwire's law), sampling BEACH hexes that touch non-river WATER (the gull hosts,
+found in-page) with ROAD as the zero control. seeds 7/42: **BEACH changed 1.17% / 0.85% in DAY (LITAMT 0.02) → 0.00%
+/ 0.00% at NIGHT (LITAMT 1.00, gate off, byte-identical)**; ROAD control ~0 in day (0.22%/0.05% = day-only gulls
+bleeding into adjacent coastal-road boxes, correctly →0 at night) and ~0 at night. So the gulls appear only by day
+and only on the water-facing beach margin. **PASS.**
+
+**Visual.** The wide `coast` clip made the ~4px gulls borderline — one agent PASS ("borderline, close to noise"),
+one FAIL ("can't locate them"). That is biolum's exact lesson (159): a subtle coast ornament must be judged at the
+**moderate ~4x zoom a user actually looks at the coast**, not the wide clip. `probes/shot-gulls.mjs` (new; camera-
+zooms a front-of-frame beach hex that passes the gull gate, day frame) at 4.6x/6.5x: both seeds read cleanly as
+little pale shorebirds standing on the damp margin at the waterline, facing the sea — correct placement, no
+floating/clutter (self-verified both seeds). Whole-city `wide` (seed 42): balanced beautiful coast, gulls correctly
+sub-pixel/uncluttered at fit zoom, no tears/floaters/blowout — agent **VISUAL: PASS**.
+
+**Verdict — SHIPPED.** The waterline, lifeless for the artifact's whole existence, now has shorebirds standing on
+the wet sand by day — the daytime Water counterpart to the recent night-life run. Draw-only, stream + pop flat.
+Water's New element cell gains its next (6, 10, 12, 16, 20, 33, 106, **169**); Water is no longer stalest
+(Urban 151 now is).
+
+### Findings for later laps
+- **A ~4px COAST ORNAMENT IS BORDERLINE AT THE WIDE `coast` CLIP AND CLEAN AT ~4.6x — SHOOT THE MODERATE ZOOM
+  FIRST (biolum's law, 159, re-confirmed).** The wide `coast` framing split two agents (one couldn't locate the
+  gulls at all); a camera-zoom to the natural ~4.6x coast scale on a hex that *passes the feature's own placement
+  gate* resolved them as birds on both seeds. When a small coast feature's probe PASSES but the wide-clip agents
+  disagree, the framing is unfair — reframe, don't redesign (the FAIL is a cue to measure/reframe, 120's law).
+- **127's SURFACE-NOT-ENTITIES LAW HELD AGAIN for a saturated domain.** Water's *entity* list is spent, but the
+  wet sand margin was an untouched *surface* with no life on it. A New element still lands in a saturated domain if
+  it targets a surface nothing has drawn on (127 picnics on PARK, 145 the beach's daily rhythm, 169 the tideline).
+- **STILL banked for Water (123):** the pier/lifeguard tower are still `rng()`-salted — site them on a depth by
+  respending their draws, but VARY 123's site-on-depth mechanism. Untouched still: a New element could also land on
+  the marsh's wet edge, or gulls could work the ferry wake as they *land* on the water (currently they only fly).
+

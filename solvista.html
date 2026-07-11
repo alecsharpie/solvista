@@ -4022,6 +4022,23 @@ function drawCell(x,y){
         const ew=(bE&&bE.t===T.ROAD)||(bW&&bW.t===T.ROAD);
         prism(gx,gy,ew?0.52:0.32,ew?0.32:0.52,2,4.4,col('deck',1),col('deckDk',0.7),col('deckDk',0.9));
         bandR(gx,gy,ew?0.52:0.32,ew?0.32:0.52,4.4,5.2,col('whiteDk',0.95));
+        if(LITAMT>0.25){ /* the span lights its rail lamps after dark and they pool warm on the
+                            water below. Every street around a bridge glows at night, but the
+                            bridge itself went dark till now — the case breaks before the road's
+                            street-lamp block runs, so the deck was the one unlit road in the city. */
+          const[bx,by]=px(gx,gy);
+          const hx2=ew?0.52*2*HW*0.82:0, hy2=ew?0:0.52*2*VR*0.82;   /* the two rail-lamp ends along the span */
+          const tw=0.55+0.45*Math.sin(waveT*1.4+x*1.3+y);           /* the reflection breathes with the swell */
+          ctx.fillStyle='rgba(255,201,120,'+(0.17*LITAMT*tw)+')';   /* warm cast on the river in front of the deck */
+          ctx.beginPath();ctx.ellipse(bx,by+4.4,ew?6:3.2,ew?1.5:2.4,0,0,7);ctx.fill();
+          for(let s=-1;s<=1;s+=2){
+            const lx=bx+hx2*s, ly=by-6.4+hy2*s;
+            ctx.fillStyle='rgba(255,213,132,'+(0.30*LITAMT)+')';    /* halo */
+            ctx.beginPath();ctx.arc(lx,ly,3.0,0,7);ctx.fill();
+            ctx.fillStyle='rgba(255,232,158,'+(0.9*LITAMT)+')';     /* lamp head */
+            ctx.beginPath();ctx.arc(lx,ly,1.2,0,7);ctx.fill();
+          }
+        }
         break;
       }
       const art=c.flow>=ARTFLOW;
