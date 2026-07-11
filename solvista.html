@@ -2794,6 +2794,30 @@ function shadS(cx,cy,r,a){
 function shadowEl(gx,gy,r,a){
   const[cx,cy]=px(gx,gy); shadS(cx,cy,r,a);
 }
+/* a herring gull standing on the wet sand, side-on. Pale grey back, white breast
+   and head, a yellow bill and legs, dark wingtips at the tail. `dir` faces it into
+   the water (or away); `peck` drops the head to feed. Small enough to be sub-pixel
+   at fit zoom (so a lined coast never clutters) but reads at the coast's own zoom. */
+function drawGull(cx,cy,dir,peck){
+  shadS(cx,cy+1.5,0.05,0.13);
+  ctx.strokeStyle=col('gold',0.85);ctx.lineWidth=0.5;      /* legs */
+  ctx.beginPath();ctx.moveTo(cx-0.4,cy+0.6);ctx.lineTo(cx-0.4,cy+1.5);
+  ctx.moveTo(cx+0.4,cy+0.6);ctx.lineTo(cx+0.4,cy+1.5);ctx.stroke();
+  ctx.fillStyle=col('whiteDk',1);                          /* pale grey back/body */
+  ctx.beginPath();ctx.ellipse(cx,cy,2.0,1.05,0,0,7);ctx.fill();
+  ctx.fillStyle=col('white',1.05);                         /* white breast, forward */
+  ctx.beginPath();ctx.ellipse(cx+dir*0.7,cy+0.15,1.2,0.9,0,0,7);ctx.fill();
+  ctx.fillStyle=col('ink',1.05);                           /* dark wingtip at the tail */
+  ctx.beginPath();ctx.ellipse(cx-dir*1.6,cy-0.1,0.7,0.5,0,0,7);ctx.fill();
+  const hx=cx+dir*1.5, hy=peck?cy+0.8:cy-1.05;             /* head up, or down feeding */
+  ctx.fillStyle=col('white',1.08);
+  ctx.beginPath();ctx.arc(hx,hy,0.85,0,7);ctx.fill();
+  ctx.fillStyle=col('gold',1.1);                           /* bill */
+  ctx.beginPath();ctx.moveTo(hx+dir*0.6,hy-0.15);ctx.lineTo(hx+dir*1.9,hy+(peck?0.5:0.25));
+  ctx.lineTo(hx+dir*0.6,hy+0.45);ctx.closePath();ctx.fill();
+  ctx.fillStyle=col('ink',1);                              /* eye */
+  ctx.beginPath();ctx.arc(hx+dir*0.15,hy-0.2,0.28,0,7);ctx.fill();
+}
 /* species from the tree's own sub-hex position, so one clump mixes.
    Conifers climb inland; the strand stays broadleaf. */
 function treeSp(gx,gy){
@@ -3325,6 +3349,32 @@ function drawCell(x,y){
             ctx.fillRect(px2-0.7+(hp*8%1)*1.4,py2-0.5,1.1,1.1);
           }
           ctx.globalAlpha=1;
+        }
+        if(edges.length&&LITAMT<0.58){ /* shorebirds gather on the damp margin by day
+             and lift off to roost at dusk (LITAMT is the slow ~110s day-clock, 0 at
+             midday -> 1 at night, so they fade with the beach furniture, not a strobe).
+             Only some stretches of shore hold a group; draw-only, hashCell-placed. */
+          const ga=clamp((0.58-LITAMT)/0.22,0,1);
+          const gh=hashCell(x*5+3,y*7+1,seedNum^0x6011);
+          if(ga>0.03&&gh<0.32){
+            const[ea,eb]=edges[(gh*3.1*edges.length)|0]; /* gh<0.32 so gh*3.1<1: always in range */
+            const emx=(ea[0]+eb[0])/2, emy=(ea[1]+eb[1])/2;
+            let ix=cx-emx,iy=cy-emy; const GL=Math.hypot(ix,iy)||1; ix/=GL;iy/=GL; /* inshore normal */
+            let tx=eb[0]-ea[0],ty=eb[1]-ea[1]; const GT=Math.hypot(tx,ty)||1; tx/=GT;ty/=GT; /* along-shore */
+            const n=1+((hashCell(x,y,seedNum^0x6012)*2.3)|0); /* a small group of 1-3 */
+            ctx.globalAlpha=ga;
+            for(let i=0;i<n;i++){
+              const hb=hashCell(x*3+i*13,y*3+i*7,seedNum^0x6013),
+                    hc=hashCell(x*2+i*5,y*4+i*11,seedNum^0x6014);
+              const along=(hb-0.5)*7, inn=2.6+hc*3.4; /* scattered along the damp band, a little inshore */
+              const gx3=emx+tx*along+ix*inn, gy3=emy+ty*along+iy*inn;
+              const face=hc<0.62?1:-1;                /* most face the water */
+              const bob=Math.sin(waveT*0.7+hb*7)*0.35;
+              const peck=hashCell(i*7+1,x+y,seedNum^0x6015)<0.28?1:0; /* one has its head down */
+              drawGull(gx3,gy3+bob,face,peck);
+            }
+            ctx.globalAlpha=1;
+          }
         }
       }
       const esp=x===shoreAt(y)-1&&espAt(y); /* the boardwalk runs over this tile */

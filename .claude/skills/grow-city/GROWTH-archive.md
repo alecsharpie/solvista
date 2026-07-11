@@ -9413,3 +9413,69 @@ gains its next (36, 59, 66, 80, 91, 149, **158**); Civic is no longer stalest (W
   symmetric ±0.10 night sample set put one frame outside the open window (ink=0). Pick night probe samples by
   checking `openAmt`, not by assuming the dusk/dawn edges are mirror images — the daylight model isn't.
 
+## Iteration 159 — the surf glows at night (2026-07-11) [Water & coast × Deepen]
+
+**Vector.** Water & coast × **Deepen** (SHIPPED). Rotation named the domain — after the 158 Civic ship the lap
+owed the stalest domain, **Water** (last SHIP 150). Kind varied off Water's worn Polish (150/132/116) and its
+recent IUX (141) to **Deepen**, enriching the existing surf-break draw with a genuinely new night phenomenon —
+and, like 135 (moon) / 153 (stars) / 158 (observatory), feeding the night-mood theme by deepening a domain toward
+Sky (108's law). Content: **bioluminescence** — the breaking surf phosphoresces a cool sea-green after dark, the
+Water counterpart to the run of night features the last laps built.
+
+**The seam.** `case T.WATER`'s surf-break block (L3126) already strokes foam along every beach-facing hex edge with
+a traveling opacity wave `ph=sin(waveT*1.6-(y+dy*0.5)*0.9)` and an inset `ins`. Its per-edge vertices `a`/`b`,
+inset direction `ix`/`iy`, and `ph` are all in scope — the exact host for a night glow that breaks where the wave
+breaks.
+
+**Change (~18 lines, draw-only).** A `LITAMT>0.5`-gated block after each foam stroke scatters up to 3 **soft
+glowing dots** along the break, each `hashCell(...,seedNum^0x0B10)`-gated (skip if `hb<0.45`) so most slots are
+empty and the glow reads as **sparse sparks, not a line**. Each dot: a wide faint halo arc + a small bright centre,
+both a **deep saturated sea-green** raw literal (`rgba(66,220,164)` / `rgba(110,238,188)` — emitted light, so
+untinted by the blue night TINT, like the warm city-light smear above; low red channel so overlaps stay green, not
+white). Strength = `dphi·(LITAMT-0.5)/0.5·(0.55+0.45·hb)`. No tile, entity, `rng()`, `tick()` pass or terrain;
+strings pure-ASCII (134). Stream + pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0, entity counts identical. Vacuous
+by construction (a night-only draw at the day census frame draws nothing) — the probe is the gate.
+
+**Probe — `probes/probe-biolum.mjs` (new, promoted).** Diffs PATCHED vs pristine HEAD at the SAME frozen frame
+(waveT pinned to 12.3, every mover cleared per tramwire's law), sampling the water hexes that touch a beach hex
+(the surf hosts, found in-page) with ROAD as the zero control. seeds 7/42: **SURF changed 0.24% / 0.51% at NIGHT →
+0.00% / 0.00% in DAY** (gate off → byte-identical), **ROAD control ~0** both frames. So the glow appears only at
+night and only on the surf line. **PASS.**
+
+**Visual.** `probes/shot-biolum.mjs` (new; takes seed/warp/**scale**) camera-zooms a front-of-frame beach that
+touches open water, clipping night + a day control. **This vector cost SIX tuning rounds** — see findings; the
+short version is that a per-edge *stroke* reads as a continuous neon tube on straight coasts however dim, and a
+pale aqua blows to near-white where adjacent hexes' strokes stack. The design that finally passed is **scattered
+soft DOTS in a deep sea-green**. At a moderate ~4.3x zoom (the scale a user actually looks at the coast) both seeds
+read as soft, tasteful, patchy phosphorescence on the waterline, no blowout: seed 42 & seed 7 one agent each,
+both **VISUAL: PASS**. Whole-city `wide` night (seed 42): balanced coherent coast, lit core → dark rim, the sparks
+correctly sub-pixel/no clutter at fit zoom, no tears/floaters/blowout — **VISUAL: PASS**.
+
+**Verdict — DEEPENED.** The breaking surf now sparkles with bioluminescence after dark, a new night life for the
+coastline that for the artifact's whole life went dark at the waterline — the Water entry in the run of night
+features (moon 135, stars 153, observatory 158). Draw-only, stream + pop flat. Water's Deepen cell gains its next
+(17, 25, 51, 65, 72, 113, 123, **159**); Water is no longer stalest (Urban 151 now is).
+
+### Findings for later laps
+- **A GLOWING LINE ALONG A HEX EDGE READS AS A NEON TUBE; A GLOWING DOT READS AS A SPARK. For a night ornament on
+  the faceted coast, draw DOTS not strokes.** Four straight agent reads FAILed the stroke forms ("uniform neon tube
+  tracing the hex edges", "blown-out near-white cores") across every brightness and patchiness I tried; switching
+  to sparse hash-gated dots passed both seeds on the first try. A per-edge stroke on a straight coast joins with its
+  neighbours into a continuous bright outline that exposes the hex geometry — no alpha low enough to fix it stays
+  visible. Dots can't form a line, so they never trace the geometry. **When a per-edge draw keeps reading as an
+  outline, stop tuning its brightness and change its SHAPE to points.**
+- **EMITTED LIGHT THAT STACKS MUST HAVE A LOW RED CHANNEL, OR IT BLOWS TO WHITE.** A pale aqua (`rgba(178,255,228)`,
+  R=178) over dark water goes near-white where two strokes overlap (additive coverage → the light stroke colour). A
+  deep sea-green (R=66) stays green at any coverage because the red channel never climbs. For any additive glow that
+  can overlap itself (coast corners, dense edges), pick the colour by its **darkest** channel, not its hue.
+- **THE "GOOD WINDOW" OF A SUBTLE COAST DETAIL IS A MODERATE ZOOM, NOT FIT AND NOT EXTREME.** At fit zoom the glow is
+  correctly invisible (adds nothing, clutters nothing — whole-city PASS); at a punishing 7x the closest corner hexes
+  stack into bright bars; at ~4x (the natural "look at the coast" zoom) it reads as intended. Judge a coast ornament
+  at the zoom a user would actually use to see the coast — `shot-biolum.mjs` now takes a `scale` arg for exactly
+  this. A 7x FAIL on a feature that's clean at fit and lovely at 4x is the zoom being unfair, not the feature.
+- **`probe-biolum` re-confirms tramwire's law and adds one:** clear EVERY mover before a whole-frame two-load diff,
+  AND if you dim a feature to fix a look, re-run the probe — a deep-green + low-alpha pass dropped seed 7's night
+  signal to 0.05% (below its own ROAD noise) before I raised it back; a look-fix can silently kill the measurement.
+
