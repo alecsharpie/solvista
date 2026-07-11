@@ -8018,3 +8018,69 @@ control for the third time (125→130→136); the guardrail stays honest.
   not a tear or a darkness compound — a future Sky/Urban Polish could tighten the CBD light gradient (steeper
   falloff from `CBDX/CBDY`), but it did not earn a fix here. Logged so a later lap can pick it up deliberately.
 
+## Iteration 137 — the people cast a shadow (2026-07-11)
+
+**Vector.** People & activity × **Polish** (SHIPPED). Rotation named the domain — 136's step-back said 137 owes
+People (still stalest, last 127) — and steered the kind to Polish/Interaction-UX while warning to **vary off
+Interaction/UX** (3 of the last 5 laps: 129/133/134). People's Polish cell was the stalest kind there (last **84**).
+The target chose itself by a house-style **inconsistency**: `shadS()` is the shared ground-contact-shadow helper,
+and every *vehicle* has cast one for many iterations (`drawVehicle`: bikes L4951 `shadS(...,0.08)`, cars L4967
+`shadS(...,0.16)`) — but the **walking figures** (peds/dogs/joggers, the only other *movers*) had **none**, so
+they read as floating a hair off the pavement. (Surveyed first: the figure and crowd draws are otherwise richly
+polished — gait/bob/kids, leash+wag, scissoring joggers, stadium/amphitheatre/strip crowds — the missing shadow
+was the one clear gap.)
+
+**Change (~5 lines, draw-only).** A `shadS(feet)` contact shadow, drawn right after `stamp()` and *before* the
+legs so the figure reads on top, at the FEET (`gy`, not the bobbing head — so the figure walks/skips over a fixed
+shadow): `drawPed` `shadS(cx,gy,0.10,0.17)` + the skipping kid `shadS(kx,gy,0.06,0.15)`; `drawDog`
+`shadS(cx,cy,0.11,0.15)` (low/long); `drawJogger` `shadS(cx,cy,0.09,0.16)`. Sizes are ~⅔ the car's (0.16), the
+figures being ~⅔ a car's footprint; ungated by light, exactly as the vehicle shadow is (it's ambient contact, not
+a sun cast). No tile, entity array, `rng()`, `tick()` pass or terrain — pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity counts
+identical (peds 664 · dogs 90 · joggers 31). `greenRoofs −1` is the documented roof-adoption headless-timing
+wobble (127/132/133/135). Exactly as predicted for a draw-only change touching no seeded stream.
+
+**Probe.** `probes/probe-figshadow.mjs` (new, promoted), patched vs pristine HEAD, seeds 7/42. **The live figures
+could not be probed** — peds/dogs are a frame-timing-dependent system whose array *composition, order AND
+positions* drift a nondeterministic ~20px between two page loads of the same seed (HEAD-vs-HEAD noise floor
+alone was |Δ|~9–13 at fixed coords; `ped[0]` isn't even the same resident twice). So the probe tests the DRAW
+FUNCTIONS deterministically: clear all live movers (incl. vehicles, which drift over roads and poison a
+fixed-coord diff), **place a fixed set of 30 peds at chosen ROAD-cell centres** — identical objects in both
+builds — freeze/pin the clocks, render, and diff a **tight feet-row band** (the shadow is a flat ~2px-wide,
+1px-tall iso-squashed smudge; `TW/TH=16/8`, so a wide box dilutes it to nothing). Result: **feet mean Δlum
+−1.16** (a *uniform* darkening — |ΔRGB| 1.14 ≈ |Δlum|, a shadow not a hue shift), consistent (−1.06/−1.27),
+**bare-road control 0.047** (≈0, >20× separation). The darkening is confined to figure feet.
+
+**Visual.** The shadow is a ~2–3px contact patch — **invisible at fit zoom, visible at zoom** (133's ring law).
+Self-read of a `hovershot` ZOOM=9 / dsf-4 no-hover crop (seed 42): a soft, flat, iso-squashed olive shadow sits
+directly under the ped's feet, correctly centred and below the legs, figure drawn on top, no spill — it grounds
+the figure exactly as intended. Whole-city `wide` frames (seeds 42 & 7, day `year=2035.62`), one agent each:
+both **VISUAL: PASS** — balanced coherent coastal city, no z-order tears / floaters / hard seams / blown-out
+colour, and — the cumulative question — **no muddy or over-darkened pavement** (the shadows correctly invisible
+at that zoom, causing no darkening).
+
+**Verdict — SHIPPED.** The walking figures now sit on the pavement with the same house-style contact shadow every
+vehicle already casts. Draw-only, pop provably flat, ~5 lines, reads at zoom.
+
+### Findings for later laps
+- **⚠ THE LIVE PED/DOG SYSTEM IS NON-REPRODUCIBLE ACROSS PAGE LOADS — a build-vs-build pixel diff on live
+  figures is hopeless; PLACE a controlled set instead (new; the lap's central probe lesson).** Peds spawn/despawn
+  and step over a nondeterministic number of real-time frames before you can freeze, so the array's composition,
+  order and positions all differ between two loads of the same seed (~20px drift, |Δ|~9 HEAD-vs-HEAD). Pinning
+  `Math.random` and zeroing gait were *necessary but not sufficient* — the positions themselves had already
+  drifted. The clean gate for any figure-DRAW change is: freeze, clear the live movers (incl. **vehicles**, which
+  drift over roads and poison a bare-ground control), and push a fixed set of figures at chosen cell centres with
+  every field set by hand — the draw code is identical whether a figure is live or placed. This is the figure
+  analogue of the terrain probes' `git show HEAD:` diff.
+- **A ~5px SPRITE'S ORNAMENT IS A ~2px MARK — size the probe band and the visual read to it, not the sprite
+  (reinforces 133).** `TW/TH=16/8` at `scale≈0.66` makes even the car's `0.16` shadow only ~3px; a per-row
+  luminance profile showed the ped shadow lands on **exactly one pixel row** (Δlum −0.81 there, 0.00 everywhere
+  else). A default 8×8 sample box diluted a real −0.8 signal to −0.1 and read as noise. Sample the one row; look
+  at a ≥9× crop. Anything the size of a person's foot is invisible at fit zoom by construction, and that is fine.
+- **THE HOUSE-STYLE HELPER IS THE TELL FOR A POLISH — grep who ELSE calls it.** `shadS`/`shadowEl` grounded
+  buildings, domes and every vehicle; the walking figures were the lone omission. A "who uses this shared helper,
+  and who conspicuously doesn't?" grep is a reliable way to find the next consistency Polish (cf. the tooltip
+  tell: a string that asserts what the draw ignores). People's remaining such gap: the *static* standing crowds
+  (strip/stadium/amphitheatre/school-run specks) also cast no shadow — but they're a bigger, more diffuse change.
+

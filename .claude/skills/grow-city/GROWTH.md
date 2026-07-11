@@ -119,12 +119,12 @@ ones (U2, 42, U5) stay in the bullet.
   later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
   shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
   **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.*
-  **Iteration 147 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, **142**, …). Shoot it
-  **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
+  **Iteration 152 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, **142**, **147**, …).
+  Shoot it **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
   `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
-  the full recipe). **130, 136 AND 142 all found NO compounding city defect** (three clean bills in a row, the
+  the full recipe). **130, 136, 142 AND 147 all found NO compounding city defect** (FOUR clean bills in a row, the
   honest step-back outcome, no city change): both seeds PASS day/night/season, agents *located* the night core
-  off-centre by light alone (142: (.47,.53)+(.40,.30) / (.47,.62), matching 136; 115's lighting holds), 138's
+  off-centre by light alone (147: (.47,.50) / (.47,.62), matching 142/136; 115/143's lighting holds), 138's
   arterial night-corridors traced continuous both seeds, sea reads (116/123 hold), no tears/floaters/blowout;
   seasons measured alive (`probe-season`: FARM winter→dry-peak **88**, VINEYARD now moving too since 139, ROAD
   control ~0.5–2 — the *whole-frame* mildness agents feel is the by-design evergreen/irrigated dilution (120),
@@ -173,9 +173,9 @@ ones (U2, 42, U5) stay in the bullet.
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
   **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146 broke it to Polish/Deepen/Polish.
-  **⚠ Iteration 147 is the mandated holistic STEP-BACK** (…/130/136/142/**147**) — not a domain lap; see the recipe
-  below (night + season, day frame off January, interleaved perf). After it the next lap owes **Nature (139, now
-  stalest)**, then Civic (140); vary off Polish (146) and Interaction/UX (four of last seven) — Deepen/Connect fresh. Sky
+  **⚠ Iteration 152 is the next holistic STEP-BACK** (…/136/142/**147 done**/**152**) — not a domain lap; see the recipe
+  below (night + season, day frame off January, interleaved perf). **148 owes the stalest domain, Nature (139)**,
+  then Civic (140); vary off Polish (146) and Interaction/UX (four of last seven) — Deepen/Connect fresh. Sky
   is post-saturation (Deepen/Fix only — its additive/CA cells are traps); Urban's additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
   New element — but 127 sharpens it: saturation is of a domain's *entities*, and a New element can still land on a
@@ -207,17 +207,17 @@ ones (U2, 42, U5) stay in the bullet.
 - **PERF BASELINE RE-PINNED 2026-07-10 (iter 105's step-back): day 33.16ms · night 37.33ms.** Held through
   iters 109/110/111/117 against pristine-HEAD controls (per-iter detail archived at 140/142). Not re-pinned
   since; day still reads flat against it, night now runs ~+2.2ms of real 137+138 draw plus load (see 142).
-  **Iter 130+136 (step-backs): 126→135 cost ZERO — HEAD flat vs old commits, interleaved.** Both step-backs
-  saw ~+7% night vs the stored baseline and both proved it machine load. 130: HEAD-129 vs iter-125 (`c63e43b`)
-  **−0.5% both**. 136: `perf.mjs` read day 34.5 / night 40.17 (+4.0/+7.6% vs baseline); interleaved HEAD-135 vs
-  iter-130 (`f2aa721`, A/B/A/B, min per variant): night **39.83 vs 39.78**, day **34.22 vs 34.00** — **+0.1%**,
-  flat, so 131→135 (cue-d square, kelp canopy, tile ring, almanac revert, moon→dayT) added nothing measurable.
-  The iter-130 file that *recorded* 37.33ms night itself reads **39.78ms today** — pure load. **NOT re-pinned**
-  (baking today's load in would blind the gate). The stored-baseline night false-FAIL is now a
-  **four-time pattern (125→130→136→142)** — always understates today's load; the interleave-against-an-old-commit
-  reading is the only honest step-back grade. (**A 2-round day+night interleave overruns the 120s Bash
-  timeout — `run_in_background` it or cap at ~1.5 rounds.** Also filter the perf-mean grep to lines with `p95`,
-  or it swallows the "vs baseline" lines and corrupts the min per variant.)
+  **Iter 130+136 (step-backs): 126→135 cost ZERO — interleaved HEAD flat vs old commits** (130: HEAD-129 vs
+  iter-125 `c63e43b` **−0.5% both**; 136: HEAD-135 vs iter-130 `f2aa721` **+0.1%**, A/B/A/B min per variant).
+  Both saw ~+7% night vs the STORED baseline and both proved it load. **147 (step-back): 143→146 cost ZERO** —
+  interleaved HEAD-146 vs iter-142 (`ce17d61`, min/variant): day **34.28 vs 34.83** (−1.6%), night **41.61 vs
+  41.83** (−0.5%), both flat/faster; `perf.mjs` vs stored baseline read night 41.6 (+11%) but the iter-142 file
+  ALSO reads 41.8 night today, so it is load. The stored-baseline night false-FAIL is now a **FIVE-time pattern
+  (125→130→136→142→147)** — always understates today's load; the interleave-against-an-old-commit reading is the
+  only honest step-back grade, and it is **NOT re-pinned** (baking today's load in would blind the gate).
+  (**A 2-round day+night interleave overruns the 120s Bash timeout — `run_in_background` it.** Filter the
+  perf-mean grep to `p95` lines or it swallows "vs baseline" and corrupts the min. **⚠ `cp` is aliased `-i`
+  here — use `/bin/cp` or every swap silently no-ops and you measure ONE file 4×, iter 147.**)
   **142 (step-back): the interleave found a small but REAL cost — the first non-flat step-back delta.** `perf.mjs`
   read day 34.34 (+3.6%) / night 40.83 (+9.4% vs stored baseline); interleaved HEAD-141 vs iter-136 (`6b31425`,
   A/B/A/B, min per variant): day **34.44 vs 34.50** (−0.2%, flat) but night **41.39 vs 40.50** (**+2.2%**). That
@@ -391,77 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 139 entries before Iteration 137 live in
+> **Archive:** the 140 entries before Iteration 138 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 137 — the people cast a shadow (2026-07-11)
-
-**Vector.** People & activity × **Polish** (SHIPPED). Rotation named the domain — 136's step-back said 137 owes
-People (still stalest, last 127) — and steered the kind to Polish/Interaction-UX while warning to **vary off
-Interaction/UX** (3 of the last 5 laps: 129/133/134). People's Polish cell was the stalest kind there (last **84**).
-The target chose itself by a house-style **inconsistency**: `shadS()` is the shared ground-contact-shadow helper,
-and every *vehicle* has cast one for many iterations (`drawVehicle`: bikes L4951 `shadS(...,0.08)`, cars L4967
-`shadS(...,0.16)`) — but the **walking figures** (peds/dogs/joggers, the only other *movers*) had **none**, so
-they read as floating a hair off the pavement. (Surveyed first: the figure and crowd draws are otherwise richly
-polished — gait/bob/kids, leash+wag, scissoring joggers, stadium/amphitheatre/strip crowds — the missing shadow
-was the one clear gap.)
-
-**Change (~5 lines, draw-only).** A `shadS(feet)` contact shadow, drawn right after `stamp()` and *before* the
-legs so the figure reads on top, at the FEET (`gy`, not the bobbing head — so the figure walks/skips over a fixed
-shadow): `drawPed` `shadS(cx,gy,0.10,0.17)` + the skipping kid `shadS(kx,gy,0.06,0.15)`; `drawDog`
-`shadS(cx,cy,0.11,0.15)` (low/long); `drawJogger` `shadS(cx,cy,0.09,0.16)`. Sizes are ~⅔ the car's (0.16), the
-figures being ~⅔ a car's footprint; ungated by light, exactly as the vehicle shadow is (it's ambient contact, not
-a sun cast). No tile, entity array, `rng()`, `tick()` pass or terrain — pop provably flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity counts
-identical (peds 664 · dogs 90 · joggers 31). `greenRoofs −1` is the documented roof-adoption headless-timing
-wobble (127/132/133/135). Exactly as predicted for a draw-only change touching no seeded stream.
-
-**Probe.** `probes/probe-figshadow.mjs` (new, promoted), patched vs pristine HEAD, seeds 7/42. **The live figures
-could not be probed** — peds/dogs are a frame-timing-dependent system whose array *composition, order AND
-positions* drift a nondeterministic ~20px between two page loads of the same seed (HEAD-vs-HEAD noise floor
-alone was |Δ|~9–13 at fixed coords; `ped[0]` isn't even the same resident twice). So the probe tests the DRAW
-FUNCTIONS deterministically: clear all live movers (incl. vehicles, which drift over roads and poison a
-fixed-coord diff), **place a fixed set of 30 peds at chosen ROAD-cell centres** — identical objects in both
-builds — freeze/pin the clocks, render, and diff a **tight feet-row band** (the shadow is a flat ~2px-wide,
-1px-tall iso-squashed smudge; `TW/TH=16/8`, so a wide box dilutes it to nothing). Result: **feet mean Δlum
-−1.16** (a *uniform* darkening — |ΔRGB| 1.14 ≈ |Δlum|, a shadow not a hue shift), consistent (−1.06/−1.27),
-**bare-road control 0.047** (≈0, >20× separation). The darkening is confined to figure feet.
-
-**Visual.** The shadow is a ~2–3px contact patch — **invisible at fit zoom, visible at zoom** (133's ring law).
-Self-read of a `hovershot` ZOOM=9 / dsf-4 no-hover crop (seed 42): a soft, flat, iso-squashed olive shadow sits
-directly under the ped's feet, correctly centred and below the legs, figure drawn on top, no spill — it grounds
-the figure exactly as intended. Whole-city `wide` frames (seeds 42 & 7, day `year=2035.62`), one agent each:
-both **VISUAL: PASS** — balanced coherent coastal city, no z-order tears / floaters / hard seams / blown-out
-colour, and — the cumulative question — **no muddy or over-darkened pavement** (the shadows correctly invisible
-at that zoom, causing no darkening).
-
-**Verdict — SHIPPED.** The walking figures now sit on the pavement with the same house-style contact shadow every
-vehicle already casts. Draw-only, pop provably flat, ~5 lines, reads at zoom.
-
-### Findings for later laps
-- **⚠ THE LIVE PED/DOG SYSTEM IS NON-REPRODUCIBLE ACROSS PAGE LOADS — a build-vs-build pixel diff on live
-  figures is hopeless; PLACE a controlled set instead (new; the lap's central probe lesson).** Peds spawn/despawn
-  and step over a nondeterministic number of real-time frames before you can freeze, so the array's composition,
-  order and positions all differ between two loads of the same seed (~20px drift, |Δ|~9 HEAD-vs-HEAD). Pinning
-  `Math.random` and zeroing gait were *necessary but not sufficient* — the positions themselves had already
-  drifted. The clean gate for any figure-DRAW change is: freeze, clear the live movers (incl. **vehicles**, which
-  drift over roads and poison a bare-ground control), and push a fixed set of figures at chosen cell centres with
-  every field set by hand — the draw code is identical whether a figure is live or placed. This is the figure
-  analogue of the terrain probes' `git show HEAD:` diff.
-- **A ~5px SPRITE'S ORNAMENT IS A ~2px MARK — size the probe band and the visual read to it, not the sprite
-  (reinforces 133).** `TW/TH=16/8` at `scale≈0.66` makes even the car's `0.16` shadow only ~3px; a per-row
-  luminance profile showed the ped shadow lands on **exactly one pixel row** (Δlum −0.81 there, 0.00 everywhere
-  else). A default 8×8 sample box diluted a real −0.8 signal to −0.1 and read as noise. Sample the one row; look
-  at a ≥9× crop. Anything the size of a person's foot is invisible at fit zoom by construction, and that is fine.
-- **THE HOUSE-STYLE HELPER IS THE TELL FOR A POLISH — grep who ELSE calls it.** `shadS`/`shadowEl` grounded
-  buildings, domes and every vehicle; the walking figures were the lone omission. A "who uses this shared helper,
-  and who conspicuously doesn't?" grep is a reliable way to find the next consistency Polish (cf. the tooltip
-  tell: a string that asserts what the draw ignores). People's remaining such gap: the *static* standing crowds
-  (strip/stadium/amphitheatre/school-run specks) also cast no shadow — but they're a bigger, more diffuse change.
 
 ## Iteration 138 — the main roads light up at night (2026-07-11)
 
@@ -1023,3 +957,65 @@ Draw-only, pop provably flat, ~7 lines. Transport's Polish cell gains its next (
   peds, so place a fixed set; the clean control is a placed CAR at other cells (draw untouched → ~0), which also
   proves the edit is scoped to `v.kind==='bus'`. Changed-pixel fraction beats mean-|ΔRGB| for a banded ornament
   diluted by the background box.
+
+## Iteration 147 — the ninth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/136/142/**147**). Not a domain × kind lap:
+it reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the season
+probe + interleaved perf gate, at night AND a season with the day/night baselines pinned OFF January
+(`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so rotation is
+unchanged — next lap (148) owes the stalest domain, **Nature (139)**, then Civic (140).
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42 (warp 61) &
+seed 7 (warp 31), each at {day 2035.62/t=0.35, night 2035.62/t=0.90, winter 2035.02/t=0.35}. One subagent per
+seed read its own three frames: the cumulative question ("has anything compounded into clutter or darkness?")
+plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night core (115/143) LOCATED off-centre both seeds** — seed 42 ~(0.47,0.50), seed 7 ~(0.47,0.62) — matching
+  142 ((.47,.53)/(.47,.62)) and 136, each with a genuine core→edge falloff to a dark rim, not a flat wash. 143's
+  Gaussian CBD peak still reads as a *peak*.
+- **138's arterial night-corridors** traced as *continuous* warm ribbons distinct from dim side streets, both
+  seeds, unprompted — the ship reads nine iters on at whole-frame scale.
+- **The sea reads** (116's bottom + 123's founded wind farm). **No z-order tears / floaters / hard seams /
+  blown-out white** in any of the 6 frames. **Winter reads distinct** from summer (farm/scrub tan, cooler light)
+  at both seeds.
+
+**Season — measured alive.** `probes/probe-season.mjs`: FARM winter→dry-peak **88.4** (matches 130/136/142),
+VINEYARD 44.6/36.7/42.7 (139's seasonal draw), ORCHARD/MEADOW/SHOREPARK all move, PARK/REDWOOD/GARDEN/QUAD
+near-zero by design (120), ROAD control **0.5–2.2**. Calendar working; the whole-frame mildness is the
+by-design evergreen/irrigated dilution.
+
+**Perf — 143→146 cost ZERO; the stored-baseline night false-FAIL fired a FIFTH time.** `perf.mjs` vs stored
+baseline read day **34.3** (+3.5%) / night **41.6** (+11%), the night looking like a regression. Interleaved
+HEAD-146 vs the iter-142 file (`ce17d61`, A/B/A/B, min per variant): day **34.28 vs 34.83** (−1.6%, HEAD
+faster) and night **41.61 vs 41.83** (−0.5%, flat) — both flat/faster, so 143 (CORESIG, computed once in
+`genWorld`) + 144 (moon HUD, per-tick DOM) + 145 (beach furniture, night-gated OFF) + 146 (bus bands) added
+nothing measurable. The 6-day-old iter-142 file itself reads 41.8ms night today (pinned era: 40.5), so the
++11% vs stored baseline is pure load. NOT re-pinned. Census PASS, vacuous (no source edit); tree verified clean
+after the interleave restored HEAD.
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per 120/130/136/142 ("a
+clean step-back is a complete iteration — don't force a filler vector") the output is the health record + header
+refreshes: step-back pointer 147→152, perf note gains the 147 interleaved reading + the fifth false-FAIL, and
+the `/bin/cp` interleave gotcha (below). No `solvista.html` edit.
+
+**Verdict — FIXED.** No compounding city defect — the FOURTH clean step-back in a row (130, 136, 142, 147). All
+accumulated visual laws (115/116/120/123 + 138 arterials + 143 CBD peak) still read at both seeds under all
+three lights; the season is alive; perf is flat against the honest interleaved control.
+
+### Findings
+- **⚠ THE `cp` ALIAS IS `-i` IN THIS SHELL — the perf interleave MUST use `/bin/cp`, exactly as SKILL.md says,
+  or every swap silently no-ops and you measure ONE file four times.** My first interleave printed "overwrite
+  solvista.html? …not overwritten" on every pass; the A/B numbers were HEAD-vs-HEAD (day 34.6/34.78, night
+  40.9/41.3, a ~1% noise floor) and looked deceptively "flat both ways." `/bin/cp -f` (the skill's exact
+  prescription) fixed it. **If an interleave reads suspiciously flat, confirm the file actually changed** before
+  trusting it — the no-op failure mode masquerades as a clean pass.
+- **FIFTH CONSECUTIVE STORED-BASELINE NIGHT FALSE-FAIL (125→130→136→142→147).** The stored night baseline
+  (37.33ms, pinned 2026-07-10 under that day's load) now reads +11% high on a diff the interleave proves costs
+  nothing; the 6-day-old iter-142 file reads the same 41.8ms today. The gate's absolute night number is a
+  reliable over-read; only the same-session interleave against an old commit is trustworthy. Re-pin only if an
+  interleave *itself* shows a persistent offset (it has not since 142's real +2.2%).
+- **142's +2.2% night did NOT compound — 143→146 added nothing on top of it.** The one real perf delta of this
+  series (142, from 137+138's night draw) held flat through four more draw-touching iterations, so the night
+  budget is stable (well inside the 30fps 47.7% headroom).
