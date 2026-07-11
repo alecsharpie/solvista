@@ -8851,3 +8851,68 @@ helper + a locator hook. Civic's Deepen cell gains its next (36, 59, 66, 80, 91,
   hall at all (it became parliament).** A per-feature probe on a one-per-city landmark must tolerate SKIPs and
   grade only the measurable instances (require ≥2), not FAIL on an occluded or absent one.
 
+## Iteration 150 — the open sea catches the sun (2026-07-11) [Water & coast × Polish]
+
+**Vector.** Water & coast × **Polish** — Water was the stalest domain (last SHIP 141), and the kind varied off
+the recent Deepen/Interaction-UX run (146/149 + the hot IUX laps) to **Polish**, its own kind (last 132). This
+is a fill-the-gap Polish, not a banked cue: by DAY the open sea — a third of the canvas — carried only a faint
+uniform sparkle (one foam stroke on ~2/7 cells) and the beach surf. There was **no sun on the water**: the
+midday ocean read as flat teal, while the night already has its warm city-light smear (L3057). The lesson
+this closes is the coast's daytime blank, not the salted-pier cue (123, still banked).
+
+**The seam.** `case T.WATER` draw (L3029). The existing daytime sparkle (L3031) and the night city-smear (L3057)
+bracket the spot; I added a day-only layer between them. `dayT` (slow ~110 s day clock) and `LITAMT` (0 by day,
+up at night) were already in scope, as was `colA('glint',...)` — the cool-white specular color, distinct from
+warm `foam`.
+
+**Change (draw-only, ~14 lines, added not replacing).** A `glit=(1-LITAMT)·max(0,1-|dayT-0.47|/0.30)` factor —
+1 at noon, 0 before dusk, 0 all night — gates a shimmer layer over open water (`!c.riv`): slow cool bands drift
+seaward (`sin((x·0.9+y·0.5)-waveT·0.55)`) and **lift the whole hex tone** with a translucent `hexTile` wash
+(α≤0.16), with brighter sparkle strokes riding each band's crest. No tile, entity, `rng()`, `hashCell`, `tick()`
+pass or terrain; strings pure-ASCII (134). Night is byte-unchanged (glit=0 → the block draws nothing); pop
+provably flat.
+
+**Two-pass tuning (logged per the counterweight).** The FIRST build used only 1px cool strokes (no wash). It
+passed the census but **both visual agents, blind, reported the sea as "flat uniform teal — glitter not
+visible"** — the contrast×width law (fine speckle averages to nothing at fit zoom). Strengthened to the
+tone-lifting **sheet** (a full-hex wash reads at any zoom); both seeds then PASS. The weak version was never
+shipped — reverted in-place before the sheet.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
+(cars 360 · trams 54 …). Vacuous by construction (a draw reading globals runs in no census metric) — the probe
+is the gate.
+
+**Probe.** `probes/probe-glitter.mjs` (new, promoted). Self-contained, no build-vs-build: freeze the clock AND
+pin `waveT` to a constant (so foam/surf/sparkle cancel), render the SAME artifact at noon (glit=1) vs morning
+(glit=0), and count pixels the noon frame pushed toward cool white (min-channel +≥12) over the OPEN-SEA box vs
+an inland LAND box. seeds 7/42/1234: **sea = 43520 / 43306 / 42122** (mean **42983**), **land control = 7 / 5 /
+6** (mean **6**). The morning frame draws no glitter by construction (glit=0), so that ~7000:1 ratio is the
+day-only sheet, confined to the sea. (An earlier build-vs-build probe read dirty controls — two page loads
+differ in `waveT` and Math.random entities — which is why the self-contained same-build, pinned-`waveT` diff is
+the honest form; see findings.)
+
+**Visual.** Coast + whole-city `wide` at seeds 42 & 7, one agent each: both **VISUAL: PASS** — cool shimmer /
+brighter drifting bands "clearly perceptible as sunlit water," "not milky / not blown-out / not a film," no
+z-order tears or floaters, the frame still a balanced coastal city. (The first, faint build's two FAILs are
+logged above.)
+
+**Verdict — SHIPPED.** The daytime open sea now catches the sun — a cool shimmer sheet that peaks at noon and
+fades to nothing by dusk, handing off cleanly to the night's warm city smear. Draw-only, day-only, pop provably
+flat. Water's Polish cell gains its next (U2, 44, 58, 79, 116, 132, **150**).
+
+### Findings for later laps
+- **A FINE-SPECKLE OCEAN EFFECT IS INVISIBLE AT FIT ZOOM — LIFT THE TILE TONE INSTEAD (contrast×width, again).**
+  1px cool strokes on ~2/5 of sea cells read as "flat teal" to two blind agents; a translucent full-hex `hexTile`
+  wash (a tone lift) reads at any zoom because it has area, not sub-pixel width. For a broad water/sky field,
+  reach for a tone wash first and let sparkle strokes ride ON it, not instead of it.
+- **A BUILD-vs-BUILD SEA PROBE IS CONFOUNDED; USE SAME-BUILD, PINNED-`waveT`, TWO-CLOCK DIFF.** Diffing patched
+  vs pristine across two page loads gave controls of 300–560 (not ~0) because the two loads froze at different
+  `waveT` (foam/surf animate with it) and spawned different Math.random entities (boats/surfers). Fix: measure
+  ONE build, set `waveT` to a constant in-page, and diff two clock states whose only real difference is the
+  feature's own gate (here glit at noon vs morning) — controls dropped to ~6. `waveT` is an assignable global,
+  so a probe can pin it exactly like `playing=false` pins the clock.
+- **A DAY-ONLY LIGHTING LAYER GATED BY `(1-LITAMT)·<midday bump>` COSTS THE NIGHT NOTHING AND HOLDS THE MEAN
+  over a full day** (iter 98's law): it only ever *adds* brightness, and only by day, so the night frame is
+  byte-identical (glit=0) and the sea's tone returns to base by dusk. This is the clean template for "the sun
+  does X to the sea/sky" without a permanent tone drift.
+

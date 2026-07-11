@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **153** · Urban **151** · People **154** · Nature **156** · Transport **155** · Civic **158** · Water **159**.
-  **Stalest is now Urban (151)**, then Sky (153) — check the last entry of the stalest domain for a banked
+  Sky **153** · Urban ~~**160**~~ (Connect reverted; last SHIP 151) · People **154** · Nature **156** · Transport **155** · Civic **158** · Water **159**.
+  **Stalest is now Sky (153)**, then People (154) — Urban was just attempted at 160 (reverted, see below), so rotate off it. Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -171,7 +171,7 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** **159 Deepen (the SURF GLOWS at night — bioluminescence sparkles the breaking wave with sparse soft sea-green DOTS, `LITAMT>0.5`-gated & `hashCell`-scattered, draw-only stream+pop-neutral; `probe-biolum` — the Water entry in the moon/stars/observatory night run).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158/159 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen/Deepen, 154 was Interaction/UX.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** **159 Deepen (the SURF GLOWS at night — bioluminescence sparkles the breaking wave with sparse soft sea-green DOTS, `LITAMT>0.5`-gated & `hashCell`-scattered, draw-only stream+pop-neutral; `probe-biolum` — the Water entry in the moon/stars/observatory night run).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158/159 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen/Deepen, 154 was Interaction/UX. **160 Urban × Connect EXPLORED → REVERTED** (RES terracing — extend 109's MID street-wall to houses): mechanism worked (`probe-terrace` 46–53% gap-fill vs 0.5% control) but the HOST doesn't exist at scale — only ~15% of RES have an E-W RES neighbour and ZERO seeds form runs of ≥3, and RES bodies are HEX PRISMS (widening a hex ≠ a shared-wall terrace). **Law: check host ADJACENCY, not just host count, before a Connect — 109's street-wall is MID-specific (MID clusters + is rectangular); RES/COM terracing needs measured E-W runs first. Urban × Connect still open (last SHIP 109); a COM high-street arcade (`hstr` marks retail runs) is the better target once its adjacency is measured.**
   **⚠ Iteration 162 is the next holistic STEP-BACK** (…/147/**152 done**/**157 done**/**162**) — not a domain lap; see the recipe
   below (night + season, day frame off January, interleaved perf). **155 took Transport × Deepen (the tram catenary, the
   149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
@@ -391,76 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 152 entries before Iteration 150 live in
+> **Archive:** the 153 entries before Iteration 151 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 150 — the open sea catches the sun (2026-07-11) [Water & coast × Polish]
-
-**Vector.** Water & coast × **Polish** — Water was the stalest domain (last SHIP 141), and the kind varied off
-the recent Deepen/Interaction-UX run (146/149 + the hot IUX laps) to **Polish**, its own kind (last 132). This
-is a fill-the-gap Polish, not a banked cue: by DAY the open sea — a third of the canvas — carried only a faint
-uniform sparkle (one foam stroke on ~2/7 cells) and the beach surf. There was **no sun on the water**: the
-midday ocean read as flat teal, while the night already has its warm city-light smear (L3057). The lesson
-this closes is the coast's daytime blank, not the salted-pier cue (123, still banked).
-
-**The seam.** `case T.WATER` draw (L3029). The existing daytime sparkle (L3031) and the night city-smear (L3057)
-bracket the spot; I added a day-only layer between them. `dayT` (slow ~110 s day clock) and `LITAMT` (0 by day,
-up at night) were already in scope, as was `colA('glint',...)` — the cool-white specular color, distinct from
-warm `foam`.
-
-**Change (draw-only, ~14 lines, added not replacing).** A `glit=(1-LITAMT)·max(0,1-|dayT-0.47|/0.30)` factor —
-1 at noon, 0 before dusk, 0 all night — gates a shimmer layer over open water (`!c.riv`): slow cool bands drift
-seaward (`sin((x·0.9+y·0.5)-waveT·0.55)`) and **lift the whole hex tone** with a translucent `hexTile` wash
-(α≤0.16), with brighter sparkle strokes riding each band's crest. No tile, entity, `rng()`, `hashCell`, `tick()`
-pass or terrain; strings pure-ASCII (134). Night is byte-unchanged (glit=0 → the block draws nothing); pop
-provably flat.
-
-**Two-pass tuning (logged per the counterweight).** The FIRST build used only 1px cool strokes (no wash). It
-passed the census but **both visual agents, blind, reported the sea as "flat uniform teal — glitter not
-visible"** — the contrast×width law (fine speckle averages to nothing at fit zoom). Strengthened to the
-tone-lifting **sheet** (a full-hex wash reads at any zoom); both seeds then PASS. The weak version was never
-shipped — reverted in-place before the sheet.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
-(cars 360 · trams 54 …). Vacuous by construction (a draw reading globals runs in no census metric) — the probe
-is the gate.
-
-**Probe.** `probes/probe-glitter.mjs` (new, promoted). Self-contained, no build-vs-build: freeze the clock AND
-pin `waveT` to a constant (so foam/surf/sparkle cancel), render the SAME artifact at noon (glit=1) vs morning
-(glit=0), and count pixels the noon frame pushed toward cool white (min-channel +≥12) over the OPEN-SEA box vs
-an inland LAND box. seeds 7/42/1234: **sea = 43520 / 43306 / 42122** (mean **42983**), **land control = 7 / 5 /
-6** (mean **6**). The morning frame draws no glitter by construction (glit=0), so that ~7000:1 ratio is the
-day-only sheet, confined to the sea. (An earlier build-vs-build probe read dirty controls — two page loads
-differ in `waveT` and Math.random entities — which is why the self-contained same-build, pinned-`waveT` diff is
-the honest form; see findings.)
-
-**Visual.** Coast + whole-city `wide` at seeds 42 & 7, one agent each: both **VISUAL: PASS** — cool shimmer /
-brighter drifting bands "clearly perceptible as sunlit water," "not milky / not blown-out / not a film," no
-z-order tears or floaters, the frame still a balanced coastal city. (The first, faint build's two FAILs are
-logged above.)
-
-**Verdict — SHIPPED.** The daytime open sea now catches the sun — a cool shimmer sheet that peaks at noon and
-fades to nothing by dusk, handing off cleanly to the night's warm city smear. Draw-only, day-only, pop provably
-flat. Water's Polish cell gains its next (U2, 44, 58, 79, 116, 132, **150**).
-
-### Findings for later laps
-- **A FINE-SPECKLE OCEAN EFFECT IS INVISIBLE AT FIT ZOOM — LIFT THE TILE TONE INSTEAD (contrast×width, again).**
-  1px cool strokes on ~2/5 of sea cells read as "flat teal" to two blind agents; a translucent full-hex `hexTile`
-  wash (a tone lift) reads at any zoom because it has area, not sub-pixel width. For a broad water/sky field,
-  reach for a tone wash first and let sparkle strokes ride ON it, not instead of it.
-- **A BUILD-vs-BUILD SEA PROBE IS CONFOUNDED; USE SAME-BUILD, PINNED-`waveT`, TWO-CLOCK DIFF.** Diffing patched
-  vs pristine across two page loads gave controls of 300–560 (not ~0) because the two loads froze at different
-  `waveT` (foam/surf animate with it) and spawned different Math.random entities (boats/surfers). Fix: measure
-  ONE build, set `waveT` to a constant in-page, and diff two clock states whose only real difference is the
-  feature's own gate (here glit at noon vs morning) — controls dropped to ~6. `waveT` is an assignable global,
-  so a probe can pin it exactly like `playing=false` pins the clock.
-- **A DAY-ONLY LIGHTING LAYER GATED BY `(1-LITAMT)·<midday bump>` COSTS THE NIGHT NOTHING AND HOLDS THE MEAN
-  over a full day** (iter 98's law): it only ever *adds* brightness, and only by day, so the night frame is
-  byte-identical (glit=0) and the sea's tone returns to base by dusk. This is the clean template for "the sun
-  does X to the sea/sky" without a permanent tone drift.
 
 ## Iteration 151 — the block grows its own corner shop (2026-07-11) [Urban fabric × New CA rule]
 
@@ -1024,3 +959,47 @@ features (moon 135, stars 153, observatory 158). Draw-only, stream + pop flat. W
 - **`probe-biolum` re-confirms tramwire's law and adds one:** clear EVERY mover before a whole-frame two-load diff,
   AND if you dim a feature to fix a look, re-run the probe — a deep-green + low-alpha pass dropped seed 7's night
   signal to 0.05% (below its own ROAD noise) before I raised it back; a look-fix can silently kill the measurement.
+
+## Iteration 160 — terraced row houses don't fit a hex city (2026-07-11) [Urban fabric × Connect]
+
+**Vector.** Urban fabric × **Connect** (EXPLORED → REVERTED). Rotation named the stalest domain, **Urban**
+(last SHIP 151); the kind chose **Connect** (Urban's under-used cell — 47, 109) deliberately to break both the
+hot **Deepen** streak (155/158/159) and the five-iteration **night** run — a daytime fabric feature.
+
+**Idea.** Extend 109's celebrated MID "street wall" — adjacent walk-ups grow their body into the E-W gap to form
+a continuous terrace at ZERO extra fills (grow the body, don't add a prism) — to **RES**: a modest inner house
+(v<0.55, so below the pool/palm bands) whose EAST neighbour is also a modest RES grows east (jx 0.20, ab 0.30→0.50)
+so their party walls butt into a terraced row, the pitched roof kept per-house so the roofline stays countable.
+Shared `resTerrace(c,x,y)` predicate (one definition, read by both the draw and a new `__terr` locator), keyed on
+the EAST cell's hash so both sides agree; draw-only (hashCell, no rng()/terrain).
+
+**What passed.** Census PASS (draw-only, vacuous — greenRoofs +1 chaotic wobble). `probe-terrace.mjs` (patched vs
+pristine HEAD, frozen day frame, movers cleared) confirmed the MECHANISM works on the pairs that exist: terraced
+pairs FILL 46–53% of the party-wall gap strip, control (rejected candidates) ~0.4–0.6% — 2/2 seeds. The join is
+correct; it just has almost nothing to join.
+
+**Why REVERTED — the host doesn't exist at scale.** City-wide count (seeds 7/42/1234): RES = 275/299/301, but only
+**37/43/49 have an E-W RES neighbour at all**, of which **5/5/11 terrace, and ZERO seeds form a run of ≥3 houses.**
+RES on this hex grid is predominantly **detached** — houses sit one-per-hex separated by roads and gaps, so there
+is no dense E-W residential fabric to weave (unlike MID, which clusters along arterials, which is exactly why 109
+worked there). The zoomed shot showed the second, deeper reason: **RES bodies are HEX PRISMS filling a hex tile**,
+so "grow east 0.20" merely widens a hexagon — it never reads as the rectangular shared-wall terrace the mechanism
+assumes. Net effect: a handful of invisible, isolated joined pairs, not a connected street. A passing census + a
+passing probe, correctly overturned by the "does it read city-wide" bar.
+
+**Verdict — EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (`git checkout`); the `resTerrace`
+helper, the `__terr` hook, `probe-terrace.mjs`, and `shot-terrace.mjs` all removed. Urban's Connect cell is
+*attempted* (~~160~~), not filled; last real Urban ship is still 109.
+
+### Findings for later laps
+- **CHECK HOST ADJACENCY, NOT JUST HOST COUNT, BEFORE A CONNECT VECTOR (the dead-code-renders-zero law's adjacency
+  corollary, 30/107).** The census tile histogram said RES≈290 — abundant — but a "join your neighbour" feature
+  needs the neighbours to BE adjacent at scale, and only ~15% of RES have an E-W RES neighbour, 0% in runs of 3+.
+  A Connect that weaves a fabric needs that fabric to be woven-able: measure adjacency (a 10-line `__terr`-style
+  count) BEFORE designing, the same discipline as censusing a host tile before wiring to it.
+- **109'S STREET-WALL TRICK IS MID-SPECIFIC, NOT A GENERAL RES/COM MOVE.** It works because MID clusters densely
+  along arterials AND is a flat-topped rectangular block whose bodies genuinely butt. RES is neither (detached,
+  hex-prism-roofed). Don't re-try RES terracing; the answer is a measured no.
+- **Urban × Connect remains genuinely open (last real ship 109).** A future attempt should target a fabric that IS
+  dense and linear — e.g. a continuous shopfront canopy/arcade along a COM high street (`c.hstr` from iter 118
+  already marks retail runs) — but only after measuring that COM clusters E-W in runs, which RES does not.
