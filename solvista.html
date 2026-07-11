@@ -6128,6 +6128,9 @@ function describeTile(c,x,y){
   /* the grove tells the same calendar the draw paints (shared orchardPhase) */
   if(c.t===T.ORCHARD){const ph=orchardPhase();
     data.push(['Grove',ph==='blossom'?'In blossom':ph==='fruit'?'In fruit':'In leaf']);}
+  /* the vineyard tells the same calendar its trellis paints (shared vinePhase) */
+  if(c.t===T.VINEYARD){const vph=vinePhase();
+    data.push(['Vines',vph==='dormant'?'Bare canes':vph==='bud'?'In leaf':vph==='veraison'?'Green fruit':'Ripe for harvest']);}
   if(c.t===T.BURNT)data.push(['Burnt','~'+Math.round(c.age*0.075)+' yr ago']);
   if(c.fire>0)data.push(['Burning']);   /* live, and drawn: drawFire paints this cell */
   /* a roof row needs a roof: the forecourt and grounds rules pave over a MID or a

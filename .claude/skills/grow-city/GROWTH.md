@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
+| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **144** · Urban **143** · People **145** · Nature **139** · Transport **146** · Civic **140** · Water **141**.
-  **Stalest is now Nature (139)**, then Civic (140), then Water (141) — check the last entry of the stalest domain for a banked
+  Sky **144** · Urban **143** · People **145** · Nature **148** · Transport **146** · Civic **140** · Water **141**.
+  **Stalest is now Civic (140)**, then Water (141), then Urban (143) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -73,18 +73,16 @@ ones (U2, 42, U5) stay in the bullet.
   the orchard drew a blossom/fruit calendar since iter 57 but its tooltip was mute; it now names the
   season via a shared `orchardPhase()`. **129's banked Nature Deepen is CASHED (iter 139)**: VINEYARD's
   grapes/canes now read `year` via a shared `vinePhase()` (bare in winter → purple at harvest), the last frozen
-  agriculture tile. Its tooltip is now the un-cashable next Nature × Interaction/UX (a `Vines` season row from
-  the same `vinePhase()`, like 129's orchard `Grove` row).) (**127 took People × New element** aimed not at its spent
+  agriculture tile. **Its tooltip is now CASHED (iter 148)** — a `Vines` season row reads the same `vinePhase()`
+  (`Bare canes`/`In leaf`/`Green fruit`/`Ripe for harvest`), like 129's orchard `Grove` row. **The
+  asserts-less-than-the-code-knows tell is now SPENT for agriculture** (orchard 129 + vineyard 148); GARDEN's draw
+  does not read `year` (needs a Deepen first, per 129), so the next Nature × Interaction/UX is a *new* seam.) (**127 took People × New element** aimed not at its spent
   *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
   "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
   and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
   that adds no element. Sky is no longer stale, and its empty `New CA rule` cell is still a trap, not an invitation.)
-  **124 cashed Urban's banked ghost-`c.solar` cue and it is now CLOSED:** `c.solar`/`c.groof` persist after a
-  building is cleared for a paved square, so the census counted panels on `PLAZA`/`QUAD`/`PARK`/`GARDEN`/`STADIUM`
-  (probe-solghost: 27 ghost solar + 4 ghost green across 8 seeds) and the adoption CA counted them as neighbours.
-  The draw + tooltip already gated on `DEV.has(c.t)`; 124 routed the census (×2) and both adoption neighbour-counts
-  through the same predicate — `solarRoofs` −20, terrain-neutral (pop/roads/developed +0). **This was the last
-  banked cue that moved a census number**; from here the census is vacuous again for most vectors — reach for a probe.
+  **124 closed the ghost-`c.solar` cue (detail in archive) — the LAST banked cue that moved a census number;
+  from here the census is vacuous for most vectors, so reach for a probe.**
   **123 cashed the cue banked for Water, exactly as 122 cashed Civic's, 121 cue (h), and 119 cue from 111:
   four laps running where *the header told the iteration what to do*.** That is the loop working. **But 123 also
   found the banked cue's own description of the code was WRONG** (it said `hashCell`; the turbines were `rng()`),
@@ -148,9 +146,10 @@ ones (U2, 42, U5) stay in the bullet.
   **129 cashed it a seventh time** (the orchard's blossom/fruit calendar, mute in `describeTile` since iter 57 —
   now a `Grove` row) and confirmed its **limit**: of the three mute vegetation tooltips only the orchard's DRAW
   read `year`, so only it could be un-muted honestly — VINEYARD/GARDEN need a Deepen first (see 129).
-  Un-cashed: `[T.IND]` *"warehouses and light industry"*,
-  `[T.VINEYARD]` *"terraced"* (draw now reads `year` via `vinePhase()`, iter 139 — READY to un-cash a `Vines`
-  season row). The plaza/quad **titles** are now **CASHED (iter 140)** — an owned square's headline reads
+  Un-cashed: `[T.IND]` *"warehouses and light industry"* (not vegetation, no calendar). `[T.VINEYARD]`
+  *"terraced"* is now **CASHED (iter 148)** — a `Vines` season row off `vinePhase()`, mirroring 129's orchard;
+  agriculture's mute-tooltip tell is now spent (only GARDEN remains and its draw is season-frozen, needs a
+  Deepen first). The plaza/quad **titles** are now **CASHED (iter 140)** — an owned square's headline reads
   *"Town hall forecourt"* / *"Museum grounds"* outright.
   **122 also warns what the tell CANNOT do alone:** its first build derived ownership from *adjacency*, named
   the wrong institution on 2 of 3 seeds, and **passed the census and would have passed both visual agents** —
@@ -391,76 +390,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 140 entries before Iteration 138 live in
+> **Archive:** the 141 entries before Iteration 139 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 138 — the main roads light up at night (2026-07-11)
-
-**Vector.** Transport × **Connect** (SHIPPED). Rotation named the domain — Transport was the single stalest
-(128) — and its entities are fully saturated (cars/buses/emergency/bikes/trams/trucks; vehicles already richly
-lit; cabins fixed 128, trains named 105, stations fixed 112), so 118's law forbids a New element. The one
-banked Transport cue (128's MINSEP cabin-crossing cosmetic) is explicitly low-value/"after anything that
-matters". So I took **Connect** — Transport's coldest live cell (last **15**) — whose signature is to add no
-new object and *light a relationship between two things that already exist*: the **arterial road network**
-(`c.flow>=ARTFLOW`, the documented "main roads" measure) and **night**. Varies off Polish (137) and Deepen
-(both hot).
-
-**The seam.** Street lamps existed (L3843) but keyed off `c.busy` — the LOCAL "≥3-developed-neighbours" test
-that the header itself notes calls *a third of the city* an avenue — as a scattered glow disc. So at night the
-city's actual through-network (`c.flow`, ~15% of roads, the real spine) never read as a network; only cars lit
-the roads. This is exactly the documented "reuse `c.flow` for anything that should follow the main roads —
-don't hand-roll a second notion of important street."
-
-**Change (~18 lines, draw-only).** In the ROAD draw case, the night-lamp block now branches on `art`: an
-arterial hex pools warm light along its centre-line toward each arterial neighbour (the same neighbour-walk the
-gold trunk line uses just above) — a soft wide base (w9 @ 0.11·LITAMT) + a bright continuous core (w4.5 @
-0.20) + a small lamp head — so `c.flow` joins hex-to-hex into one continuous lit ribbon. Ordinary streets keep
-a *dimmer* ambient disc (0.30→0.22) so the spine out-shines them. No tile, entity, `rng()`, `hashCell`,
-`tick()` pass or terrain; all strings pure-ASCII (134's invariant). Pop provably flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0** (first pass) / pop
-**−3** (final) is the documented `(year*·)` salt jitter. `arterials 795` unchanged. Stream-neutral by
-construction.
-
-**Probe.** `probes/probe-artlight.mjs` (new, promoted). Build-vs-build (patched vs pristine HEAD), night frame
-frozen (109's law — the sea sparkles on waveT, headlights ride v.p), seeds 7/42. Signed **Δluminance** over 60
-arterial hex boxes, with two controls the census can't express. First cut proved the effect real but weak
-(**+3.71**, and the seed-42 visual agent correctly failed it — the continuous ribbon at 0.15 was *fainter*
-per-pixel than the 0.30 ordinary disc). After tuning: arterial NIGHT **Δlum +7.26** (7.33/7.19) · **DAY
-control +0.08** (block is `LITAMT>0.25`-gated ⇒ night-only) · **far-water NIGHT control 0.00** (the spine lit,
-not a whole-frame wash). Both controls held; the signal near-doubled.
-
-**Visual.** First cut: **1/2** (seed 7 PASS located the corridors; seed 42 FAILED — "uniform scattered dots,
-no brighter continuous spine"). That FAIL was a true design signal, not a vague miss, so I measured (probe) and
-re-tuned rather than arguing. Retuned: **2/2 PASS**, both seeds. Asked to *locate* (108's law), both agents
-traced **continuous** warm ribbons — seed 42: "CONTINUOUS lit ribbons tracing the roads hex-to-hex, not
-scattered dots… distinctly brighter than the dim grey-blue side streets"; seed 7: a gold loop through the core
-+ a horizontal spine + a strand to the river. Both: no z-order tears / floaters / blowout, warm light
-"tasteful… not a smeared glare wash," whole frame a balanced night coastal city with the arterials reading as
-"the connective tissue."
-
-**Verdict — SHIPPED.** The city's main roads now read as a lit network at night — `c.flow`'s spine glows as a
-continuous warm corridor while side streets stay dim, adding legible structure with no new object, provably
-flat pop. Transport's Connect cell is filled (its third: 5, 15, 138).
-
-### Findings for later laps
-- **THE NIGHT LAMPS NOW ENCODE THE ROAD HIERARCHY — arterial (`c.flow`) = bright continuous ribbon, ordinary
-  street = dim ambient disc (L3843).** Any future road-network night vector should read/extend this, not
-  re-key it: the two-tier lamp is now the one night definition of "main road vs side street," and it shares
-  `c.flow` with the daytime gold trunk line (one predicate, 112's law). The `c.busy` disc is now *only* for
-  non-arterial streets.
-- **A "READS AS SCATTERED DOTS, NO CONTINUOUS RIBBON" AGENT FAIL IS A CONTRAST-vs-CONTINUITY DEFECT, NOT A
-  DESIGN-DEAD-END — measure the SIGNED delta, then push it.** The first cut's continuous stroke (0.15·LITAMT)
-  was *dimmer per-pixel than the ordinary disc it was meant to out-shine* (0.30), so the eye read the bright
-  discrete lamp-heads as beads and missed the ribbon. The probe's signed Δlum (+3.71 → +7.26) is exactly the
-  knob the agent's complaint pointed at; a linear feature must be both continuous AND brighter than what it
-  ranks above (101's contrast×width law, applied to *relative* brightness). One re-tune closed a 1/2 to 2/2.
-- **A NIGHT-ONLY DRAW ADDS PER-ARTERIAL STROKE WORK ONLY AT NIGHT (~88 hexes × ~2 segments × 2 strokes).**
-  Cheap, but night is the frame to watch (118). Not perf-gated this lap (draw-only, and the interleave overruns
-  the 120s Bash timeout); the 141 step-back's interleaved control will grade it against the stored baseline.
 
 ## Iteration 139 — the vineyard keeps the calendar (2026-07-11)
 
@@ -1019,3 +953,55 @@ three lights; the season is alive; perf is flat against the honest interleaved c
 - **142's +2.2% night did NOT compound — 143→146 added nothing on top of it.** The one real perf delta of this
   series (142, from 137+138's night draw) held flat through four more draw-touching iterations, so the night
   budget is stable (well inside the 30fps 47.7% headroom).
+
+## Iteration 148 — the vineyard names its own season (2026-07-11) [Nature × Interaction/UX]
+
+**Vector.** Nature × Interaction/UX — the stalest domain (last **139**), taking the finding the header
+banked there: iter 139 gave VINEYARD a seasonal DRAW (bare canes → leaf → green berries → purple harvest,
+via a shared `vinePhase()`), but `describeTile` never named it, so the tooltip's *"terraced"* was mute about
+the calendar the pixels already keep. This is the tell (117/122/129) cashed an **eighth** time — a string that
+asserts less than the code already knows — and the last frozen agriculture tooltip. A **banked, measured**
+finding on the stalest domain outranks kind-rotation.
+
+**The seam.** `vinePhase()` (L1112) already returns `dormant`/`bud`/`veraison`/`ripe` from `year`, read only by
+`case T.VINEYARD` in the draw (L3589). The orchard's `Grove` row (L6130, iter 129) is the exact template — one
+`describeTile` line that reads its own shared phase fn. `[T.VINEYARD]` *"terraced"* was the header's named
+un-cashed string.
+
+**Change (3 lines, tooltip-only).** A `Vines` row in `describeTile` beside the orchard's `Grove` row, reading
+the shared `vinePhase()`: `dormant→Bare canes`, `bud→In leaf`, `veraison→Green fruit`, `ripe→Ripe for harvest` —
+each word matched to what the trellis draws that phase. No tile, entity, `rng()`, `hashCell`, `tick()` pass or
+terrain; strings pure-ASCII (134). Pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
+(cars 360 · trams 54 …). Vacuous by construction (a `describeTile` edit runs in no census metric) — the probe is
+the gate.
+
+**Probe.** `probes/probe-vinetip.mjs` (new, promoted). Per 122's law a tooltip claim is checked against
+INDEPENDENTLY recomputed truth, not a screenshot: it recomputes the phase from `vinePhase`'s own window math (not
+by calling it) and confirms every on-screen vineyard's `Vines` row at 4 keyframes × 3 seeds. **104/104 rows
+match, 0 wrong.** Controls: **0** FARM and **0** ORCHARD tiles print a `Vines` row, and the orchard's own `Grove`
+row still prints **72/72** — the row is confined to the vineyard and clobbers nothing. (The seasonal DRAW itself
+was already gated by 139's `probe-vine`; what's new this lap is the string.)
+
+**Visual.** `probes/shot-vinetip.mjs` (new) fires a REAL `mouse.move` over an on-screen vineyard so the
+artifact's own handler builds the tooltip, clipped at two seasons. One agent read both: the `Vines` row reads
+exactly *"Green fruit"* (dry peak) and *"Ripe for harvest"* (autumn), text sharp/legible, em dash correct, no
+clipping/mojibake, no z-order or color defect. **VISUAL: PASS.** (No canvas draw changed, so the whole-city
+frame is identical — the census proved the world byte-for-byte unchanged.)
+
+**Verdict — SHIPPED.** The vineyard now tells the season it has painted since 139 — the last mute agriculture
+tooltip is named. Draw-... tooltip-only, pop provably flat, 3 lines. Nature's Interaction/UX cell gains its next
+(117, 129, **148**).
+
+### Findings for later laps
+- **THE ASSERTS-LESS-THAN-THE-CODE-KNOWS TELL IS NOW SPENT FOR AGRICULTURE.** 129 un-muted the orchard, 148 the
+  vineyard; the header's remaining un-cashed vegetation strings are `[T.GARDEN]` (draw does NOT read `year` — needs
+  a Deepen first, like 129/139 did for orchard/vine) and `[T.IND]` *"warehouses and light industry"* (not
+  vegetation, no calendar to name). So the next Nature × Interaction/UX is NOT another agriculture row — it needs
+  a new seam or a Deepen-then-name pair (GARDEN).
+- **A `describeTile` STRING row needs NO whole-city visual and NO draw probe — only the string-truth probe + a
+  hover shot.** The census is doubly vacuous (no metric, no draw), the whole-city frame is byte-identical, and
+  the seasonal draw was already gated upstream (139). The one gate that can fail is the string vs recomputed
+  windows, plus a hover shot that it renders. Don't re-run the interleaved perf/whole-city machinery for a
+  pure-text tooltip row.

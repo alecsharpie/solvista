@@ -8084,3 +8084,76 @@ vehicle already casts. Draw-only, pop provably flat, ~5 lines, reads at zoom.
   tell: a string that asserts what the draw ignores). People's remaining such gap: the *static* standing crowds
   (strip/stadium/amphitheatre/school-run specks) also cast no shadow — but they're a bigger, more diffuse change.
 
+## Iteration 138 — the main roads light up at night (2026-07-11)
+
+**Vector.** Transport × **Connect** (SHIPPED). Rotation named the domain — Transport was the single stalest
+(128) — and its entities are fully saturated (cars/buses/emergency/bikes/trams/trucks; vehicles already richly
+lit; cabins fixed 128, trains named 105, stations fixed 112), so 118's law forbids a New element. The one
+banked Transport cue (128's MINSEP cabin-crossing cosmetic) is explicitly low-value/"after anything that
+matters". So I took **Connect** — Transport's coldest live cell (last **15**) — whose signature is to add no
+new object and *light a relationship between two things that already exist*: the **arterial road network**
+(`c.flow>=ARTFLOW`, the documented "main roads" measure) and **night**. Varies off Polish (137) and Deepen
+(both hot).
+
+**The seam.** Street lamps existed (L3843) but keyed off `c.busy` — the LOCAL "≥3-developed-neighbours" test
+that the header itself notes calls *a third of the city* an avenue — as a scattered glow disc. So at night the
+city's actual through-network (`c.flow`, ~15% of roads, the real spine) never read as a network; only cars lit
+the roads. This is exactly the documented "reuse `c.flow` for anything that should follow the main roads —
+don't hand-roll a second notion of important street."
+
+**Change (~18 lines, draw-only).** In the ROAD draw case, the night-lamp block now branches on `art`: an
+arterial hex pools warm light along its centre-line toward each arterial neighbour (the same neighbour-walk the
+gold trunk line uses just above) — a soft wide base (w9 @ 0.11·LITAMT) + a bright continuous core (w4.5 @
+0.20) + a small lamp head — so `c.flow` joins hex-to-hex into one continuous lit ribbon. Ordinary streets keep
+a *dimmer* ambient disc (0.30→0.22) so the spine out-shines them. No tile, entity, `rng()`, `hashCell`,
+`tick()` pass or terrain; all strings pure-ASCII (134's invariant). Pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0** (first pass) / pop
+**−3** (final) is the documented `(year*·)` salt jitter. `arterials 795` unchanged. Stream-neutral by
+construction.
+
+**Probe.** `probes/probe-artlight.mjs` (new, promoted). Build-vs-build (patched vs pristine HEAD), night frame
+frozen (109's law — the sea sparkles on waveT, headlights ride v.p), seeds 7/42. Signed **Δluminance** over 60
+arterial hex boxes, with two controls the census can't express. First cut proved the effect real but weak
+(**+3.71**, and the seed-42 visual agent correctly failed it — the continuous ribbon at 0.15 was *fainter*
+per-pixel than the 0.30 ordinary disc). After tuning: arterial NIGHT **Δlum +7.26** (7.33/7.19) · **DAY
+control +0.08** (block is `LITAMT>0.25`-gated ⇒ night-only) · **far-water NIGHT control 0.00** (the spine lit,
+not a whole-frame wash). Both controls held; the signal near-doubled.
+
+**Visual.** First cut: **1/2** (seed 7 PASS located the corridors; seed 42 FAILED — "uniform scattered dots,
+no brighter continuous spine"). That FAIL was a true design signal, not a vague miss, so I measured (probe) and
+re-tuned rather than arguing. Retuned: **2/2 PASS**, both seeds. Asked to *locate* (108's law), both agents
+traced **continuous** warm ribbons — seed 42: "CONTINUOUS lit ribbons tracing the roads hex-to-hex, not
+scattered dots… distinctly brighter than the dim grey-blue side streets"; seed 7: a gold loop through the core
++ a horizontal spine + a strand to the river. Both: no z-order tears / floaters / blowout, warm light
+"tasteful… not a smeared glare wash," whole frame a balanced night coastal city with the arterials reading as
+"the connective tissue."
+
+**Verdict — SHIPPED.** The city's main roads now read as a lit network at night — `c.flow`'s spine glows as a
+continuous warm corridor while side streets stay dim, adding legible structure with no new object, provably
+flat pop. Transport's Connect cell is filled (its third: 5, 15, 138).
+
+### Findings for later laps
+- **THE NIGHT LAMPS NOW ENCODE THE ROAD HIERARCHY — arterial (`c.flow`) = bright continuous ribbon, ordinary
+  street = dim ambient disc (L3843).** Any future road-network night vector should read/extend this, not
+  re-key it: the two-tier lamp is now the one night definition of "main road vs side street," and it shares
+  `c.flow` with the daytime gold trunk line (one predicate, 112's law). The `c.busy` disc is now *only* for
+  non-arterial streets.
+- **A "READS AS SCATTERED DOTS, NO CONTINUOUS RIBBON" AGENT FAIL IS A CONTRAST-vs-CONTINUITY DEFECT, NOT A
+  DESIGN-DEAD-END — measure the SIGNED delta, then push it.** The first cut's continuous stroke (0.15·LITAMT)
+  was *dimmer per-pixel than the ordinary disc it was meant to out-shine* (0.30), so the eye read the bright
+  discrete lamp-heads as beads and missed the ribbon. The probe's signed Δlum (+3.71 → +7.26) is exactly the
+  knob the agent's complaint pointed at; a linear feature must be both continuous AND brighter than what it
+  ranks above (101's contrast×width law, applied to *relative* brightness). One re-tune closed a 1/2 to 2/2.
+- **A NIGHT-ONLY DRAW ADDS PER-ARTERIAL STROKE WORK ONLY AT NIGHT (~88 hexes × ~2 segments × 2 strokes).**
+  Cheap, but night is the frame to watch (118). Not perf-gated this lap (draw-only, and the interleave overruns
+  the 120s Bash timeout); the 141 step-back's interleaved control will grade it against the stored baseline.
+
+
+<!-- Header bullet moved from GROWTH.md at iter 148 (superseded/closed, kept for memory): -->
+**124 cashed Urban's banked ghost-`c.solar` cue and it is now CLOSED:** `c.solar`/`c.groof` persist after a
+building is cleared for a paved square, so the census counted panels on `PLAZA`/`QUAD`/`PARK`/`GARDEN`/`STADIUM`
+(probe-solghost: 27 ghost solar + 4 ghost green across 8 seeds) and the adoption CA counted them as neighbours.
+The draw + tooltip already gated on `DEV.has(c.t)`; 124 routed the census (×2) and both adoption neighbour-counts
+through the same predicate — `solarRoofs` −20, terrain-neutral (pop/roads/developed +0). This was the last
+banked cue that moved a census number; from here the census is vacuous again for most vectors — reach for a probe.
