@@ -10397,3 +10397,69 @@ field. Draw-only, pop+stream flat, ~11 lines + a probe + a shot script. Nature's
   and the barn (v>0.9) is a lone object — a farm New element / Deepen has host left. Garden (2 hexes) and meadow
   (6 hexes) remain too small to buy pixels; prefer FARM/FOREST for Nature surfaces.
 
+## Iteration 175 — the parliament floodlights its facade (2026-07-12) [Civic & culture × Deepen]
+
+**Vector — Civic × Deepen** (SHIPPED). Rotation named the domain — the 174 lap left Civic (last SHIP 168) the
+stalest owed lap. Kind: **Deepen**, the banked Civic candidate from 168's findings ("museum/parliament
+floodlights — the museum already floodlights at dusk; parliament does not. Next Civic Deepen candidate"). It also
+fits the coherent night-mood run the recent Civic/Sky/Water laps built (moon 135, stars 153, observatory 158,
+biolum surf 159, amphitheater concert 168). Draw-only, so a guaranteed-flat ship.
+
+**The seam.** `case 'museum'` (L4731) draws a **floodlit facade** at dusk — a warm `rgba(255,222,160,·)` wash up
+its front (L4751-4754) under `if(LITAMT>0.3)`. The **parliament** (L4934, the grander building — `th=34`, the
+"tallest civic roof", a full colonnade + grand gold dome) lit only its **dome + lantern beacon** at night
+(L4949-4953); its colonnade facade stayed dark. So the two grandest civic landmarks were lit inconsistently: the
+lesser one floodlit, the greater one dark below its dome. Parliament is sited 2034, present in the 2035 census
+slices, 1/city (census tile histogram confirms).
+
+**Change (~9 lines, draw-only).** Inside the parliament's existing `LITAMT>0.3` night block, before the dome
+uplight (so the dome glow overlays crisp): a warm floodlight polygon washing up the colonnade facade, mirroring
+the museum's method but on the parliament's own front-face geometry (half-extents 0.37x0.32, up to the body top
+`hb`). Warm cream `rgba(255,224,165,0.16*LITAMT)` — a touch dimmer than the museum's 0.18 since the parliament
+already carries the dome uplight, keeping it below blowout. No tile / entity / `rng()` / `hashCell` / `tick()`
+pass / terrain; `LITAMT` is a scene global, so pop + stream stay flat. All strings pure-ASCII (134).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical.
+Vacuous by construction (a night-only draw at the t=0.35 daytime census frame draws nothing) — the probe is the
+gate. (`greenRoofs -1` is documented chaotic-CA headless wobble; the change touches no `rng()`.)
+
+**Probe — `probes/probe-parliament.mjs` (new, promoted; adapted from `probe-amphi.mjs`, the 1/city-landmark
+template).** Diffs PATCHED vs pristine HEAD at the SAME frozen frame (`time` pinned, every mover cleared per the
+tramwire law), camera-zoomed onto the 1/city parliament hex so the facade is unoccluded, ROAD as the zero
+control, night vs a day control. **seeds 42/1234/3/88/7: FACADE changed 37.9/23.9/37.8/37.9/37.8% at NIGHT ->
+0.00/0.17/0.00/0.00/0.00% in DAY** (gate off -> byte-identical), **ROAD control 0.00-0.58%** both frames. All 5
+measurable (none occluded this run). **VERDICT: PASS (5 seeds).**
+
+**Visual — `probes/shot-parliament.mjs` (new, promoted).** Camera-zooms the 1/city parliament, night + a day
+control, both seeds. Two agents (seed 42, seed 1234), blind, both **VISUAL: PASS** — NIGHT shows a warm
+amber/golden wash across the colonnade bays below the dome (pooling at the steps), DAY the same colonnade reads
+as plain pale/white stone with cool shadows; the dome keeps its separate uplight in both; no z-order tears /
+floating light / white-clipping (amber, not blown out); reads as a coherent floodlit monument, not a glowing
+blob. Whole-city `wide` NIGHT (seed 42, third agent): balanced coherent coast, core located by light alone at
+**(0.47, 0.55)** — matching 162/167/172's night-core reads, so no lighting drift — sea reads, no
+tears/blowout/mojibake, stat strip crisp. **VISUAL: PASS**.
+
+**Verdict — DEEPENED.** The parliament — the city's grandest civic roof, lit only at its dome after dark for the
+artifact's whole life — now floodlights its colonnade facade at night, matching the museum's dusk floodlight and
+joining the night-mood run. Draw-only, pop + stream flat, ~9 lines + a probe + a shot script. Civic's Deepen cell
+gains 175 (36/59/66/80/91/149/158/**175**); Civic is no longer stalest (Water 169 now is — the next lap, 176,
+owes it).
+
+### Findings for later laps
+- **THE ASSERTS-INCONSISTENCY tell has a SYMMETRY form: two kindred hosts drawn inconsistently.** 168 found the
+  amphitheater's label promised what its draw omitted (asserts-more-than-it-draws). 175 is the sibling: two
+  *drawn* landmarks (museum, parliament) that should share a treatment (dusk floodlighting) but didn't — the
+  lesser one had it, the greater didn't. Where else do two kindred civics/tiles carry a night/day/seasonal
+  treatment on one but not the other? (The 168 findings also bank the **firehouse bell** and note the
+  **museum already floodlights** — parliament is now done, so the remaining civic-night-treatment gap is the
+  firehouse bell, weaker per 168.)
+- **The night-mood Civic/Sky/Water run is getting full** (moon 135, stars 153, observatory 158, biolum 159,
+  amphitheater 168, parliament 175). Each has been a single landmark or a sparse field, so none compounds into
+  city-wide night clutter — but a future night-glow vector should check the whole-frame night read (still clean
+  at 175: core (0.47,0.55), no over-bright bloom) before adding a sixth+ glow. Prefer a DAYTIME or non-glow
+  Civic move next if Civic comes up again soon.
+- **`probe-amphi.mjs` is now the reusable template for any 1/city night-lit civic landmark** (camera-zoom the
+  single host, night-vs-day diff, ROAD control, occlusion=SKIP). `probe-parliament.mjs` adapted it in minutes:
+  swap the `c.kind` filter, bump `R` for a taller host, keep the rest. For the next single-civic draw/light
+  vector, clone one of these two rather than writing a probe from scratch.
+

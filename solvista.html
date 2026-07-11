@@ -3164,6 +3164,28 @@ function drawCell(x,y){
         if(ph>0.2){ctx.strokeStyle=colA('foam',1,0.22*ph);ctx.lineWidth=1;
           ctx.beginPath();ctx.moveTo(cx-5,cy+ph*2);ctx.lineTo(cx+5,cy+ph*2);ctx.stroke();}
       }
+      /* wind-driven whitecaps (iter 185): on the open swell BEYOND the coastal
+         shelf, foam crests break and fade as the swell rolls shoreward — the one
+         texture the daytime mid-ocean lacked (it read flat teal between the surf
+         break and the noon glitter). Sparse and SEEDED per-city (hashCell, so no
+         two cities cap alike and it perturbs no rng()), and DAY-ONLY: it fades
+         out by dusk (LITAMT gate) so the night hands off cleanly to the moonglade
+         / biolum and nothing is added to the night frame. Draw-only. */
+      if(!c.riv&&LITAMT<0.6&&rDeep[idx(x,y)]>SHELF1){
+        const hb=hashCell(x,y,seedNum^0x7CA9);
+        if(hb>0.76){
+          const crest=Math.sin(waveT*1.25+(x*0.7+y*1.1)+hb*6.2);
+          if(crest>0.5){
+            const[wcx,wcy]=px(gx,gy);
+            const a=(crest-0.5)/0.5*0.55*(1-LITAMT/0.6);
+            const wob=(hb-0.5)*4, wdy=(0.5-crest)*1.5; /* the cap rides the crest */
+            ctx.fillStyle=colA('foam',1,a);
+            ctx.beginPath();ctx.ellipse(wcx+wob,wcy+wdy,3.0,1.1,0,0,7);ctx.fill();
+            ctx.strokeStyle=colA('foam',1,a*0.75);ctx.lineWidth=1.1; /* a short streak down the swell face */
+            ctx.beginPath();ctx.moveTo(wcx+wob-2.4,wcy+wdy+0.4);ctx.lineTo(wcx+wob+2.8,wcy+wdy+1.3);ctx.stroke();
+          }
+        }
+      }
       /* sun glitter — the open sea throws a bright specular sheet under the day
          sun: thickest at noon, thinning to nothing by dusk, so the night hands
          off cleanly to the warm city-light smear below (added, not replacing —
