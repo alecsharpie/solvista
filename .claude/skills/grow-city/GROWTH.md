@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105**, **171** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · People **170** · Transport **171** · Urban **173** · Nature **166** · Civic **168** · Water **169**. (162, **167**, **172** = step-backs, no domain lap.)
-  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). 171 took Transport × Interaction/UX (the boulevards name themselves — a treed ROAD now titles `Boulevard` + reports its contiguous run `Length — N blocks`, the draw had rendered an allee both kerbs for the artifact's whole life while the tooltip said `Avenue`; the asserts-less-than-the-code-knows tell, `probe-boulevard` 347/347 named+length, controls clean 3 seeds). 170 took People × New element (the pier hails its anglers — day-only fishing figures stand on the boardwalk deck, rod out over the water, line to a float; a New element on the pier *surface* per 127, and it FIXED a latent gap where the deck vanished over kelp; draw-only, `probe-anglers` day 2.18%/0.86% → night 0.00%, ROAD ~0). Next step-back at **177**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
+  Sky **161** · People **170** · Transport **171** · Urban **173** · Nature **174** · Civic **168** · Water **169**. (162, **167**, **172** = step-backs, no domain lap.)
+  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales dot the stubble fields in the weeks after the harvest cut — golden `straw`/`stubble` rolls scattered by `hashCell` when a FARM's per-cell `ph` is in the post-cut window 0.82–0.95, extending the farm's own crop calendar per 127's surface-not-entities law; draw-only stream+pop-neutral; `probe-haybale` FARM 1.8–2.1% at harvest → 0.000% in summer, ROAD ctl ~0). So the next lap (175) owes Civic (168)**, then Water (169)/People (170)/Transport (171). 171 took Transport × Interaction/UX (the boulevards name themselves — a treed ROAD now titles `Boulevard` + reports its contiguous run `Length — N blocks`, the draw had rendered an allee both kerbs for the artifact's whole life while the tooltip said `Avenue`; the asserts-less-than-the-code-knows tell, `probe-boulevard` 347/347 named+length, controls clean 3 seeds). 170 took People × New element (the pier hails its anglers — day-only fishing figures stand on the boardwalk deck, rod out over the water, line to a float; a New element on the pier *surface* per 127, and it FIXED a latent gap where the deck vanished over kelp; draw-only, `probe-anglers` day 2.18%/0.86% → night 0.00%, ROAD ~0). Next step-back at **177**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -391,59 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 166 entries before Iteration 164 live in
+> **Archive:** the 167 entries before Iteration 165 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 164 — the city hails a cab (2026-07-11) [Transport × New element]
-
-**Vector.** Transport × **New element** (SHIPPED). Rotation named the domain — after 163 (People) the lap owed the
-stalest, **Transport** (last SHIP 155, a Deepen). Kind broke Transport's long **Deepen** run (55/63/112/121/128/155)
-and its recent Polish (146): its **New element** cell was the stalest of all (last was iter 48). The bar 118/127 set —
-*a saturated domain can still take a New element on an untouched **surface***, and *prefer draw-only / Math.random for
-a guaranteed-flat pop* — is met here: taxis are a draw-only variety layered on the existing car entity, no new array,
-no rng().
-
-**The seam.** `drawVehicle` (`L5128`) draws every car as the same coloured prism; the fleet spawns in `syncFleet`
-(`L2166`) as `kind:'car'` with a `CARCOLS` colour. No taxi existed (grepped: no `taxi`/`cab`/`checker`). A taxi is the
-one everyday road vehicle the city was missing, and it reads at a glance by three cues: a lemon-yellow body, a checker
-band, and a lit roof sign.
-
-**Change (draw-only + a Math.random flag).**
-- Palette: added `cab:[247,203,55]` — a brighter, greener lemon-yellow than the orange `gold` the buses wear, so a
-  cab separates from a bus at a glance (bus G≈161 vs cab G≈203).
-- Spawn: `taxi:kind==='car'&&Math.random()<0.17` — ~1 in 6 cars. **`Math.random`, not `rng()`**, and inserted between
-  `kind` and the `c:` property so the seeded `rng()` call ORDER is byte-identical (the `c:` expression still consumes
-  its `CARCOLS` draw for every car). The CA is untouched whether a car is a cab or not.
-- Draw: a `bc=v.taxi?'cab':v.c` body colour (a cab wears yellow whatever colour it drew), a checker band (alternating
-  ink/cream `fillRect`s along the flank, like the truck's stripe), a small roof-sign prism, and an amber roof-sign
-  glow at `LITAMT>0.3` (after dark). Taxis still get the shared headlights/taillights (they fall through as cars).
-- Hover: the vehicle pick names a `taxi` **Taxi — "For hire — flag it down."** (else the existing `VKIND`/`Car`).
-
-**Census.** Vacuous by construction (draw-only + Math.random): every metric +0, empty tile histogram, cars 360
-unchanged (taxis are a subset). VERDICT PASS. (The `pop -4` wobble is RAF-timing tick-count noise, 163's law — the
-change touches no `rng()`.)
-
-**Probe.** `probes/probe-taxi.mjs` — 137's controlled placement + 163's in-page rebuild (`genWorld(seed)+__warp(61)`
-so HEAD and ART render a byte-identical city). Two scenes, each placing identical teal cars at 40 spread ROAD cells:
-a `taxi:true` scene diffs vs HEAD (the flag recolours the body + adds checker+sign), and a `taxi:false` control scene
-diffs vs HEAD (car draw is identical code → ~0, and *separate* from the taxi scene so no neighbouring cab bleeds in).
-**taxi box 3.2% of pixels changed vs HEAD · plain-car control 0.00–0.16% (<0.5%, >10x under).** PASS both seeds. The
-in-page rebuild was load-bearing: without it the two page loads render slightly different cities (RAF tick drift) and
-the control jittered to 0.35% and failed — 163's rebuild law collapsed it to ~0.
-
-**Visual.** Two agents, both **PASS**. Seed 7 & 42 downtown (day): located 3+ lemon-yellow cabs sitting correctly ON
-the road hexes, distinct from the orange-gold buses, checker band + roof sign visible, no floating/tearing. Whole-city
-(seed 7) reads balanced — yellow stays sparse (a few cabs + existing crop fields), not dominant. Night: the cabs are a
-few dark pixels at fit zoom so the amber roof-glow was unverifiable by eye (a resolution limit, not a defect — the
-probe confirms the draw path fires; cf. 163's sub-2px agent-resolution law).
-
-**Verdict.** SHIPPED. **Banked for Transport:** the New element cell is spent again; the domain's live vehicle inventory
-(car/bus/tram/truck/bike/taxi + service fleet) is now full, so its next lap is Deepen/Polish/Connect, not another kind
-of vehicle. A cab could later *deepen* (pick up/drop peds at a kerb) but that hits the `peds`-can't-serve-the-road cap
-(111) — it would need the spawn-pool move, not the leash.
 
 ## Iteration 165 — the mid-rise roofs grow their mechanical plant (2026-07-11) [Urban fabric × Deepen]
 
@@ -1000,3 +952,68 @@ script. Urban's Deepen cell gains 173 (38/54/68/92/165/**173**); the next lap (1
 - **The roof-furniture set is now CLOSED across all 5 developed building types (MID/RES/TOWER/COM/IND).** A future
   "bare roof" Urban vector has no host left; Urban Deepen must go elsewhere (facades, ground plane, the harbour
   works apron). Don't propose more roof clutter.
+
+## Iteration 174 — the cut fields keep their hay bales (2026-07-12) [Nature × New element]
+
+**Vector — Nature × New element** (next lap owed the stalest domain, Nature, last shipped 166). The forest
+floor is over-worked (156 spring bloom, 166 autumn litter — a full four-season floor), so I went to Nature's
+biggest *untouched* surface instead: the FARM belt (~150 fields, the strongest seasonal mover, winter→dry-peak
+88). 127's law — "additive inventory spent" is a claim about a domain's *entities*, not its *surfaces*.
+
+**The seam.** The farm draws its own crop calendar (`cropRGB`, iter 108/57 lineage): a field greens → ripens
+to `straw` → is **cut** to `stubble` (ph 0.80–0.90) → is ploughed back to `soilDk` (ph 0.93–0.995). The
+palette even carries `straw`/`stubble` with a comment naming "then ripe, then cut" — but the cut left the field
+**bare**: nothing marked the harvest. The post-cut stubble window was an empty surface with a name already in
+the palette.
+
+**Change (~11 lines, draw-only).** When a FARM cell's per-cell phase `ph` is in the post-cut window
+(`0.82<ph<0.95`) and `hashCell(x,y,70)<0.62` (thins to ~60% of fields for variety), scatter `1+(hashCell·3)`
+rolled hay bales: a soft contact-shadow ellipse (house-style, per 137), a `straw` body ellipse (the golden roll
+on its side), and a darker `stubble` end-cap arc (the curled end). Placement is `hashCell`-scattered so it
+perturbs nothing — no `rng()`, no terrain, no `tick()` pass. The bales inherit the scene `col()` tint, so they
+darken with night and can't blow out; not day-gated (bales sit in the field round the clock, like the barn).
+All strings pure-ASCII (134). The window sits at ph≈0.88 ≈ autumn (`applySeason`'s .87 keyframe), so bales
+appear at harvest and are gone by winter — the field's own calendar drives them, so the belt bales as a
+patchwork (each field ±2.5 weeks off its neighbours via the existing `v` phase offset), never all at once.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty; all entity/tile counts flat. Vacuous by
+construction (draw-only, no `rng()`/terrain) — the probe is the gate.
+
+**Probe — `probes/probe-haybale.mjs` (new, promoted).** PATCH(working) vs BASE(HEAD) whole-hex diff over each
+FARM cell (iter-161 law: every differing pixel over a host hex IS the bales, since the crop colour reads the
+same `year` in both builds). Rebuilds the city in-page (`genWorld;__warp;__setYear;__setTime`, iter-163(c)) so
+RAF tick jitter can't diverge the builds. **The strong control is a CALENDAR control, not just a tile control:**
+at **harvest** (`year=2035.88`) FARM diffs **2.07/1.88/1.84%** (seeds 7/42/1234) — bales present; at **summer**
+(`year=2035.40`) FARM diffs **exactly 0.000%** all three seeds — no field is post-cut, so no bale is drawn in
+either build, isolating the bale from the crop-colour calendar. ROAD tile control **~0.00–0.02%** at both
+calendars. **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-haybale.mjs` (new, promoted).** Wheels the artifact's own camera onto the densest FARM
+cluster (farms are scattered and bales are ~2px, so fit zoom shows nothing) and **freezes the calendar in-page**
+at year 2035.88/2035.90 for the final frame (discrete-seasonal freeze law — `?year=` alone drifts a season
+during the `playing=true` wait). Two agents (one per seed), blind: both **VISUAL: PASS** — golden bales visible
+on the stubble field faces, sitting correctly on the iso plane (not floating, not off-edge), reading as rounded
+bales with a highlight/shade (not flat specks), distinct from the pre-existing coral/purple crop dots; no
+z-order tears / floaters / blowout; whole belt still balanced, "bales add harvest texture without clutter." One
+un-zoomed whole-city frame (third agent): city reads balanced/beautiful, no tears/darkness/mojibake, stat strip
+crisp.
+
+**Verdict — SHIPPED.** The farm belt's calendar had a cut phase named in the palette since forever but nothing
+in the field to show for it; now the weeks after each harvest carry rolled golden bales, patchworked field by
+field. Draw-only, pop+stream flat, ~11 lines + a probe + a shot script. Nature's New element cell gains 174
+(4/26/29/102/156/**174**); the next lap (175) owes Civic (168).
+
+### Findings for later laps
+- **A CALENDAR CONTROL is stronger than a tile control for a SEASONAL draw-only feature.** Diffing PATCH vs BASE
+  over the host tile at the harvest calendar proves *something* changed; diffing the SAME tile at a non-harvest
+  calendar (summer, 0.000%) proves the change is the *bale* and not the crop colour, which reads `year` in both
+  builds and would otherwise pollute any single-calendar FARM diff. For any seasonally-gated feature, add the
+  off-season calendar as the control, not just an off-tile.
+- **The palette often names a phase the draw never showed.** `straw`/`stubble` existed with a comment "ripe,
+  then cut" for the artifact's whole life, but the cut field was bare. A named-but-unshown palette entry (or a
+  named-but-unshown draw state) is a cheap New-element seam — the intent is already recorded; you just draw it.
+  Where else does a palette/comment name a state the pixels skip?
+- **Nature's forest floor is a four-season CLOSED surface (156/166); its next big surface is the FARM belt
+  (174 opened it).** The belt still has room: post-cut bales are shipped, but a harvest could also stack sheaves,
+  and the barn (v>0.9) is a lone object — a farm New element / Deepen has host left. Garden (2 hexes) and meadow
+  (6 hexes) remain too small to buy pixels; prefer FARM/FOREST for Nature surfaces.

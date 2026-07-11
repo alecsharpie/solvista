@@ -9717,3 +9717,51 @@ Polish gains its next (84, 137, **163**); People is no longer stalest (Transport
   would spill) and the abstract **match-day concourse** dots (1.2px marks, not figures). If a future lap wants the
   platform riders grounded, the shadow must land on the DECK surface (its own small ellipse), not the ground plane.
 
+## Iteration 164 — the city hails a cab (2026-07-11) [Transport × New element]
+
+**Vector.** Transport × **New element** (SHIPPED). Rotation named the domain — after 163 (People) the lap owed the
+stalest, **Transport** (last SHIP 155, a Deepen). Kind broke Transport's long **Deepen** run (55/63/112/121/128/155)
+and its recent Polish (146): its **New element** cell was the stalest of all (last was iter 48). The bar 118/127 set —
+*a saturated domain can still take a New element on an untouched **surface***, and *prefer draw-only / Math.random for
+a guaranteed-flat pop* — is met here: taxis are a draw-only variety layered on the existing car entity, no new array,
+no rng().
+
+**The seam.** `drawVehicle` (`L5128`) draws every car as the same coloured prism; the fleet spawns in `syncFleet`
+(`L2166`) as `kind:'car'` with a `CARCOLS` colour. No taxi existed (grepped: no `taxi`/`cab`/`checker`). A taxi is the
+one everyday road vehicle the city was missing, and it reads at a glance by three cues: a lemon-yellow body, a checker
+band, and a lit roof sign.
+
+**Change (draw-only + a Math.random flag).**
+- Palette: added `cab:[247,203,55]` — a brighter, greener lemon-yellow than the orange `gold` the buses wear, so a
+  cab separates from a bus at a glance (bus G≈161 vs cab G≈203).
+- Spawn: `taxi:kind==='car'&&Math.random()<0.17` — ~1 in 6 cars. **`Math.random`, not `rng()`**, and inserted between
+  `kind` and the `c:` property so the seeded `rng()` call ORDER is byte-identical (the `c:` expression still consumes
+  its `CARCOLS` draw for every car). The CA is untouched whether a car is a cab or not.
+- Draw: a `bc=v.taxi?'cab':v.c` body colour (a cab wears yellow whatever colour it drew), a checker band (alternating
+  ink/cream `fillRect`s along the flank, like the truck's stripe), a small roof-sign prism, and an amber roof-sign
+  glow at `LITAMT>0.3` (after dark). Taxis still get the shared headlights/taillights (they fall through as cars).
+- Hover: the vehicle pick names a `taxi` **Taxi — "For hire — flag it down."** (else the existing `VKIND`/`Car`).
+
+**Census.** Vacuous by construction (draw-only + Math.random): every metric +0, empty tile histogram, cars 360
+unchanged (taxis are a subset). VERDICT PASS. (The `pop -4` wobble is RAF-timing tick-count noise, 163's law — the
+change touches no `rng()`.)
+
+**Probe.** `probes/probe-taxi.mjs` — 137's controlled placement + 163's in-page rebuild (`genWorld(seed)+__warp(61)`
+so HEAD and ART render a byte-identical city). Two scenes, each placing identical teal cars at 40 spread ROAD cells:
+a `taxi:true` scene diffs vs HEAD (the flag recolours the body + adds checker+sign), and a `taxi:false` control scene
+diffs vs HEAD (car draw is identical code → ~0, and *separate* from the taxi scene so no neighbouring cab bleeds in).
+**taxi box 3.2% of pixels changed vs HEAD · plain-car control 0.00–0.16% (<0.5%, >10x under).** PASS both seeds. The
+in-page rebuild was load-bearing: without it the two page loads render slightly different cities (RAF tick drift) and
+the control jittered to 0.35% and failed — 163's rebuild law collapsed it to ~0.
+
+**Visual.** Two agents, both **PASS**. Seed 7 & 42 downtown (day): located 3+ lemon-yellow cabs sitting correctly ON
+the road hexes, distinct from the orange-gold buses, checker band + roof sign visible, no floating/tearing. Whole-city
+(seed 7) reads balanced — yellow stays sparse (a few cabs + existing crop fields), not dominant. Night: the cabs are a
+few dark pixels at fit zoom so the amber roof-glow was unverifiable by eye (a resolution limit, not a defect — the
+probe confirms the draw path fires; cf. 163's sub-2px agent-resolution law).
+
+**Verdict.** SHIPPED. **Banked for Transport:** the New element cell is spent again; the domain's live vehicle inventory
+(car/bus/tram/truck/bike/taxi + service fleet) is now full, so its next lap is Deepen/Polish/Connect, not another kind
+of vehicle. A cab could later *deepen* (pick up/drop peds at a kerb) but that hits the `peds`-can't-serve-the-road cap
+(111) — it would need the spawn-pool move, not the leash.
+
