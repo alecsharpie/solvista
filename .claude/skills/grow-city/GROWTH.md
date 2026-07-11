@@ -29,7 +29,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137** | 71 |
+| **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137** | 71, **154** |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **153** · Urban **151** · People **145** · Nature **148** · Transport **146** · Civic **149** · Water **150**.
-  **Stalest is now People (145)**, then Transport (146), then Nature (148) — check the last entry of the stalest domain for a banked
+  Sky **153** · Urban **151** · People **154** · Nature **148** · Transport **146** · Civic **149** · Water **150**.
+  **Stalest is now Transport (146)**, then Nature (148), then Civic (149) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -174,10 +174,10 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** — (**130/136/142/147/152 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** — (**130/136/142/147/152 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen, 154 back to Interaction/UX.
   **⚠ Iteration 157 is the next holistic STEP-BACK** (…/142/147/**152 done**/**157**) — not a domain lap; see the recipe
-  below (night + season, day frame off January, interleaved perf). **154 owes the stalest domain, People (145)**,
-  then Transport (146), then Nature (148). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
+  below (night + season, day frame off January, interleaved perf). **154 took People × Interaction/UX (its
+  coldest kind, mute Resident tooltip cashed via the 117 tell); 155 owes the stalest domain, Transport (146)**, then Nature (148). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
   the banked Sky move is the SEASON word, which needs a slow clock FIRST — see the moon note above). Urban's
   additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
@@ -391,70 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 146 entries before Iteration 144 live in
+> **Archive:** the 147 entries before Iteration 145 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 144 — the almanac gets its moon (2026-07-11)
-
-**Vector.** Sky & atmosphere × **Interaction/UX** (SHIPPED). Rotation named the domain — Sky was the single
-stalest (last 135) — and its own banked finding named the vector: 135 slowed the moon FIELD onto the slow `dayT`
-clock and wrote "a moon-only HUD card is now viable" (a banked measured finding outranks kind-rotation, 119's
-law). The Interaction/UX cell held only `~~134~~` (the reverted full almanac), so this both cashes the bank and
-fills the cell. Deliberately the **moon only**, not 134's almanac: the header's live warning is that the SEASON
-word still reads the fast `year` and would strobe ~0.7 Hz (134), so it stays out until it has its own slow clock.
-
-**Change (~18 lines, DOM + draw-only, stream-neutral).** A new census-strip stat, placed right after the gold
-year/time-of-day stat so the two temporal/sky readings group: `<b id="stMoonPct">` over `<span id="stMoonName">`,
-marked `opt sm` so it sheds with the other decorative stats as the strip narrows (and never leaks onto the
-"founding four" mobile layout — it sits before the `:last-child` transit stat, which keeps its mobile role). A
-new `moonWord(l)` beside `phaseWord()` bins the lunation fraction into the eight conventional names; `syncStats()`
-reads `moonPhase()` once and writes `NN%` (illumination `(1-cos 2πl)/2`) + the phase word. No `rng()`, no
-terrain, no tile/entity, no new per-frame draw — the readout rides the existing `syncStats` cadence (per tick),
-the same one the time-of-day phase word already uses.
-
-**Census.** PASS, exit 0. Draw/DOM-only, stream-neutral — tile histogram empty, core metrics +0 (`pop −3`,
-`greenRoofs +1` are the documented chaotic-CA / roof-adoption headless wobble).
-
-**Probe — `probes/probe-moonhud.mjs` (promoted; new).** Two claims, because a readout claim needs BOTH a running
-clock (134's cadence law) and a correctness sweep:
-- **Cadence (running clock):** playing=true at 8×, read the actual DOM `#stMoonName` @10 Hz for 6 s. seed 42 &
-  seed 7 both **1 word-transition** (a legible slow readout, not a strobe), CONTROL clock advancing (ΔdayT ≈
-  0.43, Δyear ≈ 8). A `year`-driven readout would have flipped words many times per second here.
-- **Correctness + liveness:** sweep a full synodic month via `__setTime` (8 integer `dayT` steps = 1 lunation),
-  65 samples. **8/8** phase names appear (live across the month), **0** word/limb disagreements (every "waxing"
-  word waxes, every "waning" word wanes; "full"/"new" only at the illumination extremes). NB the first cut of
-  the *check* wrongly asserted `illum>0.98 ⇒ full moon`; phase names bin by lunation FRACTION, so a 99%-lit
-  waxing gibbous is correct — the readout was right, the check was fixed.
-
-**Visual.** Wide dsf=2 frames, one agent per seed. seed 42 day (`year=2035.62`, t=0.35): moon stat reads
-`0% / NEW MOON` right after `2035 / DAYTIME`, strip one clean row of 11 stats, no wrap, clear gap before the
-controls card, whole frame balanced. **seed 7 night (t=0.90): card reads `97% / WAXING GIBBOUS`, and the agent
-independently confirmed the DRAWN moon disc is a nearly-full bright round disc that AGREES with the card** — the
-locate-don't-judge check (108) against ground truth the field already holds. Both VISUAL: PASS, no z-order
-tears / floating tiles / blown-out colour.
-
-**Verdict — SHIPPED. 135's banked "moon-only HUD card is now viable" is CASHED.** The diorama now names the
-moon it draws: an almanac reading that stays put for ~110 s (one day-cycle per phase-eighth) instead of
-flickering, because it rides `dayT` not `year`. Sky's Interaction/UX cell is filled (`~~134~~, 144`); Sky is no
-longer stalest (People 137 now is). The season half stays banked and explicitly fenced off in the header.
-
-### Findings for later laps
-- **THE MOON HUD IS THE HALF OF 134's ALMANAC THAT WAS SAFE — the SEASON half is still fenced.** 135 slowed
-  only the moon; the season word still reads `year` (fast dev clock) and would strobe ~0.7 Hz. A future Sky lap
-  wanting a season readout must FIRST give it a slow clock or quantize/hold it — do not add `seasonWord(year)`
-  to the HUD and assume 144 unblocked it. The moon was shippable precisely because 135 had already re-clocked
-  its field; the season has no such fix yet.
-- **A HUD stat that mirrors an existing multi-reader field is free and safe.** `moonPhase()` was already the one
-  shared predicate (draw disc, moonglade, `__moon()`, iter 135's "one predicate" law); the card is just a fifth
-  reader of it, so it cannot drift from what's drawn — the night agent seeing card and disc agree is that law
-  paying out. When adding a readout, wire it to the field the pixels already read, never a parallel computation.
-- **A readout probe needs TWO clocks: a RUNNING one for cadence, a STEPPED one for correctness.** The strobe
-  test (134) must play; the correctness sweep must freeze and step (`__setTime` by integer `dayT` = clean
-  lunation-eighths, 135's trick). One probe, both — `probe-moonhud` runs the running-clock DOM read AND the
-  frozen sweep. Reuse the shape for any future almanac/readout gate (a season word, a tide readout).
 
 ## Iteration 145 — the beach follows the sun (2026-07-11)
 
@@ -995,3 +936,61 @@ seventh (19, 35, 50, 57, 95, 135, **153**); Sky is no longer stalest (People 145
   interconnect, NOT the season readout. The season word still reads the fast `year` (strobes ~0.7 Hz, 134) and
   needs a slow clock or quantize/hold FIRST. Sky's additive/CA cells remain traps; the next Sky lap wanting a
   *new* interconnect should look for another mature-but-disconnected pair, as this did.
+
+## Iteration 154 — the resident tells you what they're up to (2026-07-11) [People & activity × Interaction/UX]
+
+**Vector.** People & activity × **Interaction/UX** (SHIPPED). Rotation named the domain (People was stalest,
+last 145) and this is its *coldest* kind — only iter 71 sat in the People × Interaction/UX cell. Varied the kind
+off 153's Deepen. The seam is the loop's most reliable tell (117): the Resident's `ENTINFO` sub was a flat
+`'Out for a stroll.'` while `stepPed` **already** sorts peds by context — onto the pier, hugging a lively kerb,
+drawn to a high-`buzz` hex — a relationship the tooltip ignored.
+
+**Change (~20 lines, tooltip-only).** New `residentDoing(p)` reads the hex the ped stands on and returns the
+phrase for it, a FUNCTION sub in the 105 style: pier → *"Out on the pier for the view."*; then by tile —
+MARKET *"Browsing the market stalls."*, PARK/SHOREPARK *"Out for a walk in the green."*, GARDEN *"Pottering in
+the community garden."*, PLAZA/QUAD *"Crossing the square."*, BEACH/DUNE *"Down on the sand."*, STADIUM, FIELD;
+then a road → `livelyKerb` *"Window-shopping the busy street."* vs plain *"Walking the block."*; fallback
+*"Out for a stroll."* Every position a ped can legally hold is `strollable` open ground or a road (`pedWalk`),
+so the cases tile the field. The leashed **dog** heels to its owner's hex, so its sub echoes the owner —
+*"With its owner, out for a walk in the green."* (stray falls back to *"Off to sniff everything."*). Reuses the
+existing `onPier`/`cellAt`/`pedRoad`/`livelyKerb` predicates — no new state, no seeded `rng()`, no draw.
+
+**Census.** PASS, exit 0. Tooltip-only — tile histogram empty, all core/aggregate metrics +0 (vacuous by
+construction; the probe is the gate).
+
+**Probe — `probes/probe-strolling.mjs` (new, promoted).** `residentDoing` is a PURE function of position, so the
+probe enumerates EVERY cell as a hypothetical ped, buckets cells by the phrase the PAGE returns, and checks each
+bucket against the RAW `cells[].t` (122's law — not by re-calling the function). Seeds 7 & 42 @ warp 61:
+**every tile bucket holds ONLY its intended type** (`Down on the sand.` = {BEACH,DUNE}, `…green.` = {PARK,SHOREPARK},
+etc. — zero leakage), pier bucket **all onPier** (5–6 cells), road split **all** `pedRoad` with the busy bucket
+(106/118 cells) **all** `livelyKerb`. **CONTROL:** 1060+ building interiors (RES/MID/TOWER/COM/IND) → the
+fallback and NOTHING else, so the mapping doesn't leak onto tiles a ped only passes. Deterministic across two
+loads. **PROBE PASS both seeds.**
+
+**Visual.** `hovershot.mjs ZOOM=4 PICK=front` on a Resident: seed 42 rendered *"Window-shopping the busy street."*,
+seed 7 *"Browsing the market stalls."* — `pageerrors: none`, no mojibake (the strings are pure-ASCII per iter 134;
+em dashes live only in comments). One agent read both seeds' hover PNGs: tooltip legible, cream card on-frame, no
+z-order tears/blowout, scene still a coherent coastal city — **VISUAL: PASS**. Owned-dog echo verified in-page:
+*"With its owner, out for a walk in the green."*
+
+**Verdict — SHIPPED.** The peds that fill the streets now answer when you point at one: a figure on a market hex
+says it's browsing the stalls, one on a shop-lined kerb is window-shopping, one on the pier is out for the view.
+Tooltip-only, pop provably flat, reuses five existing predicates. People × Interaction/UX gains its second (71,
+**154**); People is no longer stalest (Transport 146 now is).
+
+### Findings for later laps
+- **The mute-tooltip tell now pays for ENTITIES too, not just tiles (117 was tiles).** `stepPed`'s own context
+  sorting (pier/kerb/buzz/tile) was richer than the one static string that named it — the same shape as a
+  `TILEDESC` asserting less than the CA knows. **Where else does an ENTITY's step/draw logic decide something its
+  `ENTINFO` sub keeps flat?** Candidates still flat: `Jogger` ('Logging shoreline miles.' — it knows its
+  shoreline `y`/direction), `Cyclist`, `Streetcar`/`Delivery truck` (a route/depot membership, like 105 did for
+  transit). The functional-sub (105) + shared-predicate (144) recipe applies to each.
+- **A PURE position→string function is probeable by ENUMERATION, no live entity needed.** Because `residentDoing`
+  reads only `p.x/p.y`, the probe swept ALL cells as hypothetical peds and audited the phrase→tile partition —
+  sidestepping 137's "peds are non-reproducible across loads" entirely. Any tooltip that is a pure function of an
+  entity's *cell* (not its motion phase) can be gated this way: bucket-by-phrase, check against raw `cells[].t`,
+  plus a control tile-class that must hit the fallback.
+- **`residentDoing(p)` is now the one definition of "what is this ped doing" (144's one-predicate law).** The dog
+  echo, the tooltip and the probe all call it; a future "peds thin at night" or crowd-label vector should read it,
+  not re-classify position. It maps EVERY strollable/road hex, so it is also a ready oracle for "is this ped
+  somewhere interesting."

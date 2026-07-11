@@ -6276,6 +6276,26 @@ function describeTile(c,x,y){
 /* a stubby line is real — a monorail can close its loop early, out where nothing is
    built yet, and so run a train around a loop with no station on it at all */
 const plur=(n,w)=>n+' '+w+(n===1?'':'s');
+/* A resident's tooltip is a FUNCTION of where it is standing (iter 105's pattern).
+   The stroll's own step logic already sorts peds by context — onto the pier, along a
+   kerb, drawn to a lively `buzz` hex — but the tooltip said a flat "Out for a stroll."
+   Every position a ped can legally hold is either `strollable` open ground or a road
+   (pedWalk), so these cases cover the field; the fallback is only for a hex caught
+   mid-re-anchor. Read-only: no seeded `rng()`, no state. Dogs heel to their owner's
+   hex, so a leashed dog shares its resident's phrase. */
+function residentDoing(p){
+  if(onPier(p.x,p.y))return 'Out on the pier for the view.';
+  const n=cellAt(p.x,p.y), t=n?n.t:-1;
+  if(t===T.MARKET)return 'Browsing the market stalls.';
+  if(t===T.PARK||t===T.SHOREPARK)return 'Out for a walk in the green.';
+  if(t===T.GARDEN)return 'Pottering in the community garden.';
+  if(t===T.PLAZA||t===T.QUAD)return 'Crossing the square.';
+  if(t===T.BEACH||t===T.DUNE)return 'Down on the sand.';
+  if(t===T.STADIUM)return 'Out by the stadium.';
+  if(t===T.FIELD)return 'Cutting across the field.';
+  if(pedRoad(p.x,p.y))return livelyKerb(p.x,p.y)?'Window-shopping the busy street.':'Walking the block.';
+  return 'Out for a stroll.';
+}
 const ENTINFO=[
   [()=>whales,'Gray whale','Surfacing on a slow cruise up the bay.',12],
   [()=>dolphins,'Dolphin','Rolling through the swell.',8],
@@ -6305,8 +6325,8 @@ const ENTINFO=[
   [()=>trams,'Streetcar','Riding the avenues since 1985.',9],
   [()=>trucks,'Delivery truck','Stock for the shopfronts.',9],
   [()=>bikes,'Cyclist','Two wheels beat the traffic.',6],
-  [()=>peds,'Resident','Out for a stroll.',5],
-  [()=>dogs,'Good dog','Off to sniff everything.',5],
+  [()=>peds,'Resident',residentDoing,5],
+  [()=>dogs,'Good dog',d=>{const p=ownerOf(d);return p?'With its owner, '+residentDoing(p).replace(/^./,c=>c.toLowerCase()):'Off to sniff everything.';},5],
 ];
 const VKIND={fireeng:['Fire engine','Lights on, heading to the smoke.'],
   ambo:['Ambulance','On a call.'],police:['Police cruiser','On patrol.']};

@@ -8477,3 +8477,62 @@ its tenth (…124, 143); Urban is no longer stalest.
   it was `git mv`'d into `probes/`. Any probe that predates the "resolve relative to the probe, four dirs up"
   law may carry the same bug; check the `readFileSync`/`goto` path before trusting an old probe's silence.
 
+## Iteration 144 — the almanac gets its moon (2026-07-11)
+
+**Vector.** Sky & atmosphere × **Interaction/UX** (SHIPPED). Rotation named the domain — Sky was the single
+stalest (last 135) — and its own banked finding named the vector: 135 slowed the moon FIELD onto the slow `dayT`
+clock and wrote "a moon-only HUD card is now viable" (a banked measured finding outranks kind-rotation, 119's
+law). The Interaction/UX cell held only `~~134~~` (the reverted full almanac), so this both cashes the bank and
+fills the cell. Deliberately the **moon only**, not 134's almanac: the header's live warning is that the SEASON
+word still reads the fast `year` and would strobe ~0.7 Hz (134), so it stays out until it has its own slow clock.
+
+**Change (~18 lines, DOM + draw-only, stream-neutral).** A new census-strip stat, placed right after the gold
+year/time-of-day stat so the two temporal/sky readings group: `<b id="stMoonPct">` over `<span id="stMoonName">`,
+marked `opt sm` so it sheds with the other decorative stats as the strip narrows (and never leaks onto the
+"founding four" mobile layout — it sits before the `:last-child` transit stat, which keeps its mobile role). A
+new `moonWord(l)` beside `phaseWord()` bins the lunation fraction into the eight conventional names; `syncStats()`
+reads `moonPhase()` once and writes `NN%` (illumination `(1-cos 2πl)/2`) + the phase word. No `rng()`, no
+terrain, no tile/entity, no new per-frame draw — the readout rides the existing `syncStats` cadence (per tick),
+the same one the time-of-day phase word already uses.
+
+**Census.** PASS, exit 0. Draw/DOM-only, stream-neutral — tile histogram empty, core metrics +0 (`pop −3`,
+`greenRoofs +1` are the documented chaotic-CA / roof-adoption headless wobble).
+
+**Probe — `probes/probe-moonhud.mjs` (promoted; new).** Two claims, because a readout claim needs BOTH a running
+clock (134's cadence law) and a correctness sweep:
+- **Cadence (running clock):** playing=true at 8×, read the actual DOM `#stMoonName` @10 Hz for 6 s. seed 42 &
+  seed 7 both **1 word-transition** (a legible slow readout, not a strobe), CONTROL clock advancing (ΔdayT ≈
+  0.43, Δyear ≈ 8). A `year`-driven readout would have flipped words many times per second here.
+- **Correctness + liveness:** sweep a full synodic month via `__setTime` (8 integer `dayT` steps = 1 lunation),
+  65 samples. **8/8** phase names appear (live across the month), **0** word/limb disagreements (every "waxing"
+  word waxes, every "waning" word wanes; "full"/"new" only at the illumination extremes). NB the first cut of
+  the *check* wrongly asserted `illum>0.98 ⇒ full moon`; phase names bin by lunation FRACTION, so a 99%-lit
+  waxing gibbous is correct — the readout was right, the check was fixed.
+
+**Visual.** Wide dsf=2 frames, one agent per seed. seed 42 day (`year=2035.62`, t=0.35): moon stat reads
+`0% / NEW MOON` right after `2035 / DAYTIME`, strip one clean row of 11 stats, no wrap, clear gap before the
+controls card, whole frame balanced. **seed 7 night (t=0.90): card reads `97% / WAXING GIBBOUS`, and the agent
+independently confirmed the DRAWN moon disc is a nearly-full bright round disc that AGREES with the card** — the
+locate-don't-judge check (108) against ground truth the field already holds. Both VISUAL: PASS, no z-order
+tears / floating tiles / blown-out colour.
+
+**Verdict — SHIPPED. 135's banked "moon-only HUD card is now viable" is CASHED.** The diorama now names the
+moon it draws: an almanac reading that stays put for ~110 s (one day-cycle per phase-eighth) instead of
+flickering, because it rides `dayT` not `year`. Sky's Interaction/UX cell is filled (`~~134~~, 144`); Sky is no
+longer stalest (People 137 now is). The season half stays banked and explicitly fenced off in the header.
+
+### Findings for later laps
+- **THE MOON HUD IS THE HALF OF 134's ALMANAC THAT WAS SAFE — the SEASON half is still fenced.** 135 slowed
+  only the moon; the season word still reads `year` (fast dev clock) and would strobe ~0.7 Hz. A future Sky lap
+  wanting a season readout must FIRST give it a slow clock or quantize/hold it — do not add `seasonWord(year)`
+  to the HUD and assume 144 unblocked it. The moon was shippable precisely because 135 had already re-clocked
+  its field; the season has no such fix yet.
+- **A HUD stat that mirrors an existing multi-reader field is free and safe.** `moonPhase()` was already the one
+  shared predicate (draw disc, moonglade, `__moon()`, iter 135's "one predicate" law); the card is just a fifth
+  reader of it, so it cannot drift from what's drawn — the night agent seeing card and disc agree is that law
+  paying out. When adding a readout, wire it to the field the pixels already read, never a parallel computation.
+- **A readout probe needs TWO clocks: a RUNNING one for cadence, a STEPPED one for correctness.** The strobe
+  test (134) must play; the correctness sweep must freeze and step (`__setTime` by integer `dayT` = clean
+  lunation-eighths, 135's trick). One probe, both — `probe-moonhud` runs the running-clock DOM read AND the
+  frozen sweep. Reuse the shape for any future almanac/readout gate (a season word, a tide readout).
+
