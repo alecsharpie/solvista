@@ -28,7 +28,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137** | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **144** · Urban **151** · People **145** · Nature **148** · Transport **146** · Civic **149** · Water **150**.
-  **Stalest is now Sky (144)** (post-saturation — Deepen/Fix only, its additive/CA cells are traps), then People (145), then Nature (148) — check the last entry of the stalest domain for a banked
+  Sky **153** · Urban **151** · People **145** · Nature **148** · Transport **146** · Civic **149** · Water **150**.
+  **Stalest is now People (145)**, then Transport (146), then Nature (148) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -174,10 +174,10 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** — (**130/136/142/147/152 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** — (**130/136/142/147/152 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen.
   **⚠ Iteration 157 is the next holistic STEP-BACK** (…/142/147/**152 done**/**157**) — not a domain lap; see the recipe
-  below (night + season, day frame off January, interleaved perf). **153 owes the stalest domain, Sky (144)**,
-  then People (145), then Nature (148). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
+  below (night + season, day frame off January, interleaved perf). **154 owes the stalest domain, People (145)**,
+  then Transport (146), then Nature (148). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
   the banked Sky move is the SEASON word, which needs a slow clock FIRST — see the moon note above). Urban's
   additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
@@ -391,75 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 145 entries before Iteration 143 live in
+> **Archive:** the 146 entries before Iteration 144 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 143 — the downtown gets a bright heart at night (2026-07-11)
-
-**Vector.** Urban fabric × **Polish** (SHIPPED). Rotation named the domain — Urban was the single stalest (last
-133) — and 118's law forbids a New element in a domain whose additive inventory is surveyed spent. The content
-was a **banked, thrice-reconfirmed watch-item** (136/142 step-backs): the night core reads *broad/diffuse*, a
-real falloff but no tight CBD peak, "a future Sky/Urban Polish steepening the `CBDX/CBDY` light gradient could
-cash it deliberately." A banked, measured finding outranks kind-rotation (119's law), and Polish varies HARD
-off the last four laps (all Interaction/UX, 133/134/140/141) — the header's own steer.
-
-**Probe first (119's law).** Fixed `probes/probe-nightcore.mjs`'s path bug on the way in — it read
-`./solvista.html` relative to its own dir (the exact anti-pattern SKILL.md warns about); now
-`../../../../solvista.html` (the repo-root resolve). Its ring profile *named the defect precisely*: the night
-light field `c.lit` is `0.18 + 0.70·smoothstep(1−d/34)`, and **smoothstep is flat-topped (zero slope at the
-CBD)**, so the inner rings barely out-shone each other. seed 7 ring 0-4 (**0.810**) was actually *dimmer* than
-ring 4-8 (**0.826**) — the brightest ground was a plateau, not a peak. That is the "diffuse core" three agents
-felt, measured.
-
-**Change (~6 lines, draw-only, genWorld only).** Kept the broad smoothstep glow to the rim (it earns the
-rim→core gradient) but **added a tight Gaussian bump on the CBD**: a new `CORESIG=5` and
-`c.lit = 0.16 + 0.50·broad + 0.28·exp(−d²/2σ²) + (c.lit−0.5)·0.5`. Position-only (never height — a building
-must not wear its height twice, 103/110), stream-neutral (no `rng()`, no terrain, no tile/entity), and the
-per-frame draw path is byte-identical — the Gaussian is computed once in `genWorld`, not per frame, so no perf
-cost (perf gate not needed; the step-back owns it).
-
-**Census.** PASS, exit 0. Draw-only, stream-neutral — tile histogram empty, all core metrics +0
-(`greenRoofs +1` is the roof-adoption CA's known headless-timing wobble).
-
-**Probe, after.** `probe-nightcore` ring `c.lit` means, before → after:
-- seed 42: `0.899/0.828/0.747/0.658/0.473/0.264` → `0.921/0.774/0.614/0.515/0.370/0.224` — the core→(8-12) gap
-  **doubled 0.152 → 0.307**; a real monotonic peak.
-- seed 7: `0.810/0.826/0.762/…` (0-4 *below* 4-8, no peak) → `0.832/0.770/0.629/…` (0-4 now the brightest).
-- `corr(lit,th)` **0.09–0.11** both seeds — brightness still does NOT restate height (invariant held, 103/110).
-- The PIXEL luminance moved only ~1–2 units per mid-ring (the window mix `0.35+0.65·c.lit` compresses the range
-  and windows are a fraction of each building) — so the effect is subtle by construction, which the visual gate
-  then confirmed is *discriminable*, and which is the right proportion for a nuance (a dramatic core blows out).
-
-**Visual.** Before/after night frames (off-January `year=2035.62`, t=0.88), one agent per seed, asked to
-**DISCRIMINATE** which frame has the tighter core (108's locate-don't-judge). **2/2 chose the after-frame**,
-blind, and both **located the brightest cluster at the true CBD** — seed 42 ~(0.47,0.48) [CBD (32,31)], seed 7
-~(0.44,0.63) [CBD (31,41), the southern y reads low in-frame]. Both: no z-order tears, no floating tiles, no
-blown-out/clipped white (peak stays warm window-light, not a halo/blob), whole frame a balanced night coastal
-city with a dark rim. VISUAL: PASS both.
-
-**Verdict — SHIPPED. The night-core-is-broad watch-item (136/142) is CASHED.** Downtown now reads as a single
-luminous heart with a steep inner falloff, not a wide even smear — the flat-plateau defect (smoothstep's
-zero-slope top) is gone. Draw-only, stream-neutral, position-only, zero perf cost. Urban's Polish cell gains
-its tenth (…124, 143); Urban is no longer stalest.
-
-### Findings for later laps
-- **SMOOTHSTEP IS FLAT-TOPPED — a radial falloff built on `u²(3−2u)` has ZERO slope at its centre, so it makes
-  a PLATEAU where you want a PEAK.** The night core read diffuse for 28 iterations because its own falloff was
-  gentlest exactly at the CBD (seed 7's innermost ring measured *dimmer* than the next one out). If a field
-  should read as a bright *point*, add a tight Gaussian/cone bump on top of the broad base; don't just scale the
-  smoothstep. Reusable for any "concentrate X on a centre" field (a future density/value/glow peak).
-- **THE PIXEL PROBE AND THE MODEL PROBE DISAGREE ON MAGNITUDE — the window mix `0.35+0.65·c.lit` compresses.**
-  A large swing in the `c.lit` *field* (ring means moved 0.05–0.13) became a ~1–2-luminance-unit swing in
-  rendered pixels, because the window term has a 0.35 floor and windows are a fraction of each building. So a
-  field fix reads *subtly*. If a future lap wants the core to read MORE strongly, the lever is widening
-  `0.35+0.65·c.lit`'s range (or a dedicated warm downtown sky-glow disc), NOT steepening `c.lit` further — it's
-  already peaked, and the ceiling is the mix, not the field.
-- **probe-nightcore.mjs's path was BROKEN (`./solvista.html`) and is now fixed** — it could not have run since
-  it was `git mv`'d into `probes/`. Any probe that predates the "resolve relative to the probe, four dirs up"
-  law may carry the same bug; check the `readFileSync`/`goto` path before trusting an old probe's silence.
 
 ## Iteration 144 — the almanac gets its moon (2026-07-11)
 
@@ -1003,3 +939,59 @@ all found NO compounding city defect). No watch-item survives: the night-core-br
 a step-back that finds no defect ships nothing — logging the clean bill IS the outcome. **153 owes the stalest
 domain (Sky, last 144 — Deepen/Fix only, the SEASON word still needs a slow clock first), then People (145),
 then Nature (148).**
+
+## Iteration 153 — the stars fade under a full moon (2026-07-11) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × **Deepen** (SHIPPED). Rotation named the domain — Sky was the single stalest (last
+144) — and the header's standing fence rules out its additive/CA cells (traps) and its one banked move (the
+SEASON word, still needs a slow clock, do not re-ship 134). So a Deepen that adds no element: an *interconnect*
+between two mature Sky systems that never talked. **Probed the seam first (119's law):** the night star field
+(render, ~L5491) faded only with `LITAMT` and **completely ignored `MOONF`** — `probe-starmoon` measured
+`corr(starLum, MOONF)=0.000` across a 12-sample moon-phase sweep at a fixed night. Astronomically wrong: a
+bright full moon washes all but the brightest stars out; a new moon reveals the field.
+
+**Change (~10 lines, draw-only, stream-neutral).** (1) Gave each `STARS` entry a 4th field — an intrinsic
+magnitude (`Math.random()`, at module load; touches no seeded `rng()`) — so moonlight thins the FAINT stars
+first. (2) In the draw, multiply each star's alpha by `starWash = 1−0.62·MOONF` and by `(0.6+0.8·mg)` (mean
+1.0). `MOONF` is the moon's own lit fraction, already computed at L5486 and read by the disc, the moonglade and
+the moon HUD — this is **another reader of the one predicate** (144's law), so the stars cannot drift from the
+moon that's drawn. The `(0.6+0.8·mg)` mean-1.0 spread keeps the **new-moon** field at its old average
+brightness, so the well-vetted dark-night look is unchanged and only *thins* as the moon fills. No tile, entity,
+`rng()`, `tick()` pass or terrain — pop provably flat; no `ENTINFO`/census-hook change (stars aren't a hover
+entity). Per-frame cost: 70 stars × two extra multiplies — nil.
+
+**Census.** PASS, exit 0. Draw-only, stream-neutral — tile histogram empty, core metrics flat (life/transport
+wobble is the documented chaotic-CA headless noise). Vacuous by construction; the probe is the gate.
+
+**Probe — `probes/probe-starmoon.mjs` (new, promoted).** A moon-phase SWEEP at a FIXED time of day: `daylight`
+reads `dayT mod 1` so sweeping `dayT=k+0.90` (k=0..11, deep night) holds the sky, `LITAMT` and the frozen
+twinkle IDENTICAL and varies ONLY the moon (`moonPhase` reads raw `dayT/8`). Result: **HEAD `corr(star,MOONF)`
+= 0.000** (the defect) → **patched −0.99 / −0.87** (seed 7 / 42; bright moon dims the field). **Ground control**
+(city-core patch, lit by `LITAMT` not the moon) `corr = 0.000` both builds — the change is confined to the sky.
+
+**Visual.** New-moon vs full-moon night wide frames per seed (found the extremal `t` per seed via `__moon().illum`:
+s42 NEW t=7.90 / FULL t=3.90; s7 NEW t=4.90 / FULL t=0.90), one agent each, asked to DISCRIMINATE which frame has
+the richer star field (108's locate-don't-judge). **2/2 chose the NEW-moon frame** (seed 42 blind), matching the
+intended effect; both confirmed no z-order tears / floating tiles / blown-out colour anywhere, both whole frames
+balanced night coastal cities. Seed 7 noted the effect is "very subtle at this zoom" — expected (143's
+pixel-vs-field magnitude law + the wide downscale), directionally correct and artifact-free.
+
+**Verdict — SHIPPED.** The diorama's night sky is now internally consistent: the same `MOONF` that fills the disc
+and lights the moonglade now washes the stars out, so a full-moon night reads pale and sparse while a new moon is
+brilliant. Draw-only, stream-neutral, pop flat, another reader of the moon predicate. Sky's Deepen cell gains its
+seventh (19, 35, 50, 57, 95, 135, **153**); Sky is no longer stalest (People 145 now is).
+
+### Findings for later laps
+- **`MOONF` IS NOW A FOUR-READER FIELD — reuse it, don't re-derive.** The moon's lit fraction feeds the disc, the
+  moonglade, the moon HUD (144) and now the star wash. Anything that should respond to moonlight (a future
+  night-sky-glow, a moonlit-water tweak, dimmer aurora) should read `MOONF` at L5486, not recompute a phase.
+- **THE MOON-PHASE SWEEP-AT-FIXED-NIGHT is the probe shape for any moon-driven feature.** `daylight` reads
+  `dayT mod 1` but `moonPhase` reads raw `dayT/8`, so `dayT=k+0.90` (integer k) holds time-of-day/`LITAMT`
+  IDENTICAL and sweeps ONLY the moon — a clean control for isolating a moon response from the day cycle.
+  `probe-starmoon` does it; reuse it. (And to shoot a matched new-vs-full pair, the extremal `t` is per-seed —
+  the phase carries a `seedNum` offset — so query `__moon().illum` over k=0..7 to pick them, don't assume `t=0.9`
+  is any particular phase.)
+- **Sky's SEASON word is STILL the only banked Sky move and STILL fenced.** This Deepen was a moon↔stars
+  interconnect, NOT the season readout. The season word still reads the fast `year` (strobes ~0.7 Hz, 134) and
+  needs a slow clock or quantize/hold FIRST. Sky's additive/CA cells remain traps; the next Sky lap wanting a
+  *new* interconnect should look for another mature-but-disconnected pair, as this did.

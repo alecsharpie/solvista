@@ -5429,7 +5429,9 @@ function drawSkirt(x,y){
 }
 
 /* fixed star field (screen space) */
-const STARS=[];for(let i=0;i<70;i++)STARS.push([Math.random(),Math.random()*0.55,Math.random()*7]);
+/* [u, v, twinkle-phase, magnitude] — the 4th field is intrinsic brightness (iter 153):
+   it spreads the field so moonlight washes the FAINT stars out first, as the sky really does */
+const STARS=[];for(let i=0;i<70;i++)STARS.push([Math.random(),Math.random()*0.55,Math.random()*7,Math.random()]);
 
 /* THE MARINE LAYER — weather standing in the scene, not a smudge on the lens.
    It used to be a handful of big screen-space ellipses drawn after every row,
@@ -5488,8 +5490,16 @@ function render(){
   /* night sky: stars + moon behind the slab */
   if(LITAMT>0.15){
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    for(const[u,v,tw]of STARS){
-      const a=LITAMT*(0.25+0.45*Math.pow(Math.sin(time*1.6+tw),2));
+    /* moonlight washes the fainter stars out: a full moon (MOONF~1) leaves only the
+       brightest few, a new moon reveals the whole field. Same MOONF the disc and the
+       moonglade read - one predicate, another reader of it (iter 153). starWash keeps
+       the new-moon field at its old average brightness ((0.6+0.8*mg) means 1.0), so
+       the well-vetted night look is unchanged on a dark night and only thins as the
+       moon fills. */
+    const starWash=1-0.62*MOONF;
+    for(const[u,v,tw,mg]of STARS){
+      const a=LITAMT*starWash*(0.25+0.45*Math.pow(Math.sin(time*1.6+tw),2))*(0.6+0.8*mg);
+      if(a<0.03)continue;
       ctx.fillStyle='rgba(250,248,238,'+a+')';
       ctx.fillRect(u*innerWidth,v*innerHeight,1.3,1.3);
     }

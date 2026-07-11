@@ -8413,3 +8413,67 @@ time (125→130→136→142) — but the same-session interleave this time surfa
   standing legibility nuance; a future Sky/Urban Polish steepening the `CBDX/CBDY` light gradient could cash it
   deliberately — it has not earned a forced fix.
 
+## Iteration 143 — the downtown gets a bright heart at night (2026-07-11)
+
+**Vector.** Urban fabric × **Polish** (SHIPPED). Rotation named the domain — Urban was the single stalest (last
+133) — and 118's law forbids a New element in a domain whose additive inventory is surveyed spent. The content
+was a **banked, thrice-reconfirmed watch-item** (136/142 step-backs): the night core reads *broad/diffuse*, a
+real falloff but no tight CBD peak, "a future Sky/Urban Polish steepening the `CBDX/CBDY` light gradient could
+cash it deliberately." A banked, measured finding outranks kind-rotation (119's law), and Polish varies HARD
+off the last four laps (all Interaction/UX, 133/134/140/141) — the header's own steer.
+
+**Probe first (119's law).** Fixed `probes/probe-nightcore.mjs`'s path bug on the way in — it read
+`./solvista.html` relative to its own dir (the exact anti-pattern SKILL.md warns about); now
+`../../../../solvista.html` (the repo-root resolve). Its ring profile *named the defect precisely*: the night
+light field `c.lit` is `0.18 + 0.70·smoothstep(1−d/34)`, and **smoothstep is flat-topped (zero slope at the
+CBD)**, so the inner rings barely out-shone each other. seed 7 ring 0-4 (**0.810**) was actually *dimmer* than
+ring 4-8 (**0.826**) — the brightest ground was a plateau, not a peak. That is the "diffuse core" three agents
+felt, measured.
+
+**Change (~6 lines, draw-only, genWorld only).** Kept the broad smoothstep glow to the rim (it earns the
+rim→core gradient) but **added a tight Gaussian bump on the CBD**: a new `CORESIG=5` and
+`c.lit = 0.16 + 0.50·broad + 0.28·exp(−d²/2σ²) + (c.lit−0.5)·0.5`. Position-only (never height — a building
+must not wear its height twice, 103/110), stream-neutral (no `rng()`, no terrain, no tile/entity), and the
+per-frame draw path is byte-identical — the Gaussian is computed once in `genWorld`, not per frame, so no perf
+cost (perf gate not needed; the step-back owns it).
+
+**Census.** PASS, exit 0. Draw-only, stream-neutral — tile histogram empty, all core metrics +0
+(`greenRoofs +1` is the roof-adoption CA's known headless-timing wobble).
+
+**Probe, after.** `probe-nightcore` ring `c.lit` means, before → after:
+- seed 42: `0.899/0.828/0.747/0.658/0.473/0.264` → `0.921/0.774/0.614/0.515/0.370/0.224` — the core→(8-12) gap
+  **doubled 0.152 → 0.307**; a real monotonic peak.
+- seed 7: `0.810/0.826/0.762/…` (0-4 *below* 4-8, no peak) → `0.832/0.770/0.629/…` (0-4 now the brightest).
+- `corr(lit,th)` **0.09–0.11** both seeds — brightness still does NOT restate height (invariant held, 103/110).
+- The PIXEL luminance moved only ~1–2 units per mid-ring (the window mix `0.35+0.65·c.lit` compresses the range
+  and windows are a fraction of each building) — so the effect is subtle by construction, which the visual gate
+  then confirmed is *discriminable*, and which is the right proportion for a nuance (a dramatic core blows out).
+
+**Visual.** Before/after night frames (off-January `year=2035.62`, t=0.88), one agent per seed, asked to
+**DISCRIMINATE** which frame has the tighter core (108's locate-don't-judge). **2/2 chose the after-frame**,
+blind, and both **located the brightest cluster at the true CBD** — seed 42 ~(0.47,0.48) [CBD (32,31)], seed 7
+~(0.44,0.63) [CBD (31,41), the southern y reads low in-frame]. Both: no z-order tears, no floating tiles, no
+blown-out/clipped white (peak stays warm window-light, not a halo/blob), whole frame a balanced night coastal
+city with a dark rim. VISUAL: PASS both.
+
+**Verdict — SHIPPED. The night-core-is-broad watch-item (136/142) is CASHED.** Downtown now reads as a single
+luminous heart with a steep inner falloff, not a wide even smear — the flat-plateau defect (smoothstep's
+zero-slope top) is gone. Draw-only, stream-neutral, position-only, zero perf cost. Urban's Polish cell gains
+its tenth (…124, 143); Urban is no longer stalest.
+
+### Findings for later laps
+- **SMOOTHSTEP IS FLAT-TOPPED — a radial falloff built on `u²(3−2u)` has ZERO slope at its centre, so it makes
+  a PLATEAU where you want a PEAK.** The night core read diffuse for 28 iterations because its own falloff was
+  gentlest exactly at the CBD (seed 7's innermost ring measured *dimmer* than the next one out). If a field
+  should read as a bright *point*, add a tight Gaussian/cone bump on top of the broad base; don't just scale the
+  smoothstep. Reusable for any "concentrate X on a centre" field (a future density/value/glow peak).
+- **THE PIXEL PROBE AND THE MODEL PROBE DISAGREE ON MAGNITUDE — the window mix `0.35+0.65·c.lit` compresses.**
+  A large swing in the `c.lit` *field* (ring means moved 0.05–0.13) became a ~1–2-luminance-unit swing in
+  rendered pixels, because the window term has a 0.35 floor and windows are a fraction of each building. So a
+  field fix reads *subtly*. If a future lap wants the core to read MORE strongly, the lever is widening
+  `0.35+0.65·c.lit`'s range (or a dedicated warm downtown sky-glow disc), NOT steepening `c.lit` further — it's
+  already peaked, and the ceiling is the mix, not the field.
+- **probe-nightcore.mjs's path was BROKEN (`./solvista.html`) and is now fixed** — it could not have run since
+  it was `git mv`'d into `probes/`. Any probe that predates the "resolve relative to the probe, four dirs up"
+  law may carry the same bug; check the `readFileSync`/`goto` path before trusting an old probe's silence.
+
