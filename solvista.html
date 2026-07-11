@@ -4318,7 +4318,15 @@ function drawBuilding(c,x,y,gx,gy){
   if(c.h<c.th)c.h=Math.min(c.th,c.h+0.35+(c.th-c.h)*0.012);
   const h=c.h, v=c.v;
   const lit=LITAMT*(0.35+0.65*c.lit);
-  shadowEl(gx,gy,0.42,0.13);
+  /* Contact shadow scaled to the building's MASS — a tower grounds far more
+     heavily than a bungalow, where for the artifact's whole life every building
+     dropped the identical 0.42x0.13 blob regardless of height (iter 180). Stays a
+     centered contact ellipse in the house style (cars/peds/crowds/trees all use
+     the same shadS), just sized to the mass; the radius is capped so a dense core
+     grounds without darkening into clutter. Draw-only: no rng()/terrain, stream +
+     pop flat. */
+  const shf=clamp((h-9)/120,0,1);
+  shadowEl(gx,gy,0.42+shf*0.52,0.13+shf*0.10);
   if(c.t===T.RES){
     /* The two defects iter 99 took out of MID, plus a worse one. Body was v<0.5
        while th is 9+c.v*7, so colour merely restated height (corr 0.87-0.89);

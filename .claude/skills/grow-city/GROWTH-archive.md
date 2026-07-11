@@ -10056,3 +10056,71 @@ Water's New element cell gains its next (6, 10, 12, 16, 20, 33, 106, **169**); W
   respending their draws, but VARY 123's site-on-depth mechanism. Untouched still: a New element could also land on
   the marsh's wet edge, or gulls could work the ferry wake as they *land* on the water (currently they only fly).
 
+## Iteration 170 — the pier hails its anglers (2026-07-12) [People & activity × New element]
+
+**Vector.** People & activity × **New element** (SHIPPED). Rotation named the stalest domain, **People** (last SHIP
+163, a Polish; the header explicitly owed the 170 lap to People or Transport). Kind varied off 163's Polish and the
+globally hot **Deepen** streak (165/166) to a **New element** on a fresh *surface* — 127's law (saturation is of a
+domain's *entities*, not its surfaces): People's entity list is full (peds, dogs, joggers, kids, static crowds,
+picnics, beach towels/bonfires), but no one had ever **fished**. The pier deck gets strolling peds (openCells push,
+L2235; tooltip "Out on the pier for the view") but never a *stationary* activity — anglers are the one iconic pier
+figure missing. A daytime feature, deliberately breaking the recent night-feature run.
+
+**The seam.** `drawPierAt` (L2902) draws the boardwalk deck per pier cell; the plain deck (not the snack stall at
+`x1-1` nor the ferris wheel at `x1`) had structures but no people fishing. Added the anglers right after the deck
+prism, before the stall/wheel blocks.
+
+**Change (~23-line draw + 1-line FIX, all draw-only).** On plain deck cells, gated `LITAMT<0.62` (day) and
+`x===pier.x1-2 || hashCell(x,y,seedNum^0x6A1D)<0.45` — the seaward-most eligible cell (over the deepest water, where
+people fish) is **guaranteed** an angler so a short pier is never empty, plus hash-driven others for variety. Each
+angler: a side-on figure at deck height (z5), a `trunk` rod angling out over the water, a `whiteDk` line dropping to
+a `coral` float on the sea, a `shadS` contact shadow (house style, 137/163), body colour `hashCell`-picked from
+teal/stone/terra, day fade `aa=clamp((0.62-LITAMT)/0.24,0,1)` on the same slow day-clock as the beach umbrellas/gulls
+(a rhythm, not a strobe). No tile, entity array, `rng()`, `tick()` pass or terrain; strings pure-ASCII (134). Stream
++ pop provably flat.
+
+**Bundled FIX (1 line).** `drawPierAt` was only called from the **WATER and BEACH** switch cases, so where a pier
+crosses **KELP** cells (seed 7: 2 of its 3 eligible deck cells are kelp) the deck **vanished into a gap** — a latent
+bug the artifact carried for its whole life. Added `if(pierAt(x,y))drawPierAt(x,y)` to the `T.KELP` case (kelp draws
+first, deck on top — same z-order as water/beach). This closes the gap AND is what lets the anglers site robustly
+across seeds (without it, seed 7's guaranteed cell was kelp and drew nothing).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0, entity counts identical. Vacuous by
+construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-anglers.mjs` (new, promoted).** Because the iteration bundles two changes, the probe uses
+**two reference builds** to isolate them: `BASE` = HEAD, `DECK` = HEAD + the one kelp-deck line (no anglers), `PATCH`
+= working tree. Diffing PATCH vs DECK at the same frozen frame (movers cleared, tramwire law) isolates the anglers
+alone — both builds already draw the deck over kelp. seeds 7/42: **ANGLERS (PATCH−DECK) day 2.18% / 0.86% → night
+0.00% / 0.00%** (gate off → byte-identical), **ROAD control ~0** both frames; the secondary **deck-fix (DECK−BASE)**
+column reads 25%/10% present at DAY **and** NIGHT (correct — the deck is permanent). So the anglers appear only by
+day and only on the pier deck. **PASS.** (Getting here cost the fragile-short-pier debug the finding below records.)
+
+**Visual.** `probes/shot-anglers.mjs` (new) camera-zooms the pier, day + night. Two agents (seed 7 & 42), both
+**PASS**: DAY reads 2 anglers standing correctly ON the deck, rod + line to a float on the sea; NIGHT the deck is
+empty (they pack up); the deck is **continuous end-to-end over the kelp** (gap closed); whole-city `wide` at both
+seeds balanced/beautiful, no z-order tears/floaters/blowout/mojibake. (Seed 7 first FAILed — deck empty — which the
+probe traced to the kelp gap; the FIX turned it to a clean PASS, 120's "a FAIL is a cue to MEASURE" in action.)
+
+**Verdict — SHIPPED.** The pier, strolled-but-never-fished for the artifact's whole life, now has anglers casting off
+the deck by day — the daytime People counterpart to the recent night-life run, sitting beside 169's tideline gulls.
+Bundled a real deck-over-kelp fix. Draw-only, stream + pop flat. People's New element cell gains its next (41, 56,
+**127**, **170**); People is no longer stalest (Transport 164 now is).
+
+### Findings for later laps
+- **A SWITCH-CASE-GATED DRAW SILENTLY SKIPS TILE TYPES THE CASE DOESN'T COVER — grep every case a shared helper is
+  called from before assuming it runs everywhere.** `drawPierAt` was wired into WATER + BEACH but not KELP, so the
+  pier deck (and anything I hung on it) vanished wherever the pier crossed kelp. A feature layered on a per-tile draw
+  inherits that draw's coverage gaps. When a feature "works on seed 42 but not seed 7," suspect a tile-type the host
+  draw doesn't handle on the failing seed (here: `pierdbg` printed `t:26` = KELP for seed 7's dead cells).
+- **A SHORT PROCEDURAL HOST IS HIGH-VARIANCE — GUARANTEE ONE INSTANCE, HASH THE REST.** The pier is only 3–5 deck
+  cells; an independent per-cell `hashCell<p` gate left whole piers empty on unlucky seeds (seed 7's cells all hashed
+  ≥0.75). Forcing the seaward-most eligible cell (`x===pier.x1-2`) to always fish, then hash-gating the others,
+  guarantees presence without making every cell identical. Reuse this shape for any feature on a small procedural run
+  (a few civic slots, a short parade) rather than trusting the hash to populate it.
+- **WHEN AN ITERATION BUNDLES TWO DRAW CHANGES, ADD A THIRD REFERENCE BUILD TO THE PROBE (the 161 build-vs-build law,
+  extended).** A permanent change (deck-over-kelp) swamped a day-only one (anglers) in a plain patched-vs-HEAD diff.
+  Building an intermediate reference (HEAD + only the permanent line) and diffing PATCH vs *that* isolated the
+  day-only feature cleanly, with the permanent change reported as its own column. `String.replace` on an anchor is
+  enough to synthesize the intermediate build inside the probe.
+
