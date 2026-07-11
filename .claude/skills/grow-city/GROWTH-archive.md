@@ -10543,3 +10543,67 @@ Transport (171)).
   (connected-component count, filtering longitudinal covers) is a possible future Water Deepen if it earns the
   ambiguity cost.
 
+## Iteration 177 — the fifteenth step-back finds a clean city, perf flat (2026-07-12) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/136/142/147/152/157/162/167/172/**177**). Not a
+domain × kind lap: it reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to,
+runs the season probe + interleaved perf gate, at night AND a season with the day/night baselines pinned OFF
+January (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so rotation is
+unchanged — the next lap (178) owes the stalest domains, **People (170)/Transport (171)**.
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42 (warp 61) &
+seed 7 (warp 31), each at {day 2035.62/t=0.35, night 2035.62/t=0.90, winter 2035.02/t=0.35}. One subagent per
+seed read its own three frames: the cumulative question ("has anything compounded into clutter or darkness?")
+plus 108's **locate-don't-judge** night test ("where is the core by light alone?") and a season-distinctness check.
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night core (115/143) LOCATED off-centre by light alone both seeds** — seed 42 ~(0.48,0.50), seed 7 ~(0.53,0.60)
+  — matching 172 ((.47,.55)/(.45,.62)), 167 ((.47,.50)/(.50,.62)), 162 ((.48,.53)/(.45,.62)); each a genuine warm
+  bright-core → dim residential mid-ring → dark rim → near-black ocean falloff, not a flat wash, with lit transit
+  lines threading out (138 arterials hold).
+- **All recent vectors sit correctly in the whole frame** — 173's warehouse north-light, 174's hay bales, 175's
+  parliament floodlight, 176's river tooltip (draw-nothing) — with pier/ferris/wind-farm on the water plane and the
+  block grid still separating cleanly. **No z-order tears / floaters / hard seams / blown-out white / mojibake** in
+  any of the 6 frames; stat strip + labels crisp both seeds (`·` renders correctly, no `Â·`). **Winter reads
+  distinct** from summer at both seeds (bare/stubble-striped farm plots, duller desaturated vegetation) — mild
+  California winter by design (120's evergreen/irrigated dilution), no snow.
+
+**Season — measured alive.** `probes/probe-season.mjs`: FARM winter→dry-peak **87.6** (matches
+130/136/142/147/152/157/162/167/172), VINEYARD 44.6/36.7/42.7 (139), FOREST 20.6/19.7/**30.7** (autumn holds at
+166's litter level), ORCHARD 25.3/17.8/41.4, MEADOW/SHOREPARK move, PARK/REDWOOD/GARDEN/QUAD near-zero by design
+(120), ROAD control **0.5–2.1**. Calendar working; the four-season forest floor (156/166) is real.
+
+**Perf — 173→176 cost ~ZERO.** Interleaved HEAD-176 vs the iter-172 file (`3d0e876`, A/B/A/B ×3, **min per
+variant**, one process so both eat the same machine load): day **34.44 vs 34.5ms** (**−0.2%, flat**) and night
+**40.55 vs 40.44ms** (**+0.3%, flat**). So 173 (warehouse clerestory, day roof draw) + 174 (hay bales, day-only) +
+175 (parliament floodlight, night-only) + 176 (river tooltip, draw-nothing) added ~nothing measurable — expected,
+all four are draw-only/tooltip. NOT re-pinning the stored baseline (it reads inflated on today's load per the
+reflexive false-FAIL, 167; re-pin only if an interleave *itself* shows a persistent offset — it has not since
+142's real +2.2%). Census PASS, vacuous (no source edit); tree clean.
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per
+120/130/136/142/147/152/157/162/167/172 ("a clean step-back is a complete iteration — don't force a filler
+vector") the output is the health record + header refreshes: step-back pointer 172→177 (next 182), the tenth clean
+bill, and the 177 interleaved perf reading. No `solvista.html` edit.
+
+**Verdict — FIXED.** No compounding city defect — the TENTH clean step-back in a row (130, 136, 142, 147, 152,
+157, 162, 167, 172, 177). All accumulated visual laws (115/116/120/123 + 138 arterials + 143 CBD peak) still read
+at both seeds under all three lights; the season is alive (166's autumn litter still in FOREST's probe, 139's
+vineyard moving); perf is flat against the honest interleaved control.
+
+### Findings
+- **TENTH CONSECUTIVE CLEAN STEP-BACK — the loop's late-game equilibrium is holding.** Four more laps of draw-only /
+  tooltip vectors (173 warehouse north-light, 174 hay bales, 175 parliament floodlight, 176 river course tooltip)
+  landed since 172 with ZERO measurable perf cost and no cumulative visual drift. The surface-not-entities /
+  deepen-what-exists discipline keeps adding life to *untouched surfaces & existing systems* (a roof, a stubble
+  field, a facade, a tooltip) rather than piling more entities onto a saturated coast — which is exactly why
+  nothing compounds. Pattern: 125→…→172→177.
+- **THE INTERLEAVE-VS-A-STEP-BACK-FILE IS NOW THE STANDING PERF METHOD, and it read −0.2%/+0.3% against a file 5
+  iters old.** The stored baseline remains untouched and would false-FAIL; the only trustworthy number is HEAD vs a
+  pinned older commit's file in ONE process. **3d0e876 (iter 177's anchor was iter 172) — the next step-back (182)
+  should interleave HEAD vs THIS iteration's file (Iter 177 / whatever 181 leaves) to isolate 178–181's cost.**
+- **Night is still the slowly-accumulating column but it did NOT move this window** — of 173–176 only 175's
+  parliament floodlight draws at night, and it is a 1/city landmark often occluded, so night held flat (+0.3%).
+  Night remains the column a future step-back watches first (≈40.5ms/24fps at today's load), but there is no drift
+  to act on. No perf-fix iteration owed.
+
