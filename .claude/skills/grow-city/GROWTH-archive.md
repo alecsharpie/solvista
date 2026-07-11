@@ -10925,3 +10925,71 @@ vineyard moving); perf is flat against the honest interleaved control.
   perf-fix iteration is owed. The night draw budget is being spent carefully — bounded landmark/edge lights
   (175 parliament, 179 bridges), never a full-frame night pass.
 
+## Iteration 183 — the fields name their own harvest (2026-07-12) [Nature × Interaction/UX]
+
+**Vector — Nature × Interaction/UX** (SHIPPED). Rotation named the stalest domain, **Nature (174)** (Civic 175 was the
+next-owed, staler by number is Nature). Kind varied HARD off the globally-hot **Deepen** streak (178/179/181 all Deepen,
+180 Polish) to an **Interaction/UX** — no recent iteration was one (last was 176, Water). A draw-nothing tooltip vector:
+a guaranteed-flat, pop+stream-neutral ship.
+
+**The seam — the biggest agricultural surface, unnamed.** Orchard names its `Grove` season (129) and vineyard its
+`Vines` season (148), each reading the same `year`-phase its draw paints. The **FARM** belt — the *largest* agricultural
+surface (~150 fields), the strongest seasonal mover (winter→dry-peak 88), and the richest calendar of the three (5
+phases: ploughed→sprout→standing crop→straw→cut stubble, plus 174's hay bales) — printed only the static
+`TILEDESC[FARM]` "Row crops on the golden hills." and said nothing about *where in the year* the field stood. The header
+had even declared "the agricultural asserts-less-than-code tell is SPENT (orchard 129 + vineyard 148)" — but it
+**overlooked FARM**, whose calendar is the most elaborate of all and which 174 had just deepened. A genuine open seam,
+the exact 129/148 shape on a bigger host.
+
+**Change (~8 lines, tooltip-only + a shared-predicate refactor).** Extracted the field's per-cell phase clock into a
+shared `farmPh(v)` = `((((year%1)+1)%1-(v-0.5)*0.10)%1+1)%1` (the 112 one-predicate law) and routed the FARM **draw**
+through it (was inline `s`/`ph` at L3792 — algebraically identical, so byte-unchanged pixels). Added `farmPhase(v)`
+mapping `farmPh` to a word on the draw's own boundaries (`<0.06||>=0.93` ploughed · `<0.20` sprouting · `<0.52` growing ·
+`<0.80` ripening · else harvested), and a `describeTile` `Fields` row reading `farmPhase(c.v)`: **Ploughed under /
+Sprouting / Standing crop / Ripening to straw / Cut for harvest**. Since each field runs ±5 weeks off its neighbours
+via `c.v`, the belt names a *patchwork* of phases, not one word. No tile / entity / `rng()` / `hashCell`-terrain /
+`tick()` pass / terrain change; strings pure-ASCII (134). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity counts identical
+(`solarRoofs -2`/`towerHt -1` = documented RAF tick-count jitter, touches no `rng()`; the `farmPh` refactor is
+algebraically identical so the draw is byte-unchanged). Vacuous by construction (tooltip-only) — the probe is the gate.
+
+**Probe — `probes/probe-farmtip.mjs` (new, promoted).** A logic probe on the 122/176 template: it **independently**
+recomputes each field's phase word from `year` + `c.v` (its own copy of the ph formula + boundaries, not by calling
+`farmPhase`) and asserts `describeTile`'s printed `Fields` word equals it. Rebuilt in-page (`genWorld`+`__warp`) at
+**two calendars** — harvest 2035.88 and midsummer 2035.40. seeds 7/42/1234: **word-match 35/35 · 40/40 · 45/45 at
+harvest, same at summer**; **non-FARM control (ROAD/RES/ORCHARD/VINEYARD) carries no `Fields` row, 400/400 clean**;
+**calendar control: 'Cut for harvest' = all fields at harvest → 0 at midsummer** (proving the row reads the year, not a
+static string — 174's calendar-control law). **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-farmtip.mjs` (new, promoted).** `shoot.mjs` can't hover; the shot script uses `__find('FARM')`
+for a farm's clip-ready screen coords, pins the calendar in-page (freeze-the-clock law), hovers, and clip-shoots the
+tooltip magnified. seed 42 @ harvest: tooltip reads `Farm | Row crops on the golden hills. | Fields | Cut for harvest
+| Value 55%`; seed 7 @ midsummer: `... | Fields | Standing crop | ...` — no page errors. Two agents (one per seed),
+both **VISUAL: PASS**: `Farm` title + `Fields` row visible and **legible** (no mojibake/clipping), hex cursor outline
+seats on the hovered field, surrounding farms read as coherent row-crop fields, no z-order tears / floaters / blowout;
+the whole-city frame (seed 42) still a balanced beautiful coastal city.
+
+**Verdict — SHIPPED.** The farm belt — the biggest agricultural surface, richest calendar, deepened only last lap (174)
+— now names its own harvest cycle on hover, a patchwork of phases reading the same per-cell clock the crop colour
+paints. The asserts-less-than-code tell, closed for the agricultural surface the header had overlooked. Draw-nothing
+tooltip + a one-predicate refactor, pop + stream flat, ~8 lines + a probe + a shot. Nature's Interaction/UX cell gains
+183 (117/129/**148**/**183**). The next domain lap (184) owes **Civic (175)**, then Water (176)/People (178)/Transport
+(179); step-back still at **187**.
+
+### Findings for later laps
+- **THE "ASSERTS-LESS-THAN-CODE" TELL WAS DECLARED SPENT FOR A DOMAIN WHILE ITS BIGGEST HOST WAS STILL OPEN.** The
+  header said the agricultural tell was closed by orchard (129) + vineyard (148), but FARM — the *largest* of the three,
+  with the *richest* calendar — was never named, and 174 had just deepened it. A "kind spent for domain X" claim in the
+  header is about the *hosts touched so far*, not every host; before trusting a saturation note, grep the domain for the
+  *biggest untouched instance* of the same seam. (Same shape as 127's "additive spent is about entities, not surfaces.")
+- **THE ONE-PREDICATE REFACTOR IS FREE WHEN THE DRAW ALREADY COMPUTES THE PREDICATE INLINE.** FARM's draw computed `ph`
+  inline; extracting `farmPh(v)` and pointing both the draw and the new tooltip at it cost nothing (algebraically
+  identical, byte-unchanged pixels) and bought the 112 guarantee that the word can never drift from the colour. When you
+  add a tooltip that names what a draw paints, prefer *extracting the draw's own expression* into a shared helper over
+  re-deriving the value — you get correctness-by-construction, not a second definition to keep in sync (112/175's law).
+- **GARDEN (2 hexes) is the last un-named agricultural tile, but its draw does NOT read `year` (129) — it needs a
+  Deepen FIRST.** With FARM closed, Nature's Interaction/UX seam via the agricultural calendar is spent; the next
+  Nature × Interaction/UX must be a *new* seam (e.g. does the barn/`c.v>0.9` outbuilding, or a REDWOOD stand's fire
+  history beyond 117's `Undisturbed`, name anything the draw already tracks?).
+
