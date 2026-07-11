@@ -9479,3 +9479,47 @@ features (moon 135, stars 153, observatory 158). Draw-only, stream + pop flat. W
   AND if you dim a feature to fix a look, re-run the probe — a deep-green + low-alpha pass dropped seed 7's night
   signal to 0.05% (below its own ROAD noise) before I raised it back; a look-fix can silently kill the measurement.
 
+## Iteration 160 — terraced row houses don't fit a hex city (2026-07-11) [Urban fabric × Connect]
+
+**Vector.** Urban fabric × **Connect** (EXPLORED → REVERTED). Rotation named the stalest domain, **Urban**
+(last SHIP 151); the kind chose **Connect** (Urban's under-used cell — 47, 109) deliberately to break both the
+hot **Deepen** streak (155/158/159) and the five-iteration **night** run — a daytime fabric feature.
+
+**Idea.** Extend 109's celebrated MID "street wall" — adjacent walk-ups grow their body into the E-W gap to form
+a continuous terrace at ZERO extra fills (grow the body, don't add a prism) — to **RES**: a modest inner house
+(v<0.55, so below the pool/palm bands) whose EAST neighbour is also a modest RES grows east (jx 0.20, ab 0.30→0.50)
+so their party walls butt into a terraced row, the pitched roof kept per-house so the roofline stays countable.
+Shared `resTerrace(c,x,y)` predicate (one definition, read by both the draw and a new `__terr` locator), keyed on
+the EAST cell's hash so both sides agree; draw-only (hashCell, no rng()/terrain).
+
+**What passed.** Census PASS (draw-only, vacuous — greenRoofs +1 chaotic wobble). `probe-terrace.mjs` (patched vs
+pristine HEAD, frozen day frame, movers cleared) confirmed the MECHANISM works on the pairs that exist: terraced
+pairs FILL 46–53% of the party-wall gap strip, control (rejected candidates) ~0.4–0.6% — 2/2 seeds. The join is
+correct; it just has almost nothing to join.
+
+**Why REVERTED — the host doesn't exist at scale.** City-wide count (seeds 7/42/1234): RES = 275/299/301, but only
+**37/43/49 have an E-W RES neighbour at all**, of which **5/5/11 terrace, and ZERO seeds form a run of ≥3 houses.**
+RES on this hex grid is predominantly **detached** — houses sit one-per-hex separated by roads and gaps, so there
+is no dense E-W residential fabric to weave (unlike MID, which clusters along arterials, which is exactly why 109
+worked there). The zoomed shot showed the second, deeper reason: **RES bodies are HEX PRISMS filling a hex tile**,
+so "grow east 0.20" merely widens a hexagon — it never reads as the rectangular shared-wall terrace the mechanism
+assumes. Net effect: a handful of invisible, isolated joined pairs, not a connected street. A passing census + a
+passing probe, correctly overturned by the "does it read city-wide" bar.
+
+**Verdict — EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (`git checkout`); the `resTerrace`
+helper, the `__terr` hook, `probe-terrace.mjs`, and `shot-terrace.mjs` all removed. Urban's Connect cell is
+*attempted* (~~160~~), not filled; last real Urban ship is still 109.
+
+### Findings for later laps
+- **CHECK HOST ADJACENCY, NOT JUST HOST COUNT, BEFORE A CONNECT VECTOR (the dead-code-renders-zero law's adjacency
+  corollary, 30/107).** The census tile histogram said RES≈290 — abundant — but a "join your neighbour" feature
+  needs the neighbours to BE adjacent at scale, and only ~15% of RES have an E-W RES neighbour, 0% in runs of 3+.
+  A Connect that weaves a fabric needs that fabric to be woven-able: measure adjacency (a 10-line `__terr`-style
+  count) BEFORE designing, the same discipline as censusing a host tile before wiring to it.
+- **109'S STREET-WALL TRICK IS MID-SPECIFIC, NOT A GENERAL RES/COM MOVE.** It works because MID clusters densely
+  along arterials AND is a flat-topped rectangular block whose bodies genuinely butt. RES is neither (detached,
+  hex-prism-roofed). Don't re-try RES terracing; the answer is a measured no.
+- **Urban × Connect remains genuinely open (last real ship 109).** A future attempt should target a fabric that IS
+  dense and linear — e.g. a continuous shopfront canopy/arcade along a COM high street (`c.hstr` from iter 118
+  already marks retail runs) — but only after measuring that COM clusters E-W in runs, which RES does not.
+

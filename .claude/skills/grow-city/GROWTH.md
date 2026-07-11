@@ -29,7 +29,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137**, **163** | 71, **154** |
+| **People & activity** | 41, 56, **127**, **170** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137**, **163** | 71, **154** |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · People **163** · Transport **164** · Urban **165** · Nature **166** · Civic **168** · Water **169** (New element; SHIP). (162, **167** = step-backs, no domain lap.)
-  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps); the next domain lap (170) owes People (163) or Transport (164)**, then Urban. 169 took Water × New element (the tideline gets its gulls — day-only shorebirds stand on the damp beach margin, a New element on Water's untouched *surface* per 127; no bird had ever landed; draw-only, `probe-gulls` day 1.17%/0.85% → night 0.00%, ROAD control ~0). Next step-back at **172**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
+  Sky **161** · People **170** · Transport **164** · Urban **165** · Nature **166** · Civic **168** · Water **169**. (162, **167** = step-backs, no domain lap.)
+  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps); the next domain lap (171) owes Transport (164)**, then Urban (165)/Nature (166). 170 took People × New element (the pier hails its anglers — day-only fishing figures stand on the boardwalk deck, rod out over the water, line to a float; a New element on the pier *surface* per 127, and it FIXED a latent gap where the deck vanished over kelp; draw-only, `probe-anglers` day 2.18%/0.86% → night 0.00%, ROAD ~0). Next step-back at **172**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -391,55 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 162 entries before Iteration 160 live in
+> **Archive:** the 163 entries before Iteration 161 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 160 — terraced row houses don't fit a hex city (2026-07-11) [Urban fabric × Connect]
-
-**Vector.** Urban fabric × **Connect** (EXPLORED → REVERTED). Rotation named the stalest domain, **Urban**
-(last SHIP 151); the kind chose **Connect** (Urban's under-used cell — 47, 109) deliberately to break both the
-hot **Deepen** streak (155/158/159) and the five-iteration **night** run — a daytime fabric feature.
-
-**Idea.** Extend 109's celebrated MID "street wall" — adjacent walk-ups grow their body into the E-W gap to form
-a continuous terrace at ZERO extra fills (grow the body, don't add a prism) — to **RES**: a modest inner house
-(v<0.55, so below the pool/palm bands) whose EAST neighbour is also a modest RES grows east (jx 0.20, ab 0.30→0.50)
-so their party walls butt into a terraced row, the pitched roof kept per-house so the roofline stays countable.
-Shared `resTerrace(c,x,y)` predicate (one definition, read by both the draw and a new `__terr` locator), keyed on
-the EAST cell's hash so both sides agree; draw-only (hashCell, no rng()/terrain).
-
-**What passed.** Census PASS (draw-only, vacuous — greenRoofs +1 chaotic wobble). `probe-terrace.mjs` (patched vs
-pristine HEAD, frozen day frame, movers cleared) confirmed the MECHANISM works on the pairs that exist: terraced
-pairs FILL 46–53% of the party-wall gap strip, control (rejected candidates) ~0.4–0.6% — 2/2 seeds. The join is
-correct; it just has almost nothing to join.
-
-**Why REVERTED — the host doesn't exist at scale.** City-wide count (seeds 7/42/1234): RES = 275/299/301, but only
-**37/43/49 have an E-W RES neighbour at all**, of which **5/5/11 terrace, and ZERO seeds form a run of ≥3 houses.**
-RES on this hex grid is predominantly **detached** — houses sit one-per-hex separated by roads and gaps, so there
-is no dense E-W residential fabric to weave (unlike MID, which clusters along arterials, which is exactly why 109
-worked there). The zoomed shot showed the second, deeper reason: **RES bodies are HEX PRISMS filling a hex tile**,
-so "grow east 0.20" merely widens a hexagon — it never reads as the rectangular shared-wall terrace the mechanism
-assumes. Net effect: a handful of invisible, isolated joined pairs, not a connected street. A passing census + a
-passing probe, correctly overturned by the "does it read city-wide" bar.
-
-**Verdict — EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (`git checkout`); the `resTerrace`
-helper, the `__terr` hook, `probe-terrace.mjs`, and `shot-terrace.mjs` all removed. Urban's Connect cell is
-*attempted* (~~160~~), not filled; last real Urban ship is still 109.
-
-### Findings for later laps
-- **CHECK HOST ADJACENCY, NOT JUST HOST COUNT, BEFORE A CONNECT VECTOR (the dead-code-renders-zero law's adjacency
-  corollary, 30/107).** The census tile histogram said RES≈290 — abundant — but a "join your neighbour" feature
-  needs the neighbours to BE adjacent at scale, and only ~15% of RES have an E-W RES neighbour, 0% in runs of 3+.
-  A Connect that weaves a fabric needs that fabric to be woven-able: measure adjacency (a 10-line `__terr`-style
-  count) BEFORE designing, the same discipline as censusing a host tile before wiring to it.
-- **109'S STREET-WALL TRICK IS MID-SPECIFIC, NOT A GENERAL RES/COM MOVE.** It works because MID clusters densely
-  along arterials AND is a flat-topped rectangular block whose bodies genuinely butt. RES is neither (detached,
-  hex-prism-roofed). Don't re-try RES terracing; the answer is a measured no.
-- **Urban × Connect remains genuinely open (last real ship 109).** A future attempt should target a fabric that IS
-  dense and linear — e.g. a continuous shopfront canopy/arcade along a COM high street (`c.hstr` from iter 118
-  already marks retail runs) — but only after measuring that COM clusters E-W in runs, which RES does not.
 
 ## Iteration 161 — cloud bellies catch the golden hour (2026-07-11) [Sky & atmosphere × Deepen]
 
@@ -973,3 +929,71 @@ Water's New element cell gains its next (6, 10, 12, 16, 20, 33, 106, **169**); W
 - **STILL banked for Water (123):** the pier/lifeguard tower are still `rng()`-salted — site them on a depth by
   respending their draws, but VARY 123's site-on-depth mechanism. Untouched still: a New element could also land on
   the marsh's wet edge, or gulls could work the ferry wake as they *land* on the water (currently they only fly).
+
+## Iteration 170 — the pier hails its anglers (2026-07-12) [People & activity × New element]
+
+**Vector.** People & activity × **New element** (SHIPPED). Rotation named the stalest domain, **People** (last SHIP
+163, a Polish; the header explicitly owed the 170 lap to People or Transport). Kind varied off 163's Polish and the
+globally hot **Deepen** streak (165/166) to a **New element** on a fresh *surface* — 127's law (saturation is of a
+domain's *entities*, not its surfaces): People's entity list is full (peds, dogs, joggers, kids, static crowds,
+picnics, beach towels/bonfires), but no one had ever **fished**. The pier deck gets strolling peds (openCells push,
+L2235; tooltip "Out on the pier for the view") but never a *stationary* activity — anglers are the one iconic pier
+figure missing. A daytime feature, deliberately breaking the recent night-feature run.
+
+**The seam.** `drawPierAt` (L2902) draws the boardwalk deck per pier cell; the plain deck (not the snack stall at
+`x1-1` nor the ferris wheel at `x1`) had structures but no people fishing. Added the anglers right after the deck
+prism, before the stall/wheel blocks.
+
+**Change (~23-line draw + 1-line FIX, all draw-only).** On plain deck cells, gated `LITAMT<0.62` (day) and
+`x===pier.x1-2 || hashCell(x,y,seedNum^0x6A1D)<0.45` — the seaward-most eligible cell (over the deepest water, where
+people fish) is **guaranteed** an angler so a short pier is never empty, plus hash-driven others for variety. Each
+angler: a side-on figure at deck height (z5), a `trunk` rod angling out over the water, a `whiteDk` line dropping to
+a `coral` float on the sea, a `shadS` contact shadow (house style, 137/163), body colour `hashCell`-picked from
+teal/stone/terra, day fade `aa=clamp((0.62-LITAMT)/0.24,0,1)` on the same slow day-clock as the beach umbrellas/gulls
+(a rhythm, not a strobe). No tile, entity array, `rng()`, `tick()` pass or terrain; strings pure-ASCII (134). Stream
++ pop provably flat.
+
+**Bundled FIX (1 line).** `drawPierAt` was only called from the **WATER and BEACH** switch cases, so where a pier
+crosses **KELP** cells (seed 7: 2 of its 3 eligible deck cells are kelp) the deck **vanished into a gap** — a latent
+bug the artifact carried for its whole life. Added `if(pierAt(x,y))drawPierAt(x,y)` to the `T.KELP` case (kelp draws
+first, deck on top — same z-order as water/beach). This closes the gap AND is what lets the anglers site robustly
+across seeds (without it, seed 7's guaranteed cell was kelp and drew nothing).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0, entity counts identical. Vacuous by
+construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-anglers.mjs` (new, promoted).** Because the iteration bundles two changes, the probe uses
+**two reference builds** to isolate them: `BASE` = HEAD, `DECK` = HEAD + the one kelp-deck line (no anglers), `PATCH`
+= working tree. Diffing PATCH vs DECK at the same frozen frame (movers cleared, tramwire law) isolates the anglers
+alone — both builds already draw the deck over kelp. seeds 7/42: **ANGLERS (PATCH−DECK) day 2.18% / 0.86% → night
+0.00% / 0.00%** (gate off → byte-identical), **ROAD control ~0** both frames; the secondary **deck-fix (DECK−BASE)**
+column reads 25%/10% present at DAY **and** NIGHT (correct — the deck is permanent). So the anglers appear only by
+day and only on the pier deck. **PASS.** (Getting here cost the fragile-short-pier debug the finding below records.)
+
+**Visual.** `probes/shot-anglers.mjs` (new) camera-zooms the pier, day + night. Two agents (seed 7 & 42), both
+**PASS**: DAY reads 2 anglers standing correctly ON the deck, rod + line to a float on the sea; NIGHT the deck is
+empty (they pack up); the deck is **continuous end-to-end over the kelp** (gap closed); whole-city `wide` at both
+seeds balanced/beautiful, no z-order tears/floaters/blowout/mojibake. (Seed 7 first FAILed — deck empty — which the
+probe traced to the kelp gap; the FIX turned it to a clean PASS, 120's "a FAIL is a cue to MEASURE" in action.)
+
+**Verdict — SHIPPED.** The pier, strolled-but-never-fished for the artifact's whole life, now has anglers casting off
+the deck by day — the daytime People counterpart to the recent night-life run, sitting beside 169's tideline gulls.
+Bundled a real deck-over-kelp fix. Draw-only, stream + pop flat. People's New element cell gains its next (41, 56,
+**127**, **170**); People is no longer stalest (Transport 164 now is).
+
+### Findings for later laps
+- **A SWITCH-CASE-GATED DRAW SILENTLY SKIPS TILE TYPES THE CASE DOESN'T COVER — grep every case a shared helper is
+  called from before assuming it runs everywhere.** `drawPierAt` was wired into WATER + BEACH but not KELP, so the
+  pier deck (and anything I hung on it) vanished wherever the pier crossed kelp. A feature layered on a per-tile draw
+  inherits that draw's coverage gaps. When a feature "works on seed 42 but not seed 7," suspect a tile-type the host
+  draw doesn't handle on the failing seed (here: `pierdbg` printed `t:26` = KELP for seed 7's dead cells).
+- **A SHORT PROCEDURAL HOST IS HIGH-VARIANCE — GUARANTEE ONE INSTANCE, HASH THE REST.** The pier is only 3–5 deck
+  cells; an independent per-cell `hashCell<p` gate left whole piers empty on unlucky seeds (seed 7's cells all hashed
+  ≥0.75). Forcing the seaward-most eligible cell (`x===pier.x1-2`) to always fish, then hash-gating the others,
+  guarantees presence without making every cell identical. Reuse this shape for any feature on a small procedural run
+  (a few civic slots, a short parade) rather than trusting the hash to populate it.
+- **WHEN AN ITERATION BUNDLES TWO DRAW CHANGES, ADD A THIRD REFERENCE BUILD TO THE PROBE (the 161 build-vs-build law,
+  extended).** A permanent change (deck-over-kelp) swamped a day-only one (anglers) in a plain patched-vs-HEAD diff.
+  Building an intermediate reference (HEAD + only the permanent line) and diffing PATCH vs *that* isolated the
+  day-only feature cleanly, with the permanent change reported as its own column. `String.replace` on an anchor is
+  enough to synthesize the intermediate build inside the probe.

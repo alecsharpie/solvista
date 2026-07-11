@@ -2907,6 +2907,33 @@ function drawPierAt(x,y){
     prism(gx,gy+0.3,0.04,0.04,-4,3,col('deckDk',1),col('deckDk',0.6),col('deckDk',0.85));
   }
   prism(gx,gy,0.52,0.4,3,5,col('deck',1),col('deckDk',0.7),col('deckDk',0.9));
+  /* anglers off the rail: a rod cast out over the water, line dropping to a float.
+     A stationary DAY figure (they pack up by dusk) — the one pier activity the
+     strolling crowd never does. Draw-only, hashCell-sited so only some deck cells
+     hold one, on the plain deck (not under the stall or the wheel). */
+  if(x>pier.x0&&x<pier.x1-1&&LITAMT<0.62&&(x===pier.x1-2||hashCell(x,y,seedNum^0x6A1D)<0.45)){
+    const[cx,cy]=px(gx,gy);
+    const gyd=cy-5;                                   /* deck top rides ~5px above cell centre (z5) */
+    const aa=clamp((0.62-LITAMT)/0.24,0,1);           /* fade in through the morning, gone by dusk */
+    const side=hashCell(x,y,seedNum^0x6A1E)<0.5?1:-1; /* casts to one side of the deck */
+    const ax=cx+side*1.2;
+    ctx.globalAlpha=aa;
+    shadS(ax,gyd,0.09,0.15);                          /* contact shadow on the planks */
+    const tipx=cx+side*11, tipy=gyd-6;                /* rod tip out over the water */
+    ctx.strokeStyle=col('trunk',1.1);ctx.lineWidth=0.7;
+    ctx.beginPath();ctx.moveTo(ax+side*0.4,gyd-2.6);ctx.lineTo(tipx,tipy);ctx.stroke();
+    ctx.strokeStyle=col('whiteDk',0.9);ctx.lineWidth=0.4;   /* the line down to the sea */
+    ctx.beginPath();ctx.moveTo(tipx,tipy);ctx.lineTo(cx+side*12,cy+2.2);ctx.stroke();
+    ctx.fillStyle=col('coral',1.1);                        /* a little float where it meets the water */
+    ctx.fillRect(cx+side*12-0.5,cy+1.7,1,1);
+    ctx.fillStyle=col(['teal','stone','terra'][(hashCell(x,y,seedNum^0x6A1F)*3|0)],0.95);
+    ctx.fillRect(ax-0.9,gyd-3.6,1.8,2.4);                  /* body */
+    ctx.strokeStyle=col('ink',1.3);ctx.lineWidth=0.7;      /* legs, planted */
+    ctx.beginPath();ctx.moveTo(ax,gyd-1.5);ctx.lineTo(ax-0.6,gyd-0.1);ctx.moveTo(ax,gyd-1.5);ctx.lineTo(ax+0.6,gyd-0.1);ctx.stroke();
+    ctx.fillStyle=col('ink',1.4);                          /* head */
+    ctx.beginPath();ctx.arc(ax,gyd-4.4,1,0,7);ctx.fill();
+    ctx.globalAlpha=1;
+  }
   if(x===pier.x1-1){ /* snack stall */
     prism(gx,gy-0.05,0.13,0.11,5,12,col('gold',1),col('terra',0.65),col('terra',0.9));
     prism(gx,gy-0.05,0.17,0.15,12,13.6,col('white',1),col('white',0.6),col('white',0.85));
@@ -3250,6 +3277,7 @@ function drawCell(x,y){
         ctx.beginPath();ctx.ellipse(bx+sway,cy-4.6,1.0,0.55,0,0,7);ctx.fill();
       }
       ctx.lineCap='butt';
+      if(pierAt(x,y))drawPierAt(x,y); /* the deck rides over kelp too, not just water/beach */
       break;}
     case T.DUNE:{
       hexTile(gx,gy,1.02,col('sand',0.99));   /* the dry back beach it stands on */
