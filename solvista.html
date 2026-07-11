@@ -283,6 +283,8 @@ const BASE={
   teal:[128,188,180], tealDk:[88,148,142],
   glass:[172,216,224],
   gold:[229,161,59],
+  cab:[247,203,55],   /* a brighter lemon-yellow than the orange `gold` the buses wear,
+                         so a taxi reads apart from a bus at a glance */
   sage:[131,169,113],
   soil:[139,107,80], soilDk:[103,76,55],
   sprout:[132,178,98], crop:[146,178,104],   /* the farm calendar: shoots, then the leafy crop, */
@@ -2165,7 +2167,11 @@ function syncFleet(){
     if(!opts.length)continue;
     const kind=rng()<0.14?'bus':'car';
     const[nx,ny]=opts[(rng()*opts.length)|0];
+    /* ~1 in 6 cars is a taxi. Math.random (not rng) so the seeded stream is
+       untouched; the `c:` expression below still consumes its rng() for every car,
+       so the CA is byte-identical whether a car is flagged a cab or not. */
     vehicles.push({x,y,nx,ny,p:rng(),sp:0.9+rng()*0.7,kind,
+                   taxi:kind==='car'&&Math.random()<0.17,
                    c:kind==='bus'?'gold':CARCOLS[(rng()*CARCOLS.length)|0]});
   }
   /* service fleet: one cruiser, one ambulance, one engine — as each is earned */
@@ -5153,8 +5159,9 @@ function drawVehicle(v){
   const ax=alongX?long:0.10;
   const ay=alongX?0.10:long*0.8;
   shadS(cx,cy,0.16,0.2);
-  prismS(cx,cy,ax,ay,0.5,4.4,col(v.c,1.05),col(v.c,0.62),col(v.c,0.85));
-  prismS(cx,cy,ax*0.55,ay*0.55,4.4,6.6,colLit('glass',0.9,LITAMT*0.7),col(v.c,0.55),col(v.c,0.8));
+  const bc=v.taxi?'cab':v.c;   /* a cab wears lemon-yellow whatever colour it drew */
+  prismS(cx,cy,ax,ay,0.5,4.4,col(bc,1.05),col(bc,0.62),col(bc,0.85));
+  prismS(cx,cy,ax*0.55,ay*0.55,4.4,6.6,colLit('glass',0.9,LITAMT*0.7),col(bc,0.55),col(bc,0.8));
   if(v.kind==='police'||v.kind==='ambo'||v.kind==='fireeng'){
     if(v.kind==='police'){ctx.fillStyle=col('teal',1);ctx.fillRect(cx-2.6,cy-4.2,5.2,1.2);}
     if(v.kind==='ambo'){ctx.fillStyle=col('coral',1.2);
@@ -5198,6 +5205,21 @@ function drawVehicle(v){
     ctx.strokeStyle=col('ink',1.2);ctx.lineWidth=0.6;
     ctx.beginPath();ctx.moveTo(cx,cy-6.6);ctx.lineTo(cx,cy-wh);ctx.stroke();
     ctx.fillStyle=col('ink',1.3);ctx.beginPath();ctx.arc(cx,cy-wh,0.6,0,7);ctx.fill();
+  }
+  if(v.taxi){
+    /* the two taxi cues that read at any zoom: a checker band along the flank
+       (dark squares alternating with cream, like the truck's fillRect stripe) and
+       a small roof sign that lights amber after dark. */
+    if(alongX){
+      const w=ax*CW*1.7, x0=cx-w*0.5, n=5, seg=w/n;
+      for(let i=0;i<n;i++){ctx.fillStyle=i%2?col('cream',1.12):col('ink',1.2);ctx.fillRect(x0+i*seg,cy-3.1,seg+0.4,1.2);}
+    }else{
+      const h=ay*CW*1.3, y0=cy-3.1-h*0.5, n=4, seg=h/n;
+      for(let i=0;i<n;i++){ctx.fillStyle=i%2?col('cream',1.12):col('ink',1.2);ctx.fillRect(cx-1.1,y0+i*seg,2.2,seg+0.4);}
+    }
+    /* roof sign */
+    prismS(cx,cy,ax*0.26,ay*0.36,6.6,7.9,col('cream',1.1),col('gold',0.72),col('gold',0.92));
+    if(LITAMT>0.3){ctx.fillStyle='rgba(255,208,112,'+(0.85*LITAMT)+')';ctx.beginPath();ctx.arc(cx,cy-8.0,1.1,0,7);ctx.fill();}
   }
   if(LITAMT>0.35){
     const nose=long*CW*0.9, hx=cx+FX*nose, hy=cy+FY*nose;
@@ -6408,7 +6430,7 @@ function pickEntity(wx,wy){
     if(d<r*r&&d<bd){bd=d;best=[name,typeof sub==='function'?sub(e):sub,e,r];}
   };
   for(const[g,name,sub,r]of ENTINFO)for(const e of g())consider(e,name,sub,r);
-  for(const v of vehicles){const k=VKIND[v.kind]||['Car',"Somebody's errand."];consider(v,k[0],k[1],6);}
+  for(const v of vehicles){const k=v.taxi?['Taxi','For hire — flag it down.']:(VKIND[v.kind]||['Car',"Somebody's errand."]);consider(v,k[0],k[1],6);}
   return best;
 }
 const tipEl=$('tip');

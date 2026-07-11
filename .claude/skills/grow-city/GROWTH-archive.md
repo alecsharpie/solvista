@@ -9085,3 +9085,61 @@ seventh (19, 35, 50, 57, 95, 135, **153**); Sky is no longer stalest (People 145
   needs a slow clock or quantize/hold FIRST. Sky's additive/CA cells remain traps; the next Sky lap wanting a
   *new* interconnect should look for another mature-but-disconnected pair, as this did.
 
+## Iteration 154 — the resident tells you what they're up to (2026-07-11) [People & activity × Interaction/UX]
+
+**Vector.** People & activity × **Interaction/UX** (SHIPPED). Rotation named the domain (People was stalest,
+last 145) and this is its *coldest* kind — only iter 71 sat in the People × Interaction/UX cell. Varied the kind
+off 153's Deepen. The seam is the loop's most reliable tell (117): the Resident's `ENTINFO` sub was a flat
+`'Out for a stroll.'` while `stepPed` **already** sorts peds by context — onto the pier, hugging a lively kerb,
+drawn to a high-`buzz` hex — a relationship the tooltip ignored.
+
+**Change (~20 lines, tooltip-only).** New `residentDoing(p)` reads the hex the ped stands on and returns the
+phrase for it, a FUNCTION sub in the 105 style: pier → *"Out on the pier for the view."*; then by tile —
+MARKET *"Browsing the market stalls."*, PARK/SHOREPARK *"Out for a walk in the green."*, GARDEN *"Pottering in
+the community garden."*, PLAZA/QUAD *"Crossing the square."*, BEACH/DUNE *"Down on the sand."*, STADIUM, FIELD;
+then a road → `livelyKerb` *"Window-shopping the busy street."* vs plain *"Walking the block."*; fallback
+*"Out for a stroll."* Every position a ped can legally hold is `strollable` open ground or a road (`pedWalk`),
+so the cases tile the field. The leashed **dog** heels to its owner's hex, so its sub echoes the owner —
+*"With its owner, out for a walk in the green."* (stray falls back to *"Off to sniff everything."*). Reuses the
+existing `onPier`/`cellAt`/`pedRoad`/`livelyKerb` predicates — no new state, no seeded `rng()`, no draw.
+
+**Census.** PASS, exit 0. Tooltip-only — tile histogram empty, all core/aggregate metrics +0 (vacuous by
+construction; the probe is the gate).
+
+**Probe — `probes/probe-strolling.mjs` (new, promoted).** `residentDoing` is a PURE function of position, so the
+probe enumerates EVERY cell as a hypothetical ped, buckets cells by the phrase the PAGE returns, and checks each
+bucket against the RAW `cells[].t` (122's law — not by re-calling the function). Seeds 7 & 42 @ warp 61:
+**every tile bucket holds ONLY its intended type** (`Down on the sand.` = {BEACH,DUNE}, `…green.` = {PARK,SHOREPARK},
+etc. — zero leakage), pier bucket **all onPier** (5–6 cells), road split **all** `pedRoad` with the busy bucket
+(106/118 cells) **all** `livelyKerb`. **CONTROL:** 1060+ building interiors (RES/MID/TOWER/COM/IND) → the
+fallback and NOTHING else, so the mapping doesn't leak onto tiles a ped only passes. Deterministic across two
+loads. **PROBE PASS both seeds.**
+
+**Visual.** `hovershot.mjs ZOOM=4 PICK=front` on a Resident: seed 42 rendered *"Window-shopping the busy street."*,
+seed 7 *"Browsing the market stalls."* — `pageerrors: none`, no mojibake (the strings are pure-ASCII per iter 134;
+em dashes live only in comments). One agent read both seeds' hover PNGs: tooltip legible, cream card on-frame, no
+z-order tears/blowout, scene still a coherent coastal city — **VISUAL: PASS**. Owned-dog echo verified in-page:
+*"With its owner, out for a walk in the green."*
+
+**Verdict — SHIPPED.** The peds that fill the streets now answer when you point at one: a figure on a market hex
+says it's browsing the stalls, one on a shop-lined kerb is window-shopping, one on the pier is out for the view.
+Tooltip-only, pop provably flat, reuses five existing predicates. People × Interaction/UX gains its second (71,
+**154**); People is no longer stalest (Transport 146 now is).
+
+### Findings for later laps
+- **The mute-tooltip tell now pays for ENTITIES too, not just tiles (117 was tiles).** `stepPed`'s own context
+  sorting (pier/kerb/buzz/tile) was richer than the one static string that named it — the same shape as a
+  `TILEDESC` asserting less than the CA knows. **Where else does an ENTITY's step/draw logic decide something its
+  `ENTINFO` sub keeps flat?** Candidates still flat: `Jogger` ('Logging shoreline miles.' — it knows its
+  shoreline `y`/direction), `Cyclist`, `Streetcar`/`Delivery truck` (a route/depot membership, like 105 did for
+  transit). The functional-sub (105) + shared-predicate (144) recipe applies to each.
+- **A PURE position→string function is probeable by ENUMERATION, no live entity needed.** Because `residentDoing`
+  reads only `p.x/p.y`, the probe swept ALL cells as hypothetical peds and audited the phrase→tile partition —
+  sidestepping 137's "peds are non-reproducible across loads" entirely. Any tooltip that is a pure function of an
+  entity's *cell* (not its motion phase) can be gated this way: bucket-by-phrase, check against raw `cells[].t`,
+  plus a control tile-class that must hit the fallback.
+- **`residentDoing(p)` is now the one definition of "what is this ped doing" (144's one-predicate law).** The dog
+  echo, the tooltip and the probe all call it; a future "peds thin at night" or crowd-label vector should read it,
+  not re-classify position. It maps EVERY strollable/road hex, so it is also a ready oracle for "is this ped
+  somewhere interesting."
+

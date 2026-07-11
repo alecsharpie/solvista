@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
+| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137**, **163** | 71, **154** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · Urban ~~**160**~~ (Connect reverted; last SHIP 151) · People **163** · Nature **156** · Transport **155** · Civic **158** · Water **159**. (162 = step-back, no domain lap.)
-  **Stalest is now Transport (155)**, then Nature (156) — People just went at 163 (static-crowd contact shadows, closing 137), so the next lap (164) owes Transport, then Nature. Check the last entry of the stalest domain for a banked
+  Sky **161** · Urban ~~**160**~~ (Connect reverted; last SHIP 151) · People **163** · Nature **156** · Transport **164** · Civic **158** · Water **159**. (162 = step-back, no domain lap.)
+  **Stalest is now Urban (last SHIP 151; 160 Connect reverted)**, then Nature (156) — Transport just went at 164 (the taxi, a lemon-yellow cab variety on the car entity, closing its New-element cell), so the next lap (165) owes Urban, then Nature (Urban's additive cell is spent (118), its Connect measured-hard (160) — so Deepen/Polish, or a COM high-street arcade once `hstr` adjacency is measured). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -170,7 +170,8 @@ ones (U2, 42, U5) stay in the bullet.
   **⚠ Iteration 167 is the next holistic STEP-BACK** (…/**152**/**157**/**162 done**/**167**) — not a domain lap; see the recipe
   below (night + season, day frame off January, interleaved perf). **162 was the mandated step-back (SEVENTH clean bill,
   perf 157→161 flat day / +1.1% night, seasons alive, night core located both seeds). 163 took People × Polish
-  (static-crowd contact shadows, closing 137); the next lap (164) owes the stalest domain, Transport (155), then Nature (156).** **155 took Transport × Deepen (the tram catenary, the
+  (static-crowd contact shadows, closing 137); 164 took Transport × New element (the taxi — a `Math.random`-flagged
+  lemon-yellow cab variety on the car entity; the next lap (165) owes the stalest, Urban (last SHIP 151), then Nature (156)).** **155 took Transport × Deepen (the tram catenary, the
   149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
   surface-not-entities law, forest=69 hexes vs garden=2). 157 was the mandated STEP-BACK; 158 took Civic × Deepen
   (the observatory dome rotates to track the night sky — 149's banked draw-tell); 159 took Water × Deepen (the surf
@@ -390,69 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 156 entries before Iteration 154 live in
+> **Archive:** the 157 entries before Iteration 155 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 154 — the resident tells you what they're up to (2026-07-11) [People & activity × Interaction/UX]
-
-**Vector.** People & activity × **Interaction/UX** (SHIPPED). Rotation named the domain (People was stalest,
-last 145) and this is its *coldest* kind — only iter 71 sat in the People × Interaction/UX cell. Varied the kind
-off 153's Deepen. The seam is the loop's most reliable tell (117): the Resident's `ENTINFO` sub was a flat
-`'Out for a stroll.'` while `stepPed` **already** sorts peds by context — onto the pier, hugging a lively kerb,
-drawn to a high-`buzz` hex — a relationship the tooltip ignored.
-
-**Change (~20 lines, tooltip-only).** New `residentDoing(p)` reads the hex the ped stands on and returns the
-phrase for it, a FUNCTION sub in the 105 style: pier → *"Out on the pier for the view."*; then by tile —
-MARKET *"Browsing the market stalls."*, PARK/SHOREPARK *"Out for a walk in the green."*, GARDEN *"Pottering in
-the community garden."*, PLAZA/QUAD *"Crossing the square."*, BEACH/DUNE *"Down on the sand."*, STADIUM, FIELD;
-then a road → `livelyKerb` *"Window-shopping the busy street."* vs plain *"Walking the block."*; fallback
-*"Out for a stroll."* Every position a ped can legally hold is `strollable` open ground or a road (`pedWalk`),
-so the cases tile the field. The leashed **dog** heels to its owner's hex, so its sub echoes the owner —
-*"With its owner, out for a walk in the green."* (stray falls back to *"Off to sniff everything."*). Reuses the
-existing `onPier`/`cellAt`/`pedRoad`/`livelyKerb` predicates — no new state, no seeded `rng()`, no draw.
-
-**Census.** PASS, exit 0. Tooltip-only — tile histogram empty, all core/aggregate metrics +0 (vacuous by
-construction; the probe is the gate).
-
-**Probe — `probes/probe-strolling.mjs` (new, promoted).** `residentDoing` is a PURE function of position, so the
-probe enumerates EVERY cell as a hypothetical ped, buckets cells by the phrase the PAGE returns, and checks each
-bucket against the RAW `cells[].t` (122's law — not by re-calling the function). Seeds 7 & 42 @ warp 61:
-**every tile bucket holds ONLY its intended type** (`Down on the sand.` = {BEACH,DUNE}, `…green.` = {PARK,SHOREPARK},
-etc. — zero leakage), pier bucket **all onPier** (5–6 cells), road split **all** `pedRoad` with the busy bucket
-(106/118 cells) **all** `livelyKerb`. **CONTROL:** 1060+ building interiors (RES/MID/TOWER/COM/IND) → the
-fallback and NOTHING else, so the mapping doesn't leak onto tiles a ped only passes. Deterministic across two
-loads. **PROBE PASS both seeds.**
-
-**Visual.** `hovershot.mjs ZOOM=4 PICK=front` on a Resident: seed 42 rendered *"Window-shopping the busy street."*,
-seed 7 *"Browsing the market stalls."* — `pageerrors: none`, no mojibake (the strings are pure-ASCII per iter 134;
-em dashes live only in comments). One agent read both seeds' hover PNGs: tooltip legible, cream card on-frame, no
-z-order tears/blowout, scene still a coherent coastal city — **VISUAL: PASS**. Owned-dog echo verified in-page:
-*"With its owner, out for a walk in the green."*
-
-**Verdict — SHIPPED.** The peds that fill the streets now answer when you point at one: a figure on a market hex
-says it's browsing the stalls, one on a shop-lined kerb is window-shopping, one on the pier is out for the view.
-Tooltip-only, pop provably flat, reuses five existing predicates. People × Interaction/UX gains its second (71,
-**154**); People is no longer stalest (Transport 146 now is).
-
-### Findings for later laps
-- **The mute-tooltip tell now pays for ENTITIES too, not just tiles (117 was tiles).** `stepPed`'s own context
-  sorting (pier/kerb/buzz/tile) was richer than the one static string that named it — the same shape as a
-  `TILEDESC` asserting less than the CA knows. **Where else does an ENTITY's step/draw logic decide something its
-  `ENTINFO` sub keeps flat?** Candidates still flat: `Jogger` ('Logging shoreline miles.' — it knows its
-  shoreline `y`/direction), `Cyclist`, `Streetcar`/`Delivery truck` (a route/depot membership, like 105 did for
-  transit). The functional-sub (105) + shared-predicate (144) recipe applies to each.
-- **A PURE position→string function is probeable by ENUMERATION, no live entity needed.** Because `residentDoing`
-  reads only `p.x/p.y`, the probe swept ALL cells as hypothetical peds and audited the phrase→tile partition —
-  sidestepping 137's "peds are non-reproducible across loads" entirely. Any tooltip that is a pure function of an
-  entity's *cell* (not its motion phase) can be gated this way: bucket-by-phrase, check against raw `cells[].t`,
-  plus a control tile-class that must hit the fallback.
-- **`residentDoing(p)` is now the one definition of "what is this ped doing" (144's one-predicate law).** The dog
-  echo, the tooltip and the probe all call it; a future "peds thin at night" or crowd-label vector should read it,
-  not re-classify position. It maps EVERY strollable/road hex, so it is also a ready oracle for "is this ped
-  somewhere interesting."
 
 ## Iteration 155 — the streetcar draws from an overhead wire (2026-07-11) [Transport × Deepen]
 
@@ -1027,3 +970,51 @@ Polish gains its next (84, 137, **163**); People is no longer stalest (Transport
 - **Still shadowless BY DESIGN:** the elevated **platform queue** (riders on a deck, not ground — a ground ellipse
   would spill) and the abstract **match-day concourse** dots (1.2px marks, not figures). If a future lap wants the
   platform riders grounded, the shadow must land on the DECK surface (its own small ellipse), not the ground plane.
+
+## Iteration 164 — the city hails a cab (2026-07-11) [Transport × New element]
+
+**Vector.** Transport × **New element** (SHIPPED). Rotation named the domain — after 163 (People) the lap owed the
+stalest, **Transport** (last SHIP 155, a Deepen). Kind broke Transport's long **Deepen** run (55/63/112/121/128/155)
+and its recent Polish (146): its **New element** cell was the stalest of all (last was iter 48). The bar 118/127 set —
+*a saturated domain can still take a New element on an untouched **surface***, and *prefer draw-only / Math.random for
+a guaranteed-flat pop* — is met here: taxis are a draw-only variety layered on the existing car entity, no new array,
+no rng().
+
+**The seam.** `drawVehicle` (`L5128`) draws every car as the same coloured prism; the fleet spawns in `syncFleet`
+(`L2166`) as `kind:'car'` with a `CARCOLS` colour. No taxi existed (grepped: no `taxi`/`cab`/`checker`). A taxi is the
+one everyday road vehicle the city was missing, and it reads at a glance by three cues: a lemon-yellow body, a checker
+band, and a lit roof sign.
+
+**Change (draw-only + a Math.random flag).**
+- Palette: added `cab:[247,203,55]` — a brighter, greener lemon-yellow than the orange `gold` the buses wear, so a
+  cab separates from a bus at a glance (bus G≈161 vs cab G≈203).
+- Spawn: `taxi:kind==='car'&&Math.random()<0.17` — ~1 in 6 cars. **`Math.random`, not `rng()`**, and inserted between
+  `kind` and the `c:` property so the seeded `rng()` call ORDER is byte-identical (the `c:` expression still consumes
+  its `CARCOLS` draw for every car). The CA is untouched whether a car is a cab or not.
+- Draw: a `bc=v.taxi?'cab':v.c` body colour (a cab wears yellow whatever colour it drew), a checker band (alternating
+  ink/cream `fillRect`s along the flank, like the truck's stripe), a small roof-sign prism, and an amber roof-sign
+  glow at `LITAMT>0.3` (after dark). Taxis still get the shared headlights/taillights (they fall through as cars).
+- Hover: the vehicle pick names a `taxi` **Taxi — "For hire — flag it down."** (else the existing `VKIND`/`Car`).
+
+**Census.** Vacuous by construction (draw-only + Math.random): every metric +0, empty tile histogram, cars 360
+unchanged (taxis are a subset). VERDICT PASS. (The `pop -4` wobble is RAF-timing tick-count noise, 163's law — the
+change touches no `rng()`.)
+
+**Probe.** `probes/probe-taxi.mjs` — 137's controlled placement + 163's in-page rebuild (`genWorld(seed)+__warp(61)`
+so HEAD and ART render a byte-identical city). Two scenes, each placing identical teal cars at 40 spread ROAD cells:
+a `taxi:true` scene diffs vs HEAD (the flag recolours the body + adds checker+sign), and a `taxi:false` control scene
+diffs vs HEAD (car draw is identical code → ~0, and *separate* from the taxi scene so no neighbouring cab bleeds in).
+**taxi box 3.2% of pixels changed vs HEAD · plain-car control 0.00–0.16% (<0.5%, >10x under).** PASS both seeds. The
+in-page rebuild was load-bearing: without it the two page loads render slightly different cities (RAF tick drift) and
+the control jittered to 0.35% and failed — 163's rebuild law collapsed it to ~0.
+
+**Visual.** Two agents, both **PASS**. Seed 7 & 42 downtown (day): located 3+ lemon-yellow cabs sitting correctly ON
+the road hexes, distinct from the orange-gold buses, checker band + roof sign visible, no floating/tearing. Whole-city
+(seed 7) reads balanced — yellow stays sparse (a few cabs + existing crop fields), not dominant. Night: the cabs are a
+few dark pixels at fit zoom so the amber roof-glow was unverifiable by eye (a resolution limit, not a defect — the
+probe confirms the draw path fires; cf. 163's sub-2px agent-resolution law).
+
+**Verdict.** SHIPPED. **Banked for Transport:** the New element cell is spent again; the domain's live vehicle inventory
+(car/bus/tram/truck/bike/taxi + service fleet) is now full, so its next lap is Deepen/Polish/Connect, not another kind
+of vehicle. A cab could later *deepen* (pick up/drop peds at a kerb) but that hits the `peds`-can't-serve-the-road cap
+(111) — it would need the spawn-pool move, not the leash.
