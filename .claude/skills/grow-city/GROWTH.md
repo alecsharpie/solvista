@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105**, **171** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137**, **163** | 71, **154** |
 
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · People **170** · Transport **171** · Urban **173** · Nature **174** · Civic **168** · Water **169**. (162, **167**, **172** = step-backs, no domain lap.)
-  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales dot the stubble fields in the weeks after the harvest cut — golden `straw`/`stubble` rolls scattered by `hashCell` when a FARM's per-cell `ph` is in the post-cut window 0.82–0.95, extending the farm's own crop calendar per 127's surface-not-entities law; draw-only stream+pop-neutral; `probe-haybale` FARM 1.8–2.1% at harvest → 0.000% in summer, ROAD ctl ~0). So the next lap (175) owes Civic (168)**, then Water (169)/People (170)/Transport (171). 171 took Transport × Interaction/UX (the boulevards name themselves — a treed ROAD now titles `Boulevard` + reports its contiguous run `Length — N blocks`, the draw had rendered an allee both kerbs for the artifact's whole life while the tooltip said `Avenue`; the asserts-less-than-the-code-knows tell, `probe-boulevard` 347/347 named+length, controls clean 3 seeds). 170 took People × New element (the pier hails its anglers — day-only fishing figures stand on the boardwalk deck, rod out over the water, line to a float; a New element on the pier *surface* per 127, and it FIXED a latent gap where the deck vanished over kelp; draw-only, `probe-anglers` day 2.18%/0.86% → night 0.00%, ROAD ~0). Next step-back at **177**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
+  Sky **161** · People **170** · Transport **171** · Urban **173** · Nature **174** · Civic **175** · Water **169**. (162, **167**, **172** = step-backs, no domain lap.)
+  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales dot the stubble fields in the weeks after the harvest cut — golden `straw`/`stubble` rolls scattered by `hashCell` when a FARM's per-cell `ph` is in the post-cut window 0.82–0.95, extending the farm's own crop calendar per 127's surface-not-entities law; draw-only stream+pop-neutral; `probe-haybale` FARM 1.8–2.1% at harvest → 0.000% in summer, ROAD ctl ~0). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). So the next lap (176) owes Water (169)**, then People (170)/Transport (171). 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). Next step-back at **177**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -391,59 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 167 entries before Iteration 165 live in
+> **Archive:** the 168 entries before Iteration 166 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 165 — the mid-rise roofs grow their mechanical plant (2026-07-11) [Urban fabric × Deepen]
-
-**Vector.** Urban owed the lap (last SHIP 151; 160 Connect reverted). Rotation + saturation both pointed here, and
-step 1's two banked probes decided the KIND: the additive cell is spent (118), and I measured the two things the
-header wanted checked before proposing anything.
-- **Under-construction hoarding — measured OUT.** `c.th-c.h>5` (the crane host) is only **0–2 buildings per city**
-  in a census snapshot (buildings finish in a few ticks: `c.h+=0.35+...`), so a ground-level construction hoarding
-  would be all-but-invisible. Rejected before drawing a line (probe-before-you-design).
-- **COM high-street arcade (the header's banked Connect) — measured OUT.** The `hstr` run is 21–23 cells over 7–9
-  x-columns but its **longest straight run in any single column is 2** — the parade zigzags with row parity (it
-  follows `fdx(yy)`), so a straight colonnade down it would wiggle and read square, exactly the trap 160/the
-  transport invariant warn about. Confirms 160's law: **check host ADJACENCY, not just count, before a Connect** —
-  the high-street host is contiguous by ROW but not along any hex axis, so it is not a clean arcade host.
-- So: **Deepen** (the freshest Urban kind), draw-only, on a host that exists at scale.
-
-**Change.** COM (mid-rise commercial, ~400–500 cells city-wide) grew **rooftop mechanical plant** — a concrete
-stair/lift bulkhead, a lower mechanical box, and a thin vent stack on the parapet deck (solvista.html ~L4324) — the
-commercial answer to the walk-up's timber water tank (MID, ~L4277). Gated `!c.solar&&!c.groof&&hashCell(x,y,
-seedNum^0x3C7B)<0.38` (a bare roof only; solar/green-roof/café roofs keep their own crown). Stone grey (`stone`/
-`stoneDk`), sized small (bulkhead 0.10 half-extent vs the building's 0.36, 2 units tall). Draw-only, hashCell-gated,
-no `rng()`/terrain → stream and pop stay flat, and `col()`'s day TINT makes it recede by day and darken with the
-scene at night (no additive glow, so no blowout).
-
-**Census.** Vacuous by construction (draw-only): every core metric +0, empty tile histogram, no page error. PASS.
-(A `greenRoofs -1` wobble is chaotic-CA noise; the change touches no `rng()`.)
-
-**Probe.** `probes/probe-roofplant.mjs` — build-vs-build isolation (161 law): HEAD (no plant) vs patched, each rebuilt
-in-page via `genWorld(seed)+__warp(61)` for a byte-identical city (163 law), clock + `time`/`waveT` frozen and
-`Math.random` stubbed *before* `genWorld` so the harbor ships and sea shimmer are deterministic. The raw changed-px
-count still wobbles with browser warm-up (balanced water shimmer, 161 corollary a), so the gate is **grey-plant-like
-px in the roof band vs the coast control**, not the raw count: on a clean deterministic run **seed 42 = 802 changed
-px, 98% plant-like grey (mean rgb 152,142,122 ≈ day-tinted `stone`), median y=524 (the mid-frame COM-roof band); the
-coast control (bottom fifth) holds only ~35 plant-like px.** Seed 7 the same shape (grey px concentrate mid-frame,
-control near-nil). The plant renders where intended and is absent from the control.
-
-**Visual.** Two agents (seed 42, seed 7), both **PASS**. Both located the grey bulkhead+box+vent clusters sitting
-correctly ON the flat commercial roofs (aligned to the hex tops, not floating/offset), muted concrete grey with no
-blowout, no z-order tears; existing roof furniture (helipads, solar, café discs) still reads. Whole-city wide frame at
-both seeds: the plant is barely-there texture at fit zoom — it adds skyline grain rather than dirtying it; the coast,
-pier, turbines and greenbelts all intact.
-
-**Verdict.** SHIPPED. Extends the roof-furniture vocabulary (MID's water tank) to the mid-rise COMMERCIAL mass, giving
-downtown's mid-height roofscape the lived-in grey a real block carries. **Banked for Urban:** the additive cell is
-spent (118) and Connect is measured-hard twice now (160 RES terracing, 165 high-street arcade — both host-adjacency
-failures), so Urban's next lap is Deepen/Polish. A COM arcade is only viable if a *straight-hex-axis* retail run is
-found (the `hstr` parade is not one). TOWER roofs (roof gardens/helipads) and RES/MID (water tanks) are now all
-plant-crowned; the remaining bare roof is IND (warehouses) if a further roofscape Deepen is wanted.
 
 ## Iteration 166 — the woods drop their leaves in autumn (2026-07-11) [Nature × Deepen]
 
@@ -1017,3 +969,69 @@ field. Draw-only, pop+stream flat, ~11 lines + a probe + a shot script. Nature's
   (174 opened it).** The belt still has room: post-cut bales are shipped, but a harvest could also stack sheaves,
   and the barn (v>0.9) is a lone object — a farm New element / Deepen has host left. Garden (2 hexes) and meadow
   (6 hexes) remain too small to buy pixels; prefer FARM/FOREST for Nature surfaces.
+
+## Iteration 175 — the parliament floodlights its facade (2026-07-12) [Civic & culture × Deepen]
+
+**Vector — Civic × Deepen** (SHIPPED). Rotation named the domain — the 174 lap left Civic (last SHIP 168) the
+stalest owed lap. Kind: **Deepen**, the banked Civic candidate from 168's findings ("museum/parliament
+floodlights — the museum already floodlights at dusk; parliament does not. Next Civic Deepen candidate"). It also
+fits the coherent night-mood run the recent Civic/Sky/Water laps built (moon 135, stars 153, observatory 158,
+biolum surf 159, amphitheater concert 168). Draw-only, so a guaranteed-flat ship.
+
+**The seam.** `case 'museum'` (L4731) draws a **floodlit facade** at dusk — a warm `rgba(255,222,160,·)` wash up
+its front (L4751-4754) under `if(LITAMT>0.3)`. The **parliament** (L4934, the grander building — `th=34`, the
+"tallest civic roof", a full colonnade + grand gold dome) lit only its **dome + lantern beacon** at night
+(L4949-4953); its colonnade facade stayed dark. So the two grandest civic landmarks were lit inconsistently: the
+lesser one floodlit, the greater one dark below its dome. Parliament is sited 2034, present in the 2035 census
+slices, 1/city (census tile histogram confirms).
+
+**Change (~9 lines, draw-only).** Inside the parliament's existing `LITAMT>0.3` night block, before the dome
+uplight (so the dome glow overlays crisp): a warm floodlight polygon washing up the colonnade facade, mirroring
+the museum's method but on the parliament's own front-face geometry (half-extents 0.37x0.32, up to the body top
+`hb`). Warm cream `rgba(255,224,165,0.16*LITAMT)` — a touch dimmer than the museum's 0.18 since the parliament
+already carries the dome uplight, keeping it below blowout. No tile / entity / `rng()` / `hashCell` / `tick()`
+pass / terrain; `LITAMT` is a scene global, so pop + stream stay flat. All strings pure-ASCII (134).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical.
+Vacuous by construction (a night-only draw at the t=0.35 daytime census frame draws nothing) — the probe is the
+gate. (`greenRoofs -1` is documented chaotic-CA headless wobble; the change touches no `rng()`.)
+
+**Probe — `probes/probe-parliament.mjs` (new, promoted; adapted from `probe-amphi.mjs`, the 1/city-landmark
+template).** Diffs PATCHED vs pristine HEAD at the SAME frozen frame (`time` pinned, every mover cleared per the
+tramwire law), camera-zoomed onto the 1/city parliament hex so the facade is unoccluded, ROAD as the zero
+control, night vs a day control. **seeds 42/1234/3/88/7: FACADE changed 37.9/23.9/37.8/37.9/37.8% at NIGHT ->
+0.00/0.17/0.00/0.00/0.00% in DAY** (gate off -> byte-identical), **ROAD control 0.00-0.58%** both frames. All 5
+measurable (none occluded this run). **VERDICT: PASS (5 seeds).**
+
+**Visual — `probes/shot-parliament.mjs` (new, promoted).** Camera-zooms the 1/city parliament, night + a day
+control, both seeds. Two agents (seed 42, seed 1234), blind, both **VISUAL: PASS** — NIGHT shows a warm
+amber/golden wash across the colonnade bays below the dome (pooling at the steps), DAY the same colonnade reads
+as plain pale/white stone with cool shadows; the dome keeps its separate uplight in both; no z-order tears /
+floating light / white-clipping (amber, not blown out); reads as a coherent floodlit monument, not a glowing
+blob. Whole-city `wide` NIGHT (seed 42, third agent): balanced coherent coast, core located by light alone at
+**(0.47, 0.55)** — matching 162/167/172's night-core reads, so no lighting drift — sea reads, no
+tears/blowout/mojibake, stat strip crisp. **VISUAL: PASS**.
+
+**Verdict — DEEPENED.** The parliament — the city's grandest civic roof, lit only at its dome after dark for the
+artifact's whole life — now floodlights its colonnade facade at night, matching the museum's dusk floodlight and
+joining the night-mood run. Draw-only, pop + stream flat, ~9 lines + a probe + a shot script. Civic's Deepen cell
+gains 175 (36/59/66/80/91/149/158/**175**); Civic is no longer stalest (Water 169 now is — the next lap, 176,
+owes it).
+
+### Findings for later laps
+- **THE ASSERTS-INCONSISTENCY tell has a SYMMETRY form: two kindred hosts drawn inconsistently.** 168 found the
+  amphitheater's label promised what its draw omitted (asserts-more-than-it-draws). 175 is the sibling: two
+  *drawn* landmarks (museum, parliament) that should share a treatment (dusk floodlighting) but didn't — the
+  lesser one had it, the greater didn't. Where else do two kindred civics/tiles carry a night/day/seasonal
+  treatment on one but not the other? (The 168 findings also bank the **firehouse bell** and note the
+  **museum already floodlights** — parliament is now done, so the remaining civic-night-treatment gap is the
+  firehouse bell, weaker per 168.)
+- **The night-mood Civic/Sky/Water run is getting full** (moon 135, stars 153, observatory 158, biolum 159,
+  amphitheater 168, parliament 175). Each has been a single landmark or a sparse field, so none compounds into
+  city-wide night clutter — but a future night-glow vector should check the whole-frame night read (still clean
+  at 175: core (0.47,0.55), no over-bright bloom) before adding a sixth+ glow. Prefer a DAYTIME or non-glow
+  Civic move next if Civic comes up again soon.
+- **`probe-amphi.mjs` is now the reusable template for any 1/city night-lit civic landmark** (camera-zoom the
+  single host, night-vs-day diff, ROAD control, occlusion=SKIP). `probe-parliament.mjs` adapted it in minutes:
+  swap the `c.kind` filter, bump `R` for a taller host, keep the rest. For the next single-civic draw/light
+  vector, clone one of these two rather than writing a probe from scratch.

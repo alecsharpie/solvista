@@ -4946,7 +4946,15 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.arc(cx,cy-hb-3.8,9,Math.PI,0);ctx.fill();
       ctx.fillStyle=col('white',1.05);ctx.fillRect(cx-1.2,cy-hb-16.2,2.4,3.6); /* lantern */
       ctx.fillStyle=col('gold',1.25);ctx.fillRect(cx-0.7,cy-hb-17.8,1.4,1.8);
-      if(LITAMT>0.3){ /* dome uplit, lantern beacon */
+      if(LITAMT>0.3){ /* floodlit facade, dome uplit, lantern beacon */
+        /* warm uplight washing the colonnade, like the museum's — the capitol lit after dark */
+        {const X2=0.37*2*HW, V2=0.32*2*VR, E2=0.32*2*ER;
+        const ax=cx+X2*0.04, ay=cy+V2-(V2-E2)*0.04,
+              bx=cx+X2*0.96, by=cy+V2-(V2-E2)*0.96,
+              mx=cx+X2*0.5,  my=cy+V2-(V2-E2)*0.5;
+        ctx.fillStyle='rgba(255,224,165,'+(0.16*LITAMT)+')';
+        ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.lineTo(bx,by-hb-2);
+        ctx.lineTo(mx,my-hb-2);ctx.lineTo(ax,ay-hb-2);ctx.closePath();ctx.fill();}
         ctx.fillStyle='rgba(255,222,150,'+(0.22*LITAMT)+')';
         ctx.beginPath();ctx.arc(cx,cy-hb-3.8,11.5,Math.PI,0);ctx.fill();
         ctx.fillStyle='rgba(255,240,190,'+(0.9*LITAMT)+')';

@@ -9765,3 +9765,51 @@ probe confirms the draw path fires; cf. 163's sub-2px agent-resolution law).
 of vehicle. A cab could later *deepen* (pick up/drop peds at a kerb) but that hits the `peds`-can't-serve-the-road cap
 (111) — it would need the spawn-pool move, not the leash.
 
+## Iteration 165 — the mid-rise roofs grow their mechanical plant (2026-07-11) [Urban fabric × Deepen]
+
+**Vector.** Urban owed the lap (last SHIP 151; 160 Connect reverted). Rotation + saturation both pointed here, and
+step 1's two banked probes decided the KIND: the additive cell is spent (118), and I measured the two things the
+header wanted checked before proposing anything.
+- **Under-construction hoarding — measured OUT.** `c.th-c.h>5` (the crane host) is only **0–2 buildings per city**
+  in a census snapshot (buildings finish in a few ticks: `c.h+=0.35+...`), so a ground-level construction hoarding
+  would be all-but-invisible. Rejected before drawing a line (probe-before-you-design).
+- **COM high-street arcade (the header's banked Connect) — measured OUT.** The `hstr` run is 21–23 cells over 7–9
+  x-columns but its **longest straight run in any single column is 2** — the parade zigzags with row parity (it
+  follows `fdx(yy)`), so a straight colonnade down it would wiggle and read square, exactly the trap 160/the
+  transport invariant warn about. Confirms 160's law: **check host ADJACENCY, not just count, before a Connect** —
+  the high-street host is contiguous by ROW but not along any hex axis, so it is not a clean arcade host.
+- So: **Deepen** (the freshest Urban kind), draw-only, on a host that exists at scale.
+
+**Change.** COM (mid-rise commercial, ~400–500 cells city-wide) grew **rooftop mechanical plant** — a concrete
+stair/lift bulkhead, a lower mechanical box, and a thin vent stack on the parapet deck (solvista.html ~L4324) — the
+commercial answer to the walk-up's timber water tank (MID, ~L4277). Gated `!c.solar&&!c.groof&&hashCell(x,y,
+seedNum^0x3C7B)<0.38` (a bare roof only; solar/green-roof/café roofs keep their own crown). Stone grey (`stone`/
+`stoneDk`), sized small (bulkhead 0.10 half-extent vs the building's 0.36, 2 units tall). Draw-only, hashCell-gated,
+no `rng()`/terrain → stream and pop stay flat, and `col()`'s day TINT makes it recede by day and darken with the
+scene at night (no additive glow, so no blowout).
+
+**Census.** Vacuous by construction (draw-only): every core metric +0, empty tile histogram, no page error. PASS.
+(A `greenRoofs -1` wobble is chaotic-CA noise; the change touches no `rng()`.)
+
+**Probe.** `probes/probe-roofplant.mjs` — build-vs-build isolation (161 law): HEAD (no plant) vs patched, each rebuilt
+in-page via `genWorld(seed)+__warp(61)` for a byte-identical city (163 law), clock + `time`/`waveT` frozen and
+`Math.random` stubbed *before* `genWorld` so the harbor ships and sea shimmer are deterministic. The raw changed-px
+count still wobbles with browser warm-up (balanced water shimmer, 161 corollary a), so the gate is **grey-plant-like
+px in the roof band vs the coast control**, not the raw count: on a clean deterministic run **seed 42 = 802 changed
+px, 98% plant-like grey (mean rgb 152,142,122 ≈ day-tinted `stone`), median y=524 (the mid-frame COM-roof band); the
+coast control (bottom fifth) holds only ~35 plant-like px.** Seed 7 the same shape (grey px concentrate mid-frame,
+control near-nil). The plant renders where intended and is absent from the control.
+
+**Visual.** Two agents (seed 42, seed 7), both **PASS**. Both located the grey bulkhead+box+vent clusters sitting
+correctly ON the flat commercial roofs (aligned to the hex tops, not floating/offset), muted concrete grey with no
+blowout, no z-order tears; existing roof furniture (helipads, solar, café discs) still reads. Whole-city wide frame at
+both seeds: the plant is barely-there texture at fit zoom — it adds skyline grain rather than dirtying it; the coast,
+pier, turbines and greenbelts all intact.
+
+**Verdict.** SHIPPED. Extends the roof-furniture vocabulary (MID's water tank) to the mid-rise COMMERCIAL mass, giving
+downtown's mid-height roofscape the lived-in grey a real block carries. **Banked for Urban:** the additive cell is
+spent (118) and Connect is measured-hard twice now (160 RES terracing, 165 high-street arcade — both host-adjacency
+failures), so Urban's next lap is Deepen/Polish. A COM arcade is only viable if a *straight-hex-axis* retail run is
+found (the `hstr` parade is not one). TOWER roofs (roof gardens/helipads) and RES/MID (water tanks) are now all
+plant-crowned; the remaining bare roof is IND (warehouses) if a further roofscape Deepen is wanted.
+
