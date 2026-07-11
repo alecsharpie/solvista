@@ -9941,3 +9941,59 @@ vineyard moving); perf is flat against the honest interleaved control.
   162's read: every night-only/day+night draw compounds on night alone. +1.0% over 4 iters is fine; night stays
   the column a future step-back watches first (night >30fps-budget ~50%, ≈45ms/22fps under today's load).
 
+## Iteration 168 — the amphitheater's stage gets its concert (2026-07-11) [Civic & culture × Polish]
+
+**Vector.** Civic & culture × **Polish** (SHIPPED). Rotation named the domain — after the 167 step-back the lap
+owed the stalest domain, **Civic** (last SHIP 158). Kind varied OFF Deepen deliberately: Deepen has run hot
+globally (155/158/159/165/166 all Deepen), and Civic's own last kind was Deepen (158). **Polish** is Civic's most
+under-used cell (last 73; 114 reverted) and globally cold (last Polish 163). Content fits the night-mood run the
+last laps built (moon 135, stars 153, observatory 158, biolum surf 159).
+
+**The seam.** `case 'amphitheater'` (L4745) lit an EMPTY stage at showtime — a warm wash ellipse + 3 footlight
+dots under `if(LITAMT>0.3)` — while its own `CIVICDESC` promised *"An open-air bowl beside the parks. Concerts
+through the summer."* A label asserting a performance the pixels never showed: the same asserts-more-than-it-draws
+tell that has paid seven times (117/122/129/148/158…), here in its **Polish** form — make the existing draw read
+as what its label already claims. Amphitheater is 1/city, sited from 2004 (present in the 2035 census slices), a
+zoom-reward landmark like the observatory (158) and hall clock (149) — census tile histogram confirms 1/city.
+
+**Change (~14 lines, draw-only).** Inside the existing `LITAMT>0.3` showtime block: a soft warm **beam** cone
+spilling from over the stage onto the apron; a centre-stage **performer** — a lavender body + a warm-lit head —
+that **sways** to the music (`sin(time*1.5+x*1.3)`); the warm apron wash and 3 footlights kept. No tile, entity,
+`rng()`, `hashCell` spawn, `tick()` pass or terrain; strings pure-ASCII (134). Stream + pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical.
+Vacuous by construction (a night-only draw at the t=0.35 daytime census frame draws nothing) — the probe is the gate.
+
+**Probe — `probes/probe-amphi.mjs` (new, promoted).** Diffs PATCHED vs pristine HEAD at the SAME frozen frame
+(`time` pinned, every mover cleared per tramwire's law), camera-zoomed onto the 1/city amphitheater hex so the
+stage is unoccluded (obsdome's method), ROAD as the zero control. seeds 42/1234/88: **STAGE changed 8.1–8.25% at
+NIGHT → 0.00% in DAY** (gate off → byte-identical), **ROAD ~0** both frames. seeds 3/7 skipped: their
+amphitheater is **occluded** behind foreground downtown towers (byte-identical even at night — the draw fires but
+is overpainted; verified visually), so unmeasurable here, not a failure. **VERDICT: PASS (3 seeds).**
+
+**Visual.** `probes/shot-amphi.mjs` (new) camera-zooms the amphitheater, night + a day control. seed 42 (mine) &
+seed 1234 (agent, blind): the NIGHT frame reads as a soloist under a spotlight — lavender figure, glowing head,
+warm beam, footlights, centre-stage on the hex bowl, no float/tear/blowout; the DAY frame an empty stone cavea
+(the flat coloured audience specks are the pre-existing `LITAMT<0.75` daytime crowd, untouched) — **VISUAL: PASS**
+both. Whole-city `wide` night (seed 42), one agent: balanced coherent coast, lit core (x~0.48,y~0.52, matching
+162/167's reads) → dark rim, sea reads, nothing compounded — **VISUAL: PASS**.
+
+**Verdict — SHIPPED.** The amphitheater stage, lit-but-empty for the artifact's whole life, now stages a spotlit
+performer at night — honoring the "Concerts through the summer" the label always promised, and adding a Civic
+entry to the night-life run. Draw-only, stream + pop flat, ~14 lines + a probe + a shot script. Civic's Polish
+cell gains its next (73, ~~114~~, **168**); Civic is no longer stalest (Water 159 now is).
+
+### Findings for later laps
+- **THE ASSERTS-MORE-THAN-IT-DRAWS TELL HAS A POLISH FORM, not only Deepen/Interaction.** 117/122/129/148 cashed it
+  in *tooltips* (a string vs `describeTile`); 158 cashed a *draw* comment ("open to the night") as a Deepen. 168 is
+  the same tell as a **Polish**: `CIVICDESC` (a tooltip string) asserted "Concerts", and the *draw* showed an empty
+  lit stage — so making the draw honor the string is a legibility fix, not a new system. Where else does a label
+  promise activity the tile draws as empty?
+- **A CAMERA-ZOOM PROBE ON A 1/CITY LANDMARK MUST TREAT OCCLUSION AS SKIP, NOT FAIL.** 2 of 5 seeds sited the
+  amphitheater where downtown towers overpaint it from the diorama's fixed camera — byte-identical patched-vs-
+  pristine even at night. That is the draw firing and being overdrawn, not a defect; the probe skips a
+  night≈0 seed and requires ≥2 measurable seeds passing (obsdome's "only seeds with the feature on-screen count").
+- **STILL BANKED from 158's draw-tell list:** the firehouse bell (static gold disc, no natural clock tie — weaker)
+  and museum/parliament floodlights (the museum already floodlights at dusk; parliament does not). Next Civic
+  Deepen candidate; 168 took the Polish path to the same tell instead.
+

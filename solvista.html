@@ -4159,6 +4159,32 @@ function drawCell(x,y){
               ctx.beginPath();ctx.arc(qx,qy-0.6,1.1,0,7);ctx.fill();}
           }
         }
+        /* festival-goers mill under the bunting (iter 178): the civic mile strings
+           up its strand but stood empty for the artifact's whole life. A small crowd
+           gathers on each fete cell by day and into the dusk (when the strand lights
+           up), then heads home by deep night. Scattered in an ellipse around the
+           cell with a gentle sway; house-style contact shadow (137/163). Draw-only,
+           hashCell-placed, day-faded on the slow light clock (a rhythm, not a strobe)
+           — no tile, entity, rng(), tick() pass or terrain, so pop + stream stay flat. */
+        const faa=clamp((0.82-LITAMT)/0.28,0,1);
+        if(faa>0.02){
+          const FC=['coral','gold','teal','lav','sage'];
+          for(let j=0;j<5;j++){
+            if(hashCell(x*7+j,y,seedNum^0x3F1A)>0.68)continue;
+            const a=hashCell(x+j,y*3,seedNum^0x3F1B)*6.283;
+            const rr=2.0+hashCell(x*2+j,y,seedNum^0x3F1C)*3.6;
+            const fx=cx+Math.cos(a)*rr+Math.sin(time*1.6+j*2.1+x)*0.6;
+            const fy=cy+Math.sin(a)*rr*0.5+2.2;
+            const hgt=2.5+hashCell(j+3,y+x,seedNum^0x3F1D)*0.7;
+            shadS(fx,fy,0.08,0.15*faa);
+            ctx.globalAlpha=faa;
+            ctx.fillStyle=col(FC[(x*3+y+j)%5],1.1);
+            ctx.fillRect(fx-0.7,fy-hgt,1.4,hgt);
+            ctx.fillStyle=col('ink',1.4);
+            ctx.beginPath();ctx.arc(fx,fy-hgt-0.6,0.85,0,7);ctx.fill();
+            ctx.globalAlpha=1;
+          }
+        }
       }
       if(c.stop&&!c.fete){ /* bus shelter on the sidewalk; the buses pull in */
         let rdx=0,rdy=0;
