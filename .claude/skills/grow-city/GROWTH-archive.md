@@ -7948,3 +7948,73 @@ findings — the season half still strobes).
   a different phase per city (probe: 0.07 vs 0.44) without touching `rng()`. Reuse the golden-ratio-of-seedNum
   trick for any "same every city" ornament that should vary but must not perturb the seeded stream.
 
+## Iteration 136 — the seventh step-back finds a clean, quiet city (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/**136**). Not a domain × kind lap: it
+reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the perf
+gate, and — per 115/120/125 — does it at **night AND a season, with the day/night baselines pinned OFF
+January** (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so
+rotation is unchanged; next lap (137) owes the stalest domain, **People (127)**.
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42
+(warp 61) and seed 7 (warp 31), each at {day 2035.62/t=0.40, night 2035.62/t=0.90, winter 2035.02/t=0.40}.
+One subagent per seed read its own three frames, asked the *cumulative* question ("has anything compounded
+into clutter or darkness?") plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night lighting (115) holds at both seeds, LOCATED off-centre.** By light alone the luminous core sat at
+  seed 42 ~(0.45,0.48), seed 7 ~(0.47,0.62), both with a genuine core→edge falloff ("not a flat glitter mat",
+  "peaks there and fades to dim green-grey at the edges, near-black at the corners"). Rim fades to dark.
+- **The sea reads** (116's bottom + 123's founded wind farm): turbines parallel to the shelf, no dead void.
+- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames** — brightest
+  night window-clusters stay warm amber, not clipped; the beach→sea stepped terracing reads as intentional.
+- **Winter reads distinct from summer** at both seeds (cooler/browner farm/scrub, paler sky), city balanced.
+
+**Season — measured alive, not believed.** Both agents independently called the *whole-frame* seasonal signal
+"mild / reads more late-summer than winter" — a real perception, but it is the **evergreen/irrigated dilution**
+(PARK/REDWOOD/GARDEN cover much of the frame and are near-zero *by design*, per 120), not a dead calendar.
+`probes/probe-season.mjs` (per-tile rendered-pixel distance from winter, `ROAD` = zero control): FARM
+winter→dry-peak **88.2**, →autumn 92.9; VINEYARD →autumn 58.1, ORCHARD →autumn 41.4; MEADOW/FOREST/SHOREPARK
+all move; PARK/REDWOOD/GARDEN/QUAD near-zero by design. ROAD control **0.5–2.1**. Matches 130 (FARM 88.4).
+The calendar is working; the whole-frame mildness is a *composition* fact, not a bug.
+
+**Perf — the stored-baseline false-FAIL fired a THIRD time, and the interleaved control collapsed it again.**
+`perf.mjs` read day **34.5ms** (+4.0% vs baseline) / night **40.17ms** (+7.6%), the night rise looking like a
+regression. Interleaved HEAD-135 vs the iter-130 file (`f2aa721`, A/B/A/B, min per variant): night **39.83 vs
+39.78ms** (**+0.1%**), day **34.22 vs 34.00ms** — flat both ways, so iters 131→135 (cue-d square, kelp canopy,
+tile focus ring, almanac revert, moon→dayT) added **nothing measurable**. The +7.6% night vs baseline is
+**pure machine load** — the 6-day-old iter-130 file, which *recorded* 37.33ms night, itself reads **39.78ms
+today**. **NOT re-pinned** (baking today's load in would blind the gate to a real future regression). Census
+PASS and vacuous by construction (no source edit).
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per 120/125/130 ("a clean
+step-back is a complete iteration — don't force a filler vector") the output is the health record plus header
+refreshes: step-back pointer → 141 (next is 141), perf note gains the 136 interleaved reading, rotation
+pointer notes 136 as the step-back. No `solvista.html` edit; tree verified clean after the perf interleave
+restored HEAD.
+
+**Verdict — FIXED.** No compounding city defect (the honest step-back outcome, third clean bill in a row:
+130, 136). 115/116/120/123's accumulated visual laws still all read correctly at both seeds under all three
+lights, eight iters on. The perf gate's stored-baseline false-FAIL is confirmed benign by the interleaved
+control for the third time (125→130→136); the guardrail stays honest.
+
+### Findings
+
+- **THE STORED-BASELINE PERF FALSE-FAIL IS NOW A THREE-TIME PATTERN (125→130→136) — the stored baseline
+  understates today's load, never the reverse.** 125 saw night +16%→+4% real; 130 saw +7%→−0.5%; 136 saw
+  +7.6%→+0.1%. Every step-back days after the pin conflates code drift with today's load, and every time the
+  interleave against an old commit's own file collapses it. Do not re-chase a night number a same-session
+  interleave flattens; do not re-pin to an inflated day. (`git show <old>:solvista.html > /tmp/x`, swap A/B/A/B,
+  min per variant — but note **a 2-round × day+night interleave overruns the 120s Bash timeout**; run it
+  `run_in_background`, or cap at ~1.5 rounds — one full round of the control plus two of HEAD is enough signal.)
+- **A CLEAN WHOLE-FRAME "MILD SEASON" IS A COMPOSITION FACT, NOT A REGRESSION — settle it with the probe, not
+  another agent.** Both agents this step-back read the seasons as faint; the probe shows FARM/VINEYARD/ORCHARD
+  swinging 40–90 while the frame-dominant PARK/REDWOOD/GARDEN sit near-zero *by design* (120). The agents are
+  reading the *area-weighted average*, which is genuinely muted; the calendar is not. This is the locate-don't-
+  judge law's cousin: when an agent's *impression* contradicts a by-design invariant, the probe is the verdict.
+- **THREE CLEAN STEP-BACKS DEEP, THE OPEN WATCH-ITEM IS "NIGHT CORE IS BROAD/DIFFUSE" — banked, NOT a defect.**
+  Both agents located the core with real falloff (so 115 holds), but both independently noted the glow is
+  spread across much of the built area rather than a single tight downtown peak. That is a *legibility* nuance,
+  not a tear or a darkness compound — a future Sky/Urban Polish could tighten the CBD light gradient (steeper
+  falloff from `CBDX/CBDY`), but it did not earn a fix here. Logged so a later lap can pick it up deliberately.
+

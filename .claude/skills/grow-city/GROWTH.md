@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94 | **105** |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137** | 71 |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **144** · Urban **143** · People **145** · Nature **139** · Transport **138** · Civic **140** · Water **141**.
-  **Stalest is now Transport (138)**, then Nature (139), then Civic (140) — check the last entry of the stalest domain for a banked
+  Sky **144** · Urban **143** · People **145** · Nature **139** · Transport **146** · Civic **140** · Water **141**.
+  **Stalest is now Nature (139)**, then Civic (140), then Water (141) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -172,9 +172,10 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145 broke it to Polish/Deepen.
-  **Next domain lap (146) owes Transport (138, now stalest), then Nature (139); read its row for kinds.** Vary off
-  Deepen (145) and Interaction/UX (four of last six) — Polish/Connect are fresh. Sky
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146 broke it to Polish/Deepen/Polish.
+  **⚠ Iteration 147 is the mandated holistic STEP-BACK** (…/130/136/142/**147**) — not a domain lap; see the recipe
+  below (night + season, day frame off January, interleaved perf). After it the next lap owes **Nature (139, now
+  stalest)**, then Civic (140); vary off Polish (146) and Interaction/UX (four of last seven) — Deepen/Connect fresh. Sky
   is post-saturation (Deepen/Fix only — its additive/CA cells are traps); Urban's additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
   New element — but 127 sharpens it: saturation is of a domain's *entities*, and a New element can still land on a
@@ -390,81 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 138 entries before Iteration 136 live in
+> **Archive:** the 139 entries before Iteration 137 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 136 — the seventh step-back finds a clean, quiet city (2026-07-11) [holistic step-back]
-
-**Vector.** The mandated holistic step-back (105/110/115/120/125/130/**136**). Not a domain × kind lap: it
-reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the perf
-gate, and — per 115/120/125 — does it at **night AND a season, with the day/night baselines pinned OFF
-January** (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so
-rotation is unchanged; next lap (137) owes the stalest domain, **People (127)**.
-
-**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42
-(warp 61) and seed 7 (warp 31), each at {day 2035.62/t=0.40, night 2035.62/t=0.90, winter 2035.02/t=0.40}.
-One subagent per seed read its own three frames, asked the *cumulative* question ("has anything compounded
-into clutter or darkness?") plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
-
-**Result: the city is healthy — both agents VISUAL: PASS.**
-- **Night lighting (115) holds at both seeds, LOCATED off-centre.** By light alone the luminous core sat at
-  seed 42 ~(0.45,0.48), seed 7 ~(0.47,0.62), both with a genuine core→edge falloff ("not a flat glitter mat",
-  "peaks there and fades to dim green-grey at the edges, near-black at the corners"). Rim fades to dark.
-- **The sea reads** (116's bottom + 123's founded wind farm): turbines parallel to the shelf, no dead void.
-- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames** — brightest
-  night window-clusters stay warm amber, not clipped; the beach→sea stepped terracing reads as intentional.
-- **Winter reads distinct from summer** at both seeds (cooler/browner farm/scrub, paler sky), city balanced.
-
-**Season — measured alive, not believed.** Both agents independently called the *whole-frame* seasonal signal
-"mild / reads more late-summer than winter" — a real perception, but it is the **evergreen/irrigated dilution**
-(PARK/REDWOOD/GARDEN cover much of the frame and are near-zero *by design*, per 120), not a dead calendar.
-`probes/probe-season.mjs` (per-tile rendered-pixel distance from winter, `ROAD` = zero control): FARM
-winter→dry-peak **88.2**, →autumn 92.9; VINEYARD →autumn 58.1, ORCHARD →autumn 41.4; MEADOW/FOREST/SHOREPARK
-all move; PARK/REDWOOD/GARDEN/QUAD near-zero by design. ROAD control **0.5–2.1**. Matches 130 (FARM 88.4).
-The calendar is working; the whole-frame mildness is a *composition* fact, not a bug.
-
-**Perf — the stored-baseline false-FAIL fired a THIRD time, and the interleaved control collapsed it again.**
-`perf.mjs` read day **34.5ms** (+4.0% vs baseline) / night **40.17ms** (+7.6%), the night rise looking like a
-regression. Interleaved HEAD-135 vs the iter-130 file (`f2aa721`, A/B/A/B, min per variant): night **39.83 vs
-39.78ms** (**+0.1%**), day **34.22 vs 34.00ms** — flat both ways, so iters 131→135 (cue-d square, kelp canopy,
-tile focus ring, almanac revert, moon→dayT) added **nothing measurable**. The +7.6% night vs baseline is
-**pure machine load** — the 6-day-old iter-130 file, which *recorded* 37.33ms night, itself reads **39.78ms
-today**. **NOT re-pinned** (baking today's load in would blind the gate to a real future regression). Census
-PASS and vacuous by construction (no source edit).
-
-**Change (the step-back's product — none to the city).** No compounding defect, so per 120/125/130 ("a clean
-step-back is a complete iteration — don't force a filler vector") the output is the health record plus header
-refreshes: step-back pointer → 141 (next is 141), perf note gains the 136 interleaved reading, rotation
-pointer notes 136 as the step-back. No `solvista.html` edit; tree verified clean after the perf interleave
-restored HEAD.
-
-**Verdict — FIXED.** No compounding city defect (the honest step-back outcome, third clean bill in a row:
-130, 136). 115/116/120/123's accumulated visual laws still all read correctly at both seeds under all three
-lights, eight iters on. The perf gate's stored-baseline false-FAIL is confirmed benign by the interleaved
-control for the third time (125→130→136); the guardrail stays honest.
-
-### Findings
-
-- **THE STORED-BASELINE PERF FALSE-FAIL IS NOW A THREE-TIME PATTERN (125→130→136) — the stored baseline
-  understates today's load, never the reverse.** 125 saw night +16%→+4% real; 130 saw +7%→−0.5%; 136 saw
-  +7.6%→+0.1%. Every step-back days after the pin conflates code drift with today's load, and every time the
-  interleave against an old commit's own file collapses it. Do not re-chase a night number a same-session
-  interleave flattens; do not re-pin to an inflated day. (`git show <old>:solvista.html > /tmp/x`, swap A/B/A/B,
-  min per variant — but note **a 2-round × day+night interleave overruns the 120s Bash timeout**; run it
-  `run_in_background`, or cap at ~1.5 rounds — one full round of the control plus two of HEAD is enough signal.)
-- **A CLEAN WHOLE-FRAME "MILD SEASON" IS A COMPOSITION FACT, NOT A REGRESSION — settle it with the probe, not
-  another agent.** Both agents this step-back read the seasons as faint; the probe shows FARM/VINEYARD/ORCHARD
-  swinging 40–90 while the frame-dominant PARK/REDWOOD/GARDEN sit near-zero *by design* (120). The agents are
-  reading the *area-weighted average*, which is genuinely muted; the calendar is not. This is the locate-don't-
-  judge law's cousin: when an agent's *impression* contradicts a by-design invariant, the probe is the verdict.
-- **THREE CLEAN STEP-BACKS DEEP, THE OPEN WATCH-ITEM IS "NIGHT CORE IS BROAD/DIFFUSE" — banked, NOT a defect.**
-  Both agents located the core with real falloff (so 115 holds), but both independently noted the glow is
-  spread across much of the built area rather than a single tight downtown peak. That is a *legibility* nuance,
-  not a tear or a darkness compound — a future Sky/Urban Polish could tighten the CBD light gradient (steeper
-  falloff from `CBDX/CBDY`), but it did not earn a fix here. Logged so a later lap can pick it up deliberately.
 
 ## Iteration 137 — the people cast a shadow (2026-07-11)
 
@@ -1028,3 +959,67 @@ match the kites, crowds and kids that already thin at night. Draw-only, pop prov
   Beaches are summer places — the furniture could also swell in summer / empty in winter — but that would gate a
   discrete visual on the fast `year` clock (134's strobe). It needs a slow seasonal clock first, exactly like the
   fenced-off HUD season word (144). Do not gate the umbrellas on `year`.
+
+## Iteration 146 — the bus reads as a bus (2026-07-11)
+
+**Vector.** Transport × **Polish** (SHIPPED). Rotation named the domain — Transport was the single stalest (last
+138 = Connect) — and 138's findings + 118's law rule out a Transport New element (entities saturated:
+cars/buses/emergency/bikes/trams/trucks, all richly lit; cabins/stations/trains already deepened) while its one
+banked cue (128's MINSEP cabin-crossing) is explicitly low-value. 138 was Connect, so I varied off it to
+**Polish** — Transport's stalest kind (last **94**) and globally fresh (last 143), exactly the header's steer
+("Polish/Connect are fresh").
+
+**The seam — the house-style-helper tell (137), one level up.** Every transit/utility vehicle has a
+*kind-specific* draw block: the tram a cream belt + trolley pole (L5040), the truck a raised container box
+(L5033), emergency vehicles their beacons/bars (L5022). The **bus** alone fell through to the generic vehicle
+prism — a gold body stretched to `long=0.30` with the shared 55%-width glass cabin — so it read as *a long gold
+car*, not a bus. (Buses are a real transit element: gold, spawned at 14%, and they pull into bus-stop shelters
+and dwell — L2342.)
+
+**Change (~7 lines, draw-only).** A `v.kind==='bus'` block beside the tram/truck ones: (1) a **raised roof**
+prism (z 6.0→7.7, above a car's 6.6 cap) so the silhouette is *taller and boxier* — the strongest "reads as a
+bus" signal, as the truck's container is; (2) a full-length **glass window strip** (`bandS`, z 3.9→6.0, warms at
+night via `colLit(...LITAMT)`); (3) a **cream livery band** (`bandS`, z 2.5→3.3). `bandS` lays each on the
+prism's own front faces, so they wrap the body in iso. No tile, entity array, `rng()`, `hashCell`, `tick()` pass
+or terrain; strings pure-ASCII (134). Pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0 (pop/roads/developed flat),
+entity counts identical (cars 360 · trams 54 · trucks 59 …). Stream-neutral by construction — vacuous, the probe
+is the gate.
+
+**Probe.** `probes/probe-buslivery.mjs` (new, promoted). Buses drift nondeterministically over the road network
+between loads (137's live-mover law), so a fixed-coord build-vs-build on live buses is hopeless — the probe
+CLEARS every live mover and PLACES a fixed set of buses (target) + cars (control) at spread-out ROAD-cell
+centres, all heading east, identical objects in both builds, clock frozen (109). Metric = fraction of body-box
+pixels visibly changed (the livery is a band of large per-pixel change diluted by background, so changed-fraction
+is the honest read). Patched vs pristine HEAD, seeds 7/42: **bus body 9.2% of pixels changed (mean |ΔRGB| 4.51)
+· car control 0.11% changed** — an ~80× separation, so the redesign is real and confined to the bus kind (the
+car draw is byte-identical). (An early flank-bands-only cut moved just 4% and read too subtle; the raised roof —
+a silhouette change — is what made it read AND doubled the probe signal.)
+
+**Visual.** Zoomed before/after placement (`shot-buslivery.mjs`: a bus beside a reference car, camera wheeled
+in) + un-zoomed whole-city `wide` at seeds 42 & 7. Three agents, one each (108 discriminate-don't-judge: "which
+is the bus, and is it taller/more bus-like than before?"). All **VISUAL: PASS** — the after-bus reads clearly as
+a bus (taller boxy body, blue window strip, cream livery stripe) where before it was "a flat featureless
+stretched gold box"; the reference car is unchanged; no z-order tears/floaters/mis-projection/blowout; both
+whole-city frames balanced, coherent, nothing compounded.
+
+**Verdict — SHIPPED.** The bus now reads as a bus — a taller boxy body with a window strip and cream livery —
+joining the tram and truck in having a kind-specific silhouette, where before it was a stretched gold car.
+Draw-only, pop provably flat, ~7 lines. Transport's Polish cell gains its next (U1, U3, 70, 85, 87, 94, 146).
+
+### Findings for later laps
+- **THE HOUSE-STYLE-HELPER TELL (137) HAS A SILHOUETTE SIBLING: grep who has a KIND-SPECIFIC draw block and who
+  falls through to the generic.** 137 found the shadow gap by "who calls `shadS`?"; this lap found the bus by
+  "which `v.kind` branches in `drawVehicle` and which doesn't." Tram/truck/emergency each branch; the bus and the
+  plain car did not — and a *car* falling through is correct (it IS the generic), a *bus* is not. Next such gap:
+  nothing distinguishes vehicle *colors* as fleet liveries, but that's cosmetic and low value.
+- **A ~7px SPRITE READS BY SILHOUETTE FIRST, ORNAMENT SECOND — change the outline before the flank (reinforces
+  133/137).** The flank-only bands moved just 4% of body pixels and both the probe and the eye read them as
+  marginal; the raised roof (taller than a car's cap) is what made the bus unmistakable and pushed the probe to
+  9.2%. When polishing a tiny sprite to read as a *category*, spend the first move on its height/outline vs its
+  neighbours, not on surface detail.
+- **A LIVE-VEHICLE DRAW CHANGE USES 137'S PLACED-SET PROBE, WITH A SISTER-KIND AS CONTROL.** Buses drift like
+  peds, so place a fixed set; the clean control is a placed CAR at other cells (draw untouched → ~0), which also
+  proves the edit is scoped to `v.kind==='bus'`. Changed-pixel fraction beats mean-|ΔRGB| for a banded ornament
+  diluted by the background box.
