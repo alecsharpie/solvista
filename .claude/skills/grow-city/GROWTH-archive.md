@@ -10855,3 +10855,73 @@ no longer stalest. The next iteration (**182**) is the mandated **holistic step-
   read "cool sea," the seed-7 coast read "beautiful gold"). The coast clip is the honest frame; keep a wide frame only to
   catch whole-city regressions, not to grade the ornament's presence.
 
+## Iteration 182 — the sixteenth step-back finds a clean city, perf flat (2026-07-12) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/136/142/147/152/157/162/167/172/177/**182**). Not a
+domain × kind lap: it reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to,
+runs the season probe + interleaved perf gate, at night AND a season with the day/night baselines pinned OFF
+January (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so rotation is
+unchanged — the next lap (183) owes the stalest domains, **Nature (174)/Civic (175)**, then Water (176)/People (178)/Transport (179).
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42 (warp 61) &
+seed 7 (warp 31), each at {day 2035.62/t=0.35, night 2035.62/t=0.90, winter 2035.02/t=0.35}. One subagent per
+seed read its own three frames: the cumulative question ("has anything compounded into clutter or darkness?")
+plus 108's **locate-don't-judge** night test ("where is the core by light alone?") and a season-distinctness check.
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night core (115/143) LOCATED off-centre by light alone both seeds** — seed 42 ~(0.47,0.50), seed 7 ~(0.47,0.60)
+  — matching 177 ((.48,.50)/(.53,.60)), 172 ((.47,.55)/(.45,.62)), 167 ((.47,.50)/(.50,.62)); each a genuine warm
+  bright-core → dim residential mid-ring → dark rim → near-black ocean falloff, not a flat wash, with lit transit
+  lines threading out (138 arterials hold). Both agents independently reported the warm core mass + the falloff
+  gradient + the golden street/rail chains.
+- **All recent vectors sit correctly in the whole frame** — 178's fete crowd, 179's bridge lamps, 180's mass-scaled
+  contact shadows, 181's golden-hour sea glints — with pier/ferris/wind-farm on the water plane and the block grid
+  still separating cleanly. **No z-order tears / floaters / hard seams / blown-out white / mojibake** in any of the
+  6 frames; stat strip + labels crisp both seeds (`·`, em-dashes, "WAXING CRESCENT/GIBBOUS" all render correctly,
+  no `Â·`). **Winter reads distinct** from the golden-hour day frame at both seeds (bare/stubble-striped farm plots,
+  duller desaturated vegetation, cooler sky/sea) — mild California winter by design (120's evergreen/irrigated
+  dilution), no snow; both agents noted the shift is gentle-but-clear, terrain-borne not HUD-borne.
+
+**Season — measured alive.** `probes/probe-season.mjs`: FARM winter→dry-peak **88.4** (matches
+130..177 ≈87.6), VINEYARD 44.6/36.7/42.7 (139), FOREST 20.6/19.7/**30.7** (autumn litter holds at 166's level),
+ORCHARD 25.3/17.8/41.4, MEADOW/SHOREPARK move, PARK/REDWOOD/GARDEN/QUAD near-zero by design (120), ROAD control
+**0.5–2.1**. Calendar working; the four-season forest floor (156/166) is real.
+
+**Perf — 178→181 cost ~ZERO (within machine noise).** Interleaved HEAD-181 vs the iter-177 file (`7e2ac2c`,
+A/B/A/B ×3, **min per variant**, one process so both eat the same machine load): day **35.89 vs 35.55ms**
+(**+1.0%**) and night **42.0 vs 41.61ms** (**+0.9%**). So 178 (fete crowd, day-and-dusk) + 179 (bridge lamps,
+night-only) + 180 (mass shadow, day roof/ground draw) + 181 (sea gold, dawn/dusk additive glints) added ~1%,
+inside the ±30% headless swing this box shows for identical code — i.e. flat, no drift to act on. Absolute
+numbers run a touch above 177's (34.4/40.5) purely as today's load; the honest reading is the interleaved delta.
+NOT re-pinning the stored baseline (it reads inflated on today's load per 167's reflexive false-FAIL; re-pin only
+if an interleave *itself* shows a persistent offset — it has not since 142's real +2.2%). Census PASS, vacuous
+(no source edit); tree clean.
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per
+120/130/136/142/147/152/157/162/167/172/177 ("a clean step-back is a complete iteration — don't force a filler
+vector") the output is the health record + header refreshes: step-back pointer 177→182 (next 187), the eleventh
+clean bill, and the 182 interleaved perf reading. No `solvista.html` edit.
+
+**Verdict — FIXED.** No compounding city defect — the ELEVENTH clean step-back in a row (130, 136, 142, 147, 152,
+157, 162, 167, 172, 177, 182). All accumulated visual laws (115/116/120/123 + 138 arterials + 143 CBD peak) still
+read at both seeds under all three lights; the season is alive (166's autumn litter still in FOREST's probe, 139's
+vineyard moving); perf is flat against the honest interleaved control.
+
+### Findings
+- **ELEVENTH CONSECUTIVE CLEAN STEP-BACK — the loop's late-game equilibrium is holding.** Four more laps of
+  draw-only / interconnect vectors (178 fete crowd, 179 bridge lamps, 180 mass shadow, 181 sea gold) landed since
+  177 with ~ZERO measurable perf cost and no cumulative visual drift. The surface-not-entities /
+  deepen-what-exists discipline keeps adding life to *untouched surfaces & existing systems* (an empty drawn CA
+  street, a dark bridge deck, the base of every building, the open water at golden hour) rather than piling more
+  entities onto a saturated coast — which is exactly why nothing compounds. Pattern: 125→…→177→182.
+- **THE INTERLEAVE-VS-A-STEP-BACK-FILE IS NOW THE STANDING PERF METHOD, and it read +1.0%/+0.9% against a file 5
+  iters old (`7e2ac2c`, iter 177).** The stored baseline remains untouched and would false-FAIL; the only
+  trustworthy number is HEAD vs a pinned older commit's file in ONE process. **The next step-back (187) should
+  interleave HEAD vs THIS iteration's file (Iter 182 / whatever 186 leaves, anchor `<SHA-182>`) to isolate
+  183–186's cost.**
+- **Night is still the slowly-accumulating column and it moved a hair (+0.9%) — 179's bridge lamps are the one of
+  178–181 that draws at night, and they are a bounded per-bridge draw, not a per-cell field.** Night remains the
+  column a future step-back watches first (≈42ms/24fps at today's load), but +0.9% is inside noise and no
+  perf-fix iteration is owed. The night draw budget is being spent carefully — bounded landmark/edge lights
+  (175 parliament, 179 bridges), never a full-frame night pass.
+
