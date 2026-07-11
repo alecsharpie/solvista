@@ -5131,13 +5131,21 @@ function drawVehicle(v){
     bandS(cx,cy,ax*0.92,ay*0.92,2.5,3.3,col('cream',1.06));
   }
   if(v.kind==='tram'){
-    /* cream livery belt + a slim trolley pole to the overhead — reads as rail */
+    /* cream livery belt, a pantograph, and the overhead CONTACT WIRE it draws from.
+       The pole used to poke at empty air; now it rides a taut catenary strung the
+       length of the block the streetcar is on (the A->B segment it is traversing),
+       so it reads as an electric streetcar on an electrified avenue. The wire spans
+       the ROAD, not the car (same lane offset, raised a fixed height), so it holds
+       still as the tram slides under it, and the pole meets it directly overhead. */
     ctx.fillStyle=col('cream',1.12);
     if(alongX)ctx.fillRect(cx-ax*CW*0.9,cy-3.1,ax*CW*1.8,0.9);
     else ctx.fillRect(cx-1.1,cy-ay*CW*0.7-3.1,2.2,ay*CW*1.4);
-    ctx.strokeStyle=col('ink',1.15);ctx.lineWidth=0.6;
-    ctx.beginPath();ctx.moveTo(cx,cy-6.6);ctx.lineTo(cx+1.3,cy-9.4);ctx.stroke();
-    ctx.fillStyle=col('ink',1.3);ctx.beginPath();ctx.arc(cx+1.3,cy-9.4,0.7,0,7);ctx.fill();
+    const wh=9.6, lox=-ddy/L*lane, loy=ddx/L*lane*0.6;
+    ctx.strokeStyle=col('ink',1.05);ctx.lineWidth=0.5;
+    ctx.beginPath();ctx.moveTo(A[0]+lox,A[1]+loy-wh);ctx.lineTo(B[0]+lox,B[1]+loy-wh);ctx.stroke();
+    ctx.strokeStyle=col('ink',1.2);ctx.lineWidth=0.6;
+    ctx.beginPath();ctx.moveTo(cx,cy-6.6);ctx.lineTo(cx,cy-wh);ctx.stroke();
+    ctx.fillStyle=col('ink',1.3);ctx.beginPath();ctx.arc(cx,cy-wh,0.6,0,7);ctx.fill();
   }
   if(LITAMT>0.35){
     const nose=long*CW*0.9, hx=cx+FX*nose, hy=cy+FY*nose;

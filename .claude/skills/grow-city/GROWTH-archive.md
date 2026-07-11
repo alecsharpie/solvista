@@ -8536,3 +8536,63 @@ longer stalest (People 137 now is). The season half stays banked and explicitly 
   lunation-eighths, 135's trick). One probe, both — `probe-moonhud` runs the running-clock DOM read AND the
   frozen sweep. Reuse the shape for any future almanac/readout gate (a season word, a tide readout).
 
+## Iteration 145 — the beach follows the sun (2026-07-11)
+
+**Vector.** People & activity × **Deepen** (SHIPPED). Rotation named the domain — People was the single stalest
+(last SHIP 127; 137 was Polish) — and the header steered HARD off Polish (143) and Interaction/UX (four of the
+last six: 133/134/140/141/144) toward Deepen/Connect. People's Deepen cell is its fullest (last 119), and its
+live-ped probe difficulty is documented (137), so I chose a Deepen that touches a DRAW, not the ped stepping:
+the beach furniture.
+
+**The seam.** The umbrella+towel draw on low-`c.v` BEACH cells (L3245) was ungated by time of day — it sat out
+at 2am while the bonfire (L3234, `LITAMT>0.5`) burned beside it, so the beach had no daily rhythm of use. (The
+kites already come down at night, crowds thin via `pedHidden`, kids go home by dark — the beach furniture was
+the one People-activity surface with no day/night rhythm.)
+
+**Change (~6 lines, draw-only).** Multiply the furniture's alpha by `ua=clamp((0.6-LITAMT)/0.25,0,1)` and skip
+the draw when `ua<=0.02`: full at midday (LITAMT~0), fills in through the morning, fades by dusk (LITAMT>0.6) as
+the bonfires take over. `LITAMT` rides the slow ~110s day-clock, so this is a rhythm, not a strobe (134's
+cadence law: a fast-`year` gate would flicker). No tile, entity, rng(), tick() pass or terrain — pop provably
+flat.
+
+**Census.** PASS, exit 0. Tile histogram empty, all core metrics +0 (`greenRoofs -1` is the documented
+roof-adoption headless wobble). Vacuous by construction — the probe is the gate.
+
+**Probe.** `probes/probe-beachsun.mjs` (new, promoted). Build-vs-build isolation (patched vs `git show HEAD`) at
+the SAME time of day, which separates the furniture from the day/night TINT (a within-build day-vs-night diff
+would conflate them). Clears every live mover first (137's law) and freezes. seeds 7/42: **DAY control 0.01**
+(ua=1 in both builds → beach identical, midday untouched) · **NIGHT 2.94** (patched draws no furniture, HEAD
+does → the whole umbrella removed) · **ROAD control 0.017** (change confined to the beach). Night is ~300× the
+day control — a decisive, clean separation. Selects umbrella cells by `c.v<0.08` (the draw gates on c.v, NOT
+c.sand) and skips the esplanade.
+
+**Visual.** Coast day/night pairs + whole-city wide, seeds 42 & 7, one agent each (108's discriminate-don't-
+judge: "which frame has the umbrellas?"). Both **VISUAL: PASS** — both correctly located the colorful parasols
+in the DAY frame and confirmed the NIGHT beach is bare dark sand (only pier-lamp/figure glows remain), no
+z-order tears, no half-drawn/ghost parasols, no blowout; both wide frames balanced coastal cities, nothing
+compounded.
+
+**Verdict — SHIPPED.** The beach furniture now follows the sun — umbrellas fill in through the morning, peak at
+midday, and are packed away by the time the evening bonfires are lit, giving the beach a daily rhythm of use to
+match the kites, crowds and kids that already thin at night. Draw-only, pop provably flat, slow-clock-gated
+(strobe-safe). People's Deepen cell gains its sixth (34, 64, 93, 104, 119, 145).
+
+### Findings for later laps
+- **A DRAW GATED ON `LITAMT` IS THE SAFE WAY TO GIVE PEOPLE A DAILY RHYTHM — it is the slow ~110s day-clock, not
+  the fast `year`.** 134/135 established that `year` strobes; `LITAMT` (from `daylight(dayT)`) crosses its
+  thresholds once per ~110s cycle, so a furniture/crowd draw gated on it fades in/out over minutes. Reuse the
+  `ua=clamp((0.6-LITAMT)/0.25,0,1)` shape for any "present by day, gone by night" ornament (or invert for a
+  night-only one, as the bonfire already does at `LITAMT>0.5`).
+- **THE UMBRELLA GATES ON `c.v`, NOT `c.sand` — and `__find` only exposes `c.sand`.** A probe of beach furniture
+  must select cells by `c.v` (iterate `cells` in-page), which `__find('BEACH').sand` will NOT give you; my first
+  probe cut sampled the wrong cells and read pure noise. When a draw's condition uses a field `__find` doesn't
+  return, replicate the cell scan in the evaluate block.
+- **BUILD-VS-BUILD AT A FIXED CLOCK ISOLATES A DAY-ONLY DRAW-GATE FROM THE GLOBAL TINT.** A day-only feature
+  can't be probed by a within-build day-vs-night diff (the whole frame's tint moves). Diffing patched-vs-HEAD at
+  a FIXED time of day cancels the tint (both builds see it) and leaves only the gated draw — day≈0 proves the
+  daytime no-op, night = the removed furniture. Clear live movers first or their inter-load drift swamps it (137).
+- **People's beach surface now has a DAILY rhythm; its SEASONAL rhythm is still open (and a strobe trap).**
+  Beaches are summer places — the furniture could also swell in summer / empty in winter — but that would gate a
+  discrete visual on the fast `year` clock (134's strobe). It needs a slow seasonal clock first, exactly like the
+  fenced-off HUD season word (144). Do not gate the umbrellas on `year`.
+

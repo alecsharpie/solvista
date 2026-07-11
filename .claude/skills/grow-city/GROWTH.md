@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
-| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
+| **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137** | 71, **154** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **153** · Urban **151** · People **154** · Nature **148** · Transport **146** · Civic **149** · Water **150**.
-  **Stalest is now Transport (146)**, then Nature (148), then Civic (149) — check the last entry of the stalest domain for a banked
+  Sky **153** · Urban **151** · People **154** · Nature **148** · Transport **155** · Civic **149** · Water **150**.
+  **Stalest is now Nature (148)**, then Civic (149), then Water (150) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -168,16 +168,16 @@ ones (U2, 42, U5) stay in the bullet.
   that can read `year` now does; a further Sky interconnect must come from a genuinely new derived field, not
   from un-freezing another tile.
   Recent kinds:
-  **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** ·
   **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** ·
   **138 Connect (arterial spine lit as a night corridor via `c.flow`)** ·
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** — (**130/136/142/147/152 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen, 154 back to Interaction/UX.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen, 154 was Interaction/UX.
   **⚠ Iteration 157 is the next holistic STEP-BACK** (…/142/147/**152 done**/**157**) — not a domain lap; see the recipe
   below (night + season, day frame off January, interleaved perf). **154 took People × Interaction/UX (its
-  coldest kind, mute Resident tooltip cashed via the 117 tell); 155 owes the stalest domain, Transport (146)**, then Nature (148). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
+  coldest kind, mute Resident tooltip cashed via the 117 tell); 155 took Transport × Deepen (the tram catenary, the
+  149 draw-tell); 156 owes the stalest domain, Nature (148)**, then Civic (149). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
   the banked Sky move is the SEASON word, which needs a slow clock FIRST — see the moon note above). Urban's
   additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
@@ -391,71 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 147 entries before Iteration 145 live in
+> **Archive:** the 148 entries before Iteration 146 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 145 — the beach follows the sun (2026-07-11)
-
-**Vector.** People & activity × **Deepen** (SHIPPED). Rotation named the domain — People was the single stalest
-(last SHIP 127; 137 was Polish) — and the header steered HARD off Polish (143) and Interaction/UX (four of the
-last six: 133/134/140/141/144) toward Deepen/Connect. People's Deepen cell is its fullest (last 119), and its
-live-ped probe difficulty is documented (137), so I chose a Deepen that touches a DRAW, not the ped stepping:
-the beach furniture.
-
-**The seam.** The umbrella+towel draw on low-`c.v` BEACH cells (L3245) was ungated by time of day — it sat out
-at 2am while the bonfire (L3234, `LITAMT>0.5`) burned beside it, so the beach had no daily rhythm of use. (The
-kites already come down at night, crowds thin via `pedHidden`, kids go home by dark — the beach furniture was
-the one People-activity surface with no day/night rhythm.)
-
-**Change (~6 lines, draw-only).** Multiply the furniture's alpha by `ua=clamp((0.6-LITAMT)/0.25,0,1)` and skip
-the draw when `ua<=0.02`: full at midday (LITAMT~0), fills in through the morning, fades by dusk (LITAMT>0.6) as
-the bonfires take over. `LITAMT` rides the slow ~110s day-clock, so this is a rhythm, not a strobe (134's
-cadence law: a fast-`year` gate would flicker). No tile, entity, rng(), tick() pass or terrain — pop provably
-flat.
-
-**Census.** PASS, exit 0. Tile histogram empty, all core metrics +0 (`greenRoofs -1` is the documented
-roof-adoption headless wobble). Vacuous by construction — the probe is the gate.
-
-**Probe.** `probes/probe-beachsun.mjs` (new, promoted). Build-vs-build isolation (patched vs `git show HEAD`) at
-the SAME time of day, which separates the furniture from the day/night TINT (a within-build day-vs-night diff
-would conflate them). Clears every live mover first (137's law) and freezes. seeds 7/42: **DAY control 0.01**
-(ua=1 in both builds → beach identical, midday untouched) · **NIGHT 2.94** (patched draws no furniture, HEAD
-does → the whole umbrella removed) · **ROAD control 0.017** (change confined to the beach). Night is ~300× the
-day control — a decisive, clean separation. Selects umbrella cells by `c.v<0.08` (the draw gates on c.v, NOT
-c.sand) and skips the esplanade.
-
-**Visual.** Coast day/night pairs + whole-city wide, seeds 42 & 7, one agent each (108's discriminate-don't-
-judge: "which frame has the umbrellas?"). Both **VISUAL: PASS** — both correctly located the colorful parasols
-in the DAY frame and confirmed the NIGHT beach is bare dark sand (only pier-lamp/figure glows remain), no
-z-order tears, no half-drawn/ghost parasols, no blowout; both wide frames balanced coastal cities, nothing
-compounded.
-
-**Verdict — SHIPPED.** The beach furniture now follows the sun — umbrellas fill in through the morning, peak at
-midday, and are packed away by the time the evening bonfires are lit, giving the beach a daily rhythm of use to
-match the kites, crowds and kids that already thin at night. Draw-only, pop provably flat, slow-clock-gated
-(strobe-safe). People's Deepen cell gains its sixth (34, 64, 93, 104, 119, 145).
-
-### Findings for later laps
-- **A DRAW GATED ON `LITAMT` IS THE SAFE WAY TO GIVE PEOPLE A DAILY RHYTHM — it is the slow ~110s day-clock, not
-  the fast `year`.** 134/135 established that `year` strobes; `LITAMT` (from `daylight(dayT)`) crosses its
-  thresholds once per ~110s cycle, so a furniture/crowd draw gated on it fades in/out over minutes. Reuse the
-  `ua=clamp((0.6-LITAMT)/0.25,0,1)` shape for any "present by day, gone by night" ornament (or invert for a
-  night-only one, as the bonfire already does at `LITAMT>0.5`).
-- **THE UMBRELLA GATES ON `c.v`, NOT `c.sand` — and `__find` only exposes `c.sand`.** A probe of beach furniture
-  must select cells by `c.v` (iterate `cells` in-page), which `__find('BEACH').sand` will NOT give you; my first
-  probe cut sampled the wrong cells and read pure noise. When a draw's condition uses a field `__find` doesn't
-  return, replicate the cell scan in the evaluate block.
-- **BUILD-VS-BUILD AT A FIXED CLOCK ISOLATES A DAY-ONLY DRAW-GATE FROM THE GLOBAL TINT.** A day-only feature
-  can't be probed by a within-build day-vs-night diff (the whole frame's tint moves). Diffing patched-vs-HEAD at
-  a FIXED time of day cancels the tint (both builds see it) and leaves only the gated draw — day≈0 proves the
-  daytime no-op, night = the removed furniture. Clear live movers first or their inter-load drift swamps it (137).
-- **People's beach surface now has a DAILY rhythm; its SEASONAL rhythm is still open (and a strobe trap).**
-  Beaches are summer places — the furniture could also swell in summer / empty in winter — but that would gate a
-  discrete visual on the fast `year` clock (134's strobe). It needs a slow seasonal clock first, exactly like the
-  fenced-off HUD season word (144). Do not gate the umbrellas on `year`.
 
 ## Iteration 146 — the bus reads as a bus (2026-07-11)
 
@@ -994,3 +934,78 @@ Tooltip-only, pop provably flat, reuses five existing predicates. People × Inte
   echo, the tooltip and the probe all call it; a future "peds thin at night" or crowd-label vector should read it,
   not re-classify position. It maps EVERY strollable/road hex, so it is also a ready oracle for "is this ped
   somewhere interesting."
+
+## Iteration 155 — the streetcar draws from an overhead wire (2026-07-11) [Transport × Deepen]
+
+**Vector.** Transport × **Deepen** (SHIPPED). Rotation named the domain — Transport was the single stalest (last
+146) — and 118's law + 138's findings rule out a Transport New element (entities saturated). Varied the kind off
+146 (Polish) / 154 (the recent IUX run) to **Deepen**, running the loop's most reliable move in its **draw** form
+(149's law): an ornament that asserts a relationship the draw ignores. The tram's comment (L5134) called its
+trolley pole *"a slim trolley pole to the overhead"* — but there **was no overhead.** The pole drew from
+`cy-6.6` to a lone contact dot at `(cx+1.3, cy-9.4)`, poking at empty air. Same shape as 149's frozen clock:
+the streetcar claimed to be an electric rail vehicle drawing power from a catenary, and drew none.
+
+**The seam.** `drawVehicle`'s `v.kind==='tram'` block (L5133). `A=ctr(v.x,v.y)`, `B=ctr(v.nx,v.ny)` (the A->B
+segment the tram is traversing), `L`, `lane` are all in scope at the top of `drawVehicle` (L5077-5079), so the
+overhead wire can be strung the length of the block at the SAME lane offset, raised a fixed height.
+
+**Change (~8 lines, draw-only).** Replaced the leaning pole+dot with (1) a **contact wire** from `A` to `B`,
+lane-shifted and raised `wh=9.6` (`ctx.moveTo(A[0]+lox,A[1]+loy-wh)…lineTo(B[0]+lox,B[1]+loy-wh)`) — because
+`cx=lerp(A,B,p)-ddy/L*lane` and `cy=lerp+ddx/L*lane*0.6`, the wire point directly above the tram is exactly
+`(cx,cy-wh)`, so the wire spans the ROAD (holds still as the tram slides under it), not the car; (2) a **vertical
+pantograph** from the roof `(cx,cy-6.6)` straight up to `(cx,cy-wh)`; (3) the contact shoe dot at `(cx,cy-wh)`.
+Kept the cream livery belt. No tile, entity, `rng()`, `hashCell`, `tick()` pass or terrain; strings pure-ASCII
+(134, comment only). Pop provably flat, stream-neutral.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0 (`towerHt +1` is the documented
+chaotic-CA headless wobble), entity counts identical (trams 54 · cars 360 …). Vacuous by construction — the
+probe is the gate.
+
+**Probe — `probes/probe-tramwire.mjs` (new, promoted).** Trams drift nondeterministically over the road network
+between loads (137's law), so it CLEARS **every** mover (clouds/birds/balloons spawn via `Math.random` and would
+put a noise floor on a whole-frame diff — see findings) and PLACES 120 trams (target) then 120 cars (control) at
+spread ROAD centres, all east, frozen clock+`waveT` (109). Metric = **whole-frame** changed-pixel fraction
+patched-vs-pristine-HEAD (in a frozen frame the only difference IS the wires, so no per-vehicle box / unit
+juggling). seeds 7/42: **tram-set 0.21% of frame changed** vs **car control 0.004%** — a ~50x separation,
+confined to the tram kind (the car draw is byte-identical). **PASS.**
+
+**Visual.** `probes/shot-tramwire.mjs` (new) places a run of trams on a **clear avenue** (front-of-frame, open
+ground/water in front so nothing occludes the overhead), camera-zooms, clips day + night. First shot placed the
+trams in a **tower canyon** and an agent correctly FAILED it (front-row towers buried the trams AND the wire,
+leaving pantograph nubs poking at air — see findings); the fair clear-avenue re-shoot then PASSED: a fresh agent
+read the wire as *"a single thin dark wire … unbroken across the full avenue … poles rise from the tram roofs and
+meet it"*, plausible catenary, no z-order tears/clipping/blowout, present day and night. Whole-city `wide` at
+seeds 42 & 7, one agent each: both **VISUAL: PASS** — balanced coherent coastal cities, nothing compounded (the
+wire is sub-pixel and invisible at fit zoom, so it adds no clutter there).
+
+**Verdict — DEEPENED.** The streetcar now draws power from an overhead contact wire strung over its avenue, where
+for the artifact's whole life its pole poked at empty air — it reads as an electric tram, joining the moon (135),
+the clock (149) and the vineyard (148/139) in the run of ornaments that now honor what they always claimed.
+Draw-only, stream-neutral, pop flat, ~8 lines. Transport's Deepen cell gains its next (28, 39, 55, 63, 112, 121,
+128, **155**); Transport is no longer stalest (Nature 148 now is).
+
+### Findings for later laps
+- **THE ASSERTS-MORE-THAN-IT-SHOWS *DRAW* TELL (149) PAID AGAIN — grep vehicle/ornament COMMENTS for a claimed
+  connection the geometry omits.** 149 found the frozen clock by its comment; this lap found the tram by *"pole to
+  the overhead"* over an overhead that wasn't drawn. Candidates still open (149's list): the firehouse bell is
+  static; museum/parliament are floodlit but otherwise inert. A pole/mast/gauge that *should* touch something is
+  the richest version.
+- **A LOW OVERHEAD ELEMENT IS OCCLUDED BY FRONT-ROW BUILDINGS — that is physically correct, but it means a
+  tower-canyon zoom can show a bare pantograph nub.** The wire draws in the tram's bucket (after its own two
+  cells' buildings, L5608) so it is correct against those, but nearer ROWS (drawn later, L5600) legitimately
+  overpaint it — so in dense downtown the wire hides behind the front towers (as real catenary would) and only the
+  nub pokes above. Unlike the monorail (drawn per-cell at `RAILH`, well above rooftops), the tram wire is at
+  street level and inherently occludable. Accepted as realistic; a shot MUST choose a clear avenue (open ground in
+  front) to judge it fairly, or it reads as broken nubs. **When shooting a low overhead detail, pick a
+  front-of-frame cell with open ground/water behind and in front — never a tower canyon.**
+- **A WHOLE-FRAME PATCHED-vs-HEAD DIFF NEEDS EVERY `Math.random` MOVER CLEARED, not just the seeded ones.** My
+  first cut cleared vehicles/peds/etc. but left clouds/birds/balloons, which spawn via `Math.random` at load and
+  differ between the two page loads — a 0.15% whole-frame noise floor that swamped the ~0.2% wire signal. Clearing
+  **all** movers dropped the control to 0.004% (pure render nondeterminism) and the ~50x separation appeared. For
+  any whole-frame two-load diff, clear the full entity list (the `[a,b,…].forEach(a=>a.length=0)` block), not a
+  subset. (The per-box metric in `probe-buslivery` sidesteps this by only sampling the vehicle body; a whole-frame
+  metric cannot.)
+- **`CW` IS A WORLD UNIT; `sx/sy` FROM `__find` ARE SCREEN px — do not mix them in a getImageData box.** My first
+  probe built the sample box as `0.7*CW*dpr` wide (world) but `(sy-12)…(sy-6.5)` tall (screen), so the box was the
+  wrong size and read ~0 signal. The whole-frame diff dodges the unit problem entirely and is the more robust
+  shape for a thin draw-only ornament whose exact pixels are hard to box.
