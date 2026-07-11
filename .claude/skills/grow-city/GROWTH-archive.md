@@ -8337,3 +8337,79 @@ KELP joins the woods, orchard, vineyard and institutions in naming what its own 
 > **Cue (l) CLOSED (iter 133), full detail:** a hovered TILE wears a hex-outline focus ring
 > (`hoverTile`→`render()`, 1.06 of the footprint, ink-under/cream-pulse matching `stamp()`).
 > `window.__hover(x,y)` sets it for probes; `probe-tilering.mjs` gates it.
+
+## Iteration 142 — the eighth step-back finds a clean city, and the first real perf delta (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/136/**142**; 141 slipped it one). Not a
+domain × kind lap: it reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to,
+runs the perf gate, and — per 115/120/125 — does it at **night AND a season, with the day/night baselines pinned
+OFF January** (`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so
+rotation is unchanged; next lap (143) owes the stalest domain, **Urban (133)**, then Sky (135).
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42 (warp 61)
+and seed 7 (warp 31), each at {day 2035.62/t=0.35, night 2035.62/t=0.90, winter 2035.02/t=0.35}. One subagent
+per seed read its own three frames, asked the *cumulative* question ("has anything compounded into clutter or
+darkness?") plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night lighting (115) holds at both seeds, LOCATED off-centre.** By light alone the luminous core sat at seed
+  42 ~(0.47,0.53) with a secondary glow ~(0.40,0.30), seed 7 ~(0.47,0.62) — matching 136's (.45,.48)/(.47,.62),
+  both with a genuine core→edge falloff and dim/near-black rim.
+- **138's arterial night-corridors read as designed** — both agents, unprompted, traced *continuous* warm lit
+  ribbons along the main roads ("clear diagonal streaks in the west/central grid", "amber-lit corridors
+  radiating from the core"), distinctly brighter than the dim side streets. The 138 ship still reads eight iters
+  on, at the whole-frame scale.
+- **The sea reads** (116's bottom + 123's founded wind farm): turbines parallel to the shelf, no dead void.
+- **No z-order tears, floating tiles, hard seams, or blown-out colour in any of the 6 frames** — night
+  window-clusters stay warm amber, not clipped.
+- **Winter reads distinct from summer** at both seeds (farm/scrub paler/tan, cooler sky), city balanced.
+
+**Season — measured alive, not believed.** `probes/probe-season.mjs` (per-tile rendered-pixel distance from
+winter, `ROAD` = zero control): FARM winter→dry-peak **88.3**, →autumn 93.0; VINEYARD now **44.6/36.7/42.7**
+(the iter-139 seasonal draw shows in the probe — new since 136); ORCHARD 25.3/17.8/41.4; MEADOW/FOREST/SHOREPARK
+all move; PARK/REDWOOD/GARDEN/QUAD near-zero *by design* (120). ROAD control **0.5–2.2**. Matches 130/136 (FARM
+88). The calendar is working; the whole-frame mildness agents feel is the by-design evergreen/irrigated dilution.
+
+**Perf — the stored-baseline false-FAIL fired a FOURTH time, but the interleave found the first REAL delta.**
+`perf.mjs` read day **34.34ms** (+3.6% vs baseline) / night **40.83ms** (+9.4%), the night rise looking like a
+regression. Interleaved HEAD-141 vs the iter-136 file (`6b31425`, A/B/A/B, min per variant): day **34.44 vs
+34.50ms** (**−0.2%**, flat) but night **41.39 vs 40.50ms** (**+2.2%**) — unlike 130/136 which were flat both
+ways. That +2.2% night is 137's figure contact-shadows (day+night) + **138's ~88-hex per-arterial night lamps
+landing** — small, expected (138's own finding flagged night as the one to watch), well inside budget (60fps
+budget 100%, 30fps 47.7%). NOT a regression to fix and **NOT re-pinned** (the +9.4% vs stored baseline is still
+mostly load — the 6-day-old iter-136 file itself read 40.50ms night today vs the 37.33ms it was pinned at).
+Census PASS and vacuous by construction (no source edit).
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per 120/125/130/136 ("a
+clean step-back is a complete iteration — don't force a filler vector") the output is the health record plus
+header refreshes: step-back pointer → 147, perf note gains the 142 interleaved reading (four-time false-FAIL
+pattern + first real delta), rotation notes 142 as the step-back. No `solvista.html` edit; tree verified clean
+after the perf interleave restored HEAD.
+
+**Verdict — FIXED.** No compounding city defect (the honest step-back outcome, third clean bill in a row: 130,
+136, 142). All accumulated visual laws (115/116/120/123) and 138's arterial night-lighting still read correctly
+at both seeds under all three lights. The perf gate's stored-baseline night false-FAIL is benign for the fourth
+time (125→130→136→142) — but the same-session interleave this time surfaced the genuine +2.2% night cost of
+137+138's night draw, which is exactly what the interleave exists to separate from load.
+
+### Findings
+- **THE INTERLEAVE'S JOB IS TO SEPARATE REAL COST FROM LOAD — and at 142 it did BOTH in one reading.** The
+  stored baseline said night +9.4% (looks like a regression); the interleave against iter-136's own file said
+  +2.2% (the real cost of 137+138's night draw) with day flat. Neither number alone is the truth: the stored
+  baseline conflates code + 6 days of load drift, the interleave isolates code. A non-flat interleave is not a
+  false-FAIL — it is the gate working. +2.2% for a deliberately-shipped night-lighting network is a good trade,
+  logged not fixed.
+- **⚠ WHEN SCRIPTING THE PERF INTERLEAVE, FILTER perf.mjs's OUTPUT TO THE `p95` LINES.** `perf.mjs` prints the
+  frame-timing block AND a "vs baseline" block, both starting `  day`/`  night`; a naive `grep '^  (day|night)'`
+  swallows the baseline numbers and silently corrupts the `min` per variant (they leak in as extra array
+  elements). Grep for lines containing `mean` AND `p95` (`grep -E '^  (day|night) +mean.*p95'`). Cost me one
+  wasted round this lap.
+- **138's ARTERIAL NIGHT-LIGHTING HAS PAID TWICE NOW — at ship (138) and at this whole-frame step-back.** Both
+  142 agents traced the continuous corridors unprompted at fit zoom, which is a stronger read than 138's own
+  tight clips (a linear feature that survives downscaling has real contrast×width, 101's law). The road
+  hierarchy at night (arterial ribbon vs side-street disc) is a durable, legible layer.
+- **THE NIGHT-CORE-IS-BROAD watch-item (136) is RECONFIRMED at 142, still not a defect.** Both agents again
+  located a real falloff but a spread glow rather than a tight CBD peak. Three step-backs deep it is the one
+  standing legibility nuance; a future Sky/Urban Polish steepening the `CBDX/CBDY` light gradient could cash it
+  deliberately — it has not earned a forced fix.
+
