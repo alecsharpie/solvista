@@ -1118,6 +1118,15 @@ function orchardPhase(){const s2=((year%1)+1)%1;
    autumn harvest. Shared so the draw and a future tooltip read one predicate. */
 function vinePhase(){const s2=((year%1)+1)%1;
   return s2<0.16||s2>=0.99?'dormant':s2<0.45?'bud':s2<0.72?'veraison':'ripe';}
+/* the farm belt keeps a per-field crop calendar: bare ploughed soil greens to a
+   standing crop, ripens to straw, is cut to stubble (the hay-bale weeks), then is
+   ploughed under again. Each field runs up to +-5 weeks off its neighbours via its
+   own phase v (c.v), so the belt is a patchwork, not one synchronised day. Shared
+   so the draw and the tooltip read ONE predicate for "where is this field in the
+   year" (the 112 law); farmPhase names the same ph the draw colours with. */
+function farmPh(v){return ((((year%1)+1)%1-(v-0.5)*0.10)%1+1)%1;}
+function farmPhase(v){const ph=farmPh(v);
+  return ph<0.06||ph>=0.93?'ploughed':ph<0.20?'sprouting':ph<0.52?'growing':ph<0.80?'ripening':'harvested';}
 /* woodland spring ephemerals: wildflowers carpet the forest floor in the brief
    window after the thaw and before the canopy closes over it (the same s~0.28
    spring the palette greens the canopy on). Shared so the draw and the tooltip
@@ -3789,7 +3798,7 @@ function drawCell(x,y){
          (phase from v), so the belt greens, ripens and is cut as a patchwork rather
          than all on one day. veg also swells the rows: furrows in winter, heavy
          growth at midsummer. Draw-only — no terrain, no rng(). */
-      const s=((year%1)+1)%1, ph=((s-(v-0.5)*0.10)%1+1)%1;
+      const ph=farmPh(v); /* one predicate, shared with the tooltip's farmPhase (112) */
       const veg=clamp((ph-0.10)/0.30,0,1)*(1-clamp((ph-0.80)/0.12,0,1));
       const cropN=v<0.33?'sage':(v<0.66?'gold':'crop');
       const crgb=cropRGB(cropN,ph);
@@ -6583,6 +6592,9 @@ function describeTile(c,x,y){
   /* the vineyard tells the same calendar its trellis paints (shared vinePhase) */
   if(c.t===T.VINEYARD){const vph=vinePhase();
     data.push(['Vines',vph==='dormant'?'Bare canes':vph==='bud'?'In leaf':vph==='veraison'?'Green fruit':'Ripe for harvest']);}
+  /* the field tells the same per-cell crop calendar the draw colours (shared farmPhase) */
+  if(c.t===T.FARM){const fph=farmPhase(c.v);
+    data.push(['Fields',fph==='ploughed'?'Ploughed under':fph==='sprouting'?'Sprouting':fph==='growing'?'Standing crop':fph==='ripening'?'Ripening to straw':'Cut for harvest']);}
   if(c.t===T.BURNT)data.push(['Burnt','~'+Math.round(c.age*0.075)+' yr ago']);
   if(c.fire>0)data.push(['Burning']);   /* live, and drawn: drawFire paints this cell */
   /* a roof row needs a roof: the forecourt and grounds rules pave over a MID or a

@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105**, **171** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **181** · People **178** · Transport **179** · Urban **180** · Nature **174** · Civic **175** · Water **176**. (162, **167**, **172**, **177**, **182** = step-backs, no domain lap.)
-  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales on the stubble fields post-harvest, `probe-haybale`). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). **176 took Water × Interaction/UX (the river names its course — a `Course — N hexes` row via a bridge-AWARE flood `riverCourse` so a span doesn't fragment the reach; the river was the barest tooltip in the city, zero data rows over its richest water system; a `Crossings` companion was DROPPED — bridge cells over-count vs connected components and the L1633 pave-over rule makes the unit ambiguous; draw-nothing tooltip, pop+stream flat, `probe-river` 254 river hexes named 3 seeds, sea control clean 1916 hexes, sea-leak 0). So the next domain lap (178) owes People (170)/Transport (171).** 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). **178 took People × Deepen (the festival streets fill with people — a day-and-dusk crowd of `hashCell`-scattered figures mills on each `c.fete` ROAD cell under the bunting, then heads home by deep night; a People×Civic interconnect on a drawn CA system that was rendered for the artifact's whole life but never *inhabited*; draw-only stream+pop-neutral, `probe-fetecrowd` FETE day 2.9–3.6% → night 0.00% byte-identical, ROAD ctl ~0, 3 seeds). **179 took Transport × Deepen (the bridges light their lamps at night — the bridge sub-case `break`s before the road's night-lamp block, so every bridge went pitch dark at night for the artifact's whole life while both banks glowed; two warm rail lamps atop the deck + a `waveT` reflection on the river below, a Transport×Water interconnect; draw-only stream+pop-neutral, `probe-bridgelamp` BRIDGE night 7.4–8.1% → day 0.00% byte-identical, ROAD ctl 0.00% both, 3 seeds). So the next domain lap (180) owes Urban (173, Deepen/Polish only — measured-saturated).** **180 took Urban × Polish (the towers ground their own weight — the fixed 0.42×0.13 contact shadow under every building now scales with mass `shf=clamp((h-9)/120,0,1)`, so a 150-unit tower grounds on a 0.94/0.23 pool while a bungalow keeps the old blob; centered in the house style since nothing in the artifact casts a directional shadow, draw-only stream+pop-neutral, `probe-massshadow` TALL 0.6–1.0% ≫ SHORT/CTL ~0.05% 3 seeds; the first scaling was too weak because the tower body occludes its own base shadow — size for the ring not the area). So the next domain lap (181) owes Sky (161, Deepen/Fix ONLY — saturated), then the step-back at 182.** **181 took Sky × Deepen (the sea catches the golden hour — bright additive-gold sun-path glints on the open water at dawn/dusk, reading 161's reusable `cwarm`/`skyBot` signal onto the largest surface in the frame, filling the gap between the noon glitter and the night moonglade; a Sky×Water interconnect, draw-only stream+pop-neutral, `probe-seagold` SEA dusk ~31%/dawn ~22% → noon/night ~0, LAND ctl 0 all frames, 3 seeds. ⚠ A warm alpha WASH over teal desaturates to OLIVE — carry sunset/warm light over cool water with ADDITIVE `'lighter'` glints, not a wash; two tuning rounds were lost raising a wash's alpha before the blend mode was the real fix. `GWARM`/`GWSB` are now globals beside `LITAMT` for any golden-hour draw.)** 171's fete-street TOOLTIP (`c.fete` drawn but unnamed in `describeTile`) is still banked, and now more worth cashing since the street is no longer empty. **182 was the mandated STEP-BACK — ELEVENTH clean bill in a row (perf 178→181 flat: day +1.0% / night +0.9% vs iter-177 `7e2ac2c`; seasons alive FARM dry-peak 88.4; night core off-centre both seeds ~(.47,.50)/(.47,.60)). No city change; next domain lap (183) owes Nature (174)/Civic (175), then Water (176)/People (178)/Transport (179).** Next step-back at **187** (interleave HEAD vs iter-182's file to isolate 183–186). **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
+  Sky **181** · People **178** · Transport **179** · Urban **180** · Nature **183** · Civic **175** · Water **176**. (162, **167**, **172**, **177**, **182** = step-backs, no domain lap.)
+  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales on the stubble fields post-harvest, `probe-haybale`). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). **176 took Water × Interaction/UX (the river names its course — a `Course — N hexes` row via a bridge-AWARE flood `riverCourse` so a span doesn't fragment the reach; the river was the barest tooltip in the city, zero data rows over its richest water system; a `Crossings` companion was DROPPED — bridge cells over-count vs connected components and the L1633 pave-over rule makes the unit ambiguous; draw-nothing tooltip, pop+stream flat, `probe-river` 254 river hexes named 3 seeds, sea control clean 1916 hexes, sea-leak 0). So the next domain lap (178) owes People (170)/Transport (171).** 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). **178 took People × Deepen (the festival streets fill with people — a day-and-dusk crowd of `hashCell`-scattered figures mills on each `c.fete` ROAD cell under the bunting, then heads home by deep night; a People×Civic interconnect on a drawn CA system that was rendered for the artifact's whole life but never *inhabited*; draw-only stream+pop-neutral, `probe-fetecrowd` FETE day 2.9–3.6% → night 0.00% byte-identical, ROAD ctl ~0, 3 seeds). **179 took Transport × Deepen (the bridges light their lamps at night — the bridge sub-case `break`s before the road's night-lamp block, so every bridge went pitch dark at night for the artifact's whole life while both banks glowed; two warm rail lamps atop the deck + a `waveT` reflection on the river below, a Transport×Water interconnect; draw-only stream+pop-neutral, `probe-bridgelamp` BRIDGE night 7.4–8.1% → day 0.00% byte-identical, ROAD ctl 0.00% both, 3 seeds). So the next domain lap (180) owes Urban (173, Deepen/Polish only — measured-saturated).** **180 took Urban × Polish (the towers ground their own weight — the fixed 0.42×0.13 contact shadow under every building now scales with mass `shf=clamp((h-9)/120,0,1)`, so a 150-unit tower grounds on a 0.94/0.23 pool while a bungalow keeps the old blob; centered in the house style since nothing in the artifact casts a directional shadow, draw-only stream+pop-neutral, `probe-massshadow` TALL 0.6–1.0% ≫ SHORT/CTL ~0.05% 3 seeds; the first scaling was too weak because the tower body occludes its own base shadow — size for the ring not the area). So the next domain lap (181) owes Sky (161, Deepen/Fix ONLY — saturated), then the step-back at 182.** **181 took Sky × Deepen (the sea catches the golden hour — bright additive-gold sun-path glints on the open water at dawn/dusk, reading 161's reusable `cwarm`/`skyBot` signal onto the largest surface in the frame, filling the gap between the noon glitter and the night moonglade; a Sky×Water interconnect, draw-only stream+pop-neutral, `probe-seagold` SEA dusk ~31%/dawn ~22% → noon/night ~0, LAND ctl 0 all frames, 3 seeds. ⚠ A warm alpha WASH over teal desaturates to OLIVE — carry sunset/warm light over cool water with ADDITIVE `'lighter'` glints, not a wash; two tuning rounds were lost raising a wash's alpha before the blend mode was the real fix. `GWARM`/`GWSB` are now globals beside `LITAMT` for any golden-hour draw.)** 171's fete-street TOOLTIP (`c.fete` drawn but unnamed in `describeTile`) is still banked, and now more worth cashing since the street is no longer empty. **182 was the mandated STEP-BACK — ELEVENTH clean bill in a row (perf 178→181 flat: day +1.0% / night +0.9% vs iter-177 `7e2ac2c`; seasons alive FARM dry-peak 88.4; night core off-centre both seeds ~(.47,.50)/(.47,.60)). No city change.** **183 took Nature × Interaction/UX (the fields name their own harvest — a `Fields` crop-phase row in the FARM tooltip via a shared `farmPh(v)`, the biggest agricultural surface, the one 148's "agriculture tell spent" note had OVERLOOKED; draw-nothing tooltip + byte-identical one-predicate refactor, pop+stream flat, `probe-farmtip` 3 seeds). So the next domain lap (184) owes Civic (175), then Water (176)/People (178)/Transport (179).** Next step-back at **187** (interleave HEAD vs iter-182's file to isolate 183–186). **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -75,7 +75,9 @@ ones (U2, 42, U5) stay in the bullet.
   grapes/canes now read `year` via a shared `vinePhase()` (bare in winter → purple at harvest), the last frozen
   agriculture tile. **Its tooltip is now CASHED (iter 148)** — a `Vines` season row reads the same `vinePhase()`
   (`Bare canes`/`In leaf`/`Green fruit`/`Ripe for harvest`), like 129's orchard `Grove` row. **The
-  asserts-less-than-the-code-knows tell is now SPENT for agriculture** (orchard 129 + vineyard 148); GARDEN's draw
+  asserts-less-than-the-code-knows tell is now SPENT for agriculture** (orchard 129 + vineyard 148 + **FARM 183** —
+  183 closed the biggest host, which 148's "spent" note had OVERLOOKED: a `Fields` phase row on `farmPhase(c.v)`,
+  `Ploughed under`/`Sprouting`/`Standing crop`/`Ripening to straw`/`Cut for harvest`); GARDEN's draw
   does not read `year` (needs a Deepen first, per 129), so the next Nature × Interaction/UX is a *new* seam.) (**127 took People × New element** aimed not at its spent
   *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
   "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
@@ -88,11 +90,6 @@ ones (U2, 42, U5) stay in the bullet.
   found the banked cue's own description of the code was WRONG** (it said `hashCell`; the turbines were `rng()`),
   and the implementation the cue prescribed would have reshuffled the seeded stream. **A cue is a pointer, not a
   spec — re-grep the seam before designing to it.**
-  **120 broke rotation deliberately and
-  logged why**: it was the mandated holistic step-back, the step-back found a real defect, and the skill's own
-  rule ("if something compounded badly, spend the next iteration FIXING it") outranks rotation. A step-back
-  that finds a defect and then ships an unrelated vector has wasted the step-back. **Every domain except Sky now
-  has an Interaction/UX vector** (133 filled Urban's via cue (l); 118 had closed cue (j)).
   **119 took People × Deepen, its FULLEST cell, and was right to** — because 111 had already *measured*
   and banked the vector there (move the ped spawn pool). **A banked, measured finding outranks both
   kind-rotation and cell-emptiness**; the grid says what is *untried*, not what is *most wanted*. Check
@@ -391,78 +388,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 175 entries before Iteration 173 live in
+> **Archive:** the 176 entries before Iteration 174 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 173 — the warehouse roof grows its north-light (2026-07-12) [Urban × Deepen]
-
-**Vector — Urban × Deepen** (next lap owed the stalest domain, Urban, last shipped 165). Adopted and finished a
-killed iteration found uncommitted in the worktree at startup: the source had ~3 lines of complete, coherent
-draw code (a `## Iteration 173` had never been written, so it died before step 5). Per the "dirty worktree"
-protocol — **the gates decide, not the ledger** — I re-verified it, tuned one number the visual agents flagged,
-and shipped. Domain × kind matches exactly what the header called for (the last bare roof).
-
-**The seam.** 165 gave COM the mid-rise roof-plant, closing the roof-furniture set across MID (water tanks) /
-RES (solar) / TOWER (gardens/helipads) / COM (plant) — the header noted **"only IND (warehouses) has a bare
-roof left."** The sawtooth warehouse (`drawBuilding`'s `T.IND` else-branch, ~L4595) drew two white monitor
-prisms (`gx-0.17`, `gx+0.19`) with nothing on them — a flat white cap where every other block carries lived-in
-roof detail.
-
-**Change (~4 lines, draw-only).** North-light clerestory glazing: a glass band (`colLit('glass',0.6,lit*0.65)`)
-up the front face of each sawtooth monitor — the factory's classic clerestory. Glass-grey by day; a **faint warm
-work-shift glow after dark** (light industry runs a partial night shift, dimmer than the offices' full-`lit`
-glazing above — base 0.6 and a sub-office `lit*0.65` mix keep it restrained). Loft IND keeps its own crown
-(this is the sawtooth branch only). No tile / entity / `rng()` / `hashCell` / `tick()` pass / terrain — `colLit`
-is plain glass-grey by day and mixes toward warm with the scene `lit`, so pop/stream stay flat and it can't blow
-out. All strings pure-ASCII (134). **My one edit to the inherited code:** `lit*0.4` → `lit*0.65`, because both
-visual agents independently read the night glow as "cool/subtle, not the intended warm" — a tuning nit they both
-still PASSed. The bump warms it while keeping it below the offices.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty; `pop` 154918 (+7, chaotic-CA noise, no `rng()`
-touched), `developed`/`roads` +0. Vacuous by construction (draw-only) — the probe is the gate.
-
-**Probe — `probes/probe-clerestory.mjs` (new, promoted).** PATCH(working) vs BASE(HEAD) whole-hex diff over each
-warehouse (iter-161 law: every differing pixel over a host hex IS the clerestory, by construction). Rebuilds the
-city in-page (`genWorld(seedNum); __warp(WARP); __setTime(t)`, iter-163(c)) so the RAF's wall-clock tick jitter
-can't diverge the two builds — this was load-bearing: without it the ROAD control was run-to-run non-deterministic
-(0.02%→0.55%). **WARE moves DAY AND NIGHT** — seeds 7/42/1234 day 0.70/1.77/1.20%, night 0.78/1.86/1.30%
-(**night > day every seed**, confirming the warmth bump registers after dark). **LOFT control exactly 0.000%**
-across all 6 rows (same tile, untouched branch — the decisive clean control) and **ROAD control 0.001–0.020%**
-(deterministic once rebuilt). **VERDICT: PASS (3 seeds).**
-
-**Visual — `probes/shot-clerestory.mjs` (new, promoted).** Wheels the artifact's own camera onto the largest
-warehouse cluster (IND is sparse, ~2–6/city, and small — fit zoom is invisible) and shoots day+night at both
-seeds. Two agents (one per seed), blind, both **VISUAL: PASS** — glazing visible on the roof teeth, sits
-correctly (not floating), no z-order tears / floaters / blowout anywhere, whole city still balanced; only nit was
-the cool night glow. After the warmth bump a third agent read all 4 night clips: glow now "faint WARM amber/gold,
-restrained, not blown out, clearly dimmer than the office/tower windows" — **WARMTH: GOOD**.
-
-**Verdict — DEEPENED.** The last bare roof in the city — every warehouse monitor, flat white for the artifact's
-whole life — now carries a north-light clerestory that glows a faint work-shift amber after dark. Roof furniture
-is now **truly city-wide** (MID/RES/TOWER/COM/IND). Draw-only, pop+stream flat, ~4 lines + a probe + a shot
-script. Urban's Deepen cell gains 173 (38/54/68/92/165/**173**); the next lap (174) owes Nature (166)/Civic (168).
-
-### Findings for later laps
-- **A KILLED ITERATION THAT PASSES ITS GATES IS KEPT — and adopting it is a licence to finish it, not just rubber-
-  stamp it.** The inherited 3 lines passed census + probe, but both visual agents flagged the night glow as too
-  cool. Adopting authorship meant I could take the one-number tune (`lit*0.4`→`0.65`) the original author never
-  got to, and re-gate it. The protocol's "keep it" is a floor, not a ceiling.
-- **`T` IS THE GLOBAL TILE-TYPE ENUM — NEVER name a probe `page.evaluate` param `T`.** Passing the frame time in as
-  `{ T: t }` and destructuring `({...,T})` shadowed the page's `T`, so `c.t === T.IND` became `c.t === (0.35).IND
-  === undefined` and matched ZERO cells (nWare→0) with no error — a silent all-zero probe. Cost a debugging lap.
-  Use `TOD`/`WARP`/`RX` — anything but a single capital that collides with the artifact's globals (`T`, `G`, `LIT`).
-- **A BUILD-VS-BUILD DIFF PROBE THAT COMPARES TWO SEPARATELY-LOADED FILES MUST REBUILD IN-PAGE (iter-163(c)) OR ITS
-  CONTROLS ARE NON-DETERMINISTIC.** The clerestory signal (WARE) and the same-branch LOFT control were stable
-  without the rebuild, but the ROAD control — cells the RAF keeps upgrading between load and freeze — swung 0.02→0.55%
-  run to run and false-FAILed. `genWorld(seedNum);__warp(WARP);__setTime(t)` pins a byte-identical city; without it,
-  any control on a CA-mutated tile class (ROAD/RES/upgrades) is noise. (LOFT held because loft-conversion had
-  saturated by warp 61 — a control on a *settled* class survives the jitter; a control on a *live* one does not.)
-- **The roof-furniture set is now CLOSED across all 5 developed building types (MID/RES/TOWER/COM/IND).** A future
-  "bare roof" Urban vector has no host left; Urban Deepen must go elsewhere (facades, ground plane, the harbour
-  works apron). Don't propose more roof clutter.
 
 ## Iteration 174 — the cut fields keep their hay bales (2026-07-12) [Nature × New element]
 
@@ -1056,3 +986,71 @@ vineyard moving); perf is flat against the honest interleaved control.
   column a future step-back watches first (≈42ms/24fps at today's load), but +0.9% is inside noise and no
   perf-fix iteration is owed. The night draw budget is being spent carefully — bounded landmark/edge lights
   (175 parliament, 179 bridges), never a full-frame night pass.
+
+## Iteration 183 — the fields name their own harvest (2026-07-12) [Nature × Interaction/UX]
+
+**Vector — Nature × Interaction/UX** (SHIPPED). Rotation named the stalest domain, **Nature (174)** (Civic 175 was the
+next-owed, staler by number is Nature). Kind varied HARD off the globally-hot **Deepen** streak (178/179/181 all Deepen,
+180 Polish) to an **Interaction/UX** — no recent iteration was one (last was 176, Water). A draw-nothing tooltip vector:
+a guaranteed-flat, pop+stream-neutral ship.
+
+**The seam — the biggest agricultural surface, unnamed.** Orchard names its `Grove` season (129) and vineyard its
+`Vines` season (148), each reading the same `year`-phase its draw paints. The **FARM** belt — the *largest* agricultural
+surface (~150 fields), the strongest seasonal mover (winter→dry-peak 88), and the richest calendar of the three (5
+phases: ploughed→sprout→standing crop→straw→cut stubble, plus 174's hay bales) — printed only the static
+`TILEDESC[FARM]` "Row crops on the golden hills." and said nothing about *where in the year* the field stood. The header
+had even declared "the agricultural asserts-less-than-code tell is SPENT (orchard 129 + vineyard 148)" — but it
+**overlooked FARM**, whose calendar is the most elaborate of all and which 174 had just deepened. A genuine open seam,
+the exact 129/148 shape on a bigger host.
+
+**Change (~8 lines, tooltip-only + a shared-predicate refactor).** Extracted the field's per-cell phase clock into a
+shared `farmPh(v)` = `((((year%1)+1)%1-(v-0.5)*0.10)%1+1)%1` (the 112 one-predicate law) and routed the FARM **draw**
+through it (was inline `s`/`ph` at L3792 — algebraically identical, so byte-unchanged pixels). Added `farmPhase(v)`
+mapping `farmPh` to a word on the draw's own boundaries (`<0.06||>=0.93` ploughed · `<0.20` sprouting · `<0.52` growing ·
+`<0.80` ripening · else harvested), and a `describeTile` `Fields` row reading `farmPhase(c.v)`: **Ploughed under /
+Sprouting / Standing crop / Ripening to straw / Cut for harvest**. Since each field runs ±5 weeks off its neighbours
+via `c.v`, the belt names a *patchwork* of phases, not one word. No tile / entity / `rng()` / `hashCell`-terrain /
+`tick()` pass / terrain change; strings pure-ASCII (134). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity counts identical
+(`solarRoofs -2`/`towerHt -1` = documented RAF tick-count jitter, touches no `rng()`; the `farmPh` refactor is
+algebraically identical so the draw is byte-unchanged). Vacuous by construction (tooltip-only) — the probe is the gate.
+
+**Probe — `probes/probe-farmtip.mjs` (new, promoted).** A logic probe on the 122/176 template: it **independently**
+recomputes each field's phase word from `year` + `c.v` (its own copy of the ph formula + boundaries, not by calling
+`farmPhase`) and asserts `describeTile`'s printed `Fields` word equals it. Rebuilt in-page (`genWorld`+`__warp`) at
+**two calendars** — harvest 2035.88 and midsummer 2035.40. seeds 7/42/1234: **word-match 35/35 · 40/40 · 45/45 at
+harvest, same at summer**; **non-FARM control (ROAD/RES/ORCHARD/VINEYARD) carries no `Fields` row, 400/400 clean**;
+**calendar control: 'Cut for harvest' = all fields at harvest → 0 at midsummer** (proving the row reads the year, not a
+static string — 174's calendar-control law). **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-farmtip.mjs` (new, promoted).** `shoot.mjs` can't hover; the shot script uses `__find('FARM')`
+for a farm's clip-ready screen coords, pins the calendar in-page (freeze-the-clock law), hovers, and clip-shoots the
+tooltip magnified. seed 42 @ harvest: tooltip reads `Farm | Row crops on the golden hills. | Fields | Cut for harvest
+| Value 55%`; seed 7 @ midsummer: `... | Fields | Standing crop | ...` — no page errors. Two agents (one per seed),
+both **VISUAL: PASS**: `Farm` title + `Fields` row visible and **legible** (no mojibake/clipping), hex cursor outline
+seats on the hovered field, surrounding farms read as coherent row-crop fields, no z-order tears / floaters / blowout;
+the whole-city frame (seed 42) still a balanced beautiful coastal city.
+
+**Verdict — SHIPPED.** The farm belt — the biggest agricultural surface, richest calendar, deepened only last lap (174)
+— now names its own harvest cycle on hover, a patchwork of phases reading the same per-cell clock the crop colour
+paints. The asserts-less-than-code tell, closed for the agricultural surface the header had overlooked. Draw-nothing
+tooltip + a one-predicate refactor, pop + stream flat, ~8 lines + a probe + a shot. Nature's Interaction/UX cell gains
+183 (117/129/**148**/**183**). The next domain lap (184) owes **Civic (175)**, then Water (176)/People (178)/Transport
+(179); step-back still at **187**.
+
+### Findings for later laps
+- **THE "ASSERTS-LESS-THAN-CODE" TELL WAS DECLARED SPENT FOR A DOMAIN WHILE ITS BIGGEST HOST WAS STILL OPEN.** The
+  header said the agricultural tell was closed by orchard (129) + vineyard (148), but FARM — the *largest* of the three,
+  with the *richest* calendar — was never named, and 174 had just deepened it. A "kind spent for domain X" claim in the
+  header is about the *hosts touched so far*, not every host; before trusting a saturation note, grep the domain for the
+  *biggest untouched instance* of the same seam. (Same shape as 127's "additive spent is about entities, not surfaces.")
+- **THE ONE-PREDICATE REFACTOR IS FREE WHEN THE DRAW ALREADY COMPUTES THE PREDICATE INLINE.** FARM's draw computed `ph`
+  inline; extracting `farmPh(v)` and pointing both the draw and the new tooltip at it cost nothing (algebraically
+  identical, byte-unchanged pixels) and bought the 112 guarantee that the word can never drift from the colour. When you
+  add a tooltip that names what a draw paints, prefer *extracting the draw's own expression* into a shared helper over
+  re-deriving the value — you get correctness-by-construction, not a second definition to keep in sync (112/175's law).
+- **GARDEN (2 hexes) is the last un-named agricultural tile, but its draw does NOT read `year` (129) — it needs a
+  Deepen FIRST.** With FARM closed, Nature's Interaction/UX seam via the agricultural calendar is spent; the next
+  Nature × Interaction/UX must be a *new* seam (e.g. does the barn/`c.v>0.9` outbuilding, or a REDWOOD stand's fire
+  history beyond 117's `Undisturbed`, name anything the draw already tracks?).

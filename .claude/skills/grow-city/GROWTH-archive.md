@@ -10254,3 +10254,80 @@ vineyard moving); perf is flat against the honest interleaved control.
   Night remains the column a future step-back watches first (≈41ms/24fps at today's load), but there is no drift to
   act on. No perf-fix iteration owed.
 
+## Iteration 173 — the warehouse roof grows its north-light (2026-07-12) [Urban × Deepen]
+
+**Vector — Urban × Deepen** (next lap owed the stalest domain, Urban, last shipped 165). Adopted and finished a
+killed iteration found uncommitted in the worktree at startup: the source had ~3 lines of complete, coherent
+draw code (a `## Iteration 173` had never been written, so it died before step 5). Per the "dirty worktree"
+protocol — **the gates decide, not the ledger** — I re-verified it, tuned one number the visual agents flagged,
+and shipped. Domain × kind matches exactly what the header called for (the last bare roof).
+
+**The seam.** 165 gave COM the mid-rise roof-plant, closing the roof-furniture set across MID (water tanks) /
+RES (solar) / TOWER (gardens/helipads) / COM (plant) — the header noted **"only IND (warehouses) has a bare
+roof left."** The sawtooth warehouse (`drawBuilding`'s `T.IND` else-branch, ~L4595) drew two white monitor
+prisms (`gx-0.17`, `gx+0.19`) with nothing on them — a flat white cap where every other block carries lived-in
+roof detail.
+
+**Change (~4 lines, draw-only).** North-light clerestory glazing: a glass band (`colLit('glass',0.6,lit*0.65)`)
+up the front face of each sawtooth monitor — the factory's classic clerestory. Glass-grey by day; a **faint warm
+work-shift glow after dark** (light industry runs a partial night shift, dimmer than the offices' full-`lit`
+glazing above — base 0.6 and a sub-office `lit*0.65` mix keep it restrained). Loft IND keeps its own crown
+(this is the sawtooth branch only). No tile / entity / `rng()` / `hashCell` / `tick()` pass / terrain — `colLit`
+is plain glass-grey by day and mixes toward warm with the scene `lit`, so pop/stream stay flat and it can't blow
+out. All strings pure-ASCII (134). **My one edit to the inherited code:** `lit*0.4` → `lit*0.65`, because both
+visual agents independently read the night glow as "cool/subtle, not the intended warm" — a tuning nit they both
+still PASSed. The bump warms it while keeping it below the offices.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty; `pop` 154918 (+7, chaotic-CA noise, no `rng()`
+touched), `developed`/`roads` +0. Vacuous by construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-clerestory.mjs` (new, promoted).** PATCH(working) vs BASE(HEAD) whole-hex diff over each
+warehouse (iter-161 law: every differing pixel over a host hex IS the clerestory, by construction). Rebuilds the
+city in-page (`genWorld(seedNum); __warp(WARP); __setTime(t)`, iter-163(c)) so the RAF's wall-clock tick jitter
+can't diverge the two builds — this was load-bearing: without it the ROAD control was run-to-run non-deterministic
+(0.02%→0.55%). **WARE moves DAY AND NIGHT** — seeds 7/42/1234 day 0.70/1.77/1.20%, night 0.78/1.86/1.30%
+(**night > day every seed**, confirming the warmth bump registers after dark). **LOFT control exactly 0.000%**
+across all 6 rows (same tile, untouched branch — the decisive clean control) and **ROAD control 0.001–0.020%**
+(deterministic once rebuilt). **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-clerestory.mjs` (new, promoted).** Wheels the artifact's own camera onto the largest
+warehouse cluster (IND is sparse, ~2–6/city, and small — fit zoom is invisible) and shoots day+night at both
+seeds. Two agents (one per seed), blind, both **VISUAL: PASS** — glazing visible on the roof teeth, sits
+correctly (not floating), no z-order tears / floaters / blowout anywhere, whole city still balanced; only nit was
+the cool night glow. After the warmth bump a third agent read all 4 night clips: glow now "faint WARM amber/gold,
+restrained, not blown out, clearly dimmer than the office/tower windows" — **WARMTH: GOOD**.
+
+**Verdict — DEEPENED.** The last bare roof in the city — every warehouse monitor, flat white for the artifact's
+whole life — now carries a north-light clerestory that glows a faint work-shift amber after dark. Roof furniture
+is now **truly city-wide** (MID/RES/TOWER/COM/IND). Draw-only, pop+stream flat, ~4 lines + a probe + a shot
+script. Urban's Deepen cell gains 173 (38/54/68/92/165/**173**); the next lap (174) owes Nature (166)/Civic (168).
+
+### Findings for later laps
+- **A KILLED ITERATION THAT PASSES ITS GATES IS KEPT — and adopting it is a licence to finish it, not just rubber-
+  stamp it.** The inherited 3 lines passed census + probe, but both visual agents flagged the night glow as too
+  cool. Adopting authorship meant I could take the one-number tune (`lit*0.4`→`0.65`) the original author never
+  got to, and re-gate it. The protocol's "keep it" is a floor, not a ceiling.
+- **`T` IS THE GLOBAL TILE-TYPE ENUM — NEVER name a probe `page.evaluate` param `T`.** Passing the frame time in as
+  `{ T: t }` and destructuring `({...,T})` shadowed the page's `T`, so `c.t === T.IND` became `c.t === (0.35).IND
+  === undefined` and matched ZERO cells (nWare→0) with no error — a silent all-zero probe. Cost a debugging lap.
+  Use `TOD`/`WARP`/`RX` — anything but a single capital that collides with the artifact's globals (`T`, `G`, `LIT`).
+- **A BUILD-VS-BUILD DIFF PROBE THAT COMPARES TWO SEPARATELY-LOADED FILES MUST REBUILD IN-PAGE (iter-163(c)) OR ITS
+  CONTROLS ARE NON-DETERMINISTIC.** The clerestory signal (WARE) and the same-branch LOFT control were stable
+  without the rebuild, but the ROAD control — cells the RAF keeps upgrading between load and freeze — swung 0.02→0.55%
+  run to run and false-FAILed. `genWorld(seedNum);__warp(WARP);__setTime(t)` pins a byte-identical city; without it,
+  any control on a CA-mutated tile class (ROAD/RES/upgrades) is noise. (LOFT held because loft-conversion had
+  saturated by warp 61 — a control on a *settled* class survives the jitter; a control on a *live* one does not.)
+- **The roof-furniture set is now CLOSED across all 5 developed building types (MID/RES/TOWER/COM/IND).** A future
+  "bare roof" Urban vector has no host left; Urban Deepen must go elsewhere (facades, ground plane, the harbour
+  works apron). Don't propose more roof clutter.
+
+
+## Header bullets rotated out of GROWTH.md (superseded, at iter 183)
+
+- **120 broke rotation deliberately and logged why**: it was the mandated holistic step-back, the step-back
+  found a real defect, and the skill's own rule ("if something compounded badly, spend the next iteration
+  FIXING it") outranks rotation. A step-back that finds a defect and then ships an unrelated vector has wasted
+  the step-back. (Principle now promoted to SKILL.md.)
+- **Every domain except Sky now has an Interaction/UX vector** (133 filled Urban's via cue (l); 118 had closed
+  cue (j)). — SUPERSEDED: Sky gained its Interaction/UX vector at 144 (the moon HUD card), and Nature's grew
+  to 117/129/148/183; every domain now has one.
