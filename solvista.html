@@ -2884,6 +2884,16 @@ function tree(gx,gy,s,shade){
   const[cx,cy]=px(gx,gy);
   const w=Math.sin(time*1.6+cx*0.05+cy*0.03)*1.1*WINDA*s; /* canopy sways, trunk stays */
   const sp=treeSp(gx,gy);
+  /* Contact shadow at the foot of the trunk. Every other standing thing on the
+     plate has grounded itself for a long time — peds/dogs (137), the static
+     crowds (163), every vehicle, and the buildings (180, whose own comment
+     already CLAIMS "cars/peds/crowds/trees all use the same shadS") — but the
+     trees, the most numerous vertical object in the city, floated. Sized to the
+     crown each species actually carries: a poplar's narrow plume shades a
+     fraction of a broadleaf's round head, and a conifer's spire tapers. Kept
+     low-alpha so a four-tree forest hex grounds without the floor going dark
+     (159's overlap law). */
+  shadS(cx,cy,(sp===1?0.19:sp===2?0.11:0.22)*s,0.13);
   if(sp===1){ /* conifer: a stacked spire, tiers leaning further downwind as they rise */
     ctx.strokeStyle=col('trunk',0.9);ctx.lineWidth=1.3;
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,cy-3.2*s);ctx.stroke();
@@ -2934,6 +2944,8 @@ function hedge(c,x,y,gx,gy){ /* scrub along the field edges this cell borders */
 function palm(gx,gy,s){
   const[cx,cy]=px(gx,gy);
   const w=Math.sin(time*1.4+cx*0.04+cy*0.02)*1.6*WINDA*s; /* crown rides the breeze */
+  shadS(cx,cy,0.15*s,0.13); /* the trunk's foot in the sand — a contact shadow, so it
+     stays at the base even though the bole curves away downwind above it */
   ctx.strokeStyle=col('trunk',1);ctx.lineWidth=1.3;
   ctx.beginPath();ctx.moveTo(cx,cy);ctx.quadraticCurveTo(cx+2*s+w*0.4,cy-6*s,cx+3*s+w,cy-11*s);ctx.stroke();
   ctx.strokeStyle=col('canopy',1.05);ctx.lineWidth=1.4;

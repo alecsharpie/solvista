@@ -10993,3 +10993,68 @@ tooltip + a one-predicate refactor, pop + stream flat, ~8 lines + a probe + a sh
   Nature × Interaction/UX must be a *new* seam (e.g. does the barn/`c.v>0.9` outbuilding, or a REDWOOD stand's fire
   history beyond 117's `Undisturbed`, name anything the draw already tracks?).
 
+## Iteration 184 — the town hall clock tells its time on hover (2026-07-12) [Civic & culture × Interaction/UX]
+
+**Vector — Civic & culture × Interaction/UX** (SHIPPED). Rotation named the stalest domain: **Civic (175)** was owed and
+staler by number than every other (Sky 181 · People 178 · Transport 179 · Urban 180 · Nature 183 · Water 176). On
+*kind*: Civic's other kinds are saturated or hot — additive is spent (12 richly-drawn institutions + plazas with
+statues/fountains/bunting), Deepen was JUST cashed last Civic lap (175 parliament floodlight) and is globally hot
+(178/179/181), Polish (168) has no compounding defect to fix, and a terrain CA/Connect would perturb the seeded stream
+for marginal payoff. The one clean, guaranteed-flat open Civic seam is the asserts-less-than-code tooltip tell — the
+same seam 129/148/183 cashed. Kind repeats 183 (also Interaction/UX), but *saturation beats kind-rotation* (118's law):
+when a domain's other kinds are all spent-or-hot, the kind that stays is the one that stays. Draw-nothing tooltip: a
+pop+stream-neutral ship.
+
+**The seam — a drawn clock that never told its own time.** The town hall draws a working 24h clock (iters 135/149):
+the hand reads the slow day clock `dayT` — straight up at noon, down at midnight — "the clock the town sets its watches
+by" (its own L4825 comment). Yet its tooltip (`CIVICDESC[hall]`) named only the chambers and the clerk and said nothing
+of the *hour the hand points at*. The exact orchard(129)/vineyard(148)/farm(183) shape — a draw that tracks a live
+quantity over a tooltip that stays mute — but on the slow **time** clock rather than the year, so it can never strobe
+(134's law: `dayT` ~110 s/cycle is the legible clock, unlike the fast `year`).
+
+**Change (~10 lines, tooltip-only).** Added `clockWord(t)` beside `phaseWord`/`moonWord`: `mins=round(((t%1+1)%1)*1440)
+%1440`, formatted 12-hour `H:MM AM/PM`, pure-ASCII (134). Added one `describeTile` row inside the `c.t===T.CIVIC` block:
+`if(c.kind==='hall')data.push(['Clock',clockWord(dayT)])` — reading the SAME `dayT` the drawn hand uses (up=noon convention
+matches: `dayT` 0=12:00 AM, .25=6:00 AM, .5=12:00 PM, .75=6:00 PM). No tile / entity / `rng()` / `hashCell` /
+`tick()` pass / terrain change. Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity/life/transport counts
+identical. Vacuous by construction (tooltip-only) — the probe is the gate.
+
+**Probe — `probes/probe-hallclocktip.mjs` (new, promoted).** Named to distinguish it from iter 149's
+`probe-hallclock.mjs`, which grades the *drawn hand*; this grades the *tooltip row*. On the 122/183 template it
+**independently** recomputes `clockWord` from `dayT` and asserts `describeTile`'s printed `Clock` word equals it across a
+full day sweep (midnight/3am/6am/7:12am/noon/6pm/9pm). Rebuilt in-page (`genWorld`+`__warp`), seeds 7/42/1234:
+**clock-match 7/7 each**; **time control: 7/7 distinct strings across the day** (proves the row reads the live clock, not
+a frozen string); **non-hall control (other civics + ROAD/RES/FARM) carries no `Clock` row, 500/500 clean**.
+**VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-hallclocktip.mjs` (new, promoted).** Freezes the clock in-page (freeze-the-clock law), hovers
+the hall via `__find('hall')`, clip-shoots the tooltip. seed 42 @ dayT 0.30: `...| Clock | 7:12 AM | Value 67%`; seed 7 @
+dayT 0.66: `...| Clock | 3:50 PM | High street | Value 64%` — no page errors, clock strings correct (0.30·24=7:12 AM,
+0.66·24=3:50 PM). Two agents (one per seed), both **VISUAL: PASS**: `Clock` row visible + legible (no mojibake/intra-panel
+clipping), hall hex cleanly outlined, no z-order tears / floaters / blowout; the whole frame reads as a balanced coastal
+city. (Both noted the tooltip panel runs past the clip's right edge — a screenshot framing artifact, not a defect.)
+
+**Verdict — SHIPPED.** The town hall — whose drawn hand has told the time on its dial since iter 149 — now tells it in
+words on hover, off the same slow `dayT` the hand points at. The asserts-less-than-code tell, closed on the city's most
+iconic timepiece. Draw-nothing tooltip, pop+stream flat, ~10 lines + a probe + a shot. Civic's Interaction/UX cell gains
+184 (52/122/**140**/**184**). The next domain lap (185) owes **Water (176)**, then People (178)/Transport (179)/Urban
+(180); step-back still at **187**.
+
+### Findings for later laps
+- **A DRAWN LIVE QUANTITY OVER A MUTE TOOLTIP IS THE SAME SEAM WHETHER THE CLOCK IS THE YEAR OR THE DAY.** 129/148/183
+  cashed it on the *seasonal* (`year`) clock; 184 cashed it on the *time-of-day* (`dayT`) clock. The tell is general:
+  wherever a draw animates off a global (`dayT`, `LITAMT`, `time`, `year`) and the tooltip names none of it, there is a
+  free Interaction/UX row — *provided the clock is slow enough not to strobe* (134): `dayT` (~110 s) and `year` (dev
+  clock, minutes) are safe to name as a discrete word/number; `time` (frame clock) is NOT — a readout off `time` would
+  flicker. Candidates still open on the SLOW clocks: the observatory dome's open/shut state (`LITAMT`), the police beacon,
+  the museum/parliament floodlight (`LITAMT>0.3`) — each a live "lit after dark" the tooltip could name.
+- **BEFORE NAMING A NEW PROBE/SHOT, `ls probes/` — iter 149 already owned `probe-hallclock.mjs`/`shot-hallclock.mjs`.**
+  The bare `mv` refused to overwrite (saving 149's drawn-hand tools); a `git mv` or a `Write` would have been the danger.
+  Named mine `*-hallclocktip.mjs` (the tooltip variant). Two probes can share a subject (the hall clock) from opposite
+  sides — one grades the pixels (149), one grades the words (184) — so distinguish by *what they measure*, not the subject.
+- **SATURATION BEATS KIND-ROTATION, AGAIN (118).** 184 repeated 183's Interaction/UX kind because every other Civic kind
+  was spent (additive/Polish) or hot (Deepen). When rotation names a domain but its non-repeated kinds are all
+  saturated-or-hot, repeating the one open kind on the owed domain beats forcing a weak change of a worse kind.
+
