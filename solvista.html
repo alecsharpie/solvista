@@ -153,6 +153,7 @@ h1{
 
 <div class="card census">
   <div class="stat year"><b id="stYear">1974</b><span id="stPhase">morning</span></div>
+  <div class="stat opt sm"><b id="stMoonPct">&mdash;</b><span id="stMoonName">moon</span></div>
   <div class="stat"><b id="stPop">0</b><span>residents</span></div>
   <div class="stat"><b id="stTowers">0</b><span>towers</span></div>
   <div class="stat opt sm"><b id="stTall">&mdash;</b><span>tallest, floors</span></div>
@@ -5841,7 +5842,7 @@ function syncSky(now){
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let playing=true, speed=1;
 const $=id=>document.getElementById(id);
-const elYear=$('stYear'),elPhase=$('stPhase'),elPop=$('stPop'),elParks=$('stParks'),elTowers=$('stTowers'),elTall=$('stTall'),elDens=$('stDens'),elCivic=$('stCivic'),elSolar=$('stSolar'),elWalk=$('stWalk'),elTransit=$('stTransit'),elSeed=$('stSeed');
+const elYear=$('stYear'),elPhase=$('stPhase'),elMoonPct=$('stMoonPct'),elMoonName=$('stMoonName'),elPop=$('stPop'),elParks=$('stParks'),elTowers=$('stTowers'),elTall=$('stTall'),elDens=$('stDens'),elCivic=$('stCivic'),elSolar=$('stSolar'),elWalk=$('stWalk'),elTransit=$('stTransit'),elSeed=$('stSeed');
 /* a monorail stop counts as a real station only once its neighborhood is busy —
    railStations() decides that, once, for every reader (draw, pips, tooltip, trains) */
 function monoStationCells(){
@@ -5860,9 +5861,26 @@ function phaseWord(t){
   if(t<0.80)return'sunset';
   return'night';
 }
+/* the moon's phase name for lunation fraction l (0=new .. .5=full). On the slow
+   dayT clock (moonPhase, iter 135) it changes once per ~day-cycle, so it names a
+   legible almanac reading rather than the fast-`year` strobe iter 134 found. */
+function moonWord(l){
+  l=((l%1)+1)%1;
+  if(l<0.02||l>=0.98)return'new moon';
+  if(l<0.23)return'waxing crescent';
+  if(l<0.27)return'first quarter';
+  if(l<0.48)return'waxing gibbous';
+  if(l<0.52)return'full moon';
+  if(l<0.73)return'waning gibbous';
+  if(l<0.77)return'last quarter';
+  return'waning crescent';
+}
 function syncStats(){
   elYear.textContent=year|0;
   elPhase.textContent=phaseWord(dayT);
+  const ml=moonPhase();
+  elMoonPct.textContent=Math.round((1-Math.cos(ml*6.2832))/2*100)+'%';
+  elMoonName.textContent=moonWord(ml);
   elPop.textContent=(stats.pop).toLocaleString('en-US');
   elParks.textContent=stats.parks;
   elTowers.textContent=stats.towers;

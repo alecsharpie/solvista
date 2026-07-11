@@ -7825,3 +7825,70 @@ Urban's Interaction/UX cell is filled; only Sky now lacks an Interaction/UX vect
   `describeTile` enrichment now land on a hex the frame *marks* — the legibility half of every tile-tooltip
   vector is done; only the *words* remain.
 
+## Iteration 134 — the almanac that strobed (2026-07-11)
+
+**Vector.** Sky & atmosphere × **Interaction/UX** (an EXPLORE → REVERTED). Rotation named the domain
+twice over: Sky was the single stalest (last 126) *and* the one domain the grid showed lacking an
+Interaction/UX vector (133's own closing line). The content chose itself by the loop's most reliable
+tell — *a thing the code knows and no readout names*: the HUD stat strip prints the **year** integer
+and the **time of day** (`phaseWord`), but never the **season** (hidden inside the year) nor the **moon
+phase** (iter 126 gave the moon a synodic calendar and `__moon()`, surfaced NOWHERE in the UI). Kind
+varied off Deepen (4 of the last 9) and off the site-on-depth mechanism.
+
+**Change (built, then reverted).** `stPhase` → `seasonWord(year)+' · '+phaseWord(dayT)` (e.g. "summer ·
+golden hour"), season anchored to `applySeason`'s own peaks so word and palette can't drift; plus a new
+`.stat.moon.opt.sm` card between the year and the residents count — a moon glyph (`\u{1F311}`…`\u{1F318}`,
+eight phases) + a phase word ("waxing gibbous"), read from `moonReadout()` which calls `__moon()` (one
+predicate, shared with the drawn disc). `__setYear`/`__setTime` were made to refresh the readout.
+
+**Census.** PASS, exit 0. Draw/DOM-only, stream-neutral — tile histogram empty, all core metrics +0.
+(Vacuous by construction, as every readout iteration is.)
+
+**Probe (`probe-almanac.mjs`, written, ran, then deleted with the feature).** Pinned `?year=` across a
+season/phase spread on seeds 7 & 42; read `stPhase`/`stMoonLbl` from the live DOM and compared to an
+independently-recomputed season & moon (122's law — check the claim against recomputed truth, not a
+screenshot that it renders). **48/48 pass**, control held (changing `?t=` moved neither season nor moon).
+So the mapping was *correct*. The probe proved the wrong thing.
+
+**Visual — and where it turned.** Static tight HUD clips (day/night/frozen-crescent) read beautifully:
+"AUTUMN · DAYTIME", 🌕 "FULL MOON", and the crescent glyph rendered as a distinct dark disc with a thin
+lune. But **two whole-frame agents (one per seed) both FAILED**, and both were RIGHT: (a) the raw `·`
+byte rendered as mojibake **"Â·"** over the http-served shot — the file has **no `<meta charset>`**, so
+Chromium fell back to windows-1252 (my `file://` clips sniffed UTF-8 and hid it); (b) the night agent
+caught the drawn crescent contradicting the HUD's "FULL MOON". (b) sent me to **measure the calendar's
+rate in normal play** — the one thing a static frame cannot show — and that measurement **killed the
+vector**: `year` advances **0.170 yr/sec at speed 1** (it is a fast *development* clock so a city grows
+over minutes, NOT a wall calendar). In 3 s of play the **season word cycled through 3 values (~0.7 Hz)**
+and the **moon phase through 5 (~2 Hz strobe)**. As a text readout that is flickering noise — and it
+*degrades* the previously-readable time-of-day line (driven by the slow `dayT`, ~110 s/cycle) by welding
+it to the sprinting year clock.
+
+**Verdict — EXPLORED → REVERTED.** `solvista.html` restored byte-identical to HEAD. The readout was
+*correct* (probe 48/48) and *pretty* (static clips) and still failed the bar the moment it moved. The
+census can pass a change that isn't worth its cost, and a frozen visual gate can pass one that only reads
+right when frozen (82/88/101/114/131 — now 134). Reverting it is the system working.
+
+### Findings
+- **⚠ `year` IS A FAST DEVELOPMENT CLOCK (~0.17 yr/sec = 1/6 at speed 1), NOT A WALL CALENDAR.** Anything
+  that names the **season** or the **moon phase** from `year` in a live text readout STROBES (season ~0.7 Hz,
+  moon ~2 Hz, measured over 3 s of play). This is why `stPhase` correctly showed only time-of-day, off the
+  SLOW `dayT` (~110 s/cycle): a readout must be matched to its clock's speed. Do not re-surface season/moon
+  as text until the clock they read is slowed.
+- **⚠ iter 126's DRAWN MOON ALSO STROBES ~2 Hz at night** — a latent defect its frozen-frame visual gate
+  could not catch (a single screenshot is blind to a 2 Hz cycle). **This is the real banked Sky vector:** a
+  Polish/Fix that decouples the moon's synodic phase from the sprinting `year` (e.g. tie lunations to `dayT`
+  days, or to a slowed calendar), so the disc reads as a slow, legible moon — and ONLY THEN does a
+  season/moon HUD readout become viable. The almanac is banked behind this fix.
+- **A STATIC SCREENSHOT GATE IS BLIND TO STROBE/FLICKER — a "does it read in MOTION?" claim needs a TEMPORAL
+  probe** (sample the DOM/canvas over N seconds of real play, `playing=true`, and count distinct states).
+  This is the mirror of the freeze-the-clock law (which is for two-render *diffs*): a diff needs a frozen
+  clock; a *rate* needs a running one. Every gate this loop owns — census, probe (frozen), visual (frozen) —
+  was blind here until I let the clock run and counted states. Reach for this for any readout/animation whose
+  correctness is about *cadence*, not a single frame.
+- **⚠ THE FILE HAS NO `<meta charset>` — KEEP JS STRING LITERALS PURE-ASCII.** A raw `·` (U+00B7) renders as
+  mojibake **"Â·"** when `shoot.mjs` serves over http (Chromium falls back to windows-1252); a `file://` load
+  sniffs UTF-8 and HIDES the bug, so my own tight clips looked clean and only the http wide shots caught it.
+  In JS strings use the escape (`'·'`, and `'\u{1F311}'`… for the moon glyphs, which I DID get right); in
+  HTML use `&middot;`/`&mdash;`/`&times;` — exactly as the rest of the file does (every glyph was ASCII-safe
+  before this). Promoted to SKILL.md (Invariants).
+
