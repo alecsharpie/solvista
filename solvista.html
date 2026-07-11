@@ -386,6 +386,11 @@ function moonPhase(){ return ((dayT/MOONSYN + seedNum*0.61803398875)%1+1)%1; }
 
 /* per-frame tinted color cache */
 let TINT=[1,1,1], LITAMT=0, CCACHE={};
+/* golden-hour warmth of the low sky, set once per frame from skyBot (iter 181):
+   the same cwarm signal iter 161 warms cloud bellies with — ~0.4..0.8 at
+   dawn/dusk, 0 at noon and night. GWSB is the horizon colour the sea tints
+   toward. Read by the sea's golden-hour sheen in the T.WATER draw. */
+let GWARM=0, GWSB=[255,200,120];
 /* entity screen-position stamps: each draw records where it drew this frame so
    the hover tooltip can name moving things (stale stamps = not on screen) */
 let FRAMEN=0;
@@ -3174,6 +3179,31 @@ function drawCell(x,y){
           }
         }
       }
+      /* golden hour on the sea (iter 181): at dawn/dusk the low warm sky
+         (GWARM, the reusable cwarm signal of iter 161) fires a warm sun-path
+         over the open water. A broad ORANGE wash over teal is near-complementary
+         and only muddies to olive, so — like the night moonglade — the light is
+         carried by bright ADDITIVE gold glints (which pop over any water tone),
+         under a faint warm base. The complement of the noon cool glitter (gone
+         by golden hour) and the moonglade (deep dusk on): byte-unchanged at noon
+         and night, where GWARM is 0. */
+      if(!c.riv&&GWARM>0.02){
+        const band=Math.max(0,Math.sin((x*0.8+y*0.6)-waveT*0.5));
+        const sheet=GWARM*band;
+        if(sheet>0.05){
+          hexTile(gx,gy,1.02,'rgba('+(GWSB[0]|0)+','+(GWSB[1]|0)+','+(GWSB[2]|0)+','+(sheet*0.20)+')'); /* faint warm base */
+          const[cx,cy]=px(gx,gy);
+          ctx.save(); ctx.globalCompositeOperation='lighter'; /* glints ADD, so they read gold over teal, never muddy */
+          for(let k=0;k<2;k++){
+            const ph=Math.sin(waveT*1.9+x*1.9+y*1.3+k*2.1);
+            const a=sheet*Math.max(0,ph)*0.85;
+            if(a>0.03){ctx.strokeStyle='rgba(255,'+(196-k*18)+','+(96-k*30)+','+a+')';ctx.lineWidth=1.3;
+              const oy=(k-0.5)*3.2;
+              ctx.beginPath();ctx.moveTo(cx-4,cy+oy-ph*0.6);ctx.lineTo(cx+4,cy+oy+ph*0.6);ctx.stroke();}
+          }
+          ctx.restore();
+        }
+      }
       if(c.riv){ /* the current is visible: glints slide downstream */
         const[rcx,rcy]=ctr(x,y);
         let vx=1,vy=0,best=-99;
@@ -5783,6 +5813,7 @@ function render(){
   FRAMEN++;
   applySeason();
   const dl=daylight(dayT); setLight(dl);
+  {const sb=dl.skyBot; GWARM=clamp((sb[0]-sb[2]-70)/70,0,1); GWSB=sb;} /* golden-hour sea sheen gate (iter 181) */
   FOGAMT=fogDepth();
   ctx.setTransform(1,0,0,1,0,0);
   ctx.clearRect(0,0,cvs.width,cvs.height);

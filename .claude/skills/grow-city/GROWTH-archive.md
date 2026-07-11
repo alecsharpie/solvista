@@ -10124,3 +10124,71 @@ Bundled a real deck-over-kelp fix. Draw-only, stream + pop flat. People's New el
   day-only feature cleanly, with the permanent change reported as its own column. `String.replace` on an anchor is
   enough to synthesize the intermediate build inside the probe.
 
+## Iteration 171 — the boulevards name themselves (2026-07-12) [Transport × Interaction/UX]
+
+**Vector.** Transport × **Interaction/UX** (SHIPPED). Rotation named the stalest domain, **Transport** (last SHIP
+164). Kind varied HARD off the recent runs — New element ran the last two laps (169/170) and 164 spent Transport's
+New element cell; Deepen is globally hot (155/158/159/165/166); Polish (146) and Connect (138) are Transport's two
+most-recent kinds. That left **Interaction/UX**, which is Transport's single **stalest cell (only 105 ever)** and by
+far the stalest Interaction/UX across all domains (Nature 148 · Water 141 · Urban 133 · Civic 140 · Sky 144 · People
+154 · **Transport 105**). A draw-nothing tooltip vector — guaranteed-flat pop.
+
+**The seam — the asserts-LESS-than-the-code-knows tell (117/122/129/148/168), in its Interaction form.** The ROAD
+draw has rendered a **tree-lined boulevard** — an allée planted down *both* kerbs (`if(c.treed)`, L4071) — since
+long before the ledger, and the CA spreads `treed` among connected busy streets (L1659, adopting from treed
+neighbours), so boulevards form leafy runs. But `describeTile`'s road branch named only Bridge/Arterial/Avenue/Street
+off `flow`/`busy`/`bridge` and was **mute about `c.treed`** — hovering the single leafiest, most distinctive street in
+the city read a flat "Avenue" like any other. The draw knew it was a boulevard; the label didn't say so. (The
+`boulevardTrees` census stat already counts `c.treed` — **1203** across the 9-cell matrix, ~340/city — so it is a
+tile at scale, not dead code, 30/107's law.)
+
+**Change (~10 lines, tooltip logic only).** In `describeTile`'s ROAD branch: a treed road now titles **`Boulevard`**
+(ranked below Bridge, above Arterial/Avenue/Street), sub *"A leafy avenue, planted with trees down both kerbs."* — and
+if it is *also* a trunk (`flow>=ARTFLOW`) the sub appends *" Also a trunk route."* so a treed arterial keeps its
+network identity. Added a **`Length — N block(s)`** data row = the boulevard's contiguous extent via a new
+`boulevardSize(x,y)` = `floodSize(x,y, road && treed)` — the *same* flood the woods name their stand with (117) and
+kelp its bed. No tile, entity, `rng()`, `hashCell`, `tick()` pass, terrain, or canvas draw; all strings pure-ASCII
+(134 — no accent on "allee", the `é` in this ledger note aside). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, `boulevardTrees 1203`
+unchanged, entity counts identical (greenRoofs +1 = documented RAF tick-count jitter, touches no `rng()`). Vacuous by
+construction (a tooltip-only change draws nothing) — the probe is the gate.
+
+**Probe — `probes/probe-boulevard.mjs` (new, promoted).** A DOM/logic probe, not a pixel diff (the change is pure
+tooltip logic): loads a developed city (`?seed&warp=61`) and calls `describeTile()` on real cells. **TARGET** — every
+treed ROAD must title `Boulevard` AND carry a `Length N block(s)` row whose N equals `boulevardSize` (>=1).
+**CONTROL** — busy NON-treed roads must title `Avenue`/`Arterial` and contain neither `Boulevard` nor `Length`; a
+quiet road must stay `Street`. seeds 7/42/1234: **treed named+length 347/347 · 346/346 · 340/340 (0 bad, 0
+len-mismatch)**; busy-plain control clean **33/33 · 54/54 · 29/29**; quiet road = `Street` all three; longest boulevard
+run **28 / 15 / 15 blocks**. **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-boulevard.mjs` (new, promoted).** Drives a REAL cursor onto a boulevard and a plain-busy road
+(reading back the handler's resolved `hoverTile` and retrying candidates so the control reliably lands on a non-treed
+cell — treed roads are dense near centre, so a naive projection kept snapping to a neighbouring boulevard), then
+screenshots the rendered `#tip` card. One agent, blind, read all four: **boulevard s7** = "Boulevard" + leafy sub +
+`Length 28 blocks`; **boulevard s42** = "Boulevard" + `Length 5 blocks`; **control s7/s42** = "Avenue", no
+Boulevard/Length; all cards legible, aligned, no clip/overflow/CSS breakage — **VISUAL: PASS**. (No whole-city shot:
+the canvas is byte-identical to HEAD — nothing new is drawn — so the census/interleave/step-back visual pass has
+nothing to catch here.)
+
+**Verdict — SHIPPED.** The leafiest street in every city, a flat "Avenue" for the artifact's whole life, now names
+itself a **Boulevard** and tells you how many blocks its allee runs — Transport's first Interaction/UX vector since
+105, and the asserts-less-than-the-code-knows tell cashed in its Interaction form. Draw-nothing, pop + stream flat,
+~10 lines + a probe + a shot script. Transport's Interaction/UX cell gains its next (105, **171**); Transport is no
+longer stalest (Urban 165 now is, and 172 is the step-back).
+
+### Findings for later laps
+- **THE ASSERTS-LESS-THAN-THE-CODE-KNOWS TELL EXTENDS TO A DRAW-VARIANT THE LABEL FLATTENS, not just a missing calendar
+  or a mute string.** 117/122/129/148 cashed it where a tooltip ignored CA *state*; 171 cashed it where the tooltip
+  collapsed a distinct **draw variant** (`c.treed`, an allee both kerbs) into a generic label. Look for other draw
+  flags the tooltip doesn't surface: a road can also carry `c.fete` (festival bunting is drawn, unnamed) and `c.corr`
+  (a corridor). A BUILDING's `c.corner` is already named; check what other per-cell draw flags a label flattens.
+- **A GENERIC FLOOD (`floodSize`) NOW HAS THREE READERS (stand/bed/boulevard) — reach for it for any "name this
+  contiguous run's extent" tooltip.** `boulevardSize` was one line. Any feature whose interest is *how far it reaches*
+  (a marsh, a dune field, a solar farm, an arterial spine) can report `Length/Extent — N` for near-free.
+- **A TOOLTIP-LOGIC CHANGE IS GATED BY A DOM PROBE, NOT A PIXEL DIFF — and its "visual" gate is the rendered `#tip`
+  card, not the city.** `describeTile()` returns an HTML string, callable in-page on every cell, so the probe asserts
+  the exact title/rows across ALL host cells (347/seed) with a control class — far stronger than sampling a few. The
+  screenshot only needs to confirm the card *paints*; drive the real cursor and read back `hoverTile` to place it
+  honestly (naive world->screen projection snaps to the wrong hex when the host class is dense).
+

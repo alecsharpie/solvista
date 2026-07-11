@@ -28,7 +28,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170** | 49 | 34, 64, 93, **104**, **119**, **145**, **178** | 78, **111** | | 84, **137**, **163** | 71, **154** |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · People **178** · Transport **179** · Urban **180** · Nature **174** · Civic **175** · Water **176**. (162, **167**, **172**, **177** = step-backs, no domain lap.)
-  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales on the stubble fields post-harvest, `probe-haybale`). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). **176 took Water × Interaction/UX (the river names its course — a `Course — N hexes` row via a bridge-AWARE flood `riverCourse` so a span doesn't fragment the reach; the river was the barest tooltip in the city, zero data rows over its richest water system; a `Crossings` companion was DROPPED — bridge cells over-count vs connected components and the L1633 pave-over rule makes the unit ambiguous; draw-nothing tooltip, pop+stream flat, `probe-river` 254 river hexes named 3 seeds, sea control clean 1916 hexes, sea-leak 0). So the next domain lap (178) owes People (170)/Transport (171).** 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). **178 took People × Deepen (the festival streets fill with people — a day-and-dusk crowd of `hashCell`-scattered figures mills on each `c.fete` ROAD cell under the bunting, then heads home by deep night; a People×Civic interconnect on a drawn CA system that was rendered for the artifact's whole life but never *inhabited*; draw-only stream+pop-neutral, `probe-fetecrowd` FETE day 2.9–3.6% → night 0.00% byte-identical, ROAD ctl ~0, 3 seeds). **179 took Transport × Deepen (the bridges light their lamps at night — the bridge sub-case `break`s before the road's night-lamp block, so every bridge went pitch dark at night for the artifact's whole life while both banks glowed; two warm rail lamps atop the deck + a `waveT` reflection on the river below, a Transport×Water interconnect; draw-only stream+pop-neutral, `probe-bridgelamp` BRIDGE night 7.4–8.1% → day 0.00% byte-identical, ROAD ctl 0.00% both, 3 seeds). So the next domain lap (180) owes Urban (173, Deepen/Polish only — measured-saturated).** **180 took Urban × Polish (the towers ground their own weight — the fixed 0.42×0.13 contact shadow under every building now scales with mass `shf=clamp((h-9)/120,0,1)`, so a 150-unit tower grounds on a 0.94/0.23 pool while a bungalow keeps the old blob; centered in the house style since nothing in the artifact casts a directional shadow, draw-only stream+pop-neutral, `probe-massshadow` TALL 0.6–1.0% ≫ SHORT/CTL ~0.05% 3 seeds; the first scaling was too weak because the tower body occludes its own base shadow — size for the ring not the area). So the next domain lap (181) owes Sky (161, Deepen/Fix ONLY — saturated), then the step-back at 182.** 171's fete-street TOOLTIP (`c.fete` drawn but unnamed in `describeTile`) is still banked, and now more worth cashing since the street is no longer empty. **177 was the mandated STEP-BACK — TENTH clean bill in a row (perf 173→176 flat: day −0.2% / night +0.3% vs iter-172 `3d0e876`; seasons alive FARM dry-peak 87.6; night core located off-centre both seeds ~(.48,.50)/(.53,.60)). No city change.** Next step-back at **182**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
+  Sky **181** · People **178** · Transport **179** · Urban **180** · Nature **174** · Civic **175** · Water **176**. (162, **167**, **172**, **177** = step-backs, no domain lap.)
+  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales on the stubble fields post-harvest, `probe-haybale`). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). **176 took Water × Interaction/UX (the river names its course — a `Course — N hexes` row via a bridge-AWARE flood `riverCourse` so a span doesn't fragment the reach; the river was the barest tooltip in the city, zero data rows over its richest water system; a `Crossings` companion was DROPPED — bridge cells over-count vs connected components and the L1633 pave-over rule makes the unit ambiguous; draw-nothing tooltip, pop+stream flat, `probe-river` 254 river hexes named 3 seeds, sea control clean 1916 hexes, sea-leak 0). So the next domain lap (178) owes People (170)/Transport (171).** 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). **178 took People × Deepen (the festival streets fill with people — a day-and-dusk crowd of `hashCell`-scattered figures mills on each `c.fete` ROAD cell under the bunting, then heads home by deep night; a People×Civic interconnect on a drawn CA system that was rendered for the artifact's whole life but never *inhabited*; draw-only stream+pop-neutral, `probe-fetecrowd` FETE day 2.9–3.6% → night 0.00% byte-identical, ROAD ctl ~0, 3 seeds). **179 took Transport × Deepen (the bridges light their lamps at night — the bridge sub-case `break`s before the road's night-lamp block, so every bridge went pitch dark at night for the artifact's whole life while both banks glowed; two warm rail lamps atop the deck + a `waveT` reflection on the river below, a Transport×Water interconnect; draw-only stream+pop-neutral, `probe-bridgelamp` BRIDGE night 7.4–8.1% → day 0.00% byte-identical, ROAD ctl 0.00% both, 3 seeds). So the next domain lap (180) owes Urban (173, Deepen/Polish only — measured-saturated).** **180 took Urban × Polish (the towers ground their own weight — the fixed 0.42×0.13 contact shadow under every building now scales with mass `shf=clamp((h-9)/120,0,1)`, so a 150-unit tower grounds on a 0.94/0.23 pool while a bungalow keeps the old blob; centered in the house style since nothing in the artifact casts a directional shadow, draw-only stream+pop-neutral, `probe-massshadow` TALL 0.6–1.0% ≫ SHORT/CTL ~0.05% 3 seeds; the first scaling was too weak because the tower body occludes its own base shadow — size for the ring not the area). So the next domain lap (181) owes Sky (161, Deepen/Fix ONLY — saturated), then the step-back at 182.** **181 took Sky × Deepen (the sea catches the golden hour — bright additive-gold sun-path glints on the open water at dawn/dusk, reading 161's reusable `cwarm`/`skyBot` signal onto the largest surface in the frame, filling the gap between the noon glitter and the night moonglade; a Sky×Water interconnect, draw-only stream+pop-neutral, `probe-seagold` SEA dusk ~31%/dawn ~22% → noon/night ~0, LAND ctl 0 all frames, 3 seeds. ⚠ A warm alpha WASH over teal desaturates to OLIVE — carry sunset/warm light over cool water with ADDITIVE `'lighter'` glints, not a wash; two tuning rounds were lost raising a wash's alpha before the blend mode was the real fix. `GWARM`/`GWSB` are now globals beside `LITAMT` for any golden-hour draw.) The next iteration (182) is the mandated STEP-BACK.** 171's fete-street TOOLTIP (`c.fete` drawn but unnamed in `describeTile`) is still banked, and now more worth cashing since the street is no longer empty. **177 was the mandated STEP-BACK — TENTH clean bill in a row (perf 173→176 flat: day −0.2% / night +0.3% vs iter-172 `3d0e876`; seasons alive FARM dry-peak 87.6; night core located off-centre both seeds ~(.48,.50)/(.53,.60)). No city change.** Next step-back at **182**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -391,79 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 173 entries before Iteration 171 live in
+> **Archive:** the 174 entries before Iteration 172 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 171 — the boulevards name themselves (2026-07-12) [Transport × Interaction/UX]
-
-**Vector.** Transport × **Interaction/UX** (SHIPPED). Rotation named the stalest domain, **Transport** (last SHIP
-164). Kind varied HARD off the recent runs — New element ran the last two laps (169/170) and 164 spent Transport's
-New element cell; Deepen is globally hot (155/158/159/165/166); Polish (146) and Connect (138) are Transport's two
-most-recent kinds. That left **Interaction/UX**, which is Transport's single **stalest cell (only 105 ever)** and by
-far the stalest Interaction/UX across all domains (Nature 148 · Water 141 · Urban 133 · Civic 140 · Sky 144 · People
-154 · **Transport 105**). A draw-nothing tooltip vector — guaranteed-flat pop.
-
-**The seam — the asserts-LESS-than-the-code-knows tell (117/122/129/148/168), in its Interaction form.** The ROAD
-draw has rendered a **tree-lined boulevard** — an allée planted down *both* kerbs (`if(c.treed)`, L4071) — since
-long before the ledger, and the CA spreads `treed` among connected busy streets (L1659, adopting from treed
-neighbours), so boulevards form leafy runs. But `describeTile`'s road branch named only Bridge/Arterial/Avenue/Street
-off `flow`/`busy`/`bridge` and was **mute about `c.treed`** — hovering the single leafiest, most distinctive street in
-the city read a flat "Avenue" like any other. The draw knew it was a boulevard; the label didn't say so. (The
-`boulevardTrees` census stat already counts `c.treed` — **1203** across the 9-cell matrix, ~340/city — so it is a
-tile at scale, not dead code, 30/107's law.)
-
-**Change (~10 lines, tooltip logic only).** In `describeTile`'s ROAD branch: a treed road now titles **`Boulevard`**
-(ranked below Bridge, above Arterial/Avenue/Street), sub *"A leafy avenue, planted with trees down both kerbs."* — and
-if it is *also* a trunk (`flow>=ARTFLOW`) the sub appends *" Also a trunk route."* so a treed arterial keeps its
-network identity. Added a **`Length — N block(s)`** data row = the boulevard's contiguous extent via a new
-`boulevardSize(x,y)` = `floodSize(x,y, road && treed)` — the *same* flood the woods name their stand with (117) and
-kelp its bed. No tile, entity, `rng()`, `hashCell`, `tick()` pass, terrain, or canvas draw; all strings pure-ASCII
-(134 — no accent on "allee", the `é` in this ledger note aside). Pop + stream provably flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, `boulevardTrees 1203`
-unchanged, entity counts identical (greenRoofs +1 = documented RAF tick-count jitter, touches no `rng()`). Vacuous by
-construction (a tooltip-only change draws nothing) — the probe is the gate.
-
-**Probe — `probes/probe-boulevard.mjs` (new, promoted).** A DOM/logic probe, not a pixel diff (the change is pure
-tooltip logic): loads a developed city (`?seed&warp=61`) and calls `describeTile()` on real cells. **TARGET** — every
-treed ROAD must title `Boulevard` AND carry a `Length N block(s)` row whose N equals `boulevardSize` (>=1).
-**CONTROL** — busy NON-treed roads must title `Avenue`/`Arterial` and contain neither `Boulevard` nor `Length`; a
-quiet road must stay `Street`. seeds 7/42/1234: **treed named+length 347/347 · 346/346 · 340/340 (0 bad, 0
-len-mismatch)**; busy-plain control clean **33/33 · 54/54 · 29/29**; quiet road = `Street` all three; longest boulevard
-run **28 / 15 / 15 blocks**. **VERDICT: PASS (3 seeds).**
-
-**Visual — `probes/shot-boulevard.mjs` (new, promoted).** Drives a REAL cursor onto a boulevard and a plain-busy road
-(reading back the handler's resolved `hoverTile` and retrying candidates so the control reliably lands on a non-treed
-cell — treed roads are dense near centre, so a naive projection kept snapping to a neighbouring boulevard), then
-screenshots the rendered `#tip` card. One agent, blind, read all four: **boulevard s7** = "Boulevard" + leafy sub +
-`Length 28 blocks`; **boulevard s42** = "Boulevard" + `Length 5 blocks`; **control s7/s42** = "Avenue", no
-Boulevard/Length; all cards legible, aligned, no clip/overflow/CSS breakage — **VISUAL: PASS**. (No whole-city shot:
-the canvas is byte-identical to HEAD — nothing new is drawn — so the census/interleave/step-back visual pass has
-nothing to catch here.)
-
-**Verdict — SHIPPED.** The leafiest street in every city, a flat "Avenue" for the artifact's whole life, now names
-itself a **Boulevard** and tells you how many blocks its allee runs — Transport's first Interaction/UX vector since
-105, and the asserts-less-than-the-code-knows tell cashed in its Interaction form. Draw-nothing, pop + stream flat,
-~10 lines + a probe + a shot script. Transport's Interaction/UX cell gains its next (105, **171**); Transport is no
-longer stalest (Urban 165 now is, and 172 is the step-back).
-
-### Findings for later laps
-- **THE ASSERTS-LESS-THAN-THE-CODE-KNOWS TELL EXTENDS TO A DRAW-VARIANT THE LABEL FLATTENS, not just a missing calendar
-  or a mute string.** 117/122/129/148 cashed it where a tooltip ignored CA *state*; 171 cashed it where the tooltip
-  collapsed a distinct **draw variant** (`c.treed`, an allee both kerbs) into a generic label. Look for other draw
-  flags the tooltip doesn't surface: a road can also carry `c.fete` (festival bunting is drawn, unnamed) and `c.corr`
-  (a corridor). A BUILDING's `c.corner` is already named; check what other per-cell draw flags a label flattens.
-- **A GENERIC FLOOD (`floodSize`) NOW HAS THREE READERS (stand/bed/boulevard) — reach for it for any "name this
-  contiguous run's extent" tooltip.** `boulevardSize` was one line. Any feature whose interest is *how far it reaches*
-  (a marsh, a dune field, a solar farm, an arterial spine) can report `Length/Extent — N` for near-free.
-- **A TOOLTIP-LOGIC CHANGE IS GATED BY A DOM PROBE, NOT A PIXEL DIFF — and its "visual" gate is the rendered `#tip`
-  card, not the city.** `describeTile()` returns an HTML string, callable in-page on every cell, so the probe asserts
-  the exact title/rows across ALL host cells (347/seed) with a control class — far stronger than sampling a few. The
-  screenshot only needs to confirm the card *paints*; drive the real cursor and read back `hoverTile` to place it
-  honestly (naive world->screen projection snaps to the wrong hex when the host class is dense).
 
 ## Iteration 172 — the fourteenth step-back finds a clean city, perf flat (2026-07-12) [holistic step-back]
 
@@ -1054,3 +986,65 @@ then the mandated **step-back at 182**.
   it now scales with mass but not with the sun. A future Sky×Urban interconnect could soften it toward dusk (fainter
   as the light flattens) the way 145/150 tie beach/sea to `LITAMT` — but keep it centered (house style) and beware the
   night frame, where `rgba(40,32,20,a)` over dark ground already reads as little.
+
+## Iteration 181 — the sea catches the golden hour (2026-07-12) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × **Deepen** (SHIPPED). Rotation named the stalest domain, **Sky (161)** — and the header
+mandates Sky is **Deepen/Fix ONLY** (post-saturation: additive/CA cells are traps). Kind is therefore forced to Deepen
+(varied off the globally-hot Deepen run only by domain — Sky is genuinely the owed lap). A Sky×Water *interconnect*,
+the highest-yield move: it adds no element, it applies an existing Sky signal to an existing surface.
+
+**The seam — the sea is untouched at the most beautiful light of the day.** The open sea already responds to two
+lights: a **cool sun glitter** at noon (L3160, peaks at `dayT` 0.47, gone by dusk) and the **night moonglade** (L5938,
+`LITAMT>0.5`). But at **golden hour** — dawn/dusk, when the sky blazes warm (`skyBot` orange) and iter 161 warms the
+cloud bellies — the sea stayed cold: the noon glitter has faded and the moonglade hasn't lit. 161's own finding flagged
+`cwarm` (its `skyBot` golden-hour gate) as **"a reusable golden-hour signal"**; this cashes it on the largest surface
+in the frame. A global `GWARM`/`GWSB` is set once per frame from `dl.skyBot` beside `LITAMT` (same `clamp((R-B-70)/70)`
+as 161), so the sea reads the exact signal the clouds do.
+
+**Change (~18-line draw + 2 globals, all draw-only).** In the `T.WATER` case (open water, `!c.riv`), gated `GWARM>0.02`:
+a faint warm base wash tinted toward `skyBot`, plus — the load-bearing part — bright **additive** (`globalCompositeOperation
+='lighter'`) warm-gold glint dashes that shimmer with `waveT`. No tile, entity, `rng()`, `hashCell`, `tick()` pass or
+terrain; `save`/`restore` brackets the composite change; strings pure-ASCII (134). Byte-unchanged at noon and night
+(GWARM=0). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0 (re-run on final code). Tile histogram **empty**, all core metrics **+0**, entity
+counts identical (RAF tick-count jitter only). Vacuous by construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-seagold.mjs` (new, promoted).** Diffs PATCH vs HEAD over open-water cells' screen boxes at a
+frozen frame, at **dusk / dawn / noon / night**, with land (RES/FOREST/MID) as the spatial control. Build-vs-build at the
+SAME frame (161 law) so the ambient golden-hour tint — which noon/night lack — is NOT counted as signal, only the sheen.
+Rebuilt in-page + STARS cleared + `Math.random` stubbed + movers cleared + clock/`waveT` frozen (163). seeds 7/42/1234:
+**SEA DUSK 30.9%/31.3%/31.0% · DAWN 21.8%/21.8%/22.7% → NOON 0.00% · NIGHT ~0.00%** (GWARM 0.62/0.43 → 0/0);
+**LAND control 0.00% at every frame, every seed.** **PASS (3 seeds).**
+
+**Visual — three rounds; the tuning is the story.** First build (wash `sheet*0.18`): two agents PASS but both "too
+subtle." A wash-alpha bump (0.22, then 0.42) did NOT fix it and a sharper-framed agent FAILed it — **orange-over-teal is
+near-complementary, so an alpha wash muddies toward olive instead of reading gold** (an agent literally saw "olive-gold").
+The moonglade solves the same night problem with bright *additive* glints that pop over any water tone, so the final
+build pulls the wash back to 0.20 and carries the light in **additive gold glints**. Re-shot (wide + coast, seeds 42 & 7),
+two agents both **PASS**: gold sparkle glints clearly register on open water only (not river/beach/land/piers), the sea
+still reads as teal water (no orange slab), no blown-out color / z-order tears / floaters, whole frame a balanced beautiful
+coastal dusk.
+
+**Verdict — SHIPPED.** The sea — cold at the most beautiful light of the day, between the noon glitter and the night
+moonglade — now catches a warm gold sun-path at dawn/dusk, reading 161's `cwarm` signal onto the water. A Sky×Water
+interconnect, draw-only, pop + stream flat, ~18 lines + a probe. Sky's Deepen cell gains its next (…161, **181**); Sky is
+no longer stalest. The next iteration (**182**) is the mandated **holistic step-back**.
+
+### Findings for later laps
+- **A WARM WASH OVER TEAL WATER CANNOT READ AS GOLD — IT DESATURATES TO OLIVE (near-complementary alpha blend). Carry
+  golden-hour / sunset light on water with BRIGHT ADDITIVE (`'lighter'`) GLINTS, not a broad alpha wash.** Two full
+  tuning rounds were burned raising a wash's alpha (0.18→0.42) with agents still failing it "too faint" — the alpha was
+  never the problem, the *blend mode* was. This is the moonglade's own trick (it twinkles, it doesn't wash), and it is a
+  general rule for tinting one surface toward a near-complementary light: additive points pop over any base; an alpha
+  wash of the complement just greys the base. Reach for `globalCompositeOperation='lighter'` (bracketed by save/restore)
+  the next time a warm light must read over cool water (or vice versa).
+- **`GWARM`/`GWSB` ARE NOW GLOBALS (set once per frame from `dl.skyBot`, beside `LITAMT`).** Any draw that wants "how
+  warm is the low sky right now, and toward what colour" can read them for free — a future Sky×Urban golden-hour glint on
+  west-facing tower windows (180's banked "windows catch the low sun"), a warm rim on the wind turbines, or a warm cast
+  on the beach sand at dusk. Same shape as 161's cloud-belly warmth, now available city-wide.
+- **JUDGE A COAST/WATER ORNAMENT AT COAST ZOOM — a warm sheen on the sea LOSES at wide zoom** because it competes with
+  the warm sky and the off-map peach background for the eye (159's zoom-fairness law, seen again here: the seed-42 wide
+  read "cool sea," the seed-7 coast read "beautiful gold"). The coast clip is the honest frame; keep a wide frame only to
+  catch whole-city regressions, not to grade the ornament's presence.
