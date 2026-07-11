@@ -10793,3 +10793,65 @@ then the mandated **step-back at 182**.
   as the light flattens) the way 145/150 tie beach/sea to `LITAMT` — but keep it centered (house style) and beware the
   night frame, where `rgba(40,32,20,a)` over dark ground already reads as little.
 
+## Iteration 181 — the sea catches the golden hour (2026-07-12) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × **Deepen** (SHIPPED). Rotation named the stalest domain, **Sky (161)** — and the header
+mandates Sky is **Deepen/Fix ONLY** (post-saturation: additive/CA cells are traps). Kind is therefore forced to Deepen
+(varied off the globally-hot Deepen run only by domain — Sky is genuinely the owed lap). A Sky×Water *interconnect*,
+the highest-yield move: it adds no element, it applies an existing Sky signal to an existing surface.
+
+**The seam — the sea is untouched at the most beautiful light of the day.** The open sea already responds to two
+lights: a **cool sun glitter** at noon (L3160, peaks at `dayT` 0.47, gone by dusk) and the **night moonglade** (L5938,
+`LITAMT>0.5`). But at **golden hour** — dawn/dusk, when the sky blazes warm (`skyBot` orange) and iter 161 warms the
+cloud bellies — the sea stayed cold: the noon glitter has faded and the moonglade hasn't lit. 161's own finding flagged
+`cwarm` (its `skyBot` golden-hour gate) as **"a reusable golden-hour signal"**; this cashes it on the largest surface
+in the frame. A global `GWARM`/`GWSB` is set once per frame from `dl.skyBot` beside `LITAMT` (same `clamp((R-B-70)/70)`
+as 161), so the sea reads the exact signal the clouds do.
+
+**Change (~18-line draw + 2 globals, all draw-only).** In the `T.WATER` case (open water, `!c.riv`), gated `GWARM>0.02`:
+a faint warm base wash tinted toward `skyBot`, plus — the load-bearing part — bright **additive** (`globalCompositeOperation
+='lighter'`) warm-gold glint dashes that shimmer with `waveT`. No tile, entity, `rng()`, `hashCell`, `tick()` pass or
+terrain; `save`/`restore` brackets the composite change; strings pure-ASCII (134). Byte-unchanged at noon and night
+(GWARM=0). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0 (re-run on final code). Tile histogram **empty**, all core metrics **+0**, entity
+counts identical (RAF tick-count jitter only). Vacuous by construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-seagold.mjs` (new, promoted).** Diffs PATCH vs HEAD over open-water cells' screen boxes at a
+frozen frame, at **dusk / dawn / noon / night**, with land (RES/FOREST/MID) as the spatial control. Build-vs-build at the
+SAME frame (161 law) so the ambient golden-hour tint — which noon/night lack — is NOT counted as signal, only the sheen.
+Rebuilt in-page + STARS cleared + `Math.random` stubbed + movers cleared + clock/`waveT` frozen (163). seeds 7/42/1234:
+**SEA DUSK 30.9%/31.3%/31.0% · DAWN 21.8%/21.8%/22.7% → NOON 0.00% · NIGHT ~0.00%** (GWARM 0.62/0.43 → 0/0);
+**LAND control 0.00% at every frame, every seed.** **PASS (3 seeds).**
+
+**Visual — three rounds; the tuning is the story.** First build (wash `sheet*0.18`): two agents PASS but both "too
+subtle." A wash-alpha bump (0.22, then 0.42) did NOT fix it and a sharper-framed agent FAILed it — **orange-over-teal is
+near-complementary, so an alpha wash muddies toward olive instead of reading gold** (an agent literally saw "olive-gold").
+The moonglade solves the same night problem with bright *additive* glints that pop over any water tone, so the final
+build pulls the wash back to 0.20 and carries the light in **additive gold glints**. Re-shot (wide + coast, seeds 42 & 7),
+two agents both **PASS**: gold sparkle glints clearly register on open water only (not river/beach/land/piers), the sea
+still reads as teal water (no orange slab), no blown-out color / z-order tears / floaters, whole frame a balanced beautiful
+coastal dusk.
+
+**Verdict — SHIPPED.** The sea — cold at the most beautiful light of the day, between the noon glitter and the night
+moonglade — now catches a warm gold sun-path at dawn/dusk, reading 161's `cwarm` signal onto the water. A Sky×Water
+interconnect, draw-only, pop + stream flat, ~18 lines + a probe. Sky's Deepen cell gains its next (…161, **181**); Sky is
+no longer stalest. The next iteration (**182**) is the mandated **holistic step-back**.
+
+### Findings for later laps
+- **A WARM WASH OVER TEAL WATER CANNOT READ AS GOLD — IT DESATURATES TO OLIVE (near-complementary alpha blend). Carry
+  golden-hour / sunset light on water with BRIGHT ADDITIVE (`'lighter'`) GLINTS, not a broad alpha wash.** Two full
+  tuning rounds were burned raising a wash's alpha (0.18→0.42) with agents still failing it "too faint" — the alpha was
+  never the problem, the *blend mode* was. This is the moonglade's own trick (it twinkles, it doesn't wash), and it is a
+  general rule for tinting one surface toward a near-complementary light: additive points pop over any base; an alpha
+  wash of the complement just greys the base. Reach for `globalCompositeOperation='lighter'` (bracketed by save/restore)
+  the next time a warm light must read over cool water (or vice versa).
+- **`GWARM`/`GWSB` ARE NOW GLOBALS (set once per frame from `dl.skyBot`, beside `LITAMT`).** Any draw that wants "how
+  warm is the low sky right now, and toward what colour" can read them for free — a future Sky×Urban golden-hour glint on
+  west-facing tower windows (180's banked "windows catch the low sun"), a warm rim on the wind turbines, or a warm cast
+  on the beach sand at dusk. Same shape as 161's cloud-belly warmth, now available city-wide.
+- **JUDGE A COAST/WATER ORNAMENT AT COAST ZOOM — a warm sheen on the sea LOSES at wide zoom** because it competes with
+  the warm sky and the off-map peach background for the eye (159's zoom-fairness law, seen again here: the seed-42 wide
+  read "cool sea," the seed-7 coast read "beautiful gold"). The coast clip is the honest frame; keep a wide frame only to
+  catch whole-city regressions, not to grade the ornament's presence.
+
