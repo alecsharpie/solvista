@@ -10673,3 +10673,59 @@ system nobody used: draw-only, pop + stream flat, ~24 lines + a probe. People's 
   institutions its `feteId` chain runs between). Deliberately left out of 178 to keep this a pure People Deepen and
   not poach 171's banked Interaction seam.
 
+## Iteration 179 — the bridges light their lamps at night (2026-07-12) [Transport × Deepen]
+
+**Vector.** Transport × **Deepen** (SHIPPED). Rotation named the stalest domain, **Transport (171)** (178 was the
+People lap). Kind varied off Transport's recent run — Interaction/UX (171), New element (164), Polish (146) — to a
+**Deepen** that *interconnects* Transport with **Water** (the reflection). The vehicle/road/monorail/gondola
+systems are all measured-saturated; the seam here was a genuine *gap*, not another ornament.
+
+**The seam — the one unlit road in the city.** The `T.ROAD` draw grew a rich night layer over many laps: arterial
+lit corridors, ordinary-street lamp glows, boulevard lamps. But the **bridge sub-case breaks early** (L4023) —
+`hexTile` water + a timber deck prism + a white railing band, then `break;` — *before* the `if(LITAMT>0.25)`
+street-lamp block ever runs. So for the artifact's whole life every bridge went **pitch dark at night** while the
+streets it joined glowed on both banks: a span of black cutting the warm river. Confirmed a real host first
+(dead-code law): census `bridges` = **4–60 per era-cell**, 266 across the matrix, 20–60 in developed eras.
+
+**Change (~14-line draw, all draw-only, inside `if(c.bridge)` before the break).** Gated `LITAMT>0.25` to match the
+street lamps: two warm **rail lamps** (bright head + soft halo) atop the deck at its two span-ends (`hx2/hy2` from
+the same `ew`/`0.52`·`HW`/`VR` extents the deck prism uses, so they land on the deck, not off it), plus a warm
+**reflection** ellipse on the water just in front of the deck that breathes with `waveT` (the Transport×Water
+interconnect). No tile, entity array, `rng()`, `hashCell`-terrain, `tick()` pass or terrain change; warm rgba only,
+strings pure-ASCII (134). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, `bridges 266` unchanged,
+entity counts identical (`greenRoofs -1`/`towerHt +1` = documented RAF tick-count jitter, touches no `rng()`).
+Vacuous by construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-bridgelamp.mjs` (new, promoted).** Diffs PATCH vs HEAD over the `c.bridge` ROAD cells'
+screen boxes at a frozen frame, **night + day**, with non-bridge ROAD cells as the control. Rebuilt in-page
+(`genWorld`+`__warp`), `STARS` cleared, `Math.random` stubbed, movers cleared, clock frozen (163 law) so the night
+frame is reproducible. seeds 7/42/1234: **BRIDGE lamps NIGHT 8.11% / 7.52% / 7.43% → DAY 0.00% / 0.00% / 0.00%**
+(LITAMT 0.02, byte-identical, no draw); **ROAD control 0.00%** at both frames, all three seeds (20–60 bridges each).
+**PASS (3 seeds).**
+
+**Visual.** Night `wide` + `downtown`, seeds 42 & 7. Two agents, both **PASS**: warm paired rail lamps found on the
+deck of every river crossing, sitting on the deck (not floating), the reflection reading as an *attached* smudge
+under the deck edge, towers correctly occluding decks (z-order intact); **no tears, floating lamps, or blown-out
+blobs**; the whole night frame still a balanced coastal city (streets/windows warm, sky + water dark, moon clear) —
+the lamps fill in the previously-dark bridges rather than adding clutter.
+
+**Verdict — SHIPPED.** The one road that went dark at night — the bridge deck, which `break`s before the street-lamp
+block — now lights its rail lamps and casts them warm on the river, joining the night-lit street network across the
+water. A Transport×Water interconnect: draw-only, pop + stream flat, ~14 lines + a probe. Transport's Deepen cell
+gains its next (…155, **179**); Transport is no longer stalest (Urban 173 now is). The next domain lap (180) owes
+**Urban (Deepen/Polish only — measured-saturated)**, then the step-back at **182**.
+
+### Findings for later laps
+- **AN EARLY `break` IN A DRAW CASE CAN STARVE A SUB-VARIANT OF A WHOLE LAYER THE MAIN PATH GREW LATER.** The bridge
+  sub-case was written before the road's night-lamp layer existed, and its `break;` meant every lamp/corridor pass
+  added afterward silently skipped the bridges — a dark seam nobody noticed for the artifact's life because the
+  per-feature visual gate always zoomed on the *new* lamp, never re-read the bridge. When a tile has a `break`-ing
+  sub-case (bridge, station, forecourt…), check what shared later blocks it forfeits. Candidates to audit: does the
+  bridge deck get street *trees*/*fete*/*treed* handling? (It breaks before all of them.)
+- **A REFLECTION IS THE CHEAPEST Transport×Water INTERCONNECT AND IT READS AT FIT.** A warm ellipse on the water in
+  front of a lit structure, `waveT`-modulated, costs one `ellipse` and turns an isolated light into a light *on the
+  scene*. Anything that lights up beside water (the pier, lifeguard tower, a harbour crane, a moored ship) can pool
+  a reflection for near-free — and unlike a thin ribbon, a glow-on-dark-water clears the contrast×width bar at fit.
+
