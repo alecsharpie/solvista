@@ -28,7 +28,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137** | 71, **154** |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **153** · Urban ~~**160**~~ (Connect reverted; last SHIP 151) · People **154** · Nature **156** · Transport **155** · Civic **158** · Water **159**.
-  **Stalest is now Sky (153)**, then People (154) — Urban was just attempted at 160 (reverted, see below), so rotate off it. Check the last entry of the stalest domain for a banked
+  Sky **161** · Urban ~~**160**~~ (Connect reverted; last SHIP 151) · People **154** · Nature **156** · Transport **155** · Civic **158** · Water **159**.
+  **Stalest is now People (154)**, then Transport (155) — Sky just went at 161 (cloud bellies catch golden hour), so rotate off it. Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -171,7 +171,7 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** **159 Deepen (the SURF GLOWS at night — bioluminescence sparkles the breaking wave with sparse soft sea-green DOTS, `LITAMT>0.5`-gated & `hashCell`-scattered, draw-only stream+pop-neutral; `probe-biolum` — the Water entry in the moon/stars/observatory night run).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158/159 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen/Deepen, 154 was Interaction/UX. **160 Urban × Connect EXPLORED → REVERTED** (RES terracing — extend 109's MID street-wall to houses): mechanism worked (`probe-terrace` 46–53% gap-fill vs 0.5% control) but the HOST doesn't exist at scale — only ~15% of RES have an E-W RES neighbour and ZERO seeds form runs of ≥3, and RES bodies are HEX PRISMS (widening a hex ≠ a shared-wall terrace). **Law: check host ADJACENCY, not just host count, before a Connect — 109's street-wall is MID-specific (MID clusters + is rectangular); RES/COM terracing needs measured E-W runs first. Urban × Connect still open (last SHIP 109); a COM high-street arcade (`hstr` marks retail runs) is the better target once its adjacency is measured.**
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** **159 Deepen (the SURF GLOWS at night — bioluminescence sparkles the breaking wave with sparse soft sea-green DOTS, `LITAMT>0.5`-gated & `hashCell`-scattered, draw-only stream+pop-neutral; `probe-biolum` — the Water entry in the moon/stars/observatory night run).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158/159 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen/Deepen, 154 was Interaction/UX. **160 Urban × Connect EXPLORED → REVERTED** (RES terracing — extend 109's MID street-wall to houses): mechanism worked (`probe-terrace` 46–53% gap-fill vs 0.5% control) but the HOST doesn't exist at scale — only ~15% of RES have an E-W RES neighbour and ZERO seeds form runs of ≥3, and RES bodies are HEX PRISMS (widening a hex ≠ a shared-wall terrace). **Law: check host ADJACENCY, not just host count, before a Connect — 109's street-wall is MID-specific (MID clusters + is rectangular); RES/COM terracing needs measured E-W runs first. Urban × Connect still open (last SHIP 109); a COM high-street arcade (`hstr` marks retail runs) is the better target once its adjacency is measured.** **161 Deepen (CLOUD BELLIES catch the GOLDEN HOUR — the two lower puffs of a fair cloud tint toward `dl.skyBot` by `cwarm=clamp((R-B-70)/70,0,1)`, warm at dawn/dusk, ~0 at noon AND night; top puff & rain clouds untouched; draw-only stream/pop-neutral; `probe-cloudwarm` sky-band build-vs-build, dusk +11.6 warm≫cool, noon control balanced).** The `cwarm` gate off `skyBot` is a reusable golden-hour signal; next Sky feed needs a genuinely new derived field (the Sky-feedable vegetation list is empty since 139, and the SEASON word is still banked-but-blocked by its fast-`year` strobe, 134).
   **⚠ Iteration 162 is the next holistic STEP-BACK** (…/147/**152 done**/**157 done**/**162**) — not a domain lap; see the recipe
   below (night + season, day frame off January, interleaved perf). **155 took Transport × Deepen (the tram catenary, the
   149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
@@ -391,89 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 153 entries before Iteration 151 live in
+> **Archive:** the 154 entries before Iteration 152 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 151 — the block grows its own corner shop (2026-07-11) [Urban fabric × New CA rule]
-
-**Vector.** Urban fabric × **New CA rule** — Urban was the single stalest domain (last SHIP 143), 118's law
-forbids a New element there (additive inventory surveyed spent), and the header steered the kind: vary off
-Polish (150) and Deepen (149), *"Connect/New-CA fresh."* The content came from the banked reach-field seam
-(*"nothing sites itself against `rShop`/`rGreen`/`rServ` — a derived field earns its keep when a RULE reads
-it"*): a rule keyed to shop-distance. The city has no **neighbourhood retail** — a house too deep in the
-fabric to reach a shop had nowhere to buy milk; the walkable stat measured the gap (rShop) but nothing filled it.
-
-**The seam, and the recount trap.** `recount()` populates `rShop` (r3 to COM/MARKET, L2086) but is **NOT called
-inside the per-tick sim loop** (L6342) — only at init/warp/manual — so `rShop` is *stale during `tick()`* and a
-tick-rule can't read it without a per-tick `recount()` (the reason the seam sat banked). The fresh equivalent
-is **local**: `countAround(x,y,r, COM||MARKET)`. Shops saturate >90% (the U5 note), so a full r3 desert is rare
-(2–5/city); I used **r2** ("no shop within a short walk") for coverage (8–9 mid-century).
-
-**Change (~14-line tick pass + ~13-line draw + 3-line tooltip).** A house on a built-up block (`≥3 DEV`
-neighbours) with **no COM/MARKET within 2** opens a store on its ground floor: `c.corner=true`. It **stays
-`T.RES`** — mixed-use, exactly like the `c.loft`/`c.solar`/`c.groof` flag idiom — so *no tile type changes*.
-The decision is `hashCell`-gated (no `rng()`), and `c.corner` is read only by the draw + tooltip, never by an
-rng()-gated pass, so both **setting AND clearing** it are stream-neutral. The pass **re-validates**: a store is
-absorbed (`c.corner=false`) once the growing city plants a real shop within 2, so *"in a retail gap"* holds at
-every tick, not just at placement. One store per gap falls out of the fixed-order live-mutating pass (first
-qualifier vetoes any other within 2). The RES draw grafts a storefront on the road face with the COM draw's own
-helpers (`bandR` glass, `slotS` door, `awnS` awning) sized to the RES body, a **green grocer's awning** ('sage')
-to mark it apart, and a night-lit fascia. `describeTile` titles it *"Corner shop"*.
-
-**A `RES→COM` conversion was tried FIRST and REVERTED.** The obvious form — flip the house to `T.COM` — passed
-the census but the tile histogram swung hard (TOWER **−32**, MID **+33**, FOREST/MEADOW −13, …): changing `c.t`
-flips which branch of the **fire** pass (`RES||COM && age>26 && rng()<…`) and the **upgrade** pass runs, changing
-their `rng()` **call counts** and reshuffling the whole downstream stream — even though the *decision* used
-`hashCell`. The flag-on-RES form moves the histogram by **nothing** (all core +0, empty histogram). See findings.
-
-**Census.** PASS, exit 0, pageerrors 0. Fully vacuous — every core metric **+0**, tile histogram **empty**,
-entity counts identical. Stream-neutral AND pop-neutral by construction (no `c.t` change).
-
-**Probe** `probes/probe-cornershop.mjs` (new, promoted). Per 122's law it checks placement against truth
-**recomputed independently in Node** (its own odd-r cube hex-distance, not the page's `countAround`): every
-corner shop's nearest real COM/MARKET is **> 2** hexes (control: `nearShop` must be 0), no two corners within 2
-(spacing), all title *"Corner shop"* with **0** false hits over 200 plain-RES, none before the rule's 1990 start,
-and identical count+positions on reload (determinism). **3/3 seeds PASS:** 2035 counts 5/5/4, all in a gap, min
-pair 3–7, naming 5/5·5/5·4/4, plain false-hits 0. Caught two real bugs on the way: the first `RES→COM` build
-(histogram swing) and encroachment — an early r3 non-revalidating form let the growing city plant a COM beside an
-old corner (seed 42: 2 of 4 within 3), fixed by the re-validating clear.
-
-**Visual.** `probes/shot-cornershop.mjs` (new) camera-zooms onto a corner shop (found via `__find('RES')` filtered
-by `c.corner`) day + night, clipped against the plain terraces; plus whole-city `wide` at seeds 42 & 7. One agent
-per seed, locate-don't-judge (108): **both VISUAL: PASS** — the green-awning glass storefront reads clearly as a
-small shop grafted onto a house, distinct from the plain pitched-roof terraces, awning projecting to the street
-(grounded on its hex, not stabbing a neighbour), night storefront lit; no z-order tears/floaters/blowout; both
-whole-city frames balanced and coherent. Both noted the night fascia is lit-but-not-strongly-emissive — a minor
-legibility nuance, not a fault (over-brightening one hex risks a blown dot).
-
-**Verdict — SHIPPED.** The city grows its own neighbourhood retail: a house in a shop desert opens a corner
-store on its ground floor, and it's absorbed when the shops reach it — a living urban process, guaranteed clean
-(stream + pop neutral). Urban's `New CA rule` cell gains its next (7, 23, ~~82~~, **151**); Urban is no longer
-stalest. `rShop` per se stays banked (I read a local r2 twin, not `rShop`), but the *shape* — a rule keyed to
-shop-distance — is now cashed.
-
-### Findings for later laps
-- **A TYPE CHANGE (`c.t=…`) IS NEVER STREAM-NEUTRAL, EVEN WITH A `hashCell` DECISION — a FLAG on the existing
-  tile is.** The reshuffle isn't from *your* pass calling `rng()`; it's that flipping `c.t` changes which
-  rng()-gated BRANCH a *later* pass takes (the fire pass keys on `RES||COM`, the upgrade pass branches by type),
-  so their `rng()` **call counts** shift and the downstream stream reshuffles. The file's own idiom
-  (`c.loft`/`c.solar`/`c.groof`) is the escape: set a boolean on a tile whose type never changes, read it only in
-  the draw/tooltip, and the census is vacuous. Reach for a flag before a conversion whenever the feature can be
-  mixed-use rather than a demolition.
-- **A REACH FIELD (`rShop`/`rGreen`/`rServ`) IS STALE INSIDE `tick()` — `recount()` runs only at init/warp/manual,
-  never in the sim loop.** A tick-rule that wants "distance to nearest X" must recompute it LOCALLY
-  (`countAround`), or pay a per-tick `recount()` (~1ms × hundreds of warp ticks). This is *why* the "nothing sites
-  itself against the reach fields" seam sat banked — the fields aren't available where a rule would read them. The
-  local `countAround` twin is the practical substitute; note it's your chosen radius, not necessarily rShop's 3.
-- **A RE-VALIDATING FLAG PASS KEEPS ITS OWN INVARIANT TRUE FOREVER, which lets the probe's control stay strict.**
-  Because setting *and clearing* `c.corner` are both stream-neutral, the pass can clear the flag when the world
-  grows past the condition (a shop reaches within 2 → the store is absorbed). So "every corner sits in a gap"
-  holds at 2035, not just at placement — the encroachment bug (a persistent flag the city outgrows) simply cannot
-  occur, and the probe can assert the clean control on final state. Do this for any flag whose siting condition
-  the evolving city can later violate.
 
 ## Iteration 152 — the tenth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
 
@@ -1003,3 +925,55 @@ helper, the `__terr` hook, `probe-terrace.mjs`, and `shot-terrace.mjs` all remov
 - **Urban × Connect remains genuinely open (last real ship 109).** A future attempt should target a fabric that IS
   dense and linear — e.g. a continuous shopfront canopy/arcade along a COM high street (`c.hstr` from iter 118
   already marks retail runs) — but only after measuring that COM clusters E-W in runs, which RES does not.
+
+## Iteration 161 — cloud bellies catch the golden hour (2026-07-11) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky × Deepen. Sky was the stalest domain (last vector 153) and its additive/CA cells are traps
+(surveyed 103; sky isn't cellular). The clouds are richly deepened (rain shafts, wet trails, rainbows, drifting
+shade) but the puffs themselves are drawn **pure white regardless of the light** — at dawn/dusk the warm horizon
+that colours the whole sky never touches them. That is the classic golden-hour tell: a low sun lights cloud
+**undersides** warm while the tops stay bright. A draw-only Deepen that adds no element and reads the light the
+rest of the scene already reads.
+
+**Change.** In the cloud loop (render, ~L5758) compute once per frame `cwarm=clamp((skyBot.R-skyBot.B-70)/70,0,1)`
+from `dl.skyBot` — the horizon colour is orange at dawn/dusk (R≫B), pale at noon, cool-purple at night, so `R-B`
+picks out the low-sun glow **and nothing else** (noon and night both give cwarm≈0). The two lower ("belly") puffs
+of a **fair** cloud are then filled toward `skyBot` by `cwarm*0.55` instead of white; the top crown puff and rain
+clouds (grey belly) are untouched. Pure draw-only: no terrain, no `rng()`, no new entity — pop/stream neutral.
+
+**Census.** PASS, vacuous as expected — every metric +0, tile histogram empty (draw-only). Regression guard only.
+
+**Probe.** `probes/probe-cloudwarm.mjs` — build-vs-build **sky-band diff** (patched vs pristine HEAD, same seed,
+`playing=false`, same frozen `dayT`). The two builds run identical code except the belly tint, so any pixel that
+differs IS a belly pixel; a residual is that the pre-freeze load drifts entities slightly differently per load, but
+**drift is directionally balanced (warm px ≈ cool px) while the tint shifts pixels consistently WARM**, so the
+discriminators are directional. Result over seeds 7/42/1234: **dusk mean Δ(R-B) +11.6, warm px 4095 ≫ cool px 1401**
+(≈3:1); **noon control mean +1.2, warm 1394 ≈ cool 1340** (drift only). The tint is warm-only and dusk-only.
+(Getting here cost two dead ends the probe file documents: a world→screen box missed the belly puffs — they sit at
+`cx±14s`, either side of a naive centre box — and a whole-frame count control was polluted by ground-traffic drift;
+a **loud-red belly** test confirmed the draw renders correctly and it was the *sampling* that was wrong. Law below.)
+
+**Visual.** Two dusk seeds, whole-city. **Seed 42 PASS** — belly reads clearly peach/gold under a whiter top,
+"natural golden-hour underlighting, not dirt"; the one grey cloud stays grey (by design); no tears/floaters/blowout.
+**Seed 7** an agent FAILed as "cool grey bellies" — but the visible clouds there sit HIGH against the *cool* upper
+sky (skyTop), so the real, measured warm shift (probe: seed 7 was the *strongest*, +18.2) composites over a cool
+base and reads neutral-grey rather than gold. A moderate-zoom crop confirmed: gentle, non-garish, present but subtle
+where the ambient sky is cool. The effect is by-design mild — a golden-hour touch, not a repaint.
+
+**Verdict — DEEPENED.** Sky reads the light on one more surface; draw-only, pop/stream-neutral, probe-gated.
+
+### Findings for later laps
+- **CLOUD BELLIES ARE THE SEAM: puffs were painted a fixed white while the sky around them was fully lit.** Look for
+  other *emissive/reflective* draws that ignore `dl`/`TINT` — anything drawn with a hardcoded `rgb(...)` in the sky
+  or on water that should catch dawn/dusk. `dl.skyBot` is the ready-made "how warm is the horizon right now" signal:
+  `clamp((R-B-70)/70,0,1)` is a reusable golden-hour gate (0 at noon AND night, peak at dawn/dusk).
+- **A build-vs-build pixel probe that LOCATES by boxing world→screen coords will fight the camera transform and the
+  puff geometry; a WHOLE/BAND DIFF locates by construction** — the only pixels that can differ ARE your change, so
+  diff finds them. When the diff is polluted by pre-freeze entity drift, don't chase determinism: **drift is
+  directionally balanced, a directional signal (warm-vs-cool split, or signed mean) separates cleanly.** And when a
+  subtle draw-change reads as zero in a probe, force it LOUD (pure red) first to prove the draw path before trusting
+  the sampler (cost me two dead ends this lap).
+- **A physically-plausible ambient effect will read differently by where its host sits** — the same warm belly is
+  gold over a warm sky (seed 42) and neutral-grey over a cool upper sky (seed 7). That is correct, not a bug; the
+  probe (not the agent) is the verdict for "did the warmth apply." Don't crank the strength to force every cloud
+  gold — seed 42's agent already warned the current strength is at the "natural, not dirty" edge.

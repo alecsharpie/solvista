@@ -5751,6 +5751,11 @@ function render(){
     }
   }
   /* drifting clouds + their shade */
+  /* at golden hour the low sun lights cloud bellies warm — the horizon colour
+     (dl.skyBot) is orange at dawn/dusk, pale at noon, cool-purple at night, so
+     (R-B) picks out the low-sun glow and nothing else (iter 161). The TOP of each
+     puff stays bright white; only the underside catches the warmth. */
+  const sb=dl.skyBot, cwarm=clamp((sb[0]-sb[2]-70)/70,0,1);
   for(const cl of clouds){
     const[cx,cy]=pxc(cl.x,cl.y);
     const py2=cy-185-cy*0.52; /* keep puffs in the sky even for front cells */
@@ -5880,9 +5885,11 @@ function render(){
     }
     ctx.fillStyle='rgba(255,254,250,'+a+')';
     ctx.beginPath();ctx.ellipse(cx,py2,24*cl.s,8.5*cl.s,0,0,7);ctx.fill();
-    /* a shower carries its belly grey — at whole-city scale this, not the drops,
-       is what tells the eye which cloud is the one that is raining */
+    /* the belly. A shower carries it grey — at whole-city scale this, not the
+       drops, is what tells the eye which cloud is the one that is raining. A fair
+       cloud instead catches the warm horizon on its underside at golden hour. */
     if(cl.rain)ctx.fillStyle='rgba(196,205,216,'+a+')';
+    else if(cwarm>0.01)ctx.fillStyle='rgba('+(lerp(255,sb[0],cwarm*0.55)|0)+','+(lerp(254,sb[1],cwarm*0.55)|0)+','+(lerp(250,sb[2],cwarm*0.55)|0)+','+a+')';
     ctx.beginPath();ctx.ellipse(cx-14*cl.s,py2+5,14*cl.s,6*cl.s,0,0,7);ctx.fill();
     ctx.beginPath();ctx.ellipse(cx+15*cl.s,py2+4,15*cl.s,6.5*cl.s,0,0,7);ctx.fill();
   }

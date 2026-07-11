@@ -8916,3 +8916,81 @@ flat. Water's Polish cell gains its next (U2, 44, 58, 79, 116, 132, **150**).
   byte-identical (glit=0) and the sea's tone returns to base by dusk. This is the clean template for "the sun
   does X to the sea/sky" without a permanent tone drift.
 
+## Iteration 151 — the block grows its own corner shop (2026-07-11) [Urban fabric × New CA rule]
+
+**Vector.** Urban fabric × **New CA rule** — Urban was the single stalest domain (last SHIP 143), 118's law
+forbids a New element there (additive inventory surveyed spent), and the header steered the kind: vary off
+Polish (150) and Deepen (149), *"Connect/New-CA fresh."* The content came from the banked reach-field seam
+(*"nothing sites itself against `rShop`/`rGreen`/`rServ` — a derived field earns its keep when a RULE reads
+it"*): a rule keyed to shop-distance. The city has no **neighbourhood retail** — a house too deep in the
+fabric to reach a shop had nowhere to buy milk; the walkable stat measured the gap (rShop) but nothing filled it.
+
+**The seam, and the recount trap.** `recount()` populates `rShop` (r3 to COM/MARKET, L2086) but is **NOT called
+inside the per-tick sim loop** (L6342) — only at init/warp/manual — so `rShop` is *stale during `tick()`* and a
+tick-rule can't read it without a per-tick `recount()` (the reason the seam sat banked). The fresh equivalent
+is **local**: `countAround(x,y,r, COM||MARKET)`. Shops saturate >90% (the U5 note), so a full r3 desert is rare
+(2–5/city); I used **r2** ("no shop within a short walk") for coverage (8–9 mid-century).
+
+**Change (~14-line tick pass + ~13-line draw + 3-line tooltip).** A house on a built-up block (`≥3 DEV`
+neighbours) with **no COM/MARKET within 2** opens a store on its ground floor: `c.corner=true`. It **stays
+`T.RES`** — mixed-use, exactly like the `c.loft`/`c.solar`/`c.groof` flag idiom — so *no tile type changes*.
+The decision is `hashCell`-gated (no `rng()`), and `c.corner` is read only by the draw + tooltip, never by an
+rng()-gated pass, so both **setting AND clearing** it are stream-neutral. The pass **re-validates**: a store is
+absorbed (`c.corner=false`) once the growing city plants a real shop within 2, so *"in a retail gap"* holds at
+every tick, not just at placement. One store per gap falls out of the fixed-order live-mutating pass (first
+qualifier vetoes any other within 2). The RES draw grafts a storefront on the road face with the COM draw's own
+helpers (`bandR` glass, `slotS` door, `awnS` awning) sized to the RES body, a **green grocer's awning** ('sage')
+to mark it apart, and a night-lit fascia. `describeTile` titles it *"Corner shop"*.
+
+**A `RES→COM` conversion was tried FIRST and REVERTED.** The obvious form — flip the house to `T.COM` — passed
+the census but the tile histogram swung hard (TOWER **−32**, MID **+33**, FOREST/MEADOW −13, …): changing `c.t`
+flips which branch of the **fire** pass (`RES||COM && age>26 && rng()<…`) and the **upgrade** pass runs, changing
+their `rng()` **call counts** and reshuffling the whole downstream stream — even though the *decision* used
+`hashCell`. The flag-on-RES form moves the histogram by **nothing** (all core +0, empty histogram). See findings.
+
+**Census.** PASS, exit 0, pageerrors 0. Fully vacuous — every core metric **+0**, tile histogram **empty**,
+entity counts identical. Stream-neutral AND pop-neutral by construction (no `c.t` change).
+
+**Probe** `probes/probe-cornershop.mjs` (new, promoted). Per 122's law it checks placement against truth
+**recomputed independently in Node** (its own odd-r cube hex-distance, not the page's `countAround`): every
+corner shop's nearest real COM/MARKET is **> 2** hexes (control: `nearShop` must be 0), no two corners within 2
+(spacing), all title *"Corner shop"* with **0** false hits over 200 plain-RES, none before the rule's 1990 start,
+and identical count+positions on reload (determinism). **3/3 seeds PASS:** 2035 counts 5/5/4, all in a gap, min
+pair 3–7, naming 5/5·5/5·4/4, plain false-hits 0. Caught two real bugs on the way: the first `RES→COM` build
+(histogram swing) and encroachment — an early r3 non-revalidating form let the growing city plant a COM beside an
+old corner (seed 42: 2 of 4 within 3), fixed by the re-validating clear.
+
+**Visual.** `probes/shot-cornershop.mjs` (new) camera-zooms onto a corner shop (found via `__find('RES')` filtered
+by `c.corner`) day + night, clipped against the plain terraces; plus whole-city `wide` at seeds 42 & 7. One agent
+per seed, locate-don't-judge (108): **both VISUAL: PASS** — the green-awning glass storefront reads clearly as a
+small shop grafted onto a house, distinct from the plain pitched-roof terraces, awning projecting to the street
+(grounded on its hex, not stabbing a neighbour), night storefront lit; no z-order tears/floaters/blowout; both
+whole-city frames balanced and coherent. Both noted the night fascia is lit-but-not-strongly-emissive — a minor
+legibility nuance, not a fault (over-brightening one hex risks a blown dot).
+
+**Verdict — SHIPPED.** The city grows its own neighbourhood retail: a house in a shop desert opens a corner
+store on its ground floor, and it's absorbed when the shops reach it — a living urban process, guaranteed clean
+(stream + pop neutral). Urban's `New CA rule` cell gains its next (7, 23, ~~82~~, **151**); Urban is no longer
+stalest. `rShop` per se stays banked (I read a local r2 twin, not `rShop`), but the *shape* — a rule keyed to
+shop-distance — is now cashed.
+
+### Findings for later laps
+- **A TYPE CHANGE (`c.t=…`) IS NEVER STREAM-NEUTRAL, EVEN WITH A `hashCell` DECISION — a FLAG on the existing
+  tile is.** The reshuffle isn't from *your* pass calling `rng()`; it's that flipping `c.t` changes which
+  rng()-gated BRANCH a *later* pass takes (the fire pass keys on `RES||COM`, the upgrade pass branches by type),
+  so their `rng()` **call counts** shift and the downstream stream reshuffles. The file's own idiom
+  (`c.loft`/`c.solar`/`c.groof`) is the escape: set a boolean on a tile whose type never changes, read it only in
+  the draw/tooltip, and the census is vacuous. Reach for a flag before a conversion whenever the feature can be
+  mixed-use rather than a demolition.
+- **A REACH FIELD (`rShop`/`rGreen`/`rServ`) IS STALE INSIDE `tick()` — `recount()` runs only at init/warp/manual,
+  never in the sim loop.** A tick-rule that wants "distance to nearest X" must recompute it LOCALLY
+  (`countAround`), or pay a per-tick `recount()` (~1ms × hundreds of warp ticks). This is *why* the "nothing sites
+  itself against the reach fields" seam sat banked — the fields aren't available where a rule would read them. The
+  local `countAround` twin is the practical substitute; note it's your chosen radius, not necessarily rShop's 3.
+- **A RE-VALIDATING FLAG PASS KEEPS ITS OWN INVARIANT TRUE FOREVER, which lets the probe's control stay strict.**
+  Because setting *and clearing* `c.corner` are both stream-neutral, the pass can clear the flag when the world
+  grows past the condition (a shop reaches within 2 → the store is absorbed). So "every corner sits in a gap"
+  holds at 2035, not just at placement — the encroachment bug (a persistent flag the city outgrows) simply cannot
+  occur, and the probe can assert the clean control on final state. Do this for any flag whose siting condition
+  the evolving city can later violate.
+

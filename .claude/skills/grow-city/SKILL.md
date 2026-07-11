@@ -605,6 +605,15 @@ vector, whatever it is.
   by a *fraction of the loop* (so a 2-span line and an 89-span line lapped in the
   same 71s), 115 discovered `c.lit` was per-cell white noise with `corr(lit,
   dist-from-CBD) = +0.008`. Neither was guessable from reading the draw code.
+- **To isolate a subtle draw-only change, DIFF PATCHED vs PRISTINE HEAD over a whole frame/band — it locates your
+  change BY CONSTRUCTION (iter 161).** Two builds run identical code except your edit, so *every pixel that differs
+  IS your change* — no fragile world→screen box that fights the camera transform and the shape's own geometry (161
+  wasted two passes boxing cloud puffs that sit either side of a naive centre box). Two corollaries that turned 161
+  from FAIL to a clean read: (a) when the diff is polluted by pre-freeze **entity drift**, don't chase determinism —
+  drift is **directionally balanced** (warm px ≈ cool px, signed mean ~0) while a real tint is **directional**, so a
+  warm-vs-cool split or signed mean separates signal from drift cleanly; (b) when a subtle change reads as **zero**
+  in the probe, **force it LOUD first** (paint it pure red unconditionally) to prove the draw path executes before
+  you trust the sampler — a loud frame that's still unchanged means the *sampler* is wrong, not the feature.
 - **Every gate this loop owns is FROZEN — a claim about MOTION needs a TEMPORAL probe (iter 134).** The
   census, the standard probe (freezes the clock for a two-render diff), and the visual gate (single
   screenshots) are all blind to *cadence*: a readout or animation can be provably *correct* (134's almanac
