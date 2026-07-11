@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · Urban ~~**160**~~ (Connect reverted; last SHIP 151) · People **163** · Nature **156** · Transport **164** · Civic **158** · Water **159**. (162 = step-back, no domain lap.)
-  **Stalest is now Urban (last SHIP 151; 160 Connect reverted)**, then Nature (156) — Transport just went at 164 (the taxi, a lemon-yellow cab variety on the car entity, closing its New-element cell), so the next lap (165) owes Urban, then Nature (Urban's additive cell is spent (118), its Connect measured-hard (160) — so Deepen/Polish, or a COM high-street arcade once `hstr` adjacency is measured). Check the last entry of the stalest domain for a banked
+  Sky **161** · Urban **165** (Deepen; SHIP) · People **163** · Nature **156** · Transport **164** · Civic **158** · Water **159**. (162 = step-back, no domain lap.)
+  **Stalest is now Nature (156)**, then Civic (158) — Urban just went at 165 (COM rooftop mechanical plant, a Deepen), so the next lap (166) owes Nature, then Civic. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -171,7 +171,7 @@ ones (U2, 42, U5) stay in the bullet.
   below (night + season, day frame off January, interleaved perf). **162 was the mandated step-back (SEVENTH clean bill,
   perf 157→161 flat day / +1.1% night, seasons alive, night core located both seeds). 163 took People × Polish
   (static-crowd contact shadows, closing 137); 164 took Transport × New element (the taxi — a `Math.random`-flagged
-  lemon-yellow cab variety on the car entity; the next lap (165) owes the stalest, Urban (last SHIP 151), then Nature (156)).** **155 took Transport × Deepen (the tram catenary, the
+  lemon-yellow cab variety on the car entity).** **165 took Urban × Deepen (COM rooftop mechanical plant; the next lap (166) owes the stalest, Nature (156), then Civic (158)).** **155 took Transport × Deepen (the tram catenary, the
   149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
   surface-not-entities law, forest=69 hexes vs garden=2). 157 was the mandated STEP-BACK; 158 took Civic × Deepen
   (the observatory dome rotates to track the night sky — 149's banked draw-tell); 159 took Water × Deepen (the surf
@@ -391,86 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 157 entries before Iteration 155 live in
+> **Archive:** the 158 entries before Iteration 156 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 155 — the streetcar draws from an overhead wire (2026-07-11) [Transport × Deepen]
-
-**Vector.** Transport × **Deepen** (SHIPPED). Rotation named the domain — Transport was the single stalest (last
-146) — and 118's law + 138's findings rule out a Transport New element (entities saturated). Varied the kind off
-146 (Polish) / 154 (the recent IUX run) to **Deepen**, running the loop's most reliable move in its **draw** form
-(149's law): an ornament that asserts a relationship the draw ignores. The tram's comment (L5134) called its
-trolley pole *"a slim trolley pole to the overhead"* — but there **was no overhead.** The pole drew from
-`cy-6.6` to a lone contact dot at `(cx+1.3, cy-9.4)`, poking at empty air. Same shape as 149's frozen clock:
-the streetcar claimed to be an electric rail vehicle drawing power from a catenary, and drew none.
-
-**The seam.** `drawVehicle`'s `v.kind==='tram'` block (L5133). `A=ctr(v.x,v.y)`, `B=ctr(v.nx,v.ny)` (the A->B
-segment the tram is traversing), `L`, `lane` are all in scope at the top of `drawVehicle` (L5077-5079), so the
-overhead wire can be strung the length of the block at the SAME lane offset, raised a fixed height.
-
-**Change (~8 lines, draw-only).** Replaced the leaning pole+dot with (1) a **contact wire** from `A` to `B`,
-lane-shifted and raised `wh=9.6` (`ctx.moveTo(A[0]+lox,A[1]+loy-wh)…lineTo(B[0]+lox,B[1]+loy-wh)`) — because
-`cx=lerp(A,B,p)-ddy/L*lane` and `cy=lerp+ddx/L*lane*0.6`, the wire point directly above the tram is exactly
-`(cx,cy-wh)`, so the wire spans the ROAD (holds still as the tram slides under it), not the car; (2) a **vertical
-pantograph** from the roof `(cx,cy-6.6)` straight up to `(cx,cy-wh)`; (3) the contact shoe dot at `(cx,cy-wh)`.
-Kept the cream livery belt. No tile, entity, `rng()`, `hashCell`, `tick()` pass or terrain; strings pure-ASCII
-(134, comment only). Pop provably flat, stream-neutral.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0 (`towerHt +1` is the documented
-chaotic-CA headless wobble), entity counts identical (trams 54 · cars 360 …). Vacuous by construction — the
-probe is the gate.
-
-**Probe — `probes/probe-tramwire.mjs` (new, promoted).** Trams drift nondeterministically over the road network
-between loads (137's law), so it CLEARS **every** mover (clouds/birds/balloons spawn via `Math.random` and would
-put a noise floor on a whole-frame diff — see findings) and PLACES 120 trams (target) then 120 cars (control) at
-spread ROAD centres, all east, frozen clock+`waveT` (109). Metric = **whole-frame** changed-pixel fraction
-patched-vs-pristine-HEAD (in a frozen frame the only difference IS the wires, so no per-vehicle box / unit
-juggling). seeds 7/42: **tram-set 0.21% of frame changed** vs **car control 0.004%** — a ~50x separation,
-confined to the tram kind (the car draw is byte-identical). **PASS.**
-
-**Visual.** `probes/shot-tramwire.mjs` (new) places a run of trams on a **clear avenue** (front-of-frame, open
-ground/water in front so nothing occludes the overhead), camera-zooms, clips day + night. First shot placed the
-trams in a **tower canyon** and an agent correctly FAILED it (front-row towers buried the trams AND the wire,
-leaving pantograph nubs poking at air — see findings); the fair clear-avenue re-shoot then PASSED: a fresh agent
-read the wire as *"a single thin dark wire … unbroken across the full avenue … poles rise from the tram roofs and
-meet it"*, plausible catenary, no z-order tears/clipping/blowout, present day and night. Whole-city `wide` at
-seeds 42 & 7, one agent each: both **VISUAL: PASS** — balanced coherent coastal cities, nothing compounded (the
-wire is sub-pixel and invisible at fit zoom, so it adds no clutter there).
-
-**Verdict — DEEPENED.** The streetcar now draws power from an overhead contact wire strung over its avenue, where
-for the artifact's whole life its pole poked at empty air — it reads as an electric tram, joining the moon (135),
-the clock (149) and the vineyard (148/139) in the run of ornaments that now honor what they always claimed.
-Draw-only, stream-neutral, pop flat, ~8 lines. Transport's Deepen cell gains its next (28, 39, 55, 63, 112, 121,
-128, **155**); Transport is no longer stalest (Nature 148 now is).
-
-### Findings for later laps
-- **THE ASSERTS-MORE-THAN-IT-SHOWS *DRAW* TELL (149) PAID AGAIN — grep vehicle/ornament COMMENTS for a claimed
-  connection the geometry omits.** 149 found the frozen clock by its comment; this lap found the tram by *"pole to
-  the overhead"* over an overhead that wasn't drawn. Candidates still open (149's list): the firehouse bell is
-  static; museum/parliament are floodlit but otherwise inert. A pole/mast/gauge that *should* touch something is
-  the richest version.
-- **A LOW OVERHEAD ELEMENT IS OCCLUDED BY FRONT-ROW BUILDINGS — that is physically correct, but it means a
-  tower-canyon zoom can show a bare pantograph nub.** The wire draws in the tram's bucket (after its own two
-  cells' buildings, L5608) so it is correct against those, but nearer ROWS (drawn later, L5600) legitimately
-  overpaint it — so in dense downtown the wire hides behind the front towers (as real catenary would) and only the
-  nub pokes above. Unlike the monorail (drawn per-cell at `RAILH`, well above rooftops), the tram wire is at
-  street level and inherently occludable. Accepted as realistic; a shot MUST choose a clear avenue (open ground in
-  front) to judge it fairly, or it reads as broken nubs. **When shooting a low overhead detail, pick a
-  front-of-frame cell with open ground/water behind and in front — never a tower canyon.**
-- **A WHOLE-FRAME PATCHED-vs-HEAD DIFF NEEDS EVERY `Math.random` MOVER CLEARED, not just the seeded ones.** My
-  first cut cleared vehicles/peds/etc. but left clouds/birds/balloons, which spawn via `Math.random` at load and
-  differ between the two page loads — a 0.15% whole-frame noise floor that swamped the ~0.2% wire signal. Clearing
-  **all** movers dropped the control to 0.004% (pure render nondeterminism) and the ~50x separation appeared. For
-  any whole-frame two-load diff, clear the full entity list (the `[a,b,…].forEach(a=>a.length=0)` block), not a
-  subset. (The per-box metric in `probe-buslivery` sidesteps this by only sampling the vehicle body; a whole-frame
-  metric cannot.)
-- **`CW` IS A WORLD UNIT; `sx/sy` FROM `__find` ARE SCREEN px — do not mix them in a getImageData box.** My first
-  probe built the sample box as `0.7*CW*dpr` wide (world) but `(sy-12)…(sy-6.5)` tall (screen), so the box was the
-  wrong size and read ~0 signal. The whole-frame diff dodges the unit problem entirely and is the more robust
-  shape for a thin draw-only ornament whose exact pixels are hard to box.
 
 ## Iteration 156 — the woods flower in spring (2026-07-11) [Nature × New element]
 
@@ -1018,3 +943,51 @@ probe confirms the draw path fires; cf. 163's sub-2px agent-resolution law).
 (car/bus/tram/truck/bike/taxi + service fleet) is now full, so its next lap is Deepen/Polish/Connect, not another kind
 of vehicle. A cab could later *deepen* (pick up/drop peds at a kerb) but that hits the `peds`-can't-serve-the-road cap
 (111) — it would need the spawn-pool move, not the leash.
+
+## Iteration 165 — the mid-rise roofs grow their mechanical plant (2026-07-11) [Urban fabric × Deepen]
+
+**Vector.** Urban owed the lap (last SHIP 151; 160 Connect reverted). Rotation + saturation both pointed here, and
+step 1's two banked probes decided the KIND: the additive cell is spent (118), and I measured the two things the
+header wanted checked before proposing anything.
+- **Under-construction hoarding — measured OUT.** `c.th-c.h>5` (the crane host) is only **0–2 buildings per city**
+  in a census snapshot (buildings finish in a few ticks: `c.h+=0.35+...`), so a ground-level construction hoarding
+  would be all-but-invisible. Rejected before drawing a line (probe-before-you-design).
+- **COM high-street arcade (the header's banked Connect) — measured OUT.** The `hstr` run is 21–23 cells over 7–9
+  x-columns but its **longest straight run in any single column is 2** — the parade zigzags with row parity (it
+  follows `fdx(yy)`), so a straight colonnade down it would wiggle and read square, exactly the trap 160/the
+  transport invariant warn about. Confirms 160's law: **check host ADJACENCY, not just count, before a Connect** —
+  the high-street host is contiguous by ROW but not along any hex axis, so it is not a clean arcade host.
+- So: **Deepen** (the freshest Urban kind), draw-only, on a host that exists at scale.
+
+**Change.** COM (mid-rise commercial, ~400–500 cells city-wide) grew **rooftop mechanical plant** — a concrete
+stair/lift bulkhead, a lower mechanical box, and a thin vent stack on the parapet deck (solvista.html ~L4324) — the
+commercial answer to the walk-up's timber water tank (MID, ~L4277). Gated `!c.solar&&!c.groof&&hashCell(x,y,
+seedNum^0x3C7B)<0.38` (a bare roof only; solar/green-roof/café roofs keep their own crown). Stone grey (`stone`/
+`stoneDk`), sized small (bulkhead 0.10 half-extent vs the building's 0.36, 2 units tall). Draw-only, hashCell-gated,
+no `rng()`/terrain → stream and pop stay flat, and `col()`'s day TINT makes it recede by day and darken with the
+scene at night (no additive glow, so no blowout).
+
+**Census.** Vacuous by construction (draw-only): every core metric +0, empty tile histogram, no page error. PASS.
+(A `greenRoofs -1` wobble is chaotic-CA noise; the change touches no `rng()`.)
+
+**Probe.** `probes/probe-roofplant.mjs` — build-vs-build isolation (161 law): HEAD (no plant) vs patched, each rebuilt
+in-page via `genWorld(seed)+__warp(61)` for a byte-identical city (163 law), clock + `time`/`waveT` frozen and
+`Math.random` stubbed *before* `genWorld` so the harbor ships and sea shimmer are deterministic. The raw changed-px
+count still wobbles with browser warm-up (balanced water shimmer, 161 corollary a), so the gate is **grey-plant-like
+px in the roof band vs the coast control**, not the raw count: on a clean deterministic run **seed 42 = 802 changed
+px, 98% plant-like grey (mean rgb 152,142,122 ≈ day-tinted `stone`), median y=524 (the mid-frame COM-roof band); the
+coast control (bottom fifth) holds only ~35 plant-like px.** Seed 7 the same shape (grey px concentrate mid-frame,
+control near-nil). The plant renders where intended and is absent from the control.
+
+**Visual.** Two agents (seed 42, seed 7), both **PASS**. Both located the grey bulkhead+box+vent clusters sitting
+correctly ON the flat commercial roofs (aligned to the hex tops, not floating/offset), muted concrete grey with no
+blowout, no z-order tears; existing roof furniture (helipads, solar, café discs) still reads. Whole-city wide frame at
+both seeds: the plant is barely-there texture at fit zoom — it adds skyline grain rather than dirtying it; the coast,
+pier, turbines and greenbelts all intact.
+
+**Verdict.** SHIPPED. Extends the roof-furniture vocabulary (MID's water tank) to the mid-rise COMMERCIAL mass, giving
+downtown's mid-height roofscape the lived-in grey a real block carries. **Banked for Urban:** the additive cell is
+spent (118) and Connect is measured-hard twice now (160 RES terracing, 165 high-street arcade — both host-adjacency
+failures), so Urban's next lap is Deepen/Polish. A COM arcade is only viable if a *straight-hex-axis* retail run is
+found (the `hstr` parade is not one). TOWER roofs (roof gardens/helipads) and RES/MID (water tanks) are now all
+plant-crowned; the remaining bare roof is IND (warehouses) if a further roofscape Deepen is wanted.

@@ -9143,3 +9143,78 @@ Tooltip-only, pop provably flat, reuses five existing predicates. People × Inte
   not re-classify position. It maps EVERY strollable/road hex, so it is also a ready oracle for "is this ped
   somewhere interesting."
 
+## Iteration 155 — the streetcar draws from an overhead wire (2026-07-11) [Transport × Deepen]
+
+**Vector.** Transport × **Deepen** (SHIPPED). Rotation named the domain — Transport was the single stalest (last
+146) — and 118's law + 138's findings rule out a Transport New element (entities saturated). Varied the kind off
+146 (Polish) / 154 (the recent IUX run) to **Deepen**, running the loop's most reliable move in its **draw** form
+(149's law): an ornament that asserts a relationship the draw ignores. The tram's comment (L5134) called its
+trolley pole *"a slim trolley pole to the overhead"* — but there **was no overhead.** The pole drew from
+`cy-6.6` to a lone contact dot at `(cx+1.3, cy-9.4)`, poking at empty air. Same shape as 149's frozen clock:
+the streetcar claimed to be an electric rail vehicle drawing power from a catenary, and drew none.
+
+**The seam.** `drawVehicle`'s `v.kind==='tram'` block (L5133). `A=ctr(v.x,v.y)`, `B=ctr(v.nx,v.ny)` (the A->B
+segment the tram is traversing), `L`, `lane` are all in scope at the top of `drawVehicle` (L5077-5079), so the
+overhead wire can be strung the length of the block at the SAME lane offset, raised a fixed height.
+
+**Change (~8 lines, draw-only).** Replaced the leaning pole+dot with (1) a **contact wire** from `A` to `B`,
+lane-shifted and raised `wh=9.6` (`ctx.moveTo(A[0]+lox,A[1]+loy-wh)…lineTo(B[0]+lox,B[1]+loy-wh)`) — because
+`cx=lerp(A,B,p)-ddy/L*lane` and `cy=lerp+ddx/L*lane*0.6`, the wire point directly above the tram is exactly
+`(cx,cy-wh)`, so the wire spans the ROAD (holds still as the tram slides under it), not the car; (2) a **vertical
+pantograph** from the roof `(cx,cy-6.6)` straight up to `(cx,cy-wh)`; (3) the contact shoe dot at `(cx,cy-wh)`.
+Kept the cream livery belt. No tile, entity, `rng()`, `hashCell`, `tick()` pass or terrain; strings pure-ASCII
+(134, comment only). Pop provably flat, stream-neutral.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0 (`towerHt +1` is the documented
+chaotic-CA headless wobble), entity counts identical (trams 54 · cars 360 …). Vacuous by construction — the
+probe is the gate.
+
+**Probe — `probes/probe-tramwire.mjs` (new, promoted).** Trams drift nondeterministically over the road network
+between loads (137's law), so it CLEARS **every** mover (clouds/birds/balloons spawn via `Math.random` and would
+put a noise floor on a whole-frame diff — see findings) and PLACES 120 trams (target) then 120 cars (control) at
+spread ROAD centres, all east, frozen clock+`waveT` (109). Metric = **whole-frame** changed-pixel fraction
+patched-vs-pristine-HEAD (in a frozen frame the only difference IS the wires, so no per-vehicle box / unit
+juggling). seeds 7/42: **tram-set 0.21% of frame changed** vs **car control 0.004%** — a ~50x separation,
+confined to the tram kind (the car draw is byte-identical). **PASS.**
+
+**Visual.** `probes/shot-tramwire.mjs` (new) places a run of trams on a **clear avenue** (front-of-frame, open
+ground/water in front so nothing occludes the overhead), camera-zooms, clips day + night. First shot placed the
+trams in a **tower canyon** and an agent correctly FAILED it (front-row towers buried the trams AND the wire,
+leaving pantograph nubs poking at air — see findings); the fair clear-avenue re-shoot then PASSED: a fresh agent
+read the wire as *"a single thin dark wire … unbroken across the full avenue … poles rise from the tram roofs and
+meet it"*, plausible catenary, no z-order tears/clipping/blowout, present day and night. Whole-city `wide` at
+seeds 42 & 7, one agent each: both **VISUAL: PASS** — balanced coherent coastal cities, nothing compounded (the
+wire is sub-pixel and invisible at fit zoom, so it adds no clutter there).
+
+**Verdict — DEEPENED.** The streetcar now draws power from an overhead contact wire strung over its avenue, where
+for the artifact's whole life its pole poked at empty air — it reads as an electric tram, joining the moon (135),
+the clock (149) and the vineyard (148/139) in the run of ornaments that now honor what they always claimed.
+Draw-only, stream-neutral, pop flat, ~8 lines. Transport's Deepen cell gains its next (28, 39, 55, 63, 112, 121,
+128, **155**); Transport is no longer stalest (Nature 148 now is).
+
+### Findings for later laps
+- **THE ASSERTS-MORE-THAN-IT-SHOWS *DRAW* TELL (149) PAID AGAIN — grep vehicle/ornament COMMENTS for a claimed
+  connection the geometry omits.** 149 found the frozen clock by its comment; this lap found the tram by *"pole to
+  the overhead"* over an overhead that wasn't drawn. Candidates still open (149's list): the firehouse bell is
+  static; museum/parliament are floodlit but otherwise inert. A pole/mast/gauge that *should* touch something is
+  the richest version.
+- **A LOW OVERHEAD ELEMENT IS OCCLUDED BY FRONT-ROW BUILDINGS — that is physically correct, but it means a
+  tower-canyon zoom can show a bare pantograph nub.** The wire draws in the tram's bucket (after its own two
+  cells' buildings, L5608) so it is correct against those, but nearer ROWS (drawn later, L5600) legitimately
+  overpaint it — so in dense downtown the wire hides behind the front towers (as real catenary would) and only the
+  nub pokes above. Unlike the monorail (drawn per-cell at `RAILH`, well above rooftops), the tram wire is at
+  street level and inherently occludable. Accepted as realistic; a shot MUST choose a clear avenue (open ground in
+  front) to judge it fairly, or it reads as broken nubs. **When shooting a low overhead detail, pick a
+  front-of-frame cell with open ground/water behind and in front — never a tower canyon.**
+- **A WHOLE-FRAME PATCHED-vs-HEAD DIFF NEEDS EVERY `Math.random` MOVER CLEARED, not just the seeded ones.** My
+  first cut cleared vehicles/peds/etc. but left clouds/birds/balloons, which spawn via `Math.random` at load and
+  differ between the two page loads — a 0.15% whole-frame noise floor that swamped the ~0.2% wire signal. Clearing
+  **all** movers dropped the control to 0.004% (pure render nondeterminism) and the ~50x separation appeared. For
+  any whole-frame two-load diff, clear the full entity list (the `[a,b,…].forEach(a=>a.length=0)` block), not a
+  subset. (The per-box metric in `probe-buslivery` sidesteps this by only sampling the vehicle body; a whole-frame
+  metric cannot.)
+- **`CW` IS A WORLD UNIT; `sx/sy` FROM `__find` ARE SCREEN px — do not mix them in a getImageData box.** My first
+  probe built the sample box as `0.7*CW*dpr` wide (world) but `(sy-12)…(sy-6.5)` tall (screen), so the box was the
+  wrong size and read ~0 signal. The whole-frame diff dodges the unit problem entirely and is the more robust
+  shape for a thin draw-only ornament whose exact pixels are hard to box.
+

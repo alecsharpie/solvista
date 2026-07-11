@@ -4321,6 +4321,19 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.ellipse(cx-3,cy-h-3.4,2.6,1.5,0,0,7);ctx.fill();
       ctx.fillStyle=col('gold',1.05);
       ctx.beginPath();ctx.ellipse(cx+3,cy-h-3.0,2.6,1.5,0,0,7);ctx.fill();
+    } else if(!c.solar&&!c.groof&&hashCell(x,y,seedNum^0x3C7B)<0.38){
+      /* rooftop plant: a concrete stair/lift bulkhead, a low mechanical box and a
+         vent stack on the parapet deck — the mid-rise commercial answer to the
+         walk-up's timber water tank (MID, ~L4277). A bare white roof cap gets the
+         lived-in grey a real block carries. hashCell-gated on a bare roof only
+         (the café/solar/green-roof cases keep their crown), no rng()/terrain:
+         stream and pop stay flat. Stone grey recedes under the day tint and
+         darkens with the scene at night, so it never blows out (iter 165). */
+      prism(gx+0.11,gy+0.03,0.10,0.075,h+1.4,h+3.4,col('stone',1.04),col('stoneDk',0.68),col('stoneDk',0.9)); /* stair/lift head */
+      prism(gx-0.13,gy+0.06,0.075,0.055,h+1.4,h+2.2,col('stoneDk',1),col('stoneDk',0.62),col('stoneDk',0.82)); /* mechanical box */
+      const[rcx,rcy]=px(gx+0.11,gy+0.03);
+      ctx.strokeStyle=col('ink',0.6);ctx.lineWidth=0.9;
+      ctx.beginPath();ctx.moveTo(rcx+1.4,rcy-h-3.4);ctx.lineTo(rcx+1.4,rcy-h-6.1);ctx.stroke(); /* vent stack */
     }
     if(LITAMT>0.35&&v>0.6){ /* evening crowd out on the strip, under the neon */
       const[cx,cy]=px(gx,gy);
