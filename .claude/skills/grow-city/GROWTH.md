@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · People **170** · Transport **171** · Urban **173** · Nature **174** · Civic **175** · Water **169**. (162, **167**, **172** = step-backs, no domain lap.)
-  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales dot the stubble fields in the weeks after the harvest cut — golden `straw`/`stubble` rolls scattered by `hashCell` when a FARM's per-cell `ph` is in the post-cut window 0.82–0.95, extending the farm's own crop calendar per 127's surface-not-entities law; draw-only stream+pop-neutral; `probe-haybale` FARM 1.8–2.1% at harvest → 0.000% in summer, ROAD ctl ~0). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). So the next lap (176) owes Water (169)**, then People (170)/Transport (171). 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). Next step-back at **177**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
+  Sky **161** · People **170** · Transport **171** · Urban **173** · Nature **174** · Civic **175** · Water **176**. (162, **167**, **172** = step-backs, no domain lap.)
+  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales dot the stubble fields in the weeks after the harvest cut — golden `straw`/`stubble` rolls scattered by `hashCell` when a FARM's per-cell `ph` is in the post-cut window 0.82–0.95, extending the farm's own crop calendar per 127's surface-not-entities law; draw-only stream+pop-neutral; `probe-haybale` FARM 1.8–2.1% at harvest → 0.000% in summer, ROAD ctl ~0). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). **176 took Water × Interaction/UX (the river names its course — a `Course — N hexes` row via a bridge-AWARE flood `riverCourse` so a span doesn't fragment the reach; the river was the barest tooltip in the city, zero data rows over its richest water system; a `Crossings` companion was DROPPED — bridge cells over-count vs connected components and the L1633 pave-over rule makes the unit ambiguous; draw-nothing tooltip, pop+stream flat, `probe-river` 254 river hexes named 3 seeds, sea control clean 1916 hexes, sea-leak 0). So the next domain lap (178) owes People (170)/Transport (171).** 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). Next step-back at **177**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -391,75 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 168 entries before Iteration 166 live in
+> **Archive:** the 169 entries before Iteration 167 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 166 — the woods drop their leaves in autumn (2026-07-11) [Nature × Deepen]
-
-**Vector.** Nature & landscape × **Deepen** (SHIPPED). Rotation named the domain — Nature was the single
-stalest (last 156). Kind: 156 was Nature's New element (spring wildflower understory on the FOREST floor); this
-**Deepens** that same system rather than adding a new one — the sanctioned compounding move (the river got good
-by compounding). The forest floor now keeps a full seasonal calendar: spring bloom (156) → summer green → **autumn
-leaf litter (166)** → winter bare. The canopy has ambered in autumn since forever (`applySeason`, s≈0.87), but the
-floor beneath it stayed green all year — the crown turned and the ground ignored it. This closes that gap on the
-biggest untouched-in-autumn Nature surface (FOREST = 63–69 hexes/city, per 156's histogram-first law).
-
-**The seam.** `case T.FOREST` (L3362) drew the floor as a `grassDk` fill + (since 156) a spring wildflower block.
-`applySeason` (L316) already computes an `autumn` factor from `year` but fed it only to the canopy palette
-([176,138,70] amber). I added a shared `autumnFall()` (L1121, next to `springBloom`) = `clamp(1-|s-0.87|/0.14,0,1)`,
-centred on the SAME autumn peak the crown turns on (a touch wider so the litter appears as the leaves start dropping
-and lingers into early winter) — ONE predicate the draw and the tooltip both read (112's law), so the litter cannot
-outlast the canopy nor claim a season the floor doesn't paint.
-
-**Change (~12-line draw + 1-line tooltip + 1 helper, all draw-only).** In the FOREST draw, right after the spring
-block and before the trees (so the canopy overlays the litter), an `autumnFall()>0.06`-gated block scatters 4–7
-warm leaf specks per hex — `hashCell(x,y,seedNum^SALT)` for count/positions (fresh salts 0x6A/0x6B/0x6C, no clash
-with spring's 0x5B–0x5D), colours `gold`/`brick`(russet)/`straw` matching the crown's autumn amber, size 1.6px
-(broader/denser than the bright spring specks), alpha `0.28+0.5·af`. A matching `describeTile` row (`['Understory',
-'Fallen leaves']` when `autumnFall()>0.4`, `else`-guarded against the spring row so they never both show). No tile,
-entity, `rng()`, `tick()` pass or terrain; strings pure-ASCII (134). Fully stream + pop neutral (hashCell only).
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0 (`greenRoofs +1` is documented
-chaotic-CA headless wobble), entity counts identical. Vacuous by construction — the probe is the gate.
-
-**Probe — `probes/probe-autumnfall.mjs` (new, promoted; sibling of `probe-woodbloom`).** Isolates the litter from
-the canopy's OWN seasonal amber by diffing **patched vs pristine HEAD at the SAME frozen autumn frame** — the only
-difference between the two builds is the leaf-litter block. Clears every mover first (tramwire law). seeds 7/42:
-**FOREST changed 11.82% / 11.39% in AUTUMN → 0.00% / 0.00% in SUMMER** (af=0, byte-identical), **ROAD control
-0.01–0.09%** both frames. So the litter appears only in autumn and only on forest — a ~130–1180× separation within
-the one tile type, zero leakage onto roads.
-
-**Visual.** `probes/shot-autumnfall.mjs` (new) camera-zooms a dense forest patch, clipping autumn vs summer; plus
-whole-city `wide` at seeds 42 & 7 (autumn). Three agents, one each, discriminate-don't-judge (108). Zoom agent:
-AUTUMN has gold/russet/tan specks clustered at the tree bases on the forest floor (not floating, not bleeding onto
-the clearing/road hexes), SUMMER floor plain olive — **VISUAL: PASS**. Both whole-city agents: balanced coherent
-autumn coastal city, no z-order tears/floaters/blowout, forests read as calm green/olive with the litter correctly
-sub-pixel at fit — **VISUAL: PASS** both.
-
-**Verdict — DEEPENED.** The woods now drop their leaves in autumn — a warm litter gathers on the forest floor as
-the canopy ambers overhead, giving the 69-hex woodland a full four-season floor (spring flowers → summer green →
-autumn litter → winter bare) instead of a green fill that ignored the autumn crown above it. Draw-only, stream +
-pop neutral, one shared predicate joining `springBloom`/`orchardPhase`/`vinePhase`. Nature is no longer stalest
-(Civic 158 now is).
-
-### Findings for later laps
-- **`autumnFall()` COMPLETES the shared year-predicate set** (`springBloom` · `orchardPhase` · `vinePhase` ·
-  `autumnFall`). Anything that should key on the autumn window (a future MEADOW seed-head browning, migratory-bird
-  departure, a bonfire-season cue) should READ it, not re-clamp. Like `springBloom` it reads the FAST `year` and is
-  fine for a CONTINUOUS alpha (drift tolerated); a DISCRETE autumn/not readout off it would strobe (134).
-- **A SEASON-COMPLEMENT DEEPEN is the cleanest way to re-touch a domain you just added to.** 156 shipped the spring
-  half of the forest floor as a New element; 166 shipped the autumn half as a Deepen one lap later. The two are
-  probed identically (patched-vs-pristine at one frozen frame, the other season = the confinement control), reuse
-  the same salts-family and the same shot rig, and together read as a single system rather than two features. When
-  a New element lands a *seasonal* draw, its complementary season is a ready-made next Deepen for that domain.
-- **THE PROBE PATH LAW BIT AGAIN — `probe-woodbloom.mjs` / `shot-woodbloom.mjs` still resolve `join(HERE,
-  'solvista.html')`** (i.e. inside `probes/`), which only worked because 156 ran them from the repo root before the
-  `git mv`. `probe-autumnfall.mjs` / `shot-autumnfall.mjs` resolve `../../../../solvista.html` and `../shots` from
-  their own location and run correctly in place. The two 156 scripts are latently broken if ever re-run from the
-  tracked dir; not fixed this lap (out of scope) but flagged.
 
 ## Iteration 167 — the thirteenth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
 
@@ -1035,3 +971,83 @@ owes it).
   single host, night-vs-day diff, ROAD control, occlusion=SKIP). `probe-parliament.mjs` adapted it in minutes:
   swap the `c.kind` filter, bump `R` for a taller host, keep the rest. For the next single-civic draw/light
   vector, clone one of these two rather than writing a probe from scratch.
+
+## Iteration 176 — the river names its course (2026-07-12) [Water & coast × Interaction/UX]
+
+**Vector — Water & coast × Interaction/UX** (SHIPPED). Rotation named the stalest domain, **Water** (last SHIP
+169; the 175 entry explicitly owed the 176 lap to Water). Kind: **Interaction/UX**, Water's stalest cell (only
+97, 141 — and the stalest I/UX across all domains: Nature 148 · Urban 133 · Civic 140 · Sky 144 · People 154 ·
+Transport 171 · **Water 141**). A draw-nothing tooltip vector — guaranteed-flat pop, and it varies hard off the
+recent New element (169/170) / Deepen (175) / New element (174) run.
+
+**The seam — the asserts-LESS-than-the-code-knows tell (117/122/129/148/171), in its Interaction form.** The
+**river** is the city's biggest water feature and the spine of its most-compounded system (banks → bridges →
+marsh → herons → kayaks), yet `describeTile`'s river branch (L6397) gave it the **barest tooltip in the artifact**:
+a flat `title='River'` / `sub='Fresh water winding down to the sea.'` with **zero data rows** — while the
+boulevard (171), the woods stand (117) and the kelp bed name their own extent via `floodSize`. The draw knew the
+whole waterway; the label named nothing about it.
+
+**Change (~18 lines: a `riverCourse(x,y)` helper + a 2-line data-row push, tooltip logic only).** A river hex now
+carries a **`Course — N hexes`** row = the whole waterway's open-water hex count. `riverCourse` is a **bridge-aware**
+flood: a bridge is a ROAD drawn over the river (genWorld L624; the L1633 rule also paves dense stretches into
+bridge-road), so a naive `riv`-only flood **fragments the course at every span** — the flood therefore *steps
+through* `bridge` road to keep the reach continuous, but counts only WATER hexes (every counted hex is one you can
+see as river). Sea water (`WATER && !riv`) never qualifies, so the flood **stops at the mouth** and can't walk the
+coast highway. No tile / entity / `rng()` / `hashCell` / `tick()` pass / terrain / canvas draw; strings pure-ASCII
+(134). Pop + stream provably flat.
+
+**Considered and DROPPED — a `Crossings` row.** The bridge-aware flood also *counts* the spans, so a
+`Crossings — N bridges` row was the obvious companion. A check (`probe-bridgecheck`, ad-hoc, deleted) killed it:
+raw bridge-**cell** counts wildly over-report (seed 7's longest course = 37 bridge cells but only **4** distinct
+connected components), and the L1633 rule *paves river water into bridge-road* in dense downtown, so a "bridge"
+component conflates a transverse crossing with a longitudinal covered stretch — no honest single number. Course
+(open-water hexes) has none of that murk. Shipped the clean single datum, exactly as boulevard/stand/bed do; a
+distinct-crossings count is banked below if it ever earns a Deepen.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity/tile counts
+identical (`greenRoofs -1` = documented chaotic-CA headless jitter, touches no `rng()`). Vacuous by construction
+(a tooltip-only change draws nothing) — the probe is the gate.
+
+**Probe — `probes/probe-river.mjs` (new, promoted).** A DOM/logic probe (the change is pure tooltip logic). Per
+122's law — a tooltip vector must check its claim against **independently recomputed truth**, not just that it
+renders — the probe re-implements the bridge-aware flood itself (its own predicate + count, using only the grid
+topology `nbrs6`) and asserts describeTile's printed N equals that recompute; calling `riverCourse` would only
+prove the row renders. **TARGET** every river hex titles `River` AND carries a `Course N hex(es)` row == the
+independent flood (>=1). **CONTROL** every SEA hex titles `Ocean`, carries a `Depth` row, and carries **no**
+`Course` row; the flood must also never count a sea hex (**sea-leak guard**). seeds 7/42/1234: river
+**111/48/95** hexes, named+course **OK 111/111 · 48/48 · 95/95**, course-mismatch **0**, **sea-leak 0**; sea
+control clean **630/630 · 639/639 · 647/647** (bad 0); longest course **61/48/58** hexes. **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-river.mjs` (new, promoted).** shoot.mjs can't hover, so it drives Playwright directly:
+finds a mid-course on-screen river hex, aims the real cursor at it, screenshots the rendered tooltip, and prints
+its text. seeds 42/1234 render `River · Fresh water winding down to the sea. · Course 48/58 hexes`, pageerrors
+none. Two agents (one per seed), blind, both **VISUAL: PASS** — tooltip box crisp and legible, correct three-line
+content, no clipping / overlap garbage / mojibake; cursor sits on a blue river hex; whole-city `wide` (seed 42,
+same agent) reads balanced and beautiful, no z-order tears / floaters / blowout.
+
+**Verdict — SHIPPED.** The river — the artifact's biggest waterway and the barest tooltip in the city — now names
+its own course, the same extent-flood the boulevard, the woods and the kelp bed use. Draw-only, pop + stream flat,
+~18 lines + a probe + a shot script. Water's Interaction/UX cell gains 176 (**97**, **141**, **176**); Water is no
+longer stalest (Sky 161 now is the stalest number, but post-saturation; the next domain lap owes People (170) /
+Transport (171)).
+
+### Findings for later laps
+- **THE ASSERTS-LESS-THAN-THE-CODE-KNOWS TELL HAS A NAKED form: a tile whose tooltip has NO data rows at all.**
+  117/122/129/148/171 all found a tooltip that named *some* things but omitted one; the river named *nothing* —
+  a bare title+sub over the city's richest water system. When rotation lands on a mature domain, grep
+  `describeTile` for the branches that push zero `data` rows; those are the barest, highest-yield tells.
+- **A NAIVE FLOOD FRAGMENTS AT ANYTHING THAT INTERRUPTS THE PREDICATE — make the flood aware of the interrupter.**
+  The river's `riv` water is split by bridge-road (genWorld L624 + the L1633 pave-over rule), so `floodSize(riv)`
+  would have reported a stub for most hovers. Stepping the flood *through* the interrupter while counting only the
+  real cells keeps the extent honest. Reuse this shape for any linear feature crossed by a different tile type
+  (a promenade broken by a plaza, a rail line through a station).
+- **A COUNT IS ONLY HONEST IF ITS UNIT IS UNAMBIGUOUS — check the connected-components before shipping "N of X".**
+  The `Crossings` row died because bridge *cells* (37) ≠ distinct crossings (4 components), and the L1633 rule
+  makes a component either a real span or a covered stretch — two meanings, one number. When a candidate datum
+  counts cells of a clustered feature, count its connected components first (a 20-line ad-hoc probe) and confirm
+  the unit is what the label claims. Prefer the datum whose unit is unambiguous (open-water hexes) over the one
+  that reads well but can't be defined cleanly.
+- **STILL banked for Water (123, unchanged):** the pier/lifeguard tower are still `rng()`-salted — site them on a
+  depth by respending their draws, but VARY 123's site-on-depth mechanism. And a distinct-crossings river datum
+  (connected-component count, filtering longitudinal covers) is a possible future Water Deepen if it earns the
+  ambiguity cost.

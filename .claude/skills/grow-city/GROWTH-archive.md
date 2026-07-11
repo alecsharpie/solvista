@@ -9813,3 +9813,67 @@ failures), so Urban's next lap is Deepen/Polish. A COM arcade is only viable if 
 found (the `hstr` parade is not one). TOWER roofs (roof gardens/helipads) and RES/MID (water tanks) are now all
 plant-crowned; the remaining bare roof is IND (warehouses) if a further roofscape Deepen is wanted.
 
+## Iteration 166 — the woods drop their leaves in autumn (2026-07-11) [Nature × Deepen]
+
+**Vector.** Nature & landscape × **Deepen** (SHIPPED). Rotation named the domain — Nature was the single
+stalest (last 156). Kind: 156 was Nature's New element (spring wildflower understory on the FOREST floor); this
+**Deepens** that same system rather than adding a new one — the sanctioned compounding move (the river got good
+by compounding). The forest floor now keeps a full seasonal calendar: spring bloom (156) → summer green → **autumn
+leaf litter (166)** → winter bare. The canopy has ambered in autumn since forever (`applySeason`, s≈0.87), but the
+floor beneath it stayed green all year — the crown turned and the ground ignored it. This closes that gap on the
+biggest untouched-in-autumn Nature surface (FOREST = 63–69 hexes/city, per 156's histogram-first law).
+
+**The seam.** `case T.FOREST` (L3362) drew the floor as a `grassDk` fill + (since 156) a spring wildflower block.
+`applySeason` (L316) already computes an `autumn` factor from `year` but fed it only to the canopy palette
+([176,138,70] amber). I added a shared `autumnFall()` (L1121, next to `springBloom`) = `clamp(1-|s-0.87|/0.14,0,1)`,
+centred on the SAME autumn peak the crown turns on (a touch wider so the litter appears as the leaves start dropping
+and lingers into early winter) — ONE predicate the draw and the tooltip both read (112's law), so the litter cannot
+outlast the canopy nor claim a season the floor doesn't paint.
+
+**Change (~12-line draw + 1-line tooltip + 1 helper, all draw-only).** In the FOREST draw, right after the spring
+block and before the trees (so the canopy overlays the litter), an `autumnFall()>0.06`-gated block scatters 4–7
+warm leaf specks per hex — `hashCell(x,y,seedNum^SALT)` for count/positions (fresh salts 0x6A/0x6B/0x6C, no clash
+with spring's 0x5B–0x5D), colours `gold`/`brick`(russet)/`straw` matching the crown's autumn amber, size 1.6px
+(broader/denser than the bright spring specks), alpha `0.28+0.5·af`. A matching `describeTile` row (`['Understory',
+'Fallen leaves']` when `autumnFall()>0.4`, `else`-guarded against the spring row so they never both show). No tile,
+entity, `rng()`, `tick()` pass or terrain; strings pure-ASCII (134). Fully stream + pop neutral (hashCell only).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0 (`greenRoofs +1` is documented
+chaotic-CA headless wobble), entity counts identical. Vacuous by construction — the probe is the gate.
+
+**Probe — `probes/probe-autumnfall.mjs` (new, promoted; sibling of `probe-woodbloom`).** Isolates the litter from
+the canopy's OWN seasonal amber by diffing **patched vs pristine HEAD at the SAME frozen autumn frame** — the only
+difference between the two builds is the leaf-litter block. Clears every mover first (tramwire law). seeds 7/42:
+**FOREST changed 11.82% / 11.39% in AUTUMN → 0.00% / 0.00% in SUMMER** (af=0, byte-identical), **ROAD control
+0.01–0.09%** both frames. So the litter appears only in autumn and only on forest — a ~130–1180× separation within
+the one tile type, zero leakage onto roads.
+
+**Visual.** `probes/shot-autumnfall.mjs` (new) camera-zooms a dense forest patch, clipping autumn vs summer; plus
+whole-city `wide` at seeds 42 & 7 (autumn). Three agents, one each, discriminate-don't-judge (108). Zoom agent:
+AUTUMN has gold/russet/tan specks clustered at the tree bases on the forest floor (not floating, not bleeding onto
+the clearing/road hexes), SUMMER floor plain olive — **VISUAL: PASS**. Both whole-city agents: balanced coherent
+autumn coastal city, no z-order tears/floaters/blowout, forests read as calm green/olive with the litter correctly
+sub-pixel at fit — **VISUAL: PASS** both.
+
+**Verdict — DEEPENED.** The woods now drop their leaves in autumn — a warm litter gathers on the forest floor as
+the canopy ambers overhead, giving the 69-hex woodland a full four-season floor (spring flowers → summer green →
+autumn litter → winter bare) instead of a green fill that ignored the autumn crown above it. Draw-only, stream +
+pop neutral, one shared predicate joining `springBloom`/`orchardPhase`/`vinePhase`. Nature is no longer stalest
+(Civic 158 now is).
+
+### Findings for later laps
+- **`autumnFall()` COMPLETES the shared year-predicate set** (`springBloom` · `orchardPhase` · `vinePhase` ·
+  `autumnFall`). Anything that should key on the autumn window (a future MEADOW seed-head browning, migratory-bird
+  departure, a bonfire-season cue) should READ it, not re-clamp. Like `springBloom` it reads the FAST `year` and is
+  fine for a CONTINUOUS alpha (drift tolerated); a DISCRETE autumn/not readout off it would strobe (134).
+- **A SEASON-COMPLEMENT DEEPEN is the cleanest way to re-touch a domain you just added to.** 156 shipped the spring
+  half of the forest floor as a New element; 166 shipped the autumn half as a Deepen one lap later. The two are
+  probed identically (patched-vs-pristine at one frozen frame, the other season = the confinement control), reuse
+  the same salts-family and the same shot rig, and together read as a single system rather than two features. When
+  a New element lands a *seasonal* draw, its complementary season is a ready-made next Deepen for that domain.
+- **THE PROBE PATH LAW BIT AGAIN — `probe-woodbloom.mjs` / `shot-woodbloom.mjs` still resolve `join(HERE,
+  'solvista.html')`** (i.e. inside `probes/`), which only worked because 156 ran them from the repo root before the
+  `git mv`. `probe-autumnfall.mjs` / `shot-autumnfall.mjs` resolve `../../../../solvista.html` and `../shots` from
+  their own location and run correctly in place. The two 156 scripts are latently broken if ever re-run from the
+  tracked dir; not fixed this lap (out of scope) but flagged.
+

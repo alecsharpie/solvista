@@ -1140,6 +1140,25 @@ function floodSize(x,y,pred){
 function standSize(x,y){return floodSize(x,y,isWood)}         /* woodland stand */
 function bedSize(x,y){return floodSize(x,y,m=>m.t===T.KELP)}  /* kelp bed */
 function boulevardSize(x,y){return floodSize(x,y,m=>m.t===T.ROAD&&m.treed)} /* tree-lined run */
+/* how many open-water hexes make up a river's whole course, hills to sea. Unlike the
+   other flood helpers this must TRAVERSE bridge cells: a bridge is a ROAD drawn over
+   the river (genWorld L624; the water under it stays split, and the L1633 rule paves
+   dense stretches into bridge-road too), so a plain `riv` flood fragments the course
+   at every span and undercounts. So the flood steps through `bridge` road to keep the
+   waterway continuous, but counts only the WATER hexes — every hex in the total is one
+   you can see as river. Sea water (WATER && !riv) never qualifies, so the flood stops
+   at the mouth and cannot walk the coast highway (only `bridge` road continues it). */
+function riverCourse(x,y){
+  const isRiv=m=>!!m&&((m.t===T.WATER&&m.riv)||(m.t===T.ROAD&&m.bridge));
+  const start=idx(x,y); if(!isRiv(cells[start]))return 0;
+  const seen=new Set([start]), stack=[[x,y]]; let hexes=0;
+  while(stack.length){
+    const[a,b]=stack.pop(); if(cellAt(a,b).t===T.WATER)hexes++;   /* count river water, step through bridges */
+    nbrs6(a,b,(p,q)=>{const m=cellAt(p,q); if(!isRiv(m))return;
+      const j=idx(p,q); if(seen.has(j))return; seen.add(j); stack.push([p,q]);});
+  }
+  return hexes;
+}
 /* which way a lot's public face should turn: +1 if the street it fronts lies east,
    -1 if west. Civics are sited by roadNear, so one usually does; a lot fronting
    roads evenly both ways (or none) falls back to the caller's per-city hash.
@@ -6505,6 +6524,12 @@ function describeTile(c,x,y){
   /* the seabed the tile is now drawn from — hovering names the depth you can see */
   if(c.t===T.WATER&&!c.riv){const d=rDeep[idx(x,y)];
     data.push(['Depth',d<SHELF0?'Shoals':d<=SHELF1?'Coastal shelf':d<DEEPR?'Open water':'Deep water']);}
+  /* the river is the city's biggest water feature and had the barest tooltip — a
+     bare 'River' with no data, while the boulevard, the woods and the kelp bed all
+     name their own extent (floodSize). Name the river's whole course the same way:
+     a bridge-aware flood (riverCourse) so a span in the middle doesn't split the reach. */
+  if(c.t===T.WATER&&c.riv){const n=riverCourse(x,y);
+    data.push(['Course',n+(n===1?' hex':' hexes')]);}
   /* the sea is the one part of the diorama that changes while you look at it */
   const tidal=c.t===T.BEACH||c.t===T.DUNE||c.t===T.KELP||c.t===T.MARSH
              ||(c.t===T.WATER&&!c.riv)||pierAt(x,y);
