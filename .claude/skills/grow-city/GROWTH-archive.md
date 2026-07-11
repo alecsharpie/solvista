@@ -7695,3 +7695,76 @@ declining to build a measured-dead one is the same working one step earlier.
   geometry admits it at the sites that matter.** 114's 3-hex mock was genuinely legible; the error was
   generalising from a hand-placed patch to a quarter whose real cells cannot form one. Prove the *siting*, not
   just the *look*.
+
+## Iteration 132 — the kelp beds grow a canopy (2026-07-11)
+
+**Vector.** Water & coast × **Polish**. Rotation named the domain — Water was the single stalest (123).
+Kind was steered by two constraints: Water's banked cue (pier/lifeguard-on-depth) *repeats* 123's
+site-on-depth mechanism, and the header said to **vary it or pick a different Water kind**; and Deepen
+had paid 4 of the last 9 laps. Polish satisfies both (it varies off Deepen and off the banked cue). The
+target chose itself: the kelp bed is the artifact's own documented failure surface — *"kelp lined the
+entire coast dark for ~13 iterations"* — and the draw was a **flat `waterDk` hex + four sub-pixel fronds**,
+so a bed read as a dark absence rather than a living forest.
+
+**Change.** `case T.KELP` now floats an **olive frond-canopy** on the dark shallows: 4 broad soft
+elliptical mats per hex, `colMix('waterDk','canopy',t,·)` (only ~a third of the way toward `canopy`, `t`
+quantized so the cache stays bounded), hashCell-placed (no `rng()`), clipped to the hex, drifting on
+`waveT` like the fronds above them. The base dark fill and the four upright fronds are untouched and draw
+on top. The mats are **greener, not brighter** — the bed keeps its place as the darkest thing inshore
+(the palette's stated intent, L266–269), it just reads as canopy instead of a hole.
+
+**Census.** PASS, exit 0. Draw-only and stream-neutral (no terrain, no `rng()`) — tile histogram empty,
+all core metrics +0, as expected for a Polish. (`greenRoofs` wobbled ±1 between runs on *pristine* HEAD
+too — the roof-adoption CA ticks a load-dependent number of times during the headless warp; it is census
+timing-noise, not this edit, which lives entirely inside `drawCell`.)
+
+**Probe.** `probes/probe-kelp.mjs` (promoted). Freezes the sim (same-frame-control law — mats AND fronds
+drift on `waveT`), samples a 5×5 disc at every KELP hex centre on patched vs `git show HEAD:`, seeds
+7/42/1234 at neutral tide / dry-peak / midday. Result: **KELP moved, mean |ΔRGB| 4.56**; olive index
+**(g−b) 18.0 → 26.5** (the mats add green, not blue); luminance **116.5 → 117.4** (+0.9, so the bed did NOT
+brighten — hold-the-mean holds, it stays darkest inshore). **WATER control: mean |ΔRGB| 0.20** (≈0, just
+hex-edge antialiasing where a water hex abuts a kelp hex) — the edit touched only `case T.KELP` and the
+control proves the rest of the sea did not move. VERDICT: PASS.
+
+**Visual.** Two agents, one per seed, coast-zoom + a whole-city wide (seed 7). Seed 42 **located the
+olive kelp beds** hugging the beach edge on the lower-left, reading as *"dark olive/green smudges on the
+darker teal — the darkest inshore element, greener rather than a flat black hole,"* inside the water hexes,
+no spill onto sand or open sea. Seed 7 PASSED with the olive read *marginal at that zoom* (it saw the
+darker inshore patches but could not confirm the tint) — which the probe's control-checked +8.5 olive shift
+settles quantitatively. Both: no z-order tears, no floaters, no blowout anywhere; the whole-city frame
+still reads as a balanced, beautiful coast, nothing compounded into darkness. Both `VISUAL: PASS`.
+
+**Verdict — SHIPPED.** The kelp bed reads as a kelp forest from above, not a dark hole, and the change is
+provably confined to kelp hexes (control 0.20) without darkening the coast (Δlum +0.9). Draw-only,
+stream-neutral, ~25 lines.
+
+### Findings
+- **THE KELP TILE'S DRAW NOW READS `waterDk`/`canopy` AS A CANOPY, BUT ITS TOOLTIP IS STILL MUTE** —
+  `TILEDESC[T.KELP]` says only *"Seaweed swaying in the shallows"* and `describeTile` prints nothing of the
+  bed. The un-cashed KELP tell (header) is still open, and now *richer*: a bed knows its extent (a flood
+  fill of KELP neighbours, exactly the woods' `Stand — N hexes`, iter 117) and its depth (`rDeep`). That is
+  the next Water × Interaction/UX lap when Water comes round again — but it needs a probe that recomputes
+  bed size independently (122's law: a tooltip vector needs truth checked against recomputation, not a
+  screenshot that it renders).
+- **A "re-tone a small surface" Polish gets the same instrument as a large one** — `probe-kelp` is
+  `probe-seatone`'s shape (freeze, sample the hex-centre disc on patched vs `git show HEAD:`, join by key)
+  narrowed to a sparse tile with a **same-domain control** (open WATER). The control is what makes a draw-only
+  Polish gate-able at all: |ΔRGB| 4.56 on the target vs 0.20 on the control is a verdict a screenshot cannot
+  give, and it caught nothing wrong here only because the edit was correctly scoped — that is the point.
+- **⚠ `probe-seatone.mjs` RESOLVES `REPO` AS `dirname(import.meta.url)`, which is `probes/`, NOT the repo
+  root** — so `join(REPO,'solvista.html')` and `git -C REPO` only work if you happen to run it from a cwd
+  where that path resolves, and it violates the skill's own law (resolve `../../../../solvista.html` from the
+  probe's location). `probe-kelp` does it right (`resolve(HERE,'../../../..')`) and runs from any cwd; the
+  older probes that copied the `dirname` form should be fixed the next time one is touched.
+
+
+<!-- Header bullet moved from GROWTH.md at iter 142 (closed cue, condensed to a one-line pointer there) -->
+**Open cue (d) — the civic quarter's real square — CLOSED, MEASURED DEAD (iter 131; do not re-open).** cue (d)'s
+two goals are severable and each is settled: the **connective** goal (the quarter reads as one precinct,
+not isolated domes) is **already shipped** by the fete "civic mile" bunting (`c.fete`, L1764). The **≥3-hex
+pedestrian-square** goal is **geometrically impossible at the quarter** (`probe-quarter.mjs`, seeds
+7/42/1234): taking the shared road yields **2 hex max** (it bridges a forecourt and a *building*, not two
+forecourts) and every candidate road is the **arterial/monorail/boulevard/bus-stop spine** the invariants
+forbid; growing a forecourt by annexing lots reaches 3 only at the **lone (non-quarter) majors**, never the
+quarter's own (0–1 pavable neighbours, boxed in). So a 3-hex square can exist only where there is no quarter
+to make it *civic*. 114 reverted this; 131 proved it dead in 4s/seed with a geometry probe. Leave it closed.
