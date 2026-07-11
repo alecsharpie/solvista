@@ -9641,3 +9641,79 @@ flat against the honest interleaved control.
   stars 153, biolum 159, dome 158) lands on night alone, so night is where the loop's draw work quietly compounds.
   +1.1% over 5 iters is fine, but this is the column a future step-back should watch first.
 
+## Iteration 163 — the standing crowds sit down on the pavement (2026-07-11) [People & activity × Polish]
+
+**Vector.** People & activity × **Polish** (SHIPPED). Rotation named the domain (after the 162 step-back the lap
+owed the stalest, **People**, last SHIP 154). Kind broke the hot **Deepen** streak (155/158/159/161) to **Polish** —
+and cashed a banked, *named* People finding: iter 137 gave the WALKING figures (peds/dogs/joggers) the house-style
+`shadS` contact shadow and explicitly banked that *"only the static standing crowds still cast no shadow."* This
+closes that gap. A banked finding outranks kind-rotation (the header's own law).
+
+**The seam.** Four static "crowd" draws render little standing figures with a body `fillRect` + an `ink` head arc
+and **no `shadS`** — so they float a hair above the ground while every ped, dog, jogger and vehicle around them is
+seated on a contact smudge. Two stand on the GROUND: the **evening strip crowd** on COM (`L4319`, gated
+`LITAMT>0.35 && v>0.6`, 86 host tiles/city) and the **school-run drop-off crowd** at the gate (`L4664`, gated
+`dayT` in (0.15,0.30)). The other two were left by design: the **platform queue** stands on an ELEVATED deck (a
+ground-contact ellipse doesn't apply) and the **match-day concourse** is abstract 1.2px dots, not figures.
+
+**Change (~5 lines, draw-only).** One `shadS(...)` at each ground-crowd figure's FEET, drawn *before* the body so
+the figure reads on top — exactly 137's idiom. Strip: `shadS(cx+ox,cy+oy-0.5,0.09,0.16)` (feet = body bottom).
+School: `shadS(px4,py4,kid?0.06:0.09,kid?0.15:0.16)` — kids get the smaller smudge (137's kid-shadow radius). No
+tile, entity, `rng()`, `hashCell` spawn, `tick()` pass or terrain; strings pure-ASCII (134). Stream + pop provably
+flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0 (`towerHt -1` documented chaotic
+wobble). Vacuous by construction — the probe is the gate.
+
+**Probe — `probes/probe-crowdshadow.mjs` (new, promoted).** Whole-frame build-vs-build diff (iter 161's
+locate-by-construction), patched vs pristine HEAD, at three frozen frames (strip-evening `dayT`=0.88, school-morning
+0.22, midday control 0.45). Getting a clean night diff took **three determinism fixes**, all findings below: (1) the
+pre-freeze RAF loop runs a load-timing-dependent number of `tick()`s that flip 2035 development cells DIFFERENTLY
+per load, swamping the shadow — so the probe *rebuilds* the city in-page (`genWorld(seed)+__warp(61)`, identical code
+both builds → byte-identical cities) rather than trusting the loaded state; (2) the 70-star field (`STARS`, iter
+153) is built once at load with UNSEEDED `Math.random`, so it differs per load — cleared; (3) any residual draw-time
+`Math.random` stubbed to a constant. A shadow can only DARKEN, so the diff counts darker vs lighter px (161's
+directional law). Result seeds 7/42: **strip GATE darker 234/206 px, lighter 0/0** (a pure directional shadow),
+**midday control flat** (0-3 darker / 0-7 lighter). The SCHOOL crowd is genuinely below the whole-frame noise floor
+(4 schools, a narrow window — its pooled darker/lighter FLIPS run to run, 16/4 then 19/37), so it is **not gated
+numerically** — same `shadS` idiom, confirmed in daylight by the visual shot. **PROBE PASS.** A LOUD-red test
+(iter 161's law) first proved the draw path executes (2177 red px vs HEAD 0) after a sampler bug (a 3-arg call to a
+4-arg `frame()` had made both builds render identical garbage → a false 0) — the loud frame located it in one run.
+
+**Visual.** `probes/probe-crowdshot.mjs` (new) shoots before/after (HEAD vs patched) clips at identical framing
+(same deterministic rebuild). Whole-city `wide` frames (dusk seed 42, morning seed 7): both agents **VISUAL: PASS** —
+balanced coherent coastal city, lit core→dark rim, no z-order tears / floaters / blown-out color, nothing
+compounded. Both agents could NOT resolve the ~2px contact shadow itself at crop scale (it is sub-resolution in a
+static screenshot, as any contact shadow is) — which is precisely the case the skill says a probe settles, and the
+probe does (234/0). The shadow is the *identical* `shadS` call peds/dogs/vehicles have used since 137, at the same
+alpha and the feet, so its appearance is inherited from those already-shipped shadows; the agents' job here was
+whole-frame coherence, which passed.
+
+**Verdict — SHIPPED.** The evening strip crowd and the school-run drop-off crowd now sit on the pavement on a
+contact shadow, where for the artifact's whole life they floated — every figure in the city is finally grounded
+(137 did the movers; 163 does the static crowds). Draw-only, stream + pop flat, ~5 lines + two probes. People ×
+Polish gains its next (84, 137, **163**); People is no longer stalest (Transport 155 now is).
+
+### Findings for later laps
+- **A WHOLE-FRAME NIGHT build-vs-build diff is polluted by the UNSEEDED `STARS` field (built once at load) — clear
+  `STARS` (and stub `Math.random`) for a deterministic night diff.** 161's whole-frame law assumed daytime; at night
+  the 70 randomly-placed stars differ per load and read as ~500 changed px at high amplitude, dwarfing a faint
+  ground change. `STARS.length=0` before render kills it. Any future NIGHT whole-frame probe must do this.
+- **Don't trust the LOADED city for a build-vs-build diff — REBUILD it in-page (`genWorld(seed)+__warp(N)`).** The
+  RAF loop runs a wall-clock-dependent number of `tick()`s between load and freeze, and at a developed era (2035)
+  each tick flips upgrade/succession cells, so the two loads render *different cities* even at the same seed. Calling
+  `genWorld` (which reseeds `rng=mulberry32(seed)`) + `__warp` reproduces a byte-identical city regardless of load
+  timing. This is the fix for the class of nondeterminism 137/154 flagged as "the live system is non-reproducible" —
+  for anything DETERMINISTIC (terrain, hashCell draws) you *can* get a clean diff, you just have to rebuild.
+- **Gate a probe on the STRONG instance; report a SPARSE one directionally, don't gate it.** The strip crowd (86
+  tiles) gives a rock-solid signal; the school crowd (4 tiles) sits at the noise floor and its signed/pooled count
+  flips sign run to run. Forcing a numeric gate on the sparse instance would be grading noise. Gate the strong one,
+  confirm the sparse one shares the identical code path + a visual, and say so.
+- **A contact shadow / sub-2px feature is below AGENT SCREENSHOT RESOLUTION — the probe is authoritative, the agent
+  does coherence (137's precedent, restated).** Two blind agents FAILed "can't see the shadow"; that is a resolution
+  limit, not a defect, and the probe (which CAN measure 2px) is the verdict. Frame the agent's job as the whole-city
+  coherence check, not "spot the 2px smudge."
+- **Still shadowless BY DESIGN:** the elevated **platform queue** (riders on a deck, not ground — a ground ellipse
+  would spill) and the abstract **match-day concourse** dots (1.2px marks, not figures). If a future lap wants the
+  platform riders grounded, the shadow must land on the DECK surface (its own small ellipse), not the ground plane.
+

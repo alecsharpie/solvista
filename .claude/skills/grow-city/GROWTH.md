@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · People **170** · Transport **171** · Urban **165** · Nature **166** · Civic **168** · Water **169**. (162, **167**, **172** = step-backs, no domain lap.)
-  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps); 172 was the holistic step-back (NINTH clean bill), so the next domain lap (173) owes Urban (165)**, then Nature (166)/Civic (168). 171 took Transport × Interaction/UX (the boulevards name themselves — a treed ROAD now titles `Boulevard` + reports its contiguous run `Length — N blocks`, the draw had rendered an allee both kerbs for the artifact's whole life while the tooltip said `Avenue`; the asserts-less-than-the-code-knows tell, `probe-boulevard` 347/347 named+length, controls clean 3 seeds). 170 took People × New element (the pier hails its anglers — day-only fishing figures stand on the boardwalk deck, rod out over the water, line to a float; a New element on the pier *surface* per 127, and it FIXED a latent gap where the deck vanished over kelp; draw-only, `probe-anglers` day 2.18%/0.86% → night 0.00%, ROAD ~0). Next step-back at **177**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
+  Sky **161** · People **170** · Transport **171** · Urban **173** · Nature **166** · Civic **168** · Water **169**. (162, **167**, **172** = step-backs, no domain lap.)
+  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). 171 took Transport × Interaction/UX (the boulevards name themselves — a treed ROAD now titles `Boulevard` + reports its contiguous run `Length — N blocks`, the draw had rendered an allee both kerbs for the artifact's whole life while the tooltip said `Avenue`; the asserts-less-than-the-code-knows tell, `probe-boulevard` 347/347 named+length, controls clean 3 seeds). 170 took People × New element (the pier hails its anglers — day-only fishing figures stand on the boardwalk deck, rod out over the water, line to a float; a New element on the pier *surface* per 127, and it FIXED a latent gap where the deck vanished over kelp; draw-only, `probe-anglers` day 2.18%/0.86% → night 0.00%, ROAD ~0). Next step-back at **177**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -391,87 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 165 entries before Iteration 163 live in
+> **Archive:** the 166 entries before Iteration 164 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 163 — the standing crowds sit down on the pavement (2026-07-11) [People & activity × Polish]
-
-**Vector.** People & activity × **Polish** (SHIPPED). Rotation named the domain (after the 162 step-back the lap
-owed the stalest, **People**, last SHIP 154). Kind broke the hot **Deepen** streak (155/158/159/161) to **Polish** —
-and cashed a banked, *named* People finding: iter 137 gave the WALKING figures (peds/dogs/joggers) the house-style
-`shadS` contact shadow and explicitly banked that *"only the static standing crowds still cast no shadow."* This
-closes that gap. A banked finding outranks kind-rotation (the header's own law).
-
-**The seam.** Four static "crowd" draws render little standing figures with a body `fillRect` + an `ink` head arc
-and **no `shadS`** — so they float a hair above the ground while every ped, dog, jogger and vehicle around them is
-seated on a contact smudge. Two stand on the GROUND: the **evening strip crowd** on COM (`L4319`, gated
-`LITAMT>0.35 && v>0.6`, 86 host tiles/city) and the **school-run drop-off crowd** at the gate (`L4664`, gated
-`dayT` in (0.15,0.30)). The other two were left by design: the **platform queue** stands on an ELEVATED deck (a
-ground-contact ellipse doesn't apply) and the **match-day concourse** is abstract 1.2px dots, not figures.
-
-**Change (~5 lines, draw-only).** One `shadS(...)` at each ground-crowd figure's FEET, drawn *before* the body so
-the figure reads on top — exactly 137's idiom. Strip: `shadS(cx+ox,cy+oy-0.5,0.09,0.16)` (feet = body bottom).
-School: `shadS(px4,py4,kid?0.06:0.09,kid?0.15:0.16)` — kids get the smaller smudge (137's kid-shadow radius). No
-tile, entity, `rng()`, `hashCell` spawn, `tick()` pass or terrain; strings pure-ASCII (134). Stream + pop provably
-flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0 (`towerHt -1` documented chaotic
-wobble). Vacuous by construction — the probe is the gate.
-
-**Probe — `probes/probe-crowdshadow.mjs` (new, promoted).** Whole-frame build-vs-build diff (iter 161's
-locate-by-construction), patched vs pristine HEAD, at three frozen frames (strip-evening `dayT`=0.88, school-morning
-0.22, midday control 0.45). Getting a clean night diff took **three determinism fixes**, all findings below: (1) the
-pre-freeze RAF loop runs a load-timing-dependent number of `tick()`s that flip 2035 development cells DIFFERENTLY
-per load, swamping the shadow — so the probe *rebuilds* the city in-page (`genWorld(seed)+__warp(61)`, identical code
-both builds → byte-identical cities) rather than trusting the loaded state; (2) the 70-star field (`STARS`, iter
-153) is built once at load with UNSEEDED `Math.random`, so it differs per load — cleared; (3) any residual draw-time
-`Math.random` stubbed to a constant. A shadow can only DARKEN, so the diff counts darker vs lighter px (161's
-directional law). Result seeds 7/42: **strip GATE darker 234/206 px, lighter 0/0** (a pure directional shadow),
-**midday control flat** (0-3 darker / 0-7 lighter). The SCHOOL crowd is genuinely below the whole-frame noise floor
-(4 schools, a narrow window — its pooled darker/lighter FLIPS run to run, 16/4 then 19/37), so it is **not gated
-numerically** — same `shadS` idiom, confirmed in daylight by the visual shot. **PROBE PASS.** A LOUD-red test
-(iter 161's law) first proved the draw path executes (2177 red px vs HEAD 0) after a sampler bug (a 3-arg call to a
-4-arg `frame()` had made both builds render identical garbage → a false 0) — the loud frame located it in one run.
-
-**Visual.** `probes/probe-crowdshot.mjs` (new) shoots before/after (HEAD vs patched) clips at identical framing
-(same deterministic rebuild). Whole-city `wide` frames (dusk seed 42, morning seed 7): both agents **VISUAL: PASS** —
-balanced coherent coastal city, lit core→dark rim, no z-order tears / floaters / blown-out color, nothing
-compounded. Both agents could NOT resolve the ~2px contact shadow itself at crop scale (it is sub-resolution in a
-static screenshot, as any contact shadow is) — which is precisely the case the skill says a probe settles, and the
-probe does (234/0). The shadow is the *identical* `shadS` call peds/dogs/vehicles have used since 137, at the same
-alpha and the feet, so its appearance is inherited from those already-shipped shadows; the agents' job here was
-whole-frame coherence, which passed.
-
-**Verdict — SHIPPED.** The evening strip crowd and the school-run drop-off crowd now sit on the pavement on a
-contact shadow, where for the artifact's whole life they floated — every figure in the city is finally grounded
-(137 did the movers; 163 does the static crowds). Draw-only, stream + pop flat, ~5 lines + two probes. People ×
-Polish gains its next (84, 137, **163**); People is no longer stalest (Transport 155 now is).
-
-### Findings for later laps
-- **A WHOLE-FRAME NIGHT build-vs-build diff is polluted by the UNSEEDED `STARS` field (built once at load) — clear
-  `STARS` (and stub `Math.random`) for a deterministic night diff.** 161's whole-frame law assumed daytime; at night
-  the 70 randomly-placed stars differ per load and read as ~500 changed px at high amplitude, dwarfing a faint
-  ground change. `STARS.length=0` before render kills it. Any future NIGHT whole-frame probe must do this.
-- **Don't trust the LOADED city for a build-vs-build diff — REBUILD it in-page (`genWorld(seed)+__warp(N)`).** The
-  RAF loop runs a wall-clock-dependent number of `tick()`s between load and freeze, and at a developed era (2035)
-  each tick flips upgrade/succession cells, so the two loads render *different cities* even at the same seed. Calling
-  `genWorld` (which reseeds `rng=mulberry32(seed)`) + `__warp` reproduces a byte-identical city regardless of load
-  timing. This is the fix for the class of nondeterminism 137/154 flagged as "the live system is non-reproducible" —
-  for anything DETERMINISTIC (terrain, hashCell draws) you *can* get a clean diff, you just have to rebuild.
-- **Gate a probe on the STRONG instance; report a SPARSE one directionally, don't gate it.** The strip crowd (86
-  tiles) gives a rock-solid signal; the school crowd (4 tiles) sits at the noise floor and its signed/pooled count
-  flips sign run to run. Forcing a numeric gate on the sparse instance would be grading noise. Gate the strong one,
-  confirm the sparse one shares the identical code path + a visual, and say so.
-- **A contact shadow / sub-2px feature is below AGENT SCREENSHOT RESOLUTION — the probe is authoritative, the agent
-  does coherence (137's precedent, restated).** Two blind agents FAILed "can't see the shadow"; that is a resolution
-  limit, not a defect, and the probe (which CAN measure 2px) is the verdict. Frame the agent's job as the whole-city
-  coherence check, not "spot the 2px smudge."
-- **Still shadowless BY DESIGN:** the elevated **platform queue** (riders on a deck, not ground — a ground ellipse
-  would spill) and the abstract **match-day concourse** dots (1.2px marks, not figures). If a future lap wants the
-  platform riders grounded, the shadow must land on the DECK surface (its own small ellipse), not the ground plane.
 
 ## Iteration 164 — the city hails a cab (2026-07-11) [Transport × New element]
 
@@ -1009,3 +933,70 @@ vineyard moving); perf is flat against the honest interleaved control.
   amphitheater performer draws at night, and it is a 1/city landmark often occluded, so night held flat (−0.5%).
   Night remains the column a future step-back watches first (≈41ms/24fps at today's load), but there is no drift to
   act on. No perf-fix iteration owed.
+
+## Iteration 173 — the warehouse roof grows its north-light (2026-07-12) [Urban × Deepen]
+
+**Vector — Urban × Deepen** (next lap owed the stalest domain, Urban, last shipped 165). Adopted and finished a
+killed iteration found uncommitted in the worktree at startup: the source had ~3 lines of complete, coherent
+draw code (a `## Iteration 173` had never been written, so it died before step 5). Per the "dirty worktree"
+protocol — **the gates decide, not the ledger** — I re-verified it, tuned one number the visual agents flagged,
+and shipped. Domain × kind matches exactly what the header called for (the last bare roof).
+
+**The seam.** 165 gave COM the mid-rise roof-plant, closing the roof-furniture set across MID (water tanks) /
+RES (solar) / TOWER (gardens/helipads) / COM (plant) — the header noted **"only IND (warehouses) has a bare
+roof left."** The sawtooth warehouse (`drawBuilding`'s `T.IND` else-branch, ~L4595) drew two white monitor
+prisms (`gx-0.17`, `gx+0.19`) with nothing on them — a flat white cap where every other block carries lived-in
+roof detail.
+
+**Change (~4 lines, draw-only).** North-light clerestory glazing: a glass band (`colLit('glass',0.6,lit*0.65)`)
+up the front face of each sawtooth monitor — the factory's classic clerestory. Glass-grey by day; a **faint warm
+work-shift glow after dark** (light industry runs a partial night shift, dimmer than the offices' full-`lit`
+glazing above — base 0.6 and a sub-office `lit*0.65` mix keep it restrained). Loft IND keeps its own crown
+(this is the sawtooth branch only). No tile / entity / `rng()` / `hashCell` / `tick()` pass / terrain — `colLit`
+is plain glass-grey by day and mixes toward warm with the scene `lit`, so pop/stream stay flat and it can't blow
+out. All strings pure-ASCII (134). **My one edit to the inherited code:** `lit*0.4` → `lit*0.65`, because both
+visual agents independently read the night glow as "cool/subtle, not the intended warm" — a tuning nit they both
+still PASSed. The bump warms it while keeping it below the offices.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty; `pop` 154918 (+7, chaotic-CA noise, no `rng()`
+touched), `developed`/`roads` +0. Vacuous by construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-clerestory.mjs` (new, promoted).** PATCH(working) vs BASE(HEAD) whole-hex diff over each
+warehouse (iter-161 law: every differing pixel over a host hex IS the clerestory, by construction). Rebuilds the
+city in-page (`genWorld(seedNum); __warp(WARP); __setTime(t)`, iter-163(c)) so the RAF's wall-clock tick jitter
+can't diverge the two builds — this was load-bearing: without it the ROAD control was run-to-run non-deterministic
+(0.02%→0.55%). **WARE moves DAY AND NIGHT** — seeds 7/42/1234 day 0.70/1.77/1.20%, night 0.78/1.86/1.30%
+(**night > day every seed**, confirming the warmth bump registers after dark). **LOFT control exactly 0.000%**
+across all 6 rows (same tile, untouched branch — the decisive clean control) and **ROAD control 0.001–0.020%**
+(deterministic once rebuilt). **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-clerestory.mjs` (new, promoted).** Wheels the artifact's own camera onto the largest
+warehouse cluster (IND is sparse, ~2–6/city, and small — fit zoom is invisible) and shoots day+night at both
+seeds. Two agents (one per seed), blind, both **VISUAL: PASS** — glazing visible on the roof teeth, sits
+correctly (not floating), no z-order tears / floaters / blowout anywhere, whole city still balanced; only nit was
+the cool night glow. After the warmth bump a third agent read all 4 night clips: glow now "faint WARM amber/gold,
+restrained, not blown out, clearly dimmer than the office/tower windows" — **WARMTH: GOOD**.
+
+**Verdict — DEEPENED.** The last bare roof in the city — every warehouse monitor, flat white for the artifact's
+whole life — now carries a north-light clerestory that glows a faint work-shift amber after dark. Roof furniture
+is now **truly city-wide** (MID/RES/TOWER/COM/IND). Draw-only, pop+stream flat, ~4 lines + a probe + a shot
+script. Urban's Deepen cell gains 173 (38/54/68/92/165/**173**); the next lap (174) owes Nature (166)/Civic (168).
+
+### Findings for later laps
+- **A KILLED ITERATION THAT PASSES ITS GATES IS KEPT — and adopting it is a licence to finish it, not just rubber-
+  stamp it.** The inherited 3 lines passed census + probe, but both visual agents flagged the night glow as too
+  cool. Adopting authorship meant I could take the one-number tune (`lit*0.4`→`0.65`) the original author never
+  got to, and re-gate it. The protocol's "keep it" is a floor, not a ceiling.
+- **`T` IS THE GLOBAL TILE-TYPE ENUM — NEVER name a probe `page.evaluate` param `T`.** Passing the frame time in as
+  `{ T: t }` and destructuring `({...,T})` shadowed the page's `T`, so `c.t === T.IND` became `c.t === (0.35).IND
+  === undefined` and matched ZERO cells (nWare→0) with no error — a silent all-zero probe. Cost a debugging lap.
+  Use `TOD`/`WARP`/`RX` — anything but a single capital that collides with the artifact's globals (`T`, `G`, `LIT`).
+- **A BUILD-VS-BUILD DIFF PROBE THAT COMPARES TWO SEPARATELY-LOADED FILES MUST REBUILD IN-PAGE (iter-163(c)) OR ITS
+  CONTROLS ARE NON-DETERMINISTIC.** The clerestory signal (WARE) and the same-branch LOFT control were stable
+  without the rebuild, but the ROAD control — cells the RAF keeps upgrading between load and freeze — swung 0.02→0.55%
+  run to run and false-FAILed. `genWorld(seedNum);__warp(WARP);__setTime(t)` pins a byte-identical city; without it,
+  any control on a CA-mutated tile class (ROAD/RES/upgrades) is noise. (LOFT held because loft-conversion had
+  saturated by warp 61 — a control on a *settled* class survives the jitter; a control on a *live* one does not.)
+- **The roof-furniture set is now CLOSED across all 5 developed building types (MID/RES/TOWER/COM/IND).** A future
+  "bare roof" Urban vector has no host left; Urban Deepen must go elsewhere (facades, ground plane, the harbour
+  works apron). Don't propose more roof clutter.

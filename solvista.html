@@ -4597,6 +4597,16 @@ function drawBuilding(c,x,y,gx,gy){
       bandR(gx,gy,0.38,0.33,h*0.4,h*0.7,colLit('glass',0.7,lit*0.5));
       prism(gx-0.17,gy,0.16,0.33,h,h+3,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.82));
       prism(gx+0.19,gy,0.16,0.33,h,h+3,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.82));
+      /* north-light glazing on the sawtooth monitors: the factory's classic
+         clerestory. A glass strip up the front of each catches a faint work-shift
+         glow after dark (light industry runs a partial night shift, dimmer than
+         the offices' colLit above). Draw-only; colLit is plain glass-grey by day
+         and mixes toward warm with the scene's `lit`, so pop/stream stay flat and
+         it can't blow out. Deepens 165's roofscape onto the last bare roof, IND
+         (iter 173). */
+      const wl=colLit('glass',0.6,lit*0.65);
+      bandR(gx-0.17,gy,0.163,0.333,h+1.3,h+2.7,wl);
+      bandR(gx+0.19,gy,0.163,0.333,h+1.3,h+2.7,wl);
       prism(gx+0.26,gy-0.22,0.04,0.04,h,h+8,col('brickDk',1),col('brickDk',0.6),col('brickDk',0.8));
       if(year<2000&&!REDUCED){ /* the stack still works */
         const[cx,cy]=px(gx+0.26,gy-0.22);
