@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
+| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137**, **163** | 71, **154** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · People **170** · Transport **164** · Urban **165** · Nature **166** · Civic **168** · Water **169**. (162, **167** = step-backs, no domain lap.)
-  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps); the next domain lap (171) owes Transport (164)**, then Urban (165)/Nature (166). 170 took People × New element (the pier hails its anglers — day-only fishing figures stand on the boardwalk deck, rod out over the water, line to a float; a New element on the pier *surface* per 127, and it FIXED a latent gap where the deck vanished over kelp; draw-only, `probe-anglers` day 2.18%/0.86% → night 0.00%, ROAD ~0). Next step-back at **172**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
+  Sky **161** · People **170** · Transport **171** · Urban **165** · Nature **166** · Civic **168** · Water **169**. (162, **167** = step-backs, no domain lap.)
+  **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps); 172 is the holistic step-back, so the next domain lap (173) owes Urban (165)**, then Nature (166)/Civic (168). 171 took Transport × Interaction/UX (the boulevards name themselves — a treed ROAD now titles `Boulevard` + reports its contiguous run `Length — N blocks`, the draw had rendered an allee both kerbs for the artifact's whole life while the tooltip said `Avenue`; the asserts-less-than-the-code-knows tell, `probe-boulevard` 347/347 named+length, controls clean 3 seeds). 170 took People × New element (the pier hails its anglers — day-only fishing figures stand on the boardwalk deck, rod out over the water, line to a float; a New element on the pier *surface* per 127, and it FIXED a latent gap where the deck vanished over kelp; draw-only, `probe-anglers` day 2.18%/0.86% → night 0.00%, ROAD ~0). Next step-back at **172**. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -391,63 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 163 entries before Iteration 161 live in
+> **Archive:** the 164 entries before Iteration 162 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 161 — cloud bellies catch the golden hour (2026-07-11) [Sky & atmosphere × Deepen]
-
-**Vector.** Sky × Deepen. Sky was the stalest domain (last vector 153) and its additive/CA cells are traps
-(surveyed 103; sky isn't cellular). The clouds are richly deepened (rain shafts, wet trails, rainbows, drifting
-shade) but the puffs themselves are drawn **pure white regardless of the light** — at dawn/dusk the warm horizon
-that colours the whole sky never touches them. That is the classic golden-hour tell: a low sun lights cloud
-**undersides** warm while the tops stay bright. A draw-only Deepen that adds no element and reads the light the
-rest of the scene already reads.
-
-**Change.** In the cloud loop (render, ~L5758) compute once per frame `cwarm=clamp((skyBot.R-skyBot.B-70)/70,0,1)`
-from `dl.skyBot` — the horizon colour is orange at dawn/dusk (R≫B), pale at noon, cool-purple at night, so `R-B`
-picks out the low-sun glow **and nothing else** (noon and night both give cwarm≈0). The two lower ("belly") puffs
-of a **fair** cloud are then filled toward `skyBot` by `cwarm*0.55` instead of white; the top crown puff and rain
-clouds (grey belly) are untouched. Pure draw-only: no terrain, no `rng()`, no new entity — pop/stream neutral.
-
-**Census.** PASS, vacuous as expected — every metric +0, tile histogram empty (draw-only). Regression guard only.
-
-**Probe.** `probes/probe-cloudwarm.mjs` — build-vs-build **sky-band diff** (patched vs pristine HEAD, same seed,
-`playing=false`, same frozen `dayT`). The two builds run identical code except the belly tint, so any pixel that
-differs IS a belly pixel; a residual is that the pre-freeze load drifts entities slightly differently per load, but
-**drift is directionally balanced (warm px ≈ cool px) while the tint shifts pixels consistently WARM**, so the
-discriminators are directional. Result over seeds 7/42/1234: **dusk mean Δ(R-B) +11.6, warm px 4095 ≫ cool px 1401**
-(≈3:1); **noon control mean +1.2, warm 1394 ≈ cool 1340** (drift only). The tint is warm-only and dusk-only.
-(Getting here cost two dead ends the probe file documents: a world→screen box missed the belly puffs — they sit at
-`cx±14s`, either side of a naive centre box — and a whole-frame count control was polluted by ground-traffic drift;
-a **loud-red belly** test confirmed the draw renders correctly and it was the *sampling* that was wrong. Law below.)
-
-**Visual.** Two dusk seeds, whole-city. **Seed 42 PASS** — belly reads clearly peach/gold under a whiter top,
-"natural golden-hour underlighting, not dirt"; the one grey cloud stays grey (by design); no tears/floaters/blowout.
-**Seed 7** an agent FAILed as "cool grey bellies" — but the visible clouds there sit HIGH against the *cool* upper
-sky (skyTop), so the real, measured warm shift (probe: seed 7 was the *strongest*, +18.2) composites over a cool
-base and reads neutral-grey rather than gold. A moderate-zoom crop confirmed: gentle, non-garish, present but subtle
-where the ambient sky is cool. The effect is by-design mild — a golden-hour touch, not a repaint.
-
-**Verdict — DEEPENED.** Sky reads the light on one more surface; draw-only, pop/stream-neutral, probe-gated.
-
-### Findings for later laps
-- **CLOUD BELLIES ARE THE SEAM: puffs were painted a fixed white while the sky around them was fully lit.** Look for
-  other *emissive/reflective* draws that ignore `dl`/`TINT` — anything drawn with a hardcoded `rgb(...)` in the sky
-  or on water that should catch dawn/dusk. `dl.skyBot` is the ready-made "how warm is the horizon right now" signal:
-  `clamp((R-B-70)/70,0,1)` is a reusable golden-hour gate (0 at noon AND night, peak at dawn/dusk).
-- **A build-vs-build pixel probe that LOCATES by boxing world→screen coords will fight the camera transform and the
-  puff geometry; a WHOLE/BAND DIFF locates by construction** — the only pixels that can differ ARE your change, so
-  diff finds them. When the diff is polluted by pre-freeze entity drift, don't chase determinism: **drift is
-  directionally balanced, a directional signal (warm-vs-cool split, or signed mean) separates cleanly.** And when a
-  subtle draw-change reads as zero in a probe, force it LOUD (pure red) first to prove the draw path before trusting
-  the sampler (cost me two dead ends this lap).
-- **A physically-plausible ambient effect will read differently by where its host sits** — the same warm belly is
-  gold over a warm sky (seed 42) and neutral-grey over a cool upper sky (seed 7). That is correct, not a bug; the
-  probe (not the agent) is the verdict for "did the warmth apply." Don't crank the strength to force every cloud
-  gold — seed 42's agent already warned the current strength is at the "natural, not dirty" edge.
 
 ## Iteration 162 — the twelfth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
 
@@ -997,3 +945,71 @@ Bundled a real deck-over-kelp fix. Draw-only, stream + pop flat. People's New el
   Building an intermediate reference (HEAD + only the permanent line) and diffing PATCH vs *that* isolated the
   day-only feature cleanly, with the permanent change reported as its own column. `String.replace` on an anchor is
   enough to synthesize the intermediate build inside the probe.
+
+## Iteration 171 — the boulevards name themselves (2026-07-12) [Transport × Interaction/UX]
+
+**Vector.** Transport × **Interaction/UX** (SHIPPED). Rotation named the stalest domain, **Transport** (last SHIP
+164). Kind varied HARD off the recent runs — New element ran the last two laps (169/170) and 164 spent Transport's
+New element cell; Deepen is globally hot (155/158/159/165/166); Polish (146) and Connect (138) are Transport's two
+most-recent kinds. That left **Interaction/UX**, which is Transport's single **stalest cell (only 105 ever)** and by
+far the stalest Interaction/UX across all domains (Nature 148 · Water 141 · Urban 133 · Civic 140 · Sky 144 · People
+154 · **Transport 105**). A draw-nothing tooltip vector — guaranteed-flat pop.
+
+**The seam — the asserts-LESS-than-the-code-knows tell (117/122/129/148/168), in its Interaction form.** The ROAD
+draw has rendered a **tree-lined boulevard** — an allée planted down *both* kerbs (`if(c.treed)`, L4071) — since
+long before the ledger, and the CA spreads `treed` among connected busy streets (L1659, adopting from treed
+neighbours), so boulevards form leafy runs. But `describeTile`'s road branch named only Bridge/Arterial/Avenue/Street
+off `flow`/`busy`/`bridge` and was **mute about `c.treed`** — hovering the single leafiest, most distinctive street in
+the city read a flat "Avenue" like any other. The draw knew it was a boulevard; the label didn't say so. (The
+`boulevardTrees` census stat already counts `c.treed` — **1203** across the 9-cell matrix, ~340/city — so it is a
+tile at scale, not dead code, 30/107's law.)
+
+**Change (~10 lines, tooltip logic only).** In `describeTile`'s ROAD branch: a treed road now titles **`Boulevard`**
+(ranked below Bridge, above Arterial/Avenue/Street), sub *"A leafy avenue, planted with trees down both kerbs."* — and
+if it is *also* a trunk (`flow>=ARTFLOW`) the sub appends *" Also a trunk route."* so a treed arterial keeps its
+network identity. Added a **`Length — N block(s)`** data row = the boulevard's contiguous extent via a new
+`boulevardSize(x,y)` = `floodSize(x,y, road && treed)` — the *same* flood the woods name their stand with (117) and
+kelp its bed. No tile, entity, `rng()`, `hashCell`, `tick()` pass, terrain, or canvas draw; all strings pure-ASCII
+(134 — no accent on "allee", the `é` in this ledger note aside). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, `boulevardTrees 1203`
+unchanged, entity counts identical (greenRoofs +1 = documented RAF tick-count jitter, touches no `rng()`). Vacuous by
+construction (a tooltip-only change draws nothing) — the probe is the gate.
+
+**Probe — `probes/probe-boulevard.mjs` (new, promoted).** A DOM/logic probe, not a pixel diff (the change is pure
+tooltip logic): loads a developed city (`?seed&warp=61`) and calls `describeTile()` on real cells. **TARGET** — every
+treed ROAD must title `Boulevard` AND carry a `Length N block(s)` row whose N equals `boulevardSize` (>=1).
+**CONTROL** — busy NON-treed roads must title `Avenue`/`Arterial` and contain neither `Boulevard` nor `Length`; a
+quiet road must stay `Street`. seeds 7/42/1234: **treed named+length 347/347 · 346/346 · 340/340 (0 bad, 0
+len-mismatch)**; busy-plain control clean **33/33 · 54/54 · 29/29**; quiet road = `Street` all three; longest boulevard
+run **28 / 15 / 15 blocks**. **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-boulevard.mjs` (new, promoted).** Drives a REAL cursor onto a boulevard and a plain-busy road
+(reading back the handler's resolved `hoverTile` and retrying candidates so the control reliably lands on a non-treed
+cell — treed roads are dense near centre, so a naive projection kept snapping to a neighbouring boulevard), then
+screenshots the rendered `#tip` card. One agent, blind, read all four: **boulevard s7** = "Boulevard" + leafy sub +
+`Length 28 blocks`; **boulevard s42** = "Boulevard" + `Length 5 blocks`; **control s7/s42** = "Avenue", no
+Boulevard/Length; all cards legible, aligned, no clip/overflow/CSS breakage — **VISUAL: PASS**. (No whole-city shot:
+the canvas is byte-identical to HEAD — nothing new is drawn — so the census/interleave/step-back visual pass has
+nothing to catch here.)
+
+**Verdict — SHIPPED.** The leafiest street in every city, a flat "Avenue" for the artifact's whole life, now names
+itself a **Boulevard** and tells you how many blocks its allee runs — Transport's first Interaction/UX vector since
+105, and the asserts-less-than-the-code-knows tell cashed in its Interaction form. Draw-nothing, pop + stream flat,
+~10 lines + a probe + a shot script. Transport's Interaction/UX cell gains its next (105, **171**); Transport is no
+longer stalest (Urban 165 now is, and 172 is the step-back).
+
+### Findings for later laps
+- **THE ASSERTS-LESS-THAN-THE-CODE-KNOWS TELL EXTENDS TO A DRAW-VARIANT THE LABEL FLATTENS, not just a missing calendar
+  or a mute string.** 117/122/129/148 cashed it where a tooltip ignored CA *state*; 171 cashed it where the tooltip
+  collapsed a distinct **draw variant** (`c.treed`, an allee both kerbs) into a generic label. Look for other draw
+  flags the tooltip doesn't surface: a road can also carry `c.fete` (festival bunting is drawn, unnamed) and `c.corr`
+  (a corridor). A BUILDING's `c.corner` is already named; check what other per-cell draw flags a label flattens.
+- **A GENERIC FLOOD (`floodSize`) NOW HAS THREE READERS (stand/bed/boulevard) — reach for it for any "name this
+  contiguous run's extent" tooltip.** `boulevardSize` was one line. Any feature whose interest is *how far it reaches*
+  (a marsh, a dune field, a solar farm, an arterial spine) can report `Length/Extent — N` for near-free.
+- **A TOOLTIP-LOGIC CHANGE IS GATED BY A DOM PROBE, NOT A PIXEL DIFF — and its "visual" gate is the rendered `#tip`
+  card, not the city.** `describeTile()` returns an HTML string, callable in-page on every cell, so the probe asserts
+  the exact title/rows across ALL host cells (347/seed) with a control class — far stronger than sampling a few. The
+  screenshot only needs to confirm the card *paints*; drive the real cursor and read back `hoverTile` to place it
+  honestly (naive world->screen projection snaps to the wrong hex when the host class is dense).

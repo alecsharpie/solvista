@@ -9523,3 +9523,55 @@ helper, the `__terr` hook, `probe-terrace.mjs`, and `shot-terrace.mjs` all remov
   dense and linear — e.g. a continuous shopfront canopy/arcade along a COM high street (`c.hstr` from iter 118
   already marks retail runs) — but only after measuring that COM clusters E-W in runs, which RES does not.
 
+## Iteration 161 — cloud bellies catch the golden hour (2026-07-11) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky × Deepen. Sky was the stalest domain (last vector 153) and its additive/CA cells are traps
+(surveyed 103; sky isn't cellular). The clouds are richly deepened (rain shafts, wet trails, rainbows, drifting
+shade) but the puffs themselves are drawn **pure white regardless of the light** — at dawn/dusk the warm horizon
+that colours the whole sky never touches them. That is the classic golden-hour tell: a low sun lights cloud
+**undersides** warm while the tops stay bright. A draw-only Deepen that adds no element and reads the light the
+rest of the scene already reads.
+
+**Change.** In the cloud loop (render, ~L5758) compute once per frame `cwarm=clamp((skyBot.R-skyBot.B-70)/70,0,1)`
+from `dl.skyBot` — the horizon colour is orange at dawn/dusk (R≫B), pale at noon, cool-purple at night, so `R-B`
+picks out the low-sun glow **and nothing else** (noon and night both give cwarm≈0). The two lower ("belly") puffs
+of a **fair** cloud are then filled toward `skyBot` by `cwarm*0.55` instead of white; the top crown puff and rain
+clouds (grey belly) are untouched. Pure draw-only: no terrain, no `rng()`, no new entity — pop/stream neutral.
+
+**Census.** PASS, vacuous as expected — every metric +0, tile histogram empty (draw-only). Regression guard only.
+
+**Probe.** `probes/probe-cloudwarm.mjs` — build-vs-build **sky-band diff** (patched vs pristine HEAD, same seed,
+`playing=false`, same frozen `dayT`). The two builds run identical code except the belly tint, so any pixel that
+differs IS a belly pixel; a residual is that the pre-freeze load drifts entities slightly differently per load, but
+**drift is directionally balanced (warm px ≈ cool px) while the tint shifts pixels consistently WARM**, so the
+discriminators are directional. Result over seeds 7/42/1234: **dusk mean Δ(R-B) +11.6, warm px 4095 ≫ cool px 1401**
+(≈3:1); **noon control mean +1.2, warm 1394 ≈ cool 1340** (drift only). The tint is warm-only and dusk-only.
+(Getting here cost two dead ends the probe file documents: a world→screen box missed the belly puffs — they sit at
+`cx±14s`, either side of a naive centre box — and a whole-frame count control was polluted by ground-traffic drift;
+a **loud-red belly** test confirmed the draw renders correctly and it was the *sampling* that was wrong. Law below.)
+
+**Visual.** Two dusk seeds, whole-city. **Seed 42 PASS** — belly reads clearly peach/gold under a whiter top,
+"natural golden-hour underlighting, not dirt"; the one grey cloud stays grey (by design); no tears/floaters/blowout.
+**Seed 7** an agent FAILed as "cool grey bellies" — but the visible clouds there sit HIGH against the *cool* upper
+sky (skyTop), so the real, measured warm shift (probe: seed 7 was the *strongest*, +18.2) composites over a cool
+base and reads neutral-grey rather than gold. A moderate-zoom crop confirmed: gentle, non-garish, present but subtle
+where the ambient sky is cool. The effect is by-design mild — a golden-hour touch, not a repaint.
+
+**Verdict — DEEPENED.** Sky reads the light on one more surface; draw-only, pop/stream-neutral, probe-gated.
+
+### Findings for later laps
+- **CLOUD BELLIES ARE THE SEAM: puffs were painted a fixed white while the sky around them was fully lit.** Look for
+  other *emissive/reflective* draws that ignore `dl`/`TINT` — anything drawn with a hardcoded `rgb(...)` in the sky
+  or on water that should catch dawn/dusk. `dl.skyBot` is the ready-made "how warm is the horizon right now" signal:
+  `clamp((R-B-70)/70,0,1)` is a reusable golden-hour gate (0 at noon AND night, peak at dawn/dusk).
+- **A build-vs-build pixel probe that LOCATES by boxing world→screen coords will fight the camera transform and the
+  puff geometry; a WHOLE/BAND DIFF locates by construction** — the only pixels that can differ ARE your change, so
+  diff finds them. When the diff is polluted by pre-freeze entity drift, don't chase determinism: **drift is
+  directionally balanced, a directional signal (warm-vs-cool split, or signed mean) separates cleanly.** And when a
+  subtle draw-change reads as zero in a probe, force it LOUD (pure red) first to prove the draw path before trusting
+  the sampler (cost me two dead ends this lap).
+- **A physically-plausible ambient effect will read differently by where its host sits** — the same warm belly is
+  gold over a warm sky (seed 42) and neutral-grey over a cool upper sky (seed 7). That is correct, not a bug; the
+  probe (not the agent) is the verdict for "did the warmth apply." Don't crank the strength to force every cloud
+  gold — seed 42's agent already warned the current strength is at the "natural, not dirty" edge.
+

@@ -1139,6 +1139,7 @@ function floodSize(x,y,pred){
 }
 function standSize(x,y){return floodSize(x,y,isWood)}         /* woodland stand */
 function bedSize(x,y){return floodSize(x,y,m=>m.t===T.KELP)}  /* kelp bed */
+function boulevardSize(x,y){return floodSize(x,y,m=>m.t===T.ROAD&&m.treed)} /* tree-lined run */
 /* which way a lot's public face should turn: +1 if the street it fronts lies east,
    -1 if west. Civics are sited by roadNear, so one usually does; a lot fronting
    roads evenly both ways (or none) falls back to the caller's per-city hash.
@@ -6354,8 +6355,12 @@ function describeTile(c,x,y){
   else if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';
     sub=CIVICDESC[c.kind]||'A public institution.';}
   else if(c.t===T.ROAD){const art=c.flow>=ARTFLOW;
-    title=c.bridge?'Bridge':(art?'Arterial':(c.busy?'Avenue':'Street'));
+    /* a treed street is drawn as an alleeed boulevard (both kerbs planted); the
+       label had ignored it for the artifact's whole life, so hovering the leafiest
+       road read 'Avenue' like any other. Name it, and note if it is also a trunk. */
+    title=c.bridge?'Bridge':(c.treed?'Boulevard':(art?'Arterial':(c.busy?'Avenue':'Street')));
     sub=c.bridge?'Carries the street across the water.'
+       :c.treed?('A leafy avenue, planted with trees down both kerbs.'+(art?' Also a trunk route.':''))
        :art?'A trunk route — traffic from half the district drains through here.'
        :(c.busy?'A busy street between built-up blocks.':'A quiet local street.');}
   else if(c.t===T.WATER&&c.riv){title='River';sub='Fresh water winding down to the sea.';}
@@ -6402,6 +6407,10 @@ function describeTile(c,x,y){
   /* the owning institution now leads the square's headline (see the title above),
      so it no longer needs its own data row here. */
   if(c.t===T.ROAD)data.push(['Traffic',Math.round(c.flow)]);
+  /* how far the leafy run reaches: contiguous treed road, the same flood the woods
+     name their stand with (iter 117) and kelp its bed (floodSize) */
+  if(c.t===T.ROAD&&c.treed){const n=boulevardSize(x,y);
+    data.push(['Length',n+(n===1?' block':' blocks')]);}
   if(c.t===T.ROAD&&c.stop){const{q,bl}=stopQueue(c,x,y);   /* live, like Tide (iter 97) */
     data.push(['Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);}
   /* the woods keep books the diorama never showed: how big a stand is, how far
