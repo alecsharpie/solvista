@@ -9029,3 +9029,59 @@ a step-back that finds no defect ships nothing — logging the clean bill IS the
 domain (Sky, last 144 — Deepen/Fix only, the SEASON word still needs a slow clock first), then People (145),
 then Nature (148).**
 
+## Iteration 153 — the stars fade under a full moon (2026-07-11) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × **Deepen** (SHIPPED). Rotation named the domain — Sky was the single stalest (last
+144) — and the header's standing fence rules out its additive/CA cells (traps) and its one banked move (the
+SEASON word, still needs a slow clock, do not re-ship 134). So a Deepen that adds no element: an *interconnect*
+between two mature Sky systems that never talked. **Probed the seam first (119's law):** the night star field
+(render, ~L5491) faded only with `LITAMT` and **completely ignored `MOONF`** — `probe-starmoon` measured
+`corr(starLum, MOONF)=0.000` across a 12-sample moon-phase sweep at a fixed night. Astronomically wrong: a
+bright full moon washes all but the brightest stars out; a new moon reveals the field.
+
+**Change (~10 lines, draw-only, stream-neutral).** (1) Gave each `STARS` entry a 4th field — an intrinsic
+magnitude (`Math.random()`, at module load; touches no seeded `rng()`) — so moonlight thins the FAINT stars
+first. (2) In the draw, multiply each star's alpha by `starWash = 1−0.62·MOONF` and by `(0.6+0.8·mg)` (mean
+1.0). `MOONF` is the moon's own lit fraction, already computed at L5486 and read by the disc, the moonglade and
+the moon HUD — this is **another reader of the one predicate** (144's law), so the stars cannot drift from the
+moon that's drawn. The `(0.6+0.8·mg)` mean-1.0 spread keeps the **new-moon** field at its old average
+brightness, so the well-vetted dark-night look is unchanged and only *thins* as the moon fills. No tile, entity,
+`rng()`, `tick()` pass or terrain — pop provably flat; no `ENTINFO`/census-hook change (stars aren't a hover
+entity). Per-frame cost: 70 stars × two extra multiplies — nil.
+
+**Census.** PASS, exit 0. Draw-only, stream-neutral — tile histogram empty, core metrics flat (life/transport
+wobble is the documented chaotic-CA headless noise). Vacuous by construction; the probe is the gate.
+
+**Probe — `probes/probe-starmoon.mjs` (new, promoted).** A moon-phase SWEEP at a FIXED time of day: `daylight`
+reads `dayT mod 1` so sweeping `dayT=k+0.90` (k=0..11, deep night) holds the sky, `LITAMT` and the frozen
+twinkle IDENTICAL and varies ONLY the moon (`moonPhase` reads raw `dayT/8`). Result: **HEAD `corr(star,MOONF)`
+= 0.000** (the defect) → **patched −0.99 / −0.87** (seed 7 / 42; bright moon dims the field). **Ground control**
+(city-core patch, lit by `LITAMT` not the moon) `corr = 0.000` both builds — the change is confined to the sky.
+
+**Visual.** New-moon vs full-moon night wide frames per seed (found the extremal `t` per seed via `__moon().illum`:
+s42 NEW t=7.90 / FULL t=3.90; s7 NEW t=4.90 / FULL t=0.90), one agent each, asked to DISCRIMINATE which frame has
+the richer star field (108's locate-don't-judge). **2/2 chose the NEW-moon frame** (seed 42 blind), matching the
+intended effect; both confirmed no z-order tears / floating tiles / blown-out colour anywhere, both whole frames
+balanced night coastal cities. Seed 7 noted the effect is "very subtle at this zoom" — expected (143's
+pixel-vs-field magnitude law + the wide downscale), directionally correct and artifact-free.
+
+**Verdict — SHIPPED.** The diorama's night sky is now internally consistent: the same `MOONF` that fills the disc
+and lights the moonglade now washes the stars out, so a full-moon night reads pale and sparse while a new moon is
+brilliant. Draw-only, stream-neutral, pop flat, another reader of the moon predicate. Sky's Deepen cell gains its
+seventh (19, 35, 50, 57, 95, 135, **153**); Sky is no longer stalest (People 145 now is).
+
+### Findings for later laps
+- **`MOONF` IS NOW A FOUR-READER FIELD — reuse it, don't re-derive.** The moon's lit fraction feeds the disc, the
+  moonglade, the moon HUD (144) and now the star wash. Anything that should respond to moonlight (a future
+  night-sky-glow, a moonlit-water tweak, dimmer aurora) should read `MOONF` at L5486, not recompute a phase.
+- **THE MOON-PHASE SWEEP-AT-FIXED-NIGHT is the probe shape for any moon-driven feature.** `daylight` reads
+  `dayT mod 1` but `moonPhase` reads raw `dayT/8`, so `dayT=k+0.90` (integer k) holds time-of-day/`LITAMT`
+  IDENTICAL and sweeps ONLY the moon — a clean control for isolating a moon response from the day cycle.
+  `probe-starmoon` does it; reuse it. (And to shoot a matched new-vs-full pair, the extremal `t` is per-seed —
+  the phase carries a `seedNum` offset — so query `__moon().illum` over k=0..7 to pick them, don't assume `t=0.9`
+  is any particular phase.)
+- **Sky's SEASON word is STILL the only banked Sky move and STILL fenced.** This Deepen was a moon↔stars
+  interconnect, NOT the season readout. The season word still reads the fast `year` (strobes ~0.7 Hz, 134) and
+  needs a slow clock or quantize/hold FIRST. Sky's additive/CA cells remain traps; the next Sky lap wanting a
+  *new* interconnect should look for another mature-but-disconnected pair, as this did.
+

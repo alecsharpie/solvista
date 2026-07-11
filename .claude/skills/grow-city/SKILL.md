@@ -614,6 +614,16 @@ vector, whatever it is.
   warm-vs-cool split or signed mean separates signal from drift cleanly; (b) when a subtle change reads as **zero**
   in the probe, **force it LOUD first** (paint it pure red unconditionally) to prove the draw path executes before
   you trust the sampler — a loud frame that's still unchanged means the *sampler* is wrong, not the feature.
+  Two more corollaries a whole-frame diff needs to be trustworthy (iter 163, crowd shadows): (c) **rebuild the city
+  in-page — don't trust the LOADED state.** The RAF loop runs a wall-clock-dependent number of `tick()`s between
+  load and freeze, and at a developed era each tick flips upgrade/succession cells, so two loads at the *same seed*
+  render *different cities* and drown a faint change. Call `genWorld(seed)` (it reseeds `rng=mulberry32(seed)`) +
+  `__warp(N)` in-page for a byte-identical city regardless of load timing — this is how you get a clean diff of a
+  *deterministic* draw despite 137/154's "the live system is non-reproducible." (d) **a NIGHT whole-frame diff is
+  polluted by the unseeded `STARS` field** (70 stars built once at load with `Math.random`, so different per load);
+  `STARS.length=0` before render, and stub `Math.random` for any residual draw-time randomness. And when the
+  feature is genuinely SPARSE (a few host tiles), its whole-frame count sits at the noise floor and flips sign run
+  to run — **gate the STRONG instance, report the sparse one directionally + a visual, don't gate noise.**
 - **Every gate this loop owns is FROZEN — a claim about MOTION needs a TEMPORAL probe (iter 134).** The
   census, the standard probe (freezes the clock for a two-render diff), and the visual gate (single
   screenshots) are all blind to *cadence*: a readout or animation can be provably *correct* (134's almanac

@@ -4323,6 +4323,9 @@ function drawBuilding(c,x,y,gx,gy){
       for(let j=0;j<n;j++){
         const ox=(hashCell(x*5+j,y,seedNum^0x9D3)-0.5)*10;
         const oy=2.5+hashCell(x,y*3+j,seedNum^0x64F)*2.4;
+        shadS(cx+ox,cy+oy-0.5,0.09,0.16); /* the crowd stands on the pavement — the
+          same contact smudge the walking peds got (iter 137); done before the body
+          so the figure reads on top (iter 163, closing 137's static-crowd gap) */
         ctx.fillStyle=col(['coral','teal','gold','lav','white'][(x+y*2+j)%5],0.95);
         ctx.fillRect(cx+ox-0.8,cy+oy-3.1,1.6,2.6);
         ctx.fillStyle=col('ink',1.35);
@@ -4661,6 +4664,8 @@ function drawBuilding(c,x,y,gx,gy){
           const px4=gx3-5+j*2.6+Math.sin(time*1.9+j*2.2+x)*0.6;
           const kid=j%2===0; /* kids and grown-ups mingle */
           const hgt=kid?1.8:2.9, py4=gy3+1.6;
+          shadS(px4,py4,kid?0.06:0.09,kid?0.15:0.16); /* stand on the pavement at
+            the gate — kids get the smaller smudge (iter 163, closing 137) */
           ctx.fillStyle=col(kid?KC[j%3]:AC2[j%3],1.1);
           ctx.fillRect(px4-0.7,py4-hgt,1.4,hgt);
           ctx.fillStyle=col('ink',1.4);
