@@ -1118,6 +1118,12 @@ function vinePhase(){const s2=((year%1)+1)%1;
    spring the palette greens the canopy on). Shared so the draw and the tooltip
    read ONE predicate (112). Peaks ~1 at spring, fades to 0 by early summer. */
 function springBloom(){const s=((year%1)+1)%1; return clamp(1-Math.abs(s-0.28)/0.17,0,1);}
+/* the other half of the woodland year: as the canopy ambers (applySeason, s~0.87)
+   the broadleaves let go and a leaf litter builds on the forest floor. Centred on
+   the SAME autumn peak the crown turns on, a touch wider so the litter appears as
+   the leaves start dropping and lingers into early winter. Shared predicate, so
+   the floor and the tooltip read one calendar (112) and can't outlast the canopy. */
+function autumnFall(){const s=((year%1)+1)%1; return clamp(1-Math.abs(s-0.87)/0.14,0,1);}
 /* the contiguous patch a hex belongs to, flood-filled over hex neighbours under a
    shared predicate — one definition, so the woods' stand and the kelp bed count
    contiguity the same way and cannot drift apart (112's one-predicate law). */
@@ -3374,6 +3380,20 @@ function drawCell(x,y){
            const a=hashCell(x*3+j,y*2+1,seedNum^0x5C), b=hashCell(x*2+j,y*3+2,seedNum^0x5D);
            ctx.fillStyle=col(a<0.38?'lav':a<0.72?'gold':'white',1.12);
            ctx.fillRect(fx-5+b*10,fy-2.5+a*6,1.4,1.4);
+         }
+         ctx.globalAlpha=1;
+       }}
+      {const af=autumnFall();
+       if(af>0.06){ /* autumn leaf litter: as the canopy ambers overhead the broadleaves let go
+           and a warm carpet of fallen leaves gathers on the floor; a denser scatter than the spring
+           specks and in the crown's own russet/gold, so floor and canopy read one autumn */
+         const[fx,fy]=px(gx,gy);
+         ctx.globalAlpha=0.28+0.5*af;
+         const nl=4+((hashCell(x,y,seedNum^0x6A)*4)|0);
+         for(let j=0;j<nl;j++){
+           const a=hashCell(x*3+j,y*2+3,seedNum^0x6B), b=hashCell(x*2+j,y*3+4,seedNum^0x6C);
+           ctx.fillStyle=col(a<0.42?'gold':a<0.74?'brick':'straw',0.98);
+           ctx.fillRect(fx-5+b*10,fy-2+a*6,1.6,1.5);
          }
          ctx.globalAlpha=1;
        }}
@@ -6311,6 +6331,7 @@ function describeTile(c,x,y){
          (11 -> 6 -> 0 forest hexes across 1985/2005/2035, seed 42) */
       if(deepWoods(x,y))data.push(['Deep woods — sheltered enough for old growth']);
       if(springBloom()>0.4)data.push(['Understory','Spring wildflowers']);
+      else if(autumnFall()>0.4)data.push(['Understory','Fallen leaves']);
     } else data.push(['Old growth since',est]);
     if(c.shroom>0)data.push(['Mushrooms up']);
   }

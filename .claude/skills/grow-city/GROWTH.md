@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
+| **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · Urban **165** (Deepen; SHIP) · People **163** · Nature **156** · Transport **164** · Civic **158** · Water **159**. (162 = step-back, no domain lap.)
-  **Stalest is now Nature (156)**, then Civic (158) — Urban just went at 165 (COM rooftop mechanical plant, a Deepen), so the next lap (166) owes Nature, then Civic. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
+  Sky **161** · Urban **165** · People **163** · Nature **166** (Deepen; SHIP) · Transport **164** · Civic **158** · Water **159**. (162 = step-back, no domain lap.)
+  **Stalest is now Civic (158)**, then Water (159) — Nature just went at 166 (autumn leaf litter on the FOREST floor, the season-complement of 156's spring bloom, a Deepen), so the next lap (**167 is the mandated STEP-BACK**, see below), then 168 owes Civic, then Water. **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now city-wide (MID/RES water tanks, TOWER gardens, COM plant 165); only IND (warehouses) has a bare roof left. Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -171,7 +171,7 @@ ones (U2, 42, U5) stay in the bullet.
   below (night + season, day frame off January, interleaved perf). **162 was the mandated step-back (SEVENTH clean bill,
   perf 157→161 flat day / +1.1% night, seasons alive, night core located both seeds). 163 took People × Polish
   (static-crowd contact shadows, closing 137); 164 took Transport × New element (the taxi — a `Math.random`-flagged
-  lemon-yellow cab variety on the car entity).** **165 took Urban × Deepen (COM rooftop mechanical plant; the next lap (166) owes the stalest, Nature (156), then Civic (158)).** **155 took Transport × Deepen (the tram catenary, the
+  lemon-yellow cab variety on the car entity).** **165 took Urban × Deepen (COM rooftop mechanical plant); 166 took Nature × Deepen (AUTUMN LEAF LITTER on the FOREST floor — the season-complement of 156's spring bloom, `autumnFall()` centred on the same s≈0.87 the canopy ambers on, draw-only stream+pop-neutral; `probe-autumnfall` FOREST 11.8/11.4% autumn → 0/0 summer — the forest floor now keeps a full four-season calendar). The next lap (167) is the mandated STEP-BACK, then 168 owes Civic (158).** **155 took Transport × Deepen (the tram catenary, the
   149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
   surface-not-entities law, forest=69 hexes vs garden=2). 157 was the mandated STEP-BACK; 158 took Civic × Deepen
   (the observatory dome rotates to track the night sky — 149's banked draw-tell); 159 took Water × Deepen (the surf
@@ -391,77 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 158 entries before Iteration 156 live in
+> **Archive:** the 159 entries before Iteration 157 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 156 — the woods flower in spring (2026-07-11) [Nature × New element]
-
-**Vector.** Nature & landscape × **New element** (SHIPPED). Rotation named the domain — Nature was the single
-stalest (last 148) — and 155's entry passed it the baton. Kind: varied off Nature's worn Deepen (139/120/108)
-and its now-spent agriculture Interaction/UX (148); **New element** is Nature's stalest kind (last **102**) and
-fresh. Content followed **127's law** (saturation is of a domain's *entities*, not its *surfaces*): FOREST is a
-large untouched surface — **69 hexes/city** vs GARDEN's 2 and MEADOW's 2-6 — and its floor drew nothing but
-`grassDk` + scrub. Meanwhile the MEADOW's lovely wildflower-bloom aesthetic (specks + butterflies, iter 49) is
-stranded on those 2-6 tiles where nobody sees it. So: a spring wildflower understory on the woodland floor —
-botanically the ephemerals that bloom in the brief window after the thaw and **before the canopy closes over
-them** (the same `s≈0.28` spring the palette already greens the canopy on).
-
-**The seam.** `case T.FOREST` (L3331) drew the floor as one `grassDk` fill; `applySeason` (L314) already computes
-a `spring` factor from `year` but only fed it to the canopy palette. I added a shared `springBloom()` (L1113,
-next to `orchardPhase`/`vinePhase`) = `clamp(1-|s-0.28|/0.17,0,1)` — ONE predicate the draw and the tooltip both
-read (112's law), so the flowers cannot claim a season the floor doesn't paint.
-
-**Change (~10-line draw + 1-line tooltip + 1 helper, all draw-only).** In the FOREST draw, right after the base
-hexTile and **before** the trees (so the canopy overlays the floor), a `springBloom()>0.06`-gated block scatters
-3-5 wildflower specks per hex — `hashCell(x,y,seedNum^SALT)` for count and positions (spaced salts 0x5B/0x5C/0x5D),
-colors `lav`/`gold`/`white` (static, not season-touched, so they keep their hue), alpha `0.30+0.55·spf`. A
-matching `describeTile` row (`['Understory','Spring wildflowers']` when `springBloom()>0.4`) keeps the tooltip in
-sync. No tile, entity, `rng()`, `tick()` pass or terrain; strings pure-ASCII (134). Fully stream-neutral (hashCell
-only) and pop-neutral.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0 (`pop +4` is documented
-chaotic-CA headless wobble), entity counts identical. Vacuous by construction — the probe is the gate.
-
-**Probe — `probes/probe-woodbloom.mjs` (new, promoted).** Isolates the flowers from the canopy's OWN seasonal
-palette shift by diffing **patched vs pristine HEAD at the SAME frozen spring frame** — the only difference
-between the two builds is the wildflower block (per-pixel changed fraction, |ΔRGB|>18, over each FOREST hex's 7×7
-box). Clears EVERY mover first (tramwire's law — else Math.random cars/peds drift over the ROAD control between
-loads). seeds 7/42: **FOREST changed 10.95% / 11.30% in SPRING → 0.00% / 0.00% in SUMMER** (spf=0, byte-identical),
-**ROAD control 0.04-0.16%** both frames. So the understory appears only in spring and only on forest — a ~55×
-separation within the one tile type, and zero leakage onto roads.
-
-**Visual.** `probes/shot-woodbloom.mjs` (new) camera-zooms a dense forest patch, clipping spring vs summer; plus
-whole-city `wide` at seeds 42 & 7 (spring). Three agents, one each, discriminate-don't-judge (108). Zoom agent:
-SPRING has the lavender/gold/white specks on the forest floor between/under the trees (not floating, not bleeding
-onto the neighbouring meadow hex), SUMMER floor plain — **VISUAL: PASS**. Both whole-city agents: balanced
-coherent coastal city, no z-order tears/floaters/blowout, forest/green reads as calm sage/olive with **no** speckle
-or noise at fit zoom (the understory is correctly sub-pixel there) — **VISUAL: PASS** both.
-
-**Verdict — SHIPPED.** The woods now flower in spring — a wildflower understory carpets the forest floor before
-the canopy closes and fades by summer, lifting a 69-hex surface that drew nothing but a green fill, and finally
-giving the MEADOW's stranded bloom aesthetic a stage the whole city can see. Draw-only, stream + pop neutral, one
-shared predicate. Nature's New element cell gains its next (4, 26, 29, 102, **156**); Nature is no longer stalest
-(Civic 149 now is).
-
-### Findings for later laps
-- **127'S "SURFACE, NOT ENTITIES" LAW PAYS AGAIN — pick the domain's BIGGEST tile count for a New element.** The
-  census tile histogram is the map: seed 42 forest=69, park=205, but garden=2, meadow=2-6. A within-hex ornament
-  buys pixels in proportion to the tile's COUNT, so a New element aimed at a 2-tile type (GARDEN, which the header
-  kept banking) is nearly invisible whatever you draw; the same effort on FOREST (69) lights the whole woodland.
-  **Read the histogram before choosing which surface to decorate.**
-- **A SEASON-GATED DRAW IS PROBED patched-vs-pristine AT ONE FROZEN SEASON, not season-vs-season.** The confound is
-  that the base palette ALSO shifts with season (the canopy greens/golds), so a plain spring-vs-summer FOREST diff
-  moves even with no flowers. Diffing the two BUILDS at the same spring frame cancels the palette shift entirely —
-  the only difference is your block. The summer patched-vs-pristine diff (=0) is then the clean confinement control,
-  and it's stronger than ROAD because it's the SAME tile type proving your gate is off out of season.
-- **`springBloom()` JOINS `orchardPhase`/`vinePhase` AS A SHARED YEAR-PREDICATE — reuse it, don't re-clamp.**
-  Anything else that should key on the spring window (a future MEADOW green-up, blossom drifts, spring bird return)
-  should read it, so the draw and any tooltip cannot drift. It reads the FAST `year` (development clock), which is
-  fine for a CONTINUOUS alpha (drift tolerated, like `applySeason`), but a DISCRETE spring/not-spring readout off it
-  would strobe (134) — quantize or slow-clock first, exactly as the banked SEASON word still needs.
 
 ## Iteration 157 — the eleventh step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
 
@@ -991,3 +925,67 @@ spent (118) and Connect is measured-hard twice now (160 RES terracing, 165 high-
 failures), so Urban's next lap is Deepen/Polish. A COM arcade is only viable if a *straight-hex-axis* retail run is
 found (the `hstr` parade is not one). TOWER roofs (roof gardens/helipads) and RES/MID (water tanks) are now all
 plant-crowned; the remaining bare roof is IND (warehouses) if a further roofscape Deepen is wanted.
+
+## Iteration 166 — the woods drop their leaves in autumn (2026-07-11) [Nature × Deepen]
+
+**Vector.** Nature & landscape × **Deepen** (SHIPPED). Rotation named the domain — Nature was the single
+stalest (last 156). Kind: 156 was Nature's New element (spring wildflower understory on the FOREST floor); this
+**Deepens** that same system rather than adding a new one — the sanctioned compounding move (the river got good
+by compounding). The forest floor now keeps a full seasonal calendar: spring bloom (156) → summer green → **autumn
+leaf litter (166)** → winter bare. The canopy has ambered in autumn since forever (`applySeason`, s≈0.87), but the
+floor beneath it stayed green all year — the crown turned and the ground ignored it. This closes that gap on the
+biggest untouched-in-autumn Nature surface (FOREST = 63–69 hexes/city, per 156's histogram-first law).
+
+**The seam.** `case T.FOREST` (L3362) drew the floor as a `grassDk` fill + (since 156) a spring wildflower block.
+`applySeason` (L316) already computes an `autumn` factor from `year` but fed it only to the canopy palette
+([176,138,70] amber). I added a shared `autumnFall()` (L1121, next to `springBloom`) = `clamp(1-|s-0.87|/0.14,0,1)`,
+centred on the SAME autumn peak the crown turns on (a touch wider so the litter appears as the leaves start dropping
+and lingers into early winter) — ONE predicate the draw and the tooltip both read (112's law), so the litter cannot
+outlast the canopy nor claim a season the floor doesn't paint.
+
+**Change (~12-line draw + 1-line tooltip + 1 helper, all draw-only).** In the FOREST draw, right after the spring
+block and before the trees (so the canopy overlays the litter), an `autumnFall()>0.06`-gated block scatters 4–7
+warm leaf specks per hex — `hashCell(x,y,seedNum^SALT)` for count/positions (fresh salts 0x6A/0x6B/0x6C, no clash
+with spring's 0x5B–0x5D), colours `gold`/`brick`(russet)/`straw` matching the crown's autumn amber, size 1.6px
+(broader/denser than the bright spring specks), alpha `0.28+0.5·af`. A matching `describeTile` row (`['Understory',
+'Fallen leaves']` when `autumnFall()>0.4`, `else`-guarded against the spring row so they never both show). No tile,
+entity, `rng()`, `tick()` pass or terrain; strings pure-ASCII (134). Fully stream + pop neutral (hashCell only).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0 (`greenRoofs +1` is documented
+chaotic-CA headless wobble), entity counts identical. Vacuous by construction — the probe is the gate.
+
+**Probe — `probes/probe-autumnfall.mjs` (new, promoted; sibling of `probe-woodbloom`).** Isolates the litter from
+the canopy's OWN seasonal amber by diffing **patched vs pristine HEAD at the SAME frozen autumn frame** — the only
+difference between the two builds is the leaf-litter block. Clears every mover first (tramwire law). seeds 7/42:
+**FOREST changed 11.82% / 11.39% in AUTUMN → 0.00% / 0.00% in SUMMER** (af=0, byte-identical), **ROAD control
+0.01–0.09%** both frames. So the litter appears only in autumn and only on forest — a ~130–1180× separation within
+the one tile type, zero leakage onto roads.
+
+**Visual.** `probes/shot-autumnfall.mjs` (new) camera-zooms a dense forest patch, clipping autumn vs summer; plus
+whole-city `wide` at seeds 42 & 7 (autumn). Three agents, one each, discriminate-don't-judge (108). Zoom agent:
+AUTUMN has gold/russet/tan specks clustered at the tree bases on the forest floor (not floating, not bleeding onto
+the clearing/road hexes), SUMMER floor plain olive — **VISUAL: PASS**. Both whole-city agents: balanced coherent
+autumn coastal city, no z-order tears/floaters/blowout, forests read as calm green/olive with the litter correctly
+sub-pixel at fit — **VISUAL: PASS** both.
+
+**Verdict — DEEPENED.** The woods now drop their leaves in autumn — a warm litter gathers on the forest floor as
+the canopy ambers overhead, giving the 69-hex woodland a full four-season floor (spring flowers → summer green →
+autumn litter → winter bare) instead of a green fill that ignored the autumn crown above it. Draw-only, stream +
+pop neutral, one shared predicate joining `springBloom`/`orchardPhase`/`vinePhase`. Nature is no longer stalest
+(Civic 158 now is).
+
+### Findings for later laps
+- **`autumnFall()` COMPLETES the shared year-predicate set** (`springBloom` · `orchardPhase` · `vinePhase` ·
+  `autumnFall`). Anything that should key on the autumn window (a future MEADOW seed-head browning, migratory-bird
+  departure, a bonfire-season cue) should READ it, not re-clamp. Like `springBloom` it reads the FAST `year` and is
+  fine for a CONTINUOUS alpha (drift tolerated); a DISCRETE autumn/not readout off it would strobe (134).
+- **A SEASON-COMPLEMENT DEEPEN is the cleanest way to re-touch a domain you just added to.** 156 shipped the spring
+  half of the forest floor as a New element; 166 shipped the autumn half as a Deepen one lap later. The two are
+  probed identically (patched-vs-pristine at one frozen frame, the other season = the confinement control), reuse
+  the same salts-family and the same shot rig, and together read as a single system rather than two features. When
+  a New element lands a *seasonal* draw, its complementary season is a ready-made next Deepen for that domain.
+- **THE PROBE PATH LAW BIT AGAIN — `probe-woodbloom.mjs` / `shot-woodbloom.mjs` still resolve `join(HERE,
+  'solvista.html')`** (i.e. inside `probes/`), which only worked because 156 ran them from the repo root before the
+  `git mv`. `probe-autumnfall.mjs` / `shot-autumnfall.mjs` resolve `../../../../solvista.html` and `../shots` from
+  their own location and run correctly in place. The two 156 scripts are latently broken if ever re-run from the
+  tracked dir; not fixed this lap (out of scope) but flagged.

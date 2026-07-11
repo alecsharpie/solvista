@@ -9218,3 +9218,69 @@ Draw-only, stream-neutral, pop flat, ~8 lines. Transport's Deepen cell gains its
   wrong size and read ~0 signal. The whole-frame diff dodges the unit problem entirely and is the more robust
   shape for a thin draw-only ornament whose exact pixels are hard to box.
 
+## Iteration 156 — the woods flower in spring (2026-07-11) [Nature × New element]
+
+**Vector.** Nature & landscape × **New element** (SHIPPED). Rotation named the domain — Nature was the single
+stalest (last 148) — and 155's entry passed it the baton. Kind: varied off Nature's worn Deepen (139/120/108)
+and its now-spent agriculture Interaction/UX (148); **New element** is Nature's stalest kind (last **102**) and
+fresh. Content followed **127's law** (saturation is of a domain's *entities*, not its *surfaces*): FOREST is a
+large untouched surface — **69 hexes/city** vs GARDEN's 2 and MEADOW's 2-6 — and its floor drew nothing but
+`grassDk` + scrub. Meanwhile the MEADOW's lovely wildflower-bloom aesthetic (specks + butterflies, iter 49) is
+stranded on those 2-6 tiles where nobody sees it. So: a spring wildflower understory on the woodland floor —
+botanically the ephemerals that bloom in the brief window after the thaw and **before the canopy closes over
+them** (the same `s≈0.28` spring the palette already greens the canopy on).
+
+**The seam.** `case T.FOREST` (L3331) drew the floor as one `grassDk` fill; `applySeason` (L314) already computes
+a `spring` factor from `year` but only fed it to the canopy palette. I added a shared `springBloom()` (L1113,
+next to `orchardPhase`/`vinePhase`) = `clamp(1-|s-0.28|/0.17,0,1)` — ONE predicate the draw and the tooltip both
+read (112's law), so the flowers cannot claim a season the floor doesn't paint.
+
+**Change (~10-line draw + 1-line tooltip + 1 helper, all draw-only).** In the FOREST draw, right after the base
+hexTile and **before** the trees (so the canopy overlays the floor), a `springBloom()>0.06`-gated block scatters
+3-5 wildflower specks per hex — `hashCell(x,y,seedNum^SALT)` for count and positions (spaced salts 0x5B/0x5C/0x5D),
+colors `lav`/`gold`/`white` (static, not season-touched, so they keep their hue), alpha `0.30+0.55·spf`. A
+matching `describeTile` row (`['Understory','Spring wildflowers']` when `springBloom()>0.4`) keeps the tooltip in
+sync. No tile, entity, `rng()`, `tick()` pass or terrain; strings pure-ASCII (134). Fully stream-neutral (hashCell
+only) and pop-neutral.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0 (`pop +4` is documented
+chaotic-CA headless wobble), entity counts identical. Vacuous by construction — the probe is the gate.
+
+**Probe — `probes/probe-woodbloom.mjs` (new, promoted).** Isolates the flowers from the canopy's OWN seasonal
+palette shift by diffing **patched vs pristine HEAD at the SAME frozen spring frame** — the only difference
+between the two builds is the wildflower block (per-pixel changed fraction, |ΔRGB|>18, over each FOREST hex's 7×7
+box). Clears EVERY mover first (tramwire's law — else Math.random cars/peds drift over the ROAD control between
+loads). seeds 7/42: **FOREST changed 10.95% / 11.30% in SPRING → 0.00% / 0.00% in SUMMER** (spf=0, byte-identical),
+**ROAD control 0.04-0.16%** both frames. So the understory appears only in spring and only on forest — a ~55×
+separation within the one tile type, and zero leakage onto roads.
+
+**Visual.** `probes/shot-woodbloom.mjs` (new) camera-zooms a dense forest patch, clipping spring vs summer; plus
+whole-city `wide` at seeds 42 & 7 (spring). Three agents, one each, discriminate-don't-judge (108). Zoom agent:
+SPRING has the lavender/gold/white specks on the forest floor between/under the trees (not floating, not bleeding
+onto the neighbouring meadow hex), SUMMER floor plain — **VISUAL: PASS**. Both whole-city agents: balanced
+coherent coastal city, no z-order tears/floaters/blowout, forest/green reads as calm sage/olive with **no** speckle
+or noise at fit zoom (the understory is correctly sub-pixel there) — **VISUAL: PASS** both.
+
+**Verdict — SHIPPED.** The woods now flower in spring — a wildflower understory carpets the forest floor before
+the canopy closes and fades by summer, lifting a 69-hex surface that drew nothing but a green fill, and finally
+giving the MEADOW's stranded bloom aesthetic a stage the whole city can see. Draw-only, stream + pop neutral, one
+shared predicate. Nature's New element cell gains its next (4, 26, 29, 102, **156**); Nature is no longer stalest
+(Civic 149 now is).
+
+### Findings for later laps
+- **127'S "SURFACE, NOT ENTITIES" LAW PAYS AGAIN — pick the domain's BIGGEST tile count for a New element.** The
+  census tile histogram is the map: seed 42 forest=69, park=205, but garden=2, meadow=2-6. A within-hex ornament
+  buys pixels in proportion to the tile's COUNT, so a New element aimed at a 2-tile type (GARDEN, which the header
+  kept banking) is nearly invisible whatever you draw; the same effort on FOREST (69) lights the whole woodland.
+  **Read the histogram before choosing which surface to decorate.**
+- **A SEASON-GATED DRAW IS PROBED patched-vs-pristine AT ONE FROZEN SEASON, not season-vs-season.** The confound is
+  that the base palette ALSO shifts with season (the canopy greens/golds), so a plain spring-vs-summer FOREST diff
+  moves even with no flowers. Diffing the two BUILDS at the same spring frame cancels the palette shift entirely —
+  the only difference is your block. The summer patched-vs-pristine diff (=0) is then the clean confinement control,
+  and it's stronger than ROAD because it's the SAME tile type proving your gate is off out of season.
+- **`springBloom()` JOINS `orchardPhase`/`vinePhase` AS A SHARED YEAR-PREDICATE — reuse it, don't re-clamp.**
+  Anything else that should key on the spring window (a future MEADOW green-up, blossom drifts, spring bird return)
+  should read it, so the draw and any tooltip cannot drift. It reads the FAST `year` (development clock), which is
+  fine for a CONTINUOUS alpha (drift tolerated, like `applySeason`), but a DISCRETE spring/not-spring readout off it
+  would strobe (134) — quantize or slow-clock first, exactly as the banked SEASON word still needs.
+
