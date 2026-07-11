@@ -8726,3 +8726,59 @@ three lights; the season is alive; perf is flat against the honest interleaved c
 <!-- header-trim (iter 157): superseded cue moved out of the maintained header to stay under the 400-line budget -->
 - **(l) CLOSED (iter 133)** — a hovered TILE wears a hex-outline focus ring (`probe-tilering`; detail archived).
   **Legibility law:** a thin hover stroke is INVISIBLE in a wide downscaled shot — re-shoot tight (2×/R55) first.
+
+## Iteration 148 — the vineyard names its own season (2026-07-11) [Nature × Interaction/UX]
+
+**Vector.** Nature × Interaction/UX — the stalest domain (last **139**), taking the finding the header
+banked there: iter 139 gave VINEYARD a seasonal DRAW (bare canes → leaf → green berries → purple harvest,
+via a shared `vinePhase()`), but `describeTile` never named it, so the tooltip's *"terraced"* was mute about
+the calendar the pixels already keep. This is the tell (117/122/129) cashed an **eighth** time — a string that
+asserts less than the code already knows — and the last frozen agriculture tooltip. A **banked, measured**
+finding on the stalest domain outranks kind-rotation.
+
+**The seam.** `vinePhase()` (L1112) already returns `dormant`/`bud`/`veraison`/`ripe` from `year`, read only by
+`case T.VINEYARD` in the draw (L3589). The orchard's `Grove` row (L6130, iter 129) is the exact template — one
+`describeTile` line that reads its own shared phase fn. `[T.VINEYARD]` *"terraced"* was the header's named
+un-cashed string.
+
+**Change (3 lines, tooltip-only).** A `Vines` row in `describeTile` beside the orchard's `Grove` row, reading
+the shared `vinePhase()`: `dormant→Bare canes`, `bud→In leaf`, `veraison→Green fruit`, `ripe→Ripe for harvest` —
+each word matched to what the trellis draws that phase. No tile, entity, `rng()`, `hashCell`, `tick()` pass or
+terrain; strings pure-ASCII (134). Pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
+(cars 360 · trams 54 …). Vacuous by construction (a `describeTile` edit runs in no census metric) — the probe is
+the gate.
+
+**Probe.** `probes/probe-vinetip.mjs` (new, promoted). Per 122's law a tooltip claim is checked against
+INDEPENDENTLY recomputed truth, not a screenshot: it recomputes the phase from `vinePhase`'s own window math (not
+by calling it) and confirms every on-screen vineyard's `Vines` row at 4 keyframes × 3 seeds. **104/104 rows
+match, 0 wrong.** Controls: **0** FARM and **0** ORCHARD tiles print a `Vines` row, and the orchard's own `Grove`
+row still prints **72/72** — the row is confined to the vineyard and clobbers nothing. (The seasonal DRAW itself
+was already gated by 139's `probe-vine`; what's new this lap is the string.)
+
+**Visual.** `probes/shot-vinetip.mjs` (new) fires a REAL `mouse.move` over an on-screen vineyard so the
+artifact's own handler builds the tooltip, clipped at two seasons. One agent read both: the `Vines` row reads
+exactly *"Green fruit"* (dry peak) and *"Ripe for harvest"* (autumn), text sharp/legible, em dash correct, no
+clipping/mojibake, no z-order or color defect. **VISUAL: PASS.** (No canvas draw changed, so the whole-city
+frame is identical — the census proved the world byte-for-byte unchanged.)
+
+**Verdict — SHIPPED.** The vineyard now tells the season it has painted since 139 — the last mute agriculture
+tooltip is named. Draw-... tooltip-only, pop provably flat, 3 lines. Nature's Interaction/UX cell gains its next
+(117, 129, **148**).
+
+### Findings for later laps
+- **THE ASSERTS-LESS-THAN-THE-CODE-KNOWS TELL IS NOW SPENT FOR AGRICULTURE.** 129 un-muted the orchard, 148 the
+  vineyard; the header's remaining un-cashed vegetation strings are `[T.GARDEN]` (draw does NOT read `year` — needs
+  a Deepen first, like 129/139 did for orchard/vine) and `[T.IND]` *"warehouses and light industry"* (not
+  vegetation, no calendar to name). So the next Nature × Interaction/UX is NOT another agriculture row — it needs
+  a new seam or a Deepen-then-name pair (GARDEN).
+- **A `describeTile` STRING row needs NO whole-city visual and NO draw probe — only the string-truth probe + a
+  hover shot.** The census is doubly vacuous (no metric, no draw), the whole-city frame is byte-identical, and
+  the seasonal draw was already gated upstream (139). The one gate that can fail is the string vs recomputed
+  windows, plus a hover shot that it renders. Don't re-run the interleaved perf/whole-city machinery for a
+  pure-text tooltip row.
+
+
+<!-- Header trim (iter 158): condensed the resolved night-core watch-item bullet from the maintained header. Full text preserved here. -->
+The night-core-is-broad watch-item (136/142) is now CASHED (iter 143, Urban × Polish): a tight Gaussian bump (`CORESIG=5`) on the CBD turned the flat smoothstep plateau into a peak (probe-nightcore: seed-42 core→8-12 gap 0.152→0.307). Subtle-but-discriminable (both agents blind-picked the after-frame); a stronger read needs the window mix `0.35+0.65·c.lit` widened, not `c.lit` steepened further. (125 was the same shape — its product was the pin-off-January recipe fix.)

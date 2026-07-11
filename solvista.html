@@ -4661,13 +4661,23 @@ function drawBuilding(c,x,y,gx,gy){
       {const dy2=cy-hd, R2=8.4; /* the big teal dome */
       ctx.fillStyle=col('teal',1);
       ctx.beginPath();ctx.arc(cx,dy2,R2,Math.PI,0);ctx.fill();
-      ctx.strokeStyle=LITAMT>0.3?'rgba(228,255,248,'+(0.7+0.3*LITAMT)+')':col('white',1.05);
-      ctx.lineWidth=2.2;ctx.lineCap='round'; /* the slit */
-      ctx.beginPath();ctx.moveTo(cx+sd*0.5,dy2-R2+1);ctx.lineTo(cx+sd*4.6,dy2-R2*0.4);ctx.stroke();
+      /* the dome rotates to track the night sky (iter 158): the slit points at the
+         zenith (straight up) at midnight and leans toward the east/west horizons
+         through dusk and dawn, on the same slow day clock the hall clock (149) and
+         moon (135) read — so at midnight it looks UP while the clock hand points
+         DOWN. It opens after dark and is buttoned up by day; `sd` sets which way the
+         dome swings per city. CIVICDESC promised "open to the night"; now it is. */
+      const openAmt=clamp((LITAMT-0.15)/0.45,0,1);
+      const nd=dayT>0.5?dayT-1:dayT;                   /* signed offset from midnight */
+      const phi=clamp(nd*4.887,-1.4,1.4)*openAmt*sd;   /* zenith at midnight, horizons at dusk/dawn */
+      const si=Math.sin(phi), co=Math.cos(phi);
+      ctx.strokeStyle=openAmt>0.2?'rgba(228,255,248,'+(0.55+0.4*openAmt)+')':col('white',0.9);
+      ctx.lineWidth=1+1.6*openAmt;ctx.lineCap='round'; /* the aperture: shut seam by day, open slit by night */
+      ctx.beginPath();ctx.moveTo(cx+si*1.6,dy2-co*1.6);ctx.lineTo(cx+si*(R2-0.4),dy2-co*(R2-0.4));ctx.stroke();
       ctx.lineCap='butt';
-      if(LITAMT>0.3){ /* instrument glow leaks out */
-        ctx.fillStyle='rgba(200,255,240,'+(0.2*LITAMT)+')';
-        ctx.beginPath();ctx.arc(cx+sd*2.6,dy2-R2*0.7,3.6,0,7);ctx.fill();}}
+      if(openAmt>0.2){ /* instrument glow leaks out along the open slit */
+        ctx.fillStyle='rgba(200,255,240,'+(0.24*openAmt)+')';
+        ctx.beginPath();ctx.arc(cx+si*(R2*0.6),dy2-co*(R2*0.6),3.4,0,7);ctx.fill();}}
     } else if(c.kind==='amphitheater'){
       /* a stone cavea cut into a knoll; the stage lights up after dark */
       const NT=hashCell(x,y,seedNum^0xA3F1)<0.5?4:5;   /* tier count varies per city */
@@ -6500,6 +6510,21 @@ window.__clock=()=>{const out=[];
     const tx=fx2+Math.sin(a)*2.0, ty=fy2-Math.cos(a)*2.0; /* hand tip, world coords */
     out.push({x,y,sx:fx2*scale+offX,sy:fy2*scale+offY,r:2.7*scale,ang:a,
       tipx:tx*scale+offX,tipy:ty*scale+offY});}
+  return out;};
+
+/* the observatory dome center + radius on screen, plus its swept slit azimuth
+   (iter 158). One locator so the probe measures where the aperture actually is
+   (it recomputes the expected phi itself; it never gates on the phi echoed here). */
+window.__obs=()=>{const out=[];
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const c=cells[idx(x,y)];
+    if(!c||c.t!==T.CIVIC||c.kind!=='observatory')continue;
+    const gx=x+0.5,gy=y+0.5,hd=Math.max(11,c.h*0.72);
+    const[cx,cy]=px(gx,gy), dy2=cy-hd, R2=8.4;
+    const sd=hashCell(x,y,seedNum^0x0B5E)<0.5?-1:1;
+    const openAmt=clamp((LITAMT-0.15)/0.45,0,1);
+    const nd=dayT>0.5?dayT-1:dayT;
+    const phi=clamp(nd*4.887,-1.4,1.4)*openAmt*sd;
+    out.push({x,y,sx:cx*scale+offX,sy:dy2*scale+offY,r:R2*scale,sd,openAmt,phi});}
   return out;};
 
 /* test hook: pin the hovered-tile focus ring by grid coords (cue l), so a probe
