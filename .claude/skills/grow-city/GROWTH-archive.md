@@ -10331,3 +10331,69 @@ script. Urban's Deepen cell gains 173 (38/54/68/92/165/**173**); the next lap (1
 - **Every domain except Sky now has an Interaction/UX vector** (133 filled Urban's via cue (l); 118 had closed
   cue (j)). — SUPERSEDED: Sky gained its Interaction/UX vector at 144 (the moon HUD card), and Nature's grew
   to 117/129/148/183; every domain now has one.
+
+## Iteration 174 — the cut fields keep their hay bales (2026-07-12) [Nature × New element]
+
+**Vector — Nature × New element** (next lap owed the stalest domain, Nature, last shipped 166). The forest
+floor is over-worked (156 spring bloom, 166 autumn litter — a full four-season floor), so I went to Nature's
+biggest *untouched* surface instead: the FARM belt (~150 fields, the strongest seasonal mover, winter→dry-peak
+88). 127's law — "additive inventory spent" is a claim about a domain's *entities*, not its *surfaces*.
+
+**The seam.** The farm draws its own crop calendar (`cropRGB`, iter 108/57 lineage): a field greens → ripens
+to `straw` → is **cut** to `stubble` (ph 0.80–0.90) → is ploughed back to `soilDk` (ph 0.93–0.995). The
+palette even carries `straw`/`stubble` with a comment naming "then ripe, then cut" — but the cut left the field
+**bare**: nothing marked the harvest. The post-cut stubble window was an empty surface with a name already in
+the palette.
+
+**Change (~11 lines, draw-only).** When a FARM cell's per-cell phase `ph` is in the post-cut window
+(`0.82<ph<0.95`) and `hashCell(x,y,70)<0.62` (thins to ~60% of fields for variety), scatter `1+(hashCell·3)`
+rolled hay bales: a soft contact-shadow ellipse (house-style, per 137), a `straw` body ellipse (the golden roll
+on its side), and a darker `stubble` end-cap arc (the curled end). Placement is `hashCell`-scattered so it
+perturbs nothing — no `rng()`, no terrain, no `tick()` pass. The bales inherit the scene `col()` tint, so they
+darken with night and can't blow out; not day-gated (bales sit in the field round the clock, like the barn).
+All strings pure-ASCII (134). The window sits at ph≈0.88 ≈ autumn (`applySeason`'s .87 keyframe), so bales
+appear at harvest and are gone by winter — the field's own calendar drives them, so the belt bales as a
+patchwork (each field ±2.5 weeks off its neighbours via the existing `v` phase offset), never all at once.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty; all entity/tile counts flat. Vacuous by
+construction (draw-only, no `rng()`/terrain) — the probe is the gate.
+
+**Probe — `probes/probe-haybale.mjs` (new, promoted).** PATCH(working) vs BASE(HEAD) whole-hex diff over each
+FARM cell (iter-161 law: every differing pixel over a host hex IS the bales, since the crop colour reads the
+same `year` in both builds). Rebuilds the city in-page (`genWorld;__warp;__setYear;__setTime`, iter-163(c)) so
+RAF tick jitter can't diverge the builds. **The strong control is a CALENDAR control, not just a tile control:**
+at **harvest** (`year=2035.88`) FARM diffs **2.07/1.88/1.84%** (seeds 7/42/1234) — bales present; at **summer**
+(`year=2035.40`) FARM diffs **exactly 0.000%** all three seeds — no field is post-cut, so no bale is drawn in
+either build, isolating the bale from the crop-colour calendar. ROAD tile control **~0.00–0.02%** at both
+calendars. **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-haybale.mjs` (new, promoted).** Wheels the artifact's own camera onto the densest FARM
+cluster (farms are scattered and bales are ~2px, so fit zoom shows nothing) and **freezes the calendar in-page**
+at year 2035.88/2035.90 for the final frame (discrete-seasonal freeze law — `?year=` alone drifts a season
+during the `playing=true` wait). Two agents (one per seed), blind: both **VISUAL: PASS** — golden bales visible
+on the stubble field faces, sitting correctly on the iso plane (not floating, not off-edge), reading as rounded
+bales with a highlight/shade (not flat specks), distinct from the pre-existing coral/purple crop dots; no
+z-order tears / floaters / blowout; whole belt still balanced, "bales add harvest texture without clutter." One
+un-zoomed whole-city frame (third agent): city reads balanced/beautiful, no tears/darkness/mojibake, stat strip
+crisp.
+
+**Verdict — SHIPPED.** The farm belt's calendar had a cut phase named in the palette since forever but nothing
+in the field to show for it; now the weeks after each harvest carry rolled golden bales, patchworked field by
+field. Draw-only, pop+stream flat, ~11 lines + a probe + a shot script. Nature's New element cell gains 174
+(4/26/29/102/156/**174**); the next lap (175) owes Civic (168).
+
+### Findings for later laps
+- **A CALENDAR CONTROL is stronger than a tile control for a SEASONAL draw-only feature.** Diffing PATCH vs BASE
+  over the host tile at the harvest calendar proves *something* changed; diffing the SAME tile at a non-harvest
+  calendar (summer, 0.000%) proves the change is the *bale* and not the crop colour, which reads `year` in both
+  builds and would otherwise pollute any single-calendar FARM diff. For any seasonally-gated feature, add the
+  off-season calendar as the control, not just an off-tile.
+- **The palette often names a phase the draw never showed.** `straw`/`stubble` existed with a comment "ripe,
+  then cut" for the artifact's whole life, but the cut field was bare. A named-but-unshown palette entry (or a
+  named-but-unshown draw state) is a cheap New-element seam — the intent is already recorded; you just draw it.
+  Where else does a palette/comment name a state the pixels skip?
+- **Nature's forest floor is a four-season CLOSED surface (156/166); its next big surface is the FARM belt
+  (174 opened it).** The belt still has room: post-cut bales are shipped, but a harvest could also stack sheaves,
+  and the barn (v>0.9) is a lone object — a farm New element / Deepen has host left. Garden (2 hexes) and meadow
+  (6 hexes) remain too small to buy pixels; prefer FARM/FOREST for Nature surfaces.
+

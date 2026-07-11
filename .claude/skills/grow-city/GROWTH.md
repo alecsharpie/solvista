@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105**, **171** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170** | 49 | 34, 64, 93, **104**, **119**, **145**, **178** | 78, **111** | | 84, **137**, **163** | 71, **154** |
 
@@ -55,7 +55,7 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **181** · People **178** · Transport **179** · Urban **180** · Nature **183** · Civic **175** · Water **176**. (162, **167**, **172**, **177**, **182** = step-backs, no domain lap.)
+  Sky **181** · People **178** · Transport **179** · Urban **180** · Nature **183** · Civic **184** · Water **176**. (162, **167**, **172**, **177**, **182** = step-backs, no domain lap.) **184 took Civic × Interaction/UX (the town hall clock tells its time on hover — a `Clock` row via a new `clockWord(dayT)`, reading the same slow day clock the drawn hand has pointed at since 149; kind repeated 183 because every other Civic kind is spent-or-hot, and saturation beats kind-rotation (118); draw-nothing tooltip, pop+stream flat, `probe-hallclocktip` clock-match 7/7 × 3 seeds, 7 distinct times across the day, non-hall control 500/500 clean). So the next domain lap (185) owes Water (176), then People (178)/Transport (179)/Urban (180).**
   **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales on the stubble fields post-harvest, `probe-haybale`). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). **176 took Water × Interaction/UX (the river names its course — a `Course — N hexes` row via a bridge-AWARE flood `riverCourse` so a span doesn't fragment the reach; the river was the barest tooltip in the city, zero data rows over its richest water system; a `Crossings` companion was DROPPED — bridge cells over-count vs connected components and the L1633 pave-over rule makes the unit ambiguous; draw-nothing tooltip, pop+stream flat, `probe-river` 254 river hexes named 3 seeds, sea control clean 1916 hexes, sea-leak 0). So the next domain lap (178) owes People (170)/Transport (171).** 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). **178 took People × Deepen (the festival streets fill with people — a day-and-dusk crowd of `hashCell`-scattered figures mills on each `c.fete` ROAD cell under the bunting, then heads home by deep night; a People×Civic interconnect on a drawn CA system that was rendered for the artifact's whole life but never *inhabited*; draw-only stream+pop-neutral, `probe-fetecrowd` FETE day 2.9–3.6% → night 0.00% byte-identical, ROAD ctl ~0, 3 seeds). **179 took Transport × Deepen (the bridges light their lamps at night — the bridge sub-case `break`s before the road's night-lamp block, so every bridge went pitch dark at night for the artifact's whole life while both banks glowed; two warm rail lamps atop the deck + a `waveT` reflection on the river below, a Transport×Water interconnect; draw-only stream+pop-neutral, `probe-bridgelamp` BRIDGE night 7.4–8.1% → day 0.00% byte-identical, ROAD ctl 0.00% both, 3 seeds). So the next domain lap (180) owes Urban (173, Deepen/Polish only — measured-saturated).** **180 took Urban × Polish (the towers ground their own weight — the fixed 0.42×0.13 contact shadow under every building now scales with mass `shf=clamp((h-9)/120,0,1)`, so a 150-unit tower grounds on a 0.94/0.23 pool while a bungalow keeps the old blob; centered in the house style since nothing in the artifact casts a directional shadow, draw-only stream+pop-neutral, `probe-massshadow` TALL 0.6–1.0% ≫ SHORT/CTL ~0.05% 3 seeds; the first scaling was too weak because the tower body occludes its own base shadow — size for the ring not the area). So the next domain lap (181) owes Sky (161, Deepen/Fix ONLY — saturated), then the step-back at 182.** **181 took Sky × Deepen (the sea catches the golden hour — bright additive-gold sun-path glints on the open water at dawn/dusk, reading 161's reusable `cwarm`/`skyBot` signal onto the largest surface in the frame, filling the gap between the noon glitter and the night moonglade; a Sky×Water interconnect, draw-only stream+pop-neutral, `probe-seagold` SEA dusk ~31%/dawn ~22% → noon/night ~0, LAND ctl 0 all frames, 3 seeds. ⚠ A warm alpha WASH over teal desaturates to OLIVE — carry sunset/warm light over cool water with ADDITIVE `'lighter'` glints, not a wash; two tuning rounds were lost raising a wash's alpha before the blend mode was the real fix. `GWARM`/`GWSB` are now globals beside `LITAMT` for any golden-hour draw.)** 171's fete-street TOOLTIP (`c.fete` drawn but unnamed in `describeTile`) is still banked, and now more worth cashing since the street is no longer empty. **182 was the mandated STEP-BACK — ELEVENTH clean bill in a row (perf 178→181 flat: day +1.0% / night +0.9% vs iter-177 `7e2ac2c`; seasons alive FARM dry-peak 88.4; night core off-centre both seeds ~(.47,.50)/(.47,.60)). No city change.** **183 took Nature × Interaction/UX (the fields name their own harvest — a `Fields` crop-phase row in the FARM tooltip via a shared `farmPh(v)`, the biggest agricultural surface, the one 148's "agriculture tell spent" note had OVERLOOKED; draw-nothing tooltip + byte-identical one-predicate refactor, pop+stream flat, `probe-farmtip` 3 seeds). So the next domain lap (184) owes Civic (175), then Water (176)/People (178)/Transport (179).** Next step-back at **187** (interleave HEAD vs iter-182's file to isolate 183–186). **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
@@ -388,76 +388,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 176 entries before Iteration 174 live in
+> **Archive:** the 177 entries before Iteration 175 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 174 — the cut fields keep their hay bales (2026-07-12) [Nature × New element]
-
-**Vector — Nature × New element** (next lap owed the stalest domain, Nature, last shipped 166). The forest
-floor is over-worked (156 spring bloom, 166 autumn litter — a full four-season floor), so I went to Nature's
-biggest *untouched* surface instead: the FARM belt (~150 fields, the strongest seasonal mover, winter→dry-peak
-88). 127's law — "additive inventory spent" is a claim about a domain's *entities*, not its *surfaces*.
-
-**The seam.** The farm draws its own crop calendar (`cropRGB`, iter 108/57 lineage): a field greens → ripens
-to `straw` → is **cut** to `stubble` (ph 0.80–0.90) → is ploughed back to `soilDk` (ph 0.93–0.995). The
-palette even carries `straw`/`stubble` with a comment naming "then ripe, then cut" — but the cut left the field
-**bare**: nothing marked the harvest. The post-cut stubble window was an empty surface with a name already in
-the palette.
-
-**Change (~11 lines, draw-only).** When a FARM cell's per-cell phase `ph` is in the post-cut window
-(`0.82<ph<0.95`) and `hashCell(x,y,70)<0.62` (thins to ~60% of fields for variety), scatter `1+(hashCell·3)`
-rolled hay bales: a soft contact-shadow ellipse (house-style, per 137), a `straw` body ellipse (the golden roll
-on its side), and a darker `stubble` end-cap arc (the curled end). Placement is `hashCell`-scattered so it
-perturbs nothing — no `rng()`, no terrain, no `tick()` pass. The bales inherit the scene `col()` tint, so they
-darken with night and can't blow out; not day-gated (bales sit in the field round the clock, like the barn).
-All strings pure-ASCII (134). The window sits at ph≈0.88 ≈ autumn (`applySeason`'s .87 keyframe), so bales
-appear at harvest and are gone by winter — the field's own calendar drives them, so the belt bales as a
-patchwork (each field ±2.5 weeks off its neighbours via the existing `v` phase offset), never all at once.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty; all entity/tile counts flat. Vacuous by
-construction (draw-only, no `rng()`/terrain) — the probe is the gate.
-
-**Probe — `probes/probe-haybale.mjs` (new, promoted).** PATCH(working) vs BASE(HEAD) whole-hex diff over each
-FARM cell (iter-161 law: every differing pixel over a host hex IS the bales, since the crop colour reads the
-same `year` in both builds). Rebuilds the city in-page (`genWorld;__warp;__setYear;__setTime`, iter-163(c)) so
-RAF tick jitter can't diverge the builds. **The strong control is a CALENDAR control, not just a tile control:**
-at **harvest** (`year=2035.88`) FARM diffs **2.07/1.88/1.84%** (seeds 7/42/1234) — bales present; at **summer**
-(`year=2035.40`) FARM diffs **exactly 0.000%** all three seeds — no field is post-cut, so no bale is drawn in
-either build, isolating the bale from the crop-colour calendar. ROAD tile control **~0.00–0.02%** at both
-calendars. **VERDICT: PASS (3 seeds).**
-
-**Visual — `probes/shot-haybale.mjs` (new, promoted).** Wheels the artifact's own camera onto the densest FARM
-cluster (farms are scattered and bales are ~2px, so fit zoom shows nothing) and **freezes the calendar in-page**
-at year 2035.88/2035.90 for the final frame (discrete-seasonal freeze law — `?year=` alone drifts a season
-during the `playing=true` wait). Two agents (one per seed), blind: both **VISUAL: PASS** — golden bales visible
-on the stubble field faces, sitting correctly on the iso plane (not floating, not off-edge), reading as rounded
-bales with a highlight/shade (not flat specks), distinct from the pre-existing coral/purple crop dots; no
-z-order tears / floaters / blowout; whole belt still balanced, "bales add harvest texture without clutter." One
-un-zoomed whole-city frame (third agent): city reads balanced/beautiful, no tears/darkness/mojibake, stat strip
-crisp.
-
-**Verdict — SHIPPED.** The farm belt's calendar had a cut phase named in the palette since forever but nothing
-in the field to show for it; now the weeks after each harvest carry rolled golden bales, patchworked field by
-field. Draw-only, pop+stream flat, ~11 lines + a probe + a shot script. Nature's New element cell gains 174
-(4/26/29/102/156/**174**); the next lap (175) owes Civic (168).
-
-### Findings for later laps
-- **A CALENDAR CONTROL is stronger than a tile control for a SEASONAL draw-only feature.** Diffing PATCH vs BASE
-  over the host tile at the harvest calendar proves *something* changed; diffing the SAME tile at a non-harvest
-  calendar (summer, 0.000%) proves the change is the *bale* and not the crop colour, which reads `year` in both
-  builds and would otherwise pollute any single-calendar FARM diff. For any seasonally-gated feature, add the
-  off-season calendar as the control, not just an off-tile.
-- **The palette often names a phase the draw never showed.** `straw`/`stubble` existed with a comment "ripe,
-  then cut" for the artifact's whole life, but the cut field was bare. A named-but-unshown palette entry (or a
-  named-but-unshown draw state) is a cheap New-element seam — the intent is already recorded; you just draw it.
-  Where else does a palette/comment name a state the pixels skip?
-- **Nature's forest floor is a four-season CLOSED surface (156/166); its next big surface is the FARM belt
-  (174 opened it).** The belt still has room: post-cut bales are shipped, but a harvest could also stack sheaves,
-  and the barn (v>0.9) is a lone object — a farm New element / Deepen has host left. Garden (2 hexes) and meadow
-  (6 hexes) remain too small to buy pixels; prefer FARM/FOREST for Nature surfaces.
 
 ## Iteration 175 — the parliament floodlights its facade (2026-07-12) [Civic & culture × Deepen]
 
@@ -1054,3 +989,68 @@ tooltip + a one-predicate refactor, pop + stream flat, ~8 lines + a probe + a sh
   Deepen FIRST.** With FARM closed, Nature's Interaction/UX seam via the agricultural calendar is spent; the next
   Nature × Interaction/UX must be a *new* seam (e.g. does the barn/`c.v>0.9` outbuilding, or a REDWOOD stand's fire
   history beyond 117's `Undisturbed`, name anything the draw already tracks?).
+
+## Iteration 184 — the town hall clock tells its time on hover (2026-07-12) [Civic & culture × Interaction/UX]
+
+**Vector — Civic & culture × Interaction/UX** (SHIPPED). Rotation named the stalest domain: **Civic (175)** was owed and
+staler by number than every other (Sky 181 · People 178 · Transport 179 · Urban 180 · Nature 183 · Water 176). On
+*kind*: Civic's other kinds are saturated or hot — additive is spent (12 richly-drawn institutions + plazas with
+statues/fountains/bunting), Deepen was JUST cashed last Civic lap (175 parliament floodlight) and is globally hot
+(178/179/181), Polish (168) has no compounding defect to fix, and a terrain CA/Connect would perturb the seeded stream
+for marginal payoff. The one clean, guaranteed-flat open Civic seam is the asserts-less-than-code tooltip tell — the
+same seam 129/148/183 cashed. Kind repeats 183 (also Interaction/UX), but *saturation beats kind-rotation* (118's law):
+when a domain's other kinds are all spent-or-hot, the kind that stays is the one that stays. Draw-nothing tooltip: a
+pop+stream-neutral ship.
+
+**The seam — a drawn clock that never told its own time.** The town hall draws a working 24h clock (iters 135/149):
+the hand reads the slow day clock `dayT` — straight up at noon, down at midnight — "the clock the town sets its watches
+by" (its own L4825 comment). Yet its tooltip (`CIVICDESC[hall]`) named only the chambers and the clerk and said nothing
+of the *hour the hand points at*. The exact orchard(129)/vineyard(148)/farm(183) shape — a draw that tracks a live
+quantity over a tooltip that stays mute — but on the slow **time** clock rather than the year, so it can never strobe
+(134's law: `dayT` ~110 s/cycle is the legible clock, unlike the fast `year`).
+
+**Change (~10 lines, tooltip-only).** Added `clockWord(t)` beside `phaseWord`/`moonWord`: `mins=round(((t%1+1)%1)*1440)
+%1440`, formatted 12-hour `H:MM AM/PM`, pure-ASCII (134). Added one `describeTile` row inside the `c.t===T.CIVIC` block:
+`if(c.kind==='hall')data.push(['Clock',clockWord(dayT)])` — reading the SAME `dayT` the drawn hand uses (up=noon convention
+matches: `dayT` 0=12:00 AM, .25=6:00 AM, .5=12:00 PM, .75=6:00 PM). No tile / entity / `rng()` / `hashCell` /
+`tick()` pass / terrain change. Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity/life/transport counts
+identical. Vacuous by construction (tooltip-only) — the probe is the gate.
+
+**Probe — `probes/probe-hallclocktip.mjs` (new, promoted).** Named to distinguish it from iter 149's
+`probe-hallclock.mjs`, which grades the *drawn hand*; this grades the *tooltip row*. On the 122/183 template it
+**independently** recomputes `clockWord` from `dayT` and asserts `describeTile`'s printed `Clock` word equals it across a
+full day sweep (midnight/3am/6am/7:12am/noon/6pm/9pm). Rebuilt in-page (`genWorld`+`__warp`), seeds 7/42/1234:
+**clock-match 7/7 each**; **time control: 7/7 distinct strings across the day** (proves the row reads the live clock, not
+a frozen string); **non-hall control (other civics + ROAD/RES/FARM) carries no `Clock` row, 500/500 clean**.
+**VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-hallclocktip.mjs` (new, promoted).** Freezes the clock in-page (freeze-the-clock law), hovers
+the hall via `__find('hall')`, clip-shoots the tooltip. seed 42 @ dayT 0.30: `...| Clock | 7:12 AM | Value 67%`; seed 7 @
+dayT 0.66: `...| Clock | 3:50 PM | High street | Value 64%` — no page errors, clock strings correct (0.30·24=7:12 AM,
+0.66·24=3:50 PM). Two agents (one per seed), both **VISUAL: PASS**: `Clock` row visible + legible (no mojibake/intra-panel
+clipping), hall hex cleanly outlined, no z-order tears / floaters / blowout; the whole frame reads as a balanced coastal
+city. (Both noted the tooltip panel runs past the clip's right edge — a screenshot framing artifact, not a defect.)
+
+**Verdict — SHIPPED.** The town hall — whose drawn hand has told the time on its dial since iter 149 — now tells it in
+words on hover, off the same slow `dayT` the hand points at. The asserts-less-than-code tell, closed on the city's most
+iconic timepiece. Draw-nothing tooltip, pop+stream flat, ~10 lines + a probe + a shot. Civic's Interaction/UX cell gains
+184 (52/122/**140**/**184**). The next domain lap (185) owes **Water (176)**, then People (178)/Transport (179)/Urban
+(180); step-back still at **187**.
+
+### Findings for later laps
+- **A DRAWN LIVE QUANTITY OVER A MUTE TOOLTIP IS THE SAME SEAM WHETHER THE CLOCK IS THE YEAR OR THE DAY.** 129/148/183
+  cashed it on the *seasonal* (`year`) clock; 184 cashed it on the *time-of-day* (`dayT`) clock. The tell is general:
+  wherever a draw animates off a global (`dayT`, `LITAMT`, `time`, `year`) and the tooltip names none of it, there is a
+  free Interaction/UX row — *provided the clock is slow enough not to strobe* (134): `dayT` (~110 s) and `year` (dev
+  clock, minutes) are safe to name as a discrete word/number; `time` (frame clock) is NOT — a readout off `time` would
+  flicker. Candidates still open on the SLOW clocks: the observatory dome's open/shut state (`LITAMT`), the police beacon,
+  the museum/parliament floodlight (`LITAMT>0.3`) — each a live "lit after dark" the tooltip could name.
+- **BEFORE NAMING A NEW PROBE/SHOT, `ls probes/` — iter 149 already owned `probe-hallclock.mjs`/`shot-hallclock.mjs`.**
+  The bare `mv` refused to overwrite (saving 149's drawn-hand tools); a `git mv` or a `Write` would have been the danger.
+  Named mine `*-hallclocktip.mjs` (the tooltip variant). Two probes can share a subject (the hall clock) from opposite
+  sides — one grades the pixels (149), one grades the words (184) — so distinguish by *what they measure*, not the subject.
+- **SATURATION BEATS KIND-ROTATION, AGAIN (118).** 184 repeated 183's Interaction/UX kind because every other Civic kind
+  was spent (additive/Polish) or hot (Deepen). When rotation names a domain but its non-repeated kinds are all
+  saturated-or-hot, repeating the one open kind on the owed domain beats forcing a weak change of a worse kind.

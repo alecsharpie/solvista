@@ -6327,6 +6327,14 @@ function phaseWord(t){
   if(t<0.80)return'sunset';
   return'night';
 }
+/* the town hall's clock hand (iter 149) points at the slow day clock — noon up,
+   midnight down — so name the hour it shows off the same dayT, and the tooltip
+   reads its own dial. 12-hour, ASCII only (no meta charset, iter 134). */
+function clockWord(t){
+  const mins=Math.round((((t%1)+1)%1)*1440)%1440;   /* minutes past midnight */
+  const h=(mins/60|0), m=mins%60, ap=h<12?'AM':'PM';
+  return (h%12||12)+':'+(m<10?'0':'')+m+' '+ap;
+}
 /* the moon's phase name for lunation fraction l (0=new .. .5=full). On the slow
    dayT clock (moonPhase, iter 135) it changes once per ~day-cycle, so it names a
    legible almanac reading rather than the fast-`year` strobe iter 134 found. */
@@ -6544,6 +6552,9 @@ function describeTile(c,x,y){
        are the two that ever answer more than one */
     let n=0; for(const m of cells)if(m.t===T.CIVIC&&m.kind===c.kind)n++;
     if(n>1)data.push(['One of',n+' '+CIVICLABEL[c.kind].toLowerCase()+'s']);
+    /* the hall draws a working clock the town sets its watches by (iter 149) but
+       never told the hour; name it off the same slow dayT the hand reads */
+    if(c.kind==='hall')data.push(['Clock',clockWord(dayT)]);
   }
   /* the owning institution now leads the square's headline (see the title above),
      so it no longer needs its own data row here. */
