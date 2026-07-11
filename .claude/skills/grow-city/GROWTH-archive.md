@@ -10729,3 +10729,67 @@ gains its next (…155, **179**); Transport is no longer stalest (Urban 173 now 
   scene*. Anything that lights up beside water (the pier, lifeguard tower, a harbour crane, a moored ship) can pool
   a reflection for near-free — and unlike a thin ribbon, a glow-on-dark-water clears the contrast×width bar at fit.
 
+## Iteration 180 — the towers ground their own weight (2026-07-12) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × **Polish** (SHIPPED). Rotation named the stalest domain, **Urban (173)** — the header owed
+the 180 lap to Urban, Deepen/Polish only (Urban is measured-saturated: additive spent 118, Connect measured-hard twice
+160/165, roof-furniture closed city-wide). Kind varied HARD off the globally hot **Deepen** streak (173/175/178/179 all
+Deepen) to a **Polish** — improve something already there, add nothing. Urban's last Polish was 143.
+
+**The seam — one shadow blob for every building, tower or bungalow.** `drawBuilding` opens with
+`shadowEl(gx,gy,0.42,0.13)` (L4321) — a **fixed** centered contact ellipse dropped under every RES/MID/COM/TOWER cell,
+regardless of mass. So a 150-unit ziggurat and a 9-unit house cast the **identical** ground shadow for the artifact's
+whole life, while every *other* diorama element responds to its context (umbrellas follow the sun 145, glitter 150,
+crowds cast shadows 137/163). The house style for shadows is a **centered** contact ellipse everywhere (cars, peds,
+crowds, trees all use `shadS`), so a directional rake was rejected as style-breaking — the right Polish keeps it
+centered and sizes it to the building's mass.
+
+**Change (2 lines, draw-only).** `shf=clamp((h-9)/120,0,1)` (0 for houses, ~1 for the tallest towers) now scales the
+shadow: `shadowEl(gx,gy, 0.42+shf*0.52, 0.13+shf*0.10)` — a house keeps the old 0.42/0.13 blob, a tall tower grounds
+on a 0.94-radius, 0.23-alpha pool. Still a centered ellipse in the house style, radius capped so a dense core grounds
+without darkening into clutter. No tile, entity, `rng()`, `hashCell`, `tick()` pass or terrain; `clamp` already
+defined (L182); pure-ASCII (134). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, `greenRoofs +1`/`towerHt
++1` = documented RAF tick-count jitter (touches no `rng()`). Vacuous by construction (draw-only) — the probe is the
+gate.
+
+**Probe — `probes/probe-massshadow.mjs` (new, promoted).** Diffs PATCH vs HEAD over each building's base box at a
+frozen day frame (t=0.35), split by height to prove the shadow **scales with mass**: TALL (shf>0.4, the big towers),
+SHORT (shf<0.05, houses/walk-ups — shf≈0 so ~unchanged), CTL (non-building EMPTY/PARK). Rebuilt in-page
+(`genWorld`+`__warp`), STARS cleared, `Math.random` stubbed, movers cleared, clock frozen (163 law) so the frame is
+reproducible. seeds 7/42/1234: **TALL 1.02% / 0.79% / 0.61% >> SHORT 0.08% / 0.05% / 0.04% ~ CTL 0.10% / 0.06% /
+0.04%** — a monotone height-gated darkening, ~10–15× the house/ground floor (SHORT/CTL residual is neighbouring
+towers' enlarged pools leaking into edge boxes). **PASS (3 seeds).** First cut (shf*0.32/0.055) read TALL only
+0.03–0.11% — the tower body **occludes its own base shadow**, so only the ring around the footprint shows; pushing the
+scale to 0.52/0.10 made the visible pool read without over-darkening.
+
+**Visual.** BEFORE (HEAD) vs AFTER downtown clips + AFTER whole-city `wide`, day, seeds 42 & 7. Two agents, both
+**PASS**: the taller-building grounding is **visible** (bigger/darker soft pools under the tower clusters, houses
+unchanged), pools sit **centered on the footprints** with no directional smear or misalignment; the downtown ground is
+**NOT murk** — darkening stays local to tower bases, roads/plazas/grass between them keep their tone; **no z-order
+tears, floaters, or blown-out color** anywhere; both called the whole frame a balanced, beautiful coastal city, the
+grounding *improving depth* by anchoring the towers.
+
+**Verdict — SHIPPED.** The one-size-fits-all contact shadow — identical under a bungalow and a 150-unit tower for the
+artifact's whole life — now scales with building mass, so downtown's towers ground with real visual weight while houses
+are untouched. A centered contact ellipse in the house style, draw-only, pop + stream flat, 2 lines + a probe. Urban's
+Polish cell gains its next (…143, **180**). The next domain lap (181) owes **Sky (161, Deepen/Fix only — saturated)**,
+then the mandated **step-back at 182**.
+
+### Findings for later laps
+- **A SUBTLE DRAW-ONLY CHANGE ON A SELF-OCCLUDING HOST NEEDS ITS SCALE PUSHED PAST THE OCCLUDER.** A building's contact
+  shadow is mostly *hidden under the building*, so enlarging it only exposes a thin ring around the footprint — the
+  first (modest) scaling measured 0.03–0.11% and would have failed the "is it visible" gate. When the thing you polish
+  is drawn *under* the thing that occludes it (a base shadow, a plinth, an undercroft), the visible signal is only the
+  overhang; size the change for the *ring*, not the *area*, and let the probe tell you when it clears the floor.
+- **THE HOUSE STYLE FOR SHADOWS IS A CENTERED CONTACT ELLIPSE — a directional rake would break it.** Every mover and
+  structure grounds with a centered `shadS`/`shadowEl`; nothing in the artifact casts a directional shadow. A
+  raking/leaning building shadow was considered and rejected on *consistency* grounds before it was ever coded
+  (buildings raking while cars/people/trees don't would read as a mismatch), and the centered-but-mass-scaled version
+  is the one that fits. When polishing a shared visual idiom, match the idiom the rest of the scene already uses.
+- **`shadowEl` STILL IGNORES DAYLIGHT.** The contact shadow is drawn unconditionally at the same alpha day and night;
+  it now scales with mass but not with the sun. A future Sky×Urban interconnect could soften it toward dusk (fainter
+  as the light flattens) the way 145/150 tie beach/sea to `LITAMT` — but keep it centered (house style) and beware the
+  night frame, where `rgba(40,32,20,a)` over dark ground already reads as little.
+

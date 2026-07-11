@@ -28,7 +28,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175** | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178** | 78, **111** | | 84, **137**, **163** | 71, **154** |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -55,7 +55,7 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **181** · People **186** · Transport **188** · Urban **189** · Nature **183** · Civic **184** · Water **185**. (162, **167**, **172**, **177**, **182**, **187** = step-backs, no domain lap.) **189 took Urban × Deepen (the lit shopfronts spill warm light onto the pavement in front at night — the COM storefront glass, the brightest ground-floor plane in the city, cast NOTHING on the street it faces while lamps/bridges/neon all glowed; a warm ground pool on the road-facing `fs` side gated `LITAMT>0.4 && v>0.5`, source-over low alpha matched to the street lamps' amber so a row of adjacent shops stacks without blowing to white (159's overlap law), positioned via `kerbS`'s face maths + `faceOutS`; a ground-plane Urban Deepen since Urban's additive/Connect are spent, draw-only stream+pop-neutral, `probe-shopspill` COM v>0.5 night 0.22–0.30% → day 0.00% 3 seeds, v<=0.5 gate-control ~0.01% both frames; both seeds VISUAL PASS, no blowout in the dense core). So the next domain lap (190) owes Sky (181, Deepen/Fix ONLY — saturated), then the step-back at 192.** **188 took Transport × Polish (the cable-car cabins rock on their hangers in the breeze — each cabin now PIVOTS about its fixed cable point, the hanger top staying on the rope while the body swings under it, two out-of-phase per-cabin sines, ~±2.4px so it reads at moderate zoom; the aerial transit hung rigidly vertical for the artifact's whole life while whitecaps/kites/flags all moved in the same wind, so this fixes a stillness rather than repeating 179's night-lamp move — draw-only off `time`, no rng/state, pop+stream flat; a MOTION claim so a TEMPORAL probe: `probe-cabinsway` freezes the SIM and steps only `time`, cabin `_sx` swings 4.1–4.5px pk-pk, `_sy` control 0.000, frozen monorail-train `_sx` control 0.000, 3 seeds; both seeds VISUAL PASS at ~3× — cabin stays connected by its hanger to the fixed cable, offset differs A↔B). So the next domain lap (189) owes Urban (180), then Sky (181); step-back at 192.** **186 took People × New element (the park café tables fill with seated day-only patrons — the 455-strong `cafes` surface put out parasol tables since before the ledger but never a single diner, the same amenity-with-no-people seam 127 found on the picnic lawn; `hashCell`-scattered, `LITAMT<0.5` so the terrace empties at night; draw-only stream+pop-neutral, `probe-cafepatron` CAFE day 0.93–0.99% → night 0.00% byte-identical, PARKC+ROAD ctls ~0, 3 seeds; a seed-7 agent FAIL claiming day/night INVERSION was disproven by the probe — its "night figures" were the base shop's lit windows. NB a later same-case draw (pond/fountain, `v<0.32`) OVERDRAWS the tables, so the shot selector hunts a `v>=0.44` front-most café). Next is the mandated STEP-BACK at 187; the next domain lap (188) owes Transport (179), then Urban (180)/Sky (181). **184 took Civic × Interaction/UX (the town hall clock tells its time on hover — a `Clock` row via a new `clockWord(dayT)`, reading the same slow day clock the drawn hand has pointed at since 149; kind repeated 183 because every other Civic kind is spent-or-hot, and saturation beats kind-rotation (118); draw-nothing tooltip, pop+stream flat, `probe-hallclocktip` clock-match 7/7 × 3 seeds, 7 distinct times across the day, non-hall control 500/500 clean). So the next domain lap (185) owes Water (176), then People (178)/Transport (179)/Urban (180). 185 took Water × Polish (wind-driven whitecaps break on the open swell — sparse seeded `hashCell` foam caps on open water beyond the coastal shelf `rDeep>SHELF1`, day-only via `LITAMT<0.6` so the night hands off to the moonglade; the one texture the flat daytime mid-ocean lacked, aimed at the biggest untouched water SURFACE not another coast entity; draw-only stream+pop-neutral, `probe-whitecap` SEA 0.21-0.30% day ≫ SHELF ≤0.07 ≫ LAND 0 → night 0, 3 seeds; agents "just right, slightly faint" after a size/alpha bump). So the next domain lap (188) owes Transport (179), then Urban (180)/Sky (181); step-back done at 187, next at 192.**
+  Sky **190** · People **186** · Transport **188** · Urban **189** · Nature **183** · Civic **184** · Water **185**. (162, **167**, **172**, **177**, **182**, **187** = step-backs, no domain lap.) **190 took Sky × Deepen (the golden hour rakes the sun-facing WINDOWS — an additive warm-gold glint on ONE front face of every building's glass at dawn/dusk, RIGHT at dawn / LEFT at dusk off `dayT`, cashing 180/181's banked "windows catch the low sun"; the THIRD golden-hour surface off the one `GWARM` signal after clouds 161 & sea 181, a Sky×Urban interconnect hooked into the shared `winBandR` so it reaches all 4 building types full-height; draw-only stream+pop-neutral, `probe-windowgold` splits each box L/R to prove the rake is one-sided AND flips: dusk L≫R, dawn R≫L, byte-zero noon/night, 3 seeds; a split agent verdict at `*0.30` was resolved by the probe then re-verified at `*0.44` — legibility is a separate bar from presence). So the next domain lap (191) owes People (186), then the mandated step-back at 192.** **189 took Urban × Deepen (the lit shopfronts spill warm light onto the pavement in front at night — the COM storefront glass, the brightest ground-floor plane in the city, cast NOTHING on the street it faces while lamps/bridges/neon all glowed; a warm ground pool on the road-facing `fs` side gated `LITAMT>0.4 && v>0.5`, source-over low alpha matched to the street lamps' amber so a row of adjacent shops stacks without blowing to white (159's overlap law), positioned via `kerbS`'s face maths + `faceOutS`; a ground-plane Urban Deepen since Urban's additive/Connect are spent, draw-only stream+pop-neutral, `probe-shopspill` COM v>0.5 night 0.22–0.30% → day 0.00% 3 seeds, v<=0.5 gate-control ~0.01% both frames; both seeds VISUAL PASS, no blowout in the dense core). So the next domain lap (190) owes Sky (181, Deepen/Fix ONLY — saturated), then the step-back at 192.** **188 took Transport × Polish (the cable-car cabins rock on their hangers in the breeze — each cabin now PIVOTS about its fixed cable point, the hanger top staying on the rope while the body swings under it, two out-of-phase per-cabin sines, ~±2.4px so it reads at moderate zoom; the aerial transit hung rigidly vertical for the artifact's whole life while whitecaps/kites/flags all moved in the same wind, so this fixes a stillness rather than repeating 179's night-lamp move — draw-only off `time`, no rng/state, pop+stream flat; a MOTION claim so a TEMPORAL probe: `probe-cabinsway` freezes the SIM and steps only `time`, cabin `_sx` swings 4.1–4.5px pk-pk, `_sy` control 0.000, frozen monorail-train `_sx` control 0.000, 3 seeds; both seeds VISUAL PASS at ~3× — cabin stays connected by its hanger to the fixed cable, offset differs A↔B). So the next domain lap (189) owes Urban (180), then Sky (181); step-back at 192.** **186 took People × New element (the park café tables fill with seated day-only patrons — the 455-strong `cafes` surface put out parasol tables since before the ledger but never a single diner, the same amenity-with-no-people seam 127 found on the picnic lawn; `hashCell`-scattered, `LITAMT<0.5` so the terrace empties at night; draw-only stream+pop-neutral, `probe-cafepatron` CAFE day 0.93–0.99% → night 0.00% byte-identical, PARKC+ROAD ctls ~0, 3 seeds; a seed-7 agent FAIL claiming day/night INVERSION was disproven by the probe — its "night figures" were the base shop's lit windows. NB a later same-case draw (pond/fountain, `v<0.32`) OVERDRAWS the tables, so the shot selector hunts a `v>=0.44` front-most café). Next is the mandated STEP-BACK at 187; the next domain lap (188) owes Transport (179), then Urban (180)/Sky (181). **184 took Civic × Interaction/UX (the town hall clock tells its time on hover — a `Clock` row via a new `clockWord(dayT)`, reading the same slow day clock the drawn hand has pointed at since 149; kind repeated 183 because every other Civic kind is spent-or-hot, and saturation beats kind-rotation (118); draw-nothing tooltip, pop+stream flat, `probe-hallclocktip` clock-match 7/7 × 3 seeds, 7 distinct times across the day, non-hall control 500/500 clean). So the next domain lap (185) owes Water (176), then People (178)/Transport (179)/Urban (180). 185 took Water × Polish (wind-driven whitecaps break on the open swell — sparse seeded `hashCell` foam caps on open water beyond the coastal shelf `rDeep>SHELF1`, day-only via `LITAMT<0.6` so the night hands off to the moonglade; the one texture the flat daytime mid-ocean lacked, aimed at the biggest untouched water SURFACE not another coast entity; draw-only stream+pop-neutral, `probe-whitecap` SEA 0.21-0.30% day ≫ SHELF ≤0.07 ≫ LAND 0 → night 0, 3 seeds; agents "just right, slightly faint" after a size/alpha bump). So the next domain lap (188) owes Transport (179), then Urban (180)/Sky (181); step-back done at 187, next at 192.**
   **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales on the stubble fields post-harvest, `probe-haybale`). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). **176 took Water × Interaction/UX (the river names its course — a `Course — N hexes` row via a bridge-AWARE flood `riverCourse` so a span doesn't fragment the reach; the river was the barest tooltip in the city, zero data rows over its richest water system; a `Crossings` companion was DROPPED — bridge cells over-count vs connected components and the L1633 pave-over rule makes the unit ambiguous; draw-nothing tooltip, pop+stream flat, `probe-river` 254 river hexes named 3 seeds, sea control clean 1916 hexes, sea-leak 0). So the next domain lap (178) owes People (170)/Transport (171).** 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). **178 took People × Deepen (the festival streets fill with people — a day-and-dusk crowd of `hashCell`-scattered figures mills on each `c.fete` ROAD cell under the bunting, then heads home by deep night; a People×Civic interconnect on a drawn CA system that was rendered for the artifact's whole life but never *inhabited*; draw-only stream+pop-neutral, `probe-fetecrowd` FETE day 2.9–3.6% → night 0.00% byte-identical, ROAD ctl ~0, 3 seeds). **179 took Transport × Deepen (the bridges light their lamps at night — the bridge sub-case `break`s before the road's night-lamp block, so every bridge went pitch dark at night for the artifact's whole life while both banks glowed; two warm rail lamps atop the deck + a `waveT` reflection on the river below, a Transport×Water interconnect; draw-only stream+pop-neutral, `probe-bridgelamp` BRIDGE night 7.4–8.1% → day 0.00% byte-identical, ROAD ctl 0.00% both, 3 seeds). So the next domain lap (180) owes Urban (173, Deepen/Polish only — measured-saturated).** **180 took Urban × Polish (the towers ground their own weight — the fixed 0.42×0.13 contact shadow under every building now scales with mass `shf=clamp((h-9)/120,0,1)`, so a 150-unit tower grounds on a 0.94/0.23 pool while a bungalow keeps the old blob; centered in the house style since nothing in the artifact casts a directional shadow, draw-only stream+pop-neutral, `probe-massshadow` TALL 0.6–1.0% ≫ SHORT/CTL ~0.05% 3 seeds; the first scaling was too weak because the tower body occludes its own base shadow — size for the ring not the area). So the next domain lap (181) owes Sky (161, Deepen/Fix ONLY — saturated), then the step-back at 182.** **181 took Sky × Deepen (the sea catches the golden hour — bright additive-gold sun-path glints on the open water at dawn/dusk, reading 161's reusable `cwarm`/`skyBot` signal onto the largest surface in the frame, filling the gap between the noon glitter and the night moonglade; a Sky×Water interconnect, draw-only stream+pop-neutral, `probe-seagold` SEA dusk ~31%/dawn ~22% → noon/night ~0, LAND ctl 0 all frames, 3 seeds. ⚠ A warm alpha WASH over teal desaturates to OLIVE — carry sunset/warm light over cool water with ADDITIVE `'lighter'` glints, not a wash; two tuning rounds were lost raising a wash's alpha before the blend mode was the real fix. `GWARM`/`GWSB` are now globals beside `LITAMT` for any golden-hour draw.)** 171's fete-street TOOLTIP (`c.fete` drawn but unnamed in `describeTile`) is still banked, and now more worth cashing since the street is no longer empty. **182 was the mandated STEP-BACK — ELEVENTH clean bill in a row (perf 178→181 flat: day +1.0% / night +0.9% vs iter-177 `7e2ac2c`; seasons alive FARM dry-peak 88.4; night core off-centre both seeds ~(.47,.50)/(.47,.60)). No city change.** **183 took Nature × Interaction/UX (the fields name their own harvest — a `Fields` crop-phase row in the FARM tooltip via a shared `farmPh(v)`, the biggest agricultural surface, the one 148's "agriculture tell spent" note had OVERLOOKED; draw-nothing tooltip + byte-identical one-predicate refactor, pop+stream flat, `probe-farmtip` 3 seeds). So the next domain lap (184) owes Civic (175), then Water (176)/People (178)/Transport (179).** Next step-back at **192** (187 done: HEAD vs iter-182 interleaved perf flat, isolated 183–186). **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
@@ -388,75 +388,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 182 entries before Iteration 180 live in
+> **Archive:** the 183 entries before Iteration 181 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 180 — the towers ground their own weight (2026-07-12) [Urban fabric × Polish]
-
-**Vector.** Urban fabric × **Polish** (SHIPPED). Rotation named the stalest domain, **Urban (173)** — the header owed
-the 180 lap to Urban, Deepen/Polish only (Urban is measured-saturated: additive spent 118, Connect measured-hard twice
-160/165, roof-furniture closed city-wide). Kind varied HARD off the globally hot **Deepen** streak (173/175/178/179 all
-Deepen) to a **Polish** — improve something already there, add nothing. Urban's last Polish was 143.
-
-**The seam — one shadow blob for every building, tower or bungalow.** `drawBuilding` opens with
-`shadowEl(gx,gy,0.42,0.13)` (L4321) — a **fixed** centered contact ellipse dropped under every RES/MID/COM/TOWER cell,
-regardless of mass. So a 150-unit ziggurat and a 9-unit house cast the **identical** ground shadow for the artifact's
-whole life, while every *other* diorama element responds to its context (umbrellas follow the sun 145, glitter 150,
-crowds cast shadows 137/163). The house style for shadows is a **centered** contact ellipse everywhere (cars, peds,
-crowds, trees all use `shadS`), so a directional rake was rejected as style-breaking — the right Polish keeps it
-centered and sizes it to the building's mass.
-
-**Change (2 lines, draw-only).** `shf=clamp((h-9)/120,0,1)` (0 for houses, ~1 for the tallest towers) now scales the
-shadow: `shadowEl(gx,gy, 0.42+shf*0.52, 0.13+shf*0.10)` — a house keeps the old 0.42/0.13 blob, a tall tower grounds
-on a 0.94-radius, 0.23-alpha pool. Still a centered ellipse in the house style, radius capped so a dense core grounds
-without darkening into clutter. No tile, entity, `rng()`, `hashCell`, `tick()` pass or terrain; `clamp` already
-defined (L182); pure-ASCII (134). Pop + stream provably flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, `greenRoofs +1`/`towerHt
-+1` = documented RAF tick-count jitter (touches no `rng()`). Vacuous by construction (draw-only) — the probe is the
-gate.
-
-**Probe — `probes/probe-massshadow.mjs` (new, promoted).** Diffs PATCH vs HEAD over each building's base box at a
-frozen day frame (t=0.35), split by height to prove the shadow **scales with mass**: TALL (shf>0.4, the big towers),
-SHORT (shf<0.05, houses/walk-ups — shf≈0 so ~unchanged), CTL (non-building EMPTY/PARK). Rebuilt in-page
-(`genWorld`+`__warp`), STARS cleared, `Math.random` stubbed, movers cleared, clock frozen (163 law) so the frame is
-reproducible. seeds 7/42/1234: **TALL 1.02% / 0.79% / 0.61% >> SHORT 0.08% / 0.05% / 0.04% ~ CTL 0.10% / 0.06% /
-0.04%** — a monotone height-gated darkening, ~10–15× the house/ground floor (SHORT/CTL residual is neighbouring
-towers' enlarged pools leaking into edge boxes). **PASS (3 seeds).** First cut (shf*0.32/0.055) read TALL only
-0.03–0.11% — the tower body **occludes its own base shadow**, so only the ring around the footprint shows; pushing the
-scale to 0.52/0.10 made the visible pool read without over-darkening.
-
-**Visual.** BEFORE (HEAD) vs AFTER downtown clips + AFTER whole-city `wide`, day, seeds 42 & 7. Two agents, both
-**PASS**: the taller-building grounding is **visible** (bigger/darker soft pools under the tower clusters, houses
-unchanged), pools sit **centered on the footprints** with no directional smear or misalignment; the downtown ground is
-**NOT murk** — darkening stays local to tower bases, roads/plazas/grass between them keep their tone; **no z-order
-tears, floaters, or blown-out color** anywhere; both called the whole frame a balanced, beautiful coastal city, the
-grounding *improving depth* by anchoring the towers.
-
-**Verdict — SHIPPED.** The one-size-fits-all contact shadow — identical under a bungalow and a 150-unit tower for the
-artifact's whole life — now scales with building mass, so downtown's towers ground with real visual weight while houses
-are untouched. A centered contact ellipse in the house style, draw-only, pop + stream flat, 2 lines + a probe. Urban's
-Polish cell gains its next (…143, **180**). The next domain lap (181) owes **Sky (161, Deepen/Fix only — saturated)**,
-then the mandated **step-back at 182**.
-
-### Findings for later laps
-- **A SUBTLE DRAW-ONLY CHANGE ON A SELF-OCCLUDING HOST NEEDS ITS SCALE PUSHED PAST THE OCCLUDER.** A building's contact
-  shadow is mostly *hidden under the building*, so enlarging it only exposes a thin ring around the footprint — the
-  first (modest) scaling measured 0.03–0.11% and would have failed the "is it visible" gate. When the thing you polish
-  is drawn *under* the thing that occludes it (a base shadow, a plinth, an undercroft), the visible signal is only the
-  overhang; size the change for the *ring*, not the *area*, and let the probe tell you when it clears the floor.
-- **THE HOUSE STYLE FOR SHADOWS IS A CENTERED CONTACT ELLIPSE — a directional rake would break it.** Every mover and
-  structure grounds with a centered `shadS`/`shadowEl`; nothing in the artifact casts a directional shadow. A
-  raking/leaning building shadow was considered and rejected on *consistency* grounds before it was ever coded
-  (buildings raking while cars/people/trees don't would read as a mismatch), and the centered-but-mass-scaled version
-  is the one that fits. When polishing a shared visual idiom, match the idiom the rest of the scene already uses.
-- **`shadowEl` STILL IGNORES DAYLIGHT.** The contact shadow is drawn unconditionally at the same alpha day and night;
-  it now scales with mass but not with the sun. A future Sky×Urban interconnect could soften it toward dusk (fainter
-  as the light flattens) the way 145/150 tie beach/sea to `LITAMT` — but keep it centered (house style) and beware the
-  night frame, where `rgba(40,32,20,a)` over dark ground already reads as little.
 
 ## Iteration 181 — the sea catches the golden hour (2026-07-12) [Sky & atmosphere × Deepen]
 
@@ -1010,3 +946,73 @@ A ground-plane Urban Deepen: draw-only, pop + stream flat, ~10 lines + a probe. 
   across the core (159's overlap law). The street lamps already solved this — plain `rgba(...,~0.11–0.22·LITAMT)`
   ellipses that *alpha-blend* toward warm without ever reaching white. Match the existing night-glow alphas rather than
   inventing a brighter one.
+
+## Iteration 190 — the golden hour rakes the west windows (2026-07-12) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × **Deepen** (SHIPPED). Rotation named the stalest domain, **Sky (181)** — and the header
+mandates Sky is **Deepen/Fix ONLY** (post-saturation: additive/CA cells are traps). Kind forced to Deepen. This cashes
+the move **banked twice** (180's "windows catch the low sun", 181's finding that `GWARM` is "a reusable golden-hour
+signal" for "a Sky×Urban golden-hour glint on west-facing tower windows"). A Sky×Urban interconnect, the third
+golden-hour surface after the cloud bellies (161) and the sea (181) — it adds no element, applying an existing Sky
+signal to an existing surface.
+
+**The seam — the glass was cold at the most beautiful light of the day.** The clouds warm at dawn/dusk (161) and the
+sea catches a gold sun-path (181), but the buildings' glass — the whole downtown curtain wall — stayed its flat cool
+tone through golden hour. Every real coastal city's most iconic sunset image is a wall of towers reflecting the low sun
+into orange fire on one side while the other stays shadowed. `winBandR` (L2736) is the **shared window renderer** for
+all four building types (RES 4417 / MID 4504 / COM 4583 / TOWER's stacked bands 4657–4685), so one hook there reaches
+every facade in the city, full-height up a tower.
+
+**Change (~10-line draw + a small refactor, all draw-only).** `winBandR`'s daytime early-return was converted to an
+`if/else` so the tail runs in both branches; appended, gated `GWARM>0.02`: an **additive** (`'lighter'`) warm-gold quad
+(`rgba(255,176,88,GWARM*0.44)`) over the full window band of **ONE** front face — the sun-facing one, `gs=dayT<0.5?1:-1`
+(**RIGHT at dawn / LEFT at dusk**, read off the same `dayT` clock `GWARM` derives from), drawn *over* the band so it
+reads as the pane lighting up while the shaded face stays cool. Additive not a wash (181's law: a warm alpha wash over
+cool desaturates to olive). No tile, entity, `rng()`, `hashCell`, `tick()` pass or terrain; `winQuad` geometry reused;
+strings pure-ASCII (134). Byte-unchanged at noon and night (GWARM=0). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, core metrics **+0** (pop/roads/developed flat),
+`greenRoofs -1` = documented RAF tick-count jitter (touches no `rng()`). Vacuous by construction (draw-only) — the probe
+is the gate.
+
+**Probe — `probes/probe-windowgold.mjs` (new, promoted).** Diffs PATCH vs HEAD over each building's (`DEV`, `h>12`)
+screen box at a frozen frame, at **dusk / dawn / noon / night**, with PARK/ROAD/WATER as the control, and — the
+load-bearing part — **splits each box into LEFT vs RIGHT screen halves** to prove the rake is one-sided and *flips*.
+Rebuilt in-page (`genWorld`+`__warp`), STARS cleared, `Math.random` stubbed, movers cleared, clock/`waveT` frozen (163
+law). seeds 7/42/1234: **BLD glint DUSK 12.8/13.5/13.1% · DAWN 10.6/10.9/10.7% → NOON 0.00% · NIGHT 0.00%** (GWARM
+0.72/0.43→0); **the lit half FLIPS — DUSK L 14.9/15.8/15.8% ≫ R 11.1/11.7/11.0%; DAWN R 11.5/12.0/12.2% ≫ L
+9.1/9.1/8.6%**; CONTROL 0.00% at noon/night (proving nothing else moved), 1.7–3.7% at dawn/dusk = my own glint bleeding
+into adjacent tiles' boxes. **PASS (3 seeds).**
+
+**Visual — a split verdict resolved by the probe, then re-verified.** First build (`*0.30`): seed-7 agent PASS ("subtle
+but clearly one-sided, the rake flips"), seed-42 agent FAIL ("flat scene-wide wash, no directional flip"). The
+directional probe had already measured the flip cleanly *on seed 42* (dusk L 15.0 ≫ R 11.1), so per the loop's law the
+probe is the verdict over disagreeing agents — the effect was real and directional, just **under-powered for reliable
+legibility**. Both agents confirmed headroom (no clipping). Bumped `*0.30→*0.44` (color to `255,176,88`), re-probed
+(directional contrast steeper, L/R ≈ 1.35× at dusk, still byte-zero noon/night), re-shot seed 42: agent now **PASS** —
+"on individual towers the LEFT face reads warmer cream/amber while the RIGHT sits greyer at dusk, and the warm side
+switches to the RIGHT at dawn on the same towers; no tears/floaters/blowout; wide frame a balanced golden-hour coastal
+city."
+
+**Verdict — SHIPPED.** The building glass — cold through golden hour while the clouds (161) and sea (181) caught the low
+sun — now takes a warm gold rake on its sun-facing windows, one side ablaze and the other shadowed, the lit face
+flipping between dawn and dusk. The third golden-hour surface; a Sky×Urban interconnect, draw-only, pop + stream flat,
+~10 lines + a directional probe. Sky's Deepen cell gains its next (…181, **190**). The next domain lap (191) owes the
+stalest domain, **People (186)**, then the mandated **holistic step-back at 192**.
+
+### Findings for later laps
+- **GOLDEN HOUR NOW LIGHTS THREE SURFACES — clouds (161), sea (181), glass (190) — all off the ONE `GWARM`/`GWSB`
+  signal.** The golden-hour system is now a genuine interconnect, not a one-off. Surfaces still cold at dawn/dusk: the
+  **beach sand** (145 ties it to `LITAMT`, not `GWARM`), the **wind turbines** (181's banked "warm rim"), and the
+  west-facing **civic domes/pediments**. Each is a ready Sky Deepen that adds no element — read `GWARM>0.02` and carry
+  the warmth with `'lighter'` glints, never an alpha wash (181).
+- **A DIRECTIONAL DRAW-ONLY CHANGE NEEDS A DIRECTIONAL PROBE — split the box, don't just diff it.** The census and a
+  whole-box diff both said "12% of building pixels changed," which a wash would also say; only splitting each box into
+  LEFT/RIGHT halves and showing the lit half *flips* dusk↔dawn proved the rake was one-sided (and it is what the census
+  and a naive probe are blind to). When a feature's whole point is *which side* lights, the gate must measure the side,
+  and a control that must move the *other* way at the other frame is stronger than a control that must stay at zero.
+- **THE FIRST STRENGTH THAT PASSES A PROBE CAN STILL FAIL THE EYE — legibility is a separate bar from presence.** The
+  `*0.30` build passed the probe on all three seeds (the flip was measurable) yet a strict agent could not *see* the
+  directionality; `*0.44` was the same effect, legibly. When a subtle Deepen splits the agents, don't revert on the
+  FAIL and don't ship on the probe alone — the probe says it's *there*, the agent says it's not *legible*, and both are
+  right. Push the strength until the eye catches what the probe already measured, then re-verify (cheap).

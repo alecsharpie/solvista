@@ -2735,24 +2735,43 @@ function bandR(gx,gy,ax,ay,z0,z1,fill){
 const WINDK=0.42, WINDARK=0.16;   /* unlit-glass shade; share of panes with nobody home */
 function winBandR(gx,gy,ax,ay,z0,z1,x,y,salt,f,litMix){
   const hb=z1-z0;
-  if(LITAMT<0.35||hb<=0.4){bandR(gx,gy,ax,ay,z0,z1,colLit('glass',f,litMix));return;}
   const[cx,cy]=px(gx,gy);
   const X=ax*2*HW, V=ay*2*VR, E=ay*2*ER;
-  const n=clamp(Math.round(X/hb),2,4);   /* panes across one face, ~square */
-  const mt=Math.min(0.09,0.62/X);        /* mullion width, in face parameter t */
-  const pt=(1-(n-1)*mt)/n;               /* pane width, likewise */
-  const a=(n-1)*mt+WINDARK*(1-(n-1)*mt); /* share of the band left to the wall */
-  /* ...and the share the band it replaces already had: one notch, on the 64% of faces
-     that rolled one. Holding THAT mean is what keeps downtown's tone where it was. */
-  const k=0.64*(Math.min(1.9,hb*0.8)/X)*(1-2*Math.min(0.35,hb*0.16)/hb);
-  ctx.fillStyle=colWin(f,litMix,a,k);
-  ctx.beginPath();
-  for(let s=-1;s<=1;s+=2)for(let i=0;i<n;i++)
-    if(hashCell(x*13+(s+1)*3+i*29,y*7+(z0|0),seedNum^salt)>=WINDARK){
-      const t0=i*(pt+mt);                                /* the rest is nobody home */
-      winQuad(cx,cy,s,X,V,E,z0,z1,t0,t0+pt);
-    }
-  ctx.fill();
+  if(LITAMT<0.35||hb<=0.4){bandR(gx,gy,ax,ay,z0,z1,colLit('glass',f,litMix));}
+  else{
+    const n=clamp(Math.round(X/hb),2,4);   /* panes across one face, ~square */
+    const mt=Math.min(0.09,0.62/X);        /* mullion width, in face parameter t */
+    const pt=(1-(n-1)*mt)/n;               /* pane width, likewise */
+    const a=(n-1)*mt+WINDARK*(1-(n-1)*mt); /* share of the band left to the wall */
+    /* ...and the share the band it replaces already had: one notch, on the 64% of faces
+       that rolled one. Holding THAT mean is what keeps downtown's tone where it was. */
+    const k=0.64*(Math.min(1.9,hb*0.8)/X)*(1-2*Math.min(0.35,hb*0.16)/hb);
+    ctx.fillStyle=colWin(f,litMix,a,k);
+    ctx.beginPath();
+    for(let s=-1;s<=1;s+=2)for(let i=0;i<n;i++)
+      if(hashCell(x*13+(s+1)*3+i*29,y*7+(z0|0),seedNum^salt)>=WINDARK){
+        const t0=i*(pt+mt);                                /* the rest is nobody home */
+        winQuad(cx,cy,s,X,V,E,z0,z1,t0,t0+pt);
+      }
+    ctx.fill();
+  }
+  /* Golden hour rakes the sun-facing glass (iter 190): at dawn/dusk the low warm
+     sky (GWARM, iter 181's reusable cwarm signal) fires a warm reflection across
+     the window glass. Only ONE face lights — the sun-facing one, RIGHT at dawn /
+     LEFT at dusk (dayT<0.5 vs >0.5, the same clock GWARM is read from) — so a
+     tower reads as raked by a low sun while its shaded face stays cool, not flatly
+     washed. ADDITIVE (like the sea glints/moonglade) so warm gold pops over cool
+     glass without muddying (a warm alpha wash over cool desaturates to olive, 181);
+     byte-unchanged at noon and night where GWARM is 0. A Sky x Urban interconnect,
+     drawn over the band above so it reads as the pane lighting up: no rng/hashCell/
+     terrain, stream + pop flat. */
+  if(GWARM>0.02){
+    const gs=dayT<0.5?1:-1;                        /* sun-facing face: dawn=right, dusk=left */
+    ctx.save();ctx.globalCompositeOperation='lighter';
+    ctx.fillStyle='rgba(255,176,88,'+(GWARM*0.44)+')';
+    ctx.beginPath();winQuad(cx,cy,gs,X,V,E,z0,z1,0,1);ctx.fill();
+    ctx.restore();
+  }
 }
 /* one pane-shaped quad on a prism front face, t measured from the front corner out;
    `y = cy + V + (E-V)*t` is the wall line — equal screen y is NOT equal height. */
