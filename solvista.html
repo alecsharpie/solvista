@@ -3143,6 +3143,26 @@ function drawCell(x,y){
           ctx.strokeStyle=colA('foam',1,a2);
           ctx.beginPath();
           ctx.moveTo(a[0]+ix*ins,a[1]+iy*ins);ctx.lineTo(b[0]+ix*ins,b[1]+iy*ins);ctx.stroke();
+          if(LITAMT>0.5){ /* bioluminescence: the churn of the breaking crest lights a
+               cool sea-green after dark. Drawn as SPARSE SOFT DOTS scattered along the
+               break (not a stroke — a per-edge line reads as a continuous neon tube on
+               straight coasts), so it flares as sparks of phosphorescence here and there.
+               A DEEP saturated green (low red channel) so overlaps stay green not white.
+               Emitted light -> raw literal, ignoring the blue night TINT. */
+            const ax=a[0]+ix*ins,ay=a[1]+iy*ins,bx2=b[0]+ix*ins,by2=b[1]+iy*ins;
+            for(let d=0;d<3;d++){
+              const hb=hashCell(x*13+dx*5+d*97,y*11+dy*7+d*57,seedNum^0x0B10);
+              if(hb<0.45)continue; /* most slots empty -> sparse, irregular sparks */
+              const tt=(d+0.15+hb*0.7)/3, dphi=Math.max(0,Math.sin(waveT*1.6-(y+dy*0.5)*0.9+hb*4));
+              const bl=dphi*(LITAMT-0.5)/0.5*(0.55+0.45*hb);
+              if(bl<0.06)continue;
+              const gx2=ax+(bx2-ax)*tt, gy2=ay+(by2-ay)*tt, rad=1.8+2.4*hb;
+              ctx.fillStyle='rgba(66,220,164,'+(0.13*bl)+')';       /* soft halo */
+              ctx.beginPath();ctx.arc(gx2,gy2,rad,0,7);ctx.fill();
+              ctx.fillStyle='rgba(110,238,188,'+(0.30*bl)+')';      /* bright centre */
+              ctx.beginPath();ctx.arc(gx2,gy2,rad*0.45,0,7);ctx.fill();
+            }
+          }
         }
         ctx.lineCap='butt';
       }

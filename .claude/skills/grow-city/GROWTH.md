@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **153** · Urban **151** · People **154** · Nature **156** · Transport **155** · Civic **158** · Water **150**.
-  **Stalest is now Water (150)**, then Urban (151), then Sky (153) — check the last entry of the stalest domain for a banked
+  Sky **153** · Urban **151** · People **154** · Nature **156** · Transport **155** · Civic **158** · Water **159**.
+  **Stalest is now Urban (151)**, then Sky (153) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -171,13 +171,13 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen, 154 was Interaction/UX.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** **159 Deepen (the SURF GLOWS at night — bioluminescence sparkles the breaking wave with sparse soft sea-green DOTS, `LITAMT>0.5`-gated & `hashCell`-scattered, draw-only stream+pop-neutral; `probe-biolum` — the Water entry in the moon/stars/observatory night run).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158/159 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen/Deepen, 154 was Interaction/UX.
   **⚠ Iteration 162 is the next holistic STEP-BACK** (…/147/**152 done**/**157 done**/**162**) — not a domain lap; see the recipe
   below (night + season, day frame off January, interleaved perf). **155 took Transport × Deepen (the tram catenary, the
   149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
   surface-not-entities law, forest=69 hexes vs garden=2). 157 was the mandated STEP-BACK; 158 took Civic × Deepen
-  (the observatory dome rotates to track the night sky — 149's banked draw-tell); the next lap (159) owes the
-  stalest domain, Water (150)**, then Urban (151). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
+  (the observatory dome rotates to track the night sky — 149's banked draw-tell); 159 took Water × Deepen (the surf
+  glows at night, `probe-biolum`); the next lap (160) owes the stalest domain, Urban (151)**, then Sky (153). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
   the banked Sky move is the SEASON word, which needs a slow clock FIRST — see the moon note above). Urban's
   additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
@@ -391,79 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 151 entries before Iteration 149 live in
+> **Archive:** the 152 entries before Iteration 150 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 149 — the town clock tells the time (2026-07-11) [Civic & culture × Deepen]
-
-**Vector.** Civic & culture × **Deepen** — Civic was the single stalest domain (last SHIP 140), and its most
-reliable move (the asserts-more-than-it-shows tell) was cashed at 122/140 for tooltips. This lap runs the tell
-in its **draw** form: the city hall's clock face is drawn with the comment *"the clock face the town sets its
-watches by"*, yet its hands were **frozen** at a fixed ~12:15 — an ornament that claims to tell time while
-sitting still. Kind varied off Civic's spent Interaction/UX (52/122/140) and off the globally-hot IUX run
-(133/134/140/141/144) to **Deepen** (Civic's stalest kind, last 91). Same spirit as 135's moon: drive a frozen
-ornament off the slow day clock.
-
-**The seam.** The hall clock (L4456) drew two static line segments from the dial center. `dayT` (the day
-counter, 0=midnight … .5=noon, ~110 s/cycle — the same slow clock 135 re-pinned the moon onto) is a global in
-scope. The clock face is a fixed-radius overlay (`ctx.arc(...,3.4)` in world units, so it scales with the camera
-but is ~2px at fit) — a zoom-reward detail like the police beacon / museum banner.
-
-**Change (~8 lines, draw-only).** Replaced the two frozen hands with ONE hour hand on a 24h dial:
-`clkA=(dayT-.5)·2π`; tip at `(sin clkA, -cos clkA)·2.0` — **straight up at noon, down at midnight, left in the
-morning, right in the evening, so it turns with the sun** (and the moon, 135). Added a small fixed noon tick at
-the top of the dial for orientation and an ink hub dot. Factored the dial center into `hallClockCtr(gx,gy,hb)`
-so the draw and the new `__clock()` probe hook share ONE definition (112's one-predicate law). No tile, entity,
-`rng()`, `hashCell`, `tick()` pass or terrain; no string literals (134 mojibake N/A). Pop provably flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
-(cars 360 · trams 54 …). Vacuous by construction (a draw reading a global runs in no census metric) — the probe
-is the gate.
-
-**Probe.** `probes/probe-hallclock.mjs` (new, promoted). Measures the hand's DIRECTION from pixels vs the day,
-locate-don't-judge (108). A ~2px ink hand is swamped by the bright hall wall, so it **differences** each test
-frame against a same-lighting reference (static wall/dome/hub/tick cancel; only the moving hand survives) and
-takes the centroid of the ink that APPEARED — the hand's direction. It stays in the daytime lighting window
-(dayT .15–.55, lit≈0) so lighting is constant across the measured arc, camera-zooms the dial to ~12px radius,
-and **recomputes the expected angle itself** (never trusts `__clock().ang`). seeds 7/1234/88: at dayT
-.20/.30/.40/.50 the observed hand angle matched dayT within **1–3°**, **monotonic**, control (dayT .5 twice)
-pixel-identical. Halls found in 4 seeds (dead-code: dial at scale); seed 42 SKIP (its dial is occluded by a
-front amphitheater knoll — a draw-order fact, not a bug); seeds 3/2024 have no standalone hall (became
-parliament). Straight-down/right (midnight, evening) sit in fast-changing light → left to the visual gate.
-
-**Visual.** `probes/shot-hallclock.mjs` (new) camera-zooms the dial and clips morning/noon/midnight. One agent,
-blind locate task (108): it read the hand as **lower-left / up / down** respectively and correctly assigned
-morning/noon/midnight — the three directions "clearly distinct", tick fixed at top. Whole-city `wide` at seeds
-42 & 7, one agent each: both **VISUAL: PASS**, balanced coherent coast, no tears/floaters/blowout, nothing
-compounded.
-
-**Verdict — DEEPENED.** The town clock now tells the time of day on its 24h dial and agrees with the sun and
-moon, where for the artifact's whole life it sat frozen. Draw-only, pop provably flat, ~8 lines + a shared
-helper + a locator hook. Civic's Deepen cell gains its next (36, 59, 66, 80, 91, **149**).
-
-### Findings for later laps
-- **THE ASSERTS-MORE-THAN-IT-SHOWS TELL HAS A *DRAW* FORM, NOT JUST A TOOLTIP ONE (extends 117/122/129/148).**
-  Those cashed strings that asserted what the code knew; here a *drawn ornament* (a clock) asserted a behavior
-  (telling time) the draw ignored. Look for other ornaments whose COMMENT or shape promises motion/state they
-  don't have. Candidates seen while grepping: the museum/parliament are floodlit but otherwise static; the
-  aquarium fish pennant already waves (`time`); the firehouse bell is static. A frozen sundial/gauge/vane that
-  should track a clock is the richest version.
-- **A ~2px OVERLAY HAND IS MEASURED BY DIFF-CENTROID IN A CONSTANT-LIGHTING WINDOW, NOT A LUMINANCE RAY.** The
-  first probe (darkest-ray from center) failed: the bright wall behind a thin dark hand swamps the ray. The fix
-  is 109's cancel-the-static trick applied spatially — difference two frames whose ONLY difference is the hand
-  (same lighting, clock frozen), and the centroid of "ink that appeared" is the hand. Keep to the daytime
-  lit≈0 band (KEYS) so lighting doesn't recolor the face between frames.
-- **CAMERA-SET BEATS MOUSE-WHEEL FOR ZOOMING A PROBE ONTO A FIXED POINT.** `page.mouse.wheel` drifts (clamp +
-  cursor) and my zoom walked off the dial onto a neighbour's roof. Setting `zoom/scale/offX/offY` directly
-  in-page (recovering world coords as `(sx-offX)/scale`) centers the target exactly. `__clock` returns SCREEN
-  coords (`world·scale+offX`), like `__find` — `px()`/`ctr()` return WORLD coords and the city draw applies the
-  `dpr·scale` transform, so a hook that forgets `·scale+offX` points at raw world pixels (my first bug).
-- **SOME HALLS' DIALS ARE OCCLUDED (a front amphitheater/tall neighbour), and ~2/9 seeds have no standalone
-  hall at all (it became parliament).** A per-feature probe on a one-per-city landmark must tolerate SKIPs and
-  grade only the measurable instances (require ≥2), not FAIL on an occluded or absent one.
 
 ## Iteration 150 — the open sea catches the sun (2026-07-11) [Water & coast × Polish]
 
@@ -1026,3 +958,69 @@ gains its next (36, 59, 66, 80, 91, 149, **158**); Civic is no longer stalest (W
   full-open by dusk (dayT 0.90 → openAmt 1.0) but drops fast on the dawn side (dayT 0.10 → 0.21), so a naive
   symmetric ±0.10 night sample set put one frame outside the open window (ink=0). Pick night probe samples by
   checking `openAmt`, not by assuming the dusk/dawn edges are mirror images — the daylight model isn't.
+
+## Iteration 159 — the surf glows at night (2026-07-11) [Water & coast × Deepen]
+
+**Vector.** Water & coast × **Deepen** (SHIPPED). Rotation named the domain — after the 158 Civic ship the lap
+owed the stalest domain, **Water** (last SHIP 150). Kind varied off Water's worn Polish (150/132/116) and its
+recent IUX (141) to **Deepen**, enriching the existing surf-break draw with a genuinely new night phenomenon —
+and, like 135 (moon) / 153 (stars) / 158 (observatory), feeding the night-mood theme by deepening a domain toward
+Sky (108's law). Content: **bioluminescence** — the breaking surf phosphoresces a cool sea-green after dark, the
+Water counterpart to the run of night features the last laps built.
+
+**The seam.** `case T.WATER`'s surf-break block (L3126) already strokes foam along every beach-facing hex edge with
+a traveling opacity wave `ph=sin(waveT*1.6-(y+dy*0.5)*0.9)` and an inset `ins`. Its per-edge vertices `a`/`b`,
+inset direction `ix`/`iy`, and `ph` are all in scope — the exact host for a night glow that breaks where the wave
+breaks.
+
+**Change (~18 lines, draw-only).** A `LITAMT>0.5`-gated block after each foam stroke scatters up to 3 **soft
+glowing dots** along the break, each `hashCell(...,seedNum^0x0B10)`-gated (skip if `hb<0.45`) so most slots are
+empty and the glow reads as **sparse sparks, not a line**. Each dot: a wide faint halo arc + a small bright centre,
+both a **deep saturated sea-green** raw literal (`rgba(66,220,164)` / `rgba(110,238,188)` — emitted light, so
+untinted by the blue night TINT, like the warm city-light smear above; low red channel so overlaps stay green, not
+white). Strength = `dphi·(LITAMT-0.5)/0.5·(0.55+0.45·hb)`. No tile, entity, `rng()`, `tick()` pass or terrain;
+strings pure-ASCII (134). Stream + pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, core metrics +0, entity counts identical. Vacuous
+by construction (a night-only draw at the day census frame draws nothing) — the probe is the gate.
+
+**Probe — `probes/probe-biolum.mjs` (new, promoted).** Diffs PATCHED vs pristine HEAD at the SAME frozen frame
+(waveT pinned to 12.3, every mover cleared per tramwire's law), sampling the water hexes that touch a beach hex
+(the surf hosts, found in-page) with ROAD as the zero control. seeds 7/42: **SURF changed 0.24% / 0.51% at NIGHT →
+0.00% / 0.00% in DAY** (gate off → byte-identical), **ROAD control ~0** both frames. So the glow appears only at
+night and only on the surf line. **PASS.**
+
+**Visual.** `probes/shot-biolum.mjs` (new; takes seed/warp/**scale**) camera-zooms a front-of-frame beach that
+touches open water, clipping night + a day control. **This vector cost SIX tuning rounds** — see findings; the
+short version is that a per-edge *stroke* reads as a continuous neon tube on straight coasts however dim, and a
+pale aqua blows to near-white where adjacent hexes' strokes stack. The design that finally passed is **scattered
+soft DOTS in a deep sea-green**. At a moderate ~4.3x zoom (the scale a user actually looks at the coast) both seeds
+read as soft, tasteful, patchy phosphorescence on the waterline, no blowout: seed 42 & seed 7 one agent each,
+both **VISUAL: PASS**. Whole-city `wide` night (seed 42): balanced coherent coast, lit core → dark rim, the sparks
+correctly sub-pixel/no clutter at fit zoom, no tears/floaters/blowout — **VISUAL: PASS**.
+
+**Verdict — DEEPENED.** The breaking surf now sparkles with bioluminescence after dark, a new night life for the
+coastline that for the artifact's whole life went dark at the waterline — the Water entry in the run of night
+features (moon 135, stars 153, observatory 158). Draw-only, stream + pop flat. Water's Deepen cell gains its next
+(17, 25, 51, 65, 72, 113, 123, **159**); Water is no longer stalest (Urban 151 now is).
+
+### Findings for later laps
+- **A GLOWING LINE ALONG A HEX EDGE READS AS A NEON TUBE; A GLOWING DOT READS AS A SPARK. For a night ornament on
+  the faceted coast, draw DOTS not strokes.** Four straight agent reads FAILed the stroke forms ("uniform neon tube
+  tracing the hex edges", "blown-out near-white cores") across every brightness and patchiness I tried; switching
+  to sparse hash-gated dots passed both seeds on the first try. A per-edge stroke on a straight coast joins with its
+  neighbours into a continuous bright outline that exposes the hex geometry — no alpha low enough to fix it stays
+  visible. Dots can't form a line, so they never trace the geometry. **When a per-edge draw keeps reading as an
+  outline, stop tuning its brightness and change its SHAPE to points.**
+- **EMITTED LIGHT THAT STACKS MUST HAVE A LOW RED CHANNEL, OR IT BLOWS TO WHITE.** A pale aqua (`rgba(178,255,228)`,
+  R=178) over dark water goes near-white where two strokes overlap (additive coverage → the light stroke colour). A
+  deep sea-green (R=66) stays green at any coverage because the red channel never climbs. For any additive glow that
+  can overlap itself (coast corners, dense edges), pick the colour by its **darkest** channel, not its hue.
+- **THE "GOOD WINDOW" OF A SUBTLE COAST DETAIL IS A MODERATE ZOOM, NOT FIT AND NOT EXTREME.** At fit zoom the glow is
+  correctly invisible (adds nothing, clutters nothing — whole-city PASS); at a punishing 7x the closest corner hexes
+  stack into bright bars; at ~4x (the natural "look at the coast" zoom) it reads as intended. Judge a coast ornament
+  at the zoom a user would actually use to see the coast — `shot-biolum.mjs` now takes a `scale` arg for exactly
+  this. A 7x FAIL on a feature that's clean at fit and lovely at 4x is the zoom being unfair, not the feature.
+- **`probe-biolum` re-confirms tramwire's law and adds one:** clear EVERY mover before a whole-frame two-load diff,
+  AND if you dim a feature to fix a look, re-run the probe — a deep-green + low-alpha pass dropped seed 7's night
+  signal to 0.05% (below its own ROAD noise) before I raised it back; a look-fix can silently kill the measurement.

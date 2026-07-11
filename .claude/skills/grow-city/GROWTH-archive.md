@@ -8782,3 +8782,72 @@ tooltip is named. Draw-... tooltip-only, pop provably flat, 3 lines. Nature's In
 
 <!-- Header trim (iter 158): condensed the resolved night-core watch-item bullet from the maintained header. Full text preserved here. -->
 The night-core-is-broad watch-item (136/142) is now CASHED (iter 143, Urban × Polish): a tight Gaussian bump (`CORESIG=5`) on the CBD turned the flat smoothstep plateau into a peak (probe-nightcore: seed-42 core→8-12 gap 0.152→0.307). Subtle-but-discriminable (both agents blind-picked the after-frame); a stronger read needs the window mix `0.35+0.65·c.lit` widened, not `c.lit` steepened further. (125 was the same shape — its product was the pin-off-January recipe fix.)
+
+## Iteration 149 — the town clock tells the time (2026-07-11) [Civic & culture × Deepen]
+
+**Vector.** Civic & culture × **Deepen** — Civic was the single stalest domain (last SHIP 140), and its most
+reliable move (the asserts-more-than-it-shows tell) was cashed at 122/140 for tooltips. This lap runs the tell
+in its **draw** form: the city hall's clock face is drawn with the comment *"the clock face the town sets its
+watches by"*, yet its hands were **frozen** at a fixed ~12:15 — an ornament that claims to tell time while
+sitting still. Kind varied off Civic's spent Interaction/UX (52/122/140) and off the globally-hot IUX run
+(133/134/140/141/144) to **Deepen** (Civic's stalest kind, last 91). Same spirit as 135's moon: drive a frozen
+ornament off the slow day clock.
+
+**The seam.** The hall clock (L4456) drew two static line segments from the dial center. `dayT` (the day
+counter, 0=midnight … .5=noon, ~110 s/cycle — the same slow clock 135 re-pinned the moon onto) is a global in
+scope. The clock face is a fixed-radius overlay (`ctx.arc(...,3.4)` in world units, so it scales with the camera
+but is ~2px at fit) — a zoom-reward detail like the police beacon / museum banner.
+
+**Change (~8 lines, draw-only).** Replaced the two frozen hands with ONE hour hand on a 24h dial:
+`clkA=(dayT-.5)·2π`; tip at `(sin clkA, -cos clkA)·2.0` — **straight up at noon, down at midnight, left in the
+morning, right in the evening, so it turns with the sun** (and the moon, 135). Added a small fixed noon tick at
+the top of the dial for orientation and an ink hub dot. Factored the dial center into `hallClockCtr(gx,gy,hb)`
+so the draw and the new `__clock()` probe hook share ONE definition (112's one-predicate law). No tile, entity,
+`rng()`, `hashCell`, `tick()` pass or terrain; no string literals (134 mojibake N/A). Pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
+(cars 360 · trams 54 …). Vacuous by construction (a draw reading a global runs in no census metric) — the probe
+is the gate.
+
+**Probe.** `probes/probe-hallclock.mjs` (new, promoted). Measures the hand's DIRECTION from pixels vs the day,
+locate-don't-judge (108). A ~2px ink hand is swamped by the bright hall wall, so it **differences** each test
+frame against a same-lighting reference (static wall/dome/hub/tick cancel; only the moving hand survives) and
+takes the centroid of the ink that APPEARED — the hand's direction. It stays in the daytime lighting window
+(dayT .15–.55, lit≈0) so lighting is constant across the measured arc, camera-zooms the dial to ~12px radius,
+and **recomputes the expected angle itself** (never trusts `__clock().ang`). seeds 7/1234/88: at dayT
+.20/.30/.40/.50 the observed hand angle matched dayT within **1–3°**, **monotonic**, control (dayT .5 twice)
+pixel-identical. Halls found in 4 seeds (dead-code: dial at scale); seed 42 SKIP (its dial is occluded by a
+front amphitheater knoll — a draw-order fact, not a bug); seeds 3/2024 have no standalone hall (became
+parliament). Straight-down/right (midnight, evening) sit in fast-changing light → left to the visual gate.
+
+**Visual.** `probes/shot-hallclock.mjs` (new) camera-zooms the dial and clips morning/noon/midnight. One agent,
+blind locate task (108): it read the hand as **lower-left / up / down** respectively and correctly assigned
+morning/noon/midnight — the three directions "clearly distinct", tick fixed at top. Whole-city `wide` at seeds
+42 & 7, one agent each: both **VISUAL: PASS**, balanced coherent coast, no tears/floaters/blowout, nothing
+compounded.
+
+**Verdict — DEEPENED.** The town clock now tells the time of day on its 24h dial and agrees with the sun and
+moon, where for the artifact's whole life it sat frozen. Draw-only, pop provably flat, ~8 lines + a shared
+helper + a locator hook. Civic's Deepen cell gains its next (36, 59, 66, 80, 91, **149**).
+
+### Findings for later laps
+- **THE ASSERTS-MORE-THAN-IT-SHOWS TELL HAS A *DRAW* FORM, NOT JUST A TOOLTIP ONE (extends 117/122/129/148).**
+  Those cashed strings that asserted what the code knew; here a *drawn ornament* (a clock) asserted a behavior
+  (telling time) the draw ignored. Look for other ornaments whose COMMENT or shape promises motion/state they
+  don't have. Candidates seen while grepping: the museum/parliament are floodlit but otherwise static; the
+  aquarium fish pennant already waves (`time`); the firehouse bell is static. A frozen sundial/gauge/vane that
+  should track a clock is the richest version.
+- **A ~2px OVERLAY HAND IS MEASURED BY DIFF-CENTROID IN A CONSTANT-LIGHTING WINDOW, NOT A LUMINANCE RAY.** The
+  first probe (darkest-ray from center) failed: the bright wall behind a thin dark hand swamps the ray. The fix
+  is 109's cancel-the-static trick applied spatially — difference two frames whose ONLY difference is the hand
+  (same lighting, clock frozen), and the centroid of "ink that appeared" is the hand. Keep to the daytime
+  lit≈0 band (KEYS) so lighting doesn't recolor the face between frames.
+- **CAMERA-SET BEATS MOUSE-WHEEL FOR ZOOMING A PROBE ONTO A FIXED POINT.** `page.mouse.wheel` drifts (clamp +
+  cursor) and my zoom walked off the dial onto a neighbour's roof. Setting `zoom/scale/offX/offY` directly
+  in-page (recovering world coords as `(sx-offX)/scale`) centers the target exactly. `__clock` returns SCREEN
+  coords (`world·scale+offX`), like `__find` — `px()`/`ctr()` return WORLD coords and the city draw applies the
+  `dpr·scale` transform, so a hook that forgets `·scale+offX` points at raw world pixels (my first bug).
+- **SOME HALLS' DIALS ARE OCCLUDED (a front amphitheater/tall neighbour), and ~2/9 seeds have no standalone
+  hall at all (it became parliament).** A per-feature probe on a one-per-city landmark must tolerate SKIPs and
+  grade only the measurable instances (require ≥2), not FAIL on an occluded or absent one.
+

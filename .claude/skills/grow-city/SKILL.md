@@ -637,6 +637,18 @@ vector, whatever it is.
 - **Contrast is not traceability; for a linear feature, legibility ≈ contrast ×
   width.** A 1–2 hex ribbon is one screen pixel at fit zoom, however bright. Iter 101's
   greenway passed the census with a good trade and still failed 7 of 9 agent reads.
+- **A glowing LINE along a hex edge reads as a neon tube; a glowing DOT reads as a
+  spark (iter 159).** A per-edge stroke on a straight coast joins with its neighbours
+  into a continuous bright outline that exposes the hex geometry — no alpha low enough
+  to fix it stays visible. Four agent reads FAILed every stroke form of the
+  bioluminescent surf; sparse `hashCell`-gated *dots* passed both seeds on the first
+  try. **When a per-edge draw keeps reading as an outline however you dim it, stop
+  tuning brightness and change its SHAPE to points.** Two corollaries: (a) an additive
+  glow that can overlap itself must have a **low red channel** or it blows to white on
+  the overlaps — pick a glow colour by its darkest channel, not its hue; (b) judge a
+  subtle coast ornament at a **moderate zoom** (the scale a user looks at the coast),
+  not fit (invisible) nor an extreme 7x (corner hexes stack into bars) — a 7x FAIL on a
+  feature clean at fit and lovely at ~4x is the zoom being unfair, not the feature.
 - **Ask an agent to LOCATE, not to JUDGE** (108) — see the visual gate. And when
   agents disagree, **a probe is the verdict, not a rerun**.
 - **Reverting a passing-but-weak change is the system working.** The census can pass a
