@@ -3011,6 +3011,15 @@ function windFlag(bx,by,dir,L,H,color,ph){
   ctx.closePath();ctx.fill();
 }
 
+/* screen center of a town hall's clock face, given the hall's grid cell + drawn
+   body height hb. One definition, so the draw and the __clock() probe hook agree
+   on where the dial sits (iter 149). */
+function hallClockCtr(gx,gy,hb){
+  const[cx,cy]=px(gx,gy);
+  const X2=0.33*2*HW, V2=0.29*2*VR, E2=0.29*2*ER;
+  return[cx+X2*0.55, cy+V2-(V2-E2)*0.55-(hb-7)];
+}
+
 function drawCell(x,y){
   const c=cells[idx(x,y)];
   if(c.t===T.VOID)return;   /* off the plate — nothing to draw here */
@@ -4453,15 +4462,20 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.moveTo(cx,fpy);ctx.lineTo(cx,fpy-9.5);ctx.stroke();
       ctx.fillStyle=col('gold',1.35);ctx.beginPath();ctx.arc(cx,fpy-9.5,0.95,0,7);ctx.fill(); /* pole ball */
       windFlag(cx+0.6,fpy-9,1,7.4,4.4,col('coral',1.08),x*0.7+y*0.5);}
-      /* the clock face the town sets its watches by */
-      {const X2=0.33*2*HW, V2=0.29*2*VR, E2=0.29*2*ER;
-      const fx2=cx+X2*0.55, fy2=cy+V2-(V2-E2)*0.55-(hb-7);
+      /* the clock face the town sets its watches by — the hand reads the day
+         (dayT) on a 24h dial: straight up at noon, down at midnight, left in the
+         morning, right in the evening, so it turns with the sun (and the moon,
+         iter 135) instead of sitting frozen. Slow — one turn per day-cycle (~110s). */
+      {const[fx2,fy2]=hallClockCtr(gx,gy,hb);
       ctx.fillStyle=col('gold',1.15);ctx.beginPath();ctx.arc(fx2,fy2,3.4,0,7);ctx.fill();
       ctx.fillStyle=LITAMT>0.3?colLit('glass',1,0.9):col('white',1.06);
       ctx.beginPath();ctx.arc(fx2,fy2,2.7,0,7);ctx.fill();
-      ctx.strokeStyle=col('ink',1.1);ctx.lineWidth=0.7;
-      ctx.beginPath();ctx.moveTo(fx2,fy2);ctx.lineTo(fx2,fy2-1.8);
-      ctx.moveTo(fx2,fy2);ctx.lineTo(fx2+1.3,fy2+0.4);ctx.stroke();}
+      ctx.fillStyle=col('ink',0.85);ctx.fillRect(fx2-0.3,fy2-2.55,0.6,0.7); /* noon tick, top of dial */
+      const clkA=(dayT-0.5)*2*Math.PI; /* dayT .5=noon=up, 0=midnight=down */
+      ctx.strokeStyle=col('ink',1.1);ctx.lineWidth=0.75;
+      ctx.beginPath();ctx.moveTo(fx2,fy2);
+      ctx.lineTo(fx2+Math.sin(clkA)*2.0,fy2-Math.cos(clkA)*2.0);ctx.stroke();
+      ctx.fillStyle=col('ink',1.15);ctx.beginPath();ctx.arc(fx2,fy2,0.65,0,7);ctx.fill();}
     } else if(c.kind==='museum'){
       /* temple front: full-width gold pediment over a colonnade, floodlit at dusk */
       const hb=Math.max(12,h*0.7);
@@ -6344,6 +6358,22 @@ window.__find=n=>{
     if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)||(n==='highst'&&c.hstr)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sand:c.sand,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
+/* test hook: locate every town-hall clock face + its live hand (iter 149). sx/sy
+   are the dial center in CSS px (clip-ready), r the face radius; ang is the hand
+   angle the DRAW uses, read live off the day clock ((dayT-.5)·2π: up at noon,
+   down at midnight), and tipx/tipy the hand tip — so a probe can grade the drawn
+   hand against dayT. Grades a locator only; the probe recomputes the expected
+   angle itself rather than trusting ang. */
+window.__clock=()=>{const out=[];
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const c=cells[idx(x,y)];
+    if(!c||c.t!==T.CIVIC||c.kind!=='hall')continue;
+    const gx=x+0.5,gy=y+0.5,hb=Math.max(13,c.h*0.74);
+    const[fx2,fy2]=hallClockCtr(gx,gy,hb), a=(dayT-0.5)*2*Math.PI;
+    const tx=fx2+Math.sin(a)*2.0, ty=fy2-Math.cos(a)*2.0; /* hand tip, world coords */
+    out.push({x,y,sx:fx2*scale+offX,sy:fy2*scale+offY,r:2.7*scale,ang:a,
+      tipx:tx*scale+offX,tipy:ty*scale+offY});}
+  return out;};
+
 /* test hook: pin the hovered-tile focus ring by grid coords (cue l), so a probe
    or screenshot can mark a hex the way a real mousemove does — shoot.mjs can't
    hover. null/out-of-bounds clears it; setting a tile clears any hovered entity. */

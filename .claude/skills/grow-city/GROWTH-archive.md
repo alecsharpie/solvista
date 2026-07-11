@@ -8157,3 +8157,73 @@ building is cleared for a paved square, so the census counted panels on `PLAZA`/
 The draw + tooltip already gated on `DEV.has(c.t)`; 124 routed the census (×2) and both adoption neighbour-counts
 through the same predicate — `solarRoofs` −20, terrain-neutral (pop/roads/developed +0). This was the last
 banked cue that moved a census number; from here the census is vacuous again for most vectors — reach for a probe.
+
+## Iteration 139 — the vineyard keeps the calendar (2026-07-11)
+
+**Vector.** Nature × **Deepen** (SHIPPED/DEEPENED). Rotation named the domain — Nature was the single stalest
+(129) — and the header banked the content over many laps: *"129's banked Nature move is now a Deepen — make
+VINEYARD's grapes read `year` (last Sky-feedable item; 108/113/120)."* A banked, measured cue outranks
+kind-rotation (119's law), which is why Deepen was taken despite being hot. The vineyard was the artifact's
+last frozen agriculture: its draw painted **green trellis rows + purple (`lav`) grape clusters
+UNCONDITIONALLY** — a vine stuck at perpetual harvest — while its neighbours (FARM ±88 seasonal, the orchard's
+blossom/fruit since iter 57) already turned with the year.
+
+**Change (~14 lines, draw-only).** Added a shared `vinePhase()` next to `orchardPhase()` (one predicate, one
+definition — 112's law — so a future tooltip reads the same source the draw paints): `dormant` (winter, s<0.16
+or ≥0.99) · `bud` (spring) · `veraison` (dry-peak summer) · `ripe` (autumn harvest). `case T.VINEYARD` now
+gates on it: **leafy green canes in season / bare brown thinned canes in winter**, and grape clusters
+**only at veraison (sage-green berries) and ripe (purple `lav` harvest)** — none in bud/dormant. Mirrors the
+orchard exactly. No tile, entity, `rng()`, `hashCell`, terrain or `tick()` pass; strings pure-ASCII (134).
+
+**Census.** PASS, exit 0. Draw-only and stream-neutral — tile histogram empty, all core metrics +0 (the pop −3
+seen on a re-run is the documented `(year*·)` salt jitter, present on pristine too).
+
+**Probe — two, because a seasonal draw on the fast `year` clock has TWO ways to be wrong.**
+- `probes/probe-vine.mjs` (new) — build-vs-build |ΔRGB| at vineyard hex centres, patched vs pristine HEAD,
+  clock frozen (109), per season: **winter 10.96** (grapes removed, canes browned) · **spring 3.99** · **dry-peak
+  3.74** (grapes now green not purple) · **autumn 0.00** — autumn is the *season control*: both builds draw
+  purple grapes, so my change leaves the harvest byte-identical and only fixes the three wrong seasons.
+  **ROAD control 0.46 flat every season** (the edit is only `case T.VINEYARD`). seeds 7/42/1234.
+- `probes/probe-vinerate.mjs` (new, TEMPORAL — 134's law: a claim about motion needs a running clock) —
+  `year` is the fast dev clock (~0.167 yr/s at speed 1), so the vineyard cycles in live play. Counted phase
+  flips over 12 s of real play with the **ORCHARD as the accepted-reference control**: VINEYARD **0.67 Hz** =
+  ORCHARD **0.67 Hz**, both seeds. The vineyard flickers no harder than the orchard shipped on this same clock
+  since iter 57 — it joins the diorama's existing seasonal time-lapse, it does not introduce a novel strobe.
+
+**Visual.** First reads FAILED and *both agents were right to* — but the fault was the harness, not the draw:
+`?year=` pins the calendar ONCE at load (L6357) and the live clock then drifts it `+dt·s/6` during tileshot's
+~1.4 s `playing=true` wait, so the winter pin drifted to bud (green) and the autumn pin overran past `.99` to
+dormant (brown) — the exact "seasons inverted" the seed-7 agent reported. Re-shot with the **clock frozen**
+(`playing=false; __setYear(y); render()`), the phases render as designed: I verified winter (brown bare canes),
+dry-peak (green, subtle) and autumn (green + purple clusters) myself, then a fresh agent PASSED all four seeds-42
+frames — *"winter reads bare/brown, spring/summer green, autumn green-with-purple-grapes; the four frames
+clearly differ in a sensible seasonal order,"* no z-order/floater/blowout, winery sits cleanly atop. The
+whole-city frame was confirmed balanced/beautiful/no-tears by the first seed-42 agent (that check is
+season-independent).
+
+**Verdict — DEEPENED.** The vineyard now turns through the year like its orchard and farm neighbours —
+bare in winter, laden with purple grapes at harvest — closing the last frozen agriculture tile and the last
+Sky-feedable vegetation (108/113/120). Draw-only, stream-neutral, provably scoped (autumn control 0.00, ROAD
+0.46), and no worse strobe than the orchard (0.67 Hz each).
+
+### Findings for later laps
+- **⚠ A SEASONAL SCREENSHOT MUST FREEZE THE CLOCK — `?year=` PINS ONCE, THEN THE LIVE CLOCK DRIFTS IT A FULL
+  SEASON DURING THE WAIT (new, promoted to SKILL.md).** `?year=` calls `__setYear` once at load (L6357); the
+  frame loop then runs `year += dt·s/6` (~0.167 yr/s), so a screenshot taken after a ~1 s `playing=true` wait
+  has drifted ~0.15–0.24 yr — a discrete-phase feature can be a WHOLE SEASON off. This cost two false-FAIL
+  agent reads this lap (one read the seasons "inverted"). Prior seasonal shots tolerated it because
+  `applySeason`'s color is continuous (a 0.2 drift is a small nudge); a discrete-threshold visual is not.
+  Freeze before the shot: `playing=false; __setYear(y); render()`, exactly as the probes do. (`shoot.mjs`'s
+  `?year=` alone is NOT enough for a discrete seasonal feature.)
+- **A DISCRETE-PHASE VISUAL ON THE FAST `year` CLOCK IS NOT AUTOMATICALLY A 134-STYLE STROBE — the test is
+  whether it flips WORSE than the accepted ORCHARD, not whether it flips.** 134 reverted a HUD *readout* (text
+  words at 0.7 Hz, jarring). Scenery that participates in the whole-city seasonal time-lapse (farms recolor,
+  orchard blossoms/fruits) is accepted at that same 0.67 Hz. `probe-vinerate` is the reusable instrument: run
+  the live clock, count phase flips, use the orchard as the ceiling control.
+- **THE VINEYARD TOOLTIP IS NOW UN-CASHABLE — the last banked Nature Interaction.** `TILEDESC[T.VINEYARD]`
+  ("Terraced grapevines — wine country") is now mute about a draw that knows its `vinePhase()`, exactly the
+  orchard's state before 129 gave it a `Grove` row. The next Nature × Interaction/UX lap adds a `Vines` row
+  naming the season (Dormant / Bud break / Veraison / Harvest) from the shared `vinePhase()` — one predicate,
+  already built. This retires the header's *"VINEYARD needs a Deepen first"* caveat (108/109/129): the Deepen
+  is done.
+

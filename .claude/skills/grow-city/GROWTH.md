@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137** | 71 |
 
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **144** · Urban **143** · People **145** · Nature **148** · Transport **146** · Civic **140** · Water **141**.
-  **Stalest is now Civic (140)**, then Water (141), then Urban (143) — check the last entry of the stalest domain for a banked
+  Sky **144** · Urban **143** · People **145** · Nature **148** · Transport **146** · Civic **149** · Water **141**.
+  **Stalest is now Water (141)**, then Urban (143), then Sky (144) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -171,10 +171,10 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146 broke it to Polish/Deepen/Polish.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149 broke it to Polish/Deepen/Polish/Deepen.
   **⚠ Iteration 152 is the next holistic STEP-BACK** (…/136/142/**147 done**/**152**) — not a domain lap; see the recipe
-  below (night + season, day frame off January, interleaved perf). **148 owes the stalest domain, Nature (139)**,
-  then Civic (140); vary off Polish (146) and Interaction/UX (four of last seven) — Deepen/Connect fresh. Sky
+  below (night + season, day frame off January, interleaved perf). **150 owes the stalest domain, Water (141)**,
+  then Urban (143); vary off Deepen (149) and Interaction/UX (still recent) — Polish/Connect fresh. Sky
   is post-saturation (Deepen/Fix only — its additive/CA cells are traps); Urban's additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
   New element — but 127 sharpens it: saturation is of a domain's *entities*, and a New element can still land on a
@@ -390,80 +390,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 141 entries before Iteration 139 live in
+> **Archive:** the 142 entries before Iteration 140 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 139 — the vineyard keeps the calendar (2026-07-11)
-
-**Vector.** Nature × **Deepen** (SHIPPED/DEEPENED). Rotation named the domain — Nature was the single stalest
-(129) — and the header banked the content over many laps: *"129's banked Nature move is now a Deepen — make
-VINEYARD's grapes read `year` (last Sky-feedable item; 108/113/120)."* A banked, measured cue outranks
-kind-rotation (119's law), which is why Deepen was taken despite being hot. The vineyard was the artifact's
-last frozen agriculture: its draw painted **green trellis rows + purple (`lav`) grape clusters
-UNCONDITIONALLY** — a vine stuck at perpetual harvest — while its neighbours (FARM ±88 seasonal, the orchard's
-blossom/fruit since iter 57) already turned with the year.
-
-**Change (~14 lines, draw-only).** Added a shared `vinePhase()` next to `orchardPhase()` (one predicate, one
-definition — 112's law — so a future tooltip reads the same source the draw paints): `dormant` (winter, s<0.16
-or ≥0.99) · `bud` (spring) · `veraison` (dry-peak summer) · `ripe` (autumn harvest). `case T.VINEYARD` now
-gates on it: **leafy green canes in season / bare brown thinned canes in winter**, and grape clusters
-**only at veraison (sage-green berries) and ripe (purple `lav` harvest)** — none in bud/dormant. Mirrors the
-orchard exactly. No tile, entity, `rng()`, `hashCell`, terrain or `tick()` pass; strings pure-ASCII (134).
-
-**Census.** PASS, exit 0. Draw-only and stream-neutral — tile histogram empty, all core metrics +0 (the pop −3
-seen on a re-run is the documented `(year*·)` salt jitter, present on pristine too).
-
-**Probe — two, because a seasonal draw on the fast `year` clock has TWO ways to be wrong.**
-- `probes/probe-vine.mjs` (new) — build-vs-build |ΔRGB| at vineyard hex centres, patched vs pristine HEAD,
-  clock frozen (109), per season: **winter 10.96** (grapes removed, canes browned) · **spring 3.99** · **dry-peak
-  3.74** (grapes now green not purple) · **autumn 0.00** — autumn is the *season control*: both builds draw
-  purple grapes, so my change leaves the harvest byte-identical and only fixes the three wrong seasons.
-  **ROAD control 0.46 flat every season** (the edit is only `case T.VINEYARD`). seeds 7/42/1234.
-- `probes/probe-vinerate.mjs` (new, TEMPORAL — 134's law: a claim about motion needs a running clock) —
-  `year` is the fast dev clock (~0.167 yr/s at speed 1), so the vineyard cycles in live play. Counted phase
-  flips over 12 s of real play with the **ORCHARD as the accepted-reference control**: VINEYARD **0.67 Hz** =
-  ORCHARD **0.67 Hz**, both seeds. The vineyard flickers no harder than the orchard shipped on this same clock
-  since iter 57 — it joins the diorama's existing seasonal time-lapse, it does not introduce a novel strobe.
-
-**Visual.** First reads FAILED and *both agents were right to* — but the fault was the harness, not the draw:
-`?year=` pins the calendar ONCE at load (L6357) and the live clock then drifts it `+dt·s/6` during tileshot's
-~1.4 s `playing=true` wait, so the winter pin drifted to bud (green) and the autumn pin overran past `.99` to
-dormant (brown) — the exact "seasons inverted" the seed-7 agent reported. Re-shot with the **clock frozen**
-(`playing=false; __setYear(y); render()`), the phases render as designed: I verified winter (brown bare canes),
-dry-peak (green, subtle) and autumn (green + purple clusters) myself, then a fresh agent PASSED all four seeds-42
-frames — *"winter reads bare/brown, spring/summer green, autumn green-with-purple-grapes; the four frames
-clearly differ in a sensible seasonal order,"* no z-order/floater/blowout, winery sits cleanly atop. The
-whole-city frame was confirmed balanced/beautiful/no-tears by the first seed-42 agent (that check is
-season-independent).
-
-**Verdict — DEEPENED.** The vineyard now turns through the year like its orchard and farm neighbours —
-bare in winter, laden with purple grapes at harvest — closing the last frozen agriculture tile and the last
-Sky-feedable vegetation (108/113/120). Draw-only, stream-neutral, provably scoped (autumn control 0.00, ROAD
-0.46), and no worse strobe than the orchard (0.67 Hz each).
-
-### Findings for later laps
-- **⚠ A SEASONAL SCREENSHOT MUST FREEZE THE CLOCK — `?year=` PINS ONCE, THEN THE LIVE CLOCK DRIFTS IT A FULL
-  SEASON DURING THE WAIT (new, promoted to SKILL.md).** `?year=` calls `__setYear` once at load (L6357); the
-  frame loop then runs `year += dt·s/6` (~0.167 yr/s), so a screenshot taken after a ~1 s `playing=true` wait
-  has drifted ~0.15–0.24 yr — a discrete-phase feature can be a WHOLE SEASON off. This cost two false-FAIL
-  agent reads this lap (one read the seasons "inverted"). Prior seasonal shots tolerated it because
-  `applySeason`'s color is continuous (a 0.2 drift is a small nudge); a discrete-threshold visual is not.
-  Freeze before the shot: `playing=false; __setYear(y); render()`, exactly as the probes do. (`shoot.mjs`'s
-  `?year=` alone is NOT enough for a discrete seasonal feature.)
-- **A DISCRETE-PHASE VISUAL ON THE FAST `year` CLOCK IS NOT AUTOMATICALLY A 134-STYLE STROBE — the test is
-  whether it flips WORSE than the accepted ORCHARD, not whether it flips.** 134 reverted a HUD *readout* (text
-  words at 0.7 Hz, jarring). Scenery that participates in the whole-city seasonal time-lapse (farms recolor,
-  orchard blossoms/fruits) is accepted at that same 0.67 Hz. `probe-vinerate` is the reusable instrument: run
-  the live clock, count phase flips, use the orchard as the ceiling control.
-- **THE VINEYARD TOOLTIP IS NOW UN-CASHABLE — the last banked Nature Interaction.** `TILEDESC[T.VINEYARD]`
-  ("Terraced grapevines — wine country") is now mute about a draw that knows its `vinePhase()`, exactly the
-  orchard's state before 129 gave it a `Grove` row. The next Nature × Interaction/UX lap adds a `Vines` row
-  naming the season (Dormant / Bud break / Veraison / Harvest) from the shared `vinePhase()` — one predicate,
-  already built. This retires the header's *"VINEYARD needs a Deepen first"* caveat (108/109/129): the Deepen
-  is done.
 
 ## Iteration 140 — the squares say whose they are (2026-07-11)
 
@@ -1005,3 +936,71 @@ tooltip is named. Draw-... tooltip-only, pop provably flat, 3 lines. Nature's In
   the seasonal draw was already gated upstream (139). The one gate that can fail is the string vs recomputed
   windows, plus a hover shot that it renders. Don't re-run the interleaved perf/whole-city machinery for a
   pure-text tooltip row.
+
+## Iteration 149 — the town clock tells the time (2026-07-11) [Civic & culture × Deepen]
+
+**Vector.** Civic & culture × **Deepen** — Civic was the single stalest domain (last SHIP 140), and its most
+reliable move (the asserts-more-than-it-shows tell) was cashed at 122/140 for tooltips. This lap runs the tell
+in its **draw** form: the city hall's clock face is drawn with the comment *"the clock face the town sets its
+watches by"*, yet its hands were **frozen** at a fixed ~12:15 — an ornament that claims to tell time while
+sitting still. Kind varied off Civic's spent Interaction/UX (52/122/140) and off the globally-hot IUX run
+(133/134/140/141/144) to **Deepen** (Civic's stalest kind, last 91). Same spirit as 135's moon: drive a frozen
+ornament off the slow day clock.
+
+**The seam.** The hall clock (L4456) drew two static line segments from the dial center. `dayT` (the day
+counter, 0=midnight … .5=noon, ~110 s/cycle — the same slow clock 135 re-pinned the moon onto) is a global in
+scope. The clock face is a fixed-radius overlay (`ctx.arc(...,3.4)` in world units, so it scales with the camera
+but is ~2px at fit) — a zoom-reward detail like the police beacon / museum banner.
+
+**Change (~8 lines, draw-only).** Replaced the two frozen hands with ONE hour hand on a 24h dial:
+`clkA=(dayT-.5)·2π`; tip at `(sin clkA, -cos clkA)·2.0` — **straight up at noon, down at midnight, left in the
+morning, right in the evening, so it turns with the sun** (and the moon, 135). Added a small fixed noon tick at
+the top of the dial for orientation and an ink hub dot. Factored the dial center into `hallClockCtr(gx,gy,hb)`
+so the draw and the new `__clock()` probe hook share ONE definition (112's one-predicate law). No tile, entity,
+`rng()`, `hashCell`, `tick()` pass or terrain; no string literals (134 mojibake N/A). Pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
+(cars 360 · trams 54 …). Vacuous by construction (a draw reading a global runs in no census metric) — the probe
+is the gate.
+
+**Probe.** `probes/probe-hallclock.mjs` (new, promoted). Measures the hand's DIRECTION from pixels vs the day,
+locate-don't-judge (108). A ~2px ink hand is swamped by the bright hall wall, so it **differences** each test
+frame against a same-lighting reference (static wall/dome/hub/tick cancel; only the moving hand survives) and
+takes the centroid of the ink that APPEARED — the hand's direction. It stays in the daytime lighting window
+(dayT .15–.55, lit≈0) so lighting is constant across the measured arc, camera-zooms the dial to ~12px radius,
+and **recomputes the expected angle itself** (never trusts `__clock().ang`). seeds 7/1234/88: at dayT
+.20/.30/.40/.50 the observed hand angle matched dayT within **1–3°**, **monotonic**, control (dayT .5 twice)
+pixel-identical. Halls found in 4 seeds (dead-code: dial at scale); seed 42 SKIP (its dial is occluded by a
+front amphitheater knoll — a draw-order fact, not a bug); seeds 3/2024 have no standalone hall (became
+parliament). Straight-down/right (midnight, evening) sit in fast-changing light → left to the visual gate.
+
+**Visual.** `probes/shot-hallclock.mjs` (new) camera-zooms the dial and clips morning/noon/midnight. One agent,
+blind locate task (108): it read the hand as **lower-left / up / down** respectively and correctly assigned
+morning/noon/midnight — the three directions "clearly distinct", tick fixed at top. Whole-city `wide` at seeds
+42 & 7, one agent each: both **VISUAL: PASS**, balanced coherent coast, no tears/floaters/blowout, nothing
+compounded.
+
+**Verdict — DEEPENED.** The town clock now tells the time of day on its 24h dial and agrees with the sun and
+moon, where for the artifact's whole life it sat frozen. Draw-only, pop provably flat, ~8 lines + a shared
+helper + a locator hook. Civic's Deepen cell gains its next (36, 59, 66, 80, 91, **149**).
+
+### Findings for later laps
+- **THE ASSERTS-MORE-THAN-IT-SHOWS TELL HAS A *DRAW* FORM, NOT JUST A TOOLTIP ONE (extends 117/122/129/148).**
+  Those cashed strings that asserted what the code knew; here a *drawn ornament* (a clock) asserted a behavior
+  (telling time) the draw ignored. Look for other ornaments whose COMMENT or shape promises motion/state they
+  don't have. Candidates seen while grepping: the museum/parliament are floodlit but otherwise static; the
+  aquarium fish pennant already waves (`time`); the firehouse bell is static. A frozen sundial/gauge/vane that
+  should track a clock is the richest version.
+- **A ~2px OVERLAY HAND IS MEASURED BY DIFF-CENTROID IN A CONSTANT-LIGHTING WINDOW, NOT A LUMINANCE RAY.** The
+  first probe (darkest-ray from center) failed: the bright wall behind a thin dark hand swamps the ray. The fix
+  is 109's cancel-the-static trick applied spatially — difference two frames whose ONLY difference is the hand
+  (same lighting, clock frozen), and the centroid of "ink that appeared" is the hand. Keep to the daytime
+  lit≈0 band (KEYS) so lighting doesn't recolor the face between frames.
+- **CAMERA-SET BEATS MOUSE-WHEEL FOR ZOOMING A PROBE ONTO A FIXED POINT.** `page.mouse.wheel` drifts (clamp +
+  cursor) and my zoom walked off the dial onto a neighbour's roof. Setting `zoom/scale/offX/offY` directly
+  in-page (recovering world coords as `(sx-offX)/scale`) centers the target exactly. `__clock` returns SCREEN
+  coords (`world·scale+offX`), like `__find` — `px()`/`ctr()` return WORLD coords and the city draw applies the
+  `dpr·scale` transform, so a hook that forgets `·scale+offX` points at raw world pixels (my first bug).
+- **SOME HALLS' DIALS ARE OCCLUDED (a front amphitheater/tall neighbour), and ~2/9 seeds have no standalone
+  hall at all (it became parliament).** A per-feature probe on a one-per-city landmark must tolerate SKIPs and
+  grade only the measurable instances (require ≥2), not FAIL on an occluded or absent one.
