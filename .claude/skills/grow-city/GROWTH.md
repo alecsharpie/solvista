@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
+| **Nature** | 4, 26, 29, 102, **156** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **153** · Urban **151** · People **154** · Nature **148** · Transport **155** · Civic **149** · Water **150**.
-  **Stalest is now Nature (148)**, then Civic (149), then Water (150) — check the last entry of the stalest domain for a banked
+  Sky **153** · Urban **151** · People **154** · Nature **156** · Transport **155** · Civic **149** · Water **150**.
+  **Stalest is now Civic (149)**, then Water (150), then Urban (151) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -173,11 +173,13 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen, 154 was Interaction/UX.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element, 154 was Interaction/UX.
   **⚠ Iteration 157 is the next holistic STEP-BACK** (…/142/147/**152 done**/**157**) — not a domain lap; see the recipe
   below (night + season, day frame off January, interleaved perf). **154 took People × Interaction/UX (its
   coldest kind, mute Resident tooltip cashed via the 117 tell); 155 took Transport × Deepen (the tram catenary, the
-  149 draw-tell); 156 owes the stalest domain, Nature (148)**, then Civic (149). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
+  149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
+  surface-not-entities law, forest=69 hexes vs garden=2). 157 is the mandated STEP-BACK; the lap AFTER owes the
+  stalest domain, Civic (149)**, then Water (150). Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
   the banked Sky move is the SEASON word, which needs a slow clock FIRST — see the moon note above). Urban's
   additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
@@ -391,75 +393,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 148 entries before Iteration 146 live in
+> **Archive:** the 149 entries before Iteration 147 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 146 — the bus reads as a bus (2026-07-11)
-
-**Vector.** Transport × **Polish** (SHIPPED). Rotation named the domain — Transport was the single stalest (last
-138 = Connect) — and 138's findings + 118's law rule out a Transport New element (entities saturated:
-cars/buses/emergency/bikes/trams/trucks, all richly lit; cabins/stations/trains already deepened) while its one
-banked cue (128's MINSEP cabin-crossing) is explicitly low-value. 138 was Connect, so I varied off it to
-**Polish** — Transport's stalest kind (last **94**) and globally fresh (last 143), exactly the header's steer
-("Polish/Connect are fresh").
-
-**The seam — the house-style-helper tell (137), one level up.** Every transit/utility vehicle has a
-*kind-specific* draw block: the tram a cream belt + trolley pole (L5040), the truck a raised container box
-(L5033), emergency vehicles their beacons/bars (L5022). The **bus** alone fell through to the generic vehicle
-prism — a gold body stretched to `long=0.30` with the shared 55%-width glass cabin — so it read as *a long gold
-car*, not a bus. (Buses are a real transit element: gold, spawned at 14%, and they pull into bus-stop shelters
-and dwell — L2342.)
-
-**Change (~7 lines, draw-only).** A `v.kind==='bus'` block beside the tram/truck ones: (1) a **raised roof**
-prism (z 6.0→7.7, above a car's 6.6 cap) so the silhouette is *taller and boxier* — the strongest "reads as a
-bus" signal, as the truck's container is; (2) a full-length **glass window strip** (`bandS`, z 3.9→6.0, warms at
-night via `colLit(...LITAMT)`); (3) a **cream livery band** (`bandS`, z 2.5→3.3). `bandS` lays each on the
-prism's own front faces, so they wrap the body in iso. No tile, entity array, `rng()`, `hashCell`, `tick()` pass
-or terrain; strings pure-ASCII (134). Pop provably flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0 (pop/roads/developed flat),
-entity counts identical (cars 360 · trams 54 · trucks 59 …). Stream-neutral by construction — vacuous, the probe
-is the gate.
-
-**Probe.** `probes/probe-buslivery.mjs` (new, promoted). Buses drift nondeterministically over the road network
-between loads (137's live-mover law), so a fixed-coord build-vs-build on live buses is hopeless — the probe
-CLEARS every live mover and PLACES a fixed set of buses (target) + cars (control) at spread-out ROAD-cell
-centres, all heading east, identical objects in both builds, clock frozen (109). Metric = fraction of body-box
-pixels visibly changed (the livery is a band of large per-pixel change diluted by background, so changed-fraction
-is the honest read). Patched vs pristine HEAD, seeds 7/42: **bus body 9.2% of pixels changed (mean |ΔRGB| 4.51)
-· car control 0.11% changed** — an ~80× separation, so the redesign is real and confined to the bus kind (the
-car draw is byte-identical). (An early flank-bands-only cut moved just 4% and read too subtle; the raised roof —
-a silhouette change — is what made it read AND doubled the probe signal.)
-
-**Visual.** Zoomed before/after placement (`shot-buslivery.mjs`: a bus beside a reference car, camera wheeled
-in) + un-zoomed whole-city `wide` at seeds 42 & 7. Three agents, one each (108 discriminate-don't-judge: "which
-is the bus, and is it taller/more bus-like than before?"). All **VISUAL: PASS** — the after-bus reads clearly as
-a bus (taller boxy body, blue window strip, cream livery stripe) where before it was "a flat featureless
-stretched gold box"; the reference car is unchanged; no z-order tears/floaters/mis-projection/blowout; both
-whole-city frames balanced, coherent, nothing compounded.
-
-**Verdict — SHIPPED.** The bus now reads as a bus — a taller boxy body with a window strip and cream livery —
-joining the tram and truck in having a kind-specific silhouette, where before it was a stretched gold car.
-Draw-only, pop provably flat, ~7 lines. Transport's Polish cell gains its next (U1, U3, 70, 85, 87, 94, 146).
-
-### Findings for later laps
-- **THE HOUSE-STYLE-HELPER TELL (137) HAS A SILHOUETTE SIBLING: grep who has a KIND-SPECIFIC draw block and who
-  falls through to the generic.** 137 found the shadow gap by "who calls `shadS`?"; this lap found the bus by
-  "which `v.kind` branches in `drawVehicle` and which doesn't." Tram/truck/emergency each branch; the bus and the
-  plain car did not — and a *car* falling through is correct (it IS the generic), a *bus* is not. Next such gap:
-  nothing distinguishes vehicle *colors* as fleet liveries, but that's cosmetic and low value.
-- **A ~7px SPRITE READS BY SILHOUETTE FIRST, ORNAMENT SECOND — change the outline before the flank (reinforces
-  133/137).** The flank-only bands moved just 4% of body pixels and both the probe and the eye read them as
-  marginal; the raised roof (taller than a car's cap) is what made the bus unmistakable and pushed the probe to
-  9.2%. When polishing a tiny sprite to read as a *category*, spend the first move on its height/outline vs its
-  neighbours, not on surface detail.
-- **A LIVE-VEHICLE DRAW CHANGE USES 137'S PLACED-SET PROBE, WITH A SISTER-KIND AS CONTROL.** Buses drift like
-  peds, so place a fixed set; the clean control is a placed CAR at other cells (draw untouched → ~0), which also
-  proves the edit is scoped to `v.kind==='bus'`. Changed-pixel fraction beats mean-|ΔRGB| for a banded ornament
-  diluted by the background box.
 
 ## Iteration 147 — the ninth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
 
@@ -1009,3 +947,69 @@ Draw-only, stream-neutral, pop flat, ~8 lines. Transport's Deepen cell gains its
   probe built the sample box as `0.7*CW*dpr` wide (world) but `(sy-12)…(sy-6.5)` tall (screen), so the box was the
   wrong size and read ~0 signal. The whole-frame diff dodges the unit problem entirely and is the more robust
   shape for a thin draw-only ornament whose exact pixels are hard to box.
+
+## Iteration 156 — the woods flower in spring (2026-07-11) [Nature × New element]
+
+**Vector.** Nature & landscape × **New element** (SHIPPED). Rotation named the domain — Nature was the single
+stalest (last 148) — and 155's entry passed it the baton. Kind: varied off Nature's worn Deepen (139/120/108)
+and its now-spent agriculture Interaction/UX (148); **New element** is Nature's stalest kind (last **102**) and
+fresh. Content followed **127's law** (saturation is of a domain's *entities*, not its *surfaces*): FOREST is a
+large untouched surface — **69 hexes/city** vs GARDEN's 2 and MEADOW's 2-6 — and its floor drew nothing but
+`grassDk` + scrub. Meanwhile the MEADOW's lovely wildflower-bloom aesthetic (specks + butterflies, iter 49) is
+stranded on those 2-6 tiles where nobody sees it. So: a spring wildflower understory on the woodland floor —
+botanically the ephemerals that bloom in the brief window after the thaw and **before the canopy closes over
+them** (the same `s≈0.28` spring the palette already greens the canopy on).
+
+**The seam.** `case T.FOREST` (L3331) drew the floor as one `grassDk` fill; `applySeason` (L314) already computes
+a `spring` factor from `year` but only fed it to the canopy palette. I added a shared `springBloom()` (L1113,
+next to `orchardPhase`/`vinePhase`) = `clamp(1-|s-0.28|/0.17,0,1)` — ONE predicate the draw and the tooltip both
+read (112's law), so the flowers cannot claim a season the floor doesn't paint.
+
+**Change (~10-line draw + 1-line tooltip + 1 helper, all draw-only).** In the FOREST draw, right after the base
+hexTile and **before** the trees (so the canopy overlays the floor), a `springBloom()>0.06`-gated block scatters
+3-5 wildflower specks per hex — `hashCell(x,y,seedNum^SALT)` for count and positions (spaced salts 0x5B/0x5C/0x5D),
+colors `lav`/`gold`/`white` (static, not season-touched, so they keep their hue), alpha `0.30+0.55·spf`. A
+matching `describeTile` row (`['Understory','Spring wildflowers']` when `springBloom()>0.4`) keeps the tooltip in
+sync. No tile, entity, `rng()`, `tick()` pass or terrain; strings pure-ASCII (134). Fully stream-neutral (hashCell
+only) and pop-neutral.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0 (`pop +4` is documented
+chaotic-CA headless wobble), entity counts identical. Vacuous by construction — the probe is the gate.
+
+**Probe — `probes/probe-woodbloom.mjs` (new, promoted).** Isolates the flowers from the canopy's OWN seasonal
+palette shift by diffing **patched vs pristine HEAD at the SAME frozen spring frame** — the only difference
+between the two builds is the wildflower block (per-pixel changed fraction, |ΔRGB|>18, over each FOREST hex's 7×7
+box). Clears EVERY mover first (tramwire's law — else Math.random cars/peds drift over the ROAD control between
+loads). seeds 7/42: **FOREST changed 10.95% / 11.30% in SPRING → 0.00% / 0.00% in SUMMER** (spf=0, byte-identical),
+**ROAD control 0.04-0.16%** both frames. So the understory appears only in spring and only on forest — a ~55×
+separation within the one tile type, and zero leakage onto roads.
+
+**Visual.** `probes/shot-woodbloom.mjs` (new) camera-zooms a dense forest patch, clipping spring vs summer; plus
+whole-city `wide` at seeds 42 & 7 (spring). Three agents, one each, discriminate-don't-judge (108). Zoom agent:
+SPRING has the lavender/gold/white specks on the forest floor between/under the trees (not floating, not bleeding
+onto the neighbouring meadow hex), SUMMER floor plain — **VISUAL: PASS**. Both whole-city agents: balanced
+coherent coastal city, no z-order tears/floaters/blowout, forest/green reads as calm sage/olive with **no** speckle
+or noise at fit zoom (the understory is correctly sub-pixel there) — **VISUAL: PASS** both.
+
+**Verdict — SHIPPED.** The woods now flower in spring — a wildflower understory carpets the forest floor before
+the canopy closes and fades by summer, lifting a 69-hex surface that drew nothing but a green fill, and finally
+giving the MEADOW's stranded bloom aesthetic a stage the whole city can see. Draw-only, stream + pop neutral, one
+shared predicate. Nature's New element cell gains its next (4, 26, 29, 102, **156**); Nature is no longer stalest
+(Civic 149 now is).
+
+### Findings for later laps
+- **127'S "SURFACE, NOT ENTITIES" LAW PAYS AGAIN — pick the domain's BIGGEST tile count for a New element.** The
+  census tile histogram is the map: seed 42 forest=69, park=205, but garden=2, meadow=2-6. A within-hex ornament
+  buys pixels in proportion to the tile's COUNT, so a New element aimed at a 2-tile type (GARDEN, which the header
+  kept banking) is nearly invisible whatever you draw; the same effort on FOREST (69) lights the whole woodland.
+  **Read the histogram before choosing which surface to decorate.**
+- **A SEASON-GATED DRAW IS PROBED patched-vs-pristine AT ONE FROZEN SEASON, not season-vs-season.** The confound is
+  that the base palette ALSO shifts with season (the canopy greens/golds), so a plain spring-vs-summer FOREST diff
+  moves even with no flowers. Diffing the two BUILDS at the same spring frame cancels the palette shift entirely —
+  the only difference is your block. The summer patched-vs-pristine diff (=0) is then the clean confinement control,
+  and it's stronger than ROAD because it's the SAME tile type proving your gate is off out of season.
+- **`springBloom()` JOINS `orchardPhase`/`vinePhase` AS A SHARED YEAR-PREDICATE — reuse it, don't re-clamp.**
+  Anything else that should key on the spring window (a future MEADOW green-up, blossom drifts, spring bird return)
+  should read it, so the draw and any tooltip cannot drift. It reads the FAST `year` (development clock), which is
+  fine for a CONTINUOUS alpha (drift tolerated, like `applySeason`), but a DISCRETE spring/not-spring readout off it
+  would strobe (134) — quantize or slow-clock first, exactly as the banked SEASON word still needs.

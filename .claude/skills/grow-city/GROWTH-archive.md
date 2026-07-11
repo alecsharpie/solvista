@@ -8596,3 +8596,67 @@ match the kites, crowds and kids that already thin at night. Draw-only, pop prov
   discrete visual on the fast `year` clock (134's strobe). It needs a slow seasonal clock first, exactly like the
   fenced-off HUD season word (144). Do not gate the umbrellas on `year`.
 
+## Iteration 146 — the bus reads as a bus (2026-07-11)
+
+**Vector.** Transport × **Polish** (SHIPPED). Rotation named the domain — Transport was the single stalest (last
+138 = Connect) — and 138's findings + 118's law rule out a Transport New element (entities saturated:
+cars/buses/emergency/bikes/trams/trucks, all richly lit; cabins/stations/trains already deepened) while its one
+banked cue (128's MINSEP cabin-crossing) is explicitly low-value. 138 was Connect, so I varied off it to
+**Polish** — Transport's stalest kind (last **94**) and globally fresh (last 143), exactly the header's steer
+("Polish/Connect are fresh").
+
+**The seam — the house-style-helper tell (137), one level up.** Every transit/utility vehicle has a
+*kind-specific* draw block: the tram a cream belt + trolley pole (L5040), the truck a raised container box
+(L5033), emergency vehicles their beacons/bars (L5022). The **bus** alone fell through to the generic vehicle
+prism — a gold body stretched to `long=0.30` with the shared 55%-width glass cabin — so it read as *a long gold
+car*, not a bus. (Buses are a real transit element: gold, spawned at 14%, and they pull into bus-stop shelters
+and dwell — L2342.)
+
+**Change (~7 lines, draw-only).** A `v.kind==='bus'` block beside the tram/truck ones: (1) a **raised roof**
+prism (z 6.0→7.7, above a car's 6.6 cap) so the silhouette is *taller and boxier* — the strongest "reads as a
+bus" signal, as the truck's container is; (2) a full-length **glass window strip** (`bandS`, z 3.9→6.0, warms at
+night via `colLit(...LITAMT)`); (3) a **cream livery band** (`bandS`, z 2.5→3.3). `bandS` lays each on the
+prism's own front faces, so they wrap the body in iso. No tile, entity array, `rng()`, `hashCell`, `tick()` pass
+or terrain; strings pure-ASCII (134). Pop provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0 (pop/roads/developed flat),
+entity counts identical (cars 360 · trams 54 · trucks 59 …). Stream-neutral by construction — vacuous, the probe
+is the gate.
+
+**Probe.** `probes/probe-buslivery.mjs` (new, promoted). Buses drift nondeterministically over the road network
+between loads (137's live-mover law), so a fixed-coord build-vs-build on live buses is hopeless — the probe
+CLEARS every live mover and PLACES a fixed set of buses (target) + cars (control) at spread-out ROAD-cell
+centres, all heading east, identical objects in both builds, clock frozen (109). Metric = fraction of body-box
+pixels visibly changed (the livery is a band of large per-pixel change diluted by background, so changed-fraction
+is the honest read). Patched vs pristine HEAD, seeds 7/42: **bus body 9.2% of pixels changed (mean |ΔRGB| 4.51)
+· car control 0.11% changed** — an ~80× separation, so the redesign is real and confined to the bus kind (the
+car draw is byte-identical). (An early flank-bands-only cut moved just 4% and read too subtle; the raised roof —
+a silhouette change — is what made it read AND doubled the probe signal.)
+
+**Visual.** Zoomed before/after placement (`shot-buslivery.mjs`: a bus beside a reference car, camera wheeled
+in) + un-zoomed whole-city `wide` at seeds 42 & 7. Three agents, one each (108 discriminate-don't-judge: "which
+is the bus, and is it taller/more bus-like than before?"). All **VISUAL: PASS** — the after-bus reads clearly as
+a bus (taller boxy body, blue window strip, cream livery stripe) where before it was "a flat featureless
+stretched gold box"; the reference car is unchanged; no z-order tears/floaters/mis-projection/blowout; both
+whole-city frames balanced, coherent, nothing compounded.
+
+**Verdict — SHIPPED.** The bus now reads as a bus — a taller boxy body with a window strip and cream livery —
+joining the tram and truck in having a kind-specific silhouette, where before it was a stretched gold car.
+Draw-only, pop provably flat, ~7 lines. Transport's Polish cell gains its next (U1, U3, 70, 85, 87, 94, 146).
+
+### Findings for later laps
+- **THE HOUSE-STYLE-HELPER TELL (137) HAS A SILHOUETTE SIBLING: grep who has a KIND-SPECIFIC draw block and who
+  falls through to the generic.** 137 found the shadow gap by "who calls `shadS`?"; this lap found the bus by
+  "which `v.kind` branches in `drawVehicle` and which doesn't." Tram/truck/emergency each branch; the bus and the
+  plain car did not — and a *car* falling through is correct (it IS the generic), a *bus* is not. Next such gap:
+  nothing distinguishes vehicle *colors* as fleet liveries, but that's cosmetic and low value.
+- **A ~7px SPRITE READS BY SILHOUETTE FIRST, ORNAMENT SECOND — change the outline before the flank (reinforces
+  133/137).** The flank-only bands moved just 4% of body pixels and both the probe and the eye read them as
+  marginal; the raised roof (taller than a car's cap) is what made the bus unmistakable and pushed the probe to
+  9.2%. When polishing a tiny sprite to read as a *category*, spend the first move on its height/outline vs its
+  neighbours, not on surface detail.
+- **A LIVE-VEHICLE DRAW CHANGE USES 137'S PLACED-SET PROBE, WITH A SISTER-KIND AS CONTROL.** Buses drift like
+  peds, so place a fixed set; the clean control is a placed CAR at other cells (draw untouched → ~0), which also
+  proves the edit is scoped to `v.kind==='bus'`. Changed-pixel fraction beats mean-|ΔRGB| for a banded ornament
+  diluted by the background box.
+

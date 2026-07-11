@@ -1111,6 +1111,11 @@ function orchardPhase(){const s2=((year%1)+1)%1;
    autumn harvest. Shared so the draw and a future tooltip read one predicate. */
 function vinePhase(){const s2=((year%1)+1)%1;
   return s2<0.16||s2>=0.99?'dormant':s2<0.45?'bud':s2<0.72?'veraison':'ripe';}
+/* woodland spring ephemerals: wildflowers carpet the forest floor in the brief
+   window after the thaw and before the canopy closes over it (the same s~0.28
+   spring the palette greens the canopy on). Shared so the draw and the tooltip
+   read ONE predicate (112). Peaks ~1 at spring, fades to 0 by early summer. */
+function springBloom(){const s=((year%1)+1)%1; return clamp(1-Math.abs(s-0.28)/0.17,0,1);}
 /* the contiguous patch a hex belongs to, flood-filled over hex neighbours under a
    shared predicate — one definition, so the woods' stand and the kelp bed count
    contiguity the same way and cannot drift apart (112's one-predicate law). */
@@ -3334,6 +3339,18 @@ function drawCell(x,y){
          and carries the scrub that only grows where the canopy never met. */
       const k=canopyK(x,y), m=k/6, s=0.78+0.34*m, sh=1.04-0.10*m;
       hexTile(gx,gy,1.02,col('grassDk',(0.95+0.05*Math.sin(x*0.9+y*0.7))*(1.08-0.18*m)));
+      {const spf=springBloom();
+       if(spf>0.06){ /* spring wildflowers on the leaf litter, before the canopy closes over them; trees drawn after overlay them */
+         const[fx,fy]=px(gx,gy);
+         ctx.globalAlpha=0.30+0.55*spf;
+         const nf=3+((hashCell(x,y,seedNum^0x5B)*3)|0);
+         for(let j=0;j<nf;j++){
+           const a=hashCell(x*3+j,y*2+1,seedNum^0x5C), b=hashCell(x*2+j,y*3+2,seedNum^0x5D);
+           ctx.fillStyle=col(a<0.38?'lav':a<0.72?'gold':'white',1.12);
+           ctx.fillRect(fx-5+b*10,fy-2.5+a*6,1.4,1.4);
+         }
+         ctx.globalAlpha=1;
+       }}
       if(k<=1){ /* sunlit edge: low scrub between the trunks */
         const[sx2,sy2]=px(gx+0.16,gy+0.24);
         for(let j=0;j<2;j++){
@@ -6216,6 +6233,7 @@ function describeTile(c,x,y){
       /* fires early and thins out: the deep hexes mature away into redwood
          (11 -> 6 -> 0 forest hexes across 1985/2005/2035, seed 42) */
       if(deepWoods(x,y))data.push(['Deep woods — sheltered enough for old growth']);
+      if(springBloom()>0.4)data.push(['Understory','Spring wildflowers']);
     } else data.push(['Old growth since',est]);
     if(c.shroom>0)data.push(['Mushrooms up']);
   }
