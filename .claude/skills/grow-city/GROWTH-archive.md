@@ -8994,3 +8994,38 @@ shop-distance — is now cashed.
   occur, and the probe can assert the clean control on final state. Do this for any flag whose siting condition
   the evolving city can later violate.
 
+## Iteration 152 — the tenth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
+
+**Vector.** Holistic **step-back** (the mandated 152 in the 105/110/115/120/125/130/136/142/147/**152** cadence)
+— not a domain lap. Read the WHOLE city at 2 seeds × 3 lights/calendars for cumulative drift the census can't
+see (clutter, darkness, z-order tears, floaters, blowout, a dead calendar), plus the interleaved perf gate.
+
+**Frames.** seeds 42 & 7, each at day (`t=0.35`) / night (`t=0.9`) / winter (`t=0.35,year=2035.02`), day &
+night PINNED off January at `year=2035.62` (the dry peak) so the baseline frames sit at a different calendar
+point than the winter-contrast frame (the 125 trap). `wide` whole-city, un-zoomed.
+
+**Census / seasons.** Regression census PASS (exit 0, 0 pageerrors, every metric flat — no edit this iter).
+`probe-season`: seasons alive — FARM winter→dry-peak **88.4**, VINEYARD moving (44.6/36.7/42.7 — 139 holds),
+ORCHARD 25/18/41, FOREST/PARK/SHOREPARK all shifting, ROAD control ~0.5–2.2. The calendar is not frozen.
+
+**Perf (interleaved, run alone).** HEAD (146+151) vs iter-142 control `ce17d61`, A/B/A/B ×3, min per variant:
+day **35.0 vs 34.33 (+2.0%)**, night **41.22 vs 41.44 (−0.5%)** — both flat/within noise. **143→151 cost ~zero.**
+(As the five prior step-backs found, `perf.mjs` vs the STORED baseline over-reads night as load; the
+interleave-against-an-old-commit is the honest grade, and the baseline stays UN-re-pinned so the gate can't be
+blinded by today's load.)
+
+**Visual (one agent per seed, locate-don't-judge).** BOTH **VISUAL: PASS**. Both seeds read as balanced,
+legible coastal cities in all three frames — dense-but-legible core, clean beach/water transition, river,
+parks/farms giving the eye rest; no z-order tears, floaters, seams, or blown-out/oversaturated color in any
+frame; night dim-not-murky. Agents LOCATED the night core by light alone: seed 42 **(0.47, 0.55)**, seed 7
+**(0.44, 0.62)** — matching 147's (.47,.50)/(.47,.62) and 143's CBD Gaussian peak; the lighting model holds.
+Both saw a real day↔winter vegetation tone shift (muted olive/tan tilled fields & canopy in winter vs saturated
+dry-season greens) — the calendar reads visually, not just in the probe.
+
+**Verdict — no city change (clean bill).** The **fifth consecutive clean holistic step-back** (130/136/142/147/152
+all found NO compounding city defect). No watch-item survives: the night-core-broad item was cashed at 143
+(`CORESIG`), seasons measured alive, perf flat, sea/arterial-corridor reads hold (116/123/138). Per the skill,
+a step-back that finds no defect ships nothing — logging the clean bill IS the outcome. **153 owes the stalest
+domain (Sky, last 144 — Deepen/Fix only, the SEASON word still needs a slow clock first), then People (145),
+then Nature (148).**
+

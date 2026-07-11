@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **161** · Urban ~~**160**~~ (Connect reverted; last SHIP 151) · People **154** · Nature **156** · Transport **155** · Civic **158** · Water **159**.
-  **Stalest is now People (154)**, then Transport (155) — Sky just went at 161 (cloud bellies catch golden hour), so rotate off it. Check the last entry of the stalest domain for a banked
+  Sky **161** · Urban ~~**160**~~ (Connect reverted; last SHIP 151) · People **154** · Nature **156** · Transport **155** · Civic **158** · Water **159**. (162 = step-back, no domain lap.)
+  **Stalest is now People (154)**, then Transport (155) — Sky just went at 161 (cloud bellies catch golden hour), and 162 was the mandated step-back, so the next lap owes People. Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -120,12 +120,12 @@ ones (U2, 42, U5) stay in the bullet.
   tick-rule CAN'T read them directly (iter 151): `recount()` runs only at init/warp/manual, never in the sim loop
   (L6342), so the reach maps are STALE inside `tick()`** — 151 cashed the seam's *shape* (a shop-distance rule)
   but recomputed it LOCALLY (`countAround` r2), so `rShop` per se is still unread (recompute it, or pay a recount).
-  **Iteration 162 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, **142**, **147**, **152**, **157 done**, …).
+  **Iteration 167 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, **142**, **147**, **152**, **157**, **162 done**, …).
   Shoot it **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
   `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
-  the full recipe). **130, 136, 142, 147, 152 AND 157 all found NO compounding city defect** (SIX clean bills in a row, the
+  the full recipe). **130, 136, 142, 147, 152, 157 AND 162 all found NO compounding city defect** (SEVEN clean bills in a row, the
   honest step-back outcome, no city change): both seeds PASS day/night/season, agents *located* the night core
-  off-centre by light alone (157: (.48,.52) / (.48,.60), matching 152's (.47,.55)/(.44,.62); 115/143's lighting holds), 138's
+  off-centre by light alone (162: (.48,.53) / (.45,.62), matching 157's (.48,.52)/(.48,.60) & 152's (.47,.55)/(.44,.62); 115/143's lighting holds), 138's
   arterial night-corridors traced continuous both seeds, sea reads (116/123 hold), no tears/floaters/blowout;
   seasons measured alive (`probe-season`: FARM winter→dry-peak **88**, VINEYARD now moving too since 139, ROAD
   control ~0.5–2 — the *whole-frame* mildness agents feel is the by-design evergreen/irrigated dilution (120),
@@ -165,15 +165,12 @@ ones (U2, 42, U5) stay in the bullet.
   almost no pixels. **Sky-feedable list is now EMPTY (iter 139 cashed `VINEYARD`)** — every vegetation tile
   that can read `year` now does; a further Sky interconnect must come from a genuinely new derived field, not
   from un-freezing another tile.
-  Recent kinds:
-  **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** ·
-  **138 Connect (arterial spine lit as a night corridor via `c.flow`)** ·
-  **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
-  **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
-  **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
+  Recent kinds (135–141 recaps archived at iter 162 trim):
   **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** **159 Deepen (the SURF GLOWS at night — bioluminescence sparkles the breaking wave with sparse soft sea-green DOTS, `LITAMT>0.5`-gated & `hashCell`-scattered, draw-only stream+pop-neutral; `probe-biolum` — the Water entry in the moon/stars/observatory night run).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158/159 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen/Deepen, 154 was Interaction/UX. **160 Urban × Connect EXPLORED → REVERTED** (RES terracing — extend 109's MID street-wall to houses): mechanism worked (`probe-terrace` 46–53% gap-fill vs 0.5% control) but the HOST doesn't exist at scale — only ~15% of RES have an E-W RES neighbour and ZERO seeds form runs of ≥3, and RES bodies are HEX PRISMS (widening a hex ≠ a shared-wall terrace). **Law: check host ADJACENCY, not just host count, before a Connect — 109's street-wall is MID-specific (MID clusters + is rectangular); RES/COM terracing needs measured E-W runs first. Urban × Connect still open (last SHIP 109); a COM high-street arcade (`hstr` marks retail runs) is the better target once its adjacency is measured.** **161 Deepen (CLOUD BELLIES catch the GOLDEN HOUR — the two lower puffs of a fair cloud tint toward `dl.skyBot` by `cwarm=clamp((R-B-70)/70,0,1)`, warm at dawn/dusk, ~0 at noon AND night; top puff & rain clouds untouched; draw-only stream/pop-neutral; `probe-cloudwarm` sky-band build-vs-build, dusk +11.6 warm≫cool, noon control balanced).** The `cwarm` gate off `skyBot` is a reusable golden-hour signal; next Sky feed needs a genuinely new derived field (the Sky-feedable vegetation list is empty since 139, and the SEASON word is still banked-but-blocked by its fast-`year` strobe, 134).
-  **⚠ Iteration 162 is the next holistic STEP-BACK** (…/147/**152 done**/**157 done**/**162**) — not a domain lap; see the recipe
-  below (night + season, day frame off January, interleaved perf). **155 took Transport × Deepen (the tram catenary, the
+  **⚠ Iteration 167 is the next holistic STEP-BACK** (…/**152**/**157**/**162 done**/**167**) — not a domain lap; see the recipe
+  below (night + season, day frame off January, interleaved perf). **162 was the mandated step-back (SEVENTH clean bill,
+  perf 157→161 flat day / +1.1% night, seasons alive, night core located both seeds); the next lap (163) owes the stalest
+  domain, People (154), then Transport (155).** **155 took Transport × Deepen (the tram catenary, the
   149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
   surface-not-entities law, forest=69 hexes vs garden=2). 157 was the mandated STEP-BACK; 158 took Civic × Deepen
   (the observatory dome rotates to track the night sky — 149's banked draw-tell); 159 took Water × Deepen (the surf
@@ -212,12 +209,14 @@ ones (U2, 42, U5) stay in the bullet.
   since; day still reads flat against it, night now runs ~+2.2ms of real 137+138 draw plus load (see 142).
   **Iters 130/136 (step-backs): 126→135 cost ZERO** (130 −0.5% both vs iter-125 `c63e43b`; 136 +0.1% vs iter-130
   `f2aa721`; night +7% vs the STORED baseline proven load both). **147: 143→146 cost ZERO**; **152: 143→151 cost
-  ZERO** (both vs iter-142 `ce17d61`, min/variant, all flat — detail archived). **157: 152→156 cost ZERO** —
-  HEAD-156 vs iter-152 (`be84b49`, A/B/A/B min/variant) day **37.66 vs 36.39 (+3.5%, inside the day noise floor:
-  same HEAD bytes read 43.2 then 37.7)**, night **42.83 vs 42.66 (+0.4%, flat)**; `perf.mjs` vs stored baseline
-  read +30%/+39% (pure load). **The day column is the noisy one on this box — grade it ONLY by min-of-≥2-rounds
-  interleave; night is steady.** The stored-baseline false-FAIL is now a **SEVEN-time pattern
-  (125→130→136→142→147→152→157)** — always understates today's load; the interleave-against-an-old-commit reading is
+  ZERO** (both vs iter-142 `ce17d61`, min/variant, all flat — detail archived). **157: 152→156 cost ZERO**
+  (day +3.5% inside the ±9ms day noise, night +0.4% flat; detail archived). **162: 157→161 cost ~ZERO** — HEAD-161 vs iter-157 (`ae93fd4`, A/B/A/B min/variant)
+  day **35.00 vs 35.05 (−0.1%, flat; day steady this run, all 4 reads 35.0–35.3)**, night **41.45 vs 41.00 (+1.1%,
+  small — 158 dome + 159 biolum land at night)**; `perf.mjs` vs stored baseline read +5.9%/+11.3% (pure load).
+  **The day column is USUALLY the noisy one on this box — grade it ONLY by min-of-≥2-rounds
+  interleave, but check the round spread (162's was tight); night is steady and is the SLOW-accumulating column
+  (night-only draws pile up there).** The stored-baseline false-FAIL is now an **EIGHT-time pattern
+  (125→130→136→142→147→152→157→162)** — always understates today's load; the interleave-against-an-old-commit reading is
   the only honest step-back grade, and it is **NOT re-pinned** (baking today's load in would blind the gate).
   (**A 2-round day+night interleave overruns the 120s Bash timeout — `run_in_background` it.** Filter the
   perf-mean grep to `p95` lines or it swallows "vs baseline" and corrupts the min. **⚠ `cp` is aliased `-i`
@@ -391,46 +390,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 154 entries before Iteration 152 live in
+> **Archive:** the 155 entries before Iteration 153 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 152 — the tenth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
-
-**Vector.** Holistic **step-back** (the mandated 152 in the 105/110/115/120/125/130/136/142/147/**152** cadence)
-— not a domain lap. Read the WHOLE city at 2 seeds × 3 lights/calendars for cumulative drift the census can't
-see (clutter, darkness, z-order tears, floaters, blowout, a dead calendar), plus the interleaved perf gate.
-
-**Frames.** seeds 42 & 7, each at day (`t=0.35`) / night (`t=0.9`) / winter (`t=0.35,year=2035.02`), day &
-night PINNED off January at `year=2035.62` (the dry peak) so the baseline frames sit at a different calendar
-point than the winter-contrast frame (the 125 trap). `wide` whole-city, un-zoomed.
-
-**Census / seasons.** Regression census PASS (exit 0, 0 pageerrors, every metric flat — no edit this iter).
-`probe-season`: seasons alive — FARM winter→dry-peak **88.4**, VINEYARD moving (44.6/36.7/42.7 — 139 holds),
-ORCHARD 25/18/41, FOREST/PARK/SHOREPARK all shifting, ROAD control ~0.5–2.2. The calendar is not frozen.
-
-**Perf (interleaved, run alone).** HEAD (146+151) vs iter-142 control `ce17d61`, A/B/A/B ×3, min per variant:
-day **35.0 vs 34.33 (+2.0%)**, night **41.22 vs 41.44 (−0.5%)** — both flat/within noise. **143→151 cost ~zero.**
-(As the five prior step-backs found, `perf.mjs` vs the STORED baseline over-reads night as load; the
-interleave-against-an-old-commit is the honest grade, and the baseline stays UN-re-pinned so the gate can't be
-blinded by today's load.)
-
-**Visual (one agent per seed, locate-don't-judge).** BOTH **VISUAL: PASS**. Both seeds read as balanced,
-legible coastal cities in all three frames — dense-but-legible core, clean beach/water transition, river,
-parks/farms giving the eye rest; no z-order tears, floaters, seams, or blown-out/oversaturated color in any
-frame; night dim-not-murky. Agents LOCATED the night core by light alone: seed 42 **(0.47, 0.55)**, seed 7
-**(0.44, 0.62)** — matching 147's (.47,.50)/(.47,.62) and 143's CBD Gaussian peak; the lighting model holds.
-Both saw a real day↔winter vegetation tone shift (muted olive/tan tilled fields & canopy in winter vs saturated
-dry-season greens) — the calendar reads visually, not just in the probe.
-
-**Verdict — no city change (clean bill).** The **fifth consecutive clean holistic step-back** (130/136/142/147/152
-all found NO compounding city defect). No watch-item survives: the night-core-broad item was cashed at 143
-(`CORESIG`), seasons measured alive, perf flat, sea/arterial-corridor reads hold (116/123/138). Per the skill,
-a step-back that finds no defect ships nothing — logging the clean bill IS the outcome. **153 owes the stalest
-domain (Sky, last 144 — Deepen/Fix only, the SEASON word still needs a slow clock first), then People (145),
-then Nature (148).**
 
 ## Iteration 153 — the stars fade under a full moon (2026-07-11) [Sky & atmosphere × Deepen]
 
@@ -977,3 +941,69 @@ where the ambient sky is cool. The effect is by-design mild — a golden-hour to
   gold over a warm sky (seed 42) and neutral-grey over a cool upper sky (seed 7). That is correct, not a bug; the
   probe (not the agent) is the verdict for "did the warmth apply." Don't crank the strength to force every cloud
   gold — seed 42's agent already warned the current strength is at the "natural, not dirty" edge.
+
+## Iteration 162 — the twelfth step-back finds a clean city, perf flat (2026-07-11) [holistic step-back]
+
+**Vector.** The mandated holistic step-back (105/110/115/120/125/130/136/142/147/152/157/**162**). Not a domain ×
+kind lap: it reads the WHOLE city for *cumulative* drift the census and per-feature gates are blind to, runs the
+season probe + interleaved perf gate, at night AND a season with the day/night baselines pinned OFF January
+(`year=2035.62` dry peak; `2035.02` as the seasonal-contrast frame). No city vector taken, so rotation is
+unchanged — the next lap (163) owes the stalest domain, **People (154)**, then Transport (155).
+
+**What was read.** Un-zoomed whole-city `wide` frames at **2 seeds × 3 lights/calendars** — seed 42 (warp 61) &
+seed 7 (warp 31), each at {day 2035.62/t=0.35, night 2035.62/t=0.90, winter 2035.02/t=0.35}. One subagent per
+seed read its own three frames: the cumulative question ("has anything compounded into clutter or darkness?")
+plus 108's **locate-don't-judge** night test ("where is the core by light alone?").
+
+**Result: the city is healthy — both agents VISUAL: PASS.**
+- **Night core (115/143) LOCATED off-centre both seeds** — seed 42 ~(0.48,0.53) (agent range x0.45–0.52,
+  y0.45–0.62), seed 7 ~(0.45,0.62) — matching 157 ((.48,.52)/(.48,.60)), 152, 147, each with a genuine
+  core→edge falloff to a dark rim, not a flat wash. Both agents named a secondary lit lobe too (42's river
+  pocket ~(.44,.78) + a north cluster ~(.42,.22); 7's north cluster ~(.55,.23) + the lit pier ~(.85,.55)).
+- **158's observatory, 159's surf biolum and 161's warm cloud bellies all sit correctly** in the whole frame;
+  138's arterial night-corridors read as continuous warm ribbons distinct from dim side streets both seeds; the
+  sea reads (116's bottom + 123's founded wind farm). **No z-order tears / floaters / hard seams / blown-out
+  white** in any of the 6 frames. **Winter reads distinct** from summer at both seeds (cooler/duller vegetation,
+  cooler flatter light, cooler ocean) — mildest of the three deltas at seed 42, clearer at seed 7, by-design
+  (120's evergreen/irrigated dilution).
+
+**Season — measured alive.** `probes/probe-season.mjs`: FARM winter→dry-peak **88.4** (matches
+130/136/142/147/152/157), VINEYARD 44.6/36.7/42.7 (139), FOREST 20.1/19.5/24.4 (156's spring understory + canopy
+shift both read), ORCHARD 25.3/17.8/41.4, MEADOW/SHOREPARK all move, PARK/REDWOOD/GARDEN/QUAD near-zero by design
+(120), ROAD control **0.5–2.1**. Calendar working; the whole-frame mildness is the by-design dilution, not a dead
+calendar.
+
+**Perf — 157→161 cost ~ZERO; the stored-baseline read fired its SEVENTH+ false-FAIL.** `perf.mjs` vs stored
+baseline read day **+5.9%** / night **+11.3%**, looking like a regression. Interleaved HEAD-161 vs the iter-157
+file (`ae93fd4`, A/B/A/B, **min per variant**): day **35.00 vs 35.05** (**−0.1%, flat**) and night **41.45 vs
+41.00** (**+1.1%, small**). So 158 (observatory dome, day+night draw) + 159 (surf biolum, night-only) + 161 (warm
+cloud bellies, day-only, ~0 at night) added ~nothing measurable; the +1.1% night is 158's dome + 159's biolum
+landing at night, well inside budget (night >30fps ~49–52%, ≈50fps). NOT re-pinned. **The day column was UNUSUALLY
+steady this run** — all four day reads clustered 35.0–35.3ms (contrast 157's ±9ms swing), so the day delta is
+trustworthy here; night was steady as always. Census PASS, vacuous (no source edit); tree verified clean after
+the interleave restored HEAD.
+
+**Change (the step-back's product — none to the city).** No compounding defect, so per 120/130/136/142/147/152/157
+("a clean step-back is a complete iteration — don't force a filler vector") the output is the health record +
+header refreshes: step-back pointer 157→162 (next 167), the seventh clean bill, and the 162 interleaved perf
+reading. No `solvista.html` edit.
+
+**Verdict — FIXED.** No compounding city defect — the SEVENTH clean step-back in a row (130, 136, 142, 147, 152,
+157, 162). All accumulated visual laws (115/116/120/123 + 138 arterials + 143 CBD peak) still read at both seeds
+under all three lights; the season is alive (156's understory shows in FOREST, 139's vineyard moving); perf is
+flat against the honest interleaved control.
+
+### Findings
+- **SEVENTH CONSECUTIVE CLEAN STEP-BACK, and the stored-baseline false-FAIL is now a habit — trust ONLY the
+  interleave.** The stored baseline (day 33.16 / night 37.33, pinned 2026-07-10) read +5.9% day / +11.3% night on
+  a diff the interleave proves flat/tiny; the 5-day-old iter-157 file reads the same inflated numbers today. The
+  pattern is now 125→130→136→142→147→152→157→162. Re-pin only if an interleave *itself* shows a persistent offset
+  (it has not since 142's real +2.2%).
+- **The day column is USUALLY the noisy one, but not this run — check the round-to-round spread before trusting a
+  day delta.** 157 saw the identical HEAD bytes read 43.2 then 37.7ms (a 15% load swing); 162's four day reads all
+  landed 35.0–35.3ms, so the −0.1% day delta is real, not luck. The lesson stands (grade day by min-of-≥2-rounds),
+  but "day is always ±9ms" is not a law — measure the spread, don't assume it.
+- **Night is the accumulating column, and it accumulates SLOWLY — three night-drawing features across five
+  iterations (158 dome + 159 biolum) cost +1.1%.** Every night-only draw (per-window glow 118, arterial lamps 138,
+  stars 153, biolum 159, dome 158) lands on night alone, so night is where the loop's draw work quietly compounds.
+  +1.1% over 5 iters is fine, but this is the column a future step-back should watch first.
