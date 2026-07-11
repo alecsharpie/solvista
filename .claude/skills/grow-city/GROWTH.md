@@ -29,7 +29,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119** | 78, **111** | | 84, **137** | 71 |
+| **People & activity** | 41, 56, **127** | 49 | 34, 64, 93, **104**, **119**, **145** | 78, **111** | | 84, **137** | 71 |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
   tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **144** · Urban **143** · People **137** · Nature **139** · Transport **138** · Civic **140** · Water **141**.
-  **Stalest is now People (137)**, then Transport (138), then Nature (139) — check the last entry of the stalest domain for a banked
+  Sky **144** · Urban **143** · People **145** · Nature **139** · Transport **138** · Civic **140** · Water **141**.
+  **Stalest is now Transport (138)**, then Nature (139), then Civic (140) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -172,15 +172,14 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD gets a tight Gaussian light peak — `CORESIG`; the broad-core watch-item cashed)** —
-  (**130/136/142 were the holistic step-backs — no domain × kind lap.**) Interaction/UX ran hot 133/134/140/141; 143 broke it back to Polish.
-  **Next domain lap (144) owes Sky (135, now stalest), then People (137); read its row for kinds.** Vary off
-  Polish (143) and Interaction/UX (four of last six) — reach for Deepen/Connect. Sky
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145 broke it to Polish/Deepen.
+  **Next domain lap (146) owes Transport (138, now stalest), then Nature (139); read its row for kinds.** Vary off
+  Deepen (145) and Interaction/UX (four of last six) — Polish/Connect are fresh. Sky
   is post-saturation (Deepen/Fix only — its additive/CA cells are traps); Urban's additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
-  **New element** was cashed at 127 (before that 106). Note 118's
-  finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
-  *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
-  the domain first and read its row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
+  **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
+  New element — but 127 sharpens it: saturation is of a domain's *entities*, and a New element can still land on a
+  large untouched **surface** (127 put picnics on PARK, 145 a daily rhythm on the beach). Pick the domain first and
+  read its row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
   **Connect paid three times** (109, 111, 112 — 112 logged as
   Deepen, see its entry): its trick was that
   it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
@@ -391,67 +390,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 137 entries before Iteration 135 live in
+> **Archive:** the 138 entries before Iteration 136 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 135 — the moon slows down (2026-07-11)
-
-**Vector.** Sky & atmosphere × **Deepen** (a FIX). Rotation did not name Sky (People 127 was stalest), but
-iter 134 banked a **measured, shipped defect** as "the real banked Sky vector," and a banked measured finding
-outranks kind-rotation (the loop's own law) — doubly so when it is a *fix* for a compounding problem (120's
-rule). The defect: iter 126 drove the moon's synodic phase off `year`, a fast **development** clock (~0.17
-yr/sec at speed 1), so `year*12.3685` sweeps ~2 lunations/sec and the disc **strobes ~2 Hz at night**. Every
-gate this loop owns is frozen, so it shipped invisibly (134 caught it only by letting the clock run).
-
-**What the temporal probe found first** (`probes/probe-moonrate.mjs`, promoted — 134's law: a *cadence* claim
-needs a running clock, the mirror of freeze-the-clock). playing=true, sampled `__moon().illum` at 20 Hz over
-3 s, counted 0.5-crossings (a lunation crosses twice); control = the day/dev clocks must advance. **HEAD: 12
-crossings, max |Δillum| 0.74/step**, control healthy (Δyear 0.49/3 s). Confirmed 134's analytic strobe before
-a line was written.
-
-**Change (~10 lines, draw-only).** A shared `moonPhase()` (by `daylight()`) returns the lunation fraction from
-**`dayT`** — the real day counter (~110 s/cycle; monotonic, wrapped only for time-of-day) — one synodic month
-every `MOONSYN=8` day-cycles, offset per city by `seedNum*φ` so each loads on its own phase. The render-scope
-`moonL`, the moonglade, and `__moon()` all read it (one predicate, 112's law). `dayT`-driven, it is near-fixed
-across a single night (0.5 day → ≤0.1 ΔMOONF) and visibly waxes across the ~6-min run (~3.3 day-cycles → ~0.4
-lunation). No tile, entity, `rng()`, `tick()`, or terrain — pop provably flat.
-
-**Census.** PASS, exit 0. Tile histogram empty, core +0; `greenRoofs −2` is the documented roof-adoption
-headless-timing wobble (127/132/133).
-
-**Probe, after.** `probe-moonrate`: **12 → 0 crossings, max |Δillum| 0.74 → 0.0002**, control still running —
-the strobe is gone and the page is not merely frozen. And the re-clocked iter-126 `probe-moon` (now stepping
-`dayT` by whole day-cycles at fixed night — an integer dayT step = exactly 1/8 lunation, time-of-day held):
-**corr(illum, lit px) = 1.000** both seeds, new→full 11→374 / 13→372, land control dev 0.00 — the disc still
-draws every phase correctly, and seeds 42/7 now load on *different* phases (0.07 vs 0.44), the per-seed offset
-working.
-
-**Visual.** 2/2 whole-frame night agents PASS (seeds 42 & 7, off-January `year=2035.62`, t=0.90). Both located
-a clean single moon — seed 42 a crescent at (0.74,0.15), seed 7 a near-full disc at (0.91,0.15), two distinct
-phases both rendering cleanly — no tears/doubling/blowout anywhere, each frame a balanced night city with
-core→edge falloff.
-
-**Verdict — FIXED.** The moon 126 gave a calendar now keeps it on the *day* clock, so it reads as a slow,
-legible moon instead of a 2 Hz flicker. The banked defect is closed; a moon-phase HUD card is now viable (see
-findings — the season half still strobes).
-
-### Findings for later laps
-- **⚠ THE MOON STROBE IS FIXED — but a SEASON readout still strobes (the almanac is only half-unblocked).**
-  134's almanac welded `seasonWord(year)` + a moon card to the HUD; 135 slowed the MOON (now on `dayT`), but
-  the SEASON still reads `year`, the fast dev clock (~0.7 Hz word-flip, 134). So a **moon-only** HUD card is
-  now viable; a **season** word is not, until the season also reads a slow clock (or is quantized/held). Don't
-  re-ship the full almanac assuming 135 unblocked it.
-- **`dayT` IS A MONOTONIC DAY COUNTER, not just time-of-day.** `daylight()` wraps it `%1` internally, so `dayT`
-  itself accumulates unbounded (~110 s/cycle). It is the loop's one **slow** clock: anything that "should
-  advance over minutes, not seconds" and must not flicker in a static frame should read `dayT`, never `year`
-  (the moon now does). And an **integer `dayT` step advances the moon exactly 1/8 lunation while holding
-  time-of-day fixed** — the clean way to sweep the moon at fixed night in a probe (probe-moon uses it).
-- **A per-seed phase offset (`seedNum*φ mod 1`) buys free variety at zero stream cost.** The moon now loads on
-  a different phase per city (probe: 0.07 vs 0.44) without touching `rng()`. Reuse the golden-ratio-of-seedNum
-  trick for any "same every city" ornament that should vary but must not perturb the seeded stream.
 
 ## Iteration 136 — the seventh step-back finds a clean, quiet city (2026-07-11) [holistic step-back]
 
@@ -1025,3 +968,63 @@ longer stalest (People 137 now is). The season half stays banked and explicitly 
   test (134) must play; the correctness sweep must freeze and step (`__setTime` by integer `dayT` = clean
   lunation-eighths, 135's trick). One probe, both — `probe-moonhud` runs the running-clock DOM read AND the
   frozen sweep. Reuse the shape for any future almanac/readout gate (a season word, a tide readout).
+
+## Iteration 145 — the beach follows the sun (2026-07-11)
+
+**Vector.** People & activity × **Deepen** (SHIPPED). Rotation named the domain — People was the single stalest
+(last SHIP 127; 137 was Polish) — and the header steered HARD off Polish (143) and Interaction/UX (four of the
+last six: 133/134/140/141/144) toward Deepen/Connect. People's Deepen cell is its fullest (last 119), and its
+live-ped probe difficulty is documented (137), so I chose a Deepen that touches a DRAW, not the ped stepping:
+the beach furniture.
+
+**The seam.** The umbrella+towel draw on low-`c.v` BEACH cells (L3245) was ungated by time of day — it sat out
+at 2am while the bonfire (L3234, `LITAMT>0.5`) burned beside it, so the beach had no daily rhythm of use. (The
+kites already come down at night, crowds thin via `pedHidden`, kids go home by dark — the beach furniture was
+the one People-activity surface with no day/night rhythm.)
+
+**Change (~6 lines, draw-only).** Multiply the furniture's alpha by `ua=clamp((0.6-LITAMT)/0.25,0,1)` and skip
+the draw when `ua<=0.02`: full at midday (LITAMT~0), fills in through the morning, fades by dusk (LITAMT>0.6) as
+the bonfires take over. `LITAMT` rides the slow ~110s day-clock, so this is a rhythm, not a strobe (134's
+cadence law: a fast-`year` gate would flicker). No tile, entity, rng(), tick() pass or terrain — pop provably
+flat.
+
+**Census.** PASS, exit 0. Tile histogram empty, all core metrics +0 (`greenRoofs -1` is the documented
+roof-adoption headless wobble). Vacuous by construction — the probe is the gate.
+
+**Probe.** `probes/probe-beachsun.mjs` (new, promoted). Build-vs-build isolation (patched vs `git show HEAD`) at
+the SAME time of day, which separates the furniture from the day/night TINT (a within-build day-vs-night diff
+would conflate them). Clears every live mover first (137's law) and freezes. seeds 7/42: **DAY control 0.01**
+(ua=1 in both builds → beach identical, midday untouched) · **NIGHT 2.94** (patched draws no furniture, HEAD
+does → the whole umbrella removed) · **ROAD control 0.017** (change confined to the beach). Night is ~300× the
+day control — a decisive, clean separation. Selects umbrella cells by `c.v<0.08` (the draw gates on c.v, NOT
+c.sand) and skips the esplanade.
+
+**Visual.** Coast day/night pairs + whole-city wide, seeds 42 & 7, one agent each (108's discriminate-don't-
+judge: "which frame has the umbrellas?"). Both **VISUAL: PASS** — both correctly located the colorful parasols
+in the DAY frame and confirmed the NIGHT beach is bare dark sand (only pier-lamp/figure glows remain), no
+z-order tears, no half-drawn/ghost parasols, no blowout; both wide frames balanced coastal cities, nothing
+compounded.
+
+**Verdict — SHIPPED.** The beach furniture now follows the sun — umbrellas fill in through the morning, peak at
+midday, and are packed away by the time the evening bonfires are lit, giving the beach a daily rhythm of use to
+match the kites, crowds and kids that already thin at night. Draw-only, pop provably flat, slow-clock-gated
+(strobe-safe). People's Deepen cell gains its sixth (34, 64, 93, 104, 119, 145).
+
+### Findings for later laps
+- **A DRAW GATED ON `LITAMT` IS THE SAFE WAY TO GIVE PEOPLE A DAILY RHYTHM — it is the slow ~110s day-clock, not
+  the fast `year`.** 134/135 established that `year` strobes; `LITAMT` (from `daylight(dayT)`) crosses its
+  thresholds once per ~110s cycle, so a furniture/crowd draw gated on it fades in/out over minutes. Reuse the
+  `ua=clamp((0.6-LITAMT)/0.25,0,1)` shape for any "present by day, gone by night" ornament (or invert for a
+  night-only one, as the bonfire already does at `LITAMT>0.5`).
+- **THE UMBRELLA GATES ON `c.v`, NOT `c.sand` — and `__find` only exposes `c.sand`.** A probe of beach furniture
+  must select cells by `c.v` (iterate `cells` in-page), which `__find('BEACH').sand` will NOT give you; my first
+  probe cut sampled the wrong cells and read pure noise. When a draw's condition uses a field `__find` doesn't
+  return, replicate the cell scan in the evaluate block.
+- **BUILD-VS-BUILD AT A FIXED CLOCK ISOLATES A DAY-ONLY DRAW-GATE FROM THE GLOBAL TINT.** A day-only feature
+  can't be probed by a within-build day-vs-night diff (the whole frame's tint moves). Diffing patched-vs-HEAD at
+  a FIXED time of day cancels the tint (both builds see it) and leaves only the gated draw — day≈0 proves the
+  daytime no-op, night = the removed furniture. Clear live movers first or their inter-load drift swamps it (137).
+- **People's beach surface now has a DAILY rhythm; its SEASONAL rhythm is still open (and a strobe trap).**
+  Beaches are summer places — the furniture could also swell in summer / empty in winter — but that would gate a
+  discrete visual on the fast `year` clock (134's strobe). It needs a slow seasonal clock first, exactly like the
+  fenced-off HUD season word (144). Do not gate the umbrellas on `year`.

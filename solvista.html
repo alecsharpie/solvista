@@ -3242,8 +3242,14 @@ function drawCell(x,y){
         ctx.fillRect(cx-4.5,cy-1,1.6,1.6);ctx.fillRect(cx+3,cy-0.5,1.6,1.6);
       }
       if(esp){} /* keep umbrellas/palms off the deck */
-      else if(v<0.08+0.24*clamp(stats.pop/7000,0,1)){ /* umbrella + towel: crowds grow with the city */
+      else if(v<0.08+0.24*clamp(stats.pop/7000,0,1)){ /* umbrella + towel: crowds grow with the city.
+          Beachgoers follow the sun: the furniture fills in through the morning, peaks at midday and
+          is packed away by the time the evening bonfires are lit (LITAMT is the slow ~110s day-clock,
+          0 at midday -> 1 at night, so this reads as a daily rhythm, not a strobe). Draw-only. */
+        const ua=clamp((0.6-LITAMT)/0.25,0,1);
+        if(ua>0.02){
         const[cx,cy]=px(gx,gy);
+        ctx.globalAlpha=ua;
         ctx.fillStyle=col(v<0.09?'coral':(v<0.17?'gold':(v<0.24?'lav':'teal')),1);
         ctx.beginPath();ctx.ellipse(cx,cy-5,4.5,2.6,0,0,7);ctx.fill();
         ctx.fillStyle=col('white',1);
@@ -3251,6 +3257,8 @@ function drawCell(x,y){
         ctx.strokeStyle=col('trunk',1);ctx.lineWidth=1;
         ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,cy-5);ctx.stroke();
         ctx.fillStyle=col('gold',1);ctx.fillRect(cx-6,cy+1,4,2.4);
+        ctx.globalAlpha=1;
+        }
       } else if(v<0.42) palm(gx-0.1,gy+0.1,0.9);
       if(hut&&y===hut.y&&x===shoreAt(y)-2){ /* lifeguard tower */
         prism(gx,gy,0.03,0.03,0,4,col('deckDk',1),col('deckDk',0.6),col('deckDk',0.8));

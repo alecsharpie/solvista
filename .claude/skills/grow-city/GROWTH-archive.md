@@ -7892,3 +7892,59 @@ right when frozen (82/88/101/114/131 — now 134). Reverting it is the system wo
   HTML use `&middot;`/`&mdash;`/`&times;` — exactly as the rest of the file does (every glyph was ASCII-safe
   before this). Promoted to SKILL.md (Invariants).
 
+## Iteration 135 — the moon slows down (2026-07-11)
+
+**Vector.** Sky & atmosphere × **Deepen** (a FIX). Rotation did not name Sky (People 127 was stalest), but
+iter 134 banked a **measured, shipped defect** as "the real banked Sky vector," and a banked measured finding
+outranks kind-rotation (the loop's own law) — doubly so when it is a *fix* for a compounding problem (120's
+rule). The defect: iter 126 drove the moon's synodic phase off `year`, a fast **development** clock (~0.17
+yr/sec at speed 1), so `year*12.3685` sweeps ~2 lunations/sec and the disc **strobes ~2 Hz at night**. Every
+gate this loop owns is frozen, so it shipped invisibly (134 caught it only by letting the clock run).
+
+**What the temporal probe found first** (`probes/probe-moonrate.mjs`, promoted — 134's law: a *cadence* claim
+needs a running clock, the mirror of freeze-the-clock). playing=true, sampled `__moon().illum` at 20 Hz over
+3 s, counted 0.5-crossings (a lunation crosses twice); control = the day/dev clocks must advance. **HEAD: 12
+crossings, max |Δillum| 0.74/step**, control healthy (Δyear 0.49/3 s). Confirmed 134's analytic strobe before
+a line was written.
+
+**Change (~10 lines, draw-only).** A shared `moonPhase()` (by `daylight()`) returns the lunation fraction from
+**`dayT`** — the real day counter (~110 s/cycle; monotonic, wrapped only for time-of-day) — one synodic month
+every `MOONSYN=8` day-cycles, offset per city by `seedNum*φ` so each loads on its own phase. The render-scope
+`moonL`, the moonglade, and `__moon()` all read it (one predicate, 112's law). `dayT`-driven, it is near-fixed
+across a single night (0.5 day → ≤0.1 ΔMOONF) and visibly waxes across the ~6-min run (~3.3 day-cycles → ~0.4
+lunation). No tile, entity, `rng()`, `tick()`, or terrain — pop provably flat.
+
+**Census.** PASS, exit 0. Tile histogram empty, core +0; `greenRoofs −2` is the documented roof-adoption
+headless-timing wobble (127/132/133).
+
+**Probe, after.** `probe-moonrate`: **12 → 0 crossings, max |Δillum| 0.74 → 0.0002**, control still running —
+the strobe is gone and the page is not merely frozen. And the re-clocked iter-126 `probe-moon` (now stepping
+`dayT` by whole day-cycles at fixed night — an integer dayT step = exactly 1/8 lunation, time-of-day held):
+**corr(illum, lit px) = 1.000** both seeds, new→full 11→374 / 13→372, land control dev 0.00 — the disc still
+draws every phase correctly, and seeds 42/7 now load on *different* phases (0.07 vs 0.44), the per-seed offset
+working.
+
+**Visual.** 2/2 whole-frame night agents PASS (seeds 42 & 7, off-January `year=2035.62`, t=0.90). Both located
+a clean single moon — seed 42 a crescent at (0.74,0.15), seed 7 a near-full disc at (0.91,0.15), two distinct
+phases both rendering cleanly — no tears/doubling/blowout anywhere, each frame a balanced night city with
+core→edge falloff.
+
+**Verdict — FIXED.** The moon 126 gave a calendar now keeps it on the *day* clock, so it reads as a slow,
+legible moon instead of a 2 Hz flicker. The banked defect is closed; a moon-phase HUD card is now viable (see
+findings — the season half still strobes).
+
+### Findings for later laps
+- **⚠ THE MOON STROBE IS FIXED — but a SEASON readout still strobes (the almanac is only half-unblocked).**
+  134's almanac welded `seasonWord(year)` + a moon card to the HUD; 135 slowed the MOON (now on `dayT`), but
+  the SEASON still reads `year`, the fast dev clock (~0.7 Hz word-flip, 134). So a **moon-only** HUD card is
+  now viable; a **season** word is not, until the season also reads a slow clock (or is quantized/held). Don't
+  re-ship the full almanac assuming 135 unblocked it.
+- **`dayT` IS A MONOTONIC DAY COUNTER, not just time-of-day.** `daylight()` wraps it `%1` internally, so `dayT`
+  itself accumulates unbounded (~110 s/cycle). It is the loop's one **slow** clock: anything that "should
+  advance over minutes, not seconds" and must not flicker in a static frame should read `dayT`, never `year`
+  (the moon now does). And an **integer `dayT` step advances the moon exactly 1/8 lunation while holding
+  time-of-day fixed** — the clean way to sweep the moon at fixed night in a probe (probe-moon uses it).
+- **A per-seed phase offset (`seedNum*φ mod 1`) buys free variety at zero stream cost.** The moon now loads on
+  a different phase per city (probe: 0.07 vs 0.44) without touching `rng()`. Reuse the golden-ratio-of-seedNum
+  trick for any "same every city" ornament that should vary but must not perturb the seeded stream.
+
