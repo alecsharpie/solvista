@@ -8227,3 +8227,56 @@ Sky-feedable vegetation (108/113/120). Draw-only, stream-neutral, provably scope
   already built. This retires the header's *"VINEYARD needs a Deepen first"* caveat (108/109/129): the Deepen
   is done.
 
+## Iteration 140 — the squares say whose they are (2026-07-11)
+
+**Vector.** Civic & culture × **Interaction/UX** (SHIPPED). Rotation named the domain — Civic was the single
+stalest (its last SHIP was 122; 131 was an explore that shipped nothing) — and the header banked the content
+over three laps: the plaza/quad tooltip **titles** still read the generic tile label ("Plaza"/"Quad") while a
+data row buried the owner as "Forecourt of — Town hall". Kind was forced off Deepen (139) and Polish (both hot,
+131/132/137); Civic's entities/ornaments are saturated (flags already fly on hall/library/parliament, banners on
+the museum — I grepped `windFlag` and confirmed it before proposing a New element), so 118's law forbids a New
+element, leaving Interaction/UX — and the tell ("a string generic where the code already knows the specific")
+is the loop's most reliable move (117/122/129).
+
+**The seam.** `describeTile` (L5981) set a paved square's title from the generic `TILELABEL` and only appended
+`['Forecourt of', CIVICLABEL[k]]` as a data row. `squareOwner(x,y)` (L1190) already answers whose square it is
+from `c.own` — the index the placing rule STAMPS (not adjacency, which 122 measured wrong on 2/3 seeds).
+
+**Change (~11 lines, tooltip text only).** Added a PLAZA/QUAD branch to the title/sub chain: when `squareOwner`
+resolves, the headline reads `<Institution> forecourt` / `<Institution> grounds` (e.g. "Museum forecourt",
+"University grounds") and the sub is prose ("The paved public square that fronts the museum." / "Mown lawns kept
+behind the university."). Removed the now-redundant "Forecourt of/Grounds of" data row. Squares whose owner was
+rebuilt away keep the generic "Plaza"/"Quad". No draw, tile, entity, rng()/hashCell, tick() pass or terrain;
+strings pure-ASCII (134).
+
+**Census.** PASS, exit 0. Draw-only tooltip text — tile histogram empty, all core metrics +0, stream-neutral by
+construction. Vacuous by design (the probe is the gate).
+
+**Probe.** `probes/probe-civic.mjs` — **updated** to the new headline contract, not forked (one predicate, one
+probe — 112's law applied to the gate itself; the claim moved from a data-row regex to a headline parse, so the
+probe's parse moved with it). It hovers every PLAZA/QUAD, reads the HEADLINE, and checks the named institution
+is an adjacent ELIGIBLE civic (MAJORK for forecourts, GROUNDS for quads) recomputed in Node from cube distance
+— a third implementation sharing no code with the page — then PASS 2 checks the institution agrees from its own
+side. seeds 7/42/1234: **PASS · PASS · PASS** (checked 30/25/29 tooltips, plaza 4/3/4 · quad 10/8/8, pageerrors
+0). Squares fire at scale (dead-code law) and every headline named the owner the geometry confirms.
+
+**Visual.** Hover clips at seeds 7/1234, agent read: **PASS**. Transcribed "Museum forecourt / The paved public
+square that fronts the museum.", "Hospital grounds / Mown lawns kept behind the hospital.", "University forecourt
+/ …the university." — all the new format, none generic; text legible, no overlap/clipping/blowout.
+
+**Verdict — SHIPPED.** A paved civic square's tooltip now leads with the institution it belongs to instead of a
+generic "Plaza" with the owner buried below — the headline (the most-read line) is now the specific fact. Closes
+the plaza/quad-title tell banked by 122/129. Civic's Interaction/UX cell gains its third (52, 122, 140).
+
+### Findings for later laps
+- **THE PLAZA/QUAD-TITLE TELL IS CASHED — do not re-open it.** `TILEDESC[T.PLAZA]`/`[T.QUAD]` and the generic
+  `TILELABEL` are now bypassed for OWNED squares; only ownerless/rebuilt squares fall through to them. The
+  headline names the owner and there is no longer a "Forecourt of" data row.
+- **A TOOLTIP HEADLINE IS A STRONGER SEAM THAN A DATA ROW — the fact the eye reads first should be the specific
+  one.** The owner was already correct in a buried row since 122; promoting it to the title added no new truth,
+  only legibility. When a tooltip already KNOWS the specific but leads with the generic, promoting it to the
+  headline is a clean Interaction/UX lap with zero draw risk.
+- **UPDATE THE PROBE, DON'T FORK IT.** probe-civic already owned the plaza/quad claim, so the change moved the
+  claim's *reader* (data-row regex → headline parse) rather than adding a second reader. A new probe would have
+  been two readers of one claim — the exact anti-pattern 112 warns about, applied to the harness.
+

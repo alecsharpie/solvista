@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129**, **148** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97**, **141** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132**, **150** | **97**, **141** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146** | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149** | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **144** · Urban **143** · People **145** · Nature **148** · Transport **146** · Civic **149** · Water **141**.
-  **Stalest is now Water (141)**, then Urban (143), then Sky (144) — check the last entry of the stalest domain for a banked
+  Sky **144** · Urban **143** · People **145** · Nature **148** · Transport **146** · Civic **149** · Water **150**.
+  **Stalest is now Urban (143)**, then Sky (144), then People (145) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -171,10 +171,10 @@ ones (U2, 42, U5) stay in the bullet.
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
   **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149 broke it to Polish/Deepen/Polish/Deepen.
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** — (**130/136/142 were the holistic step-backs.**) Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150 broke it to Polish/Deepen/Polish/Deepen/Polish.
   **⚠ Iteration 152 is the next holistic STEP-BACK** (…/136/142/**147 done**/**152**) — not a domain lap; see the recipe
-  below (night + season, day frame off January, interleaved perf). **150 owes the stalest domain, Water (141)**,
-  then Urban (143); vary off Deepen (149) and Interaction/UX (still recent) — Polish/Connect fresh. Sky
+  below (night + season, day frame off January, interleaved perf). **151 owes the stalest domain, Urban (143)**,
+  then Sky (144); vary off Polish (150) and Deepen (149) — Connect/New-CA fresh. Sky
   is post-saturation (Deepen/Fix only — its additive/CA cells are traps); Urban's additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
   New element — but 127 sharpens it: saturation is of a domain's *entities*, and a New element can still land on a
@@ -390,64 +390,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 142 entries before Iteration 140 live in
+> **Archive:** the 143 entries before Iteration 141 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 140 — the squares say whose they are (2026-07-11)
-
-**Vector.** Civic & culture × **Interaction/UX** (SHIPPED). Rotation named the domain — Civic was the single
-stalest (its last SHIP was 122; 131 was an explore that shipped nothing) — and the header banked the content
-over three laps: the plaza/quad tooltip **titles** still read the generic tile label ("Plaza"/"Quad") while a
-data row buried the owner as "Forecourt of — Town hall". Kind was forced off Deepen (139) and Polish (both hot,
-131/132/137); Civic's entities/ornaments are saturated (flags already fly on hall/library/parliament, banners on
-the museum — I grepped `windFlag` and confirmed it before proposing a New element), so 118's law forbids a New
-element, leaving Interaction/UX — and the tell ("a string generic where the code already knows the specific")
-is the loop's most reliable move (117/122/129).
-
-**The seam.** `describeTile` (L5981) set a paved square's title from the generic `TILELABEL` and only appended
-`['Forecourt of', CIVICLABEL[k]]` as a data row. `squareOwner(x,y)` (L1190) already answers whose square it is
-from `c.own` — the index the placing rule STAMPS (not adjacency, which 122 measured wrong on 2/3 seeds).
-
-**Change (~11 lines, tooltip text only).** Added a PLAZA/QUAD branch to the title/sub chain: when `squareOwner`
-resolves, the headline reads `<Institution> forecourt` / `<Institution> grounds` (e.g. "Museum forecourt",
-"University grounds") and the sub is prose ("The paved public square that fronts the museum." / "Mown lawns kept
-behind the university."). Removed the now-redundant "Forecourt of/Grounds of" data row. Squares whose owner was
-rebuilt away keep the generic "Plaza"/"Quad". No draw, tile, entity, rng()/hashCell, tick() pass or terrain;
-strings pure-ASCII (134).
-
-**Census.** PASS, exit 0. Draw-only tooltip text — tile histogram empty, all core metrics +0, stream-neutral by
-construction. Vacuous by design (the probe is the gate).
-
-**Probe.** `probes/probe-civic.mjs` — **updated** to the new headline contract, not forked (one predicate, one
-probe — 112's law applied to the gate itself; the claim moved from a data-row regex to a headline parse, so the
-probe's parse moved with it). It hovers every PLAZA/QUAD, reads the HEADLINE, and checks the named institution
-is an adjacent ELIGIBLE civic (MAJORK for forecourts, GROUNDS for quads) recomputed in Node from cube distance
-— a third implementation sharing no code with the page — then PASS 2 checks the institution agrees from its own
-side. seeds 7/42/1234: **PASS · PASS · PASS** (checked 30/25/29 tooltips, plaza 4/3/4 · quad 10/8/8, pageerrors
-0). Squares fire at scale (dead-code law) and every headline named the owner the geometry confirms.
-
-**Visual.** Hover clips at seeds 7/1234, agent read: **PASS**. Transcribed "Museum forecourt / The paved public
-square that fronts the museum.", "Hospital grounds / Mown lawns kept behind the hospital.", "University forecourt
-/ …the university." — all the new format, none generic; text legible, no overlap/clipping/blowout.
-
-**Verdict — SHIPPED.** A paved civic square's tooltip now leads with the institution it belongs to instead of a
-generic "Plaza" with the owner buried below — the headline (the most-read line) is now the specific fact. Closes
-the plaza/quad-title tell banked by 122/129. Civic's Interaction/UX cell gains its third (52, 122, 140).
-
-### Findings for later laps
-- **THE PLAZA/QUAD-TITLE TELL IS CASHED — do not re-open it.** `TILEDESC[T.PLAZA]`/`[T.QUAD]` and the generic
-  `TILELABEL` are now bypassed for OWNED squares; only ownerless/rebuilt squares fall through to them. The
-  headline names the owner and there is no longer a "Forecourt of" data row.
-- **A TOOLTIP HEADLINE IS A STRONGER SEAM THAN A DATA ROW — the fact the eye reads first should be the specific
-  one.** The owner was already correct in a buried row since 122; promoting it to the title added no new truth,
-  only legibility. When a tooltip already KNOWS the specific but leads with the generic, promoting it to the
-  headline is a clean Interaction/UX lap with zero draw risk.
-- **UPDATE THE PROBE, DON'T FORK IT.** probe-civic already owned the plaza/quad claim, so the change moved the
-  claim's *reader* (data-row regex → headline parse) rather than adding a second reader. A new probe would have
-  been two readers of one claim — the exact anti-pattern 112 warns about, applied to the harness.
 
 ## Iteration 141 — the kelp bed names its extent (2026-07-11)
 
@@ -1004,3 +951,68 @@ helper + a locator hook. Civic's Deepen cell gains its next (36, 59, 66, 80, 91,
 - **SOME HALLS' DIALS ARE OCCLUDED (a front amphitheater/tall neighbour), and ~2/9 seeds have no standalone
   hall at all (it became parliament).** A per-feature probe on a one-per-city landmark must tolerate SKIPs and
   grade only the measurable instances (require ≥2), not FAIL on an occluded or absent one.
+
+## Iteration 150 — the open sea catches the sun (2026-07-11) [Water & coast × Polish]
+
+**Vector.** Water & coast × **Polish** — Water was the stalest domain (last SHIP 141), and the kind varied off
+the recent Deepen/Interaction-UX run (146/149 + the hot IUX laps) to **Polish**, its own kind (last 132). This
+is a fill-the-gap Polish, not a banked cue: by DAY the open sea — a third of the canvas — carried only a faint
+uniform sparkle (one foam stroke on ~2/7 cells) and the beach surf. There was **no sun on the water**: the
+midday ocean read as flat teal, while the night already has its warm city-light smear (L3057). The lesson
+this closes is the coast's daytime blank, not the salted-pier cue (123, still banked).
+
+**The seam.** `case T.WATER` draw (L3029). The existing daytime sparkle (L3031) and the night city-smear (L3057)
+bracket the spot; I added a day-only layer between them. `dayT` (slow ~110 s day clock) and `LITAMT` (0 by day,
+up at night) were already in scope, as was `colA('glint',...)` — the cool-white specular color, distinct from
+warm `foam`.
+
+**Change (draw-only, ~14 lines, added not replacing).** A `glit=(1-LITAMT)·max(0,1-|dayT-0.47|/0.30)` factor —
+1 at noon, 0 before dusk, 0 all night — gates a shimmer layer over open water (`!c.riv`): slow cool bands drift
+seaward (`sin((x·0.9+y·0.5)-waveT·0.55)`) and **lift the whole hex tone** with a translucent `hexTile` wash
+(α≤0.16), with brighter sparkle strokes riding each band's crest. No tile, entity, `rng()`, `hashCell`, `tick()`
+pass or terrain; strings pure-ASCII (134). Night is byte-unchanged (glit=0 → the block draws nothing); pop
+provably flat.
+
+**Two-pass tuning (logged per the counterweight).** The FIRST build used only 1px cool strokes (no wash). It
+passed the census but **both visual agents, blind, reported the sea as "flat uniform teal — glitter not
+visible"** — the contrast×width law (fine speckle averages to nothing at fit zoom). Strengthened to the
+tone-lifting **sheet** (a full-hex wash reads at any zoom); both seeds then PASS. The weak version was never
+shipped — reverted in-place before the sheet.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram empty, all core metrics +0, entity counts identical
+(cars 360 · trams 54 …). Vacuous by construction (a draw reading globals runs in no census metric) — the probe
+is the gate.
+
+**Probe.** `probes/probe-glitter.mjs` (new, promoted). Self-contained, no build-vs-build: freeze the clock AND
+pin `waveT` to a constant (so foam/surf/sparkle cancel), render the SAME artifact at noon (glit=1) vs morning
+(glit=0), and count pixels the noon frame pushed toward cool white (min-channel +≥12) over the OPEN-SEA box vs
+an inland LAND box. seeds 7/42/1234: **sea = 43520 / 43306 / 42122** (mean **42983**), **land control = 7 / 5 /
+6** (mean **6**). The morning frame draws no glitter by construction (glit=0), so that ~7000:1 ratio is the
+day-only sheet, confined to the sea. (An earlier build-vs-build probe read dirty controls — two page loads
+differ in `waveT` and Math.random entities — which is why the self-contained same-build, pinned-`waveT` diff is
+the honest form; see findings.)
+
+**Visual.** Coast + whole-city `wide` at seeds 42 & 7, one agent each: both **VISUAL: PASS** — cool shimmer /
+brighter drifting bands "clearly perceptible as sunlit water," "not milky / not blown-out / not a film," no
+z-order tears or floaters, the frame still a balanced coastal city. (The first, faint build's two FAILs are
+logged above.)
+
+**Verdict — SHIPPED.** The daytime open sea now catches the sun — a cool shimmer sheet that peaks at noon and
+fades to nothing by dusk, handing off cleanly to the night's warm city smear. Draw-only, day-only, pop provably
+flat. Water's Polish cell gains its next (U2, 44, 58, 79, 116, 132, **150**).
+
+### Findings for later laps
+- **A FINE-SPECKLE OCEAN EFFECT IS INVISIBLE AT FIT ZOOM — LIFT THE TILE TONE INSTEAD (contrast×width, again).**
+  1px cool strokes on ~2/5 of sea cells read as "flat teal" to two blind agents; a translucent full-hex `hexTile`
+  wash (a tone lift) reads at any zoom because it has area, not sub-pixel width. For a broad water/sky field,
+  reach for a tone wash first and let sparkle strokes ride ON it, not instead of it.
+- **A BUILD-vs-BUILD SEA PROBE IS CONFOUNDED; USE SAME-BUILD, PINNED-`waveT`, TWO-CLOCK DIFF.** Diffing patched
+  vs pristine across two page loads gave controls of 300–560 (not ~0) because the two loads froze at different
+  `waveT` (foam/surf animate with it) and spawned different Math.random entities (boats/surfers). Fix: measure
+  ONE build, set `waveT` to a constant in-page, and diff two clock states whose only real difference is the
+  feature's own gate (here glit at noon vs morning) — controls dropped to ~6. `waveT` is an assignable global,
+  so a probe can pin it exactly like `playing=false` pins the clock.
+- **A DAY-ONLY LIGHTING LAYER GATED BY `(1-LITAMT)·<midday bump>` COSTS THE NIGHT NOTHING AND HOLDS THE MEAN
+  over a full day** (iter 98's law): it only ever *adds* brightness, and only by day, so the night frame is
+  byte-identical (glit=0) and the sea's tone returns to base by dusk. This is the clean template for "the sun
+  does X to the sea/sky" without a permanent tone drift.
