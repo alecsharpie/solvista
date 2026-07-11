@@ -10463,3 +10463,83 @@ owes it).
   swap the `c.kind` filter, bump `R` for a taller host, keep the rest. For the next single-civic draw/light
   vector, clone one of these two rather than writing a probe from scratch.
 
+## Iteration 176 — the river names its course (2026-07-12) [Water & coast × Interaction/UX]
+
+**Vector — Water & coast × Interaction/UX** (SHIPPED). Rotation named the stalest domain, **Water** (last SHIP
+169; the 175 entry explicitly owed the 176 lap to Water). Kind: **Interaction/UX**, Water's stalest cell (only
+97, 141 — and the stalest I/UX across all domains: Nature 148 · Urban 133 · Civic 140 · Sky 144 · People 154 ·
+Transport 171 · **Water 141**). A draw-nothing tooltip vector — guaranteed-flat pop, and it varies hard off the
+recent New element (169/170) / Deepen (175) / New element (174) run.
+
+**The seam — the asserts-LESS-than-the-code-knows tell (117/122/129/148/171), in its Interaction form.** The
+**river** is the city's biggest water feature and the spine of its most-compounded system (banks → bridges →
+marsh → herons → kayaks), yet `describeTile`'s river branch (L6397) gave it the **barest tooltip in the artifact**:
+a flat `title='River'` / `sub='Fresh water winding down to the sea.'` with **zero data rows** — while the
+boulevard (171), the woods stand (117) and the kelp bed name their own extent via `floodSize`. The draw knew the
+whole waterway; the label named nothing about it.
+
+**Change (~18 lines: a `riverCourse(x,y)` helper + a 2-line data-row push, tooltip logic only).** A river hex now
+carries a **`Course — N hexes`** row = the whole waterway's open-water hex count. `riverCourse` is a **bridge-aware**
+flood: a bridge is a ROAD drawn over the river (genWorld L624; the L1633 rule also paves dense stretches into
+bridge-road), so a naive `riv`-only flood **fragments the course at every span** — the flood therefore *steps
+through* `bridge` road to keep the reach continuous, but counts only WATER hexes (every counted hex is one you can
+see as river). Sea water (`WATER && !riv`) never qualifies, so the flood **stops at the mouth** and can't walk the
+coast highway. No tile / entity / `rng()` / `hashCell` / `tick()` pass / terrain / canvas draw; strings pure-ASCII
+(134). Pop + stream provably flat.
+
+**Considered and DROPPED — a `Crossings` row.** The bridge-aware flood also *counts* the spans, so a
+`Crossings — N bridges` row was the obvious companion. A check (`probe-bridgecheck`, ad-hoc, deleted) killed it:
+raw bridge-**cell** counts wildly over-report (seed 7's longest course = 37 bridge cells but only **4** distinct
+connected components), and the L1633 rule *paves river water into bridge-road* in dense downtown, so a "bridge"
+component conflates a transverse crossing with a longitudinal covered stretch — no honest single number. Course
+(open-water hexes) has none of that murk. Shipped the clean single datum, exactly as boulevard/stand/bed do; a
+distinct-crossings count is banked below if it ever earns a Deepen.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity/tile counts
+identical (`greenRoofs -1` = documented chaotic-CA headless jitter, touches no `rng()`). Vacuous by construction
+(a tooltip-only change draws nothing) — the probe is the gate.
+
+**Probe — `probes/probe-river.mjs` (new, promoted).** A DOM/logic probe (the change is pure tooltip logic). Per
+122's law — a tooltip vector must check its claim against **independently recomputed truth**, not just that it
+renders — the probe re-implements the bridge-aware flood itself (its own predicate + count, using only the grid
+topology `nbrs6`) and asserts describeTile's printed N equals that recompute; calling `riverCourse` would only
+prove the row renders. **TARGET** every river hex titles `River` AND carries a `Course N hex(es)` row == the
+independent flood (>=1). **CONTROL** every SEA hex titles `Ocean`, carries a `Depth` row, and carries **no**
+`Course` row; the flood must also never count a sea hex (**sea-leak guard**). seeds 7/42/1234: river
+**111/48/95** hexes, named+course **OK 111/111 · 48/48 · 95/95**, course-mismatch **0**, **sea-leak 0**; sea
+control clean **630/630 · 639/639 · 647/647** (bad 0); longest course **61/48/58** hexes. **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-river.mjs` (new, promoted).** shoot.mjs can't hover, so it drives Playwright directly:
+finds a mid-course on-screen river hex, aims the real cursor at it, screenshots the rendered tooltip, and prints
+its text. seeds 42/1234 render `River · Fresh water winding down to the sea. · Course 48/58 hexes`, pageerrors
+none. Two agents (one per seed), blind, both **VISUAL: PASS** — tooltip box crisp and legible, correct three-line
+content, no clipping / overlap garbage / mojibake; cursor sits on a blue river hex; whole-city `wide` (seed 42,
+same agent) reads balanced and beautiful, no z-order tears / floaters / blowout.
+
+**Verdict — SHIPPED.** The river — the artifact's biggest waterway and the barest tooltip in the city — now names
+its own course, the same extent-flood the boulevard, the woods and the kelp bed use. Draw-only, pop + stream flat,
+~18 lines + a probe + a shot script. Water's Interaction/UX cell gains 176 (**97**, **141**, **176**); Water is no
+longer stalest (Sky 161 now is the stalest number, but post-saturation; the next domain lap owes People (170) /
+Transport (171)).
+
+### Findings for later laps
+- **THE ASSERTS-LESS-THAN-THE-CODE-KNOWS TELL HAS A NAKED form: a tile whose tooltip has NO data rows at all.**
+  117/122/129/148/171 all found a tooltip that named *some* things but omitted one; the river named *nothing* —
+  a bare title+sub over the city's richest water system. When rotation lands on a mature domain, grep
+  `describeTile` for the branches that push zero `data` rows; those are the barest, highest-yield tells.
+- **A NAIVE FLOOD FRAGMENTS AT ANYTHING THAT INTERRUPTS THE PREDICATE — make the flood aware of the interrupter.**
+  The river's `riv` water is split by bridge-road (genWorld L624 + the L1633 pave-over rule), so `floodSize(riv)`
+  would have reported a stub for most hovers. Stepping the flood *through* the interrupter while counting only the
+  real cells keeps the extent honest. Reuse this shape for any linear feature crossed by a different tile type
+  (a promenade broken by a plaza, a rail line through a station).
+- **A COUNT IS ONLY HONEST IF ITS UNIT IS UNAMBIGUOUS — check the connected-components before shipping "N of X".**
+  The `Crossings` row died because bridge *cells* (37) ≠ distinct crossings (4 components), and the L1633 rule
+  makes a component either a real span or a covered stretch — two meanings, one number. When a candidate datum
+  counts cells of a clustered feature, count its connected components first (a 20-line ad-hoc probe) and confirm
+  the unit is what the label claims. Prefer the datum whose unit is unambiguous (open-water hexes) over the one
+  that reads well but can't be defined cleanly.
+- **STILL banked for Water (123, unchanged):** the pier/lifeguard tower are still `rng()`-salted — site them on a
+  depth by respending their draws, but VARY 123's site-on-depth mechanism. And a distinct-crossings river datum
+  (connected-component count, filtering longitudinal covers) is a possible future Water Deepen if it earns the
+  ambiguity cost.
+

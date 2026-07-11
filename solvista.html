@@ -4018,6 +4018,16 @@ function drawCell(x,y){
           ctx.strokeStyle=col('trunk',1);ctx.lineWidth=0.6;ctx.beginPath();ctx.moveTo(tx,ty-0.5);ctx.lineTo(tx,ty-3.1);ctx.stroke();
           ctx.fillStyle=col('whiteDk',0.95);ctx.beginPath();ctx.ellipse(tx,ty,1.1,0.65,0,0,7);ctx.fill();
           ctx.fillStyle=col(uc[si],1.05);ctx.beginPath();ctx.ellipse(tx,ty-3.3,2.0,1.1,0,0,7);ctx.fill();
+          if(LITAMT<0.5){ /* patrons take the tables by day; the terrace empties after dark (like the picnic lawn) */
+            for(let pi=0;pi<2;pi++){ /* a chair either side of the parasol; hashCell leaves some empty */
+              if(hashCell(x,y,seedNum^(0x5AF0+si*3+pi))>0.5)continue;
+              const sx=tx+(pi?1.5:-1.5), sy=ty-0.2;
+              ctx.fillStyle=col(['gold','sage','lav','coral'][(hashCell(x,y,seedNum^(0x5B60+si*3+pi))*4)|0],0.96);
+              ctx.fillRect(sx-0.7,sy-1.7,1.4,1.6);   /* a seated body, shorter than a standing ped */
+              ctx.fillStyle=col('ink',1.4);
+              ctx.beginPath();ctx.arc(sx,sy-2.2,0.8,0,7);ctx.fill();
+            }
+          }
         }
       }
       if(v<0.24){ /* pond */
