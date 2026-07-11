@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, **102** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96 | **117**, **129** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, **106** | 90 | 17, 25, 51, 65, 72, **113**, **123** | 22 | | U2, 44, 58, 79, **116**, **132** | **97**, **141** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~ | 38, 54, 68, 92 | 47, **109** | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143** | **133** |
 | **Transport** | 2, 9, 21, 31, 48 | 77 | 28, 39, 55, 63, **112**, **121**, **128** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94 | **105** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91 | 45 | | 73, ~~**114**~~ | 52, 122, **140** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135** | | | 61, 81, 89, **115** | ~~**134**~~ |
@@ -55,8 +55,8 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **135** · Urban **133** · People **137** · Nature **139** · Transport **138** · Civic **140** · Water **141**.
-  **Stalest is now Urban (133)**, then Sky (135) — check the last entry of the stalest domain for a banked
+  Sky **135** · Urban **143** · People **137** · Nature **139** · Transport **138** · Civic **140** · Water **141**.
+  **Stalest is now Sky (135)**, then People (137) — check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -128,9 +128,11 @@ ones (U2, 42, U5) stay in the bullet.
   arterial night-corridors traced continuous both seeds, sea reads (116/123 hold), no tears/floaters/blowout;
   seasons measured alive (`probe-season`: FARM winter→dry-peak **88**, VINEYARD now moving too since 139, ROAD
   control ~0.5–2 — the *whole-frame* mildness agents feel is the by-design evergreen/irrigated dilution (120),
-  a composition fact not a dead calendar). **Banked watch-item (136, reconfirmed 142, not a defect): the night
-  core reads broad/diffuse** — falloff is real but spread, not a tight CBD peak; a future Sky/Urban Polish could
-  steepen the `CBDX/CBDY` light gradient. **125** was the same shape and its product was the pin-off-January recipe fix.
+  a composition fact not a dead calendar). **The night-core-is-broad watch-item (136/142) is now CASHED (iter
+  143, Urban × Polish): a tight Gaussian bump (`CORESIG=5`) on the CBD turned the flat smoothstep plateau into a
+  peak** (probe-nightcore: seed-42 core→8-12 gap 0.152→0.307). Subtle-but-discriminable (both agents blind-picked
+  the after-frame); a stronger read needs the window mix `0.35+0.65·c.lit` widened, not `c.lit` steepened further.
+  **125** was the same shape and its product was the pin-off-January recipe fix.
   Iter 111 was People × Connect and used
   109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
   Transport** (trains ↔ their own stations) and iter 113 cashed it a third time in **Water** (the
@@ -163,18 +165,18 @@ ones (U2, 42, U5) stay in the bullet.
   almost no pixels. **Sky-feedable list is now EMPTY (iter 139 cashed `VINEYARD`)** — every vegetation tile
   that can read `year` now does; a further Sky interconnect must come from a genuinely new derived field, not
   from un-freezing another tile.
-  Recent kinds: 128 Deepen ·
-  129 Interaction/UX · **131 Polish/Connect (EXPLORED → REVERTED, cue (d) closed)** · **132 Polish** ·
+  Recent kinds:
   **133 Interaction/UX** · **134 Interaction/UX (EXPLORED → REVERTED — the strobing almanac)** ·
   **135 Deepen/Fix (moon re-clocked `year`→`dayT`, strobe gone)** · **137 Polish (figure contact shadows)** ·
   **138 Connect (arterial spine lit as a night corridor via `c.flow`)** ·
   **139 Deepen (vineyard reads `year` via `vinePhase()` — bare→purple by season)** ·
   **140 Interaction/UX (plaza/quad tooltip headlines name their owning institution)** ·
-  **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** —
-  (**130/136/142 were the holistic step-backs — no domain × kind lap.**) Interaction/UX is now VERY hot (133/134/140/141).
-  **Next domain lap (143) owes Urban (133, now stalest), then Sky (135); read its row for kinds.** Vary HARD off
-  Interaction/UX (last four laps) — reach for Deepen/Connect/Polish. Urban's additive cell is spent (118); Sky
-  is post-saturation (Deepen/Fix only). The coldest kind is **Scale** (a structural lever, not a lap move);
+  **141 Interaction/UX (kelp bed names its extent — `Bed — N hexes`, the KELP tell cashed)** ·
+  **143 Polish (night CBD gets a tight Gaussian light peak — `CORESIG`; the broad-core watch-item cashed)** —
+  (**130/136/142 were the holistic step-backs — no domain × kind lap.**) Interaction/UX ran hot 133/134/140/141; 143 broke it back to Polish.
+  **Next domain lap (144) owes Sky (135, now stalest), then People (137); read its row for kinds.** Vary off
+  Polish (143) and Interaction/UX (four of last six) — reach for Deepen/Connect. Sky
+  is post-saturation (Deepen/Fix only — its additive/CA cells are traps); Urban's additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
   **New element** was cashed at 127 (before that 106). Note 118's
   finding that a *saturated* domain cannot take a New element — but 127 sharpens it: saturation is of a domain's
   *entities*, and a New element can still land on a large untouched **surface** (127 put picnics on PARK). Pick
@@ -389,67 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 135 entries before Iteration 133 live in
+> **Archive:** the 136 entries before Iteration 134 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 133 — the hovered tile gets its ring, and cue (l) closes (2026-07-11)
-
-**Vector.** Urban fabric × **Interaction/UX** (SHIPPED). Rotation named the domain — Urban was the single
-stalest (last 124) — and the header named the content twice over: Urban's *additive* moves are surveyed
-**spent** (118), its Interaction/UX cell was **empty**, and banked **cue (l)** was waiting there. Kind was
-forced off Deepen (4 of last 9) and off the site-on-depth mechanism; Interaction/UX satisfies both and fills
-the last empty Urban cell.
-
-**The defect (cue l, banked iter 117).** Entities have worn a `stamp()` focus ring since iter 71, but a bare
-hovered **TILE** got none: `hoverEnt` is `null` whenever the cursor is over ground, and the only ring keyed
-off it. So every tile tooltip in the artifact's history — U2's, 97's coast, 117's woods, 122's institutions —
-**named a hex the frame never pointed at**, and on a dense grid at fit zoom you cannot tell which one it means.
-
-**Change (~20 lines, draw-only).** A new `hoverTile` is set by the `mousemove` handler in the same branch that
-already resolves the tile for the tooltip (and cleared on entity-hover, off-plate, pan, and `mouseleave` — one
-predicate, every reader). `render()` draws it last, as an affordance: a hex-outline ring at `ctr(hoverTile)`,
-scale **1.06** of the footprint (`hexTile`'s own path, no fill, so terrain and anything standing on it read
-through), with the **same ink-under (2.6px) / cream-pulse (1.1px) stroke as the focus ring and the transit
-trace** — the whole hover language is now one voice. Added `window.__hover(x,y)` (mirrors `__find`/`__ents`;
-`shoot.mjs` can't hover) for probes/screenshots.
-
-**Census.** PASS, exit 0. Draw-only, stream-neutral (no terrain, no `rng()`) — tile histogram empty, core
-metrics +0. (`greenRoofs` +1 is the roof-adoption CA's known headless-timing wobble, ±1 on pristine HEAD too.)
-
-**Probe** `probes/probe-tilering.mjs` (promoted). One patched build compared against ITSELF in two hover
-states (the ring is a new *state*, not a re-tone — no pristine build needed). Freezes the sim (the ring pulses
-on `time`), then drives a **real `page.mouse.move`** onto a PARK's screen coords (tests the true handler, not
-just the `__hover` hook) and diffs a hex-box against the hover-off frame, with a far-off WATER hex as control:
-seeds 7 & 42, **target |ΔRGB| 8.73** (ring drawn on the hovered hex) · **control 0.000** (it is one hex, not
-a wash) · **cleared residual 0.000** (move to void ⇒ ring vanishes, no sticky ring). VERDICT: PASS.
-
-**Visual.** Both fit-zoom agents FAILED — *and the probe + my own eyes overturned them*, the loop's law
-exactly (agents fail confidently ⇒ measure, then look at that one PNG). At R=130 the 1.1px cream stroke
-downscales away, so both agents (correctly, on their evidence) could not *see* it — while **both independently
-confirmed the WHOLE frame is clean**: no z-order tears, floaters, doubled rings, or blowout, city reads
-balanced. A **tight R=55 / 2× clip** settled the legibility question I could not delegate: a crisp
-black+cream hexagon outline hugging **exactly one** hex — the green PARK (seed 42) and the hospital hex (seed
-7) — sitting correctly on the hex grid, tracing one hexagon cleanly. Bold and legible where the cursor is (=
-where the user looks). VISUAL: PASS on the tight reads + the delegated whole-frame reads.
-
-**Verdict — SHIPPED. Cue (l) is CLOSED.** Every tile tooltip in the artifact now points at the hex it names.
-Urban's Interaction/UX cell is filled; only Sky now lacks an Interaction/UX vector.
-
-### Findings
-- **A "hover ring is invisible" agent FAIL is a ZOOM artifact, not a defect — the stroke is 1.1px and dies in
-  a downscaled wide clip.** The probe (`|ΔRGB| 8.73` hex-local, control 0.000) and a tight 2×/R55 clip both
-  show it crisp. When a thin *linear* affordance "can't be seen," re-shoot tighter before touching the draw
-  (101's contrast×width law, read the other way: at fit zoom width is fixed, so magnify the *shot*).
-- **`shoot.mjs`/`hovershot.mjs` cannot screenshot a TILE hover** — `hovershot` aims at entities via `__ents`.
-  `window.__hover(x,y)` (this iter) is the tile analogue; a tiny custom shot script that calls it + clips
-  tight is the pattern for any future tooltip/hover/selection vector on a *tile* (122's institutions, 117's
-  woods, 97's coast could all now be re-shot with their hex marked).
-- **The next tooltip lap can reuse this ring for free.** 132's banked KELP-tooltip cue and any future
-  `describeTile` enrichment now land on a hex the frame *marks* — the legibility half of every tile-tooltip
-  vector is done; only the *words* remain.
 
 ## Iteration 134 — the almanac that strobed (2026-07-11)
 
@@ -1023,3 +969,67 @@ time (125→130→136→142) — but the same-session interleave this time surfa
   located a real falloff but a spread glow rather than a tight CBD peak. Three step-backs deep it is the one
   standing legibility nuance; a future Sky/Urban Polish steepening the `CBDX/CBDY` light gradient could cash it
   deliberately — it has not earned a forced fix.
+
+## Iteration 143 — the downtown gets a bright heart at night (2026-07-11)
+
+**Vector.** Urban fabric × **Polish** (SHIPPED). Rotation named the domain — Urban was the single stalest (last
+133) — and 118's law forbids a New element in a domain whose additive inventory is surveyed spent. The content
+was a **banked, thrice-reconfirmed watch-item** (136/142 step-backs): the night core reads *broad/diffuse*, a
+real falloff but no tight CBD peak, "a future Sky/Urban Polish steepening the `CBDX/CBDY` light gradient could
+cash it deliberately." A banked, measured finding outranks kind-rotation (119's law), and Polish varies HARD
+off the last four laps (all Interaction/UX, 133/134/140/141) — the header's own steer.
+
+**Probe first (119's law).** Fixed `probes/probe-nightcore.mjs`'s path bug on the way in — it read
+`./solvista.html` relative to its own dir (the exact anti-pattern SKILL.md warns about); now
+`../../../../solvista.html` (the repo-root resolve). Its ring profile *named the defect precisely*: the night
+light field `c.lit` is `0.18 + 0.70·smoothstep(1−d/34)`, and **smoothstep is flat-topped (zero slope at the
+CBD)**, so the inner rings barely out-shone each other. seed 7 ring 0-4 (**0.810**) was actually *dimmer* than
+ring 4-8 (**0.826**) — the brightest ground was a plateau, not a peak. That is the "diffuse core" three agents
+felt, measured.
+
+**Change (~6 lines, draw-only, genWorld only).** Kept the broad smoothstep glow to the rim (it earns the
+rim→core gradient) but **added a tight Gaussian bump on the CBD**: a new `CORESIG=5` and
+`c.lit = 0.16 + 0.50·broad + 0.28·exp(−d²/2σ²) + (c.lit−0.5)·0.5`. Position-only (never height — a building
+must not wear its height twice, 103/110), stream-neutral (no `rng()`, no terrain, no tile/entity), and the
+per-frame draw path is byte-identical — the Gaussian is computed once in `genWorld`, not per frame, so no perf
+cost (perf gate not needed; the step-back owns it).
+
+**Census.** PASS, exit 0. Draw-only, stream-neutral — tile histogram empty, all core metrics +0
+(`greenRoofs +1` is the roof-adoption CA's known headless-timing wobble).
+
+**Probe, after.** `probe-nightcore` ring `c.lit` means, before → after:
+- seed 42: `0.899/0.828/0.747/0.658/0.473/0.264` → `0.921/0.774/0.614/0.515/0.370/0.224` — the core→(8-12) gap
+  **doubled 0.152 → 0.307**; a real monotonic peak.
+- seed 7: `0.810/0.826/0.762/…` (0-4 *below* 4-8, no peak) → `0.832/0.770/0.629/…` (0-4 now the brightest).
+- `corr(lit,th)` **0.09–0.11** both seeds — brightness still does NOT restate height (invariant held, 103/110).
+- The PIXEL luminance moved only ~1–2 units per mid-ring (the window mix `0.35+0.65·c.lit` compresses the range
+  and windows are a fraction of each building) — so the effect is subtle by construction, which the visual gate
+  then confirmed is *discriminable*, and which is the right proportion for a nuance (a dramatic core blows out).
+
+**Visual.** Before/after night frames (off-January `year=2035.62`, t=0.88), one agent per seed, asked to
+**DISCRIMINATE** which frame has the tighter core (108's locate-don't-judge). **2/2 chose the after-frame**,
+blind, and both **located the brightest cluster at the true CBD** — seed 42 ~(0.47,0.48) [CBD (32,31)], seed 7
+~(0.44,0.63) [CBD (31,41), the southern y reads low in-frame]. Both: no z-order tears, no floating tiles, no
+blown-out/clipped white (peak stays warm window-light, not a halo/blob), whole frame a balanced night coastal
+city with a dark rim. VISUAL: PASS both.
+
+**Verdict — SHIPPED. The night-core-is-broad watch-item (136/142) is CASHED.** Downtown now reads as a single
+luminous heart with a steep inner falloff, not a wide even smear — the flat-plateau defect (smoothstep's
+zero-slope top) is gone. Draw-only, stream-neutral, position-only, zero perf cost. Urban's Polish cell gains
+its tenth (…124, 143); Urban is no longer stalest.
+
+### Findings for later laps
+- **SMOOTHSTEP IS FLAT-TOPPED — a radial falloff built on `u²(3−2u)` has ZERO slope at its centre, so it makes
+  a PLATEAU where you want a PEAK.** The night core read diffuse for 28 iterations because its own falloff was
+  gentlest exactly at the CBD (seed 7's innermost ring measured *dimmer* than the next one out). If a field
+  should read as a bright *point*, add a tight Gaussian/cone bump on top of the broad base; don't just scale the
+  smoothstep. Reusable for any "concentrate X on a centre" field (a future density/value/glow peak).
+- **THE PIXEL PROBE AND THE MODEL PROBE DISAGREE ON MAGNITUDE — the window mix `0.35+0.65·c.lit` compresses.**
+  A large swing in the `c.lit` *field* (ring means moved 0.05–0.13) became a ~1–2-luminance-unit swing in
+  rendered pixels, because the window term has a 0.35 floor and windows are a fraction of each building. So a
+  field fix reads *subtly*. If a future lap wants the core to read MORE strongly, the lever is widening
+  `0.35+0.65·c.lit`'s range (or a dedicated warm downtown sky-glow disc), NOT steepening `c.lit` further — it's
+  already peaked, and the ceiling is the mix, not the field.
+- **probe-nightcore.mjs's path was BROKEN (`./solvista.html`) and is now fixed** — it could not have run since
+  it was `git mv`'d into `probes/`. Any probe that predates the "resolve relative to the probe, four dirs up"
+  law may carry the same bug; check the `readFileSync`/`goto` path before trusting an old probe's silence.

@@ -7768,3 +7768,60 @@ forecourts) and every candidate road is the **arterial/monorail/boulevard/bus-st
 forbid; growing a forecourt by annexing lots reaches 3 only at the **lone (non-quarter) majors**, never the
 quarter's own (0–1 pavable neighbours, boxed in). So a 3-hex square can exist only where there is no quarter
 to make it *civic*. 114 reverted this; 131 proved it dead in 4s/seed with a geometry probe. Leave it closed.
+
+## Iteration 133 — the hovered tile gets its ring, and cue (l) closes (2026-07-11)
+
+**Vector.** Urban fabric × **Interaction/UX** (SHIPPED). Rotation named the domain — Urban was the single
+stalest (last 124) — and the header named the content twice over: Urban's *additive* moves are surveyed
+**spent** (118), its Interaction/UX cell was **empty**, and banked **cue (l)** was waiting there. Kind was
+forced off Deepen (4 of last 9) and off the site-on-depth mechanism; Interaction/UX satisfies both and fills
+the last empty Urban cell.
+
+**The defect (cue l, banked iter 117).** Entities have worn a `stamp()` focus ring since iter 71, but a bare
+hovered **TILE** got none: `hoverEnt` is `null` whenever the cursor is over ground, and the only ring keyed
+off it. So every tile tooltip in the artifact's history — U2's, 97's coast, 117's woods, 122's institutions —
+**named a hex the frame never pointed at**, and on a dense grid at fit zoom you cannot tell which one it means.
+
+**Change (~20 lines, draw-only).** A new `hoverTile` is set by the `mousemove` handler in the same branch that
+already resolves the tile for the tooltip (and cleared on entity-hover, off-plate, pan, and `mouseleave` — one
+predicate, every reader). `render()` draws it last, as an affordance: a hex-outline ring at `ctr(hoverTile)`,
+scale **1.06** of the footprint (`hexTile`'s own path, no fill, so terrain and anything standing on it read
+through), with the **same ink-under (2.6px) / cream-pulse (1.1px) stroke as the focus ring and the transit
+trace** — the whole hover language is now one voice. Added `window.__hover(x,y)` (mirrors `__find`/`__ents`;
+`shoot.mjs` can't hover) for probes/screenshots.
+
+**Census.** PASS, exit 0. Draw-only, stream-neutral (no terrain, no `rng()`) — tile histogram empty, core
+metrics +0. (`greenRoofs` +1 is the roof-adoption CA's known headless-timing wobble, ±1 on pristine HEAD too.)
+
+**Probe** `probes/probe-tilering.mjs` (promoted). One patched build compared against ITSELF in two hover
+states (the ring is a new *state*, not a re-tone — no pristine build needed). Freezes the sim (the ring pulses
+on `time`), then drives a **real `page.mouse.move`** onto a PARK's screen coords (tests the true handler, not
+just the `__hover` hook) and diffs a hex-box against the hover-off frame, with a far-off WATER hex as control:
+seeds 7 & 42, **target |ΔRGB| 8.73** (ring drawn on the hovered hex) · **control 0.000** (it is one hex, not
+a wash) · **cleared residual 0.000** (move to void ⇒ ring vanishes, no sticky ring). VERDICT: PASS.
+
+**Visual.** Both fit-zoom agents FAILED — *and the probe + my own eyes overturned them*, the loop's law
+exactly (agents fail confidently ⇒ measure, then look at that one PNG). At R=130 the 1.1px cream stroke
+downscales away, so both agents (correctly, on their evidence) could not *see* it — while **both independently
+confirmed the WHOLE frame is clean**: no z-order tears, floaters, doubled rings, or blowout, city reads
+balanced. A **tight R=55 / 2× clip** settled the legibility question I could not delegate: a crisp
+black+cream hexagon outline hugging **exactly one** hex — the green PARK (seed 42) and the hospital hex (seed
+7) — sitting correctly on the hex grid, tracing one hexagon cleanly. Bold and legible where the cursor is (=
+where the user looks). VISUAL: PASS on the tight reads + the delegated whole-frame reads.
+
+**Verdict — SHIPPED. Cue (l) is CLOSED.** Every tile tooltip in the artifact now points at the hex it names.
+Urban's Interaction/UX cell is filled; only Sky now lacks an Interaction/UX vector.
+
+### Findings
+- **A "hover ring is invisible" agent FAIL is a ZOOM artifact, not a defect — the stroke is 1.1px and dies in
+  a downscaled wide clip.** The probe (`|ΔRGB| 8.73` hex-local, control 0.000) and a tight 2×/R55 clip both
+  show it crisp. When a thin *linear* affordance "can't be seen," re-shoot tighter before touching the draw
+  (101's contrast×width law, read the other way: at fit zoom width is fixed, so magnify the *shot*).
+- **`shoot.mjs`/`hovershot.mjs` cannot screenshot a TILE hover** — `hovershot` aims at entities via `__ents`.
+  `window.__hover(x,y)` (this iter) is the tile analogue; a tiny custom shot script that calls it + clips
+  tight is the pattern for any future tooltip/hover/selection vector on a *tile* (122's institutions, 117's
+  woods, 97's coast could all now be re-shot with their hex marked).
+- **The next tooltip lap can reuse this ring for free.** 132's banked KELP-tooltip cue and any future
+  `describeTile` enrichment now land on a hex the frame *marks* — the legibility half of every tile-tooltip
+  vector is done; only the *words* remain.
+

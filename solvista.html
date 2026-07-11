@@ -229,6 +229,12 @@ let CBDX=CTRX, CBDY=CTRY; const CORER=16;
    reusing 16 would pin the whole outer city at one dim value and merely move the
    flatness outward. 34 spans the populated range (probe-nightcore.mjs). */
 const LITR=34;
+/* ...but the broad glow alone reads as a flat plateau at the core: smoothstep is
+   flat-topped (zero slope at the CBD), so the inner rings barely out-shine each
+   other and downtown has no tight peak (three step-backs flagged it; ring 0-4 and
+   4-8 measured within 0.02). CORESIG is a tight Gaussian bump added ON the broad
+   base so the founding crossroads reads as a bright heart, not a wide smear. */
+const CORESIG=5;
 const SHORE0=SHOREX+5; /* nominal water's edge, five lots seaward of the highway */
 
 /* the plate mask. HEXOK gates inB(), so world generation, growth, picking and
@@ -648,8 +654,10 @@ function genWorld(seed){
      draw, and nothing here touches `rng()` or terrain — this is draw-only, and
      LITAMT is 0 by day, so it is night-only too. */
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
-    const c=cells[idx(x,y)], u=clamp(1-hexDist(x,y,CBDX,CBDY)/LITR,0,1);
-    c.lit=clamp(0.18+0.70*(u*u*(3-2*u))+(c.lit-0.5)*0.5,0,1);
+    const c=cells[idx(x,y)], d=hexDist(x,y,CBDX,CBDY);
+    const u=clamp(1-d/LITR,0,1), broad=u*u*(3-2*u);       /* gentle glow out to the rim */
+    const core=Math.exp(-(d*d)/(2*CORESIG*CORESIG));       /* tight peak on the CBD */
+    c.lit=clamp(0.16+0.50*broad+0.28*core+(c.lit-0.5)*0.5,0,1);
   }
   const act=(x,y)=>{const c=cellAt(x,y);
     if(!c||c.t===T.FOREST||c.t===T.ROCK)return;

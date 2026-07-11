@@ -29,7 +29,7 @@ import { createServer } from 'node:http';
 import { readFileSync } from 'node:fs';
 
 const SEEDS = process.argv.slice(2).length ? process.argv.slice(2).map(Number) : [7, 42, 1234];
-const HTML = readFileSync(new URL('./solvista.html', import.meta.url));
+const HTML = readFileSync(new URL('../../../../solvista.html', import.meta.url));
 
 const srv = createServer((_, res) => { res.setHeader('content-type', 'text/html'); res.end(HTML); }).listen(0);
 await new Promise(r => srv.once('listening', r));
