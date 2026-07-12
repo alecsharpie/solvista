@@ -69,9 +69,18 @@ for (const f of FRAMES) {
     __warp(61);                   /* develop the city; this ALSO advances `year` ... */
     __setYear(year);              /* ... so the calendar pin must come AFTER the warp */
     __setTime(t);
+    /* The user sees canvas PLUS DOM (200), and a frozen clock does not refresh the DOM
+       (204): syncSky() self-throttles for 400ms and syncStats() is only ever called from
+       inside the `if(playing)` branch. So a frozen frame keeps the HUD and the CSS sky
+       gradient it had AT PAGE LOAD -- i.e. daytime. Iter 227's step-back agents duly read
+       "DAYTIME / 0% new moon" off a night frame with a crescent drawn, on both seeds, and
+       FAILed the city for it; probe-hudfreeze.mjs proved the artifact correct and this
+       camera stale. Force both, or the frames lie about everything outside the canvas. */
+    lastSky = 0; syncSky(performance.now()); syncStats();
     render();
     return { dayT, year, LITAMT: +LITAMT.toFixed(2), GWARM: +GWARM.toFixed(2),
-             phase: phaseWord(dayT), sunUp: dayT >= SUNUP && dayT <= SUNDN };
+             phase: phaseWord(dayT), sunUp: dayT >= SUNUP && dayT <= SUNDN,
+             hud: document.getElementById('stPhase').textContent };
   }, { seed, t: f.t, year: f.year });
   /* NOTE: no waitForTimeout here -- a wait is exactly what drifts the pin. The
      freeze holds, but there is nothing to gain by waiting and a season to lose. */
@@ -79,6 +88,7 @@ for (const f of FRAMES) {
   await page.screenshot({ path: png });        /* DOM composited, per iter 200 */
   console.log(`  ${f.name.padEnd(7)} t=${state.dayT.toFixed(2)} year=${state.year.toFixed(2)} ` +
     `LITAMT=${String(state.LITAMT).padStart(4)} GWARM=${String(state.GWARM).padStart(4)} ` +
-    `sun=${state.sunUp ? 'UP  ' : 'down'} phase=${state.phase.padEnd(11)} -> ${png}`);
+    `sun=${state.sunUp ? 'UP  ' : 'down'} phase=${state.phase.padEnd(11)} ` +
+    `HUD=${(state.hud === state.phase ? 'ok' : 'STALE:' + state.hud).padEnd(8)} -> ${png}`);
 }
 await browser.close();

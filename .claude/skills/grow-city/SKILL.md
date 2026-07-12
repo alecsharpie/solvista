@@ -878,7 +878,17 @@ vector, whatever it is.
   inside the `if(playing)` branch**. So `playing=false; dayT=0.92; render(); screenshot()` gives you a
   **night-lit plate under a bright daytime sky**, with the HUD still reading "DAYTIME" — and an agent will
   correctly FAIL it, costing a full gate round. Force them: `lastSky=0; syncSky(performance.now()); syncStats();`
-  before you shoot. (`probes/shot-stepback.mjs` already does this; anything you hand-roll must too.)
+  before you shoot. (`probes/shot-stepback.mjs` does this **as of 227** — this line claimed it already did
+  for 23 iterations while it did **not**, and the step-back's own camera duly handed 227 a false FAIL on both
+  seeds: the HUD read `daytime / 0% new moon` off a night frame with a crescent drawn, and two agents
+  independently FAILed the *city* for the *camera*. **A documented trap you keep walking into is a broken tool,
+  not a law — fix the tool.** ⇒ And the general form, which is what makes the fix stick: **make the frame
+  SELF-REPORT the DOM state you are about to ask an agent about.** `shot-stepback` now prints `HUD=ok` /
+  `HUD=STALE:<word>` per frame, so a stale HUD is caught by the tool in one line instead of by a gate round.
+  This is 202's law — every frame self-reports its own state — extended from the canvas to the DOM, which is
+  precisely the layer 200 warns the probes cannot see. `probes/probe-hudfreeze.mjs` is the three-case rig that
+  settled it: **A** frozen-as-shot, **B** frozen + `syncStats()`, **C** actually playing; A stale while B and C
+  agree ⇒ the camera lies and the artifact is innocent.)
 - **Aim a close-up at the entity's DRAWN position (`_sx`/`_sy`), never at `ctr(x,y)` (iter 204).** 201 says a
   fixed clip is not a framing — aim at the feature. This is the sharper form for a *mover*: a vehicle is drawn
   **interpolated** between its hex and its next hex by `v.p`, so `ctr(v.x,v.y)` can be a **whole hex** (~110 px at
@@ -1513,6 +1523,11 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `shot-queueshadow.mjs` (the aimed camera: finds the instance whose ornament **measurably renders the most ink** and
   centres on it, then hands the same aim to the HEAD build so the blind before/after pair frames the identical hex —
   because `openFront`/`frontLoad` will hand you a buried one).
+  `probe-hudfreeze.mjs` (227 — **is this a real bug, or is my frozen camera lying about the DOM?** Three cases at
+  one pin: **A** frozen exactly as the shot does it · **B** frozen + `syncStats()` · **C** actually playing. **A
+  stale while B and C agree ⇒ the camera lies and the artifact is innocent.** It cleared the "night frame says
+  DAYTIME" FAIL that two agents raised on two seeds. Reach for it whenever agents report a *readout* — a HUD word, a
+  stat, a label — disagreeing with the *canvas*: the canvas is live and the DOM is not.)
   Six of them are **harness-wide**, not per-feature — reach for these on any lap:
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before
