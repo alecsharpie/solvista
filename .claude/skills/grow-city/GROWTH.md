@@ -56,73 +56,42 @@ ones (U2, 42, U5) stay in the bullet.
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
   Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **206** · Civic **204** · Water **205**.
-  **ITERATION 207 IS THE MANDATED STEP-BACK.** After it, the lap owes Urban (199), then Sky (200), then People (201).
-  **206 took Nature × NEW CA RULE (the audit kind — 107's move) and FIXED a rule that had under-fired for the
-  artifact's whole life.** The header's own banked cue said *"GARDEN is the last season-mute tile — Deepen it"*; one
-  census read said **GARDEN = 6 hexes in the whole 9-cell matrix** (year-gated 2008+, so ~2/city at 2035, zero
-  elsewhere) and **seed 5 grew ZERO gardens, ever.** The rule wanted `RES` with **>=3 RES neighbours** — and **a house
-  ringed by houses is the house the upgrade pass turns into a mid-rise**, so its pool **collapsed 40 -> 15 across the
-  only years it was allowed to run** (`probe-gardenhost`): **`T.MARKET`'s defect one tile over.** Fix: **`RES` is the
-  wrong definition of *home* — a mid-rise is still housing.** Shared **`HOMES={RES,MID}`** (TOWER excluded: skyline,
-  not neighbourhood) ⇒ pool **2.5x and STABLE**, seed 5's host **3 -> 30**, **`GARDEN 6 -> 17`**, core flat. The probe
-  also **killed the obvious next idea before a line was written**: the rule's comment says *"between the houses"*, but
-  the **vacant lot** is a mirage (`EMPTY` with >=2 RES nbrs falls **85 -> 6.5** by 2035, **0.0** with a road adjacent
-  — development eats every gap).
-  **⚠ 206's SECOND find, and the one with legs: A GARDEN IN AMONG THE HOMES IS OFTEN INVISIBLE.** The seed-5 visual
-  agent FAILed — **and was RIGHT** (3rd time in 7 laps, after 200's sun and 205's ship), though not for its stated
-  reason. `probe-gardenvis` (203's z-order rig): the camera was aimed **true** (centroid 17px on an 88px hex) and
-  seed 5's garden rendered **0 px of ink against 8,924 px drawn on top — 100% occluded**; across 23 gardens, **mean
-  58% occluded, 7 of 23 >=86% buried.** Draw order IS depth order, and **the homes you site among are what bury you.**
-  I had stated the claim in **cells** when it was a claim about **what the eye sees** (205's law, cashed against me one
-  lap later). Ships as a **light PREFERENCE, not a gate** — `rng()<(openFront?0.075:0.02)` ⇒ mean occluded **58% ->
-  40%**, fully-invisible **1 -> 0**, >=86% buried **7/23 -> 1/24**, no seed left at zero. **⚠ The HARD gate STARVED it
-  (`GARDEN 14 -> 5`, worse than the bug): `MID` is *both* a home *and* the thing that buries you, so the two predicates
-  fight.** New law ⇒ SKILL.md: **a lever has TWO ledgers — measure its cost to the POPULATION, not just its effect on
-  the INSTANCE.** **Reusable: `openFront(x,y)`+`TALLT`** (by `countAround`) — *is the hex in front clear?* **Any
-  ground-level thing that must be SEEN should ask before siting itself; 204's buried service bays (cue n) are this
-  same defect one domain over**, now half-answered: the density is not escapable by *choice of hex*, but it IS
-  steerable by *weighting the roll*.
-  **⚠ GARDEN's seasonal cue is now UNBLOCKED and worth cashing** (see the mute-tile bullet): its draw still reads no
-  `year` at all — the last season-mute vegetation tile — and it *finally has a host to show it on*.
-  **204 took Civic × CONNECT and SHIPPED: the service fleet comes home** — three CIVICDESC lines parked a vehicle at
-  a door (precinct yard, the hospital's *"ambulance bay that never closes"*, the firehouse's roll-up doors) while
-  `stepVehicle` random-walked all three like a car, so **not one ever went home**; each now runs a round trip routed
-  by a BFS field over ROAD cells. Law (*a stubbed shared `Math.random` makes a PER-ENTITY control worthless — make
-  the control a POPULATION*) ⇒ SKILL.md. Full recap: its own Iteration 204 entry, still in window.
-  **⚠ 204's REAL find is that the FIRE CA IS A GHOST — do not build "X answers the fire" (`probe-firehost`).**
-  Ignition is year-gated (blocks `year<2006`, forest `year<2030`), so **at 2035 nothing can ignite at all**, and
-  even before then it is vanishingly rare: across **3 seeds x 61 years** there are **TWO one-cell episodes** in
-  the engine's whole era (seeds 7 and 1234: *zero*), and fire **never spreads** (peak 1.00 cells lit). A cell
-  burns 4 ticks = **1.8 real seconds** while the engine covers **1.6 hexes**. So the engine now *heads* to the
-  smoke the moment one lights (forced-fire probe: road-distance descends **56->7 / 42->0 / 66->6** monotone on 3
-  seeds, HEAD wanders) and usually never arrives — which is the model being honest, not a bug. **The fire system
-  is `T.MARKET` all over again: fully drawn, three labels boasting about it, and it never runs.** Reviving it is
-  a Nature/Urban CA lap with a real cost (BURNT is the darkest tile in the palette), not a freebie.
-  **⚠ Banked cue (n) — A PARKED VEHICLE IS OFTEN INVISIBLE, AND THE DOOR IS NOT THE REASON.** `probe-servbay`
-  measures the parked vehicle's ink against itself re-drawn on top: **4 of 9 read 0%** — eaten whole by whatever
-  tall thing stands in the rows in front (draw order IS depth order). 204 then built a door-ranking lever and
-  **measured it at nothing**: nearest / least-blocked-3-rows / strictly-in-front score **485 / 489 / 485 out of
-  900**. What buries a bay is the **density of the downtown its institution stands in** — the police station
-  happens to sit in the open and reads 91-99% on every seed; the hospital and firehouse are in the core. No
-  choice among four road hexes escapes it. **Making a bay legible means giving the CIVIC TILE a visible apron on
-  its front edge — a `polish-tile` job, not a growth lap** (same shape as 195's university light). The lever was
-  measured before it was mandated (198's law) and is NOT in the shipped code.
-  **205 took Water × CONNECT (the coldest cell, last used at 22) and EXPLORED → REVERTED. Its finding is the BIG
-  one and is held in full by cue (o) below: THE PORT HAS NO WATERFRONT — Solvista is a ROADSTEAD, not a harbour,**
-  so the anchored freighter (comment: *"waiting on a berth"*; tooltip: *"Serving the harbor works"*; and
-  `if(f.anchored)continue`) is a perfect-looking label-tell that is **NOT a defect** — a roadstead is an open
-  anchorage where ships lie at anchor precisely BECAUSE there is nowhere to come alongside. 205 built her the round
-  trip, PASSED its own probe, and **two visual agents FAILed it on two seeds and were RIGHT** — the probe's
-  `ALONGSIDE < 2.2 cells` threshold was a number chosen because the berth constant met it. Two laws ⇒ SKILL.md
-  (*a probe whose threshold is in the units of your own design constant is grading your own homework*; *check the
-  host exists before you believe the tell*). Full recap rotated to `GROWTH-archive.md` at 206.
-  **203/201/202 — recaps rotated to `GROWTH-archive.md` at 206; laws promoted to SKILL.md. What survives: (a) THE
-  WHOLE TRAMWAY IS SUB-PIXEL AT FIT ZOOM** (0.5px rope, 5px cabins, hairline masts) — 203 proved the rope properly
-  depth-sorted (`probe-gondz`: 8.4-23.6% occluded) and the artifact INNOCENT of 202's "thin dark line"; the fault is
-  LEGIBILITY ⇒ a **`polish-tile` job on the WHOLE tramway**, never a tweak to the rope. **Do NOT re-try: a body/halo
-  under it (measured — backfires) or a lit top edge (measured — impossible at 0.5px). (b) 202 (20th step-back): CLEAN
-  BILL on the city, the INSTRUMENT was broken** — perf compounds beneath the per-lap gate ⇒ **PERF**; the step-back
-  camera was lying ⇒ **SKILL.md** + `probes/shot-stepback.mjs`.
+  **207 was the mandated step-back (done — clean bill; see below). THE LAP NOW OWES URBAN (stalest, 199), then Sky
+  (200), then People (201).** Urban is measured-saturated in *additive* and *Connect* (see below) ⇒ its lap must be
+  **Deepen or Polish**. **Iteration 212 is the next step-back.**
+  **206 (Nature × New CA rule, FIXED) — full recap in its own entry, still in the ledger window; header recap
+  rotated to `GROWTH-archive.md` at 207.** It audited a rule that had under-fired for the artifact's whole life
+  (`GARDEN` = 6 hexes in the entire matrix; one seed in three grew *zero*, ever) and fixed it: **a mid-rise is
+  still housing**, so `HOMES={RES,MID}` ⇒ **`GARDEN 6 → 17`**. Two things survive here:
+  **(1) Reusable — `openFront(x,y)` + `TALLT`** (beside `countAround`): *is the hex in front clear?* **Draw order
+  IS depth order, so any ground-level thing that must be SEEN should ask before siting itself** (23 gardens
+  measured: mean **58% occluded**, one at **100%**). Ship such a lever as a **PREFERENCE, not a GATE** — the hard
+  gate *starved* the rule (`GARDEN 14 → 5`, worse than the bug), because `MID` is both a home *and* the thing that
+  buries you. Law ⇒ SKILL.md (*a lever has two ledgers*). **204's buried service bays (cue n) are this same defect
+  one domain over.**
+  **(2) The vacant lot is a MIRAGE** — don't reach for it: `EMPTY` with ≥2 RES nbrs falls **85 → 6.5** by 2035,
+  and **0.0** with a road adjacent. Development eats every gap. **⚠ GARDEN's seasonal cue is now UNBLOCKED (host
+  fixed) and MEASURED (dry-peak shift 1.8 = ROAD-level) — see cue (p).**
+  **204 (Civic × Connect, SHIPPED: the service fleet comes home) — full recap in its own entry, still in the
+  ledger window; header recap rotated at 207.** Law ⇒ SKILL.md (*a stubbed shared `Math.random` makes a PER-ENTITY
+  control worthless — make the control a POPULATION*). Two findings survive here:
+  **⚠ THE FIRE CA IS A GHOST — do not build "X answers the fire" (`probe-firehost`).** Ignition is year-gated
+  (`year<2006`; forest `year<2030`), so **at 2035 nothing can ignite at all**, and before then it is vanishing:
+  **two one-cell episodes across 3 seeds × 61 years** (two seeds: *zero*), and fire **never spreads**. **`T.MARKET`
+  all over again — fully drawn, three labels boasting about it, and it never runs.** Reviving it is a Nature/Urban
+  CA lap with real cost (BURNT is the darkest tile in the palette), not a freebie.
+  **⚠ Cue (n) — A PARKED VEHICLE IS OFTEN INVISIBLE, AND THE DOOR IS NOT THE REASON** (`probe-servbay`: 4 of 9
+  parked vehicles read **0%** visible ink). What buries a bay is **the density of the downtown its institution
+  stands in**, not which door it picks — 204 built the door-ranking lever and **measured it at nothing** (485/489/
+  485 of 900), so it is NOT in the shipped code. **Making a bay legible means giving the CIVIC TILE a visible
+  apron on its front edge — a `polish-tile` job, not a growth lap** (same shape as 195's university light).
+  **205 (Water × Connect, REVERTED) — recap rotated to `GROWTH-archive.md` at 207; its finding is held IN FULL by
+  cue (o) below: THE PORT HAS NO WATERFRONT.** Two laws ⇒ SKILL.md.
+  **203/201/202 — recaps rotated; laws promoted to SKILL.md. What survives: THE WHOLE TRAMWAY IS SUB-PIXEL AT FIT
+  ZOOM** (0.5px rope, 5px cabins, hairline masts) — 203 proved the rope properly depth-sorted (`probe-gondz`:
+  8.4-23.6% occluded) and the artifact INNOCENT of 202's "thin dark line"; the fault is LEGIBILITY ⇒ a
+  **`polish-tile` job on the WHOLE tramway**, never a tweak to the rope. **Do NOT re-try: a body/halo under it
+  (measured — backfires) or a lit top edge (measured — impossible at 0.5px).**
   (Per-lap recaps of **196/198/199/200** rotated to `GROWTH-archive.md` at 206 — their laws are live elsewhere:
   198's *measure a lever before you mandate it* + the **PER-ELLIPSE cost model**, 199's *the tell's next host is a
   CONSTANT* + *inert-regime noise floor* ⇒ SKILL.md + **PERF**; 200's *probes are blind to the HUD* ⇒ its bullet
@@ -146,14 +115,11 @@ ones (U2, 42, U5) stay in the bullet.
   their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it.**
   **The asserts-less-than-the-code-knows tell is SPENT for agriculture** (orchard 129 + vineyard 139/148 + FARM
   183 — each tile's tooltip now names the season its draw already knew, off ONE shared `*Phase()` the draw and
-  the string both read). **GARDEN is the last mute one and its draw does not read `year` at all.** **⚠ UPDATED BY
-  206: that cue was right about the CODE and wrong about the PRIORITY — the tile it wanted to deepen barely EXISTED
-  (6 hexes in the whole matrix; zero in one seed in three). 206 fixed the host (`GARDEN 6 → 17`, ~4/city, none
-  buried), so the seasonal Deepen is now UNBLOCKED and is a good Nature × Deepen lap:** the three raised beds could
-  run *staggered* calendars (beds at different stages is an allotment's whole visual identity — and it is a shape
-  no other ag tile uses: FARM staggers whole FIELDS against each other, this would stagger BEDS within one plot),
-  with the tooltip reading ONE shared `gardenPhase()` — run the tell FORWARDS (123), don't re-sync later. (Full
-  recap rotated to `GROWTH-archive.md` at 204.) (**127 took People × New element** aimed not at its spent
+  the string both read). **GARDEN is the last mute one** (host fixed by 206; shift measured at ROAD-level 1.8 by
+  207 — cue (p)), **and a good Nature × Deepen lap:** its three raised beds could run *staggered* calendars (beds
+  at different stages is an allotment's whole visual identity — a shape no other ag tile uses: FARM staggers whole
+  FIELDS against each other, this would stagger BEDS within one plot), with the tooltip reading ONE shared
+  `gardenPhase()` — run the tell FORWARDS (123), don't re-sync later. (**127 took People × New element** aimed not at its spent
   *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
   "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
   and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
@@ -175,7 +141,24 @@ ones (U2, 42, U5) stay in the bullet.
   when a RULE reads it, not when the draw shows it:** `rGreen`/`rShop`/`rServ` are still read by NOTHING but the
   walkable stat. **⚠ A tick-rule cannot read them directly (151): `recount()` never runs in the sim loop, so the
   reach maps are STALE inside `tick()`** — recompute locally, or pay a recount. (Detail archived at 200.)
-  **Iteration 207 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, 197, **202 — all done**). **202 was the 20th: a CLEAN BILL on the city, and the failure was in the INSTRUMENT** (see its recap above). 197 (the 19th) is where the PERF arc was first priced — 193+194+196 cost day +3.8/+4.4%, all of it 194's tree shadows, **priced and ACCEPTED** (198 measured every lever and closed them). **207 owes: price the ARC, not just the lap (`REF=<older step-back sha> perfab.mjs`), and shoot with `probes/shot-stepback.mjs`, NOT `shoot.mjs`+`?t=`/`?year=`.**
+  **Iteration 212 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, 197, 202, **207 — all done**).
+  **207 (the 21st) = a CLEAN BILL on the city, and the PERF ARC IS PRICED AND ACCEPTED — no fix lap is owed.**
+  Both seeds PASSed all 4 frames; no feature has compounded into clutter or darkness; both agents independently
+  located the golden-hour sun at **x=0.39, y=0.10** (the locate-check working). Perf: the **lap** (203-206) was
+  **free** (day +0.3%, night +1.0% vs 202) — no surprise, since 203 and 205 both reverted. The **ARC** vs
+  `7e2ac2c` (177, 30 iters) reads **day +7.2% / night +5.1%**, and vs `5f01426` (162, 45 iters) **day +9.5% /
+  night +6.0%** (absolute: day 38.3ms · night 44.2ms). **The number that matters is that 202 read those SAME two
+  refs at +7.5/+4.1 and +8.6/+5.7** — so five laps on, the arc has moved **~+0.9% day and is NOT accelerating.**
+  Still ~+0.2%/shipped-lap; **priced and ACCEPTED.**
+  **⚠ 207's PERF SUSPECT, named NOT mandated (198's law): THERE IS NO HOT ORNAMENT — the arc is DIFFUSE, which is
+  exactly why every per-lap gate reads it as free.** `probe-drawbudget` (night): `drawCell` = **95.2%** of 132,679
+  path objects, and the hot leaves are `winBandR` **32.6%** · `prismS` **28.0%** · `hexTile` **12.7%** · `bandS`
+  **7.3%** — i.e. **~48% of the night frame is STATIC TERRAIN RE-RASTERIZED EVERY FRAME**, while everything this
+  loop has added in 200 iterations sits beneath it (`tree` 4.1%, `shadS` 2.2%, `drawBuilding` 1.4%, `drawVehicle`
+  0.4%). The suspect is that the terrain layer is redrawn every frame though it changes only on `tick()`.
+  **Do NOT open a caching lap on that say-so — 198's levers are all CLOSED (cost is PER PATH OBJECT; batching,
+  shrinking and sprite-blitting each measured at nothing), so the only real lever is drawing FEWER objects.
+  MEASURE first.**
   **The GAP-CLOSING trick (111/112/113) is SPENT in four domains; the TELL that replaced it (a label asserting
   what the draw ignores) is CASHED 7x — 117 redwoods, 122 `CIVICLABEL`, 129 orchard, 140 plaza/quad, 148
   vineyard, 183 FARM, and 199 found its next host is a CONSTANT (see SKILL.md). Still MUTE: `[T.IND]` (no
@@ -374,6 +357,23 @@ ones (U2, 42, U5) stay in the bullet.
   shore): a terrain lap with real cost, not an entity-motion freebie. **Banked host, if one is ever wanted: the
   MOLE is real and reliable** — `moleSet` is 5-12 cells on all 6 seeds probed (the `path.length>=5` guard bites
   less often than its comment implies), and it is the artifact's only built structure standing in the water.
+  **(p) THE CALENDAR IS A ONE-CROP CALENDAR — the season is loud on the CROPS and mute on the ground the city
+  actually SHOWS you (iter 207, `probe-season.mjs`, measured).** Both step-back agents, on both seeds,
+  independently flagged *"winter is near-indistinguishable from midday — summer with two plowed fields"*; the probe
+  vindicated them. Rendered-pixel distance from winter at the dry peak (`ROAD` control = **0.6**):
+  **FARM 87.0** (n=130) · VINEYARD 35.2 (26) · MEADOW 25.7 (5) · FOREST 19.9 (230) · ORCHARD 17.7 (16) —
+  **versus SHOREPARK 17.9 (n=294) · PARK 8.4 (n=583!) · REDWOOD 8.0 (34) · QUAD 5.7 (25) · GARDEN 1.8 (17).**
+  So **~170 agricultural hexes carry the entire calendar, while the ~900 hexes of amenity green run ~10x quieter
+  than FARM over ~5x the ground** — PARK, the city's single largest green surface, shifts **8.4**, barely 14x the
+  ROAD control. Not compounded damage: **a surface that was never wired** — 127's law exactly (*"additive inventory
+  spent" is a claim about a domain's ENTITIES, not its SURFACES*). It also **confirms the GARDEN cue by
+  measurement** (1.8 = ROAD-level; the last season-mute vegetation tile, and 206 has just given it a real host).
+  **⚠ This is a JUDGEMENT, not a bug — 201's law applies.** A mown park genuinely does not brown like a wheat
+  field, so PARK=8.4 may be the model being *honest*, and an agent calling winter "wrong" may be objecting to
+  **the artifact's model of a Mediterranean coast** — where winter is the GREEN season and the DRY PEAK is the
+  golden one (which is why FARM's autumn 92.6 *exceeds* its dry-peak 87.0). **Decide what a Solvista winter IS
+  before writing a line.** The cheap, defensible version is not "make PARK brown" but **give the amenity green the
+  same seasonal AMPLITUDE the crops already have** (grass ambering at the dry peak, not snow).
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a
   multi-source hex BFS capped at radius `r`, walking over land only (`WETSET` blocks
   water/marsh/kelp), filling `out` with steps-to-nearest-source and 255 for "farther
@@ -391,38 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 199 entries before Iteration 197 live in
+> **Archive:** the 200 entries before Iteration 198 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 197 — the nineteenth step-back finds a clean city and a real perf cost (2026-07-12) [holistic step-back]
-
-**Vector** — the mandated ~5-iteration step-back (105/110/115/120/125/130/136/142/147/152/157/162/167/172/177/182/187/192/**197**). The nineteenth. Isolates iters **193** (ferry night lights), **194** (tree contact shadows) and **196** (kelp tide response) — 195 was reverted byte-identical — by interleaving HEAD against iter-192's file (`d8819ec`). Not a domain × kind lap: it reads the WHOLE city for cumulative drift the census and the per-feature gates are blind to. It also owed two flagged watch items an answer.
-
-**Housekeeping — a DESTRUCTIVE rollback was found sitting in the worktree, and discarded.** Startup found `solvista.html` dirty with a diff that *deleted* 193's ferry lights, 194's tree/palm shadows and 196's kelp tide and added nothing (4 insertions were just the old kelp lines returning). It was not a half-finished iteration but a **stale pristine-control backup copied back over the artifact** — almost certainly a killed perf/probe run that had `/bin/cp`'d HEAD aside and died before restoring. `git stash`ed rather than deleted (stash: *"iter197: stale pristine-backup rollback…"*). **Law for the next runner: a dirty tree whose diff only ever SUBTRACTS shipped features is a corrupted control file, not work to keep — the skill's "keep it if census passes" rule assumes the diff ADDS something, and census would have passed this one happily.**
-
-**Census** — PASS. Every core aggregate flat (pop/developed/roads unmoved; `solarRoofs` −2, `towerHt` +1 = chaotic-CA noise). Tile histogram empty. Correct and expected: all three isolated iterations are draw-only, so the census proves only that no page threw.
-
-**Perf — the finding. FIRST non-flat lap since 142, and it is REAL.** Interleaved A/B/A/B vs iter-192 (`d8819ec`), min per variant, run **twice independently**:
-
-| run | day | night |
-| --- | --- | --- |
-| A | 36.61 → 38.22ms (**+4.4%**) | 47.55 → 48.94ms (**+2.9%**) |
-| B | 40.72 → 42.28ms (**+3.8%**) | 42.83 → 44.11ms (**+3.0%**) |
-
-Two runs agree, and the number matches **194's own self-reported cost** (day +3.4% / night +3.5%) almost exactly — so **the entire lap's cost is 194's tree shadows; 193's ferry lights and 196's kelp tide are free** (both are tiny host counts: 18 ferries, 8–17 kelp beds). Within precedent and NOT an emergency (118 shipped +5.1% night; 142's +2.2% was accepted and never fixed), but this loop *only ever adds*, and this is a per-object `fill()` on the most numerous object on the plate. **The lever is already proven: 194 tried memoizing `shadS`'s `rgba()` string and measured ZERO, which means the cost is the FILL COUNT, not the string.** `shadS` (L2843) is `fillStyle=…; beginPath(); ellipse(); fill()` — one full rasterization per tree, ~4 per forest hex. **⇒ 198 is mandated as the fix: batch a hex's tree shadows into ONE path with ONE `fill()`.**
-
-**Watch item (a) — 194's tree shadows: perf cost CONFIRMED, visual fear was CONFABULATION (3rd time).** 194's own agent had warned the dense grove went "olive-muddy, near the tolerable limit" (the kelp failure mode) and 194's probe disproved it (FOREST mean luminance −0.36..−0.44 of 255). 197's two fresh, blind whole-city agents independently read the groves as **"grounded-and-clean… canopies stay green rather than olive-muddy"** (seed 42) and **"grounded, not muddy — the contact shadows sit tight under each trunk"** (seed 7). The shadows are visually right; only their cost is wrong.
-
-**Watch item (b) — 196's kelp-banding cue: CLOSED, and it CANNOT FIRE.** 196 banked "at HIGH water the kelp hexes are still the darkest pixels in the water — if the bed count ever grows, kelp is the first thing that would band." The census tile histogram settles it: **KELP is 17/10/8 beds on the three seeds and IDENTICAL across all three eras (1985/2005/2035)** — the beds are placed at `genWorld` and *nothing in `tick()` grows them*, so the precondition has no mechanism. Both agents also confirmed the coast directly: "no dark lining, no crusty seam where the kelp bed sits" / "clean sand→turquoise gradient with no dark lining or halo band." The historic dark-coast failure mode stays closed.
-
-**Seasons alive** — `probe-season`: FARM winter→dry-peak **88.4** (identical to 192's), VINEYARD 44.6→36.7, ORCHARD 25.3→41.4, FOREST 20.6→19.7, ROAD control 0.5–2.1. The calendar is working across every agriculture tile.
-
-**Visual** — whole-frame reads at 3 lights × 2 calendars (day golden `year=2035.62` / night / winter `year=2035.02`), 2 seeds (42, 7), one agent each, asked the *cumulative-drift* question and given a **locate** task. **Both VISUAL: PASS.** Night core located by light alone at **(0.47,0.45)+(0.47,0.62)** and **(0.53,0.57)** — matching the historical band (177: (.48,.50)/(.53,.60); 172: (.47,.55)/(.45,.62)), so 115/143's CBD lighting holds. No z-order tears, no floaters, no mojibake, no blowout. Winter reads as a real but mild variant on both seeds (seed 7's agent called it "the weakest signal in the set") — that is 120's known by-design evergreen/irrigated dilution, a composition fact, not a dead calendar.
-
-**Verdict — FIXED** (no city change; `solvista.html` byte-identical to HEAD). The step-back's *job* was done: it found something. **The thirteen-clean-bill streak ends at 197 — not on the city, which is balanced, readable and beautiful at ~197 iterations, but on the frame budget.** The one durable improvement shipped here is to the harness: **`probes/perfab.mjs` now takes `REF=<sha>`** so a step-back can grade a whole lap against the previous step-back's commit instead of only HEAD-vs-working-file — the exact measurement this step exists to make, which it previously could not express. **198 = the tree-shadow perf fix (Nature × Polish); the lap then resumes owing Urban (189).** Next step-back at **202**.
 
 ## Iteration 198 — the tree shadows cost what they cost (2026-07-12) [Nature × Polish, EXPLORED -> REVERTED]
 
@@ -1089,3 +1062,86 @@ draw still reads no `year` at all (the last season-mute vegetation tile), and it
 **Reusable:** `openFront(x,y)` + `TALLT` (next to `countAround`) — *is the hex in front of this one
 clear?* Any ground-level thing that must be SEEN should ask before siting itself; **204's buried
 service bays (cue n) are this same defect one domain over.**
+
+## Iteration 207 — the twenty-first step-back finds a clean city and a one-crop calendar (2026-07-12) [holistic step-back]
+
+**Vector.** The mandated 5th-lap holistic step-back (105→…→202, all done; this is the 21st).
+Nothing added. Gates: census · perf **lap AND arc** (202's law) · whole-city visual at 2 seeds ×
+3 lights × 2 calendars, shot with `probes/shot-stepback.mjs` (202's fixed camera, never `shoot.mjs`+`?year=`).
+
+**Census.** PASS, 0 page errors. City unchanged, as a step-back should be (tile histogram empty;
+`greenRoofs +1`, `towerHt +1` — chaotic-CA wobble).
+
+**Perf — the lap is free, the ARC is real and is NOT accelerating.**
+| vs | span | day | night |
+| --- | --- | --- | --- |
+| **202** `f65487c` | the lap (203–206) | **+0.3%** | **+1.0%** |
+| **177** `7e2ac2c` | 30 iters | **+7.2%** | **+5.1%** |
+| **162** `5f01426` | 45 iters | **+9.5%** | **+6.0%** |
+
+Absolute: day 38.3ms · night 44.2ms. The lap is free — unsurprising, since **two of its four
+iterations (203, 205) reverted** and the two that shipped (204's service routing, 206's garden
+preference) add near-zero draw. The arc is the honest number, and the comparison that matters is
+against **202's own reading of the same two refs**: it measured 177 at **+7.5/+4.1** and 162 at
+**+8.6/+5.7**. Today: **+7.2/+5.1** and **+9.5/+6.0**. Five laps later the arc has moved **~+0.9% day**
+— i.e. it is still creeping at roughly the documented +0.2%/shipped-lap, and **it has not accelerated.**
+Priced and ACCEPTED; no perf-fix lap is owed.
+
+**Perf — the SUSPECT, named not fixed (198's law).** `probe-drawbudget` (night, 3 seeds): `drawCell`
+is **95.2%** of 132,679 path objects. The hot leaves are **not** the loop's ornaments — `winBandR`
+**32.6%**, `prismS` **28.0%**, `hexTile` **12.7%**, `bandS` **7.3%**: i.e. **~48% of the night frame
+is static terrain re-rasterized every frame**, plus the window bands. Everything ~200 iterations of
+this loop has *added* is in the noise beneath it (`tree` 4.1%, `shadS` 2.2%, `drawBuilding` 1.4%,
+`drawVehicle` 0.4%). **There is no hot ornament to cut** — the arc is diffuse, spread thin across
+dozens of small draws, which is exactly why every per-lap gate reads it as free. **The suspect is
+that the terrain layer is re-rasterized every frame although it changes only on `tick()`.** That is a
+*structural* observation, not a mandate: 198's levers (batch the fills / shrink the radii / blit a
+sprite) are all CLOSED and measured, the cost is **per path object**, and the only real lever is
+drawing fewer objects. Do not open a caching lap on my say-so — **measure it first.**
+
+**Visual.** PASS on **both** seeds, all four frames. Both agents, asked to *locate*, independently put
+the golden-hour sun at **x=0.39, y=0.10** on two different seeds — the locate-don't-judge check
+working. No z-order tears, no floating tiles, no blown-out color; both read the whole frame as "a
+balanced, coherent, handsome coastal city." **No feature has compounded into clutter or darkness** —
+the coast is not dark (kelp is behaving), downtown is dense but parses, night is carried by the
+window/street-light layers with no black holes.
+
+**⚠ THE FIND — both agents flagged the SAME cumulative weakness, and the probe VINDICATED them with a
+number they could not have had: THE CALENDAR IS A ONE-CROP CALENDAR.** Seed 42: *"winter reads as
+summer with two plowed fields"*; seed 7: *"otherwise winter is near-indistinguishable from midday."*
+Per the standing law an agent finding is a **cue to measure**, so I ran `probe-season.mjs` (per-tile
+rendered-pixel distance from winter, `ROAD` as the zero control). The seasons are **alive** — but they
+are loud on the crops and **mute on the ground the city actually shows you**:
+
+| carries the season | n | dry-peak | | season-MUTE | n | dry-peak |
+| --- | --- | --- | --- | --- | --- | --- |
+| **FARM** | 130 | **87.0** | | **PARK** | **583** | **8.4** |
+| VINEYARD | 26 | 35.2 (41 aut) | | **SHOREPARK** | **294** | 17.9 |
+| ORCHARD | 16 | 17.7 (41 aut) | | REDWOOD | 34 | 8.0 |
+| MEADOW | 5 | 25.7 | | QUAD | 25 | 5.7 |
+| FOREST | 230 | 19.9 (31 aut) | | **GARDEN** | 17 | **1.8** |
+| | | | | *ROAD (control)* | 1200 | *0.6* |
+
+**~170 agricultural hexes carry the whole calendar; the ~900 hexes of amenity green are ~10x quieter
+than FARM while covering ~5x the ground.** PARK — the city's single largest green surface at **583
+hexes** — shifts **8.4**, one order of magnitude under FARM and only ~14x the ROAD control. This is
+**not damage that compounded**; it is a surface that was never wired, and it is the exact shape of
+127's law (*"additive inventory spent" is a claim about a domain's ENTITIES, not its SURFACES* —
+PARK's hexes were the untouched surface then, and they are the season-mute surface now).
+It also **confirms the header's banked GARDEN cue by measurement**: `GARDEN 1.8` is ROAD-level, the
+last season-mute vegetation tile, and 206 has just given it a real host (n=17, matching 206's
+`GARDEN 6 → 17` exactly).
+
+**⚠ But do NOT take this as a mandate — it is a JUDGEMENT, and 201's law applies.** A mown park
+genuinely does *not* brown like a wheat field, so "PARK reads 8.4" may be the model being **honest**
+rather than deaf, and an agent objecting that winter looks like summer may be objecting to *the
+artifact's model of a Mediterranean coast* (where winter is the GREEN season and the *dry peak* is
+the golden one — which is precisely why FARM's autumn 92.6 > dry-peak 87.0). Whoever takes this cue
+must decide **what a Solvista winter is** before writing a line — and the cheap, defensible version is
+not "make PARK brown" but **give the amenity green the same seasonal amplitude the crops already
+have** (grass ambering at the dry peak, not snow).
+
+**Verdict: HOLISTIC — clean bill on the city; perf arc priced and ACCEPTED; one measured cue banked.**
+Three gates green, no feature has compounded into clutter or darkness, and the loop is not owed a
+fix lap. Two things banked for the laps that follow: the **season-mute amenity green** (cue (p)) and
+the **terrain-re-rasterization** perf suspect.
