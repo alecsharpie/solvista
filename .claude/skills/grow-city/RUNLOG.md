@@ -153,4 +153,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 221  Nature × Polish            SHIPPED             20m21s   $7.49  8a1b46b
 ✔ Iter 222  —                          FIXED               30m18s   $5.44  7bfe1e2
 ✔ Iter 223  Water & coast × Polish     FIXED               14m45s   $3.92  b18075c
+✔ Iter 224  —                          SHIPPED             30m50s   $8.96  893f186
 ```
