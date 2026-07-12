@@ -1065,6 +1065,21 @@ vector, whatever it is.
   different constants, where each lap's gate reads only its own caller. Corollary: **a fix that corrects dimension A
   (hue) will usually perturb dimension B (luminance) — name B and bound it, or the ladder walks B off a cliff one
   defensible step at a time.**
+  **⇒ AND THE MECHANISM BY WHICH B DRIFTS HAS A NAME: A KNOB CHOSEN FOR ITS *RATIOS* WAS NEVER NORMALISED FOR ITS
+  *MAGNITUDE*. PREFER A STRUCTURAL INVARIANT TO A CHECKED ONE (iter 223).** 222 says *name dimension B and check it
+  every lap*, which is right and is still a discipline someone must remember. 223 found the ladder's actual defect
+  and it was **one unnormalised number**. `washRGB`'s comment promised a *"LUMINANCE-MATCHED, hue-preserving"* wash,
+  and `L` (the tint's own luminance) genuinely delivered that — then every caller multiplied `L` by a **gain triple**
+  chosen for its channel **ratios** (lean the restoration onto the channel carrying the surface's identity), whose
+  **magnitude nobody normalised**: sand `1.15/1.08/1.06` has a luma-weighted mean of **1.099**, green
+  `1.08/1.15/1.06` of **1.119**. So each rung silently gifted its surface **~10% night luminance** while fixing its
+  hue, and each rung's gate — *correctly, per 221* — only ever asked about hue. The fix is one line
+  (`n = 1/(gr*0.30 + gg*0.59 + gb*0.11)`), and it is strictly better than a checked invariant: a **uniform rescale
+  cannot rotate a colour**, so the hue is preserved *by construction* while luminance loses the freedom to drift.
+  ⇒ **When several callers tune a shared mechanism through a per-caller vector, ask what that vector is chosen FOR
+  (a direction) and what it therefore silently also moves (a magnitude) — then normalise the second at the source.**
+  The tell: a helper whose comment states an invariant, and a caller-supplied multiplier applied *after* the line
+  that establishes it. **A drift you make impossible beats a drift you agree to look for.**
 - **A FLAT PER-CHANNEL MULTIPLY IS NOT A TINT ON A SATURATED SURFACE — IT IS A HUE ROTATION (iter 214).**
   The night light is applied as `base[i] * TINT[i]`, and `TINT` is named for what it is *meant* to do —
   wash the scene cooler while leaving each surface recognisably itself. Its VALUE cannot do that. The

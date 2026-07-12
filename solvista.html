@@ -493,13 +493,35 @@ function col(name,f){ /* f: face brightness */
 }
 /* The hue-preserving night wash, shared by every surface that has one (one mechanism, one
    definition — the callers differ ONLY in their per-channel gain on the wash's luminance:
-   a WARM lean for masonry and sand, FLAT for anything that grows). Crosses over at the same
-   0.35 LITAMT cut the lit glass and civOpen() use, so DAYLIGHT RUNS BYTE-IDENTICAL CODE
-   (w=0 => t===TINT): a free dead-regime control, iter 199. */
+   a WARM lean for masonry and sand, a GREEN lean for anything that grows). Crosses over at
+   the same 0.35 LITAMT cut the lit glass and civOpen() use, so DAYLIGHT RUNS BYTE-IDENTICAL
+   CODE (w=0 => t===TINT): a free dead-regime control, iter 199.
+
+   THE GAIN TRIPLE IS LUMINANCE-NEUTRALISED, AND THAT IS THE WHOLE POINT OF `n` (iter 223).
+   L is the tint's own luminance, and it is what makes this wash luminance-MATCHED: a surface
+   washed with a flat L lands within ~1 unit of where the plain cool tint would have put it,
+   which is why the wash can correct a hue without brightening anything. The per-caller gain
+   triple then quietly broke that. A triple is chosen for its channel RATIOS — it leans the
+   restoration onto whichever channel carries the surface's identity — but nobody normalised
+   its MAGNITUDE, and both shipped triples average well above 1 (sand 1.15/1.08/1.06 -> a
+   luma-weighted mean of 1.099; green 1.08/1.15/1.06 -> 1.119). So EVERY rung of the ladder
+   (214 sand, 220 masonry, 221 greens) added ~10% night luminance to its own surface as a
+   side-effect of fixing its hue, and each rung's gate — correctly, per its own law — only
+   ever asked about ITS surface's hue. Three laps later the night brightness ORDERING had
+   inverted: it was TOWER 108 > COM 107 > MID 99 > BEACH 96 (the three LIT building types on
+   top, as they must be) and it became TOWER 109 > COM 108 > BEACH 105 > MID 101 — the UNLIT
+   sand had climbed into the lit city's band, and PARK (88) out-glowed the ROAD (81). Two
+   step-back agents, on two seeds, unprompted: "the shoreline glows like it's lit at noon".
+   Dividing the triple by its own luma-weighted mean scales all three channels UNIFORMLY, so
+   the hue every rung fixed is preserved EXACTLY (a uniform scale cannot rotate a colour) and
+   only the stolen luminance is handed back. THE INVARIANT THIS RESTORES SPANS THE SET, so no
+   single caller's gate can see it: NO UNLIT SURFACE MAY OUT-BRIGHTEN THE LIT ONES. Check it
+   with probes/probe-goldenhue.mjs, which now asserts it, whenever you touch a triple. */
 function washRGB(b,f,gr,gg,gb){
   const w=clamp((LITAMT-0.35)/0.35,0,1);
   const L=TINT[0]*0.30+TINT[1]*0.59+TINT[2]*0.11;   /* the wash's own luminance */
-  const t=[lerp(TINT[0],L*gr,w),lerp(TINT[1],L*gg,w),lerp(TINT[2],L*gb,w)];
+  const n=1/(gr*0.30+gg*0.59+gb*0.11);              /* ...and the triple, luminance-neutralised */
+  const t=[lerp(TINT[0],L*gr*n,w),lerp(TINT[1],L*gg*n,w),lerp(TINT[2],L*gb*n,w)];
   return 'rgb('+Math.min(255,b[0]*t[0]*f|0)+','+Math.min(255,b[1]*t[1]*f|0)+','+Math.min(255,b[2]*t[2]*f|0)+')';
 }
 /* A WARM SURFACE, AFTER DARK. (Named for the sand, which was the first host found -

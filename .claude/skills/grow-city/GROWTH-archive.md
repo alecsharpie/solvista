@@ -14097,3 +14097,124 @@ in a whole-frame read is where the cumulative drift actually shows up. Read the 
 
 **Verdict: HOLISTIC STEP-BACK — CLEAN BILL, no fix lap owed, two cues banked (q, r).**
 
+
+<!-- header bullet rotated out of GROWTH.md at iteration 223 (cue (ae), CLOSED by 223) -->
+
+  **(ae) 🔴 THE NIGHT GROUND OUT-GLOWS THE LIT CITY — the wash ladder's UNMEASURED SIDE-EFFECT (222; THE NEXT LAP,
+  Water & coast x Polish).** Two agents, two seeds, independent, unprompted: *"the shoreline glows like it's lit at
+  noon"* · *"the sand reads LIT rather than moonlit — the least night-graded surface in the frame"* · *"unlit
+  vegetation should be the darkest thing on land, but it out-brightens the roads."* **MEASURED + CAUSAL**
+  (`probe-goldenhue`, HEAD vs pre-ladder `78f53c2` via its `SRC` hook): every surface the ladder touched gained
+  **+6..+9 night luminance** (BEACH 96->105, FOREST 58->66, PARK 81->88, RES 79->85); every surface it did NOT touch
+  moved **<=+2** (ROAD/TOWER/COM/MID/FARM/WATER). The night ORDERING has inverted — was TOWER 108 > COM 107 > MID 99 >
+  **BEACH 96** (the three LIT types on top, correct), is now TOWER 109 > COM 108 > **BEACH 105** > MID 101: **the
+  unlit sand has crossed INTO the lit city's band**, and PARK (88) out-brightens ROAD (81). ⚠ **SUPERSEDES 221's
+  "greens are hot" watch item — same root cause, ONE fix.** ⚠ **The hue fixes were RIGHT: DO NOT REVERT THEM** (BEACH
+  316->33, PARK 200->101). The lever is the **luminance** the gain triple adds, not the hue it corrects. **Gate in the
+  viewer's units: no UNLIT surface may out-brighten the LIT ones** — and hold each surface's daylight-hue distance
+  where 214/220/221 put it. ⇒ **The general law (a per-surface gate is blind to a cross-surface ORDERING) is in SKILL.md.**
+
+  > CLOSED by iteration 223. The root cause was that the ladder's per-caller gain triples were chosen for their
+  > channel RATIOS and never normalised for their MAGNITUDE (sand luma-mean 1.099, green 1.119), so each rung gifted
+  > its own surface ~10% night luminance as a side-effect of correcting its hue. One line in `washRGB` normalises the
+  > triple; a uniform rescale cannot rotate a colour, so every hue held exactly. Ordering restored to
+  > TOWER 108 > COM 107 > MID 97 > BEACH 96. The invariant is now ASSERTED by `probes/probe-goldenhue.mjs`.
+
+## Iteration 213 — the institutions keep their own hours (2026-07-12) [Civic & culture × Deepen]
+
+**Vector.** Civic & culture × **Deepen** — Civic was the stalest domain (last touched at 204). 199 gave the
+WINDOWS an hour and 210 gave the RESIDENTS one; the twelve **institutions** never got one.
+
+**The seam — 199's tell, one rung up.** Every civic night-draw was gated on `LITAMT` and nothing else, and the
+light curve **pins `LITAMT` high from dusk to dawn** (it is *0.41 at dusk and 0.64 at 4am* — so the civic
+floodlights were literally **brighter** in the small hours than at sunset). The consequences were exact:
+
+- the **amphitheater's spotlit performer swayed on the stage all night**, footlights up, to a bowl the audience
+  gate right above it (`LITAMT<0.75`) had already emptied — a singer playing to nobody until dawn;
+- the museum's floodlit facade, the library's reading lamps and the hall's lit chambers burned till morning;
+- while the **hospital** — whose own `CIVICDESC` says its bay *"never closes"* — was no more lit at 3am than the
+  school. The gate knew it was dark. **Nothing knew what the building WAS.**
+
+**Change.** `CIVHRS[kind]` — the share of an institution's lights still burning in the small hours — read off the
+**same `nightDeep()` clock the windows already use** (`civOpen(k) = 1 + (CIVHRS[k]-1)·nightDeep()`; 1 at dusk).
+Five hold at **1** because their own draw or label already claims they run all night: the ward slab, the precinct
+beacon, the engine doors, the reef tank that *"never sleeps"*, and the observatory, whose night is just beginning.
+Seven close: `parliament .40 · hall .35 · museum .30 · university .30 · library .15 · school .08 ·
+amphitheater 0`. In the draw, `clit=lit·so` dims the institution's lit **glass** back toward the unlit shade and
+`cla=LITAMT·so` dims its exterior **floodlighting**. Three lights are deliberately held **off** the curve, and
+they are the poetry: the school's **janitor window**, the hall's **clock face**, the parliament's **lantern** —
+the floodlights go out *under* it and the capitol's light is the last one over the sleeping city.
+The show **ends**: the beam, wash, singer and footlights fade out together on one `globalAlpha` (the singer is a
+solid fill and would otherwise pop), **and the house empties with it** — see Finding 3.
+Tooltip: one new `Hours` row off **the same `civOpen()`** the draw dims by (123: run the tell FORWARDS — one
+function, two readers — rather than re-syncing a string to a rule later). Verified against recomputed truth:
+hospital/police/observatory read *"Open all night"* at every hour; museum goes `Open late → Closing up`; library,
+school and amphitheater `→ Dark till morning`.
+
+**Census.** PASS, +0 on every metric, tile histogram empty — correct and predicted for a draw-only change.
+(`greenRoofs` moved +1 then +2 on the *identical* file: run-to-run harness noise, 163(c). Not the change.)
+
+**Probe.** `probes/probe-civhours.mjs` — patch vs pristine HEAD, one frozen world, three pins of the day clock.
+The design gives the gate its controls **for free**: at **dusk** `nightDeep()=0` so `civOpen()=1` and the patch is
+**byte-identical to HEAD by construction**, and by **day** the change is inert — so both must sit at the noise
+floor, and only the small hours may move. The five that never close are an **in-frame negative control**.
+
+| whole-frame changed px | patch-vs-HEAD | HEAD-vs-HEAD (floor, same run) |
+| --- | --- | --- |
+| day | 45 / 19 / 34 | 49 / 32 / 30 |
+| dusk | 24 / 7 / 11 | 31 / 20 / 19 |
+| **night** | **571 / 562 / 658** | 20 / 12 / 14 |
+
+Per institution at 4am (patch-vs-HEAD px, mask swept 1.0/0.6/0.4): **hospital 0·0·0 · police 0·0·0 · firehouse
+0·0·0 · observatory 0·0·0** — the never-close five are *exactly* unmoved. Closers: **parliament 279·279·264 ·
+hall 292·136·55 · museum 137·137·137 · library 254·95·58**, plus weakly university 13 · school 16 ·
+amphitheater 30·24·24 (they had little discretionary night light to lose — the school block is already *"dark
+after the last bell"*). The **aquarium read 28 px and walked to an honest 0** as the mask tightened: a neighbour
+bleeding into the box (196), not the aquarium, whose code path is byte-identical.
+
+**Perf.** Free. Night-only, so the day column is a **free noise floor** (199): three interleaved rounds read
+day **+2.1 / −4.3 / −1.4 %** on byte-identical code and night **+3.6 / +0.4 / −0.7 %** — night sits *centred
+inside its own control's spread*. It should: at 4am the patch draws strictly **fewer** path objects than HEAD.
+
+**Visual.** PASS, blind, both seeds. Frames renamed frameA/frameB with the order flipped per seed; agents were
+asked to **locate the hour**, not to judge the feature (108). Both put 4am on the right frame, from the pixels
+(*"the civic dome, floodlit cream at dusk, is grey at 4am"*), and both independently listed the **hospital, the
+towers and the pier lamps as still lit** while the low-rise mats went dark. A second blind pair on the
+amphitheater alone: 4am = *"a bare dark teal slab, no spotlight, no performer,"* tiers empty; dusk = the lit
+stage, the standing figure, the audience. No z-order tears, no blown-out colour, no decal glows.
+
+**Findings.**
+
+1. **Stubbing `Math.random` before `genWorld` is NOT early enough — stub it before the PAGE'S OWN SCRIPT**
+   (⇒ SKILL.md). This probe obeyed every existing freeze law (203's stub, 163's `genWorld`+`__warp` and `STARS`,
+   199's `flock`, 195's `time`/`waveT`, plus every mover array emptied) and its **day control — byte-identical
+   code in both builds — still read 8k–18k changed px.** A `page.evaluate` runs *after* the document's top-level
+   script, so all load-time `Math.random` state is already baked in and differs per load. `page.addInitScript`
+   takes the floor to **12–49 px**. `STARS` and `flock` were never a list to complete; they were **symptoms of
+   stubbing too late**.
+2. **Measure the floor IN THE SAME RUN** (⇒ SKILL.md). I first pinned `FLOOR = 40` from one run — and the next
+   run's floor came back 32–49 and the gate FAILed a passing change. The floor drifts with machine load exactly
+   as frame time does. Loading **HEAD twice** and printing `HEAD-vs-HEAD` as a column *beside* `patch-vs-HEAD`
+   makes the probe grade itself: *"night 562–658 against a floor of 12–20"* is checkable; *"night 562"* is not.
+3. **The step-back's asides law (212) paid out immediately — and the payer was an agent I had just FAILED.**
+   Seed 42's agent PASSed, then noted in passing: *"the audience dots are identical in both frames — an empty 4am
+   bowl still shows a full house."* It was right, and it was **my** bug: ending the show left the crowd sitting in
+   the dark watching an unlit stage. The house now empties **with** the show (`aud = LITAMT<0.3 ? 1 : so` — the
+   bowl is open to anyone by day, but after dark the crowd is only there while the concert is). A fresh blind pair
+   then read the transition as coherent in both cities. **Mine the asides.**
+4. **A FAIL that measurement refutes, again — and this one refuted itself.** Seed 7's agent FAILed on *"no
+   recognizable amphitheater in either frame"*. It was **right about the pixels and wrong about the cause**: the
+   amphitheater at hex(24,2) has **MID(h35) MID(h34) MID(h30)** standing in the two rows in front of it, and draw
+   order is depth order — so it is **buried** (206's occlusion law), on a seed where seed 42's front rows are all
+   `ROAD(h0)`, which is exactly why *its* agent read the bowl perfectly. **This is pre-existing artifact siting,
+   not the change** — HEAD buries the same bowl behind the same buildings. Banked as cue **(t)**. Its second FAIL
+   (*"the 4am city is a uniform blackout with zero lit landmarks"*) is 212's already-banked cue **(q)**: my entire
+   whole-frame night delta is **658 px of 1.26M — 0.05%**, so it cannot have darkened anything.
+5. **`nightDeep()` is pinned at 1 all day.** It only means anything after dark (it is `dayT` measured from dusk,
+   clamped), so `civOpen()` is *0.30 at noon* — harmless in the draw, where `lit` and `LITAMT` are 0 anyway, but a
+   trap for any **non-draw** reader. Both new readers guard it: the tooltip returns `'Open'` whenever
+   `LITAMT<0.35`, and the amphitheater's audience takes the daylight branch. **A curve keyed to "how far the night
+   has run" is undefined by day — guard every reader, not just the one you are writing.**
+
+**Verdict: DEEPENED.**
+

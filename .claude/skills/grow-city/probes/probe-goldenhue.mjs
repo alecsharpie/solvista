@@ -135,3 +135,48 @@ for (const [a, bb] of PAIRS) {
 }
 console.log('\nREAD: a tile type keeps its identity only if it stays SEPARATED from its neighbours.');
 console.log('      214: a flat per-channel multiply on a saturated surface is a HUE ROTATION, not a tint.');
+console.log('      221: separation is a GUARD, never the SCORE -- it can reward the very bug you are fixing.');
+
+/* THE INVARIANT THAT SPANS THE SET (iter 222's law, asserted here at 223).
+   The col()/sandCol() night-wash ladder applies ONE shared mechanism (washRGB) to a series of
+   surfaces, one lap per surface, and each lap is gated -- correctly, per 221 -- on ITS OWN
+   surface's distance from ITS OWN daylight hue. No per-surface gate can therefore SEE a
+   cross-surface ORDERING, and for three laps running none did: each rung handed its surface
+   ~10% night luminance as a side-effect of correcting its hue, until the unlit sand had climbed
+   past the lit mid-rises and two agents called the shoreline "lit at noon". State the invariant
+   in the viewer's units and check it every lap: AFTER DARK, THE CITY'S LIT SURFACES ARE THE
+   BRIGHT ONES. Anything the sun has stopped falling on must sit below them. */
+const LIT   = ['TOWER', 'COM', 'MID'];        /* lit windows after dark */
+const UNLIT = ['BEACH', 'PARK', 'FOREST', 'FARM', 'ROAD', 'WATER'];   /* ground; nothing lights these */
+const lumOf = k => rgb2hc(M[k]['night']).l;
+
+console.log('\nNIGHT ORDERING INVARIANT: no UNLIT surface may out-brighten the LIT ones');
+console.log('(the cross-surface gate no single rung of the wash ladder can see -- 222)\n');
+const litMin   = Math.min(...LIT.map(lumOf));
+const litLo    = LIT.find(k => lumOf(k) === litMin);
+const ranked   = [...LIT, ...UNLIT].sort((a, bb) => lumOf(bb) - lumOf(a));
+console.log('  night luminance, brightest first:');
+console.log('    ' + ranked.map(k => `${LIT.includes(k) ? '*' : ' '}${k} ${Math.round(lumOf(k))}`).join('  '));
+console.log('    (* = lit)');
+const breaches = UNLIT.filter(k => lumOf(k) >= litMin);
+console.log(`\n  dimmest LIT surface: ${litLo} ${Math.round(litMin)}`);
+if (breaches.length) {
+  for (const k of breaches)
+    console.log(`  BREACH: ${k} ${Math.round(lumOf(k))} >= ${litLo} ${Math.round(litMin)}  -- an unlit surface out-glows the lit city`);
+  console.log('\nVERDICT: FAIL -- the night ground out-glows the lit city');
+} else {
+  const head = Math.min(...UNLIT.map(k => litMin - lumOf(k)));
+  console.log(`  brightest UNLIT surface clears it by ${head.toFixed(0)} -- ordering holds`);
+  console.log('\nVERDICT: PASS -- the lit city is the bright thing after dark');
+}
+
+/* ...and the GUARD the invariant must not be bought at the expense of: each washed surface's
+   night hue must stay near its own DAYLIGHT hue (214/220/221's gate, in each rung's own units).
+   A uniform rescale of a gain triple cannot rotate a colour, so these must not move. */
+console.log('\nGUARD -- each washed surface\'s night hue vs its OWN daylight hue (214/220/221 must not regress)');
+for (const k of ['BEACH', 'RES', 'PARK', 'FOREST']) {
+  const dh = Math.abs(rgb2hc(M[k]['night']).h - rgb2hc(M[k]['day']).h);
+  const off = Math.min(dh, 360 - dh);
+  console.log(`  ${k.padEnd(7)} day ${String(Math.round(rgb2hc(M[k]['day']).h)).padStart(3)}deg -> night ${String(Math.round(rgb2hc(M[k]['night']).h)).padStart(3)}deg   ${off.toFixed(0).padStart(3)}deg off its daylight self${off > 60 ? '   <-- ROTATED' : ''}`);
+}
+process.exit(breaches.length ? 1 : 0);
