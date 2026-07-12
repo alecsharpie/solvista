@@ -13215,3 +13215,71 @@ skies correct, nothing compounded.
   **⇒ THE LESSON: the agents were WRONG on both things they were confident enough to FAIL on, and RIGHT on both
   things they said in PASSING (cues q, r). In a whole-frame read, the ASIDES are the signal** — and 213 cashed
   that immediately: a PASSing agent's aside caught a real bug (the audience left sitting in a dark bowl).
+
+## Iteration 205 — the ship that was right all along (Water × Connect)
+
+**Vector.** Water & coast × **Connect** — the coldest cell on the whole board (last used at
+iteration 22, ~180 laps ago). Connect's trick is that it adds **no new object**: it closes a gap
+between two that already exist. The ship, the mole and the harbor works all exist.
+
+**The seam (and it looked textbook).** `genWorld` spawns `freighters[0]` *"at anchor in the
+roadstead off the warehouse row, **waiting on a berth**"*, throws a rubble **mole** out across the
+roadstead so *"the ship at anchor rides in still water"*, and gives her an `ENTINFO` line saying she
+is *"**Serving** the harbor works"*. And then `advanceEntities` says **`if(f.anchored)continue`**.
+She has been a **static prop since 1974** — a comment, a breakwater and a tooltip all describing a
+job she has never once done. That is the label-asserts-what-the-draw-ignores tell, in 204's exact
+shape (the service fleet that never went home), sitting in the coldest cell on the board.
+
+**Change (built, then reverted).** `stepShip()`: lie at anchor → be called **alongside** the quay at
+`harborY` → work her boxes off and stow them again (`f.boxes` 6→0→6, the cranes visible in her
+silhouette) → stand back out. A wake and a heading while under way; `ENTINFO.sub` a **function** of
+her duty (105's law). Zero new draws from *either* random stream — the dwells were respent from her
+own `ph` (123's trick) — so the seeded CA could not move and the rest of the shipping stayed
+byte-identical.
+
+**Census.** PASS, and **vacuous by construction**: +0 on every metric, tile histogram empty,
+`freighters 18` flat. Exactly as predicted for entity motion. (The ±1 wobble on `greenRoofs`/`towerHt`
+was checked against **pristine HEAD** and reproduces there — it is the harness's own run-to-run noise,
+not the edit.)
+
+**Probe.** `probe-shipberth` PASSED, and **passing was the mistake.** HEAD's ship: motion spread
+**0.00 on all 3 seeds** — the static prop, confirmed. PATCH: **4 calls**, ~**55%** of her life
+alongside, `minDist 2.9 → 1.60` cells, cargo cycling the full 0..6, and the 5 flooded deep-lane
+control ships **bit-identical between builds**. Every number true. Every number irrelevant.
+
+**Visual — the gate that caught it.** Two agents, two seeds, both **FAIL**, both naming the same
+thing: *"she is still sitting in open water; there is no quay next to her."* Per the loop's law a FAIL
+is a cue to **measure**, so I measured — and they were right. My probe's `ALONGSIDE < 2.2 cells`
+threshold was **a number I picked because my own berth constant satisfied it**. The quantity the
+*claim* was about is the water the eye sees under her bow, and at `seaXFr(harborY,0)` — the most
+inshore position the artifact's open-water projection can even express — that is **54.6px, ~1.7
+hexes**, on every seed.
+
+**Why it cannot ship (`probe-harborhost`, 6 seeds, unanimous).** `SHOREX = CTRX+11` is *"the coast
+highway column"*. `SHORE0 = SHOREX+5` is the water's edge, *"five lots seaward of the highway"*. The
+harbor works are sited at `SHOREX-1-(rng()*3)` — **behind the highway**. So the warehouses stand
+**5–9 hexes from the sea**, and the waterline at `harborY` is **BEACH / BEACH / DUNE** on every seed:
+the same recreational sand 201 put the parasols and sunbathers on. **There is no quay, no wharf, no
+industrial waterfront anywhere in the artifact.** Bringing her alongside beaches a container ship
+between the sunbathers and a dune.
+
+⇒ **The ship was never a broken promise.** A **roadstead** is an open anchorage where ships lie at
+anchor *precisely because there is nowhere to come alongside*; ships there are worked by lighters or
+they wait. *"Waiting on a berth"* is her **situation**, not an unkept one. Solvista is a roadstead,
+not a harbour, and I read a real-world intuition ("ships dock") into a model that cannot express
+docking — **201's law**, which the header had been carrying for four iterations, aimed straight at me.
+
+**Kept.** `probes/probe-harborhost.mjs` — the host-existence probe (the `probe-market` / `probe-firehost`
+shape), so no future lap re-derives this. It runs against plain HEAD and reports the waterline terrain,
+the warehouse-to-sea distance, the bow gap, and the 0.00 motion spread, on 6 seeds. New banked cue **(o)**;
+`solvista.html` restored **byte-identical** to HEAD.
+**Not kept:** `probe-shipberth` (the one quoted above). It diffs the patch against HEAD, and the patch is
+gone — it would sit in `probes/` producing a meaningless HEAD-vs-HEAD table forever. A gate for a reverted
+change is not a gate. What was worth keeping from it is the *lesson*, and that is now a law in `SKILL.md`.
+
+**Verdict: EXPLORED → REVERTED.** The third member of the dead-host family (`T.MARKET` fully drawn and
+never sited; the fire CA fully drawn and never ignited; and now the port, fully described and never
+built). The *finding* is worth more than the feature would have been: it removes an entire family of
+tempting Water vectors from the board and names the one thing that would unlock them — **build the
+quay first.**
+

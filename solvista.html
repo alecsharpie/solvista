@@ -3613,6 +3613,59 @@ function hallClockCtr(gx,gy,hb){
   return[cx+X2*0.55, cy+V2-(V2-E2)*0.55-(hb-7)];
 }
 
+/* THE SAND<->PARK SEAM (iter 215). Where the beach meets the coastal park the two
+   palettes met on a bare hex boundary — warm tan hard against cool green, no
+   transition — so the staircase of the grid was traceable straight down the coast
+   (named independently by both step-back agents on both seeds, iter 214). A real
+   back beach has no line: marram creeps up out of the sand into the grass, and the
+   wind throws sand the other way. So each side lends the other its texture near the
+   shared edge, and the boundary becomes a mottle instead of a cut.
+   TUFTS AND SPECKS, NEVER A STROKE ALONG THE EDGE: a per-edge line joins with its
+   neighbours into an outline and re-exposes the very geometry it is meant to hide
+   (iter 159). Every mark is scattered along AND back from the edge, and a fifth of
+   the edges are skipped outright, so nothing can chain into a fringe.
+   Each hex draws only INSIDE ITSELF: draw order is depth order, so an ornament
+   offset into the hex in front is painted over by it (iter 211). The transition is
+   made by two hexes interdigitating, not by one spilling across.
+   hashCell-gated — no rng(), no terrain: pop stays flat. */
+const SEAMGREEN=new Set([T.SHOREPARK,T.PARK,T.MEADOW]);
+function seamVeg(x,y,gx,gy,sandSide){
+  const[cx,cy]=px(gx,gy);
+  const dirs=nbrDirs(y);
+  if(sandSide){ctx.lineCap='round';ctx.lineWidth=0.9;}
+  for(let d=0;d<dirs.length;d++){
+    const nx=x+dirs[d][0], ny=y+dirs[d][1], n=cellAt(nx,ny);
+    if(!n)continue;
+    if(sandSide?!SEAMGREEN.has(n.t):(n.t!==T.BEACH&&n.t!==T.DUNE))continue;
+    if(hashCell(x*7+d,y*5+3,seedNum^0x5EA1)<0.20)continue; /* a solid fringe would BE the line */
+    const[ex,ey]=px(nx+0.5,ny+0.5);
+    const ux=ex-cx, uy=ey-cy;              /* toward the neighbour; f=0.5 lands ON the shared edge */
+    const nt=2+((hashCell(y*3+d,x*3+1,seedNum^0x5EA2)*3)|0);
+    for(let j=0;j<nt;j++){
+      const a=hashCell(x+d*13,y+j*7,seedNum^0x5EA3), b=hashCell(y+j*11,x+d*5,seedNum^0x5EA4);
+      const f=0.20+a*0.24,                 /* back from the edge, so they don't queue up on it */
+            s=(b-0.5)*0.36;                /* and scattered ALONG it */
+      const tx=cx+ux*f-uy*s, ty=cy+uy*f+ux*s;
+      if(sandSide){                        /* marram, rooting out of the back beach */
+        const lean=(hashCell(x+j,d+y,seedNum^0x5EA5)-0.5)*1.8, ln=1.8+a*2.2;
+        const gc=col(j%3?'sage':'grassDk',0.92+b*0.14);
+        /* a ROOT CLUMP under the blades. A blade alone is a hairline: thinner than a
+           device pixel, it is always blended with the sand behind it and can never put a
+           green pixel down (iter 203) — it hazes the sand instead of tufting it. The clump
+           is what actually reads at fit zoom, and it is what a marram tussock looks like. */
+        ctx.fillStyle=gc;
+        ctx.beginPath();ctx.ellipse(tx,ty,1.0+a*0.7,0.5+b*0.35,0,0,6.283);ctx.fill();
+        ctx.strokeStyle=gc;
+        ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx+lean,ty-ln);ctx.stroke();
+      }else{                               /* and the sand the wind threw into the lawn */
+        ctx.fillStyle=sandCol(b<0.45?'sand':'sandDk',1.02);
+        ctx.beginPath();ctx.ellipse(tx,ty,1.4+a*1.5,0.6+a*0.6,0,0,6.283);ctx.fill();
+      }
+    }
+  }
+  if(sandSide)ctx.lineCap='butt';
+}
+
 function drawCell(x,y){
   const c=cells[idx(x,y)];
   if(c.t===T.VOID)return;   /* off the plate — nothing to draw here */
@@ -3877,6 +3930,7 @@ function drawCell(x,y){
         }
         ctx.lineCap='butt';
       }
+      seamVeg(x,y,gx,gy,true);
       break;}
     case T.BEACH:{
       hexTile(gx,gy,1.02,sandCol('sand',1));
@@ -4015,6 +4069,7 @@ function drawCell(x,y){
         prism(gx,gy,0.14,0.13,9,10.5,col('white',1),col('white',0.6),col('white',0.85));
       }
       if(pierAt(x,y))drawPierAt(x,y);
+      seamVeg(x,y,gx,gy,true);
       break;}
     case T.FOREST:{
       /* canopy closure: a hex ringed by woods closes its canopy — taller, denser,
@@ -4445,6 +4500,7 @@ function drawCell(x,y){
         ctx.fillStyle=col('gold',1.15);ctx.fillRect(cx-3,cy+1.5,1.3,1.3);
         ctx.fillStyle=col('coral',1.1);ctx.fillRect(cx+1,cy+3,1.3,1.3);
       }}
+      seamVeg(x,y,gx,gy,false);
       break;}
     case T.LIGHTHOUSE:{
       hexTile(gx,gy,1.02,col('sandDk',0.95)); /* rocky headland */

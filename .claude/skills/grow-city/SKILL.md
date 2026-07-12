@@ -793,6 +793,17 @@ vector, whatever it is.
   the summed max-channel distance from the same frame rendered *without* the element — which is threshold-free and
   correct at any width. (Corollary for the *loud* trick generally: it works on ellipses and fills, which cover whole
   pixels; it does not work on hairlines.)
+  **⇒ AND THE SAME FACT IS A DESIGN LAW, NOT ONLY A MEASUREMENT ONE: A HAIRLINE ORNAMENT NEEDS A BODY (iter 215).**
+  203 says a sub-pixel line defeats your *probe*. It also defeats the *viewer*, and for the identical reason — a
+  0.6px blade is permanently blended with whatever is behind it, so it **tints its background instead of marking
+  it.** 215's marram tufts changed ~800 px of seam sand and moved the "green ink on sand" count by **zero**
+  (31.2 → 30.7 per 1k): they were *hazing* the beach, not tufting it, and the feature's whole point was to be seen.
+  Adding a **root clump** — one solid 1–2px ellipse under the blades — took it to **+36..+62%** and both agents then
+  read it as a dune fringe. So: **any ornament made of hairlines (blades, reeds, masts, rigging, aerials) needs a
+  fill anchoring it, or it will read as a smudge of tint and no amount of extra strokes will fix it.** This is why
+  the `polish-tile` BACKLOG's two standing legibility cues — the sub-pixel elevated transit **(a)** and the marsh
+  reeds' *"seven sub-pixel strokes round the pool"* **(d)** — are both *stroke-only* draws. **The lever on both is a
+  body, not more strokes or more contrast.**
 - **A CHAIN is not a STROKE: filter a draw census by the feature's PERCEIVED extent, not its per-call extent
   (iter 203).** Hunting the "thin dark line", 203 censused every stroke that was long, thin and dark — and **missed
   the answer**, because each rope span is only **12–14 px** and sat under the "long" threshold, while **15–25 spans
@@ -1186,6 +1197,11 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   (patch-vs-HEAD whole-frame isolation with the floor measured in-run), `shot-nightsand.mjs` (the coast
   camera: whole-city + a close-up AIMED at the longest run of sea-facing beach, plus a day control;
   freezes in-page and forces `syncSky`/`syncStats` per 204).
+  `probe-seamhost.mjs` (**does the sand<->green seam exist, and where?** — 6-seed adjacency census;
+  the dead-code check run *before* 215 designed anything), `probe-seam.mjs` (**cross-boundary colour
+  MIXING** — green ink landing on seam sand / tan ink on seam lawn, with off-seam sand and lawn as the
+  controls that must not move; floor measured in-run), `shot-seam.mjs` (the seam camera: whole-city +
+  a 4.2x close-up **aimed** at the longest run of seam, day and night, patch and HEAD).
   Five of them are **harness-wide**, not per-feature — reach for these on any lap:
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before

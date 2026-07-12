@@ -21,7 +21,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~ | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
@@ -36,12 +36,14 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringable for free — and since 133 a hovered TILE is ringed too. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (which line /
   route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
-- **ROTATION.** Last vector per domain: Nature **206** · Sky **208** · Urban **209** · People **210** ·
-  Transport **211** · Civic **213** · Water **214**.
-  **THE LAP NOW OWES NATURE (stalest, 206), then Sky (208), then Urban (209).** ⚠ Urban's lap is
+- **ROTATION.** Last vector per domain: Sky **208** · Urban **209** · People **210** ·
+  Transport **211** · Civic **213** · Water **214** · Nature **215**.
+  **THE LAP NOW OWES SKY (stalest, 208), then URBAN (209).** ⚠ Urban's lap is
   already named by a banked, twice-independently-reported cue — **(r) facades as wallpaper** (Urban ×
-  Polish) — and a banked measured finding outranks kind-rotation (119). Nature's is cued too: **GARDEN
-  is the last mute ag tile** (staggered per-bed calendars + one shared `gardenPhase()`; see below).
+  Polish) — and a banked measured finding outranks kind-rotation (119). **Sky is post-saturation
+  (Deepen/Fix ONLY)**, and its only live cue **(s) is CONSTRAINED and low-value** (read it before
+  taking it) ⇒ **Urban × Polish / cue (r) is the strongest lap on the board.** (Nature's own next cue,
+  GARDEN's staggered beds, is held by cue (p).)
   **213 (Civic × Deepen, DEEPENED) — full recap in its own entry, still in the window.** The twelve
   institutions now keep hours off `CIVHRS[kind]` + `civOpen()`, on the same `nightDeep()` clock the
   windows read. Two things still steer: **(1) ⚠ `nightDeep()` IS PINNED AT 1 ALL DAY** — harmless in
@@ -119,15 +121,13 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   cannot read the reach maps (151):** `recount()` never runs in the sim loop, so `rGreen`/`rShop`/`rServ`
   are STALE inside `tick()` — recompute locally, or pay a recount.
   **⚠ ITERATION 217 IS THE NEXT HOLISTIC STEP-BACK** (every 5th since 105; 212 was the last, all 22 done). The 207/205/203/202/201 recaps are rotated — laws in SKILL.md; 205's finding is held by cue (o).
-  **212 (the 22nd) = a CLEAN BILL, no fix lap owed — and BOTH agents FAILed on causes MEASUREMENT
-  REFUTED.** Seasons alive (`probe-season` FARM dry-peak **87.0**, ROAD control 0.6), both agents named
-  the season correctly **BLIND**, both located the sun at x=0.39/y=0.10. Their two FAILs: the golden-hour
-  sun (⇒ **cue (s)**, an objection to the MODEL, 201) and "the rail is drawn over the towers" (⇒ REFUTED,
-  `probe-monoz`; the never-re-open warning is in `polish-tile` BACKLOG **(a)**).
-  **⇒ THE LESSON, RE-CONFIRMED BY 214: the agents were WRONG on both things they FAILed on, and RIGHT on
-  both things they said IN PASSING (cues q, r). In a whole-frame read, the ASIDES are the signal.** 213
-  cashed that immediately, and **214 cashed it twice** — cue (q) was closed by the agents' *word choice*
-  ("mauve", "asphalt"), and cues (u)+(v) both came from asides on a PASSing frame.
+  **212 (the 22nd) = a CLEAN BILL, no fix lap owed; both its FAILs were REFUTED by measurement** (the
+  golden-hour sun ⇒ cue (s), an objection to the MODEL; "the rail is drawn over the towers" ⇒ `probe-monoz`,
+  never-re-open warning in `polish-tile` BACKLOG **(a)**). Body archived at 215; **the LESSON is a law in
+  SKILL.md — in a whole-frame read, the FAILs are where an agent is wrong and the ASIDES are where it is
+  right.** It has now paid out four times running: 213 cashed it, 214 cashed it twice (cue (q) closed by
+  the agents' *word choice* — "mauve", "asphalt"), and **215 closed cue (v), which was an aside on a
+  PASSing frame.** Mine the asides.
   Perf ARC (same refs as 202/207, directly comparable): the lap (208-211) **day +2.7% / night +0.6%** vs 207; vs
   `7e2ac2c` (177, 35 iters) **+8.7% / +4.8%**; vs `5f01426` (162, 50 iters) **+10.5% / +7.3%** (absolute: day
   40.4ms · night 46.5ms). 202 read those same refs at +7.5/+4.1 and +8.6/+5.7, and 207 at +7.2/+5.1 and +9.5/+6.0 —
@@ -194,16 +194,16 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   objects (a *visual* decision, price it against what the ornament is worth), or accept it. **Batching fills,
   shrinking radii, and sprite-blitting are all CLOSED — measured, three ways, and none of them buys anything.**
   194's tree shadows are the standing example: ~3% for the grounding of every tree, and it is worth paying.
-  197's non-flat lap (193+194+196 = day +3.8/+4.4%, night +2.9/+3.0% vs iter-192 `d8819ec`, **all of it 194's
-  shadows**) is **priced and ACCEPTED**. 197's mandated *fix* ("the cost is the FILL COUNT — batch them into one
-  fill") was **measured and DISPROVEN by 198**, and was rotated to `GROWTH-archive.md` at iter 199 rather than
-  left here contradicting the paragraph above it.
-  **⚠ THE COST MODEL HAS A HOLE, AND 200's SUN SITS IN IT.** 198's table (per-ellipse; area-independent; sprite
-  worse) was measured on **SOLID fills only**. 200's sun is **two radial-GRADIENT fills** costing **day +2.3%/
-  +1.7%** — a lot for *two* path objects under a strict per-path model. A gradient is evaluated **per pixel**, so
-  it may be priced by **AREA** where a solid ellipse is not. **Nobody has measured that** — don't shrink `HR`
-  "because 198 said area is free" (it said no such thing about gradients); the variant to build is a
-  gradient-area sweep. 200's ~2% is **PAID** (it is the source of the whole golden-hour family).
+  (197's non-flat lap, and its mandated fix which 198 measured and DISPROVED, are archived.)
+  **⚠ THE COST MODEL HAS TWO HOLES, AND BOTH ARE THE SAME SHAPE: 198's TABLE WAS MEASURED ON SOLID FILLS ONLY.**
+  Its findings (per-ellipse; area-independent; sprite worse) are only established for solid `fill()`s, and **two
+  other primitives have each come in ~4x over the model.** (1) **GRADIENTS** — 200's sun is *two* radial-gradient
+  fills costing **day +2.3%**; a gradient is evaluated **per pixel**, so it may price by **AREA**. (2) **STROKES**
+  — 215's `seamVeg` is 692 path objects (**0.7% day**) costing **~+3% day**, and quantizing its colour cache and
+  hoisting its style writes *both* bought **nothing**, leaving its **228 line strokes** (which must generate
+  outline geometry + round caps) as the suspect. Both are **PAID and ACCEPTED**; neither is **MEASURED**. So do
+  not shrink a gradient or cull a stroke "because 198 said area/count is what matters" — **it said no such thing
+  about either.** The variants to build are a gradient-area sweep and a stroke-vs-fill sweep at equal path count.
   **⚠ A CHANGE THAT IS PROVABLY INERT IN ONE REGIME GIVES YOU A FREE NOISE FLOOR (199).** 199's edit draws
   nothing in daylight (0 panes at noon, *verified*), so its **day column IS the noise floor**: it read
   −0.0 / +0.1 / +1.0% on provably identical code. That is what "±1% means nothing" looks like when you can
@@ -330,21 +330,17 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   shore): a terrain lap with real cost, not an entity-motion freebie. **Banked host, if one is ever wanted: the
   MOLE is real and reliable** — `moleSet` is 5-12 cells on all 6 seeds probed (the `path.length>=5` guard bites
   less often than its comment implies), and it is the artifact's only built structure standing in the water.
-  **(p) CLOSED by 208 (the amenity green got a real seasonal amplitude: PARK 8.4→23.5, SHOREPARK 17.9→52.3,
-  QUAD 5.7→21.2) and EXTENDED by 209 (the RES ground joined it: 1.2→36.8). Body archived; the WARNING is live.**
-  **⚠ DO NOT RAISE THE LAWN AMPLITUDE FURTHER.** `grass` and `lawn` are the **SAME base colour** `[150,181,122]`,
-  so the dry-season divergence *is* the managed green's whole identity, and lawns must stay **greener/brighter than
-  the hills** at every point in the year — seed 7's agent already reads hillside hexes *"close in value to the paler
-  lawns, but they never invert."* It is at the top of what is safe; any further push must re-run the blind locate.
-  **⚠ GARDEN is STILL MUTE (1.8 → 5.4): its ground is mostly raised beds, so the lawn lift barely reaches it. Its
-  own richer cue stands** — staggered per-bed calendars + one shared `gardenPhase()` (Nature × Deepen; host fixed
-  by 206).
-  **(q) CLOSED by 214 — and it was a HUE bug, not luminance and not texture.** The night tint
-  `[.42,.42,.58]` lifts blue and crushes green, which ROTATES sand's hue 40->309 (violet) and put
-  the beach **44 RGB units from the ROAD, both at hue ~308** — the sand and the asphalt were the
-  same colour. `sandCol()` now dims sand with a hue-preserving wash. Body archived; the LAW (a flat
-  per-channel multiply is a hue rotation, not a tint) is in SKILL.md. **⚠ Its two live descendants
-  are cues (u) and (v) below.**
+  **(p) CLOSED by 208 (amenity green got a real seasonal amplitude) and EXTENDED by 209 (the RES ground joined it).
+  Body archived; the WARNING is live. ⚠ DO NOT RAISE THE LAWN AMPLITUDE FURTHER.** `grass` and `lawn` are the **SAME
+  base colour** `[150,181,122]`, so the dry-season divergence *is* the managed green's whole identity, and lawns must
+  stay **greener/brighter than the hills** at every point in the year — seed 7's agent already reads hillside hexes
+  *"close in value to the paler lawns, but they never invert."* Any further push must re-run the blind locate.
+  **⚠ GARDEN is STILL MUTE (1.8 → 5.4): its ground is mostly raised beds, so the lawn lift barely reaches it. Its own
+  richer cue stands** — staggered per-bed calendars + one shared `gardenPhase()` (**Nature × Deepen; host fixed by
+  206; this is Nature's next lap**).
+  **(q) CLOSED by 214 — a HUE bug, not luminance and not texture: the night tint rotates warm sand to violet, landing
+  the beach at hue ~308 beside the ROAD. `sandCol()` dims it with a hue-preserving wash. Body archived; the LAW is in
+  SKILL.md. Its live descendant is cue (u); (v) was closed by 215.**
   **(u) THE PIER / BOARDWALK DECK IS STILL VIOLET — the SAME hue-rotation bug, one tile over (214,
   Water × Polish).** Raised unprompted by seed 7's agent on the shipped frame: the deck hexes are
   *"flat lavender-mauve slabs — the exact crushed-violet failure this change was made to fix, just on
@@ -354,13 +350,17 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ⇒ **Run the audit, don't guess the hosts:** `probes/probe-sandhue.mjs` prints night hue+chroma per
   tile — any WARM surface landing near **hue ~308 with chroma <15** has been rotated to violet. (ROAD
   at 308 is FINE: asphalt *is* grey. The bug only bites a surface whose identity is its warmth.)
-  **(v) THE SAND<->PARK SEAM IS NAKED (214, Nature or Water × Polish).** Named INDEPENDENTLY by BOTH
-  agents on both seeds: warm tan meets cool desaturated green *"with no transition"*, on a bare hex
-  boundary, so the staircase is traceable. **It is not a regression — it is a REVEAL**: the seam was
-  always there and the grey sand hid it (seed 42: *"in HEAD the mauve sand and the green were close
-  enough in value that the edge disappeared — which is exactly why HEAD's sand failed to read"*). The
-  fix is not colour, it is a **straddler**: dune grass / scrub / marram on the boundary hexes. Note
-  DUNE already draws marram (`DUNEMARRAM`) — the host exists; check it is sited on the seam.
+  **(v) CLOSED by 215** — `seamVeg()` interdigitates the boundary (marram tufts out of the sand, blown
+  sand into the lawn; green ink on seam sand **+36..+62%**, tan ink on seam lawn **+34..+45%**, both
+  off-seam controls **0 px**). Cue (v) guessed DUNE's `DUNEMARRAM` might already sit on the seam — **it
+  does not**: marram draws on the dune CREST, and only 10-18 of ~55 seam hexes are marram dunes.
+  ⚠ **Banked nit (seed 7, on the PASSing frame): at extreme zoom the sand-side tufts trend into a loose
+  vertical band that hints where the edge is** — never resolving into the hex staircase, but if Nature
+  takes another coast lap, scatter depth `f` harder rather than adding more marks.
+  **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; full statement in the
+  PERF bullet's "TWO HOLES" paragraph).** Build a **stroke-vs-fill sweep at equal path-object count**. Two
+  mechanisms are already ruled OUT — the `CCACHE` key churn and the per-mark style writes both measured **zero**.
+  (A clumps-only `seamVeg` read night +0.7/+1.0% vs the full +1.1..+2.2%: suggestive, noisy, visually unverified.)
   **(r) A BUILDING TYPE HAS BECOME WALLPAPER (212, Urban × Polish suspect).** Also raised unprompted by both agents,
   independently, naming *different* types — seed 42: *"the red-roofed podium block repeats densely enough in the
   mid-city to become texture noise rather than buildings"*; seed 7: *"the striped high-rise tower is the single most
@@ -391,78 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 207 entries before Iteration 205 live in
+> **Archive:** the 208 entries before Iteration 206 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 205 — the ship that was right all along (Water × Connect)
-
-**Vector.** Water & coast × **Connect** — the coldest cell on the whole board (last used at
-iteration 22, ~180 laps ago). Connect's trick is that it adds **no new object**: it closes a gap
-between two that already exist. The ship, the mole and the harbor works all exist.
-
-**The seam (and it looked textbook).** `genWorld` spawns `freighters[0]` *"at anchor in the
-roadstead off the warehouse row, **waiting on a berth**"*, throws a rubble **mole** out across the
-roadstead so *"the ship at anchor rides in still water"*, and gives her an `ENTINFO` line saying she
-is *"**Serving** the harbor works"*. And then `advanceEntities` says **`if(f.anchored)continue`**.
-She has been a **static prop since 1974** — a comment, a breakwater and a tooltip all describing a
-job she has never once done. That is the label-asserts-what-the-draw-ignores tell, in 204's exact
-shape (the service fleet that never went home), sitting in the coldest cell on the board.
-
-**Change (built, then reverted).** `stepShip()`: lie at anchor → be called **alongside** the quay at
-`harborY` → work her boxes off and stow them again (`f.boxes` 6→0→6, the cranes visible in her
-silhouette) → stand back out. A wake and a heading while under way; `ENTINFO.sub` a **function** of
-her duty (105's law). Zero new draws from *either* random stream — the dwells were respent from her
-own `ph` (123's trick) — so the seeded CA could not move and the rest of the shipping stayed
-byte-identical.
-
-**Census.** PASS, and **vacuous by construction**: +0 on every metric, tile histogram empty,
-`freighters 18` flat. Exactly as predicted for entity motion. (The ±1 wobble on `greenRoofs`/`towerHt`
-was checked against **pristine HEAD** and reproduces there — it is the harness's own run-to-run noise,
-not the edit.)
-
-**Probe.** `probe-shipberth` PASSED, and **passing was the mistake.** HEAD's ship: motion spread
-**0.00 on all 3 seeds** — the static prop, confirmed. PATCH: **4 calls**, ~**55%** of her life
-alongside, `minDist 2.9 → 1.60` cells, cargo cycling the full 0..6, and the 5 flooded deep-lane
-control ships **bit-identical between builds**. Every number true. Every number irrelevant.
-
-**Visual — the gate that caught it.** Two agents, two seeds, both **FAIL**, both naming the same
-thing: *"she is still sitting in open water; there is no quay next to her."* Per the loop's law a FAIL
-is a cue to **measure**, so I measured — and they were right. My probe's `ALONGSIDE < 2.2 cells`
-threshold was **a number I picked because my own berth constant satisfied it**. The quantity the
-*claim* was about is the water the eye sees under her bow, and at `seaXFr(harborY,0)` — the most
-inshore position the artifact's open-water projection can even express — that is **54.6px, ~1.7
-hexes**, on every seed.
-
-**Why it cannot ship (`probe-harborhost`, 6 seeds, unanimous).** `SHOREX = CTRX+11` is *"the coast
-highway column"*. `SHORE0 = SHOREX+5` is the water's edge, *"five lots seaward of the highway"*. The
-harbor works are sited at `SHOREX-1-(rng()*3)` — **behind the highway**. So the warehouses stand
-**5–9 hexes from the sea**, and the waterline at `harborY` is **BEACH / BEACH / DUNE** on every seed:
-the same recreational sand 201 put the parasols and sunbathers on. **There is no quay, no wharf, no
-industrial waterfront anywhere in the artifact.** Bringing her alongside beaches a container ship
-between the sunbathers and a dune.
-
-⇒ **The ship was never a broken promise.** A **roadstead** is an open anchorage where ships lie at
-anchor *precisely because there is nowhere to come alongside*; ships there are worked by lighters or
-they wait. *"Waiting on a berth"* is her **situation**, not an unkept one. Solvista is a roadstead,
-not a harbour, and I read a real-world intuition ("ships dock") into a model that cannot express
-docking — **201's law**, which the header had been carrying for four iterations, aimed straight at me.
-
-**Kept.** `probes/probe-harborhost.mjs` — the host-existence probe (the `probe-market` / `probe-firehost`
-shape), so no future lap re-derives this. It runs against plain HEAD and reports the waterline terrain,
-the warehouse-to-sea distance, the bow gap, and the 0.00 motion spread, on 6 seeds. New banked cue **(o)**;
-`solvista.html` restored **byte-identical** to HEAD.
-**Not kept:** `probe-shipberth` (the one quoted above). It diffs the patch against HEAD, and the patch is
-gone — it would sit in `probes/` producing a meaningless HEAD-vs-HEAD table forever. A gate for a reverted
-change is not a gate. What was worth keeping from it is the *lesson*, and that is now a law in `SKILL.md`.
-
-**Verdict: EXPLORED → REVERTED.** The third member of the dead-host family (`T.MARKET` fully drawn and
-never sited; the fire CA fully drawn and never ignited; and now the port, fully described and never
-built). The *finding* is worth more than the feature would have been: it removes an entire family of
-tempting Water vectors from the board and names the one thing that would unlock them — **build the
-quay first.**
 
 ## Iteration 206 — the gardens the city never dug (2026-07-12) [Nature × New CA rule]
 
@@ -1260,3 +1193,86 @@ defect with the word **MAUVE**. I fixated on "detail dies" and built a **greysca
 instrument that *cannot represent hue*. It measured a real thing, passed a change the eye rejected,
 and only when I stopped and measured the word the agents actually used did the bug appear, exactly
 where they said it was. **Build the probe in the units of the complaint.**
+
+## Iteration 215 — the marram closes the seam (2026-07-13) [Nature × Polish]
+
+**Vector.** Nature was the stalest domain (last 206) and the lap owed it. It had two
+banked cues; I took **(v) the naked sand<->park seam** over the GARDEN-calendar cue —
+(v) was raised *independently by both step-back agents on both seeds* at 214 (212's law:
+weight a two-agent independent aside above any verdict), and GARDEN would have been a
+fourth **Deepen** in five laps on a tile measured **58% occluded** (206). Kind varies to
+**Polish**; domain rotates to Nature.
+
+**Host, measured before designing** (`probes/probe-seamhost.mjs`, 6 seeds). The seam is
+real and unanimous: **52-63 sand hexes touch green per city** (36-43 BEACH + 15-21 DUNE),
+~42-55 green hexes touch sand, and the green neighbour is **essentially always SHOREPARK**
+(87-115 adjacencies; PARK appeared *once* in six seeds). Not `T.MARKET` — the host exists at
+scale. Cue (v) guessed DUNE's marram might already sit on the seam; it does not — the marram
+is drawn on the **dune crest**, and only **10-18** of ~55 seam hexes are marram dunes at all.
+The seam itself was bare on both sides.
+
+**Change.** `seamVeg(x,y,gx,gy,sandSide)` (new, beside `drawCell`), called from the
+**BEACH**, **DUNE** and **SHOREPARK** draw cases. Each side lends the other its texture near
+the shared edge: **marram tufts** (a root clump + a blade or two) root out of the sand on
+hexes touching the park, and **wind-blown sand specks** scatter into the lawn on park hexes
+touching the sand. Draw-only, `hashCell`-gated, no `rng()`, no terrain.
+Three laws shaped it: **points, never a stroke along the edge** (159 — a per-edge line joins
+into an outline and re-exposes the geometry it is hiding), so every mark is scattered *along*
+AND *back from* the edge and a fifth of the edges are skipped outright; **each hex draws only
+inside itself** (211 — draw order is depth order, so an ornament offset into the hex in front
+is painted over), so the transition is made by two hexes **interdigitating**, not by one
+spilling across; and **a hairline cannot put a pixel down** (203) — see below.
+
+**Census.** PASS. Every metric **+0**, tile histogram **empty** — the correct, vacuous result
+for a draw-only change. It proves only that nothing threw. The gate is the probe.
+
+**Probe** (`probes/probe-seam.mjs`, 3 seeds x day+night). The complaint is *"warm tan meets
+cool green with NO TRANSITION"* — a claim about **colour mixing across a boundary** — so
+measure that and nothing else (214: build the probe in the units of the complaint):
+`green ink on sand` = px where G>R (sand is R>G>B, so it can only be marram); `tan ink on
+lawn` = px where R>G+12 (lawn is G>R, so it can only be blown sand). Floor measured in-run
+(213); `Math.random` stubbed in `addInitScript` before the page's own script.
+
+| day | green ink on seam SAND | tan ink on seam LAWN | ctrl sand | ctrl lawn |
+| --- | --- | --- | --- | --- |
+| seed 7 | 31.2 -> **50.6** /1k px | 80.6 -> **115.5** | **1 px** | 3 px (floor 3) |
+| seed 42 | 40.1 -> **62.2** | 80.5 -> **117.0** | **0 px** | **0 px** |
+| seed 1234 | 39.5 -> **53.6** | 82.2 -> **110.0** | **0 px** | **0 px** |
+
+**Both controls — sand with no green neighbour, lawn with no sand neighbour — changed 0-3 px
+against a floor of 0-3, on every seed and both lights.** Same tiles, same code, differing only
+in whether they sit on the seam: the change lands on the seam and nowhere else, by construction.
+
+**203's law bit, and the probe caught it.** The first build's marram was a `lineWidth 0.6`
+blade *only*. It changed ~800 px on the seam sand — and moved the green-ink count **not at
+all** (31.2 -> 30.7): a blade thinner than a device pixel is **always blended with the sand**
+and can never produce a green-dominant pixel. It was *hazing* the sand, not tufting it, and
+the interdigitation was **one-sided** (the lawn's ellipse specks worked from the start). Adding
+a **root clump** — a solid 1-2px ellipse under the blades, which is also what a marram tussock
+actually looks like — took the sand side from flat to **+36..+62%**. A hairline needs a body.
+
+**Visual.** PASS on both seeds, day and night (2 agents, before/after, whole-city + a 4.2x
+close-up **aimed** at the longest run of seam — 201: a fixed clip is not a framing;
+`probes/shot-seam.mjs`). Both independently confirmed the thing under test: seed 42 — *"BEFORE:
+an unbroken tan/green staircase, you can trace every hex edge. AFTER: the same run is feathered
+... it reads as a back-beach transition, not a rash or a dotted outline"*; seed 7 — *"a clean
+two-tone hex staircase"* becomes *"a back-beach dune fringe, not a rash, not a dotted row, and
+not an outline tracing the facets."* No z-order tears, no marks in open water, whole frame
+unchanged at 1x.
+
+**Perf — PAID, and it disproved my own hypothesis twice.** `probe-drawbudget` scores `seamVeg`
+at **692 path objects = 0.7% day / 0.5% night**. But six interleaved A/B runs read **day
++2.1..+4.5%, night +1.1..+2.2%** — consistently positive, never straddling zero (199's inert
+control straddles zero at +-1%), so it is real, and it is **~4x what the per-path-object model
+predicts**. I tested two mechanisms and **both came back negative**: (1) a continuous `f` in
+`col(name,f)` mints a unique `CCACHE` key per tuft and misses every frame — quantizing it
+bought **nothing**; (2) per-tuft `strokeStyle`+`fillStyle` writes (~1384/frame) — hoisting them
+to one-per-hex (~210) bought **nothing**. Cost accepted on 194's precedent (~3% day for the
+grounding of every tree, judged worth paying). **The suspect is NAMED, not fixed** (198): the
+692 objects are 464 ellipse fills + **228 line strokes**, and a stroke must generate outline
+geometry (with round caps) that a fill does not — **198's cost model was measured on SOLID
+FILLS ONLY, exactly as the gradient hole was.** A clumps-only variant read night **+0.7/+1.0%**
+vs the full build's **+1.1..+2.2%**, which is suggestive but two noisy runs and visually
+unverified. ⇒ **cue (x)**, below.
+
+**Verdict: SHIPPED.** Cue (v) CLOSED. The coastline no longer has a traceable hex staircase.
