@@ -23,7 +23,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
@@ -37,27 +37,21 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (which line /
   route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: Sky **208** · People **210** ·
-  Transport **211** · Civic **213** · Water **214** · Nature **215** · Urban **216**, ~~**218**~~, **219**.
+  Transport **211** · Civic **213** · Water **214** · Nature **215** · Urban **216**, ~~**218**~~, **219**, **220**.
   (**217 = the 23rd step-back; the next is 222.**)
-  ✅ **THE DOWNTOWN IS BUILT (219, Urban × Deepen, SHIPPED).** 217's and 218's long prescription is **ARCHIVED** —
-  the seam is closed. What it settled, and what it leaves: **(1) The COM fork (`solvista.html:1443`) is ONE-SHOT
-  (max 1 hit/cell), so `p` IS a live lever there** — the structural opposite of the tower roll, which re-picks each
-  COM cell ~60x and saturates (218). Towers rise only on COM, so **COM siting is where downtown is decided.**
-  **(2) The ship is `m=1+2.0*ccore` on both shop rolls — PURE ADDITION:** at the rim `ccore=0`, so the rule is
-  **byte-identical** and only the core is lifted. Tower **MASS** in ring 0-8 went **24/33/17% → 41/45/42%** of total
-  tower height on the 3 seeds; **four blind agents now point at the true CBD.** Totals barely moved (COM 649→673)
-  because the towers (239→304) come from **ARRANGEMENT** — `com>=2` is already a clustering predicate.
-  **(3) THE TRAP IS THE OBVIOUS DESIGN: scaling the rolls DOWN at the rim (`m=A+B*core`, A<1) CUTS COM city-wide —
-  and COM is the TOWER SUBSTRATE — so it cost 14-27% of the pop while *LOSING* core towers** (42→29/38/32/33), and
-  flattered the ratio, which is 218's own sin. A **wider falloff** is the other trap: it lifts the whole city and
-  **doubled the rim** (148→205). ⚠ **DO NOT re-open the tower placement roll (dead lever, 218) NOR the COM fork
-  (spent, 219).** The one defect left is cue **(ac)** — and it is the third rung of the same ladder.
-  **AFTER 219 the lap owes SKY (stalest, 208), then PEOPLE (210).** But **Sky is post-saturation (Deepen/Fix ONLY)**
-  and its only live cue **(s) is CONSTRAINED and low-value** (read it first) — so if Sky has nothing, the strongest
-  cues are **(ac) the flat skyline taper** (Urban × Polish, the direct sequel to 219), **(aa) the night built-mass
-  collapse** (Urban/Water × Polish, a one-line lever), **(y) the scorched inland cluster** (Nature × Polish) and
+  ✅ **THE DOWNTOWN IS BUILT (219, Urban × Deepen, SHIPPED)** — recap rotated to the archive at 220; the full story is
+  219's own entry, and its two general laws (a saturated roll's `p` is a **dead lever**; a spatial preference must be
+  **pure addition**, `m=1+B*field`) are in SKILL.md. ⚠ **DO NOT re-open the tower placement roll (dead lever, 218) NOR
+  the COM fork (spent, 219).** ⚠ **COM is the TOWER SUBSTRATE** — cutting it anywhere costs towers and pop downstream.
+  The one defect left on this ladder is cue **(ac)**.
+  **AFTER 220 the lap owes SKY (stalest, 208), then PEOPLE (210) — and URBAN HAS NOW HAD FOUR LAPS RUNNING
+  (216/218/219/220), so rotate OFF it unless a cue is decisive.** But **Sky is post-saturation (Deepen/Fix ONLY)** and
+  its only live cue **(s) is CONSTRAINED and low-value** (read it first) — so if Sky has nothing, the strongest cues
+  are **(ad) the still-rotated GROUND PLANE** (Nature/Urban × Polish, 220's direct sequel, 🔴 and measured),
+  **(ac) the flat skyline taper** (Urban × Polish), **(y) the scorched inland cluster** (Nature × Polish) and
   **(z) the clipped HUD label** (Interaction/UX × Polish, a stale column). Nature's other cue, **GARDEN's staggered
-  beds** (Nature × Deepen), is held by cue (p).
+  beds** (Nature × Deepen), is held by cue (p). **(u) — the violet pier deck — is the last WARM surface still rotated,
+  and is now a one-line `sandCol()` swap** (Water × Polish; 220 proved the lever on a far bigger surface).
   **STEERING FROM THE LAST LAPS — recaps live in their own entries / the archive; only the WARNINGS live here.**
   **213 (Civic × Deepen):** ⚠ **`nightDeep()` IS PINNED AT 1 ALL DAY** — harmless in a draw (`LITAMT` is 0 anyway),
   a trap for any NON-draw reader, so guard every reader. **The civic night-light audit is DONE — do not re-run it**;
@@ -321,14 +315,21 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **⚠ GARDEN is STILL MUTE (1.8 → 5.4)** — its ground is mostly raised beds, so the lawn lift barely reaches it. **Its
   own richer cue stands:** staggered per-bed calendars + one shared `gardenPhase()` (**Nature × Deepen; host fixed by
   206; Nature's next lap**).
-  **(aa) 🔴 AT NIGHT, RES AND ROAD ARE FOUR RGB UNITS APART — 214's hue-rotation bug on the city's BIGGEST SURFACE
-  (217, Urban/Water × Polish; `probes/probe-goldenhue.mjs`, 3 seeds).** Night RES = **hue 355, chr 16, lum 79**; night
-  ROAD = **hue 360, chr 11, lum 80** — *the residential roofs and the asphalt are the same colour.* PARK↔ROAD falls to
-  15, PARK↔RES to 19. 214 fixed the **sand** (BEACH still healthy: hue 33, chr 38); the **built mass never got the
-  same treatment**, which is seed 7's unprompted aside — *"a single desaturated slate-violet blob where towers, roads
-  and low buildings are one value."* **Lever: route the built mass's night fills through a luminance-matched,
-  hue-preserving wash (`sandCol()`'s trick), one line per call site.** Colour-only ⇒ zero path objects, free. ⚠ Gate
-  it at the `LITAMT` 0.35 cut the lit glass uses so **daylight stays byte-identical**.
+  **(aa) CLOSED by 220** (RES+MID masonry -> `sandCol()`; RES<->ROAD night **6 -> 16**, day 22). ⚠ **`sandCol()` IS THE
+  CITY'S GENERAL WARM-SURFACE NIGHT WASH, not a sand function** — generic over any `BASE` name, **free** (colour-only,
+  zero path objects), and **byte-identical in daylight** (`w=0` below `LITAMT` 0.35), so it is a **free dead-regime
+  control**. **Route any rotated WARM surface through it; do NOT fork a second wash.** ⚠ **GLASS (TOWER/COM) KEEPS the
+  cool tint** (holds chroma 19->17, cannot rotate) — warm-masonry-vs-cool-glass is now what makes the night read, and
+  **ROAD staying grey is CORRECT** (214).
+  **(ad) 🔴 THE GROUND PLANE IS STILL ROTATED — the built mass is fixed, the surface it stands on is not (220, Nature/
+  Urban × Polish; 220's direct sequel and the LAST rung of 214's ladder).** Two blind agents, two seeds, unprompted, on
+  a PASSing frame: *"hazy-violet mid-block interiors"* (7) and *"a violet/blue-grey ground plane"* (42). `probe-goldenhue`
+  names it: **PARK rotates green -> CYAN (hue 81 -> 206), chroma crushed 46 -> 6**; FOREST 52 -> 6 — the greens invert
+  channel order (G>R>B -> G>B>R) exactly as the warm neutrals did. ⚠ **NOT a straight `sandCol()` swap:** its wash leans
+  *warm* (`[.504,.473,.464]`), right for masonry and **wrong for grass** — a green needs an order-preserving wash of its
+  own, or `sandCol` a neutral variant. ⚠ **A cool ground UNDER warm buildings is CORRECT and must survive the fix** (it
+  is what the built mass now pops off) — **the target is the CYAN, not the coolness.** Gate in colour units (214), pair
+  PARK<->ROAD (night 15, day 50).
   **(ac) 🔴 THE SKYLINE HAS MASS BUT NO TAPER — "a spine, not a crown" (219, Urban × Polish; the THIRD RUNG of the
   217/218/219 ladder and the next Urban lap).** 219 put the tower MASS downtown (coreH share 41-45%; four blind
   agents locate the CBD) — and **two agents, on two seeds, independently and unprompted** named what is left:
@@ -357,8 +358,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; full statement in the
   PERF bullet's "TWO HOLES" paragraph).** Build a **stroke-vs-fill sweep at equal path-object count**. Two
   mechanisms are already ruled OUT — the `CCACHE` key churn and the per-mark style writes both measured **zero**.
-  **(r) CLOSED by 216** (archived; law ⇒ SKILL.md). ⇒ **FACADES ARE SPENT for Urban**, leaving only the **harbour
-  apron** (cue (o): a port lap must build the waterfront FIRST). **219 closed the downtown lap; Urban's live cue is (ac).**
+  **(r) CLOSED by 216** (archived; law ⇒ SKILL.md). ⇒ **FACADES ARE SPENT for Urban**; only the **harbour apron** is left (cue (o): a port lap must build the waterfront FIRST). Urban's live cue is **(ac)**.
   **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** *"A small dark
   brown/scorched hex cluster in the mid-left inland block that reads oddly against the surrounding green."* ⚠ The fire
   CA is a **GHOST** (cannot ignite at 2035), so this is almost certainly **LOGGING/clearcut, not BURNT** — **identify
@@ -391,116 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 212 entries before Iteration 210 live in
+> **Archive:** the 213 entries before Iteration 211 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 210 — the city goes to bed (2026-07-12) [People & activity × Deepen]
-
-**Vector** — People & activity × Deepen. People was the stalest domain (last lap 201); its
-entity list is long spent, so Deepen — and the seam turned out to be one iter 199 had left
-open one system over.
-
-**The seam** — `pedHidden` was the 199-tell exactly, and it wore its own comment as the tell:
-
-```js
-/* crowds thin late at night */
-const pedHidden = p => LITAMT > 0.75 && !!p.nite;   // nite: Math.random() < 0.5, at spawn
-```
-
-Two defects, both of which the comment denies. **(a) It does not thin — it blinks.** The
-coin is uniform and the threshold is shared, so half the city vanished *in a single frame*.
-**(b) It is deaf to the hour, because `LITAMT` is saturated.** 199 established that the light
-curve **pins `LITAMT` at 1.0 from dayT 0.86 to dawn**; it therefore cannot tell 8pm from 4am.
-199 fixed that for the *windows* (`nightDeep()`, and `BEDT`: a home empties fastest, a tower
-keeps a skeleton crew till dawn) and left the *street* on the old clock. **(c)** And the coin
-was **place-blind**: as many people were left standing in a dark rim field at 3am as outside
-the lit shopfronts.
-
-The probe then found a **fourth** defect nobody had written down. `LITAMT>0.75` is not just
-saturated, it is *narrow*: LITAMT is back down to **0.64 by the small hours**, so the old
-"night" was only `dayT 0.76..0.02` — and **the entire crowd of 93 was back on the street at
-3am.** Twice a night the city blinked.
-
-**Change** — draw-only; no terrain, no `rng()`, no new entity, **zero new path objects**.
-- `nightAmt()` = `nightDeep()` (199's clock — 0 at dusk, 1 in the small hours, off the slow
-  `dayT` the moon and the hall clock already share) faded at **both** ends by the light.
-  `nightDeep()` is monotone and clamps to 1 *outside* its span (it reads 1.0 at noon), so it
-  can open the evening but can never close the dawn; `LITAMT` does that. `NIGHTLO=0.35` is
-  the paned-glass cut **verbatim**, so the panes and the street now agree on what "the dark
-  hours" means — one predicate, one definition.
-- `curfewAt(x,y)` = `CURF0 + CURFB*buzzN(x,y) + Math.random()*CURFJ` — each resident's own
-  hour, drawn from **`c.buzz`** (iter 104's "somewhere worth standing" field, which `stepPed`
-  already walks them toward). Quiet ground turns in through the evening; the market, the
-  plaza and the lively kerbs keep their crowd. The jitter is what makes it a *thinning*: a
-  block empties one door at a time. Re-learned on re-anchor, but **only while `nightAmt()===0`**
-  — i.e. while nobody in the city is hideable at all, which makes a mid-evening pop
-  *unrepresentable* rather than merely unlikely (the per-resident coin existed to stop peds
-  blinking as they cross a hex; that property is preserved by construction).
-- `drawDog` already consulted `pedHidden(owner)`, so the dog goes home with its human for free.
-- `residentDoing` reads the **same** `out` and `nightAmt()` the draw gates on (123's law: run
-  the tell *forwards*, so the sentence and the rule cannot drift): `Staying out a while yet.` /
-  `About to call it a night.` / `Out till dawn.`
-- **The joggers carried the identical bug**, found by auditing every `LITAMT>` gate in the
-  file: `if(LITAMT>0.75 && ((j.ph*97|0)%10)<6) return;` — same saturated gate, same fixed coin,
-  one array over. They now keep their own (shorter, buzz-free) hour on the same clock: an
-  evening run is a thing, a 3am one is not.
-
-**Census** — PASS, vacuous as expected: every metric flat (±1 noise), tile histogram empty,
-entity counts unchanged (`joggers 31`, `peds 664`). It proves only that nothing threw and the
-seeded stream is untouched.
-
-**Probe** — `probes/probe-curfew.mjs`. No pixels at all: `pedHidden` is a pure function of the
-resident's hour and the clock, so **one frozen world is re-read at 8 clock pins with a zero
-noise floor**. 3 seeds. `Math.random` stubbed before `genWorld` (203) so both builds spawn the
-identical crowd. Reported in the **viewer's units** — the tile a resident stands on — never in
-buzz, since buzz is the mechanism and gating on it would be grading my own homework (205).
-
-| | lively ground keeps | quiet ground keeps |
-| --- | --- | --- |
-| BASE (its own darkest hiding pin) | 57% / 58% / 25% | 49% / 44% / 57% |
-| PATCH (the small hours) | **86% / 83% / 63%** | **27% / 29% / 32%** |
-
-BASE does not separate at all — **and the sign flips by seed**, which is what a uniform coin
-looks like as a number. PATCH separates cleanly, same sign, every seed.
-
-**Cadence** (independent of buzz — it is just a count against the clock):
-`BASE 93 -> 47 -> 47 -> 47 -> 93 -> 93` (two distinct crowd sizes: a cliff down, a cliff back
-up *before dawn*) vs `PATCH 93 -> 81 -> 52 -> 30 -> 73 -> 93` (five: a monotone descent and a
-graded dawn return).
-**Joggers:** BASE has **3/3 out at 3am on every seed** — and on seed 7 its fixed coin hid
-**nobody, ever** (3->3->3->3->3). PATCH: `3->3->2->0->0->0->3`.
-**Control:** the day is a **provably inert regime** (199) — nobody is hidden by daylight in
-either build, so it is a free noise floor: identical on all 3 seeds.
-
-**Perf** — not run, and provably not needed: the diff adds **zero path objects** (it only
-*gates* draws that already existed) and strictly draws **fewer** figures at night. Under 198's
-measured cost model (cost is per path object rasterized) that is free by construction; the only
-new per-frame work is ~140 arithmetic calls. Measuring it would have re-measured the box's noise.
-
-**Visual** — the first pass **FAILed**, and the agent was right: it measured my two frames as
-**250px apart, all of it edge anti-aliasing, with not one pedestrian moving.** The cause was
-**my own probe hygiene**, and it is a new law. Because I kept the `Math.random()` draw count
-identical (good practice — it stops the stream shifting), both builds read the **same `r`** for
-the same resident: HEAD hides `r<0.5`, PATCH hides `r < 0.505 - 0.63*buzz`. On quiet ground
-(buzz 0) **those are the same set.** I had also aimed the camera at the CBD — the one place the
-two builds *agree* (both keep the lively crowd). Re-aimed with `probes/shot-curfew.mjs` at the
-hour they actually diverge (`dayT=0.04`, where HEAD has all 93 back out) and at the ground that
-actually empties (the densest cluster of residents who go home, located, not guessed — 201).
-
-Re-shot, **both seeds PASS, blind, with the A/B labels inverted between the seeds and flipped
-against the previous round.** Both agents independently picked the patched build and named the
-mechanism unprompted — *"movement is now correlated with light"*; *"the life stays where the
-light is"*; *"a dozen-plus people idling on unlit parkland at 3am reads like a bug, not a
-city."* Both located the **jogger** fix without being told which frame was which (*"cityA: none
-running. cityB: yes, figures strung along the shore"*). Both confirmed it thins without dying:
-*"it has thinned, not died"*, *"quieter, not lifeless."* No z-order tears, no floating figures,
-no blown-out colour. (Both flagged the cable-car rope crossing the green frame — present in
-*both* builds, and already banked as 203's `polish-tile` legibility job.)
-
-**Verdict: DEEPENED.** The windows learned to keep an hour at 199; now the street does too.
 
 ## Iteration 211 — the buses come to the trains (2026-07-12) [Transport × Connect]
 
@@ -1308,3 +1203,86 @@ what remains is that the **height gradient is drowned in per-cell noise.** ⚠ 9
 was solved to **HOLD THE MEAN** — the fix is to **narrow `c.v`'s spread, not to steepen `core`**
 (a steeper `core` was tried at 98 and cost half the city's tall towers). Do not re-open the
 placement roll.
+
+## Iteration 220 — the houses were the same colour as the road (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish, closing cue **(aa)**. Iter 214 proved the night tint is a **hue
+rotation**, not a tint, and fixed it on the **sand**. The same bug was still sitting on the city's
+**biggest built surface**, which is what 217's step-back agent called, unprompted, *"a desaturated
+slate-violet blob where towers, roads and low buildings are one value."*
+
+**Probe first — and the cue's own premise did not survive it.** `probes/probe-sandhue.mjs` (0.55
+tile-body mask) put night RES<->ROAD at **~8.6 RGB units** — but **day RES<->ROAD at ~8.7**. By that
+instrument the separation does not *collapse* at night; it was never there, and the day city reads
+fine. The mask was averaging the building into its own lawn (214's "necessary but not sufficient"
+law, one level down). Re-run on the cue's *cited* instrument, `probes/probe-goldenhue.mjs` (3 seeds,
+frozen clock, world rebuilt in-page), and the cue is right and the bug is **systemic**:
+
+| night | RES vs ROAD | PARK vs ROAD | PARK vs RES | FARM vs ROAD |
+| --- | --- | --- | --- | --- |
+| day | 22 | 50 | 36 | 47 |
+| **HEAD night** | **6** | **14** | **20** | **21** |
+
+Every warm or green **land** surface loses its hue after dark — chroma crushed 3-9x (RES 48 -> 17,
+PARK 46 -> 10, FOREST 52 -> 6) — and the only land tile that holds is **BEACH (37)**, the one 214
+already fixed. The mechanism is exact, and it is 199's law (a constant whose *name* asserts a
+behaviour its *value* cannot have): run the tint `[.42,.42,.58]` on the masonry palette by hand and
+the **channel ORDER inverts** — `cream` [244,232,208] -> [103,97,**121**] (B>R>G) and `creamDk`
+[221,205,172] -> [93,86,**100**], both **lavender**; `sandDk` [212,190,146] -> [89,80,85], **chroma
+9, i.e. grey**. RES's `bodyN` is `cream`/`terra`/`sandDk` and MID's is `terra`/`cream`/`sandDk` — so
+**most house and walk-up bodies are drawn in exactly the two tones that invert to violet.** The
+saturated ones (`terra`/`coral`/`brick`) survive: they are too warm to invert.
+
+**Change (five call sites, colour only).** `col(` -> `sandCol(` on the **masonry** in `drawBuilding`:
+RES body + roof + chimney, MID body + roof. **Reuses the shipped wash rather than forking a second
+one** (one-predicate-one-definition) — `sandCol` was already generic over any `BASE` name; only its
+*header comment* claimed it was about sand, and that comment is now corrected. The **glass** types
+(TOWER/COM) **deliberately keep the cool tint**: they hold their chroma (19 -> 17), the tint cannot
+rotate them, and their identity *is* coolness — so the night city now separates into **warm masonry
+against cool glass and asphalt**, which is how a lit city actually reads. ROAD stays grey **on
+purpose** (214: asphalt genuinely is grey; the bug only bites a surface that is *supposed* to be warm).
+
+**Census.** PASS, and **vacuous by construction** — no `rng()`, no terrain, empty tile histogram, core
+metrics flat. (`solarRoofs` -1, `towerHt` +1: load-timing tick-count noise, 163's law (c). `drawBuilding`
+is pure render and cannot reach `tick()`.)
+
+**Probe (`probes/probe-goldenhue.mjs`, patch vs HEAD, 3 seeds).** The claim is about **colour**, so the
+gate is in colour units (214's law):
+
+| night | HEAD | patch | (day) |
+| --- | --- | --- | --- |
+| **RES vs ROAD** | **6** | **16** | 22 |
+| RES chroma | 17 | **34** | 48 |
+| RES hue | **356deg** (red-violet) | **24deg** (warm tan) | 36deg |
+| MID chroma | 22 | **36** | 22 |
+| PARK vs RES | 20 | **29** | 36 |
+
+Houses and asphalt go from **6 -> 16** RGB units: from 27% of their daylight separation to **73%**.
+**Controls, all clean and measured in the same run:** the **day and golden columns are UNMOVED** (RES
+day 36deg/48/152 in both builds; golden 24deg/74/129 in both) — `sandCol`'s `w=clamp((LITAMT-0.35)/0.35,0,1)`
+is **0 in daylight**, where `t===TINT` and the two functions are **byte-identical**, so the dead regime
+referees the live one *for free* (199's law). **BEACH night (33deg/37/105) and WATER night (210deg/58/67)
+are EXACTLY unchanged** — 214's fix and the sea are undisturbed.
+
+**Perf — free BY CONSTRUCTION, not by timing.** Not one prism, ellipse or stroke was added, removed or
+resized; only the *string* handed to `fillStyle` changed. Path-object count is therefore **identical**,
+and 198's measured cost model says cost on this canvas is **per path object**. Per 216's law, that
+deterministic mechanism outranks an interleaved timing number that would have no mechanism behind it.
+(`sandCol` is `CCACHE`d exactly like `col()` — ~48 extra keys per light change, not per hex.)
+
+**Visual.** `probes/shot-stepback.mjs`, seeds 42 + 7, frozen in-page, frames self-reporting
+(`night t=0.92 LITAMT=1`). Both agents **PASS**. They were told only that *"some surfaces"* changed
+after dark — never which, never in which direction (108: locate, don't judge) — and **both, blind,
+independently named the ground truth**: the low buildings read *"warm tan/khaki with terracotta
+roofs"* (42) and *"warm tan/cream with terracotta roofs"* (7), against roads that read *"slate-violet"*
+— i.e. they put RES at the measured **hue 24deg** and confirmed the RES/ROAD separation without being
+told it was the thing under test. Both confirmed the towers still read **cooler** than the low-rise,
+and both confirmed the **day frame is untouched**.
+
+**Aside, banked as cue (ad) — two seeds, independent, unprompted** (212's fail/aside law, paying out an
+eighth lap): seed 7 saw *"slightly hazy-violet mid-block interiors"* and seed 42 *"a violet/blue-grey
+ground plane."* That is **the GROUND, still on the raw cool tint** — and the probe agrees: **PARK
+rotates green -> CYAN (hue 81 -> 206) with chroma crushed 46 -> 6.** The built mass is fixed; the
+surface it stands on is not.
+
+**Verdict: SHIPPED.**

@@ -13727,3 +13727,130 @@ asked to **LOCATE, not judge** (108), and both delivered:
   Use `.02 / .30 / .62 / .87` for winter / spring / the golden dry peak / autumn — those are
   `applySeason`'s own keyframes. An unreachable test hook is the same defect class as iter 107's
   unreachable rule: **grep the URL block before assuming a hook you can see is a hook you can use.**
+
+## Iteration 210 — the city goes to bed (2026-07-12) [People & activity × Deepen]
+
+**Vector** — People & activity × Deepen. People was the stalest domain (last lap 201); its
+entity list is long spent, so Deepen — and the seam turned out to be one iter 199 had left
+open one system over.
+
+**The seam** — `pedHidden` was the 199-tell exactly, and it wore its own comment as the tell:
+
+```js
+/* crowds thin late at night */
+const pedHidden = p => LITAMT > 0.75 && !!p.nite;   // nite: Math.random() < 0.5, at spawn
+```
+
+Two defects, both of which the comment denies. **(a) It does not thin — it blinks.** The
+coin is uniform and the threshold is shared, so half the city vanished *in a single frame*.
+**(b) It is deaf to the hour, because `LITAMT` is saturated.** 199 established that the light
+curve **pins `LITAMT` at 1.0 from dayT 0.86 to dawn**; it therefore cannot tell 8pm from 4am.
+199 fixed that for the *windows* (`nightDeep()`, and `BEDT`: a home empties fastest, a tower
+keeps a skeleton crew till dawn) and left the *street* on the old clock. **(c)** And the coin
+was **place-blind**: as many people were left standing in a dark rim field at 3am as outside
+the lit shopfronts.
+
+The probe then found a **fourth** defect nobody had written down. `LITAMT>0.75` is not just
+saturated, it is *narrow*: LITAMT is back down to **0.64 by the small hours**, so the old
+"night" was only `dayT 0.76..0.02` — and **the entire crowd of 93 was back on the street at
+3am.** Twice a night the city blinked.
+
+**Change** — draw-only; no terrain, no `rng()`, no new entity, **zero new path objects**.
+- `nightAmt()` = `nightDeep()` (199's clock — 0 at dusk, 1 in the small hours, off the slow
+  `dayT` the moon and the hall clock already share) faded at **both** ends by the light.
+  `nightDeep()` is monotone and clamps to 1 *outside* its span (it reads 1.0 at noon), so it
+  can open the evening but can never close the dawn; `LITAMT` does that. `NIGHTLO=0.35` is
+  the paned-glass cut **verbatim**, so the panes and the street now agree on what "the dark
+  hours" means — one predicate, one definition.
+- `curfewAt(x,y)` = `CURF0 + CURFB*buzzN(x,y) + Math.random()*CURFJ` — each resident's own
+  hour, drawn from **`c.buzz`** (iter 104's "somewhere worth standing" field, which `stepPed`
+  already walks them toward). Quiet ground turns in through the evening; the market, the
+  plaza and the lively kerbs keep their crowd. The jitter is what makes it a *thinning*: a
+  block empties one door at a time. Re-learned on re-anchor, but **only while `nightAmt()===0`**
+  — i.e. while nobody in the city is hideable at all, which makes a mid-evening pop
+  *unrepresentable* rather than merely unlikely (the per-resident coin existed to stop peds
+  blinking as they cross a hex; that property is preserved by construction).
+- `drawDog` already consulted `pedHidden(owner)`, so the dog goes home with its human for free.
+- `residentDoing` reads the **same** `out` and `nightAmt()` the draw gates on (123's law: run
+  the tell *forwards*, so the sentence and the rule cannot drift): `Staying out a while yet.` /
+  `About to call it a night.` / `Out till dawn.`
+- **The joggers carried the identical bug**, found by auditing every `LITAMT>` gate in the
+  file: `if(LITAMT>0.75 && ((j.ph*97|0)%10)<6) return;` — same saturated gate, same fixed coin,
+  one array over. They now keep their own (shorter, buzz-free) hour on the same clock: an
+  evening run is a thing, a 3am one is not.
+
+**Census** — PASS, vacuous as expected: every metric flat (±1 noise), tile histogram empty,
+entity counts unchanged (`joggers 31`, `peds 664`). It proves only that nothing threw and the
+seeded stream is untouched.
+
+**Probe** — `probes/probe-curfew.mjs`. No pixels at all: `pedHidden` is a pure function of the
+resident's hour and the clock, so **one frozen world is re-read at 8 clock pins with a zero
+noise floor**. 3 seeds. `Math.random` stubbed before `genWorld` (203) so both builds spawn the
+identical crowd. Reported in the **viewer's units** — the tile a resident stands on — never in
+buzz, since buzz is the mechanism and gating on it would be grading my own homework (205).
+
+| | lively ground keeps | quiet ground keeps |
+| --- | --- | --- |
+| BASE (its own darkest hiding pin) | 57% / 58% / 25% | 49% / 44% / 57% |
+| PATCH (the small hours) | **86% / 83% / 63%** | **27% / 29% / 32%** |
+
+BASE does not separate at all — **and the sign flips by seed**, which is what a uniform coin
+looks like as a number. PATCH separates cleanly, same sign, every seed.
+
+**Cadence** (independent of buzz — it is just a count against the clock):
+`BASE 93 -> 47 -> 47 -> 47 -> 93 -> 93` (two distinct crowd sizes: a cliff down, a cliff back
+up *before dawn*) vs `PATCH 93 -> 81 -> 52 -> 30 -> 73 -> 93` (five: a monotone descent and a
+graded dawn return).
+**Joggers:** BASE has **3/3 out at 3am on every seed** — and on seed 7 its fixed coin hid
+**nobody, ever** (3->3->3->3->3). PATCH: `3->3->2->0->0->0->3`.
+**Control:** the day is a **provably inert regime** (199) — nobody is hidden by daylight in
+either build, so it is a free noise floor: identical on all 3 seeds.
+
+**Perf** — not run, and provably not needed: the diff adds **zero path objects** (it only
+*gates* draws that already existed) and strictly draws **fewer** figures at night. Under 198's
+measured cost model (cost is per path object rasterized) that is free by construction; the only
+new per-frame work is ~140 arithmetic calls. Measuring it would have re-measured the box's noise.
+
+**Visual** — the first pass **FAILed**, and the agent was right: it measured my two frames as
+**250px apart, all of it edge anti-aliasing, with not one pedestrian moving.** The cause was
+**my own probe hygiene**, and it is a new law. Because I kept the `Math.random()` draw count
+identical (good practice — it stops the stream shifting), both builds read the **same `r`** for
+the same resident: HEAD hides `r<0.5`, PATCH hides `r < 0.505 - 0.63*buzz`. On quiet ground
+(buzz 0) **those are the same set.** I had also aimed the camera at the CBD — the one place the
+two builds *agree* (both keep the lively crowd). Re-aimed with `probes/shot-curfew.mjs` at the
+hour they actually diverge (`dayT=0.04`, where HEAD has all 93 back out) and at the ground that
+actually empties (the densest cluster of residents who go home, located, not guessed — 201).
+
+Re-shot, **both seeds PASS, blind, with the A/B labels inverted between the seeds and flipped
+against the previous round.** Both agents independently picked the patched build and named the
+mechanism unprompted — *"movement is now correlated with light"*; *"the life stays where the
+light is"*; *"a dozen-plus people idling on unlit parkland at 3am reads like a bug, not a
+city."* Both located the **jogger** fix without being told which frame was which (*"cityA: none
+running. cityB: yes, figures strung along the shore"*). Both confirmed it thins without dying:
+*"it has thinned, not died"*, *"quieter, not lifeless."* No z-order tears, no floating figures,
+no blown-out colour. (Both flagged the cable-car rope crossing the green frame — present in
+*both* builds, and already banked as 203's `polish-tile` legibility job.)
+
+**Verdict: DEEPENED.** The windows learned to keep an hour at 199; now the street does too.
+
+
+## Header bullets rotated out of GROWTH.md (superseded, at iter 220)
+
+Moved to pay for cue (ad) under the 400-line header budget. The 219 downtown recap below is a
+restatement of Iteration 219's own entry (still in `GROWTH.md`, and rotating here in due course);
+its two *general* laws — a saturated roll's `p` is a dead lever, and a spatial preference must be
+pure addition (`m = 1 + B*field`) — were promoted to `SKILL.md` and are not lost. The header keeps
+only the live warnings.
+
+> ✅ **THE DOWNTOWN IS BUILT (219, Urban × Deepen, SHIPPED).** 217's and 218's long prescription is **ARCHIVED** —
+> the seam is closed. What it settled, and what it leaves: **(1) The COM fork (`solvista.html:1443`) is ONE-SHOT
+> (max 1 hit/cell), so `p` IS a live lever there** — the structural opposite of the tower roll, which re-picks each
+> COM cell ~60x and saturates (218). Towers rise only on COM, so **COM siting is where downtown is decided.**
+> **(2) The ship is `m=1+2.0*ccore` on both shop rolls — PURE ADDITION:** at the rim `ccore=0`, so the rule is
+> **byte-identical** and only the core is lifted. Tower **MASS** in ring 0-8 went **24/33/17% → 41/45/42%** of total
+> tower height on the 3 seeds; **four blind agents now point at the true CBD.** Totals barely moved (COM 649→673)
+> because the towers (239→304) come from **ARRANGEMENT** — `com>=2` is already a clustering predicate.
+> **(3) THE TRAP IS THE OBVIOUS DESIGN: scaling the rolls DOWN at the rim (`m=A+B*core`, A<1) CUTS COM city-wide —
+> and COM is the TOWER SUBSTRATE — so it cost 14-27% of the pop while *LOSING* core towers** (42→29/38/32/33), and
+> flattered the ratio, which is 218's own sin. A **wider falloff** is the other trap: it lifts the whole city and
+> **doubled the rim** (148→205).

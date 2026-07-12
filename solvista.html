@@ -462,7 +462,12 @@ function col(name,f){ /* f: face brightness */
   c='rgb('+Math.min(255,b[0]*TINT[0]*f|0)+','+Math.min(255,b[1]*TINT[1]*f|0)+','+Math.min(255,b[2]*TINT[2]*f|0)+')';
   return CCACHE[k]=c;
 }
-/* SAND, AFTER DARK. A flat per-channel multiply is NOT A TINT ON A WARM SURFACE —
+/* A WARM SURFACE, AFTER DARK. (Named for the sand, which was the first host found -
+   iter 214 - but this is the city's general night wash for any surface whose identity is
+   its WARMTH. Iter 220 routed the built MASONRY through it too: RES and MID draw their
+   bodies and roofs from the same warm-neutral palette and were rotating violet with it.
+   Callers: the beach/dune sand, and the houses and walk-ups.)
+   A flat per-channel multiply is NOT A TINT ON A WARM SURFACE —
    it is a HUE ROTATION. The night tint is [.42,.42,.58]: it lifts blue and crushes
    green, which is right for a cool night wash but is destructive to any surface whose
    identity is its warmth. Sand's base [238,220,178] runs R>G>B (hue 40, chroma 77);
@@ -5003,11 +5008,26 @@ function drawBuilding(c,x,y,gx,gy){
     const bodyN=tone>0.56?'cream':(tone>0.27?'terra':'sandDk');
     const rv=hashCell(x,y,seedNum^0x7A9F);
     const roofN=rv<0.45?(bodyN==='terra'?'terraDk':'terra'):(rv<0.72?'creamDk':(rv<0.9?'sage':'coral'));
-    prism(gx,gy-0.06,0.30,0.26,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
-    prism(gx,gy-0.06,0.34,0.30,h,h+2,col(roofN,1.02),col(roofN,0.6),col(roofN,0.82));
+    /* MASONRY GOES THROUGH sandCol(), NOT col() -- iter 214's hue-rotation bug on the
+       city's biggest built surface. The night tint [.42,.42,.58] lifts blue and crushes
+       green, which INVERTS the channel order of a warm neutral: cream [244,232,208]
+       comes out [103,97,121] (B>R>G) and creamDk [221,205,172] -> [93,86,100] -- both
+       lavender -- while sandDk [212,190,146] -> [89,80,85] lands at chroma 9, i.e. grey.
+       Those are exactly the tones bodyN/roofN reach for most, so the houses turned
+       violet after dark: measured RES vs ROAD falls 22 -> 6 RGB units (day -> night),
+       and both stand at hue ~350. The roofs and the asphalt become one colour, which is
+       what 217's step-back agent called "a desaturated slate-violet blob where towers,
+       roads and low buildings are one value". Same bug, same fix as the sand: a
+       luminance-matched, hue-preserving wash, so stucco stays stucco and terracotta
+       stays terracotta. The GLASS types (TOWER/COM) deliberately keep the cool tint --
+       their identity IS coolness, they hold their chroma (19 -> 17) and the tint cannot
+       rotate them -- so the night city now separates into WARM MASONRY against COOL
+       glass and asphalt, which is how a lit city actually reads. */
+    prism(gx,gy-0.06,0.30,0.26,0,h,sandCol(bodyN,1),sandCol(bodyN,0.62),sandCol(bodyN,0.85));
+    prism(gx,gy-0.06,0.34,0.30,h,h+2,sandCol(roofN,1.02),sandCol(roofN,0.6),sandCol(roofN,0.82));
     winBandR(gx,gy-0.06,0.30,0.26,h*0.35,h*0.62,x,y,0x1DE7,0.8,lit*0.8); /* window strip */
     if(hashCell(x,y,seedNum^0x5C05)<0.3) /* brick chimney */
-      prism(gx+0.15,gy-0.24,0.045,0.04,h+2,h+6,col('brick',1),col('brick',0.6),col('brick',0.85));
+      prism(gx+0.15,gy-0.24,0.045,0.04,h+2,h+6,sandCol('brick',1),sandCol('brick',0.6),sandCol('brick',0.85));
     if(c.solar) /* rooftop solar — adopted by the diffusion CA */
       prism(gx+0.04,gy-0.12,0.13,0.09,h+2,h+3,col('solar',1.15),col('solar',0.7),col('solar',0.9));
     if(v>0.62&&v<0.8){ /* backyard pool */
@@ -5116,12 +5136,15 @@ function drawBuilding(c,x,y,gx,gy){
     const en=cellAt(x+1,y);
     const join=!!en&&en.t===T.MID&&Math.min(h,en.h)>6&&hashCell(x+1,y,seedNum^0x4E27)<0.72;
     const jx=join?0.16:0, ab=join?0.5:0.34;
-    prism(gx+jx,gy,ab,0.30,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
+    /* masonry -> sandCol(), exactly as RES: the walk-up draws bodyN/roofN from the same
+       warm-neutral palette and rotated violet after dark with it. It is the most common
+       building in the city by 4x, so it carries most of the built mass's night colour. */
+    prism(gx+jx,gy,ab,0.30,0,h,sandCol(bodyN,1),sandCol(bodyN,0.62),sandCol(bodyN,0.85));
     for(let z=ph;z<h-4;z+=fp){
       winBandR(gx+jx,gy,ab,0.30,z,z+bt,x,y,0x1DE7,0.82,lit);
       if(rails)bandR(gx+jx,gy,ab+0.008,0.308,z+bt,z+bt+0.9,col('white',0.95)); /* balcony rails */
     }
-    prism(gx+jx,gy,ab+cw,0.30+cw,h,rz,col(roofN,1),col(roofN,0.6),col(roofN,0.82));
+    prism(gx+jx,gy,ab+cw,0.30+cw,h,rz,sandCol(roofN,1),sandCol(roofN,0.6),sandCol(roofN,0.82));
     /* the roof furniture rides the shifted deck — at jx=0.16 a centred green roof
        would hang 0.10 of a cell off the western eave — and now it rides the crown's
        height too (`rz`), or a set-back attic would leave the solar floating in air */
