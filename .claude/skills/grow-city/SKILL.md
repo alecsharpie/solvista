@@ -1054,6 +1054,21 @@ vector, whatever it is.
   grounding of every tree in the city, and that is a good trade); (c) **a step-back should name the SUSPECT, not
   the FIX.** Naming the fix converts the next iteration into a foregone conclusion and spends it proving the
   step-back wrong. `probes/probe-shadcost.mjs` is the reusable table — rerun it before reopening any draw-cost lever.
+- **A STABLE INTERLEAVED TIMING DELTA CAN STILL BE PURE NOISE — when you cannot EXPLAIN a cost, stop timing and COUNT
+  PATH OBJECTS (iter 216).** Every perf law here says *interleave against pristine HEAD, min per variant*, because
+  consecutive passes lie (117). True — but it leaves the impression that an interleaved number is therefore
+  **trustworthy**, and it is not. Two interleaved A/B rounds graded 216's draw-only facade change at a *stable* day
+  **+2.2% / +2.8%** (night +0.4/+0.1). Stable, repeated, and **entirely machine load** — 117's own false signal
+  (+25.5/+26.0/+26.5% on a diff with **zero draw calls**) wearing the interleave as camouflage. The way out is not
+  another round: it is to **change instrument.** 198 established that cost on this canvas is **per path object**, so
+  path-object count is a **deterministic, load-immune proxy for cost**, and `probes/probe-drawbudget.mjs` prints it.
+  216's edit measured **104,745 → 104,753 path objects (+8, +0.008%)** with `bandS` byte-identical: **+8 objects
+  cannot cost 2.5% of a frame**, so the verdict is FREE and the timing gate was reporting the weather. ⇒ **Reach for
+  the deterministic instrument whenever the timing gate's number has no MECHANISM behind it.** This is the third time
+  the loop has paid for the same shape (with 200 and 205): **when two instruments disagree, ask which one measures the
+  thing that CAUSES the effect — don't just re-run whichever is easiest to re-run.** Corollary, worth doing on any
+  draw change: **hold the MEAN of whatever you jitter** (98's hold-the-mean law) and the path count — hence the cost —
+  stays flat *by construction*, so the perf question never opens at all.
 - **THE PROBE READS THE CANVAS; THE USER SEES THE CANVAS *PLUS THE DOM* (iter 200).** Every probe in
   `probes/` measures `cvs.getContext('2d').getImageData()` — and the artifact's HUD is **not in the
   canvas**. `.placard` is a DOM card that owns the whole **top-left corner** (`left:20px`,
@@ -1197,6 +1212,13 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   (patch-vs-HEAD whole-frame isolation with the floor measured in-run), `shot-nightsand.mjs` (the coast
   camera: whole-city + a close-up AIMED at the longest run of sea-facing beach, plus a day control;
   freezes in-page and forces `syncSky`/`syncStats` per 204).
+  `probe-facade.mjs` (**is a building type WALLPAPER?** — wraps `winBandR` and records the true SCREEN
+  ROW of every window band the frame issues, so it measures the *draw*, not the source, and runs
+  unchanged on HEAD and patch. Reports distinct stripe rhythms, the top rhythm's share of the stock, and
+  the corduroy number: **what % of a building's bands land on an IDENTICAL screen row as its E-W
+  neighbour's**. MID vs TOWER is treatment vs control), `shot-facade.mjs` (the facade camera: aims at the
+  densest MID cluster — deterministic per seed, so HEAD and patch frame the same hex — day + night + a
+  whole-city frame),
   `probe-seamhost.mjs` (**does the sand<->green seam exist, and where?** — 6-seed adjacency census;
   the dead-code check run *before* 215 designed anything), `probe-seam.mjs` (**cross-boundary colour
   MIXING** — green ink landing on seam sand / tan ink on seam lawn, with off-seam sand and lawn as the

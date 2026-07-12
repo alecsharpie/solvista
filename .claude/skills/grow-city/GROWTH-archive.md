@@ -13283,3 +13283,103 @@ built). The *finding* is worth more than the feature would have been: it removes
 tempting Water vectors from the board and names the one thing that would unlock them — **build the
 quay first.**
 
+
+<!-- Header bullets rotated out of GROWTH.md at iteration 216 (closed cues; the
+     header is a fixed 400-line budget, so to add a line you must cut a line). -->
+
+## Header bullet — cue (q), rotated at 216 (closed by 214)
+
+**(q) CLOSED by 214 — a HUE bug, not luminance and not texture: the night tint rotates warm sand to violet, landing
+the beach at hue ~308 beside the ROAD. `sandCol()` dims it with a hue-preserving wash. Body archived; the LAW is in
+SKILL.md. Its live descendant is cue (u); (v) was closed by 215.**
+
+## Header bullet — cue (v), rotated at 216 (closed by 215)
+
+**(v) CLOSED by 215** — `seamVeg()` interdigitates the boundary (marram tufts out of the sand, blown
+sand into the lawn; green ink on seam sand **+36..+62%**, tan ink on seam lawn **+34..+45%**, both
+off-seam controls **0 px**). Cue (v) guessed DUNE's `DUNEMARRAM` might already sit on the seam — **it
+does not**: marram draws on the dune CREST, and only 10-18 of ~55 seam hexes are marram dunes.
+⚠ **Banked nit (seed 7, on the PASSing frame): at extreme zoom the sand-side tufts trend into a loose
+vertical band that hints where the edge is** — never resolving into the hex staircase, but if Nature
+takes another coast lap, scatter depth `f` harder rather than adding more marks.
+
+## Header bullet — cue (r), rotated at 216 (closed by 216, this iteration)
+
+**(r) A BUILDING TYPE HAS BECOME WALLPAPER (212, Urban × Polish suspect).** Also raised unprompted by both agents,
+independently, naming *different* types — seed 42: *"the red-roofed podium block repeats densely enough in the
+mid-city to become texture noise rather than buildings"*; seed 7: *"the striped high-rise tower is the single most
+repeated element and at this density it has become wallpaper."* This **CONVERGES with the header's own standing
+note** that Urban's ground plane is spent (209) and only **facades** and the harbour apron remain — the facades are
+now independently indicted by two blind reads. Urban is additive- and Connect-saturated, so this IS its next lap.
+
+## Iteration 206 — the gardens the city never dug (2026-07-12) [Nature × New CA rule]
+
+**Vector.** Nature × New CA rule — but the *audit* kind (iter 107's move: rewrite a rule that
+never fired, at zero content cost). Rotation owed Nature; the header banked a Nature cue
+("GARDEN is the last season-mute tile — Deepen it before a tooltip"). The cue was **right about
+the code and wrong about the priority**, and one census read said so: **GARDEN = 6 hexes across
+the whole 9-cell matrix**, and the rule is year-gated to 2008+, so that is **~2 per city at 2035
+and zero everywhere else**. Deepening a tile you cannot find is beautiful code nobody sees, so
+the vector became: *why are there no gardens?* (205's law, cashed one lap later: **check the host
+exists before you believe the tell**.)
+
+**The defect (`probes/probe-gardenhost.mjs`, 6 seeds × 4 eras).** The rule wanted
+`RES && countAround(...,RES)>=3`. Houses are *not* scarce — the city holds 287–369 RES throughout.
+But **a house ringed by houses is precisely the house the upgrade pass turns into a mid-rise**, so
+the pool it drew from **collapsed 40 → 15 across the only years the rule was allowed to run**:
+
+```
+  2008:  RES 369   host(RES,>=3 RES) 40.2   gardens 0.0
+  2015:  RES 387   host             37.7    gardens 0.5
+  2025:  RES 349   host             27.7    gardens 0.7
+  2035:  RES 287   host             15.2    gardens 1.5     <- seed 5: host 3, gardens 0. Ever.
+```
+
+**It is `T.MARKET`'s defect one tile over (107): a siting rule that asks for the condition the
+upgrade pass saturates past.** The probe also **killed my own next idea before I wrote it** — the
+rule's comment says gardens are dug *"between the houses"* while the code converts a **house**, so
+the honest host looked like the vacant lot. It is not: `EMPTY` with ≥2 RES neighbours falls
+**85 → 6.5** by 2035 and **with a road adjacent it is 0.0**. The development pass eats every gap.
+
+**Change.** `RES` is the wrong definition of *home* — **a mid-rise is still housing.** New shared
+`HOMES = {RES, MID}` (TOWER excluded on purpose: that is skyline, not a neighbourhood), and the
+neighbour test counts homes. Pool **2.5×** and *stable* through maturity (85→94→82→41 vs 40→38→27→15);
+seed 5's host goes **3 → 30**.
+
+**Then the visual gate FAILed on seed 5 — and it was RIGHT** (2nd time in 3 laps: 200's sun, 205's
+ship). Not for its stated reason. It claimed the garden was off-centre and had "no lawn hex"; the
+camera was in fact aimed true (`probe-gardenvis.mjs`, centroid **17px** off on an 88px hex). The
+truth was worse: **seed 5's garden rendered 0 px of ink against 8,924 px drawn on top — 100%
+occluded.** Across 23 gardens: **mean 58% occluded, 7 of 23 ≥86% buried.** A garden sited *in among
+the homes* sits behind mid-rises, and **draw order is depth order**. I had stated the claim in
+**cells** when it is a claim about **what the eye sees** (205's law, again).
+
+**The lever, measured before mandated (198) — and then measured on the OTHER side.** Front-row
+occluders separate cleanly (tall front: 2340px ink, 4/11 buried · clear front: 4354px, 2/12), so I
+mandated a hard `openFront()` gate — and **it starved the rule: GARDEN 14 → 5, worse than the bug.**
+`HOMES` requires ≥3 home neighbours and `MID` is *both* a home *and* the thing that buries you: the
+two predicates fight. So it ships as a **preference, not a gate** — `rng() < (openFront ? 0.075 : 0.02)`
+— which is also the in-world rule (nobody digs allotments in the permanent shade of the block next
+door). New law in SKILL.md: **a lever has two ledgers — measure its cost to the POPULATION, not just
+its effect on the INSTANCE.**
+
+**Census.** PASS, 0 page errors. Core flat: pop −133 (−0.1%), roads +3, developed −23 (−0.4%).
+**Tile histogram: `GARDEN 6 → 17` (+11).**
+
+**Probe (`probe-gardenvis.mjs`, 24 gardens / 6 seeds).** mean occluded **58% → 40%** · fully invisible
+**1 → 0** · ≥86% buried **7/23 → 1/24** · front-clear share **52% → 71%** · gardens/city **1.5 → 4.0**,
+and **no seed is left at zero** (seed 5: 0 → 2, its best rendering **4% occluded, 8363 px**).
+
+**Visual.** PASS on seeds 42 and 5 (seed 5 re-shot after the fix). Both agents, asked to *locate*,
+independently reported the mechanism without being told it: *"the taller mid-rises are behind/beside
+it rather than in front, so the plot is open to light and clearly visible."* Whole-city frames clean
+on both.
+
+**Verdict: FIXED.** A rule that had under-fired for the artifact's entire life now fires, and the
+gardens it digs can be seen. **The banked seasonal cue is now UNBLOCKED and worth cashing** — GARDEN's
+draw still reads no `year` at all (the last season-mute vegetation tile), and it finally has a host.
+
+**Reusable:** `openFront(x,y)` + `TALLT` (next to `countAround`) — *is the hex in front of this one
+clear?* Any ground-level thing that must be SEEN should ask before siting itself; **204's buried
+service bays (cue n) are this same defect one domain over.**
+

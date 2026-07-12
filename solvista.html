@@ -5052,6 +5052,32 @@ function drawBuilding(c,x,y,gx,gy){
     const bodyN=tone>0.68?'terra':(tone>0.36?'cream':'sandDk');
     let roofN=mv<0.40?'terraDk':(mv<0.75?'creamDk':'sandDk');
     if(roofN===bodyN)roofN='terraDk'; /* a sandDk parapet on a sandDk block reads flat */
+    /* The fourth sibling of 99/103/110, and the one they left standing. Those three
+       decoupled a building's COLOUR from its height; nobody ever decoupled its
+       FACADE. bandS() subtracts z straight from the screen y, so a band's z IS a
+       screen row — and the walk-up's bands were nailed to `z=5; z+=7` for every
+       walk-up in the city. Measured: ~475 mid-rises (the most common building by
+       4x), ONE massing, THREE distinct stripe rhythms with the top one on HALF the
+       stock, and — because same-row neighbours share a base y — **100% of E-W
+       neighbour pairs wore their window bands on IDENTICAL screen rows, on every
+       seed**. A whole block's windows therefore chained into one continuous
+       corduroy, which is what two holistic agents independently called texture
+       noise and wallpaper (iter 212; they blamed the TOWER, which is measurably
+       innocent — 42-47 rhythms, top 6%).
+         So the rhythm becomes a property of the BUILDING, not of its type: its own
+       floor pitch, its own first sill, its own crown, its own balconies — four
+       independent seed-salted draws on top of the two colour axes. Means are held
+       (pitch 7.0, sill 5.0, the old 3/7 window:wall ratio, the old ~22% balcony
+       rate) per 98's hold-the-mean law, so band count — and winBandR is ONE path
+       object per band — stays flat and the frame pays nothing. hashCell, no rng(),
+       no terrain: stream and pop flat. */
+    const fp=5.6+hashCell(x,y,seedNum^0x2B8D)*2.8;   /* floor pitch, mean 7.0 */
+    const ph=3.6+hashCell(x,y,seedNum^0x6C4A)*2.8;   /* first sill,  mean 5.0 */
+    const bt=fp*0.43;                                /* window:wall ratio, held at the old 3/7 */
+    const rails=hashCell(x,y,seedNum^0x11C3)<0.24;   /* balconies were a tell for 'terra' — now their own draw */
+    const cv=hashCell(x,y,seedNum^0x9A57);           /* the crown: overhanging eave / parapet / set-back attic */
+    const cw=cv<0.34?0.055:(cv<0.72?0.02:-0.045), ch=cv<0.34?1.1:(cv<0.72?1.6:3.4);
+    const rz=h+ch;                                   /* the roof deck: everything above rides it, not a constant */
     /* Street wall. A walk-up bodies out 0.68 of a cell, so an E-W pair leaves a
        0.32 gap and the mid-rise mass read as detached boxes rather than terraces.
        (Only the E-W gap shows: along the two diagonal axes the row in front is
@@ -5074,18 +5100,19 @@ function drawBuilding(c,x,y,gx,gy){
     const join=!!en&&en.t===T.MID&&Math.min(h,en.h)>6&&hashCell(x+1,y,seedNum^0x4E27)<0.72;
     const jx=join?0.16:0, ab=join?0.5:0.34;
     prism(gx+jx,gy,ab,0.30,0,h,col(bodyN,1),col(bodyN,0.62),col(bodyN,0.85));
-    for(let z=5;z<h-4;z+=7){
-      winBandR(gx+jx,gy,ab,0.30,z,z+3,x,y,0x1DE7,0.82,lit);
-      if(bodyN==='terra')bandR(gx+jx,gy,ab+0.008,0.308,z+3,z+3.9,col('white',0.95)); /* balcony rails */
+    for(let z=ph;z<h-4;z+=fp){
+      winBandR(gx+jx,gy,ab,0.30,z,z+bt,x,y,0x1DE7,0.82,lit);
+      if(rails)bandR(gx+jx,gy,ab+0.008,0.308,z+bt,z+bt+0.9,col('white',0.95)); /* balcony rails */
     }
-    prism(gx+jx,gy,ab+0.02,0.32,h,h+1.6,col(roofN,1),col(roofN,0.6),col(roofN,0.82));
+    prism(gx+jx,gy,ab+cw,0.30+cw,h,rz,col(roofN,1),col(roofN,0.6),col(roofN,0.82));
     /* the roof furniture rides the shifted deck — at jx=0.16 a centred green roof
-       would hang 0.10 of a cell off the western eave */
+       would hang 0.10 of a cell off the western eave — and now it rides the crown's
+       height too (`rz`), or a set-back attic would leave the solar floating in air */
     if(c.solar) /* rooftop solar array */
-      prism(gx+jx-0.08,gy+0.02,0.16,0.12,h+1.6,h+2.4,col('solar',1.15),col('solar',0.7),col('solar',0.9));
+      prism(gx+jx-0.08,gy+0.02,0.16,0.12,rz,rz+0.8,col('solar',1.15),col('solar',0.7),col('solar',0.9));
     if(c.groof){ /* green roof garden — planted, not just a bare deck */
-      prism(gx+jx,gy,0.30,0.26,h+1.6,h+3.2,col('sage',1.06),col('sage',0.62),col('sage',0.85));
-      const[gcx,gcy]=px(gx+jx,gy), ry=gcy-h-4;
+      prism(gx+jx,gy,0.30,0.26,rz,rz+1.6,col('sage',1.06),col('sage',0.62),col('sage',0.85));
+      const[gcx,gcy]=px(gx+jx,gy), ry=gcy-rz-2.4;
       ctx.fillStyle=col('sage',0.8);                                   /* planter shrubs */
       ctx.beginPath();ctx.arc(gcx-2.4,ry+0.3,1.5,0,7);ctx.fill();
       ctx.fillStyle=col('sage',1.16);
@@ -5100,11 +5127,11 @@ function drawBuilding(c,x,y,gx,gy){
     if(v>0.5){ /* roof garden fringe */
       ctx.fillStyle=col('sage',1);
       const[cx,cy]=px(gx+jx,gy);
-      ctx.fillRect(cx-4,cy-h-3.4,8,2);
+      ctx.fillRect(cx-4,cy-rz-1.8,8,2);
     } else if(!c.solar&&!c.groof&&hashCell(x,y,seedNum^0x7A7E)<0.3){
       /* the older walk-ups keep a timber water tank on the roof */
       const[cx,cy]=px(gx+jx,gy);
-      const tx=cx+3.1,ty=cy-h-1.6;
+      const tx=cx+3.1,ty=cy-rz;
       ctx.strokeStyle=col('ink',0.75);ctx.lineWidth=0.6;               /* legs */
       ctx.beginPath();ctx.moveTo(tx-1.5,ty);ctx.lineTo(tx-1.5,ty-2);
       ctx.moveTo(tx+1.5,ty);ctx.lineTo(tx+1.5,ty-2);ctx.stroke();
