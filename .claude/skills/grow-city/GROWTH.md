@@ -23,7 +23,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
@@ -37,32 +37,27 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (which line /
   route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: Sky **208** · People **210** ·
-  Transport **211** · Civic **213** · Water **214** · Nature **215** · Urban **216**, ~~**218**~~. (**217 = the 23rd
-  step-back; the next is 222.**)
-  🔴 **219 STILL OWES THE DOWNTOWN FIX — BUT NOT WHERE 217 SENT IT. 218 refuted the prescription and found the real
-  seam one layer up (Urban × Deepen).** ⚠ **DO NOT touch the tower rule — 218 took it to its ceiling and reverted.**
-  What 218 MEASURED (`probes/probe-towerroll.mjs`, `probe-quorum.mjs`, world data, 3 seeds):
-  **(1) The placement PROBABILITY is a DEAD LEVER — it converts 100.0% of the eligible pool on every seed** (zero
-  cells anywhere are still COM + unseaside + holding a quorum). ~60 samples/cell ⇒ every COM cell that ever reaches
-  the quorum towers *whatever `p` is*. **`p` sets TIMING, never PLACEMENT.** 98's own comment said this; 217
-  prescribed it anyway. **(2) The QUORUM works but hits a CEILING**: `com+2*core>=2` doubles core/rim contrast
-  (2.26x→**4.50x**), passes every gate (pop +5.5%, `tallTowers` +39%) — and **still loses the visual gate 4 agents to
-  0**, because it converts **33 of the ~38 commercial cells the core HAS** (ring 0-4: *zero* COM left) while the rim
-  holds **~139**. Seed 7 ends with **15 towers downtown vs 34 past ring 23.** **(3) 205's sin, committed:** a `TOWER %
-  of developed` **ratio** is not what the eye reads — **the eye counts MASS.** ⇒ **THE ROOT CAUSE IS COM SITING
-  (`solvista.html:1443`), the SAME defect one layer up:** `shop=(roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3)`
-  — corner lots and neighbours, **nothing knows where downtown is**; COM-origin share is 50% in ring 0-4 then **flat
-  25-36% to the rim**. Towers rise ONLY on COM, so a uniform COM layer *forces* a uniform skyline. **Give `shop` a
-  `core` preference and the EXISTING `com>=2` quorum concentrates towers automatically — it is already a clustering
-  predicate.** ⚠ **PREFERENCE, NOT GATE** (206; 218's V3/V4 raised the rim bar and destroyed **36% of the towers and
-  19% of the pop**). ⚠ **HOLD THE MEAN** (98) — total COM must not collapse or shops/cafes/`walkPct` go with it.
-  ⚠ **Judge on ALL 3 SEEDS in the VIEWER'S UNITS (tower COUNT core vs rim), never a ratio** — 218's relaxation
-  reshuffled the stream and swung seed 42's rim towers **25→37 (+48%)**, swamping its own signal on 1 seed in 3.
+  Transport **211** · Civic **213** · Water **214** · Nature **215** · Urban **216**, ~~**218**~~, **219**.
+  (**217 = the 23rd step-back; the next is 222.**)
+  ✅ **THE DOWNTOWN IS BUILT (219, Urban × Deepen, SHIPPED).** 217's and 218's long prescription is **ARCHIVED** —
+  the seam is closed. What it settled, and what it leaves: **(1) The COM fork (`solvista.html:1443`) is ONE-SHOT
+  (max 1 hit/cell), so `p` IS a live lever there** — the structural opposite of the tower roll, which re-picks each
+  COM cell ~60x and saturates (218). Towers rise only on COM, so **COM siting is where downtown is decided.**
+  **(2) The ship is `m=1+2.0*ccore` on both shop rolls — PURE ADDITION:** at the rim `ccore=0`, so the rule is
+  **byte-identical** and only the core is lifted. Tower **MASS** in ring 0-8 went **24/33/17% → 41/45/42%** of total
+  tower height on the 3 seeds; **four blind agents now point at the true CBD.** Totals barely moved (COM 649→673)
+  because the towers (239→304) come from **ARRANGEMENT** — `com>=2` is already a clustering predicate.
+  **(3) THE TRAP IS THE OBVIOUS DESIGN: scaling the rolls DOWN at the rim (`m=A+B*core`, A<1) CUTS COM city-wide —
+  and COM is the TOWER SUBSTRATE — so it cost 14-27% of the pop while *LOSING* core towers** (42→29/38/32/33), and
+  flattered the ratio, which is 218's own sin. A **wider falloff** is the other trap: it lifts the whole city and
+  **doubled the rim** (148→205). ⚠ **DO NOT re-open the tower placement roll (dead lever, 218) NOR the COM fork
+  (spent, 219).** The one defect left is cue **(ac)** — and it is the third rung of the same ladder.
   **AFTER 219 the lap owes SKY (stalest, 208), then PEOPLE (210).** But **Sky is post-saturation (Deepen/Fix ONLY)**
   and its only live cue **(s) is CONSTRAINED and low-value** (read it first) — so if Sky has nothing, the strongest
-  cues are **(aa) the night built-mass collapse** (Urban/Water × Polish, a one-line lever), **(y) the scorched inland
-  cluster** (Nature × Polish) and **(z) the clipped HUD label** (Interaction/UX × Polish, a stale column). Nature's
-  other cue, **GARDEN's staggered beds** (Nature × Deepen), is held by cue (p).
+  cues are **(ac) the flat skyline taper** (Urban × Polish, the direct sequel to 219), **(aa) the night built-mass
+  collapse** (Urban/Water × Polish, a one-line lever), **(y) the scorched inland cluster** (Nature × Polish) and
+  **(z) the clipped HUD label** (Interaction/UX × Polish, a stale column). Nature's other cue, **GARDEN's staggered
+  beds** (Nature × Deepen), is held by cue (p).
   **STEERING FROM THE LAST LAPS — recaps live in their own entries / the archive; only the WARNINGS live here.**
   **213 (Civic × Deepen):** ⚠ **`nightDeep()` IS PINNED AT 1 ALL DAY** — harmless in a draw (`LITAMT` is 0 anyway),
   a trap for any NON-draw reader, so guard every reader. **The civic night-light audit is DONE — do not re-run it**;
@@ -129,17 +124,17 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   constant so they cannot drift — 123; 213's `civOpen()`). **⚠ A tick-rule cannot read the reach maps (151):**
   `recount()` never runs in the sim loop, so `rGreen`/`rShop`/`rServ` are STALE inside `tick()` — recompute locally.
   (**222 = the next holistic step-back**; 217 was the last, all 23 done. 205's finding is held by cue (o).)
-  **212 (the 22nd) = a CLEAN BILL; both its FAILs were REFUTED by measurement** (body archived at 217). **The LESSON
-  is a law in SKILL.md — in a whole-frame read, the FAILs are where an agent is WRONG and the ASIDES are where it is
-  RIGHT — and it has now paid out FIVE times running (213, 214×2, 215, and hardest of all 217, where ALL FOUR agent
-  FAILs were wrong or overstated while the ASIDES held both real finds). MINE THE ASIDES.**
+  **THE FAIL/ASIDE LAW (from 212, now a law in SKILL.md — the header keeps only the tally): in a whole-frame read the
+  FAILs are where an agent is WRONG and the ASIDES are where it is RIGHT. It has now paid out SEVEN laps running**
+  (213, 214×2, 215, 217 — where ALL FOUR agent FAILs were wrong while the asides held both real finds — and **219,
+  where both FAILs were refuted by one render-free probe and the surviving aside became cue (ac)**). **MINE THE ASIDES.**
   Perf ARC (same refs as 202/207/212, directly comparable): the lap (213-216) **day +5.6% / night +1.0%** vs 212; vs
   `7e2ac2c` (177, 40 iters) **+11.9% / +7.6%**; vs `5f01426` (162, 55 iters) **+14.0% / +8.3%** (abs: day 40.2-43.1ms
-  · night 46.4-49.1ms). Priors: 202 read +7.5/+4.1 and +8.6/+5.7; 207 +7.2/+5.1 and +9.5/+6.0; 212 +8.7/+4.8 and
-  +10.5/+7.3. So this is the **largest single-lap arc jump on record** (~+3.2pp day in ONE 4-iteration lap, where the
-  previous TEN moved ~+1.2pp) — **but it has a NAMED, MEASURED, ALREADY-PAID mechanism and is NOT a new suspect:
-  215's `seamVeg` was priced at ~+3% day when it shipped and knowingly accepted** (692 path objects, 228 of them line
-  STROKES). Arc rate is still ~**+0.25%/iteration**; diffuse, not accelerating; **ACCEPTED — do NOT open a perf lap.**
+  · night 46.4-49.1ms). Priors: 202 +7.5/+4.1 & +8.6/+5.7; 207 +7.2/+5.1 & +9.5/+6.0; 212 +8.7/+4.8 & +10.5/+7.3.
+  Largest single-lap arc jump on record (~+3.2pp day in ONE lap vs ~+1.2pp over the previous TEN) — **but it has a
+  NAMED, MEASURED, ALREADY-PAID mechanism and is NOT a new suspect: 215's `seamVeg` was priced at ~+3% day when it
+  shipped and knowingly accepted** (692 path objects, 228 line STROKES). Arc rate ~**+0.25%/iteration**; diffuse, not
+  accelerating; **ACCEPTED — do NOT open a perf lap.** ⚠ **219 is world-data only (no new draw call) — arc unmoved.**
   ⚠ **This lap is now the best evidence for cue (x):** a lap whose only heavy addition was **strokes** cost ~**4×**
   what 198's per-path-object model predicts for fills. The **stroke-vs-fill sweep at equal path count is the
   harness's best-supported open perf question.**
@@ -229,14 +224,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   +25.5/+26.0/+26.5% on a diff with **zero draw calls**, and the identical bytes read +3.5% twenty minutes later.
   Only an **interleaved A/B/A/B against pristine HEAD** (min per variant) reads true; `perfab.mjs` implements it.
   (Reasoning archived at 199.)
-- **`?year=` IS NOW A URL HOOK (iter 108) — the seasons are finally testable.** `window.__setYear`
-  had existed since the season pass but was **never wired to the query string**, so no screenshot in
-  this loop's history could pin a *calendar* position: `?warp=61` from `year=1974` always lands on
-  ~2035.0, i.e. **every shot ever taken of this city was in January.** Now
-  `?seed=42&warp=61&year=2035.62` pins high summer. Applied *after* `warp` (warp advances `year`).
-  Use `.02 / .30 / .62 / .87` for winter / spring / the golden dry peak / autumn — those are
-  `applySeason`'s own keyframes. An unreachable test hook is the same defect class as iter 107's
-  unreachable rule: **grep the URL block before assuming a hook you can see is a hook you can use.**
+- **`?year=` is a URL hook (108); keyframes `.02/.30/.62/.87` = winter/spring/dry-peak/autumn. Full text (and
+  139/202's warning that it DRIFTS ~0.167 yr/s while `shoot.mjs` waits — use `probes/shot-stepback.mjs`) is in
+  SKILL.md; the duplicate was archived at 219.**
 - **`?tide=` IS NOW A URL HOOK (iter 113) — the sea is testable, and every prior shot was a lie about it.**
   Same story as `?year=` one dimension over: `TIDE` runs a ~2 min seeded cycle and **no screenshot in this
   loop's history could pin it.** The default is seeded, not neutral — **`?seed=42` loads at TIDE 0.02, dead
@@ -312,22 +302,18 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   reads `Â—`. A `file://` load sniffs UTF-8 and HIDES it, which is why every local shot has looked clean
   for 109 iterations. This is **iter 134's law**, already in SKILL.md, violated in the one place nobody
   re-grepped. Fix: replace both with the escape `'\u2014'` (or ' - '). **Verify over http, not file://.**
-  **(m) SHOWERS ARE HOST-STARVED — do not build "X responds to the rain" (201, `probes/probe-rainhost.mjs`, measured
-  before designing).** Rain is fully realised (shaft, drops, drying damp patch, rainbow) and **nothing on the ground
-  reads `cl.rain`** — a tempting seam. But a shower's ground footprint covers **2–5 hexes TOTAL** (BEACH 0.1–0.2,
-  PARK 0.17–0.31 per shower-frame, at 1–2 rain clouds per seed): at any moment a shower rains on **less than one**
-  picnic/café hex. `T.MARKET` again (the dead-code law) — the vector has no host. Widening the footprint is a Sky
-  change to a tuned draw, and **gradients price by AREA** (see the PERF hole).
-  **(o) THE PORT HAS NO WATERFRONT — do not build "the ship docks / cargo comes ashore / cranes work her / the harbor
-  works are fed by sea" (205, `probes/probe-harborhost.mjs`, 6 seeds, unanimous).** The warehouses sit at
-  `SHOREX-1..-3`, **behind** the coast highway, while the water's edge (`SHORE0`=`SHOREX+5`) is five lots *seaward* of
-  it — so they stand **5-9 hexes from the sea**, the waterline at `harborY` is **BEACH/DUNE/SHOREPARK** on every seed,
-  and **no quay or wharf tile exists**. Solvista is a **roadstead** (an open anchorage), so the anchored freighter is
-  *correct* — however loudly her comment ("waiting on a berth") reads like the label-tell (**205's FALSE-POSITIVE
-  mode**, ⇒ SKILL.md). A port vector must **build the waterfront FIRST**: a terrain lap with real cost, not an
-  entity-motion freebie. **Banked host if one is wanted: the MOLE is real** — `moleSet` is 5-12 cells on all 6 seeds
-  probed (the `path.length>=5` guard bites
-  less often than its comment implies), and it is the artifact's only built structure standing in the water.
+  **(m) SHOWERS ARE HOST-STARVED — do not build "X responds to the rain" (201, `probes/probe-rainhost.mjs`).** Rain is
+  fully realised and **nothing on the ground reads `cl.rain`** — a tempting seam, but a shower's ground footprint is
+  **2–5 hexes TOTAL** (1–2 rain clouds/seed), so at any moment it rains on **less than one** picnic/café hex.
+  `T.MARKET` again (dead-code law) — no host. Widening it is a Sky change to a tuned draw, and **gradients price by
+  AREA** (see the PERF hole).
+  **(o) THE PORT HAS NO WATERFRONT — do not build "the ship docks / cargo comes ashore / cranes work her" (205,
+  `probes/probe-harborhost.mjs`, 6 seeds, unanimous; body in 205's entry).** Warehouses sit **behind** the coast
+  highway, **5-9 hexes from the sea** (`SHORE0`=`SHOREX+5`); the waterline at `harborY` is BEACH/DUNE/SHOREPARK on
+  every seed and **no quay tile exists**. Solvista is a **roadstead**, so the anchored freighter is *correct* — her
+  "waiting on a berth" comment is the label-tell's **FALSE-POSITIVE mode** (⇒ SKILL.md). A port vector must **build
+  the waterfront FIRST** (a terrain lap, not an entity freebie). **Banked host: the MOLE is real** — `moleSet` is
+  5-12 cells on all 6 seeds, the artifact's only built structure standing in the water.
   **(p) CLOSED by 208/209 (body archived); the WARNING is live. ⚠ DO NOT RAISE THE LAWN AMPLITUDE FURTHER.** `grass`
   and `lawn` share a **base colour** `[150,181,122]`, so the dry-season divergence *is* the managed green's whole
   identity: lawns must stay **greener/brighter than the hills at every point in the year** (seed 7's agent already
@@ -335,7 +321,6 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **⚠ GARDEN is STILL MUTE (1.8 → 5.4)** — its ground is mostly raised beds, so the lawn lift barely reaches it. **Its
   own richer cue stands:** staggered per-bed calendars + one shared `gardenPhase()` (**Nature × Deepen; host fixed by
   206; Nature's next lap**).
-  **(q) CLOSED by 214** (body archived at 217). Live descendants: **(u)** the pier deck, and **(aa)** the built mass.
   **(aa) 🔴 AT NIGHT, RES AND ROAD ARE FOUR RGB UNITS APART — 214's hue-rotation bug on the city's BIGGEST SURFACE
   (217, Urban/Water × Polish; `probes/probe-goldenhue.mjs`, 3 seeds).** Night RES = **hue 355, chr 16, lum 79**; night
   ROAD = **hue 360, chr 11, lum 80** — *the residential roofs and the asphalt are the same colour.* PARK↔ROAD falls to
@@ -344,6 +329,17 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   and low buildings are one value."* **Lever: route the built mass's night fills through a luminance-matched,
   hue-preserving wash (`sandCol()`'s trick), one line per call site.** Colour-only ⇒ zero path objects, free. ⚠ Gate
   it at the `LITAMT` 0.35 cut the lit glass uses so **daylight stays byte-identical**.
+  **(ac) 🔴 THE SKYLINE HAS MASS BUT NO TAPER — "a spine, not a crown" (219, Urban × Polish; the THIRD RUNG of the
+  217/218/219 ladder and the next Urban lap).** 219 put the tower MASS downtown (coreH share 41-45%; four blind
+  agents locate the CBD) — and **two agents, on two seeds, independently and unprompted** named what is left:
+  *"a spine, not a crown; no tallest-in-the-middle gradient"* (1234) and *"a local thickening, not a peak — height
+  is flat, no tapering silhouette"* (7). **True, and visible in the code:** height is
+  `c.th=(54+c.v*82)*(0.70+0.66*core)` — the centrality term spans **1.94x** (0.70→1.36) while the per-cell noise
+  `c.v` spans **2.5x** (54→136), so **the noise SWAMPS the signal** and a lucky rim tower out-tops an unlucky core
+  one. ⚠ **NARROW `c.v`'s spread; do NOT steepen `core`** — 98 solved `0.70+0.66*core` to HOLD THE MEAN, and a
+  steeper `core` was tried there and **cost half the city's tall towers**. ⚠ Do not re-open placement (dead lever)
+  or the COM fork (spent). Gate in the viewer's units: a blind "point at the TALLEST tower" must land in the core,
+  and `tallTowers`/pop must not fall.
   **(ab) THE CALENDAR IS LOUD PER-TILE AND QUIET PER-FRAME (217, Sky × Deepen — LOW priority, read before taking).**
   Both agents said *"winter is indistinguishable from day"*; `probe-season` refutes the premise (FARM **87.0**,
   SHOREPARK 52.5, ROAD control 0.6 — the calendar is ALIVE). Theirs was a **frame-share** claim: the biggest-amplitude
@@ -357,14 +353,12 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   don't guess the hosts** — `probes/probe-sandhue.mjs` (night hue+chroma per tile; any WARM surface near **hue ~308,
   chroma <15** has been rotated) and `probes/probe-goldenhue.mjs` (the pairwise-separation form; **any pair under ~15
   RGB units has lost its identity**). ROAD at 308 is FINE — asphalt *is* grey; the bug only bites a warm surface.
-  **(v) CLOSED by 215** (archived). ⚠ **Banked nit:** at extreme zoom the sand-side tufts trend into a loose vertical band — on another coast lap, **scatter depth `f` harder.**
+  **(v) CLOSED by 215** (archived). ⚠ **Nit:** at extreme zoom the sand-side tufts trend into a loose vertical band — on a coast lap, **scatter depth `f` harder.**
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; full statement in the
   PERF bullet's "TWO HOLES" paragraph).** Build a **stroke-vs-fill sweep at equal path-object count**. Two
   mechanisms are already ruled OUT — the `CCACHE` key churn and the per-mark style writes both measured **zero**.
-  **(r) CLOSED by 216** (body archived at 217; its law — the agents *perceived* the wallpaper and *misattributed* its
-  host — ⇒ SKILL.md). ⇒ **FACADES ARE SPENT for Urban**, leaving only the **harbour apron** (cue (o): a port lap must
-  build the waterfront FIRST). **But Urban is NOT out of depth — 217's tower-placement defect is its richest open lap
-  in ~50 iterations; see ROTATION.**
+  **(r) CLOSED by 216** (archived; law ⇒ SKILL.md). ⇒ **FACADES ARE SPENT for Urban**, leaving only the **harbour
+  apron** (cue (o): a port lap must build the waterfront FIRST). **219 closed the downtown lap; Urban's live cue is (ac).**
   **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** *"A small dark
   brown/scorched hex cluster in the mid-left inland block that reads oddly against the surrounding green."* ⚠ The fire
   CA is a **GHOST** (cannot ignite at 2035), so this is almost certainly **LOGGING/clearcut, not BURNT** — **identify
@@ -397,106 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 211 entries before Iteration 209 live in
+> **Archive:** the 212 entries before Iteration 210 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 209 — the ground the city stands on (2026-07-12) [Urban fabric × Deepen]
-
-**Vector.** Urban fabric × Deepen. Rotation owed Urban (stalest, last lap 199) and the
-header pins it **Deepen/Polish only** — additive spent (118), Connect measured-hard twice
-(160/165), roof-furniture closed city-wide. Of the three Deepen targets the header named
-(facades, **ground plane**, harbour apron), the ground plane turned out to be the biggest
-untouched surface in the artifact.
-
-**The seam.** `drawCell`'s `default:` case painted the ground under **every** developed hex
-as one flat `col('sandDk',0.9)` — a house's front garden and a factory's yard wore the
-identical paint — while the very next line gave the `EMPTY` lot beside them a whole
-patchwork *"so the green sheets read as pasture, not paint."* The comment knew the
-principle and applied it only to the land nobody had built on yet. This is the ground-plane
-sibling of 199's tell: not a constant asserting what its value cannot do, but a **comment
-stating a standard the adjacent branch is exempted from**.
-
-**Host check FIRST (`probes/probe-groundvis.mjs`, 206's law: draw order is depth order, so a
-yard buried by the row in front is not a host).** Loud-paint one type's ground, diff vs base,
-count changed px — the diff *is* the visible ground, by construction. 3 seeds, both controls
-at an honest **0 px**:
-
-| ground | cells | visible px | % of frame | px/cell |
-| --- | --- | --- | --- | --- |
-| **RES** | 288 | **35,364** | **2.21%** | 122.8 |
-| MID | 440 | 24,633 | 1.54% | 55.9 |
-| COM | 216 | 15,478 | 0.97% | 71.5 |
-| TOWER | 80 | 5,635 | 0.35% | 70.7 |
-| EMPTY | 49 | 8,760 | 0.55% | 180.0 |
-
-**The developed ground a viewer actually SEES is ~5.2% of the frame, and the RES front
-garden alone is 2.2% — more visible ground than every open lot in the city put together.**
-Not buried at all: the yards are the *most* visible ground there is.
-
-**Change.** One new palette entry (`paving`) and one table:
-`GROUND={RES:['lawn',0.90], MID:['paving',1.00], COM:['paving',1.00], TOWER:['paving',0.94],
-CIVIC:['paving',1.05], IND:['stone',1.25]}` — gardens in the terraces, paving through the
-walk-ups and the core, hardstanding at the works; flecked like the pasture but **quantized to
-5 steps** so `col()`'s `name|f` cache stays small (the road's resurfacing-patch discipline).
-**Colour only: the same single `hexTile` per hex, ZERO new path objects** (198's per-ellipse
-cost model). And because a garden is **`lawn`**, the suburbs join the parks' calendar (208)
-**for free** — the residential fabric was the largest surface the seasons could not reach. A
-garden is drawn *deeper* than a mown park lawn (hedges, shade, shrubs), so it holds its rank
-below PARK while carrying the same year.
-
-**Census.** PASS. Core metrics exactly **+0**, tile histogram **empty**, entity counts flat —
-correct and expected: draw-only, no `rng()`, no terrain, no new tile/entity. Vacuous, so the
-probe is the gate.
-
-**Probe** (`probes/probe-ground.mjs`). Two claims, each with a control that must not move.
-Masks come from the loud-ground hook (wrap `drawCell` to record the cell, wrap `hexTile` to
-paint one type's ground red, diff vs base) so the sample is the host's own pixels — no
-world→screen box, so no neighbour contamination (196). Noise floor **0 px on both builds**.
-- **(1) SEPARATION.** BASE pairwise land-use tone separation **mean 16.4, min 1.0** — RES
-  183,161,118 vs MID 182,160,118: *the garden and the court agreed to within one RGB unit.*
-  PATCH: **mean 43.8, min 6.8** (RES 134,151,102 · MID 181,169,143 · TOWER 172,163,139).
-- **(2) THE SUBURBS JOIN THE YEAR** (a state-response question ⇒ two pins of `year` within
-  one build, run on both — 196). Winter→dry-peak rendered shift:
-  **RES 1.2 → 36.8** · **NEGATIVE control COM (paving, not seasonal) 1.0 → 1.7**, MID 1.1 →
-  1.6, TOWER 0.5 → 0.6 · **POSITIVE control PARK 44.1 → 44.6** (moves on *both* builds, so
-  the pin is live and my edit did not disturb it). RES now carries an amplitude in the
-  parks' own league, on ground that was frozen for the artifact's entire life.
-
-**Perf.** FREE — interleaved A/B vs pristine HEAD (`perfab.mjs`): **day +0.6% · night +0.2%**,
-inside the ~1% noise floor 199 proved on provably-identical code. Structurally it must be:
-same path-object count, one extra `hashCell` per developed hex, 15 extra `col()` cache entries.
-
-**Visual.** Both seeds **VISUAL: PASS**, on frozen `shot-stepback` frames. Both agents were
-asked to **LOCATE, not judge** (108), and both delivered:
-- *Suburbs vs core **from the ground alone**, ignoring roofs and heights* — both drew the
-  paved core as a central mass (~0.48,0.50 / 0.42–0.56 x) ringed by green garden ground, and
-  both said the two are **"clearly separable from ground alone — I did not need roofs or
-  heights."* That is the whole claim, read back to me by someone who could not see the code.
-- *Which frame is the drought?* — **A/B labels deliberately inverted between the seeds** so a
-  coin-flip cannot pass both (199's trick). Seed 42 said **"A"** (truth: A = dry peak); seed 7
-  said **"B"** (truth: B = dry peak). Both cited the suburban yards bleaching to khaki/straw
-  while *"the grey paved core and the beach stay unchanged in both, which is exactly the
-  'only lawn responds' signature."*
-- *Cumulative:* no tears, no floating tiles, no blowout, no muddiness. Both volunteered that
-  the city is **not** too green — *"the greens are confined to the low-density fringe, which
-  actually sharpens the density gradient rather than flattening it."*
-
-**Findings banked.**
-- **The ground plane is now SPENT as an Urban Deepen target.** Of the header's three
-  (facades, ground plane, harbour apron), **facades** and the **harbour apron** remain.
-- **A comment that states a standard the adjacent branch is exempted from is a tell** — the
-  sibling of 199's constant. `EMPTY` got the anti-"paint" patchwork; the 1,000+ developed hexes
-  beside it did not, for 208 iterations. Grep for a principle written down once and applied
-  to one branch of the same `if`.
-- **`probe-groundvis.mjs` is reusable:** it answers *"how much of surface X does a viewer
-  actually see?"* for any tile-level draw, via the loud-mask diff. Ask it before designing on
-  a ground-level surface (206's law), and note the numbers it returns are large — the ground
-  plane is not a marginal canvas.
-
-**Verdict: SHIPPED.**
 
 ## Iteration 210 — the city goes to bed (2026-07-12) [People & activity × Deepen]
 
@@ -1320,3 +1219,92 @@ structural ceiling — and the ceiling is too low. **219 owes the actual lap: Ur
 are what a gate does), **HOLD THE MEAN** (98 — total COM must not collapse, or shops/cafes/`walkPct` go with it), and
 **expect the stream to reshuffle** — judge it on all three seeds, in the viewer's units (**tower COUNT downtown vs at
 the rim**), never on a ratio.
+
+## Iteration 219 — the shops never knew where downtown was (2026-07-13) [Urban fabric × Deepen]
+
+**Vector.** Urban fabric × Deepen. The lap 217 ordered and 218 redirected: give the city a
+downtown. 217 prescribed a `core` term on the tower *placement* roll; 218 proved that roll is a
+**dead lever** (100% conversion — `p` sets timing, never placement) and named the real seam one
+layer up: **towers rise only on COM, and COM is sited by a rule that knows nothing about the CBD.**
+This closes it — at the COM fork, not the tower rule.
+
+**Probe first (218's law: print the roll's conversion rate BEFORE tuning it).**
+`probes/probe-shopcore.mjs`, Part A. The shop fork (`solvista.html:1443`) is **ONE-SHOT** —
+max hits/cell = **1** on every seed, still-eligible pool **0-1** — because the cell leaves
+`EMPTY`/`MEADOW` the instant it fires. That is the *structural opposite* of the tower roll, where
+the cell stays `COM` and is re-picked ~60x until it converts. **So `p` here CANNOT saturate, and IS
+a live lever on the COM/RES mix.** The lever is real; 218's law is what proved it rather than
+assumed it.
+
+**Change (one line + a `core` term).** `shop=(roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3)`
+becomes the same two rolls scaled by **`m = 1 + 2.0*ccore`**, clamped to 1, with
+`ccore=clamp(1-hexDist(x,y,CBDX,CBDY)/CORER,0,1)`. **PURE ADDITION** (206: preference, never a
+gate): at the rim `ccore=0`, `m=1`, and the rule is **byte-identical** to what it was. Only the core
+is lifted. Draw count is unchanged (one `rng()` per roll, same short-circuit guards).
+
+**The sweep found the trap, and it was the obvious design (`probe-shopcore.mjs`, Part B, 3 seeds).**
+Round 1 swept `m=A+B*core` with **A<1** — the natural "prefer the core" shape. **Every variant made
+the city worse in counts**: core towers **42 -> 29/38/32/33** (*down*) and pop **-14..-27%**. Mean
+`core` over developing land is ~0.1, so `A<1` makes `m<1` nearly everywhere and **cuts COM
+city-wide** — and COM is the *tower substrate*, so fewer COM => fewer towers => -240 pop apiece. The
+rim fell faster than the core, which flatters the **ratio** — **218's sin exactly, committed by its
+own successor.** Round 2 (`m=1+B*core`, never below 1) is the ship. `R4` (a *wider* falloff, the
+other obvious instinct) **doubled the rim** (148 -> 205): it lifts the whole city.
+
+**Census.** PASS. `pop 154785 -> 178629 (+15.4%)` with **`developed +12` and `roads -14` — flat.**
+The city did not sprawl, it **intensified**. Tile histogram: **`TOWER 334 -> 432 (+98)`**,
+`COM 1245 -> 1356 (+111)`, `RES -216`, `tallTowers +106`, `helipads +98`, `towerHt +12462`.
+Free interconnect: **`MARKET 12 -> 36`** (+24) and `PLAZA +2`, `STADIUM +2` — a denser commercial
+core feeds the market/civic rules downstream.
+
+**The mechanism is ARRANGEMENT, not quantity** — the finding worth keeping. Total COM barely moves
+(**649 -> 673** across the census seeds) while towers jump **239 -> 304**. `com>=2` in the upgrade
+pass is **already a clustering predicate**, so concentrating the *same* commercial fabric makes far
+more of it meet the quorum. **218 predicted this in advance and it is confirmed.**
+
+**Mass (`probes/probe-downtownmass.mjs` — world data, no render).** Share of the city's total tower
+**HEIGHT** inside ring 0-8 (the eye reads mass, not count — 218):
+
+| seed | coreH share | far-rim (23+) towers | massCentroid/devMean |
+| --- | --- | --- | --- |
+| 7 | 24.4% -> **41.0%** | 36 -> **37** | 0.82 -> 0.67 |
+| 42 | 33.0% -> **44.5%** | 25 -> 42 | 0.75 -> 0.66 |
+| 1234 | 17.3% -> **42.1%** | 35 -> 19 | 0.78 -> 0.55 |
+
+Every seed converges to **~41-45%** from a scattered 17-33%, and the mass centroid moves inward on
+all three. Far-rim is **flat in aggregate (96 -> 98)**, as pure addition requires; the per-seed swing
+is the seeded-stream reshuffle 218 warned of.
+
+**Visual — 2 PASS, 2 FAIL, and BOTH FAILs REFUTED BY MEASUREMENT (212, for the sixth lap running).**
+Four blind agents across three seeds, HEAD/patch order swapped between seeds to defeat position bias.
+**Every one of them pointed at the true CBD:**
+
+| seed | blind point | true CBD | verdict |
+| --- | --- | --- | --- |
+| 42 | (0.50, 0.60) | (0.493, 0.512) | PASS — HEAD "NO CLEAR CORE" |
+| 7 (fresh) | (0.46, 0.63) | (0.478, 0.625) | "NO CLEAR CORE" |
+| 1234 | (0.54, 0.48) | (0.558, 0.455) | PASS |
+
+Seed 7's agent **hit the CBD within 0.02 and then declared it wasn't one** — the locate/judge split
+in its purest form (108). Its two causal claims are both false: (a) *"the patch spread 102 towers
+across the whole plate — an over-built picket forest"* — the patch added **ONE** far-rim tower
+(36 -> 37) while **doubling** the core (16 -> 33); the forest is **HEAD's**, and the rim rule is
+byte-identical. (b) *"the centre is a green/park wedge"* — it is describing the **plate's** centre
+(~0.5,0.5), not the **city's** (0.478, 0.625); the header has warned for 120 iterations that
+`CBDX/CBDY != CTRX/CTRY`.
+
+**Verdict: SHIPPED.** The downtown exists, sits where the CBD is, and four blind agents found it.
+
+**⇒ BANKED, and it is the THIRD RUNG OF THE SAME LADDER (cue (ac), Urban × Polish — the next Urban
+lap).** The one thing the agents said **independently, on two different seeds, unprompted** — which
+is the aside 212 says to weight above any verdict — is that the skyline has **no taper**:
+*"a spine, not a crown"* (1234) and *"a local thickening, not a peak; height is flat, no tapering
+silhouette"* (7). **It is true, and it is visible in the code.** Height is
+`c.th=(54+c.v*82)*(0.70+0.66*core)`: the centrality term spans **1.94x** (0.70 -> 1.36) while the
+per-cell noise `c.v` spans **2.5x** (54 -> 136). **The noise SWAMPS the signal**, so a lucky rim
+tower out-tops an unlucky core one and no silhouette can form. 217 fixed height and left placement;
+218 found placement was a dead lever; 219 fixed the *substrate*, and the **mass** is now downtown —
+what remains is that the **height gradient is drowned in per-cell noise.** ⚠ 98's `0.70+0.66*core`
+was solved to **HOLD THE MEAN** — the fix is to **narrow `c.v`'s spread, not to steepen `core`**
+(a steeper `core` was tried at 98 and cost half the city's tall towers). Do not re-open the
+placement roll.

@@ -13587,3 +13587,143 @@ sitting frozen at the evergreen floor, and the season is no longer carried by ~1
 alone. Cue (p) is CLOSED for PARK/SHOREPARK/QUAD; **GARDEN remains mute (5.4) and keeps its own richer
 Nature × Deepen cue** (staggered raised beds + a shared `gardenPhase()`).
 
+
+<!-- HEADER BULLET ROTATED OUT OF GROWTH.md AT ITER 219 (superseded: the seam is closed).
+     This was the standing "219 owes the downtown fix" prescription, carried by 217 and
+     rewritten by 218. 219 shipped it (at the COM fork, not the tower rule) and the header
+     now carries only the compact result + the surviving cue (ac). Preserved verbatim. -->
+
+  🔴 **219 STILL OWES THE DOWNTOWN FIX — BUT NOT WHERE 217 SENT IT. 218 refuted the prescription and found the real
+  seam one layer up (Urban × Deepen).** ⚠ **DO NOT touch the tower rule — 218 took it to its ceiling and reverted.**
+  What 218 MEASURED (`probes/probe-towerroll.mjs`, `probe-quorum.mjs`, world data, 3 seeds):
+  **(1) The placement PROBABILITY is a DEAD LEVER — it converts 100.0% of the eligible pool on every seed** (zero
+  cells anywhere are still COM + unseaside + holding a quorum). ~60 samples/cell ⇒ every COM cell that ever reaches
+  the quorum towers *whatever `p` is*. **`p` sets TIMING, never PLACEMENT.** 98's own comment said this; 217
+  prescribed it anyway. **(2) The QUORUM works but hits a CEILING**: `com+2*core>=2` doubles core/rim contrast
+  (2.26x→**4.50x**), passes every gate (pop +5.5%, `tallTowers` +39%) — and **still loses the visual gate 4 agents to
+  0**, because it converts **33 of the ~38 commercial cells the core HAS** (ring 0-4: *zero* COM left) while the rim
+  holds **~139**. Seed 7 ends with **15 towers downtown vs 34 past ring 23.** **(3) 205's sin, committed:** a `TOWER %
+  of developed` **ratio** is not what the eye reads — **the eye counts MASS.** ⇒ **THE ROOT CAUSE IS COM SITING
+  (`solvista.html:1443`), the SAME defect one layer up:** `shop=(roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3)`
+  — corner lots and neighbours, **nothing knows where downtown is**; COM-origin share is 50% in ring 0-4 then **flat
+  25-36% to the rim**. Towers rise ONLY on COM, so a uniform COM layer *forces* a uniform skyline. **Give `shop` a
+  `core` preference and the EXISTING `com>=2` quorum concentrates towers automatically — it is already a clustering
+  predicate.** ⚠ **PREFERENCE, NOT GATE** (206; 218's V3/V4 raised the rim bar and destroyed **36% of the towers and
+  19% of the pop**). ⚠ **HOLD THE MEAN** (98) — total COM must not collapse or shops/cafes/`walkPct` go with it.
+  ⚠ **Judge on ALL 3 SEEDS in the VIEWER'S UNITS (tower COUNT core vs rim), never a ratio** — 218's relaxation
+  reshuffled the stream and swung seed 42's rim towers **25→37 (+48%)**, swamping its own signal on 1 seed in 3.
+
+  [219's RESULT: the prescription was RIGHT about the seam (COM siting) and its warnings all held. But the
+  "give shop a core preference" shape had to be PURE ADDITION (m=1+2*ccore): the natural A+B*core with A<1
+  cuts COM city-wide, and COM is the tower substrate, so it cost 14-27% of the pop while LOSING core towers.]
+
+## Iteration 209 — the ground the city stands on (2026-07-12) [Urban fabric × Deepen]
+
+**Vector.** Urban fabric × Deepen. Rotation owed Urban (stalest, last lap 199) and the
+header pins it **Deepen/Polish only** — additive spent (118), Connect measured-hard twice
+(160/165), roof-furniture closed city-wide. Of the three Deepen targets the header named
+(facades, **ground plane**, harbour apron), the ground plane turned out to be the biggest
+untouched surface in the artifact.
+
+**The seam.** `drawCell`'s `default:` case painted the ground under **every** developed hex
+as one flat `col('sandDk',0.9)` — a house's front garden and a factory's yard wore the
+identical paint — while the very next line gave the `EMPTY` lot beside them a whole
+patchwork *"so the green sheets read as pasture, not paint."* The comment knew the
+principle and applied it only to the land nobody had built on yet. This is the ground-plane
+sibling of 199's tell: not a constant asserting what its value cannot do, but a **comment
+stating a standard the adjacent branch is exempted from**.
+
+**Host check FIRST (`probes/probe-groundvis.mjs`, 206's law: draw order is depth order, so a
+yard buried by the row in front is not a host).** Loud-paint one type's ground, diff vs base,
+count changed px — the diff *is* the visible ground, by construction. 3 seeds, both controls
+at an honest **0 px**:
+
+| ground | cells | visible px | % of frame | px/cell |
+| --- | --- | --- | --- | --- |
+| **RES** | 288 | **35,364** | **2.21%** | 122.8 |
+| MID | 440 | 24,633 | 1.54% | 55.9 |
+| COM | 216 | 15,478 | 0.97% | 71.5 |
+| TOWER | 80 | 5,635 | 0.35% | 70.7 |
+| EMPTY | 49 | 8,760 | 0.55% | 180.0 |
+
+**The developed ground a viewer actually SEES is ~5.2% of the frame, and the RES front
+garden alone is 2.2% — more visible ground than every open lot in the city put together.**
+Not buried at all: the yards are the *most* visible ground there is.
+
+**Change.** One new palette entry (`paving`) and one table:
+`GROUND={RES:['lawn',0.90], MID:['paving',1.00], COM:['paving',1.00], TOWER:['paving',0.94],
+CIVIC:['paving',1.05], IND:['stone',1.25]}` — gardens in the terraces, paving through the
+walk-ups and the core, hardstanding at the works; flecked like the pasture but **quantized to
+5 steps** so `col()`'s `name|f` cache stays small (the road's resurfacing-patch discipline).
+**Colour only: the same single `hexTile` per hex, ZERO new path objects** (198's per-ellipse
+cost model). And because a garden is **`lawn`**, the suburbs join the parks' calendar (208)
+**for free** — the residential fabric was the largest surface the seasons could not reach. A
+garden is drawn *deeper* than a mown park lawn (hedges, shade, shrubs), so it holds its rank
+below PARK while carrying the same year.
+
+**Census.** PASS. Core metrics exactly **+0**, tile histogram **empty**, entity counts flat —
+correct and expected: draw-only, no `rng()`, no terrain, no new tile/entity. Vacuous, so the
+probe is the gate.
+
+**Probe** (`probes/probe-ground.mjs`). Two claims, each with a control that must not move.
+Masks come from the loud-ground hook (wrap `drawCell` to record the cell, wrap `hexTile` to
+paint one type's ground red, diff vs base) so the sample is the host's own pixels — no
+world→screen box, so no neighbour contamination (196). Noise floor **0 px on both builds**.
+- **(1) SEPARATION.** BASE pairwise land-use tone separation **mean 16.4, min 1.0** — RES
+  183,161,118 vs MID 182,160,118: *the garden and the court agreed to within one RGB unit.*
+  PATCH: **mean 43.8, min 6.8** (RES 134,151,102 · MID 181,169,143 · TOWER 172,163,139).
+- **(2) THE SUBURBS JOIN THE YEAR** (a state-response question ⇒ two pins of `year` within
+  one build, run on both — 196). Winter→dry-peak rendered shift:
+  **RES 1.2 → 36.8** · **NEGATIVE control COM (paving, not seasonal) 1.0 → 1.7**, MID 1.1 →
+  1.6, TOWER 0.5 → 0.6 · **POSITIVE control PARK 44.1 → 44.6** (moves on *both* builds, so
+  the pin is live and my edit did not disturb it). RES now carries an amplitude in the
+  parks' own league, on ground that was frozen for the artifact's entire life.
+
+**Perf.** FREE — interleaved A/B vs pristine HEAD (`perfab.mjs`): **day +0.6% · night +0.2%**,
+inside the ~1% noise floor 199 proved on provably-identical code. Structurally it must be:
+same path-object count, one extra `hashCell` per developed hex, 15 extra `col()` cache entries.
+
+**Visual.** Both seeds **VISUAL: PASS**, on frozen `shot-stepback` frames. Both agents were
+asked to **LOCATE, not judge** (108), and both delivered:
+- *Suburbs vs core **from the ground alone**, ignoring roofs and heights* — both drew the
+  paved core as a central mass (~0.48,0.50 / 0.42–0.56 x) ringed by green garden ground, and
+  both said the two are **"clearly separable from ground alone — I did not need roofs or
+  heights."* That is the whole claim, read back to me by someone who could not see the code.
+- *Which frame is the drought?* — **A/B labels deliberately inverted between the seeds** so a
+  coin-flip cannot pass both (199's trick). Seed 42 said **"A"** (truth: A = dry peak); seed 7
+  said **"B"** (truth: B = dry peak). Both cited the suburban yards bleaching to khaki/straw
+  while *"the grey paved core and the beach stay unchanged in both, which is exactly the
+  'only lawn responds' signature."*
+- *Cumulative:* no tears, no floating tiles, no blowout, no muddiness. Both volunteered that
+  the city is **not** too green — *"the greens are confined to the low-density fringe, which
+  actually sharpens the density gradient rather than flattening it."*
+
+**Findings banked.**
+- **The ground plane is now SPENT as an Urban Deepen target.** Of the header's three
+  (facades, ground plane, harbour apron), **facades** and the **harbour apron** remain.
+- **A comment that states a standard the adjacent branch is exempted from is a tell** — the
+  sibling of 199's constant. `EMPTY` got the anti-"paint" patchwork; the 1,000+ developed hexes
+  beside it did not, for 208 iterations. Grep for a principle written down once and applied
+  to one branch of the same `if`.
+- **`probe-groundvis.mjs` is reusable:** it answers *"how much of surface X does a viewer
+  actually see?"* for any tile-level draw, via the loud-mask diff. Ask it before designing on
+  a ground-level surface (206's law), and note the numbers it returns are large — the ground
+  plane is not a marginal canvas.
+
+**Verdict: SHIPPED.**
+
+
+<!-- HEADER BULLET ROTATED OUT OF GROWTH.md AT ITER 219 (superseded: DUPLICATE).
+     The `?year=` hook and its keyframes are documented in full in SKILL.md's visual-gate
+     section (which also carries 139's/202's sharper warning that `?year=` DRIFTS while
+     shoot.mjs waits, and that the step-back must use probes/shot-stepback.mjs instead).
+     The header was carrying a second, staler copy. Preserved verbatim. -->
+
+- **`?year=` IS NOW A URL HOOK (iter 108) — the seasons are finally testable.** `window.__setYear`
+  had existed since the season pass but was **never wired to the query string**, so no screenshot in
+  this loop's history could pin a *calendar* position: `?warp=61` from `year=1974` always lands on
+  ~2035.0, i.e. **every shot ever taken of this city was in January.** Now
+  `?seed=42&warp=61&year=2035.62` pins high summer. Applied *after* `warp` (warp advances `year`).
+  Use `.02 / .30 / .62 / .87` for winter / spring / the golden dry peak / autumn — those are
+  `applySeason`'s own keyframes. An unreachable test hook is the same defect class as iter 107's
+  unreachable rule: **grep the URL block before assuming a hook you can see is a hook you can use.**

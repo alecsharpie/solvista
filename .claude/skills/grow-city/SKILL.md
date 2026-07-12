@@ -955,6 +955,29 @@ vector, whatever it is.
   `tick()`, print `p`'s conversion rate.** If it is ~100%, `p` is a dead lever and **only the PREDICATE can steer the
   rule** — a predicate cannot saturate. This is a two-minute, render-free probe (`probes/probe-towerroll.mjs`) and it
   is now the first thing to run on any placement/siting vector.
+  **⇒ AND THE TELL FOR *WHICH* KIND OF ROLL YOU HAVE IS ONE LINE OF CODE: DOES THE SUCCESS BRANCH REMOVE THE CELL
+  FROM ITS OWN ELIGIBLE POOL? (iter 219.)** 218 gives you the *test* but not the *diagnosis*, and the difference is
+  structural, not statistical. The tower roll leaves the converted cell as `COM`, which is still `COM` — so `rc()`
+  re-picks it ~60x and it converts eventually **whatever `p` is**: saturated, `p` dead. The shop fork sits inside
+  the develop branch, so the cell leaves `EMPTY`/`MEADOW` **the instant it fires** and can never be re-rolled:
+  **ONE-SHOT, and `p` is a live lever on the fork's outcome** (measured — max hits/cell = **1** on every seed,
+  `probes/probe-shopcore.mjs` Part A). ⇒ **Read the rule's success branch against its own precondition before you
+  either tune `p` or write it off.** A rule whose precondition survives its own success is saturating; a rule that
+  eats its precondition is one-shot. Both live in `tick()` and they look identical at the call site.
+- **A SPATIAL PREFERENCE MUST BE PURE ADDITION — SCALING A ROLL *DOWN* IS A CUT DRESSED AS A REDISTRIBUTION, AND IT
+  COMPOUNDS THROUGH ANY RULE BUILT ON TOP OF IT (iter 219).** 206 says prefer a **preference** to a **gate**. That is
+  necessary and it is not sufficient: 219's first sweep expressed "prefer the core" the natural way — multiply the
+  roll by `m = A + B*core` with `A<1` — which is a preference, not a gate, and **every variant made the city worse**
+  (core towers **42 → 29/38/32/33**, pop **−14..−27%**). The arithmetic is the whole lesson: **mean `core` over the
+  plate is ~0.1**, so `A<1` puts `m<1` across ~90% of the land and you have quietly **cut the rule city-wide** while
+  believing you moved it. Worse, the tile you cut (`COM`) was the **SUBSTRATE** a later rule builds on (towers rise
+  only on COM, at 240 pop each), so the cut **compounded downstream** and destroyed the very core towers the change
+  was for — while *flattering the ratio*, which is 218's own sin. ⇒ **Write a spatial preference as `m = 1 + B*field`,
+  never below 1.** The un-preferred region then keeps the **byte-identical** rule, so the only thing that can happen
+  is the thing you intended, and **98's hold-the-mean comes free by construction** instead of being something you
+  must solve for. Two corollaries: (a) **"just widen the falloff" is not a gentler version of the same lever — it is
+  a different lever that lifts EVERYTHING** (219's R4, radius ×1.6, *doubled* the rim: 148 → 205); (b) before you
+  cut a tile type anywhere, **ask what is built ON it** — a substrate's population is not its own.
 - **A DENSITY FIX IS NOT A MASS FIX — THE EYE COUNTS OBJECTS, NOT RATIOS (iter 218; 205's next host).** 205 says
   state the claim in the viewer's units. Here is the specific unit error you will actually make, because it is the
   one your *rule* hands you: a siting rule operates **per cell**, so you will instinctively grade it **per cell** —
@@ -1276,7 +1299,15 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   a 4.2x close-up **aimed** at the longest run of seam, day and night, patch and HEAD).
   `probe-towerroll.mjs` (**is this `tick()` rule's `rng()<p` a DEAD LEVER?** — prints `converted / (converted +
   still-eligible)` per ring. **~100% ⇒ the roll saturated and `p` steers nothing; only the PREDICATE can.** Run it
-  BEFORE tuning any siting probability — it refuted 217's prescribed fix in one command), `probe-quorum.mjs`
+  BEFORE tuning any siting probability — it refuted 217's prescribed fix in one command),
+  `probe-shopcore.mjs` (**the COM-siting fork: is its roll one-shot or saturated, and what does a `core` preference
+  do to it?** Part A counts **hits/cell** — the direct test of the one-shot-vs-saturating tell above. Part B sweeps
+  candidate preferences on **both** of 206's ledgers, and it is the probe that caught the `A<1` cut: a variant table
+  where the *ratio* improves while the **counts and the pop fall** is the tell),
+  `probe-downtownmass.mjs` (**is there a skyline, in the units the eye reads?** — pure world data, no render, no
+  clock: share of the city's total tower **HEIGHT** inside ring 0-8, the far-rim tower count, and the height-weighted
+  mass centroid vs the mean developed distance. It is what refuted 219's two agent FAILs — the "picket forest" they
+  blamed on the patch moved by **one tower**), `probe-quorum.mjs`
   (the companion **variant sweep**: grades candidate *predicates* on both of 206's ledgers at once — the EFFECT
   (core/rim contrast) and the COST TO THE POPULATION (towers, pop) — so a starving gate outs itself in the table),
   `shot-downtown.mjs` (whole-city day+night frame **plus the CBD's true screen fraction**, so a blind "point at

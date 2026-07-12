@@ -1440,7 +1440,24 @@ function tick(){
            displaces, or 800 ticks reshuffle downstream). */
         const roads=countAround(x,y,1,n=>n.t===T.ROAD);
         const coms=countAround(x,y,1,n=>n.t===T.COM);
-        const shop=(roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3);
+        /* Downtown is decided HERE, not in the tower rule. Towers rise only on COM, so a
+           commercial layer that is sprinkled uniformly FORCES a uniform skyline whatever
+           the upgrade pass does — and for 218 iterations this fork knew only about corner
+           lots and neighbours. Nothing in it knew where the CBD was, so COM-origin share
+           ran 50% in ring 0-4 and then flat 25-36% all the way to the rim, and the city
+           ended with four times as many towers on the rim as downtown.
+           `core` is a PREFERENCE, never a gate (206), and it is PURE ADDITION: at the rim
+           ccore=0, so m=1 and the rule is byte-identical to what it was. Only the core is
+           lifted. Scaling the rolls DOWN at the rim instead was measured and is the trap —
+           it cuts COM city-wide, and COM is the tower substrate, so it cost 14-27% of the
+           pop while LOSING core towers (see probe-shopcore, round 1).
+           Note the totals barely move: COM 649 -> 673 across the census seeds. The towers
+           (239 -> 304) come from ARRANGEMENT, not quantity — `com>=2` in the upgrade pass
+           is already a clustering predicate, so concentrating the same commercial fabric
+           makes far more of it meet the quorum. The roll spends the same draws either way. */
+        const ccore=clamp(1-hexDist(x,y,CBDX,CBDY)/CORER,0,1);
+        const m=1+2.0*ccore;
+        const shop=(roads>=2&&dev>=1&&rng()<Math.min(1,0.45*m))||(coms>=1&&rng()<Math.min(1,0.3*m));
         if(shop||c.hstr){c.t=T.COM;c.th=13+c.v*9;}
         else {c.t=T.RES;c.th=9+c.v*7;}
         c.age=0; devBudgetUsed++;
