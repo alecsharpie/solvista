@@ -1048,6 +1048,20 @@ vector, whatever it is.
   proposed fix may be incoherent inside the artifact. Then get a fresh read that **states the model's
   constraint** and let it judge within that (201's two re-reads both then PASSed *and* independently flagged the
   same caveat, which is the model's — bank it, don't paper over it).
+- **IN A WHOLE-FRAME READ, THE VERDICT IS WHERE AN AGENT IS WRONG AND THE ASIDE IS WHERE IT IS RIGHT (iter 212).**
+  The locate-don't-judge law says a FAIL is a cue to measure. 212 shows *which part* of an agent's reply to trust,
+  and it inverts the obvious reading. Both step-back agents FAILed, on two different, confident, specific causes —
+  and **measurement refuted both**: the "elevated rail is drawn over the towers" was a z-order claim, and
+  `probe-monoz` found `drawMonoAt` **10.6–19.8% occluded** on every seed and light (properly depth-sorted, the third
+  clearing of the same accusation after 202 and 203); the "golden-hour sun sits in the cold sky" was factually true
+  and still wrong, being 201's objection-to-the-model (the sun is high *on purpose* — the placard owns the low-left
+  sky). Yet **the two things they mentioned only in passing, unprompted, and independently agreed on across two
+  seeds — the night coast flattening to a mauve void, and one building type repeating into wallpaper — were real,
+  unrefuted, and exactly the cumulative drift a step-back exists to catch.** The asymmetry has a cause: a FAIL is a
+  *diagnosis*, and diagnosing requires a causal model the agent does not have (it cannot see the draw order, the
+  HUD, or the plate's geometry); an aside is a *perception*, and perceiving is the one thing it is actually better
+  at than you. ⇒ **Grade the FAIL by measuring it. Mine the asides for cues — and weight an aside that two agents
+  reach independently, on different seeds, above any verdict either of them gives you.**
 - **Reverting a passing-but-weak change is the system working.** The census can pass a
   change that isn't worth its cost. Iters 82, 88, 101 and 114 all explored, failed a
   bar the census could not express, and reverted to byte-identical. That is a *result*
