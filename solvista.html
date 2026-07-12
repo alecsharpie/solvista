@@ -462,6 +462,35 @@ function col(name,f){ /* f: face brightness */
   c='rgb('+Math.min(255,b[0]*TINT[0]*f|0)+','+Math.min(255,b[1]*TINT[1]*f|0)+','+Math.min(255,b[2]*TINT[2]*f|0)+')';
   return CCACHE[k]=c;
 }
+/* SAND, AFTER DARK. A flat per-channel multiply is NOT A TINT ON A WARM SURFACE —
+   it is a HUE ROTATION. The night tint is [.42,.42,.58]: it lifts blue and crushes
+   green, which is right for a cool night wash but is destructive to any surface whose
+   identity is its warmth. Sand's base [238,220,178] runs R>G>B (hue 40, chroma 77);
+   multiplied by that tint it comes out [103,92,103] — R and B land on the SAME value
+   and G becomes the MINIMUM, i.e. hue 309, chroma 12. Violet. Measured across 3 seeds,
+   the night beach then sits 44 RGB units from the ROAD where it sat 116 by day, both
+   at hue ~308: the sand and the asphalt literally become the same colour. That is what
+   iter 212's two step-back agents, 213's third, and 214's two both called a "flat mauve
+   mass" and, unprompted, "asphalt" — cue (q). It was never a brightness bug (the beach
+   keeps 44% of its luminance at night, exactly like every other tile) and never
+   primarily a texture bug (214 fixed the texture and the beach still read as asphalt).
+   It is a HUE bug.
+   So the sand is dimmed at night by a LUMINANCE-MATCHED, HUE-PRESERVING tint instead
+   of the cool wash: the tint's own luminance, applied near-flat across the channels, so
+   the sand goes dark and slightly cool but the channels KEEP THEIR ORDER and sand stays
+   sand. Crosses over from the same 0.35 LITAMT cut the lit glass and civOpen() call
+   daylight, so daylight runs byte-identical code (a free control, iter 199). Cached in
+   CCACHE like col(), which is flushed whenever the light moves — so this is one string
+   per frame, not one per hex. */
+function sandCol(name,f){
+  const k='~'+name+'|'+f;
+  let c=CCACHE[k]; if(c)return c;
+  const w=clamp((LITAMT-0.35)/0.35,0,1), b=BASE[name];
+  const L=TINT[0]*0.30+TINT[1]*0.59+TINT[2]*0.11;   /* the wash's own luminance */
+  const t=[lerp(TINT[0],L*1.15,w),lerp(TINT[1],L*1.08,w),lerp(TINT[2],L*1.06,w)];
+  c='rgb('+Math.min(255,b[0]*t[0]*f|0)+','+Math.min(255,b[1]*t[1]*f|0)+','+Math.min(255,b[2]*t[2]*f|0)+')';
+  return CCACHE[k]=c;
+}
 function colA(name,f,a){ /* tinted rgba, for surface highlights that REFLECT light (foam, glints) rather
                             than emit it — those keep their literal color. Uncached: a varies per cell/frame. */
   const b=BASE[name];
@@ -3815,7 +3844,7 @@ function drawCell(x,y){
       if(pierAt(x,y))drawPierAt(x,y); /* the deck rides over kelp too, not just water/beach */
       break;}
     case T.DUNE:{
-      hexTile(gx,gy,1.02,col('sand',0.99));   /* the dry back beach it stands on */
+      hexTile(gx,gy,1.02,sandCol('sand',0.99));   /* the dry back beach it stands on */
       const[cx,cy]=px(gx,gy);
       const sd=c.sand||0, m=clamp(sd/DUNECAP,0,1);
       const hgt=2.0+m*4.2;                    /* the crest rises as the mound accretes */
@@ -3826,12 +3855,12 @@ function drawCell(x,y){
          reads flat however it is toned, and two stacked ellipses read as a pancake on
          a cast shadow. What sells relief here is the same thing that sells ROCK: an
          apex, a contact line, and one hard facet boundary between them. */
-      ctx.fillStyle=col('sandDk',0.88);       /* the shaded flank, apex to contact */
+      ctx.fillStyle=sandCol('sandDk',0.88);   /* the shaded flank, apex to contact */
       ctx.beginPath();
       ctx.ellipse(cx,by,rxb,hgt,0,Math.PI,2*Math.PI);   /* the dome profile, L->R */
       ctx.ellipse(cx,by,rxb,ryb,0,0,Math.PI);           /* the ground contact, R->L */
       ctx.closePath();ctx.fill();
-      ctx.fillStyle=col('sand',1.10);         /* the sunlit cap, down to the crest */
+      ctx.fillStyle=sandCol('sand',1.10);     /* the sunlit cap, down to the crest */
       ctx.beginPath();
       ctx.ellipse(cx,by,rxb,hgt,0,Math.PI,2*Math.PI);
       ctx.quadraticCurveTo(cx,by-hgt*0.30,cx-rxb,by);   /* the crest, sagging back */
@@ -3850,7 +3879,7 @@ function drawCell(x,y){
       }
       break;}
     case T.BEACH:{
-      hexTile(gx,gy,1.02,col('sand',1));
+      hexTile(gx,gy,1.02,sandCol('sand',1));
       { /* the tide: a damp margin hugs every sea-facing edge, widest after the ebb.
            drawn along the TRUE hex edges and clipped to the hex, so the wet band
            follows the coastline instead of scattering hard rectangles over the sea */
@@ -3884,13 +3913,13 @@ function drawCell(x,y){
           ctx.lineTo(S[0],S[1]);ctx.lineTo(SW[0],SW[1]);ctx.lineTo(NW[0],NW[1]);
           ctx.closePath();ctx.clip();
           ctx.lineJoin='round';ctx.lineCap='round';
-          ctx.strokeStyle=col('sandDk',0.82);
+          ctx.strokeStyle=sandCol('sandDk',0.82);
           ctx.globalAlpha=0.3+0.2*(1-TIDE);   /* wider, lighter damp reach up the beach */
           ctx.lineWidth=w2*2;
           ctx.beginPath();
           for(const[a,b]of edges){ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);}
           ctx.stroke();
-          ctx.strokeStyle=col('sandDk',0.68);
+          ctx.strokeStyle=sandCol('sandDk',0.68);
           ctx.globalAlpha=0.4+0.28*(1-TIDE);  /* darker wet line right at the waterline */
           ctx.lineWidth=w2*0.9;
           ctx.beginPath();

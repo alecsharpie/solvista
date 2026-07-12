@@ -934,6 +934,51 @@ vector, whatever it is.
   ordinary stops, so this was never the new feature's bug). **Any draw with a perpendicular/toward-viewer
   offset must check that offset's SIGN against draw order.** Draw order is depth order; an offset is a
   depth decision.
+- **BUILD THE PROBE IN THE UNITS OF THE COMPLAINT — a greyscale instrument cannot see "mauve" (iter 214).**
+  205 says state the claim in the viewer's units. 214 is the sharper, nastier form: **your probe can be
+  measuring a real defect, and still be the wrong instrument.** Three agents across three iterations
+  (212 x2, 213) described the night coast with the word **MAUVE** — a HUE. 214 fixated on their other
+  phrase ("detail dies") and built a **luminance** probe. It worked: it found a real, large, correctly-
+  measured defect (the night beach retains **32%** of its daylight texture vs RES's 103%, because every
+  beach detail draw is gated OFF at night). The fix passed that probe beautifully (texture 7.1 -> 20.3,
+  every control unmoved) and **both visual agents FAILed it, one of them blind.** The actual bug was
+  invisible to the instrument *by construction*: a greyscale probe **cannot represent hue**. One
+  colour-space probe found it in a single run, exactly where the agents had been pointing for three
+  iterations. ⇒ **When the complaint contains a colour word, measure COLOUR (hue + chroma), not
+  luminance.** And generally: before you build the probe, re-read the complaint and ask whether the
+  quantity you are about to measure *can even represent the thing being complained about*.
+  Corollary — **a probe measuring a NECESSARY but not SUFFICIENT quantity will happily pass a change the
+  eye rejects.** "Is there contrast on the beach" is necessary for the beach to read; *a neon tube also
+  has contrast*. The claim was "the beach reads as a beach", and no contrast metric can express it.
+- **A FLAT PER-CHANNEL MULTIPLY IS NOT A TINT ON A SATURATED SURFACE — IT IS A HUE ROTATION (iter 214).**
+  The night light is applied as `base[i] * TINT[i]`, and `TINT` is named for what it is *meant* to do —
+  wash the scene cooler while leaving each surface recognisably itself. Its VALUE cannot do that. The
+  night tint is **`[.42,.42,.58]`**: it lifts blue and crushes green, so it does not *darken* a warm
+  surface, it **rotates its hue**. Sand's base `[238,220,178]` runs R>G>B (hue 40, chroma 77); times that
+  tint it comes out `[103,92,103]` — **R and B land on the same value, G becomes the MINIMUM** — hue
+  **309**, chroma **12**. Violet. Measured over 3 seeds, the night beach then sat **44 RGB units from the
+  ROAD, both at hue ~308**, where they sat 116 apart by day: **the sand and the asphalt were the same
+  colour**, which is precisely what five agents called "a flat mauve mass" and "asphalt". This is
+  **199's law's next host** (a constant whose *name* asserts a behaviour its *value* cannot have), and it
+  is a whole CLASS of bug, not one tile. ⇒ **Audit it, don't guess:** `probes/probe-sandhue.mjs` prints
+  night hue+chroma per tile — **any surface whose identity is its WARMTH, landing near hue ~308 with
+  chroma <15, has been rotated.** (ROAD at 308 is *fine*: asphalt genuinely is grey. The bug only bites a
+  surface that is *supposed* to be warm.) The fix is a **luminance-matched, hue-preserving** wash for that
+  surface (`sandCol()`), which is colour-only: **zero path objects, zero geometry, and free by the
+  perf model.** Gate it at the same `LITAMT` 0.35 cut the lit glass uses and daylight stays byte-identical.
+- **ON A PER-EDGE DRAW, LEGIBILITY AND GRID-EXPOSURE ARE THE SAME QUANTITY — you cannot escape 159 by
+  keeping the shape and changing only the TONE (iter 214).** 159 says a glowing line along a hex edge
+  reads as a neon tube and must become dots. 214 read that law, *quoted it in the code comment*, and
+  reasoned around it: the beach's damp band is *already* a per-edge stroke and reads beautifully by day,
+  so surely re-tinting it (same geometry, same width, same softness, same clip — only the colour crossing
+  from dark to bright) is safe? **It is not, and both agents said why in the same breath.** The day band
+  works **BECAUSE it is dark and low-contrast**: *"at day the band is only slightly lighter than the sand,
+  so the polygon corners disappear. **The moment you crank the luminance, the geometry becomes the
+  subject.**"* The hex geometry is **always** in a per-edge stroke; contrast is the dial that makes it
+  visible. So a per-edge band can be *subtle* or it can be *bright*, and it can never be both-and-legible.
+  ⇒ **A "same shape, new tone" argument is not a defence against 159 — it is the trap.** If the feature
+  needs to be SEEN at night, it needs a different SHAPE (points), or a different SURFACE (the tile body,
+  which has no edges to betray).
 - **A label that asserts a relationship the draw ignores is a bug, and it is the
   richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
   and printed a live `Tide` for 16 iterations over a tile that never moved a pixel
@@ -1135,6 +1180,12 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   clock first). Each resolves the artifact as `join(HERE, '../../../../solvista.html')`.
   Ad-hoc probes are born at the repo root (gitignored); `git mv` one here the moment
   your ledger entry cites it.
+  `probe-sandhue.mjs` (**night hue+chroma per tile — the hue-rotation audit**; any warm surface at
+  hue ~308 / chroma <15 has been rotated to violet, see the law above), `probe-nightsand.mjs` (per-tile
+  within-hex TEXTURE retention, day vs night, with non-coastal controls), `probe-sandinert.mjs`
+  (patch-vs-HEAD whole-frame isolation with the floor measured in-run), `shot-nightsand.mjs` (the coast
+  camera: whole-city + a close-up AIMED at the longest run of sea-facing beach, plus a day control;
+  freezes in-page and forces `syncSky`/`syncStats` per 204).
   Five of them are **harness-wide**, not per-feature — reach for these on any lap:
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before

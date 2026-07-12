@@ -13015,3 +13015,203 @@ TILE to have a visible apron on its front edge"), and generalized to tiles by 20
 Iter 213's new cue **(t)** (the amphitheater buried behind three mid-rises on seed 7) is the same defect a third
 time — entity (204), tile (206), civic (213) — which is why the *general* law now lives in SKILL.md rather than
 here.
+
+
+<!-- rotated from the GROWTH.md header at iter 214 -->
+
+### cue (q) — closed by iter 214 (was: THE NIGHT COAST IS A MAUVE VOID)
+
+  **(q) THE NIGHT COAST IS A MAUVE VOID (212, Water × Polish suspect).** Raised UNPROMPTED and INDEPENDENTLY by both
+  step-back agents on both seeds — seed 42: *"the sand at night flattens to a low-contrast mauve where detail dies"*;
+  seed 7: *"the beach + coastal strip at night collapses into a single flat mauve-grey mass with no beach/sand read."*
+  The beach is fully realised BY DAY (damp margin, tidepools, towels, parasols — all tide-aware since 196/201) and
+  then reads as **nothing** after dark. **PROBE BEFORE DESIGNING** (is it luminance, is it contrast, is it that no
+  night draw is gated on BEACH at all?) — and mind cue (m): the coast is where 159's bioluminescent surf FAILed every
+  stroke form and passed only as sparse `hashCell` **dots**, so shape, not brightness, is the lever there.
+
+
+### iter 213's header recap (rotated at 214; entry still in GROWTH.md)
+
+  **213 (Civic × Deepen, DEEPENED: the institutions keep their own hours) — full recap in its own entry.** 199 gave
+  the windows an hour, 210 the residents; the twelve institutions were still gated on `LITAMT` ALONE, which the
+  light curve pins **higher at 4am (0.64) than at dusk (0.41)** — so the museum's floodlights burned *brighter* in
+  the small hours and **the amphitheater's spotlit singer played all night to a bowl its own audience gate had
+  emptied.** Now `CIVHRS[kind]` + `civOpen()` off the SAME `nightDeep()` clock the windows read: five never close
+  (hospital/police/firehouse/aquarium/observatory — each already *claims* it in its own draw or label), seven do.
+  What survives (its two probe laws ⇒ SKILL.md):
+  **(1) ⚠ `nightDeep()` IS PINNED AT 1 ALL DAY** — it means nothing before dark, so `civOpen()` reads 0.30 at noon.
+  Harmless in a draw (`lit`/`LITAMT` are 0 anyway), a **trap for any non-draw reader**: guard EVERY reader, not
+  just the one you are writing (the tooltip returns 'Open' whenever `LITAMT<0.35`).
+  **(2) THE CIVIC NIGHT-LIGHT AUDIT IS DONE — do not re-run it.** All twelve now answer the hour; three lights are
+  held OFF the curve *on purpose* — the school's janitor window, the hall's clock face, the parliament's lantern
+  (the last light over the sleeping city). **Do not "fix" them.**
+  **⚠ NEW cue (t) — THE AMPHITHEATER IS BURIED ON SOME SEEDS:** seed 7's front rows are **MID(h35) MID(h34)
+  MID(h30)** and draw order is depth order, so the bowl is invisible there (seed 42's are all `ROAD(h0)`, and its
+  agent read the show perfectly). **Pre-existing siting, not 213** — 206's occlusion law on a one-per-city
+  ground-level tile, so a hard gate would starve it: the fix is a **PREFERENCE** (206) or `frontLoad` (211).
+
+
+### the 'lap owes Water' steer (satisfied by 214)
+
+  **THE LAP NOW OWES WATER (stalest, 205), then Nature (206), then Sky (208).** ⚠ And Water is exactly where 212's
+  banked cue **(q) the night coast flattens to a mauve void** (Water × Polish) lives — named independently by two
+  blind agents, and **re-reported unprompted by a third at 213** (*"the 4am city is a uniform blackout; no
+  landmark carries a beacon"*). **A banked, measured finding outranks kind-rotation (119), and three independent
+  asides outrank any of them: (q) IS THE NEXT LAP.** (212's other cue, **(r) facades as wallpaper**, is Urban ×
+  Polish and keeps.)
+
+
+### cue (k) block, rotated from the header at iter 214
+
+  **Cue (k) is FULLY CLOSED** (116/123). The pier/lifeguard cue is stated once, above (~line 113); the duplicate
+  copy that sat here was archived at 213. **123 ran the tell FORWARDS** (make the string and the rule share ONE
+  constant, so they cannot drift apart) — prefer that to re-syncing later; **213 did the same** (one `civOpen()`,
+  read by both the draw and the tooltip). **A derived field earns its keep when a RULE reads it, not when the draw
+  shows it:** `rGreen`/`rShop`/`rServ` are still read by NOTHING but the walkable stat. **⚠ A tick-rule cannot read
+  them directly (151): `recount()` never runs in the sim loop, so the reach maps are STALE inside `tick()`** —
+  recompute locally, or pay a recount. (Detail archived at 200.)
+
+## Iteration 204 — the service fleet comes home (2026-07-12) [Civic & culture × Connect]
+
+**Vector.** Civic & culture × **Connect** — the coldest cell on the board (last used at iter **45**, ~159
+iterations ago), and Civic was the stalest domain (last touched at 195, which explored → reverted). Connect's
+trick is that it **adds no new object**: it closes a gap between two that already exist.
+
+**The seam.** Three `CIVICDESC` lines park a vehicle at a door:
+
+- `police` — *"The precinct house. **Cruisers idle in the yard**."*
+- `hospital` — *"Emergency, wards, and **the ambulance bay that never closes**."*
+- `firehouse` — *"**Engines behind roll-up doors**, ready for the fires on the hill."*
+
+…and `syncFleet` even conditions the **ambulance's very existence** on a hospital standing
+(`if(cells.some(c=>c.kind==='hospital'))services.push('ambo')`). The code knows they are related, and then
+`stepVehicle` random-walked all three exactly like a car — straightest continuation 72%, else any neighbour —
+and **not one of them ever went home.** The fire engine's tooltip said *"Lights on, heading to the smoke"* while
+its steering had no idea where the smoke was. This is the label-asserts-what-the-draw-ignores tell, cashed an
+8th time, on its richest host yet: **three labels, three vehicles, three buildings, zero connections.**
+
+**Change.** Each service vehicle runs a round trip: it stands at its own institution's door with its beacon
+dark, is dispatched **out** to a call, stands there a moment, and drives **home**. It routes by descending a
+multi-source BFS field over ROAD cells (`roadField`), so its route *is* the street network and it obeys the
+three hex axes for free. `civicDoor(kind)` is ONE definition read by both the dispatcher and the arrival test
+(112's law). Each vehicle's call answers its own institution's job, off a field the city already derives: the
+cruiser works the **arterials** (`c.flow >= ARTFLOW`, iter 77's "reuse `c.flow` for anything that should follow
+the main roads"), the ambulance is called to somewhere people **live**, the engine patrols until something
+burns. The **beacon now carries the duty** — an ambulance on a call and an engine at a fire run lit *in
+daylight*, anything still out at night runs lit as it always did, and a vehicle standing at its own door is
+**dark**. `VKIND`'s `sub` became a **function of the vehicle** (105's law), reading the same `duty` the router
+steers by and the beacon lights by: one state, three readers, so they cannot drift apart.
+
+`stepVehicle` runs per **frame** on `Math.random`, so no `rng()` draw is added and the seeded stream — and every
+CA pass downstream of it — is byte-identical.
+
+**Census.** PASS. **+0 on every metric, tile histogram empty**, pop/roads/developed all flat. That is the
+correct and predicted result for an entity-motion-only change, and it proves only that the page does not throw.
+The probe is the gate.
+
+**Probe.** `probes/probe-servcall.mjs` — 240 sim-seconds of stepped entity motion, patch vs pristine HEAD, same
+seed, same stubbed `Math.random`. Share of time each vehicle stands **on its own institution's door cell**:
+
+| | HEAD | PATCH |
+| --- | --- | --- |
+| police | 0.0 / 0.0 / 1.5 % | **20.3 / 20.3 / 17.5 %** |
+| fire engine | 0.0 / 1.4 / 0.0 % | **24.6 / 20.5 / 22.0 %** |
+| ambulance | 0.0 / 3.3 / 0.0 % | **21.3 / 20.9 / 10.1 %** |
+| traffic (control ×38) | 0.4 / 0.2 / 0.1 % | 0.4 / 0.3 / 0.3 % ✓ flat |
+
+2–5 deliberate arrivals each; mean road-distance to home roughly halves. **Forced fire** (the ghost path, lit by
+hand because it can never be caught by waiting): the engine's road-distance to the smoke descends **monotonically
+56→7 · 42→0 · 66→6** on the three seeds, while HEAD wanders (56→52 · 42→44 · 66→66).
+
+**Visual.** PASS, both seeds. Cruiser located parked at the precinct door (white body, **teal roof bar**, flat on
+the hex); ambulance located out on a call with a **lit beacon in daylight** (white body, coral cross, blue/red
+flashing square) — a thing the artifact has never done before. Whole-city day and night frames both balanced,
+skies correct, nothing compounded.
+
+**Findings.**
+
+1. **The fire CA is a ghost — `probe-firehost` measured it before a line was written, and it saved the vector
+   from being born dead.** The original design was "steer the engine at the smoke." Ignition is year-gated
+   (blocks `year<2006`, forest `year<2030`), so **at 2035 nothing can ignite at all**; and even in its own era it
+   is vanishingly rare — across **3 seeds × 61 years** there are **two one-cell episodes** in the engine's whole
+   era (seeds 7 and 1234: *zero*), fire **never spreads** (peak 1.00 cells lit), and a cell burns 4 ticks =
+   **1.8 real seconds** while the engine covers **1.6 hexes**. It is `T.MARKET` all over again: fully drawn,
+   three labels boasting about it, and it never runs. The engine now genuinely *heads* to the smoke and usually
+   never arrives, which is the model being honest. **Do not build "X responds to the fire."**
+
+2. **A parked vehicle is often invisible — and the DOOR is not the reason.** `probe-servbay` measures the parked
+   vehicle's ink against the same vehicle re-drawn on top: **4 of 9 read 0%**, eaten by whatever tall thing
+   stands in the rows in front (draw order is depth order). I then built a door-ranking lever and **measured it
+   at nothing**: nearest / least-blocked-over-3-rows / strictly-in-front score **485 / 489 / 485** out of 900.
+   What buries a bay is the **density of the downtown the institution stands in** — the police station happens to
+   sit in the open (91–99% on every seed); the hospital and firehouse sit in the core. **The lever was measured
+   before it was mandated (198's law) and is not in the shipped code.** Banked as cue (n): making a bay legible
+   means giving the civic tile a visible **apron on its front edge** — a `polish-tile` job, like 195's university.
+
+3. **A stubbed shared `Math.random` makes a PER-ENTITY control worthless** — promoted to `SKILL.md`. My first
+   control was one car, and it moved (0.0% → 1.4%), which looked like the patch routing ordinary traffic home. It
+   was not: the patched service vehicles draw a *different number* of values from the one stubbed stream, so every
+   later consumer walks a different walk. Averaged over the whole 38-car fleet the shift washes out and the
+   control reads flat. **Aggregate the control, or give it its own stream.**
+
+4. **A frozen clock does NOT refresh the DOM** — promoted to `SKILL.md`. My whole-city night frame came back with
+   a *bright daytime sky* over a night-lit plate, and an agent correctly failed it. `syncSky` is **throttled to
+   400 ms** and `syncStats` only runs inside the `playing` branch, so a hand-rolled freeze shoots a night plate
+   under a day sky. Iter 202's lying camera, walked straight into again, one layer down.
+
+5. **Aim a close-up at the entity's DRAWN position, not its hex centre** — promoted to `SKILL.md`. A vehicle is
+   drawn *interpolated* between its hex and its next hex by `v.p`, so `ctr(x,y)` can be a full hex (~110 px)
+   from where it actually appears. That is exactly far enough for a visual agent to sweep the wrong quadrant and
+   report an empty street — which one did, on a frame where the probe measured the cruiser at **96% visible ink**.
+   `stamp()` records the true drawn position in `_sx/_sy`; use it.
+
+6. **The agents disagreed, and the probe was the verdict.** Seed 7 found both vehicles and described them exactly
+   (teal roof bar, coral cross, red beacon). Seed 42 reported *"every road hex is completely empty"* — while
+   simultaneously describing *"a blue square on a white hexagonal plinth with a coral cross beside it"* and
+   calling it a hospital tile. **That is the ambulance**, beacon and all. It looked straight at the feature and
+   misnamed it. The probe, which measures precisely the disputed claim (does the vehicle contribute ink to this
+   frame), said 96% — and a direct look confirmed it. Agents fail confidently; a number is the verdict.
+
+**Verdict: SHIPPED.**
+
+
+
+### the 206/204 header recap, rotated at iter 214
+
+  **206 (Nature × New CA rule, FIXED) / 204 (Civic × Connect, SHIPPED) — recaps in their own entries; prose rotated
+  at 210, laws ⇒ SKILL.md.** What survives: **(1) Reusable — `openFront(x,y)` + `TALLT`** (beside `countAround`):
+  *is the hex in front clear?* **Draw order IS depth order, so any ground-level thing that must be SEEN should ask
+  before siting itself** (23 gardens: mean **58% occluded**, one at **100%**). Ship such a lever as a **PREFERENCE,
+  not a GATE** — the hard gate *starved* the rule (`GARDEN 14 → 5`, worse than the bug it fixed); 211's `frontLoad`
+  is the sharper form. **(2) The vacant lot is a MIRAGE** — `EMPTY` with ≥2 RES nbrs falls **85 → 6.5** by 2035,
+  **0.0** with a road adjacent; development eats every gap.
+
+
+### the 126 / 124 / Sky-traps header block, rotated at iter 214
+
+(**126 took Sky × Deepen** — the moon now keeps a calendar
+  and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
+  that adds no element. Sky is no longer stale, and its empty `New CA rule` cell is still a trap, not an invitation.)
+  **124 closed the ghost-`c.solar` cue — the LAST banked cue that moved a census number; from here the
+  census is VACUOUS for most vectors, so reach for a probe.** Three steering laws, paid for by 118/119/123 and
+  kept because they govern step 1: **a cue is a POINTER, NOT A SPEC** (123's banked cue misdescribed its own
+  code — re-grep the seam before designing to it); **a banked, measured finding outranks both kind-rotation and
+  cell-emptiness** (119); and **saturation beats kind-rotation** — 118 declined the header's own "coldest kind"
+  steer and was right, because when a domain's additive cell is spent the KIND changes, not the domain. Full
+  text rotated to `GROWTH-archive.md` at 204.
+  **Sky's additive/CA cells are TRAPS, not invitations** (115 took Sky by adding nothing; sky is not cellular, and fog on terrain is already `rSea`/`fogAt`). Surveyed at 103; detail archived.
+
+
+### 212's step-back recap, rotated at iter 214
+
+  **212 (the 22nd) = a CLEAN BILL, no fix lap owed — and BOTH agents FAILed on causes MEASUREMENT REFUTED.**
+  Seasons alive (`probe-season` FARM dry-peak **87.0**, ROAD control 0.6) and both agents named the season correctly
+  **BLIND** (frames renamed frameA/frameB, order flipped between seeds); both located the sun at **x=0.39, y=0.10**,
+  as at 207. **Their two FAILs were both wrong, and both instructive:** (i) *"the golden-hour sun sits in the cold
+  sky"* — factually true, and it is **201's law**: an objection to the MODEL (200 sited the sun high ON PURPOSE —
+  the placard owns the low-left sky, so it CANNOT go low) ⇒ **cue (s)**, not a bug. (ii) *"the elevated rail is
+  drawn OVER the towers"* — **MEASURED AND REFUTED** by `probes/probe-monoz.mjs`; the z-order verdict and the
+  NEVER-RE-OPEN warning are stated in full in `polish-tile` BACKLOG item **(a)** above, not repeated here.
+  **⇒ THE LESSON: the agents were WRONG on both things they were confident enough to FAIL on, and RIGHT on both
+  things they said in PASSING (cues q, r). In a whole-frame read, the ASIDES are the signal** — and 213 cashed
+  that immediately: a PASSing agent's aside caught a real bug (the audience left sitting in a dark bowl).
