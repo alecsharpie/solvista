@@ -828,6 +828,37 @@ vector, whatever it is.
   visible ink**. `stamp()` already records the true drawn position in world coords (`e._sx`/`e._sy`, the same
   fields `pickEntity` hovers by): render once, read them, re-centre, render again. And when the object is ~20 px,
   **clip tightly** — a 20 px vehicle in a 1400×900 frame is a needle you are asking an agent to find.
+- **A LEVER HAS TWO LEDGERS: measure its cost to the POPULATION, not just its effect on the INSTANCE (iter 206).**
+  198 says measure a lever before you mandate it. 206 *did* — and still shipped a bug, because it measured only one
+  side. The community gardens were being buried by the mid-rises drawn in front of them, so 206 measured the obvious
+  lever (*is the hex in front clear?*) and it **separated cleanly**: a garden with a tall front row renders 2340px of
+  ink and 4 in 11 are ≥86% buried; with a clear front row, 4354px and 2 in 12. Mandated as a hard gate, it
+  **starved the rule outright — `GARDEN 14 → 5`, worse than the bug it was fixing** — because the siting rule
+  demands ≥3 *home* neighbours and `MID` is **both a home and the thing that buries you**: the two predicates fight
+  for the same cells. **A constraint that improves every instance it admits can still destroy the population by
+  admitting almost none.** ⇒ When a lever is a *filter on a pool*, measure **the pool** in the same breath as the
+  effect (one census run), and prefer a **PREFERENCE to a GATE**: weighting the roll (`rng() < (openFront ? 0.075 :
+  0.02)`) took mean occlusion 58%→40% and fully-invisible 1→0 while *raising* the count to 17. The tell: your lever's
+  predicate shares a tile type with the host predicate it must coexist with.
+- **A GROUND-LEVEL TILE SITED IN DENSE FABRIC IS OFTEN INVISIBLE — "it is placed" is not "it can be seen" (iter 206).**
+  Draw order is depth order, so whatever stands in the row at `dy=+1` is painted last and buries the hex behind it.
+  Measured across 23 community gardens on 6 seeds: **mean 58% occluded, 7 of 23 ≥86% buried, and one rendering 0 px
+  of ink against 8,924 px drawn on top.** This is 204's cue (n) (buried service bays) generalized from *entities* to
+  *tiles*, and it is why a census tile-histogram win can be a visual nothing. `openFront(x,y)` + `TALLT` (beside
+  `countAround`) is the shipped predicate — **any ground-level thing that must be SEEN should ask it before siting
+  itself.** Corollary, and it is 205's law arriving by a second road: **state the claim in the viewer's units.**
+  "GARDEN 6 → 17" is a claim about *cells*; the claim that matters is *how many gardens the city shows you*, and
+  only `probe-gardenvis` (one frame under two z-orders, `occluded% = 1 − inkInPlace/inkOnTop`) can answer it.
+- **A siting rule keyed to a tile the UPGRADE PASS CONSUMES will starve itself as the city matures — key it to the
+  CATEGORY, not the TILE (iter 206).** The community-garden rule wanted `RES` with **≥3 RES neighbours**. But a house
+  ringed by houses is *precisely* the house that upgrades to a mid-rise, so the rule's own host pool **collapsed
+  40 → 15 across the only years it was allowed to run**, placing ~1.5 gardens a city and **none at all in one seed
+  in three.** The fix was one predicate: **a mid-rise is still housing** — count `HOMES = {RES, MID}`, and the pool
+  goes 2.5× and *stable* through maturity. This is now the **third** instance of one defect (`T.MARKET` wanted dense
+  `COM`, which upgrades past; iter 82's `RES→COM` on arterials found the frontage already `COM`/`MID`/`TOWER`), so
+  treat it as a standing audit: **when a rule names a tile type in a growing city, ask what that type BECOMES.**
+  The cheapest possible check comes first — `GARDEN` read **6 hexes across the entire 9-cell census matrix**, and
+  one look at the tile histogram would have caught it at any point in the artifact's life.
 - **A label that asserts a relationship the draw ignores is a bug, and it is the
   richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
   and printed a live `Tide` for 16 iterations over a tile that never moved a pixel

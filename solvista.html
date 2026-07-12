@@ -219,6 +219,13 @@ const FORECOURT_LOT=new Set([T.EMPTY,T.RES,T.COM,T.MID]);
    a ped is already standing on): see the buzz pass for why the distinction is
    load-bearing rather than pedantic. */
 const ATTRACT=new Set([T.COM,T.MARKET,T.CIVIC,T.STADIUM,T.PLAZA]);
+/* the residential fabric — where people actually live at street scale. A house
+   that upgrades to a mid-rise is still housing, so any rule meaning "in among the
+   homes" must count BOTH, or it deletes its own host as the city matures: keyed to
+   T.RES alone, the garden rule's pool fell 40 -> 15 over the very years it was
+   allowed to run, and one seed in three never dug a garden at all. TOWER is left
+   out on purpose — that is the downtown skyline, not a neighbourhood. */
+const HOMES=new Set([T.RES,T.MID]);
 const SHOREX=CTRX+11; /* the coast highway column */
 /* The founding crossroads, published by genWorld: every seed lays a main street
    through one hex and the old town grows around it, so this — not the plate's
@@ -969,6 +976,23 @@ function countAround(x,y,r,pred){ /* all cells within hex distance r */
     const c=cellAt(xx,rr); if(c&&pred(c))n++;
   } return n;
 }
+/* tiles tall enough to bury the hex behind them. */
+const TALLT=new Set([T.MID,T.TOWER,T.COM,T.CIVIC,T.IND,T.FOREST,T.REDWOOD]);
+/* is the hex in front of this one clear? Rows are painted top->bottom, so the row
+   at dy=+1 is drawn LAST and stands between this hex and the viewer: a mid-rise
+   there hides a ground-level tile outright. Measured on the community gardens
+   (probe-gardenvis): with a tall front row a garden renders 2340px of its 8800px
+   and 4 in 11 are >=86% buried; with a clear one, 4354px and 2 in 12. It is also
+   the in-world test, not just the camera's — nobody digs allotments in the
+   permanent shade of the block next door. Any ground-level thing that must be
+   SEEN should ask this before it sites itself (iter 204's buried service bays are
+   the same defect one domain over). */
+function openFront(x,y){
+  for(const[dx,dy]of nbrDirs(y)){
+    if(dy!==1)continue;
+    const n=cellAt(x+dx,y+dy); if(n&&TALLT.has(n.t))return false;
+  } return true;
+}
 /* multi-source hex BFS, capped at radius r: fills `out` with the number of
    walking steps to the nearest source, 255 meaning "farther than r". Distance
    is measured along walkable land, not straight through the bay — a park across
@@ -1494,11 +1518,19 @@ function tick(){
       c.t=T.MARKET;c.th=0;c.h=0;c.age=0;
     }
   }
-  /* residents dig community gardens between the houses (2008+) */
+  /* residents dig community gardens in among the homes (2008+). The neighbour test
+     counts HOMES (RES|MID), not houses: it used to ask for 3 RES neighbours, which
+     is precisely the condition the upgrade pass saturates past — a house ringed by
+     houses is the house that becomes a mid-rise — so the pool it drew from fell
+     40 -> 15 across the only years it was allowed to run, and it placed ~1.5 gardens
+     a city, none at all in one seed in three. Counting the flats as the homes they
+     are holds the pool at ~2.7x and steady through maturity (T.MARKET's defect, one
+     tile over: iter 107). */
   if(year>=2008)for(let k=0;k<ks(6);k++){
     const[x,y,c]=rc();
-    if(c&&c.t===T.RES&&countAround(x,y,1,n=>n.t===T.RES)>=3
-       &&countAround(x,y,2,n=>n.t===T.GARDEN)===0&&rng()<0.05){
+    if(c&&c.t===T.RES&&countAround(x,y,1,n=>HOMES.has(n.t))>=3
+       &&countAround(x,y,2,n=>n.t===T.GARDEN)===0
+       &&rng()<(openFront(x,y)?0.075:0.02)){
       c.t=T.GARDEN;c.th=0;c.h=0;c.age=0;
     }
   }

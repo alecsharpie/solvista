@@ -12249,3 +12249,68 @@ light**, and that is now known rather than guessable. `probes/probe-unilight.mjs
   (163's law (c)) leaking into a counted metric. Harmless at this size, but **do not chase
   it as a regression**, and do not trust it as a growth signal.
 
+## Iteration 196 — the kelp bed breathes with the tide (2026-07-12) [Water & coast × Deepen]
+
+**Vector — Water & coast × Deepen** (SHIPPED). Rotation: the header named **Water (185)** as next-owed for 196. Kind:
+Water's last lap was a Polish (185 whitecaps), so this varies to **Deepen** — and Deepen is the documented high-yield
+move for a domain whose basics are all present.
+
+**The seam — a tooltip that has been printing a number the draw never read.** `describeTile`'s `tidal` test (L6759)
+reads `BEACH || DUNE || KELP || MARSH || (WATER && !riv) || pierAt`, so **hovering a kelp bed prints a live `Tide` row**
+(`High water` / `Flooding` / `Ebbing` / `Low water`). The KELP draw case (L3358) read `TIDE` **nowhere**: its canopy mats
+and fronds drifted on `waveT` alone. That is *exactly* iter 113's marsh defect — a label asserting a relationship the
+draw ignores, which this skill calls the richest seam in the artifact — sitting one tile along from the marsh, unnoticed
+for the 83 iterations since. It is also the physically signature kelp behaviour: a canopy-forming alga floats up and
+**mats at the surface** on the ebb, and drowns at high water. BEACH (damp margin + tidepools) and MARSH (113) already
+answer the tide; KELP was the last inshore tile that did not.
+
+**Change (~14 lines, draw-only, in `case T.KELP`).** One factor, `low = clamp((0.62-TIDE)/0.62,0,1)` — deliberately the
+marsh's own `ebb` cut, so the two tidal tiles share a threshold rather than drifting apart (123's run-the-tell-forwards
+move). On the ebb: the four canopy mats **rise** (`my - low*1.3`), **spread** (`rr *= 1+low*0.42`) and **lighten**
+toward exposed olive (`t += lq*0.26`); and each frond tip, no longer able to stand, **lies over and trails along the
+surface** (a short quadratic, `low>0.15`). **At and above TIDE 0.62 every term is zero and the draw is byte-identical to
+HEAD** — the tide only ever *adds* the exposed canopy, it never darkens the bed, which is what keeps this clear of the
+kelp-darkness failure mode. `lq` quantizes `low` into 4 steps because `colMix` **caches on `t`** and a continuous `t`
+would defeat that cache. No tile / entity / label / `rng()` / `hashCell`-terrain / `tick()` pass; strings pure-ASCII (134).
+Host is real but sparse: **8-17 KELP hexes/city** (cf. MARSH 15).
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, every metric **+0**. Vacuous by construction
+(draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-kelptide.mjs` (new, promoted).** The isolation is *not* patch-vs-HEAD: it is **LOW water vs HIGH
+water within one build**, frozen clock, same seed, same `genWorld` — so the only variable is `TIDE` and every moved pixel
+is a tide response. Run on both builds it settles the whole claim in one 2x3:
+
+| build | KELP interior (s=0.5) | BEACH (+ctl) | ROAD (-ctl) |
+| --- | --- | --- | --- |
+| BASE  | **0.00 / 0.00 / 0.00%** (deaf — the seam) | 14.2-17.6% | 0.00% |
+| PATCH | **35.7 / 37.5 / 41.9%** (answers) | 14.2-17.6% (untouched) | 0.00% |
+
+**The probe FAILED first, and was right to.** A plain +-10px box around each kelp centre showed BASE kelp already moving
+**3.2-4.7%** with the tide — which would have killed the premise. The cause was **box bleed**, not a kelp response: kelp
+abuts the beach, and the beach's damp margin (`w2 = 2.4+(1-TIDE)*5`, up to ~7px) is drawn on the BEACH hex but **spills
+across the shared edge**. Rather than shrink the box until it passed, the probe now **masks to the hex and sweeps the
+mask** — BASE kelp goes `0.53% -> 0.00% -> 0.00%` as the mask tightens (the residual walks out entirely: it was all rim),
+while PATCH goes `19.5% -> 28.2% -> 37.5%` (*rising*, i.e. the response is centrally located, so it IS the canopy and not
+a rim artifact). BEACH is the **positive control** — it moves identically on both builds, proving the tide pin is live,
+without which "BASE kelp = 0" would be a false negative from a dead pin rather than a finding. `waveT` **and** `time`
+pinned per 195(f) — the mats drift on `waveT`, so an unpinned clock would have drowned the signal in sway.
+
+**Visual.** Coast clips at low vs high water + an un-zoomed wide frame, seeds 42 & 7, one agent each, LOCATE-not-judge.
+**Both VISUAL: PASS.** Both agents were asked which frame is low water *by the kelp alone* and **both got it right**
+(seed 7's with the two filenames deliberately listed in scrambled order): they described the spread olive surface mat and
+the trailing frond tips at low water vs. "dark water with a couple of upright frond ticks" at high. Both confirmed the
+effect stays inside the hex faces (no bleed, no tears, no blowout) and — the question that matters for this tile — **the
+coast has NOT gone dark**: kelp reads as a few discrete beds hugging the shore, not a continuous dark band, sand→shallow→
+deep gradient intact. ⚠ Seed 7's agent banked one watch item: *at high water the kelp hexes are still the darkest pixels
+in the water*, so **if the bed count ever grows, kelp is the first thing that would start banding**. That is HEAD
+behaviour (unchanged here by construction), but it is the kelp failure mode's early warning — worth a look at 197's
+step-back.
+
+**Verdict — SHIPPED.** The kelp bed now answers the tide its own tooltip has been printing all along: on the ebb the
+canopy floats up, mats and lightens, and the frond tips trail along the surface; at high water it drowns back to dark
+water, byte-identically to HEAD. Draw-only, pop + stream flat, ~14 lines + a probe. Water's Deepen cell gains 196. The
+next domain lap (198) owes **Urban (189, Deepen/Polish only — measured-saturated)**, then Sky (190)/People (191).
+**197 is the mandated STEP-BACK** — and it owes two flagged items a look: **194's tree-shadow perf cost (day +3.4% /
+night +3.5%)** and this entry's **kelp-banding-at-high-water** watch item.
+

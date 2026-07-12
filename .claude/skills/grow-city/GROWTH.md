@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~ | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~ | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
@@ -55,17 +55,40 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **198** · Civic **204** · Water **205**.
-  **Next lap owes Nature (198), then Urban (199), then Sky (200). Iteration 207 is the mandated step-back.**
-  **204 took Civic × CONNECT and SHIPPED: the service fleet comes home.** Three CIVICDESC lines parked a vehicle
-  at a door (the precinct yard, the hospital's *"ambulance bay that never closes"*, the firehouse's roll-up doors)
-  and `stepVehicle` random-walked all three like a car, so **not one ever went home.** Each now runs a round trip
-  — stands at its own institution, rolls out to a call, drives back — routing by a BFS field over ROAD cells (so
-  its route IS the street network, and obeys the three hex axes for free). The **beacon carries the duty**, and
-  `VKIND`'s sub is a FUNCTION of the vehicle (105's law): one state, three readers. Entity-motion only, so the
-  census was **+0 on every metric**; `probe-servcall` is the gate — time at its own door **0.0-3.3% → 10-25%**,
-  with the ordinary **38-car fleet flat at 0.1-0.4% in BOTH builds** (the control must be a POPULATION, a law now
-  in SKILL.md). Full recap in `GROWTH.md`'s own Iteration 204 entry.
+  Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **206** · Civic **204** · Water **205**.
+  **ITERATION 207 IS THE MANDATED STEP-BACK.** After it, the lap owes Urban (199), then Sky (200), then People (201).
+  **206 took Nature × NEW CA RULE (the audit kind — 107's move) and FIXED a rule that had under-fired for the
+  artifact's whole life.** The header's own banked cue said *"GARDEN is the last season-mute tile — Deepen it"*; one
+  census read said **GARDEN = 6 hexes in the whole 9-cell matrix** (year-gated 2008+, so ~2/city at 2035, zero
+  elsewhere) and **seed 5 grew ZERO gardens, ever.** The rule wanted `RES` with **>=3 RES neighbours** — and **a house
+  ringed by houses is the house the upgrade pass turns into a mid-rise**, so its pool **collapsed 40 -> 15 across the
+  only years it was allowed to run** (`probe-gardenhost`): **`T.MARKET`'s defect one tile over.** Fix: **`RES` is the
+  wrong definition of *home* — a mid-rise is still housing.** Shared **`HOMES={RES,MID}`** (TOWER excluded: skyline,
+  not neighbourhood) ⇒ pool **2.5x and STABLE**, seed 5's host **3 -> 30**, **`GARDEN 6 -> 17`**, core flat. The probe
+  also **killed the obvious next idea before a line was written**: the rule's comment says *"between the houses"*, but
+  the **vacant lot** is a mirage (`EMPTY` with >=2 RES nbrs falls **85 -> 6.5** by 2035, **0.0** with a road adjacent
+  — development eats every gap).
+  **⚠ 206's SECOND find, and the one with legs: A GARDEN IN AMONG THE HOMES IS OFTEN INVISIBLE.** The seed-5 visual
+  agent FAILed — **and was RIGHT** (3rd time in 7 laps, after 200's sun and 205's ship), though not for its stated
+  reason. `probe-gardenvis` (203's z-order rig): the camera was aimed **true** (centroid 17px on an 88px hex) and
+  seed 5's garden rendered **0 px of ink against 8,924 px drawn on top — 100% occluded**; across 23 gardens, **mean
+  58% occluded, 7 of 23 >=86% buried.** Draw order IS depth order, and **the homes you site among are what bury you.**
+  I had stated the claim in **cells** when it was a claim about **what the eye sees** (205's law, cashed against me one
+  lap later). Ships as a **light PREFERENCE, not a gate** — `rng()<(openFront?0.075:0.02)` ⇒ mean occluded **58% ->
+  40%**, fully-invisible **1 -> 0**, >=86% buried **7/23 -> 1/24**, no seed left at zero. **⚠ The HARD gate STARVED it
+  (`GARDEN 14 -> 5`, worse than the bug): `MID` is *both* a home *and* the thing that buries you, so the two predicates
+  fight.** New law ⇒ SKILL.md: **a lever has TWO ledgers — measure its cost to the POPULATION, not just its effect on
+  the INSTANCE.** **Reusable: `openFront(x,y)`+`TALLT`** (by `countAround`) — *is the hex in front clear?* **Any
+  ground-level thing that must be SEEN should ask before siting itself; 204's buried service bays (cue n) are this
+  same defect one domain over**, now half-answered: the density is not escapable by *choice of hex*, but it IS
+  steerable by *weighting the roll*.
+  **⚠ GARDEN's seasonal cue is now UNBLOCKED and worth cashing** (see the mute-tile bullet): its draw still reads no
+  `year` at all — the last season-mute vegetation tile — and it *finally has a host to show it on*.
+  **204 took Civic × CONNECT and SHIPPED: the service fleet comes home** — three CIVICDESC lines parked a vehicle at
+  a door (precinct yard, the hospital's *"ambulance bay that never closes"*, the firehouse's roll-up doors) while
+  `stepVehicle` random-walked all three like a car, so **not one ever went home**; each now runs a round trip routed
+  by a BFS field over ROAD cells. Law (*a stubbed shared `Math.random` makes a PER-ENTITY control worthless — make
+  the control a POPULATION*) ⇒ SKILL.md. Full recap: its own Iteration 204 entry, still in window.
   **⚠ 204's REAL find is that the FIRE CA IS A GHOST — do not build "X answers the fire" (`probe-firehost`).**
   Ignition is year-gated (blocks `year<2006`, forest `year<2030`), so **at 2035 nothing can ignite at all**, and
   even before then it is vanishingly rare: across **3 seeds x 61 years** there are **TWO one-cell episodes** in
@@ -84,56 +107,29 @@ ones (U2, 42, U5) stay in the bullet.
   choice among four road hexes escapes it. **Making a bay legible means giving the CIVIC TILE a visible apron on
   its front edge — a `polish-tile` job, not a growth lap** (same shape as 195's university light). The lever was
   measured before it was mandated (198's law) and is NOT in the shipped code.
-  **205 took Water × CONNECT — the coldest cell on the board (last used at iter 22) — and EXPLORED → REVERTED.
-  ⚠⚠ ITS FINDING IS THE BIG ONE: THE PORT HAS NO WATERFRONT, AND SOLVISTA IS A ROADSTEAD, NOT A HARBOUR.**
-  The seam looked textbook — the tell, 204's shape exactly. `genWorld` spawns `freighters[0]` *"at anchor in the
-  roadstead off the warehouse row, **waiting on a berth**"*, throws the rubble **mole** out to shelter her while she
-  waits, and her tooltip says she is *"**Serving** the harbor works"* — and then `advanceEntities` says
-  **`if(f.anchored)continue`**. She has been a **static prop since 1974** (`probe-harborhost`: motion spread **0.00
-  on every seed**). 205 duly built her the round trip: lie at anchor → be called alongside → work her boxes off and
-  stow them → stand back out. It **passed its own probe** (4 calls, ~55% of her life alongside, cargo cycling 6→0→6,
-  the 5 deep-lane control ships **bit-identical**) — **and two visual agents FAILed it on two seeds, and they were
-  RIGHT.** The probe's `ALONGSIDE < 2.2 cells` threshold was **a number I chose because my own berth constant met
-  it**; the quantity the *claim* was about was the open water the eye sees under her bow, and that is **54.6px
-  (~1.7 hexes) at `seaXFr(harborY,0)` — the most inshore position the open-water projection can even express.**
-  Then the host probe (6 seeds, unanimous): **`SHOREX`=`CTRX+11` is "the coast highway column" and `SHORE0`=`SHOREX+5`
-  is the "nominal water's edge, FIVE LOTS SEAWARD OF THE HIGHWAY"** — and the harbor works are sited at `SHOREX-1..-3`,
-  **BEHIND the highway.** So the warehouses stand **5-9 hexes from the sea**, and the waterline at `harborY` is
-  **BEACH / BEACH / DUNE** — *the same recreational sand 201 put the parasols and sunbathers on.* **There is no quay,
-  no wharf, no industrial waterfront anywhere in the artifact.** Bringing her alongside beaches a container ship
-  between the sunbathers and a dune. ⇒ **The ship is NOT a broken promise: a roadstead is an open anchorage where
-  ships lie at anchor precisely BECAUSE there is nowhere to come alongside, and "waiting on a berth" is her
-  SITUATION.** This is **201's law** (the objection is to the MODEL, not the code) meeting the **dead-host law**
-  (T.MARKET, the fire CA) — see the new cue **(o)**. Law promoted to SKILL.md: *a probe whose threshold is in the
-  units of your own design constant is grading your own homework.*
-  **203 (Transport × Polish, EXPLORED → REVERTED) closed 202's "thin dark line" cue: it is the cable-car HAUL ROPE,
-  and the artifact is INNOCENT** (`probe-gondz`: 8.4-23.6% occluded, so it *is* depth-sorted). The real fault is
-  **LEGIBILITY** — at fit zoom the whole tramway is sub-pixel (0.5px rope, 5px cabins, hairline masts), so a future
-  lap is a **`polish-tile` job on the WHOLE tramway**, not a tweak to the rope. **Do NOT re-try: a body/halo under
-  the rope (measured, backfires — it makes the line MORE prominent) or a lit top edge (measured, impossible at
-  0.5px).** Four laws in SKILL.md. **201 (People × Deepen) DEEPENED the beach to follow the tide** (`wetReach()`:
-  one definition, two readers); two laws in SKILL.md. Both full recaps rotated to `GROWTH-archive.md` at 205.
-  **202 was the 20th STEP-BACK: CLEAN BILL on the city, and the INSTRUMENT was what was broken.** Both its findings
-  are live elsewhere — (a) perf compounds beneath the per-lap gate ⇒ the **PERF bullet**; (b) the step-back's camera
-  was lying ⇒ **SKILL.md** + `probes/shot-stepback.mjs`. Its "thin dark line" cue was CLOSED by 203.
-  **200 took Sky × Polish (THE SUN IS IN THE SKY — SHIPPED)** — the city had a whole family of low-sun effects
-  (161/181/150/190/145) and **the sun itself was never drawn**. Costs day +2.3%/+1.7%, **PAID**. Its real finding is
-  the **PROBES-ARE-BLIND-TO-THE-HUD** bullet below. **199 took Urban × Deepen (the city goes to bed — SHIPPED):**
-  `WINDARK` was a **CONSTANT (0.16)** while its comment called the unlit panes *"nobody home"*, so the city never
-  went to bed; `windarkAt(t)` now sweeps it per type and the **night core SHARPENS as the night deepens.** Its law
-  (*the tell's next host is a CONSTANT whose NAME asserts a behaviour its VALUE cannot have*) ⇒ SKILL.md.
-  **198 took 197's mandated tree-shadow PERF FIX (Nature × Polish) and EXPLORED → REVERTED — the LEVER WAS WRONG.** Batch / shrink-area / sprite-blit are all **measured and CLOSED** (`probes/probe-shadcost.mjs`); the cost is **PER-ELLIPSE**, and 194's ~3% is the honest price of grounding every tree — **PAY IT.** Cost model ⇒ the **PERF bullet**; the law (*measure a lever before you mandate it*) ⇒ SKILL.md.
-  **196 took Water × Deepen (the kelp bed breathes with the tide — SHIPPED).** The kelp printed a live `Tide`
-  row over a draw that read `TIDE` **nowhere** (113's marsh defect, one tile along, unnoticed for 83 iters); on the
-  ebb the canopy now rises/spreads/lightens, and at/above `TIDE` 0.62 it is byte-identical to HEAD so the tide can
-  only ever ADD exposed canopy, never darken the bed. `probe-kelptide` diffs LOW vs HIGH water within ONE build
-  (BASE 0.00% deaf → PATCH 35.7-41.9%), with **BEACH as the POSITIVE CONTROL** — the law that a dead pin and a deaf
-  draw both read zero, so "BASE = 0" needs a host known to answer S. Full recap rotated to `GROWTH-archive.md` at 203.
-  **195 took Civic × Deepen and EXPLORED → REVERTED (byte-identical). STILL-UNCASHED finding: `university` is
-  the ONLY one of the twelve civics with no `LITAMT` — the only `MAJORK` monument pitch dark after sunset.**
-  Every *place to put the light* failed (campanile halo orphans on seed 7; the quad is overdrawn by the tile's
-  own wings; the tile is drawn small), **⇒ it is a `polish-tile` job, not a growth lap.** Gate kept
-  (`probes/probe-unilight.mjs` + `shot-uni.mjs`). Laws in SKILL.md; paragraph rotated to archive at 200.
+  **205 took Water × CONNECT (the coldest cell, last used at 22) and EXPLORED → REVERTED. Its finding is the BIG
+  one and is held in full by cue (o) below: THE PORT HAS NO WATERFRONT — Solvista is a ROADSTEAD, not a harbour,**
+  so the anchored freighter (comment: *"waiting on a berth"*; tooltip: *"Serving the harbor works"*; and
+  `if(f.anchored)continue`) is a perfect-looking label-tell that is **NOT a defect** — a roadstead is an open
+  anchorage where ships lie at anchor precisely BECAUSE there is nowhere to come alongside. 205 built her the round
+  trip, PASSED its own probe, and **two visual agents FAILed it on two seeds and were RIGHT** — the probe's
+  `ALONGSIDE < 2.2 cells` threshold was a number chosen because the berth constant met it. Two laws ⇒ SKILL.md
+  (*a probe whose threshold is in the units of your own design constant is grading your own homework*; *check the
+  host exists before you believe the tell*). Full recap rotated to `GROWTH-archive.md` at 206.
+  **203/201/202 — recaps rotated to `GROWTH-archive.md` at 206; laws promoted to SKILL.md. What survives: (a) THE
+  WHOLE TRAMWAY IS SUB-PIXEL AT FIT ZOOM** (0.5px rope, 5px cabins, hairline masts) — 203 proved the rope properly
+  depth-sorted (`probe-gondz`: 8.4-23.6% occluded) and the artifact INNOCENT of 202's "thin dark line"; the fault is
+  LEGIBILITY ⇒ a **`polish-tile` job on the WHOLE tramway**, never a tweak to the rope. **Do NOT re-try: a body/halo
+  under it (measured — backfires) or a lit top edge (measured — impossible at 0.5px). (b) 202 (20th step-back): CLEAN
+  BILL on the city, the INSTRUMENT was broken** — perf compounds beneath the per-lap gate ⇒ **PERF**; the step-back
+  camera was lying ⇒ **SKILL.md** + `probes/shot-stepback.mjs`.
+  (Per-lap recaps of **196/198/199/200** rotated to `GROWTH-archive.md` at 206 — their laws are live elsewhere:
+  198's *measure a lever before you mandate it* + the **PER-ELLIPSE cost model**, 199's *the tell's next host is a
+  CONSTANT* + *inert-regime noise floor* ⇒ SKILL.md + **PERF**; 200's *probes are blind to the HUD* ⇒ its bullet
+  below; 196's *a state-response diff needs a POSITIVE control* ⇒ SKILL.md.)
+  **195 (Civic × Deepen, REVERTED). STILL-UNCASHED: `university` is the ONLY of the twelve civics with no `LITAMT`
+  — the only `MAJORK` monument pitch dark after sunset; every place to put the light failed ⇒ a `polish-tile` job,
+  not a growth lap** (gate kept: `probes/probe-unilight.mjs` + `shot-uni.mjs`).
   **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban is measured-saturated: additive spent (118), and Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (high-street arcade: the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); **Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). **Roof-furniture is CLOSED city-wide** across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof is left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). (The per-lap recaps of **173-185**, and their superseded "next lap owes" pointers, were rotated into `GROWTH-archive.md` at iter 196 to pay for 196's lines — the header is a fixed budget, and the ROTATION line above is the live pointer.) Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
@@ -150,9 +146,14 @@ ones (U2, 42, U5) stay in the bullet.
   their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it.**
   **The asserts-less-than-the-code-knows tell is SPENT for agriculture** (orchard 129 + vineyard 139/148 + FARM
   183 — each tile's tooltip now names the season its draw already knew, off ONE shared `*Phase()` the draw and
-  the string both read). **GARDEN is the last mute one and its draw does not read `year` at all** — it needs a
-  Deepen before a tooltip, so the next Nature × Interaction/UX is a genuinely NEW seam. (Full recap rotated to
-  `GROWTH-archive.md` at 204.) (**127 took People × New element** aimed not at its spent
+  the string both read). **GARDEN is the last mute one and its draw does not read `year` at all.** **⚠ UPDATED BY
+  206: that cue was right about the CODE and wrong about the PRIORITY — the tile it wanted to deepen barely EXISTED
+  (6 hexes in the whole matrix; zero in one seed in three). 206 fixed the host (`GARDEN 6 → 17`, ~4/city, none
+  buried), so the seasonal Deepen is now UNBLOCKED and is a good Nature × Deepen lap:** the three raised beds could
+  run *staggered* calendars (beds at different stages is an allotment's whole visual identity — and it is a shape
+  no other ag tile uses: FARM staggers whole FIELDS against each other, this would stagger BEDS within one plot),
+  with the tooltip reading ONE shared `gardenPhase()` — run the tell FORWARDS (123), don't re-sync later. (Full
+  recap rotated to `GROWTH-archive.md` at 204.) (**127 took People × New element** aimed not at its spent
   *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
   "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
   and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
@@ -333,8 +334,7 @@ ones (U2, 42, U5) stay in the bullet.
   **(g) THIRTEEN lines / SIXTEEN seedless `hashCell` calls remain** — **iter 103's audit grep undercounted,
   and iter 113 corrected it.** The old pattern
   (`grep -nE 'hashCell\([^)]*,[[:space:]]*(0x)?[0-9]+\)' … | grep -v seedNum`) matches only a **bare integer**
-  salt, so every `k+90` / `j+40` / `r*3+cc+50` form was invisible to it — including **two of the marsh's own
-  three offenders.** Use the superset:
+  salt, so every `k+90` / `j+40` / `r*3+cc+50` form was invisible — incl. **two of the marsh's own three**. Superset:
   `grep -noE 'hashCell\([^;]{0,60}' solvista.html | grep -v seedNum` (then discard the L182 definition and
   genWorld's L510/511/523, which pass the real `seed`). Each survivor is a function of `(x,y[,j])` alone, so
   it paints the identical pattern in every city. Two stakes, and **only the first is an invariant breach
@@ -391,76 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 198 entries before Iteration 196 live in
+> **Archive:** the 199 entries before Iteration 197 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 196 — the kelp bed breathes with the tide (2026-07-12) [Water & coast × Deepen]
-
-**Vector — Water & coast × Deepen** (SHIPPED). Rotation: the header named **Water (185)** as next-owed for 196. Kind:
-Water's last lap was a Polish (185 whitecaps), so this varies to **Deepen** — and Deepen is the documented high-yield
-move for a domain whose basics are all present.
-
-**The seam — a tooltip that has been printing a number the draw never read.** `describeTile`'s `tidal` test (L6759)
-reads `BEACH || DUNE || KELP || MARSH || (WATER && !riv) || pierAt`, so **hovering a kelp bed prints a live `Tide` row**
-(`High water` / `Flooding` / `Ebbing` / `Low water`). The KELP draw case (L3358) read `TIDE` **nowhere**: its canopy mats
-and fronds drifted on `waveT` alone. That is *exactly* iter 113's marsh defect — a label asserting a relationship the
-draw ignores, which this skill calls the richest seam in the artifact — sitting one tile along from the marsh, unnoticed
-for the 83 iterations since. It is also the physically signature kelp behaviour: a canopy-forming alga floats up and
-**mats at the surface** on the ebb, and drowns at high water. BEACH (damp margin + tidepools) and MARSH (113) already
-answer the tide; KELP was the last inshore tile that did not.
-
-**Change (~14 lines, draw-only, in `case T.KELP`).** One factor, `low = clamp((0.62-TIDE)/0.62,0,1)` — deliberately the
-marsh's own `ebb` cut, so the two tidal tiles share a threshold rather than drifting apart (123's run-the-tell-forwards
-move). On the ebb: the four canopy mats **rise** (`my - low*1.3`), **spread** (`rr *= 1+low*0.42`) and **lighten**
-toward exposed olive (`t += lq*0.26`); and each frond tip, no longer able to stand, **lies over and trails along the
-surface** (a short quadratic, `low>0.15`). **At and above TIDE 0.62 every term is zero and the draw is byte-identical to
-HEAD** — the tide only ever *adds* the exposed canopy, it never darkens the bed, which is what keeps this clear of the
-kelp-darkness failure mode. `lq` quantizes `low` into 4 steps because `colMix` **caches on `t`** and a continuous `t`
-would defeat that cache. No tile / entity / label / `rng()` / `hashCell`-terrain / `tick()` pass; strings pure-ASCII (134).
-Host is real but sparse: **8-17 KELP hexes/city** (cf. MARSH 15).
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, every metric **+0**. Vacuous by construction
-(draw-only) — the probe is the gate.
-
-**Probe — `probes/probe-kelptide.mjs` (new, promoted).** The isolation is *not* patch-vs-HEAD: it is **LOW water vs HIGH
-water within one build**, frozen clock, same seed, same `genWorld` — so the only variable is `TIDE` and every moved pixel
-is a tide response. Run on both builds it settles the whole claim in one 2x3:
-
-| build | KELP interior (s=0.5) | BEACH (+ctl) | ROAD (-ctl) |
-| --- | --- | --- | --- |
-| BASE  | **0.00 / 0.00 / 0.00%** (deaf — the seam) | 14.2-17.6% | 0.00% |
-| PATCH | **35.7 / 37.5 / 41.9%** (answers) | 14.2-17.6% (untouched) | 0.00% |
-
-**The probe FAILED first, and was right to.** A plain +-10px box around each kelp centre showed BASE kelp already moving
-**3.2-4.7%** with the tide — which would have killed the premise. The cause was **box bleed**, not a kelp response: kelp
-abuts the beach, and the beach's damp margin (`w2 = 2.4+(1-TIDE)*5`, up to ~7px) is drawn on the BEACH hex but **spills
-across the shared edge**. Rather than shrink the box until it passed, the probe now **masks to the hex and sweeps the
-mask** — BASE kelp goes `0.53% -> 0.00% -> 0.00%` as the mask tightens (the residual walks out entirely: it was all rim),
-while PATCH goes `19.5% -> 28.2% -> 37.5%` (*rising*, i.e. the response is centrally located, so it IS the canopy and not
-a rim artifact). BEACH is the **positive control** — it moves identically on both builds, proving the tide pin is live,
-without which "BASE kelp = 0" would be a false negative from a dead pin rather than a finding. `waveT` **and** `time`
-pinned per 195(f) — the mats drift on `waveT`, so an unpinned clock would have drowned the signal in sway.
-
-**Visual.** Coast clips at low vs high water + an un-zoomed wide frame, seeds 42 & 7, one agent each, LOCATE-not-judge.
-**Both VISUAL: PASS.** Both agents were asked which frame is low water *by the kelp alone* and **both got it right**
-(seed 7's with the two filenames deliberately listed in scrambled order): they described the spread olive surface mat and
-the trailing frond tips at low water vs. "dark water with a couple of upright frond ticks" at high. Both confirmed the
-effect stays inside the hex faces (no bleed, no tears, no blowout) and — the question that matters for this tile — **the
-coast has NOT gone dark**: kelp reads as a few discrete beds hugging the shore, not a continuous dark band, sand→shallow→
-deep gradient intact. ⚠ Seed 7's agent banked one watch item: *at high water the kelp hexes are still the darkest pixels
-in the water*, so **if the bed count ever grows, kelp is the first thing that would start banding**. That is HEAD
-behaviour (unchanged here by construction), but it is the kelp failure mode's early warning — worth a look at 197's
-step-back.
-
-**Verdict — SHIPPED.** The kelp bed now answers the tide its own tooltip has been printing all along: on the ebb the
-canopy floats up, mats and lightens, and the frond tips trail along the surface; at high water it drowns back to dark
-water, byte-identically to HEAD. Draw-only, pop + stream flat, ~14 lines + a probe. Water's Deepen cell gains 196. The
-next domain lap (198) owes **Urban (189, Deepen/Polish only — measured-saturated)**, then Sky (190)/People (191).
-**197 is the mandated STEP-BACK** — and it owes two flagged items a look: **194's tree-shadow perf cost (day +3.4% /
-night +3.5%)** and this entry's **kelp-banding-at-high-water** watch item.
 
 ## Iteration 197 — the nineteenth step-back finds a clean city and a real perf cost (2026-07-12) [holistic step-back]
 
@@ -1083,3 +1018,74 @@ never sited; the fire CA fully drawn and never ignited; and now the port, fully 
 built). The *finding* is worth more than the feature would have been: it removes an entire family of
 tempting Water vectors from the board and names the one thing that would unlock them — **build the
 quay first.**
+
+## Iteration 206 — the gardens the city never dug (2026-07-12) [Nature × New CA rule]
+
+**Vector.** Nature × New CA rule — but the *audit* kind (iter 107's move: rewrite a rule that
+never fired, at zero content cost). Rotation owed Nature; the header banked a Nature cue
+("GARDEN is the last season-mute tile — Deepen it before a tooltip"). The cue was **right about
+the code and wrong about the priority**, and one census read said so: **GARDEN = 6 hexes across
+the whole 9-cell matrix**, and the rule is year-gated to 2008+, so that is **~2 per city at 2035
+and zero everywhere else**. Deepening a tile you cannot find is beautiful code nobody sees, so
+the vector became: *why are there no gardens?* (205's law, cashed one lap later: **check the host
+exists before you believe the tell**.)
+
+**The defect (`probes/probe-gardenhost.mjs`, 6 seeds × 4 eras).** The rule wanted
+`RES && countAround(...,RES)>=3`. Houses are *not* scarce — the city holds 287–369 RES throughout.
+But **a house ringed by houses is precisely the house the upgrade pass turns into a mid-rise**, so
+the pool it drew from **collapsed 40 → 15 across the only years the rule was allowed to run**:
+
+```
+  2008:  RES 369   host(RES,>=3 RES) 40.2   gardens 0.0
+  2015:  RES 387   host             37.7    gardens 0.5
+  2025:  RES 349   host             27.7    gardens 0.7
+  2035:  RES 287   host             15.2    gardens 1.5     <- seed 5: host 3, gardens 0. Ever.
+```
+
+**It is `T.MARKET`'s defect one tile over (107): a siting rule that asks for the condition the
+upgrade pass saturates past.** The probe also **killed my own next idea before I wrote it** — the
+rule's comment says gardens are dug *"between the houses"* while the code converts a **house**, so
+the honest host looked like the vacant lot. It is not: `EMPTY` with ≥2 RES neighbours falls
+**85 → 6.5** by 2035 and **with a road adjacent it is 0.0**. The development pass eats every gap.
+
+**Change.** `RES` is the wrong definition of *home* — **a mid-rise is still housing.** New shared
+`HOMES = {RES, MID}` (TOWER excluded on purpose: that is skyline, not a neighbourhood), and the
+neighbour test counts homes. Pool **2.5×** and *stable* through maturity (85→94→82→41 vs 40→38→27→15);
+seed 5's host goes **3 → 30**.
+
+**Then the visual gate FAILed on seed 5 — and it was RIGHT** (2nd time in 3 laps: 200's sun, 205's
+ship). Not for its stated reason. It claimed the garden was off-centre and had "no lawn hex"; the
+camera was in fact aimed true (`probe-gardenvis.mjs`, centroid **17px** off on an 88px hex). The
+truth was worse: **seed 5's garden rendered 0 px of ink against 8,924 px drawn on top — 100%
+occluded.** Across 23 gardens: **mean 58% occluded, 7 of 23 ≥86% buried.** A garden sited *in among
+the homes* sits behind mid-rises, and **draw order is depth order**. I had stated the claim in
+**cells** when it is a claim about **what the eye sees** (205's law, again).
+
+**The lever, measured before mandated (198) — and then measured on the OTHER side.** Front-row
+occluders separate cleanly (tall front: 2340px ink, 4/11 buried · clear front: 4354px, 2/12), so I
+mandated a hard `openFront()` gate — and **it starved the rule: GARDEN 14 → 5, worse than the bug.**
+`HOMES` requires ≥3 home neighbours and `MID` is *both* a home *and* the thing that buries you: the
+two predicates fight. So it ships as a **preference, not a gate** — `rng() < (openFront ? 0.075 : 0.02)`
+— which is also the in-world rule (nobody digs allotments in the permanent shade of the block next
+door). New law in SKILL.md: **a lever has two ledgers — measure its cost to the POPULATION, not just
+its effect on the INSTANCE.**
+
+**Census.** PASS, 0 page errors. Core flat: pop −133 (−0.1%), roads +3, developed −23 (−0.4%).
+**Tile histogram: `GARDEN 6 → 17` (+11).**
+
+**Probe (`probe-gardenvis.mjs`, 24 gardens / 6 seeds).** mean occluded **58% → 40%** · fully invisible
+**1 → 0** · ≥86% buried **7/23 → 1/24** · front-clear share **52% → 71%** · gardens/city **1.5 → 4.0**,
+and **no seed is left at zero** (seed 5: 0 → 2, its best rendering **4% occluded, 8363 px**).
+
+**Visual.** PASS on seeds 42 and 5 (seed 5 re-shot after the fix). Both agents, asked to *locate*,
+independently reported the mechanism without being told it: *"the taller mid-rises are behind/beside
+it rather than in front, so the plot is open to light and clearly visible."* Whole-city frames clean
+on both.
+
+**Verdict: FIXED.** A rule that had under-fired for the artifact's entire life now fires, and the
+gardens it digs can be seen. **The banked seasonal cue is now UNBLOCKED and worth cashing** — GARDEN's
+draw still reads no `year` at all (the last season-mute vegetation tile), and it finally has a host.
+
+**Reusable:** `openFront(x,y)` + `TALLT` (next to `countAround`) — *is the hex in front of this one
+clear?* Any ground-level thing that must be SEEN should ask before siting itself; **204's buried
+service bays (cue n) are this same defect one domain over.**
