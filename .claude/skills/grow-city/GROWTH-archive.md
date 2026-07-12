@@ -11422,3 +11422,135 @@ then Sky (181); the next step-back is at **192**.
   still the darkest pixels in the water — if the bed count ever grows, kelp is the first thing that would band.**
   **So the next domain lap (198) owes Urban (189, Deepen/Polish only — measured-saturated), then Sky (190)/People (191);
   197 is the mandated STEP-BACK.**
+
+## Header trim at iter 199 — 197's mandated perf lever (SUPERSEDED by 198, moved from GROWTH.md)
+
+Rotated out of the maintained header at iter 199 because 198 measured it and it is FALSE —
+it sat directly beneath the paragraph that disproves it. Preserved verbatim, never deleted:
+
+> **⚠ 197 found the FIRST non-flat lap since 142, and it is REAL: 193+194+196 cost day +3.8/+4.4%,
+> night +2.9/+3.0%** (two independent interleaves vs iter-192 `d8819ec`). It is **all 194's tree shadows** —
+> 193 and 196 are free. Within precedent (118 shipped +5.1% night; 142's +2.2% was accepted) and NOT an
+> emergency, but it is a per-object `fill()` on the city's most numerous object. **The lever is known: 194
+> already proved memoizing `shadS`'s rgba string buys ZERO, so the cost is the FILL COUNT, not the string —
+> batch a forest hex's ~4 tree shadows into ONE path with ONE fill.** See 197's entry.
+
+198 built exactly that batch and measured **+0.3%: nothing.** `probes/probe-shadcost.mjs` then
+discriminated the mechanism across 5 variants: the cost is **PER-ELLIPSE** (per path object
+rasterized) — not per `fill()`, not per unit area, and a pre-baked sprite blit is *worse*. The
+live statement of the cost model now lives in the header's PERF bullet and in SKILL.md.
+
+## Iteration 189 — the shopfronts spill onto the pavement at night (2026-07-12) [Urban fabric × Deepen]
+
+**Vector.** Urban fabric × **Deepen** (SHIPPED). Rotation named the stalest domain, **Urban (180)** — the 188 entry
+owed the 189 lap to Urban. Urban is measured-saturated (additive spent 118, Connect measured-hard 160/165, roof-furniture
+closed city-wide), so its laps are **Deepen/Polish only** and must go to *facades, ground plane, harbour apron* (header).
+Kind varied off 180's Polish to a **Deepen** on the **ground plane** — the one part of downtown the many night laps never
+reached.
+
+**The seam — the liveliest windows threw nothing on the street.** Downtown grew a rich night layer over dozens of laps:
+arterial lit corridors (L4197), ordinary-street lamp glows (L4216), bridge rail lamps + river reflection (179), COM neon
+signs (L4608), terrace lanterns (L4521). Yet the COM **storefront glass** — lit at night with `colLit('glass',...)`, the
+brightest ground-floor plane in the city — cast **no light onto the pavement it faces**. Every warm pool on the street
+came from a lamp; none came from the shops themselves. A genuine gap on the ground plane, not another ornament.
+
+**Change (~10-line draw, all draw-only, in the COM case after the `fs`/`bcx,bcy` setup, before the body prism so the
+kerb/crowd sit on top).** Gated `LITAMT>0.4 && v>0.5` (the retail strip): a warm **ground pool** in front of the
+storefront on the road-facing (`fs`) side — a wide soft wash (`rgba(255,206,124,·)`, 6.2×2.6) plus a brighter core near
+the glass (`rgba(255,222,150,·)`, 3.6×1.5), positioned at the storefront base via the same `X/V/E` face maths `kerbS`
+uses and pushed outward with `faceOutS(...,3.0)` toward the viewer/street. Amber matched to the street lamps' own
+`rgba(255,204,120,·)` (L4208). **Source-over low alpha** (peak ~0.12/0.18), not `'lighter'`, so a row of adjacent lit
+shops stacks into one continuous glow **without blowing to white** (159's overlap caution). No tile, entity array,
+`rng()`, `hashCell`-terrain, `tick()` pass or terrain change; strings pure-ASCII (134). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity counts identical
+(`greenRoofs +1`/`towerHt -1` = documented RAF tick-count jitter, touches no `rng()`). Vacuous by construction
+(draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-shopspill.mjs` (new, promoted).** Diffs PATCH vs HEAD over the COM cells' screen boxes at a
+frozen frame, **night + day**, split by the gate: TARGET = COM `v>0.5` (spill drawn), CONTROL = COM `v<=0.5` (gate
+excludes → no draw, so the control also tests the gate). Rebuilt in-page (`genWorld`+`__warp`), `STARS` cleared,
+`Math.random` stubbed, movers cleared, clock frozen (163 law). seeds 7/42/1234: **COM v>0.5 NIGHT 0.22% / 0.30% / 0.28%
+→ DAY 0.00% / 0.00% / 0.00%** (LITAMT 0.02, no draw); **v<=0.5 control 0.01–0.02%** both frames all seeds (edge bleed
+from adjacent lit shops). **PASS (3 seeds).**
+
+**Visual.** Night `downtown` + `wide`, seeds 42 (`warp=61`) & 7 (`warp=31`), pinned `year=2035.62`. Two agents, both
+**PASS**: warm amber pools found on the pavement hugging the base of lit shopfronts, sitting flat on the hex ground
+(not floating), fanning toward the street; **no z-order tears, floating tiles, or blowout** — the dense retail core stays
+legible with dark pavement showing through, the spill reads as *pooled glow* not a merged white/orange smear, warm
+windows still read as windows; the whole wide frame still a balanced night coastal city (dark sky/sea, moon, warm core
+dimming to the edge), the spill deepening the warmth without clutter.
+
+**Verdict — SHIPPED.** The one lit plane in downtown that gave nothing back to the street — the storefront glass — now
+pools warm on the pavement in front of it, joining the night-lit ground plane the lamps, bridges and neon already built.
+A ground-plane Urban Deepen: draw-only, pop + stream flat, ~10 lines + a probe. Urban's Deepen cell gains its next (…173,
+**189**). The next domain lap (190) owes **Sky (181, Deepen/Fix ONLY — saturated)**, then the mandated step-back at **192**.
+
+### Findings for later laps
+- **A LIT VERTICAL PLANE BESIDE A GROUND PLANE OWES IT A SPILL, AND IT IS THE CHEAPEST GROUND-PLANE DEEPEN.** Same shape
+  as 179's bridge-lamp reflection one dimension over: any structure that lights up at night (storefront, a floodlit
+  civic facade, the market stalls, a lit pier) can pool a warm ground glow in front for two ellipses — and because it is
+  glow-on-dark it clears the contrast×width bar at fit (179). Candidates still un-spilled: the MARKET stalls' string
+  lights, the CIVIC floodlit facades (they light the wall but not the forecourt paving), the pier lamps.
+- **STACK NIGHT GROUND-GLOWS WITH SOURCE-OVER LOW ALPHA, NEVER `'lighter'`, WHEN THE HOSTS ARE DENSE AND ADJACENT.**
+  The COM strip packs shops hex-to-hex, so an additive (`'lighter'`) spill would have summed into a blown-white smear
+  across the core (159's overlap law). The street lamps already solved this — plain `rgba(...,~0.11–0.22·LITAMT)`
+  ellipses that *alpha-blend* toward warm without ever reaching white. Match the existing night-glow alphas rather than
+  inventing a brighter one.
+
+
+## Header trim at iter 199 — step-back recipe + clean-bill history 130..177 (moved from GROWTH.md)
+
+Rotated out of the maintained header at iter 199 to pay for 199's lines (the header is a fixed 400-line
+budget: to add a line, cut a line). The shooting recipe is duplicated verbatim in SKILL.md; the clean-bill
+history is superseded by 197, the current step-back. Preserved verbatim, never deleted:
+
+> Shoot it **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
+> `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
+> the full recipe). **130, 136, 142, 147, 152, 157, 162, 167, 172 AND 177 all found NO compounding city defect** (TEN clean bills in a row, the
+> honest step-back outcome, no city change): both seeds PASS day/night/season, agents *located* the night core
+> off-centre by light alone (177: (.48,.50) / (.53,.60), matching 172's (.47,.55)/(.45,.62), 167's (.47,.50)/(.50,.62) & 162's (.48,.53)/(.45,.62); 115/143's lighting holds), 138's
+> arterial night-corridors traced continuous both seeds, sea reads (116/123 hold), no tears/floaters/blowout;
+> seasons measured alive (`probe-season`: FARM winter→dry-peak **88**, VINEYARD now moving too since 139, ROAD
+> control ~0.5–2 — the *whole-frame* mildness agents feel is the by-design evergreen/irrigated dilution (120),
+> a composition fact not a dead calendar). **The night-core-is-broad watch-item (136/142) is CASHED (iter 143,
+> Urban × Polish): a `CORESIG=5` Gaussian bump on the CBD made the flat plateau a peak (`probe-nightcore`, detail
+> archived); a stronger read widens the window mix `0.35+0.65·c.lit`, not `c.lit`.** (**125** = same shape, the pin-off-January recipe fix.)
+
+## Header trim at iter 199 — the full 117-vs-99 perf diagnostic (moved from GROWTH.md)
+
+Compressed in the maintained header at iter 199 (fixed 400-line budget); the operative rule survives there and
+in SKILL.md's perf section. Preserved verbatim, never deleted:
+
+> **⚠ 117 CORRECTED 99's DIAGNOSTIC.** The old rule read *"a **stable** pass-over-pass offset means code,
+> a **rising** one means load."* **The stable half is FALSE**: machine load is autocorrelated over
+> minutes, so three passes inside one loaded window are three samples of *one* draw. Iter 117's gate read
+> **+25.5 / +26.0 / +26.5%** — perfectly stable — on a diff with **zero draw calls**, and the identical
+> bytes read **+3.5%** twenty minutes later. **Never grade frame time by consecutive passes at all.** The
+> only sound reading is **interleaved A/B/A/B against pristine HEAD** (swap `solvista.html` between every
+> pass, min per variant) — and brace the shell interpolation, because `/tmp/$v117.html` silently measures
+> one variant six times. 99's *remedy* (control against pristine HEAD, not the baseline file) stands, and
+> "code" may still be earlier iterations' code. Re-pin at a step-back whenever the offset survives an
+> interleaved control; `polish-tile` owns the file, so say so in the entry rather than re-pinning silently.
+
+## Header trim at iter 199 — 195's full university post-mortem (moved from GROWTH.md)
+
+Compressed in the maintained header at iter 199 (fixed 400-line budget). Its two GENERAL laws now live in
+SKILL.md; the header keeps the live finding (the university is a polish-tile job). Preserved verbatim:
+
+> **195 took Civic × Deepen and EXPLORED → REVERTED (`solvista.html` byte-identical to HEAD).** The finding is
+> solid and still uncashed: **`university` is the ONLY one of the twelve civics with no `LITAMT` at all** — the
+> only `MAJORK` monument that goes pitch dark after sunset (parliament floodlights 175, museum facade, hall clock
+> 149, library reading hall, police beacon, hospital cross, observatory dome 158; even the school keeps one
+> janitor's window). 179/193's shape exactly: a completed family missing one member. What failed was every
+> **place to put the light**, and that is now known: (i) **the CAMPANILE ORPHANS A HALO** — tall and thin, so a
+> taller neighbour drawn later (seed 7 sits beside a hospital tower) swallows the lamp while the glow, being
+> bigger than its lamp, spills into open sky; an agent found *"a detached hazy glow blob floating in the sky,
+> unattached to any geometry."* To revive it, **gate the halo on there being no taller cell in the rows below**
+> (draw order IS depth order) — dimming it does not help. (ii) the **quad is occlusion-safe but the tile's OWN
+> wings overdraw it** by an amount that flips with `fxU`'s per-seed sign (50 changed px on seed 42, **3** on
+> seeds 7/1234, identical code). (iii) The tile is simply drawn **small** — no ornament on it carries at fit zoom
+> without a glow that extends past the geometry, which is the thing that orphans. **⇒ The university is a
+> `polish-tile` job, not a growth lap.** `probes/probe-unilight.mjs` (whole-frame diff + centroid locate-check;
+> noon/dusk controls byte-identical at **exactly 0 px**) and `probes/shot-uni.mjs` are kept so a retry starts
+> from a working gate. **So the next domain lap (196) owes Water (185), then Urban (189)/Sky (190); next

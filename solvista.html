@@ -2732,7 +2732,30 @@ function bandR(gx,gy,ax,ay,z0,z1,fill){
    nothing. Painting only what is lit draws FEWER quads than the band + darkWinR pair
    it replaces, and lands at +4.6% night / +0.0% day.
    Night-only: below the cut this is byte-for-byte the band it always was. */
-const WINDK=0.42, WINDARK=0.16;   /* unlit-glass shade; share of panes with nobody home */
+const WINDK=0.42, WINDARK=0.16;   /* unlit-glass shade; BASELINE share of panes with nobody home */
+/* How far the night has run: 0 at dusk, 1 in the small hours. LITAMT cannot answer
+   this — the light curve PINS it at 1.0 from dayT 0.86 all the way to midnight — so
+   for the artifact's whole life "nobody home" (below) was a CONSTANT: the same panes
+   were dark at 8pm and at 4am, and every window lit at dusk still burned at dawn. The
+   city never went to bed. The hour has to come from dayT, the slow clock the moon
+   (135), the hall clock (149) and the observatory dome (158) already share. Paned
+   glass is only drawn while LITAMT>=0.35 (dayT ~0.70..0.10), so that is the span this
+   runs over; smoothstepped, because a city settles, it does not snap. */
+const NIGHT0=0.70, NIGHTSPAN=0.36;
+function nightDeep(){
+  const u=clamp((((dayT-NIGHT0)%1)+1)%1/NIGHTSPAN,0,1);
+  return u*u*(3-2*u);
+}
+/* ...and who is still up depends on what the building IS. A home empties fastest; an
+   office keeps a late shift; a tower keeps a skeleton crew burning till dawn. So the
+   residential fringe goes dark while downtown stays lit, and the night core (143)
+   SHARPENS as the night deepens rather than flattening — the differential is the whole
+   point, not the dimming. [dusk, small hours] share of panes with nobody home. */
+const BEDT={[T.RES]:[0.10,0.52],[T.MID]:[0.14,0.40],[T.COM]:[0.15,0.36],[T.TOWER]:[0.17,0.28]};
+function windarkAt(t){
+  const b=BEDT[t]; if(!b)return WINDARK;
+  return b[0]+(b[1]-b[0])*nightDeep();
+}
 function winBandR(gx,gy,ax,ay,z0,z1,x,y,salt,f,litMix){
   const hb=z1-z0;
   const[cx,cy]=px(gx,gy);
@@ -2742,15 +2765,27 @@ function winBandR(gx,gy,ax,ay,z0,z1,x,y,salt,f,litMix){
     const n=clamp(Math.round(X/hb),2,4);   /* panes across one face, ~square */
     const mt=Math.min(0.09,0.62/X);        /* mullion width, in face parameter t */
     const pt=(1-(n-1)*mt)/n;               /* pane width, likewise */
+    /* The mean-holder below stays pinned to the BASELINE WINDARK, deliberately. It
+       exists to make the paned band read at the same tone the solid ribbon it replaced
+       did, at a FIXED hour; if `a` chased the hour too, colWin would brighten each
+       surviving pane to hold the block's mean — cancelling the very signal (a sleeping
+       city IS darker) and clipping the survivors to white at the top of the sweep. So
+       the lit panes keep exactly the colour they have always had, and the night's
+       darkening is carried honestly, by panes going out. */
+    const wc=cellAt(x,y), wd=windarkAt(wc?wc.t:-1);
     const a=(n-1)*mt+WINDARK*(1-(n-1)*mt); /* share of the band left to the wall */
     /* ...and the share the band it replaces already had: one notch, on the 64% of faces
        that rolled one. Holding THAT mean is what keeps downtown's tone where it was. */
     const k=0.64*(Math.min(1.9,hb*0.8)/X)*(1-2*Math.min(0.35,hb*0.16)/hb);
     ctx.fillStyle=colWin(f,litMix,a,k);
     ctx.beginPath();
+    /* one hash per pane, unchanged — so each pane carries a fixed "how late this
+       household stays up", and the rising threshold sweeps up through them in a stable
+       order. The windows wink out one by one instead of re-rolling every frame, and no
+       new randomness enters: stream-neutral by construction. */
     for(let s=-1;s<=1;s+=2)for(let i=0;i<n;i++)
-      if(hashCell(x*13+(s+1)*3+i*29,y*7+(z0|0),seedNum^salt)>=WINDARK){
-        const t0=i*(pt+mt);                                /* the rest is nobody home */
+      if(hashCell(x*13+(s+1)*3+i*29,y*7+(z0|0),seedNum^salt)>=wd){
+        const t0=i*(pt+mt);                                /* the rest have gone to bed */
         winQuad(cx,cy,s,X,V,E,z0,z1,t0,t0+pt);
       }
     ctx.fill();
@@ -6671,6 +6706,13 @@ function describeTile(c,x,y){
   if(c.t===T.CIVIC||c.t===T.STADIUM)data.push(['Est.',est]);
   else if(DEV.has(c.t))data.push(['Built','~'+est]);
   if(DEV.has(c.t))data.push(['Floors','~'+floorsOf(c.h)]);
+  /* how much of the block is still up — live, and read off the SAME windarkAt() the
+     panes are drawn from, so the tooltip can never claim a lit block the renderer has
+     put to bed. Shown only while the panes are actually drawn (LITAMT>=0.35, which is
+     winBandR's own cut), never in daylight where there is no pattern to name. */
+  if(BEDT[c.t]&&LITAMT>=0.35){const wd=windarkAt(c.t);
+    data.push(['Windows',wd<0.22?'Nearly all lit':wd<0.34?'Lights going out'
+                        :wd<0.45?'Most are asleep':'Dark &mdash; the block sleeps']);}
   if(c.t===T.TOWER&&c.h>90)data.push(['Helipad']);
   /* the institution's own district and grounds, read from the rules that built
      them: siteQuarter's MAJORK/QFAR, the forecourt's plaza, the grounds' quad.

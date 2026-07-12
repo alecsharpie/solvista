@@ -680,6 +680,34 @@ vector, whatever it is.
   test (`strollable`) were two readers of one idea, asymmetric, and the asymmetry was
   a one-way ratchet that decayed the feature to nothing over 20 sim-minutes. **When
   you add a rule, grep for every other place that already answers the same question.**
+- **The tell's next host is a CONSTANT whose NAME asserts a behaviour its VALUE cannot have (iter 199).**
+  The label-asserts-what-the-draw-ignores tell (below) has been cashed on tooltips (113/117/183) and once on a
+  *comment* (194). 199 found the next rung down: `winBandR` lit a pane wherever `hashCell(...) >= WINDARK` and
+  called the remainder **"nobody home"** — an assertion about *occupancy*, which is the one thing about a city
+  that changes across a night — while `WINDARK` was a **hard-coded 0.16**. So the same panes were dark at 8pm and
+  at 4am and every window lit at dusk still burned at dawn: the city never went to bed. **Grep for constants and
+  enums whose name or comment claims a state, a rate, or a time-of-day, then check whether anything ever varies
+  them.** A constant named for a *verb* is the tell; a constant named for a *dimension* is fine.
+  Corollary — **check whether the obvious signal is SATURATED before concluding the draw "already reads" it.**
+  It is tempting to say the windows already know about night because they scale by `LITAMT`. They do not: the
+  light curve **pins `LITAMT` at 1.0 from dayT 0.86 to midnight**, so across the entire evening it is a flat
+  plateau and carries *no* information about the hour. A signal that is clamped over the range you care about is
+  the same as no signal. Read the keyframes, not the variable name.
+- **A change that is provably INERT in one regime hands you a FREE perf noise floor (iter 199).** The perf
+  section below says to grade only by an interleaved A/B against pristine HEAD — but it does not say how to know
+  when a small delta is noise. If your change is *night-only* (or day-only, or seasonal), then the other regime
+  runs **byte-identical code**, so whatever *it* reads IS the noise floor, measured on the same box under the
+  same load, for free, in the same run. 199's edit draws zero panes in daylight (verified, not assumed), and its
+  day column read **−0.0 / +0.1 / +1.0%** across three rounds — so its night reading of **+1.5 / −1.4 / −0.2%**
+  is centred inside its own control and the change is free. Most late-game vectors are gated on `LITAMT` or
+  `year`, so this control is nearly always available: **prove the dead regime is dead, then let it referee.**
+- **Clear the pelican `flock` when you freeze the world for a probe (iter 199).** 163(c)/(d) tell you to rebuild
+  in-page with `genWorld`+`__warp`, clear `STARS`, and empty the entity *arrays*. `flock` is neither: it is a
+  lone `Math.random`-spawned **object** (`let flock=null`), so it survives the standard freeze and lands
+  somewhere different on every page load. It was the **entire per-load noise floor** — ~100–600 scattered pixels,
+  max delta ~8 — that made 199's probe false-FAIL its own daylight control, and it is invisible to every existing
+  probe's clear-list. `flock = null` and an unchanged frame goes to an honest **0 px**. (195(f): an honest zero
+  is what makes every other number in the probe readable.)
 - **A label that asserts a relationship the draw ignores is a bug, and it is the
   richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
   and printed a live `Tide` for 16 iterations over a tile that never moved a pixel
