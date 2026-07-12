@@ -758,6 +758,49 @@ vector, whatever it is.
   max delta ~8 — that made 199's probe false-FAIL its own daylight control, and it is invisible to every existing
   probe's clear-list. `flock = null` and an unchanged frame goes to an honest **0 px**. (195(f): an honest zero
   is what makes every other number in the probe readable.)
+- **STUB `Math.random` BEFORE `genWorld` — it is the freeze-list item nobody wrote down, and it is the BIGGEST
+  (iter 203).** 163(c)/(d) name `genWorld`+`__warp`, `STARS`, and the entity arrays; 199 adds `flock`. All of that
+  is still not enough, because a whole class of entities — **joggers, whales, kayaks, herons, deer, dolphins,
+  balloons** — is `Math.random`-spawned (that is exactly why `&flood=` exists for them and not for the `rng()` ones),
+  and they **respawn on every `genWorld` call**. So two renders of the "same" frozen world, in the same page load,
+  differ by **~4,000 px** — the same order as an entire feature's signal, and 203's first probe run was therefore
+  *pure noise* dressed up as a six-row table. Clearing `flock` is a special case of this; the general fix is one
+  line, and it subsumes the lot:
+  ```js
+  let s = 0x2F6E2B1 >>> 0;                                            /* before genWorld */
+  Math.random = () => ((s = (s*1664525 + 1013904223) >>> 0) / 4294967296);
+  ```
+  **And ALWAYS render the unchanged frame twice and print the diff as the probe's first row.** 195(f) says an honest
+  zero makes the other numbers readable; 203 says *make the probe SAY the zero*, because a silent noise floor does
+  not announce itself — it just quietly makes every column plausible and wrong. Better still, render both frames
+  inside **one** `page.evaluate` so nothing can drift between them.
+- **"It is drawn OVER X" is an OCCLUSION claim, and occlusion is DIRECTLY MEASURABLE — never settle it by reading
+  the draw code (iter 203).** 203 reasoned, correctly, that the cable-car rope *must* be depth-sorted: `stepGond`
+  only takes `axStep` d=1/d=2 and **both are `y+1`**, so a path is strictly monotone in y and every span is drawn
+  before the row it descends into. Four agent-reads said otherwise, in specific terms, on two seeds. A code argument
+  cannot overrule four eyes — **a number can**. Render the SAME frozen frame under **two z-orders**: the element
+  where the draw loop actually puts it, versus **the very same recorded polylines re-stroked on top of the finished
+  frame**; `occluded% = 1 − inkInPlace / inkOnTop`. **~0% ⇒ nothing ever covers it (an always-on-top overlay, and the
+  agents are right); >0% ⇒ it is genuinely depth-sorted.** The rope measured **8.4–23.6% occluded** on every seed and
+  light, so the artifact was innocent and the agents had (once again) named a cause the measurement refuted. Record
+  the polylines in **DEVICE space** (`ctx.getTransform()` at stroke time) and the replay needs no knowledge of the
+  camera. `probes/probe-gondz.mjs` is the reusable rig.
+- **A LOUD test FAILS on a SUB-PIXEL draw — measure INK, not saturation (iter 203, correcting 195(b)).** 195(b) says
+  force the feature loud and count the loud colour. But a line **thinner than one device pixel** is *always* blended
+  with its background and **can never produce a saturated pixel** — so a colour threshold counts ≈0 and you will
+  conclude the draw is dead when it is fine. 203's occlusion probe first read **"0 visible px"** on a rope that is
+  demonstrably 262–419 px. For anything sub-pixel, drop the threshold entirely and measure **ink contribution** —
+  the summed max-channel distance from the same frame rendered *without* the element — which is threshold-free and
+  correct at any width. (Corollary for the *loud* trick generally: it works on ellipses and fills, which cover whole
+  pixels; it does not work on hairlines.)
+- **A CHAIN is not a STROKE: filter a draw census by the feature's PERCEIVED extent, not its per-call extent
+  (iter 203).** Hunting the "thin dark line", 203 censused every stroke that was long, thin and dark — and **missed
+  the answer**, because each rope span is only **12–14 px** and sat under the "long" threshold, while **15–25 spans
+  chain into an unbroken 199–331 px run** across the frame. *The eye sees the chain; a per-stroke filter cannot.*
+  When you census draw calls to find something a viewer complained about, **group by issuer and sum** before you
+  threshold — and note the same census's other trap: a non-string `strokeStyle` (a `CanvasGradient`) has no
+  luminance, so defaulting it to black makes the **rain shafts** the darkest "line" in the city. `probes/probe-darkline.mjs`
+  is the reusable locator — stack-attributed, so it names the function that issued the ink.
 - **A label that asserts a relationship the draw ignores is a bug, and it is the
   richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
   and printed a live `Tide` for 16 iterations over a tile that never moved a pixel
@@ -921,11 +964,18 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   clock first). Each resolves the artifact as `join(HERE, '../../../../solvista.html')`.
   Ad-hoc probes are born at the repo root (gitignored); `git mv` one here the moment
   your ledger entry cites it.
-  Three of them are **harness-wide**, not per-feature — reach for these on any lap:
+  Five of them are **harness-wide**, not per-feature — reach for these on any lap:
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before
-  reopening any draw-cost lever), and `probe-drawbudget.mjs` (**where the frame goes** —
-  path objects per draw fn, in one render; calibrated against `probe-shadcost`).
+  reopening any draw-cost lever), `probe-drawbudget.mjs` (**where the frame goes** —
+  path objects per draw fn, in one render; calibrated against `probe-shadcost`),
+  `probe-darkline.mjs` (**locate an unexplained linear artifact**: censuses every long/thin/dark
+  stroke and attributes it to the fn that issued it — but read the chain law above before
+  trusting its thresholds), and `probe-gondz.mjs` (**is this drawn OVER that?** — one frame under
+  two z-orders, `occluded% = 1 − inkInPlace / inkOnTop`; settles any occlusion claim).
+  `probe-ropesteel.mjs` is the rig that graded — and refuted — 203's rope polish; it is the
+  template for isolating a draw by *suppressing its own strokes* (stack-matched) rather than
+  boxing it.
 - `probes/shot-stepback.mjs` — **the step-back's camera.** 3 lights × 2 calendars with
   the clock **frozen in-page** and the light pins taken from the light curve, because
   `shoot.mjs` + `?t=`/`?year=` drifts the calendar ~0.167 yr/s while it waits and will

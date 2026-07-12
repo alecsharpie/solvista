@@ -11896,3 +11896,86 @@ Compressed in the GROWTH.md header to pay for 202's lines; its laws live in SKIL
   **⚠ Two laws this lap paid for, both now in SKILL.md: a FIXED screenshot CLIP is not a framing (the `coast` rect
   missed seed 7's coastline entirely and an agent correctly FAILed the *crop*), and an agent's "this is backwards"
   can be an objection to the ARTIFACT'S MODEL, not to your change.**
+
+
+<!-- header recap for iter 196, rotated out of GROWTH.md's maintained header at iter 203 to pay for 203's lines (the header is a fixed 400-line budget) -->
+  **196 took Water × Deepen (the kelp bed breathes with the tide — SHIPPED).** `describeTile`'s `tidal` test (L6759)
+  includes `T.KELP`, so a kelp bed has always printed a live `Tide` row (`High water`/`Flooding`/`Ebbing`/`Low water`)
+  over a draw that read `TIDE` **nowhere** — iter 113's marsh defect, one tile along, unnoticed for 83 iterations. On the
+  ebb the four canopy mats now rise, spread and lighten toward exposed olive, and each frond tip lies over and trails
+  along the surface; **at/above `TIDE` 0.62 every term is 0 and the draw is byte-identical to HEAD**, so the tide only
+  ever *adds* the exposed canopy and can never darken the bed (that byte-zero is what keeps this clear of the historic
+  kelp-darkness failure mode). Shares the marsh's own `ebb` cut (0.62) rather than inventing a second threshold (123's
+  run-the-tell-forwards move). `lq` quantizes the tide factor into 4 steps because **`colMix` caches on `t`** and a
+  continuous `t` defeats that cache. Draw-only, pop+stream flat, census vacuous. `probe-kelptide` diffs **LOW vs HIGH
+  water within ONE build** (frozen clock, same `genWorld`), so the only variable is `TIDE`: **BASE kelp interior 0.00%
+  on all 3 seeds (deaf — the seam) vs PATCH 35.7-41.9% (answers)**, BEACH as the **positive control** (moves identically
+  on both builds, proving the tide pin is live — without it "BASE = 0" would be a dead pin, not a finding), ROAD 0.00%.
+  Both seeds VISUAL PASS and both agents correctly **located** low water by the tide-exposed kelp alone. (196's two banked
+  watch items are both CLOSED and were moved to the archive at 198: the kelp-banding cue **cannot fire** — 197 showed the bed
+  count is fixed at `genWorld` — and 194's tree-shadow perf cost is **real and to be PAID**, see the ROTATION and PERF bullets.)
+
+## Iteration 193 — the ferry lights up for the night crossing (2026-07-12) [Transport × Deepen]
+
+**Vector — Transport × Deepen** (SHIPPED). Rotation: the maintained header named **Transport (188)** as next-owed for 193.
+Kind: a night-lighting Deepen, but framed to NOT repeat 179's amber lamp-post move — the ferry carries a distinct
+*marine* vocabulary (coloured sidelights), and it is the last transit vehicle in the city with zero night presence.
+
+**The seam — the only dark transit vehicle at night.** Cars carry headlights + red taillights (L5561), buses/trams glow
+their window strips, emergency vehicles flash beacons, the bridges lit their deck rails (179), the shopfronts spill onto
+the pavement (189). The **ferry** — 2 per city, patrolling the coast band — ran *pitch dark*: its `col('white')` cabin is
+night-tinted to dark navy and it showed no light at all while crossing the black harbour. A genuine gap, the exact
+179/189 night-light shape on the one vehicle it had never reached, and a Transport×Water interconnect.
+
+**Change (~16 lines, draw-only, at the end of `drawFerry`).** A single `if(LITAMT>0.35)` block: warm cabin windows (4
+small squares along the cabin), a white masthead dot over the wheelhouse, red-port / green-starboard nav lights at the
+hull ends (`cx-6*dir` / `cx+6*dir`, so they swap with heading), and a soft warm wash ellipse on the water below (mirrors
+179's on-river lamp reflection). Source-over low alpha — no blowout (159's overlap law; and 2 ferries never overlap).
+Distinct from 179 by design: *coloured* marine sidelights, not amber lamp-posts. No tile / entity array / label / `rng()`
+/ `hashCell`-terrain / `tick()` pass; strings pure-ASCII (134). The ferry already has its `ENTINFO` row + `stamp()`, so
+no tooltip/label sync needed. Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0** (`greenRoofs +1` = documented
+RAF tick-count jitter, touches no `rng()`). Ferries 18/matrix = 2/city. Vacuous by construction (draw-only) — the probe
+is the gate.
+
+**Probe — `probes/probe-ferrylight.mjs` (new, promoted).** Whole-box PATCH-vs-HEAD diff (161's law) over each ferry's
+screen box at a FROZEN frame; `Math.random` stubbed *before* `genWorld` so ferry `fr` is identical across the two loads,
+STARS cleared, clock frozen, land movers cleared (163 laws). seeds 7/42/1234: **FERRY lights NIGHT 2.07 / 2.16 / 1.97%
+≫ DAY 0.00 / 0.23 / 0.00%** (9× separation; the block never runs by day, LITAMT<0.35) · **BOAT control 0.00% at night**
+(fishing boats got no lights — the edit touched ferries only, not all harbour craft). **VERDICT: PASS (3 seeds).**
+
+**Visual.** Night wide + coast clips, seeds 42 & 7 (`t=0.9&step=200`), one agent each, LOCATE-not-judge. **Both VISUAL:
+PASS.** Both agents *found* the lit vessels on the water (warm cabin windows + red/green end dots + white masthead),
+confirmed the lights sit ON the hull (no floating/tears), the faint reflection reads, the dark fishing boats stay dark,
+and the whole night frame stays balanced — sparse lit accents against a large dark sea, no clutter or over-brightness,
+city glow still dominant.
+
+**Verdict — SHIPPED.** The harbour ferry — the last transit vehicle to run dark at night — now carries its lights across
+the night crossing in a marine vocabulary (warm windows, white masthead, red/green sidelights, a wash on the water),
+completing the night-light family (bridges 179, shopfronts 189, windows 190) on the one vehicle it had missed. Draw-only,
+pop + stream flat, ~16 lines + a probe. Transport's Deepen cell gains 193. The next domain lap (194) owes **Urban (189,
+Deepen/Polish only — measured-saturated)**, then Nature (183)/Civic (184). Next step-back at **197**.
+
+
+
+<!-- header recap for iter 202 (the 20th step-back), rotated out of GROWTH.md's maintained header at iter 203: its perf finding now lives in the PERF bullet, its camera finding in SKILL.md + probes/shot-stepback.mjs, and its banked cue was CLOSED by 203 -->
+  **202 was the mandated STEP-BACK — the 20th. CLEAN BILL on the city; the INSTRUMENT was what was broken.**
+  Census PASS, seasons alive (FARM dry-peak 88.4), both seeds VISUAL PASS. Its two findings, both promoted to SKILL.md:
+  (a) **PERF COMPOUNDS BENEATH THE PER-LAP GATE.** The mandated interleaved A/B grades each lap against the lap
+  before it, and 199+200+201 duly read **free (day +0.4%, night −1.1%)** — but measured against OLDER step-backs the
+  same HEAD reads **192 +5.2% · 177 +7.5% · 162 +8.6% day** (night +2.1/+4.1/+5.7%). A ~0.2%/iter drift is
+  *permanently* under the noise floor of a 3-iteration A/B. **A step-back must price the ARC, not the lap:
+  `REF=<older step-back sha> perfab.mjs`.** New `probes/probe-drawbudget.mjs` censuses where the frame goes (path
+  objects = the unit of cost, 198): **drawCell is 94% of it**; day `prismS`+`bandS`+`hexTile` = **77%** (static terrain
+  re-rasterized every frame), night `winBandR` = **32.6%** (43,421 path objects from 2,672 `fill()`s — 198's law made
+  visible). It is CALIBRATED: `shadS` = 2.7% of day paths vs its **measured** −2.8/−3.1%. SUSPECT named, fix NOT
+  mandated (198's law). (b) **THE STEP-BACK'S OWN CAMERA WAS LYING** — four agent-reads, two false FAILs ("no sun",
+  "winter == summer"), both the instrument: `?t=0.80` is `phaseWord()`=**'night'** (past `SUNDN=0.78`, the sun block
+  draws *nothing*), and `?year=` **drifts ~0.167 yr/s** while `shoot.mjs` waits (iter 139's trap, documented and never
+  fixed at source — summer drifted to autumn, winter into spring, so agents saw farmland "inverted"). New
+  `probes/shot-stepback.mjs` freezes the clock in-page and takes its pins FROM THE LIGHT CURVE (day .30 / golden .68
+  where GWARM peaks / night .92). Re-shot: both seeds PASS, and two blind agents put the sun at **(0.386,0.104)** and
+  **(0.39,0.105)** vs the shipped formula's **(0.388,0.107)**. (Its **banked "thin dark line" cue is CLOSED by 203** —
+  see the ROTATION bullet: it was the cable-car haul rope, the artifact is innocent, and PROBE-it-don't-redesign was
+  exactly right: all four agent-reads named a cause the measurement refuted.)

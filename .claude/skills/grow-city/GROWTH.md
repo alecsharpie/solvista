@@ -26,7 +26,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~ | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22 | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188** | **105**, **171** |
+| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~ | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201** | 78, **111** | | 84, **137**, **163** | 71, **154**, **191** |
@@ -55,7 +55,27 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **200** · People **201** · Transport **193** · Urban **199** · Nature **198** · Civic **195** · Water **196**.
+  Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **198** · Civic **195** · Water **196**.
+  **Next lap owes Civic (195), then Water (196), then Urban (199).**
+  **203 took Transport × Polish and EXPLORED → REVERTED — it CLOSED 202's banked "thin dark line" cue.**
+  The line is the **aerial cable-car HAUL ROPE**: `col('ink',1.05)` = **`#373128`, the darkest ink in the palette,
+  fully OPAQUE, at 0.5 DEVICE px**. Each span is 12-14px (below any "long line" filter) but **15-25 spans CHAIN into
+  an unbroken 199-331px dark run** across the sky and the sea, on all 3 seeds — *the eye sees the chain; a per-stroke
+  filter cannot*. **The agents' CAUSE was wrong and the artifact is INNOCENT:** `probe-gondz` renders one frame under
+  two z-orders (rope in place vs. the same polylines re-stroked on top) and measures **8.4-23.6% OCCLUDED** on every
+  seed/light — not 0%, so the rope **is** depth-sorted (the girder strokes only to the midpoint; `stepGond` only takes
+  `axStep` d=1/d=2 and **both are y+1**, so a path is monotone in y). "No cabins on the line" was false too — they
+  render at **~24px each**; they are not missing, they are **5 px**. **The attempted polish DIED ON ITS OWN PROBE**
+  (`probe-ropesteel`): a daylight **glint = 0 px on every seed/light — a DEAD DRAW** (at 0.5 device px the core and
+  the highlight land in the SAME sub-pixel, so a thin dark line *cannot carry a lit top edge*), and **peak contrast
+  0.33 → 0.34, UNCHANGED** while coverage rose 419 → 567px — **a halo under a thin dark line makes it MORE prominent,
+  not less.** ⇒ **What is really wrong is LEGIBILITY, not z-order or colour (101's law on Transport):** at fit zoom the
+  whole tramway is **sub-pixel infrastructure** (0.5px rope, 5px cabins, hairline masts), so the rope is the only part
+  that registers and a lone hairline with no legible cars or towers reads as a scratch. **A future lap here is a
+  `polish-tile`-shaped job on the WHOLE tramway (rope + cabins + masts together), NOT a tweak to the rope's colour.
+  Do NOT re-try: a body/halo under the rope (measured, backfires) or a lit top edge (measured, impossible at 0.5px).**
+  Four laws promoted to SKILL.md (occlusion is measurable; the loud test fails sub-pixel; `Math.random` is part of the
+  freeze-list; a chain is not a stroke).
   **201 took People × Deepen (the beach follows the tide — DEEPENED).** The beach GROUND answered the tide all along
   (the damp margin `w2=2.4+(1-TIDE)*5`), but the furniture drawn at the bare hex centre did not — so at dead low water
   the sunbathers lay on wet sand. `wetReach()` is now ONE definition with TWO readers (the margin that strokes the wet
@@ -64,25 +84,12 @@ ones (U2, 42, U5) stay in the bullet.
   decimals. **Laws paid for, both now in SKILL.md: a FIXED screenshot CLIP is not a framing; and an agent's "this is
   BACKWARDS" may object to the ARTIFACT'S MODEL, not to your change.** Full recap rotated to `GROWTH-archive.md` at 202.
   **202 was the mandated STEP-BACK — the 20th. CLEAN BILL on the city; the INSTRUMENT was what was broken.**
-  Census PASS, seasons alive (FARM dry-peak 88.4), both seeds VISUAL PASS. Its two findings, both promoted to SKILL.md:
-  (a) **PERF COMPOUNDS BENEATH THE PER-LAP GATE.** The mandated interleaved A/B grades each lap against the lap
-  before it, and 199+200+201 duly read **free (day +0.4%, night −1.1%)** — but measured against OLDER step-backs the
-  same HEAD reads **192 +5.2% · 177 +7.5% · 162 +8.6% day** (night +2.1/+4.1/+5.7%). A ~0.2%/iter drift is
-  *permanently* under the noise floor of a 3-iteration A/B. **A step-back must price the ARC, not the lap:
-  `REF=<older step-back sha> perfab.mjs`.** New `probes/probe-drawbudget.mjs` censuses where the frame goes (path
-  objects = the unit of cost, 198): **drawCell is 94% of it**; day `prismS`+`bandS`+`hexTile` = **77%** (static terrain
-  re-rasterized every frame), night `winBandR` = **32.6%** (43,421 path objects from 2,672 `fill()`s — 198's law made
-  visible). It is CALIBRATED: `shadS` = 2.7% of day paths vs its **measured** −2.8/−3.1%. SUSPECT named, fix NOT
-  mandated (198's law). (b) **THE STEP-BACK'S OWN CAMERA WAS LYING** — four agent-reads, two false FAILs ("no sun",
-  "winter == summer"), both the instrument: `?t=0.80` is `phaseWord()`=**'night'** (past `SUNDN=0.78`, the sun block
-  draws *nothing*), and `?year=` **drifts ~0.167 yr/s** while `shoot.mjs` waits (iter 139's trap, documented and never
-  fixed at source — summer drifted to autumn, winter into spring, so agents saw farmland "inverted"). New
-  `probes/shot-stepback.mjs` freezes the clock in-page and takes its pins FROM THE LIGHT CURVE (day .30 / golden .68
-  where GWARM peaks / night .92). Re-shot: both seeds PASS, and two blind agents put the sun at **(0.386,0.104)** and
-  **(0.39,0.105)** vs the shipped formula's **(0.388,0.107)**. **⚠ BANKED CUE (both agents, both seeds, unexplained):
-  a thin dark line reads as drawn OVER the towers/water. The naive cause is DISPROVEN — `drawMonoAt`/`drawGondAt` are
-  called INSIDE the row loop (L6218-23), so they are row-interleaved. PROBE it; do not redesign on the agents' say-so.**
-  Then the lap owes Transport (193), then Civic (195).
+  Census PASS, seasons alive (FARM dry-peak 88.4), both seeds VISUAL PASS. Its two findings are now LIVE ELSEWHERE:
+  (a) **perf compounds beneath the per-lap gate** (~0.2%/iter is permanently under a 3-iteration A/B's noise floor;
+  price the **ARC** with `REF=<older sha> perfab.mjs`, and `probe-drawbudget` says where the frame goes) — see the
+  **PERF bullet**; (b) **the step-back's own camera was lying** (`?t=`/`?year=` drift ~0.167 yr/s while `shoot.mjs`
+  waits; pins must come from the light curve) — see **SKILL.md** and `probes/shot-stepback.mjs`. Its banked
+  "thin dark line" cue is **CLOSED by 203** (the ROTATION bullet). Full recap rotated to `GROWTH-archive.md` at 203.
   **200 took Sky x Polish (THE SUN IS IN THE SKY — SHIPPED).** The city carried a whole family of low-sun effects
   (warm cloud bellies 161, the sea's golden sheen 181, sun-glitter 150, raked window glass 190, beach furniture 145)
   and **the sun itself was never drawn** — every warm thing in the sky had a cause that was not on screen. A gradient
@@ -96,21 +103,12 @@ ones (U2, 42, U5) stay in the bullet.
   SHARPENS as the night deepens — the differential IS the point.** PERF free (the inert-regime noise floor, PERF
   bullet). Full paragraph rotated to `GROWTH-archive.md` at 201; laws in SKILL.md.
   **198 took 197's mandated tree-shadow PERF FIX (Nature × Polish) and EXPLORED → REVERTED — the LEVER WAS WRONG.** Batch / shrink-area / sprite-blit are all **measured and CLOSED** (`probes/probe-shadcost.mjs`); the cost is **PER-ELLIPSE**, and 194's ~3% is the honest price of grounding every tree — **PAY IT.** Full paragraph rotated to `GROWTH-archive.md` at 200; the live statement of the cost model is the **PERF bullet** below, and the law (*measure a lever before you mandate it*) is in SKILL.md.
-  **196 took Water × Deepen (the kelp bed breathes with the tide — SHIPPED).** `describeTile`'s `tidal` test (L6759)
-  includes `T.KELP`, so a kelp bed has always printed a live `Tide` row (`High water`/`Flooding`/`Ebbing`/`Low water`)
-  over a draw that read `TIDE` **nowhere** — iter 113's marsh defect, one tile along, unnoticed for 83 iterations. On the
-  ebb the four canopy mats now rise, spread and lighten toward exposed olive, and each frond tip lies over and trails
-  along the surface; **at/above `TIDE` 0.62 every term is 0 and the draw is byte-identical to HEAD**, so the tide only
-  ever *adds* the exposed canopy and can never darken the bed (that byte-zero is what keeps this clear of the historic
-  kelp-darkness failure mode). Shares the marsh's own `ebb` cut (0.62) rather than inventing a second threshold (123's
-  run-the-tell-forwards move). `lq` quantizes the tide factor into 4 steps because **`colMix` caches on `t`** and a
-  continuous `t` defeats that cache. Draw-only, pop+stream flat, census vacuous. `probe-kelptide` diffs **LOW vs HIGH
-  water within ONE build** (frozen clock, same `genWorld`), so the only variable is `TIDE`: **BASE kelp interior 0.00%
-  on all 3 seeds (deaf — the seam) vs PATCH 35.7-41.9% (answers)**, BEACH as the **positive control** (moves identically
-  on both builds, proving the tide pin is live — without it "BASE = 0" would be a dead pin, not a finding), ROAD 0.00%.
-  Both seeds VISUAL PASS and both agents correctly **located** low water by the tide-exposed kelp alone. (196's two banked
-  watch items are both CLOSED and were moved to the archive at 198: the kelp-banding cue **cannot fire** — 197 showed the bed
-  count is fixed at `genWorld` — and 194's tree-shadow perf cost is **real and to be PAID**, see the ROTATION and PERF bullets.)
+  **196 took Water × Deepen (the kelp bed breathes with the tide — SHIPPED).** The kelp printed a live `Tide`
+  row over a draw that read `TIDE` **nowhere** (113's marsh defect, one tile along, unnoticed for 83 iters); on the
+  ebb the canopy now rises/spreads/lightens, and at/above `TIDE` 0.62 it is byte-identical to HEAD so the tide can
+  only ever ADD exposed canopy, never darken the bed. `probe-kelptide` diffs LOW vs HIGH water within ONE build
+  (BASE 0.00% deaf → PATCH 35.7-41.9%), with **BEACH as the POSITIVE CONTROL** — the law that a dead pin and a deaf
+  draw both read zero, so "BASE = 0" needs a host known to answer S. Full recap rotated to `GROWTH-archive.md` at 203.
   **195 took Civic × Deepen and EXPLORED → REVERTED (byte-identical). STILL-UNCASHED finding: `university` is
   the ONLY one of the twelve civics with no `LITAMT` — the only `MAJORK` monument pitch dark after sunset.**
   Every *place to put the light* failed (campanile halo orphans on seed 7; the quad is overdrawn by the tile's
@@ -170,7 +168,7 @@ ones (U2, 42, U5) stay in the bullet.
   when a RULE reads it, not when the draw shows it:** `rGreen`/`rShop`/`rServ` are still read by NOTHING but the
   walkable stat. **⚠ A tick-rule cannot read them directly (151): `recount()` never runs in the sim loop, so the
   reach maps are STALE inside `tick()`** — recompute locally, or pay a recount. (Detail archived at 200.)
-  **Iteration 202 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, **197 — all done**). **197 was the 19th, and it BROKE the clean-bill streak at thirteen — not visually (the city is clean: both seeds VISUAL PASS at 3 lights × 2 calendars, census PASS, seasons alive FARM dry-peak 88.4, night core located (.47,.45)/(.53,.57)) but on PERF: 193+194+196 cost day +3.8/+4.4%, night +2.9/+3.0%, all of it 194's tree shadows.** Both of 197's owed watch items came back **clean** and are now both CLOSED: (a) the tree-shadow *visual* fear was confabulation for the third time — both agents read the groves "grounded-and-clean", not olive-muddy — and its *perf* cost, though real, is **irreducible and to be paid** (198); (b) **196's kelp watch item CANNOT fire**: KELP is **8–17 beds per seed and IDENTICAL across all three eras** (census tile histogram), i.e. the bed count is fixed at `genWorld` and nothing in `tick()` grows it, so the precondition has no mechanism. Both agents confirmed "no dark lining / no crusty seam where the kelp bed sits."
+  **Iteration 207 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, 197, **202 — all done**). **202 was the 20th: a CLEAN BILL on the city, and the failure was in the INSTRUMENT** (see its recap above). 197 (the 19th) is where the PERF arc was first priced — 193+194+196 cost day +3.8/+4.4%, all of it 194's tree shadows, **priced and ACCEPTED** (198 measured every lever and closed them). **207 owes: price the ARC, not just the lap (`REF=<older step-back sha> perfab.mjs`), and shoot with `probes/shot-stepback.mjs`, NOT `shoot.mjs`+`?t=`/`?year=`.**
   (The step-back framing recipe — 3 lights x 2 calendars, day frame pinned OFF January — lives in **SKILL.md**;
   the header's duplicate copy was rotated to `GROWTH-archive.md` at iter 201.)
   **The GAP-CLOSING trick (111/112/113) is SPENT in four domains; the TELL that replaced it (a label asserting
@@ -390,53 +388,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 195 entries before Iteration 193 live in
+> **Archive:** the 196 entries before Iteration 194 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 193 — the ferry lights up for the night crossing (2026-07-12) [Transport × Deepen]
-
-**Vector — Transport × Deepen** (SHIPPED). Rotation: the maintained header named **Transport (188)** as next-owed for 193.
-Kind: a night-lighting Deepen, but framed to NOT repeat 179's amber lamp-post move — the ferry carries a distinct
-*marine* vocabulary (coloured sidelights), and it is the last transit vehicle in the city with zero night presence.
-
-**The seam — the only dark transit vehicle at night.** Cars carry headlights + red taillights (L5561), buses/trams glow
-their window strips, emergency vehicles flash beacons, the bridges lit their deck rails (179), the shopfronts spill onto
-the pavement (189). The **ferry** — 2 per city, patrolling the coast band — ran *pitch dark*: its `col('white')` cabin is
-night-tinted to dark navy and it showed no light at all while crossing the black harbour. A genuine gap, the exact
-179/189 night-light shape on the one vehicle it had never reached, and a Transport×Water interconnect.
-
-**Change (~16 lines, draw-only, at the end of `drawFerry`).** A single `if(LITAMT>0.35)` block: warm cabin windows (4
-small squares along the cabin), a white masthead dot over the wheelhouse, red-port / green-starboard nav lights at the
-hull ends (`cx-6*dir` / `cx+6*dir`, so they swap with heading), and a soft warm wash ellipse on the water below (mirrors
-179's on-river lamp reflection). Source-over low alpha — no blowout (159's overlap law; and 2 ferries never overlap).
-Distinct from 179 by design: *coloured* marine sidelights, not amber lamp-posts. No tile / entity array / label / `rng()`
-/ `hashCell`-terrain / `tick()` pass; strings pure-ASCII (134). The ferry already has its `ENTINFO` row + `stamp()`, so
-no tooltip/label sync needed. Pop + stream provably flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0** (`greenRoofs +1` = documented
-RAF tick-count jitter, touches no `rng()`). Ferries 18/matrix = 2/city. Vacuous by construction (draw-only) — the probe
-is the gate.
-
-**Probe — `probes/probe-ferrylight.mjs` (new, promoted).** Whole-box PATCH-vs-HEAD diff (161's law) over each ferry's
-screen box at a FROZEN frame; `Math.random` stubbed *before* `genWorld` so ferry `fr` is identical across the two loads,
-STARS cleared, clock frozen, land movers cleared (163 laws). seeds 7/42/1234: **FERRY lights NIGHT 2.07 / 2.16 / 1.97%
-≫ DAY 0.00 / 0.23 / 0.00%** (9× separation; the block never runs by day, LITAMT<0.35) · **BOAT control 0.00% at night**
-(fishing boats got no lights — the edit touched ferries only, not all harbour craft). **VERDICT: PASS (3 seeds).**
-
-**Visual.** Night wide + coast clips, seeds 42 & 7 (`t=0.9&step=200`), one agent each, LOCATE-not-judge. **Both VISUAL:
-PASS.** Both agents *found* the lit vessels on the water (warm cabin windows + red/green end dots + white masthead),
-confirmed the lights sit ON the hull (no floating/tears), the faint reflection reads, the dark fishing boats stay dark,
-and the whole night frame stays balanced — sparse lit accents against a large dark sea, no clutter or over-brightness,
-city glow still dominant.
-
-**Verdict — SHIPPED.** The harbour ferry — the last transit vehicle to run dark at night — now carries its lights across
-the night crossing in a marine vocabulary (warm windows, white masthead, red/green sidelights, a wash on the water),
-completing the night-light family (bridges 179, shopfronts 189, windows 190) on the one vehicle it had missed. Draw-only,
-pop + stream flat, ~16 lines + a probe. Transport's Deepen cell gains 193. The next domain lap (194) owes **Urban (189,
-Deepen/Polish only — measured-saturated)**, then Nature (183)/Civic (184). Next step-back at **197**.
 
 ## Iteration 194 — the trees put their feet on the ground (2026-07-12) [Nature × Polish]
 
@@ -1063,3 +1019,71 @@ flattens colour separation. That is a Sky × Polish target with a ready-made gat
 **Verdict** — **FIXED** (the harness, not the city). The city itself gets a clean bill: census PASS, seasons alive,
 both seeds VISUAL PASS at 3 lights × 2 calendars. The step-back's *own instruments* were producing false FAILs and a
 perf gate that could never see its own drift; both are now measured, fixed, and committed as tracked probes.
+
+## Iteration 203 — the thin dark line is a cable, and the cable is fine (2026-07-12) [Transport × Polish, EXPLORED -> REVERTED]
+
+**Vector.** Transport × Polish. Rotation owed Transport (last lap 193), and 202's step-back had
+banked an explicit, unexplained cue there: *"a thin dark line reads as drawn OVER the towers/water"*
+— seen by **both** agents on **both** seeds, with the naive cause already disproven and an
+instruction attached: **PROBE it; do not redesign on the agents' say-so.** A banked, measured
+finding outranks kind-rotation, so this lap went to close it.
+
+**What the line IS (`probes/probe-darkline.mjs` — new, and reusable on ANY unexplained linear
+artifact).** Wrap `ctx.stroke()`, record each stroke's DEVICE-space polyline length, width and
+colour luminance, and attribute it to the issuing fn off the call stack; then census the strokes
+that match the description — long, thin, dark. First run was a **false lead**: the top hit was 10
+near-vertical 324px strokes from `render:6450` at `lum=0.00`, which turned out to be the **rain
+shafts** — my probe defaulted a non-string `strokeStyle` (a `CanvasGradient`) to pure black. The
+real answer was hiding *under* the length filter: **the aerial cable-car HAUL ROPE**, stroked
+`col('ink',1.05)` = **`#373128`, the darkest ink in the palette, fully opaque, at 0.5 DEVICE px**
+at fit zoom. Each span is only 12-14 px — below any sane "long line" threshold — but **15-25 spans
+CHAIN into an unbroken 199-331 px dark run** across the sky and the open sea, on all three seeds.
+The eye sees the chain; a per-stroke filter cannot. **Cue CLOSED: the line is the cable.**
+
+**The agents' CAUSE was wrong — three ways, and the third is a number.** (1) The girder never
+oversteps: `drawMonoAt` strokes only to the **midpoint** of each neighbour, so a beam cannot reach
+into another cell's footprint. (2) The rope cannot either: `stepGond` only ever takes `axStep`
+d=1 or d=2, and **both are `y+1`**, so a gondola path is **strictly monotone in y** and every span
+is drawn BEFORE the row it descends into. (3) And the direct measurement, because a code argument
+should not outrank four agent-reads: **`probes/probe-gondz.mjs`** renders the same frame under two
+z-orders — rope in its natural place vs. the very same polylines re-stroked on top of the finished
+frame — and takes the ink ratio. **OCCLUDED: 22.2/23.6 (seed 42) · 8.6/8.4 (7) · 12.5/12.9% (1234),
+day/night.** Not 0%. Later rows genuinely eat 8-24% of the rope. **It is depth-sorted; "painted on
+top of everything" is false.** The agents' other claim — *"no cabins on the line, in any frame"* —
+is also false: the cabins render at **43-96 px per frame, ~24 px each**, which is exactly a
+`prismS(0.11,0.085)` at fit zoom. They are not missing; they are **5 px**.
+
+**What I tried, and why it died.** Give the rope what the girder already got (its own comment at
+L5552: the old beam was *"brighter than every building it flew over, and with nothing beneath it"*,
+so it was given a body + a lit running surface). The rope is the mirror image and never got the
+treatment: a soft translucent **body** so a sub-pixel line antialiases into a rope, a **core** that
+is dark but not flat-opaque, and a daylight **glint** (steel catches the sky), gated on `LITAMT`.
+**`probes/probe-ropesteel.mjs` refuted it on its own terms:**
+- **`glint px: 0 -> 0`, every seed, both lights.** A **DEAD DRAW**. At 0.5 device px the core and
+  the highlight land in the **same sub-pixel** — a thin dark line *cannot carry a lit top edge*.
+- **`peak contrast: 0.33 -> 0.34` — UNCHANGED**, while coverage rose **419 -> 567 px**. Peak
+  contrast is the whole measure of "reads as a hard scratch", and it did not move; the halo made
+  the line **more** prominent, the exact opposite of the goal. **A body/halo under a thin dark line
+  is additive and works against you** — the only lever that touches peak contrast is the core's own
+  alpha/width.
+
+**Census.** PASS. Draw-only: every metric +0, tile histogram empty — correctly vacuous, and it
+proves only that the page did not throw. Reverted **byte-identical** (`git diff HEAD` clean), so
+perf is unchanged by construction and no perf gate was owed.
+
+**Visual.** 4 agent-reads (2 seeds × fit/mid/close/golden, camera aimed at the rope by
+`probes/shot-gondola.mjs`, which LOCATES the longest line and drives the artifact's own
+scale/offX/offY — 201's law). All four FAILed, and **all four were wrong about the cause** and
+right about the symptom. What survives their reads, and matches the numbers, is a **legibility**
+finding, not a z-order or colour one: at fit zoom the whole aerial tramway is **sub-pixel
+infrastructure** — a 0.5 px rope, 5 px cabins, hairline masts — so the rope is the only part that
+registers at all, and *a lone dark hairline with no legible cars or towers around it reads as a
+scratch*. That is **iter 101's law** (`legibility ≈ contrast × width`) landing on Transport.
+
+**Verdict: EXPLORED -> REVERTED.** The cue is CLOSED and the artifact is untouched. The rope is a
+legitimate object, correctly depth-sorted, and it must stay visible (the cabins hang from it —
+195's orphan law cuts the other way here). Three probes + a camera ship; four laws promoted to
+`SKILL.md`. **If a future lap reopens this, it is a `polish-tile`-shaped job on the whole aerial
+tramway — rope AND cabins AND masts together, to make it legible as infrastructure — not a tweak
+to the rope's colour.** Do not re-try: a halo/body under the rope (measured, backfires), or a lit
+top edge on it (measured, impossible at this width).
