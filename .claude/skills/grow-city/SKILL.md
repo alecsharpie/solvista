@@ -465,6 +465,19 @@ sound. A missing `## Iteration N` entry does **not** mean the work is half-writt
 - Census fails, or the diff is visibly mid-thought (a half-added tile with no
   draw case, a `tick()` pass wired to nothing)? `git stash` it rather than
   deleting, and say so.
+- **⚠ A diff that only SUBTRACTS shipped features is a CORRUPTED CONTROL FILE, not
+  work to keep — and the census will pass it happily (iter 197).** Every rule above
+  assumes the dirty tree *adds* something; this one inverts. 197 started on a tree
+  whose `solvista.html` deleted three shipped features (193's ferry lights, 194's
+  tree shadows, 196's kelp tide) and added nothing — a stale pristine backup copied
+  back over the artifact by a perf/probe run (`perfab.mjs`, `probe-*`, and the
+  step-back all `/bin/cp` HEAD aside) that was killed before it restored. A city with
+  three draw-only features removed still has flat pop/roads/tiles, so **"census
+  passes" is not evidence here** and the keep-it rule would have silently reverted
+  three good iterations. **Read the diff's SIGN before its verdict:** if it removes
+  code that `git log` shows was deliberately committed, and adds nothing, it is the
+  backup, not the work. `git stash` it (never `checkout --`; it is not yours to
+  delete) and re-run the census on restored HEAD.
 
 Iteration 72 ("the harbor gets its ships") was killed by a rate limit *between*
 its verdict and its commit. It had passed every gate; discarding it would have

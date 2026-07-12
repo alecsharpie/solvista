@@ -18,9 +18,13 @@ const CAND = [resolve(HERE, '../../../../solvista.html'), resolve(HERE, 'solvist
 const ART = CAND.find(f => existsSync(f));
 const REPO = dirname(ART);
 
+/* REF is the pristine side (default HEAD, i.e. "what did my uncommitted edit cost").
+ * A step-back sets it to the PREVIOUS step-back's commit to grade a whole lap of
+ * iterations at once — e.g. REF=d8819ec (iter 192) to price 193/194/196 together. */
+const REF = process.env.REF || 'HEAD';
 const tmp = mkdtempSync(join(tmpdir(), 'perfab-'));
 const HEAD = join(tmp, 'head.html'), PATCH = join(tmp, 'patch.html');
-writeFileSync(HEAD, execFileSync('git', ['-C', REPO, 'show', 'HEAD:solvista.html']));
+writeFileSync(HEAD, execFileSync('git', ['-C', REPO, 'show', `${REF}:solvista.html`]));
 copyFileSync(ART, PATCH);
 
 const WARMUP = 60, SAMPLE = 300, ROUNDS = 3;
@@ -51,6 +55,6 @@ for (const [name, q] of scenes) {
   }
   const a = Math.min(...A), b = Math.min(...B);
   const pct = (b - a) / a * 100;
-  console.log(`${name.padEnd(6)} pristine ${a.toFixed(2)}ms  patched ${b.toFixed(2)}ms  ->  ${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%`);
+  console.log(`${name.padEnd(6)} ${REF} ${a.toFixed(2)}ms  now ${b.toFixed(2)}ms  ->  ${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%`);
 }
 await browser.close();

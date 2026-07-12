@@ -11291,3 +11291,53 @@ Urban (180)/Sky (181).
   instance. A sparse/host-gated feature needs its shot to hunt for a clean example, or the visual gate reads a false
   absence (and an agent then invents a cause for it).
 
+
+## Rotated from the GROWTH.md header at iter 197 (to pay for 197's step-back lines)
+
+The header is a fixed 400-line budget: to add a line, cut a line, and never delete. Two blocks were
+moved down here at iter 197, both superseded rather than wrong.
+
+### (a) The per-iteration perf-history archaeology (was in the PERF BASELINE bullet)
+
+**PERF BASELINE RE-PINNED 2026-07-10 (iter 105's step-back): day 33.16ms - night 37.33ms.** Held through
+iters 109/110/111/117 against pristine-HEAD controls (per-iter detail archived at 140/142). Not re-pinned
+since; day still reads flat against it, night now runs ~+2.2ms of real 137+138 draw plus load (see 142).
+**Iters 130/136 (step-backs): 126->135 cost ZERO** (130 -0.5% both vs iter-125 `c63e43b`; 136 +0.1% vs iter-130
+`f2aa721`; night +7% vs the STORED baseline proven load both). **147: 143->146 cost ZERO**; **152: 143->151 cost
+ZERO** (both vs iter-142 `ce17d61`, min/variant, all flat). **157: 152->156 cost ZERO**
+(day +3.5% inside the +-9ms day noise, night +0.4% flat). **162: 157->161 cost ~ZERO** — HEAD-161 vs iter-157
+(`ae93fd4`, A/B/A/B min/variant) day **35.00 vs 35.05 (-0.1%)**, night **41.45 vs 41.00 (+1.1%)**; `perf.mjs` vs
+stored baseline read +5.9%/+11.3% (pure load). The stored-baseline false-FAIL was an **EIGHT-time pattern**
+(125->130->136->142->147->152->157->162) — it always understates today's load.
+**142 (step-back): the interleave found a small but REAL cost — the first non-flat step-back delta.** `perf.mjs`
+read day 34.34 (+3.6%) / night 40.83 (+9.4% vs stored baseline); interleaved HEAD-141 vs iter-136 (`6b31425`,
+A/B/A/B, min per variant): day **34.44 vs 34.50** (-0.2%, flat) but night **41.39 vs 40.50** (**+2.2%**). That
++2.2% night was 137's figure contact-shadows + **138's per-arterial night lamps landing** — small, expected,
+well inside budget (60fps 100% / 30fps 47.7%), NOT a regression to fix and NOT re-pinned.
+
+### (b) Open cue (e½)'s closed brief (CLOSED at iter 102 — the commons)
+
+**(e½) CLOSED — iter 102 shipped the blob 101 prescribed** (the commons), so the interior HAS its lung; do NOT
+plant a second one. Its 28-line brief (94/100's "edge-to-edge carpet" holistic reads, and 101's reverted
+greenway) was itself rotated at iter 196. The durable **urban** findings it carried, kept in the header until
+197 and preserved here: **`PARK` is permanent** (nothing in `tick()` consumes one, so green planted in
+`genWorld` survives to 2035); **green costs ~0.045% pop per cell and partly repays it** (`PARK` is the top
+`valueSrc`, 0.92, and lifts the frontage it faces — `cafes` +141, `COM` +51); **never zone against `TOWER` near
+the core** (92: -9.8% pop); and **the upgrade probability *saturates***, so leaning on `p` is a weak lever that
+costs towers at ~240 pop each (98). 101's "a lung must be a BLOB, not a ribbon" is now the general
+contrast-is-not-traceability law in SKILL.md.
+
+## Iteration 187 — holistic step-back (no city change)
+
+**Vector** — the mandated ~5-iteration step-back (105/110/115/120/125/130/136/142/147/152/157/162/167/172/177/**182**/**187**). The seventeenth step-back; isolates iters 183–186 (all draw-only: FARM harvest tooltip, hall-clock tooltip, whitecaps, café patrons) by interleaving HEAD against iter-182's file.
+
+**Census** — PASS, every core aggregate flat vs baseline (pop/developed/roads unmoved; cafes 455, stations 40, boulevardTrees 1203 all +0). Draw-only run, so this is expected and proves only that no page threw.
+
+**Perf (interleaved HEAD vs iter-182 `7614539`, A/B/A/B, min per variant)** — **day 36.72ms (HEAD) vs 36.28ms (182) = +1.2%; night 42.55ms vs 42.72ms = −0.4%.** Flat — four draw-only tooltip/element iterations cost nothing measurable. (Absolute numbers ran hot vs the 33/37 baseline this session — machine load; the interleaved delta is the verdict, not the absolute, per the same-session-pristine-control law.)
+
+**Seasons alive** — `probe-season`: FARM winter→dry-peak **88.4**, VINEYARD 44.6→36.7, ORCHARD 25.3→41.4, ROAD control ~0.5–2.1. The calendar is working across every agriculture tile.
+
+**Visual** — whole-frame reads at 3 lights × 2 calendars (day golden `year=2035.62` / night / winter `year=2035.02`), 2 seeds, one agent each, cumulative-drift question. **Both VISUAL: PASS.** Seed 42: balanced diamond city, dense-but-legible downtown, clean sand→teal coast (the old too-dark-coastline bug still absent), smooth sky, genuine night (lit windows + waxing-crescent moon + moonglade), winter a mild-but-present cool variant. Seed 7: same verdict — no z-order tears, no floaters, no hex seams, no blown-out color, coast bright not dark, night gold-lit with moon reflection.
+
+**Verdict — EXPLORED → REVERTED** (no change to commit; `solvista.html` restored byte-identical after the perf swap). **Twelfth clean bill in a row.** The city is balanced, readable and beautiful at ~186 iterations; nothing has compounded into clutter or darkness; seasons, night mood and coast all read correctly; perf flat. Next domain lap (188) owes Transport (179), then Urban (180)/Sky (181). Next step-back at **192**.
+

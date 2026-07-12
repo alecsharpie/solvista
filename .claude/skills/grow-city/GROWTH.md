@@ -56,6 +56,11 @@ ones (U2, 42, U5) stay in the bullet.
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
   Sky **190** · People **191** · Transport **193** · Urban **189** · Nature **194** · Civic **195** · Water **196**.
+  **⚠ 198's vector is CHOSEN, and it is not a rotation pick: the tree-shadow PERF FIX (Nature × Polish).** 197's
+  step-back measured the first non-flat lap since 142 and localized it to one draw; SKILL.md's step-back rule is
+  explicit that a measured regression outranks adding more ("if it regressed, the next iteration is a perf-fix
+  iteration"). It is cheap and the lever is already known (batch the per-tree `shadS` fills per hex — see the PERF
+  bullet). **After 198, the lap resumes owing Urban (189, Deepen/Polish only — measured-saturated), then Sky (190)/People (191).**
   **196 took Water × Deepen (the kelp bed breathes with the tide — SHIPPED).** `describeTile`'s `tidal` test (L6759)
   includes `T.KELP`, so a kelp bed has always printed a live `Tide` row (`High water`/`Flooding`/`Ebbing`/`Low water`)
   over a draw that read `TIDE` **nowhere** — iter 113's marsh defect, one tile along, unnoticed for 83 iterations. On the
@@ -151,7 +156,7 @@ ones (U2, 42, U5) stay in the bullet.
   tick-rule CAN'T read them directly (iter 151): `recount()` runs only at init/warp/manual, never in the sim loop
   (L6342), so the reach maps are STALE inside `tick()`** — 151 cashed the seam's *shape* (a shop-distance rule)
   but recomputed it LOCALLY (`countAround` r2), so `rShop` per se is still unread (recompute it, or pay a recount).
-  **Iteration 197 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, **192 — all done**). **192 was the 18th — THIRTEENTH clean bill in a row: census PASS, perf flat (day −1.0% / night 0.0% vs iter-187, interleaved), seasons alive (FARM dry-peak 88.4), both seeds VISUAL PASS at 3 lights × 2 calendars, no compounded clutter/darkness, coast clean. No city change.** **197 owes two flagged items a look: (a) 194's tree-shadow perf cost (day +3.4% / night +3.5% — an ellipse fill on the city's most numerous object), and (b) 196's kelp watch item (at HIGH water the kelp hexes are still the darkest pixels in the water, so if the bed count ever grows, kelp is the first thing that would band).**
+  **Iteration 202 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, **197 — all done**). **197 was the 19th, and it BROKE the clean-bill streak at thirteen — not visually (the city is clean: both seeds VISUAL PASS at 3 lights × 2 calendars, census PASS, seasons alive FARM dry-peak 88.4, night core located (.47,.45)/(.53,.57)) but on PERF: 193+194+196 cost day +3.8/+4.4%, night +2.9/+3.0%, all of it 194's tree shadows.** Both of 197's owed watch items came back **clean**: (a) the tree-shadow *visual* fear was confabulation for the third time — both agents read the groves "grounded-and-clean", not olive-muddy — but its *perf* cost is real, replicated, and now the header's live perf item; (b) **196's kelp watch item is CLOSED, and cannot fire**: KELP is **8–17 beds per seed and IDENTICAL across all three eras** (census tile histogram), i.e. the bed count is fixed at `genWorld` and nothing in `tick()` grows it, so the "if the bed count ever grows, kelp would band" precondition has no mechanism. Both agents confirmed "no dark lining / no crusty seam where the kelp bed sits."
   Shoot it **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
   `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
   the full recipe). **130, 136, 142, 147, 152, 157, 162, 167, 172 AND 177 all found NO compounding city defect** (TEN clean bills in a row, the
@@ -220,30 +225,26 @@ ones (U2, 42, U5) stay in the bullet.
   vectors are structurally capped at ~a quarter of any road-borne host, and would leave the rest
   *emptier* than whatever decoration they replaced. To do it properly you must move the **spawn pool**
   (`openCells` in `syncFleet`), not the leash. Don't rediscover this.
-- **PERF BASELINE RE-PINNED 2026-07-10 (iter 105's step-back): day 33.16ms · night 37.33ms.** Held through
-  iters 109/110/111/117 against pristine-HEAD controls (per-iter detail archived at 140/142). Not re-pinned
-  since; day still reads flat against it, night now runs ~+2.2ms of real 137+138 draw plus load (see 142).
-  **Iters 130/136 (step-backs): 126→135 cost ZERO** (130 −0.5% both vs iter-125 `c63e43b`; 136 +0.1% vs iter-130
-  `f2aa721`; night +7% vs the STORED baseline proven load both). **147: 143→146 cost ZERO**; **152: 143→151 cost
-  ZERO** (both vs iter-142 `ce17d61`, min/variant, all flat — detail archived). **157: 152→156 cost ZERO**
-  (day +3.5% inside the ±9ms day noise, night +0.4% flat; detail archived). **162: 157→161 cost ~ZERO** — HEAD-161 vs iter-157 (`ae93fd4`, A/B/A/B min/variant)
-  day **35.00 vs 35.05 (−0.1%, flat; day steady this run, all 4 reads 35.0–35.3)**, night **41.45 vs 41.00 (+1.1%,
-  small — 158 dome + 159 biolum land at night)**; `perf.mjs` vs stored baseline read +5.9%/+11.3% (pure load).
-  **The day column is USUALLY the noisy one on this box — grade it ONLY by min-of-≥2-rounds
-  interleave, but check the round spread (162's was tight); night is steady and is the SLOW-accumulating column
-  (night-only draws pile up there).** The stored-baseline false-FAIL is now an **EIGHT-time pattern
-  (125→130→136→142→147→152→157→162)** — always understates today's load; the interleave-against-an-old-commit reading is
-  the only honest step-back grade, and it is **NOT re-pinned** (baking today's load in would blind the gate).
-  (**A 2-round day+night interleave overruns the 120s Bash timeout — `run_in_background` it.** Filter the
-  perf-mean grep to `p95` lines or it swallows "vs baseline" and corrupts the min. **⚠ `cp` is aliased `-i`
-  here — use `/bin/cp` or every swap silently no-ops and you measure ONE file 4×, iter 147.**)
-  **142 (step-back): the interleave found a small but REAL cost — the first non-flat step-back delta.** `perf.mjs`
-  read day 34.34 (+3.6%) / night 40.83 (+9.4% vs stored baseline); interleaved HEAD-141 vs iter-136 (`6b31425`,
-  A/B/A/B, min per variant): day **34.44 vs 34.50** (−0.2%, flat) but night **41.39 vs 40.50** (**+2.2%**). That
-  +2.2% night is 137's figure contact-shadows (day+night) + **138's per-arterial night lamps landing** — small,
-  expected (138's own finding flagged night), well inside budget (60fps 100% / 30fps 47.7%), NOT a regression to
-  fix and NOT re-pinned. **Night is the one to watch** (118 added per-window
-  lit-pane draws; 138 added ~88-hex arterial strokes at night).
+- **PERF — the interleave is the ONLY honest grade, and it is NOT re-pinned.** The stored `perf-baseline.json`
+  (day 33.16ms · night 37.33ms, pinned iter 105) has now false-FAILed **nine** step-backs running
+  (125→130→136→142→147→152→157→162→**197**) because it always understates *today's* machine load — baking today's
+  load in would blind the gate, so it stays stale on purpose. Grade a lap **only** by an interleaved A/B/A/B
+  against the PREVIOUS step-back's commit, min per variant (`probes/perfab.mjs`, `REF=<sha>` since iter 197).
+  Per-iteration history 105→162 (all ~ZERO except 142's +2.2% night) is in `GROWTH-archive.md`.
+  **The day column is the NOISY one on this box — grade it only by min-of-≥2-rounds interleave and check the
+  round spread; night is steady and is the SLOW-accumulating column** (night-only draws pile up there: 118's
+  lit panes, 138's arterial lamps, 193's ferry lights).
+  **⚠ 197 found the FIRST non-flat lap since 142, and it is REAL: 193+194+196 cost day +3.8/+4.4%,
+  night +2.9/+3.0%** (two independent interleaves vs iter-192 `d8819ec`). It is **all 194's tree shadows** —
+  193 and 196 are free. Within precedent (118 shipped +5.1% night; 142's +2.2% was accepted) and NOT an
+  emergency, but it is a per-object `fill()` on the city's most numerous object. **The lever is known: 194
+  already proved memoizing `shadS`'s rgba string buys ZERO, so the cost is the FILL COUNT, not the string —
+  batch a forest hex's ~4 tree shadows into ONE path with ONE fill.** See 197's entry.
+  (**A 2+-round day+night interleave overruns the 120s Bash timeout — but do NOT pipe it through `tee`:
+  node block-buffers stdout to a pipe, so a backgrounded run looks EMPTY until it exits and you will think it
+  died (197 lost a run that way and re-ran it). Run it foreground with a long timeout, or read the task file
+  after exit.** **⚠ `cp` is aliased `-i` here — use `/bin/cp` or every swap silently no-ops and you measure ONE
+  file 4×, iter 147.**)
   **⚠ 117 CORRECTED 99's DIAGNOSTIC.** The old rule read *"a **stable** pass-over-pass offset means code,
   a **rising** one means load."* **The stable half is FALSE**: machine load is autocorrelated over
   minutes, so three passes inside one loaded window are three samples of *one* draw. Iter 117's gate read
@@ -333,14 +334,9 @@ ones (U2, 42, U5) stay in the bullet.
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
   **(l) CLOSED (iter 133) — hover-tile focus ring + the thin-stroke legibility law: both in GROWTH-archive.md (iter 157 trim).**
   **(e½) CLOSED — iter 102 shipped the commons that 101 prescribed. The interior HAS its lung; do NOT plant a second one.**
-  Its 28-line brief (94/100's "edge-to-edge carpet" holistic reads, and 101's reverted greenway) was rotated into
-  `GROWTH-archive.md` at iter 196: it had sat under *Open* cues for ~94 iterations still instructing a future lap to
-  build a lung the city already has. The durable **urban** findings it carried are kept here: **`PARK` is permanent**
-  (nothing in `tick()` consumes one, so green planted in `genWorld` survives to 2035); **green costs ~0.045% pop per
-  cell and partly repays it** (`PARK` is the top `valueSrc`, 0.92, and lifts the frontage it faces — `cafes` +141,
-  `COM` +51); **never zone against `TOWER` near the core** (92: −9.8% pop); and **the upgrade probability
-  *saturates***, so leaning on `p` is a weak lever that costs towers at ~240 pop each (98). 101's "a lung must be a
-  BLOB, not a ribbon" is now the general contrast-is-not-traceability law in SKILL.md.
+  Its brief, and the durable urban findings it carried (`PARK` is permanent; green costs ~0.045% pop/cell and partly
+  repays it; never zone against `TOWER` near the core; the upgrade probability saturates), were rotated into
+  `GROWTH-archive.md` at iter 197. 101's "a lung must be a BLOB, not a ribbon" is now SKILL.md's contrast law.
   **(g) THIRTEEN lines / SIXTEEN seedless `hashCell` calls remain** — **iter 103's audit grep undercounted,
   and iter 113 corrected it.** The old pattern
   (`grep -nE 'hashCell\([^)]*,[[:space:]]*(0x)?[0-9]+\)' … | grep -v seedNum`) matches only a **bare integer**
@@ -387,25 +383,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 189 entries before Iteration 187 live in
+> **Archive:** the 190 entries before Iteration 188 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 187 — holistic step-back (no city change)
-
-**Vector** — the mandated ~5-iteration step-back (105/110/115/120/125/130/136/142/147/152/157/162/167/172/177/**182**/**187**). The seventeenth step-back; isolates iters 183–186 (all draw-only: FARM harvest tooltip, hall-clock tooltip, whitecaps, café patrons) by interleaving HEAD against iter-182's file.
-
-**Census** — PASS, every core aggregate flat vs baseline (pop/developed/roads unmoved; cafes 455, stations 40, boulevardTrees 1203 all +0). Draw-only run, so this is expected and proves only that no page threw.
-
-**Perf (interleaved HEAD vs iter-182 `7614539`, A/B/A/B, min per variant)** — **day 36.72ms (HEAD) vs 36.28ms (182) = +1.2%; night 42.55ms vs 42.72ms = −0.4%.** Flat — four draw-only tooltip/element iterations cost nothing measurable. (Absolute numbers ran hot vs the 33/37 baseline this session — machine load; the interleaved delta is the verdict, not the absolute, per the same-session-pristine-control law.)
-
-**Seasons alive** — `probe-season`: FARM winter→dry-peak **88.4**, VINEYARD 44.6→36.7, ORCHARD 25.3→41.4, ROAD control ~0.5–2.1. The calendar is working across every agriculture tile.
-
-**Visual** — whole-frame reads at 3 lights × 2 calendars (day golden `year=2035.62` / night / winter `year=2035.02`), 2 seeds, one agent each, cumulative-drift question. **Both VISUAL: PASS.** Seed 42: balanced diamond city, dense-but-legible downtown, clean sand→teal coast (the old too-dark-coastline bug still absent), smooth sky, genuine night (lit windows + waxing-crescent moon + moonglade), winter a mild-but-present cool variant. Seed 7: same verdict — no z-order tears, no floaters, no hex seams, no blown-out color, coast bright not dark, night gold-lit with moon reflection.
-
-**Verdict — EXPLORED → REVERTED** (no change to commit; `solvista.html` restored byte-identical after the perf swap). **Twelfth clean bill in a row.** The city is balanced, readable and beautiful at ~186 iterations; nothing has compounded into clutter or darkness; seasons, night mood and coast all read correctly; perf flat. Next domain lap (188) owes Transport (179), then Urban (180)/Sky (181). Next step-back at **192**.
 
 ## Iteration 188 — the cable cars rock on their hangers in the breeze (2026-07-12) [Transport × Polish]
 
@@ -963,3 +945,30 @@ water, byte-identically to HEAD. Draw-only, pop + stream flat, ~14 lines + a pro
 next domain lap (198) owes **Urban (189, Deepen/Polish only — measured-saturated)**, then Sky (190)/People (191).
 **197 is the mandated STEP-BACK** — and it owes two flagged items a look: **194's tree-shadow perf cost (day +3.4% /
 night +3.5%)** and this entry's **kelp-banding-at-high-water** watch item.
+
+## Iteration 197 — the nineteenth step-back finds a clean city and a real perf cost (2026-07-12) [holistic step-back]
+
+**Vector** — the mandated ~5-iteration step-back (105/110/115/120/125/130/136/142/147/152/157/162/167/172/177/182/187/192/**197**). The nineteenth. Isolates iters **193** (ferry night lights), **194** (tree contact shadows) and **196** (kelp tide response) — 195 was reverted byte-identical — by interleaving HEAD against iter-192's file (`d8819ec`). Not a domain × kind lap: it reads the WHOLE city for cumulative drift the census and the per-feature gates are blind to. It also owed two flagged watch items an answer.
+
+**Housekeeping — a DESTRUCTIVE rollback was found sitting in the worktree, and discarded.** Startup found `solvista.html` dirty with a diff that *deleted* 193's ferry lights, 194's tree/palm shadows and 196's kelp tide and added nothing (4 insertions were just the old kelp lines returning). It was not a half-finished iteration but a **stale pristine-control backup copied back over the artifact** — almost certainly a killed perf/probe run that had `/bin/cp`'d HEAD aside and died before restoring. `git stash`ed rather than deleted (stash: *"iter197: stale pristine-backup rollback…"*). **Law for the next runner: a dirty tree whose diff only ever SUBTRACTS shipped features is a corrupted control file, not work to keep — the skill's "keep it if census passes" rule assumes the diff ADDS something, and census would have passed this one happily.**
+
+**Census** — PASS. Every core aggregate flat (pop/developed/roads unmoved; `solarRoofs` −2, `towerHt` +1 = chaotic-CA noise). Tile histogram empty. Correct and expected: all three isolated iterations are draw-only, so the census proves only that no page threw.
+
+**Perf — the finding. FIRST non-flat lap since 142, and it is REAL.** Interleaved A/B/A/B vs iter-192 (`d8819ec`), min per variant, run **twice independently**:
+
+| run | day | night |
+| --- | --- | --- |
+| A | 36.61 → 38.22ms (**+4.4%**) | 47.55 → 48.94ms (**+2.9%**) |
+| B | 40.72 → 42.28ms (**+3.8%**) | 42.83 → 44.11ms (**+3.0%**) |
+
+Two runs agree, and the number matches **194's own self-reported cost** (day +3.4% / night +3.5%) almost exactly — so **the entire lap's cost is 194's tree shadows; 193's ferry lights and 196's kelp tide are free** (both are tiny host counts: 18 ferries, 8–17 kelp beds). Within precedent and NOT an emergency (118 shipped +5.1% night; 142's +2.2% was accepted and never fixed), but this loop *only ever adds*, and this is a per-object `fill()` on the most numerous object on the plate. **The lever is already proven: 194 tried memoizing `shadS`'s `rgba()` string and measured ZERO, which means the cost is the FILL COUNT, not the string.** `shadS` (L2843) is `fillStyle=…; beginPath(); ellipse(); fill()` — one full rasterization per tree, ~4 per forest hex. **⇒ 198 is mandated as the fix: batch a hex's tree shadows into ONE path with ONE `fill()`.**
+
+**Watch item (a) — 194's tree shadows: perf cost CONFIRMED, visual fear was CONFABULATION (3rd time).** 194's own agent had warned the dense grove went "olive-muddy, near the tolerable limit" (the kelp failure mode) and 194's probe disproved it (FOREST mean luminance −0.36..−0.44 of 255). 197's two fresh, blind whole-city agents independently read the groves as **"grounded-and-clean… canopies stay green rather than olive-muddy"** (seed 42) and **"grounded, not muddy — the contact shadows sit tight under each trunk"** (seed 7). The shadows are visually right; only their cost is wrong.
+
+**Watch item (b) — 196's kelp-banding cue: CLOSED, and it CANNOT FIRE.** 196 banked "at HIGH water the kelp hexes are still the darkest pixels in the water — if the bed count ever grows, kelp is the first thing that would band." The census tile histogram settles it: **KELP is 17/10/8 beds on the three seeds and IDENTICAL across all three eras (1985/2005/2035)** — the beds are placed at `genWorld` and *nothing in `tick()` grows them*, so the precondition has no mechanism. Both agents also confirmed the coast directly: "no dark lining, no crusty seam where the kelp bed sits" / "clean sand→turquoise gradient with no dark lining or halo band." The historic dark-coast failure mode stays closed.
+
+**Seasons alive** — `probe-season`: FARM winter→dry-peak **88.4** (identical to 192's), VINEYARD 44.6→36.7, ORCHARD 25.3→41.4, FOREST 20.6→19.7, ROAD control 0.5–2.1. The calendar is working across every agriculture tile.
+
+**Visual** — whole-frame reads at 3 lights × 2 calendars (day golden `year=2035.62` / night / winter `year=2035.02`), 2 seeds (42, 7), one agent each, asked the *cumulative-drift* question and given a **locate** task. **Both VISUAL: PASS.** Night core located by light alone at **(0.47,0.45)+(0.47,0.62)** and **(0.53,0.57)** — matching the historical band (177: (.48,.50)/(.53,.60); 172: (.47,.55)/(.45,.62)), so 115/143's CBD lighting holds. No z-order tears, no floaters, no mojibake, no blowout. Winter reads as a real but mild variant on both seeds (seed 7's agent called it "the weakest signal in the set") — that is 120's known by-design evergreen/irrigated dilution, a composition fact, not a dead calendar.
+
+**Verdict — FIXED** (no city change; `solvista.html` byte-identical to HEAD). The step-back's *job* was done: it found something. **The thirteen-clean-bill streak ends at 197 — not on the city, which is balanced, readable and beautiful at ~197 iterations, but on the frame budget.** The one durable improvement shipped here is to the harness: **`probes/perfab.mjs` now takes `REF=<sha>`** so a step-back can grade a whole lap against the previous step-back's commit instead of only HEAD-vs-working-file — the exact measurement this step exists to make, which it previously could not express. **198 = the tree-shadow perf fix (Nature × Polish); the lap then resumes owing Urban (189).** Next step-back at **202**.
