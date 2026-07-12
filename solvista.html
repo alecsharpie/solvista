@@ -269,6 +269,21 @@ const KS=1.46;
 const ks=n=>Math.round(n*KS);
 const POPW={[T.RES]:4,[T.MID]:28,[T.COM]:10,[T.TOWER]:240,[T.CIVIC]:40,[T.IND]:16,[T.MARKET]:14};
 const DISTCOL=['gold','teal','coral','sage']; /* district identities */
+/* The ground under a structure reads its LAND USE (iter 209). For the artifact's whole
+   life every developed hex painted one flat `sandDk` — a house's front garden and a
+   factory's yard wore the same paint — while the EMPTY lot beside them got a whole
+   patchwork so it would "read as pasture, not paint". Yet this is the largest untouched
+   surface in the city: the developed ground a viewer actually SEES measures 5.2% of the
+   frame, and the RES front garden alone is 2.2% — more visible ground than every open lot
+   put together (probe-groundvis). So: gardens in the terraces, paving through the walk-ups
+   and the core, a hardstanding yard at the works. Colour only — the same single hexTile
+   per hex, ZERO new path objects (198's per-ellipse cost model).
+     A garden is `lawn`, so the suburbs now breathe with the parks' calendar (208) for
+   free — the residential fabric was the biggest surface the seasons could not reach. It
+   is drawn DEEPER than a mown park lawn (hedges, shade, shrubs), which holds its rank
+   below PARK while carrying the same year. */
+const GROUND={[T.RES]:['lawn',0.90],[T.MID]:['paving',1.00],[T.COM]:['paving',1.00],
+              [T.TOWER]:['paving',0.94],[T.CIVIC]:['paving',1.05],[T.IND]:['stone',1.25]};
 
 /* base palette [r,g,b] */
 const BASE={
@@ -284,6 +299,9 @@ const BASE={
   waterSh:[116,199,202], waterDp:[68,145,154],
   fog:[236,241,239],
   road:[136,133,126], roadArt:[116,113,107], roadLine:[233,221,192],
+  paving:[190,184,170], /* the city's hardstanding. LIGHTER than asphalt, so a street still
+                           reads darker than the pavement it runs between; DULLER than sandDk,
+                           so the core reads as laid concrete rather than as bare sand */
   cream:[244,232,208], creamDk:[221,205,172],
   terra:[199,111,74], terraDk:[170,90,60],
   white:[250,246,236], whiteDk:[228,220,204],
@@ -4618,11 +4636,16 @@ function drawCell(x,y){
         }
       }
       break;}
-    default:{ /* buildable ground under structures; open grass gets a gentle
-                 patchwork (low-frequency waves + per-cell fleck) so the green
-                 sheets read as pasture, not paint */
-      hexTile(gx,gy,1.02,col(c.t===T.EMPTY?'grass':'sandDk',
-        c.t===T.EMPTY?0.93+0.05*Math.sin(x*0.85+y*0.6)+0.04*hashCell(x,y,seedNum^0x6EAF):0.9));
+    default:{ /* buildable ground: a developed lot wears its land use (GROUND), and is
+                 flecked like the pasture below it — but QUANTIZED to 5 steps so col()'s
+                 name|f cache stays small (the same discipline as the road's resurfacing
+                 patches). Open grass gets a gentle patchwork (low-frequency waves +
+                 per-cell fleck) so the green sheets read as pasture, not paint */
+      const gnd=GROUND[c.t];
+      hexTile(gx,gy,1.02, gnd
+        ? col(gnd[0],gnd[1]+((hashCell(x,y,seedNum^0x3B7C)*5|0)-2)*0.015)
+        : col(c.t===T.EMPTY?'grass':'sandDk',
+            c.t===T.EMPTY?0.93+0.05*Math.sin(x*0.85+y*0.6)+0.04*hashCell(x,y,seedNum^0x6EAF):0.9));
       if(DEV.has(c.t))drawBuilding(c,x,y,gx,gy);
       else if(c.t===T.EMPTY){ /* succession: idle lots grow back on their own */
         if(c.hedge)hedge(c,x,y,gx,gy);

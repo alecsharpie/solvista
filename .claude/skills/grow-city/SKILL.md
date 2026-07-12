@@ -859,6 +859,24 @@ vector, whatever it is.
   treat it as a standing audit: **when a rule names a tile type in a growing city, ask what that type BECOMES.**
   The cheapest possible check comes first — `GARDEN` read **6 hexes across the entire 9-cell census matrix**, and
   one look at the tile histogram would have caught it at any point in the artifact's life.
+- **A COMMENT THAT STATES A STANDARD THE ADJACENT BRANCH IS EXEMPTED FROM is the tell's next host — and check
+  the SIZE of the exempted surface before you believe it is marginal (iter 209).** 199 found the tell's host had
+  moved from a tooltip to a *constant*; 209 found the rung below that: a **comment that gets the principle right
+  and applies it to one branch of the same `if`.** `drawCell`'s `default:` gave the `EMPTY` lot a patchwork
+  *"so the green sheets read as pasture, not paint"* — and in the very next clause painted the ground under
+  **every developed hex** one flat `sandDk`, so a house's front garden and a factory's yard agreed **to within
+  one RGB unit** for 208 iterations. **Grep for a principle written down once and applied to one branch of the
+  same conditional.** Two corollaries, both general: (a) **before designing on a ground-level surface, MEASURE how
+  much of it a viewer actually sees** — `probes/probe-groundvis.mjs` answers *"how much of surface X is visible?"*
+  by loud-painting one type's ground and diffing (the diff **is** the visible ground, by construction, 161). It
+  is the direct answer to 206's occlusion law, and here it *inverted* the expectation: the developed ground is
+  **5.2% of the frame**, the RES yards alone **2.21%** — the largest ground surface in the city, not a buried one.
+  (b) **A "saturated" interconnect list is a claim about the class you enumerated, not about the city.** The
+  header had recorded *"the Sky-feedable list is EMPTY — every vegetation tile that can read `year` now does"*;
+  that was true of **vegetation** and false of the **city**, because the biggest surface the seasons could not
+  reach was not a plant at all — it was the residential ground, wearing a non-seasonal palette name. Renaming it
+  `lawn` took its seasonal shift from **1.2 to 36.8** for free. ⇒ **When a domain looks interconnect-saturated,
+  re-ask it as: what large surfaces are wearing a palette name / field that cannot carry the signal?**
 - **A label that asserts a relationship the draw ignores is a bug, and it is the
   richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
   and printed a live `Tide` for 16 iterations over a tile that never moved a pixel

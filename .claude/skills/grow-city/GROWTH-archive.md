@@ -12447,3 +12447,120 @@ Two runs agree, and the number matches **194's own self-reported cost** (day +3.
 
 **Verdict — EXPLORED → REVERTED.** The city is unchanged; the loop's *knowledge* is not. Three perf levers are now closed by measurement instead of standing open as folklore, and `probes/probe-shadcost.mjs` is committed so the next runner who eyes a draw-cost regression can rerun the table in one command rather than re-deriving it. **Law promoted to `SKILL.md`: a perf lever is a HYPOTHESIS — measure it before you mandate it, and characterize a cost with variants that DISCRIMINATE between mechanisms, not one plausible fix.** A step-back should name the **suspect**, not the **fix**; 197 named the fix and spent an iteration proving it wrong. **The domain lap resumes at 199 owing Urban (189, Deepen/Polish only); next step-back at 202.**
 
+
+<!-- header bullets rotated out of GROWTH.md at iter 209 to pay for 209's lines (the header is a fixed 400-line budget: to add a line, cut a line). Preserved verbatim. -->
+
+(Per-lap recaps of **196/198/199/200** rotated to `GROWTH-archive.md` at 206 — their laws are live elsewhere:
+198's *measure a lever before you mandate it* + the **PER-ELLIPSE cost model**, 199's *the tell's next host is a
+CONSTANT* + *inert-regime noise floor* ⇒ SKILL.md + **PERF**; 200's *probes are blind to the HUD* ⇒ its bullet
+below; 196's *a state-response diff needs a POSITIVE control* ⇒ SKILL.md.)
+
+**Sky-feedable list is EMPTY since 139** — every vegetation tile that can read `year` now does, so a further
+Sky interconnect needs a genuinely NEW derived field. (Full 111->148 history in `GROWTH-archive.md`.)
+[SUPERSEDED BY ITER 209: this was true of *vegetation* tiles and false of the city as a whole. The developed
+GROUND PLANE — 5.2% of the visible frame, the RES yards alone 2.21% — was wearing a non-seasonal palette name
+(`sandDk`) and could read the year the moment it was given one (`lawn`): RES seasonal shift 1.2 -> 36.8. The
+live rule is now in the ROTATION bullet: look for big surfaces wearing a non-seasonal palette name.]
+
+## Iteration 199 — the city goes to bed (2026-07-12) [Urban fabric × Deepen]
+
+**Vector.** Urban fabric × Deepen. Rotation owed Urban (last lap 189) and the header
+pins it **Deepen/Polish only** — additive spent (118), Connect measured-hard twice
+(160/165), roof-furniture closed city-wide. Kind repeats 189's Deepen on 184's
+precedent: when a domain is saturated to two kinds, **saturation beats kind-rotation.**
+
+**The seam.** `winBandR` paints a lit pane wherever `hashCell(...) >= WINDARK` and leaves
+the rest as wall — and its own comment calls that remainder **"nobody home"**. That is an
+assertion about *occupancy*, which is the one thing about a city that changes across a
+night. But `WINDARK` was a **constant (0.16)**. So the same panes were dark at 8pm and at
+4am, and every window lit at dusk still burned until dawn: **the city never went to bed.**
+This is 194's tell one turn further in — not a tooltip asserting what the draw ignores, but
+a **CONSTANT whose NAME asserts what its VALUE cannot do**. And `LITAMT` cannot carry the
+hour either: the light curve **PINS it at 1.0 from dayT 0.86 all the way to midnight**, so
+the whole evening is one flat plateau. The hour had to come from `dayT` — the slow clock the
+moon (135), the hall clock (149) and the observatory dome (158) already share. Fifth reader.
+
+**Change.** `WINDARK` becomes a floor, and `windarkAt(t)` sweeps the threshold up through
+the panes as `nightDeep()` (a smoothstep over dayT 0.70..1.06, the span where paned glass is
+actually drawn) runs from dusk to the small hours. **Per building type** — homes empty
+fastest, offices keep a late shift, towers keep a skeleton crew: RES .10→.52, MID .14→.40,
+COM .15→.36, TOWER .17→.28. **The differential is the point, not the dimming**: the
+residential fringe goes dark while downtown stays lit, so the night core (143) *sharpens* as
+the night deepens instead of the city merely getting darker.
+Two things deliberately **not** done, and both are load-bearing:
+- **`colWin`'s mean-holder stays pinned to the BASELINE `WINDARK`.** It exists to make the
+  paned band read at the tone the solid ribbon it replaced did, at a *fixed* hour. If `a`
+  chased the hour too, colWin would **brighten every surviving pane to hold the block's
+  mean** — cancelling the very signal (a sleeping city IS darker) and clipping the survivors
+  to white at the top of the sweep. So a lit pane keeps exactly the colour it always had, and
+  the darkening is carried honestly, by panes going out. This is what makes "0 lighter px"
+  provable rather than lucky.
+- **No new randomness.** The existing per-pane `hashCell` is reused as-is, so each pane
+  already carries a fixed "how late this household stays up" and the rising threshold sweeps
+  up through them **in a stable order** — windows wink out one by one instead of re-rolling.
+  Stream-neutral by construction.
+Tooltip: a live `Windows` row (`Nearly all lit` / `Lights going out` / `Most are asleep` /
+`Dark — the block sleeps`) read off the **same `windarkAt()`** the panes are drawn from — one
+predicate, one definition — and shown only while the panes exist (`LITAMT>=0.35`).
+
+**Census.** PASS. Every metric **+0**, tile histogram **empty**, entity counts flat — correct
+and expected: draw-only, no `rng()`, no terrain, no new tile/entity. Vacuous, so the probe is
+the gate.
+
+**Probe** (`probes/probe-bedtime.mjs`). A **state-response** question (196's law), so the
+isolation is two pins of `dayT` **within one build** (frozen clock, same `genWorld`), run on
+both builds. The count is harvested by **wrapping `winQuad`** (fires once per lit pane) and
+`winBandR` (which knows the cell) — it counts *actual draw calls*, not my own formula, so it
+is not circular. 3 seeds:
+- **BASE: the pane count is EXACTLY frozen dusk→midnight — 0.0% on all four types, all three
+  seeds.** That is the seam stated as a number: a constant threshold *cannot* know the hour.
+- **PATCH: RES 36.8–37.5% go dark · MID 24.4–25.8% · COM 17.6–20.0% · TOWER 10.0–11.0%** —
+  a **3.42–3.70× differential**, homes over towers.
+- **MIDNIGHT patch-vs-base: 1.2–1.5% of frame changed, 100% DARKER, 0.000% lighter** (at
+  THR=10, above the noise floor) — the anti-blowout gate: panes can only ever go *out*.
+- **CONTROL noon: 0 panes drawn on BOTH builds** (the paned branch isn't taken in daylight, so
+  the edit is *unreachable* there) and the frame is **byte-identical**, 0 px, on all 3 seeds.
+- **POSITIVE CONTROL: the dayT pin is live** — BASE dusk→midnight moves ~55% of the frame. Without
+  it, "BASE panes frozen" would be a dead pin rather than a finding (196).
+
+**Perf.** FREE, and this iteration came with its **own zero control**: the day frame runs
+*provably identical code* (0 panes drawn at noon), so whatever day reads IS the noise floor.
+Three interleaved rounds vs pristine HEAD (`perfab.mjs`): **day −0.0% / +0.1% / +1.0%**
+(identical code ⇒ floor ≈1%), **night +1.5% / −1.4% / −0.2%** — centred on zero, sign flipping.
+Within its own control. (It draws *fewer* path objects at night, which by 198's per-ellipse cost
+model should if anything be cheaper; it is not measurably either way.)
+
+**Visual.** Both seeds **VISUAL: PASS**, and both agents **LOCATED blind** (108's law): given
+two unlabelled night frames and asked *which is later*, with the A/B labels **deliberately
+inverted between the seeds** so a coin-flip cannot pass both, seed 42's agent said "A" (truth:
+A = midnight) and seed 7's said "B" (truth: B = midnight) — each reasoning from the window
+pattern ("punched through with dark cells… lit windows have gone stochastic and patchy"). Both
+confirmed the differential reads and that the core holds: *"the contrast between core and
+periphery is actually stronger… which is the right nocturnal read."* No muddiness (the historic
+kelp failure mode), no tears, no blowout: *"only the window emissives dropped… the correct,
+localized behaviour."*
+
+**Findings banked.**
+- **The pelican `flock` is a probe-hygiene trap.** It is a lone `Math.random`-spawned *object*
+  (`let flock=null`), not one of the entity *arrays* 163's law tells you to clear — so it
+  survives the standard freeze and drifts per page load. It was the **entire per-load noise
+  floor** (~100–600 scattered px, max delta ~8) that made this probe's first run false-FAIL its
+  own daylight control. `flock = null` in the freeze and noon goes to an honest **0 px on every
+  seed**. Add it to the freeze list; 195(f)'s "an honest zero is what makes every other number
+  readable" applies exactly.
+- **A provably-inert regime is a free perf noise floor** — promoted to SKILL.md.
+- **A constant whose NAME asserts a behaviour its VALUE cannot have** is the tell's next host —
+  promoted to SKILL.md. Still-mute draws remain banked: `c.hedge`, `c.party`, `c.shroom`.
+
+**Verdict: SHIPPED.**
+
+
+<!-- cue (p)'s historical body, rotated out of GROWTH.md's header at iter 209 (fixed budget). Its LIVE residue — the do-not-raise-further warning and the GARDEN-still-mute cue — stays in the header. Preserved verbatim. -->
+
+**(p) CLOSED by 208 for the amenity green — but read the WARNING.** 207 found a *one-crop calendar* (~170
+agricultural hexes carried the whole year; PARK, 583 hexes, shifted **8.4** — level with **REDWOOD 8.0**, which
+is EVERGREEN BY DESIGN). The cause was **not** an unwired surface: 120 *had* wired `lawn`/`turf` into the dry
+curve and then **set the dial to ~zero** (~11 RGB units across a whole year). 208 raised the amplitude on all
+four keyframes (colour-only, zero path objects): **PARK 8.4→23.5 · SHOREPARK 17.9→52.3 · QUAD 5.7→21.2**, ROAD
+control dead at 0.6 and every untouched tile bit-identical; two blind agents on oppositely-randomized pairs both
+**correctly named the dry season** and both cited the amenity green.

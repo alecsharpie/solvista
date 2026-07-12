@@ -25,7 +25,7 @@ ones (U2, 42, U5) stay in the bullet.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~ | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~ | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
@@ -55,11 +55,23 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **208** · People **201** · Transport **203** · Urban **199** · Nature **206** · Civic **204** · Water **205**.
-  **208 took Sky × Deepen out of turn to cash cue (p)** — a *banked, measured* finding outranks rotation
-  bookkeeping (119's law), and the season pass is a Sky seam. **THE LAP NOW OWES URBAN (stalest, 199), then
-  People (201), then Transport (203).** Urban is measured-saturated in *additive* and *Connect* (see below) ⇒
-  its lap must be **Deepen or Polish**. **Iteration 212 is the next step-back.**
+  Sky **208** · People **201** · Transport **203** · Urban **209** · Nature **206** · Civic **204** · Water **205**.
+  **THE LAP NOW OWES PEOPLE (stalest, 201), then Transport (203), then Civic (204).**
+  Urban is measured-saturated in *additive* and *Connect* (see below) ⇒ its lap must be **Deepen or Polish**.
+  **209 (Urban × Deepen, SHIPPED: the ground the city stands on) — full recap in its own entry, still in the
+  ledger window; its new tell (*a comment stating a standard the adjacent branch is exempted from*) ⇒ SKILL.md.**
+  `drawCell`'s `default:` painted the ground under **every** developed hex one flat `sandDk` — a house's garden
+  and a factory's yard agreeing **to within 1 RGB unit** — beside a line giving the `EMPTY` lot a patchwork *"so
+  it reads as pasture, not paint."* Now `GROUND` = `lawn` gardens / `paving` (new palette entry) / `stone`
+  hardstanding. Colour-only, **zero new path objects**, perf free. Three things survive here:
+  **(1) ⚠ THE GROUND PLANE IS NOW SPENT** as an Urban Deepen target — **facades** and the **harbour apron** remain.
+  **(2) THE DEVELOPED GROUND IS A HUGE SURFACE, MEASURED (`probes/probe-groundvis.mjs`, reusable):** the ground a
+  viewer actually SEES is **5.2% of the frame** — RES yards alone **2.21%** (35k px), *more than every open lot put
+  together*, and NOT buried (cf. 206). Ask it — *"how much of surface X is visible?"* — before designing on any
+  ground-level surface.
+  **(3) THE SUBURBS NOW BREATHE WITH THE YEAR** (RES shift **1.2 → 36.8**; PARK positive control 44.1 → 44.6, COM
+  `paving` negative control 1.0 → 1.7). ⇒ **When a domain looks interconnect-saturated, re-ask it as: what LARGE
+  SURFACES wear a palette name that cannot carry the signal?**
   **206 (Nature × New CA rule, FIXED) — full recap in its own entry, still in the ledger window; header recap
   rotated to `GROWTH-archive.md` at 207.** It audited a rule that had under-fired for the artifact's whole life
   (`GARDEN` = 6 hexes in the entire matrix; one seed in three grew *zero*, ever) and fixed it: **a mid-rise is
@@ -93,14 +105,10 @@ ones (U2, 42, U5) stay in the bullet.
   8.4-23.6% occluded) and the artifact INNOCENT of 202's "thin dark line"; the fault is LEGIBILITY ⇒ a
   **`polish-tile` job on the WHOLE tramway**, never a tweak to the rope. **Do NOT re-try: a body/halo under it
   (measured — backfires) or a lit top edge (measured — impossible at 0.5px).**
-  (Per-lap recaps of **196/198/199/200** rotated to `GROWTH-archive.md` at 206 — their laws are live elsewhere:
-  198's *measure a lever before you mandate it* + the **PER-ELLIPSE cost model**, 199's *the tell's next host is a
-  CONSTANT* + *inert-regime noise floor* ⇒ SKILL.md + **PERF**; 200's *probes are blind to the HUD* ⇒ its bullet
-  below; 196's *a state-response diff needs a POSITIVE control* ⇒ SKILL.md.)
   **195 (Civic × Deepen, REVERTED). STILL-UNCASHED: `university` is the ONLY of the twelve civics with no `LITAMT`
   — the only `MAJORK` monument pitch dark after sunset; every place to put the light failed ⇒ a `polish-tile` job,
   not a growth lap** (gate kept: `probes/probe-unilight.mjs` + `shot-uni.mjs`).
-  **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban is measured-saturated: additive spent (118), and Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (high-street arcade: the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); **Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). **Roof-furniture is CLOSED city-wide** across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof is left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). (The per-lap recaps of **173-185**, and their superseded "next lap owes" pointers, were rotated into `GROWTH-archive.md` at iter 196 to pay for 196's lines — the header is a fixed budget, and the ROTATION line above is the live pointer.) Check the last entry of the stalest domain for a banked
+  **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban is measured-saturated: additive spent (118), and Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (high-street arcade: the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); **Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). **Roof-furniture is CLOSED city-wide** across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof is left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere — and the **GROUND PLANE is now SPENT too (209)**, leaving **facades** and the **harbour apron**. (The per-lap recaps of **173-185**, and their superseded "next lap owes" pointers, were rotated into `GROWTH-archive.md` at iter 196 to pay for 196's lines — the header is a fixed budget, and the ROTATION line above is the live pointer.) Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
   feet; draw-only, `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the
@@ -165,8 +173,7 @@ ones (U2, 42, U5) stay in the bullet.
   vineyard, 183 FARM, and 199 found its next host is a CONSTANT (see SKILL.md). Still MUTE: `[T.IND]` (no
   calendar) and GARDEN (season-frozen draw — needs a Deepen first). ⚠ 122's warning stands: a tooltip vector
   needs a probe checking the claim against INDEPENDENTLY RECOMPUTED truth, not a screenshot that it renders.
-  **Sky-feedable list is EMPTY since 139** — every vegetation tile that can read `year` now does, so a further
-  Sky interconnect needs a genuinely NEW derived field. (Full 111->148 history in `GROWTH-archive.md`.)
+  (The "Sky-feedable list is EMPTY since 139" bullet was **DISPROVEN by 209**, archived: true of *vegetation*, false of the city — see ROTATION finding (3).)
   **Kind-picking, compressed (full text + the 143-163 per-lap recaps rotated to `GROWTH-archive.md` at 204).**
   **Scale** is the coldest kind and a structural lever, not a lap move. **New element** (last 127): a saturated
   domain cannot take one — but saturation is of a domain's ENTITIES, so one can still land on a large untouched
@@ -358,20 +365,15 @@ ones (U2, 42, U5) stay in the bullet.
   shore): a terrain lap with real cost, not an entity-motion freebie. **Banked host, if one is ever wanted: the
   MOLE is real and reliable** — `moleSet` is 5-12 cells on all 6 seeds probed (the `path.length>=5` guard bites
   less often than its comment implies), and it is the artifact's only built structure standing in the water.
-  **(p) CLOSED by 208 for the amenity green — but read the WARNING.** 207 found a *one-crop calendar* (~170
-  agricultural hexes carried the whole year; PARK, 583 hexes, shifted **8.4** — level with **REDWOOD 8.0**, which
-  is EVERGREEN BY DESIGN). The cause was **not** an unwired surface: 120 *had* wired `lawn`/`turf` into the dry
-  curve and then **set the dial to ~zero** (~11 RGB units across a whole year). 208 raised the amplitude on all
-  four keyframes (colour-only, zero path objects): **PARK 8.4→23.5 · SHOREPARK 17.9→52.3 · QUAD 5.7→21.2**, ROAD
-  control dead at 0.6 and every untouched tile bit-identical; two blind agents on oppositely-randomized pairs both
-  **correctly named the dry season** and both cited the amenity green.
-  **⚠ DO NOT RAISE IT FURTHER.** `grass` and `lawn` are the **SAME base colour** `[150,181,122]` (L276/L310), so
-  the dry-season divergence *is* the park's whole identity, and the parks must stay **greener/brighter than the
-  hills** at every point in the year. Seed 7's agent already reports hillside hexes sitting *"close in value to the
-  paler lawns, but they never invert"* — the amplitude is at the top of what is safe. Any further push must re-run
-  the blind locate. **⚠ GARDEN is STILL MUTE (1.8 → 5.4): its ground is mostly raised beds, so the lawn lift barely
-  reaches it. Its own richer cue stands** — staggered per-bed calendars + one shared `gardenPhase()` (Nature ×
-  Deepen; host fixed by 206).
+  **(p) CLOSED by 208 (the amenity green got a real seasonal amplitude: PARK 8.4→23.5, SHOREPARK 17.9→52.3,
+  QUAD 5.7→21.2) and EXTENDED by 209 (the RES ground joined it: 1.2→36.8). Body archived; the WARNING is live.**
+  **⚠ DO NOT RAISE THE LAWN AMPLITUDE FURTHER.** `grass` and `lawn` are the **SAME base colour** `[150,181,122]`,
+  so the dry-season divergence *is* the managed green's whole identity, and lawns must stay **greener/brighter than
+  the hills** at every point in the year — seed 7's agent already reads hillside hexes *"close in value to the paler
+  lawns, but they never invert."* It is at the top of what is safe; any further push must re-run the blind locate.
+  **⚠ GARDEN is STILL MUTE (1.8 → 5.4): its ground is mostly raised beds, so the lawn lift barely reaches it. Its
+  own richer cue stands** — staggered per-bed calendars + one shared `gardenPhase()` (Nature × Deepen; host fixed
+  by 206).
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a
   multi-source hex BFS capped at radius `r`, walking over land only (`WETSET` blocks
   water/marsh/kelp), filling `out` with steps-to-nearest-source and 255 for "farther
@@ -389,103 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 201 entries before Iteration 199 live in
+> **Archive:** the 202 entries before Iteration 200 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 199 — the city goes to bed (2026-07-12) [Urban fabric × Deepen]
-
-**Vector.** Urban fabric × Deepen. Rotation owed Urban (last lap 189) and the header
-pins it **Deepen/Polish only** — additive spent (118), Connect measured-hard twice
-(160/165), roof-furniture closed city-wide. Kind repeats 189's Deepen on 184's
-precedent: when a domain is saturated to two kinds, **saturation beats kind-rotation.**
-
-**The seam.** `winBandR` paints a lit pane wherever `hashCell(...) >= WINDARK` and leaves
-the rest as wall — and its own comment calls that remainder **"nobody home"**. That is an
-assertion about *occupancy*, which is the one thing about a city that changes across a
-night. But `WINDARK` was a **constant (0.16)**. So the same panes were dark at 8pm and at
-4am, and every window lit at dusk still burned until dawn: **the city never went to bed.**
-This is 194's tell one turn further in — not a tooltip asserting what the draw ignores, but
-a **CONSTANT whose NAME asserts what its VALUE cannot do**. And `LITAMT` cannot carry the
-hour either: the light curve **PINS it at 1.0 from dayT 0.86 all the way to midnight**, so
-the whole evening is one flat plateau. The hour had to come from `dayT` — the slow clock the
-moon (135), the hall clock (149) and the observatory dome (158) already share. Fifth reader.
-
-**Change.** `WINDARK` becomes a floor, and `windarkAt(t)` sweeps the threshold up through
-the panes as `nightDeep()` (a smoothstep over dayT 0.70..1.06, the span where paned glass is
-actually drawn) runs from dusk to the small hours. **Per building type** — homes empty
-fastest, offices keep a late shift, towers keep a skeleton crew: RES .10→.52, MID .14→.40,
-COM .15→.36, TOWER .17→.28. **The differential is the point, not the dimming**: the
-residential fringe goes dark while downtown stays lit, so the night core (143) *sharpens* as
-the night deepens instead of the city merely getting darker.
-Two things deliberately **not** done, and both are load-bearing:
-- **`colWin`'s mean-holder stays pinned to the BASELINE `WINDARK`.** It exists to make the
-  paned band read at the tone the solid ribbon it replaced did, at a *fixed* hour. If `a`
-  chased the hour too, colWin would **brighten every surviving pane to hold the block's
-  mean** — cancelling the very signal (a sleeping city IS darker) and clipping the survivors
-  to white at the top of the sweep. So a lit pane keeps exactly the colour it always had, and
-  the darkening is carried honestly, by panes going out. This is what makes "0 lighter px"
-  provable rather than lucky.
-- **No new randomness.** The existing per-pane `hashCell` is reused as-is, so each pane
-  already carries a fixed "how late this household stays up" and the rising threshold sweeps
-  up through them **in a stable order** — windows wink out one by one instead of re-rolling.
-  Stream-neutral by construction.
-Tooltip: a live `Windows` row (`Nearly all lit` / `Lights going out` / `Most are asleep` /
-`Dark — the block sleeps`) read off the **same `windarkAt()`** the panes are drawn from — one
-predicate, one definition — and shown only while the panes exist (`LITAMT>=0.35`).
-
-**Census.** PASS. Every metric **+0**, tile histogram **empty**, entity counts flat — correct
-and expected: draw-only, no `rng()`, no terrain, no new tile/entity. Vacuous, so the probe is
-the gate.
-
-**Probe** (`probes/probe-bedtime.mjs`). A **state-response** question (196's law), so the
-isolation is two pins of `dayT` **within one build** (frozen clock, same `genWorld`), run on
-both builds. The count is harvested by **wrapping `winQuad`** (fires once per lit pane) and
-`winBandR` (which knows the cell) — it counts *actual draw calls*, not my own formula, so it
-is not circular. 3 seeds:
-- **BASE: the pane count is EXACTLY frozen dusk→midnight — 0.0% on all four types, all three
-  seeds.** That is the seam stated as a number: a constant threshold *cannot* know the hour.
-- **PATCH: RES 36.8–37.5% go dark · MID 24.4–25.8% · COM 17.6–20.0% · TOWER 10.0–11.0%** —
-  a **3.42–3.70× differential**, homes over towers.
-- **MIDNIGHT patch-vs-base: 1.2–1.5% of frame changed, 100% DARKER, 0.000% lighter** (at
-  THR=10, above the noise floor) — the anti-blowout gate: panes can only ever go *out*.
-- **CONTROL noon: 0 panes drawn on BOTH builds** (the paned branch isn't taken in daylight, so
-  the edit is *unreachable* there) and the frame is **byte-identical**, 0 px, on all 3 seeds.
-- **POSITIVE CONTROL: the dayT pin is live** — BASE dusk→midnight moves ~55% of the frame. Without
-  it, "BASE panes frozen" would be a dead pin rather than a finding (196).
-
-**Perf.** FREE, and this iteration came with its **own zero control**: the day frame runs
-*provably identical code* (0 panes drawn at noon), so whatever day reads IS the noise floor.
-Three interleaved rounds vs pristine HEAD (`perfab.mjs`): **day −0.0% / +0.1% / +1.0%**
-(identical code ⇒ floor ≈1%), **night +1.5% / −1.4% / −0.2%** — centred on zero, sign flipping.
-Within its own control. (It draws *fewer* path objects at night, which by 198's per-ellipse cost
-model should if anything be cheaper; it is not measurably either way.)
-
-**Visual.** Both seeds **VISUAL: PASS**, and both agents **LOCATED blind** (108's law): given
-two unlabelled night frames and asked *which is later*, with the A/B labels **deliberately
-inverted between the seeds** so a coin-flip cannot pass both, seed 42's agent said "A" (truth:
-A = midnight) and seed 7's said "B" (truth: B = midnight) — each reasoning from the window
-pattern ("punched through with dark cells… lit windows have gone stochastic and patchy"). Both
-confirmed the differential reads and that the core holds: *"the contrast between core and
-periphery is actually stronger… which is the right nocturnal read."* No muddiness (the historic
-kelp failure mode), no tears, no blowout: *"only the window emissives dropped… the correct,
-localized behaviour."*
-
-**Findings banked.**
-- **The pelican `flock` is a probe-hygiene trap.** It is a lone `Math.random`-spawned *object*
-  (`let flock=null`), not one of the entity *arrays* 163's law tells you to clear — so it
-  survives the standard freeze and drifts per page load. It was the **entire per-load noise
-  floor** (~100–600 scattered px, max delta ~8) that made this probe's first run false-FAIL its
-  own daylight control. `flock = null` in the freeze and noon goes to an honest **0 px on every
-  seed**. Add it to the freeze list; 195(f)'s "an honest zero is what makes every other number
-  readable" applies exactly.
-- **A provably-inert regime is a free perf noise floor** — promoted to SKILL.md.
-- **A constant whose NAME asserts a behaviour its VALUE cannot have** is the tell's next host —
-  promoted to SKILL.md. Still-mute draws remain banked: `c.hedge`, `c.party`, `c.shroom`.
-
-**Verdict: SHIPPED.**
 
 ## Iteration 200 — the sun is in the sky (2026-07-12) [Sky & atmosphere × Polish]
 
@@ -1196,3 +1106,98 @@ the blind locate.
 sitting frozen at the evergreen floor, and the season is no longer carried by ~170 agricultural hexes
 alone. Cue (p) is CLOSED for PARK/SHOREPARK/QUAD; **GARDEN remains mute (5.4) and keeps its own richer
 Nature × Deepen cue** (staggered raised beds + a shared `gardenPhase()`).
+
+## Iteration 209 — the ground the city stands on (2026-07-12) [Urban fabric × Deepen]
+
+**Vector.** Urban fabric × Deepen. Rotation owed Urban (stalest, last lap 199) and the
+header pins it **Deepen/Polish only** — additive spent (118), Connect measured-hard twice
+(160/165), roof-furniture closed city-wide. Of the three Deepen targets the header named
+(facades, **ground plane**, harbour apron), the ground plane turned out to be the biggest
+untouched surface in the artifact.
+
+**The seam.** `drawCell`'s `default:` case painted the ground under **every** developed hex
+as one flat `col('sandDk',0.9)` — a house's front garden and a factory's yard wore the
+identical paint — while the very next line gave the `EMPTY` lot beside them a whole
+patchwork *"so the green sheets read as pasture, not paint."* The comment knew the
+principle and applied it only to the land nobody had built on yet. This is the ground-plane
+sibling of 199's tell: not a constant asserting what its value cannot do, but a **comment
+stating a standard the adjacent branch is exempted from**.
+
+**Host check FIRST (`probes/probe-groundvis.mjs`, 206's law: draw order is depth order, so a
+yard buried by the row in front is not a host).** Loud-paint one type's ground, diff vs base,
+count changed px — the diff *is* the visible ground, by construction. 3 seeds, both controls
+at an honest **0 px**:
+
+| ground | cells | visible px | % of frame | px/cell |
+| --- | --- | --- | --- | --- |
+| **RES** | 288 | **35,364** | **2.21%** | 122.8 |
+| MID | 440 | 24,633 | 1.54% | 55.9 |
+| COM | 216 | 15,478 | 0.97% | 71.5 |
+| TOWER | 80 | 5,635 | 0.35% | 70.7 |
+| EMPTY | 49 | 8,760 | 0.55% | 180.0 |
+
+**The developed ground a viewer actually SEES is ~5.2% of the frame, and the RES front
+garden alone is 2.2% — more visible ground than every open lot in the city put together.**
+Not buried at all: the yards are the *most* visible ground there is.
+
+**Change.** One new palette entry (`paving`) and one table:
+`GROUND={RES:['lawn',0.90], MID:['paving',1.00], COM:['paving',1.00], TOWER:['paving',0.94],
+CIVIC:['paving',1.05], IND:['stone',1.25]}` — gardens in the terraces, paving through the
+walk-ups and the core, hardstanding at the works; flecked like the pasture but **quantized to
+5 steps** so `col()`'s `name|f` cache stays small (the road's resurfacing-patch discipline).
+**Colour only: the same single `hexTile` per hex, ZERO new path objects** (198's per-ellipse
+cost model). And because a garden is **`lawn`**, the suburbs join the parks' calendar (208)
+**for free** — the residential fabric was the largest surface the seasons could not reach. A
+garden is drawn *deeper* than a mown park lawn (hedges, shade, shrubs), so it holds its rank
+below PARK while carrying the same year.
+
+**Census.** PASS. Core metrics exactly **+0**, tile histogram **empty**, entity counts flat —
+correct and expected: draw-only, no `rng()`, no terrain, no new tile/entity. Vacuous, so the
+probe is the gate.
+
+**Probe** (`probes/probe-ground.mjs`). Two claims, each with a control that must not move.
+Masks come from the loud-ground hook (wrap `drawCell` to record the cell, wrap `hexTile` to
+paint one type's ground red, diff vs base) so the sample is the host's own pixels — no
+world→screen box, so no neighbour contamination (196). Noise floor **0 px on both builds**.
+- **(1) SEPARATION.** BASE pairwise land-use tone separation **mean 16.4, min 1.0** — RES
+  183,161,118 vs MID 182,160,118: *the garden and the court agreed to within one RGB unit.*
+  PATCH: **mean 43.8, min 6.8** (RES 134,151,102 · MID 181,169,143 · TOWER 172,163,139).
+- **(2) THE SUBURBS JOIN THE YEAR** (a state-response question ⇒ two pins of `year` within
+  one build, run on both — 196). Winter→dry-peak rendered shift:
+  **RES 1.2 → 36.8** · **NEGATIVE control COM (paving, not seasonal) 1.0 → 1.7**, MID 1.1 →
+  1.6, TOWER 0.5 → 0.6 · **POSITIVE control PARK 44.1 → 44.6** (moves on *both* builds, so
+  the pin is live and my edit did not disturb it). RES now carries an amplitude in the
+  parks' own league, on ground that was frozen for the artifact's entire life.
+
+**Perf.** FREE — interleaved A/B vs pristine HEAD (`perfab.mjs`): **day +0.6% · night +0.2%**,
+inside the ~1% noise floor 199 proved on provably-identical code. Structurally it must be:
+same path-object count, one extra `hashCell` per developed hex, 15 extra `col()` cache entries.
+
+**Visual.** Both seeds **VISUAL: PASS**, on frozen `shot-stepback` frames. Both agents were
+asked to **LOCATE, not judge** (108), and both delivered:
+- *Suburbs vs core **from the ground alone**, ignoring roofs and heights* — both drew the
+  paved core as a central mass (~0.48,0.50 / 0.42–0.56 x) ringed by green garden ground, and
+  both said the two are **"clearly separable from ground alone — I did not need roofs or
+  heights."* That is the whole claim, read back to me by someone who could not see the code.
+- *Which frame is the drought?* — **A/B labels deliberately inverted between the seeds** so a
+  coin-flip cannot pass both (199's trick). Seed 42 said **"A"** (truth: A = dry peak); seed 7
+  said **"B"** (truth: B = dry peak). Both cited the suburban yards bleaching to khaki/straw
+  while *"the grey paved core and the beach stay unchanged in both, which is exactly the
+  'only lawn responds' signature."*
+- *Cumulative:* no tears, no floating tiles, no blowout, no muddiness. Both volunteered that
+  the city is **not** too green — *"the greens are confined to the low-density fringe, which
+  actually sharpens the density gradient rather than flattening it."*
+
+**Findings banked.**
+- **The ground plane is now SPENT as an Urban Deepen target.** Of the header's three
+  (facades, ground plane, harbour apron), **facades** and the **harbour apron** remain.
+- **A comment that states a standard the adjacent branch is exempted from is a tell** — the
+  sibling of 199's constant. `EMPTY` got the anti-"paint" patchwork; the 1,000+ developed hexes
+  beside it did not, for 208 iterations. Grep for a principle written down once and applied
+  to one branch of the same `if`.
+- **`probe-groundvis.mjs` is reusable:** it answers *"how much of surface X does a viewer
+  actually see?"* for any tile-level draw, via the loud-mask diff. Ask it before designing on
+  a ground-level surface (206's law), and note the numbers it returns are large — the ground
+  plane is not a marginal canvas.
+
+**Verdict: SHIPPED.**
