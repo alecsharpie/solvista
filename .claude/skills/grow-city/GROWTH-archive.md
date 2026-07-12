@@ -11554,3 +11554,168 @@ SKILL.md; the header keeps the live finding (the university is a polish-tile job
 > `polish-tile` job, not a growth lap.** `probes/probe-unilight.mjs` (whole-frame diff + centroid locate-check;
 > noon/dusk controls byte-identical at **exactly 0 px**) and `probes/shot-uni.mjs` are kept so a retry starts
 > from a working gate. **So the next domain lap (196) owes Water (185), then Urban (189)/Sky (190); next
+
+---
+
+## Header material rotated out at iteration 200
+
+The State of the city header is a fixed 400-line budget: to add a line you must cut a line.
+These two paragraphs were moved down here at iter 200 to pay for 200's lines. Neither is
+deleted; both are superseded by a shorter live pointer in the header (and, where noted, by a
+law now written into SKILL.md).
+
+**198's ROTATION paragraph (superseded by the header's PERF bullet, which carries the law):**
+> **198 took 197's mandated tree-shadow PERF FIX (Nature x Polish) and EXPLORED -> REVERTED: the LEVER
+> WAS WRONG, and all three candidate levers are now CLOSED.** 197 mandated "batch the per-tree `shadS`
+> fills into ONE path per hex" by *inference*, never measurement (194 had memoized shadS's rgba string
+> for zero gain, so 197 reasoned the cost must be the FILL COUNT). 198 built it: **+0.3%. Nothing.**
+> `probes/probe-shadcost.mjs` then discriminated the mechanism — 5 variants all built from HEAD by
+> surgery, interleaved, 3 runs: **NOSHAD -1.3..-3.5% (the shadows' whole price — real, and the ONLY
+> variant that ever moves) - BATCH never wins (+0.3/+0.9/+2.7% day) - SMALLR (1/4 the AREA, same count)
+> ~0% - SPRITE (blit a pre-baked ellipse via `drawImage`) +2..+4%, WORSE than filling.** => **the cost is
+> PER-ELLIPSE** — near-independent of the ellipse's size, of how many are grouped into one `fill()`, and
+> not blittable away. **The only remaining lever is drawing FEWER ellipses — i.e. un-grounding trees 194
+> shipped and 197's agents twice praised. That is a bad trade: the ~3% is the honest price of the
+> shadows. PAY IT, and do not re-open batch/area/sprite.** (Law promoted to SKILL.md: *measure a lever
+> before you mandate it* — a step-back should name the suspect, not the fix.)
+
+**195's ROTATION paragraph (its two laws — a glow is a GRADIENT; a halo on a TALL THIN object orphans —
+are in SKILL.md, and its full post-mortem was already archived at 199; the header keeps a 2-line pointer):**
+> **195 took Civic x Deepen and EXPLORED -> REVERTED (byte-identical to HEAD). The finding is solid and
+> STILL UNCASHED: `university` is the ONLY one of the twelve civics with no `LITAMT` at all** — the only
+> `MAJORK` monument that goes pitch dark after sunset (parliament/museum/hall clock/library/police/
+> hospital/observatory all light; even the school keeps a janitor's window). 179/193's shape: a completed
+> family missing one member. What failed was every **place to put the light** — the campanile ORPHANS ITS
+> HALO on seed 7, the quad is overdrawn by the tile's own wings, and the tile is simply drawn small.
+> **=> The university is a `polish-tile` job, not a growth lap.** `probes/probe-unilight.mjs` +
+> `shot-uni.mjs` kept so a retry starts from a working gate.
+
+**The 111->113 gap-closing block + the tell's history + the Sky-feedable list (rotated out of the header at iter 200; the header keeps a 4-line live pointer):**
+
+>   Iter 111 was People × Connect and used
+>   109's trick (close a gap between two existing objects); iter 112 **cashed the same trick in
+>   Transport** (trains ↔ their own stations) and iter 113 cashed it a third time in **Water** (the
+>   marsh ↔ the tide its own tooltip printed). **That shape has now paid in four domains — assume it is
+>   spent, and look for the gap-closing seam only where a tooltip/label already ASSERTS a relationship
+>   the draw ignores.** (That is the reliable tell: 111 a shelter, 112 a platform, 113 a live `Tide`.)
+>   **The tell (a label asserting what the draw ignores) is CASHED 7x and its hosts are nearly spent** —
+>   117 redwoods, 122 `CIVICLABEL`, 129 orchard, 140 plaza/quad titles, 148 vineyard, 183 FARM. Still MUTE:
+>   `[T.IND]` (no calendar) and GARDEN (its draw is season-frozen — needs a Deepen first). Detail archived at 195.
+>   **The tell is SELF-RENEWING: cashing one creates the next.** The full 111->148 history is in GROWTH-archive.md.
+>   **122 also warns what the tell CANNOT do alone:** its first build derived ownership from *adjacency*, named
+>   the wrong institution on 2 of 3 seeds, and **passed the census and would have passed both visual agents** —
+>   the prose is only wrong if you know the geometry. **A tooltip vector needs a probe that checks the claim
+>   against independently recomputed truth, not just a screenshot that it renders.**
+>   Note iter 108 was Nature × Deepen but its
+>   *content* was a Sky interconnect (the farm calendar reads `applySeason`'s `year`) — **Sky can be
+>   fed by deepening another domain toward it**, which is the way out of its saturation that does not
+>   require a sky feature. **113 did this again** (the marsh reeds now read `year`), leaving 109's
+>   Sky-feedable list at `VINEYARD` and `MEADOW` seed-heads. **120 was a third instance** (the park lawns
+>   now read `year`) — and note it found `MEADOW` is only **6 tiles city-wide**, so a meadow vector buys
+>   almost no pixels. **Sky-feedable list is now EMPTY (iter 139 cashed `VINEYARD`)** — every vegetation tile
+>   that can read `year` now does; a further Sky interconnect must come from a genuinely new derived field, not
+>   from un-freezing another tile.
+
+**The closed cue-(k) / wind-farm / derived-field block (rotated out of the header at iter 200; the header keeps an 8-line live pointer with the still-banked Water cue and the 151 recount warning):**
+
+>   **Cue (k) is now FULLY CLOSED**: 116 gave the sea a bottom (the *field* half) and **123 stood the wind farm
+>   on it** (the *siting* half) — 3/18 turbines were on the shelf, now 42/42 across 14 seeds, and the farm's line
+>   bends around headlands because the depth is held and the row is not. **What 123 leaves banked for Water** is
+>   the rest of the salted coast: the **pier** row and the **lifeguard tower** are still `rng()`-picked with
+>   rejection loops, and a boardwalk should run out to a *depth*. 123's second finding makes that free — **respend
+>   an object's existing `rng()` draws rather than re-drawing them**, and the stream cannot move.
+>   **123 ran the tell FORWARDS**, which is a new move: rather than making the draw honor a string, it made the
+>   string and the rule **share one constant** (`SHELF0`/`SHELF1` — the tooltip *names* the `Coastal shelf`, the
+>   wind farm *stands* on it), so the two cannot drift apart in the first place. Prefer this to re-syncing them
+>   later. Related, and the deeper prize: **a derived field earns its keep when a RULE reads it, not when the draw
+>   shows it.** `rDeep` was drawn by 116 and read by nothing until 123 sited on it. Still unread by any rule:
+>   **`rGreen`, `rShop`, `rServ`** feed only the walkable stat — *nothing sites itself against them.* **⚠ And a
+>   tick-rule CAN'T read them directly (iter 151): `recount()` runs only at init/warp/manual, never in the sim loop
+>   (L6342), so the reach maps are STALE inside `tick()`** — 151 cashed the seam's *shape* (a shop-distance rule)
+>   but recomputed it LOCALLY (`countAround` r2), so `rShop` per se is still unread (recompute it, or pay a recount).
+**The iter-91 institutions bullet, full text (rotated out of the header at iter 200; a 7-line live pointer remains):**
+
+> - **Institutions now cluster: `MAJORK` / `QUARTER` / `siteQuarter()` (iter 91).** `MAJORK` =
+>   the five monumental kinds (`hall museum parliament university library`) — it is the shared
+>   vocabulary for "major institution", used by **both** the civic quarter and the 2020+
+>   forecourt rule (which previously inlined the same five-way test). `QUARTER` = the three
+>   that *seek* the quarter (`library museum parliament`, at 1982/1997/2034); services (school,
+>   police, firehouse, hospital, aquarium, amphitheater, observatory) stay sited by need, and
+>   `observatory` is deliberately left free to sit at the rim. `siteQuarter()` hugs the nearest
+>   standing major at `QNEAR..QFAR` = **2–4 hexes** — near enough to share a street, far enough
+>   to leave one between (adjacency would kill the bunting, which needs a ROAD cell reachable
+>   from two civics). It falls back to the scattered search when the core is walled in, so
+>   `civicKinds` never drops. **Two existing systems light up for free:** festival bunting
+>   (iter 45) roughly **doubles-to-triples** (fete 9→16, 6→18 per city), and downtown builds
+>   **taller** because three clustered civics choke one COM quorum instead of three.
+
+## Iteration 190 — the golden hour rakes the west windows (2026-07-12) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × **Deepen** (SHIPPED). Rotation named the stalest domain, **Sky (181)** — and the header
+mandates Sky is **Deepen/Fix ONLY** (post-saturation: additive/CA cells are traps). Kind forced to Deepen. This cashes
+the move **banked twice** (180's "windows catch the low sun", 181's finding that `GWARM` is "a reusable golden-hour
+signal" for "a Sky×Urban golden-hour glint on west-facing tower windows"). A Sky×Urban interconnect, the third
+golden-hour surface after the cloud bellies (161) and the sea (181) — it adds no element, applying an existing Sky
+signal to an existing surface.
+
+**The seam — the glass was cold at the most beautiful light of the day.** The clouds warm at dawn/dusk (161) and the
+sea catches a gold sun-path (181), but the buildings' glass — the whole downtown curtain wall — stayed its flat cool
+tone through golden hour. Every real coastal city's most iconic sunset image is a wall of towers reflecting the low sun
+into orange fire on one side while the other stays shadowed. `winBandR` (L2736) is the **shared window renderer** for
+all four building types (RES 4417 / MID 4504 / COM 4583 / TOWER's stacked bands 4657–4685), so one hook there reaches
+every facade in the city, full-height up a tower.
+
+**Change (~10-line draw + a small refactor, all draw-only).** `winBandR`'s daytime early-return was converted to an
+`if/else` so the tail runs in both branches; appended, gated `GWARM>0.02`: an **additive** (`'lighter'`) warm-gold quad
+(`rgba(255,176,88,GWARM*0.44)`) over the full window band of **ONE** front face — the sun-facing one, `gs=dayT<0.5?1:-1`
+(**RIGHT at dawn / LEFT at dusk**, read off the same `dayT` clock `GWARM` derives from), drawn *over* the band so it
+reads as the pane lighting up while the shaded face stays cool. Additive not a wash (181's law: a warm alpha wash over
+cool desaturates to olive). No tile, entity, `rng()`, `hashCell`, `tick()` pass or terrain; `winQuad` geometry reused;
+strings pure-ASCII (134). Byte-unchanged at noon and night (GWARM=0). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, core metrics **+0** (pop/roads/developed flat),
+`greenRoofs -1` = documented RAF tick-count jitter (touches no `rng()`). Vacuous by construction (draw-only) — the probe
+is the gate.
+
+**Probe — `probes/probe-windowgold.mjs` (new, promoted).** Diffs PATCH vs HEAD over each building's (`DEV`, `h>12`)
+screen box at a frozen frame, at **dusk / dawn / noon / night**, with PARK/ROAD/WATER as the control, and — the
+load-bearing part — **splits each box into LEFT vs RIGHT screen halves** to prove the rake is one-sided and *flips*.
+Rebuilt in-page (`genWorld`+`__warp`), STARS cleared, `Math.random` stubbed, movers cleared, clock/`waveT` frozen (163
+law). seeds 7/42/1234: **BLD glint DUSK 12.8/13.5/13.1% · DAWN 10.6/10.9/10.7% → NOON 0.00% · NIGHT 0.00%** (GWARM
+0.72/0.43→0); **the lit half FLIPS — DUSK L 14.9/15.8/15.8% ≫ R 11.1/11.7/11.0%; DAWN R 11.5/12.0/12.2% ≫ L
+9.1/9.1/8.6%**; CONTROL 0.00% at noon/night (proving nothing else moved), 1.7–3.7% at dawn/dusk = my own glint bleeding
+into adjacent tiles' boxes. **PASS (3 seeds).**
+
+**Visual — a split verdict resolved by the probe, then re-verified.** First build (`*0.30`): seed-7 agent PASS ("subtle
+but clearly one-sided, the rake flips"), seed-42 agent FAIL ("flat scene-wide wash, no directional flip"). The
+directional probe had already measured the flip cleanly *on seed 42* (dusk L 15.0 ≫ R 11.1), so per the loop's law the
+probe is the verdict over disagreeing agents — the effect was real and directional, just **under-powered for reliable
+legibility**. Both agents confirmed headroom (no clipping). Bumped `*0.30→*0.44` (color to `255,176,88`), re-probed
+(directional contrast steeper, L/R ≈ 1.35× at dusk, still byte-zero noon/night), re-shot seed 42: agent now **PASS** —
+"on individual towers the LEFT face reads warmer cream/amber while the RIGHT sits greyer at dusk, and the warm side
+switches to the RIGHT at dawn on the same towers; no tears/floaters/blowout; wide frame a balanced golden-hour coastal
+city."
+
+**Verdict — SHIPPED.** The building glass — cold through golden hour while the clouds (161) and sea (181) caught the low
+sun — now takes a warm gold rake on its sun-facing windows, one side ablaze and the other shadowed, the lit face
+flipping between dawn and dusk. The third golden-hour surface; a Sky×Urban interconnect, draw-only, pop + stream flat,
+~10 lines + a directional probe. Sky's Deepen cell gains its next (…181, **190**). The next domain lap (191) owes the
+stalest domain, **People (186)**, then the mandated **holistic step-back at 192**.
+
+### Findings for later laps
+- **GOLDEN HOUR NOW LIGHTS THREE SURFACES — clouds (161), sea (181), glass (190) — all off the ONE `GWARM`/`GWSB`
+  signal.** The golden-hour system is now a genuine interconnect, not a one-off. Surfaces still cold at dawn/dusk: the
+  **beach sand** (145 ties it to `LITAMT`, not `GWARM`), the **wind turbines** (181's banked "warm rim"), and the
+  west-facing **civic domes/pediments**. Each is a ready Sky Deepen that adds no element — read `GWARM>0.02` and carry
+  the warmth with `'lighter'` glints, never an alpha wash (181).
+- **A DIRECTIONAL DRAW-ONLY CHANGE NEEDS A DIRECTIONAL PROBE — split the box, don't just diff it.** The census and a
+  whole-box diff both said "12% of building pixels changed," which a wash would also say; only splitting each box into
+  LEFT/RIGHT halves and showing the lit half *flips* dusk↔dawn proved the rake was one-sided (and it is what the census
+  and a naive probe are blind to). When a feature's whole point is *which side* lights, the gate must measure the side,
+  and a control that must move the *other* way at the other frame is stronger than a control that must stay at zero.
+- **THE FIRST STRENGTH THAT PASSES A PROBE CAN STILL FAIL THE EYE — legibility is a separate bar from presence.** The
+  `*0.30` build passed the probe on all three seeds (the flip was measurable) yet a strict agent could not *see* the
+  directionality; `*0.44` was the same effect, legibly. When a subtle Deepen splits the agents, don't revert on the
+  FAIL and don't ship on the probe alone — the probe says it's *there*, the agent says it's not *legible*, and both are
+  right. Push the strength until the eye catches what the probe already measured, then re-verify (cheap).
+

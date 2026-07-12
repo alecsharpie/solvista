@@ -772,8 +772,32 @@ vector, whatever it is.
   grounding of every tree in the city, and that is a good trade); (c) **a step-back should name the SUSPECT, not
   the FIX.** Naming the fix converts the next iteration into a foregone conclusion and spends it proving the
   step-back wrong. `probes/probe-shadcost.mjs` is the reusable table — rerun it before reopening any draw-cost lever.
+- **THE PROBE READS THE CANVAS; THE USER SEES THE CANVAS *PLUS THE DOM* (iter 200).** Every probe in
+  `probes/` measures `cvs.getContext('2d').getImageData()` — and the artifact's HUD is **not in the
+  canvas**. `.placard` is a DOM card that owns the whole **top-left corner** (`left:20px`,
+  `max-width:300px`, and tall — `max-height:calc(100vh - 132px)`), and `.census`/`.controls` own the
+  bottom corners. A canvas readback cannot see them, so anything drawn in **screen space** can be
+  *completely invisible to the user* while the probe reports it present, bright and beautiful. 200's
+  first probe scored the golden-hour sun at **11,716 changed px** on a frame where the sun was
+  **entirely behind the placard**; two agents, on two seeds, twice, said "no sun" and were **right**.
+  ⇒ **When the claim is about VISIBILITY of a SCREEN-SPACE draw, diff `page.screenshot()` (DOM
+  composited), not the canvas.** A screenshot diff also gets the occlusion check for free: what the
+  HUD or the skyline eats simply does not appear in the diff. (World-space draws are mostly safe — the
+  camera keeps them out of the card gutters — but *any* `ctx.setTransform(dpr,0,0,dpr,0,0)` block is
+  screen space: sun, moon, stars, shooting star.)
+  Corollary — **the sky on this plate is a SCARCE, MEASURED resource, not open space.** The plate is a
+  hexagon, so the open sky is a shallow **band**: the skyline sits at ~0.12 of the viewport right
+  across the middle and only falls to 0.27–0.43 in the top corners — and the top-left corner is the
+  placard's. That is why the moon is parked at x=0.80. Measure the band before siting anything in it.
 - **Ask an agent to LOCATE, not to JUDGE** (108) — see the visual gate. And when
-  agents disagree, **a probe is the verdict, not a rerun**.
+  agents disagree, **a probe is the verdict, not a rerun** — ***but only if the probe measures what the
+  claim is about* (iter 200).** This is the one recorded case where the agents were right and the probe
+  was wrong, and the standing law above would have told you to override them. The probe was measuring a
+  *layer the user never looks at*. So when a probe and an agent disagree, do not just re-run either one:
+  **first ask what each is actually looking at.** A number beats a vibe only when it is a number *about
+  the same thing*. (The locate-don't-judge discipline is what made this catchable: agents asked to
+  *point at* the sun returned positions within ~0.01 of the shipped formula on every frame where it was
+  visible, which is exactly why their "there is no sun here" was credible rather than vague.)
 - **Reverting a passing-but-weak change is the system working.** The census can pass a
   change that isn't worth its cost. Iters 82, 88, 101 and 114 all explored, failed a
   bar the census could not express, and reverted to byte-identical. That is a *result*

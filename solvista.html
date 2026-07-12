@@ -384,6 +384,14 @@ function daylight(t){
 const MOONSYN=8;
 function moonPhase(){ return ((dayT/MOONSYN + seedNum*0.61803398875)%1+1)%1; }
 
+/* the sun is up between these two dayT instants, and they are not new numbers: they
+   are the light curve's OWN dawn and dusk keyframes (KEYS 0.05 / 0.78), so the disc
+   touches the horizon exactly as the sky turns warm and leaves it exactly as the sky
+   goes dark. Outside them the sun block draws nothing whatever, so night is
+   byte-identical. SUNR matches the moon's mr: the two discs are the same size in the
+   sky, as they are in life. */
+const SUNUP=0.05, SUNDN=0.78, SUNR=12;
+
 /* per-frame tinted color cache */
 let TINT=[1,1,1], LITAMT=0, CCACHE={};
 /* golden-hour warmth of the low sky, set once per frame from skyBot (iter 181):
@@ -6043,6 +6051,76 @@ function render(){
       ctx.strokeStyle='rgba(250,248,235,'+((1-q)*LITAMT)+')';ctx.lineWidth=1.4;
       ctx.beginPath();ctx.moveTo(sx2+q*46,sy2+q*15);ctx.lineTo(sx2+q*46-14,sy2+q*15-4.5);ctx.stroke();
     }
+  }
+
+  /* THE SUN (iter 200). The city has carried a whole family of low-sun effects for
+     dozens of iterations — warm cloud bellies (161), the sea's golden sheen (181),
+     the noon sun-glitter (150), the raked window glass (190), beach furniture that
+     follows the sun (145), roof panels tilted at it — and the draw code's own
+     comments name it: "the low sun lights cloud bellies", "the sun-facing face",
+     "under the day sun". The MOON has a disc, a phase, earthshine, a halo and a
+     glade on the water. The sun itself was never drawn. Every warm thing in this
+     sky had a cause that was not on screen.
+     So this invents no signal: the sun reads the SAME predicates its own effects
+     already read. Its SIDE is dayT's (rises RIGHT, sets LEFT — the very rule 190's
+     `gs` uses to pick which face of the glass to rake), and its COLOUR is GWARM/GWSB,
+     the single golden-hour signal 161/181/190 share, so the disc is visibly the
+     source of exactly the warmth those three already paint. Fifth reader of GWARM.
+     Drawn into the sky slab BEFORE the city, like the moon, so the skyline occludes
+     it: a sun grazing the rooftops is depth, not a tear (the moon has drawn behind
+     the slab since it was added). The halo is a RADIAL GRADIENT falling to alpha 0
+     at the rim — never a flat additive arc, which has a hard circular edge and reads
+     as a coin pasted on the sky (iter 195's law; the rain damp-patch above is the
+     house precedent). */
+  const sunP=(dayT-SUNUP)/(SUNDN-SUNUP);
+  if(sunP>0&&sunP<1){
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const sunA=Math.sin(Math.PI*sunP);                    /* altitude: 0 at the horizon, 1 at noon */
+    /* THE ARC IS SHAPED BY TWO THINGS THAT HAD TO BE MEASURED, NOT GUESSED.
+       (1) The plate is a HEXAGON, so the open sky is not a half-dome but a shallow BAND:
+       the skyline sits at ~0.12 of the viewport right across the middle and only falls
+       away to 0.27-0.43 in the top corners. A sun that descends sinusoidally dives under
+       that 0.12 ceiling and the city swallows it whole.
+       (2) The .placard OWNS THE TOP-LEFT CORNER — left:20 + max-width:300, and tall — and
+       it is a DOM card ABOVE the canvas. So the deep left corner, where a sun would
+       naturally set, is not sky at all: it is behind the placard. (This is why the moon is
+       parked at 0.80, out on the right.) The x range is therefore clamped in PIXELS off
+       the placard's own edge, not in fractions, so it still holds on a narrow viewport
+       where 300px is a much bigger share of the width.
+       So the sun rises low out of the OPEN right corner (which is genuinely deep sky),
+       climbs steeply to clear the rooftops, crosses the band, and finally sinks HALF-WAY
+       INTO the skyline over downtown, fading as it goes: its top limb stays visible the
+       whole way down, so the halo never outlives its source (iter 195's orphan law). */
+    const X0=innerWidth*0.94, X1=Math.max(innerWidth*0.30,342+70);
+    const sunX=X0+(X1-X0)*sunP;
+    const sunY=innerHeight*(0.075+0.115*Math.pow(1-sunP,4)+0.050*Math.pow(sunP,3));
+    const sunF=Math.min(1,Math.min(sunP,1-sunP)/0.05);    /* eased in and out at the horizon, never popped */
+    /* A high sun burns white; a low one takes the horizon's own colour (GWARM/GWSB) and
+       then reddens further, because it is seen through more air. That second term is not
+       decoration — GWARM is gated on the low sky being ORANGE (R-B>70), and by the time
+       the disc actually touches down the sky has gone PURPLE, so GWARM has already fallen
+       back to 0 and a GWARM-only sun turns WHITE at the exact moment it should be an
+       ember. probe-sun measured that: warmth at the horizon came back 20.6, identical to
+       noon's 20.9. Altitude has to carry the disc the last of the way down, and it must
+       redden toward a fixed ember rather than toward GWSB, which by then is lilac. */
+    const low=(1-sunA)*(1-sunA), w=GWARM*0.9;
+    const tr=lerp(lerp(255,GWSB[0],w),255,low),
+          tg=lerp(lerp(252,GWSB[1],w),140,low),
+          tb=lerp(lerp(228,GWSB[2],w), 82,low);
+    const rgb=(tr|0)+','+(tg|0)+','+(tb|0);
+    const HR=SUNR*5.2, ha=0.30*sunF*(0.55+0.45*Math.max(GWARM,low)); /* the low sun burns wider */
+    const hg=ctx.createRadialGradient(sunX,sunY,0,sunX,sunY,HR);
+    hg.addColorStop(0,'rgba('+rgb+','+ha+')');
+    hg.addColorStop(0.34,'rgba('+rgb+','+(ha*0.34)+')');
+    hg.addColorStop(1,'rgba('+rgb+',0)');
+    ctx.fillStyle=hg;ctx.beginPath();ctx.arc(sunX,sunY,HR,0,7);ctx.fill();
+    /* the disc: a solid core whose rim softens over its last fifth, so it blooms into
+       the halo instead of stamping a hard circle on the sky */
+    const dg=ctx.createRadialGradient(sunX,sunY,0,sunX,sunY,SUNR);
+    dg.addColorStop(0,'rgba('+rgb+','+sunF+')');
+    dg.addColorStop(0.82,'rgba('+rgb+','+(sunF*0.92)+')');
+    dg.addColorStop(1,'rgba('+rgb+',0)');
+    ctx.fillStyle=dg;ctx.beginPath();ctx.arc(sunX,sunY,SUNR,0,7);ctx.fill();
   }
   ctx.setTransform(dpr*scale,0,0,dpr*scale,dpr*offX,dpr*offY);
 
