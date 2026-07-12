@@ -3006,6 +3006,29 @@ let TIDE=0.5; /* sea level 0..1 on a slow seeded cycle: 1=high water, 0=low */
 let TIDEV=1;  /* sign of dTIDE/dt: >0 flooding, <0 ebbing (the tooltip reads it) */
 let TIDEPH=0; /* phase offset: lets ?tide= pin the cycle without stopping it (see __setTide) */
 
+/* How far the sea's damp band reaches up the sand, in px — widest after the ebb.
+   ONE definition, because two readers depend on it: the margin that STROKES the wet
+   sand (BEACH, ~L3500) and the beachgoers who have to stay OFF it (~L3605). Let those
+   two drift apart and the towels end up laid in the surf. */
+const WETMIN=2.4, WETSWING=5;
+function wetReach(){return WETMIN+(1-TIDE)*WETSWING}
+
+/* Which way the open sea lies from a beach hex: the mean unit vector toward its WATER
+   neighbours, by the same test the damp margin uses (a river is not the sea). Returns
+   null when the hex is landlocked — an inland beach has no sea to answer, and keeps its
+   furniture put. */
+function seaDirS(x,y){
+  const[cx,cy]=ctr(x,y); let sx=0,sy=0,n=0;
+  for(const[dx,dy]of nbrDirs(y)){
+    const e=cellAt(x+dx,y+dy);
+    if(!e||e.t!==T.WATER||e.riv)continue;
+    const[nx,ny]=ctr(x+dx,y+dy);
+    const L=Math.hypot(nx-cx,ny-cy)||1; sx+=(nx-cx)/L; sy+=(ny-cy)/L; n++;
+  }
+  if(!n)return null;
+  const L=Math.hypot(sx,sy)||1; return[sx/L,sy/L];
+}
+
 /* boardwalk pier deck; wheel drawn at the far end */
 function drawPierAt(x,y){
   const gx=x+0.5, gy=y+0.5;
@@ -3495,7 +3518,7 @@ function drawCell(x,y){
            drawn along the TRUE hex edges and clipped to the hex, so the wet band
            follows the coastline instead of scattering hard rectangles over the sea */
         const[cx,cy]=px(gx,gy);
-        const w2=2.4+(1-TIDE)*5;
+        const w2=wetReach();
         const N=[cx,cy-VR],NE=[cx+HW,cy-ER],SE=[cx+HW,cy+ER],
               S=[cx,cy+VR],SW=[cx-HW,cy+ER],NW=[cx-HW,cy-ER];
         const edges=[], pools=[];
@@ -3599,7 +3622,16 @@ function drawCell(x,y){
           0 at midday -> 1 at night, so this reads as a daily rhythm, not a strobe). Draw-only. */
         const ua=clamp((0.6-LITAMT)/0.25,0,1);
         if(ua>0.02){
-        const[cx,cy]=px(gx,gy);
+        const[cx0,cy0]=px(gx,gy);
+        /* ...and they follow the TIDE as well as the sun. A towel is never laid on wet
+           sand: the damp band reaches wetReach() inshore of the waterline, so as the ebb
+           widens it the beach retreats up the sand, and on the flood it follows the water
+           back down again. The travel is DEFINED as the band's own reach either side of
+           its mid-tide value, so the furniture and the wet sand cannot drift apart — the
+           whole ensemble (parasol, pole, towel) slides as one, +-half the band's swing,
+           and sits exactly where it always did at mid-tide. */
+        const sd=seaDirS(x,y), sw=sd?(WETMIN+0.5*WETSWING)-wetReach():0;
+        const cx=cx0+(sd?sd[0]*sw:0), cy=cy0+(sd?sd[1]*sw:0);
         ctx.globalAlpha=ua;
         ctx.fillStyle=col(v<0.09?'coral':(v<0.17?'gold':(v<0.24?'lav':'teal')),1);
         ctx.beginPath();ctx.ellipse(cx,cy-5,4.5,2.6,0,0,7);ctx.fill();

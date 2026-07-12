@@ -11719,3 +11719,133 @@ stalest domain, **People (186)**, then the mandated **holistic step-back at 192*
   FAIL and don't ship on the probe alone — the probe says it's *there*, the agent says it's not *legible*, and both are
   right. Push the strength until the eye catches what the probe already measured, then re-verify (cheap).
 
+
+<!-- Header bullets rotated out of GROWTH.md at iter 201 to pay for 201's lines.
+     The header is a FIXED 400-line budget: to add a line, cut a line. Nothing is
+     deleted — these are preserved byte-for-byte and were live until iter 201. -->
+
+## Closed cues, rotated from the header at iter 201
+
+  **(l) CLOSED (iter 133) — hover-tile focus ring + the thin-stroke legibility law: both in GROWTH-archive.md (iter 157 trim).**
+  **(e½) CLOSED — 102 shipped the commons 101 prescribed. The interior HAS its lung; do NOT plant a second one.**
+  (Brief + urban findings — PARK permanent; green ~0.045% pop/cell; never zone against TOWER near the core — archived at 197.)
+  **(d) the civic quarter's real square — CLOSED, MEASURED DEAD (iter 131; do not re-open — a ≥3-hex civic
+  square is geometrically impossible at the quarter, `probe-quarter.mjs`; full reasoning archived at iter 142).**
+
+## The step-back framing recipe, rotated from the header at iter 201 (SKILL.md holds the live copy)
+
+  Shoot it at 3 lights x 2 calendars with the day frame PINNED OFF JANUARY (`year=2035.62` baselines,
+  `2035.02` for seasonal contrast) — **SKILL.md holds the full recipe**; the duplicate copy of it, and the
+  clean-bill history of step-backs 130..177 (TEN in a row, no compounding defect; night core located by light
+  alone every time; `probe-season` FARM winter->dry-peak ~88) were rotated to `GROWTH-archive.md` at 199 — 197
+  is the live step-back, its findings in the bullets above.
+  (Stale 182/lap-160 pointers rotated to `GROWTH-archive.md` at 195 — the header is a fixed budget.)
+
+## Iteration 191 — the festival street names itself (2026-07-12) [People & activity × Interaction/UX]
+
+**Vector.** People & activity × **Interaction/UX** (SHIPPED). Rotation named the stalest domain: **People (186)** —
+the 190 entry explicitly owed the 191 lap to People, ahead of the mandated step-back at 192. On *kind*, I cashed a
+**banked, specific cue** the header had been carrying since 171 and re-flagged after 178: *"171's fete-street TOOLTIP
+(`c.fete` drawn but unnamed in `describeTile`) is still banked, and now more worth cashing since the street is no
+longer empty."* A banked measured finding outranks kind-rotation (119's law), and Interaction/UX varies cleanly off
+186's New element.
+
+**The seam — the richest street in the city read as a plain one.** The festival street (`c.fete`) is a civic mile:
+where two civic institutions front the same short stretch of road, the blocks between them string up bunting (a whole
+CA derivation in `tick()`, ~L1866), light the strand at dusk, and — since 178 — fill with a milling day-into-dusk
+crowd. Yet `describeTile`'s ROAD branch knew nothing of it: hovering the most decorated, most inhabited street in the
+diorama reported a flat `Avenue`/`Street`/`Boulevard` like any other. The exact *asserts-less-than-the-code-knows*
+tell (MARSH tide 113, REDWOOD 117): a draw stages something the tooltip is mute about.
+
+**Change (draw-nothing tooltip, two edits in `describeTile`).** (1) In the ROAD title branch, a `c.fete` override:
+title `'Festival street'`, sub `'The civic mile &mdash; bunting strung overhead where two institutions front the same
+short blocks.'` (HTML entity, not a raw em-dash byte — 134's mojibake law; the sub goes into `innerHTML`). (2) A live
+`Festival` data row after the `Traffic` row, reading the **same crowd gate the 178 draw uses** —
+`clamp((0.82-LITAMT)/0.28,0,1)>0.02 ? 'Crowds under the bunting' : 'Quiet after dark'` — so the tooltip can never claim
+a crowd the renderer left home (one predicate, one definition, 112's law). Both branches gate on the same `c.fete` the
+draw reads. No tile / entity / `rng()` / `hashCell` / `tick()` pass / terrain change; census hook, TILELABEL, ENTINFO
+untouched. Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity/life/transport
+counts identical (`solarRoofs -2` = RAF tick-count jitter; `describeTile` isn't even in the census path). Vacuous by
+construction (hover-only) — the probe is the gate.
+
+**Probe — `probes/probe-fetetip.mjs` (new, promoted).** A DOM/logic probe (like `probe-river`), not a pixel diff:
+loads a developed city (`genWorld`+`__warp`), collects fete vs ordinary ROAD cells, and across a **day** frame
+(`__setTime(0.35)`) and a **night** frame (`0.90`) calls `describeTile()` and asserts the HTML, **independently
+recomputing** the crowd gate from live `LITAMT` (122's law — grade against recomputed truth, not just that it renders).
+seeds 7/42/1234: **every fete hex (16/10/19) titled 'Festival street' with a 'Festival' row matching the recompute**,
+the value **FLIPS** day `Crowds under the bunting` → night `Quiet after dark`; **ordinary roads (788/821/855) control
+clean** — never titled 'Festival street', never carry a 'Festival' row, in either frame. **VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-fetetip.mjs` (new, promoted).** `shoot.mjs` can't hover; `__find('fete')` gives fete cells'
+clip-ready screen coords. Freezes the clock at a day + a night frame, hovers a central fete cell, clip-shoots the
+tooltip + prints its `innerText`. seeds 1234 & 7, one agent each, both **VISUAL: PASS**: the tooltip box is legible,
+title `Festival street`, the sub's `&mdash;` renders as a clean em-dash (no mojibake / no literal `&mdash;`), and the
+`Festival` row reads `Crowds under the bunting` by day, `Quiet after dark` at night; no z-order tears / floaters /
+blowout, the whole frame still a coherent coastal city day and night.
+
+**Verdict — SHIPPED.** The festival street — bunting since before 178, a crowd since 178, and mute in the tooltip its
+whole life — now names itself and reports whether the crowd is out, on the very gate that draws them. A draw-nothing
+Interaction/UX cashing a banked cue: pop + stream flat, two small edits + a probe + a shot. People's Interaction/UX
+cell gains 191 (71/**154**/**191**). Next is the mandated **holistic step-back at 192**; the next domain lap (193)
+owes Transport (188)/Urban (189), then Nature (183)/Civic (184).
+
+### Findings for later laps
+- **CASHING A BANKED TOOLTIP CUE IS THE LOOP WORKING — the header told 191 exactly what to do, five laps after 171
+  found it.** 171 spotted `c.fete` was drawn-but-unnamed and banked it; 178 inhabited the street and made it *more*
+  worth naming; 191 cashed it. A banked cue that names the seam AND the predicate (`c.fete` in `describeTile`) is a
+  near-free iteration — grep the seam, confirm it's still unnamed, share the draw's own gate.
+- **A LIVE TOOLTIP ROW SHOULD READ THE DRAW'S OWN GATE VERBATIM, and its probe should RECOMPUTE that gate, not the
+  row.** The `Festival` row copies `clamp((0.82-LITAMT)/0.28,0,1)>0.02` from the 178 crowd draw, so tooltip and pixels
+  cannot drift; the probe recomputes the same gate from `LITAMT` and asserts equality (122's law). This is the tooltip
+  analogue of 123's "share one constant" — but here the shared thing is a *predicate*, and the strongest evidence it's
+  right is that the row's value FLIPS between the day and night frames exactly when the recompute does.
+- **Still-mute draws worth a future tooltip lap:** `c.hedge` (field hedgerows, drawn, unnamed), `c.party` / `c.shroom`
+  (both in `__find`'s selector, so drawn, likely mute in `describeTile`) — grep each before designing to confirm.
+
+
+## Iters 199 + 200 rotation paragraphs, rotated from the GROWTH.md header at iter 201
+## (their LAWS live in SKILL.md and in the header's PERF / PROBES-BLIND-TO-HUD bullets; this is the full text)
+
+  **200 took Sky x Polish (THE SUN IS IN THE SKY - SHIPPED).** The city carried a whole FAMILY of low-sun effects
+  for dozens of laps - warm cloud bellies (161), the sea's golden sheen (181), sun-glitter (150), raked window
+  glass (190), beach furniture following the sun (145) - and **the sun itself was never drawn: every warm thing
+  in this sky had a cause that was not on screen** (the draw's own comments name it; the MOON gets a disc, phase,
+  earthshine, halo and glade). 179/193/195's shape, except the missing member is the **source**. Invents no
+  signal: its SIDE is `dayT`'s (rises RIGHT, sets LEFT - 190's `gs` rule) and its COLOUR is GWARM/GWSB, so it is
+  the **5th reader** of the one golden-hour signal. A gradient halo + a soft-rimmed disc (195's coin-not-a-glow
+  law), gated on `dayT` in [SUNUP,SUNDN] = **the light curve's OWN dawn/dusk keyframes (0.05/0.78)**, so night
+  draws nothing. **GWARM ALONE CANNOT CARRY THE DISC DOWN** - it is gated on the low sky being ORANGE (R-B>70),
+  and by the time the sun touches the horizon the sky has gone PURPLE, so GWARM is back to 0 and the sun turns
+  **WHITE at the exact moment it should be an ember** (measured: horizon warmth 20.6 vs noon 20.9). Altitude
+  reddens it the rest of the way, toward a *fixed* ember - not toward GWSB, which by then is lilac.
+  `probes/probe-sun.mjs` (**PAGE screenshots, not canvas - see the PROBE/DOM bullet, that is this lap's real
+  finding**): arc **0.90 -> 0.79 -> 0.62 -> 0.41 -> 0.33, MONOTONIC right->left, 3 seeds**, highest at noon, disc
+  R-B **21 -> 110**, contrast 31-97, 13k-26k VISIBLE px per day pin, **night sunDraws = 0** (proved by hooking the
+  renderer). Both seeds VISUAL PASS; agents **located the disc within ~0.01 of the formula on every frame**.
+  **COSTS day +2.3%/+1.7%; night -0.2%/-0.4% = the free inert control (199).** Real, and **PAID** (cheaper than
+  194's +3.4%). See the PERF bullet: it is two **GRADIENT** fills, which 198's cost model never measured.
+  **199 took Urban × Deepen (the city goes to bed — SHIPPED).** `winBandR` lights a pane wherever
+  `hashCell(...) >= WINDARK` and leaves the rest as wall, and its own comment calls that remainder **"nobody
+  home"** — but `WINDARK` was a **CONSTANT (0.16)**, so the same panes were dark at 8pm and at 4am and every
+  window lit at dusk still burned at dawn: the city never went to bed. **This is the tell's NEXT HOST: not a
+  tooltip asserting what the draw ignores (113/117/183) nor a comment (194), but a CONSTANT whose NAME asserts a
+  behaviour its VALUE cannot have.** `LITAMT` could not carry the hour either — **the light curve PINS it at 1.0
+  from dayT 0.86 all the way to midnight**, so the whole evening is one flat plateau; the hour comes from `dayT`,
+  the slow clock the moon (135)/hall clock (149)/observatory (158) share (5th reader). `windarkAt(t)` now sweeps
+  the threshold up through the panes over `nightDeep()`, **per building type** — RES .10→.52, MID .14→.40, COM
+  .15→.36, TOWER .17→.28 — so homes empty, offices keep a late shift and towers keep a skeleton crew: **the
+  night core (143) SHARPENS as the night deepens; the differential IS the point, not the dimming.** Two
+  deliberate non-moves: **`colWin`'s mean-holder stays pinned to the BASELINE** (let `a` chase the hour and it
+  would *brighten every survivor to hold the block's mean*, cancelling the signal and clipping to white), and
+  **no new randomness** — the existing per-pane `hashCell` already gives each pane a fixed "how late this
+  household stays up", so the threshold sweeps them out in a stable order (stream-neutral by construction).
+  Live `Windows` tooltip row off the SAME `windarkAt()`. Draw-only, census vacuous. `probe-bedtime` counts panes
+  by **wrapping `winQuad`** (actual draw calls, not my formula): **BASE dusk→midnight = 0.0% on all 4 types × 3
+  seeds** (the seam, as a number) vs **PATCH RES 37% / MID 25% / COM 19% / TOWER 10% go dark, a 3.4–3.7×
+  differential**; midnight **100% DARKER, 0.000% lighter** (anti-blowout gate); noon **0 panes drawn on both
+  builds, byte-identical**; dayT pin live. **PERF FREE** (see the PERF bullet's new noise-floor law). Both agents
+  **LOCATED the later frame BLIND with the A/B labels inverted between seeds**, reading the core as *"stronger
+  contrast between core and periphery… the right nocturnal read."*
+  **The lap now resumes owing Sky (190), then People (191)/Transport (193); next step-back at 202.**

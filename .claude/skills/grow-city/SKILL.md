@@ -798,6 +798,29 @@ vector, whatever it is.
   the same thing*. (The locate-don't-judge discipline is what made this catchable: agents asked to
   *point at* the sun returned positions within ~0.01 of the shipped formula on every frame where it was
   visible, which is exactly why their "there is no sun here" was credible rather than vague.)
+- **A FIXED CLIP IS NOT A FRAMING — aim the camera at the feature, don't guess a rectangle (iter 201).**
+  `shoot.config.json`'s `coast` and `downtown` are hard-coded rects, but **the city is procedural: the coastline
+  moves seed to seed.** On seed 7 the `coast` clip landed on **open water** — the beach, the parasols and the
+  damp margin were all outside the crop — and the visual agent correctly FAILed *the crop*, costing a full
+  gate round-trip. A fixed rect is fine for a *whole-city* read; it is a coin-flip for anything **sited by the
+  terrain**. Instead **locate the host, then aim**: `window.__find('BEACH')` returns clip-ready screen coords,
+  and for a feature whose siting rule is subtle you can capture the **actual draw calls** (wrap `ctx.ellipse`
+  on a signature unique to the ornament — grep to confirm it *is* unique), pick an instance that satisfies the
+  feature's precondition (201 needed a parasol on a **sea-facing** hex — a landlocked one has no tide to answer
+  and would have proved nothing), then set the artifact's own `scale`/`offX`/`offY` to centre it and shoot.
+  `probes/shot-beachtide.mjs` is the reusable pattern.
+- **An agent's "this is BACKWARDS" may be an objection to the ARTIFACT'S MODEL, not to your change (iter 201).**
+  The locate-don't-judge law says a FAIL is a cue to measure. This is the subtler case: **the agent's every
+  factual claim can be correct — matching your probe exactly — and its verdict still wrong**, because it is
+  applying real-world intuition to a model that cannot express it. 201's beach furniture retreats *up* the sand
+  on the ebb; an agent called that inverted (a real beach hands you *more* sand at low tide). But the artifact's
+  **coastline is fixed terrain and cannot recede**, so the tide can only express itself as the intertidal flat
+  drying out *inland*, and flipping the sign would have driven the towels **onto the widening wet sand** —
+  contradicting the one invariant the feature was built on. ⇒ When a FAIL objects to a *direction* or a
+  *semantics* rather than to a pixel, **ask what the model can actually represent** before you flip it: the
+  proposed fix may be incoherent inside the artifact. Then get a fresh read that **states the model's
+  constraint** and let it judge within that (201's two re-reads both then PASSed *and* independently flagged the
+  same caveat, which is the model's — bank it, don't paper over it).
 - **Reverting a passing-but-weak change is the system working.** The census can pass a
   change that isn't worth its cost. Iters 82, 88, 101 and 114 all explored, failed a
   bar the census could not express, and reverted to byte-identical. That is a *result*
