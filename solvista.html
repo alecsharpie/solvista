@@ -337,21 +337,29 @@ function applySeason(){
   cl=mixA(cl,[158,199,114],spring*0.5);
   BASE.canopyLt=mixA(cl,[112,142,102],winter*0.45);
   /* the managed greens — park lawn, institutional turf — are IRRIGATED, so they
-     keep their colour when the hills go gold. But irrigated is not immune: they
-     were mathematically FROZEN (0.0 rendered-pixel shift in every season, all
-     878 of them, probe-season.mjs) while meadow/forest/farm swung 20-88, so the
-     dry season read as brown blight on a permanently-emerald city rather than as
-     a season. They now take a MUTED share of the same curve — still the lushest
-     thing on the plate, but part of the year. Amplitude, not presence, is what
-     "irrigated" buys. */
-  BASE.lawn=mixA(LAWN0,[186,188,116],dry*0.55);
-  BASE.turf=mixA(TURF0,[132,150,100],dry*0.42);
-  if(winter>0){ /* the cool months also mute the open ground */
+     never burn to straw like the hills. Iter 120 wired them into the dry curve to
+     end the "878 permanently-emerald hexes" bug, but pitched the amplitude so low
+     that it bought almost nothing: PARK, the city's LARGEST green surface (583
+     hexes), shifted 8.4 rendered px from winter at the dry peak — level with
+     REDWOOD (8.0), which is EVERGREEN BY DESIGN — while FARM swung 87 over a fifth
+     of the ground (probe-season.mjs, iter 207). An irrigated lawn is not a conifer.
+     On this coast it BLEACHES through the long drought (paler, yellower, flatter),
+     deepens through the wet winter, and flushes in spring. Note `lawn` and `grass`
+     are the SAME base colour, so this divergence IS the park's identity — the
+     managed greens must keep their RANK (greener and brighter than grass/meadow at
+     every point in the year) while carrying a real amplitude on all four keyframes.
+     Amplitude, not presence, is what "irrigated" buys: 120 had the principle right
+     and the dial at zero. */
+  BASE.lawn=mixA(LAWN0,[200,204,126],dry*1.35); /* bleached but still green: G>R keeps it off the hills' gold */
+  BASE.turf=mixA(TURF0,[150,170,112],dry*1.05); /* quads are watered harder than parks: less swing */
+  BASE.lawn=mixA(BASE.lawn,[148,199,118],spring*0.45); /* the spring flush */
+  BASE.turf=mixA(BASE.turf,[102,153,98],spring*0.40);
+  if(winter>0){ /* the cool months also mute the open ground; the wet season is the GREEN one here */
     BASE.grass=mixA(BASE.grass,[132,152,118],winter*0.4);
     BASE.grassDk=mixA(BASE.grassDk,[106,128,96],winter*0.4);
     BASE.meadow=mixA(BASE.meadow,[142,162,120],winter*0.4);
-    BASE.lawn=mixA(BASE.lawn,[126,158,116],winter*0.30);
-    BASE.turf=mixA(BASE.turf,[92,124,96],winter*0.30);
+    BASE.lawn=mixA(BASE.lawn,[124,164,116],winter*0.45);
+    BASE.turf=mixA(BASE.turf,[86,122,94],winter*0.45);
   }
   const sq=(s*48)|0; /* refresh the color cache as the season drifts (48/yr) */
   if(sq!==applySeason.q){applySeason.q=sq;CCACHE={};}

@@ -28,7 +28,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~ | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201** | 78, **111** | | 84, **137**, **163** | 71, **154**, **191** |
 
 - **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
@@ -55,10 +55,11 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **206** · Civic **204** · Water **205**.
-  **207 was the mandated step-back (done — clean bill; see below). THE LAP NOW OWES URBAN (stalest, 199), then Sky
-  (200), then People (201).** Urban is measured-saturated in *additive* and *Connect* (see below) ⇒ its lap must be
-  **Deepen or Polish**. **Iteration 212 is the next step-back.**
+  Sky **208** · People **201** · Transport **203** · Urban **199** · Nature **206** · Civic **204** · Water **205**.
+  **208 took Sky × Deepen out of turn to cash cue (p)** — a *banked, measured* finding outranks rotation
+  bookkeeping (119's law), and the season pass is a Sky seam. **THE LAP NOW OWES URBAN (stalest, 199), then
+  People (201), then Transport (203).** Urban is measured-saturated in *additive* and *Connect* (see below) ⇒
+  its lap must be **Deepen or Polish**. **Iteration 212 is the next step-back.**
   **206 (Nature × New CA rule, FIXED) — full recap in its own entry, still in the ledger window; header recap
   rotated to `GROWTH-archive.md` at 207.** It audited a rule that had under-fired for the artifact's whole life
   (`GARDEN` = 6 hexes in the entire matrix; one seed in three grew *zero*, ever) and fixed it: **a mid-rise is
@@ -357,23 +358,20 @@ ones (U2, 42, U5) stay in the bullet.
   shore): a terrain lap with real cost, not an entity-motion freebie. **Banked host, if one is ever wanted: the
   MOLE is real and reliable** — `moleSet` is 5-12 cells on all 6 seeds probed (the `path.length>=5` guard bites
   less often than its comment implies), and it is the artifact's only built structure standing in the water.
-  **(p) THE CALENDAR IS A ONE-CROP CALENDAR — the season is loud on the CROPS and mute on the ground the city
-  actually SHOWS you (iter 207, `probe-season.mjs`, measured).** Both step-back agents, on both seeds,
-  independently flagged *"winter is near-indistinguishable from midday — summer with two plowed fields"*; the probe
-  vindicated them. Rendered-pixel distance from winter at the dry peak (`ROAD` control = **0.6**):
-  **FARM 87.0** (n=130) · VINEYARD 35.2 (26) · MEADOW 25.7 (5) · FOREST 19.9 (230) · ORCHARD 17.7 (16) —
-  **versus SHOREPARK 17.9 (n=294) · PARK 8.4 (n=583!) · REDWOOD 8.0 (34) · QUAD 5.7 (25) · GARDEN 1.8 (17).**
-  So **~170 agricultural hexes carry the entire calendar, while the ~900 hexes of amenity green run ~10x quieter
-  than FARM over ~5x the ground** — PARK, the city's single largest green surface, shifts **8.4**, barely 14x the
-  ROAD control. Not compounded damage: **a surface that was never wired** — 127's law exactly (*"additive inventory
-  spent" is a claim about a domain's ENTITIES, not its SURFACES*). It also **confirms the GARDEN cue by
-  measurement** (1.8 = ROAD-level; the last season-mute vegetation tile, and 206 has just given it a real host).
-  **⚠ This is a JUDGEMENT, not a bug — 201's law applies.** A mown park genuinely does not brown like a wheat
-  field, so PARK=8.4 may be the model being *honest*, and an agent calling winter "wrong" may be objecting to
-  **the artifact's model of a Mediterranean coast** — where winter is the GREEN season and the DRY PEAK is the
-  golden one (which is why FARM's autumn 92.6 *exceeds* its dry-peak 87.0). **Decide what a Solvista winter IS
-  before writing a line.** The cheap, defensible version is not "make PARK brown" but **give the amenity green the
-  same seasonal AMPLITUDE the crops already have** (grass ambering at the dry peak, not snow).
+  **(p) CLOSED by 208 for the amenity green — but read the WARNING.** 207 found a *one-crop calendar* (~170
+  agricultural hexes carried the whole year; PARK, 583 hexes, shifted **8.4** — level with **REDWOOD 8.0**, which
+  is EVERGREEN BY DESIGN). The cause was **not** an unwired surface: 120 *had* wired `lawn`/`turf` into the dry
+  curve and then **set the dial to ~zero** (~11 RGB units across a whole year). 208 raised the amplitude on all
+  four keyframes (colour-only, zero path objects): **PARK 8.4→23.5 · SHOREPARK 17.9→52.3 · QUAD 5.7→21.2**, ROAD
+  control dead at 0.6 and every untouched tile bit-identical; two blind agents on oppositely-randomized pairs both
+  **correctly named the dry season** and both cited the amenity green.
+  **⚠ DO NOT RAISE IT FURTHER.** `grass` and `lawn` are the **SAME base colour** `[150,181,122]` (L276/L310), so
+  the dry-season divergence *is* the park's whole identity, and the parks must stay **greener/brighter than the
+  hills** at every point in the year. Seed 7's agent already reports hillside hexes sitting *"close in value to the
+  paler lawns, but they never invert"* — the amplitude is at the top of what is safe. Any further push must re-run
+  the blind locate. **⚠ GARDEN is STILL MUTE (1.8 → 5.4): its ground is mostly raised beds, so the lawn lift barely
+  reaches it. Its own richer cue stands** — staggered per-bed calendars + one shared `gardenPhase()` (Nature ×
+  Deepen; host fixed by 206).
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a
   multi-source hex BFS capped at radius `r`, walking over land only (`WETSET` blocks
   water/marsh/kelp), filling `out` with steps-to-nearest-source and 255 for "farther
@@ -391,36 +389,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 200 entries before Iteration 198 live in
+> **Archive:** the 201 entries before Iteration 199 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 198 — the tree shadows cost what they cost (2026-07-12) [Nature × Polish, EXPLORED -> REVERTED]
-
-**Vector** — 197's *mandated* perf fix: "batch a hex's tree shadows into ONE path with ONE `fill()`." Not a rotation pick; the step-back rule says a measured regression outranks adding more. It ends REVERTED, and the value of the iteration is the measurement that killed it.
-
-**Change (built, measured, reverted)** — `treeGroup(f)` + a `TMODE`/`TSHAD` queue: `tree()` queues its contact ellipse instead of filling it, the group lays a whole stand down in one path + one `fill()`, then draws the bodies over it. Wired into the only four multi-tree hexes (FOREST 2-4, PARK 2-3, the boulevard allee, and the 2-tree case at ~L3769) — a single-tree hex is already one fill and can gain nothing. It worked, and it was pointless: **day +0.3%, night +0.1%** (interleaved A/B vs pristine HEAD, `probes/perfab.mjs`). `solvista.html` is now **byte-identical to HEAD**.
-
-**The finding — 197's lever was an INFERENCE, and it was WRONG.** 197 reasoned: 194 memoized `shadS`'s `rgba()` string and bought back zero, therefore the cost is the FILL COUNT, therefore batch the fills. Nobody measured it. So 198 stopped tuning and wrote `probes/probe-shadcost.mjs`, which **discriminates between mechanisms** instead of testing one plausible fix — five variants, every one built from HEAD by string surgery (so it reproduces from a clean tree and can never silently measure HEAD against itself), interleaved per round, min per variant, **three independent runs**:
-
-| variant | what it holds fixed | day | night |
-| --- | --- | --- | --- |
-| `NOSHAD` remove tree+palm shadows | — (the whole budget) | **−3.1 / −2.8 / −1.3%** | **−2.6 / −2.4 / −3.5%** |
-| `BATCH` 197's mandate, ¼ the fills | same ellipses, same area | +0.3 / +0.9 / +2.7% | +0.1 / +1.5 / −0.3% |
-| `SMALLR` radius ×0.5 (¼ the AREA) | same count of fills | +0.4 / +0.9 / −0.6% | +0.4 / +1.1 / 0.0% |
-| `SPRITE` pre-baked ellipse, `drawImage` | same shadows, no path raster | **+4.1 / +2.3%** | **+3.6 / +2.0%** |
-
-**Only `NOSHAD` ever moves.** Quartering the fill *count* buys nothing; quartering the fill *area* buys nothing; replacing the path with a sprite blit is **worse**. ⇒ **The cost is PER-ELLIPSE** — one charge per ellipse rasterized, near-independent of its size, of how many are grouped into a single `fill()`, and not avoidable by blitting. `ctx.fill()` is not the unit of cost; the **path object** is, and batching N ellipses into one fill still rasterizes N ellipses.
-
-**Why it is REVERTED rather than shipped** — the batch is +0.3% (i.e. nothing), costs a `TMODE` state machine and a double pass over each stand, and slightly changes pixels (a union fill stops two overlapping shadows double-darkening). Machinery that buys nothing does not earn its place. The one lever left on the ~3% is **drawing fewer ellipses** — un-grounding some trees — and that is a *visual* decision, not an optimization: 194's grounding is the thing 197's agents twice read as "grounded, not muddy — the contact shadows sit tight under each trunk," after twice suspecting it. **The ~3% is the honest price of the shadows, and it is worth paying** (precedent: 118 shipped +5.1% night; 142's +2.2% was accepted and never fixed). Perf is not free, but neither is beauty, and this loop has been told which one it is buying.
-
-**Census** — PASS, on the BATCH build *and* again on the restored HEAD. Every core aggregate flat, tile histogram empty. Correct and vacuous, as any draw-only iteration's census is.
-
-**Visual** — none taken, and none owed: the file is byte-identical to HEAD, so there is nothing to look at (195's precedent).
-
-**Verdict — EXPLORED → REVERTED.** The city is unchanged; the loop's *knowledge* is not. Three perf levers are now closed by measurement instead of standing open as folklore, and `probes/probe-shadcost.mjs` is committed so the next runner who eyes a draw-cost regression can rerun the table in one command rather than re-deriving it. **Law promoted to `SKILL.md`: a perf lever is a HYPOTHESIS — measure it before you mandate it, and characterize a cost with variants that DISCRIMINATE between mechanisms, not one plausible fix.** A step-back should name the **suspect**, not the **fix**; 197 named the fix and spent an iteration proving it wrong. **The domain lap resumes at 199 owing Urban (189, Deepen/Polish only); next step-back at 202.**
 
 ## Iteration 199 — the city goes to bed (2026-07-12) [Urban fabric × Deepen]
 
@@ -1145,3 +1118,81 @@ have** (grass ambering at the dry peak, not snow).
 Three gates green, no feature has compounded into clutter or darkness, and the loop is not owed a
 fix lap. Two things banked for the laps that follow: the **season-mute amenity green** (cue (p)) and
 the **terrain-re-rasterization** perf suspect.
+
+## Iteration 208 — the parks join the year (2026-07-12) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × Deepen — cashing **cue (p)**, banked and *measured* by 207's step-back.
+Rotation nominally owed Urban, but 119's law (a banked, measured finding outranks rotation
+bookkeeping) points here, and the season pass (`applySeason`) is a Sky seam. Sky's Deepen cell is its
+one live cell post-saturation.
+
+**The seam, re-read before designing (123's law: a cue is a POINTER, not a SPEC).** 207 found the
+calendar was a *one-crop calendar*: FARM shifted **87.0** rendered px from winter at the dry peak
+while PARK — the city's **largest green surface, 583 hexes** — shifted **8.4**. The cue *sounded* like
+"the amenity green was never wired", but the code said otherwise: **iter 120 had already wired it**
+(`BASE.lawn=mixA(LAWN0,[186,188,116],dry*0.55)`). The defect was not absence, it was **amplitude**:
+the dry target `[186,188,116]` sits ~36 units off `LAWN0=[150,181,122]` in red and nowhere else, then
+`dry` caps at 0.55 and is halved again — a **~11 RGB unit** swing across a whole year. 120 wrote
+*"amplitude, not presence, is what irrigated buys"* and then set the dial to **zero**.
+
+Two things make that a real defect rather than a taste call:
+- **PARK (8.4) was sitting at the EVERGREEN FLOOR.** `REDWOOD` shifts **8.0** — and a redwood is
+  seasonless *by design* (`applySeason`'s own comment: "Evergreens sit it out"). The city's biggest
+  lawn was as seasonal as a conifer.
+- **`grass` and `lawn` are the SAME base colour** — both `[150,181,122]` (L276 / L310). So the dry-season
+  divergence *is* the park's entire visual identity, and at 11 units the park was near-indistinguishable
+  from an open hillside for most of the year.
+
+**Change.** Colour-only, inside `applySeason` — **zero new path objects.** The managed greens keep
+their RANK (greener + brighter than grass/meadow at every point in the year) but now carry a real
+amplitude on all four keyframes: bleached-but-still-green at the dry peak (`G>R` keeps them off the
+hills' gold), deeper through the wet winter, plus a **spring flush** they never had. Quads swing less
+than parks (watered harder). The crop palette (`straw`/`stubble`) is untouched — `cropCol()` alone
+drives a field's year, per L298's standing ban on double-counting.
+
+**Probe** (`probes/probe-season.mjs`, rendered-px distance from winter, 3 seeds):
+
+| tile | 207 | 208 | |
+| --- | --- | --- | --- |
+| PARK (n=583) | 8.4 | **23.5** | leaves the evergreen floor; now sits with FOREST/MEADOW |
+| SHOREPARK (294) | 17.9 | **52.3** | the whole hex body is lawn — the biggest mover |
+| QUAD (25) | 5.7 | **21.2** | |
+| GARDEN (17) | 1.8 | 5.4 | still near-mute — its ground is mostly raised beds; cue stands |
+| REDWOOD (34) | 8.0 | **8.0** | evergreen floor, unmoved |
+| FARM / MEADOW / FOREST / VINEYARD / ORCHARD | 87.0 / 25.7 / 19.9 / 35.2 / 17.7 | **all identical** | negative control: no double-count |
+| **ROAD control (1200)** | 0.6 | **0.6** | dead ✓ |
+
+Every tile I did not touch is **bit-identical**, and the ROAD control stays dead — the change is
+isolated to the amenity green by construction.
+
+**Census.** PASS. Every metric **+0**, tile histogram **empty** — the correct, vacuous result for a
+colour-only change (it proves only that nothing threw or collapsed). The probe is the gate.
+
+**Visual — BLIND locate, 2 seeds (108's law).** Frames shot with `shot-stepback.mjs` (clock frozen
+in-page; `day` and `winter` share t=0.30, so only the calendar differs). Frames were copied to neutral
+names and **randomized in opposite directions per seed**, then one agent per seed was asked to *name*
+which frame was the dry season — not to judge whether the change worked.
+- seed 42 → **"B is the dry season"** (truth: A=winter, B=dry) ✓
+- seed 7 → **"A is the dry season"** (truth: A=dry, B=winter) ✓
+
+Both correct, on opposite keys. Both **independently cited the amenity green among their tells** —
+seed 7's agent *led* with "the wide coastal green strip behind the beach" (SHOREPARK, the 52.3 mover),
+seed 42's named "the coastal green belt behind the beach" second. Both confirmed the **rank held**:
+the parks still read as *"irrigated… living mid-green while the hills around them go gold"*, with **no
+dead, blown-out, sickly-yellow or washed-out lawns** in either frame, and no z-order tears, floating
+tiles or compounded clutter/darkness across all four frames (day/golden/night/winter). `VISUAL: PASS` ×2.
+
+**Perf.** Free **by construction**, not by measurement: the diff adds **zero path objects** (two extra
+`mixA` calls per frame = 6 lerps). Under 198's measured cost model — cost is **per path object
+rasterized** — a pure palette change cannot move the frame. No `perfab` run; 212's step-back owns the arc.
+
+**Banked (from seed 7's agent, unprompted and honest).** *"A couple of hillside hexes sit close in value
+to the paler lawns, but they never invert."* The rank holds, but **the amplitude is now near the top of
+what is safe** — a further push on `lawn`'s dry target risks the parks reading *paler than the hills*,
+which would invert the one relationship the tile exists to express. Do not raise it without re-running
+the blind locate.
+
+**Verdict: DEEPENED.** The city's ~900 hexes of amenity green now breathe with the year instead of
+sitting frozen at the evergreen floor, and the season is no longer carried by ~170 agricultural hexes
+alone. Cue (p) is CLOSED for PARK/SHOREPARK/QUAD; **GARDEN remains mute (5.4) and keeps its own richer
+Nature × Deepen cue** (staggered raised beds + a shared `gardenPhase()`).
