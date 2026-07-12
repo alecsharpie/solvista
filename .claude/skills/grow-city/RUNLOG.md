@@ -149,4 +149,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 217  —                          SHIPPED             35m00s   $10.24 466a8b3
 ↩ Iter 218  —                          EXPLORED → REVERTED 24m29s   $6.83  fb26856
 ✔ Iter 219  Urban fabric × Deepen      SHIPPED             27m47s   $8.15  1450e71
+✔ Iter 220  Urban fabric × Polish      SHIPPED             16m20s   $5.46  fae923d
 ```
