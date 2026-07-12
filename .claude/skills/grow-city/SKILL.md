@@ -925,6 +925,24 @@ vector, whatever it is.
   reach was not a plant at all — it was the residential ground, wearing a non-seasonal palette name. Renaming it
   `lawn` took its seasonal shift from **1.2 to 36.8** for free. ⇒ **When a domain looks interconnect-saturated,
   re-ask it as: what large surfaces are wearing a palette name / field that cannot carry the signal?**
+- **WHEN A RULE DECIDES BOTH *WHETHER* AND *HOW MUCH*, A FIX TO ONE CLAUSE IS ROUTINELY MISTAKEN FOR A FIX
+  TO THE PHENOMENON — AND THE FIX'S OWN COMMENT WILL NAME THE MECHANISM IT SKIPPED (iter 217).** 209 found
+  the tell's host in a *comment that states a standard the adjacent branch is exempted from*. 217 found the
+  rung below: **a comment that correctly diagnoses a defect, and then fixes it in ONE of the two places the
+  defect lives.** The tower rule decides *placement* and *height* on adjacent lines. Iter 98 diagnosed the
+  cause in exactly the right words — *"a linear ramp down the x+y diagonal is a HALF-PLANE, not a place, so
+  it has no peak for a skyline to sit on"* — keyed **HEIGHT** to a real centrality field (`0.70+0.66*core`),
+  and **left PLACEMENT rolling on the very half-plane it had just condemned** (`(0.14+0.20*back)*(0.5+c.val)`,
+  where 98 *itself* had established that `c.val` is not a centrality field either). The result survived 119
+  iterations and every per-lap gate: a city with a **TALL middle but not a DENSE one** — height falling
+  108→67 core-to-rim while tower *density* stayed flat (6.8–10.0%), **four times as many towers on the rim as
+  downtown**, and mean tower distance from the CBD (19.8) essentially equal to mean *developed* distance
+  (22.1). Two blind agents on two seeds said "there is no downtown" and were right. ⇒ **When you fix a rule,
+  ask what ELSE that rule decides.** Grep for rules whose clauses read *different fields* for the same idea
+  (siting vs intensity, spawn vs size, whether vs how-much) — a magnitude fix is not a distribution fix, and
+  a peak with no mass under it is not a skyline. Corollary: **the cheapest instrument is often not a render at
+  all.** `probes/probe-skyline.mjs` is pure world data — no canvas, no clock, no noise floor, no `Math.random`
+  to stub — and it settled in one run a question four rounds of screenshots could only gesture at.
 - **A KNOCKOUT SWEEP THAT REMOVES ONE OCCLUDER AT A TIME WILL TELL YOU "NOTHING COVERS IT" — AND BE
   WRONG. When it comes back empty, stop removing things and REPLAY THE DRAW'S OWN GEOMETRY (iter 211).**
   203's `probe-gondz` settles *whether* something is occluded (`occluded% = 1 − inkInPlace/inkOnTop`).
@@ -1224,7 +1242,14 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   MIXING** — green ink landing on seam sand / tan ink on seam lawn, with off-seam sand and lawn as the
   controls that must not move; floor measured in-run), `shot-seam.mjs` (the seam camera: whole-city +
   a 4.2x close-up **aimed** at the longest run of seam, day and night, patch and HEAD).
-  Five of them are **harness-wide**, not per-feature — reach for these on any lap:
+  `probe-skyline.mjs` (**is there a DOWNTOWN?** — bins every live cell by `hexDist` from the published CBD and
+  reports TOWER *density* per ring against mean tower height as the control. **Pure world data: no render, no clock,
+  no noise floor** — the cheapest probe in the harness, and the one that settled 217. Reach for it for any claim
+  about *where* a tile type sits), `probe-goldenhue.mjs` (**per-tile hue / chroma / luminance at day, golden and
+  night, plus the pairwise separation matrix** — the general form of 214's `probe-sandhue`: it answers *"does tile X
+  keep its identity from tile Y under light L?"*. Any surface pair collapsing below ~15 RGB units has lost its
+  identity; **RES↔ROAD at night is 4**, cue (aa)).
+  Six of them are **harness-wide**, not per-feature — reach for these on any lap:
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before
   reopening any draw-cost lever), `probe-drawbudget.mjs` (**where the frame goes** —
