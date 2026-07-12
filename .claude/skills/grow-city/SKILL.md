@@ -371,6 +371,56 @@ report. This is what iters 115/116/118/119/120/121 actually did, and it is what 
 straight face. Absolute numbers still go in the ledger — they are the long-run
 drift record — but the **verdict comes from the interleaved delta.**
 
+**But a step-back must price the ARC, not the LAP — the per-lap gate is STRUCTURALLY
+BLIND to compounding (iter 202).** The interleaved A/B above is the right technique
+at the wrong *baseline distance* when you use it to grade a step-back. Graded against
+the previous step-back, iters 199+200+201 came back **free: day +0.4%, night −1.1%**.
+Graded against *older* step-backs, the very same HEAD reads **192 +5.2% · 177 +7.5% ·
+162 +8.6% day** (night +2.1/+4.1/+5.7%). Both readings are honest. The loop only ever
+*adds* draw work, at roughly **+0.2%/iteration** — and +0.2% is *permanently* beneath
+the noise floor of a 3-iteration comparison, so **every lap can be truthfully called
+free while forty of them cost 8.6%.** `perfab.mjs` takes `REF` for exactly this: run it
+against the last step-back *and* against one 30–40 iterations back.
+```bash
+REF=<prev-step-back-sha>  node .claude/skills/grow-city/probes/perfab.mjs   # the lap
+REF=<40-iters-back-sha>   node .claude/skills/grow-city/probes/perfab.mjs   # the ARC
+```
+And to turn a drift into a **suspect** without inferring one (198's law), census where
+the frame actually goes: **`probes/probe-drawbudget.mjs`** counts **path objects** — the
+measured unit of cost — in one render and attributes each to the fn that issued it. It
+is calibrated: it scores `shadS` at 2.7% of day path objects, and 197/198 *measured*
+removing it at −2.8/−3.1%. Its standing result (iter 202): `drawCell` is **94%** of the
+frame; day is **77%** `prismS`+`bandS`+`hexTile` (static terrain re-rasterized every
+frame); night adds `winBandR` at **32.6%** — 43,421 path objects from 2,672 `fill()`s,
+which is 198's "batching buys nothing" law made visible. **Name the suspect; do not
+mandate the fix.**
+
+**Shoot the step-back with `probes/shot-stepback.mjs`, NOT with `shoot.mjs` + `?t=`/
+`?year=` — the step-back's own camera was lying for ~60 iterations (iter 202).** 202's
+first visual pass drew **two false FAILs from four agents** ("there is no sun"; "winter
+is identical to summer"), and *both* were the instrument:
+- **`?year=` DRIFTS.** `shoot.mjs` loads with `playing=true` and then *waits*, and the
+  frame loop advances `year += dt·speed/6` ≈ **0.167 yr/s**. The summer pin drifts to
+  autumn and the **winter pin drifts into spring**, so agents duly report the seasons
+  as absent or *inverted*. This is **iter 139's trap** — which the ledger *documented*
+  and never fixed at source, so the recipe went on telling every step-back to pin with
+  `?year=` anyway. A documented trap you keep walking into is a broken tool, not a law.
+- **Guessed light pins land on the wrong phase.** 202 shot "golden hour" at `t=0.80`.
+  The artifact's own `phaseWord()` calls `t>=0.80` **`'night'`**, and past `SUNDN=0.78`
+  the sun block *"draws nothing whatever"*. **Take the pins from the light curve, never
+  from intuition:** day `0.30`, golden `0.68` (`GWARM` peaks 0.786 at 0.70), night `0.92`.
+
+`shot-stepback.mjs` freezes the world in-page (`playing=false` stops *both* clocks),
+pins `genWorld`+`__warp`+`__setYear`+`__setTime`, renders once with **no wait**, and
+shoots with `page.screenshot()` (DOM-composited, per 200's law). Every frame
+**self-reports** its own state (`golden t=0.68 GWARM=0.72 sun=UP phase=golden hour`),
+so a mis-pinned frame is caught by the tool instead of by an agent. Re-shot that way,
+both seeds PASSed and two blind agents put the sun within **0.003** of the shipped
+formula.
+```bash
+node .claude/skills/grow-city/probes/shot-stepback.mjs 42 .claude/skills/grow-city/shots/sb
+```
+
 The whole-city read in this step-back is the same job as the visual gate, so
 delegate it the same way: one `Agent` per seed, each reading its own un-zoomed
 frame, each returning a text verdict. Ask them the *cumulative* question — "has
@@ -871,6 +921,16 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   clock first). Each resolves the artifact as `join(HERE, '../../../../solvista.html')`.
   Ad-hoc probes are born at the repo root (gitignored); `git mv` one here the moment
   your ledger entry cites it.
+  Three of them are **harness-wide**, not per-feature — reach for these on any lap:
+  `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
+  `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before
+  reopening any draw-cost lever), and `probe-drawbudget.mjs` (**where the frame goes** —
+  path objects per draw fn, in one render; calibrated against `probe-shadcost`).
+- `probes/shot-stepback.mjs` — **the step-back's camera.** 3 lights × 2 calendars with
+  the clock **frozen in-page** and the light pins taken from the light curve, because
+  `shoot.mjs` + `?t=`/`?year=` drifts the calendar ~0.167 yr/s while it waits and will
+  hand you false FAILs (iters 139, 202). Each frame self-reports its own state.
+  `node probes/shot-stepback.mjs <seed> <outdir>`.
 - `run-loop.sh` — the headless event-based runner (one fresh `claude -p` per
   iteration, next starts when the previous exits). Handles rate limits, refuses
   to start on a dirty tree or a dirty worktree, `--status`, `STOP`.

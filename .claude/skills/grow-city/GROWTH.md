@@ -56,26 +56,33 @@ ones (U2, 42, U5) stay in the bullet.
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
   Sky **200** · People **201** · Transport **193** · Urban **199** · Nature **198** · Civic **195** · Water **196**.
-  **201 took People × Deepen (the beach follows the tide — DEEPENED).** 145 taught the beach furniture to follow
-  the **sun**; the beach *ground* has answered the **tide** all along (the damp margin `w2=2.4+(1-TIDE)*5`, which
-  196 used as its positive control *because* it provably reads TIDE) — but the furniture was drawn at `px(gx,gy)`,
-  the bare hex centre, so **the sunbathers answered one signal, were deaf to the other, and at dead low water were
-  lying on wet sand.** 196's shape one tile along, in People. `wetReach()` now owns the band's reach as **one
-  definition with two readers** — the margin that *strokes* the wet sand and the beachgoers who must stay *off* it
-  (drift them apart and the towels end up in the surf); `seaDirS()` gives the seaward normal (same water test, a
-  river is not the sea; `null` = landlocked). The ensemble slides by the band's own reach either side of its
-  **mid-tide** value, so it retreats on the ebb, follows the water down on the flood, and **sits exactly where it
-  always did at mid-tide.** Draw-only, census vacuous. `probe-beachtide` measures **draw calls, not pixels**
-  (wrapping `ctx.ellipse` on the parasol's `4.5x2.6` signature — unique in the file — so there is **no pixel noise
-  floor and the zero is honest**): **BASE 0.00px on 3/3 seeds = the seam as a number**, vs **PATCH +4.80px**, the
-  predicted travel *to two decimals*; perp drift 0.00, the 26–30 **landlocked** beach hexes 0.00 (no sea to answer),
-  and the damp margin moves on **both** builds = the TIDE pin is LIVE (196's law: without it, BASE=0 is a dead pin,
-  not a deaf draw). **PERF free BY CONSTRUCTION: zero new path objects** (198's cost model) — measured nothing,
-  and said so. Both seeds VISUAL PASS blind with **A/B inverted between seeds**.
-  **⚠ Two laws this lap paid for, both now in SKILL.md: a FIXED screenshot CLIP is not a framing (the `coast` rect
-  missed seed 7's coastline entirely and an agent correctly FAILed the *crop*), and an agent's "this is backwards"
-  can be an objection to the ARTIFACT'S MODEL, not to your change.**
-  **Next step-back at 202 (the 20th) — it is DUE NEXT.** Then the lap owes Transport (193), then Civic (195).
+  **201 took People × Deepen (the beach follows the tide — DEEPENED).** The beach GROUND answered the tide all along
+  (the damp margin `w2=2.4+(1-TIDE)*5`), but the furniture drawn at the bare hex centre did not — so at dead low water
+  the sunbathers lay on wet sand. `wetReach()` is now ONE definition with TWO readers (the margin that strokes the wet
+  sand + the beachgoers who must stay off it); `seaDirS()` gives the seaward normal (`null` = landlocked). `probe-beachtide`
+  counts DRAW CALLS not pixels, so the zero is honest: BASE 0.00px (the seam) vs PATCH +4.80px, the predicted travel to two
+  decimals. **Laws paid for, both now in SKILL.md: a FIXED screenshot CLIP is not a framing; and an agent's "this is
+  BACKWARDS" may object to the ARTIFACT'S MODEL, not to your change.** Full recap rotated to `GROWTH-archive.md` at 202.
+  **202 was the mandated STEP-BACK — the 20th. CLEAN BILL on the city; the INSTRUMENT was what was broken.**
+  Census PASS, seasons alive (FARM dry-peak 88.4), both seeds VISUAL PASS. Its two findings, both promoted to SKILL.md:
+  (a) **PERF COMPOUNDS BENEATH THE PER-LAP GATE.** The mandated interleaved A/B grades each lap against the lap
+  before it, and 199+200+201 duly read **free (day +0.4%, night −1.1%)** — but measured against OLDER step-backs the
+  same HEAD reads **192 +5.2% · 177 +7.5% · 162 +8.6% day** (night +2.1/+4.1/+5.7%). A ~0.2%/iter drift is
+  *permanently* under the noise floor of a 3-iteration A/B. **A step-back must price the ARC, not the lap:
+  `REF=<older step-back sha> perfab.mjs`.** New `probes/probe-drawbudget.mjs` censuses where the frame goes (path
+  objects = the unit of cost, 198): **drawCell is 94% of it**; day `prismS`+`bandS`+`hexTile` = **77%** (static terrain
+  re-rasterized every frame), night `winBandR` = **32.6%** (43,421 path objects from 2,672 `fill()`s — 198's law made
+  visible). It is CALIBRATED: `shadS` = 2.7% of day paths vs its **measured** −2.8/−3.1%. SUSPECT named, fix NOT
+  mandated (198's law). (b) **THE STEP-BACK'S OWN CAMERA WAS LYING** — four agent-reads, two false FAILs ("no sun",
+  "winter == summer"), both the instrument: `?t=0.80` is `phaseWord()`=**'night'** (past `SUNDN=0.78`, the sun block
+  draws *nothing*), and `?year=` **drifts ~0.167 yr/s** while `shoot.mjs` waits (iter 139's trap, documented and never
+  fixed at source — summer drifted to autumn, winter into spring, so agents saw farmland "inverted"). New
+  `probes/shot-stepback.mjs` freezes the clock in-page and takes its pins FROM THE LIGHT CURVE (day .30 / golden .68
+  where GWARM peaks / night .92). Re-shot: both seeds PASS, and two blind agents put the sun at **(0.386,0.104)** and
+  **(0.39,0.105)** vs the shipped formula's **(0.388,0.107)**. **⚠ BANKED CUE (both agents, both seeds, unexplained):
+  a thin dark line reads as drawn OVER the towers/water. The naive cause is DISPROVEN — `drawMonoAt`/`drawGondAt` are
+  called INSIDE the row loop (L6218-23), so they are row-interleaved. PROBE it; do not redesign on the agents' say-so.**
+  Then the lap owes Transport (193), then Civic (195).
   **200 took Sky x Polish (THE SUN IS IN THE SKY — SHIPPED).** The city carried a whole family of low-sun effects
   (warm cloud bellies 161, the sea's golden sheen 181, sun-glitter 150, raked window glass 190, beach furniture 145)
   and **the sun itself was never drawn** — every warm thing in the sky had a cause that was not on screen. A gradient
@@ -109,7 +116,7 @@ ones (U2, 42, U5) stay in the bullet.
   Every *place to put the light* failed (campanile halo orphans on seed 7; the quad is overdrawn by the tile's
   own wings; the tile is drawn small), **⇒ it is a `polish-tile` job, not a growth lap.** Gate kept
   (`probes/probe-unilight.mjs` + `shot-uni.mjs`). Laws in SKILL.md; paragraph rotated to archive at 200.
-  step-back at **197** (which also owes 194's flagged tree-shadow perf cost a look).** (162, **167**, **172**, **177**, **182**, **187**, **192** = step-backs, no domain lap.) **191 took People × Interaction/UX (the festival street names itself — the `c.fete` civic-mile road, bunting-strung since before 178 and crowd-filled since 178, was mute in `describeTile`: it now titles 'Festival street' with a live `Festival` row reading 'Crowds under the bunting'/'Quiet after dark' off the SAME `clamp((0.82-LITAMT)/0.28,0,1)>0.02` gate the 178 crowd draw uses; a banked cue from 171 finally cashed (119's law: a banked measured finding outranks kind-rotation). Draw-nothing tooltip, pop+stream flat, `probe-fetetip` recomputes the gate independently — every fete hex named + row FLIPS day→night, ordinary roads control clean, 3 seeds; both seeds VISUAL PASS, `&mdash;` renders clean. Still-mute draws banked: `c.hedge`, `c.party`, `c.shroom`.) **192 was the mandated STEP-BACK — eighteenth, THIRTEENTH clean bill in a row (perf 188→191 flat: day −1.0%/night 0.0% vs iter-187 `ec206ef`; seasons alive FARM dry-peak 88.4; coast bright, night lit, winter present, both seeds VISUAL PASS). No city change.** **193 took Transport × Deepen (the ferry lights up for the night crossing — the LAST transit vehicle to run dark at night now carries warm-lit cabin windows + a white masthead + red-port/green-starboard nav lights + a wash on the water, completing the night-light family (bridges 179, shopfronts 189, windows 190) on the vehicle it had missed; framed to NOT repeat 179's amber lamp — a distinct MARINE vocabulary of coloured sidelights; draw-only stream+pop-neutral, `probe-ferrylight` FERRY night 2.0–2.2% ≫ day 0–0.23%, BOAT ctl 0.00% at night (ferries only), 3 seeds; both seeds VISUAL PASS, agents located the lit vessels). So the next domain lap (194) owes Urban (189, Deepen/Polish only — measured-saturated), then Nature (183)/Civic (184); next step-back at **197**. **190 took Sky × Deepen (the golden hour rakes the sun-facing WINDOWS — an additive warm-gold glint on ONE front face of every building's glass at dawn/dusk, RIGHT at dawn / LEFT at dusk off `dayT`, cashing 180/181's banked "windows catch the low sun"; the THIRD golden-hour surface off the one `GWARM` signal after clouds 161 & sea 181, a Sky×Urban interconnect hooked into the shared `winBandR` so it reaches all 4 building types full-height; draw-only stream+pop-neutral, `probe-windowgold` splits each box L/R to prove the rake is one-sided AND flips: dusk L≫R, dawn R≫L, byte-zero noon/night, 3 seeds; a split agent verdict at `*0.30` was resolved by the probe then re-verified at `*0.44` — legibility is a separate bar from presence). So the next domain lap (191) owes People (186), then the mandated step-back at 192.** **189 took Urban × Deepen (the lit shopfronts spill warm light onto the pavement in front at night — the COM storefront glass, the brightest ground-floor plane in the city, cast NOTHING on the street it faces while lamps/bridges/neon all glowed; a warm ground pool on the road-facing `fs` side gated `LITAMT>0.4 && v>0.5`, source-over low alpha matched to the street lamps' amber so a row of adjacent shops stacks without blowing to white (159's overlap law), positioned via `kerbS`'s face maths + `faceOutS`; a ground-plane Urban Deepen since Urban's additive/Connect are spent, draw-only stream+pop-neutral, `probe-shopspill` COM v>0.5 night 0.22–0.30% → day 0.00% 3 seeds, v<=0.5 gate-control ~0.01% both frames; both seeds VISUAL PASS, no blowout in the dense core). So the next domain lap (190) owes Sky (181, Deepen/Fix ONLY — saturated), then the step-back at 192.** **188 took Transport × Polish (the cable-car cabins rock on their hangers in the breeze — each cabin now PIVOTS about its fixed cable point, the hanger top staying on the rope while the body swings under it, two out-of-phase per-cabin sines, ~±2.4px so it reads at moderate zoom; the aerial transit hung rigidly vertical for the artifact's whole life while whitecaps/kites/flags all moved in the same wind, so this fixes a stillness rather than repeating 179's night-lamp move — draw-only off `time`, no rng/state, pop+stream flat; a MOTION claim so a TEMPORAL probe: `probe-cabinsway` freezes the SIM and steps only `time`, cabin `_sx` swings 4.1–4.5px pk-pk, `_sy` control 0.000, frozen monorail-train `_sx` control 0.000, 3 seeds; both seeds VISUAL PASS at ~3× — cabin stays connected by its hanger to the fixed cable, offset differs A↔B). So the next domain lap (189) owes Urban (180), then Sky (181); step-back at 192.** **186 took People × New element (the park café tables fill with seated day-only patrons — the 455-strong `cafes` surface put out parasol tables since before the ledger but never a single diner, the same amenity-with-no-people seam 127 found on the picnic lawn; `hashCell`-scattered, `LITAMT<0.5` so the terrace empties at night; draw-only stream+pop-neutral, `probe-cafepatron` CAFE day 0.93–0.99% → night 0.00% byte-identical, PARKC+ROAD ctls ~0, 3 seeds; a seed-7 agent FAIL claiming day/night INVERSION was disproven by the probe — its "night figures" were the base shop's lit windows. NB a later same-case draw (pond/fountain, `v<0.32`) OVERDRAWS the tables, so the shot selector hunts a `v>=0.44` front-most café). Next is the mandated STEP-BACK at 187; the next domain lap (188) owes Transport (179), then Urban (180)/Sky (181). **184 took Civic × Interaction/UX (the town hall clock tells its time on hover — a `Clock` row via a new `clockWord(dayT)`, reading the same slow day clock the drawn hand has pointed at since 149; kind repeated 183 because every other Civic kind is spent-or-hot, and saturation beats kind-rotation (118); draw-nothing tooltip, pop+stream flat, `probe-hallclocktip` clock-match 7/7 × 3 seeds, 7 distinct times across the day, non-hall control 500/500 clean). So the next domain lap (185) owes Water (176), then People (178)/Transport (179)/Urban (180). 185 took Water × Polish (wind-driven whitecaps break on the open swell — sparse seeded `hashCell` foam caps on open water beyond the coastal shelf `rDeep>SHELF1`, day-only via `LITAMT<0.6` so the night hands off to the moonglade; the one texture the flat daytime mid-ocean lacked, aimed at the biggest untouched water SURFACE not another coast entity; draw-only stream+pop-neutral, `probe-whitecap` SEA 0.21-0.30% day ≫ SHELF ≤0.07 ≫ LAND 0 → night 0, 3 seeds; agents "just right, slightly faint" after a size/alpha bump). So the next domain lap (188) owes Transport (179), then Urban (180)/Sky (181); step-back done at 187, next at 192.** **194 took Nature × Polish (the trees put their feet on the ground — every tree and palm now drops the house-style `shadS` contact shadow that peds/dogs (137), the static crowds (163), every vehicle and the buildings (180) have dropped for dozens of iterations; the trees, the most numerous vertical object on the plate, floated. Found by grepping the shared primitive, not the ledger: **180's own comment CLAIMS "cars/peds/crowds/trees all use the same shadS"** — the assert-what-the-draw-ignores law, in a COMMENT rather than a tooltip. Sized per species (broadleaf .22 / conifer .19 / poplar .11 / palm .15) at alpha .13 so a 4-tree forest hex grounds without the floor going dark (159's overlap law). Draw-only, census vacuous; `probe-treeshadow` gates on the fact that **a contact shadow can only DARKEN** — FOREST 3.2-4.9% / PARK 2.5-2.7% darker px with **ZERO lighter on every seed**, LAND-ctl (1014 cells) and WATER byte-flat, 3 seeds. A seed-42 agent warned the dense grove went 'olive-muddy, near the tolerable limit' (the kelp failure mode) — **confabulation, disproven by the probe: FOREST mean luminance moves -0.36..-0.44 of 255**, under half a luminance level. ⚠ **COSTS day +3.4% / night +3.5%** (interleaved A/B vs pristine HEAD, `probes/perfab.mjs`) — an ellipse fill on the city's most numerous object; within tolerance and precedent (118 shipped +5.1% night) but a REAL cost — **197's step-back should watch it**. A memo of `shadS`'s rgba() string was tried to buy it back and measured ZERO — reverted.) So the next domain lap (195) owes Civic (184), then Water (185); next step-back at **197**.
+  (The per-lap recaps of **184-194** — and their superseded "next lap owes" pointers — were rotated into `GROWTH-archive.md` at iter **202** to pay for 202's lines; the ROTATION line above is the live pointer. 162/167/172/177/182/187/192/197/**202** = step-backs, no domain lap.)
   **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban is measured-saturated: additive spent (118), and Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (high-street arcade: the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); **Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). **Roof-furniture is CLOSED city-wide** across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof is left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). (The per-lap recaps of **173-185**, and their superseded "next lap owes" pointers, were rotated into `GROWTH-archive.md` at iter 196 to pay for 196's lines — the header is a fixed budget, and the ROTATION line above is the live pointer.) Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
@@ -383,25 +390,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 194 entries before Iteration 192 live in
+> **Archive:** the 195 entries before Iteration 193 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 192 — the eighteenth step-back finds a clean city, perf flat (2026-07-12) [holistic step-back]
-
-**Vector** — the mandated ~5-iteration step-back (105/110/115/120/125/130/136/142/147/152/157/162/167/172/177/**182**/**187**/**192**). The eighteenth step-back; isolates iters 188–191 (all draw-only: 188 cable-car cabin sway, 189 shopfront night spill, 190 golden-hour window glint, 191 festival-street tooltip) by interleaving HEAD against iter-187's file (`ec206ef`). Not a domain × kind lap — reads the WHOLE city for cumulative drift the census and per-feature gates are blind to.
-
-**Census** — PASS, every core aggregate flat vs baseline (pop/developed/roads unmoved; cafes 455, stations 40, boulevardTrees 1203, greenRoofs 405→406 chaotic-noise). Draw-only run, so this is expected and proves only that no page threw.
-
-**Perf (interleaved HEAD vs iter-187 `ec206ef`, A/B/A/B, min per variant)** — **day 35.16ms (HEAD) vs 35.5ms (187) = −1.0%; night 41.25ms vs 41.25ms = 0.0%.** Flat — four draw-only iterations (cabin sway, shopfront spill, window gold, fete tooltip) cost nothing measurable. (Interleaved delta is the verdict, not the absolute, per the same-session-pristine-control law.)
-
-**Seasons alive** — `probe-season`: FARM winter→dry-peak **88.4**, VINEYARD 44.6→36.7, ORCHARD 25.3→41.4, FIELD 2.4→5.3, ROAD control ~0.5–2.1. The calendar is working across every agriculture tile.
-
-**Visual** — whole-frame reads at 3 lights × 2 calendars (day golden `year=2035.62` / night / winter `year=2035.02`), 2 seeds (42, 7), one agent each, cumulative-drift question. **Both VISUAL: PASS.** Seed 42: balanced diamond city, legible downtown, bright clean sand→teal coast (no dark-coast compounding), genuine lit night (windows + waxing-crescent moon + moonglade), winter a mild-but-present cool variant; no z-order tears/floaters/mojibake/blowout. Seed 7: same verdict — coast clean, night atmospheric (one agent noted the far-right night ocean is fairly dark but moon/moonglade keep it legible — not a failure), winter distinct.
-
-**Verdict — EXPLORED → REVERTED** (no change to commit; `solvista.html` untouched — a step-back, no city vector). **Thirteenth clean bill in a row.** The city is balanced, readable and beautiful at ~191 iterations; nothing has compounded into clutter or darkness; seasons, night mood and coast all read correctly; perf flat. Next domain lap (193) owes Transport (188)/Urban (189), then Nature (183)/Civic (184). Next step-back at **197**.
 
 ## Iteration 193 — the ferry lights up for the night crossing (2026-07-12) [Transport × Deepen]
 
@@ -995,3 +988,78 @@ and it is banked below rather than papered over.
 
 **Verdict: DEEPENED.** The beach now answers both its signals: the sun brings the parasols out,
 and the tide decides where they stand.
+
+## Iteration 202 — the twentieth step-back finds a clean city and a lying camera (2026-07-12) [holistic step-back]
+
+**Vector** — holistic step-back (the 20th; 197 was the 19th). No domain lap, no city change: `solvista.html` is
+**byte-identical to iter 201**. Two harness probes added.
+
+**Census** — PASS, no page errors, every metric flat (baseline pinned on the same HEAD, so a flat read is the
+correct one). Seasons alive: `probe-season` FARM winter→dry-peak **88.4** (the ledger's own expected value),
+ROAD control 0.5–2.1.
+
+**Perf — the finding. THE PER-LAP GATE IS STRUCTURALLY BLIND TO COMPOUNDING.**
+SKILL.md mandates an interleaved A/B against a *same-session pristine control*, and a step-back sets `REF` to the
+previous step-back. Done that way, the last lap is free — and that verdict is *true but useless*:
+
+| REF (step-back) | iters in arc | day | night |
+| --- | --- | --- | --- |
+| 197 `08cc77b` | 3 (199,200,201) | **+0.4%** | −1.1% |
+| 192 `d8819ec` | 10 | +5.2% | +2.1% |
+| 177 `7e2ac2c` | 25 | +7.5% | +4.1% |
+| 162 `5f01426` | 40 | **+8.6%** | **+5.7%** |
+
+All four measured interleaved against the *same* HEAD, same box, same load. The drift is ~**0.2%/iteration** — which
+is *permanently* beneath the noise floor of the 3-iteration A/B the loop is told to run, so every lap can be honestly
+graded "free" while the arc costs 8.6%. **A step-back must price the ARC, not the lap.**
+
+To spend that finding you need a SUSPECT, and 198's law says measure it, don't infer it. New
+**`probes/probe-drawbudget.mjs`** censuses the whole frame in ONE render, exploiting 198's cost model (the unit of
+cost is the **path object rasterized**, so path-object *count* is a cost proxy). It wraps the ctx terminal ops and
+attributes each to the artifact fn that issued it (leaf) and to the fn `render()` called (family):
+
+- `drawCell` is **93.8% day / 95.1% night** of all path objects. Entities (vehicles, peds, boats) are a rounding error.
+- Day leaves: `prismS` **35.7%** + `bandS` **23.6%** + `hexTile` **17.7%** = **77% in three geometry primitives** —
+  i.e. the *static terrain*, re-rasterized every frame although only the light changes.
+- Night leaves: `winBandR` **32.6%** — **43,421 path objects from 2,672 `fill()` calls**. That is 198's law made
+  visible: batching into one `fill()` does not reduce cost, the ellipses/rects are still rasterized.
+- **The proxy is CALIBRATED:** `shadS` (194's tree shadows) = **2.7%** of day path objects, and 197/198 *measured*
+  its removal at **−2.8/−3.1%**. Count predicts time.
+
+⇒ **SUSPECT NAMED, FIX NOT MANDATED** (198's law — 197 mandated a fix and burned 198 disproving it). Note the split:
+the *drift* lives in the ornament layer the loop keeps adding, but the *mass* (77%) is static terrain that predates
+the loop. Clawing back the drift means un-shipping features; the money is somewhere no lap has looked.
+
+**Visual — FOUR agent reads, TWO false FAILs, and BOTH were the instrument, not the city.**
+The first pass (shoot.mjs + `?t=`/`?year=`) FAILed on both seeds, both agents independently: *"no sun, the golden
+frame renders as NIGHT"* and *"winter is indistinguishable from summer"*. Both were **correct about the pixels and
+wrong about the cause** — I had shot the wrong frames:
+
+1. **`t=0.80` is night.** The artifact's own `phaseWord()` returns `'night'` for `t>=0.80`, and `SUNDN=0.78` means the
+   sun block *"draws nothing whatever"* past it (its own comment). I guessed the golden-hour pin. Reading `GWARM`
+   off the light curve shows it peaks at **0.786 at t=0.70** — golden hour is `[0.55,0.70)`, nowhere near 0.80.
+2. **`?year=` DRIFTS.** `playing=true` + `shoot.mjs`'s wait advances `year += dt*speed/6` ≈ **0.167 yr/s** (L7095), so
+   the summer pin drifted toward autumn and the *winter* pin drifted into **spring** — which is exactly why an agent
+   reported the farmland looked **"inverted"**. This is **iter 139's trap**, which the ledger DOCUMENTED and never
+   fixed at source, so the step-back recipe kept telling every iteration to pin with `?year=` anyway.
+
+New **`probes/shot-stepback.mjs`** fixes the camera: freezes the world in-page (`playing=false` → L7092 stops both
+clocks), `genWorld`+`__warp`+`__setYear`+`__setTime`+`render()`, no wait, and `page.screenshot()` (DOM-composited,
+per 200's law that the user sees canvas **plus** placard). Its pins come from the light curve, not a guess, and each
+frame **self-reports** its state (`golden t=0.68 LITAMT=0.28 GWARM=0.72 sun=UP phase=golden hour`).
+
+Re-shot, both seeds **VISUAL: PASS**. The locate-don't-judge check is the proof: two blind agents put the sun at
+**(0.386,0.104)** and **(0.39,0.105)**; the shipped formula at `sunP=0.863` gives **(0.388,0.107)** — within 0.003.
+Seasons now plainly visible to the agents too (bare ploughed farm, darker/bluer canopy), matching `probe-season`.
+
+**⚠ BANKED CUE (for a Transport/Sky lap, not for tonight).** Both agents, both seeds, unprompted: a long thin dark
+line reads as drawn **over** the towers and out across sand/water — *"stray thread"*, *"floating line"*. **The naive
+explanation is already DISPROVEN:** `drawMonoAt`/`drawGondAt` are called *inside* the row loop immediately after
+`drawCell(x,y)` (L6218–6223), so the aerial lines are row-interleaved and do respect z-order. Real, unexplained,
+**and it must be PROBED** — do not redesign on the agents' say-so (108/120's law).
+Second, softer cue (both agents): the **golden-hour frame is muddy** — the landmass takes a brown-mauve wash that
+flattens colour separation. That is a Sky × Polish target with a ready-made gate (`GWARM`).
+
+**Verdict** — **FIXED** (the harness, not the city). The city itself gets a clean bill: census PASS, seasons alive,
+both seeds VISUAL PASS at 3 lights × 2 calendars. The step-back's *own instruments* were producing false FAILs and a
+perf gate that could never see its own drift; both are now measured, fixed, and committed as tracked probes.
