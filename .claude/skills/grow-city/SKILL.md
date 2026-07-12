@@ -690,6 +690,27 @@ vector, whatever it is.
   subtle coast ornament at a **moderate zoom** (the scale a user looks at the coast),
   not fit (invisible) nor an extreme 7x (corner hexes stack into bars) — a 7x FAIL on a
   feature clean at fit and lovely at ~4x is the zoom being unfair, not the feature.
+- **To prove a STATE RESPONSE ("does X answer signal S?"), diff two states of ONE build — and you then need a
+  POSITIVE control (iter 196).** Every probe law above assumes the question is *"what did my edit change?"*, whose
+  isolation is patch-vs-HEAD. A **Deepen that makes an existing tile answer an existing signal** asks a different
+  question, and a patch-vs-HEAD diff answers it only indirectly. Isolate instead by rendering **one build twice at two
+  pins of S** (frozen clock, same `genWorld`): the only variable is S, so every moved pixel is an S-response. Run that
+  on **both** builds and one table settles the whole claim — `BASE` host ≈ 0 (the seam: the draw was deaf) vs `PATCH`
+  host ≫ 0 (the fix). **But "BASE = 0" is worthless on its own**, because a dead pin produces exactly the same zero as
+  a deaf draw. So carry a **positive control: a host already known to answer S** (196 used BEACH, whose damp margin and
+  tidepools provably read `TIDE`). It must move on *both* builds — that is what proves the pin is live, and it doubles
+  as proof your edit didn't disturb it. A negative control (dry land) catches the rest.
+- **A world→screen BOX around a host also samples its NEIGHBOURS — mask to the host's own geometry and SWEEP the mask
+  (iter 196).** 161 says prefer a whole-frame diff *because* boxes fight geometry; but a state-response probe (above)
+  **cannot** use a whole frame, since every other tile that answers S would pollute it. When you must box, the box is
+  contaminated by neighbours — and **a neighbour that answers the same signal S will masquerade as your host answering
+  it.** 196's first run "found" HEAD's kelp already responding to the tide at 3.2–4.7%, which would have killed the
+  premise; the real cause was the *beach's* damp margin (`w2` up to ~7px) drawn on the BEACH hex but spilling across
+  the shared edge into the kelp box. **Do not shrink the box until it passes — that is grading your own homework.**
+  Mask to the host's polygon and **sweep the mask size**: if the contaminant *walks out to an honest zero* as the mask
+  tightens (0.53% → 0.00% → 0.00%) while your signal *rises* (19% → 28% → 37%), you have proved both that the residual
+  was rim bleed **and** that your effect is centrally located — i.e. it really is the host, not an artifact. A sweep
+  that *explains* a residual is worth more than a threshold that hides it.
 - **Ask an agent to LOCATE, not to JUDGE** (108) — see the visual gate. And when
   agents disagree, **a probe is the verdict, not a rerun**.
 - **Reverting a passing-but-weak change is the system working.** The census can pass a

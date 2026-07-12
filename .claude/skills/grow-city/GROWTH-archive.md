@@ -11172,3 +11172,122 @@ tooltips are still mute — was condensed into two lines in the header.)
   agriculture's mute-tooltip tell is now spent (only GARDEN remains and its draw is season-frozen, needs a
   Deepen first). The plaza/quad **titles** are now **CASHED (iter 140)** — an owned square's headline reads
   *"Town hall forecourt"* / *"Museum grounds"* outright.
+
+
+## Header trim — iter 196 (rotated out of the maintained header, verbatim)
+
+The per-lap recaps of iters 173-185 and their superseded "next domain lap owes" pointers, cut from the
+ROTATION bullet to keep the header inside its 400-line budget. Preserved byte-for-byte:
+
+> **Stalest by number is Sky (161), but Sky is post-saturation (Deepen/Fix ONLY — additive/CA cells are traps). 173 took Urban × Deepen (the warehouse north-light clerestory — closing the roof-furniture set city-wide; see below), so the next domain lap (174) owes Nature (166)/Civic (168)**, then Water (169)/People (170)/Transport (171). **174 took Nature × New element (rolled hay bales on the stubble fields post-harvest, `probe-haybale`). **175 took Civic × Deepen (the parliament floodlights its facade — a warm uplight wash up the colonnade at night, matching the museum's dusk floodlight; the grander "tallest civic roof" only lit its dome/lantern while the museum lit its facade — the banked 168 Civic Deepen candidate; draw-only stream+pop-neutral, `probe-parliament` FACADE 24–38% at night → 0.00% day, ROAD ctl ~0, 5 seeds; joins the night-mood run moon/stars/observatory/biolum/amphitheater). **176 took Water × Interaction/UX (the river names its course — a `Course — N hexes` row via a bridge-AWARE flood `riverCourse` so a span doesn't fragment the reach; the river was the barest tooltip in the city, zero data rows over its richest water system; a `Crossings` companion was DROPPED — bridge cells over-count vs connected components and the L1633 pave-over rule makes the unit ambiguous; draw-nothing tooltip, pop+stream flat, `probe-river` 254 river hexes named 3 seeds, sea control clean 1916 hexes, sea-leak 0). So the next domain lap (178) owes People (170)/Transport (171).** 171 took Transport × Interaction/UX (the boulevards name themselves, `probe-boulevard`); 170 took People × New element (the pier's day-only anglers, `probe-anglers`). **178 took People × Deepen (the festival streets fill with people — a day-and-dusk crowd of `hashCell`-scattered figures mills on each `c.fete` ROAD cell under the bunting, then heads home by deep night; a People×Civic interconnect on a drawn CA system that was rendered for the artifact's whole life but never *inhabited*; draw-only stream+pop-neutral, `probe-fetecrowd` FETE day 2.9–3.6% → night 0.00% byte-identical, ROAD ctl ~0, 3 seeds). **179 took Transport × Deepen (the bridges light their lamps at night — the bridge sub-case `break`s before the road's night-lamp block, so every bridge went pitch dark at night for the artifact's whole life while both banks glowed; two warm rail lamps atop the deck + a `waveT` reflection on the river below, a Transport×Water interconnect; draw-only stream+pop-neutral, `probe-bridgelamp` BRIDGE night 7.4–8.1% → day 0.00% byte-identical, ROAD ctl 0.00% both, 3 seeds). So the next domain lap (180) owes Urban (173, Deepen/Polish only — measured-saturated).** **180 took Urban × Polish (the towers ground their own weight — the fixed 0.42×0.13 contact shadow under every building now scales with mass `shf=clamp((h-9)/120,0,1)`, so a 150-unit tower grounds on a 0.94/0.23 pool while a bungalow keeps the old blob; centered in the house style since nothing in the artifact casts a directional shadow, draw-only stream+pop-neutral, `probe-massshadow` TALL 0.6–1.0% ≫ SHORT/CTL ~0.05% 3 seeds; the first scaling was too weak because the tower body occludes its own base shadow — size for the ring not the area). So the next domain lap (181) owes Sky (161, Deepen/Fix ONLY — saturated), then the step-back at 182.** **181 took Sky × Deepen (the sea catches the golden hour — bright additive-gold sun-path glints on the open water at dawn/dusk, reading 161's reusable `cwarm`/`skyBot` signal onto the largest surface in the frame, filling the gap between the noon glitter and the night moonglade; a Sky×Water interconnect, draw-only stream+pop-neutral, `probe-seagold` SEA dusk ~31%/dawn ~22% → noon/night ~0, LAND ctl 0 all frames, 3 seeds. ⚠ A warm alpha WASH over teal desaturates to OLIVE — carry sunset/warm light over cool water with ADDITIVE `'lighter'` glints, not a wash; two tuning rounds were lost raising a wash's alpha before the blend mode was the real fix. `GWARM`/`GWSB` are now globals beside `LITAMT` for any golden-hour draw.)** 171's fete-street TOOLTIP (`c.fete` drawn but unnamed in `describeTile`) is still banked, and now more worth cashing since the street is no longer empty. **182 was the mandated STEP-BACK — ELEVENTH clean bill in a row (perf 178→181 flat: day +1.0% / night +0.9% vs iter-177 `7e2ac2c`; seasons alive FARM dry-peak 88.4; night core off-centre both seeds ~(.47,.50)/(.47,.60)). No city change.** **183 took Nature × Interaction/UX (the fields name their own harvest — a `Fields` crop-phase row in the FARM tooltip via a shared `farmPh(v)`, the biggest agricultural surface, the one 148's "agriculture tell spent" note had OVERLOOKED; draw-nothing tooltip + byte-identical one-predicate refactor, pop+stream flat, `probe-farmtip` 3 seeds). So the next domain lap (184) owes Civic (175), then Water (176)/People (178)/Transport (179).** Next step-back at **197** (192 done: HEAD vs iter-187 interleaved perf flat, isolated 188–191). **Urban is measured-saturated now: additive spent (118), Connect measured-hard TWICE (160 RES terracing, 165 high-street arcade — the `hstr` parade zigzags with parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). Roof-furniture is now CLOSED city-wide across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). 
+
+
+## Header trim — iter 196, cue (e½) (rotated out of the maintained header, verbatim)
+
+Cue (e½) was CLOSED by iter 102 (the commons), but its full brief remained under *Open cues* in the maintained
+header for ~94 iterations, still telling a future lap to build a lung the city already had. Moved here byte-for-byte;
+the durable urban findings were kept in the header.
+
+>   **(e½) the interior is an edge-to-edge carpet — now DENSITY-ONLY** *(cue (e)'s skyline half was
+>   **CLOSED by iter 98**; its **palette** half was **CLOSED by iter 99**)* Urban fabric — iter 94's
+>   holistic agent called the landmass "too uniform… little breathing room between core and edge,"
+>   and the interior an "edge-to-edge carpet of roads + rooftops with little green breathing room."
+>   **98 fixed the skyline; 99 fixed the colour; 100 put the first *earned* green in the interior
+>   (7–10 `QUAD` hexes behind the institutions) — but it did NOT add a lung.** Iter 100's step-back
+>   agent, reading the whole frame: the interior *"does breathe… but green is fragmented into small
+>   patches rather than any real district-scale lung,"* and its top recommendation was to
+>   **consolidate green into one or two district-scale parks/greenways** instead of more scatter.
+>   That, plus mid-block density, is exactly what remains. Note iter 100 spent −1.03% pop for 23
+>   cells, so a district-scale park is affordable but not free.
+>   **Iter 101 attacked this and REVERTED — read its findings before re-trying.** It settled three
+>   things and cost nothing: (i) **`PARK` is permanent** — nothing in `tick()` consumes one, so green
+>   planted in `genWorld` survives to 2035, and the "plant it early" host iter 88 hoped for is real;
+>   (ii) green costs about **0.045% pop per cell** and partly repays it, because `PARK` is the top
+>   `valueSrc` (0.92) and lifts the frontage it faces (`cafes` +141, `COM` +51); (iii) **the lung must
+>   be a BLOB, not a ribbon** — a 1–2 hex corridor is untraceable at frame scale whatever its contrast
+>   (see the law at the top). So: ~50 contiguous cells, **≥3 hexes across**, sited by
+>   `hexDist(x,y,CBDX,CBDY)`, not by `c.val`. The greenway's flag/tooltip/half-segment path draw and
+>   its contiguity probe were all correct — only the shape was wrong.
+>   Heed iter 92 (never zone against `TOWER` near the core: −9.8% pop) **and** iter 98
+>   (the upgrade probability *saturates*, so leaning on `p` is a weak lever that costs towers at 240
+>   pop each). A `MID`/`RES` thinning rule, or interior parks, is likelier than anything touching
+>   towers. **This is the first (e½) move that must change tiles, so it cannot be stream-neutral —
+>   budget for a few % of chaotic wobble and judge it on the tile histogram.**
+>   The same agent flagged seed 1234's long straight monorail/cable
+>   lines as still reading like a "wireframe/UI stroke" — but iters 85/87 closed that with two
+>   agents each, so treat this as one un-zoomed opinion, **not** a reopening of cue (c).
+
+## Iteration 186 — the café tables fill with patrons by day (2026-07-12) [People & activity × New element]
+
+**Vector — People & activity × New element** (SHIPPED). Rotation named the stalest domain: **People** (last SHIP 178;
+the 185 entry explicitly owed the 186 lap to People). On *kind*: Deepen just ran on People (178) and has been globally
+hot (178/179/181), Interaction/UX ran twice recently (183/184), and Polish ran the last two laps (180/185) — so **New
+element** was both the freshest kind (globally unused since Nature 174) and the one that gives a guaranteed-flat pop
+when drawn-only. Aimed, per 127's law, not at People's spent *entity* list but at an under-served *surface*.
+
+**The seam — set tables with no diners.** The park café/kiosk (drawn since long before the ledger, on every PARK hex
+adjacent to a shop — the 455-strong `cafes` surface) puts out two parasol tables with poles and tabletops… and nobody
+sits at them. The exact shape 127 found for the picnic lawn: a drawn amenity for people, with no people. A café is only
+alive when someone is having a coffee at it.
+
+**Change (~10-line draw, all draw-only).** In the `T.PARK` café block, after each parasol is drawn, add day-only
+seated patrons: two chairs either side of the parasol, each gated `hashCell(x,y,seedNum^SALT)>0.5` so some sit empty
+(a lived-in terrace, not a packed one), each a short colored body (`['gold','sage','lav','coral']`, `hashCell`-picked)
++ an ink head, clearly smaller/seated vs a standing ped. **Day-only** (`LITAMT<0.5`, matching the picnic lawn right
+below it) so the terrace empties after dark. No tile / entity / `rng()` / `hashCell`-terrain / `tick()` pass / terrain
+change; strings pure-ASCII (134); no new tile/entity → census hook, TILELABEL, ENTINFO all unchanged. Pop + stream
+provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity/life/transport
+counts identical. Vacuous by construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-cafepatron.mjs` (new, promoted; cloned from `probe-whitecap.mjs`, the PATCH-vs-HEAD template).**
+Diffs PATCH vs pristine HEAD over PARK screen boxes at a frozen frame, day/night, with two controls: PARKC (PARK cells
+NOT adjacent to shops — no café draw, must stay ~0) and ROAD (must stay 0 — the café block is the only edit). Rebuilt
+in-page (`genWorld`+`__warp`), STARS cleared, `Math.random` stubbed, movers cleared, clock frozen (163 law). seeds
+7/42/1234: **CAFE patrons DAY 0.99/0.94/0.93% -> NIGHT 0.00% all** (the `LITAMT` day-gate, night byte-identical);
+**PARKC control <=0.01% every frame**; **ROAD control 0.00% every frame**. Clean separation CAFE >> PARKC ~ ROAD ~ 0.
+**VERDICT: PASS (3 seeds).**
+
+**Visual — `probes/shot-cafepatron.mjs` (new, promoted).** ~7-8x zoom onto a café-edge PARK tile (selector requires
+occupied seats + `v>=0.44` to skip the pond/fountain that would overdraw the tables + front-most row to avoid tower
+occlusion), day + night. seed 42: patrons clearly visible as small seated colored bodies + ink heads flanking the coral
+and teal parasols, correctly smaller/seated vs the taller bunting-pole standers, gone at night — agent + my own read
+both **VISUAL: PASS**, whole frame balanced. seed 7: after re-framing (the first framing landed on a pond café where
+the pond overdraws the tables, then on tower-occluded ones), patrons clearly visible on the park hex beside the shop's
+striped awning by day, park hex dark and empty at night. Whole-city wide/downtown reads (both seeds, agents): balanced
+coherent coastal city, no z-order tears / floaters / blowout / compounded clutter.
+
+⚠ **A confidently-wrong agent FAIL, settled by the probe (the loop's law working).** The seed-7 visual agent FAILed
+claiming the day/night behavior was *inverted* — "patrons appear at NIGHT, absent by DAY." The probe disproves it flat:
+night café-diff is **0.00% byte-identical to HEAD** on seed 7, and the code gates `LITAMT<0.5` (night LITAMT=1.00, block
+skipped). The "night figures" it saw were the *base* shop's lit-window silhouettes, present in HEAD too — not my
+patrons. The FAIL was really a framing artifact (its shot centered on a pond café whose tables the pond overdraws, plus
+a lit shop nearby). Per the header law (agents fail confidently; a FAIL naming a cause absent from the code is a cue to
+*measure*, not redesign) the probe was the verdict, and a corrected framing then showed the seed-7 patrons plainly.
+
+**Verdict — SHIPPED.** The park café tables — set with parasols since before the ledger and never once occupied — now
+fill with seated patrons by day and empty after dark, like the picnic lawn beside them. A People × New element aimed at
+a surface (127's law), draw-only, pop + stream flat, ~10 lines + a probe + a shot. People's New element cell gains 186
+(41/56/127/170/**186**). Next is the mandated **step-back at 187**; the next domain lap (188) owes Transport (179), then
+Urban (180)/Sky (181).
+
+### Findings for later laps
+- **A DRAWN AMENITY-FOR-PEOPLE WITH NO PEOPLE IS THE SAME SEAM AS THE MUTE-TOOLTIP TELL — look for set tables, empty
+  benches, vacant stages.** 127 found it on the picnic lawn (blanket, no picnickers), 186 on the café terrace (tables,
+  no diners). The move: a draw already stages a human activity but omits the humans; add them day-gated (`LITAMT<0.5`)
+  and `hashCell`-scattered so pop stays flat and the night hands off cleanly. Candidates still open: the fountain-plaza
+  benches, the amphitheater seating tiers (a daytime audience?), the market stalls (but MARKET reads 0 — dead host,
+  107), the surf-beach towels (already crowded). Prefer the ones on a *developed/urban* surface, since the coast and
+  parks are getting full.
+- **A LATER DRAW IN THE SAME TILE CASE CAN OVERDRAW YOUR FEATURE — mind the case's own paint order.** The café tables
+  are drawn first in `T.PARK`, then `if(v<0.24)` paints a big pond ellipse *over* them, and `v<0.32` a fountain — so on
+  low-value café tiles the tables (and my patrons) are partly buried. The feature is correct (probe 0.93%+), but a
+  close-up must frame a `v>=0.44` café tile to SEE it. When a per-tile feature reads absent at some framings but the
+  probe says present, suspect a later same-case draw occluding it before you suspect the feature.
+- **THE VISUAL-SHOT SELECTOR IS PART OF THE GATE — teach it to skip occluded instances.** A café-edge tile sits next to
+  shops/towers, which draw tall in later rows and occlude it; a pond/fountern café buries its own tables. `shot-cafepatron.mjs`
+  ends up selecting for occupied seats AND `v>=0.44` AND the front-most row precisely so the framing lands on a *visible*
+  instance. A sparse/host-gated feature needs its shot to hunt for a clean example, or the visual gate reads a false
+  absence (and an agent then invents a cause for it).
+
