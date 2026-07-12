@@ -14335,3 +14335,111 @@ instrument that *cannot represent hue*. It measured a real thing, passed a chang
 and only when I stopped and measured the word the agents actually used did the bug appear, exactly
 where they said it was. **Build the probe in the units of the complaint.**
 
+
+<!-- header bullets rotated out of GROWTH.md at iteration 225 (closed cues, riders done) -->
+
+  **(v) CLOSED by 215**; its nit rides a coast lap (i.e. **223**): at extreme zoom the marram tufts trend into a loose vertical band — **scatter depth `f` harder.**
+  **(r) CLOSED by 216** (archived; law ⇒ SKILL.md). ⇒ **FACADES ARE SPENT for Urban**; only the **harbour apron** is left (cue (o): a port lap must build the waterfront FIRST). Urban's live cue is **(ac)**.
+
+## Iteration 215 — the marram closes the seam (2026-07-13) [Nature × Polish]
+
+**Vector.** Nature was the stalest domain (last 206) and the lap owed it. It had two
+banked cues; I took **(v) the naked sand<->park seam** over the GARDEN-calendar cue —
+(v) was raised *independently by both step-back agents on both seeds* at 214 (212's law:
+weight a two-agent independent aside above any verdict), and GARDEN would have been a
+fourth **Deepen** in five laps on a tile measured **58% occluded** (206). Kind varies to
+**Polish**; domain rotates to Nature.
+
+**Host, measured before designing** (`probes/probe-seamhost.mjs`, 6 seeds). The seam is
+real and unanimous: **52-63 sand hexes touch green per city** (36-43 BEACH + 15-21 DUNE),
+~42-55 green hexes touch sand, and the green neighbour is **essentially always SHOREPARK**
+(87-115 adjacencies; PARK appeared *once* in six seeds). Not `T.MARKET` — the host exists at
+scale. Cue (v) guessed DUNE's marram might already sit on the seam; it does not — the marram
+is drawn on the **dune crest**, and only **10-18** of ~55 seam hexes are marram dunes at all.
+The seam itself was bare on both sides.
+
+**Change.** `seamVeg(x,y,gx,gy,sandSide)` (new, beside `drawCell`), called from the
+**BEACH**, **DUNE** and **SHOREPARK** draw cases. Each side lends the other its texture near
+the shared edge: **marram tufts** (a root clump + a blade or two) root out of the sand on
+hexes touching the park, and **wind-blown sand specks** scatter into the lawn on park hexes
+touching the sand. Draw-only, `hashCell`-gated, no `rng()`, no terrain.
+Three laws shaped it: **points, never a stroke along the edge** (159 — a per-edge line joins
+into an outline and re-exposes the geometry it is hiding), so every mark is scattered *along*
+AND *back from* the edge and a fifth of the edges are skipped outright; **each hex draws only
+inside itself** (211 — draw order is depth order, so an ornament offset into the hex in front
+is painted over), so the transition is made by two hexes **interdigitating**, not by one
+spilling across; and **a hairline cannot put a pixel down** (203) — see below.
+
+**Census.** PASS. Every metric **+0**, tile histogram **empty** — the correct, vacuous result
+for a draw-only change. It proves only that nothing threw. The gate is the probe.
+
+**Probe** (`probes/probe-seam.mjs`, 3 seeds x day+night). The complaint is *"warm tan meets
+cool green with NO TRANSITION"* — a claim about **colour mixing across a boundary** — so
+measure that and nothing else (214: build the probe in the units of the complaint):
+`green ink on sand` = px where G>R (sand is R>G>B, so it can only be marram); `tan ink on
+lawn` = px where R>G+12 (lawn is G>R, so it can only be blown sand). Floor measured in-run
+(213); `Math.random` stubbed in `addInitScript` before the page's own script.
+
+| day | green ink on seam SAND | tan ink on seam LAWN | ctrl sand | ctrl lawn |
+| --- | --- | --- | --- | --- |
+| seed 7 | 31.2 -> **50.6** /1k px | 80.6 -> **115.5** | **1 px** | 3 px (floor 3) |
+| seed 42 | 40.1 -> **62.2** | 80.5 -> **117.0** | **0 px** | **0 px** |
+| seed 1234 | 39.5 -> **53.6** | 82.2 -> **110.0** | **0 px** | **0 px** |
+
+**Both controls — sand with no green neighbour, lawn with no sand neighbour — changed 0-3 px
+against a floor of 0-3, on every seed and both lights.** Same tiles, same code, differing only
+in whether they sit on the seam: the change lands on the seam and nowhere else, by construction.
+
+**203's law bit, and the probe caught it.** The first build's marram was a `lineWidth 0.6`
+blade *only*. It changed ~800 px on the seam sand — and moved the green-ink count **not at
+all** (31.2 -> 30.7): a blade thinner than a device pixel is **always blended with the sand**
+and can never produce a green-dominant pixel. It was *hazing* the sand, not tufting it, and
+the interdigitation was **one-sided** (the lawn's ellipse specks worked from the start). Adding
+a **root clump** — a solid 1-2px ellipse under the blades, which is also what a marram tussock
+actually looks like — took the sand side from flat to **+36..+62%**. A hairline needs a body.
+
+**Visual.** PASS on both seeds, day and night (2 agents, before/after, whole-city + a 4.2x
+close-up **aimed** at the longest run of seam — 201: a fixed clip is not a framing;
+`probes/shot-seam.mjs`). Both independently confirmed the thing under test: seed 42 — *"BEFORE:
+an unbroken tan/green staircase, you can trace every hex edge. AFTER: the same run is feathered
+... it reads as a back-beach transition, not a rash or a dotted outline"*; seed 7 — *"a clean
+two-tone hex staircase"* becomes *"a back-beach dune fringe, not a rash, not a dotted row, and
+not an outline tracing the facets."* No z-order tears, no marks in open water, whole frame
+unchanged at 1x.
+
+**Perf — PAID, and it disproved my own hypothesis twice.** `probe-drawbudget` scores `seamVeg`
+at **692 path objects = 0.7% day / 0.5% night**. But six interleaved A/B runs read **day
++2.1..+4.5%, night +1.1..+2.2%** — consistently positive, never straddling zero (199's inert
+control straddles zero at +-1%), so it is real, and it is **~4x what the per-path-object model
+predicts**. I tested two mechanisms and **both came back negative**: (1) a continuous `f` in
+`col(name,f)` mints a unique `CCACHE` key per tuft and misses every frame — quantizing it
+bought **nothing**; (2) per-tuft `strokeStyle`+`fillStyle` writes (~1384/frame) — hoisting them
+to one-per-hex (~210) bought **nothing**. Cost accepted on 194's precedent (~3% day for the
+grounding of every tree, judged worth paying). **The suspect is NAMED, not fixed** (198): the
+692 objects are 464 ellipse fills + **228 line strokes**, and a stroke must generate outline
+geometry (with round caps) that a fill does not — **198's cost model was measured on SOLID
+FILLS ONLY, exactly as the gradient hole was.** A clumps-only variant read night **+0.7/+1.0%**
+vs the full build's **+1.1..+2.2%**, which is suggestive but two noisy runs and visually
+unverified. ⇒ **cue (x)**, below.
+
+**Verdict: SHIPPED.** Cue (v) CLOSED. The coastline no longer has a traceable hex staircase.
+
+
+<!-- cue bodies compressed out of the GROWTH.md header at iteration 225 (live warnings kept there) -->
+
+  **(ae) CLOSED by 223** (body archived). Root cause: the ladder's per-caller **gain triples were chosen for their
+  channel RATIOS and never normalised for their MAGNITUDE** (sand luma-mean **1.099**, green **1.119**), so each rung
+  gifted its own surface **~10% night luminance** while correctly fixing its hue. One line in `washRGB` hands it back
+  (`n = 1/(gr*.30+gg*.59+gb*.11)`); a uniform rescale **cannot rotate a colour**, so every hue held exactly. Ordering
+  restored: **TOWER 108 > COM 107 > MID 97 > BEACH 96.** ⚠ **The invariant is now ASSERTED by
+  `probes/probe-goldenhue.mjs` — run it whenever you touch a gain triple** (and do not fork a second wash). ⚠ **Watch:
+  PARK vs ROAD separation is 14, just under the ~15 collapse floor** — both agents still located the parks by colour
+  alone (they part in **HUE**, 104° vs 15°, not luminance), but a later lap that lowers the greens again will bite here.
+  **(ac) CLOSED by 224 — THE 217/218/219 SKYLINE LADDER IS COMPLETE** (body + verdict archived). The city now has
+  mass downtown (219) **and** a tapering silhouette (224: `crownGap` 20.9 → 42.6, `corr(th,core)` 0.616 → 0.811,
+  envelopes near-monotone on 3 seeds; free — path objects −0.1%). ⚠ **THE WHOLE `c.th` LADDER IS NOW SPENT: do not
+  re-open placement (dead lever, 218), the COM fork (spent, 219), the height noise, or `TCAP` (224).** Two live
+  warnings from it: (1) ⚠ **`c.th` HAS TWO WRITERS** — placement *and* the 2022+ growth rule; touch one, check the
+  other (⇒ SKILL.md). (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did (0.125) and
+  **219 invalidated it** (now 0.282) without anyone noticing for 6 laps; normalise by the *formula's* own max, as
+  `TCAP` does. Urban's live cue is now **(af)**.

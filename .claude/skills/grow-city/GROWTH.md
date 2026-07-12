@@ -26,7 +26,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163** | 71, **154**, **191** |
 
 - **Interaction/UX kind — the FEATURE INVENTORY (U2 / 42 / 52 / 71 / 97 / 105 / 117 / 122 + U5's
@@ -36,26 +36,37 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringable for free — and since 133 a hovered TILE is ringed too. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (which line /
   route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
-- **ROTATION.** Last vector per domain: Sky **208** · People **210** ·
-  Transport **211** · Civic **213** · Nature **221** · Water **223** · Urban **224**.
+- **ROTATION.** Last vector per domain: People **210** ·
+  Transport **211** · Civic **213** · Nature **221** · Water **223** · Urban **224** · Sky **225**.
   (**222 = the 24th step-back; the next is 227.**)
   ✅ **THE SKYLINE LADDER IS COMPLETE (217→218→219→224)** — mass downtown *and* a taper. Cue **(ac) CLOSED**; the
   whole `c.th` ladder is **SPENT** (see (ac) below for the two warnings it leaves). Laws in SKILL.md.
   ✅ **THE WASH LADDER IS COMPLETE *AND* LUMINANCE-SAFE (223)** — cue **(ae) CLOSED**, and 221's "greens are hot"
   watch item closed with it (one root cause, one line). **Its invariant is now ASSERTED by `probe-goldenhue.mjs`.**
-  🔴 **225 OWES SKY (stalest BY FAR — 208, now 17 laps cold), THEN PEOPLE (210).** Urban has now had **five** laps
-  (216/218/219/220/224), Nature 221, Water 223 — **rotate OFF all three; they are the well-trodden ones and their
-  live cues are the WEAKEST left.** ⚠ **224 read Sky's cue (s) and confirmed it is a genuine dead end** (the sun is
-  high *on purpose* — 200; the warmth is at the bottom; reconciling them is a sky-gradient redesign, not a lap), so
-  **do NOT burn another lap re-reading (s).** Sky is post-saturation (Deepen/Fix ONLY) and its other cue **(ab) is
-  LOW and arguably correct by design** ⇒ **if Sky again has nothing, GO TO PEOPLE (210), not back to Urban.** People's
-  banked find is 137's: **the static standing crowds are the last movers casting no `shadS()` shadow** (People ×
-  Polish) — and 210 proved People is probe-able like any domain. Remaining cues, ranked: **(af) tower-facade
-  wallpaper** (Urban × Polish — instrument exists, `probe-facade.mjs`), **(u) the violet pier deck** (Water × Polish —
-  the LAST warm surface still rotated; 223 did NOT reach it, the deck bypasses `col()`), **(y) the scorched inland
-  cluster** (Nature × Polish), **(z) the clipped HUD label** (Interaction/UX × Polish — a stale column, and **224's
-  agents saw it AGAIN, unprompted, on both seeds**). Nature's **GARDEN staggered beds** (Nature × Deepen) is held by
-  cue (p).
+  🔴 **226 OWES PEOPLE (stalest — 210), THEN Interaction/UX (cue (z)).** **225 took Sky and it was NOT empty** — the
+  header had written Sky off as post-saturation with only two weak cues, and the real seam was neither of them: it was
+  **`shadS`, a function named for a SHADOW that could not cast one** (199's tell, on a *function*). ⇒ **"A domain is
+  saturated" is a claim about the CUES YOU HAVE BANKED, not about the code — when a stale domain's cue list looks
+  dead, go GREP ITS SEAM before you skip it.** Sky's cues **(s)** (dead end, confirmed twice — do NOT re-read) and
+  **(ab)** (low, arguably correct by design) both still stand unspent; Sky is now *fresh* anyway. Urban has had
+  **five** laps (216/218/219/220/224) — keep rotating off it. People's banked find is 137's: **the static standing
+  crowds are the last movers casting no `shadS()` shadow** (People × Polish) — ⚠ **225 REFRAMES IT: `shadS` now
+  carries the sun's vector, so anything given a shadow inherits the whole day for free; the cue is CHEAPER than it
+  was.** Remaining cues, ranked: **(af) tower-facade wallpaper** (Urban × Polish — instrument exists,
+  `probe-facade.mjs`), **(u) the violet pier deck** (Water × Polish — the LAST warm surface still rotated; 223 did NOT
+  reach it, the deck bypasses `col()`), **(y) the scorched inland cluster** (Nature × Polish), **(z) the clipped HUD
+  label** (Interaction/UX × Polish — a stale column, and **224's agents saw it AGAIN, unprompted, on both seeds**).
+  Nature's **GARDEN staggered beds** (Nature × Deepen) is held by cue (p).
+  **225 (Sky × Deepen, SHIPPED): THE SHADOWS NOW READ THE SUN.** `shadS` is the ONE function every shadow in the city
+  routes through (trees, palms, peds, crowds, dogs, gulls, every vehicle, the boardwalk), and it drew a **centred
+  ellipse at a hard-coded alpha** — identical at dawn, noon, golden hour and midnight — while the artifact moves a sun
+  across the sky and sets it. It now reads a per-frame sun-vector (**`SHOFF`** throw · **`SHLEN`** stretch ·
+  **`SHAMT`** opacity) derived from the SAME `sunP`/altitude the disc is drawn from. Measured: throw/width **−0.65
+  morning / +0.70 evening** (the sign flip), **0.00 at noon and at night**, both no-cast hours with `rx` identical to
+  HEAD. **FREE** — still one ellipse per call (path objects −0.07% day / +0.03% night). ⚠ **Noon is BYTE-IDENTICAL by
+  construction** (the sun is high AND centred there) ⇒ **any future shadow lap has a free dead-regime control at
+  t=0.415.** ⚠ **`SHAMT` must never reach 0 at night** — with no sun the remaining patch is what keeps every ped,
+  tree and car from FLOATING; it is an ambient contact patch, not a cast shadow.
   **STEERING FROM THE LAST LAPS — recaps live in their own entries / the archive; only the WARNINGS live here.**
   **213 (Civic × Deepen):** ⚠ **`nightDeep()` IS PINNED AT 1 ALL DAY** — harmless in a draw (`LITAMT` is 0 anyway),
   a trap for any NON-draw reader, so guard every reader. **The civic night-light audit is DONE — do not re-run it**;
@@ -319,27 +330,21 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ⚠ **GLASS (TOWER/COM) KEEPS the cool tint** (cannot rotate) and **ROAD staying grey is CORRECT** (214). **Do NOT
   fork a second wash — extend `washRGB`.** ⚠ **Still rotated, both bypassing `col()`:** the **pier deck** (cue (u))
   and **FARM** (`cropRGB`/`colRGB` — a real lap, not a freebie).
-  **(ae) CLOSED by 223** (body archived). Root cause: the ladder's per-caller **gain triples were chosen for their
-  channel RATIOS and never normalised for their MAGNITUDE** (sand luma-mean **1.099**, green **1.119**), so each rung
-  gifted its own surface **~10% night luminance** while correctly fixing its hue. One line in `washRGB` hands it back
-  (`n = 1/(gr*.30+gg*.59+gb*.11)`); a uniform rescale **cannot rotate a colour**, so every hue held exactly. Ordering
-  restored: **TOWER 108 > COM 107 > MID 97 > BEACH 96.** ⚠ **The invariant is now ASSERTED by
-  `probes/probe-goldenhue.mjs` — run it whenever you touch a gain triple** (and do not fork a second wash). ⚠ **Watch:
-  PARK vs ROAD separation is 14, just under the ~15 collapse floor** — both agents still located the parks by colour
-  alone (they part in **HUE**, 104° vs 15°, not luminance), but a later lap that lowers the greens again will bite here.
+  **(ae) CLOSED by 223** (root cause = `washRGB` gain triples chosen for their RATIOS, never normalised for their
+  MAGNITUDE; body archived, law ⇒ SKILL.md). ⚠ **The invariant is ASSERTED by `probes/probe-goldenhue.mjs` — run it
+  whenever you touch a gain triple**, and do not fork a second wash. ⚠ **Watch: PARK vs ROAD separation is 14, just
+  under the ~15 collapse floor** — a later lap that lowers the greens again will bite here.
   **(af) TOWER FACADES ARE THE NEW WALLPAPER (222, both seeds, unprompted).** *"The central tower field is a repeating
   teal cylinder motif"* (42) · *"the same tall pale slab with horizontal band-glazing repeats across the whole
   western/central two-thirds"* (7). **216 spent the MID facades and used TOWER as its CONTROL** — so this is 216's
   lever one tile over, and its instrument already exists: **`probes/probe-facade.mjs`** (distinct stripe rhythms, top
   rhythm's share of the stock, and the corduroy number). Urban x Polish — but it queues BEHIND **(ac)**.
-  **(ac) CLOSED by 224 — THE 217/218/219 SKYLINE LADDER IS COMPLETE** (body + verdict archived). The city now has
-  mass downtown (219) **and** a tapering silhouette (224: `crownGap` 20.9 → 42.6, `corr(th,core)` 0.616 → 0.811,
-  envelopes near-monotone on 3 seeds; free — path objects −0.1%). ⚠ **THE WHOLE `c.th` LADDER IS NOW SPENT: do not
-  re-open placement (dead lever, 218), the COM fork (spent, 219), the height noise, or `TCAP` (224).** Two live
-  warnings from it: (1) ⚠ **`c.th` HAS TWO WRITERS** — placement *and* the 2022+ growth rule; touch one, check the
-  other (⇒ SKILL.md). (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did (0.125) and
-  **219 invalidated it** (now 0.282) without anyone noticing for 6 laps; normalise by the *formula's* own max, as
-  `TCAP` does. Urban's live cue is now **(af)**.
+  **(ac) CLOSED by 224 — THE 217/218/219 SKYLINE LADDER IS COMPLETE** (body archived): mass downtown *and* a taper.
+  ⚠ **THE WHOLE `c.th` LADDER IS SPENT: do not re-open placement (dead lever, 218), the COM fork (219), the height
+  noise, or `TCAP` (224).** Two live warnings: (1) ⚠ **`c.th` HAS TWO WRITERS** — placement *and* the 2022+ growth
+  rule; touch one, check the other. (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did
+  (0.125), **219 invalidated it** (0.282) unnoticed for 6 laps; normalise by the formula's own max (⇒ SKILL.md).
+  Urban's live cue is now **(af)**.
   **(ab) THE CALENDAR IS LOUD PER-TILE AND QUIET PER-FRAME (217, Sky × Deepen — LOW; now said by FOUR agents, +221's
   seed 42).** *"Winter is indistinguishable from day"* — but `probe-season` refutes the premise (FARM **87.0**, ROAD
   control 0.6: the calendar is ALIVE). Theirs is a **frame-share** claim (biggest-amplitude tiles are the fewest:
@@ -351,11 +356,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   lever: route the deck's fills through **`sandCol()`**. ⇒ **Audit, don't guess the hosts** — `probes/probe-sandhue.mjs`
   (any WARM surface near **hue ~308, chroma <15** is rotated; ROAD at 308 is FINE — asphalt *is* grey). ⚠ **GATE ON THE
   DECK'S DISTANCE FROM ITS OWN DAYLIGHT HUE, NOT a pairwise separation** — 221 proved separation *rewards* the bug.
-  **(v) CLOSED by 215**; its nit rides a coast lap (i.e. **223**): at extreme zoom the marram tufts trend into a loose vertical band — **scatter depth `f` harder.**
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; full statement in the
   PERF bullet's "TWO HOLES" paragraph).** Build a **stroke-vs-fill sweep at equal path-object count**. Two
   mechanisms are already ruled OUT — the `CCACHE` key churn and the per-mark style writes both measured **zero**.
-  **(r) CLOSED by 216** (archived; law ⇒ SKILL.md). ⇒ **FACADES ARE SPENT for Urban**; only the **harbour apron** is left (cue (o): a port lap must build the waterfront FIRST). Urban's live cue is **(ac)**.
   **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** *"A small dark
   brown/scorched hex cluster in the mid-left inland block that reads oddly against the surrounding green."* ⚠ The fire
   CA is a **GHOST** (cannot ignite at 2035), so this is almost certainly **LOGGING/clearcut, not BURNT** — **identify
@@ -387,94 +390,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 217 entries before Iteration 215 live in
+> **Archive:** the 218 entries before Iteration 216 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 215 — the marram closes the seam (2026-07-13) [Nature × Polish]
-
-**Vector.** Nature was the stalest domain (last 206) and the lap owed it. It had two
-banked cues; I took **(v) the naked sand<->park seam** over the GARDEN-calendar cue —
-(v) was raised *independently by both step-back agents on both seeds* at 214 (212's law:
-weight a two-agent independent aside above any verdict), and GARDEN would have been a
-fourth **Deepen** in five laps on a tile measured **58% occluded** (206). Kind varies to
-**Polish**; domain rotates to Nature.
-
-**Host, measured before designing** (`probes/probe-seamhost.mjs`, 6 seeds). The seam is
-real and unanimous: **52-63 sand hexes touch green per city** (36-43 BEACH + 15-21 DUNE),
-~42-55 green hexes touch sand, and the green neighbour is **essentially always SHOREPARK**
-(87-115 adjacencies; PARK appeared *once* in six seeds). Not `T.MARKET` — the host exists at
-scale. Cue (v) guessed DUNE's marram might already sit on the seam; it does not — the marram
-is drawn on the **dune crest**, and only **10-18** of ~55 seam hexes are marram dunes at all.
-The seam itself was bare on both sides.
-
-**Change.** `seamVeg(x,y,gx,gy,sandSide)` (new, beside `drawCell`), called from the
-**BEACH**, **DUNE** and **SHOREPARK** draw cases. Each side lends the other its texture near
-the shared edge: **marram tufts** (a root clump + a blade or two) root out of the sand on
-hexes touching the park, and **wind-blown sand specks** scatter into the lawn on park hexes
-touching the sand. Draw-only, `hashCell`-gated, no `rng()`, no terrain.
-Three laws shaped it: **points, never a stroke along the edge** (159 — a per-edge line joins
-into an outline and re-exposes the geometry it is hiding), so every mark is scattered *along*
-AND *back from* the edge and a fifth of the edges are skipped outright; **each hex draws only
-inside itself** (211 — draw order is depth order, so an ornament offset into the hex in front
-is painted over), so the transition is made by two hexes **interdigitating**, not by one
-spilling across; and **a hairline cannot put a pixel down** (203) — see below.
-
-**Census.** PASS. Every metric **+0**, tile histogram **empty** — the correct, vacuous result
-for a draw-only change. It proves only that nothing threw. The gate is the probe.
-
-**Probe** (`probes/probe-seam.mjs`, 3 seeds x day+night). The complaint is *"warm tan meets
-cool green with NO TRANSITION"* — a claim about **colour mixing across a boundary** — so
-measure that and nothing else (214: build the probe in the units of the complaint):
-`green ink on sand` = px where G>R (sand is R>G>B, so it can only be marram); `tan ink on
-lawn` = px where R>G+12 (lawn is G>R, so it can only be blown sand). Floor measured in-run
-(213); `Math.random` stubbed in `addInitScript` before the page's own script.
-
-| day | green ink on seam SAND | tan ink on seam LAWN | ctrl sand | ctrl lawn |
-| --- | --- | --- | --- | --- |
-| seed 7 | 31.2 -> **50.6** /1k px | 80.6 -> **115.5** | **1 px** | 3 px (floor 3) |
-| seed 42 | 40.1 -> **62.2** | 80.5 -> **117.0** | **0 px** | **0 px** |
-| seed 1234 | 39.5 -> **53.6** | 82.2 -> **110.0** | **0 px** | **0 px** |
-
-**Both controls — sand with no green neighbour, lawn with no sand neighbour — changed 0-3 px
-against a floor of 0-3, on every seed and both lights.** Same tiles, same code, differing only
-in whether they sit on the seam: the change lands on the seam and nowhere else, by construction.
-
-**203's law bit, and the probe caught it.** The first build's marram was a `lineWidth 0.6`
-blade *only*. It changed ~800 px on the seam sand — and moved the green-ink count **not at
-all** (31.2 -> 30.7): a blade thinner than a device pixel is **always blended with the sand**
-and can never produce a green-dominant pixel. It was *hazing* the sand, not tufting it, and
-the interdigitation was **one-sided** (the lawn's ellipse specks worked from the start). Adding
-a **root clump** — a solid 1-2px ellipse under the blades, which is also what a marram tussock
-actually looks like — took the sand side from flat to **+36..+62%**. A hairline needs a body.
-
-**Visual.** PASS on both seeds, day and night (2 agents, before/after, whole-city + a 4.2x
-close-up **aimed** at the longest run of seam — 201: a fixed clip is not a framing;
-`probes/shot-seam.mjs`). Both independently confirmed the thing under test: seed 42 — *"BEFORE:
-an unbroken tan/green staircase, you can trace every hex edge. AFTER: the same run is feathered
-... it reads as a back-beach transition, not a rash or a dotted outline"*; seed 7 — *"a clean
-two-tone hex staircase"* becomes *"a back-beach dune fringe, not a rash, not a dotted row, and
-not an outline tracing the facets."* No z-order tears, no marks in open water, whole frame
-unchanged at 1x.
-
-**Perf — PAID, and it disproved my own hypothesis twice.** `probe-drawbudget` scores `seamVeg`
-at **692 path objects = 0.7% day / 0.5% night**. But six interleaved A/B runs read **day
-+2.1..+4.5%, night +1.1..+2.2%** — consistently positive, never straddling zero (199's inert
-control straddles zero at +-1%), so it is real, and it is **~4x what the per-path-object model
-predicts**. I tested two mechanisms and **both came back negative**: (1) a continuous `f` in
-`col(name,f)` mints a unique `CCACHE` key per tuft and misses every frame — quantizing it
-bought **nothing**; (2) per-tuft `strokeStyle`+`fillStyle` writes (~1384/frame) — hoisting them
-to one-per-hex (~210) bought **nothing**. Cost accepted on 194's precedent (~3% day for the
-grounding of every tree, judged worth paying). **The suspect is NAMED, not fixed** (198): the
-692 objects are 464 ellipse fills + **228 line strokes**, and a stroke must generate outline
-geometry (with round caps) that a fill does not — **198's cost model was measured on SOLID
-FILLS ONLY, exactly as the gradient hole was.** A clumps-only variant read night **+0.7/+1.0%**
-vs the full build's **+1.1..+2.2%**, which is suggestive but two noisy runs and visually
-unverified. ⇒ **cue (x)**, below.
-
-**Verdict: SHIPPED.** Cue (v) CLOSED. The coastline no longer has a traceable hex staircase.
 
 ## Iteration 216 — the walk-up stops being one building (2026-07-13) [Urban fabric × Polish]
 
@@ -1262,3 +1182,85 @@ and this says **check that the thing you asked it to locate is VISIBLE IN THE PR
 rule decides both whether and how-much; this says one field can be written by **two rules in different
 branches**, and a fix to one is routinely mistaken for a fix to the phenomenon. `c.th` had two writers
 for 126 iterations and only one knew where downtown was.
+
+## Iteration 225 — the shadows never knew where the sun was (2026-07-13) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × **Deepen** (rotation: Sky was the stalest domain by far — 17 laps
+cold since 208 — and its two live cues were both flagged dead-end/low, so the header told me to
+look for a real seam or fall through to People). Also a deliberate **KIND** change: 220/221/223/224
+were four straight Polish laps.
+
+**The seam — 199's tell, and its purest instance yet.** `shadS(cx,cy,r,a)` is the ONE function
+every shadow in the city routes through: trees, palms, peds, kids, dogs, joggers, the static
+crowds, gulls, every vehicle, the boardwalk. It drew **a centred ellipse at a hard-coded alpha**:
+```js
+ctx.fillStyle='rgba(40,32,20,'+a+')';
+ctx.beginPath();ctx.ellipse(cx,cy,r*TW,r*TH,0,0,7);ctx.fill();
+```
+Meanwhile the artifact **has a sun, and moves it**: `sunX = X0+(X1-X0)*sunP` sweeps from the open
+right corner (0.94W) to over downtown on the left (0.30W), with altitude `sin(pi*sunP)`, and it
+**sets** (`SUNDN=0.78`). So a function named for a **SHADOW** could not cast one: the same blob at
+the same opacity at dawn, at noon, at golden hour and **at midnight**. 199's law says the tell's
+host is *a constant whose NAME asserts a behaviour its VALUE cannot have* — here the whole
+**function** was that constant.
+
+**Change.** Three edits, one new concept. `render()` derives a per-frame sun-vector off the SAME
+`sunP`/altitude the disc is drawn from (so the shadows and the sun can never disagree about where
+the light is): **`SHOFF`** (throw, in units of the shadow's own x-radius, signed), **`SHLEN`**
+(stretch), **`SHAMT`** (opacity). `shadS` reads them. `e` eases the cast in/out across the horizon
+toward the **sunless ambient patch** rather than toward zero — with no sun the city is lamplit from
+every side, so what remains is a faint round contact patch: it must NOT vanish, or every ped, tree
+and car floats at night.
+
+**Noon is byte-identical by construction** — the sun there is both high AND centred, so
+`SHOFF=0/SHLEN=1/SHAMT=1` — which hands the iteration a **free dead-regime control** (199).
+
+**Census.** PASS. Every metric +0, tile histogram empty — the correct, vacuous result for a
+draw-only change (it touches no terrain and no `rng()`). The iteration rests on the probe.
+
+**Probe** (`probes/probe-shadowpx.mjs`). The claim in the viewer's units (205): *shadows fall away
+from the sun and stretch when it is low* — so they must fall **LEFT** in the morning (sun right) and
+**RIGHT** in the evening. **A SIGN FLIP.** Measured in DEVICE PX by wrapping `ctx.ellipse` inside
+`shadS` and reading `getTransform()` at draw time (203). On the rows with zero population wobble:
+
+| hour | SHOFF | HEAD rx | patch rx | throw px | throw/width |
+| --- | --- | --- | --- | --- | --- |
+| morning | −0.647 | 15.62 | 21.86 | **−10.10** | **−0.65** |
+| NOON (control) | 0 | 15.69 | 15.69 | **0.00** | **0.00** |
+| evening | +0.704 | 15.69 | 22.88 | **+11.05** | **+0.70** |
+| night (control) | 0 | 15.17 | 15.17 | **0.00** | **0.00** |
+
+The sign flip is exact, and `throw/width` reproduces the design constants (−0.647/+0.704) to two
+decimals at **every zoom** (it is scale-invariant, as a throw in shadow-radii must be). Both
+no-cast hours read **0.00 with rx identical to HEAD**. Elongation 1.40x/1.46x = `SHLEN`.
+
+**Visual.** Both seeds PASS, and the **blind locate** (108/224) is the real result: agents were
+given `frameA`/`frameB` (same city, same camera, hour stripped from the filename so they could not
+reason "morning ⇒ west") and asked only *which way do the shadows fall*. **Both, independently, on
+two different seeds: A = LEFT, B = RIGHT, B longer.** Ground truth exactly. Seed 7, unprompted:
+*"shadow direction now unifies the whole skyline instead of each tower having its own blob."*
+
+**Perf — FREE, by the deterministic instrument (216/222).** Still exactly ONE ellipse per call: the
+throw is an offset, the length a radius, the softening an alpha. Path objects **day 107,933 →
+107,858 (−0.07%), night 138,452 → 138,496 (+0.03%)**, and `shadS` itself 2790→2791 / 2934→2932 —
+all inside the ±7 entity-population wobble. No timing A/B run: with no mechanism to price, it would
+only have reported the weather.
+
+**Verdict: SHIPPED.**
+
+**⚠ A LAW THIS LAP PAID FOR — AN INK-WEIGHTED CENTROID MEASURES REWEIGHTING, NOT DISPLACEMENT.**
+The first probe isolated the shadow LAYER correctly (render twice, once with `shadS` suppressed;
+the difference IS every shadow, by construction — 161) and then took the **ink-weighted centroid**
+of that layer, HEAD vs patch. It returned **the WRONG SIGN at evening on both seeds**, and an ink
+ratio of **2.5x** where the geometry predicts 1.2x. Both are one artifact: a shadow on bright sand
+contributes far more ink than one on dark asphalt, so when the shadows grow, the ink **reweights
+across the city** and the global centroid moves for reasons that have nothing to do with how far
+any shadow was thrown. ⇒ **A centroid over a whole frame is a statistic about WHERE THE INK IS, not
+about WHERE ANYTHING MOVED.** When the claim is *displacement*, measure displacement **per object**
+(or in the draw's own device-space coordinates), never as a global centre of mass — and treat a
+**ratio that overshoots the geometry** as the tell that your weights, not your feature, are moving.
+Promoted to SKILL.md.
+
+**Banked for a later lap (an aside, per 212).** Seed 42, unprompted: at golden hour the interior
+street grid *"darkens noticeably from accumulated tower shadows — atmospheric, not clutter."* Read
+as fine today by both agents; if a later lap lengthens shadows further, that is where it bites.

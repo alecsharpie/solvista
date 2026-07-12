@@ -432,6 +432,20 @@ let TINT=[1,1,1], LITAMT=0, CCACHE={};
    dawn/dusk, 0 at noon and night. GWSB is the horizon colour the sea tints
    toward. Read by the sea's golden-hour sheen in the T.WATER draw. */
 let GWARM=0, GWSB=[255,200,120];
+/* THE SUN'S VECTOR, AS THE GROUND SEES IT (iter 225). The sun demonstrably crosses
+   the sky — it rises out of the open right corner and sets over downtown on the left
+   (sunX, in the sky block) — and it has an altitude (sin(pi*sunP)). shadS() knew
+   neither: it painted one centred ellipse at one fixed alpha at dawn, at noon, at
+   dusk and at midnight, so a function named for a SHADOW could not cast one.
+   SHOFF = how far the shadow is thrown, in units of its OWN x-radius, signed (the
+   sun is right at dawn, so the shadow falls left, and the sign flips by dusk).
+   SHLEN = how far it stretches (a low sun throws a long shadow).
+   SHAMT = how dark it is (a low sun's shadow is longer but softer; with no sun at
+   all the city is lamplit from every side, so what is left is a faint ambient
+   contact patch — it must NOT vanish, or every ped, tree and car floats at night).
+   Noon is SHOFF 0 / SHLEN 1 / SHAMT 1 by construction — the sun is both high AND
+   centred there — so midday renders byte-identical to before this iteration. */
+let SHOFF=0, SHLEN=1, SHAMT=1;
 /* entity screen-position stamps: each draw records where it drew this frame so
    the hover tooltip can name moving things (stale stamps = not on screen) */
 let FRAMEN=0;
@@ -3344,9 +3358,17 @@ function kerbS(cx,cy,ax,ay,s,proj,fill){
   ctx.lineTo(fx(t1)+ox,fy(t1)+oy);ctx.lineTo(fx(t0)+ox,fy(t0)+oy);
   ctx.closePath();ctx.fill();
 }
+/* every shadow in the city comes through here — trees, palms, peds, kids, dogs,
+   joggers, crowds, gulls, vehicles, the boardwalk — so the sun's vector (SHOFF/
+   SHLEN/SHAMT, set once a frame in render()) reaches all of them from one place.
+   Still exactly ONE ellipse per call: the throw is an offset, the length a radius,
+   the softening an alpha, so this costs nothing by the measured per-path-object
+   model. The throw is HORIZONTAL only — the sun's arc here is essentially east to
+   west across the frame, and displacing a shadow DOWNWARD would push it toward the
+   viewer into the next row, which is drawn later and would paint over it (211). */
 function shadS(cx,cy,r,a){
-  ctx.fillStyle='rgba(40,32,20,'+a+')';
-  ctx.beginPath();ctx.ellipse(cx,cy,r*TW,r*TH,0,0,7);ctx.fill();
+  ctx.fillStyle='rgba(40,32,20,'+(a*SHAMT)+')';
+  ctx.beginPath();ctx.ellipse(cx+SHOFF*r*TW,cy,r*TW*SHLEN,r*TH,0,0,7);ctx.fill();
 }
 function shadowEl(gx,gy,r,a){
   const[cx,cy]=px(gx,gy); shadS(cx,cy,r,a);
@@ -6658,6 +6680,17 @@ function render(){
   applySeason();
   const dl=daylight(dayT); setLight(dl);
   {const sb=dl.skyBot; GWARM=clamp((sb[0]-sb[2]-70)/70,0,1); GWSB=sb;} /* golden-hour sea sheen gate (iter 181) */
+  /* the shadow's sun-vector (iter 225) — the SAME sunP/altitude the disc is drawn from
+     up in the sky block, so the shadows and the sun can never disagree about where the
+     light is. `e` eases the CAST in and out across the horizon, blending toward the
+     sunless ambient patch rather than toward zero, so nothing pops at dawn or dusk. */
+  {const sp=(dayT-SUNUP)/(SUNDN-SUNUP);
+   if(sp>0&&sp<1){
+     const alt=Math.sin(Math.PI*sp), lo=1-alt, e=Math.min(1,Math.min(sp,1-sp)/0.06);
+     SHOFF=e*(2*sp-1)*(0.30+1.15*lo);
+     SHLEN=lerp(1, 1+1.35*lo*lo, e);
+     SHAMT=lerp(0.55, 1-0.30*lo, e);
+   }else{ SHOFF=0; SHLEN=1; SHAMT=0.55; }}
   FOGAMT=fogDepth();
   ctx.setTransform(1,0,0,1,0,0);
   ctx.clearRect(0,0,cvs.width,cvs.height);

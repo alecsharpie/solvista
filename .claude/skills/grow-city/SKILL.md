@@ -1124,6 +1124,33 @@ vector, whatever it is.
   ⇒ **A "same shape, new tone" argument is not a defence against 159 — it is the trap.** If the feature
   needs to be SEEN at night, it needs a different SHAPE (points), or a different SURFACE (the tile body,
   which has no edges to betray).
+- **AN INK-WEIGHTED CENTROID MEASURES *REWEIGHTING*, NOT *DISPLACEMENT* — when the claim is that something MOVED,
+  measure the move PER OBJECT, never as a global centre of mass (iter 225).** 161 says a whole-frame patch-vs-HEAD
+  diff locates your change *by construction*, and that is true — but locating the ink is not the same as measuring
+  what the ink *did*, and the obvious next step is a trap. 225's first probe isolated the shadow layer perfectly
+  (render twice, once with `shadS` suppressed; the difference IS every shadow in the city) and then took the
+  **ink-weighted centroid** of that layer, HEAD vs patch, to measure how far the shadows were thrown. It returned
+  **the WRONG SIGN on both seeds** — reporting the city's shadows had swung *left* at the exact hour the code threw
+  them *right* — plus an ink ratio of **2.5x** where the geometry predicted 1.2x. One cause for both: a shadow on
+  bright sand contributes far more ink than one on dark asphalt, so when the shadows grew, **the ink reweighted
+  across the city** and the global centroid moved for reasons having nothing to do with any shadow's displacement.
+  ⇒ **A centroid over a frame is a statistic about WHERE THE INK IS, not about WHERE ANYTHING WENT.** Measure a
+  displacement in the draw's own device-space coordinates (wrap the primitive, read `ctx.getTransform()` at draw
+  time — 203) and difference it **per object**; the result is then scale-invariant and falsifiable (225's read the
+  design constants back to two decimals at every zoom, with two independent no-move hours pinned at exactly 0.00).
+  Two corollaries: (a) **a RATIO THAT OVERSHOOTS THE GEOMETRY is the tell** that your weights, not your feature, are
+  moving — if the shape grew 1.2x and the ink grew 2.5x, stop and re-read the instrument; (b) **pairing by INDEX is
+  fragile** — the entity population wobbles ~0.2% per load, one missing object shifts every later index, so take the
+  statistic over the **POPULATION** (204) rather than per-index, or gate on the counts matching.
+- **A DOMAIN IS "SATURATED" ONLY RELATIVE TO THE CUES YOU HAVE BANKED — WHEN A STALE DOMAIN'S CUE LIST LOOKS DEAD,
+  GREP ITS SEAM BEFORE YOU SKIP IT (iter 225).** The ledger header had written Sky off as post-saturation with two
+  weak cues, one a confirmed dead end, and instructed the next lap to fall through to another domain if Sky "again
+  has nothing." Sky had plenty: `shadS` — **the one function every shadow in the city routes through** — was drawing
+  a centred ellipse at a hard-coded alpha, identical at dawn, noon, golden hour and midnight, in an artifact that
+  *moves a sun across the sky and sets it*. That is 199's tell (a name asserting a behaviour its value cannot have)
+  hosted on a **function**, and no amount of re-reading the banked cue list would ever have surfaced it. ⇒ The
+  saturation notes record *where you have already looked*, which is **not** the same as where there is nothing to
+  find. Spend one `grep` on the stale domain's seams before you accept its own verdict on itself.
 - **A label that asserts a relationship the draw ignores is a bug, and it is the
   richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
   and printed a live `Tide` for 16 iterations over a tile that never moved a pixel
