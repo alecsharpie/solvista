@@ -151,4 +151,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 219  Urban fabric × Deepen      SHIPPED             27m47s   $8.15  1450e71
 ✔ Iter 220  Urban fabric × Polish      SHIPPED             16m20s   $5.46  fae923d
 ✔ Iter 221  Nature × Polish            SHIPPED             20m21s   $7.49  8a1b46b
+✔ Iter 222  —                          FIXED               30m18s   $5.44  7bfe1e2
 ```
