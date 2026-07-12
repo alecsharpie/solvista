@@ -653,11 +653,19 @@ even if the census looks fine:
   your target tile move?) plus the **screenshots**, not from every ±1.
 - **Canvas sizing gotcha:** the canvas needs explicit `width/height:100%`;
   `position:fixed;inset:0` alone does NOT stretch it.
-- **The file has NO `<meta charset>` — keep JS string literals pure-ASCII (iter 134).** A raw non-ASCII
-  byte (e.g. `·` U+00B7) renders as mojibake (`Â·`) when `shoot.mjs` serves the file over http, because
-  Chromium falls back to windows-1252; a `file://` load sniffs UTF-8 and HIDES the bug, so tight `file://`
-  clips look clean while the http wide shots are corrupt. In JS strings use the escape (`'·'`,
-  `'\u{1F311}'`); in HTML use `&middot;`/`&mdash;`/`&times;` — as the rest of the file already does.
+- **The file DECLARES `<meta charset="utf-8">` (line 1, iter 229) — raw UTF-8 in string literals is now
+  SAFE, and iter 134's "keep literals pure-ASCII" rule is REPEALED.** Do not hand-escape a `·` or an `é`,
+  and do not re-open this: the file is **self-describing** under every serving condition, asserted by
+  `probes/probe-charset.mjs` (which serves the same bytes three ways — `file://`, http with no charset,
+  http with `charset=utf-8` — and FAILs unless all three decode as UTF-8). **If you ever touch the head of
+  the file, keep the meta tag in the first 1024 bytes or the whole class comes back.**
+  The history is the lesson, and it is a law: **134 saw mojibake in an http screenshot and wrote a
+  DISCIPLINE ("escape every literal") where a one-line STRUCTURAL fix was available.** The discipline was
+  then silently violated 12 times over 95 iterations, and the ledger escalated it to its #1 cue —
+  *"a LIVE bug shipped on the public site"* — which was **false**: GitHub Pages sends
+  `Content-Type: text/html; charset=utf-8`, which overrides everything, so **no user ever saw it.** The
+  mojibake existed *only* under `shoot.mjs`'s dev server, which sends `text/html` with no charset. ⇒
+  **THE LOOP HAD BEEN GRADING ITS OWN INSTRUMENT AND FILING THE RESULT AGAINST THE ARTIFACT.**
 - Keep the census hook (`window.__census()`, near `__warp`/`__setTime` ~L1929)
   in sync if you add tile types or entity arrays — add them to its tallies so the
   metric keeps measuring the right things.
@@ -676,6 +684,26 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A DEFECT ONLY YOUR HARNESS CAN SEE IS A DEFECT IN YOUR HARNESS — REPRODUCE IT IN THE USER'S
+  CONFIGURATION BEFORE YOU BELIEVE IT IS THE ARTIFACT'S (iter 229).** 200 says a probe can measure a
+  *layer* the user never looks at; 205 says the label-tell has a false-positive mode; 202/227 say a
+  documented trap you keep walking into is a broken tool, not a law. 229 is all three at once, and it
+  names the missing question: **WHO SERVES / RENDERS THE THING WHEN A REAL USER LOOKS AT IT?** The
+  harness had *three* ways of loading the artifact and had never reconciled them — `shoot.mjs` serves
+  http with **no charset** (Chromium falls back to windows-1252 ⇒ **creates** mojibake), `hovershot.mjs`
+  and every probe load `file://` (Chromium sniffs UTF-8 ⇒ **hides** it), and the deployed site is
+  **neither**: GitHub Pages sends `charset=utf-8`, which **overrides both**. So the artifact was
+  *innocent*, the mojibake was an artifact of the dev server, and **no user had ever seen it** — yet the
+  ledger had escalated it across three step-backs into its **#1 🔴 cue, "a LIVE bug on the public site",
+  re-measured as "~4x bigger"**, and ordered the next lap to spend itself hand-escaping 12 string
+  literals that were never broken. **Every re-measurement re-confirmed it, because every re-measurement
+  used the same broken instrument.** ⇒ Before you build to a defect that only ever shows up *in your own
+  tooling's output*, spend one command on the real thing (`curl -sI <the deployed URL>` cost 3 seconds and
+  refuted the loop's loudest cue). And when the instrument and the artifact disagree, **the fix is usually
+  STRUCTURAL and belongs to whichever one is lying** — here one `<meta charset>` in the artifact fixed the
+  bug, repealed a wrong invariant, *and* stopped the instrument lying, all at once. The tell: **a defect
+  that only reproduces under one of your load paths, and a "discipline" in your notes telling you to keep
+  working around it.**
 - **Probe before you design.** Measure the thing you believe is broken *before*
   writing a line of the fix. Iters 112 and 115 both opened by probing and both found
   the real defect was not the assumed one — 112 discovered monorail trains advanced
@@ -1553,6 +1581,18 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   otherwise file them under "flat"), `shot-crown.mjs` (its camera: whole-city *and* a close-up aimed at the CBD, day
   + night, `SRC=` to shoot the identical framing on HEAD for a blind A/B; every frame self-reports `dayT`/`phase`/
   `sun`/`LITAMT` per 202 — ⚠ `phaseWord` takes `dayT`, and calling it **bare** labels every frame `night`),
+  `probe-charset.mjs` (229 — **is the artifact self-describing, or is the SERVER holding it up?** Serves the same
+  bytes three ways — `file://` · http `text/html` (= `shoot.mjs`, **no charset**) · http `charset=utf-8` (= GitHub
+  Pages, measured live) — and reads the strings back **as the JS engine decoded them**, since the inline `<script>`
+  is decoded with the document and a mis-decode corrupts the string *literals*. **FAILs unless all three come back
+  UTF-8.** Run it if you ever touch the head of the file), `probe-hud.mjs` (229 — **is the HUD clipping its own
+  labels?** Pure DOM: `scrollWidth > clientWidth` per stat, plus each box's overrun past the viewport, swept across
+  6 widths 1600→390. **Every probe in `probes/` reads the canvas and is blind to this layer (200)** — this is the
+  one that can see it. It **refuted cue (z)**: 0 clipped labels at every width, ≥20px spare), `shot-charset.mjs`
+  (229 — the camera that pins the **harsh** serving condition on purpose (http, no charset), because the harness's
+  own cameras disagree: `shoot.mjs` **creates** the mojibake and `hovershot.mjs` (`file://`) **hides** it. Shoots
+  the tooltip + stats + whole frame; `SRC=` for a blind HEAD/patch pair. ⚠ `__find` returns HEX indices in `x`/`y`
+  and SCREEN px in **`sx`/`sy`** — aim at `sx`/`sy`),
   `probe-hudfreeze.mjs` (227 — **is this a real bug, or is my frozen camera lying about the DOM?** Three cases at
   one pin: **A** frozen exactly as the shot does it · **B** frozen + `syncStats()` · **C** actually playing. **A
   stale while B and C agree ⇒ the camera lies and the artifact is innocent.** It cleared the "night frame says

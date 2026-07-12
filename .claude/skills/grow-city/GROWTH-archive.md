@@ -14864,3 +14864,132 @@ are what a gate does), **HOLD THE MEAN** (98 — total COM must not collapse, or
 **expect the stream to reshuffle** — judge it on all three seeds, in the viewer's units (**tower COUNT downtown vs at
 the rim**), never on a ratio.
 
+
+---
+
+## Header bullets rotated out at Iteration 229 (cues (w) and (z), both CLOSED — one FIXED at root, one REFUTED)
+
+Moved verbatim from `GROWTH.md`'s maintained header to keep it inside its 400-line budget. Both were
+closed by iter 229; kept here because the loop's memory is the one thing it cannot re-derive. **Read
+229's entry before re-opening either — the finding is that BOTH were artifacts of the harness's own
+screenshot server, not defects of the artifact.**
+
+**(w) [CLOSED by 229 — the premise was FALSE] A LIVE MOJIBAKE BUG IS SHIPPED ON THE PUBLIC SITE — and 227
+re-measured it ~4x BIGGER than recorded.** Raw non-ASCII **inside RENDERED JS string literals**, in a file with
+**no `<meta charset>`**: over **http (= GitHub Pages, the deployed artifact)** Chromium falls back to
+windows-1252 and the user reads mojibake. A `file://` load sniffs UTF-8 and **HIDES it — which is why every
+local shot has looked clean for 122 iterations.** 214 named only `:7446`/`:7451` (the monorail/cable-car
+tooltips); **the real list is >=8 sites and includes the STATS PANEL** — `elTall`'s em-dash (**L7320**, on
+screen at all times) and the acute-e in `cafes` (L7430), plus 7432/7443/7451/7460. Re-grep, do NOT trust this
+list either: `grep -nP "^(?!\s*[/*]).*'[^']*[\x{0080}-\x{FFFF}][^']*'" solvista.html`. Fix = the `\uXXXX`
+escape (iter 134's own law, violated in the one place nobody re-grepped). **Verify over http, NOT file://.**
+The **cheapest real user-facing win in the ledger** — Interaction/UX × Polish, and it **pairs with cue (z)**
+for one tidy HUD lap.
+> **229's verdict: the parenthesis "(= GitHub Pages, the deployed artifact)" was the whole error.** GitHub
+> Pages sends `Content-Type: text/html; charset=utf-8`, which **overrides** meta tags and sniffing alike, so
+> the deployed city decoded as UTF-8 and **no user ever saw mojibake**. The corruption existed only under
+> `shoot.mjs`'s dev server (`text/html`, no charset). Fixed at root anyway — `<meta charset="utf-8">`, line 1
+> — because a "self-contained single file" that needs the *server* to declare its encoding is not
+> self-contained. Asserted by `probes/probe-charset.mjs`.
+
+**(z) [CLOSED by 229 — REFUTED, does not reproduce] THE HUD CLIPS ITS OWN LABEL (216 + 224, seed 7).** The
+stats bar clips `TRANSIT REA[CH]` at its right edge. **Only an agent could find it — every probe in `probes/`
+is blind to the DOM** (200). Interaction/UX × Polish, and it **pairs with cue (w)** (the live shipped
+mojibake) for one tidy HUD lap.
+> **229's verdict: measured, and it does not reproduce.** `probes/probe-hud.mjs` sweeps the DOM at six
+> viewport widths (1600 → 390, incl. the step-back's 1600 and the `mobile` framing's 390): **0 clipped labels
+> at every width**, `scrollWidth == clientWidth` on every stat, and the card always fits with **>=20px spare**
+> (the `.opt.sm`/`.opt.md` media queries drop stats as the viewport narrows, exactly as designed). A blind
+> agent on seed 7, unprompted, independently confirmed: *"TRANSIT REACH ends comfortably inside the card's
+> right edge."* The one true half of the cue is its second sentence — **the DOM is invisible to every canvas
+> probe** — which is why it needed `probe-hud.mjs` to settle it either way.
+
+## Iteration 219 — the shops never knew where downtown was (2026-07-13) [Urban fabric × Deepen]
+
+**Vector.** Urban fabric × Deepen. The lap 217 ordered and 218 redirected: give the city a
+downtown. 217 prescribed a `core` term on the tower *placement* roll; 218 proved that roll is a
+**dead lever** (100% conversion — `p` sets timing, never placement) and named the real seam one
+layer up: **towers rise only on COM, and COM is sited by a rule that knows nothing about the CBD.**
+This closes it — at the COM fork, not the tower rule.
+
+**Probe first (218's law: print the roll's conversion rate BEFORE tuning it).**
+`probes/probe-shopcore.mjs`, Part A. The shop fork (`solvista.html:1443`) is **ONE-SHOT** —
+max hits/cell = **1** on every seed, still-eligible pool **0-1** — because the cell leaves
+`EMPTY`/`MEADOW` the instant it fires. That is the *structural opposite* of the tower roll, where
+the cell stays `COM` and is re-picked ~60x until it converts. **So `p` here CANNOT saturate, and IS
+a live lever on the COM/RES mix.** The lever is real; 218's law is what proved it rather than
+assumed it.
+
+**Change (one line + a `core` term).** `shop=(roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3)`
+becomes the same two rolls scaled by **`m = 1 + 2.0*ccore`**, clamped to 1, with
+`ccore=clamp(1-hexDist(x,y,CBDX,CBDY)/CORER,0,1)`. **PURE ADDITION** (206: preference, never a
+gate): at the rim `ccore=0`, `m=1`, and the rule is **byte-identical** to what it was. Only the core
+is lifted. Draw count is unchanged (one `rng()` per roll, same short-circuit guards).
+
+**The sweep found the trap, and it was the obvious design (`probe-shopcore.mjs`, Part B, 3 seeds).**
+Round 1 swept `m=A+B*core` with **A<1** — the natural "prefer the core" shape. **Every variant made
+the city worse in counts**: core towers **42 -> 29/38/32/33** (*down*) and pop **-14..-27%**. Mean
+`core` over developing land is ~0.1, so `A<1` makes `m<1` nearly everywhere and **cuts COM
+city-wide** — and COM is the *tower substrate*, so fewer COM => fewer towers => -240 pop apiece. The
+rim fell faster than the core, which flatters the **ratio** — **218's sin exactly, committed by its
+own successor.** Round 2 (`m=1+B*core`, never below 1) is the ship. `R4` (a *wider* falloff, the
+other obvious instinct) **doubled the rim** (148 -> 205): it lifts the whole city.
+
+**Census.** PASS. `pop 154785 -> 178629 (+15.4%)` with **`developed +12` and `roads -14` — flat.**
+The city did not sprawl, it **intensified**. Tile histogram: **`TOWER 334 -> 432 (+98)`**,
+`COM 1245 -> 1356 (+111)`, `RES -216`, `tallTowers +106`, `helipads +98`, `towerHt +12462`.
+Free interconnect: **`MARKET 12 -> 36`** (+24) and `PLAZA +2`, `STADIUM +2` — a denser commercial
+core feeds the market/civic rules downstream.
+
+**The mechanism is ARRANGEMENT, not quantity** — the finding worth keeping. Total COM barely moves
+(**649 -> 673** across the census seeds) while towers jump **239 -> 304**. `com>=2` in the upgrade
+pass is **already a clustering predicate**, so concentrating the *same* commercial fabric makes far
+more of it meet the quorum. **218 predicted this in advance and it is confirmed.**
+
+**Mass (`probes/probe-downtownmass.mjs` — world data, no render).** Share of the city's total tower
+**HEIGHT** inside ring 0-8 (the eye reads mass, not count — 218):
+
+| seed | coreH share | far-rim (23+) towers | massCentroid/devMean |
+| --- | --- | --- | --- |
+| 7 | 24.4% -> **41.0%** | 36 -> **37** | 0.82 -> 0.67 |
+| 42 | 33.0% -> **44.5%** | 25 -> 42 | 0.75 -> 0.66 |
+| 1234 | 17.3% -> **42.1%** | 35 -> 19 | 0.78 -> 0.55 |
+
+Every seed converges to **~41-45%** from a scattered 17-33%, and the mass centroid moves inward on
+all three. Far-rim is **flat in aggregate (96 -> 98)**, as pure addition requires; the per-seed swing
+is the seeded-stream reshuffle 218 warned of.
+
+**Visual — 2 PASS, 2 FAIL, and BOTH FAILs REFUTED BY MEASUREMENT (212, for the sixth lap running).**
+Four blind agents across three seeds, HEAD/patch order swapped between seeds to defeat position bias.
+**Every one of them pointed at the true CBD:**
+
+| seed | blind point | true CBD | verdict |
+| --- | --- | --- | --- |
+| 42 | (0.50, 0.60) | (0.493, 0.512) | PASS — HEAD "NO CLEAR CORE" |
+| 7 (fresh) | (0.46, 0.63) | (0.478, 0.625) | "NO CLEAR CORE" |
+| 1234 | (0.54, 0.48) | (0.558, 0.455) | PASS |
+
+Seed 7's agent **hit the CBD within 0.02 and then declared it wasn't one** — the locate/judge split
+in its purest form (108). Its two causal claims are both false: (a) *"the patch spread 102 towers
+across the whole plate — an over-built picket forest"* — the patch added **ONE** far-rim tower
+(36 -> 37) while **doubling** the core (16 -> 33); the forest is **HEAD's**, and the rim rule is
+byte-identical. (b) *"the centre is a green/park wedge"* — it is describing the **plate's** centre
+(~0.5,0.5), not the **city's** (0.478, 0.625); the header has warned for 120 iterations that
+`CBDX/CBDY != CTRX/CTRY`.
+
+**Verdict: SHIPPED.** The downtown exists, sits where the CBD is, and four blind agents found it.
+
+**⇒ BANKED, and it is the THIRD RUNG OF THE SAME LADDER (cue (ac), Urban × Polish — the next Urban
+lap).** The one thing the agents said **independently, on two different seeds, unprompted** — which
+is the aside 212 says to weight above any verdict — is that the skyline has **no taper**:
+*"a spine, not a crown"* (1234) and *"a local thickening, not a peak; height is flat, no tapering
+silhouette"* (7). **It is true, and it is visible in the code.** Height is
+`c.th=(54+c.v*82)*(0.70+0.66*core)`: the centrality term spans **1.94x** (0.70 -> 1.36) while the
+per-cell noise `c.v` spans **2.5x** (54 -> 136). **The noise SWAMPS the signal**, so a lucky rim
+tower out-tops an unlucky core one and no silhouette can form. 217 fixed height and left placement;
+218 found placement was a dead lever; 219 fixed the *substrate*, and the **mass** is now downtown —
+what remains is that the **height gradient is drowned in per-cell noise.** ⚠ 98's `0.70+0.66*core`
+was solved to **HOLD THE MEAN** — the fix is to **narrow `c.v`'s spread, not to steepen `core`**
+(a steeper `core` was tried at 98 and cost half the city's tall towers). Do not re-open the
+placement roll.
+
