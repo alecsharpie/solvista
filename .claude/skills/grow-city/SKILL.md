@@ -811,6 +811,20 @@ vector, whatever it is.
   reads flat (0.1–0.4% in *both* builds), which is the only thing the control was ever asking. ⇒ **Make a control
   a POPULATION, not an individual** — or give it its own PRNG. A control that can move for a reason you did not
   cause is not a control.
+- **...and the SAME stub can HIDE YOUR TREATMENT, not merely spoil a control — the failure inverts when you keep
+  the draw COUNT identical (iter 210).** 204's law assumes your patch draws a *different* number of values, so
+  everything downstream diverges. Do the conscientious thing — keep the count the same, so the stream does *not*
+  shift — and you buy the opposite bug: **both builds now read the SAME `r` at the same position for the same
+  entity**, and if old rule and new rule are both thresholds on that one `r`, they can decide **identically**.
+  210 replaced `hidden = (r < 0.5)` with `hidden = (r < 0.505 − 0.63·buzz)`; on quiet ground (`buzz = 0`) those
+  are *the same set*, so two builds that differ enormously in the aggregate produced **frames 250 px apart, with
+  not one figure moved**, and the first visual gate correctly reported nothing. The feature was fine; the *frame*
+  was. ⇒ **A stubbed stream makes your builds correlated, and correlation cuts both ways.** When a patch-vs-HEAD
+  diff of a *stochastic* decision comes back suspiciously empty, before you doubt the feature, ask whether the two
+  rules are reading the same random number — and if they are, **shoot the regime where the two thresholds
+  *separate*** (210's hour was `dayT 0.04`, where HEAD's saturated gate had let its entire crowd back out) or give
+  the new rule **its own stream**. The aggregate probe is unaffected either way, which is why it was right and the
+  first screenshots were wrong.
 - **A FROZEN CLOCK DOES NOT REFRESH THE DOM — `syncSky` is THROTTLED and `syncStats` only runs when playing
   (iter 204).** 200 says the user sees canvas *plus* DOM; 202 says the step-back's camera was lying. Here is the
   third member of that family, and it will bite any hand-rolled freeze: `frame()` calls `render()` on **every**

@@ -12564,3 +12564,121 @@ curve and then **set the dial to ~zero** (~11 RGB units across a whole year). 20
 four keyframes (colour-only, zero path objects): **PARK 8.4→23.5 · SHOREPARK 17.9→52.3 · QUAD 5.7→21.2**, ROAD
 control dead at 0.6 and every untouched tile bit-identical; two blind agents on oppositely-randomized pairs both
 **correctly named the dry season** and both cited the amenity green.
+
+<!-- header material rotated out of GROWTH.md at iter 210, to pay for 210's lines.
+     Preserved verbatim; nothing here is deleted, only moved. -->
+
+## Rotated from the State-of-the-city header at iter 210
+
+- **(137 took People × Polish)**: gave the walking figures — peds/dogs/joggers, the only movers with no
+  `shadS()` shadow while every vehicle has one — the house-style contact shadow at the feet; draw-only,
+  `probe-figshadow` gates it. People's figure/crowd draws are richly polished now; only the *static* standing
+  crowds still cast no shadow. **⚠ The live ped/dog system is non-reproducible across page loads — probe figure
+  DRAW changes by controlled placement, not a build-vs-build diff (137's findings).**
+  — **NOTE: the ⚠ warning above was DISPROVEN by iter 210** and is kept here only as the record. 203's
+  `Math.random` stub + an in-page `genWorld` gives byte-identical crowds across two builds, and
+  `probes/probe-curfew.mjs` is a working build-vs-build diff of the ped system. The People domain is
+  probe-able like any other. The *shadow* finding (static standing crowds cast none) is still open.
+- **(132 took Water × Polish)** — the kelp beds got a floating olive canopy so a bed reads as a living forest,
+  not a flat dark hole, while staying the darkest thing inshore; `probe-kelp` gates it.
+- (The per-lap recaps of **173-185**, and their superseded "next lap owes" pointers, were rotated into this
+  archive at iter 196 to pay for 196's lines — the header is a fixed budget, and its ROTATION line is the live
+  pointer.)
+
+## Iteration 200 — the sun is in the sky (2026-07-12) [Sky & atmosphere × Polish]
+
+**Vector.** Sky & atmosphere × Polish. Sky was the stalest domain (last at 190) and is
+post-saturation — Deepen/Polish only — and Deepen had run four of the last five laps, so
+Polish (last at 115) was the coldest kind in the stalest domain.
+
+**Change.** **The city has had a whole FAMILY of low-sun effects for dozens of iterations —
+warm cloud bellies (161), the sea's golden sheen (181), the noon sun-glitter (150), the raked
+window glass (190), beach furniture that follows the sun (145), roof panels tilted at it — and
+the sun itself was never drawn.** The draw code's own comments name it ("the low sun lights
+cloud bellies", "the sun-facing face", "under the day sun"); the MOON has a disc, a phase,
+earthshine, a halo and a glade on the water. Every warm thing in this sky had a cause that was
+not on screen. That is 179/193/195's shape — a completed family missing one member — except
+here the missing member is the *source*.
+
+It invents no signal. Its SIDE is `dayT`'s (rises RIGHT, sets LEFT — the very rule 190's `gs`
+uses to choose which face of the glass to rake) and its COLOUR is `GWARM`/`GWSB`, so it is the
+**fifth reader** of the one golden-hour signal 161/181/190 already share: the disc is visibly
+the source of exactly the warmth those three paint. Two draws — a halo that is a **radial
+gradient falling to alpha 0 at the rim** (195's law: a flat additive `arc()` is a coin, not a
+glow) and a disc whose rim softens into it. Drawn into the sky slab *before* the city, like the
+moon, so the skyline occludes it. Gated on `dayT` ∈ [`SUNUP`,`SUNDN`] — **not new numbers: the
+light curve's own dawn/dusk keyframes (0.05 / 0.78)** — so it touches the horizon exactly as the
+sky turns warm, and **draws literally nothing at night**.
+
+**Two things the measurement forced, neither of which was guessable:**
+1. **`GWARM` alone cannot carry the disc down.** It is gated on the low sky being ORANGE
+   (`R−B > 70`), and by the time the sun actually touches the horizon the sky has gone PURPLE —
+   so GWARM has already fallen back to 0 and a GWARM-only sun turns **WHITE at the exact moment
+   it should be an ember**. The probe caught it as a number: horizon warmth **20.6 vs noon 20.9,
+   identical**. Altitude has to redden it the rest of the way, and toward a *fixed* ember — not
+   toward `GWSB`, which by then is lilac.
+2. **The arc is shaped by the plate and by the HUD.** The plate is a hexagon, so the open sky is
+   a shallow **band** (skyline ~0.12 of the viewport across the middle, deep only in the
+   corners), and **`.placard` owns the top-left corner**. So the sun rises low out of the **open
+   sea** on the right, climbs to clear the rooftops, and **sets behind downtown** on the left —
+   it cannot go low there, the placard is in the way. An agent noted the dusk sun sits *higher*
+   than the dawn sun and "reads backwards"; that asymmetry is the constraint, and it happens to
+   be right for this city (open water east, high skyline west).
+
+**Census.** PASS, 0 page errors. `pop/roads/developed` **+0 / +0 / +0**, tile histogram empty —
+correct and near-vacuous for a draw-only change (no terrain, no `rng()`).
+
+**Probe.** `probes/probe-sun.mjs`. **⚠ It screenshots the PAGE, not the canvas, and that is the
+whole finding of this iteration.** The first version read `cvs.getImageData()` like every other
+probe here, and confidently scored the golden-hour sun at **11,716 changed px** on a frame where
+the sun was **entirely behind the DOM placard** — while two visual agents, on two seeds, twice,
+reported no sun and were **RIGHT**. A canvas readback cannot see the HUD. `page.screenshot()`
+composites DOM over canvas exactly as the user sees it, so the diff measures only the sun that
+*can actually be seen*, and gets occlusion-checking for free.
+On the shipped build, 3 seeds × 7 dayT pins:
+- **ARC centroid x 0.90 → 0.79 → 0.62 → 0.41 → 0.33 — MONOTONIC right→left on every seed**
+  (rises E, sets W: agrees with 190's `gs`). Highest at noon (cy 0.088).
+- **REDDENS: disc R−B 21 (noon, a white 247,247,226) → 110 (sunset, an ember 235,164,126).**
+- **SEEN: 13k–26k visible px at every day pin; contrast 31–97 against the local sky** (presence
+  is not legibility — iter 101).
+- **NIGHT: `sunDraws` = 0** at both night pins on all 3 seeds, counted by hooking the renderer's
+  own `createRadialGradient` — so the dead regime is *proved* dead, not asserted from my formula.
+  Stray night px (0–16) sit inside the probe's own base-vs-base noise floor.
+
+**Visual.** Both seeds **VISUAL: PASS** (third round; the first two FAILed on the buried sun and
+were correct to). The agents **located the disc within ~0.01 of the shipped formula on every
+frame** — day (0.71, 0.09) vs predicted (0.714, 0.097); golden (0.37, 0.10) vs (0.381, 0.108);
+dawn (0.89, 0.16) vs (0.898, 0.163) — which is what made their "there is no sun here" credible
+rather than vague. No coin rim, no orphan glow, no z-order tears; whole frames still read as a
+balanced coastal city.
+
+**Perf.** ⚠ **day +2.3% / +1.7%** (two interleaved A/B runs vs pristine HEAD, `probes/perfab.mjs`);
+**night −0.2% / −0.4%**, which is the **free inert control** (199's law — the sun draws zero calls
+at night, *verified*, so night runs byte-identical code and whatever it reads IS the noise floor).
+The day cost is real and is **PAID**: cheaper than 194's tree shadows (+3.4%, also paid), for the
+most fundamental object in a daylight sky. **Banked:** it is *two radial-GRADIENT fills*, and
+198's per-ellipse cost model was measured on **solid** fills only — a gradient rasterizes per
+pixel, so it may be priced by AREA where a solid ellipse is not. 198's table does not answer that.
+
+**Verdict.** SHIPPED.
+
+**Findings (promoted to SKILL.md).**
+- **The probe reads the CANVAS; the user sees the CANVAS + the DOM.** For a visibility claim about
+  a *screen-space* draw, diff `page.screenshot()`, not the canvas. Anything in a
+  `ctx.setTransform(dpr,0,0,dpr,0,0)` block is screen space: sun, moon, stars, shooting star.
+- **"A probe is the verdict, not a rerun" — but ONLY if the probe measures what the claim is
+  about.** This is the first recorded case where the agents were right and the probe was wrong,
+  and the standing law would have told me to override them. When a probe and an agent disagree,
+  don't re-run either: **first ask what layer each one is looking at.**
+- **The sky on this plate is scarce and measured**, not open space — a shallow band, with the
+  top-left corner owned by the placard (which is why the moon sits at x=0.80).
+
+- **206 recap prose, rotated at 210** (durable findings kept in the header): 206 audited a rule that had
+  under-fired for the artifact's whole life (`GARDEN` = 6 hexes in the entire census matrix; one seed in three
+  grew *zero*, ever) and fixed it — **a mid-rise is still housing**, so `HOMES={RES,MID}` ⇒ **`GARDEN 6 → 17`**.
+  The hard `openFront` gate starved it (`GARDEN 14 → 5`) because `MID` is both a home *and* the thing that buries
+  you; shipped as a preference (`rng() < (openFront ? 0.075 : 0.02)`), which took mean occlusion 58%→40% and
+  fully-invisible 1→0 while *raising* the count to 17.
+- **204 recap prose, rotated at 210** (durable findings kept in the header): 204 gave the service fleet (police /
+  ambulance / fire) a home bay at its own institution and a `duty` state machine — `bay → call → onscene → home` —
+  read by the router, the beacon and the tooltip alike, so the three cannot drift apart.

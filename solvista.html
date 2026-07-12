@@ -2353,7 +2353,10 @@ function syncFleet(){
     peds.push({x,y,hx:x,hy:y,ox:(rng()-0.5)*0.6,oy:(rng()-0.5)*0.6,tx:0,ty:0,tm:0,
                ph:peds.length*1.7, /* gait phase, index-derived: costs no random draw */
                c:PEDC[(rng()*PEDC.length)|0],
-               kid:Math.random()<0.18?1+Math.random()*6:0, nite:Math.random()<0.5}); /* some walk a child;
+               kid:Math.random()<0.18?1+Math.random()*6:0, out:curfewAt(x,y)}); /* some walk a child;
+               `out` is the hour they keep (curfewAt): drawn from the buzz of the ground they
+               live on, so the quiet edges turn in and the lively streets do not. c.buzz is
+               computed just above this call in tick(), so the anchor's buzz is already there.
                Math.random AFTER the rng draws so the seeded stream is untouched.
                hx,hy is the cell they're anchored to: they may stroll onto the
                streets around it, and re-anchor whenever they reach home ground. */
@@ -2424,7 +2427,12 @@ function syncFleet(){
   const wantJoggers=fl('joggers',Math.min(7,2+(stats.pop/9000|0)));
   while(joggers.length<wantJoggers){
     joggers.push({y:SEAY0+3+Math.random()*(SEAY1-SEAY0-6),off:-0.75+Math.random()*0.3,
-      sp:(0.28+Math.random()*0.12)*(Math.random()<0.5?1:-1),ph:Math.random()*7,c:JOGC[(Math.random()*JOGC.length)|0]});
+      sp:(0.28+Math.random()*0.12)*(Math.random()<0.5?1:-1),ph:Math.random()*7,c:JOGC[(Math.random()*JOGC.length)|0],
+      /* their own hour, on the same nightAmt() clock the residents keep. The esplanade is
+         quiet ground and stays quiet, so a runner's is SHORT and none of them is drawn from
+         buzz: an evening run is a thing, a 3am one is not. Sited here rather than in the draw
+         because a per-frame test would have to be a function of the runner, not of the clock. */
+      out:JOG0+Math.random()*JOGJ});
   }
   const wantShuttles=year>=2030?6:(year>=2012?3:0);
   while(shuttles.length<wantShuttles){
@@ -2739,6 +2747,26 @@ function kerbDir(x,y){
    All Math.random(), like the rest of stepPed: the seeded stream is untouched. */
 const BUZZMAX=3, BUZZW=1.6, BUZZSTILL=0.55, BUZZDWELL=1.3;
 const buzzN=(x,y)=>{const n=cellAt(x,y);return n?Math.min(1,(n.buzz||0)/BUZZMAX):0};
+/* A resident's own hour: how deep into the night they stay out, on nightDeep()'s scale
+   (0 = home by dusk, >=1 = out till dawn). The old rule was one shared threshold flipped
+   by a uniform coin, and it had iter 199's defect exactly, one system over: it tested
+   LITAMT, which the light curve PINS at 1.0 from dayT 0.86 to dawn, so it could not tell
+   8pm from 4am -- half the city blinked out in a single frame at dusk and whoever was left
+   then stood there till morning. And the coin was place-blind, so as many people were left
+   standing in a dark rim field at 3am as outside the lit shopfronts. 199 taught the WINDOWS
+   to go to bed (BEDT, off nightDeep); this is the same clock reaching the street.
+   Who stays out is decided by the buzz of the ground they live on -- c.buzz (104), the
+   artifact's own "somewhere worth standing" field, which stepPed already walks them toward.
+   Quiet ground turns in through the evening; the market, the plaza and the lively kerbs keep
+   their crowd into the small hours. The jitter is what makes it a THINNING and not a cliff:
+   a block empties one door at a time. Read by drawPed (via pedHidden), by drawDog through
+   its owner, and by the tooltip -- one number, every reader. */
+const CURF0=0.30, CURFB=0.60, CURFJ=0.95;
+const curfewAt=(x,y)=>CURF0+CURFB*buzzN(x,y)+Math.random()*CURFJ;
+/* A jogger keeps an hour too (drawJogger), on the same clock -- but a shorter one, and with
+   no buzz term: the esplanade is quiet ground, an evening run is a thing and a 3am one is
+   not. Every runner is in by nightAmt 0.62. */
+const JOG0=0.16, JOGJ=0.46;
 function stepPed(p,dt){
   p.tm-=dt;
   const pierBound=onPier(p.x,p.y), onRoad=!pierBound&&pedRoad(p.x,p.y);
@@ -2766,7 +2794,15 @@ function stepPed(p,dt){
       while(i<5&&r>=wt[i]){r-=wt[i];i++}   /* r<wt[i] on exit, so wt[i]>0: the pick is legal */
       const nx=p.x+dirs[i][0], ny=p.y+dirs[i][1];
       p.x=nx;p.y=ny;
-      if(homeGround(nx,ny)){p.hx=nx;p.hy=ny;} /* reached somewhere to live: re-anchor */
+      if(homeGround(nx,ny)){p.hx=nx;p.hy=ny;
+        /* ...and re-learn the hour they keep, since it is a fact about where they live.
+           ONLY while nightAmt() is 0 -- i.e. while nobody in the city is hideable at all.
+           Moving `out` after dusk could pop a resident in or out of an evening they were
+           already halfway through; gating on the clock being *dead* makes that
+           unrepresentable rather than merely unlikely. Per RESIDENT, never per cell -- a
+           positional test makes a ped blink as it crosses a hex, which is the defect the
+           old coin existed to avoid. */
+        if(nightAmt()===0)p.out=curfewAt(nx,ny);}
     }}
   p.ox=lerp(p.ox,p.tx,dt*0.7); p.oy=lerp(p.oy,p.ty,dt*0.7);
 }
@@ -3371,10 +3407,21 @@ function drawEspAt(x,y){
       ctx.beginPath();ctx.arc(x1-w-1.1,y1-lift-7.5,2.3,0,7);ctx.fill();}
   }
 }
-/* crowds thin late at night (drawPed). A leashed dog goes home when its human
-   does, so both draws consult the same coin rather than stranding a dog on a
-   leash held by nobody. */
-const pedHidden=p=>LITAMT>0.75&&!!p.nite;
+/* How much night there is to stay out IN: nightDeep() (0 at dusk, 1 in the small hours --
+   the slow dayT clock the panes (199), the moon (135) and the hall clock (149) already
+   share), faded off at BOTH ends by the light itself. The fade is not a flourish:
+   nightDeep() clamps to 1 outside its span (it reads 1.0 at noon), so it needs the light
+   to tell it the dark hours are over -- and it is MONOTONE, so it can open the evening but
+   can never close the dawn. LITAMT does that: as the sky comes up the city comes back out,
+   the early-to-bed first, and the late crowd on the lively kerbs never left. 0 all day, so
+   nobody is ever hidden by daylight, and no separate gate is needed. */
+const NIGHTLO=0.35, NIGHTFADE=0.25;   /* NIGHTLO is the paned-glass cut verbatim: same dark hours */
+const nightAmt=()=>nightDeep()*clamp((LITAMT-NIGHTLO)/NIGHTFADE,0,1);
+/* The crowd thins through the evening, one resident at a time, and it thins from the QUIET
+   ground first (drawPed): each is hidden once the night has run past their own hour. A
+   leashed dog goes home when its human does, so both draws consult that same hour rather
+   than stranding a dog on a leash held by nobody. */
+const pedHidden=p=>nightAmt()>p.out;
 function drawDog(d){
   const p=ownerOf(d);
   if(p&&pedHidden(p))return;
@@ -5899,7 +5946,7 @@ function drawVehicle(v){
   }
 }
 function drawPed(p){
-  if(pedHidden(p))return; /* crowds thin late at night — the coin is per
+  if(pedHidden(p))return; /* they have gone home for the night — the hour is per
     RESIDENT, not per cell: a positional hash made a ped blink as it changed hex,
     which the sidewalks (peds now cross hexes far more often) would have made plain */
   const z=onPier(p.x,p.y)?5:0;
@@ -5937,7 +5984,11 @@ function drawPed(p){
   }
 }
 function drawJogger(j){
-  if(LITAMT>0.75&&(((j.ph*97)|0)%10)<6)return; /* only a few night runners */
+  if(nightAmt()>j.out)return; /* the runners go in too, on their own hour (curfewAt's clock).
+    This gate used to read LITAMT>0.75 against a fixed 60% coin -- the residents' old bug
+    verbatim, one array over: LITAMT is PINNED at 1.0 from dayT 0.86 to dawn and has fallen
+    back to 0.64 by the small hours, so "night" was really only dayT 0.76..0.02 and the whole
+    field was out running again at 3am. */
   const[cx,cy]=pxc(seaXF(j.y,j.off),j.y);
   stamp(j,cx,cy);
   shadS(cx,cy,0.09,0.16); /* seats the runner on the strand, matching peds/vehicles */
@@ -7170,7 +7221,17 @@ const plur=(n,w)=>n+' '+w+(n===1?'':'s');
    (pedWalk), so these cases cover the field; the fallback is only for a hex caught
    mid-re-anchor. Read-only: no seeded `rng()`, no state. Dogs heel to their owner's
    hex, so a leashed dog shares its resident's phrase. */
-function residentDoing(p){
+/* After dark, whether they are staying out. A hidden resident cannot be hovered at all
+   (drawPed returns before stamp()), so anyone under the cursor at night is by construction
+   one of the ones who stayed -- and this reads the SAME `out` and nightDeep() that decided
+   it, so the sentence and the draw cannot drift apart (iter 123: run the tell forwards). */
+function outLate(p){
+  const n=nightAmt(); if(n<=0)return '';
+  if(p.out>=1)return ' Out till dawn.';
+  return n>p.out-0.18?' About to call it a night.':' Staying out a while yet.';
+}
+function residentDoing(p){return residentWhere(p)+outLate(p)}
+function residentWhere(p){
   if(onPier(p.x,p.y))return 'Out on the pier for the view.';
   const n=cellAt(p.x,p.y), t=n?n.t:-1;
   if(t===T.MARKET)return 'Browsing the market stalls.';
