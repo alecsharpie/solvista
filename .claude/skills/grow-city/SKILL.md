@@ -345,7 +345,10 @@ The census and screenshots are both blind to *performance* drift, and this loop
 only ever adds entities and draw work — dozens of individually-cheap features
 can compound into a slow frame exactly the way kelp compounded into a dark
 coast. Log the number in the holistic entry; if it regressed, the next iteration
-is a perf-fix iteration. Run the passes **sequentially, and never alongside a
+is a perf-fix iteration — but **name the SUSPECT (which draw got slower), not the
+FIX (which lever to pull)**. 197 named the lever ("batch the per-tree shadow fills"),
+198 built it and measured **+0.3%**, and the real cost model turned out to be
+per-ellipse — see the perf-lever law below. Run the passes **sequentially, and never alongside a
 subagent that is doing anything** — the gate measures frame time on a loaded
 shared machine, so concurrency doesn't just slow it, it *corrupts the reading*.
 (The visual gate parallelizes safely because reading a PNG has no timing
@@ -724,6 +727,23 @@ vector, whatever it is.
   tightens (0.53% → 0.00% → 0.00%) while your signal *rises* (19% → 28% → 37%), you have proved both that the residual
   was rim bleed **and** that your effect is centrally located — i.e. it really is the host, not an artifact. A sweep
   that *explains* a residual is worth more than a threshold that hides it.
+- **A perf LEVER is a HYPOTHESIS — measure it before you MANDATE it, and characterize a cost with variants that
+  DISCRIMINATE between mechanisms, not one plausible fix (iter 198).** 197's step-back measured a real +3.4% from
+  194's per-tree contact shadows and then mandated the *fix* — "batch the per-tree `shadS` fills into one path per
+  hex" — reasoning that since 194 had memoized `shadS`'s `rgba()` string for zero gain, the cost *must* be the fill
+  count. That was inference, never measurement. 198 built the batch exactly as ordered and measured **+0.3%:
+  nothing.** The way out was to stop tuning and write a probe that **holds one factor fixed per variant**, so the
+  table names the mechanism rather than grading one guess: `NOSHAD` (remove the draw → the whole budget), `BATCH`
+  (¼ the fill *count*, same area), `SMALLR` (¼ the *area*, same count), `SPRITE` (`drawImage` a pre-baked ellipse
+  → no path raster). **Only `NOSHAD` moved.** ⇒ On this canvas a draw costs **PER-ELLIPSE — per path object
+  rasterized** — near-independent of its size, of how many are grouped into one `fill()`, and a sprite blit is
+  *worse* (+2–4%), not better. Three corollaries, all general: (a) **`ctx.fill()` is not the unit of cost; the path
+  object is** — batching N ellipses into one fill still rasterizes N ellipses, so "batch the fills" is not an
+  optimization, it is a refactor; (b) the only real lever on such a cost is **drawing fewer things**, which is a
+  *visual* decision — price it against what the ornament is worth and be willing to **pay** (194's ~3% buys the
+  grounding of every tree in the city, and that is a good trade); (c) **a step-back should name the SUSPECT, not
+  the FIX.** Naming the fix converts the next iteration into a foregone conclusion and spends it proving the
+  step-back wrong. `probes/probe-shadcost.mjs` is the reusable table — rerun it before reopening any draw-cost lever.
 - **Ask an agent to LOCATE, not to JUDGE** (108) — see the visual gate. And when
   agents disagree, **a probe is the verdict, not a rerun**.
 - **Reverting a passing-but-weak change is the system working.** The census can pass a

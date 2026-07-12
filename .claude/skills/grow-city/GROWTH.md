@@ -23,7 +23,7 @@ ones (U2, 42, U5) stay in the bullet.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194** | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~ | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22 | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188** | **105**, **171** |
@@ -55,12 +55,9 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **190** · People **191** · Transport **193** · Urban **189** · Nature **194** · Civic **195** · Water **196**.
-  **⚠ 198's vector is CHOSEN, and it is not a rotation pick: the tree-shadow PERF FIX (Nature × Polish).** 197's
-  step-back measured the first non-flat lap since 142 and localized it to one draw; SKILL.md's step-back rule is
-  explicit that a measured regression outranks adding more ("if it regressed, the next iteration is a perf-fix
-  iteration"). It is cheap and the lever is already known (batch the per-tree `shadS` fills per hex — see the PERF
-  bullet). **After 198, the lap resumes owing Urban (189, Deepen/Polish only — measured-saturated), then Sky (190)/People (191).**
+  Sky **190** · People **191** · Transport **193** · Urban **189** · Nature **198** · Civic **195** · Water **196**.
+  **198 took 197's mandated tree-shadow PERF FIX (Nature × Polish) and EXPLORED → REVERTED: the LEVER WAS WRONG, and all three candidate levers are now CLOSED.** 197 mandated "batch the per-tree `shadS` fills into ONE path per hex" by *inference*, never measurement (194 had memoized shadS's rgba string for zero gain, so 197 reasoned the cost must be the FILL COUNT). 198 built it: **+0.3%. Nothing.** `probes/probe-shadcost.mjs` then discriminated the mechanism — 5 variants all built from HEAD by surgery, interleaved, 3 runs: **NOSHAD −1.3..−3.5% (the shadows' whole price — real, and the ONLY variant that ever moves) · BATCH never wins (+0.3/+0.9/+2.7% day) · SMALLR (¼ the AREA, same count) ~0% · SPRITE (blit a pre-baked ellipse via `drawImage`) +2..+4%, WORSE than filling.** ⇒ **the cost is PER-ELLIPSE** — near-independent of the ellipse's size, of how many are grouped into one `fill()`, and not blittable away. **The only remaining lever is drawing FEWER ellipses — i.e. un-grounding trees 194 shipped and 197's agents twice praised. That is a bad trade: the ~3% is the honest price of the shadows. PAY IT, and do not re-open batch/area/sprite.** (Law promoted to SKILL.md: *measure a lever before you mandate it* — a step-back should name the suspect, not the fix.)
+  **The lap now resumes owing Urban (189, Deepen/Polish only — measured-saturated), then Sky (190)/People (191).**
   **196 took Water × Deepen (the kelp bed breathes with the tide — SHIPPED).** `describeTile`'s `tidal` test (L6759)
   includes `T.KELP`, so a kelp bed has always printed a live `Tide` row (`High water`/`Flooding`/`Ebbing`/`Low water`)
   over a draw that read `TIDE` **nowhere** — iter 113's marsh defect, one tile along, unnoticed for 83 iterations. On the
@@ -73,11 +70,9 @@ ones (U2, 42, U5) stay in the bullet.
   water within ONE build** (frozen clock, same `genWorld`), so the only variable is `TIDE`: **BASE kelp interior 0.00%
   on all 3 seeds (deaf — the seam) vs PATCH 35.7-41.9% (answers)**, BEACH as the **positive control** (moves identically
   on both builds, proving the tide pin is live — without it "BASE = 0" would be a dead pin, not a finding), ROAD 0.00%.
-  Both seeds VISUAL PASS and both agents correctly **located** low water by the kelp alone. **Two things banked for
-  197's step-back: (a) 194's tree-shadow perf cost (day +3.4% / night +3.5%), and (b) at HIGH water the kelp hexes are
-  still the darkest pixels in the water — if the bed count ever grows, kelp is the first thing that would band.**
-  **So the next domain lap (198) owes Urban (189, Deepen/Polish only — measured-saturated), then Sky (190)/People (191);
-  197 is the mandated STEP-BACK.**
+  Both seeds VISUAL PASS and both agents correctly **located** low water by the tide-exposed kelp alone. (196's two banked
+  watch items are both CLOSED and were moved to the archive at 198: the kelp-banding cue **cannot fire** — 197 showed the bed
+  count is fixed at `genWorld` — and 194's tree-shadow perf cost is **real and to be PAID**, see the ROTATION and PERF bullets.)
   **195 took Civic × Deepen and EXPLORED → REVERTED (`solvista.html` byte-identical to HEAD).** The finding is
   solid and still uncashed: **`university` is the ONLY one of the twelve civics with no `LITAMT` at all** — the
   only `MAJORK` monument that goes pitch dark after sunset (parliament floodlights 175, museum facade, hall clock
@@ -156,7 +151,7 @@ ones (U2, 42, U5) stay in the bullet.
   tick-rule CAN'T read them directly (iter 151): `recount()` runs only at init/warp/manual, never in the sim loop
   (L6342), so the reach maps are STALE inside `tick()`** — 151 cashed the seam's *shape* (a shop-distance rule)
   but recomputed it LOCALLY (`countAround` r2), so `rShop` per se is still unread (recompute it, or pay a recount).
-  **Iteration 202 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, **197 — all done**). **197 was the 19th, and it BROKE the clean-bill streak at thirteen — not visually (the city is clean: both seeds VISUAL PASS at 3 lights × 2 calendars, census PASS, seasons alive FARM dry-peak 88.4, night core located (.47,.45)/(.53,.57)) but on PERF: 193+194+196 cost day +3.8/+4.4%, night +2.9/+3.0%, all of it 194's tree shadows.** Both of 197's owed watch items came back **clean**: (a) the tree-shadow *visual* fear was confabulation for the third time — both agents read the groves "grounded-and-clean", not olive-muddy — but its *perf* cost is real, replicated, and now the header's live perf item; (b) **196's kelp watch item is CLOSED, and cannot fire**: KELP is **8–17 beds per seed and IDENTICAL across all three eras** (census tile histogram), i.e. the bed count is fixed at `genWorld` and nothing in `tick()` grows it, so the "if the bed count ever grows, kelp would band" precondition has no mechanism. Both agents confirmed "no dark lining / no crusty seam where the kelp bed sits."
+  **Iteration 202 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, **197 — all done**). **197 was the 19th, and it BROKE the clean-bill streak at thirteen — not visually (the city is clean: both seeds VISUAL PASS at 3 lights × 2 calendars, census PASS, seasons alive FARM dry-peak 88.4, night core located (.47,.45)/(.53,.57)) but on PERF: 193+194+196 cost day +3.8/+4.4%, night +2.9/+3.0%, all of it 194's tree shadows.** Both of 197's owed watch items came back **clean** and are now both CLOSED: (a) the tree-shadow *visual* fear was confabulation for the third time — both agents read the groves "grounded-and-clean", not olive-muddy — and its *perf* cost, though real, is **irreducible and to be paid** (198); (b) **196's kelp watch item CANNOT fire**: KELP is **8–17 beds per seed and IDENTICAL across all three eras** (census tile histogram), i.e. the bed count is fixed at `genWorld` and nothing in `tick()` grows it, so the precondition has no mechanism. Both agents confirmed "no dark lining / no crusty seam where the kelp bed sits."
   Shoot it **at night AND a season, and PIN THE DAY FRAME OFF JANUARY** (`year=2035.62` dry-peak baselines +
   `2035.02` as the seasonal-contrast frame — a default `?warp=61` frame is already ~winter; SKILL.md holds
   the full recipe). **130, 136, 142, 147, 152, 157, 162, 167, 172 AND 177 all found NO compounding city defect** (TEN clean bills in a row, the
@@ -234,6 +229,12 @@ ones (U2, 42, U5) stay in the bullet.
   **The day column is the NOISY one on this box — grade it only by min-of-≥2-rounds interleave and check the
   round spread; night is steady and is the SLOW-accumulating column** (night-only draws pile up there: 118's
   lit panes, 138's arterial lamps, 193's ferry lights).
+  **The COST MODEL is now MEASURED, not guessed (198, `probes/probe-shadcost.mjs`): a canvas ornament costs
+  PER-ELLIPSE (per path object rasterized) — NOT per `fill()`, NOT per unit area, and a pre-baked `drawImage`
+  sprite is WORSE, not better.** So the levers on any future draw-cost regression are, in order: draw fewer
+  objects (a *visual* decision, price it against what the ornament is worth), or accept it. **Batching fills,
+  shrinking radii, and sprite-blitting are all CLOSED — measured, three ways, and none of them buys anything.**
+  194's tree shadows are the standing example: ~3% for the grounding of every tree, and it is worth paying.
   **⚠ 197 found the FIRST non-flat lap since 142, and it is REAL: 193+194+196 cost day +3.8/+4.4%,
   night +2.9/+3.0%** (two independent interleaves vs iter-192 `d8819ec`). It is **all 194's tree shadows** —
   193 and 196 are free. Within precedent (118 shipped +5.1% night; 142's +2.2% was accepted) and NOT an
@@ -383,79 +384,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 190 entries before Iteration 188 live in
+> **Archive:** the 191 entries before Iteration 189 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 188 — the cable cars rock on their hangers in the breeze (2026-07-12) [Transport × Polish]
-
-**Vector.** Transport × **Polish** (SHIPPED). Rotation named the stalest domain: **Transport (179)** (186 was
-People, 187 the step-back). On *kind*: Transport's whole run is night-ward Deepen (179 bridge lamps, 155 catenary),
-New element (164 taxi), Interaction/UX (171 boulevards), Polish (146 bus). Deepen just ran at 179, so I **varied off
-it deliberately** — 179 was "add a warm night lamp to an unlit transport structure," and the obvious next candidate
-(a night lamp on the dark elevated monorail station) would have *repeated the move*. Polish instead, aimed at a
-daytime-and-night stillness.
-
-**The seam — the aerial transit hangs rigidly vertical.** I grepped the whole Transport surface first and found it
-measured-saturated: roads carry lane markings, avenue/arterial centre-lines, lit night corridors, street trees,
-boulevard allées, and bus shelters *with day-fading boarding queues*; vehicles have livery, headlights + red
-taillights (5521), contact shadows, beacons, taxi checker; monorail trains and gondola cabins already have night-lit
-glass windows; bridges got their night lamps at 179; the tram got its catenary at 155. The one thing left untouched:
-the **cable-car cabins hang dead-plumb from the rope** and never move relative to it. Meanwhile the city already has
-a *wind* — 185's whitecaps break on the swell, the kites fly, the flags stream — so a rigid, windless cable car is
-the odd stillness out. Cable cars sway; ours didn't.
-
-**Change (~6-line draw edit, all draw-only).** In the cabin draw block (render loop, ~L5960), each cabin now
-**pivots about its fixed cable attachment point** (`gsx,gsy-Hs`): the hanger's *top* stays on the rope, and a lateral
-`sway` offset swings the hanger *bottom*, the cabin body, its window band, and its hover-stamp together. `sway =
-sin(time*1.15 + cb.p*39 + li*1.7)*1.7 + sin(time*0.63 + li)*0.7` — two out-of-phase sines (a quick gust over a slow
-swell), per-cabin-phased off `cb.p`/`li` so no two cars rock in lockstep, ~±2.4px peak so it reads at moderate zoom
-without looking unmoored. Pure draw off the animation clock `time`; no tile / entity / `rng()` / `hashCell`-terrain /
-`tick()` pass / terrain change / new state; strings pure-ASCII (134). Pop + stream provably flat.
-
-**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**; gondola **16** and every core metric **+0**
-(`greenRoofs +1` = documented RAF tick-count jitter). Vacuous by construction (draw-only) — the probe is the gate.
-
-**Probe — `probes/probe-cabinsway.mjs` (new, promoted).** A **MOTION** claim, so a **temporal** probe (iter-134
-law: a frozen two-render diff is blind to cadence). It **freezes the SIM** (`playing=false`, so every cabin's rope
-position `cb.p` and thus `gsx` stay put) and steps **only the animation clock** `time` across 48 samples of a cycle,
-re-rendering at each and reading the stamped screen coords. The sway is a pure function of `time`, so:
-**CABIN dx (cb._sx pk-pk) = 4.08 / 4.30 / 4.45** on seeds 7/42/1234 (matching the designed ±2.4 amplitude); **CABIN
-dy = 0.000** (the sway is horizontal only); **TRAIN dx = 0.000** — a monorail train's `_sx` is the control, and with
-the sim frozen it stays pinned, proving the motion is my sway and not the sim advancing. **VERDICT: PASS (3 seeds).**
-
-**Visual — `/tmp` zoom + wide shots.** ~3× camera zoom centred on a cabin, rendered at **two clock moments** half a
-slow-cycle apart (A/B) so a still-image agent can see the cabin swing relative to its fixed cable, plus a whole-city
-`wide` (day golden `year=2035.62`) for the compounding check. seeds 42 & 7, one agent each, both **VISUAL: PASS**:
-the coral cabin stays **connected by its hanger to the fixed cable** (not floating, not detached, not clipping the
-tower), its offset/angle relative to the cable **differs between A and B** (sway visible), no z-order tears /
-floaters / blown-out color anywhere, and the whole frame still reads as a balanced, beautiful coastal city.
-
-**Verdict — SHIPPED.** The aerial cable cars — plumb and windless for the artifact's whole life — now rock gently on
-their hangers in the same breeze that raises the whitecaps and flies the kites. A Transport × Polish that fixes a
-*stillness* rather than repeating 179's night-lamp move: draw-only, pop + stream flat, ~6 lines + a temporal probe.
-Transport's Polish cell gains 188 (U1/U3/70/85/87/94/**146**/**188**). The next domain lap (189) owes **Urban (180)**,
-then Sky (181); the next step-back is at **192**.
-
-### Findings for later laps
-- **A "stillness" is a Polish seam the way a mute tooltip is an Interaction seam.** When a city already has a force
-  (here: wind — whitecaps 185, kites, flags) that visibly moves *some* things, anything in the same medium that
-  *doesn't* move is a gap worth closing. The aerial cabins hung rigid while everything else in the wind swayed. Look
-  for other unmoved things that should respond to a force already in the scene: do the moored boats bob on the swell?
-  do the flags on the far buildings stream while nearer ones are still? does anything hang (banners, the bunting)
-  that should sway?
-- **A pendulum under an iso vertical prism is free: pivot the ground point, pin the top.** `prismS` builds a vertical
-  prism upward from a ground screen-point, so shifting that point laterally translates the whole body sideways at
-  every height. To make it swing rather than slide, keep the *cable/attachment* draw at the original `gsx` and feed
-  the *swayed* `gsx+sway` only to the body + the hanger's bottom endpoint. No rotation math, no new transform.
-- **A MOTION Polish's gate is a TEMPORAL probe with a FROZEN-SIM control, and the control is another moving entity
-  held still.** Rather than diffing two frames (blind to cadence) or trusting a still agent (can't see motion), freeze
-  the sim and step only `time`: the feature's stamped coord must oscillate while a *sibling* entity that also gets
-  stamped but does NOT have the feature (the monorail train) stays pinned — that pin is what proves the sim is
-  actually frozen and the oscillation is the feature, not the world advancing. `_sy` doubles as an axis control
-  (horizontal-only sway ⇒ dy≈0).
 
 ## Iteration 189 — the shopfronts spill onto the pavement at night (2026-07-12) [Urban fabric × Deepen]
 
@@ -972,3 +905,28 @@ Two runs agree, and the number matches **194's own self-reported cost** (day +3.
 **Visual** — whole-frame reads at 3 lights × 2 calendars (day golden `year=2035.62` / night / winter `year=2035.02`), 2 seeds (42, 7), one agent each, asked the *cumulative-drift* question and given a **locate** task. **Both VISUAL: PASS.** Night core located by light alone at **(0.47,0.45)+(0.47,0.62)** and **(0.53,0.57)** — matching the historical band (177: (.48,.50)/(.53,.60); 172: (.47,.55)/(.45,.62)), so 115/143's CBD lighting holds. No z-order tears, no floaters, no mojibake, no blowout. Winter reads as a real but mild variant on both seeds (seed 7's agent called it "the weakest signal in the set") — that is 120's known by-design evergreen/irrigated dilution, a composition fact, not a dead calendar.
 
 **Verdict — FIXED** (no city change; `solvista.html` byte-identical to HEAD). The step-back's *job* was done: it found something. **The thirteen-clean-bill streak ends at 197 — not on the city, which is balanced, readable and beautiful at ~197 iterations, but on the frame budget.** The one durable improvement shipped here is to the harness: **`probes/perfab.mjs` now takes `REF=<sha>`** so a step-back can grade a whole lap against the previous step-back's commit instead of only HEAD-vs-working-file — the exact measurement this step exists to make, which it previously could not express. **198 = the tree-shadow perf fix (Nature × Polish); the lap then resumes owing Urban (189).** Next step-back at **202**.
+
+## Iteration 198 — the tree shadows cost what they cost (2026-07-12) [Nature × Polish, EXPLORED -> REVERTED]
+
+**Vector** — 197's *mandated* perf fix: "batch a hex's tree shadows into ONE path with ONE `fill()`." Not a rotation pick; the step-back rule says a measured regression outranks adding more. It ends REVERTED, and the value of the iteration is the measurement that killed it.
+
+**Change (built, measured, reverted)** — `treeGroup(f)` + a `TMODE`/`TSHAD` queue: `tree()` queues its contact ellipse instead of filling it, the group lays a whole stand down in one path + one `fill()`, then draws the bodies over it. Wired into the only four multi-tree hexes (FOREST 2-4, PARK 2-3, the boulevard allee, and the 2-tree case at ~L3769) — a single-tree hex is already one fill and can gain nothing. It worked, and it was pointless: **day +0.3%, night +0.1%** (interleaved A/B vs pristine HEAD, `probes/perfab.mjs`). `solvista.html` is now **byte-identical to HEAD**.
+
+**The finding — 197's lever was an INFERENCE, and it was WRONG.** 197 reasoned: 194 memoized `shadS`'s `rgba()` string and bought back zero, therefore the cost is the FILL COUNT, therefore batch the fills. Nobody measured it. So 198 stopped tuning and wrote `probes/probe-shadcost.mjs`, which **discriminates between mechanisms** instead of testing one plausible fix — five variants, every one built from HEAD by string surgery (so it reproduces from a clean tree and can never silently measure HEAD against itself), interleaved per round, min per variant, **three independent runs**:
+
+| variant | what it holds fixed | day | night |
+| --- | --- | --- | --- |
+| `NOSHAD` remove tree+palm shadows | — (the whole budget) | **−3.1 / −2.8 / −1.3%** | **−2.6 / −2.4 / −3.5%** |
+| `BATCH` 197's mandate, ¼ the fills | same ellipses, same area | +0.3 / +0.9 / +2.7% | +0.1 / +1.5 / −0.3% |
+| `SMALLR` radius ×0.5 (¼ the AREA) | same count of fills | +0.4 / +0.9 / −0.6% | +0.4 / +1.1 / 0.0% |
+| `SPRITE` pre-baked ellipse, `drawImage` | same shadows, no path raster | **+4.1 / +2.3%** | **+3.6 / +2.0%** |
+
+**Only `NOSHAD` ever moves.** Quartering the fill *count* buys nothing; quartering the fill *area* buys nothing; replacing the path with a sprite blit is **worse**. ⇒ **The cost is PER-ELLIPSE** — one charge per ellipse rasterized, near-independent of its size, of how many are grouped into a single `fill()`, and not avoidable by blitting. `ctx.fill()` is not the unit of cost; the **path object** is, and batching N ellipses into one fill still rasterizes N ellipses.
+
+**Why it is REVERTED rather than shipped** — the batch is +0.3% (i.e. nothing), costs a `TMODE` state machine and a double pass over each stand, and slightly changes pixels (a union fill stops two overlapping shadows double-darkening). Machinery that buys nothing does not earn its place. The one lever left on the ~3% is **drawing fewer ellipses** — un-grounding some trees — and that is a *visual* decision, not an optimization: 194's grounding is the thing 197's agents twice read as "grounded, not muddy — the contact shadows sit tight under each trunk," after twice suspecting it. **The ~3% is the honest price of the shadows, and it is worth paying** (precedent: 118 shipped +5.1% night; 142's +2.2% was accepted and never fixed). Perf is not free, but neither is beauty, and this loop has been told which one it is buying.
+
+**Census** — PASS, on the BATCH build *and* again on the restored HEAD. Every core aggregate flat, tile histogram empty. Correct and vacuous, as any draw-only iteration's census is.
+
+**Visual** — none taken, and none owed: the file is byte-identical to HEAD, so there is nothing to look at (195's precedent).
+
+**Verdict — EXPLORED → REVERTED.** The city is unchanged; the loop's *knowledge* is not. Three perf levers are now closed by measurement instead of standing open as folklore, and `probes/probe-shadcost.mjs` is committed so the next runner who eyes a draw-cost regression can rerun the table in one command rather than re-deriving it. **Law promoted to `SKILL.md`: a perf lever is a HYPOTHESIS — measure it before you mandate it, and characterize a cost with variants that DISCRIMINATE between mechanisms, not one plausible fix.** A step-back should name the **suspect**, not the **fix**; 197 named the fix and spent an iteration proving it wrong. **The domain lap resumes at 199 owing Urban (189, Deepen/Polish only); next step-back at 202.**

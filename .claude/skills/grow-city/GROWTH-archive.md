@@ -11341,3 +11341,84 @@ contrast-is-not-traceability law in SKILL.md.
 
 **Verdict — EXPLORED → REVERTED** (no change to commit; `solvista.html` restored byte-identical after the perf swap). **Twelfth clean bill in a row.** The city is balanced, readable and beautiful at ~186 iterations; nothing has compounded into clutter or darkness; seasons, night mood and coast all read correctly; perf flat. Next domain lap (188) owes Transport (179), then Urban (180)/Sky (181). Next step-back at **192**.
 
+## Iteration 188 — the cable cars rock on their hangers in the breeze (2026-07-12) [Transport × Polish]
+
+**Vector.** Transport × **Polish** (SHIPPED). Rotation named the stalest domain: **Transport (179)** (186 was
+People, 187 the step-back). On *kind*: Transport's whole run is night-ward Deepen (179 bridge lamps, 155 catenary),
+New element (164 taxi), Interaction/UX (171 boulevards), Polish (146 bus). Deepen just ran at 179, so I **varied off
+it deliberately** — 179 was "add a warm night lamp to an unlit transport structure," and the obvious next candidate
+(a night lamp on the dark elevated monorail station) would have *repeated the move*. Polish instead, aimed at a
+daytime-and-night stillness.
+
+**The seam — the aerial transit hangs rigidly vertical.** I grepped the whole Transport surface first and found it
+measured-saturated: roads carry lane markings, avenue/arterial centre-lines, lit night corridors, street trees,
+boulevard allées, and bus shelters *with day-fading boarding queues*; vehicles have livery, headlights + red
+taillights (5521), contact shadows, beacons, taxi checker; monorail trains and gondola cabins already have night-lit
+glass windows; bridges got their night lamps at 179; the tram got its catenary at 155. The one thing left untouched:
+the **cable-car cabins hang dead-plumb from the rope** and never move relative to it. Meanwhile the city already has
+a *wind* — 185's whitecaps break on the swell, the kites fly, the flags stream — so a rigid, windless cable car is
+the odd stillness out. Cable cars sway; ours didn't.
+
+**Change (~6-line draw edit, all draw-only).** In the cabin draw block (render loop, ~L5960), each cabin now
+**pivots about its fixed cable attachment point** (`gsx,gsy-Hs`): the hanger's *top* stays on the rope, and a lateral
+`sway` offset swings the hanger *bottom*, the cabin body, its window band, and its hover-stamp together. `sway =
+sin(time*1.15 + cb.p*39 + li*1.7)*1.7 + sin(time*0.63 + li)*0.7` — two out-of-phase sines (a quick gust over a slow
+swell), per-cabin-phased off `cb.p`/`li` so no two cars rock in lockstep, ~±2.4px peak so it reads at moderate zoom
+without looking unmoored. Pure draw off the animation clock `time`; no tile / entity / `rng()` / `hashCell`-terrain /
+`tick()` pass / terrain change / new state; strings pure-ASCII (134). Pop + stream provably flat.
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**; gondola **16** and every core metric **+0**
+(`greenRoofs +1` = documented RAF tick-count jitter). Vacuous by construction (draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-cabinsway.mjs` (new, promoted).** A **MOTION** claim, so a **temporal** probe (iter-134
+law: a frozen two-render diff is blind to cadence). It **freezes the SIM** (`playing=false`, so every cabin's rope
+position `cb.p` and thus `gsx` stay put) and steps **only the animation clock** `time` across 48 samples of a cycle,
+re-rendering at each and reading the stamped screen coords. The sway is a pure function of `time`, so:
+**CABIN dx (cb._sx pk-pk) = 4.08 / 4.30 / 4.45** on seeds 7/42/1234 (matching the designed ±2.4 amplitude); **CABIN
+dy = 0.000** (the sway is horizontal only); **TRAIN dx = 0.000** — a monorail train's `_sx` is the control, and with
+the sim frozen it stays pinned, proving the motion is my sway and not the sim advancing. **VERDICT: PASS (3 seeds).**
+
+**Visual — `/tmp` zoom + wide shots.** ~3× camera zoom centred on a cabin, rendered at **two clock moments** half a
+slow-cycle apart (A/B) so a still-image agent can see the cabin swing relative to its fixed cable, plus a whole-city
+`wide` (day golden `year=2035.62`) for the compounding check. seeds 42 & 7, one agent each, both **VISUAL: PASS**:
+the coral cabin stays **connected by its hanger to the fixed cable** (not floating, not detached, not clipping the
+tower), its offset/angle relative to the cable **differs between A and B** (sway visible), no z-order tears /
+floaters / blown-out color anywhere, and the whole frame still reads as a balanced, beautiful coastal city.
+
+**Verdict — SHIPPED.** The aerial cable cars — plumb and windless for the artifact's whole life — now rock gently on
+their hangers in the same breeze that raises the whitecaps and flies the kites. A Transport × Polish that fixes a
+*stillness* rather than repeating 179's night-lamp move: draw-only, pop + stream flat, ~6 lines + a temporal probe.
+Transport's Polish cell gains 188 (U1/U3/70/85/87/94/**146**/**188**). The next domain lap (189) owes **Urban (180)**,
+then Sky (181); the next step-back is at **192**.
+
+### Findings for later laps
+- **A "stillness" is a Polish seam the way a mute tooltip is an Interaction seam.** When a city already has a force
+  (here: wind — whitecaps 185, kites, flags) that visibly moves *some* things, anything in the same medium that
+  *doesn't* move is a gap worth closing. The aerial cabins hung rigid while everything else in the wind swayed. Look
+  for other unmoved things that should respond to a force already in the scene: do the moored boats bob on the swell?
+  do the flags on the far buildings stream while nearer ones are still? does anything hang (banners, the bunting)
+  that should sway?
+- **A pendulum under an iso vertical prism is free: pivot the ground point, pin the top.** `prismS` builds a vertical
+  prism upward from a ground screen-point, so shifting that point laterally translates the whole body sideways at
+  every height. To make it swing rather than slide, keep the *cable/attachment* draw at the original `gsx` and feed
+  the *swayed* `gsx+sway` only to the body + the hanger's bottom endpoint. No rotation math, no new transform.
+- **A MOTION Polish's gate is a TEMPORAL probe with a FROZEN-SIM control, and the control is another moving entity
+  held still.** Rather than diffing two frames (blind to cadence) or trusting a still agent (can't see motion), freeze
+  the sim and step only `time`: the feature's stamped coord must oscillate while a *sibling* entity that also gets
+  stamped but does NOT have the feature (the monorail train) stays pinned — that pin is what proves the sim is
+  actually frozen and the oscillation is the feature, not the world advancing. `_sy` doubles as an axis control
+  (horizontal-only sway ⇒ dy≈0).
+
+
+<!-- Header bullets rotated out of GROWTH.md at iteration 198 (the header is a fixed
+     400-line budget: to add a line, cut a line). Both of iteration 196's banked
+     watch items, superseded — (b) was CLOSED by 197 (the kelp bed count is fixed at
+     genWorld and nothing in tick() grows it, so the precondition has no mechanism),
+     and (a) was CLOSED by 198 (the cost is real, per-ellipse, and irreducible without
+     un-grounding the trees — it is to be paid). Preserved verbatim: -->
+
+  Both seeds VISUAL PASS and both agents correctly **located** low water by the kelp alone. **Two things banked for
+  197's step-back: (a) 194's tree-shadow perf cost (day +3.4% / night +3.5%), and (b) at HIGH water the kelp hexes are
+  still the darkest pixels in the water — if the bed count ever grows, kelp is the first thing that would band.**
+  **So the next domain lap (198) owes Urban (189, Deepen/Polish only — measured-saturated), then Sky (190)/People (191);
+  197 is the mandated STEP-BACK.**
