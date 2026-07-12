@@ -943,6 +943,38 @@ vector, whatever it is.
   a peak with no mass under it is not a skyline. Corollary: **the cheapest instrument is often not a render at
   all.** `probes/probe-skyline.mjs` is pure world data — no canvas, no clock, no noise floor, no `Math.random`
   to stub — and it settled in one run a question four rounds of screenshots could only gesture at.
+- **A SATURATED RULE CANNOT BE STEERED BY ITS PROBABILITY — MEASURE THE CONVERSION RATE BEFORE YOU TUNE A RATE
+  (iter 218, and it REFUTED the fix 217 ordered).** 199's corollary says to check whether a *signal* is saturated
+  before concluding a draw "already reads" it. This is the same trap one level up, in the **CA rules themselves**,
+  and it is the loop's native currency: a per-tick pass is sampled **~60 times per cell** over a run
+  (~800 ticks × `ks(240)` picks), so `1-(1-p)^60 ≈ 1` for any `p` above ~0.02. **The roll converts ~100% of whatever
+  qualifies, and the probability therefore sets only TIMING, never PLACEMENT.** Measured on the tower rule:
+  `converted / (converted + still-eligible)` = **100.0% on all three seeds** — not one cell anywhere in any city was
+  still eligible and un-converted. So 217's prescription (*"give the placement roll a `core` term"*) was **incapable
+  of moving a single tower**, and 98's comment had said so years earlier. ⇒ **Before you tune ANY `rng()<p` in
+  `tick()`, print `p`'s conversion rate.** If it is ~100%, `p` is a dead lever and **only the PREDICATE can steer the
+  rule** — a predicate cannot saturate. This is a two-minute, render-free probe (`probes/probe-towerroll.mjs`) and it
+  is now the first thing to run on any placement/siting vector.
+- **A DENSITY FIX IS NOT A MASS FIX — THE EYE COUNTS OBJECTS, NOT RATIOS (iter 218; 205's next host).** 205 says
+  state the claim in the viewer's units. Here is the specific unit error you will actually make, because it is the
+  one your *rule* hands you: a siting rule operates **per cell**, so you will instinctively grade it **per cell** —
+  "TOWER % of developed land" — and that ratio can improve enormously while the frame gets *no better*. Solvista's
+  rim carries **~20× more land** than its core, so `53.6% core vs 6.3% rim` density still leaves **15 towers downtown
+  against 34 out past ring 23**: twice as many on the rim, exactly what four blind agents reported and what the
+  ratio concealed. ⇒ **When a rule distributes objects over unequal-sized regions, grade it on the COUNT, not the
+  share.** The tell: your probe's units are the units your rule is written in.
+- **A RULE CAN BE FAITHFUL TO A DEFECT ONE LAYER UPSTREAM — CHECK THE HOST LAYER'S DISTRIBUTION BEFORE YOU BLAME THE
+  RULE THAT READS IT (iter 218).** The dead-code law says confirm a host *exists* at scale before wiring to it. This
+  is its distributional twin, and it is what 217 (and 98, and I) got wrong for 120 iterations: **towers can only rise
+  on `COM`, and `COM` is itself uniformly sprinkled** (COM-origin share: 50% in ring 0-4, then flat 25–36% out to the
+  rim), so a uniform commercial layer **forces** a uniform skyline no matter what the tower rule says. The tower rule
+  was never broken — it was *correctly* reflecting its host. The real defect was one line up (`shop=(roads>=2&&…)`,
+  L1443), wearing **the identical fault** (siting with no centrality term), and fixing *it* needs no tower change at
+  all, because `com>=2` **is already a clustering predicate** and will concentrate towers automatically wherever COM
+  concentrates. ⇒ **When a rule's output is mis-distributed, plot the distribution of its HOST before touching the
+  rule.** If the host is flat, the rule is innocent and you are about to spend a lap in the wrong file. Corollary,
+  paid for twice now: **a fix in the wrong place is worse than no fix** — it passes every gate, banks a real number,
+  and leaves a *second* half-finished fix in the file for someone to find in another 119 iterations.
 - **A KNOCKOUT SWEEP THAT REMOVES ONE OCCLUDER AT A TIME WILL TELL YOU "NOTHING COVERS IT" — AND BE
   WRONG. When it comes back empty, stop removing things and REPLAY THE DRAW'S OWN GEOMETRY (iter 211).**
   203's `probe-gondz` settles *whether* something is occluded (`occluded% = 1 − inkInPlace/inkOnTop`).
@@ -1242,6 +1274,13 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   MIXING** — green ink landing on seam sand / tan ink on seam lawn, with off-seam sand and lawn as the
   controls that must not move; floor measured in-run), `shot-seam.mjs` (the seam camera: whole-city +
   a 4.2x close-up **aimed** at the longest run of seam, day and night, patch and HEAD).
+  `probe-towerroll.mjs` (**is this `tick()` rule's `rng()<p` a DEAD LEVER?** — prints `converted / (converted +
+  still-eligible)` per ring. **~100% ⇒ the roll saturated and `p` steers nothing; only the PREDICATE can.** Run it
+  BEFORE tuning any siting probability — it refuted 217's prescribed fix in one command), `probe-quorum.mjs`
+  (the companion **variant sweep**: grades candidate *predicates* on both of 206's ledgers at once — the EFFECT
+  (core/rim contrast) and the COST TO THE POPULATION (towers, pop) — so a starving gate outs itself in the table),
+  `shot-downtown.mjs` (whole-city day+night frame **plus the CBD's true screen fraction**, so a blind "point at
+  downtown" answer is checkable against ground truth — 108's locate-don't-judge, with the answer key),
   `probe-skyline.mjs` (**is there a DOWNTOWN?** — bins every live cell by `hexDist` from the published CBD and
   reports TOWER *density* per ring against mean tower height as the control. **Pure world data: no render, no clock,
   no noise floor** — the cheapest probe in the harness, and the one that settled 217. Reach for it for any claim

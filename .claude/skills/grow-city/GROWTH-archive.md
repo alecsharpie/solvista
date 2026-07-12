@@ -13508,3 +13508,82 @@ something. (Its "see open cue (d)" pointer was already dead: cue (d) was closed 
 (**127 took People × New element**) aimed not at its spent *entity* list but at its biggest untouched *surface* —
 PARK's 878 hexes. "Additive inventory spent" is a claim about a domain's entities, not its surfaces.
 (**126 took Sky × Deepen**) — a Deepen that adds no element is the documented way past Sky's additive saturation.
+
+## Iteration 208 — the parks join the year (2026-07-12) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × Deepen — cashing **cue (p)**, banked and *measured* by 207's step-back.
+Rotation nominally owed Urban, but 119's law (a banked, measured finding outranks rotation
+bookkeeping) points here, and the season pass (`applySeason`) is a Sky seam. Sky's Deepen cell is its
+one live cell post-saturation.
+
+**The seam, re-read before designing (123's law: a cue is a POINTER, not a SPEC).** 207 found the
+calendar was a *one-crop calendar*: FARM shifted **87.0** rendered px from winter at the dry peak
+while PARK — the city's **largest green surface, 583 hexes** — shifted **8.4**. The cue *sounded* like
+"the amenity green was never wired", but the code said otherwise: **iter 120 had already wired it**
+(`BASE.lawn=mixA(LAWN0,[186,188,116],dry*0.55)`). The defect was not absence, it was **amplitude**:
+the dry target `[186,188,116]` sits ~36 units off `LAWN0=[150,181,122]` in red and nowhere else, then
+`dry` caps at 0.55 and is halved again — a **~11 RGB unit** swing across a whole year. 120 wrote
+*"amplitude, not presence, is what irrigated buys"* and then set the dial to **zero**.
+
+Two things make that a real defect rather than a taste call:
+- **PARK (8.4) was sitting at the EVERGREEN FLOOR.** `REDWOOD` shifts **8.0** — and a redwood is
+  seasonless *by design* (`applySeason`'s own comment: "Evergreens sit it out"). The city's biggest
+  lawn was as seasonal as a conifer.
+- **`grass` and `lawn` are the SAME base colour** — both `[150,181,122]` (L276 / L310). So the dry-season
+  divergence *is* the park's entire visual identity, and at 11 units the park was near-indistinguishable
+  from an open hillside for most of the year.
+
+**Change.** Colour-only, inside `applySeason` — **zero new path objects.** The managed greens keep
+their RANK (greener + brighter than grass/meadow at every point in the year) but now carry a real
+amplitude on all four keyframes: bleached-but-still-green at the dry peak (`G>R` keeps them off the
+hills' gold), deeper through the wet winter, plus a **spring flush** they never had. Quads swing less
+than parks (watered harder). The crop palette (`straw`/`stubble`) is untouched — `cropCol()` alone
+drives a field's year, per L298's standing ban on double-counting.
+
+**Probe** (`probes/probe-season.mjs`, rendered-px distance from winter, 3 seeds):
+
+| tile | 207 | 208 | |
+| --- | --- | --- | --- |
+| PARK (n=583) | 8.4 | **23.5** | leaves the evergreen floor; now sits with FOREST/MEADOW |
+| SHOREPARK (294) | 17.9 | **52.3** | the whole hex body is lawn — the biggest mover |
+| QUAD (25) | 5.7 | **21.2** | |
+| GARDEN (17) | 1.8 | 5.4 | still near-mute — its ground is mostly raised beds; cue stands |
+| REDWOOD (34) | 8.0 | **8.0** | evergreen floor, unmoved |
+| FARM / MEADOW / FOREST / VINEYARD / ORCHARD | 87.0 / 25.7 / 19.9 / 35.2 / 17.7 | **all identical** | negative control: no double-count |
+| **ROAD control (1200)** | 0.6 | **0.6** | dead ✓ |
+
+Every tile I did not touch is **bit-identical**, and the ROAD control stays dead — the change is
+isolated to the amenity green by construction.
+
+**Census.** PASS. Every metric **+0**, tile histogram **empty** — the correct, vacuous result for a
+colour-only change (it proves only that nothing threw or collapsed). The probe is the gate.
+
+**Visual — BLIND locate, 2 seeds (108's law).** Frames shot with `shot-stepback.mjs` (clock frozen
+in-page; `day` and `winter` share t=0.30, so only the calendar differs). Frames were copied to neutral
+names and **randomized in opposite directions per seed**, then one agent per seed was asked to *name*
+which frame was the dry season — not to judge whether the change worked.
+- seed 42 → **"B is the dry season"** (truth: A=winter, B=dry) ✓
+- seed 7 → **"A is the dry season"** (truth: A=dry, B=winter) ✓
+
+Both correct, on opposite keys. Both **independently cited the amenity green among their tells** —
+seed 7's agent *led* with "the wide coastal green strip behind the beach" (SHOREPARK, the 52.3 mover),
+seed 42's named "the coastal green belt behind the beach" second. Both confirmed the **rank held**:
+the parks still read as *"irrigated… living mid-green while the hills around them go gold"*, with **no
+dead, blown-out, sickly-yellow or washed-out lawns** in either frame, and no z-order tears, floating
+tiles or compounded clutter/darkness across all four frames (day/golden/night/winter). `VISUAL: PASS` ×2.
+
+**Perf.** Free **by construction**, not by measurement: the diff adds **zero path objects** (two extra
+`mixA` calls per frame = 6 lerps). Under 198's measured cost model — cost is **per path object
+rasterized** — a pure palette change cannot move the frame. No `perfab` run; 212's step-back owns the arc.
+
+**Banked (from seed 7's agent, unprompted and honest).** *"A couple of hillside hexes sit close in value
+to the paler lawns, but they never invert."* The rank holds, but **the amplitude is now near the top of
+what is safe** — a further push on `lawn`'s dry target risks the parks reading *paler than the hills*,
+which would invert the one relationship the tile exists to express. Do not raise it without re-running
+the blind locate.
+
+**Verdict: DEEPENED.** The city's ~900 hexes of amenity green now breathe with the year instead of
+sitting frozen at the evergreen floor, and the season is no longer carried by ~170 agricultural hexes
+alone. Cue (p) is CLOSED for PARK/SHOREPARK/QUAD; **GARDEN remains mute (5.4) and keeps its own richer
+Nature × Deepen cue** (staggered raised beds + a shared `gardenPhase()`).
+
