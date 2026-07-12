@@ -230,7 +230,18 @@ both at this one.)
        guards, hashCell thresholds) still need a temporary source edit: back up
        first (`/bin/cp`), shoot, **revert**, re-run census. See iters 11/16/19.
    - **Determinism holds** — because seeds are pinned, a metric moving that you
-     *didn't* intend to touch is a red flag; investigate before logging.
+     *didn't* intend to touch is a red flag; investigate before logging. **But the
+     census itself has a ±2 wobble on tick-sensitive metrics, and it will frame your
+     edit for it (iter 226).** `census.mjs` does `goto` → `waitForTimeout(500)` → read
+     and **never sets `playing=false`**, so the RAF loop runs a *wall-clock-dependent*
+     number of `tick()`s in that window — 163's law (c), living inside the gate. A
+     draw-only change makes each frame a hair slower, so fewer ticks land, and a
+     late-development metric (`solarRoofs`) shifts a cell or two. 226's *same patched
+     file* read `+1`, then `+0`, then `-2`. ⇒ **To test whether an unintended metric
+     move is YOURS, re-run the SAME FILE — do not diff against HEAD.** HEAD-vs-baseline
+     comes back byte-clean (it is the file the baseline was pinned from), which makes
+     your edit look guilty of something the harness did. Core metrics (`pop`,
+     `developed`, `roads`) are not affected and remain the real gate.
 5. **Log — successes AND failures, equally.** Append to `GROWTH.md`: iteration #,
    the domain × kind, what changed, the census/tile-histogram lines that moved, and
    the verdict. **A reverted attempt is a first-class outcome, not a non-event** —
@@ -897,6 +908,29 @@ vector, whatever it is.
   itself.** Corollary, and it is 205's law arriving by a second road: **state the claim in the viewer's units.**
   "GARDEN 6 → 17" is a claim about *cells*; the claim that matters is *how many gardens the city shows you*, and
   only `probe-gardenvis` (one frame under two z-orders, `occluded% = 1 − inkInPlace/inkOnTop`) can answer it.
+- **`openFront`/`frontLoad` ONLY COUNT `TALLT` — so they will call a front "clear" that is not, and a GROUND-LEVEL
+  thing will still be buried (iter 226).** 206 gives you `openFront` and 211 the sharper `frontLoad`, and both are
+  the right *idea*: draw order is depth order, so ask what stands in the rows in front. But both only count tiles in
+  **`TALLT`**, and the thing that actually hides a person's *feet* is often a **mid-height shop** — not in `TALLT`,
+  and more than tall enough. 226 aimed its visual gate at a bus stop three times and was buried three times: once
+  behind towers (`openFront` misses a tower two rows back — 211's own caveat), then behind a shop that
+  `frontLoad(x,y)===0` swore was not there. **Two full agent rounds, both FAILing the camera while the feature was
+  fine.** ⇒ **For anything drawn at ground level, "can it be SEEN" is not answerable by a tile predicate — answer it
+  by MEASURED INK.** Render the frame with the ornament and again without it, diff per instance, and take the
+  argmax: that is where it *provably* renders, and it is the only honest place to aim a camera (201's locate-then-aim,
+  with the locating done by measurement instead of by a predicate that does not know what it is looking for).
+- **WHEN THE VECTOR IS "APPLY THE HOUSE STANDARD TO THE LAST THING THAT LACKS IT", THE CONTROL IS THE HOUSE STANDARD
+  — NOT A THRESHOLD YOU CHOOSE (iter 226).** 205 says a probe whose threshold is in the units of your own design
+  constant is grading its own homework, and leaves you with: so what threshold *is* honest? Here is one whole class
+  of vector where the answer is free. 226 gave the city's waiting crowds the contact shadow every other figure
+  already had; the visual agents FAILed it with *"I cannot see it"*, and **in the viewer's units they were right** —
+  2.1 px of shadow per figure at fit zoom. The trap is to now argue about whether 2.1 px is "enough", which is a
+  number you would be inventing. **Don't. Measure the thing the artifact ALREADY SHIPS AND ACCEPTS, the same way, in
+  the same frame.** A ped's shadow — unquestioned for 200 iterations — renders **4.4–4.5 px/figure**; the new queue
+  shadow renders **1.9–2.7**. Same order, same idiom ⇒ *"invisible at fit zoom"* is a true statement about **every
+  shadow in Solvista**, not an objection to this one, and the feature ships. ⇒ **Isolate the incumbent with the same
+  rig you used on the newcomer** (stack-suppress its call site, re-render, diff) **and read the two side by side.**
+  The tell you can use this: your change's one-line description is *"X should do what Y already does."*
 - **A siting rule keyed to a tile the UPGRADE PASS CONSUMES will starve itself as the city matures — key it to the
   CATEGORY, not the TILE (iter 206).** The community-garden rule wanted `RES` with **≥3 RES neighbours**. But a house
   ringed by houses is *precisely* the house that upgrades to a mid-rise, so the rule's own host pool **collapsed
@@ -1468,6 +1502,17 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   crown *worse*), and `probe-apex.mjs` (**is this quantity even visible in the projection?** — reports
   `corr(screen apex, true height)` vs `corr(screen apex, ROW/depth)`; it reads **0.26 / 0.995**, which is the proof
   that screen-y is depth. **Run it before asking any agent to locate something by how HIGH it sits in the frame.**)
+  `probe-queueshadow.mjs` (226 — **does this draw-only ornament RENDER, and does it follow the sun?** Isolates a new
+  draw **by stack-suppressing its own call sites** and re-rendering *in one page*, so the diff IS the change at a
+  noise floor of **exactly 0**, off the final composited canvas (occlusion checked for free). Carries `stray` ink as
+  the control that nothing else moved, and measures the throw **per object against its own noon** — the raw left/right
+  ink split is biased by surface brightness and read 63–72% west at `SHOFF=0`),
+  `probe-shadowparity.mjs` (226 — **is my new ornament the same as the one the artifact already ships?** Isolates the
+  newcomer AND the incumbent with the same rig and prints px/figure side by side. The answer to *"an agent cannot see
+  it"* when the vector is "apply the house standard to the last thing lacking it" — see the law above),
+  `shot-queueshadow.mjs` (the aimed camera: finds the instance whose ornament **measurably renders the most ink** and
+  centres on it, then hands the same aim to the HEAD build so the blind before/after pair frames the identical hex —
+  because `openFront`/`frontLoad` will hand you a buried one).
   Six of them are **harness-wide**, not per-feature — reach for these on any lap:
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before

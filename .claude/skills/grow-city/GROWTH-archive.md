@@ -14443,3 +14443,89 @@ unverified. ⇒ **cue (x)**, below.
   other (⇒ SKILL.md). (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did (0.125) and
   **219 invalidated it** (now 0.282) without anyone noticing for 6 laps; normalise by the *formula's* own max, as
   `TCAP` does. Urban's live cue is now **(af)**.
+
+## Iteration 216 — the walk-up stops being one building (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish, closing cue **(r)** ("a building type has become
+wallpaper" — banked at 212, raised *unprompted and independently* by both step-back
+agents). Rotation owed Sky (stalest, 208), but a banked measured finding outranks
+kind-rotation (119), and Sky's only live cue (s) is the constrained one.
+
+**Probe FIRST — and it overturned the agents' host.** Both 212 agents perceived
+repetition; each named a *different* culprit, and seed 7 named the **TOWER**
+(*"the striped high-rise tower ... has become wallpaper"*). `probes/probe-facade.mjs`
+(wraps `winBandR`, records the true SCREEN ROW of every band the frame issues — so it
+measures the draw, not the source, and runs unchanged on HEAD and patch):
+
+| | MID | TOWER |
+| --- | --- | --- |
+| count | **369–477** (the most common building, by 4x) | 67–91 |
+| massing forms | **1** | 4 |
+| distinct stripe rhythms | **3** (top = **50%** of the whole stock) | 44–47 (top 6–7.7%) |
+| bands on an IDENTICAL screen row as the E-W neighbour | **89–91%** | 28–47% |
+
+**The TOWER is measurably innocent; the MID is the wallpaper.** And MID's top colour
+combo — `sandDk` body + `terraDk` roof, **31%** — is exactly seed 42's *"red-roofed
+podium block."* Both agents had felt the right thing and one had pointed at the wrong
+object: **locate-don't-judge, and 212's own law (mine the ASIDES, measure the FAILs).**
+
+**Root cause — the fourth sibling of 99/103/110, and the one they left standing.**
+Those three decoupled a building's *colour* from its height. Nobody ever decoupled its
+**facade**. `bandS()` subtracts `z` straight from the screen y, so **a band's z IS a
+screen row** — and the walk-up's bands were nailed to `z=5; z+=7` for every walk-up in
+the city. Same-row neighbours share a base y, so their window strips landed on
+*identical screen rows* and chained into one continuous corduroy across a whole block.
+
+**Change.** The rhythm becomes a property of the **building**, not of its type: four
+independent seed-salted draws on top of the two existing colour axes — its own floor
+pitch (`fp`, mean held at 7.0), its own first sill (`ph`, mean 5.0), its own crown
+(`cv` → overhanging eave / flat parapet / tall set-back attic), its own balconies
+(`rails`, which had been a *tell for the colour `terra`* — an ornament restating another
+axis, the same defect one rung down). Means held per 98's hold-the-mean law. All roof
+furniture (solar, green roof, fringe, water tank) was nailed to a constant `h+1.6` deck
+and now rides the crown's real height `rz` — otherwise a set-back attic leaves the solar
+floating in air.
+
+**Census.** PASS. Draw-only and `hashCell`-only: pop −4 of 154,785 (**0.003%**, timing
+noise), tile histogram **empty**. Correctly near-vacuous — the probe is the gate.
+
+**Probe (patch vs HEAD, TOWER as the untouched control).**
+- MID distinct rhythms **3 → 44–55**; top rhythm's share **50.1/50.7/46.6% → 5.9/6.7/5.4%**.
+- MID corduroy — bands on an identical screen row as the neighbour — **91/91/89.3% → 22.1/23.2/21.7%**.
+- **TOWER control: byte-identical on all three seeds** (46/6%/27.8 · 47/7.7%/47 · 44/7.4%/41.8).
+- The walk-up now lands on the *same* facade heterogeneity as the tower — the element the
+  probe had cleared as innocent — rather than on an arbitrary target.
+
+**Perf — the timing gate lied, and a deterministic instrument caught it.** Two interleaved
+A/B rounds read a *stable* day **+2.2% / +2.8%** (night +0.4/+0.1). A stable day-only cost
+is iter 117's exact false signal, so instead of arguing with the noise I counted the thing
+that *determines* cost under 198's model: `probes/probe-drawbudget.mjs`, which is
+timing-free. **Path objects 104,745 → 104,753: +8, or +0.008%.** `bandS` byte-identical
+(24,338 both). +8 objects cannot cost 2.5% of a frame. **FREE**, and the day column was
+machine load. ⇒ **law promoted to SKILL.md.**
+
+**Visual.** Both agents, **blind, with the A/B order SWAPPED between seeds**, were asked to
+*locate* the corduroy frame. Seed 42 → "A" (HEAD). Seed 7 → "B" (HEAD). **Both correct, so
+it is not positional bias**, and their prose independently restates the probe: *"every
+walk-up carries the same band pitch starting at the same height, so the strips chain across
+neighbouring blocks into one continuous striped-wallpaper field."* On the patch both read
+*"many individual buildings ... flat parapets, overhanging cream eaves with a shadow lip,
+brick set-back top storeys"* — **varied, not jittered** ("the window strips still align
+*within* each building, so it looks designed"). No z-order tears, **no floating roof
+furniture** (the `rz` risk), no blown-out colour. Both **VISUAL: PASS**.
+
+**Asides banked (212's law — the asides are where an agent is right).**
+- **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND** (seed 7): *"a small dark brown/scorched hex
+  cluster in the mid-left inland block that reads oddly against the surrounding green."*
+  Unprompted, on a PASSing frame. Note the header says the fire CA is a **ghost** (cannot
+  ignite at 2035) — so this is probably LOGGING/clearcut, not BURNT. **Identify the tile
+  before designing** (dead-code law).
+- **(z) THE HUD CLIPS ITS OWN LABEL** (seed 7): the stats bar clips `TRANSIT REA[CH]` at the
+  right edge. A real DOM bug, cheap, and **probes are blind to the HUD** (200) — which is
+  exactly why only an agent could have found it. Interaction/UX × Polish.
+- Seed 42 re-reported the known sub-pixel elevated transit as *"stray hairlines"* — that is
+  `polish-tile` BACKLOG **(a)**, z-order cleared three times. **Not new; do not re-open.**
+
+**Verdict: SHIPPED.** Cue **(r)** CLOSED. The most common building in Solvista is no longer
+one building drawn 475 times.
+

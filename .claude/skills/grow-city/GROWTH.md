@@ -27,7 +27,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163** | 71, **154**, **191** |
+| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
 - **Interaction/UX kind — the FEATURE INVENTORY (U2 / 42 / 52 / 71 / 97 / 105 / 117 / 122 + U5's
   falling stats) was rotated to `GROWTH-archive.md` at 211: it was history, not steering.** What
@@ -36,37 +36,38 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringable for free — and since 133 a hovered TILE is ringed too. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (which line /
   route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
-- **ROTATION.** Last vector per domain: People **210** ·
+- **ROTATION.** Last vector per domain: People **226** ·
   Transport **211** · Civic **213** · Nature **221** · Water **223** · Urban **224** · Sky **225**.
-  (**222 = the 24th step-back; the next is 227.**)
+  🔴 **227 IS THE 25TH HOLISTIC STEP-BACK** (222 was the 24th). After it, the stalest column is
+  **Interaction/UX (cue (z))**, then Transport (211) / Civic (213). Urban has had **five** laps
+  (216/218/219/220/224) — keep rotating off it.
   ✅ **THE SKYLINE LADDER IS COMPLETE (217→218→219→224)** — mass downtown *and* a taper. Cue **(ac) CLOSED**; the
   whole `c.th` ladder is **SPENT** (see (ac) below for the two warnings it leaves). Laws in SKILL.md.
   ✅ **THE WASH LADDER IS COMPLETE *AND* LUMINANCE-SAFE (223)** — cue **(ae) CLOSED**, and 221's "greens are hot"
   watch item closed with it (one root cause, one line). **Its invariant is now ASSERTED by `probe-goldenhue.mjs`.**
-  🔴 **226 OWES PEOPLE (stalest — 210), THEN Interaction/UX (cue (z)).** **225 took Sky and it was NOT empty** — the
-  header had written Sky off as post-saturation with only two weak cues, and the real seam was neither of them: it was
-  **`shadS`, a function named for a SHADOW that could not cast one** (199's tell, on a *function*). ⇒ **"A domain is
-  saturated" is a claim about the CUES YOU HAVE BANKED, not about the code — when a stale domain's cue list looks
-  dead, go GREP ITS SEAM before you skip it.** Sky's cues **(s)** (dead end, confirmed twice — do NOT re-read) and
-  **(ab)** (low, arguably correct by design) both still stand unspent; Sky is now *fresh* anyway. Urban has had
-  **five** laps (216/218/219/220/224) — keep rotating off it. People's banked find is 137's: **the static standing
-  crowds are the last movers casting no `shadS()` shadow** (People × Polish) — ⚠ **225 REFRAMES IT: `shadS` now
-  carries the sun's vector, so anything given a shadow inherits the whole day for free; the cue is CHEAPER than it
-  was.** Remaining cues, ranked: **(af) tower-facade wallpaper** (Urban × Polish — instrument exists,
+  ✅ **137's STANDING-CROWD CUE IS CLOSED (226) — and it was HALF STALE when taken.** 163 had already shadowed the
+  *moving/evening* crowd (its own comment at L5375 says so), so the real gap was the crowds that **WAIT**: the bus
+  queue, the rail platform queue, the stadium concourse. All three now cast `shadS` and inherit 225's sun vector.
+  **Every STANDING figure in Solvista is now grounded; the SEATED ones (cafe, picnic, amphitheater tiers) are
+  deliberately not** — the idiom grounds a figure standing ON the ground. **People's cue list is now EMPTY.**
+  Remaining cues, ranked: **(af) tower-facade wallpaper** (Urban × Polish — instrument exists,
   `probe-facade.mjs`), **(u) the violet pier deck** (Water × Polish — the LAST warm surface still rotated; 223 did NOT
   reach it, the deck bypasses `col()`), **(y) the scorched inland cluster** (Nature × Polish), **(z) the clipped HUD
   label** (Interaction/UX × Polish — a stale column, and **224's agents saw it AGAIN, unprompted, on both seeds**).
-  Nature's **GARDEN staggered beds** (Nature × Deepen) is held by cue (p).
-  **225 (Sky × Deepen, SHIPPED): THE SHADOWS NOW READ THE SUN.** `shadS` is the ONE function every shadow in the city
-  routes through (trees, palms, peds, crowds, dogs, gulls, every vehicle, the boardwalk), and it drew a **centred
-  ellipse at a hard-coded alpha** — identical at dawn, noon, golden hour and midnight — while the artifact moves a sun
-  across the sky and sets it. It now reads a per-frame sun-vector (**`SHOFF`** throw · **`SHLEN`** stretch ·
-  **`SHAMT`** opacity) derived from the SAME `sunP`/altitude the disc is drawn from. Measured: throw/width **−0.65
-  morning / +0.70 evening** (the sign flip), **0.00 at noon and at night**, both no-cast hours with `rx` identical to
-  HEAD. **FREE** — still one ellipse per call (path objects −0.07% day / +0.03% night). ⚠ **Noon is BYTE-IDENTICAL by
-  construction** (the sun is high AND centred there) ⇒ **any future shadow lap has a free dead-regime control at
-  t=0.415.** ⚠ **`SHAMT` must never reach 0 at night** — with no sun the remaining patch is what keeps every ped,
-  tree and car from FLOATING; it is an ambient contact patch, not a cast shadow.
+  Nature's **GARDEN staggered beds** (Nature × Deepen) is held by cue (p). Sky's **(s)** (dead end, confirmed twice —
+  do NOT re-read) and **(ab)** (low, arguably correct by design) stand unspent; Sky is *fresh* anyway after 225.
+  **225 (Sky × Deepen): THE SHADOWS READ THE SUN.** `shadS` — the ONE function every shadow routes through — now
+  carries a per-frame sun vector (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity); recap in its entry.
+  ⚠ **Noon (t=0.415) is BYTE-IDENTICAL by construction ⇒ every shadow lap has a free dead-regime control there**
+  (226 spent it). ⚠ **`SHAMT` must never reach 0 at night** — the residual patch is what keeps every ped, tree and
+  car from FLOATING; it is an ambient contact patch, not a cast shadow.
+  **226 (People × Polish): two harness traps, both general, both now LAWS in SKILL.md.** ⚠ **`census.mjs` DOES NOT
+  FREEZE THE CLOCK** (`goto` → `waitForTimeout(500)` → read, `playing=true`), so the RAF loop runs a wall-clock-dependent
+  number of `tick()`s and **tick-sensitive metrics (`solarRoofs`) wobble ±2** — the SAME patched file gave `+0`, then
+  `-2`. Core metrics unaffected. ⇒ **to test whether an unintended metric move is YOURS, re-run the SAME FILE, not HEAD.**
+  ⚠ **`openFront`/`frontLoad` ONLY COUNT `TALLT`** — a mid-height SHOP is not `TALLT` and still buries a ground-level
+  figure's feet; both called the front "clear" and handed 226's camera two buried bus stops (two lost gate rounds).
+  **For a ground-level ornament, aim (and site) by MEASURED ink, not by a tile predicate.**
   **STEERING FROM THE LAST LAPS — recaps live in their own entries / the archive; only the WARNINGS live here.**
   **213 (Civic × Deepen):** ⚠ **`nightDeep()` IS PINNED AT 1 ALL DAY** — harmless in a draw (`LITAMT` is 0 anyway),
   a trap for any NON-draw reader, so guard every reader. **The civic night-light audit is DONE — do not re-run it**;
@@ -108,8 +109,8 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   (c) **A parked service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204, cue n).
   (d) **The marsh reeds do not read** — seven sub-pixel strokes round the pool; its calendar is already computed and invisible (cue (i), 113).
   **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban is measured-saturated: additive spent (118), and Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (high-street arcade: the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); **Urban's next lap is Deepen/Polish only**. **Roof-furniture is CLOSED city-wide** across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND clerestory 173) — no bare roof is left, and the **GROUND PLANE is SPENT too (209)**, and **216 spent the FACADES** — only the **harbour apron** is left. Check the last entry of the stalest domain for a banked
-   finding before reading its row. (**137's People × Polish**: still open from it — the *static* standing
-   crowds are the last movers casting no `shadS()` shadow.) (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
+   finding before reading its row. (**137's People × Polish cue is CLOSED by 226** — every standing figure is now
+   grounded; People has no banked cue left.) (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
   **STILL banked for Sky: the SEASON word** — it reads the fast `year` and would strobe ~0.7 Hz (134), so it needs a
   slow clock FIRST; don't add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac assuming 135/144 unblocked it.)
   **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by
@@ -390,96 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 218 entries before Iteration 216 live in
+> **Archive:** the 219 entries before Iteration 217 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 216 — the walk-up stops being one building (2026-07-13) [Urban fabric × Polish]
-
-**Vector.** Urban fabric × Polish, closing cue **(r)** ("a building type has become
-wallpaper" — banked at 212, raised *unprompted and independently* by both step-back
-agents). Rotation owed Sky (stalest, 208), but a banked measured finding outranks
-kind-rotation (119), and Sky's only live cue (s) is the constrained one.
-
-**Probe FIRST — and it overturned the agents' host.** Both 212 agents perceived
-repetition; each named a *different* culprit, and seed 7 named the **TOWER**
-(*"the striped high-rise tower ... has become wallpaper"*). `probes/probe-facade.mjs`
-(wraps `winBandR`, records the true SCREEN ROW of every band the frame issues — so it
-measures the draw, not the source, and runs unchanged on HEAD and patch):
-
-| | MID | TOWER |
-| --- | --- | --- |
-| count | **369–477** (the most common building, by 4x) | 67–91 |
-| massing forms | **1** | 4 |
-| distinct stripe rhythms | **3** (top = **50%** of the whole stock) | 44–47 (top 6–7.7%) |
-| bands on an IDENTICAL screen row as the E-W neighbour | **89–91%** | 28–47% |
-
-**The TOWER is measurably innocent; the MID is the wallpaper.** And MID's top colour
-combo — `sandDk` body + `terraDk` roof, **31%** — is exactly seed 42's *"red-roofed
-podium block."* Both agents had felt the right thing and one had pointed at the wrong
-object: **locate-don't-judge, and 212's own law (mine the ASIDES, measure the FAILs).**
-
-**Root cause — the fourth sibling of 99/103/110, and the one they left standing.**
-Those three decoupled a building's *colour* from its height. Nobody ever decoupled its
-**facade**. `bandS()` subtracts `z` straight from the screen y, so **a band's z IS a
-screen row** — and the walk-up's bands were nailed to `z=5; z+=7` for every walk-up in
-the city. Same-row neighbours share a base y, so their window strips landed on
-*identical screen rows* and chained into one continuous corduroy across a whole block.
-
-**Change.** The rhythm becomes a property of the **building**, not of its type: four
-independent seed-salted draws on top of the two existing colour axes — its own floor
-pitch (`fp`, mean held at 7.0), its own first sill (`ph`, mean 5.0), its own crown
-(`cv` → overhanging eave / flat parapet / tall set-back attic), its own balconies
-(`rails`, which had been a *tell for the colour `terra`* — an ornament restating another
-axis, the same defect one rung down). Means held per 98's hold-the-mean law. All roof
-furniture (solar, green roof, fringe, water tank) was nailed to a constant `h+1.6` deck
-and now rides the crown's real height `rz` — otherwise a set-back attic leaves the solar
-floating in air.
-
-**Census.** PASS. Draw-only and `hashCell`-only: pop −4 of 154,785 (**0.003%**, timing
-noise), tile histogram **empty**. Correctly near-vacuous — the probe is the gate.
-
-**Probe (patch vs HEAD, TOWER as the untouched control).**
-- MID distinct rhythms **3 → 44–55**; top rhythm's share **50.1/50.7/46.6% → 5.9/6.7/5.4%**.
-- MID corduroy — bands on an identical screen row as the neighbour — **91/91/89.3% → 22.1/23.2/21.7%**.
-- **TOWER control: byte-identical on all three seeds** (46/6%/27.8 · 47/7.7%/47 · 44/7.4%/41.8).
-- The walk-up now lands on the *same* facade heterogeneity as the tower — the element the
-  probe had cleared as innocent — rather than on an arbitrary target.
-
-**Perf — the timing gate lied, and a deterministic instrument caught it.** Two interleaved
-A/B rounds read a *stable* day **+2.2% / +2.8%** (night +0.4/+0.1). A stable day-only cost
-is iter 117's exact false signal, so instead of arguing with the noise I counted the thing
-that *determines* cost under 198's model: `probes/probe-drawbudget.mjs`, which is
-timing-free. **Path objects 104,745 → 104,753: +8, or +0.008%.** `bandS` byte-identical
-(24,338 both). +8 objects cannot cost 2.5% of a frame. **FREE**, and the day column was
-machine load. ⇒ **law promoted to SKILL.md.**
-
-**Visual.** Both agents, **blind, with the A/B order SWAPPED between seeds**, were asked to
-*locate* the corduroy frame. Seed 42 → "A" (HEAD). Seed 7 → "B" (HEAD). **Both correct, so
-it is not positional bias**, and their prose independently restates the probe: *"every
-walk-up carries the same band pitch starting at the same height, so the strips chain across
-neighbouring blocks into one continuous striped-wallpaper field."* On the patch both read
-*"many individual buildings ... flat parapets, overhanging cream eaves with a shadow lip,
-brick set-back top storeys"* — **varied, not jittered** ("the window strips still align
-*within* each building, so it looks designed"). No z-order tears, **no floating roof
-furniture** (the `rz` risk), no blown-out colour. Both **VISUAL: PASS**.
-
-**Asides banked (212's law — the asides are where an agent is right).**
-- **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND** (seed 7): *"a small dark brown/scorched hex
-  cluster in the mid-left inland block that reads oddly against the surrounding green."*
-  Unprompted, on a PASSing frame. Note the header says the fire CA is a **ghost** (cannot
-  ignite at 2035) — so this is probably LOGGING/clearcut, not BURNT. **Identify the tile
-  before designing** (dead-code law).
-- **(z) THE HUD CLIPS ITS OWN LABEL** (seed 7): the stats bar clips `TRANSIT REA[CH]` at the
-  right edge. A real DOM bug, cheap, and **probes are blind to the HUD** (200) — which is
-  exactly why only an agent could have found it. Interaction/UX × Polish.
-- Seed 42 re-reported the known sub-pixel elevated transit as *"stray hairlines"* — that is
-  `polish-tile` BACKLOG **(a)**, z-order cleared three times. **Not new; do not re-open.**
-
-**Verdict: SHIPPED.** Cue **(r)** CLOSED. The most common building in Solvista is no longer
-one building drawn 475 times.
 
 ## Iteration 217 — the twenty-third step-back finds a city with no downtown (2026-07-13) [holistic step-back]
 
@@ -1264,3 +1180,107 @@ Promoted to SKILL.md.
 **Banked for a later lap (an aside, per 212).** Seed 42, unprompted: at golden hour the interior
 street grid *"darkens noticeably from accumulated tower shadows — atmospheric, not clutter."* Read
 as fine today by both agents; if a later lap lengthens shadows further, that is where it bites.
+
+## Iteration 226 — the people waiting for the bus were the last ones floating (2026-07-13) [People & activity × Polish]
+
+**Vector** — People & activity × Polish. People was the stalest domain (last touched 210), and
+the header banked 137's cue: *the static standing crowds are the last movers casting no
+`shadS()` shadow* — made cheaper by 225, which taught `shadS` the sun's vector, so anything
+given a shadow now inherits the whole day for free.
+
+**The cue was HALF STALE — grep the seam, don't build to the pointer (a cue is a POINTER, NOT
+A SPEC).** 163 had already closed it for the *moving/evening* crowd; its own comment at L5375
+says so in as many words (*"closing 137's static-crowd gap"*), and the fete crowd and the
+school-run crowd have had `shadS` all along. An audit of **every human figure in the file**
+(via the head-circle idiom, `arc(...,0.5-0.9,0,7)`) found the true gap is narrower and much
+sharper than the cue stated: what still floated was not the "static" crowds but the crowds
+that **WAIT** —
+- the **bus-stop queue** (L5007) — at every stop in the city, and drawn only when `LITAMT<0.55`,
+  i.e. **in daylight**, exactly when a shadow should exist;
+- the **rail platform queue** (L6203);
+- the **stadium concourse crowd** (L4444).
+The three **seated** crowds (cafe patrons, picnickers, amphitheater tiers) were deliberately
+left alone: the artifact's contact-shadow idiom grounds a figure that STANDS on the ground.
+
+**Change** — one `shadS` call each, in the house style, matching **163's shipped standing-crowd
+constants** (`r=0.09, a=0.16`) for the queue; `0.07/0.14` on the platform deck (a bright, shallow
+surface: a full-weight smudge there reads as dirt); the gull's `0.05/0.13` for the 1.2px stadium
+specks. Drawn *before* the body so the figure reads on top, and *inside* the queue's `globalAlpha`
+so the shadow fades as they board — a shadow must never outlive the figure that owns it (195).
+
+**Census** — PASS, and vacuous as expected for a draw-only change: `pop` / `developed` / every
+tile **+0**, histogram empty. ⚠ **But `solarRoofs` read `+1`, and chasing it found a real hole in
+the harness, not in the edit:** `census.mjs` does `goto` -> `waitForTimeout(500)` -> read and
+**never sets `playing=false`**, so the RAF loop runs a *wall-clock-dependent* number of `tick()`s
+in that window (163's law (c), living inside the gate itself). The **same patched file** re-run
+gives `+0`, then `-2`. A draw-only edit makes each frame a hair slower, so fewer ticks land —
+**tick-sensitive metrics carry a +-2 wobble and it is NOT a determinism breach.** Core metrics are
+unaffected. ⇒ **To test whether an unintended metric move is yours, re-run the SAME FILE — do not
+diff against HEAD** (HEAD-vs-baseline was byte-clean, which made the edit look guilty).
+
+**Probe — `probes/probe-queueshadow.mjs`** (the census cannot see this at all). One build, not
+two: the new shadows are suppressed **by stack** (their three call-site line numbers) and the page
+renders twice back to back with the clock frozen, so the diff **is** the change by construction
+(161) at a noise floor of **exactly 0**, off the *final composited* canvas — which occlusion-checks
+it for free (200). Over 2 seeds x 3 hours:
+- **floor 0 · stray 0** in every row — the edit disturbs nothing it does not own (it draws no
+  `rng()`/`Math.random`, so this is the strong form of the control);
+- **106-113 waiting figures** per city — a real population, not three specks;
+- the throw **swings with the sun**: morning **-0.18/-0.21 px (west)**, evening **+0.41 px (east)**,
+  and **noon is the control that reads 0 by construction** (`SHOFF=0` there — 225's free
+  dead-regime pin). The measured morning:evening ratio (**-0.44 / -0.51**) independently recovers
+  `SHOFF`'s own ratio (**-0.36/+0.70 = -0.51**), which is a number I did not tune.
+
+⚠ **225's centroid law recurs one level down, and it bit here: a raw left/right INK split is
+biased by the SURFACE.** With `SHOFF=0` at noon the split read **63% / 72% west**, not 50/50 —
+because a shadow on bright pavement carries more ink than the same shadow on dark asphalt, so the
+split measures *reweighting*, not *throw*. Fixed by differencing each figure against **its own
+noon**, at which point seed 7's noon control lands on an exact **50/50**.
+
+**Probe 2 — `probes/probe-shadowparity.mjs`, and it is the one that decided the iteration.** The
+first visual round FAILed with *"I cannot see it"*, and in the viewer's units (205) the agent was
+right: **2.1 px of shadow per figure at fit zoom.** But "small" is only a defect if it is UNLIKE
+what the artifact already ships — and the claim was never *"a big shadow"*, it was ***"the waiting
+figures are grounded like every other figure in the city."*** So the control is **not a threshold I
+choose** (205: a probe whose threshold is in the units of my own design constant grades its own
+homework) — it is **the city's own already-shipped shadow**, isolated the same way, in the same
+frame. Over 3 seeds, px per figure:
+
+| group | figures | px/figure |
+| --- | --- | --- |
+| **queue (226, NEW)** | 106-113 | **2.1 / 1.9 / 2.7** |
+| ped (the house standard) | 86-87 | **4.5 / 4.5 / 4.4** |
+
+⇒ a waiting figure's shadow renders **about half a ped's**, same order, same idiom — so *"invisible
+at fit zoom"* is a true statement about **every shadow in Solvista**, including ones shipped 60 laps
+ago and never questioned. It is not an objection to this one. (163's strip crowd reads 0 figures at
+`t=0.30` because it is an **evening** draw — correct, not a bug.)
+
+**Perf — FREE, and settled by the deterministic instrument, not the timer (216).** Path objects
+**day 107,854 -> 107,957 (+103, +0.096%)**, **night 138,451 -> 138,488 (+37)**. Night barely moves
+because the crowds go home — the design. +103 path objects cannot cost a frame anything under the
+measured per-path-object model (198), so the timing gate was not run: it would have reported the
+weather.
+
+**Visual — PASS on both seeds, blind... after the camera FAILed the gate TWICE and the feature never
+did.** Round 1 aimed at the *busiest* stop: downtown, and a wall of towers stood in front of it (I
+looked myself — the agent was right). Round 2 used **`openFront`**, which only tests the row at
+`dy=+1` and **misses a tower two rows back** (211), so it picked another buried stop. Round 3 used
+**`frontLoad(x,y)===0`** — and *still* landed behind a mid-height shop, because **`frontLoad` and
+`openFront` only count `TALLT` types**, and a shop is not `TALLT` but is more than tall enough to
+hide a person's feet. Round 4 aimed at the figure whose shadow **measurably renders the most ink**
+(render with, render without, diff per figure, take the argmax) — and both seeds passed at once:
+- seed 42's agent, blind, **picked the patched frame correctly** and described *"a small soft
+  dark-brown ellipse hugging the ground right under the standing figures"*;
+- seed 7's agent honestly could not split the golden-hour pair, **and saw the shadow plainly in the
+  morning frame** — which is the stronger read, not the weaker one;
+- **both, independently, on different seeds, reported the morning shadow falls LEFT** (= west,
+  matching `SHOFF=-0.36`), and both called it ***"soft grounding, not dirt"***, of the same family as
+  the tree shadows beside it. Both whole-city frames clean: no clutter, no z-order tears, no
+  darkening. One aside, from a third agent and already banked: the elevated transit still *"reads as
+  wireframe"* (the standing `polish-tile` cue (a)).
+
+**Verdict — SHIPPED.** The last crowd in Solvista that stood on nothing now stands on the ground,
+and because 225 put the sun into `shadS`, it got the entire day's arc for free: the queue's shadow
+leans west at breakfast, sits under their feet at noon, and stretches east while they wait for the
+evening bus.

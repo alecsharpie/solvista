@@ -4440,8 +4440,10 @@ function drawCell(x,y){
       if(LITAMT<0.75){ /* match-day crowd on the concourse */
         for(let j=0;j<9;j++){const a=j*0.7+hv*6;
           if(hashCell(x*7+j,y,seedNum^0x4A17)<0.72){
+            const sx2=cx+Math.cos(a)*(RX-1.2), sy2=ty+Math.sin(a)*(RY-0.6)+0.6; /* feet, at the speck's foot */
+            shadS(sx2,sy2,0.05,0.13);   /* a speck this small takes the gull's patch, not a ped's */
             ctx.fillStyle=j&1?col(AC,1.25):col('white',1.15);
-            ctx.fillRect(cx+Math.cos(a)*(RX-1.2)-0.6,ty+Math.sin(a)*(RY-0.6)-0.6,1.2,1.2);}}
+            ctx.fillRect(sx2-0.6,sy2-1.2,1.2,1.2);}}
       }
       /* four floodlight masts leaning out from the bowl corners */
       ctx.strokeStyle=col('whiteDk',0.9);ctx.lineWidth=1;
@@ -4996,6 +4998,13 @@ function drawCell(x,y){
               const fx2=lerp(x1,x2,u)-ox*bl,fy2=lerp(y1,y2,u)-oy*bl;
               const bob=Math.sin(time*1.3+j*2.1+x)*0.25;
               ctx.globalAlpha=1-bl*bl;
+              /* the queue is the city's last crowd standing on nothing: peds, joggers,
+                 dogs and the strip crowd (163) all take shadS, and the people WAITING
+                 for the bus — the one crowd that holds still long enough to be looked
+                 at — floated. Only the torso bobs, so the feet are planted and the
+                 contact patch belongs at fy2. It fades as they board, on the same
+                 globalAlpha, so a shadow never outlives the figure that owns it (195). */
+              shadS(fx2,fy2,0.09,0.16);
               ctx.strokeStyle=col(WC[(x*3+y+j)%3],1);ctx.lineWidth=1.1;
               ctx.beginPath();ctx.moveTo(fx2,fy2);ctx.lineTo(fx2,fy2-2.2+bob);ctx.stroke();
               ctx.fillStyle=col('ink',0.9);
@@ -6187,6 +6196,11 @@ function drawMonoAt(x,y,e){
       /* boarding: they close on the post under the canopy and are gone by the time it pulls out */
       const ox=(hashCell(x*7+j,y,seedNum^0x77A)-0.5)*7.5*(1-bl), oy=(hashCell(x,y*5+j,seedNum^0x3B2)-0.5)*3-bl*2.4;
       ctx.globalAlpha=1-bl*bl;
+      /* their feet are the foot of the body rect, which lands on the platform deck —
+         so this patch sits ON the deck, not on the ground 20px below it. Smaller and
+         fainter than a ped's: the deck is a bright, shallow surface and a full-weight
+         smudge on it reads as dirt. */
+      shadS(cx+ox,cy+oy-2.5,0.07,0.14);
       ctx.fillStyle=col(PC[(x+y+j)%5],0.95);
       ctx.fillRect(cx+ox-0.8,cy+oy-5.2,1.6,2.7);
       ctx.fillStyle=col('ink',1.35);
