@@ -12120,3 +12120,132 @@ not waved through** — the next step-back (197) should watch it.
   183 closed the biggest host, which 148's "spent" note had OVERLOOKED: a `Fields` phase row on `farmPhase(c.v)`,
   `Ploughed under`/`Sprouting`/`Standing crop`/`Ripening to straw`/`Cut for harvest`); GARDEN's draw
   does not read `year` (needs a Deepen first, per 129), so the next Nature × Interaction/UX is a *new* seam.) (**127 took People × New element** aimed not at its spent
+
+## Header recaps rotated out at Iteration 205
+
+The maintained header in `GROWTH.md` is a fixed 400-line budget: to add a line you cut a line.
+Iteration 205 paid for its own recap by rotating these two down here in full. Their laws are
+already promoted to `SKILL.md`; the header keeps a one-line pointer to each.
+
+**203 took Transport × Polish and EXPLORED → REVERTED — it CLOSED 202's banked "thin dark line" cue.**
+The line is the **aerial cable-car HAUL ROPE**: `col('ink',1.05)` = **`#373128`, the darkest ink in the palette,
+fully OPAQUE, at 0.5 DEVICE px**. Each span is 12-14px (below any "long line" filter) but **15-25 spans CHAIN into
+an unbroken 199-331px dark run** across the sky and the sea, on all 3 seeds — *the eye sees the chain; a per-stroke
+filter cannot*. **The agents' CAUSE was wrong and the artifact is INNOCENT:** `probe-gondz` renders one frame under
+two z-orders (rope in place vs. the same polylines re-stroked on top) and measures **8.4-23.6% OCCLUDED** on every
+seed/light — not 0%, so the rope **is** depth-sorted (the girder strokes only to the midpoint; `stepGond` only takes
+`axStep` d=1/d=2 and **both are y+1**, so a path is monotone in y). "No cabins on the line" was false too — they
+render at **~24px each**; they are not missing, they are **5 px**. **The attempted polish DIED ON ITS OWN PROBE**
+(`probe-ropesteel`): a daylight **glint = 0 px on every seed/light — a DEAD DRAW** (at 0.5 device px the core and
+the highlight land in the SAME sub-pixel, so a thin dark line *cannot carry a lit top edge*), and **peak contrast
+0.33 → 0.34, UNCHANGED** while coverage rose 419 → 567px — **a halo under a thin dark line makes it MORE prominent,
+not less.** ⇒ **What is really wrong is LEGIBILITY, not z-order or colour (101's law on Transport):** at fit zoom the
+whole tramway is **sub-pixel infrastructure** (0.5px rope, 5px cabins, hairline masts), so the rope is the only part
+that registers and a lone hairline with no legible cars or towers reads as a scratch. **A future lap here is a
+`polish-tile`-shaped job on the WHOLE tramway (rope + cabins + masts together), NOT a tweak to the rope's colour.
+Do NOT re-try: a body/halo under the rope (measured, backfires) or a lit top edge (measured, impossible at 0.5px).**
+Four laws promoted to SKILL.md (occlusion is measurable; the loud test fails sub-pixel; `Math.random` is part of the
+freeze-list; a chain is not a stroke).
+
+**201 took People × Deepen (the beach follows the tide — DEEPENED).** The beach GROUND answered the tide all along
+(the damp margin `w2=2.4+(1-TIDE)*5`), but the furniture drawn at the bare hex centre did not — so at dead low water
+the sunbathers lay on wet sand. `wetReach()` is now ONE definition with TWO readers (the margin that strokes the wet
+sand + the beachgoers who must stay off it); `seaDirS()` gives the seaward normal (`null` = landlocked). `probe-beachtide`
+counts DRAW CALLS not pixels, so the zero is honest: BASE 0.00px (the seam) vs PATCH +4.80px, the predicted travel to two
+decimals. **Laws paid for, both now in SKILL.md: a FIXED screenshot CLIP is not a framing; and an agent's "this is
+BACKWARDS" may object to the ARTIFACT'S MODEL, not to your change.** Full recap rotated to `GROWTH-archive.md` at 202.
+
+## Iteration 195 — the university will not light (2026-07-12) [Civic & culture × Deepen]
+
+**Vector.** Civic & culture × Deepen (rotation owed Civic — last lap 184; kind varied
+off 184's Interaction/UX).
+
+**Change (attempted).** *The one dark institution.* Grepping `LITAMT` across all twelve
+`c.kind` civic draw branches turned up a clean, measured gap: **`university` is the only
+civic in the city with no `LITAMT` reference at all** — the only one of the five `MAJORK`
+monuments that goes pitch dark after sunset, while the parliament floodlights its colonnade
+(175), the museum its facade, the hall its clock (149), the library its reading hall, the
+police its beacon, the hospital its cross, the observatory its dome (158), and even the
+school keeps one janitor's window burning. Same shape as 179 (dark bridges) and 193 (dark
+ferry): a completed family with exactly one member missing. Three draw-only elements were
+tried, all inside the `kind==='university'` branch:
+(a) the wing's flat dead glass strip → the city's own per-pane `winBandR` field (salt
+`0x5CB1`), so a scattered few panes burn and the rest are nobody home;
+(b) the campanile's belfry lantern burns warm, with a radial-gradient additive halo;
+(c) a warm courtyard pool on the quad the wings enclose.
+
+**Census.** PASS every build. `pop`/`roads`/`developed` **+0**, tile histogram empty,
+`pageerrors: 0` — draw-only, `hashCell` off `seedNum`, stream- and pop-neutral throughout.
+(Vacuous by construction, as expected for a night draw; the probe is the gate.)
+
+**Probe.** `probes/probe-unilight.mjs` — whole-frame PATCH-vs-HEAD diff (161's law: two
+builds run identical code save the edit, so **every differing pixel IS the edit**, and its
+CENTROID must land on the university, which makes it a locate-check and not just a
+magnitude). Controls were clean throughout: **NOON and DUSK exactly 0 changed px** on all
+three seeds — byte-identical, because `winBandR` falls through to the very `bandR`/`colLit`
+call it replaced below `LITAMT<0.35` and `lit` is 0 by day. The target never earned its
+place:
+- lantern pane alone: **5 / 47 / 8** changed px whole-frame (seeds 7/42/1234) — *at the
+  noise floor*; both visual agents saw nothing on the tower.
+- + halo: **21 / 136 / 44**, then **27 / 155 / 61** once the halo was drawn last. Legible
+  at last — seed 42's agent, asked strictly to hunt for a rim: *"obvious… the single
+  brightest thing in the frame… reads as LIGHT, fades smoothly, no visible rim, ring or
+  seam even where it crosses the spire… the spire stays green."*
+- occlusion-safe elements only (windows + quad): **3 / 50 / 1** — sub-perceptual again.
+  Pushing the alphas to compensate **broke the noon control** (6 px): raising the window's
+  `f` from 0.85 to 0.90 also moved the *day* fallback colour. The control caught it.
+
+**Visual.** The halo build was beautiful on seed 42 and **broken on seed 7**, where a
+blind agent found *"a detached hazy round glow blob floating in the empty sky just off the
+tower's right edge, unattached to any geometry"* — **the halo, orphaned.** The campanile is
+tall and thin, so a taller neighbour (seed 7 sits beside a hospital tower, drawn later
+because it is a lower row) swallows the lamp while the glow, being by construction larger
+than its lamp, still spills into open sky. A light with no visible source: the invariants'
+"no floating" clause, and a procedural city must hold on **every** seed, not one.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` is byte-identical to HEAD. The
+*diagnosis* stands and is still worth cashing; what failed is every **place to put the
+light**, and that is now known rather than guessable. `probes/probe-unilight.mjs` and
+`probes/shot-uni.mjs` are kept so a retry starts from a working gate.
+
+**Findings — read these before retrying the university.**
+- **The campanile is the WRONG HOST for a glow, and cannot be fixed by dimming it.** Any
+  halo is larger than its lamp; on a tall thin tower a later-drawn neighbour hides the lamp
+  and not the halo. To revive it, **gate the halo on there being no taller cell in the rows
+  below** (the draw order *is* the depth order) — the guard is the fix, not the alpha.
+- **The quad is occlusion-safe but the tile's OWN wings overdraw it**, by an amount that
+  flips with `fxU`'s per-seed sign — hence 50 px on seed 42 and 3 px on seeds 7/1234 for
+  the identical code. Reconciling the wing/quad geometry is a **tile redesign** →
+  **`polish-tile`, not a growth lap.** That is the real referral: the university tile is
+  simply drawn *small*, and no night ornament on it can carry at fit zoom without a glow
+  that extends past the geometry — which is exactly the thing that orphans.
+- **A LOUD test must be measured against the LOUD COLOUR, not re-run through the same
+  PATCH-vs-HEAD diff.** Painting the lantern pure red and comparing red-vs-HEAD (139 px) to
+  warm-vs-HEAD (136 px), I concluded it was "95% occluded" — **wrong, and wrong by
+  construction**: both builds change the same pixel *set* versus HEAD, so the totals
+  coincide no matter what colour the change is. A direct **red-pixel count** in the loud
+  build (13 / 85 / 36 px) showed it was rendering fine all along. The diff is blind to
+  *which* colour; only a count of the loud colour isolates the draw. (161's corollary (b)
+  says force it loud — this says *how to read the loud frame*.)
+- **Freezing `playing` is NOT freezing the clock.** `waveT` and `time` keep whatever
+  wall-clock-dependent value the RAF loop reached before the freeze, so two loads render
+  different water: the probe's first cut had a **10–22 px noise floor of drifting surf**,
+  700–900 px from the university, sitting right on top of a 5–47 px signal. Pinning
+  `waveT` *and* `time` (163's laws name STARS/movers/`genWorld`, but not these) took the
+  unchanged frames to **exactly 0**. An honest zero is what made every later number
+  readable.
+- **Do not compute a tall civic's clip from `h`.** It cost **two false VISUAL FAILs** on
+  framing alone. The campanile is drawn from `px(gx-fxU*0.18, gy-0.34)` — an origin already
+  well above the tile centre — so `h` always under-counts and the spire crops. `shot-uni.mjs`
+  now clips from the top of the viewport: extra sky is free, a cropped spire costs an agent
+  round.
+- **A flat additive `arc()` is a coin, not a glow** — hard circular rim, and it tints
+  whatever sits inside it (the green spire went olive). `createRadialGradient` falling to
+  alpha 0 at the rim fixes both. The artifact already knew this: the rain damp-patch
+  (~L6216) is a gradient, commented *"soft-edged, or it reads as a decal."* **Reuse it for
+  any glow.**
+- ⚠ **`greenRoofs` jitters run-to-run in the census on IDENTICAL bytes** (404 → 405 → 406).
+  Not a vector's doing — it is the wall-clock-dependent tick count between load and warp
+  (163's law (c)) leaking into a counted metric. Harmless at this size, but **do not chase
+  it as a regression**, and do not trust it as a growth signal.
+

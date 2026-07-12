@@ -24,7 +24,7 @@ ones (U2, 42, U5) stay in the bullet.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60 | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~ | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22 | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~ | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
@@ -55,21 +55,17 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **198** · Civic **204** · Water **196**.
-  **Next lap owes Water (196), then Nature (198), then Urban (199).**
-  **204 took Civic × CONNECT — the coldest cell on the board (last used at iter 45) — and SHIPPED: the service
-  fleet comes home.** Three CIVICDESC lines park a vehicle at a door (the precinct's *"Cruisers idle in the
-  yard"*, the hospital's *"ambulance bay that never closes"*, the firehouse's *"Engines behind roll-up doors"*),
-  and `syncFleet` even conditions the AMBULANCE'S EXISTENCE on a hospital standing — then `stepVehicle`
-  random-walked all three exactly like a car (straightest 72%, else any neighbour) and **not one ever went
-  home.** Now each runs a round trip: stands at its own institution with its beacon dark, rolls out to a call,
-  drives back. It routes by descending a BFS field over ROAD cells, so its route IS the street network (and
-  therefore obeys the three hex axes for free). Entity-motion only — no `rng()` draw added, so the census is
-  **+0 on every metric, tile histogram empty**, exactly as predicted. `probe-servcall` is the gate: time spent
-  standing at its own door goes **0.0-3.3% -> 10-25%** (2-5 deliberate arrivals) on 3 seeds, with the **ordinary
-  38-car fleet flat at 0.1-0.4% in BOTH builds**. The **beacon now carries the duty** (an ambulance on a call and
-  an engine at a fire run lit *in daylight*; a vehicle at its bay is dark), and `VKIND`'s sub is a FUNCTION of the
-  vehicle (105's law) reading the same `duty` — one state, three readers.
+  Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **198** · Civic **204** · Water **205**.
+  **Next lap owes Nature (198), then Urban (199), then Sky (200). Iteration 207 is the mandated step-back.**
+  **204 took Civic × CONNECT and SHIPPED: the service fleet comes home.** Three CIVICDESC lines parked a vehicle
+  at a door (the precinct yard, the hospital's *"ambulance bay that never closes"*, the firehouse's roll-up doors)
+  and `stepVehicle` random-walked all three like a car, so **not one ever went home.** Each now runs a round trip
+  — stands at its own institution, rolls out to a call, drives back — routing by a BFS field over ROAD cells (so
+  its route IS the street network, and obeys the three hex axes for free). The **beacon carries the duty**, and
+  `VKIND`'s sub is a FUNCTION of the vehicle (105's law): one state, three readers. Entity-motion only, so the
+  census was **+0 on every metric**; `probe-servcall` is the gate — time at its own door **0.0-3.3% → 10-25%**,
+  with the ordinary **38-car fleet flat at 0.1-0.4% in BOTH builds** (the control must be a POPULATION, a law now
+  in SKILL.md). Full recap in `GROWTH.md`'s own Iteration 204 entry.
   **⚠ 204's REAL find is that the FIRE CA IS A GHOST — do not build "X answers the fire" (`probe-firehost`).**
   Ignition is year-gated (blocks `year<2006`, forest `year<2030`), so **at 2035 nothing can ignite at all**, and
   even before then it is vanishingly rare: across **3 seeds x 61 years** there are **TWO one-cell episodes** in
@@ -88,52 +84,45 @@ ones (U2, 42, U5) stay in the bullet.
   choice among four road hexes escapes it. **Making a bay legible means giving the CIVIC TILE a visible apron on
   its front edge — a `polish-tile` job, not a growth lap** (same shape as 195's university light). The lever was
   measured before it was mandated (198's law) and is NOT in the shipped code.
-  **203 took Transport × Polish and EXPLORED → REVERTED — it CLOSED 202's banked "thin dark line" cue.**
-  The line is the **aerial cable-car HAUL ROPE**: `col('ink',1.05)` = **`#373128`, the darkest ink in the palette,
-  fully OPAQUE, at 0.5 DEVICE px**. Each span is 12-14px (below any "long line" filter) but **15-25 spans CHAIN into
-  an unbroken 199-331px dark run** across the sky and the sea, on all 3 seeds — *the eye sees the chain; a per-stroke
-  filter cannot*. **The agents' CAUSE was wrong and the artifact is INNOCENT:** `probe-gondz` renders one frame under
-  two z-orders (rope in place vs. the same polylines re-stroked on top) and measures **8.4-23.6% OCCLUDED** on every
-  seed/light — not 0%, so the rope **is** depth-sorted (the girder strokes only to the midpoint; `stepGond` only takes
-  `axStep` d=1/d=2 and **both are y+1**, so a path is monotone in y). "No cabins on the line" was false too — they
-  render at **~24px each**; they are not missing, they are **5 px**. **The attempted polish DIED ON ITS OWN PROBE**
-  (`probe-ropesteel`): a daylight **glint = 0 px on every seed/light — a DEAD DRAW** (at 0.5 device px the core and
-  the highlight land in the SAME sub-pixel, so a thin dark line *cannot carry a lit top edge*), and **peak contrast
-  0.33 → 0.34, UNCHANGED** while coverage rose 419 → 567px — **a halo under a thin dark line makes it MORE prominent,
-  not less.** ⇒ **What is really wrong is LEGIBILITY, not z-order or colour (101's law on Transport):** at fit zoom the
-  whole tramway is **sub-pixel infrastructure** (0.5px rope, 5px cabins, hairline masts), so the rope is the only part
-  that registers and a lone hairline with no legible cars or towers reads as a scratch. **A future lap here is a
-  `polish-tile`-shaped job on the WHOLE tramway (rope + cabins + masts together), NOT a tweak to the rope's colour.
-  Do NOT re-try: a body/halo under the rope (measured, backfires) or a lit top edge (measured, impossible at 0.5px).**
-  Four laws promoted to SKILL.md (occlusion is measurable; the loud test fails sub-pixel; `Math.random` is part of the
-  freeze-list; a chain is not a stroke).
-  **201 took People × Deepen (the beach follows the tide — DEEPENED).** The beach GROUND answered the tide all along
-  (the damp margin `w2=2.4+(1-TIDE)*5`), but the furniture drawn at the bare hex centre did not — so at dead low water
-  the sunbathers lay on wet sand. `wetReach()` is now ONE definition with TWO readers (the margin that strokes the wet
-  sand + the beachgoers who must stay off it); `seaDirS()` gives the seaward normal (`null` = landlocked). `probe-beachtide`
-  counts DRAW CALLS not pixels, so the zero is honest: BASE 0.00px (the seam) vs PATCH +4.80px, the predicted travel to two
-  decimals. **Laws paid for, both now in SKILL.md: a FIXED screenshot CLIP is not a framing; and an agent's "this is
-  BACKWARDS" may object to the ARTIFACT'S MODEL, not to your change.** Full recap rotated to `GROWTH-archive.md` at 202.
-  **202 was the mandated STEP-BACK — the 20th. CLEAN BILL on the city; the INSTRUMENT was what was broken.**
-  Census PASS, seasons alive (FARM dry-peak 88.4), both seeds VISUAL PASS. Its two findings are now LIVE ELSEWHERE:
-  (a) **perf compounds beneath the per-lap gate** (~0.2%/iter is permanently under a 3-iteration A/B's noise floor;
-  price the **ARC** with `REF=<older sha> perfab.mjs`, and `probe-drawbudget` says where the frame goes) — see the
-  **PERF bullet**; (b) **the step-back's own camera was lying** (`?t=`/`?year=` drift ~0.167 yr/s while `shoot.mjs`
-  waits; pins must come from the light curve) — see **SKILL.md** and `probes/shot-stepback.mjs`. Its banked
-  "thin dark line" cue is **CLOSED by 203** (the ROTATION bullet). Full recap rotated to `GROWTH-archive.md` at 203.
-  **200 took Sky x Polish (THE SUN IS IN THE SKY — SHIPPED).** The city carried a whole family of low-sun effects
-  (warm cloud bellies 161, the sea's golden sheen 181, sun-glitter 150, raked window glass 190, beach furniture 145)
-  and **the sun itself was never drawn** — every warm thing in the sky had a cause that was not on screen. A gradient
-  halo + soft-rimmed disc, 5th reader of the one golden-hour signal. **COSTS day +2.3%/+1.7% — real, and PAID.** Its
-  real finding is the **PROBES-ARE-BLIND-TO-THE-HUD** bullet below (a canvas probe scored a sun that sat entirely
-  behind the placard). Full paragraph rotated to `GROWTH-archive.md` at 201; laws in SKILL.md.
-  **199 took Urban × Deepen (the city goes to bed — SHIPPED).** `WINDARK` was a **CONSTANT (0.16)** while its own
-  comment called the unlit panes *"nobody home"* — so the same panes were dark at 8pm and 4am and the city never
-  went to bed. **The tell's next host: a CONSTANT whose NAME asserts a behaviour its VALUE cannot have.**
-  `windarkAt(t)` sweeps the threshold per building type (RES .10→.52 … TOWER .17→.28), so the **night core (143)
-  SHARPENS as the night deepens — the differential IS the point.** PERF free (the inert-regime noise floor, PERF
-  bullet). Full paragraph rotated to `GROWTH-archive.md` at 201; laws in SKILL.md.
-  **198 took 197's mandated tree-shadow PERF FIX (Nature × Polish) and EXPLORED → REVERTED — the LEVER WAS WRONG.** Batch / shrink-area / sprite-blit are all **measured and CLOSED** (`probes/probe-shadcost.mjs`); the cost is **PER-ELLIPSE**, and 194's ~3% is the honest price of grounding every tree — **PAY IT.** Full paragraph rotated to `GROWTH-archive.md` at 200; the live statement of the cost model is the **PERF bullet** below, and the law (*measure a lever before you mandate it*) is in SKILL.md.
+  **205 took Water × CONNECT — the coldest cell on the board (last used at iter 22) — and EXPLORED → REVERTED.
+  ⚠⚠ ITS FINDING IS THE BIG ONE: THE PORT HAS NO WATERFRONT, AND SOLVISTA IS A ROADSTEAD, NOT A HARBOUR.**
+  The seam looked textbook — the tell, 204's shape exactly. `genWorld` spawns `freighters[0]` *"at anchor in the
+  roadstead off the warehouse row, **waiting on a berth**"*, throws the rubble **mole** out to shelter her while she
+  waits, and her tooltip says she is *"**Serving** the harbor works"* — and then `advanceEntities` says
+  **`if(f.anchored)continue`**. She has been a **static prop since 1974** (`probe-harborhost`: motion spread **0.00
+  on every seed**). 205 duly built her the round trip: lie at anchor → be called alongside → work her boxes off and
+  stow them → stand back out. It **passed its own probe** (4 calls, ~55% of her life alongside, cargo cycling 6→0→6,
+  the 5 deep-lane control ships **bit-identical**) — **and two visual agents FAILed it on two seeds, and they were
+  RIGHT.** The probe's `ALONGSIDE < 2.2 cells` threshold was **a number I chose because my own berth constant met
+  it**; the quantity the *claim* was about was the open water the eye sees under her bow, and that is **54.6px
+  (~1.7 hexes) at `seaXFr(harborY,0)` — the most inshore position the open-water projection can even express.**
+  Then the host probe (6 seeds, unanimous): **`SHOREX`=`CTRX+11` is "the coast highway column" and `SHORE0`=`SHOREX+5`
+  is the "nominal water's edge, FIVE LOTS SEAWARD OF THE HIGHWAY"** — and the harbor works are sited at `SHOREX-1..-3`,
+  **BEHIND the highway.** So the warehouses stand **5-9 hexes from the sea**, and the waterline at `harborY` is
+  **BEACH / BEACH / DUNE** — *the same recreational sand 201 put the parasols and sunbathers on.* **There is no quay,
+  no wharf, no industrial waterfront anywhere in the artifact.** Bringing her alongside beaches a container ship
+  between the sunbathers and a dune. ⇒ **The ship is NOT a broken promise: a roadstead is an open anchorage where
+  ships lie at anchor precisely BECAUSE there is nowhere to come alongside, and "waiting on a berth" is her
+  SITUATION.** This is **201's law** (the objection is to the MODEL, not the code) meeting the **dead-host law**
+  (T.MARKET, the fire CA) — see the new cue **(o)**. Law promoted to SKILL.md: *a probe whose threshold is in the
+  units of your own design constant is grading your own homework.*
+  **203 (Transport × Polish, EXPLORED → REVERTED) closed 202's "thin dark line" cue: it is the cable-car HAUL ROPE,
+  and the artifact is INNOCENT** (`probe-gondz`: 8.4-23.6% occluded, so it *is* depth-sorted). The real fault is
+  **LEGIBILITY** — at fit zoom the whole tramway is sub-pixel (0.5px rope, 5px cabins, hairline masts), so a future
+  lap is a **`polish-tile` job on the WHOLE tramway**, not a tweak to the rope. **Do NOT re-try: a body/halo under
+  the rope (measured, backfires — it makes the line MORE prominent) or a lit top edge (measured, impossible at
+  0.5px).** Four laws in SKILL.md. **201 (People × Deepen) DEEPENED the beach to follow the tide** (`wetReach()`:
+  one definition, two readers); two laws in SKILL.md. Both full recaps rotated to `GROWTH-archive.md` at 205.
+  **202 was the 20th STEP-BACK: CLEAN BILL on the city, and the INSTRUMENT was what was broken.** Both its findings
+  are live elsewhere — (a) perf compounds beneath the per-lap gate ⇒ the **PERF bullet**; (b) the step-back's camera
+  was lying ⇒ **SKILL.md** + `probes/shot-stepback.mjs`. Its "thin dark line" cue was CLOSED by 203.
+  **200 took Sky × Polish (THE SUN IS IN THE SKY — SHIPPED)** — the city had a whole family of low-sun effects
+  (161/181/150/190/145) and **the sun itself was never drawn**. Costs day +2.3%/+1.7%, **PAID**. Its real finding is
+  the **PROBES-ARE-BLIND-TO-THE-HUD** bullet below. **199 took Urban × Deepen (the city goes to bed — SHIPPED):**
+  `WINDARK` was a **CONSTANT (0.16)** while its comment called the unlit panes *"nobody home"*, so the city never
+  went to bed; `windarkAt(t)` now sweeps it per type and the **night core SHARPENS as the night deepens.** Its law
+  (*the tell's next host is a CONSTANT whose NAME asserts a behaviour its VALUE cannot have*) ⇒ SKILL.md.
+  **198 took 197's mandated tree-shadow PERF FIX (Nature × Polish) and EXPLORED → REVERTED — the LEVER WAS WRONG.** Batch / shrink-area / sprite-blit are all **measured and CLOSED** (`probes/probe-shadcost.mjs`); the cost is **PER-ELLIPSE**, and 194's ~3% is the honest price of grounding every tree — **PAY IT.** Cost model ⇒ the **PERF bullet**; the law (*measure a lever before you mandate it*) ⇒ SKILL.md.
   **196 took Water × Deepen (the kelp bed breathes with the tide — SHIPPED).** The kelp printed a live `Tide`
   row over a draw that read `TIDE` **nowhere** (113's marsh defect, one tile along, unnoticed for 83 iters); on the
   ebb the canopy now rises/spreads/lightens, and at/above `TIDE` 0.62 it is byte-identical to HEAD so the tide can
@@ -374,6 +363,17 @@ ones (U2, 42, U5) stay in the bullet.
   moment a shower rains on **less than one** picnic/café hex. This is `T.MARKET` again (the dead-code law): the
   vector has no host. Widening the footprint is a Sky change to a tuned draw, and gradients price by AREA (see
   the PERF hole).
+  **(o) THE PORT HAS NO WATERFRONT — do not build "the ship docks / cargo comes ashore / cranes work her /
+  lighters run to a wharf / the harbor works are fed by sea" (iter 205, `probes/probe-harborhost.mjs`, 6 seeds,
+  unanimous).** `SHOREX`=`CTRX+11` is *the coast highway column*; `SHORE0`=`SHOREX+5` is the water's edge *"five
+  lots seaward of the highway"*; the warehouses are sited at `SHOREX-1..-3`, **behind** it. So they stand **5-9
+  hexes from the sea**, the waterline at `harborY` is **BEACH/DUNE/SHOREPARK** on every seed, and **no quay or
+  wharf tile exists**. Solvista is a **roadstead** — an open anchorage — so the anchored freighter is *correct*,
+  not broken, however loudly her comment ("waiting on a berth") and her tooltip ("Serving the harbor works") read
+  like the label-tell. A port vector must **build the waterfront FIRST** (a quay/wharf tile on an industrial
+  shore): a terrain lap with real cost, not an entity-motion freebie. **Banked host, if one is ever wanted: the
+  MOLE is real and reliable** — `moleSet` is 5-12 cells on all 6 seeds probed (the `path.length>=5` guard bites
+  less often than its comment implies), and it is the artifact's only built structure standing in the water.
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a
   multi-source hex BFS capped at radius `r`, walking over land only (`WETSET` blocks
   water/marsh/kelp), filling `out` with steps-to-nearest-source and 255 for "farther
@@ -391,105 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 197 entries before Iteration 195 live in
+> **Archive:** the 198 entries before Iteration 196 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 195 — the university will not light (2026-07-12) [Civic & culture × Deepen]
-
-**Vector.** Civic & culture × Deepen (rotation owed Civic — last lap 184; kind varied
-off 184's Interaction/UX).
-
-**Change (attempted).** *The one dark institution.* Grepping `LITAMT` across all twelve
-`c.kind` civic draw branches turned up a clean, measured gap: **`university` is the only
-civic in the city with no `LITAMT` reference at all** — the only one of the five `MAJORK`
-monuments that goes pitch dark after sunset, while the parliament floodlights its colonnade
-(175), the museum its facade, the hall its clock (149), the library its reading hall, the
-police its beacon, the hospital its cross, the observatory its dome (158), and even the
-school keeps one janitor's window burning. Same shape as 179 (dark bridges) and 193 (dark
-ferry): a completed family with exactly one member missing. Three draw-only elements were
-tried, all inside the `kind==='university'` branch:
-(a) the wing's flat dead glass strip → the city's own per-pane `winBandR` field (salt
-`0x5CB1`), so a scattered few panes burn and the rest are nobody home;
-(b) the campanile's belfry lantern burns warm, with a radial-gradient additive halo;
-(c) a warm courtyard pool on the quad the wings enclose.
-
-**Census.** PASS every build. `pop`/`roads`/`developed` **+0**, tile histogram empty,
-`pageerrors: 0` — draw-only, `hashCell` off `seedNum`, stream- and pop-neutral throughout.
-(Vacuous by construction, as expected for a night draw; the probe is the gate.)
-
-**Probe.** `probes/probe-unilight.mjs` — whole-frame PATCH-vs-HEAD diff (161's law: two
-builds run identical code save the edit, so **every differing pixel IS the edit**, and its
-CENTROID must land on the university, which makes it a locate-check and not just a
-magnitude). Controls were clean throughout: **NOON and DUSK exactly 0 changed px** on all
-three seeds — byte-identical, because `winBandR` falls through to the very `bandR`/`colLit`
-call it replaced below `LITAMT<0.35` and `lit` is 0 by day. The target never earned its
-place:
-- lantern pane alone: **5 / 47 / 8** changed px whole-frame (seeds 7/42/1234) — *at the
-  noise floor*; both visual agents saw nothing on the tower.
-- + halo: **21 / 136 / 44**, then **27 / 155 / 61** once the halo was drawn last. Legible
-  at last — seed 42's agent, asked strictly to hunt for a rim: *"obvious… the single
-  brightest thing in the frame… reads as LIGHT, fades smoothly, no visible rim, ring or
-  seam even where it crosses the spire… the spire stays green."*
-- occlusion-safe elements only (windows + quad): **3 / 50 / 1** — sub-perceptual again.
-  Pushing the alphas to compensate **broke the noon control** (6 px): raising the window's
-  `f` from 0.85 to 0.90 also moved the *day* fallback colour. The control caught it.
-
-**Visual.** The halo build was beautiful on seed 42 and **broken on seed 7**, where a
-blind agent found *"a detached hazy round glow blob floating in the empty sky just off the
-tower's right edge, unattached to any geometry"* — **the halo, orphaned.** The campanile is
-tall and thin, so a taller neighbour (seed 7 sits beside a hospital tower, drawn later
-because it is a lower row) swallows the lamp while the glow, being by construction larger
-than its lamp, still spills into open sky. A light with no visible source: the invariants'
-"no floating" clause, and a procedural city must hold on **every** seed, not one.
-
-**Verdict: EXPLORED → REVERTED.** `solvista.html` is byte-identical to HEAD. The
-*diagnosis* stands and is still worth cashing; what failed is every **place to put the
-light**, and that is now known rather than guessable. `probes/probe-unilight.mjs` and
-`probes/shot-uni.mjs` are kept so a retry starts from a working gate.
-
-**Findings — read these before retrying the university.**
-- **The campanile is the WRONG HOST for a glow, and cannot be fixed by dimming it.** Any
-  halo is larger than its lamp; on a tall thin tower a later-drawn neighbour hides the lamp
-  and not the halo. To revive it, **gate the halo on there being no taller cell in the rows
-  below** (the draw order *is* the depth order) — the guard is the fix, not the alpha.
-- **The quad is occlusion-safe but the tile's OWN wings overdraw it**, by an amount that
-  flips with `fxU`'s per-seed sign — hence 50 px on seed 42 and 3 px on seeds 7/1234 for
-  the identical code. Reconciling the wing/quad geometry is a **tile redesign** →
-  **`polish-tile`, not a growth lap.** That is the real referral: the university tile is
-  simply drawn *small*, and no night ornament on it can carry at fit zoom without a glow
-  that extends past the geometry — which is exactly the thing that orphans.
-- **A LOUD test must be measured against the LOUD COLOUR, not re-run through the same
-  PATCH-vs-HEAD diff.** Painting the lantern pure red and comparing red-vs-HEAD (139 px) to
-  warm-vs-HEAD (136 px), I concluded it was "95% occluded" — **wrong, and wrong by
-  construction**: both builds change the same pixel *set* versus HEAD, so the totals
-  coincide no matter what colour the change is. A direct **red-pixel count** in the loud
-  build (13 / 85 / 36 px) showed it was rendering fine all along. The diff is blind to
-  *which* colour; only a count of the loud colour isolates the draw. (161's corollary (b)
-  says force it loud — this says *how to read the loud frame*.)
-- **Freezing `playing` is NOT freezing the clock.** `waveT` and `time` keep whatever
-  wall-clock-dependent value the RAF loop reached before the freeze, so two loads render
-  different water: the probe's first cut had a **10–22 px noise floor of drifting surf**,
-  700–900 px from the university, sitting right on top of a 5–47 px signal. Pinning
-  `waveT` *and* `time` (163's laws name STARS/movers/`genWorld`, but not these) took the
-  unchanged frames to **exactly 0**. An honest zero is what made every later number
-  readable.
-- **Do not compute a tall civic's clip from `h`.** It cost **two false VISUAL FAILs** on
-  framing alone. The campanile is drawn from `px(gx-fxU*0.18, gy-0.34)` — an origin already
-  well above the tile centre — so `h` always under-counts and the spire crops. `shot-uni.mjs`
-  now clips from the top of the viewport: extra sky is free, a cropped spire costs an agent
-  round.
-- **A flat additive `arc()` is a coin, not a glow** — hard circular rim, and it tints
-  whatever sits inside it (the green spire went olive). `createRadialGradient` falling to
-  alpha 0 at the rim fixes both. The artifact already knew this: the rain damp-patch
-  (~L6216) is a gradient, commented *"soft-edged, or it reads as a decal."* **Reuse it for
-  any glow.**
-- ⚠ **`greenRoofs` jitters run-to-run in the census on IDENTICAL bytes** (404 → 405 → 406).
-  Not a vector's doing — it is the wall-clock-dependent tick count between load and warp
-  (163's law (c)) leaking into a counted metric. Harmless at this size, but **do not chase
-  it as a regression**, and do not trust it as a growth signal.
 
 ## Iteration 196 — the kelp bed breathes with the tide (2026-07-12) [Water & coast × Deepen]
 
@@ -1110,3 +1016,70 @@ skies correct, nothing compounded.
    frame), said 96% — and a direct look confirmed it. Agents fail confidently; a number is the verdict.
 
 **Verdict: SHIPPED.**
+
+## Iteration 205 — the ship that was right all along (Water × Connect)
+
+**Vector.** Water & coast × **Connect** — the coldest cell on the whole board (last used at
+iteration 22, ~180 laps ago). Connect's trick is that it adds **no new object**: it closes a gap
+between two that already exist. The ship, the mole and the harbor works all exist.
+
+**The seam (and it looked textbook).** `genWorld` spawns `freighters[0]` *"at anchor in the
+roadstead off the warehouse row, **waiting on a berth**"*, throws a rubble **mole** out across the
+roadstead so *"the ship at anchor rides in still water"*, and gives her an `ENTINFO` line saying she
+is *"**Serving** the harbor works"*. And then `advanceEntities` says **`if(f.anchored)continue`**.
+She has been a **static prop since 1974** — a comment, a breakwater and a tooltip all describing a
+job she has never once done. That is the label-asserts-what-the-draw-ignores tell, in 204's exact
+shape (the service fleet that never went home), sitting in the coldest cell on the board.
+
+**Change (built, then reverted).** `stepShip()`: lie at anchor → be called **alongside** the quay at
+`harborY` → work her boxes off and stow them again (`f.boxes` 6→0→6, the cranes visible in her
+silhouette) → stand back out. A wake and a heading while under way; `ENTINFO.sub` a **function** of
+her duty (105's law). Zero new draws from *either* random stream — the dwells were respent from her
+own `ph` (123's trick) — so the seeded CA could not move and the rest of the shipping stayed
+byte-identical.
+
+**Census.** PASS, and **vacuous by construction**: +0 on every metric, tile histogram empty,
+`freighters 18` flat. Exactly as predicted for entity motion. (The ±1 wobble on `greenRoofs`/`towerHt`
+was checked against **pristine HEAD** and reproduces there — it is the harness's own run-to-run noise,
+not the edit.)
+
+**Probe.** `probe-shipberth` PASSED, and **passing was the mistake.** HEAD's ship: motion spread
+**0.00 on all 3 seeds** — the static prop, confirmed. PATCH: **4 calls**, ~**55%** of her life
+alongside, `minDist 2.9 → 1.60` cells, cargo cycling the full 0..6, and the 5 flooded deep-lane
+control ships **bit-identical between builds**. Every number true. Every number irrelevant.
+
+**Visual — the gate that caught it.** Two agents, two seeds, both **FAIL**, both naming the same
+thing: *"she is still sitting in open water; there is no quay next to her."* Per the loop's law a FAIL
+is a cue to **measure**, so I measured — and they were right. My probe's `ALONGSIDE < 2.2 cells`
+threshold was **a number I picked because my own berth constant satisfied it**. The quantity the
+*claim* was about is the water the eye sees under her bow, and at `seaXFr(harborY,0)` — the most
+inshore position the artifact's open-water projection can even express — that is **54.6px, ~1.7
+hexes**, on every seed.
+
+**Why it cannot ship (`probe-harborhost`, 6 seeds, unanimous).** `SHOREX = CTRX+11` is *"the coast
+highway column"*. `SHORE0 = SHOREX+5` is the water's edge, *"five lots seaward of the highway"*. The
+harbor works are sited at `SHOREX-1-(rng()*3)` — **behind the highway**. So the warehouses stand
+**5–9 hexes from the sea**, and the waterline at `harborY` is **BEACH / BEACH / DUNE** on every seed:
+the same recreational sand 201 put the parasols and sunbathers on. **There is no quay, no wharf, no
+industrial waterfront anywhere in the artifact.** Bringing her alongside beaches a container ship
+between the sunbathers and a dune.
+
+⇒ **The ship was never a broken promise.** A **roadstead** is an open anchorage where ships lie at
+anchor *precisely because there is nowhere to come alongside*; ships there are worked by lighters or
+they wait. *"Waiting on a berth"* is her **situation**, not an unkept one. Solvista is a roadstead,
+not a harbour, and I read a real-world intuition ("ships dock") into a model that cannot express
+docking — **201's law**, which the header had been carrying for four iterations, aimed straight at me.
+
+**Kept.** `probes/probe-harborhost.mjs` — the host-existence probe (the `probe-market` / `probe-firehost`
+shape), so no future lap re-derives this. It runs against plain HEAD and reports the waterline terrain,
+the warehouse-to-sea distance, the bow gap, and the 0.00 motion spread, on 6 seeds. New banked cue **(o)**;
+`solvista.html` restored **byte-identical** to HEAD.
+**Not kept:** `probe-shipberth` (the one quoted above). It diffs the patch against HEAD, and the patch is
+gone — it would sit in `probes/` producing a meaningless HEAD-vs-HEAD table forever. A gate for a reverted
+change is not a gate. What was worth keeping from it is the *lesson*, and that is now a law in `SKILL.md`.
+
+**Verdict: EXPLORED → REVERTED.** The third member of the dead-host family (`T.MARKET` fully drawn and
+never sited; the fire CA fully drawn and never ignited; and now the port, fully described and never
+built). The *finding* is worth more than the feature would have been: it removes an entire family of
+tempting Water vectors from the board and names the one thing that would unlock them — **build the
+quay first.**

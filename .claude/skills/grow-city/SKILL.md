@@ -909,6 +909,30 @@ vector, whatever it is.
   hexagon, so the open sky is a shallow **band**: the skyline sits at ~0.12 of the viewport right
   across the middle and only falls to 0.27–0.43 in the top corners — and the top-left corner is the
   placard's. That is why the moon is parked at x=0.80. Measure the band before siting anything in it.
+- **A PROBE WHOSE THRESHOLD IS IN THE UNITS OF YOUR OWN DESIGN CONSTANT IS GRADING YOUR OWN HOMEWORK (iter 205).**
+  196 says *don't shrink the box until it passes*. This is the same sin one level up, and it is much harder to see,
+  because the probe is **not wrong** — every number it prints is true. 205 moved a ship to `seaXFr(harborY, 0)`,
+  called that "the berth", and gated on `dist < 2.2 cells`. It passed: 4 arrivals, 55% of her life "alongside",
+  control bit-identical. **But `2.2 cells` was chosen because the berth constant met it**, and the claim was not
+  *"her distance decreases"* — it was ***"she comes alongside"***, which is a claim about **the water the eye sees
+  under her bow**: 54.6px, ~1.7 hexes, unchanged and never computed. Two agents FAILed it instantly. ⇒ **State the
+  claim in the viewer's units, then measure THAT.** If your gate's threshold and your design's constant are
+  expressed in the same quantity, the gate can only ever confirm you implemented what you implemented. The tell:
+  you can pass the probe by editing the threshold. And note this is the *second* case (with 200's sun behind the
+  placard) where the agents were right and the probe was wrong — **both times the probe was measuring a layer or a
+  unit the user never sees.** When a probe and an agent disagree, ask what each is *looking at* BEFORE re-running
+  either.
+- **CHECK THE HOST EXISTS BEFORE YOU BELIEVE THE TELL — the label-tell has a FALSE-POSITIVE MODE (iter 205).**
+  The richest seam in the artifact (a label asserting what the draw ignores) has been cashed eight times, so it is
+  trusted on sight. **It can also be a lie in the other direction.** The harbor freighter's comment said *"waiting
+  on a berth"*, her breakwater said *"rides in still water"*, her tooltip said *"Serving the harbor works"*, and
+  the step loop said `if(f.anchored)continue` — a perfect tell. It was **not a defect**: `SHORE0 = SHOREX+5` puts
+  the water's edge *"five lots seaward of the highway"* while the warehouses sit *behind* the highway, so the port
+  has **no waterfront at all**, the waterline is a swimming beach, and a ship lying at anchor offshore is **the
+  correct depiction of a roadstead.** The label was describing the model accurately; *I* was reading real-world
+  intuition ("ships dock") into a model that cannot express docking. ⇒ Before you build to a tell, spend one
+  command proving its **host** exists (the dead-code law: `T.MARKET`, the fire CA, and now the quay). And per 201:
+  when the fix requires the world to contain something, **ask whether the world does.**
 - **Ask an agent to LOCATE, not to JUDGE** (108) — see the visual gate. And when
   agents disagree, **a probe is the verdict, not a rerun** — ***but only if the probe measures what the
   claim is about* (iter 200).** This is the one recorded case where the agents were right and the probe
