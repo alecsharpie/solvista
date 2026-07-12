@@ -1077,6 +1077,27 @@ vector, whatever it is.
   ordinary stops, so this was never the new feature's bug). **Any draw with a perpendicular/toward-viewer
   offset must check that offset's SIGN against draw order.** Draw order is depth order; an offset is a
   depth decision.
+- **A BANKED INSTRUMENT CAN BE THE WRONG INSTRUMENT — AND IT WILL ACQUIT THE VERY THING THE AGENTS KEEP POINTING
+  AT (iter 228, sharpening 214).** 214 says build the probe in the units of the complaint. Its nastiest form is
+  when a probe **already exists**, was written by an earlier lap, is cited by the cue itself, and is *correct* —
+  so nobody re-asks what it measures. Cue (af) (the loudest in the ledger: six agents, three step-backs, "the
+  towers are wallpaper") shipped with `probe-facade` as its named instrument. `probe-facade` measures stripe
+  **RHYTHM**, and it had **measured TOWER innocent** (42-47 rhythms, top 6%) while the agents went on pointing at
+  the towers for three step-backs. Both were true: **a tower can wear a unique stripe rhythm and still be the same
+  SHAPE as every other tower.** Every one of the six agents had said **SILHOUETTE** and **ROOF**; not one said
+  banding. A new twenty-line draw census (`probe-crown`) found the defect immediately — **4 distinct crowns
+  city-wide, 41% of towers ending flat.** ⇒ **Re-derive the instrument from the COMPLAINT'S OWN NOUNS, even when
+  the cue hands you a probe.** The tell: the banked probe *passes* the thing the agents *fail*. (This is the cue-is-
+  a-POINTER-not-a-SPEC law, one level down: the cue can be wrong about its own instrument.)
+- **A NUMBER THAT WILL NOT MOVE IS A TELL THAT YOUR INSTRUMENT, NOT THE CITY, IS DECIDING IT (iter 228).** 228's fix
+  took tower crowns 4 -> 17 while the "41% flat" bucket sat **exactly unchanged** — the same 35.3% on the same seed,
+  before and after. A metric that is *stone* while everything around it moves is not a stubborn defect; it is a
+  bucket your probe cannot see into. It was: the helideck is raw `ctx.arc`, invisible to a `prism`/`bandR` hook, so
+  **~40% of towers — the TALLEST, read hardest against the sky, all wearing ONE identical bare deck** — were being
+  silently filed under "flat". Shipping there would have been **217's law exactly** (a fix to one clause, mistaken
+  for a fix to the phenomenon). ⇒ **Before believing a bucket, ACCOUNT for it**: make the probe report the residual
+  as its own named column (`crownable-but-bare`, which must go to 0), so the part your hook is blind to cannot hide
+  inside the part it can see.
 - **BUILD THE PROBE IN THE UNITS OF THE COMPLAINT — a greyscale instrument cannot see "mauve" (iter 214).**
   205 says state the claim in the viewer's units. 214 is the sharper, nastier form: **your probe can be
   measuring a real defect, and still be the wrong instrument.** Three agents across three iterations
@@ -1523,6 +1544,15 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `shot-queueshadow.mjs` (the aimed camera: finds the instance whose ornament **measurably renders the most ink** and
   centres on it, then hands the same aim to the HEAD build so the blind before/after pair frames the identical hex —
   because `openFront`/`frontLoad` will hand you a buried one).
+  `probe-crown.mjs` (228 — **is this building type the same SHAPE every time?** Wraps `drawBuilding`+`prism`+`bandR`
+  and censuses the MASSING the frame actually draws: distinct SILHOUETTES, distinct **CROWNS** (what sits at the
+  roofline — what the eye reads against the sky), and each one's top share. Build-agnostic, so it runs unchanged on
+  HEAD and patch, with **MID as the control**. It is the instrument cue (af) *should* have named — `probe-facade`
+  measures RHYTHM and had acquitted the towers three step-backs running. ⚠ It reports **`crownable-but-bare`**
+  separately, because a hook on `prism`/`bandR` is **blind to raw-`ctx` crowns** like the helideck and would
+  otherwise file them under "flat"), `shot-crown.mjs` (its camera: whole-city *and* a close-up aimed at the CBD, day
+  + night, `SRC=` to shoot the identical framing on HEAD for a blind A/B; every frame self-reports `dayT`/`phase`/
+  `sun`/`LITAMT` per 202 — ⚠ `phaseWord` takes `dayT`, and calling it **bare** labels every frame `night`),
   `probe-hudfreeze.mjs` (227 — **is this a real bug, or is my frozen camera lying about the DOM?** Three cases at
   one pin: **A** frozen exactly as the shot does it · **B** frozen + `syncStats()` · **C** actually playing. **A
   stale while B and C agree ⇒ the camera lies and the artifact is innocent.** It cleared the "night frame says

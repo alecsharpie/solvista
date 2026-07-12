@@ -14776,3 +14776,91 @@ warnings. Preserved here verbatim.
   **(z) THE HUD CLIPS ITS OWN LABEL (216, seed 7).** The stats bar clips `TRANSIT REA[CH]` at its right edge. Cheap,
   real, and **only an agent could have found it — every probe in `probes/` is blind to the DOM** (200). Interaction/UX
   × Polish, and the first live cue that column has had in a while.
+
+## Iteration 218 — the towers were never the problem (2026-07-13) [Urban fabric × Deepen]
+
+**Vector** — the owed fix lap (217: *"the city has no downtown"*). The header ordered a specific fix: **give the
+tower PLACEMENT roll a `core` term, as 98 gave the height one.** I measured its premise first (*probe before you
+design*) and the premise is **false**. `solvista.html` ends this iteration **byte-identical to iter 217**.
+
+**The prescribed fix is a DEAD LEVER, and the proof is one number.** `probes/probe-towerroll.mjs` (world data, no
+render): the placement roll converts **100.0% of the eligible pool on all three seeds.** There is not ONE cell left
+anywhere in any city that is still `COM`, unseaside, and holding a `com>=2` quorum. The leftover COM all sits at
+quorum 0 or 1 (seed 7: `0:75  1:139  2:2`). ~800 ticks x `ks(240)` picks sample every cell ~60 times, so **every COM
+cell that ever reaches the quorum towers, whatever `p` is.** Scaling `p` by `core` can only change *when* a cell
+towers, never *whether* — it buys no skyline and costs towers at 240 pop each. **The comment sitting ON the seam
+said so** (iter 98: *"this test SATURATES… it is a weak lever"*), and 217 prescribed it anyway. A probability cannot
+steer a rule it has already saturated; **only the PREDICATE can.**
+
+**So I graded the QUORUM instead** (`com + L*core >= K` — a predicate cannot saturate) and swept it,
+`probes/probe-quorum.mjs`, 3 seeds. Two ledgers per 206: the EFFECT, and the COST TO THE POPULATION.
+
+| variant | core/rim contrast | towers | pop |
+| --- | --- | --- | --- |
+| HEAD `com>=2` | 2.26x | 239 | 106,412 |
+| **V1 `com+2*core>=2`** | **4.50x** | 248 (+4%) | 108,542 (+2%) |
+| V2 `com+3*core>=2` | 4.63x | 289 (+21%) | 117,988 (+11%) |
+| V3 `com+3*core>=2.5` | 15.5x | **152 (-36%)** | **86,018 (-19%)** |
+| V4 `com+4*core>=2.5` | 16.3x | 177 (-26%) | 92,456 (-13%) |
+
+**206's starvation law, reproduced exactly:** V3/V4 raise the RIM's bar to redistribute and destroy a third of the
+city (a -19% pop collapse would hard-fail the census). V1 only ever *relaxes* — rim bar untouched, nothing starved —
+and **holds the mean** in 98's sense. It passed **every gate**: census **PASS** (`pop 154,778 -> 163,274` +5.5%,
+`TOWER 334 -> 369`, **`tallTowers 138 -> 192` +39%** — the new mass landing exactly on 98's existing height peak),
+`probe-skyline` gradient monotone on all 3 seeds (seed 1234: **38.5 / 22.4 / 11.0 / 6.9 / 6.9 / 6.0%**), height
+control still decaying 120->67.
+
+**And I reverted it anyway, because the eye still says no.** Four blind agents (2 patched / 2 HEAD, none told which)
+were asked to **LOCATE** downtown (108). All four independently reported *"no falloff; towers run to the rim."*
+**They were right and my probe was wrong — 205's sin, and I walked straight into it.** I measured **TOWER % of
+developed land**, a *ratio*, because that is the unit my *rule* operates in. **The viewer counts towers — a MASS.**
+The rim carries ~20x more land, so even at **53.6% core vs 6.3% rim density**, seed 7 still stands **15 towers
+downtown against 34 out past ring 23.** Twice as many towers on the rim as in the core. That is 217's own tell,
+undefeated.
+
+**THE CEILING, and it is why no tower rule can ever fix this.** Re-run `probe-towerroll` on the patched build: seed 7
+ring 0-4 has **ZERO commercial cells left** — every one is now a tower — and rings 0-8 hold 33 towers with **5**
+unconverted COM remaining. **V1 has exhausted the downtown's commercial land.** The core holds **~38 COM cells; the
+rim holds ~139.** Towers rise *only* on COM. So **no quorum, no probability, no tower rule of any kind can put more
+than ~38 towers downtown while the city carries ~93.** The skyline is capped by the distribution of **commercial
+land**, and the tower rule was never broken — it is faithfully reflecting a COM layer that is itself uniform.
+
+**Counterbalanced blind A/B (patched vs HEAD, same seed/camera, agents not told which): split 1-1.** Seed 7's agent
+picked the patch correctly (*"A reads as a rim of spikes; B reads as having a downtown"*). Seed 42's picked **HEAD** —
+and was right to: the patch's extra `rng()` draws (the relaxed gate short-circuits *less*, so more rolls happen)
+**reshuffled the seeded stream and pushed seed 42's rim towers 25 -> 37** while adding only 6 downtown. The rule never
+touches the rim's bar; that +48% is pure chaotic-CA wobble, and **on one seed in three it swamps the entire signal.**
+A change must hold across seeds, not one.
+
+**THE ROOT CAUSE — same defect class, one layer upstream, and it is one line (`solvista.html:1443`):**
+```js
+const shop=(roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3);
+```
+Commercial land is sited by **corner lots and neighbours. Nothing in it knows where downtown is** — exactly the fault
+217 found in tower *placement*, sitting one layer up in the rule that creates the tower rule's only host. Measured
+COM-origin share of developed land (seed 7): **50% in ring 0-4, then flat at 25-36% all the way out.** COM is
+sprinkled, therefore towers are sprinkled.
+
+**And the fix is cheaper than what I built, because `com>=2` is ALREADY a clustering predicate.** Cluster the
+commercial land and the *existing, untouched* quorum concentrates towers downtown **automatically** — V1 becomes
+redundant, and arguably harmful (it lets an isolated core shop tower, blurring the very clustering the real fix
+creates). **That is the whole reason this reverts rather than ships:** V1 is not a partial fix, it is a fix in the
+wrong place, and keeping it would leave a second half-finished fix in the file for someone to find in 119 iterations.
+
+**Census** — PASS on restored HEAD (`pop`/`roads`/`developed`/`towers` flat; 0 page errors). The V1 numbers above are
+recorded for 219, not shipped.
+
+**Visual** — 4 blind LOCATE reads + a 2-seed counterbalanced blind A/B, all via `probes/shot-downtown.mjs` (prints
+the CBD's true screen fraction as ground truth). Health unanimous and clean on every frame: no z-order tears, no
+floating tiles, no blown-out colour, *"coherent, attractive coastal diorama"*. The only FAIL is the one 217 already
+banked. Blind-locate ground truth is worth keeping: on HEAD seed 7 the agent said "NO CLEAR CENTRE" and its forced
+guess missed the true CBD by **0.18**; on the patched frame the guess landed **0.02** away. The lever is real. It is
+just nowhere near enough.
+
+**Verdict: EXPLORED → REVERTED.** The prescribed fix was refuted, the real lever was found, measured, taken to its
+structural ceiling — and the ceiling is too low. **219 owes the actual lap: Urban x Deepen, give `shop` (L1443) a
+`core` preference and let the quorum do its job.** Warnings that carry: **PREFERENCE, NOT GATE** (206 — V3/V4 above
+are what a gate does), **HOLD THE MEAN** (98 — total COM must not collapse, or shops/cafes/`walkPct` go with it), and
+**expect the stream to reshuffle** — judge it on all three seeds, in the viewer's units (**tower COUNT downtown vs at
+the rim**), never on a ratio.
+

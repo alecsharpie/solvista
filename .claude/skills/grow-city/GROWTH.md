@@ -23,7 +23,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
@@ -35,21 +35,22 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: People **226** ·
-  Transport **211** · Civic **213** · Nature **221** · Water **223** · Urban **224** · Sky **225**.
+  Transport **211** · Civic **213** · Nature **221** · Water **223** · Sky **225** · Urban **228**.
   ✅ **227 WAS THE 25TH STEP-BACK — city CLEAN, arc UNMOVED, and it FIXED ITS OWN CAMERA** (the frozen frames had
   been showing a **load-time HUD**: `DAYTIME / 0% NEW MOON` over a night sky, on every step-back ever shot; frames
   now self-report `HUD=ok`). **232 is the 26th.**
-  🔴 **TAKE CUE (af) — TOWER/MID FACADE WALLPAPER — NEXT (Urban × Polish).** Six agents across 222/224/227, both
-  seeds, unprompted; it is the one thing all four of 227's reads agreed on, and its instrument already exists
-  (`probe-facade.mjs`). Stalest columns after that: **Interaction/UX** (cues (z)+(w), a HUD lap), then Transport
-  (211) / Civic (213).
+  ✅ **CUE (af) IS CLOSED BY 228** — the ledger's loudest cue (six agents, three step-backs) is spent.
+  🔴 **TAKE THE HUD LAP NEXT (Interaction/UX × Polish — the stalest column, last touched 191).** Cues **(w)** (a
+  LIVE shipped mojibake bug on the public site, >=8 sites incl. the always-on-screen stats panel) + **(z)** (the HUD
+  clips `TRANSIT REA[CH]`) pair into one tidy lap, and (w) is **the cheapest real user-facing win in the ledger**.
+  Then Transport (211) / Civic (213).
   ✅ **THE SKYLINE LADDER (217→218→219→224) and THE WASH LADDER (223) ARE BOTH COMPLETE** — cues **(ac)** and **(ae)**
   CLOSED; the `c.th` ladder is **SPENT** (warnings at (ac)); the wash is **luminance-safe**, its invariant **ASSERTED
   by `probe-goldenhue.mjs`**. Laws in SKILL.md. ⚠ But NEW cue **(ag)**: 227's agent says the night greens read hot
   again — which would sit on the wash ladder's own invariant.
   ✅ **137's STANDING-CROWD CUE IS CLOSED (226).** Every STANDING figure now casts `shadS` and inherits 225's sun
   vector; the SEATED ones (cafe, picnic, amphitheater) are deliberately not. **People's cue list is EMPTY.**
-  **CUES, RANKED:** 🔴 **(af)** tower/MID facade wallpaper (Urban × Polish — six agents; **TAKE IT NEXT**) ·
+  **CUES, RANKED:** 🔴
   **(w)+(z)** the shipped mojibake + the clipped HUD label (Interaction/UX × Polish — the stalest column; one tidy
   HUD lap, and (w) is a LIVE bug on the public site) · **(u)** the violet pier deck (Water × Polish — the LAST warm
   surface still rotated; the deck bypasses `col()`) · **(ag)** the night greens stay hot (**NEW at 227**) · **(y)**
@@ -322,16 +323,15 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   MAGNITUDE; body archived, law ⇒ SKILL.md). ⚠ **The invariant is ASSERTED by `probes/probe-goldenhue.mjs` — run it
   whenever you touch a gain triple.** ⚠ **Watch: PARK vs ROAD separation is 14, just under the ~15 collapse floor**
   — and **227's cue (ag) says the night greens read hot again**, so that is where the next lap will bite.
-  **(af) TOWER + MID FACADES ARE WALLPAPER — 🔴 THE LOUDEST CUE IN THE LEDGER; TAKE IT NEXT (Urban × Polish).**
-  **Six agents across 222/224/227, both seeds, every time unprompted:** *"a repeating teal cylinder motif"* ·
-  *"the same tall pale slab with horizontal band-glazing repeats"* · **227:** *"a repeating field of identical
-  horizontally-banded slabs with little silhouette variety"* (7) · *"the drum-roof block is genuinely over-used and
-  is the element most at risk of compounding further"* (42). 227's pair indict the **MID drum-roofs** as well as the
-  towers, and both name **SILHOUETTE / roof variety**, not colour. **216 spent the MID facades and used TOWER as its
-  CONTROL** — this is 216's lever one tile over, and its instrument exists: **`probes/probe-facade.mjs`** (distinct
-  stripe rhythms, the top rhythm's share of the stock, the corduroy number). **(ac) is CLOSED so nothing queues
-  ahead of it.** ⚠ Price it by **COUNTING OBJECTS** (222), not by reading the diff; **hold the MEAN** of anything you
-  jitter (216) so the path count — hence the cost — stays flat.
+  **(af) CLOSED by 228 — the tower CROWN was the defect** (body in 228's entry). ⚠ **The banked instrument was the
+  WRONG one**, and that is the lasting lesson: `probe-facade` measures stripe RHYTHM and had measured TOWER
+  *innocent* (42-47 rhythms, top 6%) while six agents kept pointing at the towers — **a tower can wear a unique
+  rhythm and still be the same SHAPE.** The crown is now a 4th independent axis (`towerLook.crown` + `towerCrown()`,
+  `probes/probe-crown.mjs`): crowns **4.0 -> 18.3**, top share **40.8% -> 15.3%**, MID control byte-identical, cost
+  **+17 day / +51 night path objects (FREE)**. ⚠ **227's indictment of the MID drum-roofs was REFUTED by
+  measurement** (MID: 32 crowns, top 11% — already varied by 216). ⚠ **The TOWER SILHOUETTE (the body below the
+  roofline) is still 5.3 shapes / top 55%** — untouched, and the obvious next Urban lap if the towers are ever
+  called wallpaper again; the crown was the cheap half.
   **(ag) THE NIGHT GREENS STAY HOT (227, seed 7, unprompted; NEW).** *"At night the land base reads flat purple-grey
   and the parks/farms in the middle stay oddly bright green, breaking the night mood."* Sits squarely on 222's
   ladder invariant (**no UNLIT surface may out-brighten the LIT ones**) and on 223's live watch item (**PARK<->ROAD
@@ -390,98 +390,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 220 entries before Iteration 218 live in
+> **Archive:** the 221 entries before Iteration 219 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 218 — the towers were never the problem (2026-07-13) [Urban fabric × Deepen]
-
-**Vector** — the owed fix lap (217: *"the city has no downtown"*). The header ordered a specific fix: **give the
-tower PLACEMENT roll a `core` term, as 98 gave the height one.** I measured its premise first (*probe before you
-design*) and the premise is **false**. `solvista.html` ends this iteration **byte-identical to iter 217**.
-
-**The prescribed fix is a DEAD LEVER, and the proof is one number.** `probes/probe-towerroll.mjs` (world data, no
-render): the placement roll converts **100.0% of the eligible pool on all three seeds.** There is not ONE cell left
-anywhere in any city that is still `COM`, unseaside, and holding a `com>=2` quorum. The leftover COM all sits at
-quorum 0 or 1 (seed 7: `0:75  1:139  2:2`). ~800 ticks x `ks(240)` picks sample every cell ~60 times, so **every COM
-cell that ever reaches the quorum towers, whatever `p` is.** Scaling `p` by `core` can only change *when* a cell
-towers, never *whether* — it buys no skyline and costs towers at 240 pop each. **The comment sitting ON the seam
-said so** (iter 98: *"this test SATURATES… it is a weak lever"*), and 217 prescribed it anyway. A probability cannot
-steer a rule it has already saturated; **only the PREDICATE can.**
-
-**So I graded the QUORUM instead** (`com + L*core >= K` — a predicate cannot saturate) and swept it,
-`probes/probe-quorum.mjs`, 3 seeds. Two ledgers per 206: the EFFECT, and the COST TO THE POPULATION.
-
-| variant | core/rim contrast | towers | pop |
-| --- | --- | --- | --- |
-| HEAD `com>=2` | 2.26x | 239 | 106,412 |
-| **V1 `com+2*core>=2`** | **4.50x** | 248 (+4%) | 108,542 (+2%) |
-| V2 `com+3*core>=2` | 4.63x | 289 (+21%) | 117,988 (+11%) |
-| V3 `com+3*core>=2.5` | 15.5x | **152 (-36%)** | **86,018 (-19%)** |
-| V4 `com+4*core>=2.5` | 16.3x | 177 (-26%) | 92,456 (-13%) |
-
-**206's starvation law, reproduced exactly:** V3/V4 raise the RIM's bar to redistribute and destroy a third of the
-city (a -19% pop collapse would hard-fail the census). V1 only ever *relaxes* — rim bar untouched, nothing starved —
-and **holds the mean** in 98's sense. It passed **every gate**: census **PASS** (`pop 154,778 -> 163,274` +5.5%,
-`TOWER 334 -> 369`, **`tallTowers 138 -> 192` +39%** — the new mass landing exactly on 98's existing height peak),
-`probe-skyline` gradient monotone on all 3 seeds (seed 1234: **38.5 / 22.4 / 11.0 / 6.9 / 6.9 / 6.0%**), height
-control still decaying 120->67.
-
-**And I reverted it anyway, because the eye still says no.** Four blind agents (2 patched / 2 HEAD, none told which)
-were asked to **LOCATE** downtown (108). All four independently reported *"no falloff; towers run to the rim."*
-**They were right and my probe was wrong — 205's sin, and I walked straight into it.** I measured **TOWER % of
-developed land**, a *ratio*, because that is the unit my *rule* operates in. **The viewer counts towers — a MASS.**
-The rim carries ~20x more land, so even at **53.6% core vs 6.3% rim density**, seed 7 still stands **15 towers
-downtown against 34 out past ring 23.** Twice as many towers on the rim as in the core. That is 217's own tell,
-undefeated.
-
-**THE CEILING, and it is why no tower rule can ever fix this.** Re-run `probe-towerroll` on the patched build: seed 7
-ring 0-4 has **ZERO commercial cells left** — every one is now a tower — and rings 0-8 hold 33 towers with **5**
-unconverted COM remaining. **V1 has exhausted the downtown's commercial land.** The core holds **~38 COM cells; the
-rim holds ~139.** Towers rise *only* on COM. So **no quorum, no probability, no tower rule of any kind can put more
-than ~38 towers downtown while the city carries ~93.** The skyline is capped by the distribution of **commercial
-land**, and the tower rule was never broken — it is faithfully reflecting a COM layer that is itself uniform.
-
-**Counterbalanced blind A/B (patched vs HEAD, same seed/camera, agents not told which): split 1-1.** Seed 7's agent
-picked the patch correctly (*"A reads as a rim of spikes; B reads as having a downtown"*). Seed 42's picked **HEAD** —
-and was right to: the patch's extra `rng()` draws (the relaxed gate short-circuits *less*, so more rolls happen)
-**reshuffled the seeded stream and pushed seed 42's rim towers 25 -> 37** while adding only 6 downtown. The rule never
-touches the rim's bar; that +48% is pure chaotic-CA wobble, and **on one seed in three it swamps the entire signal.**
-A change must hold across seeds, not one.
-
-**THE ROOT CAUSE — same defect class, one layer upstream, and it is one line (`solvista.html:1443`):**
-```js
-const shop=(roads>=2&&dev>=1&&rng()<0.45)||(coms>=1&&rng()<0.3);
-```
-Commercial land is sited by **corner lots and neighbours. Nothing in it knows where downtown is** — exactly the fault
-217 found in tower *placement*, sitting one layer up in the rule that creates the tower rule's only host. Measured
-COM-origin share of developed land (seed 7): **50% in ring 0-4, then flat at 25-36% all the way out.** COM is
-sprinkled, therefore towers are sprinkled.
-
-**And the fix is cheaper than what I built, because `com>=2` is ALREADY a clustering predicate.** Cluster the
-commercial land and the *existing, untouched* quorum concentrates towers downtown **automatically** — V1 becomes
-redundant, and arguably harmful (it lets an isolated core shop tower, blurring the very clustering the real fix
-creates). **That is the whole reason this reverts rather than ships:** V1 is not a partial fix, it is a fix in the
-wrong place, and keeping it would leave a second half-finished fix in the file for someone to find in 119 iterations.
-
-**Census** — PASS on restored HEAD (`pop`/`roads`/`developed`/`towers` flat; 0 page errors). The V1 numbers above are
-recorded for 219, not shipped.
-
-**Visual** — 4 blind LOCATE reads + a 2-seed counterbalanced blind A/B, all via `probes/shot-downtown.mjs` (prints
-the CBD's true screen fraction as ground truth). Health unanimous and clean on every frame: no z-order tears, no
-floating tiles, no blown-out colour, *"coherent, attractive coastal diorama"*. The only FAIL is the one 217 already
-banked. Blind-locate ground truth is worth keeping: on HEAD seed 7 the agent said "NO CLEAR CENTRE" and its forced
-guess missed the true CBD by **0.18**; on the patched frame the guess landed **0.02** away. The lever is real. It is
-just nowhere near enough.
-
-**Verdict: EXPLORED → REVERTED.** The prescribed fix was refuted, the real lever was found, measured, taken to its
-structural ceiling — and the ceiling is too low. **219 owes the actual lap: Urban x Deepen, give `shop` (L1443) a
-`core` preference and let the quorum do its job.** Warnings that carry: **PREFERENCE, NOT GATE** (206 — V3/V4 above
-are what a gate does), **HOLD THE MEAN** (98 — total COM must not collapse, or shops/cafes/`walkPct` go with it), and
-**expect the stream to reshuffle** — judge it on all three seeds, in the viewer's units (**tower COUNT downtown vs at
-the rim**), never on a ratio.
 
 ## Iteration 219 — the shops never knew where downtown was (2026-07-13) [Urban fabric × Deepen]
 
@@ -1267,3 +1180,76 @@ from vegetation colour alone. **Mining the asides** (212 — the asides are wher
 and two calendars, the census is flat, and the arc has stopped advancing. What was broken was the instrument
 that watches it — and it had been broken, in a way SKILL.md explicitly denied, since the camera was written. A
 step-back that finds nothing wrong with the city and one thing wrong with its own eyes is the step-back working.
+
+## Iteration 228 — the towers all wore the same hat (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish. Cue **(af)** — the loudest in the ledger: six agents
+across 222/224/227, both seeds, every time unprompted, called downtown wallpaper. Every
+one of them named the **SILHOUETTE** and the **ROOF**; not one named colour or banding.
+
+**Probe first (the loop's first law), and it RELOCATED the bug.** `probe-facade` was the
+banked instrument, and it is the WRONG one: it measures stripe RHYTHM, and it had already
+measured TOWER *innocent* (42-47 rhythms, top 6%) while six agents went on pointing at the
+towers. Both are true — **a tower can wear a unique stripe rhythm and still be the same
+SHAPE as every other tower.** So the cue needed a new instrument, not the banked one (*a cue
+is a POINTER, NOT A SPEC*). `probes/probe-crown.mjs` wraps `drawBuilding`+`prism`+`bandR` and
+records the massing the frame ACTUALLY draws (build-agnostic: runs unchanged on HEAD and
+patch). HEAD, 3 seeds, ~101 towers each:
+
+- **TOWER: 4.0 distinct CROWNS city-wide, top share 40.8%** — and **41% of towers `flat`**.
+- MID: **32.3 crowns, top 11.3%** — already richly varied by 216. **227's indictment of the
+  MID drum-roofs does not survive measurement** (212's law: grade the FAIL by measuring it).
+
+Iter 110 decoupled a tower's COLOUR from its silhouette (4 forms x 5 bodies). What it never
+decoupled is **what sits at the ROOFLINE**, which stayed a property of `style` — and styles 1
+and 3 put their setbacks low down and then simply **STOP**. The eye reads a skyline by its
+**TOPS**, so downtown had a crown vocabulary of four.
+
+**...and the `flat` bucket was the real find.** The fix took crowns 4 -> 17 and the 41% `flat`
+bucket **did not move** — a number that will not move is a tell that the INSTRUMENT is deciding
+it. It was: `flatShort` (crownable-but-bare) is **0**, and every `flat` tower is an **h>90
+helipad tower** — invisible to a prism/bandR hook because the helideck is raw `ctx.arc`. That is
+**~40% of the tower stock (54/134, 44/102, 25/68) — the TALLEST towers, read hardest against the
+sky — all wearing ONE identical bare deck.** Stopping there would have been **217's law exactly**
+(a fix to one clause, mistaken for a fix to the phenomenon).
+
+**Change.** The crown becomes the **fourth independent seed-salted axis** (`towerLook.crown`), so
+any massing can wear any crown: **4 styles x 5 bodies x 5 crowns**. New `towerCrown()`: cornice /
+roof garden / mech penthouse / stepped cap / **spire** (a SOLID tapered needle on a plinth — 215's
+law: a hairline ornament needs a BODY). The helipad towers keep their deck (`heliPads` is real world
+data — the city helicopter lands on those roofs), but it now rides a **plinth** from the same hash
+(parapet / stepped cap / bare). Mast suppressed under a spire; helideck ineligible for spire/garden.
+Draw-only: `hashCell`, no `rng()`, no terrain.
+
+**Census.** PASS. Core flat (`pop`/`developed`/`roads` +0), **tile histogram empty** — correct for
+draw-only. `solarRoofs -2 / greenRoofs -1 / towerHt +1` is the harness, not the edit: **re-running
+the SAME FILE** gave `-1 / -1 / +0` (226's law — do NOT diff against HEAD to test this).
+
+**Probe.** `probe-crown.mjs`, 3 seeds:
+
+| | crowns (distinct) | top crown share | crownable-but-bare |
+| --- | --- | --- | --- |
+| **TOWER** HEAD | 4.0 | 40.8% | 41% |
+| **TOWER** patch | **18.3** | **15.3%** | **0** |
+| MID (control) | 32.3 -> **32.3** | 11.3% -> **11.3%** | 0 |
+
+MID is **byte-identical** on every number — the control holds. The tower crown is now as varied as
+the mid-rise crown 216 built.
+
+**Cost.** Priced by **COUNTING PATH OBJECTS** (222 — never by reading the diff): day **108,888 ->
+108,905 (+17, +0.016%)** · night **139,401 -> 139,452 (+51, +0.037%)**. **FREE.** Hold-the-mean (98/216)
+did the work: two per-style roof prisms came OUT, five crowns averaging ~1.4 went in.
+
+**Visual.** Blind A/B, both seeds, **order flipped between them**, asking agents to COUNT roof shapes
+(a quantity the projection PRESERVES — 224 forbids asking them to judge by height/position). Both
+PASS, no z-tears, no floating, no blown colour. **Seed 42 (A=HEAD, B=patch) picked the patch, clearly**
+— "2-3 vs 6-7", naming the exact five crowns shipped (stepped setback, tapered needle, cornice lip,
+penthouse, green roof) and calling HEAD's deck *"a stamp repeated across the skyline"*, which is the
+40%-helideck defect found **independently, by eye**. **Seed 7 (A=patch, B=HEAD) picked HEAD** — and its
+read is **refuted by the draw**: it claimed HEAD shows *"spire/needle, penthouse, stepped cap, cornice
+rim"* and *"teal/olive helipad discs"*, **none of which HEAD contains** (its 4 crowns are sage garden /
+sage cap / bare / deck). It confabulated the patch's vocabulary onto both frames. ⚠ **Both agents picked
+"B"**, so the blind A/B carries position bias and is WEAK evidence; the verdict rests on the draw census,
+which is not a matter of interpretation.
+
+**Verdict: SHIPPED.** Cue (af) — the loudest cue in the ledger, six agents, three step-backs — is CLOSED.
