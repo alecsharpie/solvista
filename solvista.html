@@ -3062,6 +3062,34 @@ function windarkAt(t){
   const b=BEDT[t]; if(!b)return WINDARK;
   return b[0]+(b[1]-b[0])*nightDeep();
 }
+/* The homes got an hour (199) and the residents got one (210); the TWELVE
+   INSTITUTIONS never did. Every civic night-draw was gated on LITAMT alone —
+   and the light curve PINS LITAMT high from dusk to dawn — so the museum's
+   floodlights, the library's reading lamps and the amphitheater's SPOTLIT
+   PERFORMER all burned exactly as brightly at 4am as at 8pm: the singer swayed
+   on the stage all night to a bowl the same gate had already emptied of its
+   audience. Meanwhile the hospital, whose own CIVICDESC says its bay "never
+   closes", was no more lit at 3am than the school. The gate knew it was dark;
+   nothing knew what the building WAS.
+   Share of the institution's lights still burning in the small hours, off the
+   same nightDeep() clock the windows read: 1 = never closes. The five that
+   hold at 1 are the ones their own draw or label already claims run all night
+   (the ward slab, the precinct beacon, the engine doors, the reef tank that
+   "never sleeps", and the observatory, whose whole night is just beginning). */
+const CIVHRS={hospital:1,police:1,firehouse:1,aquarium:1,observatory:1,
+  parliament:0.40,hall:0.35,museum:0.30,university:0.30,library:0.15,
+  school:0.08,amphitheater:0};
+const civOpen=k=>{const e=CIVHRS[k]; return e===undefined?1:1+(e-1)*nightDeep();};
+/* ...and the tooltip reads the SAME curve the draw dims by, so it can never
+   claim a lit gallery the renderer has already put to bed (123: run the tell
+   FORWARDS — one function, two readers — rather than re-syncing a string to a
+   rule later). dayT is the slow ~110s clock, so this word holds (134). */
+const civicHourWord=k=>{
+  if(LITAMT<0.35)return 'Open';                       /* daylight: the same span the lit glass runs over */
+  if((CIVHRS[k]===undefined?1:CIVHRS[k])>=1)return 'Open all night';
+  const o=civOpen(k);
+  return o>0.72?'Open late':(o>0.30?'Closing up':'Dark till morning');
+};
 function winBandR(gx,gy,ax,ay,z0,z1,x,y,salt,f,litMix){
   const hb=z1-z0;
   const[cx,cy]=px(gx,gy);
@@ -5253,6 +5281,14 @@ function drawBuilding(c,x,y,gx,gy){
     }
   } else if(c.t===T.CIVIC){
     const[cx,cy]=px(gx,gy);
+    /* the institution's own hours (iter 213): 1 at dusk, CIVHRS[kind] in the small
+       hours. `clit` dims its lit GLASS back toward the unlit shade as the staff go
+       home; `cla` dims its exterior FLOODLIGHTING. The five that never close keep
+       so===1, so their draw is byte-for-byte what it always was. A handful of lights
+       are deliberately held OFF the curve because they are exactly the ones that
+       should be the last thing burning: the school's janitor window, the hall's
+       clock face, the parliament's lantern. */
+    const so=civOpen(c.kind), clit=lit*so, cla=LITAMT*so;
     if(c.kind==='hospital'){
       /* white campus: tall ward slab + low clinic wing, big coral cross on the roof */
       /* the ambulance bay opens onto the street the campus fronts */
@@ -5288,13 +5324,13 @@ function drawBuilding(c,x,y,gx,gy){
       prism(gx,gy,0.42,0.36,0,1.2,col('cream',1),col('creamDk',0.7),col('creamDk',0.9)); /* plinth */
       prism(gx,gy,0.33,0.29,1.2,hb,col('white',1),col('white',0.62),col('white',0.85));  /* hall */
       bandR(gx,gy,0.33,0.29,hb-2.4,hb-0.2,col('gold',1)); /* civic trim */
-      {const wg=colLit('glass',0.88,Math.min(1,lit*1.5+0.15)); /* readers keep the lights on */
+      {const wg=colLit('glass',0.88,Math.min(1,clit*1.5+0.15)); /* readers keep the lights on — until they go home */
       for(let j=0;j<3;j++)slotS(cx,cy,0.33,0.29,0.22+j*0.26,2.6,hb-5,2.6,wg,true);
-      if(LITAMT>0.35){ctx.fillStyle='rgba(255,206,130,'+(0.14*LITAMT)+')'; /* spill onto the plinth */
+      if(LITAMT>0.35&&so>0.02){ctx.fillStyle='rgba(255,206,130,'+(0.14*cla)+')'; /* spill onto the plinth */
         ctx.beginPath();ctx.ellipse(cx+0.33*HW,cy+4,7,3,0,0,7);ctx.fill();}}
       /* clerestory lantern on the roof */
       prism(gx-0.05,gy-0.10,0.15,0.11,hb,hb+3.4,col('white',1.02),col('whiteDk',0.62),col('whiteDk',0.85));
-      bandR(gx-0.05,gy-0.10,0.15,0.11,hb+0.8,hb+2.6,colLit('glass',0.85,lit));
+      bandR(gx-0.05,gy-0.10,0.15,0.11,hb+0.8,hb+2.6,colLit('glass',0.85,clit));
       /* terra pergola colonnade along the entrance face */
       for(let j=0;j<NC;j++)slotS(cx,cy,0.40,0.345,-(0.16+j*0.68/NC),1.2,7.5,1.5,col('white',1.02),false);
       slotS(cx,cy,0.41,0.355,-0.5,7.5,9,0.80*HW,col('terra',1),false);
@@ -5325,7 +5361,7 @@ function drawBuilding(c,x,y,gx,gy){
       prism(gx,gy,0.39,0.33,1.3,2.6,col('cream',1.04),col('creamDk',0.72),col('creamDk',0.92));
       prism(gx,gy,0.33,0.29,2.6,hb,col('white',1),col('white',0.62),col('white',0.85));
       bandR(gx,gy,0.33,0.29,hb-3,hb-0.6,col('gold',1));
-      bandR(gx,gy,0.33,0.29,3.4,6.8,colLit('glass',0.85,lit*0.9));
+      bandR(gx,gy,0.33,0.29,3.4,6.8,colLit('glass',0.85,clit*0.9)); /* the chambers empty out */
       for(let j=0;j<3;j++)slotS(cx,cy,0.33,0.29,-(0.2+j*0.26),2.6,hb-4,1.6,col('white',1.05),false); /* pilasters */
       prism(gx,gy,0.16,0.14,hb,hb+3.2,col('white',1.03),col('whiteDk',0.62),col('whiteDk',0.85)); /* drum */
       ctx.fillStyle=col('gold',1.05);
@@ -5357,7 +5393,7 @@ function drawBuilding(c,x,y,gx,gy){
       prism(gx,gy,0.43,0.37,0,1.3,col('cream',1),col('creamDk',0.7),col('creamDk',0.9)); /* stylobate */
       prism(gx,gy,0.34,0.30,1.3,hb,col('white',1),col('white',0.62),col('white',0.85));
       bandR(gx,gy,0.34,0.30,hb-2.6,hb-0.4,col('gold',1));
-      bandR(gx,gy,0.34,0.30,2.8,hb-4,colLit('glass',0.85,lit*0.7)); /* gallery glazing */
+      bandR(gx,gy,0.34,0.30,2.8,hb-4,colLit('glass',0.85,clit*0.7)); /* gallery glazing — dark once the galleries close */
       /* low north gallery wing */
       prism(gx-0.12,gy-0.24,0.20,0.12,1.3,hb*0.55,col('white',1),col('white',0.62),col('white',0.85));
       prism(gx-0.12,gy-0.24,0.215,0.135,hb*0.55,hb*0.55+1.2,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.82));
@@ -5371,8 +5407,8 @@ function drawBuilding(c,x,y,gx,gy){
             mx3=cx+X2*0.5, my3=cy+V2-(V2-E2)*0.5;
       ctx.fillStyle=col('gold',1.05);
       ctx.beginPath();ctx.moveTo(ax3,ay3-hb);ctx.lineTo(bx3,by3-hb);ctx.lineTo(mx3,my3-hb-6);ctx.closePath();ctx.fill();
-      if(LITAMT>0.3){ /* floodlit facade */
-        ctx.fillStyle='rgba(255,222,160,'+(0.18*LITAMT)+')';
+      if(LITAMT>0.3&&so>0.02){ /* floodlit facade — dimmed to a night wash once the doors shut */
+        ctx.fillStyle='rgba(255,222,160,'+(0.18*cla)+')';
         ctx.beginPath();ctx.moveTo(ax3,ay3);ctx.lineTo(bx3,by3);ctx.lineTo(bx3,by3-hb-2);
         ctx.lineTo(mx3,my3-hb-7.5);ctx.lineTo(ax3,ay3-hb-2);ctx.closePath();ctx.fill();
       }}
@@ -5406,7 +5442,7 @@ function drawBuilding(c,x,y,gx,gy){
       /* long low block, dark after the last bell */
       prism(gx-fxS*0.13,gy-0.06,0.24,0.26,1.1,hb,col('white',1),col('white',0.62),col('white',0.85));
       bandR(gx-fxS*0.13,gy-0.06,0.244,0.264,1.8,4.4,col('teal',0.95)); /* wainscot */
-      bandR(gx-fxS*0.13,gy-0.06,0.24,0.26,hb*0.5,hb*0.5+2.4,colLit('glass',0.85,lit*0.25));
+      bandR(gx-fxS*0.13,gy-0.06,0.24,0.26,hb*0.5,hb*0.5+2.4,colLit('glass',0.85,clit*0.25)); /* classrooms, dark after the last bell */
       prism(gx-fxS*0.13,gy-0.06,0.26,0.28,hb,hb+1.5,col('terra',1),col('terraDk',0.62),col('terraDk',0.85)); /* tile roof */
       /* gabled entry porch */
       prism(gx-fxS*0.13+0.16,gy+0.16,0.09,0.08,1.1,hb*0.55,col('cream',1.04),col('creamDk',0.7),col('creamDk',0.9));
@@ -5417,7 +5453,8 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.strokeStyle=col('whiteDk',1);ctx.lineWidth=1;
       ctx.beginPath();ctx.moveTo(fx3+3,fy3-hb-1.5);ctx.lineTo(fx3+3,fy3-hb-11);ctx.stroke();
       windFlag(fx3+3,fy3-hb-10.8,1,5.4,2.9,col('gold',1.25),x*0.9+y*0.6); /* flies with the breeze */
-      if(LITAMT>0.45){ /* one janitor window */
+      if(LITAMT>0.45){ /* one janitor window — held OFF the hours curve on purpose: the
+        classroom band beside it goes dark, and this is the one light left burning */
         ctx.fillStyle='rgba(255,214,140,'+(0.8*LITAMT)+')';
         ctx.fillRect(fx3-6,fy3-hb*0.5-1,2.2,2.6);}}
       if(dayT>0.15&&dayT<0.30){ /* the school run: drop-off crowd at the gate */
@@ -5479,13 +5516,30 @@ function drawBuilding(c,x,y,gx,gy){
       prism(gx,gy-0.24,0.175,0.095,7,8.2,col('terra',1),col('terraDk',0.6),col('terraDk',0.85));
       ctx.fillStyle=col('teal',0.9); /* stage apron */
       ctx.beginPath();ctx.ellipse(cx,cy+1.5,2.6,1.4,0,0,Math.PI);ctx.fill();
-      if(LITAMT<0.75){ /* audience specks on the tiers */
+      /* audience specks on the tiers. The house empties WITH the show (iter 213): the
+         bowl is open to anyone by day, but after dark the crowd is only there while
+         the concert is — otherwise ending the show left a full house sitting in the
+         dark watching an empty stage, which is what the old flat LITAMT<0.75 gate
+         did. `so` is ~1 at dusk, so the crowd fades out over the evening rather than
+         snapping; by DAY nightDeep() is pinned at 1 (it only means anything after
+         dark), hence the daylight branch. */
+      {const aud=LITAMT<0.3?1:so;
+      if(LITAMT<0.75&&aud>0.02){
+        ctx.globalAlpha=aud;
         for(let j=0;j<8;j++){const a=0.35+j*0.33, r2=1+(hashCell(x*3+j,y,seedNum^0xAD1)*NT|0);
           ctx.fillStyle=col(j&1?'coral':(j&2?'gold':'lav'),1.1);
           ctx.fillRect(cx+Math.cos(a)*(2.6+r2*2.0)-0.6,cy+1.5+Math.sin(a)*(1.4+r2*1.05)-0.6,1.2,1.2);}
-      }
-      if(LITAMT>0.3){ /* showtime: a spotlit performer under the beam, footlights
-         — the concert the CIVICDESC promised, over the empty lit stage it drew */
+        ctx.globalAlpha=1;
+      }}
+      if(LITAMT>0.3&&so>0.02){ /* showtime: a spotlit performer under the beam, footlights
+         — the concert the CIVICDESC promised, over the empty lit stage it drew.
+         And now the show ENDS (iter 213). CIVHRS.amphitheater is 0, so the beam, the
+         wash, the singer and the footlights all fade out together on one globalAlpha
+         and the bowl goes dark stone — instead of the performer swaying on till dawn
+         to a house the audience gate (LITAMT<0.75, right above) had emptied hours ago.
+         globalAlpha, not per-fill alpha, because the singer is a SOLID fill and would
+         otherwise pop out at the cut. */
+        ctx.globalAlpha=so;
         const sway=Math.sin(time*1.5+x*1.3)*0.35;   /* sways to the music */
         /* the beam: a soft cone spilling down from over the stage onto the apron */
         ctx.fillStyle='rgba(255,226,172,'+(0.14*LITAMT)+')';
@@ -5502,6 +5556,7 @@ function drawBuilding(c,x,y,gx,gy){
         /* footlights along the stage lip */
         ctx.fillStyle='rgba(255,214,150,'+(0.85*LITAMT)+')';
         for(let j=0;j<3;j++)ctx.fillRect(cx-3+j*3-0.5,cy+2.6,1,1);
+        ctx.globalAlpha=1;
       }
     } else if(c.kind==='aquarium'){
       /* the glass tide hall: teal barrel vault glowing sea-cyan after dark */
@@ -5542,7 +5597,7 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.beginPath();ctx.moveTo(qx-5.6,qy-1.1);ctx.lineTo(qx+5.6,qy-1.1);ctx.stroke();}
       /* two low wings framing the quad */
       prism(gx-fxU*0.18,gy-0.1,0.15,0.28,1.1,hw2,col('cream',1),col('creamDk',0.62),col('creamDk',0.85));
-      bandR(gx-fxU*0.18,gy-0.1,0.15,0.28,hw2*0.4,hw2*0.75,colLit('glass',0.85,lit*0.6));
+      bandR(gx-fxU*0.18,gy-0.1,0.15,0.28,hw2*0.4,hw2*0.75,colLit('glass',0.85,clit*0.6)); /* the lecture halls empty; the labs keep a light */
       prism(gx-fxU*0.18,gy-0.1,0.165,0.295,hw2,hw2+1.3,col('terra',1),col('terraDk',0.6),col('terraDk',0.85));
       prism(gx+fxU*0.12,gy-0.3,0.22,0.10,1.1,hw2*0.9,col('cream',1),col('creamDk',0.62),col('creamDk',0.85));
       prism(gx+fxU*0.12,gy-0.3,0.235,0.115,hw2*0.9,hw2*0.9+1.3,col('terra',1),col('terraDk',0.6),col('terraDk',0.85));
@@ -5561,7 +5616,7 @@ function drawBuilding(c,x,y,gx,gy){
       prism(gx,gy,0.42,0.36,1.4,2.8,col('cream',1.04),col('creamDk',0.72),col('creamDk',0.92)); /* steps */
       prism(gx,gy,0.37,0.32,2.8,hb,col('white',1),col('white',0.62),col('white',0.85));
       bandR(gx,gy,0.37,0.32,hb-3,hb-0.6,col('gold',1));
-      bandR(gx,gy,0.37,0.32,3.6,hb-5,colLit('glass',0.85,lit*0.9));
+      bandR(gx,gy,0.37,0.32,3.6,hb-5,colLit('glass',0.85,clit*0.9)); /* the chamber rises for the night */
       for(let j=0;j<5;j++)slotS(cx,cy,0.37,0.32,0.1+j*0.2,2.8,hb-3.4,1.8,col('white',1.06),false); /* colonnade */
       for(let j=0;j<3;j++)slotS(cx,cy,0.37,0.32,-(0.14+j*0.3),2.8,hb-3.4,1.8,col('white',1.06),false);
       prism(gx,gy,0.20,0.17,hb,hb+3.8,col('white',1.03),col('whiteDk',0.62),col('whiteDk',0.85)); /* attic */
@@ -5575,11 +5630,13 @@ function drawBuilding(c,x,y,gx,gy){
         const ax=cx+X2*0.04, ay=cy+V2-(V2-E2)*0.04,
               bx=cx+X2*0.96, by=cy+V2-(V2-E2)*0.96,
               mx=cx+X2*0.5,  my=cy+V2-(V2-E2)*0.5;
-        ctx.fillStyle='rgba(255,224,165,'+(0.16*LITAMT)+')';
+        ctx.fillStyle='rgba(255,224,165,'+(0.16*cla)+')';
         ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.lineTo(bx,by-hb-2);
         ctx.lineTo(mx,my-hb-2);ctx.lineTo(ax,ay-hb-2);ctx.closePath();ctx.fill();}
-        ctx.fillStyle='rgba(255,222,150,'+(0.22*LITAMT)+')';
+        ctx.fillStyle='rgba(255,222,150,'+(0.22*cla)+')';
         ctx.beginPath();ctx.arc(cx,cy-hb-3.8,11.5,Math.PI,0);ctx.fill();
+        /* the lantern is held OFF the hours curve: the floodlights go out under it,
+           and the capitol's light is the last one left over the sleeping city */
         ctx.fillStyle='rgba(255,240,190,'+(0.9*LITAMT)+')';
         ctx.fillRect(cx-1,cy-hb-16,2,2.4);}
       {const[e1x,e1y]=px(gx+0.32,gy+0.28), e2x=cx-(e1x-cx); /* twin gold standards */
@@ -7185,6 +7242,10 @@ function describeTile(c,x,y){
     /* the hall draws a working clock the town sets its watches by (iter 149) but
        never told the hour; name it off the same slow dayT the hand reads */
     if(c.kind==='hall')data.push(['Clock',clockWord(dayT)]);
+    /* ...and every institution now keeps its own hours (iter 213). The word comes
+       off civOpen() — the SAME curve the night draw dims by — so the tooltip can
+       never claim an open gallery over a building the renderer has put to bed. */
+    data.push(['Hours',civicHourWord(c.kind)]);
   }
   /* the owning institution now leads the square's headline (see the title above),
      so it no longer needs its own data row here. */

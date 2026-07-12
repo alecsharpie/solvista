@@ -801,6 +801,29 @@ vector, whatever it is.
   threshold — and note the same census's other trap: a non-string `strokeStyle` (a `CanvasGradient`) has no
   luminance, so defaulting it to black makes the **rain shafts** the darkest "line" in the city. `probes/probe-darkline.mjs`
   is the reusable locator — stack-attributed, so it names the function that issued the ink.
+- **STUBBING `Math.random` BEFORE `genWorld` IS NOT EARLY ENOUGH — stub it before the PAGE'S OWN SCRIPT, with
+  `page.addInitScript` (iter 213, sharpening 203).** 203 says stub the PRNG before `genWorld` because a whole class
+  of entities respawns in it. True, and still not enough: a `page.evaluate` runs **after the document's top-level
+  script has already executed**, so every piece of state the artifact seeds with the *real* `Math.random` **at load**
+  is baked in before your stub can land — and differs on every page load. That is why 199 had to name `flock`, and
+  163 had to name `STARS`: they are not a list to complete, they are **symptoms of stubbing too late**. 213's probe
+  did everything 203/199/163 ask (stub, `genWorld`+`__warp`, clear `STARS`/`flock`, pin `time`/`waveT`, empty every
+  mover array) and its day control — **byte-identical code in both builds** — still read **8k–18k changed px**. One
+  line fixed it and subsumes the whole clear-list:
+  ```js
+  await page.addInitScript(() => { let s = 0x51F3A9C >>> 0;
+    Math.random = () => ((s = (s*1664525 + 1013904223) >>> 0) / 4294967296); });
+  ```
+  Floor: **8k–18k px → 12–49 px.** Do this in **every** probe; it costs one line and it is the difference between a
+  probe that measures your feature and one that measures the weather.
+- **...and MEASURE THE FLOOR IN THE SAME RUN — a floor pinned from an earlier run is the stale-baseline sin (iter
+  213).** 203 says "always render the unchanged frame twice and print the diff as the probe's first row." Go one
+  further: load **HEAD twice** and carry `HEAD-vs-HEAD` as a **column beside** `patch-vs-HEAD`, per hour, per seed.
+  The residual floor *drifts with machine load* exactly as frame time does (213's floor read 10–40 px on one run and
+  32–49 px on the next), so a `const FLOOR = 40` you pinned an hour ago will start FAILing a passing gate — the same
+  way `perf-baseline.json` went stale and made the perf gate untrustworthy. Compute the threshold **from the floor
+  the run just measured**, and the probe grades itself: `night 562–658 px against a floor of 12–20` is a sentence a
+  reader can check, and `night 562 px` alone is not.
 - **A stubbed SHARED `Math.random` makes a PER-ENTITY control WORTHLESS — aggregate the control (iter 204).**
   203 tells you to stub `Math.random` so a probe is reproducible. But the stub is **one stream**, and your patch
   almost always draws a *different number* of values from it (204's service vehicles now pull targets, waits and

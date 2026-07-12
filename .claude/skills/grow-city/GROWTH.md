@@ -25,7 +25,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~ | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163** | 71, **154**, **191** |
 
@@ -36,33 +36,40 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringable for free — and since 133 a hovered TILE is ringed too. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (which line /
   route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
-- **ROTATION.** Last vector per domain (**212 was a step-back — it takes no domain, so rotation is unmoved**):
-  Sky **208** · People **210** · Transport **211** · Urban **209** · Nature **206** · Civic **204** · Water **205**.
-  **THE LAP NOW OWES CIVIC (stalest, 204), then Water (205), then Nature (206).** ⚠ But 212 banked TWO cues that a
-  *step-back is meant to steer by* — **(q) the night coast** (Water × Polish) and **(r) facades as wallpaper**
-  (Urban × Polish). Both were named independently by two blind agents, and **a banked, measured finding outranks
-  kind-rotation (119)**: Water is already 2nd in the queue, so (q) is the natural next-but-one lap.
-  **211 (Transport × Connect, SHIPPED: the buses come to the trains) — full recap in its own entry.**
-  `recount()` had built ONE transit reach map from stations UNION bus stops while the two were sited by rules that
-  had never heard of each other — so they met at the coin's base rate: **3 of 55 stations over 6 seeds.** A station
-  now claims a nearby street (`c.stop=2`; `STOPR=2` is `rTransit`'s OWN radius, shared). Coverage **24% → 93%**,
-  the terrain ceiling. What survives (its kerb-offset law ⇒ SKILL.md):
-  **(1) `frontLoad(x,y)` is the sharper `openFront`** (beside it): `openFront` is a boolean on the row at dy=+1 and
-  **misses a TOWER two rows in front**, which reaches up the screen anyway — 11 of 42 interchanges were invisible
-  WITH `openFront` true. `frontLoad` weights two rows (first double). Both ship as **PREFERENCES, never gates**
-  (206). Net: interchange occlusion **58% → 36%**, ink **94 → 136** vs the ordinary control's 144.
-  **(2) A station sits in dense fabric BY CONSTRUCTION** (>=3 developed nbrs), so ANY ground-level thing sited off
-  one inherits 206's occlusion law; the residual 36% is terrain, not rule.
+- **ROTATION.** Last vector per domain: Water **205** · Nature **206** · Sky **208** · Urban **209** ·
+  People **210** · Transport **211** · Civic **213**.
+  **THE LAP NOW OWES WATER (stalest, 205), then Nature (206), then Sky (208).** ⚠ And Water is exactly where 212's
+  banked cue **(q) the night coast flattens to a mauve void** (Water × Polish) lives — named independently by two
+  blind agents, and **re-reported unprompted by a third at 213** (*"the 4am city is a uniform blackout; no
+  landmark carries a beacon"*). **A banked, measured finding outranks kind-rotation (119), and three independent
+  asides outrank any of them: (q) IS THE NEXT LAP.** (212's other cue, **(r) facades as wallpaper**, is Urban ×
+  Polish and keeps.)
+  **213 (Civic × Deepen, DEEPENED: the institutions keep their own hours) — full recap in its own entry.** 199 gave
+  the windows an hour, 210 the residents; the twelve institutions were still gated on `LITAMT` ALONE, which the
+  light curve pins **higher at 4am (0.64) than at dusk (0.41)** — so the museum's floodlights burned *brighter* in
+  the small hours and **the amphitheater's spotlit singer played all night to a bowl its own audience gate had
+  emptied.** Now `CIVHRS[kind]` + `civOpen()` off the SAME `nightDeep()` clock the windows read: five never close
+  (hospital/police/firehouse/aquarium/observatory — each already *claims* it in its own draw or label), seven do.
+  What survives (its two probe laws ⇒ SKILL.md):
+  **(1) ⚠ `nightDeep()` IS PINNED AT 1 ALL DAY** — it means nothing before dark, so `civOpen()` reads 0.30 at noon.
+  Harmless in a draw (`lit`/`LITAMT` are 0 anyway), a **trap for any non-draw reader**: guard EVERY reader, not
+  just the one you are writing (the tooltip returns 'Open' whenever `LITAMT<0.35`).
+  **(2) THE CIVIC NIGHT-LIGHT AUDIT IS DONE — do not re-run it.** All twelve now answer the hour; three lights are
+  held OFF the curve *on purpose* — the school's janitor window, the hall's clock face, the parliament's lantern
+  (the last light over the sleeping city). **Do not "fix" them.**
+  **⚠ NEW cue (t) — THE AMPHITHEATER IS BURIED ON SOME SEEDS:** seed 7's front rows are **MID(h35) MID(h34)
+  MID(h30)** and draw order is depth order, so the bowl is invisible there (seed 42's are all `ROAD(h0)`, and its
+  agent read the show perfectly). **Pre-existing siting, not 213** — 206's occlusion law on a one-per-city
+  ground-level tile, so a hard gate would starve it: the fix is a **PREFERENCE** (206) or `frontLoad` (211).
+  **211 (Transport × Connect) / 210 (People × Deepen) — full recaps in their own entries, both still in the
+  window; laws ⇒ SKILL.md.** What steers: **(1) `frontLoad(x,y)` is the sharper `openFront`** (beside it) —
+  `openFront` is a boolean on the row at dy=+1 and **misses a TOWER two rows in front**; `frontLoad` weights two
+  rows. Both ship as **PREFERENCES, never gates** (206). **(2) ⚠ 137's "the ped/dog system is NON-REPRODUCIBLE" is
+  DISPROVEN** — the `Math.random` stub + in-page `genWorld` gives byte-identical crowds; **People is probe-able
+  like any domain.** **(3) THE `LITAMT` NIGHT-GATE AUDIT IS DONE** — `LITAMT` is back to **0.64 by the small
+  hours**, so any gate `LITAMT > 0.64` defines a "night" that **ends before dawn**. Exactly two existed, both
+  People, both fixed at 210; **every other `LITAMT>` gate is <= 0.6 and is safe.**
   Urban is measured-saturated in *additive* and *Connect* (see below) ⇒ its lap must be **Deepen or Polish**.
-  **210 (People × Deepen, SHIPPED: the city goes to bed) — full recap in its own entry, still in the window.**
-  199 gave the WINDOWS an hour; the STREET was still a uniform 50/50 coin against a saturated `LITAMT>0.75`. Each
-  resident now keeps their own `out` (`curfewAt`). Two findings steer (its stubbed-stream law ⇒ SKILL.md):
-  **(1) ⚠ 137's "the ped/dog system is NON-REPRODUCIBLE ⇒ never probe it build-vs-build" is DISPROVEN** — 203's
-  `Math.random` stub + in-page `genWorld` gives byte-identical crowds. **People is probe-able like any domain**
-  (`probes/probe-curfew.mjs` IS a build-vs-build diff of the crowd).
-  **(2) THE `LITAMT` NIGHT-GATE AUDIT IS DONE — do not re-run it.** `LITAMT` peaks at 1.0 (dayT 0.86) but is back to
-  **0.64 by the small hours**, so any gate `LITAMT > 0.64` defines a "night" that **ends before dawn**. Exactly two
-  existed, both People, both fixed at 210. **Every other `LITAMT>` gate is <= 0.6 and is safe.**
   **209 (Urban × Deepen, SHIPPED: the ground the city stands on) — full recap in its own entry, still in the
   window; its new tell (*a comment stating a standard the adjacent branch is exempted from*) ⇒ SKILL.md.** Now
   `GROUND` = `lawn` gardens / `paving` / `stone` hardstanding, where every developed hex had shared one flat
@@ -84,9 +91,6 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   (`year<2006`, forest `year<2030`) so **at 2035 nothing can ignite at all**; before then, **two one-cell episodes
   across 3 seeds × 61 years** and fire **never spreads**. **`T.MARKET` again.** Reviving it is a real CA lap (BURNT
   is the palette's darkest tile), not a freebie.
-  **⚠ Cue (n) — A PARKED VEHICLE IS OFTEN INVISIBLE, AND THE DOOR IS NOT THE REASON** (`probe-servbay`: 4 of 9 read
-  **0%** visible ink). What buries a bay is **the density of the downtown its institution stands in**, not which door
-  it picks — 204 built the door-ranking lever and **measured it at nothing**, so it is NOT in the shipped code.
   **⚠ THE `polish-tile` BACKLOG — measured cues that are NOT growth laps. Do not spend a domain's lap on one; they
   need a tile redesign, and each already has a gate written.** (a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit
   zoom** (0.5px rope, 5px cabins, hairline masts/pylons) — **its Z-ORDER IS CORRECT AND IS CLEARED THREE TIMES; the
@@ -126,16 +130,14 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   cell-emptiness** (119); and **saturation beats kind-rotation** — 118 declined the header's own "coldest kind"
   steer and was right, because when a domain's additive cell is spent the KIND changes, not the domain. Full
   text rotated to `GROWTH-archive.md` at 204.
-  **Sky's additive/CA cells are TRAPS, not invitations** (115 took Sky by adding nothing; sky is not cellular, and
-  fog on terrain is already `rSea`/`fogAt`). Surveyed at 103; detail archived.
-  **Cue (k) is FULLY CLOSED** (116 gave the sea a depth field, 123 stood the wind farm on it). **Still banked for
-  Water:** the **pier** row and the **lifeguard tower** are still `rng()`-picked with rejection loops and should
-  site on a *depth* — free via 123's trick, **respend an object's existing `rng()` draws rather than re-drawing
-  them**, and the stream cannot move. **123 ran the tell FORWARDS** (make the string and the rule share ONE
-  constant, so they cannot drift apart) — prefer that to re-syncing them later. **A derived field earns its keep
-  when a RULE reads it, not when the draw shows it:** `rGreen`/`rShop`/`rServ` are still read by NOTHING but the
-  walkable stat. **⚠ A tick-rule cannot read them directly (151): `recount()` never runs in the sim loop, so the
-  reach maps are STALE inside `tick()`** — recompute locally, or pay a recount. (Detail archived at 200.)
+  **Sky's additive/CA cells are TRAPS, not invitations** (115 took Sky by adding nothing; sky is not cellular, and fog on terrain is already `rSea`/`fogAt`). Surveyed at 103; detail archived.
+  **Cue (k) is FULLY CLOSED** (116/123). The pier/lifeguard cue is stated once, above (~line 113); the duplicate
+  copy that sat here was archived at 213. **123 ran the tell FORWARDS** (make the string and the rule share ONE
+  constant, so they cannot drift apart) — prefer that to re-syncing later; **213 did the same** (one `civOpen()`,
+  read by both the draw and the tooltip). **A derived field earns its keep when a RULE reads it, not when the draw
+  shows it:** `rGreen`/`rShop`/`rServ` are still read by NOTHING but the walkable stat. **⚠ A tick-rule cannot read
+  them directly (151): `recount()` never runs in the sim loop, so the reach maps are STALE inside `tick()`** —
+  recompute locally, or pay a recount. (Detail archived at 200.)
   **⚠ ITERATION 217 IS THE NEXT HOLISTIC STEP-BACK** (every 5th since 105; **212 was the last, all 22 done**). The 207 / 205 / 203 / 202 / 201 recaps are rotated — laws in SKILL.md; 205's finding is held in full by cue (o).
   **212 (the 22nd) = a CLEAN BILL, no fix lap owed — and BOTH agents FAILed on causes MEASUREMENT REFUTED.**
   Seasons alive (`probe-season` FARM dry-peak **87.0**, ROAD control 0.6) and both agents named the season correctly
@@ -143,13 +145,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   as at 207. **Their two FAILs were both wrong, and both instructive:** (i) *"the golden-hour sun sits in the cold
   sky"* — factually true, and it is **201's law**: an objection to the MODEL (200 sited the sun high ON PURPOSE —
   the placard owns the low-left sky, so it CANNOT go low) ⇒ **cue (s)**, not a bug. (ii) *"the elevated rail is
-  drawn OVER the towers"* — **MEASURED AND REFUTED** by new `probes/probe-monoz.mjs`: `drawMonoAt` is **10.6-19.8%
-  occluded** on every seed and light, i.e. genuinely depth-sorted, with `drawGondAt` carried as a calibration
-  control reproducing 203's independent 8.4-23.6%. **⇒ THE TRANSIT Z-ORDER IS CORRECT AND IS NOW CLEARED THREE
-  TIMES (202, 203, 212) — NEVER RE-OPEN IT.** The fault is **LEGIBILITY** (the tramway is sub-pixel at fit zoom,
-  `polish-tile` backlog (a)): a hairline whose supports sit below the pixel floor READS as on-top however correctly
-  it is sorted. **⇒ THE LESSON: the agents were WRONG on both things they were confident enough to FAIL on, and
-  RIGHT on both things they said in PASSING (cues q, r). In a whole-frame read, the ASIDES are the signal.**
+  drawn OVER the towers"* — **MEASURED AND REFUTED** by `probes/probe-monoz.mjs`; the z-order verdict and the
+  NEVER-RE-OPEN warning are stated in full in `polish-tile` BACKLOG item **(a)** above, not repeated here.
+  **⇒ THE LESSON: the agents were WRONG on both things they were confident enough to FAIL on, and RIGHT on both
+  things they said in PASSING (cues q, r). In a whole-frame read, the ASIDES are the signal** — and 213 cashed
+  that immediately: a PASSing agent's aside caught a real bug (the audience left sitting in a dark bowl).
   Perf ARC (same refs as 202/207, directly comparable): the lap (208-211) **day +2.7% / night +0.6%** vs 207; vs
   `7e2ac2c` (177, 35 iters) **+8.7% / +4.8%**; vs `5f01426` (162, 50 iters) **+10.5% / +7.3%** (absolute: day
   40.4ms · night 46.5ms). 202 read those same refs at +7.5/+4.1 and +8.6/+5.7, and 207 at +7.2/+5.1 and +9.5/+6.0 —
@@ -391,79 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 205 entries before Iteration 203 live in
+> **Archive:** the 206 entries before Iteration 204 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 203 — the thin dark line is a cable, and the cable is fine (2026-07-12) [Transport × Polish, EXPLORED -> REVERTED]
-
-**Vector.** Transport × Polish. Rotation owed Transport (last lap 193), and 202's step-back had
-banked an explicit, unexplained cue there: *"a thin dark line reads as drawn OVER the towers/water"*
-— seen by **both** agents on **both** seeds, with the naive cause already disproven and an
-instruction attached: **PROBE it; do not redesign on the agents' say-so.** A banked, measured
-finding outranks kind-rotation, so this lap went to close it.
-
-**What the line IS (`probes/probe-darkline.mjs` — new, and reusable on ANY unexplained linear
-artifact).** Wrap `ctx.stroke()`, record each stroke's DEVICE-space polyline length, width and
-colour luminance, and attribute it to the issuing fn off the call stack; then census the strokes
-that match the description — long, thin, dark. First run was a **false lead**: the top hit was 10
-near-vertical 324px strokes from `render:6450` at `lum=0.00`, which turned out to be the **rain
-shafts** — my probe defaulted a non-string `strokeStyle` (a `CanvasGradient`) to pure black. The
-real answer was hiding *under* the length filter: **the aerial cable-car HAUL ROPE**, stroked
-`col('ink',1.05)` = **`#373128`, the darkest ink in the palette, fully opaque, at 0.5 DEVICE px**
-at fit zoom. Each span is only 12-14 px — below any sane "long line" threshold — but **15-25 spans
-CHAIN into an unbroken 199-331 px dark run** across the sky and the open sea, on all three seeds.
-The eye sees the chain; a per-stroke filter cannot. **Cue CLOSED: the line is the cable.**
-
-**The agents' CAUSE was wrong — three ways, and the third is a number.** (1) The girder never
-oversteps: `drawMonoAt` strokes only to the **midpoint** of each neighbour, so a beam cannot reach
-into another cell's footprint. (2) The rope cannot either: `stepGond` only ever takes `axStep`
-d=1 or d=2, and **both are `y+1`**, so a gondola path is **strictly monotone in y** and every span
-is drawn BEFORE the row it descends into. (3) And the direct measurement, because a code argument
-should not outrank four agent-reads: **`probes/probe-gondz.mjs`** renders the same frame under two
-z-orders — rope in its natural place vs. the very same polylines re-stroked on top of the finished
-frame — and takes the ink ratio. **OCCLUDED: 22.2/23.6 (seed 42) · 8.6/8.4 (7) · 12.5/12.9% (1234),
-day/night.** Not 0%. Later rows genuinely eat 8-24% of the rope. **It is depth-sorted; "painted on
-top of everything" is false.** The agents' other claim — *"no cabins on the line, in any frame"* —
-is also false: the cabins render at **43-96 px per frame, ~24 px each**, which is exactly a
-`prismS(0.11,0.085)` at fit zoom. They are not missing; they are **5 px**.
-
-**What I tried, and why it died.** Give the rope what the girder already got (its own comment at
-L5552: the old beam was *"brighter than every building it flew over, and with nothing beneath it"*,
-so it was given a body + a lit running surface). The rope is the mirror image and never got the
-treatment: a soft translucent **body** so a sub-pixel line antialiases into a rope, a **core** that
-is dark but not flat-opaque, and a daylight **glint** (steel catches the sky), gated on `LITAMT`.
-**`probes/probe-ropesteel.mjs` refuted it on its own terms:**
-- **`glint px: 0 -> 0`, every seed, both lights.** A **DEAD DRAW**. At 0.5 device px the core and
-  the highlight land in the **same sub-pixel** — a thin dark line *cannot carry a lit top edge*.
-- **`peak contrast: 0.33 -> 0.34` — UNCHANGED**, while coverage rose **419 -> 567 px**. Peak
-  contrast is the whole measure of "reads as a hard scratch", and it did not move; the halo made
-  the line **more** prominent, the exact opposite of the goal. **A body/halo under a thin dark line
-  is additive and works against you** — the only lever that touches peak contrast is the core's own
-  alpha/width.
-
-**Census.** PASS. Draw-only: every metric +0, tile histogram empty — correctly vacuous, and it
-proves only that the page did not throw. Reverted **byte-identical** (`git diff HEAD` clean), so
-perf is unchanged by construction and no perf gate was owed.
-
-**Visual.** 4 agent-reads (2 seeds × fit/mid/close/golden, camera aimed at the rope by
-`probes/shot-gondola.mjs`, which LOCATES the longest line and drives the artifact's own
-scale/offX/offY — 201's law). All four FAILed, and **all four were wrong about the cause** and
-right about the symptom. What survives their reads, and matches the numbers, is a **legibility**
-finding, not a z-order or colour one: at fit zoom the whole aerial tramway is **sub-pixel
-infrastructure** — a 0.5 px rope, 5 px cabins, hairline masts — so the rope is the only part that
-registers at all, and *a lone dark hairline with no legible cars or towers around it reads as a
-scratch*. That is **iter 101's law** (`legibility ≈ contrast × width`) landing on Transport.
-
-**Verdict: EXPLORED -> REVERTED.** The cue is CLOSED and the artifact is untouched. The rope is a
-legitimate object, correctly depth-sorted, and it must stay visible (the cabins hang from it —
-195's orphan law cuts the other way here). Three probes + a camera ship; four laws promoted to
-`SKILL.md`. **If a future lap reopens this, it is a `polish-tile`-shaped job on the whole aerial
-tramway — rope AND cabins AND masts together, to make it legible as infrastructure — not a tweak
-to the rope's colour.** Do not re-try: a halo/body under the rope (measured, backfires), or a lit
-top edge on it (measured, impossible at this width).
 
 ## Iteration 204 — the service fleet comes home (2026-07-12) [Civic & culture × Connect]
 
@@ -1239,3 +1171,101 @@ because it is the lesson: the agents were **wrong about the two things they were
 in a whole-frame read is where the cumulative drift actually shows up. Read the asides.
 
 **Verdict: HOLISTIC STEP-BACK — CLEAN BILL, no fix lap owed, two cues banked (q, r).**
+
+## Iteration 213 — the institutions keep their own hours (2026-07-12) [Civic & culture × Deepen]
+
+**Vector.** Civic & culture × **Deepen** — Civic was the stalest domain (last touched at 204). 199 gave the
+WINDOWS an hour and 210 gave the RESIDENTS one; the twelve **institutions** never got one.
+
+**The seam — 199's tell, one rung up.** Every civic night-draw was gated on `LITAMT` and nothing else, and the
+light curve **pins `LITAMT` high from dusk to dawn** (it is *0.41 at dusk and 0.64 at 4am* — so the civic
+floodlights were literally **brighter** in the small hours than at sunset). The consequences were exact:
+
+- the **amphitheater's spotlit performer swayed on the stage all night**, footlights up, to a bowl the audience
+  gate right above it (`LITAMT<0.75`) had already emptied — a singer playing to nobody until dawn;
+- the museum's floodlit facade, the library's reading lamps and the hall's lit chambers burned till morning;
+- while the **hospital** — whose own `CIVICDESC` says its bay *"never closes"* — was no more lit at 3am than the
+  school. The gate knew it was dark. **Nothing knew what the building WAS.**
+
+**Change.** `CIVHRS[kind]` — the share of an institution's lights still burning in the small hours — read off the
+**same `nightDeep()` clock the windows already use** (`civOpen(k) = 1 + (CIVHRS[k]-1)·nightDeep()`; 1 at dusk).
+Five hold at **1** because their own draw or label already claims they run all night: the ward slab, the precinct
+beacon, the engine doors, the reef tank that *"never sleeps"*, and the observatory, whose night is just beginning.
+Seven close: `parliament .40 · hall .35 · museum .30 · university .30 · library .15 · school .08 ·
+amphitheater 0`. In the draw, `clit=lit·so` dims the institution's lit **glass** back toward the unlit shade and
+`cla=LITAMT·so` dims its exterior **floodlighting**. Three lights are deliberately held **off** the curve, and
+they are the poetry: the school's **janitor window**, the hall's **clock face**, the parliament's **lantern** —
+the floodlights go out *under* it and the capitol's light is the last one over the sleeping city.
+The show **ends**: the beam, wash, singer and footlights fade out together on one `globalAlpha` (the singer is a
+solid fill and would otherwise pop), **and the house empties with it** — see Finding 3.
+Tooltip: one new `Hours` row off **the same `civOpen()`** the draw dims by (123: run the tell FORWARDS — one
+function, two readers — rather than re-syncing a string to a rule later). Verified against recomputed truth:
+hospital/police/observatory read *"Open all night"* at every hour; museum goes `Open late → Closing up`; library,
+school and amphitheater `→ Dark till morning`.
+
+**Census.** PASS, +0 on every metric, tile histogram empty — correct and predicted for a draw-only change.
+(`greenRoofs` moved +1 then +2 on the *identical* file: run-to-run harness noise, 163(c). Not the change.)
+
+**Probe.** `probes/probe-civhours.mjs` — patch vs pristine HEAD, one frozen world, three pins of the day clock.
+The design gives the gate its controls **for free**: at **dusk** `nightDeep()=0` so `civOpen()=1` and the patch is
+**byte-identical to HEAD by construction**, and by **day** the change is inert — so both must sit at the noise
+floor, and only the small hours may move. The five that never close are an **in-frame negative control**.
+
+| whole-frame changed px | patch-vs-HEAD | HEAD-vs-HEAD (floor, same run) |
+| --- | --- | --- |
+| day | 45 / 19 / 34 | 49 / 32 / 30 |
+| dusk | 24 / 7 / 11 | 31 / 20 / 19 |
+| **night** | **571 / 562 / 658** | 20 / 12 / 14 |
+
+Per institution at 4am (patch-vs-HEAD px, mask swept 1.0/0.6/0.4): **hospital 0·0·0 · police 0·0·0 · firehouse
+0·0·0 · observatory 0·0·0** — the never-close five are *exactly* unmoved. Closers: **parliament 279·279·264 ·
+hall 292·136·55 · museum 137·137·137 · library 254·95·58**, plus weakly university 13 · school 16 ·
+amphitheater 30·24·24 (they had little discretionary night light to lose — the school block is already *"dark
+after the last bell"*). The **aquarium read 28 px and walked to an honest 0** as the mask tightened: a neighbour
+bleeding into the box (196), not the aquarium, whose code path is byte-identical.
+
+**Perf.** Free. Night-only, so the day column is a **free noise floor** (199): three interleaved rounds read
+day **+2.1 / −4.3 / −1.4 %** on byte-identical code and night **+3.6 / +0.4 / −0.7 %** — night sits *centred
+inside its own control's spread*. It should: at 4am the patch draws strictly **fewer** path objects than HEAD.
+
+**Visual.** PASS, blind, both seeds. Frames renamed frameA/frameB with the order flipped per seed; agents were
+asked to **locate the hour**, not to judge the feature (108). Both put 4am on the right frame, from the pixels
+(*"the civic dome, floodlit cream at dusk, is grey at 4am"*), and both independently listed the **hospital, the
+towers and the pier lamps as still lit** while the low-rise mats went dark. A second blind pair on the
+amphitheater alone: 4am = *"a bare dark teal slab, no spotlight, no performer,"* tiers empty; dusk = the lit
+stage, the standing figure, the audience. No z-order tears, no blown-out colour, no decal glows.
+
+**Findings.**
+
+1. **Stubbing `Math.random` before `genWorld` is NOT early enough — stub it before the PAGE'S OWN SCRIPT**
+   (⇒ SKILL.md). This probe obeyed every existing freeze law (203's stub, 163's `genWorld`+`__warp` and `STARS`,
+   199's `flock`, 195's `time`/`waveT`, plus every mover array emptied) and its **day control — byte-identical
+   code in both builds — still read 8k–18k changed px.** A `page.evaluate` runs *after* the document's top-level
+   script, so all load-time `Math.random` state is already baked in and differs per load. `page.addInitScript`
+   takes the floor to **12–49 px**. `STARS` and `flock` were never a list to complete; they were **symptoms of
+   stubbing too late**.
+2. **Measure the floor IN THE SAME RUN** (⇒ SKILL.md). I first pinned `FLOOR = 40` from one run — and the next
+   run's floor came back 32–49 and the gate FAILed a passing change. The floor drifts with machine load exactly
+   as frame time does. Loading **HEAD twice** and printing `HEAD-vs-HEAD` as a column *beside* `patch-vs-HEAD`
+   makes the probe grade itself: *"night 562–658 against a floor of 12–20"* is checkable; *"night 562"* is not.
+3. **The step-back's asides law (212) paid out immediately — and the payer was an agent I had just FAILED.**
+   Seed 42's agent PASSed, then noted in passing: *"the audience dots are identical in both frames — an empty 4am
+   bowl still shows a full house."* It was right, and it was **my** bug: ending the show left the crowd sitting in
+   the dark watching an unlit stage. The house now empties **with** the show (`aud = LITAMT<0.3 ? 1 : so` — the
+   bowl is open to anyone by day, but after dark the crowd is only there while the concert is). A fresh blind pair
+   then read the transition as coherent in both cities. **Mine the asides.**
+4. **A FAIL that measurement refutes, again — and this one refuted itself.** Seed 7's agent FAILed on *"no
+   recognizable amphitheater in either frame"*. It was **right about the pixels and wrong about the cause**: the
+   amphitheater at hex(24,2) has **MID(h35) MID(h34) MID(h30)** standing in the two rows in front of it, and draw
+   order is depth order — so it is **buried** (206's occlusion law), on a seed where seed 42's front rows are all
+   `ROAD(h0)`, which is exactly why *its* agent read the bowl perfectly. **This is pre-existing artifact siting,
+   not the change** — HEAD buries the same bowl behind the same buildings. Banked as cue **(t)**. Its second FAIL
+   (*"the 4am city is a uniform blackout with zero lit landmarks"*) is 212's already-banked cue **(q)**: my entire
+   whole-frame night delta is **658 px of 1.26M — 0.05%**, so it cannot have darkened anything.
+5. **`nightDeep()` is pinned at 1 all day.** It only means anything after dark (it is `dayT` measured from dusk,
+   clamped), so `civOpen()` is *0.30 at noon* — harmless in the draw, where `lit` and `LITAMT` are 0 anyway, but a
+   trap for any **non-draw** reader. Both new readers guard it: the tooltip returns `'Open'` whenever
+   `LITAMT<0.35`, and the amphitheater's audience takes the daylight branch. **A curve keyed to "how far the night
+   has run" is undefined by day — guard every reader, not just the one you are writing.**
+
+**Verdict: DEEPENED.**

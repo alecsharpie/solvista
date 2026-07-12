@@ -12928,3 +12928,90 @@ grep that regenerates it, which is the part that keeps working):**
 > (206/204:) **204's buried service bays (cue n) are the same defect one domain over.** GARDEN's seasonal cue is
 > UNBLOCKED (host fixed) and MEASURED (dry-peak shift 1.8 = ROAD-level) — see cue (p). The fire CA's `T.MARKET`
 > parallel: fully drawn, three labels boasting about it, and it never runs.
+
+## Iteration 203 — the thin dark line is a cable, and the cable is fine (2026-07-12) [Transport × Polish, EXPLORED -> REVERTED]
+
+**Vector.** Transport × Polish. Rotation owed Transport (last lap 193), and 202's step-back had
+banked an explicit, unexplained cue there: *"a thin dark line reads as drawn OVER the towers/water"*
+— seen by **both** agents on **both** seeds, with the naive cause already disproven and an
+instruction attached: **PROBE it; do not redesign on the agents' say-so.** A banked, measured
+finding outranks kind-rotation, so this lap went to close it.
+
+**What the line IS (`probes/probe-darkline.mjs` — new, and reusable on ANY unexplained linear
+artifact).** Wrap `ctx.stroke()`, record each stroke's DEVICE-space polyline length, width and
+colour luminance, and attribute it to the issuing fn off the call stack; then census the strokes
+that match the description — long, thin, dark. First run was a **false lead**: the top hit was 10
+near-vertical 324px strokes from `render:6450` at `lum=0.00`, which turned out to be the **rain
+shafts** — my probe defaulted a non-string `strokeStyle` (a `CanvasGradient`) to pure black. The
+real answer was hiding *under* the length filter: **the aerial cable-car HAUL ROPE**, stroked
+`col('ink',1.05)` = **`#373128`, the darkest ink in the palette, fully opaque, at 0.5 DEVICE px**
+at fit zoom. Each span is only 12-14 px — below any sane "long line" threshold — but **15-25 spans
+CHAIN into an unbroken 199-331 px dark run** across the sky and the open sea, on all three seeds.
+The eye sees the chain; a per-stroke filter cannot. **Cue CLOSED: the line is the cable.**
+
+**The agents' CAUSE was wrong — three ways, and the third is a number.** (1) The girder never
+oversteps: `drawMonoAt` strokes only to the **midpoint** of each neighbour, so a beam cannot reach
+into another cell's footprint. (2) The rope cannot either: `stepGond` only ever takes `axStep`
+d=1 or d=2, and **both are `y+1`**, so a gondola path is **strictly monotone in y** and every span
+is drawn BEFORE the row it descends into. (3) And the direct measurement, because a code argument
+should not outrank four agent-reads: **`probes/probe-gondz.mjs`** renders the same frame under two
+z-orders — rope in its natural place vs. the very same polylines re-stroked on top of the finished
+frame — and takes the ink ratio. **OCCLUDED: 22.2/23.6 (seed 42) · 8.6/8.4 (7) · 12.5/12.9% (1234),
+day/night.** Not 0%. Later rows genuinely eat 8-24% of the rope. **It is depth-sorted; "painted on
+top of everything" is false.** The agents' other claim — *"no cabins on the line, in any frame"* —
+is also false: the cabins render at **43-96 px per frame, ~24 px each**, which is exactly a
+`prismS(0.11,0.085)` at fit zoom. They are not missing; they are **5 px**.
+
+**What I tried, and why it died.** Give the rope what the girder already got (its own comment at
+L5552: the old beam was *"brighter than every building it flew over, and with nothing beneath it"*,
+so it was given a body + a lit running surface). The rope is the mirror image and never got the
+treatment: a soft translucent **body** so a sub-pixel line antialiases into a rope, a **core** that
+is dark but not flat-opaque, and a daylight **glint** (steel catches the sky), gated on `LITAMT`.
+**`probes/probe-ropesteel.mjs` refuted it on its own terms:**
+- **`glint px: 0 -> 0`, every seed, both lights.** A **DEAD DRAW**. At 0.5 device px the core and
+  the highlight land in the **same sub-pixel** — a thin dark line *cannot carry a lit top edge*.
+- **`peak contrast: 0.33 -> 0.34` — UNCHANGED**, while coverage rose **419 -> 567 px**. Peak
+  contrast is the whole measure of "reads as a hard scratch", and it did not move; the halo made
+  the line **more** prominent, the exact opposite of the goal. **A body/halo under a thin dark line
+  is additive and works against you** — the only lever that touches peak contrast is the core's own
+  alpha/width.
+
+**Census.** PASS. Draw-only: every metric +0, tile histogram empty — correctly vacuous, and it
+proves only that the page did not throw. Reverted **byte-identical** (`git diff HEAD` clean), so
+perf is unchanged by construction and no perf gate was owed.
+
+**Visual.** 4 agent-reads (2 seeds × fit/mid/close/golden, camera aimed at the rope by
+`probes/shot-gondola.mjs`, which LOCATES the longest line and drives the artifact's own
+scale/offX/offY — 201's law). All four FAILed, and **all four were wrong about the cause** and
+right about the symptom. What survives their reads, and matches the numbers, is a **legibility**
+finding, not a z-order or colour one: at fit zoom the whole aerial tramway is **sub-pixel
+infrastructure** — a 0.5 px rope, 5 px cabins, hairline masts — so the rope is the only part that
+registers at all, and *a lone dark hairline with no legible cars or towers around it reads as a
+scratch*. That is **iter 101's law** (`legibility ≈ contrast × width`) landing on Transport.
+
+**Verdict: EXPLORED -> REVERTED.** The cue is CLOSED and the artifact is untouched. The rope is a
+legitimate object, correctly depth-sorted, and it must stay visible (the cabins hang from it —
+195's orphan law cuts the other way here). Three probes + a camera ship; four laws promoted to
+`SKILL.md`. **If a future lap reopens this, it is a `polish-tile`-shaped job on the whole aerial
+tramway — rope AND cabins AND masts together, to make it legible as infrastructure — not a tweak
+to the rope's colour.** Do not re-try: a halo/body under the rope (measured, backfires), or a lit
+top edge on it (measured, impossible at this width).
+
+
+---
+
+### Header bullets rotated out at iteration 213
+
+*(Moved from the maintained `GROWTH.md` header to keep it inside its 400-line budget. Nothing is deleted — the
+loop's memory is the one thing it cannot re-derive. Both bullets below are SUBSUMED by shorter forms that remain
+in the header, cited here so the trail is followable.)*
+
+**Cue (n) — A PARKED VEHICLE IS OFTEN INVISIBLE, AND THE DOOR IS NOT THE REASON** (iter 204; `probe-servbay`:
+4 of 9 read **0%** visible ink). What buries a bay is **the density of the downtown its institution stands in**,
+not which door it picks — 204 built the door-ranking lever and **measured it at nothing** (nearest /
+least-blocked-over-3-rows / strictly-in-front scored 485 / 489 / 485 out of 900), so it is NOT in the shipped
+code. *Subsumed by:* `polish-tile` BACKLOG item **(c)** in the header ("a parked service vehicle needs its CIVIC
+TILE to have a visible apron on its front edge"), and generalized to tiles by 206's occlusion law in SKILL.md.
+Iter 213's new cue **(t)** (the amphitheater buried behind three mid-rises on seed 7) is the same defect a third
+time — entity (204), tile (206), civic (213) — which is why the *general* law now lives in SKILL.md rather than
+here.
