@@ -26,38 +26,39 @@ ones (U2, 42, U5) stay in the bullet.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~ | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
+| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~ | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163** | 71, **154**, **191** |
 
-- **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
-  tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
-  + **hover focus ring (iter 71, People-led)** + **census stats that can fall
-  (U5: tallest / density / solar share / transit reach / walkable)**
-  + **the coast names itself (iter 97, Water-led: pier/stall/ferris wheel,
-  esplanade, lifeguard tower, dune `Sand`+`Marram grass`, live `Tide`)**
-  + **the transit lines name themselves (iter 105, Transport-led: hovering a monorail train or
-  cable-car cabin names its LINE — "Line 3 of 3 — a 183-span loop with 30 stations" — and traces the
-  whole route across the city, pipped at its stops)**
-  + **the woods name their own stand (iter 117, Nature-led: `Stand — N hexes` by live flood fill,
-  `Canopy Closed/Thickening/Open edge` read from the draw's own `k`, `Undisturbed ~N yr`,
-  `Old growth since`, `Deep woods`, `Mushrooms up`, `Burning`, and a live
-  `Wildflowers In bloom/Gone over/Not in flower`)**
-  + **the institutions name themselves (iter 122, Civic-led: `CIVICDESC` gives all 12 kinds their own
-  sentence, drawn from each one's siting rule; `Civic quarter — N institutions` by `siteQuarter`'s own
-  `MAJORK`/`QFAR`; `Fronts a paved forecourt` / `Keeps its own grounds behind`, and the squares answer
-  back with `Forecourt of — Town hall` / `Grounds of — Museum`; `One of — 4 schools`)**.
-  When adding an entity array: `stamp()` it in its draw + add an `ENTINFO` row
-  (same discipline as the census hook). `stamp()` now also draws the focus ring,
-  so any stamped entity is ringable for free — **and since iter 133 a hovered TILE is ringed too (cue l closed)**.
-  **An `ENTINFO` `sub` may be a
-  FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
-  *membership* (which line / route / depot), computed live, not a stored string.
+- **Interaction/UX kind — the FEATURE INVENTORY (U2 / 42 / 52 / 71 / 97 / 105 / 117 / 122 + U5's
+  falling stats) was rotated to `GROWTH-archive.md` at 211: it was history, not steering.** What
+  steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (the same
+  discipline as the census hook). `stamp()` also draws the focus ring, so any stamped entity is
+  ringable for free — and since 133 a hovered TILE is ringed too. **An `ENTINFO` `sub` may be a
+  FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (which line /
+  route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **208** · People **210** · Transport **203** · Urban **209** · Nature **206** · Civic **204** · Water **205**.
-  **THE LAP NOW OWES TRANSPORT (stalest, 203 — and that was a REVERT, so its last SHIP was 193), then Civic
-  (204), then Water (205).**
+  Sky **208** · People **210** · Transport **211** · Urban **209** · Nature **206** · Civic **204** · Water **205**.
+  **THE LAP NOW OWES CIVIC (stalest, 204), then Water (205), then Nature (206).**
+  **211 (Transport × Connect, SHIPPED: the buses come to the trains) — full recap in its own entry.**
+  `recount()` had built ONE transit reach map from stations UNION bus stops while the two were sited by
+  rules that had never heard of each other (stops were a blind 5% `hashCell` coin) — so they met at
+  **exactly the coin's base rate: 3 of 55 stations over 6 seeds, and 3 seeds in 6 had NO interchange.**
+  A station now claims a nearby street (`c.stop=2`; `STOPR=2` is `rTransit`'s OWN radius, shared, not a
+  new number). Coverage **24% → 93%, exactly the terrain ceiling.** Three findings survive:
+  **(1) ⚠ THE BUS SHELTER HAD A LATENT DRAW BUG, OLDER THAN THIS VECTOR AND NOW FIXED** — its sidewalk
+  offset `sd=((x+y)&1)` put half the shelters on the **near kerb**, i.e. inside the hex in front, which
+  is drawn later and laps over them (`hexTile` draws at 1.02 to overlap on purpose). Near-kerb shelters
+  were invisible **32%** of the time vs **9%** far-kerb — **and that was already true of ORDINARY stops
+  (29% vs 9%) for the artifact's whole life.** The draw now takes the kerb the viewer can see.
+  **(2) `frontLoad(x,y)` is the sharper `openFront`** (beside it): `openFront` is a boolean on the row
+  at dy=+1 and **misses a TOWER two rows in front**, which reaches up the screen anyway — 11 of 42
+  interchanges were invisible WITH `openFront` true. `frontLoad` weights two rows (first double).
+  Both levers shipped as **PREFERENCES, never gates** (206). Net: interchange occlusion **58% → 36%**,
+  ink **94 → 136** vs the ordinary control's 144.
+  **(3) A station sits in dense fabric BY CONSTRUCTION** (>=3 developed nbrs), so ANY ground-level thing
+  sited off a station inherits 206's occlusion law; the residual 36% is terrain, not rule.
   Urban is measured-saturated in *additive* and *Connect* (see below) ⇒ its lap must be **Deepen or Polish**.
   **210 (People × Deepen, SHIPPED: the city goes to bed) — full recap in its own entry, still in the window.**
   199 gave the WINDOWS an hour (`BEDT` off `nightDeep()`); the STREET was still on a uniform 50/50 coin against a
@@ -103,7 +104,6 @@ ones (U2, 42, U5) stay in the bullet.
   parked vehicles read **0%** visible ink). What buries a bay is **the density of the downtown its institution
   stands in**, not which door it picks — 204 built the door-ranking lever and **measured it at nothing** (485/489/
   485 of 900), so it is NOT in the shipped code.
-  **205 (Water × Connect, REVERTED) — recap rotated at 207; its finding is held IN FULL by cue (o) below: THE PORT HAS NO WATERFRONT.** **203/201/202 — recaps rotated; laws ⇒ SKILL.md.**
   **⚠ THE `polish-tile` BACKLOG — three measured cues that are NOT growth laps. Do not spend a domain's lap on
   one; they need a tile redesign, and each already has a gate written.** (a) **The WHOLE TRAMWAY is sub-pixel at
   fit zoom** (0.5px rope, 5px cabins, hairline masts) — 203 proved the rope properly depth-sorted (`probe-gondz`:
@@ -153,7 +153,7 @@ ones (U2, 42, U5) stay in the bullet.
   when a RULE reads it, not when the draw shows it:** `rGreen`/`rShop`/`rServ` are still read by NOTHING but the
   walkable stat. **⚠ A tick-rule cannot read them directly (151): `recount()` never runs in the sim loop, so the
   reach maps are STALE inside `tick()`** — recompute locally, or pay a recount. (Detail archived at 200.)
-  **Iteration 212 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, 197, 202, **207 — all done**).
+  **⚠ ITERATION 212 IS THE NEXT HOLISTIC STEP-BACK** (every 5th since 105; **207 was the last, all 21 done**). The 205 / 203 / 202 / 201 recaps are rotated — laws in SKILL.md; 205's finding is held in full by cue (o).
   **207 (the 21st) = a CLEAN BILL on the city, and the PERF ARC IS PRICED AND ACCEPTED — no fix lap is owed.**
   Both seeds PASSed all 4 frames; no feature has compounded into clutter or darkness; both agents independently
   located the golden-hour sun at **x=0.39, y=0.10** (the locate-check working). Perf: the **lap** (203-206) was
@@ -391,88 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 203 entries before Iteration 201 live in
+> **Archive:** the 204 entries before Iteration 202 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 201 — the beach follows the tide (2026-07-12) [People & activity × Deepen]
-
-**Vector** — People & activity × Deepen. People was the stalest domain (last lap 191);
-its basics are long spent, so Deepen, not another entity.
-
-**The seam** — iter 145 taught the beach furniture to follow the **sun** (`LITAMT` gates the
-parasols in through the morning and packs them away by dusk), and the beach *ground* has
-answered the **tide** since long before that — the damp margin `w2=2.4+(1-TIDE)*5` sweeps up
-and down the sand, and iter 196 used it as its positive control *precisely because* it
-provably reads `TIDE`. But the furniture itself was drawn at `px(gx,gy)`, the bare hex
-centre. So the sunbathers answered one signal and were deaf to the other, and **at dead low
-water they were lying on wet sand.** 196's shape (a tile deaf to a signal its own hex
-already reads), one tile along, in the People domain.
-
-**Change** — draw-only. `wetReach()` now owns the damp band's reach as **one definition with
-two readers** — the margin that *strokes* the wet sand, and the beachgoers who must stay
-*off* it. Let those drift apart and the towels end up laid in the surf; sharing the constant
-makes that unrepresentable. `seaDirS(x,y)` gives the mean unit vector toward a hex's WATER
-neighbours (same water test the margin uses — a river is not the sea), `null` when
-landlocked. The whole ensemble (parasol, pole, towel) slides along that normal by
-`(WETMIN+0.5*WETSWING) - wetReach()`, i.e. **the band's own reach either side of its mid-tide
-value** — so it retreats up the sand as the ebb widens the wet band, follows the water back
-down on the flood, and sits exactly where it always did at mid-tide. No new randomness, no
-terrain, no `rng()`.
-
-**Census** — vacuous, as expected for draw-only: PASS, every metric +0, tile histogram empty.
-Proves only that nothing threw and that the seeded stream is untouched.
-
-**Probe** — `probes/probe-beachtide.mjs`. A **state-response** claim, so 196's isolation: one
-build rendered twice at two `TIDE` pins (frozen clock, same `genWorld`), the only variable
-being the tide. Measures **draw calls, not pixels** (199's wrap-the-draw move) — `ctx.ellipse`
-is wrapped and the parasol canopy captured by its `4.5x2.6` signature, which occurs **exactly
-once** in the file. No pixel noise floor at all, so the zero is an honest zero.
-
-| build | along-seaward | perp (ctl) | landlocked (ctl) | tide-px (live?) |
-| --- | --- | --- | --- | --- |
-| BASE  | **0.00px** (3/3 seeds) | 0.00 | 0.00 (n=26–30) | 10.0–11.4k |
-| PATCH | **+4.80px** (3/3 seeds) | 0.00 | 0.00 (n=26–30) | 10.5–11.9k |
-
-`BASE 0.00` **is the seam, as a number** — the draw was deaf. `PATCH +4.80px` is the travel
-the design predicts to two decimal places (pins sweep 0.02→0.98, so 0.96 × the band's 5px
-swing). Direction is checked against a seaward normal the probe **recomputes from the terrain
-itself**, not by calling `seaDirS` (122's law). Controls: perpendicular drift 0.00 (it travels
-along the shore normal, not sideways); the 26–30 **landlocked** beach hexes per seed move
-0.00px (no sea to answer → furniture stays put). **Positive control**: the damp margin moves
-~10–12k px on *both* builds, so the TIDE pin is LIVE — without it `BASE=0` would be a dead pin
-rather than a deaf draw (196's law, and it is what makes the zero mean anything).
-
-**Perf** — not run, and **provably not needed**: the diff adds **zero path objects** (verified
-by grep — it re-centres ellipses/line/rect that were already drawn) plus ~240 neighbour lookups
-per frame. Under 198's measured cost model (cost is *per path object rasterized*), that is free
-by construction. Measuring it would only have re-measured the box's noise.
-
-**Visual** — the first pass FAILed on **my framing, not the feature**: `shoot.config.json`'s
-`coast` clip is a hard-coded rectangle and the coastline moves seed to seed, so on seed 7 it
-landed on open water with the beach off the edge of the crop. Fixed with
-`probes/shot-beachtide.mjs`, which **aims the camera** at a beach hex that actually draws a
-parasol *and* faces the sea (found from the real draw calls). Re-shot, both seeds **VISUAL
-PASS**, blind, with the A/B labels **inverted between the seeds**: both agents correctly
-located dead low water from the wide damp flat, and both confirmed the invariant — *"neither
-frame puts a pole or towel on wet sand"*; *"the only things standing on wet sand are gulls and
-a dog — correct."*
-
-**The one objection, and why it did not sink it** — the seed-42 agent's first read called the
-response **inverted** (a real beach hands you *more* sand at low tide; mine retreats up it).
-This is a property of the **artifact's tide model, not of this change**: the coastline is fixed
-terrain and cannot recede, so the ebb can only express itself as the intertidal flat drying out
-*inland* of the fixed edge. Flipping the sign would drive the towels **onto the widening wet
-band** — contradicting the single invariant the feature is built on. Two fresh, correctly-framed,
-independent reads both declined the objection: *"they're plausibly just avoiding the wet flat…
-it doesn't read as backwards"* and *"local behaviour is right; the global consequence is a
-compromise, not a bug."* Both flagged the same honest caveat unprompted, which is the model's,
-and it is banked below rather than papered over.
-
-**Verdict: DEEPENED.** The beach now answers both its signals: the sun brings the parasols out,
-and the tide decides where they stand.
 
 ## Iteration 202 — the twentieth step-back finds a clean city and a lying camera (2026-07-12) [holistic step-back]
 
@@ -1218,3 +1141,94 @@ no blown-out colour. (Both flagged the cable-car rope crossing the green frame �
 *both* builds, and already banked as 203's `polish-tile` legibility job.)
 
 **Verdict: DEEPENED.** The windows learned to keep an hour at 199; now the street does too.
+
+## Iteration 211 — the buses come to the trains (2026-07-12) [Transport × Connect]
+
+**Vector.** Transport × Connect. Rotation owed Transport (stalest: 203, and that was a REVERT, so
+its last SHIP was 193), and its banked cue — the sub-pixel tramway — is explicitly a `polish-tile`
+job, not a growth lap. Within the row, **Connect** was the cold cell that fits: its trick is that it
+adds NO NEW OBJECT, it closes a gap between two that already exist. The last three ships were all
+Deepen, so the kind rotates too.
+
+**The gap, measured before designing a line (`probes/probe-interchange.mjs`).** `recount()` builds
+ONE transit reach map from stations UNION bus stops — `reachFill(rTransit,2,(c,i)=>stations.has(i)||
+(c.t===T.ROAD&&c.stop))` — so the *model* already asserts an integrated transit system. But the two
+were sited by rules that had never heard of each other: stations are monorail stops with >=3
+developed neighbours; bus stops were `hashCell(x,y,seedNum^0xB5B5)<0.05`, **a blind 5% coin on the
+road grid**. They met only by chance, and the number is exactly that: **3 of 55 stations across 6
+seeds had a shelter within a hex — 5%, the coin's own base rate.** Three seeds in six had **no
+interchange at all**. This is the derived-field mirror of the label-tell: a *field* asserting a
+network the geometry never built.
+
+**Change.** A station now claims a nearby street as a feeder stop (`c.stop=2`; ordinary shelters
+stay `1`, so every existing truthy reader — `rTransit`, `stepVehicle`, the draw — is untouched).
+Three things share one definition rather than drifting:
+- **`STOPR=2`** — the search radius is not a new number, it is `rTransit`'s own reach, so "close
+  enough to feed the platform" and "close enough to count as served" are ONE predicate (112's law).
+  `recount()` now reads `STOPR` too.
+- **`stopOK(x,y,c)`** — the eligibility test was inline in the coin; the interchange needed the same
+  question, and a second copy would have drifted. Factored once.
+- The draw reads `c.stop===2` for a longer canopy + a two-plate sign totem (the bus route below, the
+  line overhead); `stopCap` gives it 2..4 waiting instead of 1..3 (a train just unloaded — and this
+  is deliberately NOT the city-wide bump iter 98's law forbids: it lands on the ~5 feeder stops a
+  city has, not under every canopy). Tooltip: `Interchange` + `Feeds — Line N of M`, recomputed live
+  off the same `m.sta` every other reader shares (105). `__find('interchange')` for the camera.
+
+**Census.** PASS, and flat by construction — `c.stop` is a flag, not a tile; the rule draws no
+`rng()` and moves no terrain. pop/roads/developed all **+0**, tile histogram empty. Correctly
+vacuous: it proves only that the page did not throw. **The probes are the gate.**
+
+**Probe — coverage (`probe-interchange.mjs`, 6 seeds).** Stations with a bus stop within `STOPR`:
+**13/55 (24%) → 51/55 (93%)**, and 93% is **exactly the terrain CEILING** (51 of 55 stations have
+*any* eligible road within 2 — the other 4 stand over park or unbuilt edge). Within 1 hex: 5% → 38%.
+Two controls held: the ceiling is terrain-derived and **did not move** (56%/93% in both builds, so
+nothing perturbed the world), and **163/163 blind-coin shelters still stand** — an interchange
+PROMOTES a shelter or adds one, it never destroys one (recomputed independently, per 122).
+
+**⚠ THE VISUAL AGENT WAS RIGHT AND THE FIRST DESIGN WAS WRONG — and the cause it named was still
+wrong.** Seed 42 FAILed: *"no canopy, no posts, no totem; only three queue figures, clipped at the
+waist."* It blamed a z-order tear. It was not one — but the SYMPTOM was real, and chasing it found a
+**bug older than this vector**:
+- **`probes/probe-ichvis.mjs`** (two z-orders: `occluded% = 1 - inkInPlace/inkOnTop`, per 203's
+  `probe-gondz`) measured the naive nearest-wins rule at **58% mean occlusion, 17 of 42 rendering
+  under 20px of ink**, against **24%** for the ordinary-shelter control. A station needs >=3 developed
+  neighbours, so it stands in dense fabric **BY CONSTRUCTION** — 206's law, one domain over.
+- **Single knockouts could not find the occluder** and said "nothing covers it" — flattening every
+  cell in an 11x13 block, every entity array, the monorail and the cable car, one at a time, never
+  gave the shelter back. That was an instrument failure, not a finding (see the law below).
+- The real mechanism, found by replaying the draw's own geometry (`probes/probe-kerb.mjs`): the
+  shelter is offset to a sidewalk side by `sd=((x+y)&1)?1:-1`, and on an E-W street that lands it
+  either UP the screen (far kerb) or DOWN it (**near kerb — inside the hex in front, which is drawn
+  later and laps over it**; `hexTile` draws at 1.02 precisely so it overlaps its neighbour). Measured
+  over 3 seeds: a near-kerb shelter is invisible **32%** of the time against **9%** on the far kerb —
+  **and that was already true of ORDINARY stops (29% vs 9%), for the artifact's whole life.** A third
+  of the city's bus shelters have been drawing themselves under the pavement in front.
+
+**Fix (two levers, both measured, both PREFERENCES not gates).**
+- **The draw takes the kerb the viewer can SEE** (parity still picks the side where the street runs
+  across the screen and neither kerb is buried). This fixes every shelter in the city, not just the
+  new ones: the ink gap between the two kerb classes **closed from 28 to 9** (near 120→134, far
+  148→143) and ordinary mean occlusion fell **24% → 18%**. Real, and partial — the kerb was never the
+  whole cause.
+- **`frontLoad(x,y)`** (new, beside `openFront`) — the siting rule prefers a street the city has not
+  built in front of. `openFront` is a boolean on the row at dy=+1 and **misses a TOWER two rows in
+  front**, which is tall enough to reach up the screen anyway (11 of 42 were invisible WITH
+  `openFront` true). `frontLoad` weights two rows, first row double. Shipped as a **preference**
+  (`frontLoad*20 + d*10 + hash`), never a gate — 206's hard gate starved the rule it was fixing, and
+  here a gate would cost the coverage that IS the vector.
+
+**Net (probe-ichvis, 4 seeds).** Interchange mean occlusion **58% → 36%**, fully-buried (>=86%)
+**17 → 8**, ink shown **94 → 136** — against the ordinary control's 144, i.e. **near parity**. And
+coverage never moved off its ceiling: **93%** throughout. The residual is terrain, not rule: a
+platform downtown genuinely has towers around it.
+
+**Visual.** Re-shot with `probes/shot-interchange.mjs` (locates a real interchange AND the station
+that claimed it, and frames the PAIR — a frame with only the shelter in it would prove nothing).
+Both seeds **PASS** on the re-read, and both agents *located* it unprompted: seed 7 — *"at the foot
+of the monorail pillar, ~20px below the beam; canopy, two posts, 3-4 figures, and the gold plate with
+a teal plate above it"*; seed 42 — *"directly below the station, ~1 hex south, exactly as intended"*,
+the very cell that had read as *"legless torsos on a tower roof."* Whole-frame reads clean on both.
+**Banked caveat:** at 5.2x the two-plate totem is hard to resolve among towers — it is ~2px.
+
+**Verdict: SHIPPED.** Perf not owed (212 is the step-back); the change adds ~2 path objects at each
+of ~5 interchanges and one `frontLoad` sweep per station per *tick*, not per frame.

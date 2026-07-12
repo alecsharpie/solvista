@@ -891,6 +891,26 @@ vector, whatever it is.
   reach was not a plant at all — it was the residential ground, wearing a non-seasonal palette name. Renaming it
   `lawn` took its seasonal shift from **1.2 to 36.8** for free. ⇒ **When a domain looks interconnect-saturated,
   re-ask it as: what large surfaces are wearing a palette name / field that cannot carry the signal?**
+- **A KNOCKOUT SWEEP THAT REMOVES ONE OCCLUDER AT A TIME WILL TELL YOU "NOTHING COVERS IT" — AND BE
+  WRONG. When it comes back empty, stop removing things and REPLAY THE DRAW'S OWN GEOMETRY (iter 211).**
+  203's `probe-gondz` settles *whether* something is occluded (`occluded% = 1 − inkInPlace/inkOnTop`).
+  It does not tell you **what** is doing it, and the obvious next probe — knock out each candidate and
+  see which one gives the element back — has **two blind spots that both return a confident zero**:
+  (a) **several occluders overlap**, so removing any one leaves the rest still covering; and (b) the
+  occluder is the **GROUND PLANE of the hex in front**, which no knockout removes — flattening a
+  building (`h=0`) or even retyping it (`t=T.EMPTY`) *still paints its hex*, and `hexTile` draws at
+  **1.02 precisely so a tile laps over its neighbour**. 211 flattened an 11×13 block, every entity
+  array, the monorail and the cable car, one at a time, and the shelter never reappeared — while a
+  `fillRect` spy proved the draw was **executing and issuing its pixels**. The answer came from
+  arithmetic, not deletion: **replay the draw's own offsets and ask where it actually puts the object.**
+  ⇒ Corollary, and it is an artifact-wide invariant: **a per-hex ornament drawn at an OFFSET from its
+  hex centre can land inside the NEXT hex, which is drawn later and paints over it.** The bus shelter
+  offset to a "sidewalk side" by `sd=((x+y)&1)?1:-1` had, for the artifact's *entire life*, been
+  putting half its shelters on the **near kerb** — inside the hex in front — where they were invisible
+  **32%** of the time against **9%** on the far kerb (`probes/probe-kerb.mjs`, and it read the same on
+  ordinary stops, so this was never the new feature's bug). **Any draw with a perpendicular/toward-viewer
+  offset must check that offset's SIGN against draw order.** Draw order is depth order; an offset is a
+  depth decision.
 - **A label that asserts a relationship the draw ignores is a bug, and it is the
   richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
   and printed a live `Tide` for 16 iterations over a tile that never moved a pixel

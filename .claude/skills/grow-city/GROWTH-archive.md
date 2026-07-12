@@ -12682,3 +12682,105 @@ pixel, so it may be priced by AREA where a solid ellipse is not. 198's table doe
 - **204 recap prose, rotated at 210** (durable findings kept in the header): 204 gave the service fleet (police /
   ambulance / fire) a home bay at its own institution and a `duty` state machine — `bay → call → onscene → home` —
   read by the router, the beacon and the tooltip alike, so the three cannot drift apart.
+
+## Rotated from the maintained header at iteration 211 — the Interaction/UX feature inventory
+
+(Moved out of `GROWTH.md`'s State-of-the-city header to keep it inside its 400-line budget. This is
+the *inventory* of what the Interaction/UX kind has shipped — history, not steering. The two rules
+that steer a future vector were kept in the header.)
+
+- **Interaction/UX kind:** tile tooltip (U2, user-directed) + **entity
+  tooltips (iter 42)** + **Est./Built years in tooltips (iter 52, Civic-led)**
+  + **hover focus ring (iter 71, People-led)** + **census stats that can fall
+  (U5: tallest / density / solar share / transit reach / walkable)**
+  + **the coast names itself (iter 97, Water-led: pier/stall/ferris wheel,
+  esplanade, lifeguard tower, dune `Sand`+`Marram grass`, live `Tide`)**
+  + **the transit lines name themselves (iter 105, Transport-led: hovering a monorail train or
+  cable-car cabin names its LINE — "Line 3 of 3 — a 183-span loop with 30 stations" — and traces the
+  whole route across the city, pipped at its stops)**
+  + **the woods name their own stand (iter 117, Nature-led: `Stand — N hexes` by live flood fill,
+  `Canopy Closed/Thickening/Open edge` read from the draw's own `k`, `Undisturbed ~N yr`,
+  `Old growth since`, `Deep woods`, `Mushrooms up`, `Burning`, and a live
+  `Wildflowers In bloom/Gone over/Not in flower`)**
+  + **the institutions name themselves (iter 122, Civic-led: `CIVICDESC` gives all 12 kinds their own
+  sentence, drawn from each one's siting rule; `Civic quarter — N institutions` by `siteQuarter`'s own
+  `MAJORK`/`QFAR`; `Fronts a paved forecourt` / `Keeps its own grounds behind`, and the squares answer
+  back with `Forecourt of — Town hall` / `Grounds of — Museum`; `One of — 4 schools`)**.
+
+## Iteration 201 — the beach follows the tide (2026-07-12) [People & activity × Deepen]
+
+**Vector** — People & activity × Deepen. People was the stalest domain (last lap 191);
+its basics are long spent, so Deepen, not another entity.
+
+**The seam** — iter 145 taught the beach furniture to follow the **sun** (`LITAMT` gates the
+parasols in through the morning and packs them away by dusk), and the beach *ground* has
+answered the **tide** since long before that — the damp margin `w2=2.4+(1-TIDE)*5` sweeps up
+and down the sand, and iter 196 used it as its positive control *precisely because* it
+provably reads `TIDE`. But the furniture itself was drawn at `px(gx,gy)`, the bare hex
+centre. So the sunbathers answered one signal and were deaf to the other, and **at dead low
+water they were lying on wet sand.** 196's shape (a tile deaf to a signal its own hex
+already reads), one tile along, in the People domain.
+
+**Change** — draw-only. `wetReach()` now owns the damp band's reach as **one definition with
+two readers** — the margin that *strokes* the wet sand, and the beachgoers who must stay
+*off* it. Let those drift apart and the towels end up laid in the surf; sharing the constant
+makes that unrepresentable. `seaDirS(x,y)` gives the mean unit vector toward a hex's WATER
+neighbours (same water test the margin uses — a river is not the sea), `null` when
+landlocked. The whole ensemble (parasol, pole, towel) slides along that normal by
+`(WETMIN+0.5*WETSWING) - wetReach()`, i.e. **the band's own reach either side of its mid-tide
+value** — so it retreats up the sand as the ebb widens the wet band, follows the water back
+down on the flood, and sits exactly where it always did at mid-tide. No new randomness, no
+terrain, no `rng()`.
+
+**Census** — vacuous, as expected for draw-only: PASS, every metric +0, tile histogram empty.
+Proves only that nothing threw and that the seeded stream is untouched.
+
+**Probe** — `probes/probe-beachtide.mjs`. A **state-response** claim, so 196's isolation: one
+build rendered twice at two `TIDE` pins (frozen clock, same `genWorld`), the only variable
+being the tide. Measures **draw calls, not pixels** (199's wrap-the-draw move) — `ctx.ellipse`
+is wrapped and the parasol canopy captured by its `4.5x2.6` signature, which occurs **exactly
+once** in the file. No pixel noise floor at all, so the zero is an honest zero.
+
+| build | along-seaward | perp (ctl) | landlocked (ctl) | tide-px (live?) |
+| --- | --- | --- | --- | --- |
+| BASE  | **0.00px** (3/3 seeds) | 0.00 | 0.00 (n=26–30) | 10.0–11.4k |
+| PATCH | **+4.80px** (3/3 seeds) | 0.00 | 0.00 (n=26–30) | 10.5–11.9k |
+
+`BASE 0.00` **is the seam, as a number** — the draw was deaf. `PATCH +4.80px` is the travel
+the design predicts to two decimal places (pins sweep 0.02→0.98, so 0.96 × the band's 5px
+swing). Direction is checked against a seaward normal the probe **recomputes from the terrain
+itself**, not by calling `seaDirS` (122's law). Controls: perpendicular drift 0.00 (it travels
+along the shore normal, not sideways); the 26–30 **landlocked** beach hexes per seed move
+0.00px (no sea to answer → furniture stays put). **Positive control**: the damp margin moves
+~10–12k px on *both* builds, so the TIDE pin is LIVE — without it `BASE=0` would be a dead pin
+rather than a deaf draw (196's law, and it is what makes the zero mean anything).
+
+**Perf** — not run, and **provably not needed**: the diff adds **zero path objects** (verified
+by grep — it re-centres ellipses/line/rect that were already drawn) plus ~240 neighbour lookups
+per frame. Under 198's measured cost model (cost is *per path object rasterized*), that is free
+by construction. Measuring it would only have re-measured the box's noise.
+
+**Visual** — the first pass FAILed on **my framing, not the feature**: `shoot.config.json`'s
+`coast` clip is a hard-coded rectangle and the coastline moves seed to seed, so on seed 7 it
+landed on open water with the beach off the edge of the crop. Fixed with
+`probes/shot-beachtide.mjs`, which **aims the camera** at a beach hex that actually draws a
+parasol *and* faces the sea (found from the real draw calls). Re-shot, both seeds **VISUAL
+PASS**, blind, with the A/B labels **inverted between the seeds**: both agents correctly
+located dead low water from the wide damp flat, and both confirmed the invariant — *"neither
+frame puts a pole or towel on wet sand"*; *"the only things standing on wet sand are gulls and
+a dog — correct."*
+
+**The one objection, and why it did not sink it** — the seed-42 agent's first read called the
+response **inverted** (a real beach hands you *more* sand at low tide; mine retreats up it).
+This is a property of the **artifact's tide model, not of this change**: the coastline is fixed
+terrain and cannot recede, so the ebb can only express itself as the intertidal flat drying out
+*inland* of the fixed edge. Flipping the sign would drive the towels **onto the widening wet
+band** — contradicting the single invariant the feature is built on. Two fresh, correctly-framed,
+independent reads both declined the objection: *"they're plausibly just avoiding the wet flat…
+it doesn't read as backwards"* and *"local behaviour is right; the global consequence is a
+compromise, not a bug."* Both flagged the same honest caveat unprompted, which is the model's,
+and it is banked below rather than papered over.
+
+**Verdict: DEEPENED.** The beach now answers both its signals: the sun brings the parasols out,
+and the tide decides where they stand.
+

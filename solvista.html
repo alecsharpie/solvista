@@ -1115,6 +1115,30 @@ const HOME=new Set([T.RES,T.MID,T.TOWER]);
    trunks on their own — a river crossing is a bottleneck every trip must share.
    Reads topology + val, writes only c.flow: no rng(), no hashCell, no terrain. */
 const ARTFLOW=64;                    /* trip-units above which a street is an arterial */
+/* How far a home may be from a stop and still count as served by transit — and,
+   since iter 211, how far a railway platform may reach for the street that feeds
+   it. recount()'s rTransit and the interchange rule are the same claim about the
+   same network, so they read the same number (iter 112's law: one predicate, one
+   definition, all readers share it). */
+const STOPR=2;
+/* Where a bus shelter may stand: a built-up street, but not the coast highway and
+   not out on a bridge deck. Both the blind 5% coin and the interchange rule ask
+   this — it was inline in the coin, and a second copy would have drifted. */
+const stopOK=(x,y,c)=>c.t===T.ROAD&&!c.bridge&&x!==SHOREX&&countAround(x,y,1,n=>DEV.has(n.t))>=2;
+/* How buried is a ground-level thing on this hex? openFront() asks the same question
+   as a boolean, but it only looks at the row at dy=+1 — and a TOWER two rows in front
+   is tall enough to reach up the screen and cover the hex anyway (measured: 11 of 42
+   interchanges rendered under 20px of ink WITH openFront true). This weights the first
+   row double, because a tile there hides a shelter outright. Returns 0 for a clear
+   view. Used as a PREFERENCE, never a gate (iter 206). */
+function frontLoad(x,y){
+  let n=0;
+  for(let yy=y+1;yy<=y+2;yy++)for(let xx=x-2;xx<=x+2;xx++){
+    if(hexDist(x,y,xx,yy)>2)continue;
+    const c=cellAt(xx,yy); if(c&&TALLT.has(c.t))n+=(yy===y+1?2:1);
+  }
+  return n;
+}
 const RDF=[0.93,0.965,1.0,1.035,1.07];  /* asphalt resurfacing-patch brightness steps */
 const _flQ=new Int32Array(G*G), _flD=new Uint8Array(G*G), _flA=new Float32Array(G*G);
 const _flVal=new Float32Array(G*G);
@@ -1993,9 +2017,42 @@ function tick(){
      (hash-gated, recomputed as the city builds); no rng(), no terrain change. */
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)]; c.stop=0;
-    if(c.t!==T.ROAD||c.bridge||x===SHOREX)continue;
-    if(countAround(x,y,1,n=>DEV.has(n.t))<2)continue;
+    if(!stopOK(x,y,c))continue;
     if(hashCell(x,y,seedNum^0xB5B5)<0.05)c.stop=1;
+  }
+  /* ...and the buses come to the trains (iter 211). The coin above had never
+     heard of the railway, so the two networks recount() already treats as ONE
+     — rTransit fills from stations UNION stops — met only by chance: 3 of 55
+     stations over 6 seeds had a shelter within a hex, which is precisely the
+     coin's own 5% base rate. Three seeds in six had no interchange at all.
+     Now every station claims a nearby street as a feeder stop.
+     STOPR is not a new number: it is rTransit's own reach, so "close enough to
+     feed the platform" and "close enough to count as served" are one predicate.
+
+     It may NOT simply take the nearest. A station needs >=3 developed neighbours,
+     so it stands in dense fabric BY CONSTRUCTION — and the nearest street is then
+     very likely to have a tower drawn in front of it, which buries the shelter
+     (draw order is depth order; iter 206). Measured, nearest-wins put the mean
+     interchange at 58% occluded against 24% for an ordinary shelter, and 40% of
+     them rendered under 20px of ink: a stop the city could not see. So a street
+     the viewer can actually SEE outranks a nearer one — both are inside STOPR, so
+     both feed the platform equally by the artifact's own definition of reach, and
+     visibility is bought for nothing.
+     openFront is a PREFERENCE, not a gate (206's hard gate starved the rule it was
+     fixing): if every candidate is buried, the nearest still takes it, so coverage
+     never falls. Nearest breaks the visible ties; the hash breaks the rest, so the
+     shelter does not land on the same side of every platform.
+     Pure derivation — no rng(), no terrain. */
+  for(const i of monoStationCells()){
+    const sx=i%G,sy=(i/G)|0;
+    let best=null,bs=1e9;
+    for(let yy=sy-STOPR;yy<=sy+STOPR;yy++)for(let xx=sx-STOPR;xx<=sx+STOPR;xx++){
+      const d=hexDist(sx,sy,xx,yy); if(d>STOPR)continue;
+      const c=cellAt(xx,yy); if(!c||!stopOK(xx,yy,c))continue;
+      const s=frontLoad(xx,yy)*20+d*10+hashCell(xx,yy,seedNum^0x1C7A);
+      if(s<bs){bs=s;best=c;}
+    }
+    if(best)best.stop=2;                 /* 2 = interchange; 1 = an ordinary shelter */
   }
   /* the buzz field: how much is there to come out FOR, seen from this hex?
      Pure terrain derivation (no rng(), no terrain change), recomputed each tick
@@ -2222,7 +2279,7 @@ function recount(){
      Green and shops saturate above 90% on their own — services are the binding
      constraint, so walkable falls when towers outpace the civic building. */
   const stations=new Set(monoStationCells());
-  reachFill(rTransit,2,(c,i)=>stations.has(i)||(c.t===T.ROAD&&c.stop));
+  reachFill(rTransit,STOPR,(c,i)=>stations.has(i)||(c.t===T.ROAD&&c.stop));
   reachFill(rGreen,3,c=>c.t===T.PARK||c.t===T.GARDEN||c.t===T.PLAZA||c.t===T.SHOREPARK||c.t===T.QUAD);
   reachFill(rShop,3,c=>c.t===T.COM||c.t===T.MARKET);
   reachFill(rServ,6,c=>c.t===T.CIVIC);
@@ -2479,12 +2536,16 @@ function syncFleet(){
    ~1.5 as well. What the change buys is VARIATION, not more people — a queue
    that empties is the feature; +1 glyph under every canopy would be clutter. */
 const BUSBRD=1.9, BUSGONE=6.0, BUSQGAP=20;
-const stopCap=(x,y)=>1+((hashCell(x,y,seedNum^0x5B05)*3)|0);   /* 1..3 wait here */
+/* 1..3 wait at an ordinary shelter. An interchange takes 2..4: a train has just
+   put a load of people on the pavement, and that is the whole reason it is there.
+   The +1 is deliberately NOT the city-wide bump iter 98's law forbids — it lands
+   on the ~5 feeder stops a city has, not under every canopy. */
+const stopCap=(c,x,y)=>1+((hashCell(x,y,seedNum^0x5B05)*3)|0)+(c.stop===2?1:0);
 function stopQueue(c,x,y){
   const since=c.blast===undefined?1e4:time-c.blast;
   if(since<BUSBRD)return{q:c.bqs||0,bl:since/BUSBRD};   /* the bus is in: they board */
   const u=since-BUSBRD;
-  return{q:u<BUSGONE?0:Math.min(stopCap(x,y),1+((u-BUSGONE)/BUSQGAP|0)),bl:0};
+  return{q:u<BUSGONE?0:Math.min(stopCap(c,x,y),1+((u-BUSGONE)/BUSQGAP|0)),bl:0};
 }
 /* ---- the service fleet comes home (iter 204) ---------------------------------------
    Three CIVICDESC lines park a vehicle at a door — the precinct's "Cruisers idle in the
@@ -4653,9 +4714,24 @@ function drawCell(x,y){
         for(const[dx2,dy2]of nbrDirs(y)){const n=cellAt(x+dx2,y+dy2);
           if(n&&n.t===T.ROAD){const[nx2,ny2]=ctr(x+dx2,y+dy2);rdx=nx2-cx;rdy=ny2-cy;break;}}
         if(rdx||rdy){
+          const ich=c.stop===2;                               /* the feeder stop at a railway platform */
           const L=Math.hypot(rdx,rdy),ax=rdx/L,ay=rdy/L;      /* along the street */
-          const sd=((x+y)&1)?1:-1,ox=-ay*3.6*sd,oy=ax*3.6*sd; /* sidewalk side */
-          const x1=cx-ax*2.4+ox,y1=cy-ay*2.4+oy,x2=cx+ax*2.4+ox,y2=cy+ay*2.4+oy;
+          /* Which kerb? It used to alternate on parity — and that quietly threw a third
+             of the city's bus shelters away. The offset is perpendicular to the street,
+             so on an E-W street it lands the shelter either UP the screen (the far kerb)
+             or DOWN it (the near kerb) — and the near kerb is INSIDE the hex in front,
+             which is drawn later and laps over it (hexTile draws at 1.02 precisely so it
+             overlaps its neighbour). Measured over 3 seeds: a near-kerb shelter is
+             invisible 32% of the time against 9% on the far kerb, and that has been true
+             of ORDINARY stops for the artifact's whole life (29% vs 9%) — the interchange
+             rule only made it visible by siting stops downtown, where it bites hardest.
+             So: take the kerb the viewer can SEE. Parity still picks the side when the
+             street runs across the screen (ax~0), where neither kerb is buried and the
+             alternation is free. (Draw order is depth order — iter 206, again.) */
+          const sd=Math.abs(ax)<0.05?(((x+y)&1)?1:-1):(ax>0?-1:1);
+          const ox=-ay*3.6*sd,oy=ax*3.6*sd;                   /* the far kerb */
+          const hl=ich?3.4:2.4;                               /* an interchange shelters a trainful: a longer canopy */
+          const x1=cx-ax*hl+ox,y1=cy-ay*hl+oy,x2=cx+ax*hl+ox,y2=cy+ay*hl+oy;
           ctx.strokeStyle=col('ink',0.8);ctx.lineWidth=0.6;   /* posts */
           ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x1,y1-3.8);
           ctx.moveTo(x2,y2);ctx.lineTo(x2,y2-3.8);ctx.stroke();
@@ -4663,6 +4739,12 @@ function drawCell(x,y){
           ctx.beginPath();ctx.moveTo(x1-ax*0.8,y1-4.4);ctx.lineTo(x2+ax*0.8,y2-4.4);ctx.stroke();
           ctx.fillStyle=col('gold',1.1);                      /* route sign */
           ctx.fillRect(x2+ax*1.2-0.8,y2-3.4,1.6,1.3);
+          if(ich){ /* the interchange totem carries two plates: the bus route below,
+                      and the line running over its head — the one place in the city
+                      where the street network and the railway are named together */
+            ctx.fillStyle=col('teal',1.05);
+            ctx.fillRect(x2+ax*1.2-0.8,y2-5.1,1.6,1.3);
+          }
           if(LITAMT<0.55){ /* the day buses: a queue builds, and a bus takes it away */
             const WC=['coral','teal','lav'];
             const{q,bl}=stopQueue(c,x,y);
@@ -7117,7 +7199,15 @@ function describeTile(c,x,y){
   if(c.t===T.ROAD&&c.treed){const n=boulevardSize(x,y);
     data.push(['Length',n+(n===1?' block':' blocks')]);}
   if(c.t===T.ROAD&&c.stop){const{q,bl}=stopQueue(c,x,y);   /* live, like Tide (iter 97) */
-    data.push(['Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);}
+    data.push([c.stop===2?'Interchange':'Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);}
+  /* an interchange exists because a railway platform reached for this street
+     (iter 211), so it can say which line it feeds — recomputed live off the same
+     m.sta every other reader shares, never a stored string (iter 105) */
+  if(c.t===T.ROAD&&c.stop===2)for(let k=0;k<monos.length;k++){
+    const m=monos[k];
+    if([...(m.sta||[])].some(i=>{const[sx2,sy2]=m.path[i];return hexDist(x,y,sx2,sy2)<=STOPR})){
+      data.push(['Feeds','Line '+(k+1)+' of '+monos.length]);break;}
+  }
   /* the woods keep books the diorama never showed: how big a stand is, how far
      its canopy has closed, whether it is sheltered enough to turn old-growth.
      Every predicate here is the one the DRAW or tick() uses, so the tooltip can
@@ -7418,7 +7508,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)||(n==='highst'&&c.hstr)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='interchange'&&c.stop===2)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)||(n==='highst'&&c.hstr)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sand:c.sand,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 /* test hook: locate every town-hall clock face + its live hand (iter 149). sx/sy
