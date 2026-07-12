@@ -12784,3 +12784,147 @@ and it is banked below rather than papered over.
 **Verdict: DEEPENED.** The beach now answers both its signals: the sun brings the parasols out,
 and the tide decides where they stand.
 
+## Iteration 202 — the twentieth step-back finds a clean city and a lying camera (2026-07-12) [holistic step-back]
+
+**Vector** — holistic step-back (the 20th; 197 was the 19th). No domain lap, no city change: `solvista.html` is
+**byte-identical to iter 201**. Two harness probes added.
+
+**Census** — PASS, no page errors, every metric flat (baseline pinned on the same HEAD, so a flat read is the
+correct one). Seasons alive: `probe-season` FARM winter→dry-peak **88.4** (the ledger's own expected value),
+ROAD control 0.5–2.1.
+
+**Perf — the finding. THE PER-LAP GATE IS STRUCTURALLY BLIND TO COMPOUNDING.**
+SKILL.md mandates an interleaved A/B against a *same-session pristine control*, and a step-back sets `REF` to the
+previous step-back. Done that way, the last lap is free — and that verdict is *true but useless*:
+
+| REF (step-back) | iters in arc | day | night |
+| --- | --- | --- | --- |
+| 197 `08cc77b` | 3 (199,200,201) | **+0.4%** | −1.1% |
+| 192 `d8819ec` | 10 | +5.2% | +2.1% |
+| 177 `7e2ac2c` | 25 | +7.5% | +4.1% |
+| 162 `5f01426` | 40 | **+8.6%** | **+5.7%** |
+
+All four measured interleaved against the *same* HEAD, same box, same load. The drift is ~**0.2%/iteration** — which
+is *permanently* beneath the noise floor of the 3-iteration A/B the loop is told to run, so every lap can be honestly
+graded "free" while the arc costs 8.6%. **A step-back must price the ARC, not the lap.**
+
+To spend that finding you need a SUSPECT, and 198's law says measure it, don't infer it. New
+**`probes/probe-drawbudget.mjs`** censuses the whole frame in ONE render, exploiting 198's cost model (the unit of
+cost is the **path object rasterized**, so path-object *count* is a cost proxy). It wraps the ctx terminal ops and
+attributes each to the artifact fn that issued it (leaf) and to the fn `render()` called (family):
+
+- `drawCell` is **93.8% day / 95.1% night** of all path objects. Entities (vehicles, peds, boats) are a rounding error.
+- Day leaves: `prismS` **35.7%** + `bandS` **23.6%** + `hexTile` **17.7%** = **77% in three geometry primitives** —
+  i.e. the *static terrain*, re-rasterized every frame although only the light changes.
+- Night leaves: `winBandR` **32.6%** — **43,421 path objects from 2,672 `fill()` calls**. That is 198's law made
+  visible: batching into one `fill()` does not reduce cost, the ellipses/rects are still rasterized.
+- **The proxy is CALIBRATED:** `shadS` (194's tree shadows) = **2.7%** of day path objects, and 197/198 *measured*
+  its removal at **−2.8/−3.1%**. Count predicts time.
+
+⇒ **SUSPECT NAMED, FIX NOT MANDATED** (198's law — 197 mandated a fix and burned 198 disproving it). Note the split:
+the *drift* lives in the ornament layer the loop keeps adding, but the *mass* (77%) is static terrain that predates
+the loop. Clawing back the drift means un-shipping features; the money is somewhere no lap has looked.
+
+**Visual — FOUR agent reads, TWO false FAILs, and BOTH were the instrument, not the city.**
+The first pass (shoot.mjs + `?t=`/`?year=`) FAILed on both seeds, both agents independently: *"no sun, the golden
+frame renders as NIGHT"* and *"winter is indistinguishable from summer"*. Both were **correct about the pixels and
+wrong about the cause** — I had shot the wrong frames:
+
+1. **`t=0.80` is night.** The artifact's own `phaseWord()` returns `'night'` for `t>=0.80`, and `SUNDN=0.78` means the
+   sun block *"draws nothing whatever"* past it (its own comment). I guessed the golden-hour pin. Reading `GWARM`
+   off the light curve shows it peaks at **0.786 at t=0.70** — golden hour is `[0.55,0.70)`, nowhere near 0.80.
+2. **`?year=` DRIFTS.** `playing=true` + `shoot.mjs`'s wait advances `year += dt*speed/6` ≈ **0.167 yr/s** (L7095), so
+   the summer pin drifted toward autumn and the *winter* pin drifted into **spring** — which is exactly why an agent
+   reported the farmland looked **"inverted"**. This is **iter 139's trap**, which the ledger DOCUMENTED and never
+   fixed at source, so the step-back recipe kept telling every iteration to pin with `?year=` anyway.
+
+New **`probes/shot-stepback.mjs`** fixes the camera: freezes the world in-page (`playing=false` → L7092 stops both
+clocks), `genWorld`+`__warp`+`__setYear`+`__setTime`+`render()`, no wait, and `page.screenshot()` (DOM-composited,
+per 200's law that the user sees canvas **plus** placard). Its pins come from the light curve, not a guess, and each
+frame **self-reports** its state (`golden t=0.68 LITAMT=0.28 GWARM=0.72 sun=UP phase=golden hour`).
+
+Re-shot, both seeds **VISUAL: PASS**. The locate-don't-judge check is the proof: two blind agents put the sun at
+**(0.386,0.104)** and **(0.39,0.105)**; the shipped formula at `sunP=0.863` gives **(0.388,0.107)** — within 0.003.
+Seasons now plainly visible to the agents too (bare ploughed farm, darker/bluer canopy), matching `probe-season`.
+
+**⚠ BANKED CUE (for a Transport/Sky lap, not for tonight).** Both agents, both seeds, unprompted: a long thin dark
+line reads as drawn **over** the towers and out across sand/water — *"stray thread"*, *"floating line"*. **The naive
+explanation is already DISPROVEN:** `drawMonoAt`/`drawGondAt` are called *inside* the row loop immediately after
+`drawCell(x,y)` (L6218–6223), so the aerial lines are row-interleaved and do respect z-order. Real, unexplained,
+**and it must be PROBED** — do not redesign on the agents' say-so (108/120's law).
+Second, softer cue (both agents): the **golden-hour frame is muddy** — the landmass takes a brown-mauve wash that
+flattens colour separation. That is a Sky × Polish target with a ready-made gate (`GWARM`).
+
+**Verdict** — **FIXED** (the harness, not the city). The city itself gets a clean bill: census PASS, seasons alive,
+both seeds VISUAL PASS at 3 lights × 2 calendars. The step-back's *own instruments* were producing false FAILs and a
+perf gate that could never see its own drift; both are now measured, fixed, and committed as tracked probes.
+
+
+---
+
+## Header bullets rotated out at iteration 212 (the 22nd step-back)
+
+The maintained header hit its 400-line budget, so per SKILL.md step 5 ("to add a line, cut a line — MOVE
+superseded bullets, never delete") the following were moved here to make room for 212's step-back recap and
+its three new cues (q)/(r)/(s). Preserved verbatim.
+
+**207's step-back recap (superseded by 212's, which prices the same arc against the same refs):**
+
+> **207 (the 21st) = a CLEAN BILL on the city, and the PERF ARC IS PRICED AND ACCEPTED — no fix lap is owed.**
+> Both seeds PASSed all 4 frames; no feature has compounded into clutter or darkness; both agents independently
+> located the golden-hour sun at **x=0.39, y=0.10** (the locate-check working). Perf: the **lap** (203-206) was
+> **free** (day +0.3%, night +1.0% vs 202) — no surprise, since 203 and 205 both reverted. The **ARC** vs
+> `7e2ac2c` (177, 30 iters) reads **day +7.2% / night +5.1%**, and vs `5f01426` (162, 45 iters) **day +9.5% /
+> night +6.0%** (absolute: day 38.3ms · night 44.2ms). **The number that matters is that 202 read those SAME two
+> refs at +7.5/+4.1 and +8.6/+5.7** — so five laps on, the arc has moved **~+0.9% day and is NOT accelerating.**
+> Still ~+0.2%/shipped-lap; **priced and ACCEPTED.**
+
+**Sky's moon — CLOSED (135 fixed it, 144 named it). Only the banked SEASON-word cue survives in the header:**
+
+> (**Sky's moon is FIXED (135) and now NAMED (144).** 135 re-clocked the moon's phase onto the slow `dayT`
+> (~110 s/cycle) not the fast `year`, killing the ~2 Hz strobe; 144 shipped the moon-only HUD card 135 had banked —
+> the census strip's 2nd stat reads `NN% / <phase>` from `moonWord()` off that same slow clock, a fifth reader of
+> the one field (`probe-moonhud`: 1 transition/6 s at 8x, 8/8 phases, night agent confirmed card=disc).)
+
+**211's bus-shelter kerb finding (the LAW is promoted to SKILL.md; this is the measurement that bought it):**
+
+> **(1) THE BUS SHELTER HAD A LATENT DRAW BUG, OLDER THAN THIS VECTOR AND NOW FIXED** — its sidewalk offset
+> `sd=((x+y)&1)` put half the shelters on the **near kerb**, i.e. inside the hex in front, which is drawn later
+> and laps over them (`hexTile` draws at 1.02 to overlap on purpose). Near-kerb shelters were invisible **32%**
+> of the time vs **9%** far-kerb — **and that was already true of ORDINARY stops (29% vs 9%) for the artifact's
+> whole life.** The draw now takes the kerb the viewer can see.
+
+**210's stubbed-stream finding (the LAW is promoted to SKILL.md):**
+
+> **(2) A STUBBED SHARED `Math.random` CAN HIDE YOUR TREATMENT, not merely spoil a control** (204's law one rung
+> down). Keeping the draw COUNT identical made both builds read the SAME `r` per resident, so on quiet ground they
+> hid **identical sets** and the first visual gate saw *nothing*. Its curfew detail: each resident keeps their own
+> `out` (`curfewAt` = `CURF0+CURFB*buzzN(anchor)+jitter`) and is hidden once `nightAmt()` passes it; the joggers
+> carried the identical `LITAMT>0.75` + fixed coin — the whole field was out running at 3am, and on seed 7 that
+> coin hid **nobody, ever**.
+
+**Cue (g)'s line-number catalogue (STALE — the file has grown ~1.5k lines since 113; the header now carries the
+grep that regenerates it, which is the part that keeps working):**
+
+> - **Presence decisions:** **L2747** `hashCell(x,y,77)<0.28` — which surf cells catch the city's light-smear at
+>   night.
+> - **Ornament jitter:** kelp sway **L2799**, palm fronds **L2832 x2 / L2834 x2**, orchard fruit **L3248/3249**,
+>   **park fireflies L3423 x2**, **L3610/3613**, **L5113/5117**. The marsh reed tufts were CLOSED by 113 (its lean
+>   salt `hashCell(x,j,7)` took no `y`, so every marsh hex in a column leaned identically). The tower window-lights
+>   (`hashCell(x,z|0,3|5|9|13)`) were CLOSED by 110, folded into its TOWER Polish; they now mix `seedNum`.
+> - Old (undercounting) pattern, kept for the record:
+>   `grep -nE 'hashCell\([^)]*,[[:space:]]*(0x)?[0-9]+\)' … | grep -v seedNum` — matches only a bare integer salt,
+>   so every `k+90` / `j+40` / `r*3+cc+50` form was invisible, incl. two of the marsh's own three.
+
+**Misc. rationale, now history:**
+
+> **Interaction/UX is now a column** (added iter 97). It was a documented *kind* that lived only in the bullet
+> below, so a domain touched by an Interaction vector still looked untouched to step 1's rotation scan.
+>
+> (Perf, 117:) brace the shell interpolation (`/tmp/$v117.html` silently measures one variant six times). Full
+> reasoning rotated at 199; 199's inert-regime law tells you how big the noise floor actually is on the day you run
+> it.
+>
+> (206/204:) **204's buried service bays (cue n) are the same defect one domain over.** GARDEN's seasonal cue is
+> UNBLOCKED (host fixed) and MEASURED (dry-peak shift 1.8 = ROAD-level) — see cue (p). The fire CA's `T.MARKET`
+> parallel: fully drawn, three labels boasting about it, and it never runs.
