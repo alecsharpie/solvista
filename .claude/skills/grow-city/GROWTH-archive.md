@@ -11058,3 +11058,117 @@ iconic timepiece. Draw-nothing tooltip, pop+stream flat, ~10 lines + a probe + a
   was spent (additive/Polish) or hot (Deepen). When rotation names a domain but its non-repeated kinds are all
   saturated-or-hot, repeating the one open kind on the owed domain beats forcing a weak change of a worse kind.
 
+
+## Header bullets rotated out of GROWTH.md's State-of-the-city at iter 195
+
+(Moved, not deleted — the header is a fixed 400-line budget, so adding 195's lines
+meant cutting these. They were superseded by the ROTATION bullet and by the current
+step-back pointer: they still named iteration 182 as "the next step-back" and lap 160
+as the next domain lap, long after both had happened.)
+
+  **⚠ Iteration 182 is the next holistic STEP-BACK** (…/**157**/**162 done**/**167 done**/**172 done**/**177 done**/**182**) — not a domain lap; see the recipe
+  below (night + season, day frame off January, interleaved perf). **162 was the mandated step-back (SEVENTH clean bill,
+  perf 157→161 flat day / +1.1% night, seasons alive, night core located both seeds). 163 took People × Polish
+  (static-crowd contact shadows, closing 137); 164 took Transport × New element (the taxi — a `Math.random`-flagged
+  lemon-yellow cab variety on the car entity).** **165 took Urban × Deepen (COM rooftop mechanical plant); 166 took Nature × Deepen (AUTUMN LEAF LITTER on the FOREST floor — the season-complement of 156's spring bloom, `autumnFall()` centred on the same s≈0.87 the canopy ambers on, draw-only stream+pop-neutral; `probe-autumnfall` FOREST 11.8/11.4% autumn → 0/0 summer — the forest floor now keeps a full four-season calendar). 167 was the mandated STEP-BACK (clean); 168 owes Civic (158).** **155 took Transport × Deepen (the tram catenary, the
+  149 draw-tell); 156 took Nature × New element (spring wildflower understory on the FOREST floor — 127's
+  surface-not-entities law, forest=69 hexes vs garden=2). 157 was the mandated STEP-BACK; 158 took Civic × Deepen
+  (the observatory dome rotates to track the night sky — 149's banked draw-tell); 159 took Water × Deepen (the surf
+  glows at night, `probe-biolum`); the next lap (160) owes the stalest domain, Urban (151)**, then Sky (153).
+
+## Iteration 185 — wind-driven whitecaps break on the open swell (2026-07-12) [Water & coast × Polish]
+
+**Vector — Water & coast × Polish** (SHIPPED). Rotation named the stalest domain, **Water** (last SHIP 176; the 184
+entry explicitly owed the 185 lap to Water). On *kind*: Interaction/UX just ran twice (183/184) and Deepen has been
+globally hot (178/179/181), so both were avoided; **New element** was ruled out because the guidance warns against
+piling more entities onto a saturated coast (the coast already carries boats/ferries/freighters/surfers/dolphins/
+whales/herons/kayaks/kites). **Polish** — improve an existing surface, add nothing — is the fresh, on-guidance kind,
+aimed at the biggest untouched *surface* rather than an entity (127's surface-not-entities law).
+
+**The seam — the daytime mid-ocean read flat.** The open sea is already rich (depth-graded tone 116, sparkle,
+noon cool glitter 150, golden-hour glints 181, night moonglade + biolum surf 159, a traveling surf break). But all
+of those are either noon-only (glitter), dawn/dusk-only (gold), night-only (moonglade/biolum), or at the *beach*
+edge (surf break). On a plain daytime afternoon the **open water between the surf line and the noon-glitter zone**
+had no sense of a breeze — flat teal with only the faint static sparkle line (L3161). The one genuine daytime gap.
+
+**Change (~20-line draw, all draw-only).** In the `T.WATER` case, after the sparkle: on **open water only**
+(`!c.riv && rDeep[idx(x,y)]>SHELF1` — beyond the coastal shelf, so not in the shallows/surf zone), sparse **whitecaps**
+gated `hashCell(x,y,seedNum^0x7CA9)>0.76` (~24% of open cells, seeded so no two cities cap alike and it perturbs no
+`rng()`), each breaking on a `waveT`-driven `crest` phase (only when `crest>0.5`) as a small foam ellipse + a short
+streak down the swell face. **Day-only:** gated `LITAMT<0.6` with the alpha fading `*(1-LITAMT/0.6)`, so the caps
+melt away by dusk and the night frame is byte-unchanged (hands off to the moonglade/biolum — nothing added to the
+night, respecting the "night-glow run is getting full" watch of 175). No tile / entity / `rng()` / `hashCell`-terrain
+/ `tick()` pass / terrain change; strings pure-ASCII (134). Pop + stream provably flat. (Tuned once: first cut read
+"faint/understated" to the visual agents — bumped per-cap size 2.6->3.0 and alpha 0.42->0.55, **size not density**,
+so it reads clearer without becoming a busy speckle.)
+
+**Census.** PASS, exit 0, pageerrors 0. Tile histogram **empty**, all core metrics **+0**, entity counts identical
+(`greenRoofs -1`/`towerHt -1` = documented RAF tick-count jitter, touches no `rng()`). Vacuous by construction
+(draw-only) — the probe is the gate.
+
+**Probe — `probes/probe-whitecap.mjs` (new, promoted; adapted from `probe-seagold.mjs`, the open-water build-vs-build
+template).** Diffs PATCH vs pristine HEAD over water-cell screen boxes at a frozen frame, day/noon/dusk/night, with
+**two** controls: SHELF (shallow water `rDeep<=SHELF1`, must stay ~0 — proves the *depth* gate) and LAND (RES/FOREST/
+MID, must stay 0 — the WATER case is the only edit). Rebuilt in-page (`genWorld`+`__warp`), STARS cleared,
+`Math.random` stubbed, movers cleared, clock+`waveT` frozen (163 law) so a same-frame PATCH-vs-HEAD diff is exactly
+my code. seeds 7/42/1234: **SEA caps DAY 0.23/0.21/0.29% · NOON 0.24/0.21/0.30% -> DUSK 0.07/0.07/0.10% -> NIGHT
+0.00% all** (the `LITAMT` day-gate); **SHELF control <=0.07% every frame** (caps are offshore only); **LAND control
+0.00% every frame, every seed**. Clean three-way separation SEA >> SHELF >> LAND. **VERDICT: PASS (3 seeds).**
+
+**Visual.** Coast clips (181's zoom-fairness law: judge a water ornament at coast zoom) both seeds + a whole-city
+`wide`, day. Five agent reads across two rounds, all **VISUAL: PASS**: whitecaps read as **scattered small white
+dabs/streaks on the open teal sea** (not a uniform sheet, no repeating stripes), **correctly placed** out on the open
+water away from the beach/surf line — none on land/beach/river/boats, and distinguishable from the triangular
+sailboats and buoys; **no z-order tears / floaters / blown-out white**; the sea still reads as a coherent graded teal
+ocean. Whole-frame agent: balanced beautiful coastal city, the sea "not speckled or busy," stat strip crisp, no `Â·`
+mojibake. Prominence rose from "faint/understated" (first cut) to "just right, slightly faint" after the size/alpha bump.
+
+**Verdict — SHIPPED.** The open mid-ocean — flat teal on a plain daytime afternoon, between the beach surf and the
+noon glitter — now grows sparse wind-driven whitecaps that break and fade with the swell, seeded per-city and gone by
+dusk. A Polish of the biggest untouched water surface, draw-only, pop + stream flat, ~20 lines + a probe. Water's
+Polish cell gains 185 (…**150**, **185**). The next domain lap (186) owes **People (178)**, then Transport (179)/Urban
+(180); step-back still at **187**.
+
+### Findings for later laps
+- **A "SATURATED COAST" IS SATURATED IN ENTITIES, NOT SURFACES — the open-sea SURFACE was the clean Water lap.** The
+  header repeatedly warns against piling more entities onto the coast, and the coast's entity list is genuinely spent.
+  But the *open-water surface* (350+ hexes/city) had one un-lit daytime state, and a draw-only Polish of it added life
+  with zero new entities and zero clutter risk (127's law, applied to Water: the surface-not-entities move is the way
+  past a coast that's full of craft). When Water comes up again, look for another *surface* state (the beach dry sand,
+  the dune face, the rock armour) before reaching for a new floating thing.
+- **A DAY-GATED WATER ORNAMENT IS THE CLEAN COMPLEMENT TO A SATURATING NIGHT-GLOW RUN.** 175 flagged the night-mood
+  glow run (moon/stars/observatory/biolum/amphitheater/parliament/bridge lamps) as getting full. Whitecaps gate the
+  OTHER way — `LITAMT<0.6`, present by day, byte-unchanged at night — so they add nothing to the crowded night frame
+  and fill the under-served daytime instead. When a domain's night is busy, its day is where the room is.
+- **TUNE A SUBTLE ORNAMENT BY PER-INSTANCE SIZE/ALPHA, NOT BY DENSITY.** The first cut read "faint" to two agents; the
+  fix was to enlarge and brighten each cap (2.6->3.0, alpha 0.42->0.55) while keeping the `hashCell>0.76` count fixed,
+  so it reads clearer without tipping into a busy speckle (the whole-frame agent had confirmed headroom: "not speckled
+  or busy"). Raising the count would have risked the clutter the whole-frame gate exists to catch; raising the
+  per-cap presence does not.
+- **`probe-seagold.mjs`/`probe-whitecap.mjs` are the reusable open-water build-vs-build template** (PATCH-vs-HEAD over
+  `T.WATER !riv` cell boxes at a frozen frame, a depth/shelf control + a land control, day/night frames). For the next
+  open-sea draw vector, clone one: swap the frame set and the target/control cell filters, keep the 163-law in-page
+  rebuild + mover clear + STARS/Math.random stubs that make the diff reproducible.
+
+
+## Header bullets rotated out at iter 195 (part 2): the 'tell' cashing history
+
+(Moved, not deleted. The LAW itself is promoted in SKILL.md ('A label that asserts a
+relationship the draw ignores is a bug'); what lived here was the blow-by-blow of which
+iteration cashed it 5th/6th/7th, which no longer steers a vector. The live residue — which
+tooltips are still mute — was condensed into two lines in the header.)
+
+  **117 cashed the tell a fifth time and it is now the loop's most reliable move**: `TILEDESC` claimed
+  *"Old-growth redwoods"* and *"Wild grass and wildflowers"* while `describeTile` printed only `Value`,
+  though the CA had tracked `c.age`/`c.fire`/`c.bloom`/`c.shroom` since 1974. **Where else does a string
+  assert what the code already knows?** **122 cashed it a sixth time** (`CIVICLABEL`'s one sub for twelve
+  institutions) and found the tell is **self-renewing**: cashing it *created* a new one, since
+  `TILEDESC[T.PLAZA]` still says only *"A paved civic square"* for a square that now knows its institution.
+  **129 cashed it a seventh time** (the orchard's blossom/fruit calendar, mute in `describeTile` since iter 57 —
+  now a `Grove` row) and confirmed its **limit**: of the three mute vegetation tooltips only the orchard's DRAW
+  read `year`, so only it could be un-muted honestly — VINEYARD/GARDEN need a Deepen first (see 129).
+  Un-cashed: `[T.IND]` *"warehouses and light industry"* (not vegetation, no calendar). `[T.VINEYARD]`
+  *"terraced"* is now **CASHED (iter 148)** — a `Vines` season row off `vinePhase()`, mirroring 129's orchard;
+  agriculture's mute-tooltip tell is now spent (only GARDEN remains and its draw is season-frozen, needs a
+  Deepen first). The plaza/quad **titles** are now **CASHED (iter 140)** — an owned square's headline reads
+  *"Town hall forecourt"* / *"Museum grounds"* outright.

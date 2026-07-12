@@ -624,6 +624,28 @@ vector, whatever it is.
   `STARS.length=0` before render, and stub `Math.random` for any residual draw-time randomness. And when the
   feature is genuinely SPARSE (a few host tiles), its whole-frame count sits at the noise floor and flips sign run
   to run — **gate the STRONG instance, report the sparse one directionally + a visual, don't gate noise.**
+  Two more the university lap paid for (iter 195): (e) **a LOUD test must be read against the LOUD COLOUR, not
+  re-run through the same PATCH-vs-HEAD diff.** 195 painted a lantern pure red, compared red-vs-HEAD (139 px) to
+  warm-vs-HEAD (136 px), and concluded the draw was "95% occluded" — **wrong by construction**: both builds change
+  the same pixel *set* versus HEAD, so the totals coincide whatever colour the change is. A direct **count of red
+  pixels** in the loud build (13/85/36) showed it was rendering fine. The diff is blind to *which* colour; only
+  counting the loud colour isolates the draw. Corollary (b) says force it loud — this says how to *read* the loud
+  frame. (f) **`playing=false` is NOT a frozen clock.** `waveT` and `time` keep whatever wall-clock-dependent value
+  the RAF loop reached before the freeze, so two loads render different water: 195's probe had a **10–22 px noise
+  floor of drifting surf** sitting right on top of a 5–47 px signal. Pin `waveT` **and** `time` (163's laws name
+  STARS/movers/`genWorld`, not these) and the unchanged frames go to **exactly 0**. An honest zero is what makes
+  every other number in the probe readable.
+- **A GLOW is a gradient, and it must not outlive the thing it comes from (iter 195).** Two rules, both general:
+  (a) **a flat additive `arc()` is a coin, not a glow** — it has a hard circular rim and it tints whatever sits
+  inside it (195's warm halo turned a green spire olive); an agent called it *"a brown coin pasted on the sky."*
+  Use `createRadialGradient` falling to **alpha 0 at the rim**. The artifact already knew this — the rain
+  damp-patch (~L6216) is a gradient, commented *"soft-edged, or it reads as a decal."* (b) **a halo around a
+  TALL THIN object ORPHANS.** A halo is by construction larger than its lamp, so when a later-drawn neighbour
+  (a lower row — **draw order IS depth order**) covers the lamp, the glow still spills into open sky beside it:
+  a light with no visible source, which is the invariants' "no floating" clause. 195's campanile lamp was
+  *"obvious… reads as LIGHT, no seam"* on seed 42 and **a detached blob hanging in the sky on seed 7**, and a
+  procedural city must hold on **every** seed. **Gate such a glow on there being no taller cell in the rows below
+  — do not just dim it**, and prefer a ground-level host (which is occluded together with its tile).
 - **Every gate this loop owns is FROZEN — a claim about MOTION needs a TEMPORAL probe (iter 134).** The
   census, the standard probe (freezes the clock for a two-render diff), and the visual gate (single
   screenshots) are all blind to *cadence*: a readout or animation can be provably *correct* (134's almanac
