@@ -1034,6 +1034,21 @@ vector, whatever it is.
   Corollary — **a probe measuring a NECESSARY but not SUFFICIENT quantity will happily pass a change the
   eye rejects.** "Is there contrast on the beach" is necessary for the beach to read; *a neon tube also
   has contrast*. The claim was "the beach reads as a beach", and no contrast metric can express it.
+  **⇒ AND THE NASTIEST FORM: A "DISTINCTNESS" METRIC CAN BE *ANTI-CORRELATED* WITH CORRECTNESS — IT WILL
+  REWARD THE VERY BUG YOU ARE FIXING (iter 221).** 214's law says use the right *dimension* (hue, not
+  luminance). 221 got the dimension right and the **relation** wrong, and it nearly failed a correct fix.
+  The night ground plane was rotating green -> **CYAN**, so the standing cue prescribed the obvious gate:
+  *pair PARK<->ROAD separation*. But **a cyan park is maximally far in RGB from its warm tan neighbours** —
+  the hue-rotation bug was *inflating* the number the cue said to maximize, and fixing it moved PARK<->RES
+  **29 -> 25 (down)** while PARK<->ROAD barely stirred (15 -> 16). A gate on neighbour-separation would
+  have read the correct fix as a regression and the bug as healthy. **The claim was never "the park differs
+  from its neighbours" — it was "the park is not GREEN".** ⇒ **For an identity/hue claim, gate on the
+  surface's distance from ITS OWN DAYLIGHT SELF, not from other surfaces**: PARK's night hue went **113deg
+  off its daylight hue -> 20deg off**, which is the claim, stated in its own units. Carry the separations
+  as a *guard* (nothing may fall below the ~15 collapse floor), never as the *score*. **The tell: your gate
+  is a pairwise/contrast/difference metric, and the defect you are fixing is one of the two things being
+  differenced.** (This is why the cue's own suggested gate must be re-derived, not trusted — a cue is a
+  POINTER, NOT A SPEC.)
 - **A FLAT PER-CHANNEL MULTIPLY IS NOT A TINT ON A SATURATED SURFACE — IT IS A HUE ROTATION (iter 214).**
   The night light is applied as `base[i] * TINT[i]`, and `TINT` is named for what it is *meant* to do —
   wash the scene cooler while leaving each surface recognisably itself. Its VALUE cannot do that. The

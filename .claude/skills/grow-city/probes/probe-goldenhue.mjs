@@ -32,7 +32,11 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const PW = join(homedir(), '.claude/skills/screenshot-verify/node_modules/playwright/index.js');
 const { chromium } = (await import(pathToFileURL(PW).href)).default;
 const HERE = dirname(fileURLToPath(import.meta.url));
-const PAGE = pathToFileURL(join(HERE, '../../../../solvista.html')).href;
+/* SRC=<path> grades an arbitrary build (e.g. HEAD materialized to /tmp) WITHOUT ever
+   overwriting the artifact — 197's corrupted-control-file landmine is a probe that
+   /bin/cp's HEAD over solvista.html and is killed before it restores. Default: the
+   working tree, resolved relative to the probe (never an absolute path). */
+const PAGE = pathToFileURL(process.env.SRC || join(HERE, '../../../../solvista.html')).href;
 
 const SEEDS = [7, 42, 1234];
 const WARP = 61;

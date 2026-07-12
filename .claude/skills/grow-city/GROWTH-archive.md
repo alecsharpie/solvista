@@ -13854,3 +13854,123 @@ only the live warnings.
 > and COM is the TOWER SUBSTRATE — so it cost 14-27% of the pop while *LOSING* core towers** (42→29/38/32/33), and
 > flattered the ratio, which is 218's own sin. A **wider falloff** is the other trap: it lifts the whole city and
 > **doubled the rim** (148→205).
+
+## Iteration 211 — the buses come to the trains (2026-07-12) [Transport × Connect]
+
+**Vector.** Transport × Connect. Rotation owed Transport (stalest: 203, and that was a REVERT, so
+its last SHIP was 193), and its banked cue — the sub-pixel tramway — is explicitly a `polish-tile`
+job, not a growth lap. Within the row, **Connect** was the cold cell that fits: its trick is that it
+adds NO NEW OBJECT, it closes a gap between two that already exist. The last three ships were all
+Deepen, so the kind rotates too.
+
+**The gap, measured before designing a line (`probes/probe-interchange.mjs`).** `recount()` builds
+ONE transit reach map from stations UNION bus stops — `reachFill(rTransit,2,(c,i)=>stations.has(i)||
+(c.t===T.ROAD&&c.stop))` — so the *model* already asserts an integrated transit system. But the two
+were sited by rules that had never heard of each other: stations are monorail stops with >=3
+developed neighbours; bus stops were `hashCell(x,y,seedNum^0xB5B5)<0.05`, **a blind 5% coin on the
+road grid**. They met only by chance, and the number is exactly that: **3 of 55 stations across 6
+seeds had a shelter within a hex — 5%, the coin's own base rate.** Three seeds in six had **no
+interchange at all**. This is the derived-field mirror of the label-tell: a *field* asserting a
+network the geometry never built.
+
+**Change.** A station now claims a nearby street as a feeder stop (`c.stop=2`; ordinary shelters
+stay `1`, so every existing truthy reader — `rTransit`, `stepVehicle`, the draw — is untouched).
+Three things share one definition rather than drifting:
+- **`STOPR=2`** — the search radius is not a new number, it is `rTransit`'s own reach, so "close
+  enough to feed the platform" and "close enough to count as served" are ONE predicate (112's law).
+  `recount()` now reads `STOPR` too.
+- **`stopOK(x,y,c)`** — the eligibility test was inline in the coin; the interchange needed the same
+  question, and a second copy would have drifted. Factored once.
+- The draw reads `c.stop===2` for a longer canopy + a two-plate sign totem (the bus route below, the
+  line overhead); `stopCap` gives it 2..4 waiting instead of 1..3 (a train just unloaded — and this
+  is deliberately NOT the city-wide bump iter 98's law forbids: it lands on the ~5 feeder stops a
+  city has, not under every canopy). Tooltip: `Interchange` + `Feeds — Line N of M`, recomputed live
+  off the same `m.sta` every other reader shares (105). `__find('interchange')` for the camera.
+
+**Census.** PASS, and flat by construction — `c.stop` is a flag, not a tile; the rule draws no
+`rng()` and moves no terrain. pop/roads/developed all **+0**, tile histogram empty. Correctly
+vacuous: it proves only that the page did not throw. **The probes are the gate.**
+
+**Probe — coverage (`probe-interchange.mjs`, 6 seeds).** Stations with a bus stop within `STOPR`:
+**13/55 (24%) → 51/55 (93%)**, and 93% is **exactly the terrain CEILING** (51 of 55 stations have
+*any* eligible road within 2 — the other 4 stand over park or unbuilt edge). Within 1 hex: 5% → 38%.
+Two controls held: the ceiling is terrain-derived and **did not move** (56%/93% in both builds, so
+nothing perturbed the world), and **163/163 blind-coin shelters still stand** — an interchange
+PROMOTES a shelter or adds one, it never destroys one (recomputed independently, per 122).
+
+**⚠ THE VISUAL AGENT WAS RIGHT AND THE FIRST DESIGN WAS WRONG — and the cause it named was still
+wrong.** Seed 42 FAILed: *"no canopy, no posts, no totem; only three queue figures, clipped at the
+waist."* It blamed a z-order tear. It was not one — but the SYMPTOM was real, and chasing it found a
+**bug older than this vector**:
+- **`probes/probe-ichvis.mjs`** (two z-orders: `occluded% = 1 - inkInPlace/inkOnTop`, per 203's
+  `probe-gondz`) measured the naive nearest-wins rule at **58% mean occlusion, 17 of 42 rendering
+  under 20px of ink**, against **24%** for the ordinary-shelter control. A station needs >=3 developed
+  neighbours, so it stands in dense fabric **BY CONSTRUCTION** — 206's law, one domain over.
+- **Single knockouts could not find the occluder** and said "nothing covers it" — flattening every
+  cell in an 11x13 block, every entity array, the monorail and the cable car, one at a time, never
+  gave the shelter back. That was an instrument failure, not a finding (see the law below).
+- The real mechanism, found by replaying the draw's own geometry (`probes/probe-kerb.mjs`): the
+  shelter is offset to a sidewalk side by `sd=((x+y)&1)?1:-1`, and on an E-W street that lands it
+  either UP the screen (far kerb) or DOWN it (**near kerb — inside the hex in front, which is drawn
+  later and laps over it**; `hexTile` draws at 1.02 precisely so it overlaps its neighbour). Measured
+  over 3 seeds: a near-kerb shelter is invisible **32%** of the time against **9%** on the far kerb —
+  **and that was already true of ORDINARY stops (29% vs 9%), for the artifact's whole life.** A third
+  of the city's bus shelters have been drawing themselves under the pavement in front.
+
+**Fix (two levers, both measured, both PREFERENCES not gates).**
+- **The draw takes the kerb the viewer can SEE** (parity still picks the side where the street runs
+  across the screen and neither kerb is buried). This fixes every shelter in the city, not just the
+  new ones: the ink gap between the two kerb classes **closed from 28 to 9** (near 120→134, far
+  148→143) and ordinary mean occlusion fell **24% → 18%**. Real, and partial — the kerb was never the
+  whole cause.
+- **`frontLoad(x,y)`** (new, beside `openFront`) — the siting rule prefers a street the city has not
+  built in front of. `openFront` is a boolean on the row at dy=+1 and **misses a TOWER two rows in
+  front**, which is tall enough to reach up the screen anyway (11 of 42 were invisible WITH
+  `openFront` true). `frontLoad` weights two rows, first row double. Shipped as a **preference**
+  (`frontLoad*20 + d*10 + hash`), never a gate — 206's hard gate starved the rule it was fixing, and
+  here a gate would cost the coverage that IS the vector.
+
+**Net (probe-ichvis, 4 seeds).** Interchange mean occlusion **58% → 36%**, fully-buried (>=86%)
+**17 → 8**, ink shown **94 → 136** — against the ordinary control's 144, i.e. **near parity**. And
+coverage never moved off its ceiling: **93%** throughout. The residual is terrain, not rule: a
+platform downtown genuinely has towers around it.
+
+**Visual.** Re-shot with `probes/shot-interchange.mjs` (locates a real interchange AND the station
+that claimed it, and frames the PAIR — a frame with only the shelter in it would prove nothing).
+Both seeds **PASS** on the re-read, and both agents *located* it unprompted: seed 7 — *"at the foot
+of the monorail pillar, ~20px below the beam; canopy, two posts, 3-4 figures, and the gold plate with
+a teal plate above it"*; seed 42 — *"directly below the station, ~1 hex south, exactly as intended"*,
+the very cell that had read as *"legless torsos on a tower roof."* Whole-frame reads clean on both.
+**Banked caveat:** at 5.2x the two-plate totem is hard to resolve among towers — it is ~2px.
+
+**Verdict: SHIPPED.** Perf not owed (212 is the step-back); the change adds ~2 path objects at each
+of ~5 interchanges and one `frontLoad` sweep per station per *tick*, not per frame.
+
+
+<!-- header bullets rotated out of GROWTH.md at iteration 221 (budget: 400 lines; MOVE, never delete). Preserved verbatim. -->
+
+Cue **(aa)**'s full body, superseded by 221's night-wash-ladder bullet (which states the shared
+`washRGB` + per-identity gain triple that generalizes it). Kept for the record:
+
+> **(aa) CLOSED by 220** (RES+MID masonry -> `sandCol()`; RES<->ROAD night **6 -> 16**, day 22). ⚠ **`sandCol()` IS THE
+> CITY'S GENERAL WARM-SURFACE NIGHT WASH, not a sand function** — generic over any `BASE` name, **free** (colour-only,
+> zero path objects), and **byte-identical in daylight** (`w=0` below `LITAMT` 0.35), so it is a **free dead-regime
+> control**. **Route any rotated WARM surface through it; do NOT fork a second wash.** ⚠ **GLASS (TOWER/COM) KEEPS the
+> cool tint** (holds chroma 19->17, cannot rotate) — warm-masonry-vs-cool-glass is now what makes the night read, and
+> **ROAD staying grey is CORRECT** (214).
+
+Cue **(ad)**'s full body, closed by 221 (the fix shipped; the cue's *prescribed gate* was refuted —
+see 221's entry and the SKILL.md law it promoted):
+
+> **(ad) 🔴 THE GROUND PLANE IS STILL ROTATED — the built mass is fixed, the surface it stands on is not (220, Nature/
+> Urban × Polish; 220's direct sequel and the LAST rung of 214's ladder).** Two blind agents, two seeds, unprompted, on
+> a PASSing frame: *"hazy-violet mid-block interiors"* (7) and *"a violet/blue-grey ground plane"* (42). `probe-goldenhue`
+> names it: **PARK rotates green -> CYAN (hue 81 -> 206), chroma crushed 46 -> 6**; FOREST 52 -> 6 — the greens invert
+> channel order (G>R>B -> G>B>R) exactly as the warm neutrals did. ⚠ **NOT a straight `sandCol()` swap:** its wash leans
+> *warm* (`[.504,.473,.464]`), right for masonry and **wrong for grass** — a green needs an order-preserving wash of its
+> own, or `sandCol` a neutral variant. ⚠ **A cool ground UNDER warm buildings is CORRECT and must survive the fix** (it
+> is what the built mass now pops off) — **the target is the CYAN, not the coolness.** Gate in colour units (214), pair
+> PARK<->ROAD (night 15, day 50).
+
+(221's note on that last clause: the fix *did* keep the coolness — green is cooler than tan — and the
+"neutral variant" guess was measured and rejected as under-restoring. The gate clause was the error.)

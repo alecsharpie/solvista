@@ -455,12 +455,52 @@ function setLight(dl){ /* called every frame — only flush the color cache when
   if(dl.lit===LITAMT&&dl.tint[0]===TINT[0]&&dl.tint[1]===TINT[1]&&dl.tint[2]===TINT[2])return;
   TINT=dl.tint;LITAMT=dl.lit;CCACHE={};
 }
+/* THE GREENS TAKE THEIR NIGHT WASH FROM THE PALETTE, NOT THE CALL SITE.
+   A flat per-channel multiply is not a tint on a surface whose identity is a HUE — it is a
+   hue ROTATION (iter 214; see sandCol below). The night tint [.42,.42,.58] is brutal on green
+   specifically: it crushes G's warm neighbour R by .42 while LIFTING B by .58, so B overtakes
+   R and the channel order goes G>R>B -> G>B>R. EVERY green in the palette inverts that way —
+   grass, grassDk, lawn, meadow, canopy, canopyLt, turf, sage, sprout — which turns the whole
+   ground plane CYAN after dark: PARK measured hue 81 -> 206 with chroma crushed 46 -> 6,
+   FOREST 52 -> 6. It is iter 220's bug on the surface the city STANDS on, and two step-back
+   agents named it unprompted, on two seeds ("a violet/blue-grey ground plane").
+   Iter 220 made the WARM wash opt-in per call site, and rightly: cream/white/deck are shared
+   between masonry, boats, foam and signage, so only the caller knows if it is drawing a wall.
+   Green carries no such ambiguity — in this city a green surface is ALWAYS something growing,
+   and there is none that should read cyan. So col() dispatches on the NAME, and no future
+   call site can reintroduce the rotation by forgetting to ask for the right wash. */
+const LEAFN=new Set(['grass','grassDk','lawn','meadow','canopy','canopyLt',
+                     'conifer','coniferLt','turf','sage','sprout']);
 function col(name,f){ /* f: face brightness */
   const k=name+'|'+f;
   let c=CCACHE[k]; if(c)return c;
+  /* The gain is sandCol's OWN vector, PERMUTED to the channel order a green wears. That wash is
+     not arbitrary warmth: it gives the strongest gain to the channel carrying the surface's
+     IDENTITY — for sand that is R (its max), crushed .42 by the tint. A green's identity channel
+     is G, which the tint crushes by exactly the same .42, so the symmetric restoration is the
+     same triple read in the green's own order (G max, R mid, B min) — which every entry in LEAFN
+     wears. A FLAT (1,1,1) wash was measured first and is hue-EXACT but under-restores: it leaves
+     PARK at chroma 10, a dark grey with a hint of green, and the cue's own gate (PARK vs ROAD)
+     does not move. This lands the greens at chroma ~34, where iter 220's masonry (34) and 214's
+     sand (37) already sit — so every surface the night has been taught to keep now keeps it by
+     the same rule and to the same degree. The ground stays COOLER than the warm-washed masonry
+     standing on it — because green simply IS cooler than tan — so the built mass still pops off
+     it (220): the bug was the cyan, never the coolness. */
+  if(LEAFN.has(name))return CCACHE[k]=washRGB(BASE[name],f,1.08,1.15,1.06);
   const b=BASE[name];
   c='rgb('+Math.min(255,b[0]*TINT[0]*f|0)+','+Math.min(255,b[1]*TINT[1]*f|0)+','+Math.min(255,b[2]*TINT[2]*f|0)+')';
   return CCACHE[k]=c;
+}
+/* The hue-preserving night wash, shared by every surface that has one (one mechanism, one
+   definition — the callers differ ONLY in their per-channel gain on the wash's luminance:
+   a WARM lean for masonry and sand, FLAT for anything that grows). Crosses over at the same
+   0.35 LITAMT cut the lit glass and civOpen() use, so DAYLIGHT RUNS BYTE-IDENTICAL CODE
+   (w=0 => t===TINT): a free dead-regime control, iter 199. */
+function washRGB(b,f,gr,gg,gb){
+  const w=clamp((LITAMT-0.35)/0.35,0,1);
+  const L=TINT[0]*0.30+TINT[1]*0.59+TINT[2]*0.11;   /* the wash's own luminance */
+  const t=[lerp(TINT[0],L*gr,w),lerp(TINT[1],L*gg,w),lerp(TINT[2],L*gb,w)];
+  return 'rgb('+Math.min(255,b[0]*t[0]*f|0)+','+Math.min(255,b[1]*t[1]*f|0)+','+Math.min(255,b[2]*t[2]*f|0)+')';
 }
 /* A WARM SURFACE, AFTER DARK. (Named for the sand, which was the first host found -
    iter 214 - but this is the city's general night wash for any surface whose identity is
@@ -490,11 +530,7 @@ function col(name,f){ /* f: face brightness */
 function sandCol(name,f){
   const k='~'+name+'|'+f;
   let c=CCACHE[k]; if(c)return c;
-  const w=clamp((LITAMT-0.35)/0.35,0,1), b=BASE[name];
-  const L=TINT[0]*0.30+TINT[1]*0.59+TINT[2]*0.11;   /* the wash's own luminance */
-  const t=[lerp(TINT[0],L*1.15,w),lerp(TINT[1],L*1.08,w),lerp(TINT[2],L*1.06,w)];
-  c='rgb('+Math.min(255,b[0]*t[0]*f|0)+','+Math.min(255,b[1]*t[1]*f|0)+','+Math.min(255,b[2]*t[2]*f|0)+')';
-  return CCACHE[k]=c;
+  return CCACHE[k]=washRGB(BASE[name],f,1.15,1.08,1.06);   /* the WARM lean */
 }
 function colA(name,f,a){ /* tinted rgba, for surface highlights that REFLECT light (foam, glints) rather
                             than emit it — those keep their literal color. Uncached: a varies per cell/frame. */
