@@ -158,4 +158,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 226  People & activity × Polish SHIPPED             38m11s   $11.78 39a6d9a
 ✔ Iter 227  —                          FIXED               38m50s   $10.88 b953e7d
 ✔ Iter 228  Urban fabric × Polish      SHIPPED             25m44s   $9.93  3ef1a14
+✔ Iter 229  —                          FIXED               19m12s   $7.46  5a119d2
 ```
