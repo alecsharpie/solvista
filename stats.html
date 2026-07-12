@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Solvista — an autonomous build loop, in cost &amp; time</title>
-<meta name="description" content="211 iterations of a headless Claude loop growing a procedural city — cost, compute time, and the loop's own self-verified build log.">
+<meta name="description" content="213 iterations of a headless Claude loop growing a procedural city — runtime, would-be cost, and the loop's own self-verified build log.">
 <meta name="theme-color" content="#f9f9f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
 <style>
@@ -45,7 +45,7 @@ h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:.3em 0 .35em;letter-spa
 .td{font-size:13px;color:var(--ink2)}
 .chart{margin:44px 0 0}
 .chart h2{font-size:22px;letter-spacing:-.01em;margin:0 0 4px}
-.sub{color:var(--ink2);font-size:14.5px;margin:0 0 16px;max-width:70ch}
+.sub{color:var(--ink2);font-size:14.5px;margin:0 0 16px;max-width:72ch}
 .svgbox{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 12px}
 text.axis{fill:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
 text.vlbl{fill:var(--ink);font-size:14px;font-weight:600}
@@ -53,12 +53,12 @@ text.vnum{fill:var(--ink2);font-size:13px;font-variant-numeric:tabular-nums}
 text.endlbl{fill:var(--ink);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
 .col{cursor:pointer;transition:opacity .1s}.col:hover{opacity:.75}
 .key{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 2px;vertical-align:baseline}
-.key.k-billed{background:var(--series-1)}.key.k-recovered{background:var(--series-2)}
+.key.k-billed{background:var(--series-1)}.key.k-recovered{background:var(--series-2)}.key.k-est{background:var(--muted);opacity:.55}
 .provlegend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;font-size:13px;color:var(--ink2)}
 .provlegend b{color:var(--ink);font-variant-numeric:tabular-nums}
 .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 .sw-est{background:var(--muted);opacity:.5}.sw-rec{background:var(--series-2)}.sw-bil{background:var(--series-1)}
-.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--surface);max-height:520px;overflow-y:auto}
 table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border)}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);position:sticky;top:0;background:var(--surface)}
@@ -69,7 +69,6 @@ tbody tr:last-child td{border-bottom:none}
 .v-deep{color:var(--series-2);background:color-mix(in srgb,var(--series-2) 14%,transparent)}
 .v-fix{color:var(--series-3);background:color-mix(in srgb,var(--series-3) 18%,transparent)}
 .v-rev{color:var(--series-6);background:color-mix(in srgb,var(--series-6) 14%,transparent)}
-.tablewrap{max-height:520px;overflow-y:auto}
 footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:13.5px}
 footer a{color:var(--series-1);text-decoration:none}footer a:hover{text-decoration:underline}
 .tip{position:fixed;z-index:10;background:var(--ink);color:var(--surface);padding:8px 11px;border-radius:8px;font-size:12.5px;line-height:1.45;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25);max-width:240px}
@@ -109,15 +108,23 @@ footer a{color:var(--series-1);text-decoration:none}footer a:hover{text-decorati
 <section class="tiles">
   <div class="tile"><div class="tl">Would-be API cost</div><div class="tv">$819</div><div class="td">across 137 measured iterations</div></div>
   <div class="tile"><div class="tl">Autonomous compute</div><div class="tv">56.3<span class="tvu">h</span></div><div class="td">measured; 75h incl. estimated early runs</div></div>
-  <div class="tile"><div class="tl">Cost per iteration</div><div class="tv">$5.98</div><div class="td">avg &middot; 25 min each</div></div>
-  <div class="tile"><div class="tl">Priciest iteration</div><div class="tv">$16.99</div><div class="td">#211 &middot; 49 min</div></div>
+  <div class="tile"><div class="tl">Per iteration</div><div class="tv">25<span class="tvu">min</span></div><div class="td">avg &middot; $5.98 would-be</div></div>
+  <div class="tile"><div class="tl">Longest iteration</div><div class="tv">111<span class="tvu">min</span></div><div class="td">#213 &middot; $16.99 priciest (#211)</div></div>
+</section>
+
+<section class="chart">
+  <h2>How long each iteration ran</h2>
+  <p class="sub">Wall-clock runtime per iteration. <span class="key k-est"></span>#1&ndash;75 are a flat
+  15-min estimate (no record kept); <span class="key k-recovered"></span>#76&ndash;123 recovered from
+  terminal logs; <span class="key k-billed"></span>#124&ndash;213 logged live. The longest ran 111 min (#213). Hover for detail.</p>
+  <div id="timeChart" class="svgbox"></div>
 </section>
 
 <section class="chart">
   <h2>What each iteration would have cost</h2>
-  <p class="sub">One column per iteration. Two data sources: <span class="key k-billed"></span>logged live by the
-  loop's cost ledger (#124&ndash;213), and <span class="key k-recovered"></span>recovered from terminal
-  output (#76&ndash;123). Hover for detail.</p>
+  <p class="sub">One column per iteration. <span class="key k-billed"></span>Logged live by the
+  loop's cost ledger (#124&ndash;213); <span class="key k-recovered"></span>recovered from terminal
+  output (#76&ndash;123). The unrecorded early runs have no cost figure. Hover for detail.</p>
   <div id="costChart" class="svgbox"></div>
 </section>
 
@@ -138,8 +145,8 @@ footer a{color:var(--series-1);text-decoration:none}footer a:hover{text-decorati
 <section class="chart">
   <h2>What we can and can't see</h2>
   <p class="sub">The cost logger was added at iteration 124; earlier figures were rescued from saved
-  terminal scrollback. Iterations 1&ndash;75 predate any saved record — shown here as a flat ~15-minute
-  estimate with no cost data.</p>
+  terminal scrollback. Iterations 1&ndash;75 predate any saved record — shown here as a flat
+  15-minute estimate with no cost data.</p>
   <div id="provChart" class="svgbox"></div>
   <div class="provlegend">
     <span><span class="sw sw-est"></span><b>1&ndash;75</b> &middot; no record &middot; estimated 15 min/iter, no cost</span>
@@ -158,8 +165,9 @@ footer a{color:var(--series-1);text-decoration:none}footer a:hover{text-decorati
 </section>
 
 <footer>
-  <p>Snapshot as of iteration 213 &middot; 2026-07-12. The loop keeps running, so the live city keeps
-  changing. Costs are API-equivalent estimates on a flat-rate subscription, not amounts paid.</p>
+  <p>Snapshot as of iteration 213 &middot; 2026-07-12, regenerated automatically after each iteration.
+  The loop keeps running, so the live city keeps changing. Costs are API-equivalent estimates on a
+  flat-rate subscription, not amounts paid.</p>
   <p><a href="./">&larr; the living city</a> &middot; <a href="https://github.com/alecsharpie/solvista">source on GitHub</a></p>
 </footer>
 
@@ -168,7 +176,6 @@ footer a{color:var(--series-1);text-decoration:none}footer a:hover{text-decorati
 <div id="tip" class="tip" hidden></div>
 
 <script>
-// theme: ?theme= override, else system; toggle button flips + persists on the root
 (function(){const q=new URLSearchParams(location.search).get('theme');
   const root=document.documentElement;
   if(q==='dark'||q==='light')root.dataset.theme=q;
@@ -183,6 +190,8 @@ const MAXITER = 213;
 const fmtUsd = n => n==null ? '—' : '$'+n.toFixed(2);
 const fmtMin = s => (s/60).toFixed(0)+' min';
 const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const TIERSRC = {estimated:'estimated (no record)', recovered:'recovered from logs', billed:'logged live'};
+const TIERFILL = {estimated:'--muted', recovered:'--series-2', billed:'--series-1'};
 
 const NS='http://www.w3.org/2000/svg';
 function el(t,a={}){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
@@ -195,35 +204,43 @@ function showTip(html,x,y){tip.innerHTML=html;tip.hidden=false;const r=tip.getBo
 function hideTip(){tip.hidden=true;}
 
 function drawAll(){
-// ---- cost per iteration (columns, #76–211) ----
+// ---- runtime per iteration (columns, full run, all tiers) ----
 (function(){
-  const box=document.getElementById('costChart');
-  const rows=DATA.filter(d=>d.c!=null);
-  const W=920,H=300,P={l:44,r:12,t:14,b:28};
-  const s=svg(box,W,H);
-  const iw=W-P.l-P.r, ih=H-P.t-P.b;
-  const maxC=Math.max(...rows.map(d=>d.c));
-  const x=i=>P.l+ (iw)*( (i-rows[0].i)/(rows[rows.length-1].i-rows[0].i) );
-  const bw=Math.max(2,iw/rows.length-1.2);
+  const box=document.getElementById('timeChart');const rows=DATA;
+  const W=920,H=300,P={l:44,r:12,t:14,b:28};const s=svg(box,W,H);
+  const iw=W-P.l-P.r,ih=H-P.t-P.b;const maxM=Math.max(...rows.map(d=>d.s/60));
+  const x=i=>P.l+iw*((i-1)/(MAXITER-1));const bw=Math.max(1.4,iw/rows.length-0.8);
+  const y=m=>P.t+ih-(m/maxM)*ih;
+  [0,30,60,90].forEach(v=>{if(v>maxM)return;const yy=y(v);
+    s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
+    const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent=v+'m';s.appendChild(t);});
+  rows.forEach(d=>{const m=d.s/60;const bx=x(d.i)-bw/2,by=y(m),bh=P.t+ih-by;
+    const r=el('rect',{x:bx,y:by,width:bw,height:Math.max(0.5,bh),rx:Math.min(1.5,bw/2),fill:cssv(TIERFILL[d.t]),'fill-opacity':d.t==='estimated'?0.4:1,class:'col'});
+    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtMin(d.s)+(d.c!=null?' &middot; '+fmtUsd(d.c):'')+(d.k?'<br>'+d.k:'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
+    r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
+  [1,75,124,MAXITER].forEach(i=>{const t=el('text',{x:x(i),y:H-8,'text-anchor':i===1?'start':i===MAXITER?'end':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});
+})();
+
+// ---- cost per iteration (columns) ----
+(function(){
+  const box=document.getElementById('costChart');const rows=DATA.filter(d=>d.c!=null);
+  const W=920,H=300,P={l:44,r:12,t:14,b:28};const s=svg(box,W,H);
+  const iw=W-P.l-P.r,ih=H-P.t-P.b;const maxC=Math.max(...rows.map(d=>d.c));
+  const x=i=>P.l+iw*((i-rows[0].i)/(rows[rows.length-1].i-rows[0].i));const bw=Math.max(2,iw/rows.length-1.2);
   const y=c=>P.t+ih-(c/maxC)*ih;
-  // gridlines + y ticks
   [0,5,10,15].forEach(v=>{if(v>maxC)return;const yy=y(v);
     s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
     const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent='$'+v;s.appendChild(t);});
-  // columns
   rows.forEach(d=>{const bx=x(d.i)-bw/2,by=y(d.c),bh=P.t+ih-by;
-    const fill=d.t==='billed'?cssv('--series-1'):cssv('--series-2');
-    const r=el('rect',{x:bx,y:by,width:bw,height:Math.max(0.5,bh),rx:Math.min(2,bw/2),fill,class:'col'});
-    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtUsd(d.c)+' &middot; '+fmtMin(d.s)+(d.k?'<br>'+d.k:'')+(d.v?'<br><span class=vt>'+d.v.replace('EXPLORED → REVERTED','reverted').toLowerCase()+'</span>':'')+'<br><span class=src>'+(d.t==='billed'?'logged live':'recovered')+'</span>',e.clientX,e.clientY));
+    const r=el('rect',{x:bx,y:by,width:bw,height:Math.max(0.5,bh),rx:Math.min(2,bw/2),fill:cssv(TIERFILL[d.t]),class:'col'});
+    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtUsd(d.c)+' &middot; '+fmtMin(d.s)+(d.k?'<br>'+d.k:'')+(d.v?'<br><span class=vt>'+d.v.replace('EXPLORED → REVERTED','reverted').toLowerCase()+'</span>':'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
     r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
-  // x labels
   [rows[0].i,124,160,200,rows[rows.length-1].i].forEach(i=>{const t=el('text',{x:x(i),y:H-8,'text-anchor':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});
 })();
 
 // ---- cumulative cost (area+line) ----
 (function(){
-  const box=document.getElementById('cumChart');
-  const rows=DATA.filter(d=>d.c!=null);let acc=0;const pts=rows.map(d=>({i:d.i,y:(acc+=d.c)}));
+  const box=document.getElementById('cumChart');const rows=DATA.filter(d=>d.c!=null);let acc=0;const pts=rows.map(d=>({i:d.i,y:(acc+=d.c)}));
   const W=920,H=260,P={l:52,r:12,t:14,b:28};const s=svg(box,W,H);
   const iw=W-P.l-P.r,ih=H-P.t-P.b;const maxY=pts[pts.length-1].y;
   const X=i=>P.l+iw*((i-pts[0].i)/(pts[pts.length-1].i-pts[0].i));const Y=v=>P.t+ih-(v/maxY)*ih;
@@ -236,7 +253,6 @@ function drawAll(){
   s.appendChild(el('path',{d:dLine,fill:'none',stroke:cssv('--series-1'),'stroke-width':2,'stroke-linejoin':'round'}));
   const end=pts[pts.length-1];s.appendChild(el('circle',{cx:X(end.i),cy:Y(end.y),r:4,fill:cssv('--series-1'),stroke:cssv('--surface'),'stroke-width':2}));
   const lt=el('text',{x:X(end.i)-8,y:Y(end.y)+18,'text-anchor':'end',class:'endlbl'});lt.textContent=fmtUsd(end.y);s.appendChild(lt);
-  // hover crosshair
   const hv=el('line',{y1:P.t,y2:P.t+ih,stroke:cssv('--muted'),'stroke-width':1,opacity:0});s.appendChild(hv);
   const hd=el('circle',{r:4,fill:cssv('--series-1'),stroke:cssv('--surface'),'stroke-width':2,opacity:0});s.appendChild(hd);
   s.addEventListener('mousemove',e=>{const pt=s.getBoundingClientRect();const px=(e.clientX-pt.left)/pt.width*W;

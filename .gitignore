@@ -5,7 +5,6 @@
 shots/
 .claude/scheduled_tasks.lock
 .claude/skills/grow-city/STOP
-.claude/skills/grow-city/RUNLOG.md
 
 # iteration scratch: the /bin/cp backup taken before a big swing, and the ad-hoc
 # probe/shot scripts an iteration writes to verify itself. Ignored so a killed

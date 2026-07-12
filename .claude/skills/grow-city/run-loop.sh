@@ -274,6 +274,21 @@ while :; do
     # wrote (idempotent by sha, so a no-commit iteration appends nothing). Uses the
     # raw stream only for cost, so it must run before "$out" is removed.
     node "$HERE/runlog.mjs" --repo "$REPO" --elapsed "$elapsed" --raw "$out" 2>&1 | tee -a "$LOG" || true
+
+    # Refresh the public dashboard (stats.html) and commit it + RUNLOG.md — as a
+    # POST-iteration step here in bash, NEVER inside the `claude -p` agent: if the
+    # agent regenerated its own scoreboard, that work would inflate the very cost
+    # and time this page reports. Commit to main, then fast-forward the worktree so
+    # the next iteration's --ff-only merge still applies.
+    node "$HERE/build-stats.mjs" 2>&1 | tee -a "$LOG" || true
+    if [ -n "$(git -C "$REPO" status --porcelain -- .claude/skills/grow-city/RUNLOG.md stats.html)" ]; then
+      git -C "$REPO" add .claude/skills/grow-city/RUNLOG.md stats.html
+      git -C "$REPO" commit -q -m "stats: refresh dashboard (post-iteration $done_ok)" || true
+      git -C "$WT" merge --ff-only main >/dev/null 2>&1 \
+        || log "warn: worktree ff after stats commit failed — next iteration may need a manual sync"
+      git -C "$REPO" push origin main >/dev/null 2>&1 \
+        || log "warn: stats push failed (will retry next iteration)"
+    fi
   else
     fails=$((fails + 1))
     log "--- iteration $((done_ok + 1)) FAILED (exit $rc) after ${elapsed}s [$fails/$MAX_FAILS] ---"
