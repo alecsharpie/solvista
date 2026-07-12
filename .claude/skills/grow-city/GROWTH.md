@@ -38,22 +38,20 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: Sky **208** · People **210** ·
   Transport **211** · Civic **213** · Water **214** · Urban **216**, ~~**218**~~, **219**, **220** · Nature **221**.
-  (**217 = the 23rd step-back; the next is 222 — i.e. NEXT.**)
-  ✅ **THE DOWNTOWN IS BUILT (219, Urban × Deepen, SHIPPED)** — recap rotated to the archive at 220; the full story is
-  219's own entry, and its two general laws (a saturated roll's `p` is a **dead lever**; a spatial preference must be
-  **pure addition**, `m=1+B*field`) are in SKILL.md. ⚠ **DO NOT re-open the tower placement roll (dead lever, 218) NOR
-  the COM fork (spent, 219).** ⚠ **COM is the TOWER SUBSTRATE** — cutting it anywhere costs towers and pop downstream.
-  The one defect left on this ladder is cue **(ac)**.
-  **222 IS THE STEP-BACK — take it FIRST** (24th; the last was 217, and the budget is every ~5). It also owes the
-  ARC perf read and is the natural place to settle 221's one-seed "night greens are a touch hot" watch item.
-  **AFTER it, the lap owes SKY (stalest by far, 208), then PEOPLE (210)** — Urban had four laps running
-  (216/218/219/220) and Nature has just had 221, so **rotate OFF both unless a cue is decisive.** But **Sky is
-  post-saturation (Deepen/Fix ONLY)** and its only live cue **(s) is CONSTRAINED and low-value** (read it first) — so
-  if Sky has nothing, the strongest cues are **(ac) the flat skyline taper** (Urban × Polish, 🔴 and measured),
-  **(u) the violet pier deck** (Water × Polish — the last WARM surface still rotated, a one-line `sandCol()` swap;
-  220/221 proved the lever on far bigger surfaces), **(y) the scorched inland cluster** (Nature × Polish) and
-  **(z) the clipped HUD label** (Interaction/UX × Polish, a stale column). Nature's **GARDEN staggered beds**
-  (Nature × Deepen) is held by cue (p).
+  (**222 = the 24th step-back; the next is 227.**)
+  ✅ **THE DOWNTOWN IS BUILT (219)** — laws in SKILL.md. ⚠ **DO NOT re-open the tower placement roll (dead lever, 218)
+  NOR the COM fork (spent, 219)**, and ⚠ **COM is the TOWER SUBSTRATE** (cutting it costs towers + pop downstream).
+  The one defect left on that ladder is cue **(ac)**.
+  🔴 **223 IS (ae) — THE NIGHT GROUND OUT-GLOWS THE LIT CITY** (Water & coast × Polish). Measured, causal, two-seed,
+  and it **supersedes 221's watch item**. **119's law applies: a banked, MEASURED finding outranks kind-rotation** —
+  take it before the stale domains. **AFTER it the lap owes SKY (stalest by far, 208), then PEOPLE (210)** — Urban had
+  four laps running (216/218/219/220) and Nature has just had 221, so **rotate OFF both unless a cue is decisive.**
+  But **Sky is post-saturation (Deepen/Fix ONLY)** and its only live cue **(s) is CONSTRAINED and low-value** (read it
+  first) — so if Sky has nothing, the strongest cues are **(ac) the flat skyline taper** (Urban × Polish, 🔴, measured,
+  and RECONFIRMED at 222 by a blind LOCATE on two seeds), **(af) the tower-facade wallpaper** (Urban × Polish, new at
+  222), **(u) the violet pier deck** (Water × Polish — the last WARM surface still rotated), **(y) the scorched inland
+  cluster** (Nature × Polish) and **(z) the clipped HUD label** (Interaction/UX × Polish, a stale column). Nature's
+  **GARDEN staggered beds** (Nature × Deepen) is held by cue (p).
   **STEERING FROM THE LAST LAPS — recaps live in their own entries / the archive; only the WARNINGS live here.**
   **213 (Civic × Deepen):** ⚠ **`nightDeep()` IS PINNED AT 1 ALL DAY** — harmless in a draw (`LITAMT` is 0 anyway),
   a trap for any NON-draw reader, so guard every reader. **The civic night-light audit is DONE — do not re-run it**;
@@ -124,16 +122,19 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   FAILs are where an agent is WRONG and the ASIDES are where it is RIGHT. It has now paid out SEVEN laps running**
   (213, 214×2, 215, 217 — where ALL FOUR agent FAILs were wrong while the asides held both real finds — and **219,
   where both FAILs were refuted by one render-free probe and the surviving aside became cue (ac)**). **MINE THE ASIDES.**
-  Perf ARC (same refs as 202/207/212, directly comparable): the lap (213-216) **day +5.6% / night +1.0%** vs 212; vs
-  `7e2ac2c` (177, 40 iters) **+11.9% / +7.6%**; vs `5f01426` (162, 55 iters) **+14.0% / +8.3%** (abs: day 40.2-43.1ms
-  · night 46.4-49.1ms). Priors: 202 +7.5/+4.1 & +8.6/+5.7; 207 +7.2/+5.1 & +9.5/+6.0; 212 +8.7/+4.8 & +10.5/+7.3.
-  Largest single-lap arc jump on record (~+3.2pp day in ONE lap vs ~+1.2pp over the previous TEN) — **but it has a
-  NAMED, MEASURED, ALREADY-PAID mechanism and is NOT a new suspect: 215's `seamVeg` was priced at ~+3% day when it
-  shipped and knowingly accepted** (692 path objects, 228 line STROKES). Arc rate ~**+0.25%/iteration**; diffuse, not
-  accelerating; **ACCEPTED — do NOT open a perf lap.** ⚠ **219 is world-data only (no new draw call) — arc unmoved.**
-  ⚠ **This lap is now the best evidence for cue (x):** a lap whose only heavy addition was **strokes** cost ~**4×**
-  what 198's per-path-object model predicts for fills. The **stroke-vs-fill sweep at equal path count is the
-  harness's best-supported open perf question.**
+  Perf ARC (same refs as 202/207/212, directly comparable): the lap (218-221) **day +3.3% / night +4.2%** vs 217; vs
+  `7e2ac2c` (177, 45 iters) **+15.0% / +12.2%**; vs `5f01426` (162, 60 iters) **+15.9% / +13.3%** (abs: day
+  40.6-41.7ms · night 47.3-48.2ms). Priors: 202 +7.5/+4.1 & +8.6/+5.7; 207 +7.2/+5.1 & +9.5/+6.0; 212 +8.7/+4.8 &
+  +10.5/+7.3; 217 +11.9/+7.6 & +14.0/+8.3. Arc rate ~**+0.3%/iteration**; diffuse, not accelerating; **ACCEPTED — do
+  NOT open a perf lap.** ⚠ **222 FALSIFIED this header's own claim that "219 is world-data only — arc unmoved."** The
+  lap's +3.3/+4.2% had NO mechanism (220/221 colour-only, 219 world-data, 218 reverted), so per 216 the INSTRUMENT was
+  changed rather than the timer re-run: `probe-drawbudget` reads **day 104,787 -> 108,007 (+3.1%)** and **night
+  132,547 -> 138,734 (+4.7%)** — the two instruments AGREE, so the cost is REAL, and it is **219's downtown** (more
+  core COM => more towers => more `prismS`/`bandS` by day and more `winBandR` by night, which is exactly why night
+  grew more than day). **PAID and ACCEPTED.** ⇒ **LAW: "no new draw CALL" is NOT "no new draw WORK" — THE WORLD IS THE
+  DRAW LIST** (⇒ SKILL.md): price a CA/siting vector by COUNTING OBJECTS, not by reading the diff.
+  ⚠ **Cue (x) stands** (215's `seamVeg`: 692 path objects / 228 STROKES cost ~4x what the fill model predicts — the
+  stroke-vs-fill sweep at equal path count is the harness's best-supported open perf question).
   **⚠ THE STANDING PERF SUSPECT (207, unchanged at 212/217; named NOT mandated per 198): THERE IS NO HOT ORNAMENT —
   the arc is DIFFUSE, which is exactly why every per-lap gate reads it as free.** `probe-drawbudget` (night):
   `drawCell` = **95.2%** of 132,679 path objects; hot leaves `winBandR` **32.6%** · `prismS` **28.0%** · `hexTile`
@@ -196,33 +197,24 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   objects (a *visual* decision, price it against what the ornament is worth), or accept it. **Batching fills,
   shrinking radii, and sprite-blitting are all CLOSED — measured, three ways, and none of them buys anything.**
   194's tree shadows are the standing example: ~3% for the grounding of every tree, and it is worth paying.
-  **⚠ THE COST MODEL HAS TWO HOLES, AND BOTH ARE THE SAME SHAPE: 198's TABLE WAS MEASURED ON SOLID FILLS ONLY.**
-  Its findings (per-ellipse; area-independent; sprite worse) are only established for solid `fill()`s, and **two
-  other primitives have each come in ~4x over the model.** (1) **GRADIENTS** — 200's sun is *two* radial-gradient
-  fills costing **day +2.3%**; a gradient is evaluated **per pixel**, so it may price by **AREA**. (2) **STROKES**
-  — 215's `seamVeg` is 692 path objects (**0.7% day**) costing **~+3% day**, and quantizing its colour cache and
-  hoisting its style writes *both* bought **nothing**, leaving its **228 line strokes** (which must generate
-  outline geometry + round caps) as the suspect. Both are **PAID and ACCEPTED**; neither is **MEASURED**. So do
-  not shrink a gradient or cull a stroke "because 198 said area/count is what matters" — **it said no such thing
-  about either.** The variants to build are a gradient-area sweep and a stroke-vs-fill sweep at equal path count.
-  **⚠ A CHANGE THAT IS PROVABLY INERT IN ONE REGIME GIVES YOU A FREE NOISE FLOOR (199).** 199's edit draws
-  nothing in daylight (0 panes at noon, *verified*), so its **day column IS the noise floor**: it read
-  −0.0 / +0.1 / +1.0% on provably identical code. That is what "±1% means nothing" looks like when you can
-  prove it, rather than assert it. Most late-game vectors are night-only or day-only — use the **dead regime as
-  the control** instead of arguing with the noise.
-  (**A 2+-round day+night interleave overruns the 120s Bash timeout — but do NOT pipe it through `tee`:
-  node block-buffers stdout to a pipe, so a backgrounded run looks EMPTY until it exits and you will think it
-  died (197 lost a run that way and re-ran it). Run it foreground with a long timeout, or read the task file
-  after exit.** **⚠ `cp` is aliased `-i` here — use `/bin/cp` or every swap silently no-ops and you measure ONE
-  file 4×, iter 147.**)
-  **⚠ NEVER grade frame time by CONSECUTIVE passes (117 corrected 99).** Machine load is autocorrelated over
-  minutes, so three passes in one window are three samples of ONE draw: 117's gate read a perfectly STABLE
-  +25.5/+26.0/+26.5% on a diff with **zero draw calls**, and the identical bytes read +3.5% twenty minutes later.
-  Only an **interleaved A/B/A/B against pristine HEAD** (min per variant) reads true; `perfab.mjs` implements it.
-  (Reasoning archived at 199.)
-- **`?year=` is a URL hook (108); keyframes `.02/.30/.62/.87` = winter/spring/dry-peak/autumn. Full text (and
-  139/202's warning that it DRIFTS ~0.167 yr/s while `shoot.mjs` waits — use `probes/shot-stepback.mjs`) is in
-  SKILL.md; the duplicate was archived at 219.**
+  **⚠ THE COST MODEL HAS TWO HOLES, BOTH THE SAME SHAPE: 198's TABLE WAS MEASURED ON SOLID FILLS ONLY.** Its findings
+  (per-ellipse; area-independent; sprite worse) hold only for solid `fill()`s, and **two other primitives have each
+  come in ~4x over the model**: (1) **GRADIENTS** — 200's sun is two radial-gradient fills costing **day +2.3%**; a
+  gradient is evaluated **per pixel**, so it may price by **AREA**. (2) **STROKES** — 215's `seamVeg`, 692 path
+  objects (0.7% day) costing **~+3% day**, with the colour-cache and style-write levers both measuring **zero**,
+  leaving its **228 line strokes** as the suspect. Both **PAID and ACCEPTED**; neither **MEASURED**. Do not shrink a
+  gradient or cull a stroke "because 198 said count is what matters" — **it said no such thing about either.**
+  **⚠ THE DEAD-REGIME CONTROL (199) and ⚠ NEVER GRADE BY CONSECUTIVE PASSES (117 corrected 99) are both LAWS in
+  SKILL.md** — bodies archived at 222. One line each: a change **provably inert in one regime** makes THAT regime its
+  free, same-run noise floor (199's day column read −0.0/+0.1/+1.0% on identical code); and machine load is
+  autocorrelated over minutes, so only an **interleaved A/B/A/B against pristine HEAD** (min per variant,
+  `perfab.mjs`) reads true — 117's gate read a *stable* +25.5/+26.0/+26.5% on a diff with **zero draw calls**.
+  (**A 2+-round day+night interleave overruns the 120s Bash timeout — do NOT pipe it through `tee`**: node
+  block-buffers stdout to a pipe, so a backgrounded run looks EMPTY until it exits (197 lost a run that way). Run it
+  foreground with a long timeout. **⚠ `cp` is aliased `-i` here — use `/bin/cp`**, or every swap silently no-ops and
+  you measure ONE file 4x, iter 147.)
+- **`?year=` is a URL hook (108); keyframes `.02/.30/.62/.87` = winter/spring/dry-peak/autumn. Full text (+ 139/202's
+  warning that it DRIFTS ~0.167 yr/s while `shoot.mjs` waits — use `probes/shot-stepback.mjs`) is in SKILL.md.**
 - **`?tide=` IS NOW A URL HOOK (iter 113) — the sea is testable, and every prior shot was a lie about it.**
   Same story as `?year=` one dimension over: `TIDE` runs a ~2 min seeded cycle and **no screenshot in this
   loop's history could pin it.** The default is seeded, not neutral — **`?seed=42` loads at TIDE 0.02, dead
@@ -317,21 +309,30 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **⚠ GARDEN is STILL MUTE (1.8 → 5.4)** — its ground is mostly raised beds, so the lawn lift barely reaches it. **Its
   own richer cue stands:** staggered per-bed calendars + one shared `gardenPhase()` (**Nature × Deepen; host fixed by
   206; Nature's next lap**).
-  **(aa) CLOSED by 220** (RES+MID masonry -> `sandCol()`; RES<->ROAD night **6 -> 16**). Body archived at 221; the
-  night wash is **free** (colour-only, zero path objects) and **byte-identical in daylight**, so it is a **free
-  dead-regime control**. ⚠ **GLASS (TOWER/COM) KEEPS the cool tint** (chroma 19->17, cannot rotate) and **ROAD staying
-  grey is CORRECT** (214): warm-masonry vs cool-glass vs green-ground is now what makes the night read. **Do NOT fork
-  a second wash — extend `washRGB` with a gain triple.**
-  **(ad) CLOSED by 221** (greens -> `LEAFN` + `col()` dispatch; PARK night hue **194 -> 101**, chroma 6 -> 15, FOREST
-  chroma 7 -> 25). ⚠ **Its prescribed gate (pair PARK<->ROAD) was ANTI-CORRELATED with correctness** — a cyan park is
-  maximally far from tan houses, so the bug INFLATED it — ⇒ law in SKILL.md; **a cue is a POINTER, NOT A SPEC.**
-  ⚠ **Watch item, ONE seed only (needs a second to act):** seed 42 called the night greens *"a touch hot... park hexes
-  pop as bright cut-outs"* (seed 7 said *"dark olive"* and the chroma is only 32% of daylight's, so the diagnosis is
-  false) — but PARK night lum did rise 82 -> 88. **If a step-back sees it on TWO seeds, dial the G gain 1.15 -> 1.10.**
-  ⚠ **THE NIGHT-WASH LADDER (214 sand, 220 masonry, 221 greens) IS COMPLETE FOR `col()`.** The math is ONE shared
-  `washRGB(b,f,gr,gg,gb)`; a gain triple lifts hardest on the channel carrying the surface's IDENTITY (R warm, G
-  green). **Still rotated, and both bypass `col()`:** the **pier deck** (cue (u)) and **FARM**, coloured in
-  `cropRGB`/`colRGB` (`crop` survives by **1 RGB unit**; `straw`/`stubble`/`soil` do not — a real lap, not a freebie).
+  **(aa)/(ad) CLOSED (220 masonry, 221 greens); bodies archived at 222. THE `col()` WASH LADDER IS COMPLETE** — ONE
+  shared `washRGB(b,f,gr,gg,gb)` whose gain triple lifts hardest on the channel carrying the surface's IDENTITY (R
+  warm, G green); **colour-only (zero path objects)**, **byte-identical in daylight** ⇒ a free dead-regime control.
+  ⚠ **GLASS (TOWER/COM) KEEPS the cool tint** (cannot rotate) and **ROAD staying grey is CORRECT** (214). **Do NOT
+  fork a second wash — extend `washRGB`.** ⚠ **Still rotated, both bypassing `col()`:** the **pier deck** (cue (u))
+  and **FARM** (`cropRGB`/`colRGB` — a real lap, not a freebie).
+  **(ae) 🔴 THE NIGHT GROUND OUT-GLOWS THE LIT CITY — the wash ladder's UNMEASURED SIDE-EFFECT (222; THE NEXT LAP,
+  Water & coast x Polish).** Two agents, two seeds, independent, unprompted: *"the shoreline glows like it's lit at
+  noon"* · *"the sand reads LIT rather than moonlit — the least night-graded surface in the frame"* · *"unlit
+  vegetation should be the darkest thing on land, but it out-brightens the roads."* **MEASURED + CAUSAL**
+  (`probe-goldenhue`, HEAD vs pre-ladder `78f53c2` via its `SRC` hook): every surface the ladder touched gained
+  **+6..+9 night luminance** (BEACH 96->105, FOREST 58->66, PARK 81->88, RES 79->85); every surface it did NOT touch
+  moved **<=+2** (ROAD/TOWER/COM/MID/FARM/WATER). The night ORDERING has inverted — was TOWER 108 > COM 107 > MID 99 >
+  **BEACH 96** (the three LIT types on top, correct), is now TOWER 109 > COM 108 > **BEACH 105** > MID 101: **the
+  unlit sand has crossed INTO the lit city's band**, and PARK (88) out-brightens ROAD (81). ⚠ **SUPERSEDES 221's
+  "greens are hot" watch item — same root cause, ONE fix.** ⚠ **The hue fixes were RIGHT: DO NOT REVERT THEM** (BEACH
+  316->33, PARK 200->101). The lever is the **luminance** the gain triple adds, not the hue it corrects. **Gate in the
+  viewer's units: no UNLIT surface may out-brighten the LIT ones** — and hold each surface's daylight-hue distance
+  where 214/220/221 put it. ⇒ **The general law (a per-surface gate is blind to a cross-surface ORDERING) is in SKILL.md.**
+  **(af) TOWER FACADES ARE THE NEW WALLPAPER (222, both seeds, unprompted).** *"The central tower field is a repeating
+  teal cylinder motif"* (42) · *"the same tall pale slab with horizontal band-glazing repeats across the whole
+  western/central two-thirds"* (7). **216 spent the MID facades and used TOWER as its CONTROL** — so this is 216's
+  lever one tile over, and its instrument already exists: **`probes/probe-facade.mjs`** (distinct stripe rhythms, top
+  rhythm's share of the stock, and the corduroy number). Urban x Polish — but it queues BEHIND **(ac)**.
   **(ac) 🔴 THE SKYLINE HAS MASS BUT NO TAPER — "a spine, not a crown" (219, Urban × Polish; the THIRD RUNG of the
   217/218/219 ladder and the next Urban lap).** 219 put the tower MASS downtown (coreH share 41-45%; four blind
   agents locate the CBD) — and **two agents, on two seeds, independently and unprompted** named what is left:
@@ -354,8 +355,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   lever: route the deck's fills through **`sandCol()`**. ⇒ **Audit, don't guess the hosts** — `probes/probe-sandhue.mjs`
   (any WARM surface near **hue ~308, chroma <15** is rotated; ROAD at 308 is FINE — asphalt *is* grey). ⚠ **GATE ON THE
   DECK'S DISTANCE FROM ITS OWN DAYLIGHT HUE, NOT a pairwise separation** — 221 proved separation *rewards* the bug.
-  **(v) CLOSED by 215**; its nit rides a coast lap: at extreme zoom the marram tufts trend into a loose vertical band —
-  **scatter depth `f` harder.**
+  **(v) CLOSED by 215**; its nit rides a coast lap (i.e. **223**): at extreme zoom the marram tufts trend into a loose vertical band — **scatter depth `f` harder.**
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; full statement in the
   PERF bullet's "TWO HOLES" paragraph).** Build a **stroke-vs-fill sweep at equal path-object count**. Two
   mechanisms are already ruled OUT — the `CCACHE` key churn and the per-mark style writes both measured **zero**.
@@ -391,93 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 214 entries before Iteration 212 live in
+> **Archive:** the 215 entries before Iteration 213 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 212 — the twenty-second step-back finds a clean city and two agents crying wolf (2026-07-12) [holistic step-back]
-
-**Vector** — holistic step-back (the 22nd; 207 was the 21st). No domain lap, no city change: `solvista.html` is
-**byte-identical to iter 211**. One harness probe added (`probes/probe-monoz.mjs`).
-
-**Census** — PASS, 0 page errors, every metric flat (baseline pinned on the same HEAD, so flat is the correct read).
-Seasons alive and measured: `probe-season` FARM winter→dry-peak **87.0** (the expected ~88), SHOREPARK **51.9**,
-PARK 23.3, QUAD 21.8 — 208/209's seasonal work holding — with the **ROAD control at 0.6**. GARDEN is still the one
-mute tile (**5.4**), exactly as cue (p) says.
-
-**Perf — the ARC, priced against the same two refs 202 and 207 used, so the trend is directly comparable.**
-
-| REF | iters in arc | day | night |
-| --- | --- | --- | --- |
-| 207 `8e1c20d` | 4 (the lap: 208–211) | +2.7% | +0.6% |
-| 177 `7e2ac2c` | 35 | **+8.7%** | +4.8% |
-| 162 `5f01426` | 50 | **+10.5%** | **+7.3%** |
-
-Absolute: day ~40.4ms · night ~46.5ms. The comparison that matters is against the *same* refs five laps ago:
-vs 177, **202 read +7.5 → 207 +7.2 → 212 +8.7**; vs 162, **202 +8.6 → 207 +9.5 → 212 +10.5**. Ten laps on from
-202, the arc has moved ~+1.2% day / ~+1.6% night — i.e. still **~+0.2%/shipped-lap and NOT accelerating**, which is
-the rate the loop priced and accepted at 207. **No fix lap is owed.** 207's suspect stands and was not re-measured
-(the arc is unchanged in character): the drift is **diffuse** — ~48% of the night frame is static terrain
-re-rasterized every frame (`winBandR`/`prismS`/`hexTile`/`bandS`) — and 198's levers are all closed, so the only
-real lever is drawing FEWER objects. Do not open a caching lap on that say-so.
-
-**Visual — BOTH seeds FAILed, and BOTH FAILs were refuted by measurement. This is the locate-don't-judge law
-paying for itself a third time.** Shot with `probes/shot-stepback.mjs` (3 lights × 2 calendars, clock frozen
-in-page, every frame self-reporting its state).
-
-- **The sun: a clean LOCATE.** Both agents, independently, on two seeds, put the golden-hour sun at
-  **x≈0.39, y≈0.10** — identical to 207's two agents and to the shipped formula. Seed 42 nevertheless FAILed it:
-  *"the disc sits in the cold part of the sky"* while all the warm gradient comes from the bottom/bottom-right.
-  Every factual claim in that is **true**, and the verdict is still wrong — it is **201's law** (an objection to the
-  ARTIFACT'S MODEL, not to a defect): iter 200 sited the sun high **on purpose**, because the plate is a hexagon and
-  the `.placard` owns the low-left sky, so *the sun cannot go low*. Flipping or lowering it would put it behind the
-  HUD. **Banked as cue (s), not fixed.**
-- **The "z-order tear": MEASURED, REFUTED.** Seed 7 FAILed the whole city on a specific, confident claim — *"the
-  elevated-rail/viaduct outlines pass IN FRONT of tower faces they should be behind, with no visible pylons for
-  long spans."* Iter 202's agents said this of a "thin dark line" and **203 measured the GONDOLA** (`probe-gondz`:
-  8.4–23.6% occluded — properly depth-sorted). But **nobody had ever measured the MONORAIL**, which is what this
-  agent actually named. New `probes/probe-monoz.mjs` (203's method, refined: the viaduct is `prismS` **fills**, not
-  strokes, so instead of replaying polylines it **defers the real draw** — suppress `drawMonoAt` during the row
-  loop while recording its args *and the live camera matrix*, then re-invoke the untouched original after
-  `render()`; identical code, identical camera, only the *when* changes):
-
-  | fn | seed 42 | seed 7 | seed 1234 |
-  | --- | --- | --- | --- |
-  | `drawMonoAt` | 16.8% day / 19.8% night | 10.6% / 12.7% | 16.3% / 18.2% |
-  | `drawGondAt` (control) | 16.1% / 25.1% | 2.1% / 1.5% | 5.0% / 5.2% |
-
-  **The monorail is occluded 10.6–19.8% on every seed and light — it is genuinely depth-sorted.** The `drawGondAt`
-  column is a **calibration control**: it reproduces 203's independent 8.4–23.6% with a different rig, so the rig
-  is trustworthy. ⇒ **The artifact is innocent for the third time**, and the fault is what 203 already named:
-  **LEGIBILITY, not z-order** (`polish-tile` backlog cue (a) — the whole tramway is sub-pixel at fit zoom). A
-  hairline crossing the skyline with its supports below the pixel floor **reads as "on top"** to a human eye
-  however correctly it is sorted. **Do not "fix" the z-order. There is nothing wrong with it.**
-- **The seasons: a clean BLIND read.** The two day-lit calendar frames were copied to neutral `frameA`/`frameB`
-  names **with the order flipped between seeds**, so a lazy guess fails. **Both agents named the season correctly**
-  (42: A=winter/B=dry ✓; 7: A=dry/B=winter ✓). Seed 7 called them subtle — but per cue (p) that subtlety is
-  **deliberate and must not be "fixed"**: `grass` and `lawn` share a base colour, and the lawns must stay greener
-  than the hills at every point in the year.
-
-**The two findings that SURVIVE — both raised UNPROMPTED and INDEPENDENTLY by both agents, on different seeds.
-This is what a step-back is for, and neither is refuted:**
-1. **THE NIGHT COAST IS A MAUVE VOID.** Seed 42: *"the sand at night flattens to a low-contrast mauve where detail
-   dies."* Seed 7: *"the beach + east coastal strip at night collapses into a single flat mauve-grey mass with no
-   beach/sand read."* Two agents, two seeds, same words. ⇒ **cue (q)**, a Water × Polish suspect.
-2. **A BUILDING TYPE HAS BECOME WALLPAPER.** Seed 42: *"the red-roofed podium block repeats densely enough in the
-   mid-city to become texture noise rather than buildings."* Seed 7: *"the striped high-rise tower is the single
-   most repeated element and at this density it has become wallpaper."* ⇒ **cue (r)**, an Urban × Polish suspect —
-   and it **converges with the header's own standing note** that Urban's only remaining Deepen/Polish targets are
-   **facades** and the harbour apron. The facades are now independently indicted by two blind reads.
-
-**Verdict — the city is SOUND: census clean, seasons alive, sun correct, transit properly depth-sorted, perf arc
-flat in rate and accepted. Both agent FAILs were noise; both agent ASIDES were signal.** Note the shape of that,
-because it is the lesson: the agents were **wrong about the two things they were confident enough to FAIL on**, and
-**right about the two things they mentioned in passing** — a FAIL is a cue to measure, but the *unprompted aside*
-in a whole-frame read is where the cumulative drift actually shows up. Read the asides.
-
-**Verdict: HOLISTIC STEP-BACK — CLEAN BILL, no fix lap owed, two cues banked (q, r).**
 
 ## Iteration 213 — the institutions keep their own hours (2026-07-12) [Civic & culture × Deepen]
 
@@ -1278,3 +1196,107 @@ chroma 15 is **32%** of daylight's 47, not "close to daytime saturation") and **
 future step-back sees it on two seeds, dial the G gain 1.15 -> 1.10.**
 
 **Verdict: SHIPPED.**
+
+## Iteration 222 — the twenty-fourth step-back finds the sand outshining the towers (2026-07-13) [holistic step-back]
+
+**Vector:** holistic step-back (24th; the last was 217). No source change — this is a read, a
+measurement, and a hand-off. Census PASS, city healthy (every core metric +0, tile histogram empty).
+
+**Frames:** `probes/shot-stepback.mjs`, seeds 42 and 7 — day (t=0.30) / golden (0.68) / night (0.92)
+at `year=2035.62`, plus a winter (2035.02) contrast frame. Every frame self-reported its own state;
+no mis-pinned camera this time.
+
+**The agents:** both FAILed. Per 212's fail/aside law, the FAILs are where they were wrong and the
+asides are where they were right — and **that law has now paid out for the eighth lap running.**
+
+**FAIL 1 (both seeds): "winter is indistinguishable from day."** This is cue **(ab)**, now said by
+SIX agents. `probe-season` refutes the premise (FARM 87.0 seasonal shift, ROAD control 0.6 — the
+calendar is ALIVE); theirs is a frame-SHARE claim, and a dry-Mediterranean city having no snow is
+arguably correct by design. Unchanged, still LOW.
+
+**FAIL 2 (seed 7): "tower wallpaper / no skyline hierarchy."** The hierarchy half is cue **(ac)**,
+already 🔴 and measured. The *wallpaper* half is new — see (af).
+
+**THE ASIDE, AND IT IS THE FINDING — both seeds, independent, unprompted:** *"the sand reads
+full-daylight tan, the shoreline glows like it's lit at noon"* (42) · *"the beach sand reads LIT
+rather than moonlit — it is the least night-graded surface in the frame"* (7) · *"unlit vegetation
+should be the darkest thing on land, but here it out-brightens the roads"* (42).
+
+**Measured, and CAUSAL** (`probes/probe-goldenhue.mjs`, HEAD vs pre-ladder `78f53c2` via its `SRC`
+hook — the same instrument on both builds):
+
+```
+ night lum      pre-ladder(213)   HEAD(221)    delta
+  BEACH               96            105         +9     <- washed (214)
+  FOREST              58             66         +8     <- washed (221)
+  PARK                81             88         +7     <- washed (221)
+  RES                 79             85         +6     <- washed (220)
+  ROAD/TOWER/COM/MID/FARM/WATER                <= +2   <- NOT washed
+```
+
+Every surface the night-wash ladder touched gained **+6..+9** night luminance; every surface it did
+not touch moved **<= +2**. The ladder is unambiguously the cause, and the night brightness ORDERING
+has inverted:
+
+- **before:** TOWER 108 > COM 107 > MID 99 > **BEACH 96** — the three LIT building types on top. Correct.
+- **now:** TOWER 109 > COM 108 > **BEACH 105** > MID 101 — **the unlit sand has crossed INTO the lit
+  city's band**, and PARK (88) now out-brightens ROAD (81), exactly as the agents said.
+
+**Why no gate could see it — and it is a LAW (⇒ SKILL.md).** 214, 220 and 221 each fixed a real hue
+rotation and each passed a *correct* gate — and 221's own law **mandated** the shape of that gate:
+*for an identity/hue claim, gate on the surface's distance from ITS OWN DAYLIGHT SELF, not from other
+surfaces.* That law is right, and it is **exactly why the drift was invisible**: a per-surface
+identity gate is blind, by construction, to a **cross-surface ORDERING**. Three laps each moved their
+own surface +6..+9 and none of them was ever asked about anybody else. ⇒ **A ladder of per-surface
+fixes needs a GLOBAL invariant that no single lap can check.** Here it is, in the viewer's units:
+**no UNLIT surface may out-brighten the LIT ones.**
+
+⚠ **The hue fixes were RIGHT — do not revert them** (BEACH hue 316->33 out of violet; PARK 200->101
+out of cyan; chroma restored 12->37 / 8->15). The lever is the **luminance** the gain triple adds as
+a side-effect, not the hue it corrects.
+
+**PERF — and it FALSIFIES a claim this header was making.** Lap (218-221) vs 217 `466a8b3`:
+**day +3.3% / night +4.2%.** Arc vs `7e2ac2c` (177): **+15.0% / +12.2%** (was +11.9/+7.6 at 217).
+Arc vs `5f01426` (162): **+15.9% / +13.3%** (was +14.0/+8.3). Abs: day 40.6-41.7ms, night 47.3-48.2ms.
+
+That is ~+3pp day / +4.6pp night from four iterations that **should have added no draw work at all**
+(220/221 colour-only; 219 world-data; 218 reverted) — a cost with no mechanism, which by 216's law
+means *change instrument, don't re-run the timer.* `probe-drawbudget` (deterministic, load-immune):
+
+```
+  path objects     217(466a8b3)   HEAD(221)    delta
+    day              104,787       108,007     +3.1%
+    night            132,547       138,734     +4.7%
+```
+
+**The two instruments AGREE to within 0.5pp, so the cost is REAL, not machine load — and it is
+EXPLAINED: it is 219's downtown.** Concentrating COM in the core built more towers, and a tower is
+`prismS`/`bandS` bands by day and `winBandR` lit panes by night — which is precisely why **night grew
+more than day**. This is a paid, legitimate cost (a denser city costs more to draw), and it is
+**ACCEPTED — do NOT open a perf lap.**
+
+⚠ But the header asserted **"219 is world-data only (no new draw call) — arc unmoved"**, and that is
+now **measured false**. ⇒ **LAW (⇒ SKILL.md): "no new draw CALL" is not "no new draw WORK" — the
+WORLD IS THE DRAW LIST.** A rule that changes which tiles *exist* changes how many path objects get
+rasterized every frame, forever, even though the diff adds not one drawing primitive. The loop has
+been pricing CA/siting vectors as free by reading the *diff*; they must be priced by counting
+**objects**, which is one command.
+
+**A FALSE cue, killed before it cost a lap.** Seed 42: *"the moon is bright while the stat bar reads
+0% NEW MOON — contradictory."* Investigated: `moonPhase()` is ONE predicate with two readers (draw
+L6622, HUD L7219 — 135/144 wired it correctly), the lit lune is properly skipped at new moon
+(`MOONF>0.015`), and what the agent saw is the deliberate, documented **earthshine limb** (*"the whole
+disc, dim, so the unlit part still reads as moon"*). Physically correct and intended — 201's
+objection-to-the-model shape. **Do not chase it.**
+
+**Cue (ac) RECONFIRMED, and by a LOCATE answer rather than a judgement** (108's law working as
+designed): asked to *point at the single tallest tower*, both agents, on both seeds, pointed at the
+**rim** — (0.51, 0.09) and (0.44, 0.10), y≈0.1 being the top edge of the plate. That is the noise
+swamping the centrality signal, exactly as (ac) states. Still the top Urban cue.
+
+**Census:** PASS. Every core metric +0, tile histogram empty (no source change). Entities nominal.
+
+**Verdict: FIXED** — nothing shipped to the artifact, but the step-back did its job: it caught a
+three-lap compounding drift that every per-lap gate was structurally blind to, refuted a perf
+suspicion with a second instrument, killed a false cue, and promoted two laws. **The next iteration
+is (ae): put the night ground back under the lit city.**

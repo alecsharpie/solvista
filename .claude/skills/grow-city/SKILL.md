@@ -1049,6 +1049,22 @@ vector, whatever it is.
   is a pairwise/contrast/difference metric, and the defect you are fixing is one of the two things being
   differenced.** (This is why the cue's own suggested gate must be re-derived, not trusted — a cue is a
   POINTER, NOT A SPEC.)
+  **⇒ AND ITS PRICE, PAID AT 222: A PER-SURFACE GATE IS BLIND BY CONSTRUCTION TO A CROSS-SURFACE *ORDERING*, SO A
+  LADDER OF PER-SURFACE FIXES NEEDS A GLOBAL INVARIANT NO SINGLE LAP CAN CHECK.** 221's law above is correct and it
+  is *exactly why the next drift was invisible*. Three laps (214 sand, 220 masonry, 221 greens) each fixed a real
+  hue rotation, and each was gated — as mandated — on **its own surface's distance from its own daylight self**.
+  None was ever asked about anybody else. But the shared `washRGB` gain triple lifts **luminance** as a side-effect,
+  so each lap silently added **+6..+9 night luminance to its own surface** while every un-washed surface moved
+  **<=+2** — and after three laps the night brightness ORDERING had inverted: it *was* TOWER 108 > COM 107 > MID 99 >
+  BEACH 96 (the three LIT building types on top, correct), and it became TOWER 109 > COM 108 > **BEACH 105** > MID
+  101 — **the unlit sand had crossed into the lit city's band**, which two blind agents on two seeds called *"the
+  shoreline glows like it's lit at noon."* Every per-lap gate passed, correctly, the whole way down. ⇒ **When you
+  are the Nth lap of a ladder applying ONE shared mechanism to a series of surfaces, the per-lap gate is necessary
+  and not sufficient: state the invariant that spans the SET** (here: *no UNLIT surface may out-brighten the LIT
+  ones*) **and check it every lap.** The tell: a shared helper (`washRGB`, `sandCol`) that several laps call with
+  different constants, where each lap's gate reads only its own caller. Corollary: **a fix that corrects dimension A
+  (hue) will usually perturb dimension B (luminance) — name B and bound it, or the ladder walks B off a cliff one
+  defensible step at a time.**
 - **A FLAT PER-CHANNEL MULTIPLY IS NOT A TINT ON A SATURATED SURFACE — IT IS A HUE ROTATION (iter 214).**
   The night light is applied as `base[i] * TINT[i]`, and `TINT` is named for what it is *meant* to do —
   wash the scene cooler while leaving each surface recognisably itself. Its VALUE cannot do that. The
@@ -1157,6 +1173,20 @@ vector, whatever it is.
   thing that CAUSES the effect — don't just re-run whichever is easiest to re-run.** Corollary, worth doing on any
   draw change: **hold the MEAN of whatever you jitter** (98's hold-the-mean law) and the path count — hence the cost —
   stays flat *by construction*, so the perf question never opens at all.
+  **⇒ BUT RUN THE SAME INSTRUMENT WHEN THEY *AGREE*, BECAUSE "NO NEW DRAW CALL" IS NOT "NO NEW DRAW WORK" — THE WORLD
+  IS THE DRAW LIST (iter 222).** 216 uses the path-object count to *acquit* a draw change the timer had wrongly
+  convicted. 222 ran it expecting the same acquittal — a lap of four iterations that added **no drawing primitive at
+  all** (two colour-only washes, one world-data siting rule, one revert) was reading a stable day +3.3% / night +4.2%,
+  which looked exactly like 216's phantom. **It was not.** Path objects read **day 104,787 → 108,007 (+3.1%)** and
+  **night 132,547 → 138,734 (+4.7%)** — agreeing with the timer to within 0.5pp, so the cost was **real**, and the
+  mechanism was the *world*: iter 219's siting fix had concentrated COM downtown, more COM grows more TOWERs, and a
+  tower is `prismS`/`bandS` bands by day and `winBandR` lit panes by night (which is why **night grew more than day** —
+  the signature of the mechanism, visible in the numbers). ⇒ **A rule that changes which tiles EXIST changes how many
+  objects are rasterized every frame, forever, even though its diff contains not one drawing call.** The loop had been
+  pricing CA/siting/`tick()` vectors as free by *reading the diff* — and had written "219 is world-data only (no new
+  draw call) — arc unmoved" straight into the ledger header, where it was false. **Price a world-changing vector by
+  COUNTING OBJECTS, not by inspecting its diff**; it is one command, and it is the only way the loop can tell "this
+  city got denser" (a cost worth paying) from "this draw got fatter" (a cost to interrogate).
 - **THE PROBE READS THE CANVAS; THE USER SEES THE CANVAS *PLUS THE DOM* (iter 200).** Every probe in
   `probes/` measures `cvs.getContext('2d').getImageData()` — and the artifact's HUD is **not in the
   canvas**. `.placard` is a DOM card that owns the whole **top-left corner** (`left:20px`,

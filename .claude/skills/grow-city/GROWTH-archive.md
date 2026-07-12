@@ -13974,3 +13974,126 @@ see 221's entry and the SKILL.md law it promoted):
 
 (221's note on that last clause: the fix *did* keep the coolness — green is cooler than tan — and the
 "neutral variant" guess was measured and rejected as under-restoring. The gate clause was the error.)
+
+## Header trim at Iteration 222 (moved out of GROWTH.md's maintained header, verbatim)
+
+The header hit its 400-line budget at 222. Per SKILL.md ("to add a line, cut a line — MOVE, never
+delete"), the following bullets were moved here to make room for cues **(ae)** and **(af)**. All three
+are settled law now carried in `SKILL.md`; the header keeps a one-line pointer to each.
+
+**(aa) CLOSED by 220** (RES+MID masonry -> `sandCol()`; RES<->ROAD night **6 -> 16**). Body archived at 221; the
+night wash is **free** (colour-only, zero path objects) and **byte-identical in daylight**, so it is a **free
+dead-regime control**. GLASS (TOWER/COM) KEEPS the cool tint (chroma 19->17, cannot rotate) and ROAD staying
+grey is CORRECT (214): warm-masonry vs cool-glass vs green-ground is now what makes the night read. Do NOT fork
+a second wash — extend `washRGB` with a gain triple.
+
+**(ad) CLOSED by 221** (greens -> `LEAFN` + `col()` dispatch; PARK night hue **194 -> 101**, chroma 6 -> 15, FOREST
+chroma 7 -> 25). Its prescribed gate (pair PARK<->ROAD) was ANTI-CORRELATED with correctness — a cyan park is
+maximally far from tan houses, so the bug INFLATED it — ⇒ law in SKILL.md; a cue is a POINTER, NOT A SPEC.
+Watch item, ONE seed only (needs a second to act): seed 42 called the night greens *"a touch hot... park hexes
+pop as bright cut-outs"* (seed 7 said *"dark olive"* and the chroma is only 32% of daylight's, so the diagnosis is
+false) — but PARK night lum did rise 82 -> 88. If a step-back sees it on TWO seeds, dial the G gain 1.15 -> 1.10.
+*(SUPERSEDED at 222: a step-back DID see it on two seeds, and the root cause is not the G gain but the whole
+ladder's luminance side-effect — see cue (ae). One fix covers both.)*
+THE NIGHT-WASH LADDER (214 sand, 220 masonry, 221 greens) IS COMPLETE FOR `col()`. The math is ONE shared
+`washRGB(b,f,gr,gg,gb)`; a gain triple lifts hardest on the channel carrying the surface's IDENTITY (R warm, G
+green). Still rotated, and both bypass `col()`: the **pier deck** (cue (u)) and **FARM**, coloured in
+`cropRGB`/`colRGB` (`crop` survives by **1 RGB unit**; `straw`/`stubble`/`soil` do not — a real lap, not a freebie).
+
+**⚠ A CHANGE THAT IS PROVABLY INERT IN ONE REGIME GIVES YOU A FREE NOISE FLOOR (199).** 199's edit draws
+nothing in daylight (0 panes at noon, *verified*), so its **day column IS the noise floor**: it read
+-0.0 / +0.1 / +1.0% on provably identical code. That is what "±1% means nothing" looks like when you can
+prove it, rather than assert it. Most late-game vectors are night-only or day-only — use the **dead regime as
+the control** instead of arguing with the noise.
+
+**⚠ NEVER grade frame time by CONSECUTIVE passes (117 corrected 99).** Machine load is autocorrelated over
+minutes, so three passes in one window are three samples of ONE draw: 117's gate read a perfectly STABLE
++25.5/+26.0/+26.5% on a diff with **zero draw calls**, and the identical bytes read +3.5% twenty minutes later.
+Only an **interleaved A/B/A/B against pristine HEAD** (min per variant) reads true; `perfab.mjs` implements it.
+(Reasoning archived at 199.)
+
+**(v) CLOSED by 215**; its nit rides a coast lap: at extreme zoom the marram tufts trend into a loose vertical
+band — scatter depth `f` harder.
+
+## Iteration 212 — the twenty-second step-back finds a clean city and two agents crying wolf (2026-07-12) [holistic step-back]
+
+**Vector** — holistic step-back (the 22nd; 207 was the 21st). No domain lap, no city change: `solvista.html` is
+**byte-identical to iter 211**. One harness probe added (`probes/probe-monoz.mjs`).
+
+**Census** — PASS, 0 page errors, every metric flat (baseline pinned on the same HEAD, so flat is the correct read).
+Seasons alive and measured: `probe-season` FARM winter→dry-peak **87.0** (the expected ~88), SHOREPARK **51.9**,
+PARK 23.3, QUAD 21.8 — 208/209's seasonal work holding — with the **ROAD control at 0.6**. GARDEN is still the one
+mute tile (**5.4**), exactly as cue (p) says.
+
+**Perf — the ARC, priced against the same two refs 202 and 207 used, so the trend is directly comparable.**
+
+| REF | iters in arc | day | night |
+| --- | --- | --- | --- |
+| 207 `8e1c20d` | 4 (the lap: 208–211) | +2.7% | +0.6% |
+| 177 `7e2ac2c` | 35 | **+8.7%** | +4.8% |
+| 162 `5f01426` | 50 | **+10.5%** | **+7.3%** |
+
+Absolute: day ~40.4ms · night ~46.5ms. The comparison that matters is against the *same* refs five laps ago:
+vs 177, **202 read +7.5 → 207 +7.2 → 212 +8.7**; vs 162, **202 +8.6 → 207 +9.5 → 212 +10.5**. Ten laps on from
+202, the arc has moved ~+1.2% day / ~+1.6% night — i.e. still **~+0.2%/shipped-lap and NOT accelerating**, which is
+the rate the loop priced and accepted at 207. **No fix lap is owed.** 207's suspect stands and was not re-measured
+(the arc is unchanged in character): the drift is **diffuse** — ~48% of the night frame is static terrain
+re-rasterized every frame (`winBandR`/`prismS`/`hexTile`/`bandS`) — and 198's levers are all closed, so the only
+real lever is drawing FEWER objects. Do not open a caching lap on that say-so.
+
+**Visual — BOTH seeds FAILed, and BOTH FAILs were refuted by measurement. This is the locate-don't-judge law
+paying for itself a third time.** Shot with `probes/shot-stepback.mjs` (3 lights × 2 calendars, clock frozen
+in-page, every frame self-reporting its state).
+
+- **The sun: a clean LOCATE.** Both agents, independently, on two seeds, put the golden-hour sun at
+  **x≈0.39, y≈0.10** — identical to 207's two agents and to the shipped formula. Seed 42 nevertheless FAILed it:
+  *"the disc sits in the cold part of the sky"* while all the warm gradient comes from the bottom/bottom-right.
+  Every factual claim in that is **true**, and the verdict is still wrong — it is **201's law** (an objection to the
+  ARTIFACT'S MODEL, not to a defect): iter 200 sited the sun high **on purpose**, because the plate is a hexagon and
+  the `.placard` owns the low-left sky, so *the sun cannot go low*. Flipping or lowering it would put it behind the
+  HUD. **Banked as cue (s), not fixed.**
+- **The "z-order tear": MEASURED, REFUTED.** Seed 7 FAILed the whole city on a specific, confident claim — *"the
+  elevated-rail/viaduct outlines pass IN FRONT of tower faces they should be behind, with no visible pylons for
+  long spans."* Iter 202's agents said this of a "thin dark line" and **203 measured the GONDOLA** (`probe-gondz`:
+  8.4–23.6% occluded — properly depth-sorted). But **nobody had ever measured the MONORAIL**, which is what this
+  agent actually named. New `probes/probe-monoz.mjs` (203's method, refined: the viaduct is `prismS` **fills**, not
+  strokes, so instead of replaying polylines it **defers the real draw** — suppress `drawMonoAt` during the row
+  loop while recording its args *and the live camera matrix*, then re-invoke the untouched original after
+  `render()`; identical code, identical camera, only the *when* changes):
+
+  | fn | seed 42 | seed 7 | seed 1234 |
+  | --- | --- | --- | --- |
+  | `drawMonoAt` | 16.8% day / 19.8% night | 10.6% / 12.7% | 16.3% / 18.2% |
+  | `drawGondAt` (control) | 16.1% / 25.1% | 2.1% / 1.5% | 5.0% / 5.2% |
+
+  **The monorail is occluded 10.6–19.8% on every seed and light — it is genuinely depth-sorted.** The `drawGondAt`
+  column is a **calibration control**: it reproduces 203's independent 8.4–23.6% with a different rig, so the rig
+  is trustworthy. ⇒ **The artifact is innocent for the third time**, and the fault is what 203 already named:
+  **LEGIBILITY, not z-order** (`polish-tile` backlog cue (a) — the whole tramway is sub-pixel at fit zoom). A
+  hairline crossing the skyline with its supports below the pixel floor **reads as "on top"** to a human eye
+  however correctly it is sorted. **Do not "fix" the z-order. There is nothing wrong with it.**
+- **The seasons: a clean BLIND read.** The two day-lit calendar frames were copied to neutral `frameA`/`frameB`
+  names **with the order flipped between seeds**, so a lazy guess fails. **Both agents named the season correctly**
+  (42: A=winter/B=dry ✓; 7: A=dry/B=winter ✓). Seed 7 called them subtle — but per cue (p) that subtlety is
+  **deliberate and must not be "fixed"**: `grass` and `lawn` share a base colour, and the lawns must stay greener
+  than the hills at every point in the year.
+
+**The two findings that SURVIVE — both raised UNPROMPTED and INDEPENDENTLY by both agents, on different seeds.
+This is what a step-back is for, and neither is refuted:**
+1. **THE NIGHT COAST IS A MAUVE VOID.** Seed 42: *"the sand at night flattens to a low-contrast mauve where detail
+   dies."* Seed 7: *"the beach + east coastal strip at night collapses into a single flat mauve-grey mass with no
+   beach/sand read."* Two agents, two seeds, same words. ⇒ **cue (q)**, a Water × Polish suspect.
+2. **A BUILDING TYPE HAS BECOME WALLPAPER.** Seed 42: *"the red-roofed podium block repeats densely enough in the
+   mid-city to become texture noise rather than buildings."* Seed 7: *"the striped high-rise tower is the single
+   most repeated element and at this density it has become wallpaper."* ⇒ **cue (r)**, an Urban × Polish suspect —
+   and it **converges with the header's own standing note** that Urban's only remaining Deepen/Polish targets are
+   **facades** and the harbour apron. The facades are now independently indicted by two blind reads.
+
+**Verdict — the city is SOUND: census clean, seasons alive, sun correct, transit properly depth-sorted, perf arc
+flat in rate and accepted. Both agent FAILs were noise; both agent ASIDES were signal.** Note the shape of that,
+because it is the lesson: the agents were **wrong about the two things they were confident enough to FAIL on**, and
+**right about the two things they mentioned in passing** — a FAIL is a cue to measure, but the *unprompted aside*
+in a whole-frame read is where the cumulative drift actually shows up. Read the asides.
+
+**Verdict: HOLISTIC STEP-BACK — CLEAN BILL, no fix lap owed, two cues banked (q, r).**
+
