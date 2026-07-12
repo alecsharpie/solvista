@@ -24,7 +24,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
+| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
@@ -38,22 +38,29 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: People **226** ·
-  Transport **211** · Civic **213** · Nature **221** · Water **223** · Sky **225** · Urban **228**.
+  Transport **230** · Civic **213** · Nature **221** · Water **223** · Sky **225** · Urban **228**.
+  🔴 **NEXT: Civic (stalest, 213)**, then People (226) / Urban (228).
+  ✅ **230 (Transport × Deepen): THE TRAFFIC KEEPS HOURS.** The city's PEOPLE went to bed at 199
+  (windows) and 210 (crowd); its TRAFFIC never did — at 3am the streets carried the full 5pm fleet.
+  Now `vehHidden(v)` reads the SAME `nightAmt()` clock, per-vehicle, thinning by CLASS
+  (`VCURF`): vans in first, then cyclists; trams to a night service; cars thin but a street never
+  empties. **The BUS, the SERVICE fleet and the TAXI keep no hour** — the bus because `stepVehicle`
+  stamps the stop queue whether or not it is DRAWN (hiding it empties a queue nobody came for, 226).
+  ⚠ **The `taxi` flag was DECORATIVE for ~200 iterations and is now load-bearing:** cab share of the cars still out
+  **13% → 41%**. **Nothing spawns/despawns** (Math.random at spawn, never `rng()`) ⇒ census byte-identical, day
+  provably inert (free dead-regime control), and it **REMOVES** night draw work (−1,300..−1,500 path objects).
   The **Interaction/UX column** (cross-cutting, so it sits in the bullet not the grid — like U2/42/U5) was last
   touched at **229**; before that **191**.
   ✅ **227 WAS THE 25TH STEP-BACK — city CLEAN, arc UNMOVED, and it FIXED ITS OWN CAMERA** (the frozen frames had
   been showing a **load-time HUD**: `DAYTIME / 0% NEW MOON` over a night sky, on every step-back ever shot; frames
   now self-report `HUD=ok`). **232 is the 26th.**
-  ✅ **CUE (af) IS CLOSED BY 228** — the ledger's loudest cue (six agents, three step-backs) is spent.
-  ✅ **THE HUD LAP IS DONE (229) — AND BOTH ITS CUES WERE THE HARNESS, NOT THE CITY.** (w) the "live shipped
-  mojibake" was **never on the public site** (GitHub Pages sends `charset=utf-8`); (z) the clipped `TRANSIT REACH`
-  **does not reproduce** at any width. Fixed at root regardless (`<meta charset="utf-8">` ⇒ the file is now
-  self-describing and **134's pure-ASCII rule is REPEALED**). ⚠ **The lasting lesson is a LAW in SKILL.md: a
-  defect only your HARNESS can see is a defect IN your harness.** Two more of the ledger's cues were born from
-  agents reading `shoot.mjs` output — **(y)** and **(s)** — so weigh them accordingly.
-  🔴 **NEXT: Transport (stalest, 211) or Civic (213).** No 🔴 cue is left in the ranked list; the survivors are
-  **(u)** (violet pier deck, Water × Polish — the last warm surface still rotated, a one-line lever) and **(ag)**
-  (night greens read hot, Nature/Water × Polish). Both are real and measured; neither is urgent.
+  ✅ **THE HUD LAP IS DONE (229) — AND BOTH ITS CUES WERE THE HARNESS, NOT THE CITY** (see (w)+(z); law in SKILL.md:
+  *a defect only your HARNESS can see is a defect IN your harness*). ⚠ **Two more of the ledger's cues were born from
+  agents reading `shoot.mjs` output — (y) and (s) — so REPRODUCE either in the user's configuration before designing
+  to it.**
+  No 🔴 cue is left in the ranked list; the survivors are **(u)** (violet pier deck, Water × Polish — the last warm
+  surface still rotated, a one-line lever) and **(ag)** (night greens read hot, Nature/Water × Polish). Both are real
+  and measured; neither is urgent.
   ✅ **THE SKYLINE LADDER (217→218→219→224) and THE WASH LADDER (223) ARE BOTH COMPLETE** — cues **(ac)** and **(ae)**
   CLOSED; the `c.th` ladder is **SPENT** (warnings at (ac)); the wash is **luminance-safe**, its invariant **ASSERTED
   by `probe-goldenhue.mjs`**. Laws in SKILL.md. ⚠ But NEW cue **(ag)**: 227's agent says the night greens read hot
@@ -131,7 +138,6 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **Cue (k) CLOSED (116/123).** Still steers: **run the tell FORWARDS** (make the string and the rule share ONE
   constant so they cannot drift — 123; 213's `civOpen()`). **⚠ A tick-rule cannot read the reach maps (151):**
   `recount()` never runs in the sim loop, so `rGreen`/`rShop`/`rServ` are STALE inside `tick()` — recompute locally.
-  (**222 = the next holistic step-back**; 217 was the last, all 23 done. 205's finding is held by cue (o).)
   **THE FAIL/ASIDE LAW (from 212, now a law in SKILL.md — the header keeps only the tally): in a whole-frame read the
   FAILs are where an agent is WRONG and the ASIDES are where it is RIGHT. It has now paid out SEVEN laps running**
   (213, 214×2, 215, 217 — where ALL FOUR agent FAILs were wrong while the asides held both real finds — and **219,
@@ -297,12 +303,8 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   city): **the night surf light-smear, `hashCell(x,y,77)<0.28`, is the one to fix.** *Ornament jitter* (kelp sway,
   fronds, fruit, fireflies) is cosmetic. Marsh reeds (113) + tower window-lights (110) CLOSED. ⚠ `darkWinR` is **not**
   a breach (it mixes `seedNum^salt` internally — check the callee). When fixing a range, **space the bases**.
-  **(w)+(z) BOTH CLOSED BY 229 — BOTH WERE THE HARNESS, NOT THE CITY (bodies archived; law ⇒ SKILL.md).** The
-  three load paths were never reconciled: `shoot.mjs` serves http with **no charset** (⇒ 1252 ⇒ **creates** the
-  mojibake), `hovershot.mjs` + every probe load `file://` (⇒ sniffs UTF-8 ⇒ **hides** it), and GitHub Pages sends
-  **`charset=utf-8`** (⇒ overrides both ⇒ **no user ever saw it**). Fixed at root regardless — `<meta
-  charset="utf-8">` ⇒ the file is **self-describing**, `probe-charset.mjs` asserts it, and **134's pure-ASCII rule
-  is REPEALED.** (z) refuted outright: `probe-hud.mjs`, 6 widths, **0 clipped labels, >=20px spare.**
+  **(w)+(z) CLOSED BY 229 — both were the HARNESS, not the city (body rotated to the archive at 230; the law, and
+  the `<meta charset>` invariant that repeals 134's pure-ASCII rule, are in SKILL.md).**
   **(m) SHOWERS ARE HOST-STARVED — do not build "X responds to the rain"** (201, `probes/probe-rainhost.mjs`).
   Nothing on the ground reads `cl.rain`, and a shower's footprint is **2-5 hexes TOTAL**, so at any moment it rains
   on **less than one** picnic/cafe hex — `T.MARKET` again (dead-code law), **no host.** Widening it is a Sky change
@@ -389,94 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 222 entries before Iteration 220 live in
+> **Archive:** the 223 entries before Iteration 221 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 220 — the houses were the same colour as the road (2026-07-13) [Urban fabric × Polish]
-
-**Vector.** Urban fabric × Polish, closing cue **(aa)**. Iter 214 proved the night tint is a **hue
-rotation**, not a tint, and fixed it on the **sand**. The same bug was still sitting on the city's
-**biggest built surface**, which is what 217's step-back agent called, unprompted, *"a desaturated
-slate-violet blob where towers, roads and low buildings are one value."*
-
-**Probe first — and the cue's own premise did not survive it.** `probes/probe-sandhue.mjs` (0.55
-tile-body mask) put night RES<->ROAD at **~8.6 RGB units** — but **day RES<->ROAD at ~8.7**. By that
-instrument the separation does not *collapse* at night; it was never there, and the day city reads
-fine. The mask was averaging the building into its own lawn (214's "necessary but not sufficient"
-law, one level down). Re-run on the cue's *cited* instrument, `probes/probe-goldenhue.mjs` (3 seeds,
-frozen clock, world rebuilt in-page), and the cue is right and the bug is **systemic**:
-
-| night | RES vs ROAD | PARK vs ROAD | PARK vs RES | FARM vs ROAD |
-| --- | --- | --- | --- | --- |
-| day | 22 | 50 | 36 | 47 |
-| **HEAD night** | **6** | **14** | **20** | **21** |
-
-Every warm or green **land** surface loses its hue after dark — chroma crushed 3-9x (RES 48 -> 17,
-PARK 46 -> 10, FOREST 52 -> 6) — and the only land tile that holds is **BEACH (37)**, the one 214
-already fixed. The mechanism is exact, and it is 199's law (a constant whose *name* asserts a
-behaviour its *value* cannot have): run the tint `[.42,.42,.58]` on the masonry palette by hand and
-the **channel ORDER inverts** — `cream` [244,232,208] -> [103,97,**121**] (B>R>G) and `creamDk`
-[221,205,172] -> [93,86,**100**], both **lavender**; `sandDk` [212,190,146] -> [89,80,85], **chroma
-9, i.e. grey**. RES's `bodyN` is `cream`/`terra`/`sandDk` and MID's is `terra`/`cream`/`sandDk` — so
-**most house and walk-up bodies are drawn in exactly the two tones that invert to violet.** The
-saturated ones (`terra`/`coral`/`brick`) survive: they are too warm to invert.
-
-**Change (five call sites, colour only).** `col(` -> `sandCol(` on the **masonry** in `drawBuilding`:
-RES body + roof + chimney, MID body + roof. **Reuses the shipped wash rather than forking a second
-one** (one-predicate-one-definition) — `sandCol` was already generic over any `BASE` name; only its
-*header comment* claimed it was about sand, and that comment is now corrected. The **glass** types
-(TOWER/COM) **deliberately keep the cool tint**: they hold their chroma (19 -> 17), the tint cannot
-rotate them, and their identity *is* coolness — so the night city now separates into **warm masonry
-against cool glass and asphalt**, which is how a lit city actually reads. ROAD stays grey **on
-purpose** (214: asphalt genuinely is grey; the bug only bites a surface that is *supposed* to be warm).
-
-**Census.** PASS, and **vacuous by construction** — no `rng()`, no terrain, empty tile histogram, core
-metrics flat. (`solarRoofs` -1, `towerHt` +1: load-timing tick-count noise, 163's law (c). `drawBuilding`
-is pure render and cannot reach `tick()`.)
-
-**Probe (`probes/probe-goldenhue.mjs`, patch vs HEAD, 3 seeds).** The claim is about **colour**, so the
-gate is in colour units (214's law):
-
-| night | HEAD | patch | (day) |
-| --- | --- | --- | --- |
-| **RES vs ROAD** | **6** | **16** | 22 |
-| RES chroma | 17 | **34** | 48 |
-| RES hue | **356deg** (red-violet) | **24deg** (warm tan) | 36deg |
-| MID chroma | 22 | **36** | 22 |
-| PARK vs RES | 20 | **29** | 36 |
-
-Houses and asphalt go from **6 -> 16** RGB units: from 27% of their daylight separation to **73%**.
-**Controls, all clean and measured in the same run:** the **day and golden columns are UNMOVED** (RES
-day 36deg/48/152 in both builds; golden 24deg/74/129 in both) — `sandCol`'s `w=clamp((LITAMT-0.35)/0.35,0,1)`
-is **0 in daylight**, where `t===TINT` and the two functions are **byte-identical**, so the dead regime
-referees the live one *for free* (199's law). **BEACH night (33deg/37/105) and WATER night (210deg/58/67)
-are EXACTLY unchanged** — 214's fix and the sea are undisturbed.
-
-**Perf — free BY CONSTRUCTION, not by timing.** Not one prism, ellipse or stroke was added, removed or
-resized; only the *string* handed to `fillStyle` changed. Path-object count is therefore **identical**,
-and 198's measured cost model says cost on this canvas is **per path object**. Per 216's law, that
-deterministic mechanism outranks an interleaved timing number that would have no mechanism behind it.
-(`sandCol` is `CCACHE`d exactly like `col()` — ~48 extra keys per light change, not per hex.)
-
-**Visual.** `probes/shot-stepback.mjs`, seeds 42 + 7, frozen in-page, frames self-reporting
-(`night t=0.92 LITAMT=1`). Both agents **PASS**. They were told only that *"some surfaces"* changed
-after dark — never which, never in which direction (108: locate, don't judge) — and **both, blind,
-independently named the ground truth**: the low buildings read *"warm tan/khaki with terracotta
-roofs"* (42) and *"warm tan/cream with terracotta roofs"* (7), against roads that read *"slate-violet"*
-— i.e. they put RES at the measured **hue 24deg** and confirmed the RES/ROAD separation without being
-told it was the thing under test. Both confirmed the towers still read **cooler** than the low-rise,
-and both confirmed the **day frame is untouched**.
-
-**Aside, banked as cue (ad) — two seeds, independent, unprompted** (212's fail/aside law, paying out an
-eighth lap): seed 7 saw *"slightly hazy-violet mid-block interiors"* and seed 42 *"a violet/blue-grey
-ground plane."* That is **the GROUND, still on the raw cool tint** — and the probe agrees: **PARK
-rotates green -> CYAN (hue 81 -> 206) with chroma crushed 46 -> 6.** The built mass is fixed; the
-surface it stands on is not.
-
-**Verdict: SHIPPED.**
 
 ## Iteration 221 — the parks were the same colour as the sea (2026-07-13) [Nature × Polish]
 
@@ -1243,3 +1162,79 @@ reproduce it in the USER'S configuration before you believe it is the artifact's
 have refuted the loop's loudest cue at any point in 95 iterations.* And note what this implicates: **cues (y)
 (the "scorched" hex cluster) and (s) (golden-hour "mud") were also born from agents reading `shoot.mjs`
 frames** — the same camera that manufactured this one. Reproduce them before designing to them.
+
+## Iteration 230 — the cars never went home (2026-07-13) [Transport × Deepen]
+
+**Vector.** Transport was the stalest domain (last touched at 211) and the ledger had no 🔴 cue
+left, so I greped its seam instead of taking a banked one (225's law: the saturation notes record
+where you have *looked*, not where there is nothing to find). The tell was sitting in `syncFleet`:
+the city's PEOPLE learned to go to bed — the windows at 199 (`BEDT`), the crowd, its dogs and its
+runners at 210 (`curfewAt`) — and its TRAFFIC never did. At 3am the streets still carried the same
+**38 cars, 16 cyclists, 7 delivery vans and 6 streetcars** they carried at 5pm, because every fleet
+count is a pure function of `roads.length` and nothing else. And the `taxi` flag — ~1 in 6 cars,
+flagged ever since it got its lemon livery — had never MEANT anything but a colour.
+
+**Change.** The traffic keeps hours too, on the *same* clock the crowd already uses (`nightAmt()`:
+0 all day, ~1 in the small hours, and closed off at dawn by `LITAMT` because `nightDeep` alone is
+monotone and can never end a night). One shared predicate, `vehHidden(v)`, read by `drawVehicle`
+— one predicate, one definition. The hour is per VEHICLE, not per cell (a positional hash makes a
+mover blink as it crosses a hex — 210's finding, and a car crosses hexes constantly), and it thins
+by CLASS, because a class is what a shift IS: `VCURF = {bike:[0.10,0.45], truck:[0.16,0.50],
+tram:[0.45,0.90], car:[0.35,1.00]}` — the vans finish their round first, then the cyclists; the
+streetcars fall back to a night service (the jitter runs past 1, so a few keep running all night);
+ordinary cars thin, but a street never empties.
+
+Three classes keep NO hour, and each is a decision rather than an omission: the **bus** (a night
+service is real, and `stepVehicle` stamps the stop queue whether or not the bus is *drawn*, so
+hiding one would empty a queue nobody ever came for — 226's waiting crowd); the **service fleet**
+(staying out is what it is FOR — 204); and the **taxi**. The cab is the point: as the ordinary
+traffic goes home it stays out, so **the cab's share of the cars still on the street climbs through
+the night** — the same city, read at 3am, is a city of taxis. That is an interconnect, not a new
+object: nothing is spawned or despawned, and the flag that had been decorative for ~200 iterations
+now does the work. Its tooltip reads the same `nightAmt()` its rule does (123's *run the tell
+FORWARDS* — the label and the rule share ONE number, so they cannot drift): *"The night shift —
+still for hire once the traffic has gone home."* A vehicle that has gone in is not hoverable
+either, for free — it returns before `stamp()`, so `consider()` drops it on the `_sf` test.
+
+**Census.** PASS. Every metric **+0**, tile histogram **empty** — the correct and nearly vacuous
+result: the hours come from `Math.random` at spawn (exactly as the taxi flag does), never `rng()`,
+so the seeded stream is byte-identical. The iteration rests on the probe.
+
+**Probe** (`probes/probe-nightfleet.mjs`, 3 seeds). **A** — the city is built ONCE per seed and only
+the HOUR is swept, so the fleet is held fixed and the visible mix is a pure function of the clock:
+`bike 16/16 → 0/16 · truck 7/7 → 0/7 · tram 6/6 → 2–3/6 (the night service) · car 28/28 → 4–8 · bus
+and taxi unmoved`; on-street **70 → 19–24**. **CAB SHARE of the cars still out: 13.0% → 41.1%**
+(mean of 3 seeds) — the claim, in the viewer's units. Control: `nightAmt()` is 0 all day *by
+construction*, so **every class reads 100% visible at day on every seed** (199's free dead-regime
+control). **B** — they must actually stop RENDERING, not merely test hidden: at 3am **46–51 of 70**
+vehicles are in, worth **2,006–2,366 px** of ink off the final composited canvas (occlusion checked
+for free); the identical pair at day is **0 hidden, 0 px**.
+
+⚠ **B is isolated WITHIN one page, and it had to be.** The obvious patch-vs-HEAD diff *cannot see
+this feature*: two loads of the SAME file drift by thousands of px through `genWorld`, and ~45
+hidden vehicles are worth about the same — its DAY control, on provably inert code, read **11,721 px
+against a 7,034 px floor**. Two renders inside one page are byte-identical (measured: **0 px**), so
+the fix was to isolate by **mutating the DATA** instead of swapping the build: render the night as
+shipped, clear every vehicle's hour (`v.out = undefined`), render the same frozen world again — the
+difference IS the traffic that went home, at a floor of exactly 0. (⇒ new law in SKILL.md.)
+
+**Visual.** The first pass FAILed — and it was the **camera**, not the city: at fit zoom a vehicle is
+a few px, and the agent *correctly refused to count them* rather than inventing a number (201: a wide
+frame is not a framing). So I aimed (`probes/shot-nightfleet.mjs`): freeze, put the whole fleet back
+on the road and render once to stamp the true DRAWN positions (a vehicle that has gone home leaves
+no `_sx` at all — the thing to point the camera at is precisely the thing that leaves no trace),
+take the argmax knot of departing traffic, centre on it at 4.2x, then let the hours back in. Shot as
+a **blind A/B** of the identical frozen hex at the identical instant — shipped vs full-fleet — with
+the letters **swapped between the seeds**. Both agents, independently, picked the **correct** frame
+and picked **different letters** (X on 42, Y on 7 — so not positional guessing): *"Every object that
+vanishes is exactly the right class: all 4 cyclists, the delivery van, and three ordinary cars —
+while the taxi, the bus and the ambulance are pixel-identical in both."* Both read the street as a
+living night city (headlights, lit panes, the streetcar glowing along its rail), no tears, no
+floaters. **VISUAL: PASS ×2.**
+
+**Perf.** FREE — and for once it gives a little back. Graded on the deterministic instrument (216:
+path objects, not the timer), hours-on vs hours-off in one page: **day exactly 0** on all three seeds
+(byte-identical, as the code proves) and **3am −1,303 to −1,493 path objects**. This is the first
+iteration in the arc that *removes* night draw work instead of adding it.
+
+**Verdict: SHIPPED.**

@@ -684,6 +684,26 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **WHEN PATCH-vs-HEAD CANNOT GET BELOW ITS OWN SIGNAL, STOP SWAPPING THE BUILD AND MUTATE THE DATA (iter 230).**
+  161 says a whole-frame patch-vs-HEAD diff locates your change *by construction*, and 213 says measure the floor
+  in the same run. Do both and you can still be stuck: **two loads of the SAME file drift by thousands of px through
+  `genWorld`** — 213's `addInitScript` stub fixes the *PRNG*, but something in the pre-freeze RAF frames survives the
+  rebuild regardless, and it gets worse the longer a page idles before its freeze (**open all your pages up front and
+  frame them in sequence and the floor hits 40,000 px**; open→frame→close one at a time and it falls to a few
+  thousand). When your feature is worth about that much — 230's ~45 hidden vehicles are ~2,000 px — **patch-vs-HEAD
+  is structurally incapable of seeing it**, and it will say so in the most misleading way available: 230's DAY
+  control, on code that is *provably inert* by day, read **11,721 px against a 7,034 px floor.** ⇒ Two renders inside
+  **one page** are byte-identical (measure it: **0 px**), so isolate the feature **without changing the build** —
+  render as shipped, then **mutate the state the feature reads** (230 cleared every vehicle's curfew, `v.out =
+  undefined`, so nobody keeps an hour) and render the same frozen world again. The difference IS the feature, at a
+  floor of **exactly 0**, off the final composited canvas — so occlusion is checked for free. This is 226's
+  stack-suppression law generalized: **226 suppresses the DRAW, 230 suppresses the DECISION**, and both beat a build
+  swap because they never leave the page. The tell: your change is a *conditional* on existing entities, and your
+  cross-build floor is the same order as your effect.
+  Corollary — **the thing you want to aim a camera at may be the thing that leaves no trace.** A hidden entity
+  returns before `stamp()`, so it has **no `_sx`/`_sy` at all** and 204's "aim at the drawn position" has nothing to
+  read. Render **with the feature off** first (everyone back on the road), take the drawn positions *then*, pick your
+  argmax knot, and only afterwards let the feature back in — the camera is aimed by the counterfactual.
 - **A DEFECT ONLY YOUR HARNESS CAN SEE IS A DEFECT IN YOUR HARNESS — REPRODUCE IT IN THE USER'S
   CONFIGURATION BEFORE YOU BELIEVE IT IS THE ARTIFACT'S (iter 229).** 200 says a probe can measure a
   *layer* the user never looks at; 205 says the label-tell has a false-positive mode; 202/227 say a
@@ -1593,6 +1613,15 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   own cameras disagree: `shoot.mjs` **creates** the mojibake and `hovershot.mjs` (`file://`) **hides** it. Shoots
   the tooltip + stats + whole frame; `SRC=` for a blind HEAD/patch pair. ⚠ `__find` returns HEX indices in `x`/`y`
   and SCREEN px in **`sx`/`sy`** — aim at `sx`/`sy`),
+  `probe-nightfleet.mjs` (230 — **does this conditional-on-an-entity feature actually fire, and does it RENDER?**
+  Part A sweeps the HOUR over **one** city built once per seed, so the fleet is held fixed and the visible mix is a
+  pure function of the clock (no pixels ⇒ no noise floor at all); daylight is the free dead-regime control. Part B
+  is the **mutate-the-data** rig of the law above — isolate the feature inside ONE page by clearing the state it
+  reads (`v.out = undefined`), floor **exactly 0**. Reach for it for any *hide/show/gate* feature, where a build
+  swap's floor swamps the signal), `shot-nightfleet.mjs` (its camera — **aims by the counterfactual**: the hidden
+  thing has no `_sx`, so it renders the feature OFF to find where the departed traffic *would* be, centres there,
+  then lets the feature back in. Shoots a **blind A/B** of the identical frozen hex, shipped vs feature-off, for a
+  LOCATE question with a checkable answer),
   `probe-hudfreeze.mjs` (227 — **is this a real bug, or is my frozen camera lying about the DOM?** Three cases at
   one pin: **A** frozen exactly as the shot does it · **B** frozen + `syncStats()` · **C** actually playing. **A
   stale while B and C agree ⇒ the camera lies and the artifact is innocent.** It cleared the "night frame says

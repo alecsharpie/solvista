@@ -14993,3 +14993,96 @@ was solved to **HOLD THE MEAN** — the fix is to **narrow `c.v`'s spread, not t
 (a steeper `core` was tried at 98 and cost half the city's tall towers). Do not re-open the
 placement roll.
 
+
+<!-- header bullet rotated out of GROWTH.md at iteration 230 (closed cue; the law lives in SKILL.md) -->
+> **(w)+(z) BOTH CLOSED BY 229 — BOTH WERE THE HARNESS, NOT THE CITY.** The three load paths were
+> never reconciled: `shoot.mjs` serves http with **no charset** (⇒ windows-1252 ⇒ **creates** the
+> mojibake), `hovershot.mjs` + every probe load `file://` (⇒ sniffs UTF-8 ⇒ **hides** it), and GitHub
+> Pages sends **`charset=utf-8`** (⇒ overrides both ⇒ **no user ever saw it**). Fixed at root
+> regardless — `<meta charset="utf-8">` ⇒ the file is **self-describing**, `probe-charset.mjs` asserts
+> it, and **134's pure-ASCII rule is REPEALED.** (z) refuted outright: `probe-hud.mjs`, 6 widths,
+> **0 clipped labels, >=20px spare.**
+
+## Iteration 220 — the houses were the same colour as the road (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish, closing cue **(aa)**. Iter 214 proved the night tint is a **hue
+rotation**, not a tint, and fixed it on the **sand**. The same bug was still sitting on the city's
+**biggest built surface**, which is what 217's step-back agent called, unprompted, *"a desaturated
+slate-violet blob where towers, roads and low buildings are one value."*
+
+**Probe first — and the cue's own premise did not survive it.** `probes/probe-sandhue.mjs` (0.55
+tile-body mask) put night RES<->ROAD at **~8.6 RGB units** — but **day RES<->ROAD at ~8.7**. By that
+instrument the separation does not *collapse* at night; it was never there, and the day city reads
+fine. The mask was averaging the building into its own lawn (214's "necessary but not sufficient"
+law, one level down). Re-run on the cue's *cited* instrument, `probes/probe-goldenhue.mjs` (3 seeds,
+frozen clock, world rebuilt in-page), and the cue is right and the bug is **systemic**:
+
+| night | RES vs ROAD | PARK vs ROAD | PARK vs RES | FARM vs ROAD |
+| --- | --- | --- | --- | --- |
+| day | 22 | 50 | 36 | 47 |
+| **HEAD night** | **6** | **14** | **20** | **21** |
+
+Every warm or green **land** surface loses its hue after dark — chroma crushed 3-9x (RES 48 -> 17,
+PARK 46 -> 10, FOREST 52 -> 6) — and the only land tile that holds is **BEACH (37)**, the one 214
+already fixed. The mechanism is exact, and it is 199's law (a constant whose *name* asserts a
+behaviour its *value* cannot have): run the tint `[.42,.42,.58]` on the masonry palette by hand and
+the **channel ORDER inverts** — `cream` [244,232,208] -> [103,97,**121**] (B>R>G) and `creamDk`
+[221,205,172] -> [93,86,**100**], both **lavender**; `sandDk` [212,190,146] -> [89,80,85], **chroma
+9, i.e. grey**. RES's `bodyN` is `cream`/`terra`/`sandDk` and MID's is `terra`/`cream`/`sandDk` — so
+**most house and walk-up bodies are drawn in exactly the two tones that invert to violet.** The
+saturated ones (`terra`/`coral`/`brick`) survive: they are too warm to invert.
+
+**Change (five call sites, colour only).** `col(` -> `sandCol(` on the **masonry** in `drawBuilding`:
+RES body + roof + chimney, MID body + roof. **Reuses the shipped wash rather than forking a second
+one** (one-predicate-one-definition) — `sandCol` was already generic over any `BASE` name; only its
+*header comment* claimed it was about sand, and that comment is now corrected. The **glass** types
+(TOWER/COM) **deliberately keep the cool tint**: they hold their chroma (19 -> 17), the tint cannot
+rotate them, and their identity *is* coolness — so the night city now separates into **warm masonry
+against cool glass and asphalt**, which is how a lit city actually reads. ROAD stays grey **on
+purpose** (214: asphalt genuinely is grey; the bug only bites a surface that is *supposed* to be warm).
+
+**Census.** PASS, and **vacuous by construction** — no `rng()`, no terrain, empty tile histogram, core
+metrics flat. (`solarRoofs` -1, `towerHt` +1: load-timing tick-count noise, 163's law (c). `drawBuilding`
+is pure render and cannot reach `tick()`.)
+
+**Probe (`probes/probe-goldenhue.mjs`, patch vs HEAD, 3 seeds).** The claim is about **colour**, so the
+gate is in colour units (214's law):
+
+| night | HEAD | patch | (day) |
+| --- | --- | --- | --- |
+| **RES vs ROAD** | **6** | **16** | 22 |
+| RES chroma | 17 | **34** | 48 |
+| RES hue | **356deg** (red-violet) | **24deg** (warm tan) | 36deg |
+| MID chroma | 22 | **36** | 22 |
+| PARK vs RES | 20 | **29** | 36 |
+
+Houses and asphalt go from **6 -> 16** RGB units: from 27% of their daylight separation to **73%**.
+**Controls, all clean and measured in the same run:** the **day and golden columns are UNMOVED** (RES
+day 36deg/48/152 in both builds; golden 24deg/74/129 in both) — `sandCol`'s `w=clamp((LITAMT-0.35)/0.35,0,1)`
+is **0 in daylight**, where `t===TINT` and the two functions are **byte-identical**, so the dead regime
+referees the live one *for free* (199's law). **BEACH night (33deg/37/105) and WATER night (210deg/58/67)
+are EXACTLY unchanged** — 214's fix and the sea are undisturbed.
+
+**Perf — free BY CONSTRUCTION, not by timing.** Not one prism, ellipse or stroke was added, removed or
+resized; only the *string* handed to `fillStyle` changed. Path-object count is therefore **identical**,
+and 198's measured cost model says cost on this canvas is **per path object**. Per 216's law, that
+deterministic mechanism outranks an interleaved timing number that would have no mechanism behind it.
+(`sandCol` is `CCACHE`d exactly like `col()` — ~48 extra keys per light change, not per hex.)
+
+**Visual.** `probes/shot-stepback.mjs`, seeds 42 + 7, frozen in-page, frames self-reporting
+(`night t=0.92 LITAMT=1`). Both agents **PASS**. They were told only that *"some surfaces"* changed
+after dark — never which, never in which direction (108: locate, don't judge) — and **both, blind,
+independently named the ground truth**: the low buildings read *"warm tan/khaki with terracotta
+roofs"* (42) and *"warm tan/cream with terracotta roofs"* (7), against roads that read *"slate-violet"*
+— i.e. they put RES at the measured **hue 24deg** and confirmed the RES/ROAD separation without being
+told it was the thing under test. Both confirmed the towers still read **cooler** than the low-rise,
+and both confirmed the **day frame is untouched**.
+
+**Aside, banked as cue (ad) — two seeds, independent, unprompted** (212's fail/aside law, paying out an
+eighth lap): seed 7 saw *"slightly hazy-violet mid-block interiors"* and seed 42 *"a violet/blue-grey
+ground plane."* That is **the GROUND, still on the raw cool tint** — and the probe agrees: **PARK
+rotates green -> CYAN (hue 81 -> 206) with chroma crushed 46 -> 6.** The built mass is fixed; the
+surface it stands on is not.
+
+**Verdict: SHIPPED.**
+

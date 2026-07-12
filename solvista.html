@@ -2483,8 +2483,11 @@ function syncFleet(){
     /* ~1 in 6 cars is a taxi. Math.random (not rng) so the seeded stream is
        untouched; the `c:` expression below still consumes its rng() for every car,
        so the CA is byte-identical whether a car is flagged a cab or not. */
-    vehicles.push({x,y,nx,ny,p:rng(),sp:0.9+rng()*0.7,kind,
-                   taxi:kind==='car'&&Math.random()<0.17,
+    const taxi=kind==='car'&&Math.random()<0.17;
+    /* the cab keeps no hour: it is the one that stays out (vehCurfew), and a bus runs
+       a night service. Only the ordinary car turns in. */
+    vehicles.push({x,y,nx,ny,p:rng(),sp:0.9+rng()*0.7,kind,taxi,
+                   out:(kind==='car'&&!taxi)?vehCurfew('car'):undefined,
                    c:kind==='bus'?'gold':CARCOLS[(rng()*CARCOLS.length)|0]});
   }
   /* service fleet: one cruiser, one ambulance, one engine — as each is earned */
@@ -2510,7 +2513,7 @@ function syncFleet(){
     const opts=roadNbrOpts(x,y);
     if(!opts.length)continue;
     const[nx,ny]=opts[(rng()*opts.length)|0];
-    bikes.push({x,y,nx,ny,p:rng(),sp:1.4+rng()*0.8,kind:'bike',
+    bikes.push({x,y,nx,ny,p:rng(),sp:1.4+rng()*0.8,kind:'bike',out:vehCurfew('bike'),
                 c:['coral','teal','gold','sage'][(rng()*4)|0]});
   }
   /* streetcars ride the avenues from the mid-80s. Spawn picks use Math.random
@@ -2523,7 +2526,7 @@ function syncFleet(){
     const opts=roadNbrOpts(x,y);
     if(!opts.length)continue;
     const[nx,ny]=opts[(Math.random()*opts.length)|0];
-    trams.push({x,y,nx,ny,p:Math.random(),sp:0.6+Math.random()*0.22,kind:'tram',c:'brick'});
+    trams.push({x,y,nx,ny,p:Math.random(),sp:0.6+Math.random()*0.22,kind:'tram',out:vehCurfew('tram'),c:'brick'});
   }
   /* delivery trucks work the streets from the early days (Math.random, no perturbation) */
   const TRKC=['teal','sage','cream','gold'];
@@ -2534,7 +2537,7 @@ function syncFleet(){
     const opts=roadNbrOpts(x,y);
     if(!opts.length)continue;
     const[nx,ny]=opts[(Math.random()*opts.length)|0];
-    trucks.push({x,y,nx,ny,p:Math.random(),sp:0.7+Math.random()*0.25,kind:'truck',c:TRKC[(Math.random()*TRKC.length)|0]});
+    trucks.push({x,y,nx,ny,p:Math.random(),sp:0.7+Math.random()*0.25,kind:'truck',out:vehCurfew('truck'),c:TRKC[(Math.random()*TRKC.length)|0]});
   }
   const openCells=[], kerbCells=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){const t=cells[idx(x,y)].t;
@@ -2978,6 +2981,33 @@ const curfewAt=(x,y)=>CURF0+CURFB*buzzN(x,y)+Math.random()*CURFJ;
    no buzz term: the esplanade is quiet ground, an evening run is a thing and a 3am one is
    not. Every runner is in by nightAmt 0.62. */
 const JOG0=0.16, JOGJ=0.46;
+/* ---- the traffic keeps hours too (iter 230) -------------------------------
+   The city's PEOPLE learned to go to bed -- the windows at 199 (BEDT), the crowd and its
+   dogs and runners at 210 (curfewAt) -- and its TRAFFIC never did: at 3am the streets still
+   carried the same 38 cars, 16 cyclists, 7 delivery vans and 6 streetcars they carried at
+   5pm. Same clock as the crowd (nightAmt: 0 all day, ~1 in the small hours, and closed off
+   at dawn by the light itself, since nightDeep alone is monotone and can never end a night);
+   the hour is per VEHICLE, not per cell, because a positional hash makes a mover blink as it
+   crosses a hex (210's finding, and a car crosses hexes constantly).
+   It thins by CLASS, because a class is what a shift IS: the vans finish their round first,
+   then the cyclists; the streetcars fall back to a night service (the jitter runs past 1, so
+   a few keep running all night); ordinary cars thin, but a street never empties.
+   Who does NOT keep an hour, and why -- each of these is a decision, not an omission:
+     the BUS   -- a night service is a real thing, and stepVehicle stamps the stop queue
+                  whether or not the bus is DRAWN, so hiding one would empty a queue that
+                  nobody ever came for (226's waiting crowd).
+     the SERVICE fleet (police/ambo/fireeng) -- staying out is what it is for (204).
+     the TAXI  -- and the taxi is the point. ~1 in 6 cars has been flagged a cab ever since
+                  it got its lemon livery, and the flag has never MEANT anything. Now it does:
+                  as the ordinary traffic goes home the cab stays out, so the cab's share of
+                  the cars still on the street CLIMBS through the night. Same city, read at
+                  3am, is a city of taxis -- an interconnect, not a new object.
+   Nothing is spawned or despawned and no rng() is drawn (the hour comes from Math.random at
+   spawn, exactly as the taxi flag does), so the seeded stream -- and every census metric --
+   is byte-identical. And it is 0 all day, so DAYLIGHT IS A FREE DEAD-REGIME CONTROL (199). */
+const VCURF={bike:[0.10,0.45], truck:[0.16,0.50], tram:[0.45,0.90], car:[0.35,1.00]};
+const vehCurfew=k=>{const b=VCURF[k];return b?b[0]+Math.random()*b[1]:undefined};
+const vehHidden=v=>v.out!==undefined&&nightAmt()>v.out;
 function stepPed(p,dt){
   p.tm-=dt;
   const pierBound=onPier(p.x,p.y), onRoad=!pierBound&&pedRoad(p.x,p.y);
@@ -6306,6 +6336,9 @@ function trainPos(m,p){ /* -> [screenX, screenY, alongX, cell] */
 /* draw a vehicle at ground level, sliding between hex centers
    (roads run on hex axes, so straight runs draw straight) */
 function drawVehicle(v){
+  if(vehHidden(v))return;  /* off the road for the night, on its own hour (vehCurfew).
+     Before stamp(), so a vehicle that has gone in cannot be hovered either -- drawPed's
+     rule exactly. stepVehicle still runs it, so it is back where it belongs by morning. */
   const A=ctr(v.x,v.y), B=ctr(v.nx,v.ny);
   const ddx=B[0]-A[0], ddy=B[1]-A[1], L=Math.hypot(ddx,ddy)||1;
   const lane=(v.kind==='bike'?0.17:0.09)*CW; /* cyclists hug the curb */
@@ -7801,7 +7834,14 @@ function pickEntity(wx,wy){
     if(d<r*r&&d<bd){bd=d;best=[name,typeof sub==='function'?sub(e):sub,e,r];}
   };
   for(const[g,name,sub,r]of ENTINFO)for(const e of g())consider(e,name,sub,r);
-  for(const v of vehicles){const k=v.taxi?['Taxi','For hire — flag it down.']:(VKIND[v.kind]||['Car',"Somebody's errand."]);consider(v,k[0],k[1],6);}
+  /* The cab reads the same clock its rule does (vehCurfew): it is the one car that keeps no
+     hour, so once the ordinary traffic has gone home it is most of what is left on the road.
+     Computed live off nightAmt(), never a stored string -- the label and the rule share ONE
+     number, so they cannot drift apart. A vehicle that HAS gone home is never named at all:
+     it returns before stamp(), so consider() drops it on the _sf test above, free. */
+  const CAB=['Taxi',()=>nightAmt()>0.5?'The night shift — still for hire once the traffic has gone home.'
+                                      :'For hire — flag it down.'];
+  for(const v of vehicles){const k=v.taxi?CAB:(VKIND[v.kind]||['Car',"Somebody's errand."]);consider(v,k[0],k[1],6);}
   return best;
 }
 const tipEl=$('tip');
