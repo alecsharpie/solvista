@@ -27,7 +27,7 @@ ones (U2, 42, U5) stay in the bullet.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22 | | U2, 44, 58, 79, **116**, **132**, **150**, **185** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193** | 5, 15, **138** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~ | 45 | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~ | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201** | 78, **111** | | 84, **137**, **163** | 71, **154**, **191** |
 
@@ -55,8 +55,39 @@ ones (U2, 42, U5) stay in the bullet.
   FUNCTION of the entity (iter 105)** — use it when a thing's interest is its
   *membership* (which line / route / depot), computed live, not a stored string.
 - **ROTATION.** Last vector per domain:
-  Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **198** · Civic **195** · Water **196**.
-  **Next lap owes Civic (195), then Water (196), then Urban (199).**
+  Sky **200** · People **201** · Transport **203** · Urban **199** · Nature **198** · Civic **204** · Water **196**.
+  **Next lap owes Water (196), then Nature (198), then Urban (199).**
+  **204 took Civic × CONNECT — the coldest cell on the board (last used at iter 45) — and SHIPPED: the service
+  fleet comes home.** Three CIVICDESC lines park a vehicle at a door (the precinct's *"Cruisers idle in the
+  yard"*, the hospital's *"ambulance bay that never closes"*, the firehouse's *"Engines behind roll-up doors"*),
+  and `syncFleet` even conditions the AMBULANCE'S EXISTENCE on a hospital standing — then `stepVehicle`
+  random-walked all three exactly like a car (straightest 72%, else any neighbour) and **not one ever went
+  home.** Now each runs a round trip: stands at its own institution with its beacon dark, rolls out to a call,
+  drives back. It routes by descending a BFS field over ROAD cells, so its route IS the street network (and
+  therefore obeys the three hex axes for free). Entity-motion only — no `rng()` draw added, so the census is
+  **+0 on every metric, tile histogram empty**, exactly as predicted. `probe-servcall` is the gate: time spent
+  standing at its own door goes **0.0-3.3% -> 10-25%** (2-5 deliberate arrivals) on 3 seeds, with the **ordinary
+  38-car fleet flat at 0.1-0.4% in BOTH builds**. The **beacon now carries the duty** (an ambulance on a call and
+  an engine at a fire run lit *in daylight*; a vehicle at its bay is dark), and `VKIND`'s sub is a FUNCTION of the
+  vehicle (105's law) reading the same `duty` — one state, three readers.
+  **⚠ 204's REAL find is that the FIRE CA IS A GHOST — do not build "X answers the fire" (`probe-firehost`).**
+  Ignition is year-gated (blocks `year<2006`, forest `year<2030`), so **at 2035 nothing can ignite at all**, and
+  even before then it is vanishingly rare: across **3 seeds x 61 years** there are **TWO one-cell episodes** in
+  the engine's whole era (seeds 7 and 1234: *zero*), and fire **never spreads** (peak 1.00 cells lit). A cell
+  burns 4 ticks = **1.8 real seconds** while the engine covers **1.6 hexes**. So the engine now *heads* to the
+  smoke the moment one lights (forced-fire probe: road-distance descends **56->7 / 42->0 / 66->6** monotone on 3
+  seeds, HEAD wanders) and usually never arrives — which is the model being honest, not a bug. **The fire system
+  is `T.MARKET` all over again: fully drawn, three labels boasting about it, and it never runs.** Reviving it is
+  a Nature/Urban CA lap with a real cost (BURNT is the darkest tile in the palette), not a freebie.
+  **⚠ Banked cue (n) — A PARKED VEHICLE IS OFTEN INVISIBLE, AND THE DOOR IS NOT THE REASON.** `probe-servbay`
+  measures the parked vehicle's ink against itself re-drawn on top: **4 of 9 read 0%** — eaten whole by whatever
+  tall thing stands in the rows in front (draw order IS depth order). 204 then built a door-ranking lever and
+  **measured it at nothing**: nearest / least-blocked-3-rows / strictly-in-front score **485 / 489 / 485 out of
+  900**. What buries a bay is the **density of the downtown its institution stands in** — the police station
+  happens to sit in the open and reads 91-99% on every seed; the hospital and firehouse are in the core. No
+  choice among four road hexes escapes it. **Making a bay legible means giving the CIVIC TILE a visible apron on
+  its front edge — a `polish-tile` job, not a growth lap** (same shape as 195's university light). The lever was
+  measured before it was mandated (198's law) and is NOT in the shipped code.
   **203 took Transport × Polish and EXPLORED → REVERTED — it CLOSED 202's banked "thin dark line" cue.**
   The line is the **aerial cable-car HAUL ROPE**: `col('ink',1.05)` = **`#373128`, the darkest ink in the palette,
   fully OPAQUE, at 0.5 DEVICE px**. Each span is 12-14px (below any "long line" filter) but **15-25 spans CHAIN into
@@ -114,7 +145,6 @@ ones (U2, 42, U5) stay in the bullet.
   Every *place to put the light* failed (campanile halo orphans on seed 7; the quad is overdrawn by the tile's
   own wings; the tile is drawn small), **⇒ it is a `polish-tile` job, not a growth lap.** Gate kept
   (`probes/probe-unilight.mjs` + `shot-uni.mjs`). Laws in SKILL.md; paragraph rotated to archive at 200.
-  (The per-lap recaps of **184-194** — and their superseded "next lap owes" pointers — were rotated into `GROWTH-archive.md` at iter **202** to pay for 202's lines; the ROTATION line above is the live pointer. 162/167/172/177/182/187/192/197/**202** = step-backs, no domain lap.)
   **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban is measured-saturated: additive spent (118), and Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (high-street arcade: the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); **Urban's next lap is Deepen/Polish only** (or a COM arcade if a *straight-hex-axis* retail run is ever found — the parade is not one). **Roof-furniture is CLOSED city-wide** across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND warehouse north-light clerestory 173) — no bare roof is left, so a future Urban "bare roof" vector has no host; Urban Deepen must go elsewhere (facades, ground plane, harbour apron). (The per-lap recaps of **173-185**, and their superseded "next lap owes" pointers, were rotated into `GROWTH-archive.md` at iter 196 to pay for 196's lines — the header is a fixed budget, and the ROTATION line above is the live pointer.) Check the last entry of the stalest domain for a banked
   finding before reading its row. (**137 took People × Polish**: gave the walking figures — peds/dogs/joggers,
   the only movers with no `shadS()` shadow while every vehicle has one — the house-style contact shadow at the
@@ -128,36 +158,23 @@ ones (U2, 42, U5) stay in the bullet.
   add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac assuming 135/144 unblocked it. Sky's additive/CA cells are still traps, see below.) (**132 took Water × Polish** — the kelp beds got a floating olive canopy so a bed reads as a living
   forest, not a flat dark hole, while staying the darkest thing inshore; `probe-kelp` gates it.)
   **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by respending
-  their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it.** (**129 cashed the tell a 7th time for Nature**:
-  the orchard drew a blossom/fruit calendar since iter 57 but its tooltip was mute; it now names the
-  season via a shared `orchardPhase()`. **129's banked Nature Deepen is CASHED (iter 139)**: VINEYARD's
-  grapes/canes now read `year` via a shared `vinePhase()` (bare in winter → purple at harvest), the last frozen
-  agriculture tile. **Its tooltip is now CASHED (iter 148)** — a `Vines` season row reads the same `vinePhase()`
-  (`Bare canes`/`In leaf`/`Green fruit`/`Ripe for harvest`), like 129's orchard `Grove` row. **The
-  asserts-less-than-the-code-knows tell is now SPENT for agriculture** (orchard 129 + vineyard 148 + **FARM 183** —
-  183 closed the biggest host, which 148's "spent" note had OVERLOOKED: a `Fields` phase row on `farmPhase(c.v)`,
-  `Ploughed under`/`Sprouting`/`Standing crop`/`Ripening to straw`/`Cut for harvest`); GARDEN's draw
-  does not read `year` (needs a Deepen first, per 129), so the next Nature × Interaction/UX is a *new* seam.) (**127 took People × New element** aimed not at its spent
+  their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it.**
+  **The asserts-less-than-the-code-knows tell is SPENT for agriculture** (orchard 129 + vineyard 139/148 + FARM
+  183 — each tile's tooltip now names the season its draw already knew, off ONE shared `*Phase()` the draw and
+  the string both read). **GARDEN is the last mute one and its draw does not read `year` at all** — it needs a
+  Deepen before a tooltip, so the next Nature × Interaction/UX is a genuinely NEW seam. (Full recap rotated to
+  `GROWTH-archive.md` at 204.) (**127 took People × New element** aimed not at its spent
   *entity* list but at its biggest untouched *surface* — PARK's 878 hexes now show day-only picnics. The lesson:
   "additive inventory spent" is a claim about a domain's entities, not its surfaces.) (**126 took Sky × Deepen** — the moon now keeps a calendar
   and the moonglade dims with its phase — which is the documented way past Sky's additive saturation: a Deepen
   that adds no element. Sky is no longer stale, and its empty `New CA rule` cell is still a trap, not an invitation.)
-  **124 closed the ghost-`c.solar` cue (detail in archive) — the LAST banked cue that moved a census number;
-  from here the census is vacuous for most vectors, so reach for a probe.**
-  **123 cashed the cue banked for Water, exactly as 122 cashed Civic's, 121 cue (h), and 119 cue from 111:
-  four laps running where *the header told the iteration what to do*.** That is the loop working. **But 123 also
-  found the banked cue's own description of the code was WRONG** (it said `hashCell`; the turbines were `rng()`),
-  and the implementation the cue prescribed would have reshuffled the seeded stream. **A cue is a pointer, not a
-  spec — re-grep the seam before designing to it.**
-  **119 took People × Deepen, its FULLEST cell, and was right to** — because 111 had already *measured*
-  and banked the vector there (move the ped spawn pool). **A banked, measured finding outranks both
-  kind-rotation and cell-emptiness**; the grid says what is *untried*, not what is *most wanted*. Check
-  the last entry of the stalest domain for a banked finding before reading its row.
-  **⚠ 118 declined the header's own "coldest kind" steer, and was right to.** The header said *New element*;
-  118 first grepped the Urban draw and found its additive moves **spent** (cranes, helipads, masts, skybridges,
-  lofts, solar/green roofs, terraces, neon, podia — full inventory in 118's last finding). Saturation beats
-  kind-rotation: when a domain's additive cell is exhausted, the kind changes, not the domain. Read the
-  inventory before proposing an Urban **New element**.
+  **124 closed the ghost-`c.solar` cue — the LAST banked cue that moved a census number; from here the
+  census is VACUOUS for most vectors, so reach for a probe.** Three steering laws, paid for by 118/119/123 and
+  kept because they govern step 1: **a cue is a POINTER, NOT A SPEC** (123's banked cue misdescribed its own
+  code — re-grep the seam before designing to it); **a banked, measured finding outranks both kind-rotation and
+  cell-emptiness** (119); and **saturation beats kind-rotation** — 118 declined the header's own "coldest kind"
+  steer and was right, because when a domain's additive cell is spent the KIND changes, not the domain. Full
+  text rotated to `GROWTH-archive.md` at 204.
   **Sky's additive/CA cells are TRAPS, not invitations** (115 took Sky by adding nothing; sky is not cellular, and
   fog on terrain is already `rSea`/`fogAt`). Surveyed at 103; detail archived.
   **Cue (k) is FULLY CLOSED** (116 gave the sea a depth field, 123 stood the wind farm on it). **Still banked for
@@ -169,8 +186,6 @@ ones (U2, 42, U5) stay in the bullet.
   walkable stat. **⚠ A tick-rule cannot read them directly (151): `recount()` never runs in the sim loop, so the
   reach maps are STALE inside `tick()`** — recompute locally, or pay a recount. (Detail archived at 200.)
   **Iteration 207 is the next holistic step-back** (105, 110, 115, 120, 125, 130, 136, 142, 147, 152, 157, 162, 167, 172, 177, 182, 187, 192, 197, **202 — all done**). **202 was the 20th: a CLEAN BILL on the city, and the failure was in the INSTRUMENT** (see its recap above). 197 (the 19th) is where the PERF arc was first priced — 193+194+196 cost day +3.8/+4.4%, all of it 194's tree shadows, **priced and ACCEPTED** (198 measured every lever and closed them). **207 owes: price the ARC, not just the lap (`REF=<older step-back sha> perfab.mjs`), and shoot with `probes/shot-stepback.mjs`, NOT `shoot.mjs`+`?t=`/`?year=`.**
-  (The step-back framing recipe — 3 lights x 2 calendars, day frame pinned OFF January — lives in **SKILL.md**;
-  the header's duplicate copy was rotated to `GROWTH-archive.md` at iter 201.)
   **The GAP-CLOSING trick (111/112/113) is SPENT in four domains; the TELL that replaced it (a label asserting
   what the draw ignores) is CASHED 7x — 117 redwoods, 122 `CIVICLABEL`, 129 orchard, 140 plaza/quad, 148
   vineyard, 183 FARM, and 199 found its next host is a CONSTANT (see SKILL.md). Still MUTE: `[T.IND]` (no
@@ -178,26 +193,14 @@ ones (U2, 42, U5) stay in the bullet.
   needs a probe checking the claim against INDEPENDENTLY RECOMPUTED truth, not a screenshot that it renders.
   **Sky-feedable list is EMPTY since 139** — every vegetation tile that can read `year` now does, so a further
   Sky interconnect needs a genuinely NEW derived field. (Full 111->148 history in `GROWTH-archive.md`.)
-  Recent kinds (135–141 recaps archived at iter 162 trim):
-  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** **159 Deepen (the SURF GLOWS at night — bioluminescence sparkles the breaking wave with sparse soft sea-green DOTS, `LITAMT>0.5`-gated & `hashCell`-scattered, draw-only stream+pop-neutral; `probe-biolum` — the Water entry in the moon/stars/observatory night run).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158/159 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen/Deepen, 154 was Interaction/UX. **160 Urban × Connect EXPLORED → REVERTED** (RES terracing — extend 109's MID street-wall to houses): mechanism worked (`probe-terrace` 46–53% gap-fill vs 0.5% control) but the HOST doesn't exist at scale — only ~15% of RES have an E-W RES neighbour and ZERO seeds form runs of ≥3, and RES bodies are HEX PRISMS (widening a hex ≠ a shared-wall terrace). **Law: check host ADJACENCY, not just host count, before a Connect — 109's street-wall is MID-specific (MID clusters + is rectangular); RES/COM terracing needs measured E-W runs first. Urban × Connect still open (last SHIP 109); a COM high-street arcade (`hstr` marks retail runs) is the better target once its adjacency is measured.** **161 Deepen (CLOUD BELLIES catch the GOLDEN HOUR — the two lower puffs of a fair cloud tint toward `dl.skyBot` by `cwarm=clamp((R-B-70)/70,0,1)`, warm at dawn/dusk, ~0 at noon AND night; top puff & rain clouds untouched; draw-only stream/pop-neutral; `probe-cloudwarm` sky-band build-vs-build, dusk +11.6 warm≫cool, noon control balanced).** The `cwarm` gate off `skyBot` is a reusable golden-hour signal; next Sky feed needs a genuinely new derived field (the Sky-feedable vegetation list is empty since 139, and the SEASON word is still banked-but-blocked by its fast-`year` strobe, 134). **162 STEP-BACK (seventh clean bill).** **163 Polish (STATIC STANDING CROWDS finally cast the house-style contact shadow — the evening strip crowd (COM) + school-run drop-off now `shadS` at their feet like every ped/vehicle since 137; draw-only stream/pop-neutral; `probe-crowdshadow` strip 234/206 darker px & ZERO lighter, control flat). Closes 137's banked static-crowd gap; only the ELEVATED platform queue + abstract concourse dots deliberately left (deck/dots, not ground figures).**
-  (Stale 182/lap-160 pointers rotated to `GROWTH-archive.md` at 195 — the header is a fixed budget.)
-  Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
-  the banked Sky move is the SEASON word, which needs a slow clock FIRST — see the moon note above). Urban's
-  additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
-  **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
-  New element — but 127 sharpens it: saturation is of a domain's *entities*, and a New element can still land on a
-  large untouched **surface** (127 put picnics on PARK, 145 a daily rhythm on the beach). Pick the domain first and
-  read its row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
-  **Connect paid three times** (109, 111, 112 — 112 logged as
-  Deepen, see its entry): its trick was that
-  it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
-  Note **107 was a New CA rule that
-  ADDED NOTHING**: it rewrote a pass that had never fired. *Auditing an existing rule for
-  reachability* is a New-CA-rule move available in every domain and it costs no new content — see
-  `probe-market.mjs` and the dead-rule law below. (Iter 106 passed on Connect/CA/Scale *for Water*
-  and recorded why in its entry: Connect there means a corridor and iter 101's law kills those; a
-  Water CA rule would repeat iter 90's dune accretion; Scale is a structural lever, not a lap move.
-  That reasoning is Water-specific — the kinds stay cold for **other** domains.)
+  **Kind-picking, compressed (full text + the 143-163 per-lap recaps rotated to `GROWTH-archive.md` at 204).**
+  **Scale** is the coldest kind and a structural lever, not a lap move. **New element** (last 127): a saturated
+  domain cannot take one — but saturation is of a domain's ENTITIES, so one can still land on a large untouched
+  **surface** (127 put picnics on PARK's 878 hexes; 145 a daily rhythm on the beach). **Connect** (109, 111, 112,
+  and now **204**): its trick is that it adds NO NEW OBJECT — it closes a gap between two that already exist.
+  **107 was a New CA rule that ADDED NOTHING** — it rewrote a pass that had never fired; *auditing an existing
+  rule for reachability* is a New-CA-rule move available in every domain at zero content cost (`probe-market.mjs`,
+  and 204's `probe-firehost` is the same move on the fire pass — it found a ghost).
   Note **Nature × Connect was attempted and reverted three times** (46, 88,
   101) and is the row's graveyard: 46 found it geometrically impossible, 88 found it has no host
   draw-only, 101 found the host *and the land* and lost on **shape**. Do not re-open it as a
@@ -388,94 +391,11 @@ ones (U2, 42, U5) stay in the bullet.
 
 <!-- rotated -->
 
-> **Archive:** the 196 entries before Iteration 194 live in
+> **Archive:** the 197 entries before Iteration 195 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 194 — the trees put their feet on the ground (2026-07-12) [Nature × Polish]
-
-**Vector.** Nature × Polish. Nature was stalest (183) and **Polish is its coldest
-cell — last touched at iter 96, ~100 iterations ago.** The seam was found by grepping
-`shadS` rather than by reading the ledger: peds/dogs (137), the static standing crowds
-(163), every vehicle, the gulls, and the buildings (180) all ground themselves with a
-contact shadow. The trees — the most numerous vertical object on the plate (~25 call
-sites: FOREST 2-4/hex, PARK, QUAD, PLAZA, MEADOW, GARDEN, SHOREPARK, the boulevard
-street trees, the redwoods, the beach palms) — cast nothing and floated. **Iter 180's
-own comment at the building shadow literally CLAIMS "cars/peds/crowds/trees all use
-the same shadS".** They didn't. That is the loop's own richest-seam law (a label
-asserting a relationship the draw ignores) found in a *comment* rather than a tooltip.
-
-**Change.** Two `shadS` calls, +12 lines, draw-only. In `tree()` a contact shadow at
-the foot of the trunk sized to the crown each species actually carries — broadleaf
-0.22, conifer 0.19, poplar 0.11 (its narrow plume shades a fraction of a round head)
-— and in `palm()` a 0.15 shadow at the bole's foot (it stays at the base even though
-the trunk curves away downwind above it). All at alpha 0.13, deliberately low so a
-four-tree forest hex grounds without the floor going dark (159's overlap law).
-
-**Census.** PASS. Draw-only: tile histogram empty, `developed`/`roads`/`tileKinds`
-+0, pop -3/154918 (0.002%, noise). Vacuous by construction — the iteration rests on
-the probe.
-
-**Probe.** `probes/probe-treeshadow.mjs`, build-vs-build over a deterministic in-page
-rebuild (161). The gate exploits a physical fact: **a contact shadow can only DARKEN**,
-so `lighter` px must be exactly 0.
-
-| class | darker | lighter | meanLum |
-| --- | --- | --- | --- |
-| FOREST (host) | 4.06 / 4.87 / 3.23% | **0.00** | -0.36/-0.44/-0.29 |
-| PARK (host) | 2.59 / 2.53 / 2.66% | **0.00** | -0.27/-0.27/-0.28 |
-| LAND-ctl (1014 cells) | 0.00 / 0.00 / 0.00% | 0.00 | 0.00 |
-| WATER (700+ cells) | 0.00 / 0.01 / 0.00% | 0.00 | 0.00 |
-
-3 seeds. Zero lighter pixels anywhere, on any seed.
-
-**Visual.** Both seeds VISUAL PASS; both agents *located* the tree cover correctly
-(inland forest wedges + the palm line on the shore), so they actually looked. The
-seed-42 agent warned the dense conifer grove went *"distinctly darker/olive-muddy...
-near the tolerable limit"* — the kelp failure mode, and worth taking seriously. **It
-was confabulation, and the probe proved it:** FOREST mean luminance shifts by
-**-0.36..-0.44 out of 255**, i.e. less than half of one luminance level. The grove's
-pixels *move* (4.9% of them) but its tone does not sink. Agents name causes; a number
-is the verdict.
-
-**Perf.** `probes/perfab.mjs` (new; interleaved A/B/A/B vs pristine HEAD, min per
-variant, because a stored baseline cannot answer "did MY change cost anything").
-**day +3.4%, night +3.5%** — consistent across both scenes, so real, not noise. This
-is the honest price of an ellipse fill on the most numerous object in the city. Within
-tolerance and within precedent (118 shipped night +5.1%), but **logged as a real cost,
-not waved through** — the next step-back (197) should watch it.
-
-**Verdict: SHIPPED.**
-
-### Findings
-
-- **The richest seam can be a COMMENT, not a tooltip.** The loop's law says a *label*
-  asserting a relationship the draw ignores is a bug. It generalizes: iter 180's code
-  comment asserted trees used `shadS` and nothing had ever checked. **`grep` the shared
-  primitive (`shadS`) for who calls it, and diff that against who *claims* to.**
-- **A control that is contaminated is not a control — fix the control, don't move the
-  threshold.** The first run FAILed on a farm control reading 0.26-0.41% darker. It
-  would have been trivial (and wrong) to loosen the gate. The cause was **box bleed**:
-  at R=12px the sample box around a farm cell reaches into the tree-bearing hex next
-  door. Excluding tree hosts within *two rings* drove it to exactly 0.00% — which
-  **proves** the bleed explanation instead of asserting it.
-- **A hand-maintained predicate drifts from the draw it mirrors (one-predicate law,
-  again).** A residual 0.026% on the land control was not noise — it was GARDEN and
-  SHOREPARK missing from my `TREEHOST` set. **Attribute each `tree()`/`palm()` call to
-  its enclosing `case T.X:` from the source rather than guessing the host list**; the
-  marginal number was a real hole, not a threshold to fudge.
-- **A rejected optimization is still a result.** `shadS` rebuilds an `rgba()` string
-  per call, and with trees it is now the hottest draw call in the frame — so memoizing
-  it looked free. Measured: **it bought nothing** (+3.6/+3.1 vs +3.4/+3.5, pure noise).
-  Chrome already caches the fillStyle parse; the cost is the ellipse path+fill itself.
-  Reverted, so the diff is exactly the feature. **Don't ship an optimization you did not
-  measure — and don't keep one that measured zero.**
-- **Banked for Nature:** the shadow is *centered* (house style — nothing in the artifact
-  casts a directional shadow). If a future Sky vector ever gives the city a real sun
-  direction, `shadS`'s call sites are now a complete, single-primitive inventory of every
-  grounded object, and a directional pass could be done in one place.
 
 ## Iteration 195 — the university will not light (2026-07-12) [Civic & culture × Deepen]
 
@@ -1087,3 +1007,106 @@ legitimate object, correctly depth-sorted, and it must stay visible (the cabins 
 tramway — rope AND cabins AND masts together, to make it legible as infrastructure — not a tweak
 to the rope's colour.** Do not re-try: a halo/body under the rope (measured, backfires), or a lit
 top edge on it (measured, impossible at this width).
+
+## Iteration 204 — the service fleet comes home (2026-07-12) [Civic & culture × Connect]
+
+**Vector.** Civic & culture × **Connect** — the coldest cell on the board (last used at iter **45**, ~159
+iterations ago), and Civic was the stalest domain (last touched at 195, which explored → reverted). Connect's
+trick is that it **adds no new object**: it closes a gap between two that already exist.
+
+**The seam.** Three `CIVICDESC` lines park a vehicle at a door:
+
+- `police` — *"The precinct house. **Cruisers idle in the yard**."*
+- `hospital` — *"Emergency, wards, and **the ambulance bay that never closes**."*
+- `firehouse` — *"**Engines behind roll-up doors**, ready for the fires on the hill."*
+
+…and `syncFleet` even conditions the **ambulance's very existence** on a hospital standing
+(`if(cells.some(c=>c.kind==='hospital'))services.push('ambo')`). The code knows they are related, and then
+`stepVehicle` random-walked all three exactly like a car — straightest continuation 72%, else any neighbour —
+and **not one of them ever went home.** The fire engine's tooltip said *"Lights on, heading to the smoke"* while
+its steering had no idea where the smoke was. This is the label-asserts-what-the-draw-ignores tell, cashed an
+8th time, on its richest host yet: **three labels, three vehicles, three buildings, zero connections.**
+
+**Change.** Each service vehicle runs a round trip: it stands at its own institution's door with its beacon
+dark, is dispatched **out** to a call, stands there a moment, and drives **home**. It routes by descending a
+multi-source BFS field over ROAD cells (`roadField`), so its route *is* the street network and it obeys the
+three hex axes for free. `civicDoor(kind)` is ONE definition read by both the dispatcher and the arrival test
+(112's law). Each vehicle's call answers its own institution's job, off a field the city already derives: the
+cruiser works the **arterials** (`c.flow >= ARTFLOW`, iter 77's "reuse `c.flow` for anything that should follow
+the main roads"), the ambulance is called to somewhere people **live**, the engine patrols until something
+burns. The **beacon now carries the duty** — an ambulance on a call and an engine at a fire run lit *in
+daylight*, anything still out at night runs lit as it always did, and a vehicle standing at its own door is
+**dark**. `VKIND`'s `sub` became a **function of the vehicle** (105's law), reading the same `duty` the router
+steers by and the beacon lights by: one state, three readers, so they cannot drift apart.
+
+`stepVehicle` runs per **frame** on `Math.random`, so no `rng()` draw is added and the seeded stream — and every
+CA pass downstream of it — is byte-identical.
+
+**Census.** PASS. **+0 on every metric, tile histogram empty**, pop/roads/developed all flat. That is the
+correct and predicted result for an entity-motion-only change, and it proves only that the page does not throw.
+The probe is the gate.
+
+**Probe.** `probes/probe-servcall.mjs` — 240 sim-seconds of stepped entity motion, patch vs pristine HEAD, same
+seed, same stubbed `Math.random`. Share of time each vehicle stands **on its own institution's door cell**:
+
+| | HEAD | PATCH |
+| --- | --- | --- |
+| police | 0.0 / 0.0 / 1.5 % | **20.3 / 20.3 / 17.5 %** |
+| fire engine | 0.0 / 1.4 / 0.0 % | **24.6 / 20.5 / 22.0 %** |
+| ambulance | 0.0 / 3.3 / 0.0 % | **21.3 / 20.9 / 10.1 %** |
+| traffic (control ×38) | 0.4 / 0.2 / 0.1 % | 0.4 / 0.3 / 0.3 % ✓ flat |
+
+2–5 deliberate arrivals each; mean road-distance to home roughly halves. **Forced fire** (the ghost path, lit by
+hand because it can never be caught by waiting): the engine's road-distance to the smoke descends **monotonically
+56→7 · 42→0 · 66→6** on the three seeds, while HEAD wanders (56→52 · 42→44 · 66→66).
+
+**Visual.** PASS, both seeds. Cruiser located parked at the precinct door (white body, **teal roof bar**, flat on
+the hex); ambulance located out on a call with a **lit beacon in daylight** (white body, coral cross, blue/red
+flashing square) — a thing the artifact has never done before. Whole-city day and night frames both balanced,
+skies correct, nothing compounded.
+
+**Findings.**
+
+1. **The fire CA is a ghost — `probe-firehost` measured it before a line was written, and it saved the vector
+   from being born dead.** The original design was "steer the engine at the smoke." Ignition is year-gated
+   (blocks `year<2006`, forest `year<2030`), so **at 2035 nothing can ignite at all**; and even in its own era it
+   is vanishingly rare — across **3 seeds × 61 years** there are **two one-cell episodes** in the engine's whole
+   era (seeds 7 and 1234: *zero*), fire **never spreads** (peak 1.00 cells lit), and a cell burns 4 ticks =
+   **1.8 real seconds** while the engine covers **1.6 hexes**. It is `T.MARKET` all over again: fully drawn,
+   three labels boasting about it, and it never runs. The engine now genuinely *heads* to the smoke and usually
+   never arrives, which is the model being honest. **Do not build "X responds to the fire."**
+
+2. **A parked vehicle is often invisible — and the DOOR is not the reason.** `probe-servbay` measures the parked
+   vehicle's ink against the same vehicle re-drawn on top: **4 of 9 read 0%**, eaten by whatever tall thing
+   stands in the rows in front (draw order is depth order). I then built a door-ranking lever and **measured it
+   at nothing**: nearest / least-blocked-over-3-rows / strictly-in-front score **485 / 489 / 485** out of 900.
+   What buries a bay is the **density of the downtown the institution stands in** — the police station happens to
+   sit in the open (91–99% on every seed); the hospital and firehouse sit in the core. **The lever was measured
+   before it was mandated (198's law) and is not in the shipped code.** Banked as cue (n): making a bay legible
+   means giving the civic tile a visible **apron on its front edge** — a `polish-tile` job, like 195's university.
+
+3. **A stubbed shared `Math.random` makes a PER-ENTITY control worthless** — promoted to `SKILL.md`. My first
+   control was one car, and it moved (0.0% → 1.4%), which looked like the patch routing ordinary traffic home. It
+   was not: the patched service vehicles draw a *different number* of values from the one stubbed stream, so every
+   later consumer walks a different walk. Averaged over the whole 38-car fleet the shift washes out and the
+   control reads flat. **Aggregate the control, or give it its own stream.**
+
+4. **A frozen clock does NOT refresh the DOM** — promoted to `SKILL.md`. My whole-city night frame came back with
+   a *bright daytime sky* over a night-lit plate, and an agent correctly failed it. `syncSky` is **throttled to
+   400 ms** and `syncStats` only runs inside the `playing` branch, so a hand-rolled freeze shoots a night plate
+   under a day sky. Iter 202's lying camera, walked straight into again, one layer down.
+
+5. **Aim a close-up at the entity's DRAWN position, not its hex centre** — promoted to `SKILL.md`. A vehicle is
+   drawn *interpolated* between its hex and its next hex by `v.p`, so `ctr(x,y)` can be a full hex (~110 px)
+   from where it actually appears. That is exactly far enough for a visual agent to sweep the wrong quadrant and
+   report an empty street — which one did, on a frame where the probe measured the cruiser at **96% visible ink**.
+   `stamp()` records the true drawn position in `_sx/_sy`; use it.
+
+6. **The agents disagreed, and the probe was the verdict.** Seed 7 found both vehicles and described them exactly
+   (teal roof bar, coral cross, red beacon). Seed 42 reported *"every road hex is completely empty"* — while
+   simultaneously describing *"a blue square on a white hexagonal plinth with a coral cross beside it"* and
+   calling it a hospital tile. **That is the ambulance**, beacon and all. It looked straight at the feature and
+   misnamed it. The probe, which measures precisely the disputed claim (does the vehicle contribute ink to this
+   frame), said 96% — and a direct look confirmed it. Agents fail confidently; a number is the verdict.
+
+**Verdict: SHIPPED.**

@@ -11979,3 +11979,144 @@ Deepen/Polish only — measured-saturated)**, then Nature (183)/Civic (184). Nex
   **(0.39,0.105)** vs the shipped formula's **(0.388,0.107)**. (Its **banked "thin dark line" cue is CLOSED by 203** —
   see the ROTATION bullet: it was the cable-car haul rope, the artifact is innocent, and PROBE-it-don't-redesign was
   exactly right: all four agent-reads named a cause the measurement refuted.)
+
+<!-- Header block rotated out of GROWTH.md at iter 204 (the header is a fixed 400-line budget:
+     to add a line, cut a line). The three steering laws it carried survive, compressed, in the
+     live header; this is the full text as it stood. -->
+
+  **124 closed the ghost-`c.solar` cue (detail in archive) — the LAST banked cue that moved a census number;
+  from here the census is vacuous for most vectors, so reach for a probe.**
+  **123 cashed the cue banked for Water, exactly as 122 cashed Civic's, 121 cue (h), and 119 cue from 111:
+  four laps running where *the header told the iteration what to do*.** That is the loop working. **But 123 also
+  found the banked cue's own description of the code was WRONG** (it said `hashCell`; the turbines were `rng()`),
+  and the implementation the cue prescribed would have reshuffled the seeded stream. **A cue is a pointer, not a
+  spec — re-grep the seam before designing to it.**
+  **119 took People × Deepen, its FULLEST cell, and was right to** — because 111 had already *measured*
+  and banked the vector there (move the ped spawn pool). **A banked, measured finding outranks both
+  kind-rotation and cell-emptiness**; the grid says what is *untried*, not what is *most wanted*. Check
+  the last entry of the stalest domain for a banked finding before reading its row.
+  **⚠ 118 declined the header's own "coldest kind" steer, and was right to.** The header said *New element*;
+  118 first grepped the Urban draw and found its additive moves **spent** (cranes, helipads, masts, skybridges,
+  lofts, solar/green roofs, terraces, neon, podia — full inventory in 118's last finding). Saturation beats
+  kind-rotation: when a domain's additive cell is exhausted, the kind changes, not the domain. Read the
+  inventory before proposing an Urban **New element**.
+
+## Iteration 194 — the trees put their feet on the ground (2026-07-12) [Nature × Polish]
+
+**Vector.** Nature × Polish. Nature was stalest (183) and **Polish is its coldest
+cell — last touched at iter 96, ~100 iterations ago.** The seam was found by grepping
+`shadS` rather than by reading the ledger: peds/dogs (137), the static standing crowds
+(163), every vehicle, the gulls, and the buildings (180) all ground themselves with a
+contact shadow. The trees — the most numerous vertical object on the plate (~25 call
+sites: FOREST 2-4/hex, PARK, QUAD, PLAZA, MEADOW, GARDEN, SHOREPARK, the boulevard
+street trees, the redwoods, the beach palms) — cast nothing and floated. **Iter 180's
+own comment at the building shadow literally CLAIMS "cars/peds/crowds/trees all use
+the same shadS".** They didn't. That is the loop's own richest-seam law (a label
+asserting a relationship the draw ignores) found in a *comment* rather than a tooltip.
+
+**Change.** Two `shadS` calls, +12 lines, draw-only. In `tree()` a contact shadow at
+the foot of the trunk sized to the crown each species actually carries — broadleaf
+0.22, conifer 0.19, poplar 0.11 (its narrow plume shades a fraction of a round head)
+— and in `palm()` a 0.15 shadow at the bole's foot (it stays at the base even though
+the trunk curves away downwind above it). All at alpha 0.13, deliberately low so a
+four-tree forest hex grounds without the floor going dark (159's overlap law).
+
+**Census.** PASS. Draw-only: tile histogram empty, `developed`/`roads`/`tileKinds`
++0, pop -3/154918 (0.002%, noise). Vacuous by construction — the iteration rests on
+the probe.
+
+**Probe.** `probes/probe-treeshadow.mjs`, build-vs-build over a deterministic in-page
+rebuild (161). The gate exploits a physical fact: **a contact shadow can only DARKEN**,
+so `lighter` px must be exactly 0.
+
+| class | darker | lighter | meanLum |
+| --- | --- | --- | --- |
+| FOREST (host) | 4.06 / 4.87 / 3.23% | **0.00** | -0.36/-0.44/-0.29 |
+| PARK (host) | 2.59 / 2.53 / 2.66% | **0.00** | -0.27/-0.27/-0.28 |
+| LAND-ctl (1014 cells) | 0.00 / 0.00 / 0.00% | 0.00 | 0.00 |
+| WATER (700+ cells) | 0.00 / 0.01 / 0.00% | 0.00 | 0.00 |
+
+3 seeds. Zero lighter pixels anywhere, on any seed.
+
+**Visual.** Both seeds VISUAL PASS; both agents *located* the tree cover correctly
+(inland forest wedges + the palm line on the shore), so they actually looked. The
+seed-42 agent warned the dense conifer grove went *"distinctly darker/olive-muddy...
+near the tolerable limit"* — the kelp failure mode, and worth taking seriously. **It
+was confabulation, and the probe proved it:** FOREST mean luminance shifts by
+**-0.36..-0.44 out of 255**, i.e. less than half of one luminance level. The grove's
+pixels *move* (4.9% of them) but its tone does not sink. Agents name causes; a number
+is the verdict.
+
+**Perf.** `probes/perfab.mjs` (new; interleaved A/B/A/B vs pristine HEAD, min per
+variant, because a stored baseline cannot answer "did MY change cost anything").
+**day +3.4%, night +3.5%** — consistent across both scenes, so real, not noise. This
+is the honest price of an ellipse fill on the most numerous object in the city. Within
+tolerance and within precedent (118 shipped night +5.1%), but **logged as a real cost,
+not waved through** — the next step-back (197) should watch it.
+
+**Verdict: SHIPPED.**
+
+### Findings
+
+- **The richest seam can be a COMMENT, not a tooltip.** The loop's law says a *label*
+  asserting a relationship the draw ignores is a bug. It generalizes: iter 180's code
+  comment asserted trees used `shadS` and nothing had ever checked. **`grep` the shared
+  primitive (`shadS`) for who calls it, and diff that against who *claims* to.**
+- **A control that is contaminated is not a control — fix the control, don't move the
+  threshold.** The first run FAILed on a farm control reading 0.26-0.41% darker. It
+  would have been trivial (and wrong) to loosen the gate. The cause was **box bleed**:
+  at R=12px the sample box around a farm cell reaches into the tree-bearing hex next
+  door. Excluding tree hosts within *two rings* drove it to exactly 0.00% — which
+  **proves** the bleed explanation instead of asserting it.
+- **A hand-maintained predicate drifts from the draw it mirrors (one-predicate law,
+  again).** A residual 0.026% on the land control was not noise — it was GARDEN and
+  SHOREPARK missing from my `TREEHOST` set. **Attribute each `tree()`/`palm()` call to
+  its enclosing `case T.X:` from the source rather than guessing the host list**; the
+  marginal number was a real hole, not a threshold to fudge.
+- **A rejected optimization is still a result.** `shadS` rebuilds an `rgba()` string
+  per call, and with trees it is now the hottest draw call in the frame — so memoizing
+  it looked free. Measured: **it bought nothing** (+3.6/+3.1 vs +3.4/+3.5, pure noise).
+  Chrome already caches the fillStyle parse; the cost is the ellipse path+fill itself.
+  Reverted, so the diff is exactly the feature. **Don't ship an optimization you did not
+  measure — and don't keep one that measured zero.**
+- **Banked for Nature:** the shadow is *centered* (house style — nothing in the artifact
+  casts a directional shadow). If a future Sky vector ever gives the city a real sun
+  direction, `shadS`'s call sites are now a complete, single-primitive inventory of every
+  grounded object, and a directional pass could be done in one place.
+
+
+<!-- Header block rotated out of GROWTH.md at iter 204: the per-lap recaps of 143-163 and the
+     kind-picking discussion. The durable steers survive, compressed, in the live header. -->
+  Recent kinds (135–141 recaps archived at iter 162 trim):
+  **143 Polish (night CBD Gaussian light peak — `CORESIG`)** · **144 Interaction/UX (moon HUD card — `moonWord()`)** · **145 Deepen (beach furniture follows the sun via `LITAMT` — day-only umbrellas, `probe-beachsun`)** · **146 Polish (the bus reads as a bus — taller boxy body + window strip + cream livery, `probe-buslivery`)** · **149 Deepen (town-hall clock hand reads `dayT` — 24h dial, up at noon / down at midnight, agrees with the sun & moon; `hallClockCtr` shared by draw + `__clock` hook, `probe-hallclock`)** · **150 Polish (the open sea gets a day-only SUN GLITTER — cool bands of shimmer lift the water tone at noon, gone by dusk, night byte-unchanged; `probe-glitter`)** · **151 New CA rule (the block grows its own CORNER SHOP — a house in a shop desert opens a green-awning store on its ground floor via `c.corner`, a mixed-use FLAG so it stays RES and the census is vacuous; re-validating, stream+pop neutral; `probe-cornershop`)** · **152 STEP-BACK (fifth consecutive clean bill — no city change; perf 143→151 ~zero, seasons alive, night core located)** · **153 Deepen (the night STARS fade under a full moon — a 5th reader of `MOONF`, per-star magnitude thins the faint ones first; `probe-starmoon`)** · **154 Interaction/UX (the Resident tooltip names what the ped is doing from its hex — pier/market/green/kerb — via `residentDoing()`, the dog echoes its owner; `probe-strolling`)** · **155 Deepen (the streetcar draws from an OVERHEAD CONTACT WIRE — the pole that poked at empty air now rides a catenary strung the A→B block; the draw-form of the 149 tell; `probe-tramwire`)** — (**130/136/142/147/152/157 were the holistic step-backs.**) **156 New element (the WOODS FLOWER IN SPRING — a wildflower understory carpets the 69-hex forest floor before the canopy closes, then fades by summer; shared `springBloom()`, draw-only stream+pop-neutral; `probe-woodbloom`).** **157 STEP-BACK (sixth consecutive clean bill — no city change; perf 152→156 ~zero, seasons alive incl. FOREST now moving via 156, night core located both seeds).** **158 Deepen (the OBSERVATORY DOME opens after dark and ROTATES to track the night sky — slit at the zenith at midnight, leaning to the horizons at dusk/dawn, shut by day; reads the slow `dayT` like the 149 clock & 135 moon; `__obs` locator, `probe-obsdome`).** **159 Deepen (the SURF GLOWS at night — bioluminescence sparkles the breaking wave with sparse soft sea-green DOTS, `LITAMT>0.5`-gated & `hashCell`-scattered, draw-only stream+pop-neutral; `probe-biolum` — the Water entry in the moon/stars/observatory night run).** Interaction/UX ran hot 133/134/140/141/144; 143/145/146/149/150/151/153/155/156/158/159 broke it to Polish/Deepen/Polish/Deepen/Polish/New-CA/Deepen/Deepen/New-element/Deepen/Deepen, 154 was Interaction/UX. **160 Urban × Connect EXPLORED → REVERTED** (RES terracing — extend 109's MID street-wall to houses): mechanism worked (`probe-terrace` 46–53% gap-fill vs 0.5% control) but the HOST doesn't exist at scale — only ~15% of RES have an E-W RES neighbour and ZERO seeds form runs of ≥3, and RES bodies are HEX PRISMS (widening a hex ≠ a shared-wall terrace). **Law: check host ADJACENCY, not just host count, before a Connect — 109's street-wall is MID-specific (MID clusters + is rectangular); RES/COM terracing needs measured E-W runs first. Urban × Connect still open (last SHIP 109); a COM high-street arcade (`hstr` marks retail runs) is the better target once its adjacency is measured.** **161 Deepen (CLOUD BELLIES catch the GOLDEN HOUR — the two lower puffs of a fair cloud tint toward `dl.skyBot` by `cwarm=clamp((R-B-70)/70,0,1)`, warm at dawn/dusk, ~0 at noon AND night; top puff & rain clouds untouched; draw-only stream/pop-neutral; `probe-cloudwarm` sky-band build-vs-build, dusk +11.6 warm≫cool, noon control balanced).** The `cwarm` gate off `skyBot` is a reusable golden-hour signal; next Sky feed needs a genuinely new derived field (the Sky-feedable vegetation list is empty since 139, and the SEASON word is still banked-but-blocked by its fast-`year` strobe, 134). **162 STEP-BACK (seventh clean bill).** **163 Polish (STATIC STANDING CROWDS finally cast the house-style contact shadow — the evening strip crowd (COM) + school-run drop-off now `shadS` at their feet like every ped/vehicle since 137; draw-only stream/pop-neutral; `probe-crowdshadow` strip 234/206 darker px & ZERO lighter, control flat). Closes 137's banked static-crowd gap; only the ELEVATED platform queue + abstract concourse dots deliberately left (deck/dots, not ground figures).**
+  (Stale 182/lap-160 pointers rotated to `GROWTH-archive.md` at 195 — the header is a fixed budget.)
+  Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps;
+  the banked Sky move is the SEASON word, which needs a slow clock FIRST — see the moon note above). Urban's
+  additive cell is spent (118). The coldest kind is **Scale** (a structural lever, not a lap move);
+  **New element** was cashed at 127 (before that 106). Note 118's finding that a *saturated* domain cannot take a
+  New element — but 127 sharpens it: saturation is of a domain's *entities*, and a New element can still land on a
+  large untouched **surface** (127 put picnics on PARK, 145 a daily rhythm on the beach). Pick the domain first and
+  read its row before choosing. **Connect** (last 111) is live and cheap: its trick is to add no new object.
+  **Connect paid three times** (109, 111, 112 — 112 logged as
+  Deepen, see its entry): its trick was that
+  it added no new object — it *closed a gap between two that already existed* (see 109's first finding).
+  Note **107 was a New CA rule that
+  ADDED NOTHING**: it rewrote a pass that had never fired. *Auditing an existing rule for
+  reachability* is a New-CA-rule move available in every domain and it costs no new content — see
+  `probe-market.mjs` and the dead-rule law below. (Iter 106 passed on Connect/CA/Scale *for Water*
+  and recorded why in its entry: Connect there means a corridor and iter 101's law kills those; a
+  Water CA rule would repeat iter 90's dune accretion; Scale is a structural lever, not a lap move.
+  That reasoning is Water-specific — the kinds stay cold for **other** domains.)
+
+<!-- Header block rotated out of GROWTH.md at iter 204: the agriculture `tell` recap (129/139/148/183),
+     which the header itself marks SPENT. The live pointer survives, compressed. -->
+  their draws (123's stream-neutral trick) — but that REPEATS 123's site-on-depth mechanism, so vary it.** (**129 cashed the tell a 7th time for Nature**:
+  the orchard drew a blossom/fruit calendar since iter 57 but its tooltip was mute; it now names the
+  season via a shared `orchardPhase()`. **129's banked Nature Deepen is CASHED (iter 139)**: VINEYARD's
+  grapes/canes now read `year` via a shared `vinePhase()` (bare in winter → purple at harvest), the last frozen
+  agriculture tile. **Its tooltip is now CASHED (iter 148)** — a `Vines` season row reads the same `vinePhase()`
+  (`Bare canes`/`In leaf`/`Green fruit`/`Ripe for harvest`), like 129's orchard `Grove` row. **The
+  asserts-less-than-the-code-knows tell is now SPENT for agriculture** (orchard 129 + vineyard 148 + **FARM 183** —
+  183 closed the biggest host, which 148's "spent" note had OVERLOOKED: a `Fields` phase row on `farmPhase(c.v)`,
+  `Ploughed under`/`Sprouting`/`Standing crop`/`Ripening to straw`/`Cut for harvest`); GARDEN's draw
+  does not read `year` (needs a Deepen first, per 129), so the next Nature × Interaction/UX is a *new* seam.) (**127 took People × New element** aimed not at its spent

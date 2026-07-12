@@ -2233,7 +2233,9 @@ function syncFleet(){
     const opts=roadNbrOpts(x,y);
     if(!opts.length)continue;
     const[nx,ny]=opts[(rng()*opts.length)|0];
-    vehicles.push({x,y,nx,ny,p:rng(),sp:1.15,kind:sv,
+    /* it starts the way a shift starts: driving back to its own door (iter 204). `duty`
+       adds no rng() draw, so the seeded stream is byte-identical to before. */
+    vehicles.push({x,y,nx,ny,p:rng(),sp:1.15,kind:sv,duty:'home',
                    c:sv==='fireeng'?'coral':'white'});
   }
   /* cyclists take the streets from the early 80s */
@@ -2418,8 +2420,132 @@ function stopQueue(c,x,y){
   const u=since-BUSBRD;
   return{q:u<BUSGONE?0:Math.min(stopCap(x,y),1+((u-BUSGONE)/BUSQGAP|0)),bl:0};
 }
+/* ---- the service fleet comes home (iter 204) ---------------------------------------
+   Three CIVICDESC lines park a vehicle at a door — the precinct's "Cruisers idle in the
+   yard", the hospital's "ambulance bay that never closes", the firehouse's "Engines behind
+   roll-up doors" — and syncFleet already conditions the AMBULANCE'S EXISTENCE on a hospital
+   standing. Then stepVehicle random-walked all three exactly like a car (straightest 72%,
+   else any neighbour) and not one of them ever went home. The buildings, the vehicles and
+   the road graph all existed; only the line between them was missing — which is Connect's
+   whole trick: add no new object, close the gap between two that are already there.
+
+   Each service vehicle now runs a round trip: it stands at its own institution's door with
+   its beacon dark, rolls OUT along the streets to a call, stands there a moment, and drives
+   home. It routes by descending a BFS field over ROAD cells, so its route IS the street
+   network and it therefore obeys the three hex axes — never a straight line through blocks.
+
+   The engine breaks off for a live fire the moment one lights, which is the only thing that
+   could ever make its "Lights on, heading to the smoke" true. It rarely ARRIVES, and that is
+   the model being honest rather than a bug: probe-firehost measured the fire CA over 3 seeds
+   x 61 years and found TWO one-cell episodes in the engine's entire era (seeds 7 and 1234:
+   none at all), each alive 1.4s while the engine covers 1.6 hexes. It heads to the smoke;
+   the smoke goes out. The near-dead fire CA is banked as a cue, not patched here.
+
+   stepVehicle runs per FRAME on Math.random, so the seeded rng() stream — and every CA pass
+   downstream of it — is untouched: pop, roads and the tile histogram are byte-identical. */
+const SERVHOME={police:'police',fireeng:'firehouse',ambo:'hospital'};
+const AMBOCALL=new Set([T.RES,T.MID,T.TOWER]);
+/* DRAW ORDER IS DEPTH ORDER: the plate renders in plain rows top->bottom, so whatever stands
+   in the rows BELOW a door is drawn after it, and in front of it. A door with a tower in front
+   is a bay the viewer can never see into — and that is not a hypothetical: civicDoor first
+   handed back every road cell touching the institution and let the BFS take the nearest, and
+   probe-servbay measured FOUR OF NINE parked vehicles contributing ZERO ink, eaten whole by a
+   neighbour in front, while the cruiser (sited in the open by luck) read 95-100%. So rank the
+   doors by what blocks them and come home to the most open one. */
+/* the ROAD cells at an institution's door — ONE definition, read by the dispatcher (where is
+   home) and by the arrival test (am I there yet). Two copies of this would drift (112).
+   The vehicle takes the NEAREST of them, and that is deliberate: probe-servbay measured the
+   parked vehicle's visible ink under three door rules — nearest, least-blocked-in-the-next-
+   three-rows, and strictly-in-front-of-the-building — and they scored 485 / 489 / 485 out of
+   900. Door choice buys NOTHING. What buries a parked vehicle is the density of the downtown
+   its institution stands in (the hospital and the firehouse are sited in the core; the police
+   station happens to sit in the open and reads 91-99% on every seed), and no choice among four
+   road hexes escapes that. Making a bay legible means giving the CIVIC TILE a visible apron —
+   a polish-tile job, not a growth lap. Ranking the doors was a lever, and it was measured
+   before it was mandated (198's law); it is not kept. */
+function civicDoor(kind){
+  const out=[];
+  for(const i of HEXI){
+    const c=cells[i]; if(c.t!==T.CIVIC||c.kind!==kind)continue;
+    const x=i%G,y=(i/G)|0;
+    for(const[dx,dy]of nbrDirs(y)){const n=cellAt(x+dx,y+dy);if(n&&n.t===T.ROAD)out.push([x+dx,y+dy])}
+  }
+  return out;
+}
+/* ...and the road cells at the edge of a fire. A blaze in the deep woods has no street at
+   its edge, so there is nowhere to send the engine and it simply keeps its patrol. */
+function fireDoor(){
+  const out=[];
+  for(const i of HEXI){
+    const c=cells[i]; if(c.fire<=0)continue;
+    const x=i%G,y=(i/G)|0;
+    for(const[dx,dy]of nbrDirs(y)){const n=cellAt(x+dx,y+dy);if(n&&n.t===T.ROAD)out.push([x+dx,y+dy])}
+  }
+  return out;
+}
+/* steps along the ROAD NETWORK out of a set of road cells (multi-source hex BFS). A vehicle
+   descends this field, so it drives the streets. Rebuilt only when a vehicle re-targets — a
+   few times a minute, never per frame. */
+function roadField(srcs){
+  const d=new Int32Array(G*G).fill(-1); const q=[];
+  for(const[x,y]of srcs){const i=idx(x,y); if(d[i]<0){d[i]=0;q.push(x,y)}}
+  for(let h=0;h<q.length;h+=2){
+    const x=q[h],y=q[h+1],dv=d[idx(x,y)];
+    for(const[dx,dy]of nbrDirs(y)){
+      const nx=x+dx,ny=y+dy,n=cellAt(nx,ny); if(!n||n.t!==T.ROAD)continue;
+      const j=idx(nx,ny); if(d[j]>=0)continue;
+      d[j]=dv+1; q.push(nx,ny);
+    }
+  }
+  return d;
+}
+/* where a vehicle is sent when it rolls out. Each answers its own institution's job, off a
+   field the city already derives: the cruiser works the arterials (c.flow, iter 77 — "reuse
+   c.flow for anything that should follow the main roads"), the ambulance is called to
+   somewhere people actually live, the engine just patrols until something burns. */
+function servTarget(v){
+  const roads=roadCells(); if(!roads.length)return null;
+  const want=[];
+  for(const[x,y]of roads){
+    if(v.kind==='police'){ if(cellAt(x,y).flow>=ARTFLOW)want.push([x,y]) }
+    else if(v.kind==='ambo'){
+      for(const[dx,dy]of nbrDirs(y)){const n=cellAt(x+dx,y+dy);if(n&&AMBOCALL.has(n.t)){want.push([x,y]);break}}
+    }
+  }
+  const pool=want.length?want:roads;
+  return pool[(Math.random()*pool.length)|0];
+}
+/* give v a duty and the field that routes it there. A 'call' retries a few targets so the
+   vehicle is not dispatched into a road component it cannot reach; if nothing is reachable
+   it keeps no field and drives on the straightest-continuation rule until the streets grow
+   back together. */
+function servSend(v,duty){
+  const tries=duty==='call'?6:1;
+  for(let k=0;k<tries;k++){
+    let srcs;
+    if(duty==='home')srcs=civicDoor(SERVHOME[v.kind]);
+    else if(duty==='fire')srcs=fireDoor();
+    else{const t=servTarget(v); srcs=t?[t]:null}
+    if(!srcs||!srcs.length)break;
+    const f=roadField(srcs);
+    if(f[idx(v.x,v.y)]>0||k===tries-1){v.duty=duty;v.fld=f;return}
+  }
+  v.duty='call'; v.fld=null;   /* nowhere reachable to be: stay out on the streets */
+}
 function stepVehicle(v,dt){
-  if(v.wait>0){v.wait-=dt;return;}   /* a bus pulled in at its stop */
+  if(v.wait>0){v.wait-=dt;   /* a bus pulled in at its stop; a service vehicle is standing */
+    if(v.wait<=0){
+      if(v.duty==='bay')servSend(v,'call');                              /* the shout comes in */
+      else if(v.duty==='onscene'||v.duty==='atfire')servSend(v,'home');  /* stood down */
+    }
+    return;}
+  if(v.duty){   /* the engine breaks off for a fire, and resumes its round when it is out */
+    if(v.kind==='fireeng'){
+      if(firesNow&&v.duty!=='fire'&&v.duty!=='atfire')servSend(v,'fire');
+      else if(!firesNow&&(v.duty==='fire'||v.duty==='atfire'))servSend(v,'home');
+    }
+    if(!v.fld&&v.duty!=='bay')servSend(v,v.duty);   /* spawned, or the streets moved under it */
+  }
   if(v.dwell>0)v.dwell-=dt;
   v.p+=dt*v.sp;
   while(v.p>=1){
@@ -2428,6 +2554,11 @@ function stepVehicle(v,dt){
     const cc=cellAt(v.x,v.y);
     if(v.kind==='bus'&&cc&&cc.stop&&!(v.dwell>0)){v.wait=1.2+Math.random()*0.9;v.dwell=16;
       cc.bqs=stopQueue(cc,v.x,v.y).q; cc.blast=time;}   /* whoever was waiting gets on */
+    /* arrived: back into the bay, or stand at the incident */
+    if(v.fld&&v.fld[idx(v.x,v.y)]===0){
+      if(v.duty==='home'){v.duty='bay';v.fld=null;v.wait=7+Math.random()*13}
+      else{v.duty=v.duty==='fire'?'atfire':'onscene';v.fld=null;v.wait=4+Math.random()*7}
+    }
     const opts=roadNbrOpts(v.x,v.y,lx,ly);
     if(!opts.length){v.nx=lx;v.ny=ly;continue}
     /* prefer whichever neighbor keeps the heading straightest */
@@ -2440,7 +2571,19 @@ function stepVehicle(v,dt){
       const dot=(dx0*dx1+dy0*dy1)/(Math.hypot(dx0,dy0)*Math.hypot(dx1,dy1)||1);
       if(dot>bs){bs=dot;straight=o}
     }
-    const pick=(straight&&Math.random()<0.72)?straight:opts[(Math.random()*opts.length)|0];
+    let pick=null;
+    if(v.fld){   /* on a duty: the field IS the route — step downhill toward the target */
+      const here=v.fld[idx(v.x,v.y)];
+      let bd=1e9,cands=[];
+      for(const o of opts){
+        const d=v.fld[idx(o[0],o[1])]; if(d<0)continue;
+        if(d<bd){bd=d;cands=[o]} else if(d===bd)cands.push(o);
+      }
+      /* only if it actually descends — it may not, since roadNbrOpts forbids the U-turn.
+         Then it takes the ordinary rule, drives on, and comes back around. */
+      if(cands.length&&(here<0||bd<here))pick=cands[(Math.random()*cands.length)|0];
+    }
+    if(!pick)pick=(straight&&Math.random()<0.72)?straight:opts[(Math.random()*opts.length)|0];
     v.nx=pick[0];v.ny=pick[1];
   }
 }
@@ -5611,8 +5754,12 @@ function drawVehicle(v){
     if(v.kind==='ambo'){ctx.fillStyle=col('coral',1.2);
       ctx.fillRect(cx-1.9,cy-6.3,3.8,1.2);ctx.fillRect(cx-0.6,cy-7.6,1.2,3.8);}
     if(v.kind==='fireeng'){ctx.fillStyle=col('gold',1.15);ctx.fillRect(cx-3.5,cy-6.4,7,1);}
-    /* beacon: always at night; the engine also flashes whenever something burns */
-    if(LITAMT>0.2||(v.kind==='fireeng'&&firesNow)||(v.kind==='ambo'&&firesNow)){
+    /* beacon: an ambulance on a call and an engine at a fire run lit, day OR night — that is
+       what the light is FOR. Anything still out at night runs lit as it always did. But a
+       vehicle standing at its own door is dark, so the beacon now carries the duty (204). */
+    const resp=(v.kind==='ambo'&&(v.duty==='call'||v.duty==='onscene'))
+             ||(v.kind==='fireeng'&&(v.duty==='fire'||v.duty==='atfire'));
+    if(resp||(LITAMT>0.2&&v.duty!=='bay')){
       ctx.fillStyle=((time*5+v.p)%1<0.5)?'rgba(120,170,255,0.95)':'rgba(255,110,90,0.95)';
       ctx.fillRect(cx-0.8,cy-7.4,1.6,1.6);
     }
@@ -7005,8 +7152,21 @@ const ENTINFO=[
   [()=>peds,'Resident',residentDoing,5],
   [()=>dogs,'Good dog',d=>{const p=ownerOf(d);return p?'With its owner, '+residentDoing(p).replace(/^./,c=>c.toLowerCase()):'Off to sniff everything.';},5],
 ];
-const VKIND={fireeng:['Fire engine','Lights on, heading to the smoke.'],
-  ambo:['Ambulance','On a call.'],police:['Police cruiser','On patrol.']};
+/* A service vehicle's interest is what it is DOING, so its `sub` is a FUNCTION of the vehicle
+   (iter 105's law) rather than one frozen sentence. Since iter 204 it is genuinely doing it:
+   the strings below are read off the same `duty` the router steers by and the beacon lights
+   by — one state, three readers, so they cannot drift apart. */
+const SERVDUTY={
+  police:{bay:'Idling in the yard behind the precinct house.',call:'On patrol, working the main roads.',
+    onscene:'Pulled up on the beat.',home:'Heading back to the yard.'},
+  ambo:{bay:'Standing in the ambulance bay that never closes.',call:'On a call.',
+    onscene:'On scene.',home:'Returning to the bay at the hospital.'},
+  fireeng:{bay:'Back behind the roll-up doors at the firehouse.',call:'Out on patrol.',
+    fire:'Lights on, heading to the smoke.',atfire:'At the fire, working the hose.',
+    home:'Heading back to the apron.'}};
+const VKIND={fireeng:['Fire engine',v=>SERVDUTY.fireeng[v.duty]||'Out on patrol.'],
+  ambo:['Ambulance',v=>SERVDUTY.ambo[v.duty]||'On a call.'],
+  police:['Police cruiser',v=>SERVDUTY.police[v.duty]||'On patrol.']};
 /* the entity the cursor is naming right now (null when hovering a tile) */
 let hoverEnt=null,hoverR=0,hoverTile=null;
 function pickEntity(wx,wy){

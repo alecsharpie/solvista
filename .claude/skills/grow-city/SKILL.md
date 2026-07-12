@@ -801,6 +801,33 @@ vector, whatever it is.
   threshold — and note the same census's other trap: a non-string `strokeStyle` (a `CanvasGradient`) has no
   luminance, so defaulting it to black makes the **rain shafts** the darkest "line" in the city. `probes/probe-darkline.mjs`
   is the reusable locator — stack-attributed, so it names the function that issued the ink.
+- **A stubbed SHARED `Math.random` makes a PER-ENTITY control WORTHLESS — aggregate the control (iter 204).**
+  203 tells you to stub `Math.random` so a probe is reproducible. But the stub is **one stream**, and your patch
+  almost always draws a *different number* of values from it (204's service vehicles now pull targets, waits and
+  tie-breaks). Every consumer *after* them therefore gets different numbers and walks a different walk — so a
+  **single** control entity diverges between the two builds for reasons that have nothing to do with your change.
+  204's first control was one car, and it moved 0.0% → 1.4%, which reads exactly like "the patch routed ordinary
+  traffic home." It had not. Averaged over the whole **38-car fleet** the stream-shift washes out and the control
+  reads flat (0.1–0.4% in *both* builds), which is the only thing the control was ever asking. ⇒ **Make a control
+  a POPULATION, not an individual** — or give it its own PRNG. A control that can move for a reason you did not
+  cause is not a control.
+- **A FROZEN CLOCK DOES NOT REFRESH THE DOM — `syncSky` is THROTTLED and `syncStats` only runs when playing
+  (iter 204).** 200 says the user sees canvas *plus* DOM; 202 says the step-back's camera was lying. Here is the
+  third member of that family, and it will bite any hand-rolled freeze: `frame()` calls `render()` on **every**
+  RAF regardless of `playing` (so your canvas is fine, and any debug overlay you paint is *wiped*), but
+  `syncSky(now)` **early-returns for 400 ms** (`if(now-lastSky<400)return`) and `syncStats()` is called **only
+  inside the `if(playing)` branch**. So `playing=false; dayT=0.92; render(); screenshot()` gives you a
+  **night-lit plate under a bright daytime sky**, with the HUD still reading "DAYTIME" — and an agent will
+  correctly FAIL it, costing a full gate round. Force them: `lastSky=0; syncSky(performance.now()); syncStats();`
+  before you shoot. (`probes/shot-stepback.mjs` already does this; anything you hand-roll must too.)
+- **Aim a close-up at the entity's DRAWN position (`_sx`/`_sy`), never at `ctr(x,y)` (iter 204).** 201 says a
+  fixed clip is not a framing — aim at the feature. This is the sharper form for a *mover*: a vehicle is drawn
+  **interpolated** between its hex and its next hex by `v.p`, so `ctr(v.x,v.y)` can be a **whole hex** (~110 px at
+  5.5×) from where it actually appears. That is precisely far enough for a visual agent to sweep the wrong
+  quadrant and report an empty street — one did, on a frame where the probe measured the parked cruiser at **96%
+  visible ink**. `stamp()` already records the true drawn position in world coords (`e._sx`/`e._sy`, the same
+  fields `pickEntity` hovers by): render once, read them, re-centre, render again. And when the object is ~20 px,
+  **clip tightly** — a 20 px vehicle in a 1400×900 frame is a needle you are asking an agent to find.
 - **A label that asserts a relationship the draw ignores is a bug, and it is the
   richest seam in the artifact.** `TILEDESC[MARSH]` promised a "Reedy tidal wetland"
   and printed a live `Tide` for 16 iterations over a tile that never moved a pixel
