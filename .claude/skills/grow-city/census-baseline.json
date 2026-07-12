@@ -1,5 +1,5 @@
 {
- "when": "2026-07-12T18:59:48.851Z",
+ "when": "2026-07-12T19:14:26.762Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -420,7 +420,7 @@
    "G": 67,
    "year": 2005,
    "seed": "16",
-   "pop": 18376,
+   "pop": 18373,
    "parks": 124,
    "towers": 50,
    "tallestFloors": 66,
@@ -435,7 +435,7 @@
    "developed": 686,
    "solarRoofs": 0,
    "greenRoofs": 0,
-   "towerHt": 4535,
+   "towerHt": 4534,
    "tallTowers": 28,
    "helipads": 25,
    "boulevardTrees": 47,
@@ -852,7 +852,7 @@
    "roads": 871,
    "bridges": 54,
    "developed": 1005,
-   "solarRoofs": 386,
+   "solarRoofs": 385,
    "greenRoofs": 191,
    "towerHt": 5951,
    "tallTowers": 36,

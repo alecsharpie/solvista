@@ -1231,6 +1231,26 @@ function frontLoad(x,y){
   }
   return n;
 }
+/* TCAP — how tall a tower on this hex is ever allowed to grow (iter 224).
+   The skyline is written by TWO rules and only ONE of them knew where downtown was.
+   Placement keys height to `core` (iter 98); the 2022+ growth rule then added
+   `c.th += 9+c.v*12` under a FLAT universal ceiling of 160, with no `core` anywhere —
+   so the rim slowly climbed to the very ceiling downtown already sat at. Its own
+   comment says "the downtown keeps rising" (199's tell: a comment asserting a
+   behaviour the code cannot have — it lifted the WHOLE city, uniformly).
+   Measured (probe-towergrow): mean growth is small (~4) and flat across rings, but
+   its TAIL is fat and centrality-blind — maxGrow 42-60, one tower at ring 9-12 grew
+   +79. The mean was never the problem; the TAIL sets the ENVELOPE, and a skyline's
+   silhouette IS its envelope. That is why a lucky rim tower out-topped the core.
+   So the ceiling tapers on the SAME centrality shape placement uses, normalised by
+   that shape's own MAX (1.36) so the core keeps its existing 160 and only the rim is
+   cut (to 82). Normalising by the formula's max, not by the measured mean core, is
+   deliberate: 98's hold-the-mean constant went stale the moment 219 moved COM
+   downtown, and a cap keyed to a world statistic would rot the same way. */
+function TCAP(x,y){
+  const core=clamp(1-hexDist(x,y,CBDX,CBDY)/CORER,0,1);
+  return 160*(0.70+0.66*core)/1.36;             /* 82.4 at the rim, 160.0 on the CBD */
+}
 const RDF=[0.93,0.965,1.0,1.035,1.07];  /* asphalt resurfacing-patch brightness steps */
 const _flQ=new Int32Array(G*G), _flD=new Uint8Array(G*G), _flA=new Float32Array(G*G);
 const _flVal=new Float32Array(G*G);
@@ -1578,15 +1598,21 @@ function tick(){
            against its own 0.782 mean, so downtown was literally a DIP. Measured: tall
            towers averaged 0.92x the height of rim towers, and the tallest tower stood
            ~30 hexes from the densest cluster on all three seeds.
-           `0.70+0.66*core` is solved to HOLD THE MEAN, not cut it: mean core over
-           tower sites is 0.125, so this averages 0.783 against the ramp's 0.782 while
-           peaking at 1.36 downtown against 0.70 at the rim. Holding the mean is the
-           whole trick — an earlier 0.52+0.72*core averaged 0.62 and cost HALF the
-           city's tall towers and helipads. That is shrinking a city, not massing it.
-           See probe-core.mjs. */
-        c.t=T.TOWER; c.th=(54+c.v*82)*(0.70+0.66*core); c.age=0; stats.towers++;
+           `0.70+0.66*core` is solved to HOLD THE MEAN, not cut it: it peaks at 1.36
+           downtown against 0.70 at the rim. Holding the mean is the whole trick — an
+           earlier 0.52+0.72*core averaged 0.62 and cost HALF the city's tall towers
+           and helipads. That is shrinking a city, not massing it. See probe-core.mjs.
+           The noise `a+b*c.v` is narrowed from 54+82v (2.52x) to 74+42v (1.57x), and
+           a+b/2 is held at 95 so E[height] is unchanged BY CONSTRUCTION — which is
+           what makes hold-the-mean survive `core`'s distribution moving underneath it.
+           It moved: 98 solved against a mean core of 0.125 over tower sites and it now
+           measures 0.282, because 219 concentrated COM (the tower substrate) downtown.
+           So do NOT re-derive a constant from the measured mean core — that is the
+           stale-knob trap this line already fell into once. Normalise by the formula's
+           own max instead, as the growth cap below does. */
+        c.t=T.TOWER; c.th=(74+c.v*42)*(0.70+0.66*core); c.age=0; stats.towers++;
       }
-    } else if(c.t===T.TOWER&&year>=2022&&rng()<0.02&&c.th<160){
+    } else if(c.t===T.TOWER&&year>=2022&&rng()<0.02&&c.th<TCAP(x,y)){
       c.th+=9+c.v*12;                             /* the downtown keeps rising */
     } else if(c.t===T.RES&&year>=2010&&rng()<0.02){
       if(countAround(x,y,1,n=>n.t===T.TOWER)>=1){c.t=T.MID;c.th=22+c.v*14;c.age=0;}

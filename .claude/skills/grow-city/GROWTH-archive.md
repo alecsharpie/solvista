@@ -14218,3 +14218,120 @@ stage, the standing figure, the audience. No z-order tears, no blown-out colour,
 
 **Verdict: DEEPENED.**
 
+
+<!-- header bullet rotated out of GROWTH.md at iter 224 (cue (ac), CLOSED by 224) -->
+
+  **(ac) 🔴 THE SKYLINE HAS MASS BUT NO TAPER — "a spine, not a crown" (219, Urban × Polish; the THIRD RUNG of the
+  217/218/219 ladder and the next Urban lap).** 219 put the tower MASS downtown (coreH share 41-45%; four blind
+  agents locate the CBD) — and **two agents, on two seeds, independently and unprompted** named what is left:
+  *"a spine, not a crown; no tallest-in-the-middle gradient"* (1234) and *"a local thickening, not a peak — height
+  is flat, no tapering silhouette"* (7). **True, and visible in the code:** height is
+  `c.th=(54+c.v*82)*(0.70+0.66*core)` — the centrality term spans **1.94x** (0.70→1.36) while the per-cell noise
+  `c.v` spans **2.5x** (54→136), so **the noise SWAMPS the signal** and a lucky rim tower out-tops an unlucky core
+  one. ⚠ **NARROW `c.v`'s spread; do NOT steepen `core`** — 98 solved `0.70+0.66*core` to HOLD THE MEAN, and a
+  steeper `core` was tried there and **cost half the city's tall towers**. ⚠ Do not re-open placement (dead lever)
+  or the COM fork (spent). Gate in the viewer's units: a blind "point at the TALLEST tower" must land in the core,
+  and `tallTowers`/pop must not fall.
+
+  [224's verdict: the DIAGNOSIS was right and the PRESCRIPTION was backwards. The mean taper was already strong
+  (corr 0.58-0.67); the broken statistic was the ENVELOPE. Narrowing the noise ALONE *worsened* the crown
+  (crownGap 20.9 -> 11.5, seed 42 NEGATIVE) while *raising* corr to 0.861 — the prescribed metric was a MEAN
+  statistic and the viewer reads an ENVELOPE. The real cause was a SECOND writer of `c.th`: the 2022+ growth rule,
+  a flat 160 ceiling with no `core` at all, whose centrality-blind fat tail (maxGrow 42-60, one at +79) set the
+  envelope. Fixed by TCAP + a narrowed noise. Also: the "blind point at the TALLEST tower" gate this cue mandated
+  is INVALID in this projection — see 224's promoted law.]
+
+## Iteration 214 — the sand was the same colour as the road (2026-07-13) [Water & coast × Polish]
+
+**Vector.** Water & coast × Polish — cue **(q)**, "the night coast flattens to a mauve void".
+The stalest domain (last 205) *and* the banked cue, raised UNPROMPTED by both step-back
+agents at 212 and re-raised by a third at 213. Three independent asides outrank
+kind-rotation, so the header had already named this the next lap.
+
+**Change.** `sandCol(name,f)` (beside `col()`), read by the BEACH and DUNE sand surfaces.
+At night the sand is dimmed by a **luminance-matched, HUE-PRESERVING** wash instead of the
+global cool tint. Colour-only: **zero new path objects, zero geometry touched.** Crosses over
+from the same `LITAMT` 0.35 cut the lit glass and `civOpen()` call daylight, so **daylight
+runs byte-identical code** (199's free control). Cached in `CCACHE` (flushed on light change)
+⇒ one string per frame, not one per hex.
+
+**The bug, measured (`probes/probe-sandhue.mjs`, 3 seeds).** Never a brightness bug and never
+*primarily* a texture bug. **A flat per-channel multiply is not a TINT on a warm surface — it
+is a HUE ROTATION.** The night tint is `[.42,.42,.58]`: it lifts blue and crushes green. Sand's
+base `[238,220,178]` runs R>G>B (hue 40, chroma 77); multiplied by that tint it comes out
+`[103,92,103]` — **R and B land on the same value and G becomes the MINIMUM**, i.e. hue **309**,
+chroma **12**. Violet.
+
+| | day | HEAD night | PATCH night |
+| --- | --- | --- | --- |
+| BEACH | chroma 77, hue 40 | chroma **12**, hue **309** | chroma **36**, hue **33** |
+| DUNE | chroma 72, hue 43 | chroma 10, hue 305 | chroma 35, hue 35 |
+| ROAD (control) | chroma 37, hue 40 | chroma 8, hue **308** | chroma 8, hue 308 (unmoved) |
+| **BEACH <-> ROAD dist** | **116** | **44** | **56** |
+
+At night the beach and the asphalt sat **44 RGB units apart, both at hue ~308** — the sand and
+the road were *literally the same colour*. Two agents said "it reads as **asphalt**", unprompted;
+they were measurably right. **Controls: SHOREPARK / PARK / FOREST / RES / ROAD / WATER all
+byte-identical, and the whole DAY column byte-identical.**
+
+**Census.** PASS, 0 page errors, tile histogram empty — correct and vacuous for a draw-only
+colour change (the census cannot see this vector at all; the probes are the gate).
+
+**Isolation (`probes/probe-sandinert.mjs`, patch-vs-HEAD, floor measured in-run per 213).**
+day **3 px / 2 px against floors of 3 / 2 — provably inert**; night **47,383 / 50,872 px, 86% on
+the BEACH mask** (the rest is DUNE, also fixed).
+
+**"Too bright?" — the two agents disagreed, so a number decided.** Sand has the highest albedo
+in the scene, and the right question is whether it keeps its *daylight ratio* against the city:
+`beach/RES` = **1.43x day · 1.28x HEAD night · 1.42x PATCH night**. HEAD had **crushed** the
+beach's relative albedo after dark; the fix restores exactly the daylight ratio. Not overbright —
+*correctly* bright. (Agent 42's "too bright" is 201's objection-to-the-model.)
+
+**Visual.** Both PASS. Seed 42 was run **BLIND** (HEAD vs PATCH unlabeled, order flipped from the
+earlier round) and the agent picked the patch: HEAD's sand *"does not read as sand at all — a
+poured concrete apron or a grey-lilac asphalt slab"*; the patch's *"sits well outside the
+road/building greys, so the eye separates beach from pavement instantly."* Both explicitly
+cleared the overcorrection risk: *"No orange. No amber. No implied off-scene light source. It
+does not look pasted on."*
+
+**Verdict: FIXED.** Cue (q) is CLOSED — and it was closed by hue, not by luminance or texture.
+
+### The first half of this lap: EXPLORED -> REVERTED (the moonlit waterline)
+
+Before the hue finding I built the *wrong* fix, and the gate caught it. Logged in full because it
+is the more instructive half.
+
+**Change (reverted).** `probes/probe-nightsand.mjs` measured per-tile within-hex luminance stdev
+(= texture) and found a real defect: the night beach retains only **32%** of its daylight texture,
+against PARK 66% / ROAD 83% / **RES 103%** — because *every* beach detail draw is gated OFF at
+night (shorebirds `LITAMT<0.58`, towels/parasols `<0.6`) and the sole night draw, the bonfire, is
+`v`-band-gated and rare. Absolute night texture **3.99**, below the streets' 16 and barely above
+open water's 1.6. So I crossed the damp band over from `sandDk` (a *stain*, darker than sand) to a
+moonlit `glint` **sheen** (a *mirror*, brighter), keyed to `MOONF` — the same lit fraction the disc,
+star-wash and moonglade read (153). It worked, numerically: BEACHfront texture **7.1 -> 20.3**
+(retention **108%**), every control unmoved, day byte-identical.
+
+**Why it died.** **Both agents FAILed it, and the seed-42 agent — BLIND — preferred HEAD.**
+*"It visibly steps along hex edges — I can count the individual straight segments and see the
+miter joints."* *"Every corner is a 120-degree hex vertex. It is a polyline, not a shoreline."*
+*"A glowing plastic tube laid on the coast."* At whole-city zoom the entire coast became a white
+crenellated sawtooth. This is **159's law**, which I read, quoted in the code comment, and then
+reasoned my way past — arguing that since the *day* band is also a per-edge stroke and reads fine,
+a night one would too. The seed-7 agent supplied the missing half: *"at day the band is only
+slightly lighter than the sand, so the polygon corners disappear. **The moment you crank the
+luminance, the geometry becomes the subject.**"*
+
+**What I'd avoid next time.** (1) Don't try to sneak past 159 by "keeping the shape and only
+changing the tone" — on a per-edge draw, **legibility and grid-exposure are the same quantity**.
+(2) Don't trust a probe that measures a **necessary but not sufficient** quantity: "is there
+contrast on the beach" is necessary for the beach to read, but *a neon tube also has contrast*.
+(3) Two mid-flight findings worth keeping: only **62 of 147** beach hexes are sea-facing (the damp
+band cannot reach the other 85 — 206's measure-the-pool law), and `MOONF` is near **NEW on seed 42
+at `dayT` 0.92**, so any moon-gated fix is weakest on exactly the seed the cue was filed against.
+
+**The lesson, and it is the whole iteration.** Three agents across three iterations described this
+defect with the word **MAUVE**. I fixated on "detail dies" and built a **greyscale** probe — an
+instrument that *cannot represent hue*. It measured a real thing, passed a change the eye rejected,
+and only when I stopped and measured the word the agents actually used did the bug appear, exactly
+where they said it was. **Build the probe in the units of the complaint.**
+

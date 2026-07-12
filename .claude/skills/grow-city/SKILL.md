@@ -986,6 +986,21 @@ vector, whatever it is.
   against 34 out past ring 23**: twice as many on the rim, exactly what four blind agents reported and what the
   ratio concealed. ⇒ **When a rule distributes objects over unequal-sized regions, grade it on the COUNT, not the
   share.** The tell: your probe's units are the units your rule is written in.
+  **⇒ AND THE NEXT UNIT ERROR IS MEAN-vs-ENVELOPE: FOR ANYTHING THAT READS AS A SILHOUETTE, THE VIEWER'S STATISTIC
+  IS THE *MAX*, NOT THE MEAN — AND THE TWO CAN MOVE IN OPPOSITE DIRECTIONS (iter 224).** 218's error is *per-cell vs
+  per-object*; this one is *central-tendency vs extreme*, and it is nastier because the mean statistic will look
+  **excellent** while the thing the viewer complains about gets **worse**. Solvista's mean tower height already
+  tapered beautifully from the CBD (`corr(th,core)` 0.58–0.67; mean height 124→69 by ring) at the exact moment two
+  blind agents called the skyline *"a spine, not a crown."* They were right: **a skyline IS its upper envelope** —
+  you see the tallest thing in each direction, not the average thing — and the envelope was broken (one seed's ring
+  5-8 max **out-topped the core's**). Worse, the fix the cue prescribed (narrow the height noise) **raised `corr` to
+  0.861 and made the crown WORSE**: `crownGap` 20.9 → 11.5, with one seed going **negative**. It compressed the
+  core's peak harder than it compressed the rim's growth-inflated outliers. ⇒ **When the claim is about a
+  SILHOUETTE, a SKYLINE, a HORIZON, a CANOPY, a RIDGE — anything where the eye samples the extreme of a
+  distribution — gate on `max` per region, never on `corr` or `mean`.** 224's `crownGap = max(th | d≤6) − max(th |
+  d>8)` is the shape to copy: one number, in the viewer's units, that goes **negative** exactly when the thing is
+  wrong. And this is 221's law again (*a gate can be anti-correlated with correctness*) with a new tell: **your
+  metric is a measure of central tendency and the defect lives in the tail.**
 - **A RULE CAN BE FAITHFUL TO A DEFECT ONE LAYER UPSTREAM — CHECK THE HOST LAYER'S DISTRIBUTION BEFORE YOU BLAME THE
   RULE THAT READS IT (iter 218).** The dead-code law says confirm a host *exists* at scale before wiring to it. This
   is its distributional twin, and it is what 217 (and 98, and I) got wrong for 120 iterations: **towers can only rise
@@ -1252,6 +1267,42 @@ vector, whatever it is.
   the same thing*. (The locate-don't-judge discipline is what made this catchable: agents asked to
   *point at* the sun returned positions within ~0.01 of the shipped formula on every frame where it was
   visible, which is exactly why their "there is no sun here" was credible rather than vague.)
+  **⇒ BUT FIRST CHECK THE THING YOU ASKED THEM TO LOCATE IS VISIBLE IN THE PROJECTION AT ALL — SCREEN-Y IS
+  DEPTH, NOT HEIGHT (iter 224).** 108 says ask an agent to LOCATE because a wrong answer is *visibly* wrong.
+  That only holds if the quantity you name is one the projection **preserves**, and the most obvious quantity
+  in a city — **how tall a building is** — is one it **destroys**. A cell's baseline is `ctr(x,y).y =
+  (y+0.5)*ROWY`, so the apex is `(row baseline − height)`: across ~30 rows the baseline moves far more than any
+  building height, and **the topmost thing in the image is the farthest-back thing, not the tallest.** Measured
+  (`probes/probe-apex.mjs`): `corr(screen apex, true height)` = **0.262 / −0.289**, while `corr(screen apex,
+  ROW/depth)` = **0.995 on every seed.** So cue (ac)'s mandated gate — *"a blind 'point at the TALLEST tower'
+  must land in the core"* — was **unanswerable by eye**, and an agent duly pointed at (0.44, 0.12) on a frame
+  whose CBD is at y=0.625: it had found the **height-91 rim tower at row 2**, exactly as the projection
+  dictates. That is not a bad agent, it is a **bad question**, and it cost a full gate round. ⇒ **Before you
+  ask a blind locate, ask what the projection does to the quantity you are naming.** Re-phrased in a
+  projection-safe unit — *"judge height ONLY by the length of the vertical wall, never by position in the
+  frame"* — the same agent, blind, counted **5–8 massive outskirt slabs in HEAD and "essentially none" in the
+  patch** and matched the world data exactly. **Name a quantity the projection keeps** (drawn wall length, ink,
+  colour, count, left-right position — `sx` survives fine), or **aim the camera** (201) so the comparison is
+  local and depth is held constant.
+- **WHEN YOU FIX A QUANTITY, GREP FOR EVERY RULE THAT *WRITES* IT (iter 224 — 217's sibling).** 217 says: when a
+  rule decides both *whether* and *how much*, a fix to one clause is mistaken for a fix to the phenomenon. Its
+  sibling is the same defect one scope wider: **one field, written by TWO RULES IN DIFFERENT BRANCHES**, where a
+  later lap fixes the writer it happened to be reading and never learns the other exists. `c.th` (tower height)
+  is set at **placement** — which iter 98 correctly keyed to `core` — and then *written again* by a **2022+ growth
+  rule in a different `else if`**, `c.th += 9+c.v*12` under a **flat universal ceiling of 160 with no `core`
+  anywhere**. It survived **126 iterations** and every gate, and it is what kept the skyline flat: the rim slowly
+  climbed to the very ceiling downtown already sat at. **Its own comment said `/* the downtown keeps rising */`**
+  — 199's tell, on a rule that lifted the *whole city, uniformly*. ⇒ Before you tune a field, `grep -n` for every
+  assignment to it (`c.th=`, `c.th+=`) and read them **together**. A quantity with two writers has two
+  distributions, and you are only ever looking at one of them.
+  **⇒ AND ITS COROLLARY, PAID FOR TWICE: A CONSTANT SOLVED AGAINST A MEASURED WORLD STATISTIC WILL ROT WHEN A
+  LATER LAP MOVES THAT STATISTIC — NORMALISE BY THE FORMULA'S OWN MAX, NOT BY THE WORLD'S MEAN.** 98 solved
+  `0.70+0.66*core` to hold-the-mean against a **measured mean `core` over tower sites of 0.125**. That number is
+  not a constant of the code — it is a property of **where COM happens to sit** — and **219 concentrated COM
+  downtown**, silently taking it to **0.282** and invalidating the solve, unnoticed for six laps. 224's `TCAP`
+  normalises by the centrality shape's own **max (1.36)**, which is a property of the *formula* and cannot drift.
+  This is 223's law (*prefer a structural invariant to a checked one*) arriving from a second direction — and it
+  is why 224 **rejected a higher-scoring variant** that needed a `/0.886` derived from the same rotting statistic.
 - **A FIXED CLIP IS NOT A FRAMING — aim the camera at the feature, don't guess a rectangle (iter 201).**
   `shoot.config.json`'s `coast` and `downtown` are hard-coded rects, but **the city is procedural: the coastline
   moves seed to seed.** On seed 7 the `coast` clip landed on **open water** — the beach, the parasols and the
@@ -1379,6 +1430,17 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   night, plus the pairwise separation matrix** — the general form of 214's `probe-sandhue`: it answers *"does tile X
   keep its identity from tile Y under light L?"*. Any surface pair collapsing below ~15 RGB units has lost its
   identity; **RES↔ROAD at night is 4**, cue (aa)).
+  The **skyline four** (224, all pure world data — no render, no clock, no noise floor, nothing to stub):
+  `probe-taper.mjs` (per-ring tower height: mean, **max (the ENVELOPE)**, `corr(th,core)`, where the tallest
+  actually stands, and **the mean `core` over tower sites** — the statistic 98 hard-coded and 219 invalidated;
+  print it before trusting any tower constant), `probe-towergrow.mjs` (**splits height into PLACEMENT vs the 2022+
+  GROWTH rule** — it is what found that growth's *mean* is small and flat while its **tail** is fat and
+  centrality-blind; reach for it whenever a quantity has two writers), `probe-crownsweep.mjs` (**the two-ledger
+  variant sweep** for the skyline: grades candidate height formulas on the EFFECT (`crownGap`, envelope, corr) and
+  the COST (towers/tallTowers/helipads/towerHt/pop) at once — it is what showed the cue's own prescription made the
+  crown *worse*), and `probe-apex.mjs` (**is this quantity even visible in the projection?** — reports
+  `corr(screen apex, true height)` vs `corr(screen apex, ROW/depth)`; it reads **0.26 / 0.995**, which is the proof
+  that screen-y is depth. **Run it before asking any agent to locate something by how HIGH it sits in the frame.**)
   Six of them are **harness-wide**, not per-feature — reach for these on any lap:
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before
