@@ -7,24 +7,26 @@
 <meta name="description" content="245 iterations of a headless Claude loop growing a procedural city — runtime, would-be cost, and the loop's own self-verified build log.">
 <meta name="theme-color" content="#f9f9f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
 :root{
   /* Solvista at golden hour — parchment cards on a pale-blue-to-sand sky */
   --sky:#cfe4ec; --ground:#e7dcc4; --plane:#e7dcc4;
   --surface:#f6efdd; --ink:#2a241b; --ink2:#6b6252; --muted:#9a8f76;
   --grid:#ddd0b3; --axis:#c3b498; --gold:#b47d1c; --border:rgba(58,54,45,.16);
-  /* data colours drawn straight off the map: sunlit gold, grass, water, roof-clay */
-  --series-1:#b47d1c; --series-2:#4e7d43; --series-3:#3d84a8; --series-6:#c1553a;
+  /* data colours drawn off the map but picked for contrast on parchment:
+     water (shipped), grass (deepened), dusk-plum (fixed), roof-clay (reverted) */
+  --series-1:#2f7d9b; --series-2:#4f8a3f; --series-3:#86598a; --series-6:#c15236;
 }
 @media (prefers-color-scheme:dark){:root{
   /* Solvista at dusk — twilight-navy sky fading to warm dark, cream ink */
   --sky:#1e2744; --ground:#141118; --plane:#141118;
   --surface:#211d17; --ink:#f6efdd; --ink2:#c8bc9f; --muted:#8f8469;
   --grid:#312d25; --axis:#433d33; --gold:#e0a94e; --border:rgba(247,240,223,.13);
-  --series-1:#e0a94e; --series-2:#7bab5f; --series-3:#6bb0d0; --series-6:#e07a5f;
+  --series-1:#5cabca; --series-2:#84b866; --series-3:#c193bd; --series-6:#e07a5f;
 }}
-:root[data-theme=dark]{--sky:#1e2744;--ground:#141118;--plane:#141118;--surface:#211d17;--ink:#f6efdd;--ink2:#c8bc9f;--muted:#8f8469;--grid:#312d25;--axis:#433d33;--gold:#e0a94e;--border:rgba(247,240,223,.13);--series-1:#e0a94e;--series-2:#7bab5f;--series-3:#6bb0d0;--series-6:#e07a5f;}
-:root[data-theme=light]{--sky:#cfe4ec;--ground:#e7dcc4;--plane:#e7dcc4;--surface:#f6efdd;--ink:#2a241b;--ink2:#6b6252;--muted:#9a8f76;--grid:#ddd0b3;--axis:#c3b498;--gold:#b47d1c;--border:rgba(58,54,45,.16);--series-1:#b47d1c;--series-2:#4e7d43;--series-3:#3d84a8;--series-6:#c1553a;}
+:root[data-theme=dark]{--sky:#1e2744;--ground:#141118;--plane:#141118;--surface:#211d17;--ink:#f6efdd;--ink2:#c8bc9f;--muted:#8f8469;--grid:#312d25;--axis:#433d33;--gold:#e0a94e;--border:rgba(247,240,223,.13);--series-1:#5cabca;--series-2:#84b866;--series-3:#c193bd;--series-6:#e07a5f;}
+:root[data-theme=light]{--sky:#cfe4ec;--ground:#e7dcc4;--plane:#e7dcc4;--surface:#f6efdd;--ink:#2a241b;--ink2:#6b6252;--muted:#9a8f76;--grid:#ddd0b3;--axis:#c3b498;--gold:#b47d1c;--border:rgba(58,54,45,.16);--series-1:#2f7d9b;--series-2:#4f8a3f;--series-3:#86598a;--series-6:#c15236;}
 *{box-sizing:border-box}
 body{margin:0;color:var(--ink);background:var(--ground);
   background-image:linear-gradient(180deg,var(--sky) 0,var(--ground) 46%);background-attachment:fixed;
