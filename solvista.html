@@ -1102,7 +1102,10 @@ function genWorld(seed){
   for(let i=0;i<8;i++){const[bx2,by2]=rc();birds.push({x:bx2,y:by2,a:rng()*7,sp:0.9+rng()*0.6,h:70+rng()*40});}
   /* a pelican flock glides over in V-formation (Math.random, no perturbation) */
   {const d=Math.random()<0.5?1:-1; flock={x:d>0?-8:G+8,y:CTRY-16+Math.random()*32,h:92+Math.random()*22,dir:d,sp:0.55+Math.random()*0.2,n:7};}
-  for(let i=0;i<7;i++)clouds.push({x:rng()*G,y:CTRY-20+rng()*40,s:0.8+rng()*0.9,sp:0.06+rng()*0.05,rain:rng()<0.3});
+  /* `wf` is how much of a front it takes before this cloud lets go — NOT a rain
+     flag. It replaces a `rain:rng()<0.3` boolean rolled once here and then true
+     forever (iter 236); one rng() draw either way, so the stream is untouched. */
+  for(let i=0;i<7;i++)clouds.push({x:rng()*G,y:CTRY-20+rng()*40,s:0.8+rng()*0.9,sp:0.06+rng()*0.05,wf:0.40+rng()*0.52});
   /* kites over the beach */
   for(let i=0;i<3;i++){
     const ky=SEAY0+((rng()*(SEAY1-SEAY0))|0);
@@ -2034,11 +2037,19 @@ function tick(){
     let best=0;for(let j=1;j<4;j++)if(votes[j]>votes[best])best=j;
     if(votes[best]>=3&&best!==c.dist&&rng()<0.5)c.dist=best;
   }
-  /* rain showers passing overhead seed the meadows */
-  for(const cl of clouds)if(cl.rain){
+  /* rain showers passing overhead seed the meadows — and now they really do pass
+     (iter 236): the cloud waters the ground only while the front has it raining.
+     The draws are SPENT FOR EVERY CLOUD, wet or dry, so the weather can never
+     reshuffle the seeded stream — the front decides where the flowers come up, and
+     nothing about the skyline. (It also removes a draw that was conditional on the
+     cloud's wall-clock POSITION, which HEAD rolled only when the cell under the
+     cloud happened to be meadow.) */
+  for(const cl of clouds){
+    const wet=cloudWet(cl)>0.35;
     for(let i=0;i<3;i++){
       const c=cellAt((cl.x|0)+((rng()*5)|0)-2,(cl.y|0)+((rng()*5)|0)-2);
-      if(c&&c.t===T.MEADOW&&c.bloom===0&&rng()<0.3)c.bloom=7;
+      const r=rng();
+      if(wet&&c&&c.t===T.MEADOW&&c.bloom===0&&r<0.3)c.bloom=7;
     }
   }
   /* wildflower blooms ripple across the meadows (excitable-media CA);
@@ -3602,6 +3613,32 @@ let time=0, waveT=0, WINDA=0.5; /* breeze strength 0..1: seeded gust cycle */
 let TIDE=0.5; /* sea level 0..1 on a slow seeded cycle: 1=high water, 0=low */
 let TIDEV=1;  /* sign of dTIDE/dt: >0 flooding, <0 ebbing (the tooltip reads it) */
 let TIDEPH=0; /* phase offset: lets ?tide= pin the cycle without stopping it (see __setTide) */
+/* THE WEATHER FRONT (iter 236). The wind gusts (WINDA) and the sea turns (TIDE), and
+   the rain did neither: `cl.rain` was rolled once in genWorld and was still true when
+   the city was sixty years old — a "shower" that had rained since the founding, wrapped
+   the plate at x>G+6, and rained again. The pass it feeds even says "showers PASSING
+   overhead". So the roll became a per-cloud threshold (`cl.wf`) and the sky gets a front
+   that comes and goes: dry spells, then a band of cloud that greys up, lets go together,
+   and clears.
+   ⚠ Keyed to `year`, the sim's own clock — NOT to `time`. tick()'s meadow-bloom pass
+   reads this, and a CA that read the WALL clock would make genWorld+__warp irreproducible
+   and blind every probe in the harness. `year` advances 0.075/tick under __warp, so the
+   front is deterministic there; it freezes with `playing=false` and pins with __setYear,
+   exactly as the seasons do.
+   Two incommensurate periods, so no two fronts are alike — some barely wet the plate. */
+const FRONTP=0.31;              /* ~20 yr-units per cycle = ~2 min at speed 1, the tide's cadence */
+const WETRAMP=0.16;             /* a shower FADES in over ~6s. A veil that pops is a strobe (134) */
+/* The base sits BELOW the midpoint on purpose: it holds the MEAN number of showers at
+   HEAD's (~2 of 7), so this lap buys the ARC and not a wetter city — the clamp at the
+   dry end is what makes a dry spell a dry spell (98's hold-the-mean, which also keeps
+   the draw-cost question shut: same rain, redistributed). */
+function rainFront(){
+  const p=year*FRONTP+(seedNum%53)*0.7;
+  return clamp(0.40+0.55*Math.sin(p)+0.15*Math.sin(p*0.37+1.1),0,1);
+}
+/* 0 = dry, 1 = a shower at full weight. ONE definition, and every reader shares it —
+   the sky, the wet ground, the bow and the CA (the loop's one-predicate law). */
+function cloudWet(cl){ return clamp((rainFront()-cl.wf)/WETRAMP,0,1); }
 
 /* How far the sea's damp band reaches up the sand, in px — widest after the ebb.
    ONE definition, because two readers depend on it: the margin that STROKES the wet
@@ -7247,14 +7284,15 @@ function render(){
   const sb=dl.skyBot, cwarm=clamp((sb[0]-sb[2]-70)/70,0,1);
   for(const cl of clouds){
     const[cx,cy]=pxc(cl.x,cl.y);
+    const w=cloudWet(cl);          /* this cloud's shower, 0..1, as the front finds it */
     const py2=cy-185-cy*0.52; /* keep puffs in the sky even for front cells */
     /* how far downwind the drops trail on their way down. The wet ground has to
        know this too, or it pools where no rain is falling. */
-    const rlean=cl.rain?(cy-(py2+6*cl.s))*(0.06+0.08*WINDA):0;
+    const rlean=w>0?(cy-(py2+6*cl.s))*(0.06+0.08*WINDA):0;
     if(inB(cl.x|0,cl.y|0)){ /* shade only falls where there is ground to catch it */
       ctx.fillStyle='rgba(36,30,20,'+(0.05*(1-LITAMT*0.6))+')';
       ctx.beginPath();ctx.ellipse(cx,cy,30*cl.s,12*cl.s,0,0,7);ctx.fill();
-      if(cl.rain){
+      if(w>0){
         /* ground the shower has already crossed stays wet, and dries off behind it.
            The cloud drifts +x at a steady speed, so "how long since this spot was
            rained on" is just how far it lies behind the cloud — the wet trail needs
@@ -7262,7 +7300,7 @@ function render(){
            (cx-rlean), not on the cloud: a damp patch that does not sit under the
            falling drops is a smudge with no visible cause. Soft-edged, or it reads
            as a decal rather than as wet ground. */
-        const R=48*cl.s, wa=0.10*(1-LITAMT*0.6);
+        const R=48*cl.s, wa=0.10*w*(1-LITAMT*0.6);
         ctx.save();
         ctx.translate(cx-rlean*0.55,cy+1);ctx.scale(1,0.30);
         const wg=ctx.createRadialGradient(0,0,0,0,0,R);
@@ -7276,7 +7314,9 @@ function render(){
     }
     const a=0.5*(1-LITAMT*0.72);
     const py2r=py2;
-    if(cl.rain&&LITAMT<0.15){ /* sun + rain = an occasional rainbow trailing the shower */
+    if(w>0.5&&LITAMT<0.15){ /* sun + rain = an occasional rainbow trailing the shower.
+         A bow stands in real drops, so it wants a shower with weight behind it — it
+         does not come up on the first grey of a gathering front. */
       const osc=Math.sin(time*0.12+cl.y*1.7);
       const ra=Math.min(1,Math.max(0,(osc-0.5)/0.25));
       /* The bow is refracted light standing in this shower's own drops, so it may
@@ -7314,7 +7354,7 @@ function render(){
         }
       }
     }
-    if(cl.rain){
+    if(w>0){
       /* The shower falls the whole way to the ground it is watering. It used to be
          six 6px ticks hanging under the belly — ~200px of clear air short of the
          city — which left iter 89's rainbow standing in drops that never arrived.
@@ -7328,7 +7368,11 @@ function render(){
          averages into a causeless grey haze instead of resolving into rain. */
       const gy2=cl.y|0;
       const inset=(gy2>=0&&gy2<G)?Math.min(cl.x-ROWMIN[gy2],ROWMAX[gy2]-cl.x):-1;
-      const pa=clamp(inset/2,0,1); /* spent 2 hexes short of the rim, as the bow is */
+      /* spent 2 hexes short of the rim (as the bow is), and weighted by the shower
+         itself — every alpha below reads `pa`, so the veil gathers and thins with the
+         front instead of switching on. Its WIDTH is unchanged: a shower that grew
+         sideways as it strengthened would read as a zoom, not as rain. */
+      const pa=clamp(inset/2,0,1)*w;
       if(pa>0){
         const top=py2+6*cl.s, foot=cx-rlean, lit=1-LITAMT*0.5;
         /* A shaft first, drops second. Seen from across a city a shower is not drops
@@ -7377,8 +7421,14 @@ function render(){
     /* the belly. A shower carries it grey — at whole-city scale this, not the
        drops, is what tells the eye which cloud is the one that is raining. A fair
        cloud instead catches the warm horizon on its underside at golden hour. */
-    if(cl.rain)ctx.fillStyle='rgba(196,205,216,'+a+')';
-    else if(cwarm>0.01)ctx.fillStyle='rgba('+(lerp(255,sb[0],cwarm*0.55)|0)+','+(lerp(254,sb[1],cwarm*0.55)|0)+','+(lerp(250,sb[2],cwarm*0.55)|0)+','+a+')';
+    /* The grey now GATHERS (iter 236). A cloud darkens as the front brings it up to
+       letting go and pales again behind the shower, so at whole-city scale you can
+       see the weather coming before a drop falls. Warmth first, then grey over it —
+       a cloud on the edge of a front at golden hour is both. */
+    let br=255,bg=254,bb=250;
+    if(cwarm>0.01){br=lerp(255,sb[0],cwarm*0.55);bg=lerp(254,sb[1],cwarm*0.55);bb=lerp(250,sb[2],cwarm*0.55);}
+    if(w>0.01){br=lerp(br,196,w);bg=lerp(bg,205,w);bb=lerp(bb,216,w);}
+    ctx.fillStyle='rgba('+(br|0)+','+(bg|0)+','+(bb|0)+','+a+')';
     ctx.beginPath();ctx.ellipse(cx-14*cl.s,py2+5,14*cl.s,6*cl.s,0,0,7);ctx.fill();
     ctx.beginPath();ctx.ellipse(cx+15*cl.s,py2+4,15*cl.s,6.5*cl.s,0,0,7);ctx.fill();
   }
@@ -8068,6 +8118,10 @@ window.__warp=n=>{const target=year+n;while(year<target){year+=0.45/6;tick();}
   for(const c of cells)if(DEV.has(c.t))c.h=c.th; recount();syncStats();};
 window.__setTime=t=>{dayT=t;};
 window.__setYear=n=>{year=n;}; /* pin the calendar (seasons) for tests; moon phase is on dayT now (iter 135) */
+/* the weather front, for probes. Season and front are on DIFFERENT scales — season is
+   year%1, the front is a ~20yr cycle — so __setYear can pin one without fixing the other
+   (year+10 = same season, opposite weather). Iter 236. */
+window.__front=()=>({front:rainFront(),wet:clouds.map(cl=>cloudWet(cl))});
 /* the moon's phase for the current dayT: {phase 0..1 (0=new,.5=full), illum lit fraction, waxing}.
    Pin it with __setTime(day) — an integer step of dayT advances one lunation-eighth at fixed time-of-day. */
 window.__moon=()=>{const l=moonPhase();return{phase:l,illum:(1-Math.cos(l*6.2832))/2,waxing:l<0.5};};

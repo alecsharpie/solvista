@@ -26,7 +26,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
 - **Interaction/UX — the FEATURE INVENTORY was rotated to the archive at 211 (history, not steering).** ⚠ **229 is
@@ -37,40 +37,39 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   `stamp()` also draws the focus ring, so any stamped entity is ringable free — and since 133 a hovered TILE is
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
-- **ROTATION.** Last vector per domain: Sky **225** · People **226** ·
-  Transport **230** · Civic **231** · Nature **233** · Water **234** · Urban **235**.
-  🔴 **NEXT: Sky (stalest, 225)**, then People (226) / Transport (230). **232 WAS THE 26th STEP-BACK — the next is 237.**
+- **ROTATION.** Last vector per domain: People **226** · Transport **230** · Civic **231** ·
+  Nature **233** · Water **234** · Urban **235** · Sky **236**.
+  🔴 **237 IS THE 27th STEP-BACK** (232 was the 26th) — take it before the next domain vector.
+  After it: People (stalest, 226), then Transport (230).
+  ✅ **236 SHIPPED Sky × Deepen off 225's OWN LAW** (*a stale domain's cue list is where you LOOKED — **grep its
+  seam***): both Sky cues were dead ends, and the seam held a **199-tell in plain sight** — `cl.rain` was rolled ONCE
+  in `genWorld`, so a cloud that spawned raining **rained for the city's whole life, wrapped the plate, and rained
+  again**, beside a `WINDA` that gusts and a `TIDE` that turns. ⇒ **THE SKY NOW HAS A WEATHER FRONT**
+  (`rainFront()`/`cloudWet()`, keyed to **`year`** so `tick()` stays reproducible under `__warp`; pinnable with
+  `__setYear`, and **`year+k` = same season, different weather**). ⚠ **`cl.rain` IS GONE** — code written against it
+  reads `undefined`; the ONE predicate is **`cloudWet(cl)` (0..1)** and all six readers share it.
   ⚠ **233 took (ai) and REVERTED** — NOT closed; do not re-try a bare rim mask, read (ai) below.
-  ✅ **235 CLOSED (af′) — the ledger's loudest cue (six agents, three step-backs) — and the tower look is now SPENT
-  on all four axes (see (af′)).** ⚠ **Its lesson is a LAW (⇒ SKILL.md): a banked probe can carry the RIGHT
-  instrument under the WRONG NAME.** `probe-crown` is named for the crown 228 already fixed, and would have
-  acquitted the towers a fourth time — but its `silo()` was measuring the **silhouette** all along, and convicting.
-  ✅ **234 CLOSED (u) AND COMPLETED THE `col()` WASH LADDER** (214 sand → 220 masonry → 221 greens → 223
-  normalisation → 234 timber): **every surface routing through `col()` now keeps its identity after dark.**
-  ⚠ **The deck was GREY, not violet** — which is why 214's "hue ~308" audit walked past it for four laps.
-  **Audit by `dHUE`, never a target hue (⇒ SKILL.md).** Detail in the wash bullet + (u) below.
-  ✅ **232 (26th step-back): CITY CLEAN, ARC UNMOVED — AND THE AGENTS' ASIDE WAS A REAL, MEASURED DEFECT.** Both
-  FAILs were refuted; the *asides* paid out for the **eighth lap running**, producing **(ai)** (still open, below)
-  and firing **(af′)** (CLOSED by 235). ⚠ **230's `taxi` flag is LOAD-BEARING** (was decorative ~200 iters; `VCURF`
-  thins the night fleet by CLASS — the BUS/SERVICE/TAXI keep no hour). Bodies of 227/230/231 archived at 232.
-  ✅ **CLOSED LADDERS (bodies archived at 232 — do not re-open):** the **HUD lap** (229; both its cues were the
-  HARNESS, not the city), the **SKYLINE ladder** (217→224, `c.th` SPENT — warnings at (ac)), the **WASH ladder**
-  (223, luminance-safe, invariant ASSERTED by `probe-goldenhue.mjs` — warnings at (aa)/(ae)), and **137's
-  standing-crowd cue** (226 — **People's cue list is EMPTY**). ⚠ **(y) and (s) were born from agents reading
+  ✅ **CLOSED LADDERS — DO NOT RE-OPEN. Bodies archived; every law is in SKILL.md.** The **WASH ladder**
+  (214→220→221→223→**234**: every surface routing through `col()` now keeps its identity after dark; **audit by
+  `dHUE`, never a target hue**; invariant ASSERTED by `probe-goldenhue.mjs` — warnings at (aa)/(ae)) · the **TOWER
+  LOOK** (228 crown + **235** footprint; its law: *a banked probe can carry the RIGHT instrument under the WRONG
+  NAME* — `probe-crown`'s `silo()` had been convicting the towers all along) · the **SKYLINE ladder** (217→224,
+  `c.th` SPENT — warnings at (ac)) · the **HUD lap** (229 — both its cues were the HARNESS, not the city) · **137's
+  standing-crowd cue** (226 ⇒ **People's cue list is EMPTY**). ⚠ **230's `taxi` flag is LOAD-BEARING** (`VCURF` thins
+  the night fleet by CLASS — BUS/SERVICE/TAXI keep no hour). ⚠ **(y) and (s) were born from agents reading
   `shoot.mjs` output — REPRODUCE either in the user's configuration before designing to it** (229's law).
-  **Interaction/UX** (cross-cutting, so it sits here not in the grid) was last touched at **229**; before that 191.
+  ✅ **232 (26th step-back): city clean, arc unmoved; both FAILs refuted, and the ASIDES paid out for the EIGHTH lap
+  running** — producing **(ai)**, firing (af′); **236 made it NINE** (see (aj)). **Interaction/UX** (cross-cutting) was
+  last touched at **229**; before that 191.
   **CUES, RANKED** ((w)/(z) CLOSED 229, (t) CLOSED 231, (u) CLOSED 234, **(af′) CLOSED 235**): 🔴 **(ai)** THE CITY
   HAS NO FRINGE — **measured; 233 tried and REVERTED, the way through is NAMED** ·
   **(ag)** the night greens stay hot (Nature × Polish) · **(y)** the scorched inland cluster (Nature ×
   Polish) · **(ah)** the amphitheater's cavea has a **FIXED orientation** —
   it now often sits on the water's edge and does not face it (*"facing the bowl toward the river would look far
   more intentional"* — 231's agent, unprompted). 199's tell on a **draw**; Civic × Deepen · **(s)** golden-hour
-  contrast collapse (Sky × Polish — CONSTRAINED; strengthened at 227) · **(ab)** (low, arguably correct by design).
-  Nature's **GARDEN staggered beds** (Nature × Deepen) is held by cue (p). ⚠ **Sky is stalest and its only cue (s) is
-  CONSTRAINED — but 225's law: a stale domain's cue list is where you LOOKED, not where there is nothing. Grep its seam.**
-  ⚠ **(y) and (s) were both born from agents reading
-  `shoot.mjs` frames** — and 229 proved that camera can manufacture a defect. **Reproduce either in the user's
-  configuration (or with a probe) before designing to it.**
+  contrast collapse (Sky × Polish — CONSTRAINED; strengthened at 227) · **(ab)** (low, arguably correct by design) ·
+  Nature's **GARDEN staggered beds**, held by (p). ✅ **225's grep-the-seam law is PROVEN — 236 shipped Sky off it
+  while (s)/(ab) sat there looking dead. Apply it to the next stale domain (People).**
   **225 (Sky × Deepen): THE SHADOWS READ THE SUN.** `shadS` — the ONE function every shadow routes through — carries
   a per-frame sun vector (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity). ⚠ **Noon (t=0.415) is
   BYTE-IDENTICAL by construction ⇒ every shadow lap has a free dead-regime control there.** ⚠ **`SHAMT` must never
@@ -99,26 +98,24 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   carry the signal?** ⚠ **206: the vacant lot is a MIRAGE** — `EMPTY` with >=2 RES nbrs falls **85 -> 6.5** by 2035,
   **0.0** with a road adjacent; development eats every gap.
   **⚠ THE FIRE CA IS A GHOST — do not build "X answers the fire" (`probe-firehost`).** Ignition is year-gated
-  (`year<2006`, forest `year<2030`) so **at 2035 nothing can ignite at all**; before then, **two one-cell episodes
-  across 3 seeds × 61 years** and fire **never spreads**. **`T.MARKET` again.** Reviving it is a real CA lap (BURNT
-  is the palette's darkest tile), not a freebie.
+  (`year<2006`, forest `year<2030`) ⇒ **at 2035 nothing can ignite at all**; before then, **two one-cell episodes
+  across 3 seeds × 61 years**, and fire **never spreads**. **`T.MARKET` again.** Reviving it is a real CA lap, not a
+  freebie.
   **⚠ THE `polish-tile` BACKLOG — measured cues that are NOT growth laps. Do not spend a domain's lap on one; they
   need a tile redesign, and each already has a gate written.** (a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit
-  zoom** (0.5px rope, 5px cabins, hairline masts/pylons) — **its Z-ORDER IS CORRECT AND IS CLEARED FOUR TIMES** (203
-  `probe-gondz`: rope 8.4-23.6% occluded; 212 `probe-monoz`: `drawMonoAt` 10.6-19.8%; 217's agents FAILed it again;
-  and **232's BOTH agents called it *"scratches over the image"*, seed 7 adding *"no visible pylon at the seaward
-  end"***). **NEVER RE-OPEN THE Z-ORDER — the fault is LEGIBILITY**: a hairline with sub-pixel supports READS on-top
-  however correctly it is sorted, and 215's law names the lever — **a hairline ornament needs a BODY**, not more
-  strokes. *Do NOT re-try a body/halo under the rope (measured — backfires) or a lit top edge (impossible at 0.5px).*
+  zoom** (0.5px rope, 5px cabins, hairline masts/pylons). ⚠ **NEVER RE-OPEN THE Z-ORDER — it is CORRECT and CLEARED
+  FOUR TIMES** (203/212's probes measured it properly depth-sorted; 217's and 232's agents FAILed it anyway).
+  **The fault is LEGIBILITY**: a hairline READS on-top however well it is sorted, and 215 names the lever — **a
+  hairline ornament needs a BODY**, not more strokes. *Do NOT re-try a body/halo under the rope (measured —
+  backfires) or a lit top edge (impossible at 0.5px).*
   (b) **`university` is the ONLY of the twelve civics with no `LITAMT`** — the one `MAJORK` monument
   pitch dark after sunset; every place to put the light failed (195; `probe-unilight.mjs` + `shot-uni.mjs`).
   (c) **A parked service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204, cue n).
   (d) **The marsh reeds do not read** — seven sub-pixel strokes round the pool; its calendar is already computed and invisible (cue (i), 113).
-  **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban is measured-saturated: additive spent (118), and Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (high-street arcade: the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); **Urban's next lap is Deepen/Polish only**. **Roof-furniture is CLOSED city-wide** across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND clerestory 173) — no bare roof is left, and the **GROUND PLANE is SPENT too (209)**, and **216 spent the FACADES** — only the **harbour apron** is left. Check the last entry of the stalest domain for a banked
-   finding before reading its row. ⚠ **But 232 REFUTED "Urban is spent" from the SILHOUETTE side — see (af′).**
-   (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
+  **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban is measured-saturated: additive spent (118), and Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (high-street arcade: the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2, so it is not a clean arcade host); **Urban's next lap is Deepen/Polish only**. **Roof-furniture is CLOSED city-wide** across all 5 developed types (MID/RES water tanks, TOWER gardens, COM plant 165, IND clerestory 173) — no bare roof is left, and the **GROUND PLANE is SPENT too (209)**, and **216 spent the FACADES** — only the **harbour apron** is left. Check the last entry of the stalest domain for a banked finding before reading its row. ⚠ **But 232 REFUTED "Urban is spent" from the SILHOUETTE side — see (af′).** (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
   **STILL banked for Sky: the SEASON word** — it reads the fast `year` and would strobe ~0.7 Hz (134), so it needs a
-  slow clock FIRST; don't add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac assuming 135/144 unblocked it.)
+  slow clock FIRST; don't add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac. ⚠ **236's front is
+  ALSO on `year` and is NOT that slow clock** — it cycles ~2 min on purpose, so a "weather word" would strobe too.)
   **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by
   respending their draws (123's stream-neutral trick) — but that REPEATS 123's mechanism, so vary it.**
   **The asserts-less-than-the-code-knows tell is SPENT for agriculture** (orchard 129 + vineyard 139/148 +
@@ -142,21 +139,17 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   (213, 214×2, 215, 217, 219, and **232 — its cleanest instance: both FAILs refuted by probes, while the two asides
   both seeds reached INDEPENDENTLY became cue (ai), measured and WORSE than stated, and fired (af′)). MINE THE
   ASIDES** — and weight an aside two agents reach independently, on different seeds, above any verdict either gives.
-  Perf ARC (same refs as 202/207/212/217/222/227, directly comparable): **232's lap (228-231) costs DAY ONLY, and it
-  has a MECHANISM — the two instruments AGREE, so per 216 it is REAL and PAID.** Timer **day +1.1% · night +0.0%**;
-  path objects **day 107,959 -> 109,247 (+1.2%) · night 138,520 -> 138,668 (+0.1%)**. The asymmetry IS the mechanism:
-  **228's tower crowns add objects in BOTH regimes, and 230's night curfew REMOVES vehicles at night and cancels
-  them** — which is why night alone came back flat. (229 is text-layer, 231 moves one tile.) ARC: vs `7e2ac2c` (177,
-  55 iters) **+16.4% / +11.9%**; vs `5f01426` (162, 70 iters) **+17.9% / +13.7%** (abs: day 41.1-42.1ms · night
-  47.2-48.3ms) — **+1.0pp on both columns over 228-231**, dead on the documented rate. (Per-step-back priors 202→227
-  archived at 233.) Arc rate ~**+0.2-0.3%/iteration**; diffuse, **NOT accelerating**; **ACCEPTED — do NOT open a perf
-  lap.** ⚠ **222 FALSIFIED this header's own claim that "219 is world-data only — arc unmoved."** The
-  lap's +3.3/+4.2% had NO mechanism (220/221 colour-only, 219 world-data, 218 reverted), so per 216 the INSTRUMENT was
-  changed rather than the timer re-run: `probe-drawbudget` reads **day 104,787 -> 108,007 (+3.1%)** and **night
-  132,547 -> 138,734 (+4.7%)** — the two instruments AGREE, so the cost is REAL, and it is **219's downtown** (more
-  core COM => more towers => more `prismS`/`bandS` by day and more `winBandR` by night, which is exactly why night
-  grew more than day). **PAID and ACCEPTED.** ⇒ **LAW: "no new draw CALL" is NOT "no new draw WORK" — THE WORLD IS THE
-  DRAW LIST** (⇒ SKILL.md): price a CA/siting vector by COUNTING OBJECTS, not by reading the diff.
+  Perf ARC (refs as 202/207/212/217/222/227, directly comparable; per-step-back priors 202→227 archived at 233,
+  232's lap-detail at 236). At 232: ARC vs `7e2ac2c` (177, 55 iters) **+16.4% / +11.9%**; vs `5f01426` (162, 70 iters)
+  **+17.9% / +13.7%** (abs: day 41.1-42.1ms · night 47.2-48.3ms). Arc rate ~**+0.2-0.3%/iteration**; diffuse, **NOT
+  accelerating**; **ACCEPTED — do NOT open a perf lap.** **236** (draw+world): path objects day **109,207 ->
+  110,162 (+0.9%)** · night **138,434 -> 138,985 (+0.4%)** — mean rain **held by construction** (98), the grey belly
+  is colour-only (**zero objects**); residual is the chaotic reshuffle. ⚠ **222 FALSIFIED this header's own claim that
+  "219 is world-data only — arc unmoved"**: `probe-drawbudget` read day **+3.1%** / night **+4.7%**, AGREEING with the
+  timer, and the cause was **219's downtown** (more core COM => more towers => more `prismS`/`bandS` by day, more
+  `winBandR` by night — which is why night grew more). **PAID and ACCEPTED.** ⇒ **LAW: "no new draw CALL" is NOT "no
+  new draw WORK" — THE WORLD IS THE DRAW LIST** (⇒ SKILL.md): price a CA/siting vector by COUNTING OBJECTS, never by
+  reading the diff.
   ⚠ **Cue (x) stands** (215's `seamVeg`: 692 path objects / 228 STROKES cost ~4x what the fill model predicts — the
   stroke-vs-fill sweep at equal path count is the harness's best-supported open perf question).
   **⚠ THE STANDING PERF SUSPECT (207, re-measured UNCHANGED at 232; named NOT mandated per 198): THERE IS NO HOT
@@ -294,7 +287,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   city): **the night surf light-smear, `hashCell(x,y,77)<0.28`, is the one to fix.** *Ornament jitter* (kelp sway,
   fronds, fruit, fireflies) is cosmetic. Marsh reeds (113) + tower window-lights (110) CLOSED. ⚠ `darkWinR` is **not**
   a breach (it mixes `seedNum^salt` internally — check the callee). When fixing a range, **space the bases**.
-  **(w)+(z) CLOSED BY 229; (t) CLOSED BY 231 — bodies in the archive / entry 231; laws in SKILL.md.**
+  **(w)/(z) CLOSED 229 · (t) CLOSED 231 · (u) CLOSED 234 · (af)/(af′) CLOSED 228/235 — bodies archived, laws in SKILL.md.**
   **(m) SHOWERS ARE HOST-STARVED — do not build "X responds to the rain"** (201, `probes/probe-rainhost.mjs`). Nothing
   on the ground reads `cl.rain`, and a shower is **2-5 hexes TOTAL**, so it rains on **less than one** picnic/cafe hex
   — `T.MARKET` again, **no host.** Widening it is a Sky change to a tuned draw, and **gradients price by AREA**.
@@ -317,9 +310,8 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   so no call site can forget to ask.** ⚠ **FARM (`cropRGB`/`colRGB`) is the ONLY warm surface still outside `col()`.**
   ⚠ **Watch: PARK↔ROAD separation is 14, just under the ~15 collapse floor**
   — and **(ag) says the night greens read hot again**, so that is where the next lap bites.
-  **(af) CLOSED by 228 (crown) · (af′) CLOSED by 235 (footprint) — THE TOWER IS NOW VARIED ON ALL FOUR AXES**
-  (massing × plan × body × crown; silhouettes **5.3 → 13.0**, top share **54% → 22%**, MID control unmoved).
-  ⚠ **DO NOT RE-OPEN THE TOWER LOOK.** All four axes are spent, and a fifth keyed to HEIGHT would rebuild 110's
+  ⚠ **DO NOT RE-OPEN THE TOWER LOOK** (228 crown + 235 footprint; silhouettes **5.3 → 13.0**, top share **54% →
+  22%**). All four axes are spent, and a fifth keyed to HEIGHT would rebuild 110's
   original defect (corr(style,th) 0.73). ⚠ **`towerLook` now publishes `bax`/`bay` — the ONE definition of "how
   wide is a tower". The skybridge and the helideck BOTH read it** (each had silently assumed the old fixed width;
   a point plan would have floated the bridge and overhung the pad). **Any new tower ornament must read it too.**
@@ -360,7 +352,15 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   (0.282) unnoticed for 6 laps; normalise by the formula's own max (⇒ SKILL.md).
   **(ab) CALENDAR LOUD PER-TILE, QUIET PER-FRAME (217, Sky — LOW; body archived 233).** ⚠ **NOT "the seasons are dead"**
   (`probe-season` refuted it 3x). Loud tiles are RARE (FARM 92.1/122 hexes) vs PARK 22.4/574. Fix = a bigger seasonal SURFACE; (p) forbids the lawn.
-  **(u) CLOSED BY 234 (body archived) — the deck takes `sandCol()`'s warm wash by NAME (`WARMN`); it was GREY, not violet.**
+  **(aj) THE SHOWERS FALL WHERE NOBODY LIVES (236, seed 7, unprompted — and MEASURED).** *"Both showers fall on the
+  OPEN OCEAN, not the city."* Half that FAIL was refuted; this half is real, and it is **pre-existing cloud siting,
+  not 236's front** — clouds spawn `x:rng()*G, y:CTRY-20+rng()*40` with **no reference to the land**, so a seed can
+  park its sky over the sea: seed 7's front frame renders **sky 21,497 px vs ground 10,220**, seed 42's **8,547 vs
+  34,953** — a **4x swing from the same code**. ⚠ **AND ONLY 3–4 OF 7 SOAKED CLOUDS EVER RENDER A VEIL**
+  (`probe-front` D): the draw spends a shower **2 hexes short of the rim**, so the front's range is *half invisible*.
+  **The lever is the SPAWN, not the draw** — bias `cl.x`/`cl.y` onto the live rows (`ROWMIN`/`ROWMAX`, `HEXI`) and the
+  same front buys ~2x the visible weather for **zero new draw work**. ⚠ Rain over the sea is **CORRECT** (201) — this
+  is about *coverage*. **Sky × Polish.**
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; see the PERF bullet's "TWO
   HOLES").** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` key churn and per-mark style
   writes are both ruled OUT (measured **zero**).
@@ -391,115 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 228 entries before Iteration 226 live in
+> **Archive:** the 229 entries before Iteration 227 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 226 — the people waiting for the bus were the last ones floating (2026-07-13) [People & activity × Polish]
-
-**Vector** — People & activity × Polish. People was the stalest domain (last touched 210), and
-the header banked 137's cue: *the static standing crowds are the last movers casting no
-`shadS()` shadow* — made cheaper by 225, which taught `shadS` the sun's vector, so anything
-given a shadow now inherits the whole day for free.
-
-**The cue was HALF STALE — grep the seam, don't build to the pointer (a cue is a POINTER, NOT
-A SPEC).** 163 had already closed it for the *moving/evening* crowd; its own comment at L5375
-says so in as many words (*"closing 137's static-crowd gap"*), and the fete crowd and the
-school-run crowd have had `shadS` all along. An audit of **every human figure in the file**
-(via the head-circle idiom, `arc(...,0.5-0.9,0,7)`) found the true gap is narrower and much
-sharper than the cue stated: what still floated was not the "static" crowds but the crowds
-that **WAIT** —
-- the **bus-stop queue** (L5007) — at every stop in the city, and drawn only when `LITAMT<0.55`,
-  i.e. **in daylight**, exactly when a shadow should exist;
-- the **rail platform queue** (L6203);
-- the **stadium concourse crowd** (L4444).
-The three **seated** crowds (cafe patrons, picnickers, amphitheater tiers) were deliberately
-left alone: the artifact's contact-shadow idiom grounds a figure that STANDS on the ground.
-
-**Change** — one `shadS` call each, in the house style, matching **163's shipped standing-crowd
-constants** (`r=0.09, a=0.16`) for the queue; `0.07/0.14` on the platform deck (a bright, shallow
-surface: a full-weight smudge there reads as dirt); the gull's `0.05/0.13` for the 1.2px stadium
-specks. Drawn *before* the body so the figure reads on top, and *inside* the queue's `globalAlpha`
-so the shadow fades as they board — a shadow must never outlive the figure that owns it (195).
-
-**Census** — PASS, and vacuous as expected for a draw-only change: `pop` / `developed` / every
-tile **+0**, histogram empty. ⚠ **But `solarRoofs` read `+1`, and chasing it found a real hole in
-the harness, not in the edit:** `census.mjs` does `goto` -> `waitForTimeout(500)` -> read and
-**never sets `playing=false`**, so the RAF loop runs a *wall-clock-dependent* number of `tick()`s
-in that window (163's law (c), living inside the gate itself). The **same patched file** re-run
-gives `+0`, then `-2`. A draw-only edit makes each frame a hair slower, so fewer ticks land —
-**tick-sensitive metrics carry a +-2 wobble and it is NOT a determinism breach.** Core metrics are
-unaffected. ⇒ **To test whether an unintended metric move is yours, re-run the SAME FILE — do not
-diff against HEAD** (HEAD-vs-baseline was byte-clean, which made the edit look guilty).
-
-**Probe — `probes/probe-queueshadow.mjs`** (the census cannot see this at all). One build, not
-two: the new shadows are suppressed **by stack** (their three call-site line numbers) and the page
-renders twice back to back with the clock frozen, so the diff **is** the change by construction
-(161) at a noise floor of **exactly 0**, off the *final composited* canvas — which occlusion-checks
-it for free (200). Over 2 seeds x 3 hours:
-- **floor 0 · stray 0** in every row — the edit disturbs nothing it does not own (it draws no
-  `rng()`/`Math.random`, so this is the strong form of the control);
-- **106-113 waiting figures** per city — a real population, not three specks;
-- the throw **swings with the sun**: morning **-0.18/-0.21 px (west)**, evening **+0.41 px (east)**,
-  and **noon is the control that reads 0 by construction** (`SHOFF=0` there — 225's free
-  dead-regime pin). The measured morning:evening ratio (**-0.44 / -0.51**) independently recovers
-  `SHOFF`'s own ratio (**-0.36/+0.70 = -0.51**), which is a number I did not tune.
-
-⚠ **225's centroid law recurs one level down, and it bit here: a raw left/right INK split is
-biased by the SURFACE.** With `SHOFF=0` at noon the split read **63% / 72% west**, not 50/50 —
-because a shadow on bright pavement carries more ink than the same shadow on dark asphalt, so the
-split measures *reweighting*, not *throw*. Fixed by differencing each figure against **its own
-noon**, at which point seed 7's noon control lands on an exact **50/50**.
-
-**Probe 2 — `probes/probe-shadowparity.mjs`, and it is the one that decided the iteration.** The
-first visual round FAILed with *"I cannot see it"*, and in the viewer's units (205) the agent was
-right: **2.1 px of shadow per figure at fit zoom.** But "small" is only a defect if it is UNLIKE
-what the artifact already ships — and the claim was never *"a big shadow"*, it was ***"the waiting
-figures are grounded like every other figure in the city."*** So the control is **not a threshold I
-choose** (205: a probe whose threshold is in the units of my own design constant grades its own
-homework) — it is **the city's own already-shipped shadow**, isolated the same way, in the same
-frame. Over 3 seeds, px per figure:
-
-| group | figures | px/figure |
-| --- | --- | --- |
-| **queue (226, NEW)** | 106-113 | **2.1 / 1.9 / 2.7** |
-| ped (the house standard) | 86-87 | **4.5 / 4.5 / 4.4** |
-
-⇒ a waiting figure's shadow renders **about half a ped's**, same order, same idiom — so *"invisible
-at fit zoom"* is a true statement about **every shadow in Solvista**, including ones shipped 60 laps
-ago and never questioned. It is not an objection to this one. (163's strip crowd reads 0 figures at
-`t=0.30` because it is an **evening** draw — correct, not a bug.)
-
-**Perf — FREE, and settled by the deterministic instrument, not the timer (216).** Path objects
-**day 107,854 -> 107,957 (+103, +0.096%)**, **night 138,451 -> 138,488 (+37)**. Night barely moves
-because the crowds go home — the design. +103 path objects cannot cost a frame anything under the
-measured per-path-object model (198), so the timing gate was not run: it would have reported the
-weather.
-
-**Visual — PASS on both seeds, blind... after the camera FAILed the gate TWICE and the feature never
-did.** Round 1 aimed at the *busiest* stop: downtown, and a wall of towers stood in front of it (I
-looked myself — the agent was right). Round 2 used **`openFront`**, which only tests the row at
-`dy=+1` and **misses a tower two rows back** (211), so it picked another buried stop. Round 3 used
-**`frontLoad(x,y)===0`** — and *still* landed behind a mid-height shop, because **`frontLoad` and
-`openFront` only count `TALLT` types**, and a shop is not `TALLT` but is more than tall enough to
-hide a person's feet. Round 4 aimed at the figure whose shadow **measurably renders the most ink**
-(render with, render without, diff per figure, take the argmax) — and both seeds passed at once:
-- seed 42's agent, blind, **picked the patched frame correctly** and described *"a small soft
-  dark-brown ellipse hugging the ground right under the standing figures"*;
-- seed 7's agent honestly could not split the golden-hour pair, **and saw the shadow plainly in the
-  morning frame** — which is the stronger read, not the weaker one;
-- **both, independently, on different seeds, reported the morning shadow falls LEFT** (= west,
-  matching `SHOFF=-0.36`), and both called it ***"soft grounding, not dirt"***, of the same family as
-  the tree shadows beside it. Both whole-city frames clean: no clutter, no z-order tears, no
-  darkening. One aside, from a third agent and already banked: the elevated transit still *"reads as
-  wireframe"* (the standing `polish-tile` cue (a)).
-
-**Verdict — SHIPPED.** The last crowd in Solvista that stood on nothing now stands on the ground,
-and because 225 put the sun into `shadS`, it got the entire day's arc for free: the queue's shadow
-leans west at breakfast, sits under their feet at noon, and stretches east while they wait for the
-evening bus.
 
 ## Iteration 227 — the twenty-fifth step-back finds a clean city and a lying HUD (2026-07-13) [holistic step-back]
 
@@ -1220,3 +1116,88 @@ No z-order tears, no blown-out colour, city still coherent. **VISUAL: PASS ×2.*
 me a probe, and the probe's headline number was about the wrong noun.** Reading what `silo()` actually
 measured — instead of what `probe-crown` is *called* — turned a would-be fourth acquittal into a
 one-command conviction. ⇒ **A banked probe can carry the right instrument under the wrong name.**
+
+## Iteration 236 — the shower that had been raining since 1974 (2026-07-13) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky was the stalest domain (last touched 225) and its only banked cue, (s), is
+CONSTRAINED. So I took **225's own law** — *a stale domain's cue list records where you have
+already LOOKED, not where there is nothing to find; grep its seam* — and grepped the seam
+instead of re-reading the cue list. The seam answered immediately.
+
+**The defect.** `cl.rain` was rolled **once**, in `genWorld` (`rain:rng()<0.3`), and never
+written again. So a cloud that spawned raining rained from the founding of the city, drifted
++x, **wrapped the plate at `x>G+6`, and rained again** — for the entire life of the diorama.
+The `tick()` pass it feeds even says *"rain showers **passing** overhead"*. Meanwhile `WINDA`
+one line away is a live gust cycle and `TIDE` a live ~2-min cycle: **Solvista had wind that
+gusted and a sea that turned, and rain that was a permanent property of a cloud.** This is
+**199's tell** (a name asserting a behaviour its value cannot have), hosted on a boolean.
+
+**Change.** The roll becomes a per-cloud **threshold** — `cl.wf`, *how much of a front it takes
+before this cloud lets go* — and the sky gets a **front** (`rainFront()`, two incommensurate
+periods, ~20 yr-units ≈ 2 min at speed 1, seeded phase). A shower is now **continuous**
+(`cloudWet()`, 0..1), so it gathers and clears instead of switching: the belly greys up first,
+then the veil, the damp ground and the bow follow, all weighted by the same `w`.
+- **ONE predicate, and every reader shares it** (the loop's own law): the veil, the wet patch,
+  the rainbow, the grey belly and the meadow-bloom CA all read `cloudWet()`. It had been **six
+  independent readers of one frozen boolean**.
+- ⚠ **Keyed to `year`, NOT to `time`.** `tick()` reads this, and a CA that read the **wall
+  clock** would make `genWorld`+`__warp` irreproducible and **blind every probe in the harness**.
+  `year` advances 0.075/tick under `__warp`, so the front is deterministic there, freezes with
+  `playing=false`, and **pins with `__setYear`** exactly as the seasons do. Season is `year%1`
+  and the front is a ~20 yr cycle, so **`year+k` is the same season with different weather** —
+  which is what let the camera hold the season fixed and vary only the sky.
+- One `rng()` draw either way in `genWorld` ⇒ **stream-neutral at spawn**; and the bloom pass now
+  spends its draws for **every** cloud, wet or dry, so **the weather can never reshuffle the
+  seeded stream** (it decides where flowers come up, and nothing about the skyline).
+- **98's hold-the-mean:** the front's base sits *below* the midpoint on purpose, so the MEAN
+  number of showers stays at HEAD's (~2 of 7). This lap buys the **arc**, not a wetter city —
+  and it keeps the draw-cost question shut by construction.
+
+**Census.** PASS, 0 page errors. Core held and rose: `pop 171652→175353 (+2.2%)`, `developed
++0.3%`, `roads +0.3%`. The tile histogram moved broadly (`COM +83 / MID −72 / TOWER +21`) — the
+expected **one-time chaotic reshuffle**, since the bloom pass's `rng()` draw count changed by
+construction; it is a wash, not a tax, and nothing collapsed.
+
+**Probe (`probes/probe-front.mjs`) — TEMPORAL, per 134: every gate this loop owns is FROZEN, and
+this claim is about CADENCE. And the defect is its OWN CONTROL** — when the vector is *"make X
+vary"*, HEAD's answer is a constant **by construction**, so no threshold had to be invented:
+
+| | HEAD | patch |
+| --- | --- | --- |
+| seed 42 | **2 raining clouds, forever — DISTINCT STATES = 1** | 0–7, mean 2.8, **8 distinct states** |
+| seed 7 | **1 raining cloud, forever — DISTINCT STATES = 1** | 0–5, mean 1.3, **5 distinct states** |
+
+- **STROBE (134):** fastest turn-on **0.17–0.21 w/sec ⇒ a shower fades in over ~5–6 s** (a strobe
+  is >1 w/sec). It gathers; it does not pop.
+- **The front is deterministic** under `__setYear` and has real dry spells (seed 7: `rain 0 0 0 0`
+  across ~40 s).
+- **Isolated by SUPPRESSION in ONE page** (226/230/234 — set every `cl.wf=9` and re-render): the
+  weather's ink runs **0 px (dry — an honest floor, byte-identical) → 31,717–51,747 px (front)**.
+
+**Visual — the FAILs were WRONG and the AGENTS WERE RIGHT ANYWAY (212, both halves in one lap).**
+Both agents, blind, **RANKED the three frames correctly** (dry → gathering → front) on both seeds,
+which is the locate question and it passed. Seed 42 PASSed. Seed 7 FAILed on *"the raining cloud
+bellies are not darkened"* — **refuted by measurement** (21,497 *visible* sky px at mean Δ33.9),
+and then by a **fresh blind agent that pixel-sampled the bellies**: it found **6 of 6 isolable
+clouds grey-bellied in the front frame and 0 in the dry frame** (`~(200,215,223)` vs
+`~(229,240,240)`), named the rainy frame correctly, and called the belly legible at whole-city
+zoom without hunting for drops. Ground truth: **7 soaked vs 0.** ⇒ `VISUAL: PASS`.
+
+**⚠ BUT THE AGENTS' COUNT WAS RIGHT AND MY CAMERA'S CAPTION WAS WRONG — and that is the lap's law
+(⇒ SKILL.md).** The camera printed **`RAINING=7/7`**, read straight off the *rule*; both agents
+counted **2**. The draw spends a shower **2 hexes short of the rim**, so a cloud the front has
+soaked renders **nothing** while it drifts over the void — only **3–4 of 7 ever put a veil on the
+plate**. A self-reporting frame (202) that reports in the **rule's** units rather than the
+**viewer's** (205) is **worse than no caption**: it looks authoritative, and it had me one step
+from "the agents cannot count." The probe now prints **`soaked 7/7 -> RENDERED 4/7`**, and *the gap
+is the finding*. **200 paid out again too:** 6,652 px of the weather's ink sits **behind the
+placard** — masked out before any of the numbers above were believed.
+
+**Perf.** Priced by **counting objects**, not by reading the diff (222 — this vector changes the
+world). Day **109,207 → 110,162 (+0.9%)**, night **138,434 → 138,985 (+0.4%)**. Mechanically
+explained and small: the mean rain is **held by construction** (98), and the grey belly is a
+**colour** change costing **zero path objects**; the residual is the chaotic world reshuffle.
+Not a perf lap.
+
+**Verdict: SHIPPED.** The sky has weather. It gathers, it rains, it clears, and it is different
+in every city — and `probes/shot-front.mjs` can pin any of it, at a fixed season, for the next lap.

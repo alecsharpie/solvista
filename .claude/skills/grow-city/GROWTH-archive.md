@@ -15594,3 +15594,107 @@ Promoted to SKILL.md.
 street grid *"darkens noticeably from accumulated tower shadows — atmospheric, not clutter."* Read
 as fine today by both agents; if a later lap lengthens shadows further, that is where it bites.
 
+## Iteration 226 — the people waiting for the bus were the last ones floating (2026-07-13) [People & activity × Polish]
+
+**Vector** — People & activity × Polish. People was the stalest domain (last touched 210), and
+the header banked 137's cue: *the static standing crowds are the last movers casting no
+`shadS()` shadow* — made cheaper by 225, which taught `shadS` the sun's vector, so anything
+given a shadow now inherits the whole day for free.
+
+**The cue was HALF STALE — grep the seam, don't build to the pointer (a cue is a POINTER, NOT
+A SPEC).** 163 had already closed it for the *moving/evening* crowd; its own comment at L5375
+says so in as many words (*"closing 137's static-crowd gap"*), and the fete crowd and the
+school-run crowd have had `shadS` all along. An audit of **every human figure in the file**
+(via the head-circle idiom, `arc(...,0.5-0.9,0,7)`) found the true gap is narrower and much
+sharper than the cue stated: what still floated was not the "static" crowds but the crowds
+that **WAIT** —
+- the **bus-stop queue** (L5007) — at every stop in the city, and drawn only when `LITAMT<0.55`,
+  i.e. **in daylight**, exactly when a shadow should exist;
+- the **rail platform queue** (L6203);
+- the **stadium concourse crowd** (L4444).
+The three **seated** crowds (cafe patrons, picnickers, amphitheater tiers) were deliberately
+left alone: the artifact's contact-shadow idiom grounds a figure that STANDS on the ground.
+
+**Change** — one `shadS` call each, in the house style, matching **163's shipped standing-crowd
+constants** (`r=0.09, a=0.16`) for the queue; `0.07/0.14` on the platform deck (a bright, shallow
+surface: a full-weight smudge there reads as dirt); the gull's `0.05/0.13` for the 1.2px stadium
+specks. Drawn *before* the body so the figure reads on top, and *inside* the queue's `globalAlpha`
+so the shadow fades as they board — a shadow must never outlive the figure that owns it (195).
+
+**Census** — PASS, and vacuous as expected for a draw-only change: `pop` / `developed` / every
+tile **+0**, histogram empty. ⚠ **But `solarRoofs` read `+1`, and chasing it found a real hole in
+the harness, not in the edit:** `census.mjs` does `goto` -> `waitForTimeout(500)` -> read and
+**never sets `playing=false`**, so the RAF loop runs a *wall-clock-dependent* number of `tick()`s
+in that window (163's law (c), living inside the gate itself). The **same patched file** re-run
+gives `+0`, then `-2`. A draw-only edit makes each frame a hair slower, so fewer ticks land —
+**tick-sensitive metrics carry a +-2 wobble and it is NOT a determinism breach.** Core metrics are
+unaffected. ⇒ **To test whether an unintended metric move is yours, re-run the SAME FILE — do not
+diff against HEAD** (HEAD-vs-baseline was byte-clean, which made the edit look guilty).
+
+**Probe — `probes/probe-queueshadow.mjs`** (the census cannot see this at all). One build, not
+two: the new shadows are suppressed **by stack** (their three call-site line numbers) and the page
+renders twice back to back with the clock frozen, so the diff **is** the change by construction
+(161) at a noise floor of **exactly 0**, off the *final composited* canvas — which occlusion-checks
+it for free (200). Over 2 seeds x 3 hours:
+- **floor 0 · stray 0** in every row — the edit disturbs nothing it does not own (it draws no
+  `rng()`/`Math.random`, so this is the strong form of the control);
+- **106-113 waiting figures** per city — a real population, not three specks;
+- the throw **swings with the sun**: morning **-0.18/-0.21 px (west)**, evening **+0.41 px (east)**,
+  and **noon is the control that reads 0 by construction** (`SHOFF=0` there — 225's free
+  dead-regime pin). The measured morning:evening ratio (**-0.44 / -0.51**) independently recovers
+  `SHOFF`'s own ratio (**-0.36/+0.70 = -0.51**), which is a number I did not tune.
+
+⚠ **225's centroid law recurs one level down, and it bit here: a raw left/right INK split is
+biased by the SURFACE.** With `SHOFF=0` at noon the split read **63% / 72% west**, not 50/50 —
+because a shadow on bright pavement carries more ink than the same shadow on dark asphalt, so the
+split measures *reweighting*, not *throw*. Fixed by differencing each figure against **its own
+noon**, at which point seed 7's noon control lands on an exact **50/50**.
+
+**Probe 2 — `probes/probe-shadowparity.mjs`, and it is the one that decided the iteration.** The
+first visual round FAILed with *"I cannot see it"*, and in the viewer's units (205) the agent was
+right: **2.1 px of shadow per figure at fit zoom.** But "small" is only a defect if it is UNLIKE
+what the artifact already ships — and the claim was never *"a big shadow"*, it was ***"the waiting
+figures are grounded like every other figure in the city."*** So the control is **not a threshold I
+choose** (205: a probe whose threshold is in the units of my own design constant grades its own
+homework) — it is **the city's own already-shipped shadow**, isolated the same way, in the same
+frame. Over 3 seeds, px per figure:
+
+| group | figures | px/figure |
+| --- | --- | --- |
+| **queue (226, NEW)** | 106-113 | **2.1 / 1.9 / 2.7** |
+| ped (the house standard) | 86-87 | **4.5 / 4.5 / 4.4** |
+
+⇒ a waiting figure's shadow renders **about half a ped's**, same order, same idiom — so *"invisible
+at fit zoom"* is a true statement about **every shadow in Solvista**, including ones shipped 60 laps
+ago and never questioned. It is not an objection to this one. (163's strip crowd reads 0 figures at
+`t=0.30` because it is an **evening** draw — correct, not a bug.)
+
+**Perf — FREE, and settled by the deterministic instrument, not the timer (216).** Path objects
+**day 107,854 -> 107,957 (+103, +0.096%)**, **night 138,451 -> 138,488 (+37)**. Night barely moves
+because the crowds go home — the design. +103 path objects cannot cost a frame anything under the
+measured per-path-object model (198), so the timing gate was not run: it would have reported the
+weather.
+
+**Visual — PASS on both seeds, blind... after the camera FAILed the gate TWICE and the feature never
+did.** Round 1 aimed at the *busiest* stop: downtown, and a wall of towers stood in front of it (I
+looked myself — the agent was right). Round 2 used **`openFront`**, which only tests the row at
+`dy=+1` and **misses a tower two rows back** (211), so it picked another buried stop. Round 3 used
+**`frontLoad(x,y)===0`** — and *still* landed behind a mid-height shop, because **`frontLoad` and
+`openFront` only count `TALLT` types**, and a shop is not `TALLT` but is more than tall enough to
+hide a person's feet. Round 4 aimed at the figure whose shadow **measurably renders the most ink**
+(render with, render without, diff per figure, take the argmax) — and both seeds passed at once:
+- seed 42's agent, blind, **picked the patched frame correctly** and described *"a small soft
+  dark-brown ellipse hugging the ground right under the standing figures"*;
+- seed 7's agent honestly could not split the golden-hour pair, **and saw the shadow plainly in the
+  morning frame** — which is the stronger read, not the weaker one;
+- **both, independently, on different seeds, reported the morning shadow falls LEFT** (= west,
+  matching `SHOFF=-0.36`), and both called it ***"soft grounding, not dirt"***, of the same family as
+  the tree shadows beside it. Both whole-city frames clean: no clutter, no z-order tears, no
+  darkening. One aside, from a third agent and already banked: the elevated transit still *"reads as
+  wireframe"* (the standing `polish-tile` cue (a)).
+
+**Verdict — SHIPPED.** The last crowd in Solvista that stood on nothing now stands on the ground,
+and because 225 put the sun into `shadS`, it got the entire day's arc for free: the queue's shadow
+leans west at breakfast, sits under their feet at noon, and stretches east while they wait for the
+evening bus.
+

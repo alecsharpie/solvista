@@ -1246,6 +1246,24 @@ vector, whatever it is.
   test ("does the banked probe *pass* the thing the agents *fail*?") must be applied **per metric, not per probe** —
   `probe-crown` passed on `crown` and failed on `silo` **in the same output**. The tell: the cue tells you a probe is
   the wrong instrument, and the reason given is *the name of the lap that wrote it*.
+- **A SELF-REPORTING FRAME MUST SELF-REPORT IN THE *VIEWER'S* UNITS — A CAPTION IN THE RULE'S UNITS IS WORSE THAN NO
+  CAPTION, BECAUSE IT LOOKS AUTHORITATIVE AND IT WILL MAKE CORRECT AGENTS LOOK WRONG (iter 236).** 202 says make every
+  frame self-report its own state so a mis-pinned frame is caught by the tool, not by a gate round. 205 says state the
+  claim in the viewer's units. Put them together carelessly and you get a **confidently mislabelled frame**: 236's
+  camera printed `RAINING=7/7`, read straight off the rule that decides which clouds are wet — and **both visual
+  agents, blind, on two seeds, counted 2.** They were **right**. The draw spends a shower *2 hexes short of the rim*,
+  so a cloud the front has soaked renders **nothing at all** while it drifts out over the void; only **3–4 of 7** ever
+  put a veil on the plate. The caption and the pixels were measuring **different quantities**, and because the caption
+  was mine I was one step from "the agents cannot count" — the exact inversion 200/205 warn about, now arriving
+  through the *instrument's own label*. ⇒ **Before you print a number on a frame, ask whether a viewer could in
+  principle arrive at it by looking.** If the rule's number and the drawn number can differ (a mask, a cull, an
+  off-screen instance, an occluder), **print BOTH and name which is which** — 236's probe now reports
+  `soaked 7/7 -> RENDERED 4/7`, and the gap *is* the finding. The tell: your caption comes from the decision, and the
+  agent's answer comes from the canvas.
+  Corollary, and it is free every time you fix a *constant that should have been a variable*: **the defect is its own
+  perfect control.** When the vector is "make X vary", HEAD's answer is a **constant by construction**, so a temporal
+  probe's `DISTINCT STATES = 1` is an unarguable baseline you did not have to design — 236's HEAD read *2 raining
+  clouds, forever, on every seed*, and no threshold had to be invented to call that broken.
 - **A NUMBER THAT WILL NOT MOVE IS A TELL THAT YOUR INSTRUMENT, NOT THE CITY, IS DECIDING IT (iter 228).** 228's fix
   took tower crowns 4 -> 17 while the "41% flat" bucket sat **exactly unchanged** — the same 35.3% on the same seed,
   before and after. A metric that is *stone* while everything around it moves is not a stubborn defect; it is a
@@ -1775,6 +1793,16 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   sees, and is graded by measured ink in the MATURE frame that actually renders. The mature-world version of this
   sweep is a **leak** and misranked 231 by 3x — see the law), `shot-amphsite.mjs` (the camera: aims at each build's
   **own** host, self-reports the front's tile types + heights, day+night, `SRC=` for a blind HEAD/patch pair).
+  `probe-front.mjs` (236 — **the TEMPORAL probe: does this thing actually CHANGE OVER TIME?** Every other gate here
+  is frozen, so a claim about *cadence* has no instrument (134). Part A runs the clock and counts **DISTINCT STATES**
+  (HEAD's weather reads **1** — a constant, which is the defect stating itself); Part B measures the fastest possible
+  turn-on in **units/sec** and converts it to a fade time, so a **strobe** cannot hide; Part C pins the cycle with
+  `__setYear` to prove it is deterministic; Part D reports the thing in **the VIEWER'S units** — `soaked N/7 ->
+  RENDERED M/7`, plus the feature's ink isolated by **suppression in one page** (floor exactly 0) **with the HUD
+  masked out** (200). Reach for it for any *cycle, rhythm, schedule or weather* vector), `shot-front.mjs` (its camera:
+  freezes in-page and **searches for the `year` that hits a target front while HOLDING THE SEASON FIXED** — season is
+  `year%1`, the front a ~20yr cycle, so `year+k` varies one and not the other. Every frame self-reports — ⚠ **and
+  236's law: self-report in the VIEWER'S units, or the caption lies with authority**).
   Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure
