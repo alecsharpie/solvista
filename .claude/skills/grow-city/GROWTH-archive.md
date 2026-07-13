@@ -17666,3 +17666,130 @@ and boats sit elsewhere. Emptying the mover arrays took the floor to **0**.
 **Verdict** DEEPENED. The sea now answers the wind: **21–42 px → 725–861 px** of wind-response,
 monotonic across the sweep, floor 0, land control unmoved — at zero net draw cost.
 
+## Iteration 246 — the slack was the exhaustion (2026-07-14) [Nature × Deepen]
+
+**Vector.** Nature was the stalest domain (238) *and* the ledger's #1 🔴 cue — **(ai), the city
+has no fringe** — is a Nature × Deepen vector (233 is struck in that cell). Both pointers agreed,
+so I took (ai). The header has carried a **named way through** since 233: *hold the rim AND widen
+the core in ONE lap, so `developed` stays flat, the census gate opens, and the belt can be as
+strong as the eye needs.* This lap did not build it. **It measured it first — and it does not exist.**
+
+**Probe before you design, and it killed the design (`probes/probe-fringeabsorb.mjs`, 6 seeds,
+pure world data).** 233's pair has two halves; the second one is a claim, and nobody had checked it.
+
+| | |
+| --- | --- |
+| a candidate belt **HOLDS** | **157–223** developed cells (depth 5→8) |
+| widening the parcel rule's road radius 2→3 **ADMITS** | **25** cells |
+| …the same widening at radius **2→4** admits | **25** cells |
+
+**The pair is 7–9x short, and the second row is the one that closes it.** `r=4` admits *exactly
+what `r=3` admits* ⇒ there are **zero** interior open cells at road-distance 4. The interior's
+unbuilt land is not *out of reach* of the predicate — it is **gone**. This is 206's *the vacant
+lot is a MIRAGE* arriving on the absorption question: development has eaten every interior gap,
+so there is nothing inland for the freed rim development to land on, at any radius. **No paired
+addition exists.** Every fringe removes core fabric, 1:1, exactly as 233 measured.
+
+🔑 **THE LAW (promoted to SKILL.md) — A BUDGET WITH SLACK IS NOT ABSORPTION CAPACITY; THE SLACK
+*IS* THE PREDICATE'S EXHAUSTION.** 233 reasoned — and the header has repeated for 14 iterations —
+*"the budget **has slack** (1153/1382), so the city **can** absorb the freed development inland."*
+The slack is real (measured again here: **1082–1187 used against a 1382 cap, on every seed**).
+The inference is **backwards**. A rule whose roll is ~100% saturated (218) stops **only** when it
+runs out of eligible cells — so unspent budget is not headroom the city could use, it is the
+**receipt for land it could not find**. Slack and exhaustion are *the same fact read from opposite
+ends*, and 233 cited the symptom of *no absorption* as the evidence *for* absorption. ⇒ **When a
+saturated rule leaves a budget unspent, that is a measurement of MISSING SUPPLY, not of SPARE
+CAPACITY. Never treat a cap's headroom as a place to put something — go count the eligible cells.**
+
+**And the shape does not rescue it either (`probes/probe-fringeshape.mjs`).** Before conceding I
+built the best remaining candidate: **top-K of a smooth field**, which designs out all three of
+233's shape failures at once (a smooth field's top-K is its *peaks* ⇒ contiguous **lobes**, never
+speckle; the boundary is the **noise**, not `hexDist`, so it cannot trace the plate's hexagon; and
+**K is a constant**, so the *amount* held is identical on every seed while the *shape* still
+wanders — killing the lottery that actually killed 233, whose noise decided the amount too).
+
+It is a **weak lever anyway.** Largest contiguous undeveloped run in the outer plate:
+
+| | HEAD | K=90 | K=120 | K=150 | K=180 |
+| --- | --- | --- | --- | --- | --- |
+| mean (6 seeds) | **118** | 122 | 124 | 127 | **133** |
+| cost (developed cells held) | 0 | 40 | 54 | 68 | **81** |
+
+**81 developed cells (≈ −7% at 2035) buys +15 cells of countryside — and on seed 1234 it buys
+NOTHING (107 → 107).** The cause is structural and it is the third independent finger pointing at
+the same host: **the ROADS fragment every lobe.** A belt cannot touch them (233 left them alone on
+purpose — the lanes must still thread to the edge), so held land arrives in slivers either side of
+an asphalt line and never merges into country.
+
+**⇒ (ai) IS TERMINAL AS SPECIFIED, and this is 218's host law being ignored for three laps.**
+`probe-fringehost`'s own header — written by 233 — names limiter **(3)**: *"the rim is dense because
+ROADS run to the rim, and **the fix belongs in the road/corridor pass**."* 233 then built a mask
+over the **parcel** rule, and the header's way through targets the **parcel** rule, and this lap's
+lobes are a mask over the **parcel** rule. All three faithfully steer the innocent rule (218: it
+fills what the roads reach) while the host goes untouched. But the road pass is **more** metric-
+negative, not less: cutting rim roads costs `roads` *and* starves the parcels that need them, so
+`developed` falls further. **There is no mechanism that produces a fringe without removing core
+fabric, and nothing inland can absorb it.** The cue is unreachable while `developed`/`roads` are
+hard core-collapse gates — which they should be (233's own law: a core gate guards against
+*accident*, so it cannot pass a deliberate *reduction*).
+
+**Census.** PASS, 0 page errors. `solvista.html` is **byte-identical to HEAD** — nothing was built,
+so nothing had to be reverted. **No visual gate: there is no change to look at.**
+
+**Verdict: EXPLORED → REVERTED.** Two probes banked, one law promoted, and the ledger's #1 cue
+**RETIRED as specified** rather than left to steer a fourth lap into the same box. The cue's
+*complaint* is still real and still unaddressed — but it must be re-derived from its own nouns
+(228/235), and the honest next step is to stop spending laps on the density statistic.
+
+
+---
+
+## Header bullets rotated out at Iteration 256
+
+Moved from the maintained header (400-line budget) by the 31st step-back. **Nothing here is deleted — these
+are the LAW RESTATEMENTS from the 236–251 warning blocks and the 228-recursion / 251-cost narratives. Every
+law below is in `SKILL.md`, which is where a future iteration should read it.** The header now keeps only the
+*artifact API facts* and *do-not-retry* warnings those blocks were carrying, which are the parts that cannot
+be re-derived from SKILL.md.
+
+**From "WARNINGS FROM 249–251":**
+- 🔑 *A GATE BREACHED BY A HAIR, WHOSE PRESCRIBED FIX COSTS A HEALTHY GUARD, IS A GATE TO SUSPECT — and
+  "is it LIT?" is an EXTREME, never a MEAN* (251, building on 224).
+- **250:** ⚠ *A TRIANGLE, not `beachPhase`'s cosine* — a beach in January is still a beach; a concert in
+  January is NOT ON. ⚠ *The AUDIENCE must move WITH the show* (else 213's bug). 🔑 *A REMOVAL VECTOR'S PROBE
+  MUST NAME WHAT SURVIVES — and that control convicts a DEAD INSTRUMENT before it convicts the city.*
+- **249:** the berth's existence is **`pierAt` itself**. ⚠ *`dwell` is the house's own word for a call —
+  grep for the mechanism the artifact already ships before inventing one.* 🔑 *TWO FREE, EXACT CONTROLS* —
+  HEAD's **constant IS the baseline** (236), and a host with a **BIRTHDAY** hands you a **dead regime
+  running HEAD's bytes** (199).
+
+**From "WARNINGS FROM 236–248":**
+- **248:** *an ANCHOR is not an EXTENT* (any cull/fade evaluated at a draw's anchor under-bounds its own
+  pixels); *a CORRECT SIBLING DRAW is a FREE POSITIVE CONTROL*.
+- **247:** *a threshold in an `if/else if` chain is a BOUNDARY — narrowing one arm WIDENS its neighbour*
+  (grep a chain's other arms first); *a REMOVAL vector needs a probe that names what SURVIVES*.
+- **245:** *a CENTRED lever buys a BYTE-IDENTICAL FIXED POINT* (247–250 cashed it) · *AIM BY MEASURED INK OF
+  THE HOST, not the frame* · *a fixed ELIGIBILITY gate caps the range of any threshold beneath it.*
+- **244:** *penalise the wall* is a **DEAD LEVER**; *a sweep built with the artifact's own rule grades in the
+  PATCHED world — `K=0` is NOT HEAD.*
+- **242:** *when code CITES A NEIGHBOUR, GO READ THE NEIGHBOUR.*
+- **241:** *an empty cue list is not saturation, it is evidence nobody has grepped* (5 for 5 at the time; 6
+  for 6 by 254).
+- **240:** 🔑 *a SLOW CLOCK is open to every domain — `Math.floor(dayT)` is a REAL DAY COUNTER and cannot
+  strobe.*
+- **239:** *name the FILE, never a letter, in a visual A/B.*
+- **236:** *`year+k` = same season, different weather.*
+
+**The 228-recursion narrative (5x, every time on a probe this harness already owned)** — 237×2; 238 INSIDE
+the probe 237 had just repaired; 251 (`probe-goldenhue`'s one-centre-pixel sample); 255 (`probe-seastate`'s
+sea mask never contained the sea — it loud-painted the ornaments; `water`/`waterDk` are the RIVER, the body
+is `waterSh`/`waterDp`, so `land`, its COMPLEMENT, silently held the whole ocean). Both repaired at 255;
+`probe-seastate`'s fixed-point frame HASH was also pure noise (the same HEAD file hashed 3 different values
+in 3 runs — *a hash is not a diff*, 245's own law broken by 245's own probe). The law — *read what a probe
+MEASURES and WHERE IT SAMPLES, not what it is called; apply 228's test PER METRIC* — is in SKILL.md.
+
+**251's cost, and the corroboration rule it bought.** A bad probe does not merely misgrade a lap — it
+**MANUFACTURES A CUE** that then steers the loop for 24 iterations and gets "reconfirmed" by the same broken
+instrument. ⇒ **A cue re-confirmed is NOT corroborated unless a DIFFERENT instrument did it.** 252 is the
+counter-example and the template: agents + a repaired area probe + a grep — three instruments, one answer.
+(This rule is retained in compressed form in the header, because it governs how the cue list is *read*.)
