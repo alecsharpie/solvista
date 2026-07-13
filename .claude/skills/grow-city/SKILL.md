@@ -710,6 +710,31 @@ vector, whatever it is.
   across all four seasons on BOTH builds.** ⇒ **A removal vector needs a probe that names what SURVIVES, not one that
   measures what MOVED.** The tell: your probe's headline number is a **pixel diff**, and your claim contains a noun
   (*empty*, *gone*, *packed away*) that a pixel diff cannot verify.
+- **AN ANCHOR IS NOT AN EXTENT — ANY CULL, FADE OR BOUND EVALUATED AT A DRAW'S ANCHOR POINT SILENTLY UNDER-BOUNDS
+  EVERY PIXEL IT PUTS BEYOND THAT POINT (iter 248).** 211 says a per-hex ornament drawn at an **offset** can land in
+  the *next hex* and be painted over: draw order is depth order, so an offset is a depth decision. 248 is the same
+  defect on the **culling** axis, and it is the one that reaches the *void*. The rain shaft is a quad ~`26*s` wide at
+  the belly and `36*s` at the foot whose foot trails **upwind** by `rlean` — and its rim gate tested **`cl.x`, the
+  cloud's centre**. So at the very moment the gate declared a shower fully on-plate (`pa=1`), **up to 57% of its
+  landing footprint was painting on the void** (measured: 1.4–2.1 hexes past the rim in the model; **4.7% of every
+  veil quad the artifact actually fills**, worst **3.4 hexes**, in the shipped draw). ⇒ **When a draw has EXTENT — a
+  quad, an ellipse, a halo, a shadow, an arc, anything with a half-width, a lean or an offset — its bound must be
+  computed from its own DRAWN EDGES, not from the point it hangs off.** The fade *grammar* rarely needs to change;
+  only its reference point does. And the fix is **structural, not checked** (223): make `pa>0` *require* the whole
+  extent inside the rim and off-plate ink is **exactly 0 by construction**, forever, instead of a thing you agree to
+  go on measuring.
+  ⇒ **AND THE COROLLARY IS THE CHEAPEST POSITIVE CONTROL THIS LOOP HAS FOUND: WHEN ONE DRAW IN THE FILE ALREADY DOES
+  IT RIGHT, THAT DRAW *IS* YOUR CONTROL — IT VALIDATES THE INSTRUMENT AND CONVICTS THE DEFECT IN THE SAME RUN.** The
+  rainbow sits **twenty lines** from the shaft, fades against the **same rim**, and tests its **LEGS** (`fl`/`fr`,
+  under a comment that says *"test the LEGS, not the cloud"*). It read **0.00 hexes of overhang on all 6 seeds** while
+  the shaft read 2.14 — so a single probe, with no extra design, proved the rig could see zero *and* that the shaft
+  was not it. 196 warns that a `BASE = 0` is worthless without a **positive** control; a correct sibling draw is that
+  control, free. **Before building a control, grep the file for a neighbour that already solves your problem.**
+  ⚠ **This is 242's cited-standard law with the citation running the OTHER WAY, which is why it survived so long.**
+  242 found a draw citing a **broken** neighbour as precedent. Here the shaft cites a **correct** one — *"spent 2
+  hexes short of the rim **(as the bow is)**"* — and **still does not do what the bow does**. A false invariant had
+  acquired a witness that actually holds, so the comment read as *audited*. ⇒ **"As X does" is a claim about TWO
+  pieces of code, and X being right does not make the claim true. Go and read the neighbour — every time.**
 - **A BUDGET WITH SLACK IS NOT ABSORPTION CAPACITY — THE SLACK *IS* THE PREDICATE'S EXHAUSTION, AND IT WILL BE CITED
   AS THE EVIDENCE FOR EXACTLY THE THING IT DISPROVES (iter 246).** 233's law says that when a vector's *purpose* is to
   take something away, the lap is not "tune it down" — it is to **find the PAIRED ADDITION that holds the core metric
@@ -2110,6 +2135,23 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   not `hexDist` · **K constant** ⇒ the *amount* held is identical every seed while the *shape* still wanders, killing
   the lottery that killed 233. ⚠ Its verdict was **negative**, and that is the reusable part: a belt cannot buy
   contiguity because **ROADS fragment every lobe**).
+  `probe-rainrim.mjs` (248 — **is this draw bounded by its ANCHOR or by its own EXTENT?** Part A is pure world data
+  (no render, no clock, no noise floor): it sweeps the cloud across its row — which IS the traverse it makes in play —
+  and reports the hexes of veil painted **past the plate's rim**, weighted by the alpha it is actually drawn at, with
+  the **two ledgers** (206) beside it: the off-plate ink the fix erases and the on-plate ink it must not destroy.
+  ⚠ **Its `bow` column is a POSITIVE CONTROL, and it is the reusable idea** — the rainbow fades against the SAME rim
+  and tests its own LEGS, so it MUST read 0.00; a correct sibling draw validates the rig for free (see the law).
+  Part B grades the **SHIPPED DRAW, not the probe's arithmetic**: it tags the shaft's own gradient (`96,116,142`,
+  unique to it) and reads back the quad the artifact actually fills — **build-agnostic**, so it runs unchanged on HEAD
+  and patch with no source swap and no cross-build floor), `shot-rainrim.mjs` (its camera — ⚠ **the void backdrop is
+  the BODY's CSS gradient, so every `getImageData` probe is structurally blind to it (200) and this MUST use
+  `page.screenshot()`**. Shoots three framings × two builds, named **by file** (239): `rim` (the treatment), `inland`
+  (⚠ the **live** control — both builds must rain, and rain identically) and an un-zoomed `city`. It pins `time`,
+  `waveT` **and `dayT` BEFORE `genWorld`/`__warp`** and re-seeds `Math.random` in-page: `addInitScript` fixes the PRNG
+  *function*, but the stream POSITION and the clocks at load are wall-clock dependent, and `__warp`'s ticks branch on
+  them — leave them and two builds warp **different populations** into being and the control reads thousands of px),
+  `pngdiff.mjs` (count differing pixels between two PNGs, with a tolerance; ⚠ load them as **base64 data URLs** — a
+  blank page cannot load `file://` images and will hang).
   Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure

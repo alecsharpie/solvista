@@ -16914,3 +16914,104 @@ accepted, downtown legible, no tears, no collapse. But it has been carrying a se
 only its farms can feel, and a mid-rise field that is two shapes wearing many colours — and
 in both cases the harness owned a probe that was quietly saying so.
 
+## Iteration 238 — the trees were the one green thing that never felt the summer (2026-07-13) [Nature × Deepen]
+
+**Vector.** Cue **(ak)**, the step-back's #1 🔴: *the season is mute on 68% of the
+vegetation*. Both 237 agents, blind, on two seeds, made the same headline FAIL — and both
+used the same noun: ***"Trees* still full green… a crop-rotation frame, not a winter."*
+
+**Change — two defects, stacked, both in the seam the cue pointed at.**
+1. **The deciduous canopy had no `dry` term.** `applySeason` drives every other green off the
+   drought curve — `grass`, `grassDk`, `meadow`, `lawn`, `turf` — and drove `canopy`/`canopyLt`
+   off *autumn, spring and winter only*. At the dry peak (`s=0.62`) those three curves are all
+   **exactly 0**, so `BASE.canopy` was returned to `CAN0` **unchanged**: every broadleaf in the
+   city was *mathematically inert* on the loudest keyframe of this coast's calendar. It now dusts
+   to a drought olive (`[176,152,84]` at `dry`), mixed FIRST so autumn's amber still lands on top
+   of an already-dried canopy.
+2. **The evergreen palette was read by everything except the evergreens.** `conifer`/`coniferLt`
+   carried the comment *"evergreens sit out the seasons"* and were read by **exactly one draw —
+   the REDWOOD** — while the thing actually *named* a conifer (`tree()`'s spire, `sp===1`) and the
+   **palm** both drew from the **deciduous** `canopy`. Renamed **`evergreen`/`evergreenLt`** and
+   pointed the spire and the palm at it. A palm no longer drought-stresses; a pine no longer ambers
+   in autumn; and the mixed wood now reads **two-tone**.
+   ⚠ I found this only after a `col('conifer'` grep came back clean and the page then threw:
+   the redwood's call is `col(t===0?'coniferLt':'conifer',…)` — **a ternary hides a palette name
+   from an anchored grep.** Grep `col([^)]*'name'`, never `col('name'`.
+
+**Census.** PASS. Every metric flat, tile histogram empty (`pop -1`, `solarRoofs -2` = 226's
+unfrozen-clock wobble). Colour-only: **zero path objects, zero geometry** ⇒ free by 198's cost
+model. Byte-identical in **winter** (`dry=0`) — 199's free dead-regime control, which is also why
+`probe-goldenhue`'s default-calendar assertions are untouched.
+
+**Probe — and the probe is the finding.** `probes/probe-seasonarea.mjs` (new, banked).
+- Canopy rendered swing winter→dry: **~8 → ~28** (3.5×), consistent across FOREST/PARK/ORCHARD.
+- Area-weighted all-veg **26.8 → 28.4**. **FOREST 16.1 → 19.5 · PARK 20.2 → 22.2 — both still
+  below the 25 floor. MUTE AREA UNCHANGED: 66.6% → 66.6%. (ak) IS NOT CLOSED.** Logged as measured,
+  not as claimed.
+
+**Visual.** Blind A/B, **crossed** between seeds (42: A=patch · 7: B=patch, so "the second one" is
+wrong on one). **Both agents picked the patched build correctly**, and both — *unprompted, never
+told the distinction existed* — reported the conifer spires and the palms staying green while only
+the broadleaf rounds turn: *"two populations behave differently… a nice two-tone stipple instead of
+a flat wash."* Both: drought-stressed, **not** autumnal ("no orange, no rust, no bare trunks"). Both
+whole-city frames clean — no tears, no clutter. **VISUAL: PASS ×2.** One caveat banked: *"near the
+far end of the safe range in the sunniest hexes"* — the amplitude is at its ceiling, and the reason
+is structural: the dry olive sits only ~24 RGB from the **autumn** amber, and they must stay distinct.
+
+**Verdict: DEEPENED.** The trees answer the calendar; the evergreens are finally real.
+
+**⇒ THE HANDOFF, AND IT IS WORTH MORE THAN THE SHIP: (ak)'S OWN GATE WAS THE WRONG INSTRUMENT —
+228'S LAW RECURSING A *THIRD* TIME, INSIDE THE PROBE 237 REPAIRED.** `probe-season` samples **ONE
+PIXEL, at the hex centre**. PARK draws its trees at grid *offsets* and its pond/fountain *at* the
+centre ⇒ **it is structurally blind to a park's canopy.** On the *same* change it reported **PARK
+20.8 → 20.9 (unmoved)** and **FOREST 18.9 → 27.1 ("crossed the floor")** — both artifacts of where
+one pixel happened to land. 237 fixed that probe's weighting **BETWEEN** tile types and left the
+sample **WITHIN** a hex at one pixel: **two different unit errors, only the first closed.**
+⇒ **And the area probe REFRAMES (ak) entirely. Every vegetated GROUND is already seasonal** — lawn
+swings **52.7**, grassDk **31.8**, grass **34.4** — and **SHOREPARK, which is 88.7% lawn, reads 44.4
+and is NOT mute.** The greens turn fine. **PARK reads 20.2 because a park hex is only 45% lawn**;
+the rest is canopy (12%) plus **paths, ponds, benches, playgrounds and café furniture that have no
+calendar at all**. FOREST is 17% canopy over a `grassDk` floor darkened by canopy-closure shade.
+⇒ **(ak)'s "68% mute" is dominated by DILUTION — season-dead furniture, hardscape, shadow and
+understory INSIDE each hex — not by dead palettes, and NOT by the lawn (which (p) rightly forbids
+touching, and which is already the most seasonal surface in the city).** A palette lap cannot reach
+the per-tile floor. The next lap on (ak) must either give the season-dead *contents* of a park hex a
+calendar, or accept the floor as unreachable and retire the metric.
+
+
+<!-- Header bullets rotated out of GROWTH.md's "State of the city" at iteration 248
+     (the header is a fixed 400-line budget; to add a line, cut a line). The full
+     bodies of these laps live in their own entries above / in SKILL.md. Preserved
+     here verbatim — nothing is ever deleted. -->
+
+### 247's header block, as it stood before the 248 trim
+
+✅ **247 (the 29th step-back): THE BEACH WAS PACKED FOR A WINTER NOBODY WAS HAVING — DEEPENED.** Both agents FAILed,
+independently, two seeds, one headline: **winter is indistinguishable from summer** (cue (ak) — now **four agents over
+two step-backs**). MEASURED (237), the FAIL split into a **misread** + a **real defect** (243): ✗ *"it runs backwards;
+there is no snow"* is **201's objection-to-the-MODEL** (`TILEDESC` says **'the Pacific'**, `.62` is **the golden dry
+peak** ⇒ Mediterranean: a green winter is **correct**); ✓ *"a packed swimming beach in winter"* is **real**. The seam:
+the furniture's comment says *"Beachgoers follow the sun"* and it reads **three** clocks (`pop`, `LITAMT`, `TIDE`),
+deaf to the **fourth** — and the city had exactly **three** seasonal predicates, `orchardPhase`/`vinePhase`/`farmPhase`,
+**all agricultural. The season reached the farms and stopped.** Shipped **`beachPhase()`** — the fourth; ONE predicate,
+read by the draw AND a new `describeTile` row (**Sands — Packed/Busy/Quiet/Empty for the winter**), per 117/123.
+**Towels 3 → 38 → 15 over the year vs HEAD's 38,38,38,38 — a constant, forever** (236: for a *"make X vary"* vector
+HEAD's answer is constant **by construction**; no threshold need be invented).
+🔑 **ITS LAW (SKILL.md): A THRESHOLD INSIDE AN `if/else if` CHAIN IS NOT A GATE — IT IS A *BOUNDARY BETWEEN TWO
+FEATURES*, SO NARROWING ONE ARM SILENTLY WIDENS ITS NEIGHBOUR.** The umbrella and **PALM** arms sit on the SAME `v`, so
+shrinking the furniture's threshold did not EMPTY those hexes — **it handed them to the next arm, and winter grew a full
+palm in every deckchair slot the crowd vacated.** ⚠ **AND MY PROBE PASSED IT**: it measured *that* 2,076 px of sand
+changed, never ***what they changed to*** (**214**). **Two agents caught it; one read the source.** ⇒ **When a vector
+REMOVES a thing, don't measure that its pixels moved — COUNT WHAT IS THERE** (`probe-beachpalm` hooks `palm()`: **PALMS
+flat at 128/109/111 across all seasons on BOTH builds**). ⚠ **Grep a chain's arms before touching any threshold in it.**
+
+### 245's header block, as it stood before the 248 trim
+
+✅ **245: THE WHOLE SCENE GUSTS TOGETHER, EXCEPT THE SEA — DEEPENED** (`seaState()`, ONE predicate, floor `SEACALM`;
+the sea's calm→gale response **21–42 px → 725–861 px**, monotonic; body archived at 247).
+🔑 **ITS TWO LAWS, BOTH IN SKILL.md.** (1) **A CENTRED LEVER BUYS A BYTE-IDENTICAL FIXED POINT — the exact,
+falsifiable proof that a dynamic feature adds NO draw work** (foam **REDISTRIBUTED**, not added: mean caps 8.00% →
+8.07% ⇒ **+0.4 path objects**). **247 cashed this again.** (2) ⚠ **AIM BY MEASURED INK OF THE *HOST*, NOT THE FRAME**
+— 245's argmax found the **palms** (they read `WINDA` too, **8x** the ink) and an agent correctly FAILed *the camera*.
+⚠ Corollary (**217's law on a DRAW**): **A FIXED *ELIGIBILITY* GATE CAPS THE DYNAMIC RANGE OF ANY THRESHOLD BENEATH
+IT** (riding only the crest threshold capped the swing at **1.5x**; riding the gate too ⇒ **3.0x**). **247 cashed this too.**

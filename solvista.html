@@ -7734,11 +7734,22 @@ function render(){
          below a pixel once the whole city is fitted to a screen, and a veil of them
          averages into a causeless grey haze instead of resolving into rain. */
       const gy2=cl.y|0;
-      const inset=(gy2>=0&&gy2<G)?Math.min(cl.x-ROWMIN[gy2],ROWMAX[gy2]-cl.x):-1;
-      /* spent 2 hexes short of the rim (as the bow is), and weighted by the shower
-         itself — every alpha below reads `pa`, so the veil gathers and thins with the
-         front instead of switching on. Its WIDTH is unchanged: a shower that grew
-         sideways as it strengthened would read as a zoom, not as rain. */
+      /* Spent 2 hexes short of the rim — measured from the VEIL'S OWN EDGES, the way
+         the bow measures from its legs. This test used to read the CLOUD'S CENTRE
+         while its comment claimed it was bounded "as the bow is": the veil is a quad
+         ~26*s wide at the belly and ~36*s at the foot, and its foot trails upwind by
+         `rlean`, so a shower whose centre was safely inland still landed better than
+         half its foot out on the void. Measured, at full alpha: up to 2.1 hexes past
+         the edge, 57% of the foot off-plate — while the bow, testing its legs, read
+         0.00 on every seed. The quad is the outer envelope (the drops fall inside it
+         at ±20.7*s / ±28.8*s), so bounding it bounds the whole veil.
+         Weighted by the shower itself — every alpha below reads `pa`, so the veil
+         gathers and thins with the front instead of switching on. Its WIDTH is
+         unchanged: a shower that grew sideways as it strengthened would read as a
+         zoom, not as rain. */
+      const vl=Math.min(cx-26*cl.s,cx-rlean-36*cl.s)/CW-0.25;   /* pxc: X=(gx+0.25)*CW */
+      const vr=Math.max(cx+26*cl.s,cx-rlean+36*cl.s)/CW-0.25;
+      const inset=(gy2>=0&&gy2<G)?Math.min(vl-ROWMIN[gy2],ROWMAX[gy2]-vr):-1;
       const pa=clamp(inset/2,0,1)*w;
       if(pa>0){
         const top=py2+6*cl.s, foot=cx-rlean, lit=1-LITAMT*0.5;
