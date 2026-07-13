@@ -78,10 +78,10 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 145  People & activity × Deepen SHIPPED             19m16s   $6.67  aff0ce3
 ✔ Iter 146  Transport × Polish         SHIPPED             16m15s   $5.05  badd1a5
 ✔ Iter 147  —                          FIXED               12m46s   $2.55  cfea400
-✔ Iter 148  —                          SHIPPED             8m50s    $3.12  ce5b929
-✔ Iter 149  —                          DEEPENED            31m44s   $9.99  523a0de
-✔ Iter 150  —                          SHIPPED             23m43s   $7.25  6d3e8e3
-✔ Iter 151  —                          SHIPPED             29m10s   $10.50 3af626e
+✔ Iter 148  Nature × Interaction/UX    SHIPPED             8m50s    $3.12  ce5b929
+✔ Iter 149  Civic & culture × Deepen   DEEPENED            31m44s   $9.99  523a0de
+✔ Iter 150  Water & coast × Polish     SHIPPED             23m43s   $7.25  6d3e8e3
+✔ Iter 151  Urban fabric × New CA rule SHIPPED             29m10s   $10.50 3af626e
 ✔ Iter 152  —                          SHIPPED             12m52s   $2.16  be84b49
 ✔ Iter 153  Sky & atmosphere × Deepen  SHIPPED             18m40s   $5.08  5cdf589
 ✔ Iter 154  People & activity × Interaction/UX SHIPPED             12m41s   $3.87  fa5dd13
@@ -95,7 +95,7 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 162  —                          FIXED               10m07s   $2.98  5f01426
 ✔ Iter 163  People & activity × Polish SHIPPED             61m43s   $14.33 4d89daf
 ✔ Iter 164  Transport × New element    SHIPPED             33m44s   $9.23  7e33110
-✔ Iter 165  —                          SHIPPED             27m02s   $6.16  76b8455
+✔ Iter 165  Urban fabric × Deepen      SHIPPED             27m02s   $6.16  76b8455
 ✔ Iter 166  Nature & landscape × Deepen DEEPENED            10m28s   $3.19  5362cc4
 ✔ Iter 167  —                          FIXED               10m22s   $1.77  e942152
 ✔ Iter 168  Civic & culture × Polish   SHIPPED             19m25s   $4.77  df90f1d
@@ -128,48 +128,48 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ↩ Iter 195  Civic & culture × Deepen   EXPLORED → REVERTED 85m31s   $15.52 4c13e88
 ✔ Iter 196  Water & coast × Deepen     SHIPPED             19m01s   $6.61  15bc577
 ✔ Iter 197  —                          FIXED               15m32s   $4.63  08cc77b
-↩ Iter 198  —                          EXPLORED → REVERTED 45m09s   $5.08  4c04879
+↩ Iter 198  Nature × Polish            EXPLORED → REVERTED 45m09s   $5.08  4c04879
 ✔ Iter 199  Urban fabric × Deepen      SHIPPED             48m42s   $11.06 e9a4dfe
 ✔ Iter 200  Sky & atmosphere × Polish  SHIPPED             97m07s   $14.89 b8f17a1
 ✔ Iter 201  People & activity × Deepen DEEPENED            24m39s   $11.01 ffb363a
 ✔ Iter 202  —                          SHIPPED             36m43s   $6.15  f65487c
 ↩ Iter 203  Transport × Polish         EXPLORED → REVERTED 46m16s   $10.16 6333c76
-✔ Iter 204  —                          SHIPPED             52m57s   $15.32 da6ba85
-↩ Iter 205  —                          EXPLORED → REVERTED 25m58s   $8.89  bae02b3
-✔ Iter 206  —                          FIXED               37m13s   $11.23 4d4f855
+✔ Iter 204  Civic & culture × Connect  SHIPPED             52m57s   $15.32 da6ba85
+↩ Iter 205  Water × Connect            EXPLORED → REVERTED 25m58s   $8.89  bae02b3
+✔ Iter 206  Nature × New CA rule       FIXED               37m13s   $11.23 4d4f855
 ✔ Iter 207  —                          SHIPPED             23m32s   $3.97  8e1c20d
-✔ Iter 208  —                          DEEPENED            13m09s   $4.04  f3e3e04
+✔ Iter 208  Sky & atmosphere × Deepen  DEEPENED            13m09s   $4.04  f3e3e04
 ✔ Iter 209  Urban fabric × Deepen      SHIPPED             22m16s   $6.83  17877fa
 ✔ Iter 210  People & activity × Deepen DEEPENED            36m12s   $13.83 d57bec6
 ✔ Iter 211  Transport × Connect        SHIPPED             49m14s   $16.99 2fbaa72
 ✔ Iter 212  —                          SHIPPED             30m27s   $5.89  432617c
-✔ Iter 213  —                          DEEPENED            111m01s  $15.57 78f53c2
-✔ Iter 214  —                          FIXED               47m43s   $14.34 e4b6103
-✔ Iter 215  —                          SHIPPED             82m38s   $10.18 1f1e761
+✔ Iter 213  Civic & culture × Deepen   DEEPENED            111m01s  $15.57 78f53c2
+✔ Iter 214  Water & coast × Polish     FIXED               47m43s   $14.34 e4b6103
+✔ Iter 215  Nature × Polish            SHIPPED             82m38s   $10.18 1f1e761
 ✔ Iter 216  Urban fabric × Polish      SHIPPED             28m50s   $6.76  b65e880
 ✔ Iter 217  —                          SHIPPED             35m00s   $10.24 466a8b3
-↩ Iter 218  —                          EXPLORED → REVERTED 24m29s   $6.83  fb26856
+↩ Iter 218  Urban fabric × Deepen      EXPLORED → REVERTED 24m29s   $6.83  fb26856
 ✔ Iter 219  Urban fabric × Deepen      SHIPPED             27m47s   $8.15  1450e71
 ✔ Iter 220  Urban fabric × Polish      SHIPPED             16m20s   $5.46  fae923d
 ✔ Iter 221  Nature × Polish            SHIPPED             20m21s   $7.49  8a1b46b
 ✔ Iter 222  —                          FIXED               30m18s   $5.44  7bfe1e2
 ✔ Iter 223  Water & coast × Polish     FIXED               14m45s   $3.92  b18075c
-✔ Iter 224  —                          SHIPPED             30m50s   $8.96  893f186
+✔ Iter 224  Urban fabric × Polish      SHIPPED             30m50s   $8.96  893f186
 ✔ Iter 225  Sky & atmosphere × Deepen  SHIPPED             73m00s   $10.15 4dcb59a
 ✔ Iter 226  People & activity × Polish SHIPPED             38m11s   $11.78 39a6d9a
 ✔ Iter 227  —                          FIXED               38m50s   $10.88 b953e7d
 ✔ Iter 228  Urban fabric × Polish      SHIPPED             25m44s   $9.93  3ef1a14
 ✔ Iter 229  —                          FIXED               19m12s   $7.46  5a119d2
-✔ Iter 230  —                          SHIPPED             46m57s   $12.16 ea4f414
+✔ Iter 230  Transport × Deepen         SHIPPED             46m57s   $12.16 ea4f414
 ✔ Iter 231  Civic & culture × Polish   FIXED               35m52s   $12.72 ddadf5c
 ✔ Iter 232  —                          SHIPPED             33m14s   $9.54  d6b6f90
-↩ Iter 233  —                          EXPLORED → REVERTED 65m14s   $19.40 c9eb21f
-✔ Iter 234  —                          SHIPPED             24m13s   $9.55  a71514a
-✔ Iter 235  —                          SHIPPED             22m09s   $7.38  6cc8638
-✔ Iter 236  —                          SHIPPED             46m01s   $15.33 ba24787
+↩ Iter 233  Nature × Deepen            EXPLORED → REVERTED 65m14s   $19.40 c9eb21f
+✔ Iter 234  Water & coast × Polish     SHIPPED             24m13s   $9.55  a71514a
+✔ Iter 235  Urban fabric × Polish      SHIPPED             22m09s   $7.38  6cc8638
+✔ Iter 236  Sky & atmosphere × Deepen  SHIPPED             46m01s   $15.33 ba24787
 ✔ Iter 237  —                          FIXED               34m24s   $8.99  8aa998a
-✔ Iter 238  —                          DEEPENED            31m13s   $12.00 062ac39
-✔ Iter 239  —                          SHIPPED             34m33s   $7.47  a46d417
+✔ Iter 238  Nature × Deepen            DEEPENED            31m13s   $12.00 062ac39
+✔ Iter 239  Urban fabric × Polish      SHIPPED             34m33s   $7.47  a46d417
 ✔ Iter 240  People & activity × Deepen SHIPPED             28m07s   $16.46 d307c8c
 ✔ Iter 241  Transport × Polish         SHIPPED             38m33s   $13.20 4d6e903
 ✔ Iter 242  —                          SHIPPED             71m43s   $18.94 703b2b9
