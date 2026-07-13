@@ -208,11 +208,20 @@ const resultRows = verdicts.map(d =>
   `<td class="num">${d.avgMin.toFixed(0)} min</td><td class="num">${fmt$(d.avgCost)}</td>` +
   `<td class="num">${fmt$(d.cost)}</td></tr>`).join('');
 
+// A tiny isometric block — the favicon's mark — used as a section bullet so a row
+// of little Solvista tiles marches down the page. Colours are the mark's own
+// (sun / gold / shadow), constant in both themes like the favicon.
+const CUBE = "data:image/svg+xml," + encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='translate(32 32.5)'>` +
+  `<path d='M0-22 22-9 0 4-22-9Z' fill='#f7e4b4'/><path d='M-22-9 0 4 0 26-22 4Z' fill='#c98a2e'/>` +
+  `<path d='M22-9 0 4 0 26 22 4Z' fill='#7a4a1c'/></g></svg>`);
+
 const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/dark" title="Toggle theme">◐</button>
 <div class="wrap">
 
 <header class="hero">
-  <div class="eyebrow">Solvista · autonomous build loop</div>
+  <div class="specimen"><div class="chip"><img src="${CUBE}" alt="" width="40" height="40"></div><div class="st"><b>SPECIMEN #${maxIter}</b><span>iterations logged</span></div></div>
+  <div class="eyebrow">Solvista · the loop's field log</div>
   <h1>A city that builds itself, one verified step at a time.</h1>
   <p class="lede">Solvista is a procedural cellular-automata city. It grows through a headless
   loop: each iteration is a fresh <code>claude&nbsp;-p</code> process with an empty context that reads the
@@ -234,10 +243,10 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
 </section>
 
 <section class="tiles">
-  <div class="tile"><div class="tl">Would-be API cost</div><div class="tv">${fmt$(knownCost)}</div><div class="td">across ${known.length} measured iterations</div></div>
-  <div class="tile"><div class="tl">Autonomous compute</div><div class="tv">${knownHours.toFixed(1)}<span class="tvu">h</span></div><div class="td">measured; ${totalHours.toFixed(0)}h incl. estimated early runs</div></div>
-  <div class="tile"><div class="tl">Per iteration</div><div class="tv">${avgMin.toFixed(0)}<span class="tvu">min</span></div><div class="td">avg &middot; ${fmt$(avgCost)} would-be</div></div>
-  <div class="tile"><div class="tl">Longest iteration</div><div class="tv">${(longest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="td">#${longest.iter} &middot; ${fmt$(priciest.cost)} priciest (#${priciest.iter})</div></div>
+  <div class="tile"><div class="tv">${fmt$(knownCost)}</div><div class="tl">Would-be API cost</div><div class="td">across ${known.length} measured iterations</div></div>
+  <div class="tile"><div class="tv">${knownHours.toFixed(1)}<span class="tvu">h</span></div><div class="tl">Autonomous compute</div><div class="td">measured; ${totalHours.toFixed(0)}h incl. estimated early runs</div></div>
+  <div class="tile"><div class="tv">${avgMin.toFixed(0)}<span class="tvu">min</span></div><div class="tl">Per iteration</div><div class="td">avg &middot; ${fmt$(avgCost)} would-be</div></div>
+  <div class="tile"><div class="tv">${(longest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Longest iteration</div><div class="td">#${longest.iter} &middot; ${fmt$(priciest.cost)} priciest (#${priciest.iter})</div></div>
 </section>
 
 <section class="chart">
@@ -560,42 +569,62 @@ drawAll();
 
 const head = `<style>
 :root{
-  --surface:#fcfcfb; --plane:#f9f9f7; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
-  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,.10);
-  --series-1:#2a78d6; --series-2:#1baf7a; --series-3:#eda100; --series-6:#e34948;
+  /* Solvista at golden hour — parchment cards on a pale-blue-to-sand sky */
+  --sky:#cfe4ec; --ground:#e7dcc4; --plane:#e7dcc4;
+  --surface:#f6efdd; --ink:#2a241b; --ink2:#6b6252; --muted:#9a8f76;
+  --grid:#ddd0b3; --axis:#c3b498; --gold:#b47d1c; --border:rgba(58,54,45,.16);
+  /* data colours drawn straight off the map: sunlit gold, grass, water, roof-clay */
+  --series-1:#b47d1c; --series-2:#4e7d43; --series-3:#3d84a8; --series-6:#c1553a;
 }
 @media (prefers-color-scheme:dark){:root{
-  --surface:#1a1a19; --plane:#0d0d0d; --ink:#fff; --ink2:#c3c2b7; --muted:#898781;
-  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,.10);
-  --series-1:#3987e5; --series-2:#199e70; --series-3:#c98500; --series-6:#e66767;
+  /* Solvista at dusk — twilight-navy sky fading to warm dark, cream ink */
+  --sky:#1e2744; --ground:#141118; --plane:#141118;
+  --surface:#211d17; --ink:#f6efdd; --ink2:#c8bc9f; --muted:#8f8469;
+  --grid:#312d25; --axis:#433d33; --gold:#e0a94e; --border:rgba(247,240,223,.13);
+  --series-1:#e0a94e; --series-2:#7bab5f; --series-3:#6bb0d0; --series-6:#e07a5f;
 }}
-:root[data-theme=dark]{--surface:#1a1a19;--plane:#0d0d0d;--ink:#fff;--ink2:#c3c2b7;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--series-1:#3987e5;--series-2:#199e70;--series-3:#c98500;--series-6:#e66767;}
-:root[data-theme=light]{--surface:#fcfcfb;--plane:#f9f9f7;--ink:#0b0b0b;--ink2:#52514e;--grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.10);--series-1:#2a78d6;--series-2:#1baf7a;--series-3:#eda100;--series-6:#e34948;}
+:root[data-theme=dark]{--sky:#1e2744;--ground:#141118;--plane:#141118;--surface:#211d17;--ink:#f6efdd;--ink2:#c8bc9f;--muted:#8f8469;--grid:#312d25;--axis:#433d33;--gold:#e0a94e;--border:rgba(247,240,223,.13);--series-1:#e0a94e;--series-2:#7bab5f;--series-3:#6bb0d0;--series-6:#e07a5f;}
+:root[data-theme=light]{--sky:#cfe4ec;--ground:#e7dcc4;--plane:#e7dcc4;--surface:#f6efdd;--ink:#2a241b;--ink2:#6b6252;--muted:#9a8f76;--grid:#ddd0b3;--axis:#c3b498;--gold:#b47d1c;--border:rgba(58,54,45,.16);--series-1:#b47d1c;--series-2:#4e7d43;--series-3:#3d84a8;--series-6:#c1553a;}
 *{box-sizing:border-box}
-body{margin:0;background:var(--plane);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{margin:0;color:var(--ink);background:var(--ground);
+  background-image:linear-gradient(180deg,var(--sky) 0,var(--ground) 46%);background-attachment:fixed;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif}
 .wrap{max-width:1000px;margin:0 auto;padding:clamp(20px,5vw,56px) clamp(16px,4vw,32px) 64px}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--surface);padding:.1em .35em;border-radius:4px;border:1px solid var(--border)}
-.hero{padding-bottom:8px}
-.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:600;color:var(--muted)}
-h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:.3em 0 .35em;letter-spacing:-.02em;max-width:16ch}
-.lede{font-size:clamp(16px,2.2vw,18px);color:var(--ink2);max-width:64ch;margin:0 0 26px}
-.herofig{display:flex;flex-wrap:wrap;gap:clamp(24px,6vw,64px);margin:26px 0 20px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:.1em .35em;border-radius:4px}
+.hero{position:relative;padding-bottom:8px}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:var(--gold)}
+h1{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  font-size:clamp(30px,5.4vw,50px);font-weight:600;line-height:1.05;margin:.28em 0 .38em;letter-spacing:-.01em;max-width:17ch}
+.lede{font-size:clamp(16px,2.2vw,18px);color:var(--ink2);max-width:62ch;margin:0 0 22px}
+.specimen{position:absolute;top:2px;right:0;display:flex;align-items:center;gap:12px}
+.specimen .chip{width:56px;height:56px;border-radius:14px;background:#0d0d0d;display:grid;place-items:center;box-shadow:0 6px 18px rgba(40,30,10,.22)}
+.specimen .chip img{width:40px;height:40px;display:block}
+.specimen .st{display:flex;flex-direction:column;line-height:1.25}
+.specimen .st b{font-size:14px;font-weight:700;letter-spacing:.02em;color:var(--ink)}
+.specimen .st span{font-size:12px;color:var(--muted)}
+.herofig{display:flex;flex-wrap:wrap;gap:clamp(22px,6vw,60px);margin:24px 0 20px}
 .herofig>div{display:flex;flex-direction:column}
-.big{font-size:clamp(40px,8vw,64px);font-weight:650;line-height:1;letter-spacing:-.02em}
+.big{font-size:clamp(40px,8vw,62px);font-weight:650;line-height:1;letter-spacing:-.02em;color:var(--gold)}
 .big .sm{font-size:.5em;font-weight:600;margin-left:1px}
-.unit{color:var(--ink2);font-size:14px;margin-top:6px}
-.back{display:inline-block;margin-top:8px;color:var(--series-1);text-decoration:none;font-weight:600;font-size:15px}
+.unit{color:var(--ink2);font-size:13.5px;margin-top:7px;max-width:24ch}
+.back{display:inline-block;margin-top:6px;color:var(--gold);text-decoration:none;font-weight:700;font-size:15px}
 .back:hover{text-decoration:underline}
-.note{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--series-3);border-radius:10px;padding:16px 18px;margin:28px 0;font-size:15px;color:var(--ink2)}
+.note{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:12px;padding:16px 18px;margin:26px 0;font-size:15px;color:var(--ink2)}
 .note strong{color:var(--ink)}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:28px 0 8px}
-.tile{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
-.tl{font-size:13px;color:var(--muted);font-weight:600}
-.tv{font-size:32px;font-weight:650;letter-spacing:-.02em;margin:6px 0 2px}
-.tv .tvu{font-size:.55em;font-weight:600;margin-left:1px}
-.td{font-size:13px;color:var(--ink2)}
-.chart{margin:44px 0 0}
-.chart h2{font-size:22px;letter-spacing:-.01em;margin:0 0 4px}
+/* the four headline figures, set like the city's own bottom read-out bar */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin:26px 0 8px;
+  background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:12px;overflow:hidden}
+.tile{padding:16px 20px;border-left:1px solid var(--border)}
+.tile:first-child{border-left:none}
+.tv{font-size:31px;font-weight:650;letter-spacing:-.02em;color:var(--gold)}
+.tv .tvu{font-size:.5em;font-weight:600;margin-left:1px;color:var(--ink2)}
+.tl{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:700;margin:5px 0 3px}
+.td{font-size:12.5px;color:var(--ink2)}
+.chart{margin:46px 0 0}
+.chart h2{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  font-size:23px;font-weight:600;letter-spacing:-.01em;margin:0 0 5px;padding-left:26px;
+  background:url("${CUBE}") left 2px/17px no-repeat}
 .sub{color:var(--ink2);font-size:14.5px;margin:0 0 16px;max-width:72ch}
 .svgbox{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 12px}
 text.axis{fill:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
@@ -618,16 +647,17 @@ tbody tr:last-child td{border-bottom:none}
 .num{text-align:right;font-variant-numeric:tabular-nums}
 .dim{color:var(--muted)}
 .vb{font-size:12px;font-weight:600;padding:2px 8px;border-radius:20px}
-.v-ship{color:var(--series-1);background:color-mix(in srgb,var(--series-1) 14%,transparent)}
-.v-deep{color:var(--series-2);background:color-mix(in srgb,var(--series-2) 14%,transparent)}
+.v-ship{color:var(--series-1);background:color-mix(in srgb,var(--series-1) 16%,transparent)}
+.v-deep{color:var(--series-2);background:color-mix(in srgb,var(--series-2) 16%,transparent)}
 .v-fix{color:var(--series-3);background:color-mix(in srgb,var(--series-3) 18%,transparent)}
-.v-rev{color:var(--series-6);background:color-mix(in srgb,var(--series-6) 14%,transparent)}
+.v-rev{color:var(--series-6);background:color-mix(in srgb,var(--series-6) 16%,transparent)}
 footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:13.5px}
-footer a{color:var(--series-1);text-decoration:none}footer a:hover{text-decoration:underline}
+footer a{color:var(--gold);text-decoration:none}footer a:hover{text-decoration:underline}
 .tip{position:fixed;z-index:10;background:var(--ink);color:var(--surface);padding:8px 11px;border-radius:8px;font-size:12.5px;line-height:1.45;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25);max-width:240px}
 .tip b{font-weight:650}.tip .vt{opacity:.8}.tip .src{opacity:.6;font-size:11px}
 .themebtn{position:fixed;top:14px;right:14px;z-index:9;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--ink2);font-size:17px;cursor:pointer;line-height:1}
 .themebtn:hover{color:var(--ink)}
+@media (max-width:560px){.specimen{display:none}}
 @media print{.themebtn{display:none}}
 </style>`;
 
