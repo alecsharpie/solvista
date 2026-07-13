@@ -12,7 +12,7 @@
  * Single source of truth is RUNLOG.md:
  *   ✔ / ↩  = logged live by runlog.mjs (billed tier; has verdict + vector)
  *   ≈      = recovered from terminal scrollback (cost+time only)
- * Iterations before the first RUNLOG entry are shown as a flat 15-min estimate
+ * Iterations before the first RUNLOG entry are shown as a flat 10-min estimate
  * with no cost — clearly labelled as such.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const RUNLOG = join(HERE, 'RUNLOG.md');
 const OUT = join(HERE, '../../../stats.html');       // repo root — served by Pages
-const EST_MINUTES = 15;                              // flat estimate for the unrecorded early runs
+const EST_MINUTES = 10;                              // flat estimate for the unrecorded early runs
 
 // ---- parse RUNLOG into rows -------------------------------------------------
 function parseRunlog(txt) {
