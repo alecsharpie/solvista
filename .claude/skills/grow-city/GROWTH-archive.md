@@ -15512,3 +15512,85 @@ rule decides both whether and how-much; this says one field can be written by **
 branches**, and a fix to one is routinely mistaken for a fix to the phenomenon. `c.th` had two writers
 for 126 iterations and only one knew where downtown was.
 
+## Iteration 225 — the shadows never knew where the sun was (2026-07-13) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × **Deepen** (rotation: Sky was the stalest domain by far — 17 laps
+cold since 208 — and its two live cues were both flagged dead-end/low, so the header told me to
+look for a real seam or fall through to People). Also a deliberate **KIND** change: 220/221/223/224
+were four straight Polish laps.
+
+**The seam — 199's tell, and its purest instance yet.** `shadS(cx,cy,r,a)` is the ONE function
+every shadow in the city routes through: trees, palms, peds, kids, dogs, joggers, the static
+crowds, gulls, every vehicle, the boardwalk. It drew **a centred ellipse at a hard-coded alpha**:
+```js
+ctx.fillStyle='rgba(40,32,20,'+a+')';
+ctx.beginPath();ctx.ellipse(cx,cy,r*TW,r*TH,0,0,7);ctx.fill();
+```
+Meanwhile the artifact **has a sun, and moves it**: `sunX = X0+(X1-X0)*sunP` sweeps from the open
+right corner (0.94W) to over downtown on the left (0.30W), with altitude `sin(pi*sunP)`, and it
+**sets** (`SUNDN=0.78`). So a function named for a **SHADOW** could not cast one: the same blob at
+the same opacity at dawn, at noon, at golden hour and **at midnight**. 199's law says the tell's
+host is *a constant whose NAME asserts a behaviour its VALUE cannot have* — here the whole
+**function** was that constant.
+
+**Change.** Three edits, one new concept. `render()` derives a per-frame sun-vector off the SAME
+`sunP`/altitude the disc is drawn from (so the shadows and the sun can never disagree about where
+the light is): **`SHOFF`** (throw, in units of the shadow's own x-radius, signed), **`SHLEN`**
+(stretch), **`SHAMT`** (opacity). `shadS` reads them. `e` eases the cast in/out across the horizon
+toward the **sunless ambient patch** rather than toward zero — with no sun the city is lamplit from
+every side, so what remains is a faint round contact patch: it must NOT vanish, or every ped, tree
+and car floats at night.
+
+**Noon is byte-identical by construction** — the sun there is both high AND centred, so
+`SHOFF=0/SHLEN=1/SHAMT=1` — which hands the iteration a **free dead-regime control** (199).
+
+**Census.** PASS. Every metric +0, tile histogram empty — the correct, vacuous result for a
+draw-only change (it touches no terrain and no `rng()`). The iteration rests on the probe.
+
+**Probe** (`probes/probe-shadowpx.mjs`). The claim in the viewer's units (205): *shadows fall away
+from the sun and stretch when it is low* — so they must fall **LEFT** in the morning (sun right) and
+**RIGHT** in the evening. **A SIGN FLIP.** Measured in DEVICE PX by wrapping `ctx.ellipse` inside
+`shadS` and reading `getTransform()` at draw time (203). On the rows with zero population wobble:
+
+| hour | SHOFF | HEAD rx | patch rx | throw px | throw/width |
+| --- | --- | --- | --- | --- | --- |
+| morning | −0.647 | 15.62 | 21.86 | **−10.10** | **−0.65** |
+| NOON (control) | 0 | 15.69 | 15.69 | **0.00** | **0.00** |
+| evening | +0.704 | 15.69 | 22.88 | **+11.05** | **+0.70** |
+| night (control) | 0 | 15.17 | 15.17 | **0.00** | **0.00** |
+
+The sign flip is exact, and `throw/width` reproduces the design constants (−0.647/+0.704) to two
+decimals at **every zoom** (it is scale-invariant, as a throw in shadow-radii must be). Both
+no-cast hours read **0.00 with rx identical to HEAD**. Elongation 1.40x/1.46x = `SHLEN`.
+
+**Visual.** Both seeds PASS, and the **blind locate** (108/224) is the real result: agents were
+given `frameA`/`frameB` (same city, same camera, hour stripped from the filename so they could not
+reason "morning ⇒ west") and asked only *which way do the shadows fall*. **Both, independently, on
+two different seeds: A = LEFT, B = RIGHT, B longer.** Ground truth exactly. Seed 7, unprompted:
+*"shadow direction now unifies the whole skyline instead of each tower having its own blob."*
+
+**Perf — FREE, by the deterministic instrument (216/222).** Still exactly ONE ellipse per call: the
+throw is an offset, the length a radius, the softening an alpha. Path objects **day 107,933 →
+107,858 (−0.07%), night 138,452 → 138,496 (+0.03%)**, and `shadS` itself 2790→2791 / 2934→2932 —
+all inside the ±7 entity-population wobble. No timing A/B run: with no mechanism to price, it would
+only have reported the weather.
+
+**Verdict: SHIPPED.**
+
+**⚠ A LAW THIS LAP PAID FOR — AN INK-WEIGHTED CENTROID MEASURES REWEIGHTING, NOT DISPLACEMENT.**
+The first probe isolated the shadow LAYER correctly (render twice, once with `shadS` suppressed;
+the difference IS every shadow, by construction — 161) and then took the **ink-weighted centroid**
+of that layer, HEAD vs patch. It returned **the WRONG SIGN at evening on both seeds**, and an ink
+ratio of **2.5x** where the geometry predicts 1.2x. Both are one artifact: a shadow on bright sand
+contributes far more ink than one on dark asphalt, so when the shadows grow, the ink **reweights
+across the city** and the global centroid moves for reasons that have nothing to do with how far
+any shadow was thrown. ⇒ **A centroid over a whole frame is a statistic about WHERE THE INK IS, not
+about WHERE ANYTHING MOVED.** When the claim is *displacement*, measure displacement **per object**
+(or in the draw's own device-space coordinates), never as a global centre of mass — and treat a
+**ratio that overshoots the geometry** as the tell that your weights, not your feature, are moving.
+Promoted to SKILL.md.
+
+**Banked for a later lap (an aside, per 212).** Seed 42, unprompted: at golden hour the interior
+street grid *"darkens noticeably from accumulated tower shadows — atmospheric, not clutter."* Read
+as fine today by both agents; if a later lap lengthens shadows further, that is where it bites.
+

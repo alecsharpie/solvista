@@ -23,7 +23,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
@@ -37,29 +37,31 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   `stamp()` also draws the focus ring, so any stamped entity is ringable free — and since 133 a hovered TILE is
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
-- **ROTATION.** Last vector per domain: People **226** ·
-  Transport **230** · Civic **231** · Nature **233** · Water **234** · Sky **225** · Urban **228**.
-  🔴 **NEXT: Sky (stalest, 225)**, then People (226) / Urban (228). **232 WAS THE 26th STEP-BACK — the next is 237.**
+- **ROTATION.** Last vector per domain: Sky **225** · People **226** ·
+  Transport **230** · Civic **231** · Nature **233** · Water **234** · Urban **235**.
+  🔴 **NEXT: Sky (stalest, 225)**, then People (226) / Transport (230). **232 WAS THE 26th STEP-BACK — the next is 237.**
   ⚠ **233 took (ai) and REVERTED** — NOT closed; do not re-try a bare rim mask, read (ai) below.
+  ✅ **235 CLOSED (af′) — the ledger's loudest cue (six agents, three step-backs) — and the tower look is now SPENT
+  on all four axes (see (af′)).** ⚠ **Its lesson is a LAW (⇒ SKILL.md): a banked probe can carry the RIGHT
+  instrument under the WRONG NAME.** `probe-crown` is named for the crown 228 already fixed, and would have
+  acquitted the towers a fourth time — but its `silo()` was measuring the **silhouette** all along, and convicting.
   ✅ **234 CLOSED (u) AND COMPLETED THE `col()` WASH LADDER** (214 sand → 220 masonry → 221 greens → 223
   normalisation → 234 timber): **every surface routing through `col()` now keeps its identity after dark.**
   ⚠ **The deck was GREY, not violet** — which is why 214's "hue ~308" audit walked past it for four laps.
   **Audit by `dHUE`, never a target hue (⇒ SKILL.md).** Detail in the wash bullet + (u) below.
   ✅ **232 (26th step-back): CITY CLEAN, ARC UNMOVED — AND THE AGENTS' ASIDE WAS A REAL, MEASURED DEFECT.** Both
-  FAILs were refuted (see below); the *asides* paid out for the **eighth lap running**. **NEW cue (ai): THE CITY HAS
-  NO FRINGE**, and it is **worse than the agents claimed** — the taper is **NEGATIVE**. ⚠ **The pre-registered TOWER
-  SILHOUETTE trigger has FIRED** (see (af)): both agents, both seeds, unprompted, called the towers wallpaper again.
-  ⚠ **230's `taxi` flag is LOAD-BEARING** (was decorative ~200 iters; `VCURF` thins the night fleet by CLASS — the
-  BUS/SERVICE/TAXI keep no hour). Bodies of 227/230/231 archived at 232.
+  FAILs were refuted; the *asides* paid out for the **eighth lap running**, producing **(ai)** (still open, below)
+  and firing **(af′)** (CLOSED by 235). ⚠ **230's `taxi` flag is LOAD-BEARING** (was decorative ~200 iters; `VCURF`
+  thins the night fleet by CLASS — the BUS/SERVICE/TAXI keep no hour). Bodies of 227/230/231 archived at 232.
   ✅ **CLOSED LADDERS (bodies archived at 232 — do not re-open):** the **HUD lap** (229; both its cues were the
   HARNESS, not the city), the **SKYLINE ladder** (217→224, `c.th` SPENT — warnings at (ac)), the **WASH ladder**
   (223, luminance-safe, invariant ASSERTED by `probe-goldenhue.mjs` — warnings at (aa)/(ae)), and **137's
   standing-crowd cue** (226 — **People's cue list is EMPTY**). ⚠ **(y) and (s) were born from agents reading
   `shoot.mjs` output — REPRODUCE either in the user's configuration before designing to it** (229's law).
   **Interaction/UX** (cross-cutting, so it sits here not in the grid) was last touched at **229**; before that 191.
-  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) CLOSED 231, **(u) CLOSED 234**): 🔴 **(ai)** THE CITY HAS NO FRINGE —
-  **measured; 233 tried and REVERTED, the way through is NAMED** · **(af′)** tower SILHOUETTE, trigger FIRED (Urban
-  × Polish) · **(ag)** the night greens stay hot (Nature × Polish) · **(y)** the scorched inland cluster (Nature ×
+  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) CLOSED 231, (u) CLOSED 234, **(af′) CLOSED 235**): 🔴 **(ai)** THE CITY
+  HAS NO FRINGE — **measured; 233 tried and REVERTED, the way through is NAMED** ·
+  **(ag)** the night greens stay hot (Nature × Polish) · **(y)** the scorched inland cluster (Nature ×
   Polish) · **(ah)** the amphitheater's cavea has a **FIXED orientation** —
   it now often sits on the water's edge and does not face it (*"facing the bowl toward the river would look far
   more intentional"* — 231's agent, unprompted). 199's tell on a **draw**; Civic × Deepen · **(s)** golden-hour
@@ -315,14 +317,12 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   so no call site can forget to ask.** ⚠ **FARM (`cropRGB`/`colRGB`) is the ONLY warm surface still outside `col()`.**
   ⚠ **Watch: PARK↔ROAD separation is 14, just under the ~15 collapse floor**
   — and **(ag) says the night greens read hot again**, so that is where the next lap bites.
-  **(af) CLOSED by 228 (crown). ⚠ (af′) ITS PRE-REGISTERED TRIGGER HAS FIRED (232).** The header said
-  *"the next Urban lap if the towers are ever called wallpaper again"* — and at 232 **both agents, both seeds,
-  unprompted** did exactly that: *"nearly every tall building is the same horizontally-striped slab… at ~110 towers
-  this is the single biggest thing flattening the skyline"* (42) · *"dozens of near-identical slab towers… variety
-  was added in plan but not in MASS/HEIGHT/FOOTPRINT"* (7). **The TOWER SILHOUETTE (the body below the roofline) is
-  still 5.3 shapes / top 55%.** ⇒ **Urban × Polish, and the instrument is `probes/probe-crown.mjs` — but re-derive it
-  from the complaint's nouns first (228's own law): they said SILHOUETTE/MASS/FOOTPRINT, and `probe-crown` measures
-  the CROWN, which 228 already fixed.** Do not let a banked probe acquit the thing the agents keep pointing at.
+  **(af) CLOSED by 228 (crown) · (af′) CLOSED by 235 (footprint) — THE TOWER IS NOW VARIED ON ALL FOUR AXES**
+  (massing × plan × body × crown; silhouettes **5.3 → 13.0**, top share **54% → 22%**, MID control unmoved).
+  ⚠ **DO NOT RE-OPEN THE TOWER LOOK.** All four axes are spent, and a fifth keyed to HEIGHT would rebuild 110's
+  original defect (corr(style,th) 0.73). ⚠ **`towerLook` now publishes `bax`/`bay` — the ONE definition of "how
+  wide is a tower". The skybridge and the helideck BOTH read it** (each had silently assumed the old fixed width;
+  a point plan would have floated the bridge and overhung the pad). **Any new tower ornament must read it too.**
   **(ag) THE NIGHT GREENS STAY HOT (227, seed 7, unprompted).** *"The parks/farms in the middle stay oddly bright
   green, breaking the night mood."* Sits on 222's ladder invariant (**no UNLIT surface may out-brighten the LIT
   ones**) and on 223's live watch item (**PARK↔ROAD separation is 14, just under the ~15 collapse floor**) — likely
@@ -391,93 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 227 entries before Iteration 225 live in
+> **Archive:** the 228 entries before Iteration 226 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 225 — the shadows never knew where the sun was (2026-07-13) [Sky & atmosphere × Deepen]
-
-**Vector.** Sky & atmosphere × **Deepen** (rotation: Sky was the stalest domain by far — 17 laps
-cold since 208 — and its two live cues were both flagged dead-end/low, so the header told me to
-look for a real seam or fall through to People). Also a deliberate **KIND** change: 220/221/223/224
-were four straight Polish laps.
-
-**The seam — 199's tell, and its purest instance yet.** `shadS(cx,cy,r,a)` is the ONE function
-every shadow in the city routes through: trees, palms, peds, kids, dogs, joggers, the static
-crowds, gulls, every vehicle, the boardwalk. It drew **a centred ellipse at a hard-coded alpha**:
-```js
-ctx.fillStyle='rgba(40,32,20,'+a+')';
-ctx.beginPath();ctx.ellipse(cx,cy,r*TW,r*TH,0,0,7);ctx.fill();
-```
-Meanwhile the artifact **has a sun, and moves it**: `sunX = X0+(X1-X0)*sunP` sweeps from the open
-right corner (0.94W) to over downtown on the left (0.30W), with altitude `sin(pi*sunP)`, and it
-**sets** (`SUNDN=0.78`). So a function named for a **SHADOW** could not cast one: the same blob at
-the same opacity at dawn, at noon, at golden hour and **at midnight**. 199's law says the tell's
-host is *a constant whose NAME asserts a behaviour its VALUE cannot have* — here the whole
-**function** was that constant.
-
-**Change.** Three edits, one new concept. `render()` derives a per-frame sun-vector off the SAME
-`sunP`/altitude the disc is drawn from (so the shadows and the sun can never disagree about where
-the light is): **`SHOFF`** (throw, in units of the shadow's own x-radius, signed), **`SHLEN`**
-(stretch), **`SHAMT`** (opacity). `shadS` reads them. `e` eases the cast in/out across the horizon
-toward the **sunless ambient patch** rather than toward zero — with no sun the city is lamplit from
-every side, so what remains is a faint round contact patch: it must NOT vanish, or every ped, tree
-and car floats at night.
-
-**Noon is byte-identical by construction** — the sun there is both high AND centred, so
-`SHOFF=0/SHLEN=1/SHAMT=1` — which hands the iteration a **free dead-regime control** (199).
-
-**Census.** PASS. Every metric +0, tile histogram empty — the correct, vacuous result for a
-draw-only change (it touches no terrain and no `rng()`). The iteration rests on the probe.
-
-**Probe** (`probes/probe-shadowpx.mjs`). The claim in the viewer's units (205): *shadows fall away
-from the sun and stretch when it is low* — so they must fall **LEFT** in the morning (sun right) and
-**RIGHT** in the evening. **A SIGN FLIP.** Measured in DEVICE PX by wrapping `ctx.ellipse` inside
-`shadS` and reading `getTransform()` at draw time (203). On the rows with zero population wobble:
-
-| hour | SHOFF | HEAD rx | patch rx | throw px | throw/width |
-| --- | --- | --- | --- | --- | --- |
-| morning | −0.647 | 15.62 | 21.86 | **−10.10** | **−0.65** |
-| NOON (control) | 0 | 15.69 | 15.69 | **0.00** | **0.00** |
-| evening | +0.704 | 15.69 | 22.88 | **+11.05** | **+0.70** |
-| night (control) | 0 | 15.17 | 15.17 | **0.00** | **0.00** |
-
-The sign flip is exact, and `throw/width` reproduces the design constants (−0.647/+0.704) to two
-decimals at **every zoom** (it is scale-invariant, as a throw in shadow-radii must be). Both
-no-cast hours read **0.00 with rx identical to HEAD**. Elongation 1.40x/1.46x = `SHLEN`.
-
-**Visual.** Both seeds PASS, and the **blind locate** (108/224) is the real result: agents were
-given `frameA`/`frameB` (same city, same camera, hour stripped from the filename so they could not
-reason "morning ⇒ west") and asked only *which way do the shadows fall*. **Both, independently, on
-two different seeds: A = LEFT, B = RIGHT, B longer.** Ground truth exactly. Seed 7, unprompted:
-*"shadow direction now unifies the whole skyline instead of each tower having its own blob."*
-
-**Perf — FREE, by the deterministic instrument (216/222).** Still exactly ONE ellipse per call: the
-throw is an offset, the length a radius, the softening an alpha. Path objects **day 107,933 →
-107,858 (−0.07%), night 138,452 → 138,496 (+0.03%)**, and `shadS` itself 2790→2791 / 2934→2932 —
-all inside the ±7 entity-population wobble. No timing A/B run: with no mechanism to price, it would
-only have reported the weather.
-
-**Verdict: SHIPPED.**
-
-**⚠ A LAW THIS LAP PAID FOR — AN INK-WEIGHTED CENTROID MEASURES REWEIGHTING, NOT DISPLACEMENT.**
-The first probe isolated the shadow LAYER correctly (render twice, once with `shadS` suppressed;
-the difference IS every shadow, by construction — 161) and then took the **ink-weighted centroid**
-of that layer, HEAD vs patch. It returned **the WRONG SIGN at evening on both seeds**, and an ink
-ratio of **2.5x** where the geometry predicts 1.2x. Both are one artifact: a shadow on bright sand
-contributes far more ink than one on dark asphalt, so when the shadows grow, the ink **reweights
-across the city** and the global centroid moves for reasons that have nothing to do with how far
-any shadow was thrown. ⇒ **A centroid over a whole frame is a statistic about WHERE THE INK IS, not
-about WHERE ANYTHING MOVED.** When the claim is *displacement*, measure displacement **per object**
-(or in the draw's own device-space coordinates), never as a global centre of mass — and treat a
-**ratio that overshoots the geometry** as the tell that your weights, not your feature, are moving.
-Promoted to SKILL.md.
-
-**Banked for a later lap (an aside, per 212).** Seed 42, unprompted: at golden hour the interior
-street grid *"darkens noticeably from accumulated tower shadows — atmospheric, not clutter."* Read
-as fine today by both agents; if a later lap lengthens shadows further, that is where it bites.
 
 ## Iteration 226 — the people waiting for the bus were the last ones floating (2026-07-13) [People & activity × Polish]
 
@@ -1224,3 +1142,81 @@ A=head), each asked to LOCATE the timber rather than judge the change (108):
 surface that goes through `col()`** — the last one still bypassing it was never violet, which is
 precisely why it survived four laps of a ladder built to hunt violet. **FARM (`cropRGB`/`colRGB`)
 remains the one warm surface outside `col()` entirely** — a different mechanism, not this ladder's.
+
+## Iteration 235 — every tower in the city was the same width (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish — cue **(af′)**, whose pre-registered trigger fired at 232. Urban's
+own rotation was due (last 228) and this is the ledger's loudest standing cue: **six agents across
+three step-backs**, on both seeds, always unprompted, have called downtown wallpaper.
+
+**The instrument had to be re-derived, and 228's own law said so.** The cue arrives holding a probe
+(`probe-crown`), and the trap was to run it, watch it pass, and acquit the towers for a fourth time.
+228 fixed the **CROWN**; the 232 agents said **SILHOUETTE / MASS / FOOTPRINT** — *"variety was added
+in plan but not in MASS/HEIGHT/FOOTPRINT"*. Re-reading `probe-crown` rather than trusting its
+headline showed it already carries the right instrument (`silo()`: the **absolute half-width sampled
+at 12 normalised heights** — the outline the eye traces), and that instrument was **convicting**, not
+acquitting: **TOWER 5.3 distinct silhouettes, top share 54.1%**, against a healthy crown (19.0 / 15.8%).
+
+**The defect was one number.** All four massings are drawn at the same half-extents — `0.32/0.28`,
+`0.33/0.29`, `0.31/0.27`, `0.34/0.30`: **an aspect of 1.14 and a ~10% width spread for every tower in
+the city.** So the styles differ only in what happens near the *top*, and the body below the roofline
+— which is most of a tower — was one shape ~110 times per frame. This is **110's defect surviving on
+the axis 110 did not decouple**: it split colour from silhouette and gave downtown 4 forms × 5 bodies,
+and 228 added 5 crowns, but nothing ever varied the **plan**.
+
+**Change.** A fifth independent seed-salted axis in `towerLook` — the **footprint** (`hashCell(…^0x1F5B)`
+→ point `0.64×0.86` / block `1.00×1.00` / slab `1.32×1.00`, at cuts `.30/.36/.34`). It multiplies every
+half-extent of all four massings, so the axes compose: **4 massings × 3 plans × 5 bodies × 5 crowns.**
+Independent of `style` **and of height** — a footprint keyed to `v` would rebuild 110's *exact* defect
+(corr(style,th) 0.73) on a new axis. **Mean `fx` is held at 1.000 by construction** (98's hold-the-mean),
+so built mass, density and object count are all unchanged.
+Three pieces of geometry assumed the old fixed width and were fixed with it:
+- **The helideck** is a fixed 3.3px arc, and a roof's *shallow* axis binds it (`ay*21.3` vertical vs
+  `ay*32` horizontal). The ziggurat was **already flush** at 3.41px, so a point plan would have hung the
+  pad over its own roof edge. Sized off `fy`, it keeps exactly the fit the artifact already shipped. It
+  **cannot** be gated off instead: `heliPads` is real world data (`c.th>90`) and the helicopter lands there.
+- **The skybridge** spanned a fixed *fraction of the hex spacing* (0.28→0.72), which worked only because
+  every tower was ~10.2px wide against an 8.96px inset. On a 6.6px point tower it would have started
+  **2.4px clear of the building and hung in mid-air.** Both ends now inset 85% of each tower's **own**
+  half-width — reproducing the shipped geometry for a block plan.
+- To do that without a **second** answer to "how wide is a tower", `towerLook` now publishes the body's
+  base half-extents (`bax`/`bay`) and both the draw and the bridge read them. *One predicate, one definition.*
+- The contact shadow follows the plan too — a needle dropping a slab's shadow reads as standing beside
+  its own footing.
+
+**Census.** PASS, 0 page errors, and **every metric exactly +0** — `pop`, `towers`, `towerHt`,
+`tallTowers`, `helipads`, tile histogram empty. Correct and expected: the footprint feeds no
+`rng()`-gated predicate, so the change is stream-neutral and terrain-flat. Vacuous as a growth signal;
+the iteration rests on the probe.
+
+**Probe** (`probes/probe-crown.mjs`, 3 seeds, build-agnostic, **MID as control**):
+
+| | HEAD | patch |
+| --- | --- | --- |
+| TOWER distinct silhouettes | 5.3 | **13.0** |
+| TOWER top silhouette share (*the wallpaper number*) | **54.1%** | **22.0%** |
+| TOWER distinct crowns | 19.0 | 33.7 |
+| MID silhouettes / top (**control**) | 2.0 / 67.7% | **2.0 / 67.7%** — unmoved |
+| `crownable-but-bare` (228's accounted residual) | 0 | **0** |
+
+Crowns rose for free: a crown caps `tax/tay`, so the same crown on a slab and on a needle is a
+different (width,height) pair. Tower counts identical (110/96/68).
+
+**Perf.** Priced by **counting objects**, not by reading the diff (222) and not by the timer (216):
+`probe-drawbudget` reads **day 109,213 → 109,200 (−0.01%)** and **night 138,573 → 138,492 (−0.06%)**.
+Flat — a footprint is a change of **EXTENTS, not of objects**, so it is free by 198's per-path-object
+cost model. `winBandR` does not subdivide by width. No timing gate was run and none is needed.
+
+**Visual.** Blind A/B (`shot-crown.mjs`, day+night, whole-city + CBD close-up), one agent per seed,
+**labels flipped between seeds** so agreement could not come from position. **Both picked the patch**,
+and both described HEAD in the 232 agents' own vocabulary — *"a forest of near-identical slabs… one
+extruded texture"* / *"repeated stamping… an even pincushion"* — against *"a genuine mix: broad plates,
+fat blocks, and slender needles… towers read as individual buildings"*. Both explicitly cleared the two
+failure modes the geometry fixes were aimed at: **no helipad overhangs a roof edge; no skybridge floats.**
+No z-order tears, no blown-out colour, city still coherent. **VISUAL: PASS ×2.**
+
+**Verdict: SHIPPED.** **Cue (af′) CLOSED, and the tower is now varied on all four of its axes**
+(massing × plan × body × crown). The lesson is 228's own law paying out a second time: **the cue handed
+me a probe, and the probe's headline number was about the wrong noun.** Reading what `silo()` actually
+measured — instead of what `probe-crown` is *called* — turned a would-be fourth acquittal into a
+one-command conviction. ⇒ **A banked probe can carry the right instrument under the wrong name.**

@@ -1232,6 +1232,20 @@ vector, whatever it is.
   city-wide, 41% of towers ending flat.** ⇒ **Re-derive the instrument from the COMPLAINT'S OWN NOUNS, even when
   the cue hands you a probe.** The tell: the banked probe *passes* the thing the agents *fail*. (This is the cue-is-
   a-POINTER-not-a-SPEC law, one level down: the cue can be wrong about its own instrument.)
+  **⇒ BUT THE CONVERSE IS ALSO TRUE, AND OBEYING 228 LITERALLY WILL MAKE YOU REBUILD WHAT YOU ALREADY HAVE: A BANKED
+  PROBE CAN CARRY THE RIGHT INSTRUMENT UNDER THE WRONG NAME — READ WHAT IT *MEASURES*, NOT WHAT IT IS *CALLED*
+  (iter 235).** 228 says re-derive the instrument from the complaint's nouns *even when the cue hands you a probe*,
+  and the header duly warned 235 that `probe-crown` "measures the CROWN, which 228 already fixed. Do not let a banked
+  probe acquit the thing the agents keep pointing at." Taken at its word, that says: **build a new probe.** It was
+  wrong — and expensively so, because `probe-crown` **already contained the exact instrument the complaint called
+  for.** Its `silo()` samples the **absolute half-width at 12 normalised heights**, i.e. *the outline the eye traces
+  against the sky*, which is precisely SILHOUETTE/MASS/FOOTPRINT; it was **printing 5.3 shapes / top 54%** — a
+  conviction — in a line nobody read, beside the crown headline everybody did. The probe was named for the lap that
+  *authored* it, not for everything it measures, and one lap's name became the next lap's blind spot. ⇒ **Before you
+  accept OR reject a banked probe, open it and read its metrics against the complaint's nouns, one by one.** 228's
+  test ("does the banked probe *pass* the thing the agents *fail*?") must be applied **per metric, not per probe** —
+  `probe-crown` passed on `crown` and failed on `silo` **in the same output**. The tell: the cue tells you a probe is
+  the wrong instrument, and the reason given is *the name of the lap that wrote it*.
 - **A NUMBER THAT WILL NOT MOVE IS A TELL THAT YOUR INSTRUMENT, NOT THE CITY, IS DECIDING IT (iter 228).** 228's fix
   took tower crowns 4 -> 17 while the "41% flat" bucket sat **exactly unchanged** — the same 35.3% on the same seed,
   before and after. A metric that is *stone* while everything around it moves is not a stubborn defect; it is a
@@ -1713,11 +1727,13 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `shot-queueshadow.mjs` (the aimed camera: finds the instance whose ornament **measurably renders the most ink** and
   centres on it, then hands the same aim to the HEAD build so the blind before/after pair frames the identical hex —
   because `openFront`/`frontLoad` will hand you a buried one).
-  `probe-crown.mjs` (228 — **is this building type the same SHAPE every time?** Wraps `drawBuilding`+`prism`+`bandR`
-  and censuses the MASSING the frame actually draws: distinct SILHOUETTES, distinct **CROWNS** (what sits at the
-  roofline — what the eye reads against the sky), and each one's top share. Build-agnostic, so it runs unchanged on
-  HEAD and patch, with **MID as the control**. It is the instrument cue (af) *should* have named — `probe-facade`
-  measures RHYTHM and had acquitted the towers three step-backs running. ⚠ It reports **`crownable-but-bare`**
+  `probe-crown.mjs` (228 — **is this building type the same SHAPE every time?** ⚠ **BADLY NAMED: it reports TWO
+  independent metrics and BOTH are load-bearing** — `silo` (distinct **SILHOUETTES**: the absolute half-width sampled
+  at 12 normalised heights = the outline the eye traces, which is MASS/FOOTPRINT) *and* `crown` (what sits at the
+  roofline). 228 fixed the crown; **235 fixed the silhouette off the same probe**, which had been quietly convicting
+  the towers the whole time (see the read-what-it-MEASURES law). Wraps `drawBuilding`+`prism`+`bandR`, so it censuses
+  the massing the frame actually *draws*. Build-agnostic — runs unchanged on HEAD and patch — with **MID as the
+  control**. ⚠ It reports **`crownable-but-bare`**
   separately, because a hook on `prism`/`bandR` is **blind to raw-`ctx` crowns** like the helideck and would
   otherwise file them under "flat"), `shot-crown.mjs` (its camera: whole-city *and* a close-up aimed at the CBD, day
   + night, `SRC=` to shoot the identical framing on HEAD for a blind A/B; every frame self-reports `dayT`/`phase`/
