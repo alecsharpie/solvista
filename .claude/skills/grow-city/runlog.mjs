@@ -88,10 +88,17 @@ const entry = entryOf(num);
 
 const vmatch = (s) => s && s.match(/([A-Z][A-Za-z& ]+?)\s+(?:x|×)\s+\**([A-Za-z/ ]+?)\**(?:,|\.|\s+\(|$)/);
 const vEntry = entry.match(/\*\*Vector\*?\*?\s*[.—-]*\s*(.+)/);
+/* The entry's `## Iteration N — title [Domain × Kind]` header now carries the
+ * vector as a structured tag even when the **Vector** line opens with prose
+ * ("Sky was the stalest domain…") — read that bracket so those runs log a full
+ * vector instead of `—`. A step-back's `[holistic step-back]` has no `×` and is
+ * correctly skipped. */
+const vHead = entry.match(/^##[^\n]*\[([^\]]*(?:x|×)[^\]]*)\]/m);
 /* Last-ditch fallback: the commit subject usually ends with `(Domain × Kind)`
  * even when the body opens with prose — keep the tag rather than logging `—`. */
 const vParen = subject.match(/\(([^)]*(?:x|×)[^)]*)\)/);
-const vm = vmatch(body.split('\n')[0]) || vmatch(vEntry ? vEntry[1] : '') || vmatch(vParen ? vParen[1] : '');
+const vm = vmatch(body.split('\n')[0]) || vmatch(vEntry ? vEntry[1] : '') ||
+  vmatch(vHead ? vHead[1] : '') || vmatch(vParen ? vParen[1] : '');
 const vector = vm ? `${vm[1].trim()} × ${vm[2].trim()}` : '—';
 
 const vd = entry.match(/\*\*Verdict[^*]*?(SHIPPED|DEEPENED|FIXED|EXPLORED\s*(?:→|->)\s*REVERTED|REVERTED)/i);
