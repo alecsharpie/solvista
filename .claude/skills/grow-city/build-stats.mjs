@@ -115,6 +115,29 @@ const tags = TAG_ORDER.map(t => {
   return { t, n: rs.length, cost: sum(rs, r => r.cost), secs: sum(rs, r => r.secs) };
 }).filter(d => d.n > 0).sort((a, b) => b.n - a.n);
 
+// The other half of the vector: the KIND of change. Order matters — "interconnect"
+// must win over "connect", "New CA rule" over "New element".
+const canonKind = d => {
+  if (!d) return null;
+  for (const [re, name] of [[/polish/i, 'Polish'], [/deepen|interconnect/i, 'Deepen'],
+    [/new\s*ca|ca rule/i, 'New CA rule'], [/new element|new tile|new entity|new structure/i, 'New element'],
+    [/interaction|ux/i, 'Interaction/UX'], [/connect/i, 'Connect'], [/scale/i, 'Scale']])
+    if (re.test(d.trim())) return name;
+  return null;
+};
+function kindFor(r) {
+  const grab = str => { const m = str && str.match(/(?:x|×)\s*\**([A-Za-z][A-Za-z/ ]*?)\**\s*(?:[,.)]|$)/); return m ? m[1] : null; };
+  let k = canonKind(grab(r.vector)); if (k) return k;
+  const p = (subjOf[r.iter] || '').match(/\([^)]*(?:x|×)([^)]*)\)/);
+  return canonKind(p ? p[1] : null);
+}
+for (const r of rows) r.kind = kindFor(r);
+const KIND_ORDER = ['Polish', 'Deepen', 'New element', 'Connect', 'Interaction/UX', 'New CA rule', 'Scale'];
+const kinds = KIND_ORDER.map(t => {
+  const rs = known.filter(r => r.kind === t);
+  return { t, n: rs.length, cost: sum(rs, r => r.cost), secs: sum(rs, r => r.secs) };
+}).filter(d => d.n > 0).sort((a, b) => b.n - a.n);
+
 const chartRows = rows.map(r => ({ i: r.iter, c: r.cost, s: r.secs, t: r.tier, v: r.verdict, k: r.vector, g: r.tag }));
 
 // ---- why later iterations cost more: context read per iteration -------------
@@ -272,6 +295,17 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
   growth vector. Bars are counts across the ${known.length} measured iterations; hover for would-be cost.</p>
   <div id="tagChart" class="svgbox"></div>
 </section>
+
+<section class="chart">
+  <h2>How the loop changed the city</h2>
+  <p class="sub">The other half of each vector: the <em>kind</em> of change, not the place. <strong>Deepen</strong>
+  enriches or interconnects what already exists (the loop's self-declared highest-yield move);
+  <strong>Polish</strong> makes something read better without adding anything; <strong>New element</strong> adds a
+  tile or entity; <strong>Connect</strong> links across a domain; <strong>Interaction/UX</strong> is how you read and
+  poke the diorama. Counts across the ${kinds.reduce((a, d) => a + d.n, 0)} growth iterations that named a kind (step-backs and fixes have
+  none); hover for avg time and cost.</p>
+  <div id="kindChart" class="svgbox"></div>
+</section>
 ${analysis ? `
 <section class="chart">
   <h2>Why later iterations cost more</h2>
@@ -347,6 +381,7 @@ ${analysis ? `
   });})();
 const DATA = ${JSON.stringify(chartRows)};
 const TAGS = ${JSON.stringify(tags)};
+const KINDS = ${JSON.stringify(kinds)};
 const CTX = ${JSON.stringify(ctx)};
 const MAXITER = ${maxIter};
 const fmtUsd = n => n==null ? '—' : '$'+n.toFixed(2);
@@ -376,6 +411,20 @@ function showTip(html,x,y){tip.innerHTML=html;tip.hidden=false;const r=tip.getBo
   let L=x+14,T=y+14;if(L+r.width>window.innerWidth-8)L=x-r.width-14;if(T+r.height>window.innerHeight-8)T=y-r.height-14;
   tip.style.left=L+'px';tip.style.top=T+'px';}
 function hideTip(){tip.hidden=true;}
+
+// Horizontal count bars with an avg-time/avg-cost tooltip; fillFn(label)->{c,o}.
+function drawBars(boxId,items,fillFn){
+  const box=document.getElementById(boxId);if(!box||!items.length)return;
+  const W=CW,rowH=40,P={l:116,r:150,t:6,b:6};const H=P.t+P.b+items.length*rowH;const s=svg(box,W,H);
+  const maxN=Math.max(...items.map(d=>d.n));const iw=W-P.l-P.r;
+  items.forEach((d,idx)=>{const cy=P.t+idx*rowH+rowH/2;const bw=(d.n/maxN)*iw;const f=fillFn(d.t);
+    const lab=el('text',{x:P.l-12,y:cy+4,'text-anchor':'end',class:'vlbl'});lab.textContent=d.t;s.appendChild(lab);
+    const bar=el('rect',{x:P.l,y:cy-10,width:Math.max(2,bw),height:20,rx:4,fill:cssv(f.c),'fill-opacity':f.o,class:'col'});
+    const avgM=(d.secs/60/d.n).toFixed(0),avgC=fmtUsd(d.cost/d.n);
+    bar.addEventListener('mousemove',e=>showTip('<b>'+d.t+'</b><br>'+d.n+' iterations<br>'+avgM+' min &middot; '+avgC+' avg<br>'+fmtUsd(d.cost)+' would-be total',e.clientX,e.clientY));
+    bar.addEventListener('mouseleave',hideTip);s.appendChild(bar);
+    const vt=el('text',{x:P.l+Math.max(2,bw)+8,y:cy+4,class:'vnum'});vt.textContent=d.n+'  ·  '+fmtUsd(d.cost);s.appendChild(vt);});
+}
 
 function drawAll(){
 // ---- runtime per iteration (columns, full run, all tiers) ----
@@ -459,20 +508,9 @@ function drawAll(){
   xAxis(s,H);
 })();
 
-// ---- what the loop worked on (tag bars) ----
-(function(){
-  const box=document.getElementById('tagChart');if(!box||!TAGS.length)return;
-  const fill=t=>(t==='Step-back'||t==='Fix')?'--muted':'--series-1';
-  const W=CW,rowH=40,P={l:92,r:150,t:6,b:6};const H=P.t+P.b+TAGS.length*rowH;const s=svg(box,W,H);
-  const maxN=Math.max(...TAGS.map(d=>d.n));const iw=W-P.l-P.r;
-  TAGS.forEach((d,idx)=>{const cy=P.t+idx*rowH+rowH/2;const bw=(d.n/maxN)*iw;
-    const lab=el('text',{x:P.l-12,y:cy+4,'text-anchor':'end',class:'vlbl'});lab.textContent=d.t;s.appendChild(lab);
-    const bar=el('rect',{x:P.l,y:cy-10,width:Math.max(2,bw),height:20,rx:4,fill:cssv(fill(d.t)),'fill-opacity':(d.t==='Step-back'||d.t==='Fix')?0.5:1,class:'col'});
-    const avgM=(d.secs/60/d.n).toFixed(0),avgC=fmtUsd(d.cost/d.n);
-    bar.addEventListener('mousemove',e=>showTip('<b>'+d.t+'</b><br>'+d.n+' iterations<br>'+avgM+' min &middot; '+avgC+' avg<br>'+fmtUsd(d.cost)+' would-be total',e.clientX,e.clientY));
-    bar.addEventListener('mouseleave',hideTip);s.appendChild(bar);
-    const vt=el('text',{x:P.l+Math.max(2,bw)+8,y:cy+4,class:'vnum'});vt.textContent=d.n+'  ·  '+fmtUsd(d.cost);s.appendChild(vt);});
-})();
+// ---- horizontal count bars, reused for the domain and kind breakdowns ----
+drawBars('tagChart', TAGS, t => ({ c: (t==='Step-back'||t==='Fix') ? '--muted' : '--series-1', o: (t==='Step-back'||t==='Fix') ? 0.5 : 1 }));
+drawBars('kindChart', KINDS, () => ({ c: '--series-1', o: 1 }));
 
 // ---- context read each iteration (stacked area: artifact + ledger) ----
 (function(){
