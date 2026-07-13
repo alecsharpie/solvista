@@ -159,17 +159,22 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
 
 <section class="chart">
   <h2>How long each iteration ran</h2>
-  <p class="sub">Wall-clock runtime per iteration. <span class="key k-est"></span>#1&ndash;${firstKnown - 1} are a flat
-  ${EST_MINUTES}-min estimate (no record kept); <span class="key k-recovered"></span>#${recFrom}&ndash;${bilFrom - 1} recovered from
-  terminal logs; <span class="key k-billed"></span>#${bilFrom}&ndash;${maxIter} logged live. The longest ran ${(longest.secs/60).toFixed(0)} min (#${longest.iter}). Hover for detail.</p>
+  <p class="sub">Wall-clock runtime per iteration, each bar coloured by the loop's own verdict:
+  <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
+  <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted &mdash;
+  <span class="key k-est"></span>grey are the early runs with no recorded verdict. Reverts run
+  <strong>longest on average</strong>; the single longest was ${(longest.secs/60).toFixed(0)} min (#${longest.iter}). Provenance
+  (estimated / recovered / live) is the strip near the bottom. Hover for detail.</p>
   <div id="timeChart" class="svgbox"></div>
 </section>
 
 <section class="chart">
   <h2>What each iteration would have cost</h2>
-  <p class="sub">One column per iteration. <span class="key k-billed"></span>Logged live by the
-  loop's cost ledger (#${bilFrom}&ndash;${maxIter}); <span class="key k-recovered"></span>recovered from terminal
-  output (#${recFrom}&ndash;${bilFrom - 1}). The unrecorded early runs have no cost figure. Hover for detail.</p>
+  <p class="sub">One column per iteration, coloured by result:
+  <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
+  <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted;
+  <span class="key k-est"></span>grey columns (#${recFrom}&ndash;${bilFrom - 1}) predate the verdict log. The
+  unrecorded early runs have no cost figure. Hover for detail.</p>
   <div id="costChart" class="svgbox"></div>
 </section>
 
@@ -265,7 +270,11 @@ const BW=Math.max(1.6, IW/MAXITER-0.6);
 const XTICKS=[1,${firstKnown - 1},${bilFrom},200,MAXITER].filter((v,i,a)=>a.indexOf(v)===i&&v>=1&&v<=MAXITER);
 function xAxis(s,H){XTICKS.forEach(i=>{const t=el('text',{x:xI(i),y:H-8,'text-anchor':i===1?'start':i>=MAXITER?'end':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});}
 const TIERSRC = {estimated:'estimated (no record)', recovered:'recovered from logs', billed:'logged live'};
-const TIERFILL = {estimated:'--muted', recovered:'--series-2', billed:'--series-1'};
+// Colour bars by the loop's own verdict; grey where no verdict was recorded.
+const VCOL = {SHIPPED:'--series-1',DEEPENED:'--series-2',FIXED:'--series-3','EXPLORED → REVERTED':'--series-6'};
+const VTXT = {SHIPPED:'shipped',DEEPENED:'deepened',FIXED:'fixed','EXPLORED → REVERTED':'reverted'};
+const barFill = d => d.v ? VCOL[d.v] : '--muted';
+const barOp = d => d.t==='estimated' ? 0.35 : (d.v ? 1 : 0.55);
 
 const NS='http://www.w3.org/2000/svg';
 function el(t,a={}){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
@@ -288,8 +297,8 @@ function drawAll(){
     s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
     const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent=v+'m';s.appendChild(t);});
   rows.forEach(d=>{const m=d.s/60;const bx=xI(d.i)-BW/2,by=y(m),bh=P.t+ih-by;
-    const r=el('rect',{x:bx,y:by,width:BW,height:Math.max(0.5,bh),rx:Math.min(1.5,BW/2),fill:cssv(TIERFILL[d.t]),'fill-opacity':d.t==='estimated'?0.4:1,class:'col'});
-    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtMin(d.s)+(d.c!=null?' &middot; '+fmtUsd(d.c):'')+(d.g?'<br>'+d.g:'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
+    const r=el('rect',{x:bx,y:by,width:BW,height:Math.max(0.5,bh),rx:Math.min(1.5,BW/2),fill:cssv(barFill(d)),'fill-opacity':barOp(d),class:'col'});
+    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtMin(d.s)+(d.c!=null?' &middot; '+fmtUsd(d.c):'')+(d.v?'<br><span class=vt>'+VTXT[d.v]+'</span>':'')+(d.g?'<br>'+d.g:'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
     r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
   xAxis(s,H);
 })();
@@ -304,8 +313,8 @@ function drawAll(){
     s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
     const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent='$'+v;s.appendChild(t);});
   rows.forEach(d=>{const bx=xI(d.i)-BW/2,by=y(d.c),bh=P.t+ih-by;
-    const r=el('rect',{x:bx,y:by,width:BW,height:Math.max(0.5,bh),rx:Math.min(2,BW/2),fill:cssv(TIERFILL[d.t]),class:'col'});
-    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtUsd(d.c)+' &middot; '+fmtMin(d.s)+(d.g?'<br>'+d.g:'')+(d.v?'<br><span class=vt>'+d.v.replace('EXPLORED → REVERTED','reverted').toLowerCase()+'</span>':'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
+    const r=el('rect',{x:bx,y:by,width:BW,height:Math.max(0.5,bh),rx:Math.min(2,BW/2),fill:cssv(barFill(d)),'fill-opacity':barOp(d),class:'col'});
+    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtUsd(d.c)+' &middot; '+fmtMin(d.s)+(d.v?'<br><span class=vt>'+VTXT[d.v]+'</span>':'')+(d.g?'<br>'+d.g:'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
     r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
   xAxis(s,H);
 })();
