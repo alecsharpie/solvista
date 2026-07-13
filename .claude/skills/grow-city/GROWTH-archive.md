@@ -17276,3 +17276,155 @@ lap in which **241 REMOVED draw work**, has **no mechanism**. The deterministic 
 went **110,152 → 111,389 day (+1.1%)** and **138,970 → 140,189 night (+0.9%)** — dead on the ~+0.2%/iter arc — and
 the 177-ref arc was flat, corroborating the smaller number. ⇒ **The lap timer over-read by ~2x, and only the
 object count and the ARC could tell.** Grade a lap with `probe-drawbudget` **beside** `perfab`, never `perfab` alone.
+
+## Header bodies rotated at iteration 252 (the 30th step-back)
+
+Moved out of the maintained header to hold the 400-line budget. Every LAW below is
+already in `SKILL.md`; these are the full bodies as the header carried them.
+
+- **248: THE SHOWER CITED A NEIGHBOUR IT NEVER READ — FIXED** (cue (ao)'s shaft half; body archived at 249).
+  ITS LAW (SKILL.md): AN ANCHOR IS NOT AN EXTENT — 211's offset law on the **culling** axis: any cull/fade/bound
+  evaluated at a draw's *anchor* under-bounds every pixel it puts beyond it. COROLLARY — A CORRECT SIBLING DRAW IS
+  A FREE POSITIVE CONTROL (the bow, same rim, read 0.00 hex on 6 seeds). 242's cited-standard law with the
+  citation running the OTHER WAY — 242 cited a **broken** neighbour; 248 cites a **correct** one and still does not
+  do what it says.
+- **247 (29th step-back): `beachPhase()`, the 4th seasonal predicate.** ITS LAW (SKILL.md): A THRESHOLD IN AN
+  `if/else if` CHAIN IS A *BOUNDARY BETWEEN TWO FEATURES* — narrowing one arm WIDENS its neighbour (winter grew a
+  palm in every vacated deckchair slot). Grep a chain's other arms first. A REMOVAL VECTOR NEEDS A PROBE THAT NAMES
+  WHAT SURVIVES (214; 250 sharpened it — that control also catches a DEAD INSTRUMENT).
+- **245: `seaState()`, ONE predicate, floor `SEACALM`** (bodies archived 247/248; both laws in SKILL.md): a CENTRED
+  lever buys a BYTE-IDENTICAL FIXED POINT (247/248/249/250 cashed it again) · AIM BY MEASURED INK OF THE *HOST*,
+  NOT THE FRAME · a fixed *ELIGIBILITY* gate caps the dynamic range of any threshold beneath it.
+- **244:** TURNING THE AMPHITHEATER'S BOWL WAS BUILT AND REVERTED (the projection cannot carry it); fixed from the
+  other side, the SITE comes to the bowl (`RAY6`/`viewScore`/`amphSight`). *Penalise the wall* is a DEAD LEVER.
+  A sweep built with the artifact's own rule grades in the PATCHED world — `K=0` is NOT HEAD.
+- **WARNINGS FROM 236–242** (bodies archived 244/242/250; every LAW in SKILL.md). **242:** MARSH/KELP no longer
+  catch cloud shade (`WETSET`) — *when code CITES A NEIGHBOUR as precedent, GO READ THE NEIGHBOUR.* **241:**
+  `RAILCAP=130`, (am) CLOSED ⇒ *an empty cue list is not saturation, it is evidence nobody has grepped*.
+  **240:** a SLOW CLOCK is open to every domain — `Math.floor(dayT)` is a REAL DAY COUNTER (`dayT+=dt*s/110` never
+  wraps), it cannot strobe. **239:** *name the FILE, never a letter, in a visual A/B*. **236:** `cl.rain` IS GONE —
+  ONE predicate `cloudWet(cl)` (0..1), six readers; `year+k` = same season, different weather.
+
+## Iteration 242 — the twenty-eighth step-back finds the clouds shading the open sea (2026-07-13) [holistic step-back]
+
+**Vector** — the 28th step-back (overdue; the header flagged it). Whole-city read at 2 seeds × 3 lights × 2
+calendars, the perf lap + arc, the draw budget — then FIXED the one defect both agents found.
+
+**The read.** Seed 42 PASS, seed 7 FAIL. Seed 7's headline FAIL was the **elevated rail's z-order** — the *seventh*
+time that has been raised and the seventh time it is wrong (CLEARED BY PROBE TWICE, 203/212; it is a LEGIBILITY
+defect, polish-tile's cue (a)). But **both agents, blind, on different seeds, unprompted, in passing** reported the
+same thing: *"dark elliptical blobs sitting on the open ocean with no cloud above them — they look like holes in the
+water"* (42) · *"dark oval blobs on the water with no cloud above them (cloud shadows without their clouds)"* (7).
+**212's aside law, tenth payout — and its purest: the FAIL was the wrong diagnosis, the ASIDE was the lap.**
+
+**The defect.** The cloud shade was gated
+`if(inB(cl.x|0,cl.y|0)){ /* shade only falls where there is ground to catch it */ }`.
+**`inB()` is the PLATE, and the plate runs out to sea** — so every cloud drifting over the ocean painted a dark
+ellipse straight onto the water, ~250px below the puffs that cast it. 199/209's tell (a predicate that cannot
+deliver what its comment asserts), and it had been there for the artifact's whole life.
+🔑 **A NEW HOST FOR THE TELL, AND THE LAW OF THIS LAP: A LATER DRAW CITED AN EARLIER ONE AS AUTHORITY FOR A STANDARD
+IT NEVER ENFORCED.** The rainbow (~L7515) builds a careful `ROWMIN`/`ROWMAX` rim test under the comment *"it fades
+out as the shower leaves the plate (**cf. the cloud shade above — no ground, no bow**)"* — **citing as precedent a
+gate that was never doing the job.** ⇒ **When code cites a neighbour as the precedent for an invariant, go read the
+neighbour. A cited standard is not an enforced one.** (Promoted to SKILL.md.)
+
+**Change** — `shadeGround(cl)` samples the shade ellipse's **own footprint** (5×3 cells, sized from `30*cl.s/CW` ×
+`12*cl.s/ROWY`) and returns the **land fraction**, via `WETSET` — the artifact's one definition of wet, reused, not
+re-rolled. Alpha scales by `min(1, 2·frac)`: **half a footprint of land casts a full shadow**, so a cloud standing
+over the coast is not dimmed on its land side; only a cloud well out to sea fades away. The damp rain-patch scales
+with it too (rain-wet ground on the open ocean is the same bug). `inB(centre)` is **kept** as a precondition.
+
+⚠ **THE FIRST CUT WAS WRONG AND THE CONTROL CAUGHT IT.** Gating on the footprint *alone* (dropping `inB`) let clouds
+whose **centre is off-plate** cast shade for the first time — the ellipse is **not clipped to the rim**, so it would
+spill into the void: a *new* floating artifact, the very class the agents flagged. The probe's land control went
+**+66% (up)** — impossible for a change that only ever multiplies alpha by a fraction ≤1 — which is what exposed it.
+**A control that can only move one way, moving the other way, is the cheapest bug detector in the harness.**
+
+**Probe** (`probes/probe-cloudshade.mjs`) — the claim in the **viewer's units** (205): *dark ink is landing on sea
+pixels*. The suppression family (226 draw / 230 decision / 234 colour): render as shipped, re-render with **only the
+shade's fill suppressed** (its `rgba(36,30,20,…)` is unique in the file) ⇒ the difference **IS** the shade layer, in
+ONE page, **floor exactly 0**, off the composited canvas (occlusion free). The **water mask** comes from 234's
+palette suppression (loud-paint the sea's `BASE` entries, flush `CCACHE`, re-render), so it is derived per-build and
+the probe runs **unchanged on HEAD and patch** with no cross-build floor. HUD masked (200).
+
+| | shade ink ON SEA | on LAND (control) | floor |
+| --- | --- | --- | --- |
+| HEAD (241) | **165,320** | 160,620 | 0 |
+| patch | **27,334 (−83%)** | 136,866 | 0 |
+
+Seed 42 goes to **exactly 0** sea ink (836 px → 0). Seed 7 (6/7 clouds off-land — cue (aj)) **72,003 → 8,519** ink.
+**The control holds where it must:** on seed 1234 (clouds mostly inland) the land shade is **unchanged — 2,519 px,
+49,259 → 49,255**. The residual sea ink is coastal spill *continuous with* a land shadow, which reads as a shadow,
+not as a hole — and both agents counted it as zero blobs on open water.
+
+**Census** — PASS, 0 page errors. Tile histogram **empty**, every core metric +0 (`greenRoofs +3` is 226's
+documented tick-wobble). Correct and expected for a draw-only change, and exactly why the lap rests on the probe.
+
+**Perf** — **free**: path objects day 111,389 → 111,469 (**+0.07%**), night 140,189 → 140,165 (**−0.02%**), inside
+the probe's own run-to-run wobble. No new path objects; the change is alpha-only plus ~105 `cellAt` lookups/frame.
+🔑 **AND THE STEP-BACK'S OWN PERF GATE IS 216'S LAW AGAIN.** The interleaved LAP timer vs 237 read a *stable* **day
++2.4% / night +2.2%** — which, over a lap in which **241 REMOVED draw work**, has **no mechanism**. The object count
+disagreed: **110,152 → 111,389 day (+1.1%)**, **138,970 → 140,189 night (+0.9%)** — dead on the ~+0.2%/iter arc — and
+the 177-ref **ARC was flat** (+18.6%/+12.8% vs 237's +17.2%/+13.8%), corroborating the smaller number. **The lap
+timer over-read by ~2x.** ⇒ **Grade a lap with `probe-drawbudget` BESIDE `perfab`, never `perfab` alone.**
+
+**Visual** — blind A/B, **per file name** (239), **crossed mapping** between seeds (238), asked to **COUNT** blobs
+(108: locate, don't judge — a checkable answer). Both agents picked the patch. Seed 7: `sb7` **3 blobs** at
+(0.92,0.55), (0.87,0.44), (0.81,0.71) → `fix7` **0**. Seed 42: `sb42` **1 blob** at (0.945,0.612) → `fix42` **0**.
+Neither found any shadow spilling off the plate; neither lost a land shadow. Seed 7's `VISUAL: FAIL` **names pristine
+HEAD as the defective build** — the strongest form of a pass this gate can produce.
+⚠ **Side-effect, honestly reported: MARSH and KELP no longer catch cloud shade** (both are in `WETSET`). Both agents
+read it as an improvement — the kelp went **teal instead of olive-brown** — and it is consistent with the coast's
+long history of compounding dark. Noted rather than tuned.
+
+**Banked from the asides** — 🔴 **(an)** the black cables running out over the beach and ending in the sea:
+**re-reported by BOTH agents on BOTH seeds**, still **unidentified**, now the most-reported *undiagnosed* defect in
+the ledger · **(ao)** the rain shafts and rainbow are not bounded by the ground (the same family this lap just fixed)
+· **(ak)** *both* agents, independently: **winter reads as "lusher", not as winter** — the season is a
+hue-on-vegetation signal only, and the beach crowd still sunbathes in January · **(ag)** reconfirmed (night parks
+out-brighten the lit streets; the sand "glows like it's still dusk") · **(s)** golden-hour contrast collapse, raised
+now at a **FIFTH** step-back.
+
+**Verdict** — **FIXED.** The city is otherwise whole: no z-order tears, no blown-out colour, no broken geometry, the
+night frame is the one that "has aged best", and the arc is flat. One 240-iteration-old defect, found by an aside,
+closed by a probe with an honest zero.
+
+
+## Iteration 249/250/251 header bodies, rotated at 252
+
+Moved out of the maintained header to hold the 400-line budget. Every LAW is in `SKILL.md`;
+the header keeps the WARNINGS only. Bodies verbatim as the header carried them:
+
+  ✅ **251: THE INVARIANT HAD NEVER ONCE SAMPLED A LIT WINDOW — FIXED (the harness); artifact BYTE-IDENTICAL to HEAD.**
+  Took the ranked **#1 🔴 cue (ag)** and **refuted it on every count**. (1) **Greens innocent**: PARK **81**, *below* the
+  ROAD. (2) **Wash ladder innocent**: with `washRGB` **switched off** (`w=0`, the pre-214 city) the night ordering is
+  **IDENTICAL** ⇒ 223 steals nothing. (3) The residual `BEACH 96 >= MID 95` was **THE PROBE**: it read **ONE PIXEL AT
+  THE HEX CENTRE**, which on a building is its **ROOF** — so an invariant about **LIT** surfaces had **never sampled a
+  lit window** — and it scored the **MEAN**, which folds a lit building's dark wall back in. Re-scored on the **p90
+  ENVELOPE** over the hex's **AREA**: **pristine HEAD PASSES by 21**. ⚠ The point sample distorted the **hue guards**
+  too (PARK's *"26° off its daylight self"* is **1°** in area units). ⚠ **I built the prescribed fix first (an albedo
+  knee on the night sand) and the guard I had to ADD to the probe convicted it**: `BEACH↔ROAD` **24 → 18** — walking the
+  sand back toward **214's asphalt** to buy a number **no viewer can see** (two blind agents, crossed A/B, both seeds:
+  the shore is *"a quiet dark ribbon"* at ~90 against a **frame max of 237–244**). **The cure was the disease.**
+  🔑 **ITS LAW (SKILL.md): A GATE BREACHED BY A HAIR, WHOSE PRESCRIBED FIX COSTS A HEALTHY GUARD, IS A GATE TO SUSPECT
+  — and "is it LIT?" is an EXTREME, never a MEAN** (224, on the brightness axis).
+  ✅ **250: THE CONCERT PLAYED EVERY NIGHT OF THE YEAR — DEEPENED.** Civic's cue list was **EMPTY**, so I grepped its
+  seam. `CIVICDESC.amphitheater` promised *"Concerts through the **summer**"* over a showtime gate that was **`LITAMT`
+  and nothing else**; **DISTINCT SHOW STATES = 1, forever**. Now `concertSeason()` — **ONE predicate, four readers**
+  (beam, footlights, **night audience**, tooltip). ⚠ **A TRIANGLE, not beachPhase's cosine — a beach in January is still
+  a beach; a concert in January is NOT ON.** ⚠ **The AUDIENCE had to move with the show** or it re-ships 213's bug (a
+  full house watching a struck stage). 🔑 **249's two free EXACT controls cashed again** (HEAD's constant; the bowl's
+  **BIRTHDAY**, `year>=2004` ⇒ 1985 is HEAD's bytes). 🔑 **ITS LAW (SKILL.md): A REMOVAL VECTOR'S PROBE MUST NAME WHAT
+  *SURVIVES* — AND THAT CONTROL CONVICTS A DEAD INSTRUMENT BEFORE IT CONVICTS THE CITY** (my tier-arc control read 0 —
+  impossible; the probe was broken).
+  ✅ **249: THE FERRY PROMISED "EVERY STOP" AND STOPPED NOWHERE — DEEPENED.** Transport's cue list was **EMPTY**, so I
+  grepped its seam instead of skipping it — **240's law is now 4 for 4** (Sky 236 · Nature 238 · People 240 · Transport
+  249). `stepFerry` was **ONE line**, `f.fr` **never written again after spawn**: **DISTINCT SPEEDS = 1 on every seed**,
+  forever, under a tooltip promising *"every stop"*. She crosses the pier's row **every pass** — the head stands **2.5–4.1
+  cells OUT IN THE WATER on all 6 seeds** — and never turned in. ⚠ **NOT cue (o): the PIER has a waterfront, the HARBOUR
+  does not.** Now `ferryApp`/`ferryFr`/`ferryThr`, **ONE predicate, four readers**, the berth's *existence* being
+  **`pierAt` itself** (123). ⚠ **`f.sp` KEEPS ITS SIGN — the THROTTLE goes to zero, never the velocity** (`drawFerry`
+  reads it for her heading). ⚠ **`dwell` is the house's own word for a call** (`stepVehicle`: the bus) — **grep for the
+  mechanism the artifact already ships before inventing one.** 🔑 **ITS LAW (SKILL.md): TWO FREE, EXACT CONTROLS** —
+  HEAD's **constant IS the baseline** (236), and a host with a **BIRTHDAY** (no deck before 1986) hands you a **dead
+  regime running HEAD's byte-identical code** for nothing (199, arriving through the *world* not the light).

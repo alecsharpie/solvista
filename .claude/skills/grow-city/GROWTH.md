@@ -9,15 +9,11 @@ Metrics are summed over all 9 cells of the matrix.
 
 ## State of the city (maintained header — UPDATE EACH ITERATION)
 
-This grid + the notes below are what step 1 (Orient) reads instead of the whole
-archive. Cells hold iteration numbers (**struck = explored and reverted**, so the
-cell is *attempted*, not *filled* — read its entry before re-trying it); `U1`–`U5` are user-directed passes
-(U1 generative monorail · U2 feedback polish: smooth water motion / hover
-tooltip / kelp re-gate · U3 determinism audit · U4 hexagon plate + plural
-rivers/monorails/cable cars · U5 census stats that can fall).
-
-**Interaction/UX is a column** (since 97). Cells hold only vectors the ledger explicitly attributes to a domain;
-cross-cutting ones (U2, 42, U5) stay in the bullet below.
+This grid + the notes below are what step 1 (Orient) reads instead of the whole archive. Cells hold iteration numbers
+(**struck = explored and reverted**, so the cell is *attempted*, not *filled* — read its entry before re-trying it);
+`U1`–`U5` are user-directed passes (U1 generative monorail · U2 feedback polish · U3 determinism audit · U4 hexagon
+plate + plural rivers/monorails/cable cars · U5 census stats that can fall). **Interaction/UX is a column** (since 97);
+cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -30,153 +26,142 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
 - **Interaction/UX — the FEATURE INVENTORY was rotated to the archive at 211 (history, not steering).** ⚠ **229 is
-  cross-cutting (the TEXT LAYER: `<meta charset>` ⇒ every tooltip + the stats panel), so it sits here, not in a grid
-  cell.** It **repealed 134's rule** — raw UTF-8 in JS string literals is now SAFE (`probes/probe-charset.mjs` asserts
-  it), so **do not hand-escape a `·` or an `é`.** What steers: when adding an entity array, `stamp()` it in its draw +
-  add an `ENTINFO` row (same discipline as the census hook). `stamp()` also draws the focus ring, so any stamped entity
-  is ringable free — and since 133 a hovered TILE is ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity
+  cross-cutting (the TEXT LAYER: `<meta charset>`), and it REPEALED 134's rule** — raw UTF-8 in JS string literals is
+  now SAFE (`probes/probe-charset.mjs` asserts it), so **do not hand-escape a `·` or an `é`.** What steers: when adding
+  an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census hook); `stamp()` also
+  draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a FUNCTION of the entity
   (105)** — use it when a thing's interest is its *membership* (which line/route/depot), computed live, never a string.
 - **ROTATION.** Last vector per domain: Urban **239** · Water **245** · People **247** · Sky **248** ·
-  Transport **249** · Civic **250** · Nature **251**. **247 was the 29th step-back; the 30th is DUE NOW (~252).**
-  ➡ **NEXT: the STEP-BACK (30th), then Urban fabric — but Urban's seam is DRY (248 grepped `drawBuilding`/
-  `updateValue`/`POPW`/`midLook`/`towerLook`; only the harbour apron remains).** The best-supported open cue is now
-  **(aj)** the cloud SPAWN (Sky × Polish, ~2x the visible weather at zero new draw work, doubly measured).
-  ⚠ **Read the `peds` cap first** (111) before designing anything road-borne.
+  Transport **249** · Civic **250** · Nature **251**. **252 was the 30th step-back; the 31st is due ~257.**
+  ➡ **NEXT: Sky × Deepen — cue (aq), THE SUN KEEPS NO CALENDAR** (252, below: the single best-supported cue in the
+  ledger, named independently by both agents in their OWN nouns and confirmed by grep). Then Urban — but **Urban's
+  seam is DRY** (248 grepped `drawBuilding`/`updateValue`/`POPW`/`midLook`/`towerLook`; only the harbour apron
+  remains). ⚠ **Read the `peds` cap first** (111) before designing anything road-borne.
+  🔴 **252 (30th step-back): THE SUN KEEPS NO CALENDAR — and the cue is NOT the canopy** (full body in the entry).
+  Both agents, both seeds, headline FAIL, in their OWN nouns: *"no cooler light, same sky, **same sun**"* · *"no
+  desaturation, **no low sun**"*. `probe-seasonarea`: **66.4% of vegetated area (893/1345) is MUTE** — PARK **22.9**,
+  FOREST **19.8**, vs FARM 46.6 / SHOREPARK 44.4, ROAD control 3.5. ⚠ **But the vegetation is at its MEASURED CEILING
+  (238's coverage law) and that 66.4% is largely CORRECT** — PARK's lawn is already fully seasonal, FOREST is 83%
+  conifer. 🔑 **The defect is the LIGHT: `sunP=(dayT-SUNUP)/(SUNDN-SUNUP)` has NO `year` term and `SUNUP`/`SUNDN` are
+  CONSTANTS**, so the sun's arc is identical in January and July; the sky and sea carry no seasonal tint. **199's tell
+  on two constants + 209's law** (the large surface wearing a field that cannot carry the signal — here, *the
+  illumination itself*). ⇒ **The loop spent laps on vegetation because that is where its instrument pointed.**
   🔴 **251 KILLED THE #1 CUE AND THE INSTRUMENT THAT MADE IT. Re-read the cue list with suspicion:** (ag) was ranked
   top for **24 iterations**, was **reconfirmed twice**, and was **false on every count** — because every re-measurement
   used the same broken probe. **A cue re-confirmed by the instrument that created it is not corroborated.**
-  ✅ **251: THE INVARIANT HAD NEVER ONCE SAMPLED A LIT WINDOW — FIXED (the harness); artifact BYTE-IDENTICAL to HEAD.**
-  Took the ranked **#1 🔴 cue (ag)** and **refuted it on every count**. (1) **Greens innocent**: PARK **81**, *below* the
-  ROAD. (2) **Wash ladder innocent**: with `washRGB` **switched off** (`w=0`, the pre-214 city) the night ordering is
-  **IDENTICAL** ⇒ 223 steals nothing. (3) The residual `BEACH 96 >= MID 95` was **THE PROBE**: it read **ONE PIXEL AT
-  THE HEX CENTRE**, which on a building is its **ROOF** — so an invariant about **LIT** surfaces had **never sampled a
-  lit window** — and it scored the **MEAN**, which folds a lit building's dark wall back in. Re-scored on the **p90
-  ENVELOPE** over the hex's **AREA**: **pristine HEAD PASSES by 21**. ⚠ The point sample distorted the **hue guards**
-  too (PARK's *"26° off its daylight self"* is **1°** in area units). ⚠ **I built the prescribed fix first (an albedo
-  knee on the night sand) and the guard I had to ADD to the probe convicted it**: `BEACH↔ROAD` **24 → 18** — walking the
-  sand back toward **214's asphalt** to buy a number **no viewer can see** (two blind agents, crossed A/B, both seeds:
-  the shore is *"a quiet dark ribbon"* at ~90 against a **frame max of 237–244**). **The cure was the disease.**
-  🔑 **ITS LAW (SKILL.md): A GATE BREACHED BY A HAIR, WHOSE PRESCRIBED FIX COSTS A HEALTHY GUARD, IS A GATE TO SUSPECT
-  — and "is it LIT?" is an EXTREME, never a MEAN** (224, on the brightness axis).
-  ✅ **250: THE CONCERT PLAYED EVERY NIGHT OF THE YEAR — DEEPENED.** Civic's cue list was **EMPTY**, so I grepped its
-  seam. `CIVICDESC.amphitheater` promised *"Concerts through the **summer**"* over a showtime gate that was **`LITAMT`
-  and nothing else**; **DISTINCT SHOW STATES = 1, forever**. Now `concertSeason()` — **ONE predicate, four readers**
-  (beam, footlights, **night audience**, tooltip). ⚠ **A TRIANGLE, not beachPhase's cosine — a beach in January is still
-  a beach; a concert in January is NOT ON.** ⚠ **The AUDIENCE had to move with the show** or it re-ships 213's bug (a
-  full house watching a struck stage). 🔑 **249's two free EXACT controls cashed again** (HEAD's constant; the bowl's
-  **BIRTHDAY**, `year>=2004` ⇒ 1985 is HEAD's bytes). 🔑 **ITS LAW (SKILL.md): A REMOVAL VECTOR'S PROBE MUST NAME WHAT
-  *SURVIVES* — AND THAT CONTROL CONVICTS A DEAD INSTRUMENT BEFORE IT CONVICTS THE CITY** (my tier-arc control read 0 —
-  impossible; the probe was broken).
-  ✅ **249: THE FERRY PROMISED "EVERY STOP" AND STOPPED NOWHERE — DEEPENED.** Transport's cue list was **EMPTY**, so I
-  grepped its seam instead of skipping it — **240's law is now 4 for 4** (Sky 236 · Nature 238 · People 240 · Transport
-  249). `stepFerry` was **ONE line**, `f.fr` **never written again after spawn**: **DISTINCT SPEEDS = 1 on every seed**,
-  forever, under a tooltip promising *"every stop"*. She crosses the pier's row **every pass** — the head stands **2.5–4.1
-  cells OUT IN THE WATER on all 6 seeds** — and never turned in. ⚠ **NOT cue (o): the PIER has a waterfront, the HARBOUR
-  does not.** Now `ferryApp`/`ferryFr`/`ferryThr`, **ONE predicate, four readers**, the berth's *existence* being
-  **`pierAt` itself** (123). ⚠ **`f.sp` KEEPS ITS SIGN — the THROTTLE goes to zero, never the velocity** (`drawFerry`
-  reads it for her heading). ⚠ **`dwell` is the house's own word for a call** (`stepVehicle`: the bus) — **grep for the
-  mechanism the artifact already ships before inventing one.** 🔑 **ITS LAW (SKILL.md): TWO FREE, EXACT CONTROLS** —
-  HEAD's **constant IS the baseline** (236), and a host with a **BIRTHDAY** (no deck before 1986) hands you a **dead
-  regime running HEAD's byte-identical code** for nothing (199, arriving through the *world* not the light).
-  ✅ **248: THE SHOWER CITED A NEIGHBOUR IT NEVER READ — FIXED** (cue **(ao)**'s shaft half; body archived at 249).
-  🔑 **ITS LAW (SKILL.md): AN ANCHOR IS NOT AN EXTENT** — 211's offset law on the **culling** axis: any cull/fade/bound
-  evaluated at a draw's *anchor* under-bounds every pixel it puts beyond it. 🔑 **COROLLARY — A CORRECT SIBLING DRAW IS
-  A FREE POSITIVE CONTROL** (the bow, same rim, read **0.00 hex on 6 seeds**). ⚠ **242's cited-standard law with the
-  citation running the OTHER WAY** — 242 cited a **broken** neighbour; 248 cites a **correct** one and still does not do
-  what it says.
-  ✅ **247 (29th step-back): `beachPhase()`, the 4th seasonal predicate** (body archived 248). 🔑 **ITS LAW (SKILL.md):
-  A THRESHOLD IN AN `if/else if` CHAIN IS A *BOUNDARY BETWEEN TWO FEATURES* — narrowing one arm WIDENS its neighbour**
-  (winter grew a palm in every vacated deckchair slot). ⚠ **Grep a chain's other arms first.** ⚠ **A REMOVAL VECTOR
-  NEEDS A PROBE THAT NAMES WHAT SURVIVES** (214; **250** sharpened it — that control also catches a DEAD INSTRUMENT).
-  ⛔ **(ai) RETIRED (246) — UNREACHABLE, DO NOT RE-OPEN. Body archived 247; LAW in SKILL.md** (*a budget with slack is
-  not absorption capacity — the slack IS the exhaustion; count the eligible cells*). ⚠ **DO NOT re-try a belt, a mask,
-  or a core-widening**: no paired addition exists (2→3 ADMITS 25, **2→4 admits the SAME 25** ⇒ **zero** interior open
-  cells) and **the ROADS fragment every lobe**. ➡ **The COMPLAINT is still real** (*"a wall of buildings meeting the
-  void"*, 232) — **re-derive it from its own nouns (228/235); stop spending laps on the density statistic.**
-  ✅ **245: `seaState()`, ONE predicate, floor `SEACALM`** (bodies archived 247/248; **both laws in SKILL.md**): **a
-  CENTRED lever buys a BYTE-IDENTICAL FIXED POINT** (247/248/**249**/**250** cashed it again) · ⚠ **AIM BY MEASURED INK
-  OF THE *HOST*, NOT THE FRAME** · ⚠ **a fixed *ELIGIBILITY* gate caps the dynamic range of any threshold beneath it.**
-  ⚠ **244: TURNING THE AMPHITHEATER'S BOWL WAS BUILT AND REVERTED — DO NOT RE-TRY IT** (the projection cannot carry it);
-  fixed from the other side, the **SITE comes to the bowl** (`RAY6`/`viewScore`/`amphSight`). ⚠ *Penalise the wall* is a
-  **DEAD LEVER**. ⚠ **A sweep built with the artifact's own rule grades in the PATCHED world — `K=0` is NOT HEAD.**
-  ⚠ **WARNINGS FROM 236–242 — bodies archived (244/242/250); every LAW is in SKILL.md; ranked list leads with (ag).**
-  **242:** ⚠ **MARSH/KELP no longer catch cloud shade** (`WETSET`) — *when code CITES A NEIGHBOUR as precedent, GO READ
-  THE NEIGHBOUR.* **241:** `RAILCAP=130`, (am) CLOSED ⇒ *an empty cue list is not saturation, it is evidence nobody has
-  grepped* (**now 5 for 5** — 236/238/240/249/**250**). **240:** 🔑 **a SLOW CLOCK is open to every domain —
-  `Math.floor(dayT)` is a REAL DAY COUNTER** (`dayT+=dt*s/110` never wraps), **it cannot strobe.** **239:** *name the
-  FILE, never a letter, in a visual A/B* (240/242/247/**250** are its payoff). **236:** ⚠ **`cl.rain` IS GONE** — ONE
-  predicate **`cloudWet(cl)` (0..1)**, six readers; **`year+k` = same season, different weather.**
-  🔴 **228'S LAW HAS NOW RECURSED 4x, EVERY TIME ON A PROBE THIS HARNESS ALREADY OWNED** (237 found two; 238 found the
-  third INSIDE the probe 237 had just repaired; **251 found the fourth — `probe-goldenhue`'s ONE-CENTRE-PIXEL sample,
-  which on a building lands on its ROOF, so an invariant about LIT surfaces had never sampled a lit window**) — *read
-  what a probe MEASURES and WHERE IT SAMPLES, not what it is called; apply 228's test PER METRIC.* ⚠ **AND 251 ADDS THE
-  COST: a bad probe does not just misgrade a lap — it MANUFACTURES A CUE, and the cue then steers the loop for 24
-  iterations and gets "reconfirmed" by the same broken instrument.** ⇒ **When a cue has been re-measured and re-
-  confirmed, that is NOT corroboration unless a DIFFERENT instrument did it.**
+  ⚠ **WARNINGS FROM 249–251 — bodies rotated to the archive at 252; every LAW is in SKILL.md.**
+  **251 (the harness; artifact BYTE-IDENTICAL):** refuted the #1 cue (ag) **on every count**. 🔑 *A GATE BREACHED BY A
+  HAIR, WHOSE PRESCRIBED FIX COSTS A HEALTHY GUARD, IS A GATE TO SUSPECT — and "is it LIT?" is an **EXTREME**, never a
+  MEAN* (224). ⚠ **`probe-goldenhue` is REPAIRED** (it sampled ONE PIXEL at the hex centre = a building's **ROOF**; it
+  now reads the **AREA** and scores on the **p90 envelope**, under which **pristine HEAD PASSES by 21**). ⚠ **Greens
+  and the wash ladder are INNOCENT — do NOT re-open the night sand or the night greens.**
+  **250:** `concertSeason()` — ONE predicate, four readers. ⚠ **A TRIANGLE, not `beachPhase`'s cosine** — *a beach in
+  January is still a beach; a concert in January is NOT ON.* ⚠ **The AUDIENCE must move WITH the show** (else 213's
+  bug). 🔑 *A REMOVAL VECTOR'S PROBE MUST NAME WHAT **SURVIVES** — and that control convicts a DEAD INSTRUMENT before
+  it convicts the city.* **249:** `ferryApp`/`ferryFr`/`ferryThr` — ONE predicate, four readers; the berth's existence
+  is **`pierAt` itself**. ⚠ **`f.sp` KEEPS ITS SIGN — the THROTTLE goes to zero, never the velocity.** ⚠ **`dwell` is
+  the house's own word for a call** — *grep for the mechanism the artifact already ships before inventing one.*
+  ⚠ **NOT cue (o): the PIER has a waterfront, the HARBOUR does not.** 🔑 *TWO FREE, EXACT CONTROLS* — HEAD's **constant
+  IS the baseline** (236), and a host with a **BIRTHDAY** hands you a **dead regime running HEAD's bytes** (199).
+  ⚠ **WARNINGS FROM 236–248 — bodies rotated to the archive at 252; every LAW is in SKILL.md.** **248:** *an ANCHOR is
+  not an EXTENT* (any cull/fade evaluated at a draw's anchor under-bounds its own pixels); *a CORRECT SIBLING DRAW is a
+  FREE POSITIVE CONTROL*. **247:** *a threshold in an `if/else if` chain is a BOUNDARY — narrowing one arm WIDENS its
+  neighbour* (**grep a chain's other arms first**); *a REMOVAL vector needs a probe that names what SURVIVES*.
+  **245:** `seaState()`, floor `SEACALM` — *a CENTRED lever buys a BYTE-IDENTICAL FIXED POINT* (247–250 cashed it) · ⚠
+  *AIM BY MEASURED INK OF THE **HOST**, not the frame* · ⚠ *a fixed **ELIGIBILITY** gate caps the range of any threshold
+  beneath it.* ⚠ **244: TURNING THE AMPHITHEATER'S BOWL WAS BUILT AND REVERTED — DO NOT RE-TRY** (the projection cannot
+  carry it); *penalise the wall* is a **DEAD LEVER**; ⚠ *a sweep built with the artifact's own rule grades in the
+  PATCHED world — `K=0` is NOT HEAD.* **242:** ⚠ **MARSH/KELP no longer catch cloud shade** (`WETSET`) — *when code
+  CITES A NEIGHBOUR, GO READ THE NEIGHBOUR.* **241:** `RAILCAP=130` ⇒ *an empty cue list is not saturation, it is
+  evidence nobody has grepped* (**now 5 for 5**). **240:** 🔑 *a SLOW CLOCK is open to every domain — `Math.floor(dayT)`
+  is a REAL DAY COUNTER and cannot strobe.* **239:** *name the FILE, never a letter, in a visual A/B.* **236:** ⚠ **`cl.rain`
+  IS GONE** — ONE predicate **`cloudWet(cl)`**; *`year+k` = same season, different weather.*
+  ⛔ **(ai) RETIRED (246) — UNREACHABLE, DO NOT RE-OPEN. LAW in SKILL.md** (*a budget with slack is not absorption
+  capacity — the slack IS the exhaustion; count the eligible cells*). ⚠ **DO NOT re-try a belt, a mask, or a
+  core-widening**: no paired addition exists (2→3 ADMITS 25, **2→4 admits the SAME 25**) and **the ROADS fragment every
+  lobe**. ➡ **The COMPLAINT is still real** (232) — **re-derive it from its own nouns (228/235); stop spending laps on
+  the density statistic.**
+  🔴 **228'S LAW HAS RECURSED 4x, EVERY TIME ON A PROBE THIS HARNESS ALREADY OWNED** (237×2; 238 INSIDE the probe 237
+  had just repaired; **251 — `probe-goldenhue`'s one-centre-pixel sample**) — *read what a probe MEASURES and WHERE IT
+  SAMPLES, not what it is called; apply 228's test **PER METRIC**.* ⚠ **251's COST: a bad probe does not just misgrade a
+  lap — it MANUFACTURES A CUE that then steers the loop for 24 iterations and gets "reconfirmed" by the same broken
+  instrument.** ⇒ **A cue re-confirmed is NOT corroborated unless a DIFFERENT instrument did it.** ✅ **252 is the
+  counter-example and the template: agents + a repaired area probe + a grep — three instruments, one answer.**
   ✅ **CLOSED LADDERS — DO NOT RE-OPEN. Bodies archived; every law is in SKILL.md.** The **WASH ladder**
-  (214→220→221→223→**234**; **audit by `dHUE`, never a target hue** — warnings at (aa)/(ae)) · the **TOWER LOOK**
-  (228 crown + **235** footprint) · the **SKYLINE ladder** (217→224, `c.th` SPENT — warnings at (ac)) · the **HUD
-  lap** (229 — both its cues were the HARNESS, not the city) · **137's standing-crowd cue** (226). ⚠ **230's `taxi`
-  flag is LOAD-BEARING** (`VCURF` thins the night fleet by CLASS). ⚠ **(y) and (s) were born from agents reading
+  (214→220→221→223→**234**; **audit by `dHUE`, never a target hue**) · the **TOWER LOOK** (228 crown + **235**
+  footprint) · the **SKYLINE ladder** (217→224, `c.th` SPENT) · the **HUD lap** (229 — both cues were the HARNESS) ·
+  **137's standing-crowd cue** (226) · the **SEASONAL-VEGETATION seam** (238 + **252** — measured-capped). ⚠ **230's
+  `taxi` flag is LOAD-BEARING** (`VCURF` thins the night fleet by CLASS). ⚠ **(y) and (s) were born from agents reading
   `shoot.mjs` output — REPRODUCE either in the user's configuration before designing to it** (229's law).
   **Interaction/UX** (cross-cutting) last touched **229**.
   **CUES, RANKED** (CLOSED: (w)/(z) 229 · (t) 231 · (u) 234 · (af′) 235 · (al) 239 · (am) 241 · (an) 243 · **(ah) 244**;
   **(aj)'s SHADE half CLOSED 242 — its cloud-SITING half is still open**; **(ao)'s SHAFT half CLOSED 248 — its BOW half
   is REFRAMED and its prescription REFUTED**; **(ab) RETIRED into (ak) 238**; ⛔ **(ai) RETIRED 246 — UNREACHABLE, do not
-  re-open** · ⛔ **(ag) CLOSED 251 — REFUTED on every count, do not re-open**): 🔴 **(aj)** the clouds
-  spawn with no reference to the land, so a seed parks its sky over the sea — **the lever is the SPAWN, not the draw**:
-  ~2x the visible weather at **zero new draw work** (Sky × Polish, cheap, doubly measured) · **(ak)** the season — ⚠ **242: both agents, both seeds, independently —
-  winter reads as "lusher", NOT as winter**; read the cue, its prescription is dead · **(y)** the scorched inland
-  cluster (Nature × Polish) · **(s)** golden-hour
-  contrast collapse (Sky × Polish — CONSTRAINED; strengthened at 227) ·
-  Nature's **GARDEN staggered beds**, held by (p) · **(ap)** the sea's foam is invisible at fit zoom (Water × Polish).
+  re-open** · ⛔ **(ag) CLOSED 251 — REFUTED on every count, do not re-open**):
+  🔴 **(aq) THE SUN KEEPS NO CALENDAR** (Sky × Deepen; 252) — **the best-supported cue in the ledger**: raised
+  independently by both agents on both seeds *in their own nouns*, and confirmed by grep — **two DIFFERENT
+  instruments**, which is exactly what 251 says a cue needs. ⚠ **ITS FIVE TRAPS, PRE-NAMED — read before designing:**
+  (1) ⛔ **DO NOT LOWER THE SUN** — cue (s)'s trap and **200's**: the sky is a shallow band (~0.12 of the viewport) and
+  `.placard` owns the top-left, so a low winter sun hides *behind the HUD* while a `getImageData` probe reports it
+  present. A visibility claim here needs **`page.screenshot()`**. (2) ⇒ **The lever is COLOUR/WARMTH (and maybe day
+  LENGTH), never ALTITUDE** — colour-only is **zero path objects, free by the perf model** (214). (3) ⚠ Go through the
+  **WASH LADDER's discipline** (214→234): `washRGB` is **normalised** since 223 — do not re-introduce an un-normalised
+  gain triple; **audit by `dHUE`, never a target hue** (234). (4) 🔑 **CENTRE THE LEVER ON THE DRY PEAK** (245) ⇒ a
+  **byte-identical fixed point** at `s=0.62` that *proves* it adds no draw work. (5) ⚠ **`year` is a FAST clock**
+  (~0.17 yr/s): a *continuous* colour term tolerates it, a *discrete* one strobes (134). ·
+  **(aj)** the clouds spawn with no reference to the land, so a seed parks its sky over the sea — **the lever is the
+  SPAWN, not the draw**: ~2x the visible weather at **zero new draw work** (Sky × Polish, doubly measured) ·
+  ⛔ **(ak) MEASURED-CAPPED and its prescription DEAD** (238 + 252) — **(aq) supersedes it; do not re-open the canopy** ·
+  **(s)** golden-hour contrast collapse (Sky × Polish — CONSTRAINED; ⚠ **both agents re-raised it at 252** —
+  *"land, beach, farms, parks and rooftops all collapse to the same terracotta"* — so it is **LIVE**, and it may be the
+  **same line of code as (aq)**) · **(y)** the scorched inland cluster (Nature × Polish) · Nature's **GARDEN staggered
+  beds**, held by (p) · **(ap)** the sea's foam is invisible at fit zoom (Water × Polish).
   **225: THE SHADOWS READ THE SUN.** `shadS` (every shadow routes through it) carries a per-frame sun vector
   (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity). ⚠ **Noon (t=0.415) is BYTE-IDENTICAL ⇒ a free
   dead-regime control for every shadow lap.** ⚠ **`SHAMT` must never reach 0 at night** — the residual patch is what
-  keeps every ped, tree and car from FLOATING. **(Bodies of the older laps were rotated at 227/242; WARNINGS only.)**
-  ⚠ **226: `census.mjs` DOES NOT FREEZE THE CLOCK** ⇒ tick-sensitive metrics (`solarRoofs`) **wobble ±2**; core
-  metrics unaffected. **To test whether an unintended metric move is YOURS, re-run the SAME FILE, not HEAD.**
+  keeps every ped, tree and car from FLOATING. ⚠ **226: `census.mjs` DOES NOT FREEZE THE CLOCK** ⇒ tick-sensitive
+  metrics (`solarRoofs`) **wobble ±2**; core metrics unaffected. **To test whether an unintended metric move is YOURS,
+  re-run the SAME FILE, not HEAD.**
   ⚠ **231: THREE PREDICATES, DON'T MIX THEM (body archived at 242).** `openFront`/`frontLoad` count **TALLT
   MEMBERSHIP** — wrong for anything drawn flat. **`groundLoad(x,y)` is the ground-level one**: sums drawn **HEIGHT**,
   reads **`c.th` never `c.h`**, and counts a `RAISEABLE` lot at `FUTUREH` — **an empty lot is not a clear view, it is
   a building that has not been built yet.** ⚠ **Aim a CAMERA by measured ink, never by any of the three (226).**
   ⚠ **Settled audits, bodies archived at 242 — the live warnings only.** **213:** `nightDeep()` is **pinned at 1 all
   day** (a trap for any NON-draw reader); the civic night-light audit is **DONE** — three lights are off the curve on
-  purpose (school janitor, hall clock face, parliament lantern), **do not "fix" them**. **211/210:** `frontLoad` is
-  the sharper `openFront`; **both ship as PREFERENCES, NEVER GATES (206)**, and `LITAMT` returns to **0.64** by the
-  small hours, so any gate `LITAMT > 0.64` defines a "night" that **ENDS BEFORE DAWN**. **137's "the ped/dog system is
+  purpose (school janitor, hall clock face, parliament lantern), **do not "fix" them**. **211/210:** both `frontLoad`
+  and `openFront` ship as **PREFERENCES, NEVER GATES (206)**, and `LITAMT` returns to **0.64** by the small hours, so
+  any gate `LITAMT > 0.64` defines a "night" that **ENDS BEFORE DAWN**. **137's "the ped/dog system is
   NON-REPRODUCIBLE" is DISPROVEN** ⇒ **People is probe-able like any domain**. **209:** the **GROUND PLANE is SPENT**
-  (216 spent the FACADES); its law — *when a domain looks interconnect-saturated, ask what LARGE SURFACES wear a
-  palette name that cannot carry the signal* — is in SKILL.md. **206:** the vacant lot is a **MIRAGE** (`EMPTY` with
-  ≥2 RES nbrs falls **85 → 6.5** by 2035, **0.0** with a road adjacent); development eats every gap.
-  **⚠ THE FIRE CA IS A GHOST — do not build "X answers the fire"** (`probe-firehost`; body archived at 242).
-  Ignition is year-gated ⇒ **at 2035 nothing can ignite at all**, and fire **never spreads**. **`T.MARKET` again.**
+  (216 spent the FACADES); its law — *when a domain looks interconnect-saturated, ask what LARGE SURFACES wear a field
+  that cannot carry the signal* — is in SKILL.md, **and (aq) is its next payout: the LIGHT is such a surface.**
+  **206:** the vacant lot is a **MIRAGE** (`EMPTY` with ≥2 RES nbrs falls **85 → 6.5** by 2035); development eats every
+  gap. **⚠ THE FIRE CA IS A GHOST — do not build "X answers the fire"** (`probe-firehost`): ignition is year-gated ⇒
+  **at 2035 nothing can ignite at all**, and fire **never spreads**. **`T.MARKET` again.**
   **⚠ THE `polish-tile` BACKLOG — measured cues that are NOT growth laps. Do not spend a domain's lap on one; they
   need a tile redesign, and each has a gate written.** (a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit zoom**
-  (0.5px rope, 5px cabins, hairline masts; body archived 242). ⚠ **NEVER RE-OPEN THE Z-ORDER — CLEARED BY PROBE TWICE**
-  (203/212); agents have mis-diagnosed it **SEVEN times** (217, 232, 237×2, 242). **That persistence IS the evidence:
-  the fault is LEGIBILITY** — **a hairline ornament needs a BODY** (215), not more strokes. *Do NOT re-try a body/halo
-  under the rope (measured — backfires) nor a lit top edge (impossible at 0.5px).* **Most-reported defect in the ledger.**
-  (b) **`university` is the ONLY of the twelve civics with no `LITAMT`** — the one `MAJORK` monument
-  pitch dark after sunset; every place to put the light failed (195; `probe-unilight.mjs` + `shot-uni.mjs`).
-  (c) **A parked service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204, cue n). (d) **The marsh reeds do not read** — seven sub-pixel strokes round the pool; its calendar is already computed and invisible (cue (i), 113).
+  (0.5px rope, 5px cabins, hairline masts). ⚠ **NEVER RE-OPEN THE Z-ORDER — CLEARED BY PROBE TWICE** (203/212); agents
+  have now mis-diagnosed it **EIGHT times** (217, 232, 237×2, 242, **252×2**: *"flat dark scratches over the rooftops"*).
+  **That persistence IS the evidence: the fault is LEGIBILITY** — **a hairline ornament needs a BODY** (215), not more
+  strokes. *Do NOT re-try a body/halo under the rope (measured — backfires) nor a lit top edge (impossible at 0.5px).*
+  **Most-reported defect in the ledger; a `polish-tile` lap is OVERDUE here.** (b) **`university` is the ONLY of the
+  twelve civics with no `LITAMT`** — pitch dark after sunset; every place to put the light failed (195). (c) **A parked
+  service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204). (d) **The marsh reeds do not
+  read** — seven sub-pixel strokes round the pool; its calendar is computed and invisible (cue (i), 113).
   **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban: additive spent (118), Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2 — not a clean arcade host); **Urban's next lap is Deepen/Polish only**. **Roof-furniture is CLOSED city-wide** (MID/RES tanks, TOWER gardens, COM plant 165, IND clerestory 173); the **GROUND PLANE is SPENT (209)** and **216 spent the FACADES** — only the **harbour apron** is left. ⚠ **"Urban is spent" was REFUTED from the SILHOUETTE side (232 → (af′), 237 → (al)) and that seam is now CLOSED TOO** (235 tower + **239** mid-rise). **The building look is DONE; Urban's next lap is neither massing nor facade.** (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
   **STILL banked for Sky: the SEASON word** — it reads the fast `year` and would strobe ~0.7 Hz (134), so it needs a
-  slow clock FIRST; don't add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac. ⚠ **236's front is
-  ALSO on `year` and is NOT that slow clock** — it cycles ~2 min on purpose, so a "weather word" would strobe too.)
-  **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by
-  respending their draws (123's stream-neutral trick) — but that REPEATS 123's mechanism, so vary it.**
-  **The asserts-less-than-the-code-knows tell is SPENT for agriculture** (orchard 129 + vineyard 139/148 + FARM 183,
-  off ONE shared `*Phase()`; **238 spent the last of it — the CANOPY**). **GARDEN is the last mute one** — cue **(p)**
-  OWNS it (⚠ **(al) is CLOSED and (ai) RETIRED — nothing outranks it now**). ⇒ **"Additive inventory spent" is a claim about a domain's ENTITIES, not its
-  SURFACES** (127 put picnics on PARK's 878 hexes), **and a Deepen that adds no element is the documented way past
-  additive saturation** (126). ⚠ **238 REFUTED this line's old claim that "the season cannot reach PARK"** — it
-  reaches PARK's *lawn* at full strength (52.7, the city's most seasonal surface); PARK is diluted by the 55% of a
-  park hex that is canopy + season-dead furniture. **Read (ak) before designing any seasonal vector.**
-  **124 closed the LAST banked cue that moved a census number; the census is VACUOUS for most vectors now — reach
-  for a probe.** Three laws govern step 1: **a cue is a POINTER, NOT A SPEC** (re-grep the seam before designing to
-  it); **a banked, measured finding outranks kind-rotation and cell-emptiness** (119); **saturation beats
-  kind-rotation** — when a domain's additive cell is spent, the KIND changes, not the domain (118).
+  **slow clock FIRST**; don't add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac. ⚠ **236's front is
+  ALSO on `year` and is NOT that slow clock.**) **Water's banked cue (123): the pier/lifeguard are still `rng()`-salted
+  — site them on a depth by respending their draws, but that REPEATS 123's mechanism, so vary it.**
+  **The asserts-less-than-the-code-knows tell is SPENT for agriculture** (orchard 129 + vineyard 139/148 + FARM 183;
+  **238 spent the CANOPY**). **GARDEN is the last mute one** — cue **(p)** OWNS it. ⇒ **"Additive inventory spent" is a
+  claim about a domain's ENTITIES, not its SURFACES** (127 put picnics on PARK's 878 hexes), **and a Deepen that adds no
+  element is the documented way past additive saturation** (126). ⚠ **THE SEASONAL-VEGETATION SEAM IS MEASURED-CLOSED
+  (238 + 252)** — PARK is at its ceiling, FOREST is 83% conifer, and the 66.4% mute area is **largely CORRECT.**
+  ⇒ **Do not open a canopy/vegetation seasonal vector; (aq) — THE LIGHT — supersedes it.**
+  **124 closed the LAST banked cue that moved a census number; the census is VACUOUS for most vectors — reach for a
+  probe.** Three laws govern step 1: **a cue is a POINTER, NOT A SPEC** (re-grep the seam before designing to it); **a
+  banked, measured finding outranks kind-rotation and cell-emptiness** (119); **saturation beats kind-rotation** — when
+  a domain's additive cell is spent, the KIND changes, not the domain (118).
   **Sky's additive/CA cells are TRAPS** (sky is not cellular; fog on terrain is already `rSea`/`fogAt`).
   **Cue (k) CLOSED (116/123).** Still steers: **run the tell FORWARDS** (make the string and the rule share ONE
   constant so they cannot drift — 123; 213's `civOpen()`). **⚠ A tick-rule cannot read the reach maps (151):**
@@ -186,42 +171,44 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **242** (seed 7's FAIL named the elevated rail's z-order — the **SEVENTH** raising and the seventh time WRONG,
   CLEARED BY PROBE TWICE, 203/212 — while the ASIDE both agents reached independently became the lap), **245** (⇒ cue
   **(ap)**; and its FAIL was real but was **MY CAMERA**, not the city — see (ap)).
-  ⚠ **237 INVERTED IT** — both agents' headline FAIL was right *and* correctly diagnosed. ⇒ **grade the FAIL by
-  MEASURING it; do not assume it is wrong.** Still weight an aside two agents reach independently above any verdict.
-  ⚠ **241: an agent attributed a QUANTITY difference to a STYLE one** — on a diff with **no draw code**, it called the
-  losing build's beams *"darker and thicker"* (it has **18% more track**). ⇒ **More of a thing reads as a heavier draw;
-  check your diff first.** ⚠ **243: a cue can bundle a REAL defect with a MISREAD — see (an).**
-  Perf ARC (refs as 202/207/212/217/222/227/237/242/247, directly comparable; per-step-back priors 202→227 archived at
-  233, 232's lap-detail at 236). **At 247: ARC vs `7e2ac2c` (177, 70 iters) day +19.0% / night +12.7%** — against
-  242's +18.6%/+12.8%, i.e. **the arc did NOT move over this lap either.** Arc rate ~**+0.2%/iteration**; diffuse, **NOT
-  accelerating**; **ACCEPTED — do NOT open a perf lap.**
+  ⚠ **237 AND 252 INVERTED IT** — the headline FAIL was **right**. At 252 both agents FAILed on *"winter looks like
+  summer"* and a probe **confirmed** them (66.4% mute), **but their FAIL's implied cause (the canopy) was the dead one
+  and their ASIDE's nouns (SUN, LIGHT) were the live one** — so the law holds in a *third* form: ⇒ **grade the FAIL by
+  MEASURING it; then build the fix from the agents' NOUNS, not from their diagnosis.** Still weight an aside two agents
+  reach independently above any verdict. ⚠ **241: an agent attributed a QUANTITY difference to a STYLE one** — it
+  called a build's beams *"darker and thicker"* (it has **18% more track**). ⇒ **More of a thing reads as a heavier
+  draw; check your diff first.** ⚠ **243: a cue can bundle a REAL defect with a MISREAD — see (an).**
+  Perf ARC (refs 202/207/212/217/222/227/237/242/247/**252**, directly comparable; priors archived at 233/236).
+  **At 252: ARC vs `7e2ac2c` (177, 75 iters) day +18.2% / night +12.4%** — vs 247's +19.0/+12.7 and 242's +18.6/+12.8:
+  **the arc has NOT MOVED ACROSS THREE STEP-BACKS** (fractionally *down*, within noise). **LAP (252 vs 247): day +1.3%
+  / night +0.1% — free**, consistent with 249–251 being predicate/harness laps (**251 shipped byte-identical**).
+  `probe-drawbudget` **unchanged** (`winBandR` 31.9% · `prismS` 29.1% · `hexTile` 12.1% · `bandS` 7.5%). Arc rate
+  ~**+0.2%/iteration**; diffuse, **NOT accelerating**; **ACCEPTED — do NOT open a perf lap.**
   🔑 **THE LAP TIMER OVER-READS; GRADE A LAP WITH `probe-drawbudget` BESIDE `perfab`, NEVER `perfab` ALONE** (216's law
-  on a step-back; 242's and 247's bodies archived at 251). **Twice now the interleaved LAP timer has reported a stable
-  +2–3% over a lap that MEASURABLY REMOVED draw work** — a cost with **no mechanism**. Only the deterministic object
-  count and the ARC could tell. `probe-drawbudget` (night) is **UNCHANGED from 207/232**: `drawCell` **94.1%**,
-  `winBandR` **32.3%**, `prismS` **28.2%**, `hexTile` **12.2%**, `bandS` **7.6%** ⇒ ~48% static terrain, **no hot ornament.**
+  on a step-back; bodies archived at 251). **Twice the interleaved LAP timer has reported a stable +2–3% over a lap that
+  MEASURABLY REMOVED draw work** — a cost with **no mechanism**; only the deterministic object count and the ARC could
+  tell. The night profile is **UNCHANGED from 207/232/252**: `drawCell` **94%**, then `winBandR`/`prismS`/`hexTile`/
+  `bandS` ⇒ ~48% static terrain, **no hot ornament.**
   ⚠ **A WORLD-CHANGING VECTOR IS NOT FREE just because its diff has no draw call — THE WORLD IS THE DRAW LIST**
   (222, body archived; the LAW is in SKILL.md). Price a CA/siting vector with `probe-drawbudget`, never by reading the diff.
-  ✅ **241 RAN IT IN REVERSE AND IT PAID: a world vector that REMOVES things gives draw work BACK.** Budgeting the
-  monorail measured **path objects −3.2% day / −2.9% night (seed 7)**, **0.00% (seed 42 — byte-identical, already under
-  budget)**. First give-back against the ~+0.2%/iter arc. ⇒ **Count the objects when a lap SUBTRACTS, not only when it adds.**
-  ⚠ **Cue (x) stands** (215's `seamVeg`: 692 path objects / 228 STROKES cost ~4x the fill model — a stroke-vs-fill sweep at equal path count is the best-supported open perf question).
-  **⚠ THE STANDING PERF SUSPECT (207, UNCHANGED at 232/237; NAMED not mandated per 198): THERE IS NO HOT ORNAMENT —
-  the arc is DIFFUSE**, which is why every per-lap gate reads it free. **No caching lap — 198's levers are CLOSED;
-  the only lever is FEWER objects.**
+  ✅ **241 RAN IT IN REVERSE AND IT PAID: a world vector that REMOVES things gives draw work BACK** (monorail budget:
+  path objects **−3.2% day / −2.9% night**). ⇒ **Count the objects when a lap SUBTRACTS, not only when it adds.**
+  ⚠ **Cue (x) stands** (215's `seamVeg`: 692 path objects / 228 STROKES cost ~4x the fill model — a stroke-vs-fill
+  sweep at equal path count is the best-supported open perf question). **⚠ THE STANDING PERF SUSPECT (207, UNCHANGED
+  at 232/237/**252**; NAMED not mandated per 198): THERE IS NO HOT ORNAMENT — the arc is DIFFUSE**, which is why every
+  per-lap gate reads it free. **No caching lap — 198's levers are CLOSED; the only lever is FEWER objects.**
   **The GAP-CLOSING trick (111/112/113) is SPENT in four domains; the TELL that replaced it (a label asserting what
-  the draw ignores) is CASHED 8x** (117, 122, 129, 140, 148, 183, **238**) **and its host keeps moving DOWN: 199 a
-  CONSTANT, 209 a COMMENT, 217 a HALF-FINISHED FIX, 238 a palette entry NO DRAW COULD REACH — see SKILL.md.** Still MUTE: `[T.IND]` (no calendar) and GARDEN
-  (season-frozen draw — needs a Deepen first; and see **(ak)**, which now owns the season question). ⚠ 122: a
-  tooltip vector needs a probe checking the claim against INDEPENDENTLY RECOMPUTED truth, not a screenshot.
-  **Kind-picking, compressed (full text rotated to `GROWTH-archive.md` at 204).** **Scale** is the coldest kind and a
-  structural lever, not a lap move. **New element** (last 127): a saturated domain cannot take one — but saturation is
-  of a domain's ENTITIES, so one can still land on a large untouched **surface** (127 put picnics on PARK's 878 hexes).
-  **Connect** (109/111/112/204): its trick is that it adds NO NEW OBJECT — it closes a gap between two that exist.
-  **107 was a New CA rule that ADDED NOTHING** — *auditing an existing rule for reachability* is a New-CA-rule move
-  available in every domain at zero content cost (`probe-market.mjs`; 204's `probe-firehost` found a ghost).
-  ⚠ **Nature × Connect is the row's GRAVEYARD — attempted and REVERTED three times** (46 geometrically impossible ·
-  88 no draw-only host · 101 found host *and* land and lost on **shape**). **Do not re-open it as a *corridor*.**
+  the draw ignores) is CASHED 9x** (117, 122, 129, 140, 148, 183, 238, **252**) **and its host keeps moving DOWN: 199 a
+  CONSTANT, 209 a COMMENT, 217 a HALF-FINISHED FIX, 238 a palette entry NO DRAW COULD REACH, and 252 TWO CONSTANTS
+  (`SUNUP`/`SUNDN`) NAMING AN EVENT THAT NEVER MOVES — see SKILL.md.** Still MUTE: `[T.IND]` (no calendar) and GARDEN.
+  ⚠ 122: a tooltip vector needs a probe checking the claim against INDEPENDENTLY RECOMPUTED truth, not a screenshot.
+  **Kind-picking, compressed (full text in `GROWTH-archive.md`, 204).** **Scale** is the coldest kind — a structural
+  lever, not a lap move. **New element** (last 127): a saturated domain cannot take one, but saturation is of a domain's
+  ENTITIES, so one can still land on a large untouched **surface**. **Connect** (109/111/112/204): its trick is that it
+  adds NO NEW OBJECT — it closes a gap between two that exist. **107 was a New CA rule that ADDED NOTHING** — *auditing
+  an existing rule for reachability* is available in every domain at zero content cost (`probe-firehost` found a ghost).
+  ⚠ **Nature × Connect is the row's GRAVEYARD — REVERTED three times** (46 · 88 · 101). **Do not re-open it as a
+  *corridor*.**
   **Cue (e½) CLOSED (102).** Nature's cold cells are Connect (leave it) and Scale. **(ak) is Nature's next lap.**
 - **⚠ SCREEN SPACE IS SPOKEN FOR (200 — rotated to the archive at 237; the law is in SKILL.md).** Probes read
   `getImageData()` and are **blind to the HUD**; `.placard` owns the top-left, `.census`/`.controls` the bottom
@@ -404,95 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 244 entries before Iteration 242 live in
+> **Archive:** the 245 entries before Iteration 243 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 242 — the twenty-eighth step-back finds the clouds shading the open sea (2026-07-13) [holistic step-back]
-
-**Vector** — the 28th step-back (overdue; the header flagged it). Whole-city read at 2 seeds × 3 lights × 2
-calendars, the perf lap + arc, the draw budget — then FIXED the one defect both agents found.
-
-**The read.** Seed 42 PASS, seed 7 FAIL. Seed 7's headline FAIL was the **elevated rail's z-order** — the *seventh*
-time that has been raised and the seventh time it is wrong (CLEARED BY PROBE TWICE, 203/212; it is a LEGIBILITY
-defect, polish-tile's cue (a)). But **both agents, blind, on different seeds, unprompted, in passing** reported the
-same thing: *"dark elliptical blobs sitting on the open ocean with no cloud above them — they look like holes in the
-water"* (42) · *"dark oval blobs on the water with no cloud above them (cloud shadows without their clouds)"* (7).
-**212's aside law, tenth payout — and its purest: the FAIL was the wrong diagnosis, the ASIDE was the lap.**
-
-**The defect.** The cloud shade was gated
-`if(inB(cl.x|0,cl.y|0)){ /* shade only falls where there is ground to catch it */ }`.
-**`inB()` is the PLATE, and the plate runs out to sea** — so every cloud drifting over the ocean painted a dark
-ellipse straight onto the water, ~250px below the puffs that cast it. 199/209's tell (a predicate that cannot
-deliver what its comment asserts), and it had been there for the artifact's whole life.
-🔑 **A NEW HOST FOR THE TELL, AND THE LAW OF THIS LAP: A LATER DRAW CITED AN EARLIER ONE AS AUTHORITY FOR A STANDARD
-IT NEVER ENFORCED.** The rainbow (~L7515) builds a careful `ROWMIN`/`ROWMAX` rim test under the comment *"it fades
-out as the shower leaves the plate (**cf. the cloud shade above — no ground, no bow**)"* — **citing as precedent a
-gate that was never doing the job.** ⇒ **When code cites a neighbour as the precedent for an invariant, go read the
-neighbour. A cited standard is not an enforced one.** (Promoted to SKILL.md.)
-
-**Change** — `shadeGround(cl)` samples the shade ellipse's **own footprint** (5×3 cells, sized from `30*cl.s/CW` ×
-`12*cl.s/ROWY`) and returns the **land fraction**, via `WETSET` — the artifact's one definition of wet, reused, not
-re-rolled. Alpha scales by `min(1, 2·frac)`: **half a footprint of land casts a full shadow**, so a cloud standing
-over the coast is not dimmed on its land side; only a cloud well out to sea fades away. The damp rain-patch scales
-with it too (rain-wet ground on the open ocean is the same bug). `inB(centre)` is **kept** as a precondition.
-
-⚠ **THE FIRST CUT WAS WRONG AND THE CONTROL CAUGHT IT.** Gating on the footprint *alone* (dropping `inB`) let clouds
-whose **centre is off-plate** cast shade for the first time — the ellipse is **not clipped to the rim**, so it would
-spill into the void: a *new* floating artifact, the very class the agents flagged. The probe's land control went
-**+66% (up)** — impossible for a change that only ever multiplies alpha by a fraction ≤1 — which is what exposed it.
-**A control that can only move one way, moving the other way, is the cheapest bug detector in the harness.**
-
-**Probe** (`probes/probe-cloudshade.mjs`) — the claim in the **viewer's units** (205): *dark ink is landing on sea
-pixels*. The suppression family (226 draw / 230 decision / 234 colour): render as shipped, re-render with **only the
-shade's fill suppressed** (its `rgba(36,30,20,…)` is unique in the file) ⇒ the difference **IS** the shade layer, in
-ONE page, **floor exactly 0**, off the composited canvas (occlusion free). The **water mask** comes from 234's
-palette suppression (loud-paint the sea's `BASE` entries, flush `CCACHE`, re-render), so it is derived per-build and
-the probe runs **unchanged on HEAD and patch** with no cross-build floor. HUD masked (200).
-
-| | shade ink ON SEA | on LAND (control) | floor |
-| --- | --- | --- | --- |
-| HEAD (241) | **165,320** | 160,620 | 0 |
-| patch | **27,334 (−83%)** | 136,866 | 0 |
-
-Seed 42 goes to **exactly 0** sea ink (836 px → 0). Seed 7 (6/7 clouds off-land — cue (aj)) **72,003 → 8,519** ink.
-**The control holds where it must:** on seed 1234 (clouds mostly inland) the land shade is **unchanged — 2,519 px,
-49,259 → 49,255**. The residual sea ink is coastal spill *continuous with* a land shadow, which reads as a shadow,
-not as a hole — and both agents counted it as zero blobs on open water.
-
-**Census** — PASS, 0 page errors. Tile histogram **empty**, every core metric +0 (`greenRoofs +3` is 226's
-documented tick-wobble). Correct and expected for a draw-only change, and exactly why the lap rests on the probe.
-
-**Perf** — **free**: path objects day 111,389 → 111,469 (**+0.07%**), night 140,189 → 140,165 (**−0.02%**), inside
-the probe's own run-to-run wobble. No new path objects; the change is alpha-only plus ~105 `cellAt` lookups/frame.
-🔑 **AND THE STEP-BACK'S OWN PERF GATE IS 216'S LAW AGAIN.** The interleaved LAP timer vs 237 read a *stable* **day
-+2.4% / night +2.2%** — which, over a lap in which **241 REMOVED draw work**, has **no mechanism**. The object count
-disagreed: **110,152 → 111,389 day (+1.1%)**, **138,970 → 140,189 night (+0.9%)** — dead on the ~+0.2%/iter arc — and
-the 177-ref **ARC was flat** (+18.6%/+12.8% vs 237's +17.2%/+13.8%), corroborating the smaller number. **The lap
-timer over-read by ~2x.** ⇒ **Grade a lap with `probe-drawbudget` BESIDE `perfab`, never `perfab` alone.**
-
-**Visual** — blind A/B, **per file name** (239), **crossed mapping** between seeds (238), asked to **COUNT** blobs
-(108: locate, don't judge — a checkable answer). Both agents picked the patch. Seed 7: `sb7` **3 blobs** at
-(0.92,0.55), (0.87,0.44), (0.81,0.71) → `fix7` **0**. Seed 42: `sb42` **1 blob** at (0.945,0.612) → `fix42` **0**.
-Neither found any shadow spilling off the plate; neither lost a land shadow. Seed 7's `VISUAL: FAIL` **names pristine
-HEAD as the defective build** — the strongest form of a pass this gate can produce.
-⚠ **Side-effect, honestly reported: MARSH and KELP no longer catch cloud shade** (both are in `WETSET`). Both agents
-read it as an improvement — the kelp went **teal instead of olive-brown** — and it is consistent with the coast's
-long history of compounding dark. Noted rather than tuned.
-
-**Banked from the asides** — 🔴 **(an)** the black cables running out over the beach and ending in the sea:
-**re-reported by BOTH agents on BOTH seeds**, still **unidentified**, now the most-reported *undiagnosed* defect in
-the ledger · **(ao)** the rain shafts and rainbow are not bounded by the ground (the same family this lap just fixed)
-· **(ak)** *both* agents, independently: **winter reads as "lusher", not as winter** — the season is a
-hue-on-vegetation signal only, and the beach crowd still sunbathes in January · **(ag)** reconfirmed (night parks
-out-brighten the lit streets; the sand "glows like it's still dusk") · **(s)** golden-hour contrast collapse, raised
-now at a **FIFTH** step-back.
-
-**Verdict** — **FIXED.** The city is otherwise whole: no z-order tears, no blown-out colour, no broken geometry, the
-night frame is the one that "has aged best", and the arc is flat. One 240-iteration-old defect, found by an aside,
-closed by a probe with an honest zero.
 
 ## Iteration 243 — the cable car went for a swim (Transport × Polish, FIXED)
 
@@ -1198,3 +1101,72 @@ A probe that could not see a lit window generated a FAIL, the FAIL became the lo
 was re-confirmed twice **by the same broken instrument**, and its prescription — dim the sand — would
 have damaged 214's guard by 25% to buy a number no viewer can see. **Cue (ag) is CLOSED, refuted on
 every count.**
+
+## Iteration 252 — the sun keeps no calendar (2026-07-14) [holistic step-back, 30th]
+
+**Vector** — the 30th whole-city step-back. No artifact change: `solvista.html` is
+**byte-identical to HEAD**. The lap's output is a measurement, a refuted cue, and a new
+#1 cue with its traps pre-named.
+
+**Gates**
+- **Census: PASS.** Tile histogram empty, as it must be for an untouched file.
+- **Perf LAP (vs 247, `481602e`): day +1.3% / night +0.1% — free.**
+- **Perf ARC (vs 177, `7e2ac2c`, 75 iters): day +18.2% / night +12.4%**, against 247's
+  +19.0/+12.7 and 242's +18.6/+12.8. **The arc has not moved across three step-backs**
+  (fractionally down, within noise). `probe-drawbudget` unchanged — `winBandR` 31.9%,
+  `prismS` 29.1%, `hexTile` 12.1%, `bandS` 7.5%; ~48% static terrain, **no hot ornament**.
+  Consistent with 249–251 being predicate/harness laps (251 shipped byte-identical).
+  **ACCEPTED — no perf lap.**
+- **Visual: FAIL on both seeds** — and the FAIL was **right**, which inverts the usual
+  reading (212). Both agents, independently, on both seeds: winter is indistinguishable
+  from summer, and the golden grade flattens the plate to one terracotta value.
+
+**What the agents actually said (their nouns, per 228/235)**
+> *"No snow, no bare trees, **no cooler light**, same sky, **same sun**, same ocean."* (s42)
+> *"No desaturation, **no low sun**, no bare canopy across the forests."* (s7)
+> Both could find **only** "two farm patches turning brown."
+
+**The measurement** (`probes/probe-seasonarea.mjs` — 238's AREA form; `probe-season`'s
+one-centre-pixel sample is the broken one):
+
+    MUTE AREA at the dry peak (<25/441):  893 / 1345 = 66.4% of vegetated hexes
+    PARK      562 hexes (41.8%)   22.9   <-- MUTE, the biggest vegetated surface
+    FOREST    236 hexes (17.5%)   19.8   <-- MUTE
+    FARM      112 hexes            46.6
+    SHOREPARK 294 hexes            44.4
+    ROAD      control               3.5   <-- honest zero
+
+So **two-thirds of the city's greenery does not keep a calendar**, and the agents were
+describing this table exactly.
+
+**⚠ …and the obvious fix is DEAD, which is the half that matters (238's coverage law).**
+Before designing anything I asked what fraction of each hex a palette change can even
+*paint*: PARK is **46.5% lawn / 10.1% canopy / 43% season-dead furniture**, and its lawn
+is *already* fully seasonal — SHOREPARK is 88.7% lawn and moves 44.4, and PARK's 22.9 is
+precisely that number diluted. FOREST's hex is only **17.3% deciduous canopy**; the rest
+is **conifer, which is correctly evergreen**. 238 had already measured that a canopy fix
+moves PARK by ~2 and *"no design could have done better."* ⇒ **The 66.4% is largely
+CORRECT. (ak)'s prescription stays dead, and I did not spend the lap on it** — this is
+251's law obeyed rather than re-learned: a loud, twice-confirmed cue whose prescribed fix
+damages nothing and buys nothing.
+
+**🔑 THE FINDING — the defect is the LIGHT, and the ledger had never grepped it.**
+`applySeason` touches **only** the terrain palette (`grass`/`grassDk`/`meadow`/`canopy`/
+`canopyLt`/`lawn`/`turf`). The sun's position is `sunP=(dayT-SUNUP)/(SUNDN-SUNUP)` — **a
+pure function of the hour, with no `year` term anywhere** — and `SUNUP=0.05`/`SUNDN=0.78`
+are **hard-coded constants**. **The sun rises at the same hour, sets at the same hour, and
+climbs to the same altitude on every day of the year**; the sky and sea carry no seasonal
+term at all. This is **199's tell hosted on two constants** (names asserting *when the sun
+comes up*, whose values cannot vary) and **209's law** (the large surface wearing a field
+that cannot carry the signal — here, the **illumination**, i.e. every pixel in the frame).
+
+Both agents named SUN and LIGHT. The loop kept spending laps on vegetation **because that
+is where its instrument pointed** — `probe-seasonarea` can only see tiles.
+
+**Verdict** — **FIXED (the ledger's aim)**; artifact **byte-identical to HEAD**. Cue
+**(aq)** banked as #1 with all five traps pre-named (⛔ *do not lower the sun* — that is
+cue (s)'s and 200's placard trap; the lever is **colour/warmth**, not altitude; centre it
+on the dry peak per 245 for a byte-identical fixed point). Per 198, the step-back **names
+the suspect, not the fix.** Also: the elevated transit took its **8th** agent
+misdiagnosis (z-order, cleared by probe twice) — that backlog item is now overdue a
+`polish-tile` lap.
