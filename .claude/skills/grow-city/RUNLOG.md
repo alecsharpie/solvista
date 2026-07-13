@@ -180,4 +180,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 247  People & activity × Deepen DEEPENED            79m48s   $19.67 481602e
 ✔ Iter 248  Sky × Polish               FIXED               51m23s   $12.91 684464e
 ✔ Iter 249  Transport × Deepen         DEEPENED            28m38s   $10.63 aa9f75a
+✔ Iter 250  Civic & culture × Deepen   DEEPENED            37m11s   $12.37 59bc73c
 ```
