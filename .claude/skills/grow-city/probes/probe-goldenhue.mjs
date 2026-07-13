@@ -42,8 +42,13 @@ const SEEDS = [7, 42, 1234];
 const WARP = 61;
 const LIGHTS = [['day', 0.30], ['golden', 0.68], ['night', 0.92]];
 const KINDS = ['PARK', 'FOREST', 'ROAD', 'RES', 'MID', 'TOWER', 'COM', 'FARM', 'BEACH', 'WATER'];
-/* the pairs whose distinctness the agents said golden hour destroys */
-const PAIRS = [['PARK', 'ROAD'], ['PARK', 'RES'], ['RES', 'ROAD'], ['FARM', 'ROAD'], ['FOREST', 'MID']];
+/* the pairs whose distinctness the agents said golden hour destroys.
+   BEACH vs ROAD is 214'S OWN HEADLINE PAIR -- "the sand and the asphalt literally become the
+   same colour" -- and this probe never carried it, which is a hole: it is the exact collapse
+   the whole wash ladder exists to prevent, and it is the GUARD any change to the sand's night
+   luminance must clear (iter 251 dims the night sand to satisfy 222's ordering invariant, and
+   the way to get that wrong is to dim it back into the asphalt). A GUARD, never the score -- 221. */
+const PAIRS = [['PARK', 'ROAD'], ['PARK', 'RES'], ['RES', 'ROAD'], ['FARM', 'ROAD'], ['FOREST', 'MID'], ['BEACH', 'ROAD']];
 
 const rgb2hc = ([r, g, bb]) => {
   const mx = Math.max(r, g, bb), mn = Math.min(r, g, bb), c = mx - mn;
@@ -84,22 +89,56 @@ for (const seed of SEEDS) {
       .filter(s => s.sx > 60 && s.sx < innerWidth - 60 && s.sy > 60 && s.sy < innerHeight - 60)
       .slice(0, 300);
 
-    const out = {};
+    /* THE HEX'S OWN BOX, NOT ITS CENTRE PIXEL (iter 251, closing 238's defect in THIS probe).
+       This probe sampled getImageData(sx, sy, 1, 1) -- ONE pixel, at the hex centre -- for its
+       whole life. For a flat surface (sand, asphalt) that is fine. For a BUILDING it is a
+       catastrophe: the centre pixel of a mid-rise lands on its ROOF, so the "night luminance"
+       of every lit building type was measured WITHOUT EVER SAMPLING A LIT WINDOW. That is what
+       made the ordering invariant below claim, for 29 iterations, that the beach out-glows the
+       lit city -- it was comparing the beach's sand to a building's roof. */
+    let hexW = 0;
+    for (const k of KINDS) {
+      const m = new Map(sites[k].map(s => [s.x + ',' + s.y, s]));
+      for (const s of sites[k]) {
+        const n = m.get((s.x + 1) + ',' + s.y);
+        if (n) { hexW = Math.abs(n.sx - s.sx); break; }
+      }
+      if (hexW) break;
+    }
+    const R = Math.max(2, Math.round(hexW * 0.42 * dpr));   /* inside the hex, clear of neighbours */
+    const W = cvs.width, H = cvs.height;
+
+    const out = { hexW, box: {} };
     for (const [nm, t] of LIGHTS) {
       __setTime(t);
       lastSky = 0; render();             /* 204: force the sky, frozen clock won't */
-      out[nm] = {};
+      const img = ctx.getImageData(0, 0, W, H).data;
+      out.box[nm] = {};
       for (const k of KINDS) {
-        out[nm][k] = sites[k].map(s => {
-          const d = ctx.getImageData(Math.round(s.sx * dpr), Math.round(s.sy * dpr), 1, 1).data;
-          return [d[0], d[1], d[2]];
+        out.box[nm][k] = sites[k].map(s => {
+          const cx = Math.round(s.sx * dpr), cy = Math.round(s.sy * dpr);
+          let r = 0, g = 0, bl = 0, n = 0; const lums = [];
+          for (let yy = Math.max(0, cy - R); yy <= Math.min(H - 1, cy + R); yy++)
+            for (let xx = Math.max(0, cx - R); xx <= Math.min(W - 1, cx + R); xx++) {
+              const i = (yy * W + xx) * 4;
+              r += img[i]; g += img[i + 1]; bl += img[i + 2]; n++;
+              lums.push(img[i] * 0.30 + img[i + 1] * 0.59 + img[i + 2] * 0.11);
+            }
+          if (!n) return [0, 0, 0, 0];
+          /* the MEAN colour of the hex (its identity) ...and the ENVELOPE of its light.
+             224: for anything the eye reads as "bright", the viewer's statistic is the
+             EXTREME, not the mean -- a building reads as LIT because of its windows, not
+             because its hex average is high. p90 is what a lit pane does to a facade. */
+          lums.sort((p, q) => p - q);
+          return [r / n, g / n, bl / n, lums[Math.floor(lums.length * 0.90)]];
         });
       }
     }
     return out;
   }, { KINDS, LIGHTS, seed, WARP });
 
-  for (const [nm] of LIGHTS) for (const k of KINDS) acc[nm][k].push(...res[nm][k]);
+  for (const [nm] of LIGHTS) for (const k of KINDS) acc[nm][k].push(...res.box[nm][k]);
+  if (seed === SEEDS[0]) console.log(`\n(area sample: hex is ${res.hexW.toFixed(1)}px on screen; each instance read over its own box, not one centre pixel — iter 251)`);
 }
 await b.close();
 
@@ -148,24 +187,41 @@ console.log('      221: separation is a GUARD, never the SCORE -- it can reward 
    BRIGHT ONES. Anything the sun has stopped falling on must sit below them. */
 const LIT   = ['TOWER', 'COM', 'MID'];        /* lit windows after dark */
 const UNLIT = ['BEACH', 'PARK', 'FOREST', 'FARM', 'ROAD', 'WATER'];   /* ground; nothing lights these */
-const lumOf = k => rgb2hc(M[k]['night']).l;
+const lumOf = k => rgb2hc(M[k]['night']).l;                       /* the hex's MEAN colour */
+const envOf = k => { const a = acc['night'][k]; return a.length ? a.reduce((s, p) => s + p[3], 0) / a.length : 0; };
 
+/* ...AND IT MUST BE SCORED ON THE ENVELOPE, NOT THE MEAN (iter 251).
+   The invariant above is right, and for 29 iterations it was measured with the wrong statistic.
+   A building reads as LIT because of its WINDOWS -- a handful of 200+ pixels against a dark
+   wall -- not because its hex AVERAGE is high. Averaging throws away exactly the information
+   that makes it read as lit, so a flat pale surface (sand: uniform, mean == envelope) can
+   "out-brighten" a lit high-variance one on the MEAN while looking obviously dimmer to any eye.
+   That is precisely what happened: on the mean, BEACH 96 >= MID 95 = FAIL, and the prescribed
+   fix (dim the sand) costs BEACH<->ROAD 24 -> 18, walking the sand back toward 214's asphalt to
+   buy a number no viewer can see. Two blind agents, two seeds, crossed A/B, measured the frame
+   themselves and said the opposite: the shoreline is "a quiet dark ribbon" at ~90 against a frame
+   max of 237-244 from the tower windows. THE EYE READS THE EXTREME (224). So the score is the
+   p90 -- what the lit panes actually put on the facade -- and the mean is kept as a diagnostic. */
+const ranked = [...LIT, ...UNLIT].sort((a, bb) => envOf(bb) - envOf(a));
 console.log('\nNIGHT ORDERING INVARIANT: no UNLIT surface may out-brighten the LIT ones');
-console.log('(the cross-surface gate no single rung of the wash ladder can see -- 222)\n');
-const litMin   = Math.min(...LIT.map(lumOf));
-const litLo    = LIT.find(k => lumOf(k) === litMin);
-const ranked   = [...LIT, ...UNLIT].sort((a, bb) => lumOf(bb) - lumOf(a));
-console.log('  night luminance, brightest first:');
-console.log('    ' + ranked.map(k => `${LIT.includes(k) ? '*' : ' '}${k} ${Math.round(lumOf(k))}`).join('  '));
+console.log('(222\'s law -- scored on the ENVELOPE (p90) since 251, because the EYE READS THE EXTREME)\n');
+console.log('  night p90 luminance (the light a surface actually shows), brightest first:');
+console.log('    ' + ranked.map(k => `${LIT.includes(k) ? '*' : ' '}${k} ${Math.round(envOf(k))}`).join('  '));
 console.log('    (* = lit)');
-const breaches = UNLIT.filter(k => lumOf(k) >= litMin);
-console.log(`\n  dimmest LIT surface: ${litLo} ${Math.round(litMin)}`);
+console.log('  ...and the same surfaces by MEAN (the DIAGNOSTIC -- a lit building averages its dark wall in):');
+console.log('    ' + [...LIT, ...UNLIT].sort((a, bb) => lumOf(bb) - lumOf(a))
+  .map(k => `${LIT.includes(k) ? '*' : ' '}${k} ${Math.round(lumOf(k))}`).join('  '));
+
+const litMin   = Math.min(...LIT.map(envOf));
+const litLo    = LIT.find(k => envOf(k) === litMin);
+const breaches = UNLIT.filter(k => envOf(k) >= litMin);
+console.log(`\n  dimmest LIT surface: ${litLo} ${Math.round(litMin)}  (by envelope)`);
 if (breaches.length) {
   for (const k of breaches)
-    console.log(`  BREACH: ${k} ${Math.round(lumOf(k))} >= ${litLo} ${Math.round(litMin)}  -- an unlit surface out-glows the lit city`);
+    console.log(`  BREACH: ${k} ${Math.round(envOf(k))} >= ${litLo} ${Math.round(litMin)}  -- an unlit surface out-glows the lit city`);
   console.log('\nVERDICT: FAIL -- the night ground out-glows the lit city');
 } else {
-  const head = Math.min(...UNLIT.map(k => litMin - lumOf(k)));
+  const head = Math.min(...UNLIT.map(k => litMin - envOf(k)));
   console.log(`  brightest UNLIT surface clears it by ${head.toFixed(0)} -- ordering holds`);
   console.log('\nVERDICT: PASS -- the lit city is the bright thing after dark');
 }

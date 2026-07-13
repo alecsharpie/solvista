@@ -17187,3 +17187,92 @@ it catchable: the agents md5'd the paths I named.
 
 **Verdict: SHIPPED.**
 
+## Iteration 241 — three loops, each twice the width of the city it served (2026-07-13) [Transport × Polish]
+
+**Vector.** Transport × Polish, taking cue **(am)** — 240's agent, unprompted on a PASSing frame:
+*"Long straight grey beams criss-cross nearly the whole diorama in big X patterns, flattening the
+isometric read... the mid-city is closer to visual noise."* The ledger called it "the single
+most-reported defect", raised from two sides (polish-tile's (a) calls the same structure *sub-pixel
+and illegible*).
+
+**The cue's spec was wrong, and the probe killed it three times.** `probes/probe-railink.mjs`
+isolates the elevated transit by suppressing its own draw fns and re-rendering **in one page**
+(226/230/234's suppression family — floor **exactly 0** on every row, occlusion counted for free off
+the final composited canvas, and build-agnostic so it runs unchanged on HEAD and patch). Against the
+**house standard** (226 — the control is not a threshold I chose, it is *an ordinary building*,
+isolated with the same rig):
+
+- **"The beam is too bright" — FALSE.** Its ink sits at the **33rd percentile** of the building
+  faces it flies over; its brightest decile cuts **dTop +37 / dBot −53**, against a building's
+  **+57 / −55**. **In band.** Dimming it would only have served polish-tile's *illegible* cue a
+  second helping. ⚠ Note the mean contrast is **−9** and hides all of this — **loudness lives in
+  the TAILS**; a mean-only read acquits it.
+- **"The gondola is the culprit" — FALSE.** Monorail **33,497 px** vs gondola **1,004** on seed 7. 33x.
+- **"It has no visible legs" — FALSE.** **41.5%** of the monorail's ink already *is* pylons.
+
+Every per-pixel property measured **in band**. The only quantity out of band was **EXTENT** — and
+that is a property of the **network**, not of any draw.
+
+**Change (the planner, not the draw — the diff contains not one drawing call).** `seedMono`'s
+`minLen` was **fresh noise on every line (32..81)**, and the line COUNT (1..3) was rolled by a
+**different rule that never read it**. Two independent lotteries, multiplied, with nothing in the
+system aware of how much elevated track was already up: measured across 12 seeds, total track ran
+**28..291 cells — a 10.4x spread**, on a plate only ~66 cells wide. Seed 7 — *the seed that drew the
+complaint* — was the worst of the twelve: three loops of 79/102/110, **each roughly twice the
+diameter of the city it served**. Now one city-wide budget (`RAILCAP=130`) is **shared across the
+planned lines**: a one-line city still earns a grand circuit, a three-line city gets three compact
+ones. `wander` (was a flat `+30` on every line) is now the line's own slice too.
+
+**Census.** PASS. **`pop`/`roads`/`developed` +0 exactly** — byte-flat, because the monorail plans
+off its own private PRNG (`seedNum^0xC17A`) and `monoSet` is read by nothing but the planner and the
+draw. `monoLines` **11, unchanged — no line was deleted**; `stations 55→46` and `monorail 25→19`
+fall in proportion to shorter loops, which is the intent.
+
+**Probe (seed 7, day).** mono ink **33,497 → 20,072 px (−40%)**; beam width **36.4 → 23.8**; longest
+single line across 12 seeds **133 → 73**; total max **291 → 175**; spread **10.4x → 6.3x** (and the
+residue is all at the LOW end, which nobody complains about). **Seed 42 byte-identical** — it was
+already under budget, so the fix touches only the fat tail. Columns crossed moves only **57% → 53%**:
+three loops sited in three quarters still *touch* most of the frame even when compact. **Said plainly:
+this cut the ink hard and the criss-cross geometry only somewhat.**
+
+**Perf.** Path objects **−3.2% day / −2.9% night (seed 7)**, **0.00% (seed 42)**, −0.6% (1234).
+222's law run in reverse: a world vector that *removes* things is a perf **credit**.
+
+**Visual.** Two agents, blind, on a **crossed** A/B mapping (238) and asked **per file path** (239),
+both picked the patch. Seed 7: HEAD *"long unbroken diagonals running corner-to-corner… two runs
+cross into clear X's"*; patch *"chopped into shorter segments that close into local circuits…
+noticeably fewer beam-on-beam crossings."* It put 240's sentence on **HEAD**. Both confirmed the
+monorail **survived** — beams, pylons and trains legible, *"a reduction, not a stub"* — and found no
+z-order tears, floating tiles or blown-out colour, day or night.
+
+⚠ **One agent confabulated a cause**: it reported HEAD drawing *"the beams darker and thicker, with
+denser heavier pylons"* on a diff with **no draw code in it**. Its *perception* was right (HEAD has
+18% more track ⇒ 18% more beam and pylons in frame); its *cause* was invented. 212's law, new host.
+
+**Rejected, and worth the warning: bounding the loop's RADIUS.** Homing the moment the railhead is
+`R` hexes from its own first pylon *sounds* like the exact lever for "it spans the plate" — it is a
+trap, and it is measured: a line then runs straight out and straight back, which is not a loop but a
+**stub** (every line collapsed to ~20 cells; mean track 127 → 50, the feature gutted). **A loop's
+radius and its length are coupled**; the route home costs ~65% again, which is where the first cut of
+this budget leaked (a one-line city homed at 107 cells and still landed at 176). Divide the share by
+that overshoot instead.
+
+**Verdict: SHIPPED.** ⚠ **polish-tile's (a) — the sub-pixel rope/masts — is a DIFFERENT and still-open
+cue. 241 did not touch the draw.**
+
+
+<!-- header bullets rotated out of GROWTH.md at iteration 251 (perf lap-detail for 242 and 247;
+     their standing conclusion — "the lap timer over-reads; grade with probe-drawbudget beside
+     perfab, never perfab alone" — is kept in the maintained header). -->
+
+**247 IS THE SECOND GIVE-BACK, AND IT CONFIRMS 242'S LAW AGAIN.** The lap timer vs 242 read day **+2.5%** / night
+**+0.4%** — which, over a lap containing a fix, a byte-identical worst case, **245's mean held by construction** and a
+revert, has **no mechanism**. Path objects: **111,389 → 111,005 day (−0.3%)** and **140,189 → 139,629 night (−0.4%)** —
+the lap **REMOVED** draw work. ⇒ **The day timer over-read AGAIN; only the object count and the ARC could tell.**
+
+**242 IS 216'S LAW PAYING OUT ON A STEP-BACK, AND IT IS WHY THE LAP GATE MUST NOT BE READ ALONE.** The
+interleaved LAP timer vs `8aa998a` (237) read a *stable* **day +2.4% / night +2.2%** — which, over a 5-iteration
+lap in which **241 REMOVED draw work**, has **no mechanism**. The deterministic instrument disagreed: path objects
+went **110,152 → 111,389 day (+1.1%)** and **138,970 → 140,189 night (+0.9%)** — dead on the ~+0.2%/iter arc — and
+the 177-ref arc was flat, corroborating the smaller number. ⇒ **The lap timer over-read by ~2x, and only the
+object count and the ARC could tell.** Grade a lap with `probe-drawbudget` **beside** `perfab`, never `perfab` alone.

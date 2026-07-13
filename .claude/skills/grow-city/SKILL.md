@@ -684,6 +684,26 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A GATE BREACHED BY A HAIR, WHOSE PRESCRIBED FIX COSTS A HEALTHY GUARD, IS A GATE TO SUSPECT — AND "IS IT LIT?"
+  IS AN *EXTREME*, NEVER A MEAN (iter 251).** 224 says a SILHOUETTE's statistic is the `max`; 251 is the same error on
+  the *brightness* axis, and it had been steering the loop's **#1 🔴 cue for 24 iterations**. 222's invariant (*no UNLIT
+  surface may out-brighten the LIT ones*) is right, and it was scored on each tile's **MEAN** — but **a building reads
+  as lit because of its WINDOWS**, a handful of 240-luminance panes against a dark wall, *not* because its hex average
+  is high. A mean folds the dark body back in, so a **flat pale surface** (sand: uniform, mean == envelope) can
+  "out-brighten" a lit high-variance one **while looking obviously dimmer to any eye**. It duly did: `BEACH 96 >= MID
+  95` ⇒ FAIL. ⚠ **AND THE PROBE HAD NEVER ONCE SAMPLED A LIT WINDOW** — it read `getImageData(sx,sy,1,1)`, **one pixel
+  at the hex centre**, which on a building lands on its **ROOF** (238's point-sample defect, **recursing a fourth
+  time**, inside a probe the header already warned about). The invariant was comparing *the beach's sand to a
+  building's roof*. Re-scored on the **p90 envelope** over the hex's **area**, **pristine unmodified HEAD PASSES by
+  21** (`*TOWER 131 *MID 123 *COM 119 | BEACH 98`), and the same fix reveals the point sample was distorting the *hue*
+  guards too (PARK's *"26° off its daylight self"* is **1°** in area units). ⇒ **Two tells, and either one should stop
+  you: (a) your gate FAILS by ~1 unit and the fix it prescribes DAMAGES something measured and healthy** (dimming the
+  sand to satisfy the mean cost `BEACH↔ROAD` **24 → 18**, walking it back toward 214's asphalt — *the cure was the
+  disease*); **(b) blind agents MEASURE THE FRAME and report the opposite of your probe** (both said the shore is *"a
+  quiet dark ribbon"* at ~90 against a **frame max of 237–244**). **When a probe and an agent disagree, ask what each
+  is LOOKING AT before re-running either** (200/205) — here the probe was looking at a roof. This is **229's law
+  arriving on an INVARIANT instead of a serving condition**: the cue was *re-confirmed twice*, and every
+  re-confirmation used the same broken instrument. **A defect only your harness can see is a defect in your harness.**
 - **WHEN THE VECTOR IS "MAKE X VARY", HEAD'S *CONSTANT* IS A FREE, EXACT BASELINE — AND IF THE FEATURE HANGS OFF A
   THING THE WORLD BUILDS AT A KNOWN YEAR, THE ERA BEFORE IT IS A FREE, EXACT *CONTROL* (iter 249).** 236 says the
   defect is its own perfect control (when you are fixing a constant that should have been a variable, HEAD's
@@ -2023,7 +2043,14 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   about *where* a tile type sits), `probe-goldenhue.mjs` (**per-tile hue / chroma / luminance at day, golden and
   night, plus the pairwise separation matrix** — the general form of 214's `probe-sandhue`: it answers *"does tile X
   keep its identity from tile Y under light L?"*. Any surface pair collapsing below ~15 RGB units has lost its
-  identity; **RES↔ROAD at night is 4**, cue (aa)).
+  identity. ✅ **REPAIRED at 251, and it had been lying in TWO ways at once**: it sampled **ONE PIXEL AT THE HEX
+  CENTRE** (238's defect — on a building that is its **ROOF**, so its *"night luminance"* of every LIT type had
+  **never once included a lit window**), and it scored 222's ordering invariant on the **MEAN**, which folds a lit
+  building's dark wall back in. It now samples the hex's **AREA** and scores the invariant on the **p90 ENVELOPE** —
+  *the eye reads the EXTREME* (224) — under which **pristine HEAD PASSES by 21**. ⚠ It also carries **`BEACH↔ROAD`**,
+  **214's own headline pair**, which it never had: that is the guard any change to the night sand must clear, and it
+  is what convicted 251's own patch. **Trust it again; do NOT re-open the night sand or the night greens (cue (ag) is
+  CLOSED, refuted).**
   `probe-deckhue.mjs` (234 — **the colour of a draw that has NO TILE TYPE.** Loud-paints `BASE.deck`, diffs
   inside one page, and the changed pixels ARE the deck (see the palette-suppression law): reports its rendered
   hue / chroma / luminance, and gates on **`dHUE` — its angular distance from its OWN daylight hue** (221),
