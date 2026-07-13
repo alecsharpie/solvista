@@ -15949,3 +15949,84 @@ timer, and the cause was **219's downtown** (more core COM => more towers => mor
 `winBandR` by night — which is why night grew more). **PAID and ACCEPTED.** ⇒ **LAW: "no new draw CALL" is NOT "no
 new draw WORK" — THE WORLD IS THE DRAW LIST** (⇒ SKILL.md): price a CA/siting vector by COUNTING OBJECTS, never by
 reading the diff.
+
+## Iteration 229 — the bug was in the camera, not the city (2026-07-13) [Interaction/UX × Polish]
+
+**Vector.** Interaction/UX × Polish — the stalest column (last touched 191). The header ordered this lap
+explicitly: cues **(w)** (*"a LIVE mojibake bug is SHIPPED ON THE PUBLIC SITE"*, the ledger's **#1 🔴 cue**,
+escalated across three step-backs and re-measured at 227 as *"~4x bigger than recorded"*) + **(z)** (the HUD
+clips `TRANSIT REA[CH]`), *"one tidy HUD lap, and (w) is the cheapest real user-facing win in the ledger."*
+
+**Both cues were FALSE. The mojibake was being manufactured by our own screenshot server.**
+
+**Probe first (the cue is a POINTER, NOT A SPEC).** Cue (w) makes a checkable claim about the *deployed* site,
+and how a document decodes is decided by, in order: (1) the HTTP `Content-Type` charset — **overrides
+everything**; (2) a `<meta charset>` in the first 1024 bytes; (3) sniffing / windows-1252 fallback. One command:
+
+```
+$ curl -sI https://www.alecsharpie.me/solvista/solvista.html
+content-type: text/html; charset=utf-8          <-- GitHub Pages DECLARES it
+```
+
+⇒ **The public site has never shown mojibake to anyone.** `probes/probe-charset.mjs` then served the *same
+bytes* three ways and read the strings back **as the JS engine decoded them** (the inline `<script>` is decoded
+with the document, so a mis-decode corrupts the string *literals*, which is what lands in the DOM):
+
+| case | `document.characterSet` | `TILEDESC[T.COM]` |
+| --- | --- | --- |
+| A  `file://` (every probe, `hovershot.mjs`) | UTF-8 *(sniffed)* | `cafés` — **clean** |
+| B  http `text/html` — **`shoot.mjs`'s server** | **windows-1252** | **`cafÃ©s` — MOJIBAKE** |
+| C  http `charset=utf-8` — **GitHub Pages (measured live)** | UTF-8 | `cafés` — **clean** |
+
+**The harness had three load paths and had never reconciled them.** `shoot.mjs` **creates** the bug (no
+charset ⇒ 1252 fallback); `hovershot.mjs` + every probe load `file://` and **hide** it (Chromium sniffs UTF-8);
+the deployed site is **neither**. So for 95 iterations the loop looked at its own screenshots, saw `cafÃ©s`,
+and filed it against the artifact — and **every re-measurement re-confirmed it, because every re-measurement
+used the same broken instrument.** 134 saw this in an http shot and wrote a *discipline* ("keep every JS
+literal pure-ASCII") where a one-line *structural* fix existed; the discipline was then silently violated **12
+times**, and the ledger promoted the violations to its loudest cue.
+
+**Change (1 line).** `<meta charset="utf-8">` at line 1 — so the file **describes its own encoding** and no
+longer depends on the server. This is the right fix even though no user was affected, because
+`solvista.html`'s entire premise is *a single self-contained file, no build step*: **a "self-contained" file
+that only renders correctly when the server happens to declare its charset is not self-contained.** It also
+**stops the instrument lying**, which is worth more to this loop than the bug was. Per 223: *prefer a
+structural invariant to a checked one — a drift you make impossible beats a drift you agree to look for.*
+⇒ **134's pure-ASCII rule is REPEALED in SKILL.md** (raw UTF-8 in literals is now safe; do not hand-escape).
+
+**Cue (z) is REFUTED.** `probes/probe-hud.mjs` (pure DOM — every probe in `probes/` reads the canvas and is
+**blind to this layer**, 200): `scrollWidth > clientWidth` per stat, plus each box's overrun past the viewport,
+swept 1600 → 1400 → 1024 → 820 → 640 → 390 (the step-back's width down to the `mobile` framing). **0 clipped
+labels at every width; the card always fits with >=20px spare** — the `.opt.sm`/`.opt.md` media queries drop
+stats as the viewport narrows, exactly as designed. A blind agent on seed 7, unprompted, independently agreed:
+*"TRANSIT REACH ends comfortably inside the card's right edge."* I also tested the plausible coupling — that
+mojibake *widens* glyphs (`—` 1 char -> `â€"` 3) and could overflow the flex row — and it does not: at
+`warp=61` the em-dash placeholder never shows (the city has floors to report).
+
+**Census.** PASS, `pageerrors: 0`. Correctly **vacuous** — a `<meta>` tag touches no terrain, no `rng()`, no
+draw call. **Zero path objects; free by the cost model, no perf lap needed.** Control: `document.compatMode`
+is `BackCompat` on **both** HEAD and patch — the meta tag did not disturb the document mode (only a DOCTYPE
+would). *(Banked, NOT a cue: the file is in **quirks mode**. It has been for 229 iterations and the layout is
+tuned inside it — adding a DOCTYPE would reflow the whole HUD. Do not "fix" it as a drive-by.)*
+
+**Visual.** `probes/shot-charset.mjs` — a new camera that pins the **harsh** condition on purpose (http, no
+charset = byte-for-byte `shoot.mjs`'s header), because the harness's own cameras disagree about this defect.
+Blind A/B (neutral filenames, agents asked to **transcribe, not judge** — so a wrong answer is *visibly*
+wrong against ground truth I held):
+- Blind transcription agent: read `tooltip-A` as `Street-level shops and cafés.` and `tooltip-B` as
+  `Street-level shops and cafÃ©s.`, named B's corruption as *"UTF-8 'é' decoded as Latin-1"*, and returned
+  `CLEAN: tooltip-A` — **A was the patch.** Exactly matches the strings the probe read.
+- Seed 42 whole-frame before/after: canvas **identical** (only ambient boat drift, correctly attributed), the
+  one difference being the tooltip text. `VISUAL: PASS`
+- Seed 7: tooltip clean, every stats label *"fully visible, none clipped"*, city coherent. `VISUAL: PASS`
+
+**Verdict: FIXED.** The artifact is now self-describing under **every** serving condition (asserted by
+`probe-charset.mjs`, which FAILs unless all three cases decode UTF-8), the ledger's #1 cue is closed as a
+false positive, cue (z) is closed as refuted, and a wrong invariant is off the books.
+
+⚠ **THE LAW (promoted to SKILL.md): a defect only your HARNESS can see is a defect IN your harness —
+reproduce it in the USER'S configuration before you believe it is the artifact's.** *One `curl -sI` would
+have refuted the loop's loudest cue at any point in 95 iterations.* And note what this implicates: **cues (y)
+(the "scorched" hex cluster) and (s) (golden-hour "mud") were also born from agents reading `shoot.mjs`
+frames** — the same camera that manufactured this one. Reproduce them before designing to them.
+

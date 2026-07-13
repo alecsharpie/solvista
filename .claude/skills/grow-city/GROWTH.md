@@ -23,7 +23,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235** | **133** |
+| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
@@ -38,10 +38,18 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: People **226** · Transport **230** · Civic **231** ·
-  Water **234** · Urban **235** · Sky **236** · Nature **238**. **237 was the 27th step-back (done); 239 is due
-  the 28th** (5 laps on).
-  ➡ **NEXT: 🔴 (al) the MID-RISE wallpaper** (Urban × Polish) — a banked, measured finding outranks kind-rotation
-  (119), and it is now the only 🔴 with an unspent lever. After it: People (stalest, 226), then Transport (230).
+  Water **234** · Sky **236** · Nature **238** · Urban **239**. **237 was the 27th step-back; the 28th is due
+  ~242** (5 laps on).
+  ➡ **NEXT: People** — stalest by far (226), and **its cue list is EMPTY** (226 closed 137's), so it is exactly the
+  case **225's grep-the-seam law** is for: *the saturation notes record where you have already LOOKED, not where
+  there is nothing to find.* That law has now shipped Sky (236) and Nature (238) off stale domains; People is its
+  third test. ⚠ **Read the `peds` cap first** (111, below) before designing anything road-borne.
+  The standing 🔴 is **(ai) THE CITY HAS NO FRINGE** — measured, 233 tried and reverted, but **the way through is
+  NAMED** (hold the rim and widen the core in ONE lap, so `developed` stays flat and the census gate opens). It
+  outranks kind-rotation (119) whenever a Nature/Urban lap comes up.
+  ⚠ **239: NAME THE FILE, NEVER A LETTER, in a visual A/B** — an agent read four PNGs, perceived correctly, and
+  **transposed "A"/"B"**, inverting a result the probe had already settled. Ask **per file path**; 238's crossed
+  mapping guards a *bias*, not the *bookkeeping*. Law in SKILL.md.
   🔴 **228'S LAW HAS NOW RECURSED THREE TIMES, EVERY TIME ON A PROBE THIS HARNESS ALREADY OWNED** (237 found two;
   **238 found the third INSIDE the probe 237 had just repaired**). The general form is a LAW in SKILL.md — *read
   what a probe MEASURES and WHERE IT SAMPLES, not what it is called, and apply 228's test PER METRIC.*
@@ -61,9 +69,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ✅ **THE FAIL/ASIDE LAW HAS NOW PAID OUT NINE LAPS RUNNING** (232's detail archived at 237) — **but 237 is its
   first INVERSION: both agents' HEADLINE FAIL was RIGHT and correctly diagnosed.** ⇒ the law is *"grade the FAIL by
   measuring it"*, **not** *"the FAIL is always wrong"*. **Interaction/UX** (cross-cutting) last touched **229**.
-  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) 231, (u) 234, **(af′) 235 — but see (al), it fixed the WRONG BUILDING**;
-  **(ab) RETIRED into (ak) at 238**): 🔴 **(al)** THE **MID-RISE** IS THE REAL WALLPAPER — *the only 🔴 with an
-  unspent lever* · 🔴 **(ai)** THE CITY HAS NO FRINGE — **measured; 233 tried and REVERTED, the way through is
+  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) 231, (u) 234, (af′) 235, **(al) CLOSED 239 — the building-look ladder
+  is COMPLETE**; **(ab) RETIRED into (ak) at 238**): 🔴 **(ai)** THE CITY HAS NO FRINGE — **now the ONLY 🔴;
+  measured; 233 tried and REVERTED, the way through is
   NAMED** · **(ak)** the season — **238 shipped the trees and REFRAMED it; its headline number is DEAD, read the cue
   before citing it** · **(ag)** the night greens stay hot (Nature × Polish) · **(y)** the scorched inland cluster
   (Nature × Polish) · **(ah)** the amphitheater's cavea has a **FIXED orientation** — it now often sits on the
@@ -114,7 +122,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   (b) **`university` is the ONLY of the twelve civics with no `LITAMT`** — the one `MAJORK` monument
   pitch dark after sunset; every place to put the light failed (195; `probe-unilight.mjs` + `shot-uni.mjs`).
   (c) **A parked service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204, cue n). (d) **The marsh reeds do not read** — seven sub-pixel strokes round the pool; its calendar is already computed and invisible (cue (i), 113).
-  **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban: additive spent (118), Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2 — not a clean arcade host); **Urban's next lap is Deepen/Polish only**. **Roof-furniture is CLOSED city-wide** (MID/RES tanks, TOWER gardens, COM plant 165, IND clerestory 173); the **GROUND PLANE is SPENT (209)** and **216 spent the FACADES** — only the **harbour apron** is left. ⚠ **But "Urban is spent" is REFUTED from the SILHOUETTE side — 232 → (af′), and now 237 → 🔴 (al): the MID-RISE has TWO SHAPES over 420 buildings.** (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
+  **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban: additive spent (118), Connect measured-hard TWICE** — 160 (RES terracing: no seed forms E-W RES runs of >=3) and 165 (the `hstr` parade zigzags with row parity, longest straight-hex-axis run = 2 — not a clean arcade host); **Urban's next lap is Deepen/Polish only**. **Roof-furniture is CLOSED city-wide** (MID/RES tanks, TOWER gardens, COM plant 165, IND clerestory 173); the **GROUND PLANE is SPENT (209)** and **216 spent the FACADES** — only the **harbour apron** is left. ⚠ **"Urban is spent" was REFUTED from the SILHOUETTE side (232 → (af′), 237 → (al)) and that seam is now CLOSED TOO** (235 tower + **239** mid-rise). **The building look is DONE; Urban's next lap is neither massing nor facade.** (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
   **STILL banked for Sky: the SEASON word** — it reads the fast `year` and would strobe ~0.7 Hz (134), so it needs a
   slow clock FIRST; don't add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac. ⚠ **236's front is
   ALSO on `year` and is NOT that slow clock** — it cycles ~2 min on purpose, so a "weather word" would strobe too.)
@@ -287,11 +295,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   so no call site can forget to ask.** ⚠ **FARM (`cropRGB`/`colRGB`) is the ONLY warm surface still outside `col()`.**
   ⚠ **Watch: PARK↔ROAD separation is 14, just under the ~15 collapse floor**
   — and **(ag) says the night greens read hot again**, so that is where the next lap bites.
-  ⚠ **DO NOT RE-OPEN THE TOWER LOOK** (228 crown + 235 footprint; silhouettes **5.3 → 13.0**, top share **54% →
-  22%**). All four axes are spent, and a fifth keyed to HEIGHT would rebuild 110's
-  original defect (corr(style,th) 0.73). ⚠ **`towerLook` now publishes `bax`/`bay` — the ONE definition of "how
-  wide is a tower". The skybridge and the helideck BOTH read it** (each had silently assumed the old fixed width;
-  a point plan would have floated the bridge and overhung the pad). **Any new tower ornament must read it too.**
+  ⚠ **`towerLook` publishes `bax`/`bay` — the ONE definition of "how wide is a tower"; the skybridge and helideck
+  BOTH read it** (a point plan would have floated the bridge and overhung the pad). **Any new tower ornament must
+  read it — and `midLook` (`fx`/`fy`/`segs`, furniture scaled by `rs`) is its walk-up twin. See (al).**
   **(ag) THE NIGHT GREENS STAY HOT (227, seed 7, unprompted).** *"The parks/farms in the middle stay oddly bright
   green, breaking the night mood."* Sits on 222's ladder invariant (**no UNLIT surface may out-brighten the LIT
   ones**) and on 223's live watch item (**PARK↔ROAD separation is 14, just under the ~15 collapse floor**) — likely
@@ -327,7 +333,6 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   noise, or `TCAP` (224). (1) ⚠ **`c.th` HAS TWO WRITERS** (placement + the 2022+ growth rule) — touch one, check the
   other. (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did (0.125), 219 invalidated it
   (0.282) unnoticed for 6 laps; normalise by the formula's own max (⇒ SKILL.md).
-  **(ab) RETIRED INTO (ak) at 238** (body archived) — right observation, now EXPLAINED (dilution); its fix is measured-dead, and its "`probe-season` refuted it 3x" was the wrong instrument.
   **(aj) THE SHOWERS FALL WHERE NOBODY LIVES (236, seed 7, unprompted — and MEASURED).** *"Both showers fall on the
   OPEN OCEAN, not the city."* Half that FAIL was refuted; this half is real, and it is **pre-existing cloud siting,
   not 236's front** — clouds spawn `x:rng()*G, y:CTRY-20+rng()*40` with **no reference to the land**, so a seed can
@@ -355,18 +360,13 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   per-tile floor.** Honest moves left: give a park hex's season-dead contents a calendar, or **retire the metric**.
   ⚠ Canopy amplitude is **AT ITS CEILING** — the dry olive sits ~24 RGB from the **autumn** amber and they must stay
   distinct. **Nature.**
-  🔴 **(al) THE MID-RISE IS THE REAL WALLPAPER — 235 FIXED THE WRONG BUILDING (237, MEASURED).** 228 (crown) and 235
-  (footprint) closed the TOWER LOOK off six agents' *"the towers are wallpaper"* — and at 237, one lap later, **both
-  agents said it again**, on two seeds. They were **not** talking about the towers, and re-reading them says so
-  plainly: *"the **red-roof cube** tiles the entire southwest quadrant — roof colour varies, roof **form** does
-  not"* · *"the mid-left band is a uniform grey-roof mush."* `probe-crown` had the number the whole time, **printed
-  as its CONTROL row and therefore never read as a finding**: **MID = 2.0 SILHOUETTES, top shape 68.8%**, over
-  **419.7 buildings per seed — 4.5x the tower count (93.3)** — against TOWER's post-235 **12.3 silhouettes / top
-  21.0%**. The city's most numerous building has **two shapes**. ⚠ **This is 228's own law biting the lap that
-  cashed it** (*a banked instrument can be the wrong instrument*) **and 235's** (*read what a probe MEASURES, not
-  what it is called* — nor what it is **labelled a control**). ⚠ Do NOT re-open TOWER: it is measured varied.
-  **Urban × Polish.** Gate: `probes/probe-crown.mjs` — **and swap the roles: MID is now the treatment, TOWER the
-  control.**
+  ✅ **(al) CLOSED by 239 — THE BUILDING-LOOK LADDER IS COMPLETE** (228 tower crown · 235 tower footprint · **239
+  the MID-RISE, which was the building actually causing it**). `midLook` gives the walk-up a PLAN (3 widths) and a
+  PROFILE (box · shop plinth · set-back attic): **silhouettes 2.0 → 20.7, top 68.8% → 13.7%**, TOWER control
+  byte-unmoved, population held. ⚠ **EVERY FORM'S BASE IS ITS WIDEST PART** — not style but what keeps the terrace
+  sound (an upper floor steps back from a party wall, **never through it**); **the party wall is now the
+  NEIGHBOUR'S WEST FACE**, not a constant. ⚠ **DO NOT RE-OPEN EITHER BUILDING** (both measured varied; a fifth axis
+  keyed to HEIGHT rebuilds 110's defect) — and its **~+2% draw ops** (a step is inherently +1 prism) are **PAID.**
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; see the PERF bullet's "TWO
   HOLES").** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` key churn and per-mark style
   writes are both ruled OUT (measured **zero**).
@@ -391,91 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 231 entries before Iteration 229 live in
+> **Archive:** the 232 entries before Iteration 230 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 229 — the bug was in the camera, not the city (2026-07-13) [Interaction/UX × Polish]
-
-**Vector.** Interaction/UX × Polish — the stalest column (last touched 191). The header ordered this lap
-explicitly: cues **(w)** (*"a LIVE mojibake bug is SHIPPED ON THE PUBLIC SITE"*, the ledger's **#1 🔴 cue**,
-escalated across three step-backs and re-measured at 227 as *"~4x bigger than recorded"*) + **(z)** (the HUD
-clips `TRANSIT REA[CH]`), *"one tidy HUD lap, and (w) is the cheapest real user-facing win in the ledger."*
-
-**Both cues were FALSE. The mojibake was being manufactured by our own screenshot server.**
-
-**Probe first (the cue is a POINTER, NOT A SPEC).** Cue (w) makes a checkable claim about the *deployed* site,
-and how a document decodes is decided by, in order: (1) the HTTP `Content-Type` charset — **overrides
-everything**; (2) a `<meta charset>` in the first 1024 bytes; (3) sniffing / windows-1252 fallback. One command:
-
-```
-$ curl -sI https://www.alecsharpie.me/solvista/solvista.html
-content-type: text/html; charset=utf-8          <-- GitHub Pages DECLARES it
-```
-
-⇒ **The public site has never shown mojibake to anyone.** `probes/probe-charset.mjs` then served the *same
-bytes* three ways and read the strings back **as the JS engine decoded them** (the inline `<script>` is decoded
-with the document, so a mis-decode corrupts the string *literals*, which is what lands in the DOM):
-
-| case | `document.characterSet` | `TILEDESC[T.COM]` |
-| --- | --- | --- |
-| A  `file://` (every probe, `hovershot.mjs`) | UTF-8 *(sniffed)* | `cafés` — **clean** |
-| B  http `text/html` — **`shoot.mjs`'s server** | **windows-1252** | **`cafÃ©s` — MOJIBAKE** |
-| C  http `charset=utf-8` — **GitHub Pages (measured live)** | UTF-8 | `cafés` — **clean** |
-
-**The harness had three load paths and had never reconciled them.** `shoot.mjs` **creates** the bug (no
-charset ⇒ 1252 fallback); `hovershot.mjs` + every probe load `file://` and **hide** it (Chromium sniffs UTF-8);
-the deployed site is **neither**. So for 95 iterations the loop looked at its own screenshots, saw `cafÃ©s`,
-and filed it against the artifact — and **every re-measurement re-confirmed it, because every re-measurement
-used the same broken instrument.** 134 saw this in an http shot and wrote a *discipline* ("keep every JS
-literal pure-ASCII") where a one-line *structural* fix existed; the discipline was then silently violated **12
-times**, and the ledger promoted the violations to its loudest cue.
-
-**Change (1 line).** `<meta charset="utf-8">` at line 1 — so the file **describes its own encoding** and no
-longer depends on the server. This is the right fix even though no user was affected, because
-`solvista.html`'s entire premise is *a single self-contained file, no build step*: **a "self-contained" file
-that only renders correctly when the server happens to declare its charset is not self-contained.** It also
-**stops the instrument lying**, which is worth more to this loop than the bug was. Per 223: *prefer a
-structural invariant to a checked one — a drift you make impossible beats a drift you agree to look for.*
-⇒ **134's pure-ASCII rule is REPEALED in SKILL.md** (raw UTF-8 in literals is now safe; do not hand-escape).
-
-**Cue (z) is REFUTED.** `probes/probe-hud.mjs` (pure DOM — every probe in `probes/` reads the canvas and is
-**blind to this layer**, 200): `scrollWidth > clientWidth` per stat, plus each box's overrun past the viewport,
-swept 1600 → 1400 → 1024 → 820 → 640 → 390 (the step-back's width down to the `mobile` framing). **0 clipped
-labels at every width; the card always fits with >=20px spare** — the `.opt.sm`/`.opt.md` media queries drop
-stats as the viewport narrows, exactly as designed. A blind agent on seed 7, unprompted, independently agreed:
-*"TRANSIT REACH ends comfortably inside the card's right edge."* I also tested the plausible coupling — that
-mojibake *widens* glyphs (`—` 1 char -> `â€"` 3) and could overflow the flex row — and it does not: at
-`warp=61` the em-dash placeholder never shows (the city has floors to report).
-
-**Census.** PASS, `pageerrors: 0`. Correctly **vacuous** — a `<meta>` tag touches no terrain, no `rng()`, no
-draw call. **Zero path objects; free by the cost model, no perf lap needed.** Control: `document.compatMode`
-is `BackCompat` on **both** HEAD and patch — the meta tag did not disturb the document mode (only a DOCTYPE
-would). *(Banked, NOT a cue: the file is in **quirks mode**. It has been for 229 iterations and the layout is
-tuned inside it — adding a DOCTYPE would reflow the whole HUD. Do not "fix" it as a drive-by.)*
-
-**Visual.** `probes/shot-charset.mjs` — a new camera that pins the **harsh** condition on purpose (http, no
-charset = byte-for-byte `shoot.mjs`'s header), because the harness's own cameras disagree about this defect.
-Blind A/B (neutral filenames, agents asked to **transcribe, not judge** — so a wrong answer is *visibly*
-wrong against ground truth I held):
-- Blind transcription agent: read `tooltip-A` as `Street-level shops and cafés.` and `tooltip-B` as
-  `Street-level shops and cafÃ©s.`, named B's corruption as *"UTF-8 'é' decoded as Latin-1"*, and returned
-  `CLEAN: tooltip-A` — **A was the patch.** Exactly matches the strings the probe read.
-- Seed 42 whole-frame before/after: canvas **identical** (only ambient boat drift, correctly attributed), the
-  one difference being the tooltip text. `VISUAL: PASS`
-- Seed 7: tooltip clean, every stats label *"fully visible, none clipped"*, city coherent. `VISUAL: PASS`
-
-**Verdict: FIXED.** The artifact is now self-describing under **every** serving condition (asserted by
-`probe-charset.mjs`, which FAILs unless all three cases decode UTF-8), the ledger's #1 cue is closed as a
-false positive, cue (z) is closed as refuted, and a wrong invariant is off the books.
-
-⚠ **THE LAW (promoted to SKILL.md): a defect only your HARNESS can see is a defect IN your harness —
-reproduce it in the USER'S configuration before you believe it is the artifact's.** *One `curl -sI` would
-have refuted the loop's loudest cue at any point in 95 iterations.* And note what this implicates: **cues (y)
-(the "scorched" hex cluster) and (s) (golden-hour "mud") were also born from agents reading `shoot.mjs`
-frames** — the same camera that manufactured this one. Reproduce them before designing to them.
 
 ## Iteration 230 — the cars never went home (2026-07-13) [Transport × Deepen]
 
@@ -1187,3 +1107,67 @@ understory INSIDE each hex — not by dead palettes, and NOT by the lawn (which 
 touching, and which is already the most seasonal surface in the city).** A palette lap cannot reach
 the per-tile floor. The next lap on (ak) must either give the season-dead *contents* of a park hex a
 calendar, or accept the floor as unreachable and retire the metric.
+
+## Iteration 239 — every walk-up in the city was the same cube (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish — the ledger's #1 🔴 cue **(al)**, the only red with an
+unspent lever. 228 (crowns) and 235 (footprints) closed the TOWER LOOK off six agents'
+*"the towers are wallpaper"*; at 237, one lap later, **both step-back agents said it again**,
+on two seeds — and they were not talking about the towers: *"the **red-roof cube** tiles the
+entire southwest quadrant — roof colour varies, roof **form** does not"* · *"the mid-left band
+is a uniform grey-roof mush."*
+
+**Change.** `midLook(x,y,v)` — the mid-rise gets the two axes 235 gave the tower, and for the
+same reason. **TWO is not a figure of speech:** the walk-up's body was ONE prism of constant
+half-width from pavement to roof, so `silo()` (the half-width at 12 heights — the outline the
+eye traces) read the SAME value at every height, and the city held exactly **two** of them:
+0.34 detached, 0.50 terraced. 99 gave it colour and 216 gave it a stripe rhythm; **a striped
+cube is still a cube.**
+- **PLAN** (free): 3 widths, `fx` mean 1.040.
+- **PROFILE** (the half `silo()` can see): box · **shop plinth with the flats set back above**
+  · **set-back attic storey**. **Every form's base is its widest part** — not a style choice
+  but what keeps the terrace sound: an upper floor may step back from a party wall, **never
+  through it**, so no two walk-ups can overlap however their plans differ.
+- The **party wall is now the NEIGHBOUR'S WEST FACE**, wherever its plan puts it (was a
+  hard-coded `gx+0.66`). At `fx≡1` it reduces to the old `jx=0.16 / ab=0.50` exactly.
+- Bands, rails, roof cap and all roof furniture ride their own storey's width (`rs`), so
+  nothing overhangs a narrowed attic. Means held (98): plan 1.040 × form 0.965 = **1.004**.
+
+**Probe** (`probe-crown`, the instrument cue (al) names, roles swapped: **MID treatment, TOWER
+control**). MID **silhouettes 2.0 → 20.7**, top shape **68.8% → 13.7%**; crowns 32.3 → 136.7.
+**TOWER control byte-unmoved** (12.3 / 21.0%). **Population held: 419.7 → 419.7** (206 — a
+massing rule must not starve its own stock). MID now out-varies the tower it was measured
+against.
+
+**Census.** PASS. Core flat (`pop`/`developed`/`roads` +0); tile histogram **empty** — correct
+and expected for a draw-only vector (`solarRoofs +3` is 226's ±2 tick wobble). hashCell only,
+no `rng()`, no terrain ⇒ stream and pop flat.
+
+**Perf — PAID AND NAMED.** A step is inherently **+1 prism (3 fills)**, taken by ~58% of
+walk-ups. Deterministic instrument (216/222 — frozen world, identical city both builds, 3
+seeds): **+248 prisms/frame ⇒ day +1.85% / night +1.78% draw ops** (+2.3% path objects). **The
+mechanism is fully accounted for — there is no unexplained cost.** ⚠ **The TIMER was unusable
+today and I am not citing it:** two interleaved A/B rounds read day +4.9% then +2.9%, night
++2.9% then **+11.6%**, while **HEAD's own night absolute moved 49.2 → 52.2ms on byte-identical
+code**. A change adding +1.78% night objects **cannot** cost 11.6% of the frame. 216's law
+exactly — *when the timer has no mechanism behind it, count objects.* ~2% to give the city's
+most numerous building (420/seed, **4.5x the towers**) a real massing is the trade 194 made for
+tree shadows and the ledger called good.
+
+**Visual.** PASS on both seeds (`shot-facade`, which aims at the densest MID cluster, so HEAD
+and patch frame the same hex). Seed 7, asked **by file name**: HEAD **~1 distinct silhouette
+("plain cube")**, patch **~4** — it named the plinth and the set-back unprompted — with no
+interpenetration at the party walls, no roof furniture overhanging an edge, no z-tears, whole
+city still coherent.
+
+⚠ **THE GATE ALMOST FAILED A CORRECT CHANGE, AND THE CAUSE WAS THE LABELS.** Seed 42's agent
+was given the pair as **"FRAME A" / "FRAME B"** and **transposed them** — it reported HEAD as
+having 3–4 shapes and the patch as "essentially one shape", i.e. the exact inversion of the
+probe. Its *substance* was right the whole time (it described *"a wider skirt/base course under
+a set-back upper volume"* — a form that exists **only in the patch**) and only its letters were
+crossed. Checked the instrument first (197: working file **is** the patch, md5-verified; the
+two PNGs differ), then looked myself, then re-asked seed 7 **by file name with no letters at
+all** — which came back correct and unambiguous. **Promoted to a law in SKILL.md.**
+
+**Verdict: SHIPPED.** Cue **(al) CLOSED** — the ledger's most-reported defect (six agents,
+three step-backs) is measured shut on the building that was actually causing it.

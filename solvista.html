@@ -5341,6 +5341,48 @@ function towerCrown(gx,gy,ax,ay,h,k,bodyN,capN){
     ctx.closePath();ctx.fill();
   }
 }
+/* The MID-RISE is the city's most numerous building — 419.7 per seed, 4.5x the tower
+   count (93.3) — and once 228 (crowns) and 235 (footprints) had closed the TOWER LOOK
+   off six agents' "the towers are wallpaper", the 237 step-back's two agents, blind, on
+   two seeds, said it AGAIN. They were not talking about the towers, and re-reading them
+   says so plainly: "the RED-ROOF CUBE tiles the entire southwest quadrant — roof colour
+   varies, roof FORM does not" and "the mid-left band is a uniform grey-roof mush".
+   probe-crown had the number the whole time, printed as its CONTROL row and therefore
+   never read as a finding: MID = 2.0 SILHOUETTES, top shape 68.8%, against TOWER's
+   post-235 12.3 / 21.0%.
+     TWO is not a figure of speech. The walk-up's body is ONE prism of constant half-width
+   from pavement to roof, so silo() — the half-width sampled at 12 heights, i.e. the
+   outline the eye traces against the sky — reads the SAME value at every height, and the
+   only two values in the city are 0.34 (detached) and 0.50 (terraced). 99 gave the
+   walk-up its colour and 216 gave it a stripe rhythm; neither can rescue a silhouette,
+   because a striped cube is still a cube.
+     So it gets the two axes 235 gave the tower: a PLAN (how wide) and a PROFILE (how it
+   steps). Both are independent of HEIGHT (98/110 — corr(style,th) 0.73 was the original
+   defect; a massing keyed to v would rebuild it on a new axis) and independent of each
+   other (110's law — a silhouette must not merely restate the massing). The PROFILE is
+   the half silo() can actually see, and it is what makes a walk-up a walk-up rather than
+   a box: a retail plinth with the flats set back above it, or a set-back attic storey.
+     EVERY FORM'S BASE IS ITS WIDEST PART, and that is not a style choice — it is what
+   keeps the terrace join sound: an upper floor may step back from a party wall, never
+   through it, so no two walk-ups can ever overlap however their plans differ.
+     Means are held (98): the three forms' height-weighted width factor averages 0.965
+   and the plan averages 1.040, so the product is 1.004 — the city's built mass is
+   unchanged. Cosmetic: hashCell only, no rng(), no terrain, feeds no predicate ⇒ stream
+   and pop flat. A stepped profile adds ONE prism (3 path objects) to ~58% of walk-ups;
+   priced by COUNTING objects (222), never by reading the diff. */
+function midLook(x,y,v){
+  const pv=hashCell(x,y,seedNum^0x7C3F);
+  const plan=pv<0.30?0:(pv<0.70?1:2);              /* narrow | standard | broad */
+  const fx=[0.82,1.04,1.26][plan];                 /* mean 1.040 */
+  const fy=[0.94,1.02,1.08][plan];                 /* a broad block bodies out deeper too */
+  const sv=hashCell(x,y,seedNum^0x53A9);
+  const form=sv<0.42?0:(sv<0.74?1:2);              /* box | plinth | attic */
+  /* [top of segment as a fraction of h, width factor]. The base is always 1.00. */
+  const segs=form===0?[[1,1.00]]
+            :form===1?[[0.26,1.00],[1,0.90]]       /* shop plinth, flats set back above it */
+            :         [[0.74,1.00],[1,0.84]];      /* set-back attic storey */
+  return{plan,fx,fy,form,segs,tw:segs[segs.length-1][1]};
+}
 function drawBuilding(c,x,y,gx,gy){
   /* animate growth */
   if(c.h<c.th)c.h=Math.min(c.th,c.h+0.35+(c.th-c.h)*0.012);
@@ -5357,7 +5399,9 @@ function drawBuilding(c,x,y,gx,gy){
   /* Since 235 a tower's contact patch follows its PLAN as well as its mass: a needle
      that dropped a slab's shadow would read as standing beside its own footing. */
   const TL=c.t===T.TOWER?towerLook(x,y,v):null;
-  shadowEl(gx,gy,(0.42+shf*0.52)*(TL?TL.fx:1),(0.13+shf*0.10)*(TL?TL.fy:1));
+  const ML=c.t===T.MID?midLook(x,y,v):null;
+  const PL=TL||ML;                                 /* whichever type publishes a plan */
+  shadowEl(gx,gy,(0.42+shf*0.52)*(PL?PL.fx:1),(0.13+shf*0.10)*(PL?PL.fy:1));
   if(c.t===T.RES){
     /* The two defects iter 99 took out of MID, plus a worse one. Body was v<0.5
        while th is 9+c.v*7, so colour merely restated height (corr 0.87-0.89);
@@ -5479,17 +5523,16 @@ function drawBuilding(c,x,y,gx,gy){
     const cv=hashCell(x,y,seedNum^0x9A57);           /* the crown: overhanging eave / parapet / set-back attic */
     const cw=cv<0.34?0.055:(cv<0.72?0.02:-0.045), ch=cv<0.34?1.1:(cv<0.72?1.6:3.4);
     const rz=h+ch;                                   /* the roof deck: everything above rides it, not a constant */
-    /* Street wall. A walk-up bodies out 0.68 of a cell, so an E-W pair leaves a
-       0.32 gap and the mid-rise mass read as detached boxes rather than terraces.
+    /* Street wall. A walk-up bodies out ~0.68 of a cell, so an E-W pair leaves a
+       gap and the mid-rise mass read as detached boxes rather than terraces.
        (Only the E-W gap shows: along the two diagonal axes the row in front is
        drawn later and its own height covers the seam.) A walk-up whose EAST
-       neighbour is also a walk-up therefore GROWS east into the gap — centre
-       +0.16, half-extent 0.34 -> 0.5 — so its east face lands exactly on that
-       neighbour's west face (gx+0.66) and the two butt into one terrace. Chains
-       compose: each member grows into the next, so a run of n closes n-1 joints
-       with no overlap and no z-fighting, and the row's left-to-right draw order
-       does the occlusion. Where the two heights differ the taller one's flank IS
-       the party wall, which is what a stepped terrace looks like.
+       neighbour is also a walk-up therefore GROWS east into the gap until its east
+       face lands exactly on that neighbour's west face, and the two butt into one
+       terrace. Chains compose: each member grows into the next, so a run of n closes
+       n-1 joints with no overlap and no z-fighting, and the row's left-to-right draw
+       order does the occlusion. Where the two heights differ the taller one's flank
+       IS the party wall, which is what a stepped terrace looks like.
          Growing the body beats filling the gap with a third prism: the window
        ribbon, cornice and balcony rails all stretch across the joint for free,
        and the frame pays ZERO extra fill()s. The filler-prism version cost ~2000
@@ -5499,43 +5542,65 @@ function drawBuilding(c,x,y,gx,gy){
        stays open as a light well. */
     const en=cellAt(x+1,y);
     const join=!!en&&en.t===T.MID&&Math.min(h,en.h)>6&&hashCell(x+1,y,seedNum^0x4E27)<0.72;
-    const jx=join?0.16:0, ab=join?0.5:0.34;
+    /* Since the plan varies (midLook), the party wall can no longer be the constant 0.66
+       the old code hard-coded: it is the NEIGHBOUR'S WEST FACE, wherever that neighbour's
+       own plan puts it. Every walk-up's west face sits at gx-W, so a joined one grows east
+       until it lands exactly on gx+1-Wn — a run of narrow and broad blocks still butts into
+       one terrace with no overlap and no z-fighting, and the chain still composes because
+       each member's west face is a property of itself alone. (At fx===1 this reduces to the
+       old jx=0.16 / ab=0.50 exactly.) */
+    const W=0.34*ML.fx, dy=0.30*ML.fy;                     /* own west half-extent; depth */
+    const Wn=join?0.34*midLook(x+1,y,en.v).fx:0;           /* the neighbour's west face */
+    const E=join?1-Wn:W;
+    const jx=(E-W)/2, ab=(E+W)/2;
+    const wAt=z=>{const f=z/h;for(const[t,w]of ML.segs)if(f<t)return w;return ML.tw;};
     /* masonry -> sandCol(), exactly as RES: the walk-up draws bodyN/roofN from the same
        warm-neutral palette and rotated violet after dark with it. It is the most common
-       building in the city by 4x, so it carries most of the built mass's night colour. */
-    prism(gx+jx,gy,ab,0.30,0,h,sandCol(bodyN,1),sandCol(bodyN,0.62),sandCol(bodyN,0.85));
-    for(let z=ph;z<h-4;z+=fp){
-      winBandR(gx+jx,gy,ab,0.30,z,z+bt,x,y,0x1DE7,0.82,lit);
-      if(rails)bandR(gx+jx,gy,ab+0.008,0.308,z+bt,z+bt+0.9,col('white',0.95)); /* balcony rails */
+       building in the city by 4x, so it carries most of the built mass's night colour.
+         The body is now STEPPED — each segment rides the one below it, so the mass stays
+       solid (an upper floor sets BACK from the base, never through it: nothing floats, and
+       the ledge left on the lower segment's top face IS the setback the eye reads). */
+    let bz=0;
+    for(const[t,w]of ML.segs){
+      const bz1=h*t;
+      prism(gx+jx,gy,ab*w,dy*w,bz,bz1,sandCol(bodyN,1),sandCol(bodyN,0.62),sandCol(bodyN,0.85));
+      bz=bz1;
     }
-    prism(gx+jx,gy,ab+cw,0.30+cw,h,rz,sandCol(roofN,1),sandCol(roofN,0.6),sandCol(roofN,0.82));
+    for(let z=ph;z<h-4;z+=fp){
+      const bw=wAt(z);                                     /* a band rides its own storey's width */
+      winBandR(gx+jx,gy,ab*bw,dy*bw,z,z+bt,x,y,0x1DE7,0.82,lit);
+      if(rails)bandR(gx+jx,gy,ab*bw+0.008,dy*bw+0.008,z+bt,z+bt+0.9,col('white',0.95)); /* balcony rails */
+    }
+    const rax=ab*ML.tw, ray=dy*ML.tw;                      /* the roof deck: the TOP segment's plan */
+    const rs=Math.min(1,rax/0.34);                         /* ...and the furniture is scaled to it */
+    prism(gx+jx,gy,rax+cw,ray+cw,h,rz,sandCol(roofN,1),sandCol(roofN,0.6),sandCol(roofN,0.82));
     /* the roof furniture rides the shifted deck — at jx=0.16 a centred green roof
        would hang 0.10 of a cell off the western eave — and now it rides the crown's
        height too (`rz`), or a set-back attic would leave the solar floating in air */
     if(c.solar) /* rooftop solar array */
-      prism(gx+jx-0.08,gy+0.02,0.16,0.12,rz,rz+0.8,col('solar',1.15),col('solar',0.7),col('solar',0.9));
+      prism(gx+jx-0.08*rs,gy+0.02,0.16*rs,0.12*rs,rz,rz+0.8,col('solar',1.15),col('solar',0.7),col('solar',0.9));
     if(c.groof){ /* green roof garden — planted, not just a bare deck */
-      prism(gx+jx,gy,0.30,0.26,rz,rz+1.6,col('sage',1.06),col('sage',0.62),col('sage',0.85));
+      prism(gx+jx,gy,0.30*rs,0.26*rs,rz,rz+1.6,col('sage',1.06),col('sage',0.62),col('sage',0.85));
       const[gcx,gcy]=px(gx+jx,gy), ry=gcy-rz-2.4;
       ctx.fillStyle=col('sage',0.8);                                   /* planter shrubs */
-      ctx.beginPath();ctx.arc(gcx-2.4,ry+0.3,1.5,0,7);ctx.fill();
+      ctx.beginPath();ctx.arc(gcx-2.4*rs,ry+0.3,1.5*rs,0,7);ctx.fill();
       ctx.fillStyle=col('sage',1.16);
-      ctx.beginPath();ctx.arc(gcx+2.1,ry-0.6,1.8,0,7);ctx.fill();
+      ctx.beginPath();ctx.arc(gcx+2.1*rs,ry-0.6,1.8*rs,0,7);ctx.fill();
       ctx.fillStyle=col('canopyLt',0.95);
-      ctx.beginPath();ctx.arc(gcx-0.2,ry-0.2,1.2,0,7);ctx.fill();
+      ctx.beginPath();ctx.arc(gcx-0.2*rs,ry-0.2,1.2*rs,0,7);ctx.fill();
       if(LITAMT>0.4&&hashCell(x,y,seedNum^0x60F0)<0.55){ /* a terrace lantern after dark */
         ctx.fillStyle='rgba(255,214,140,'+(0.55*LITAMT)+')';
-        ctx.beginPath();ctx.arc(gcx+0.5,ry-2.4,1.15,0,7);ctx.fill();
+        ctx.beginPath();ctx.arc(gcx+0.5*rs,ry-2.4,1.15*rs,0,7);ctx.fill();
       }
     }
     if(v>0.5){ /* roof garden fringe */
       ctx.fillStyle=col('sage',1);
       const[cx,cy]=px(gx+jx,gy);
-      ctx.fillRect(cx-4,cy-rz-1.8,8,2);
+      ctx.fillRect(cx-4*rs,cy-rz-1.8,8*rs,2);
     } else if(!c.solar&&!c.groof&&hashCell(x,y,seedNum^0x7A7E)<0.3){
       /* the older walk-ups keep a timber water tank on the roof */
       const[cx,cy]=px(gx+jx,gy);
-      const tx=cx+3.1,ty=cy-rz;
+      const tx=cx+3.1*rs,ty=cy-rz;
       ctx.strokeStyle=col('ink',0.75);ctx.lineWidth=0.6;               /* legs */
       ctx.beginPath();ctx.moveTo(tx-1.5,ty);ctx.lineTo(tx-1.5,ty-2);
       ctx.moveTo(tx+1.5,ty);ctx.lineTo(tx+1.5,ty-2);ctx.stroke();

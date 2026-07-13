@@ -1567,6 +1567,25 @@ vector, whatever it is.
   intuition ("ships dock") into a model that cannot express docking. ⇒ Before you build to a tell, spend one
   command proving its **host** exists (the dead-code law: `T.MARKET`, the fire CA, and now the quay). And per 201:
   when the fix requires the world to contain something, **ask whether the world does.**
+- **NAME THE FILE, NEVER A LETTER — "FRAME A / FRAME B" IS A TRANSPOSITION HAZARD, AND IT WILL HAND YOU A
+  PERFECT INVERSION OF A CORRECT RESULT (iter 239).** 238 crosses the A/B mapping between seeds so that
+  *"the fix is always the second one"* fails on one of them. That defends against a **bias** and does
+  nothing about the **bookkeeping**, which is the failure that actually happens: 239's seed-42 agent read
+  four PNGs, formed an entirely correct perception, and **attached it to the wrong letter** — reporting
+  pristine HEAD as the varied build and the patch as *"essentially one shape"*, the exact inverse of a probe
+  that had measured 2.0 → 20.7 silhouettes with its control unmoved. The tell that it was bookkeeping and not
+  perception: **its description of the losing frame named a feature that exists ONLY in the patch** (*"a wider
+  skirt/base course under a set-back upper volume"*). An A/B letter is a **pointer the agent must maintain
+  across four images**, and pointers get swapped; a **path is self-identifying and cannot be**. ⇒ Give the
+  agent the **file paths**, tell it to **refer to each by name**, and ask it to report **per file** — never
+  "which of A/B is better". Then *you* map name → build, which is a lookup you control. The same discipline
+  makes the answer checkable: `mid7head/day.png ~1 shape · mid7/day.png ~4 shapes` is a sentence you can
+  verify against ground truth you already hold; *"B is better"* is not.
+  ⚠ **And when a visual read inverts a measurement, check the INSTRUMENT before you re-argue the result**
+  (197): confirm by **md5** that the file on disk is the build you think it is (a perf/probe run `/bin/cp`s
+  HEAD aside and can leave it swapped) and that the two PNGs actually **differ**. Only then spend the budget
+  and **look yourself** — that is precisely the case the visual gate's "look at *that one* PNG" clause is
+  reserved for.
 - **Ask an agent to LOCATE, not to JUDGE** (108) — see the visual gate. And when
   agents disagree, **a probe is the verdict, not a rerun** — ***but only if the probe measures what the
   claim is about* (iter 200).** This is the one recorded case where the agents were right and the probe
