@@ -684,6 +684,33 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A BUDGET WITH SLACK IS NOT ABSORPTION CAPACITY — THE SLACK *IS* THE PREDICATE'S EXHAUSTION, AND IT WILL BE CITED
+  AS THE EVIDENCE FOR EXACTLY THE THING IT DISPROVES (iter 246).** 233's law says that when a vector's *purpose* is to
+  take something away, the lap is not "tune it down" — it is to **find the PAIRED ADDITION that holds the core metric
+  flat.** Right, and it leaves you one step from the trap: *where do you put the thing you freed?* The obvious answer
+  is wherever a cap has headroom. 233 measured the dev budget at **1153 used / 1382**, wrote *"the budget **has slack**,
+  so the city **can** absorb the freed development inland"* straight into the ledger header, and that sentence steered
+  the loop's **#1 cue for 14 iterations**. The slack is real. **The inference is backwards.** A rule whose roll is
+  ~100% saturated (218) stops for exactly **one** reason — it has run out of **eligible cells** — so unspent budget is
+  not headroom the city could use, it is the **receipt for land it could not find.** *Slack and exhaustion are the same
+  fact read from opposite ends*, and the plan was resting the absorption half of its pair on the very measurement that
+  refuted it. Measured: a belt **HOLDS 157–223** cells while widening the parcel rule's road radius 2→3 **ADMITS 25** —
+  and **2→4 admits the SAME 25**, i.e. **zero** interior open cells at road-distance 4. The land was not *out of reach*
+  of the predicate; it was **gone** (206's *the vacant lot is a MIRAGE*, arriving on the absorption question).
+  ⇒ **Never treat a cap's headroom as a place to put something. Go COUNT THE ELIGIBLE CELLS** — it is a render-free
+  probe (`probes/probe-fringeabsorb.mjs`) and it costs one command. **The tell: your plan says "there is slack, so it
+  can absorb", and the rule that left the slack is saturated.**
+  ⇒ **AND THE COMPANION IS 218'S HOST LAW, WHICH THIS CUE HAD NOW IGNORED FOR THREE LAPS — INCLUDING IN THE PROBE THAT
+  NAMED IT.** `probe-fringehost`'s own header (written by 233) lists limiter **(3)**: *"the rim is dense because ROADS
+  run to the rim, and **the fix belongs in the road/corridor pass**."* 233 then built a mask over the **parcel** rule;
+  the header's way-through targeted the **parcel** rule; and 246's own best candidate shape was a mask over the
+  **parcel** rule. **All three steer the innocent rule** (218: it faithfully fills what the roads reach) while the host
+  goes untouched — and the measurement says so out loud: a lobe belt holding **81 developed cells (≈ −7%)** grows the
+  biggest contiguous undeveloped run only **118 → 133**, and on one seed **not at all (107 → 107)**, because **the
+  ROADS fragment every lobe** and a belt may not touch them. **Writing the host law down in your probe's header does
+  not make you obey it.** When a lap's third independent measurement points at a host you keep declining to touch,
+  **the vector is not under-tuned — it is aimed at the wrong file**, and the honest move may be to declare it
+  unreachable rather than to build a fourth mask.
 - **WHEN YOU MAKE A CONSTANT INTO A FUNCTION OF A SIGNAL, CENTRE EVERY LEVER ON THAT SIGNAL'S MEAN — IT BUYS A
   BYTE-IDENTICAL FIXED POINT, WHICH IS AN EXACT, FALSIFIABLE PROOF THAT THE FEATURE ADDS NO DRAW WORK (iter 245).**
   98 says hold the mean; 216 says a draw change is free if the path count is flat; 222 says the world IS the draw
@@ -2044,6 +2071,19 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   HEAD-vs-HEAD control reads 5,416 px), `shot-seastate.mjs` (its camera — freezes in-page, pins the wind, and **aims the
   close-up by measured ink OF THE HOST**: ⚠ the argmax **must** be masked to the sea, or it lands on the palms, which
   read the same signal and move 8x the ink — see the law).
+  The **fringe pair** (246 — reach for these on any vector whose purpose is to REMOVE fabric, and BEFORE you promise a
+  paired addition): `probe-fringeabsorb.mjs` (**can the core absorb what the rim gives back?** — pure world data, 6
+  seeds, no render. Prints the three numbers that decide any hold-something-back vector: the **budget's slack**, what a
+  candidate mask **HOLDS**, and what a widened predicate **ADMITS**. ⚠ **Read its `r=3` and `r=4` columns TOGETHER** —
+  when a wider radius admits *the same* cells, the supply is **exhausted, not out of reach**, and no predicate can
+  reach it. It refuted the ledger's #1 cue in one run, before a line of the fix was written),
+  `probe-fringeshape.mjs` (**the shape sweep: what is the most countryside per developed cell spent?** Grades candidate
+  masks on both of 206's ledgers — the COST (developed cells held) and the payoff in the units the eye reads (**the
+  largest CONTIGUOUS undeveloped run**, with HEAD as the control). Its candidate is **top-K of a smooth field**, which
+  designs out all three of 233's shape laws at once — peaks ⇒ **lobes** never speckle · the boundary is the **noise**
+  not `hexDist` · **K constant** ⇒ the *amount* held is identical every seed while the *shape* still wanders, killing
+  the lottery that killed 233. ⚠ Its verdict was **negative**, and that is the reusable part: a belt cannot buy
+  contiguity because **ROADS fragment every lobe**).
   Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure

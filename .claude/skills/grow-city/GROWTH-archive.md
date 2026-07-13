@@ -16722,3 +16722,118 @@ me a probe, and the probe's headline number was about the wrong noun.** Reading 
 measured — instead of what `probe-crown` is *called* — turned a would-be fourth acquittal into a
 one-command conviction. ⇒ **A banked probe can carry the right instrument under the wrong name.**
 
+
+
+### (ai) — RETIRED AS SPECIFIED by 246 (body, rotated from the header)
+
+The cue that steered the ledger as its #1 🔴 for 14 iterations. 246 measured its named way through and it
+does not exist (see Iteration 246; `probes/probe-fringeabsorb.mjs` + `probes/probe-fringeshape.mjs`). Kept
+byte-for-byte because the COMPLAINT it records is still real and still unaddressed — only its PRESCRIPTION
+and its DENSITY STATISTIC are dead. Anyone re-opening the fringe must re-derive the instrument from the
+complaint's own nouns (228/235), NOT from the numbers below.
+
+  **🔴 (ai) THE CITY HAS NO FRINGE — IT IS DENSEST AT ITS RIM (232; MEASURED, `probes/probe-fringe.mjs`; agent quotes
+  archived at 242).** Developed share of LAND by distance inward from the plate rim (6 seeds, sea excluded, pure world
+  data): **rim 0-2 = 46.5% vs deep interior = 41.3% ⇒ taper −5.3 points, INVERTED.** The rim is the *most* built-up
+  band on **5 of 6 seeds**; WILD land at the rim is **13.4%**. The diorama's outer boundary is a wall of buildings
+  meeting the void. ⚠ **233 TOOK THIS AND REVERTED — STILL OPEN, and the obvious fix is MEASURED-DEAD**
+  (`probes/probe-fringehost.mjs`, banked, runs on HEAD). **(1) The parcel roll is 100.0% SATURATED on every seed** ⇒
+  per 218 `p` is a **DEAD lever**; only the **PREDICATE** steers it. **(2) ROAD is FLAT across rim bands** (29.5% vs
+  33.6%) ⇒ the parcel rule is **INNOCENT** (218's host law) — it fills what the roads reach, and the roads reach the
+  edge. **(3) THE DEV BUDGET HAS SLACK (1153/1382)** ⇒ a held-back rim lot is **NOT re-spent inland**; pop falls ~1:1.
+  ⇒ **THE BOX: strong enough to READ as country ⇒ `developed` collapses −5.7..−9.3% and the census HARD-FAILS; weak
+  enough to pass (ceiling ≈ −4.5%) ⇒ the noise-drawn belt is SEED-FRAGILE** (195: it must hold on EVERY seed).
+  ✅ **The cost lands ENTIRELY OUTSIDE — downtown is NOT taxed.** ⇒ **THE WAY THROUGH: HOLD THE RIM AND WIDEN THE CORE
+  IN ONE LAP.** The slack means the city *can* absorb the freed development inland if interior cells are made eligible
+  (the predicate's `road within 2` is the lever; widening it in the INTERIOR ONLY is pure addition, 219) — then
+  `developed` stays flat, **the census gate opens**, and the belt can be as strong as the eye needs. **Priced
+  separately each half fails; the PAIR ships.**
+  ⚠ Its three SHAPE laws (scatter ⇒ **speckle**; ring-strength ⇒ **offset halo**, since a `hexDist` field's boundary
+  IS the plate's hexagon; the warp must **exceed the belt depth**) are **archived at 242 — read them before designing
+  the belt's shape.**
+
+## Iteration 236 — the shower that had been raining since 1974 (2026-07-13) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky was the stalest domain (last touched 225) and its only banked cue, (s), is
+CONSTRAINED. So I took **225's own law** — *a stale domain's cue list records where you have
+already LOOKED, not where there is nothing to find; grep its seam* — and grepped the seam
+instead of re-reading the cue list. The seam answered immediately.
+
+**The defect.** `cl.rain` was rolled **once**, in `genWorld` (`rain:rng()<0.3`), and never
+written again. So a cloud that spawned raining rained from the founding of the city, drifted
++x, **wrapped the plate at `x>G+6`, and rained again** — for the entire life of the diorama.
+The `tick()` pass it feeds even says *"rain showers **passing** overhead"*. Meanwhile `WINDA`
+one line away is a live gust cycle and `TIDE` a live ~2-min cycle: **Solvista had wind that
+gusted and a sea that turned, and rain that was a permanent property of a cloud.** This is
+**199's tell** (a name asserting a behaviour its value cannot have), hosted on a boolean.
+
+**Change.** The roll becomes a per-cloud **threshold** — `cl.wf`, *how much of a front it takes
+before this cloud lets go* — and the sky gets a **front** (`rainFront()`, two incommensurate
+periods, ~20 yr-units ≈ 2 min at speed 1, seeded phase). A shower is now **continuous**
+(`cloudWet()`, 0..1), so it gathers and clears instead of switching: the belly greys up first,
+then the veil, the damp ground and the bow follow, all weighted by the same `w`.
+- **ONE predicate, and every reader shares it** (the loop's own law): the veil, the wet patch,
+  the rainbow, the grey belly and the meadow-bloom CA all read `cloudWet()`. It had been **six
+  independent readers of one frozen boolean**.
+- ⚠ **Keyed to `year`, NOT to `time`.** `tick()` reads this, and a CA that read the **wall
+  clock** would make `genWorld`+`__warp` irreproducible and **blind every probe in the harness**.
+  `year` advances 0.075/tick under `__warp`, so the front is deterministic there, freezes with
+  `playing=false`, and **pins with `__setYear`** exactly as the seasons do. Season is `year%1`
+  and the front is a ~20 yr cycle, so **`year+k` is the same season with different weather** —
+  which is what let the camera hold the season fixed and vary only the sky.
+- One `rng()` draw either way in `genWorld` ⇒ **stream-neutral at spawn**; and the bloom pass now
+  spends its draws for **every** cloud, wet or dry, so **the weather can never reshuffle the
+  seeded stream** (it decides where flowers come up, and nothing about the skyline).
+- **98's hold-the-mean:** the front's base sits *below* the midpoint on purpose, so the MEAN
+  number of showers stays at HEAD's (~2 of 7). This lap buys the **arc**, not a wetter city —
+  and it keeps the draw-cost question shut by construction.
+
+**Census.** PASS, 0 page errors. Core held and rose: `pop 171652→175353 (+2.2%)`, `developed
++0.3%`, `roads +0.3%`. The tile histogram moved broadly (`COM +83 / MID −72 / TOWER +21`) — the
+expected **one-time chaotic reshuffle**, since the bloom pass's `rng()` draw count changed by
+construction; it is a wash, not a tax, and nothing collapsed.
+
+**Probe (`probes/probe-front.mjs`) — TEMPORAL, per 134: every gate this loop owns is FROZEN, and
+this claim is about CADENCE. And the defect is its OWN CONTROL** — when the vector is *"make X
+vary"*, HEAD's answer is a constant **by construction**, so no threshold had to be invented:
+
+| | HEAD | patch |
+| --- | --- | --- |
+| seed 42 | **2 raining clouds, forever — DISTINCT STATES = 1** | 0–7, mean 2.8, **8 distinct states** |
+| seed 7 | **1 raining cloud, forever — DISTINCT STATES = 1** | 0–5, mean 1.3, **5 distinct states** |
+
+- **STROBE (134):** fastest turn-on **0.17–0.21 w/sec ⇒ a shower fades in over ~5–6 s** (a strobe
+  is >1 w/sec). It gathers; it does not pop.
+- **The front is deterministic** under `__setYear` and has real dry spells (seed 7: `rain 0 0 0 0`
+  across ~40 s).
+- **Isolated by SUPPRESSION in ONE page** (226/230/234 — set every `cl.wf=9` and re-render): the
+  weather's ink runs **0 px (dry — an honest floor, byte-identical) → 31,717–51,747 px (front)**.
+
+**Visual — the FAILs were WRONG and the AGENTS WERE RIGHT ANYWAY (212, both halves in one lap).**
+Both agents, blind, **RANKED the three frames correctly** (dry → gathering → front) on both seeds,
+which is the locate question and it passed. Seed 42 PASSed. Seed 7 FAILed on *"the raining cloud
+bellies are not darkened"* — **refuted by measurement** (21,497 *visible* sky px at mean Δ33.9),
+and then by a **fresh blind agent that pixel-sampled the bellies**: it found **6 of 6 isolable
+clouds grey-bellied in the front frame and 0 in the dry frame** (`~(200,215,223)` vs
+`~(229,240,240)`), named the rainy frame correctly, and called the belly legible at whole-city
+zoom without hunting for drops. Ground truth: **7 soaked vs 0.** ⇒ `VISUAL: PASS`.
+
+**⚠ BUT THE AGENTS' COUNT WAS RIGHT AND MY CAMERA'S CAPTION WAS WRONG — and that is the lap's law
+(⇒ SKILL.md).** The camera printed **`RAINING=7/7`**, read straight off the *rule*; both agents
+counted **2**. The draw spends a shower **2 hexes short of the rim**, so a cloud the front has
+soaked renders **nothing** while it drifts over the void — only **3–4 of 7 ever put a veil on the
+plate**. A self-reporting frame (202) that reports in the **rule's** units rather than the
+**viewer's** (205) is **worse than no caption**: it looks authoritative, and it had me one step
+from "the agents cannot count." The probe now prints **`soaked 7/7 -> RENDERED 4/7`**, and *the gap
+is the finding*. **200 paid out again too:** 6,652 px of the weather's ink sits **behind the
+placard** — masked out before any of the numbers above were believed.
+
+**Perf.** Priced by **counting objects**, not by reading the diff (222 — this vector changes the
+world). Day **109,207 → 110,162 (+0.9%)**, night **138,434 → 138,985 (+0.4%)**. Mechanically
+explained and small: the mean rain is **held by construction** (98), and the grey belly is a
+**colour** change costing **zero path objects**; the residual is the chaotic world reshuffle.
+Not a perf lap.
+
+**Verdict: SHIPPED.** The sky has weather. It gathers, it rains, it clears, and it is different
+in every city — and `probes/shot-front.mjs` can pin any of it, at a fixed season, for the next lap.
+
