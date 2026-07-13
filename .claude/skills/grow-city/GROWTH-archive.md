@@ -17015,3 +17015,90 @@ falsifiable proof that a dynamic feature adds NO draw work** (foam **REDISTRIBUT
 — 245's argmax found the **palms** (they read `WINDA` too, **8x** the ink) and an agent correctly FAILed *the camera*.
 ⚠ Corollary (**217's law on a DRAW**): **A FIXED *ELIGIBILITY* GATE CAPS THE DYNAMIC RANGE OF ANY THRESHOLD BENEATH
 IT** (riding only the crest threshold capped the swing at **1.5x**; riding the gate too ⇒ **3.0x**). **247 cashed this too.**
+
+## Header bullet rotated at Iteration 249 — the 248 block (body)
+
+Compressed in the maintained header (its LAW lives in `SKILL.md`); kept here in full, per the
+fixed-budget rule (*to add a line, cut a line* — **never delete**).
+
+> ✅ **248: THE SHOWER CITED A NEIGHBOUR IT NEVER READ — FIXED** (cue **(ao)**'s shaft half). The veil's
+> rim gate tested **`cl.x`, the cloud's CENTRE**, under a comment claiming it was spent *"2 hexes short of
+> the rim **(as the bow is)**"* — while the **bow, twenty lines away, tests its LEGS**. It painted **4.7% of
+> every veil quad filled past the rim** (worst **3.4 hex**; at `pa=1`, **57% of its landing foot on the
+> void**). Gating on the veil's **own drawn edges** (it leans **upwind**, so the LEFT rim spills worst) ⇒
+> off-plate ink **exactly 0 BY CONSTRUCTION**, **93.6% of on-plate rain retained**, and it can only ever
+> fill **fewer** quads.
+> 🔑 **ITS LAW (SKILL.md): AN ANCHOR IS NOT AN EXTENT** — 211's offset law on the **culling** axis: any
+> cull/fade/bound evaluated at a draw's *anchor* under-bounds every pixel it puts beyond it.
+> 🔑 **COROLLARY — A CORRECT SIBLING DRAW IS A FREE POSITIVE CONTROL** (the bow, same rim, read **0.00 hex
+> on 6 seeds**: it validated the rig and convicted the shaft in one run). ⚠ **This is 242's cited-standard
+> law with the citation running the OTHER WAY** — 242's draw cited a **broken** neighbour; 248's cites a
+> **correct** one and still does not do what it says.
+
+Also compressed at 249: the **247** block's measured body (its law is in `SKILL.md`; the full entry is
+above in this archive).
+
+## Iteration 239 — every walk-up in the city was the same cube (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish — the ledger's #1 🔴 cue **(al)**, the only red with an
+unspent lever. 228 (crowns) and 235 (footprints) closed the TOWER LOOK off six agents'
+*"the towers are wallpaper"*; at 237, one lap later, **both step-back agents said it again**,
+on two seeds — and they were not talking about the towers: *"the **red-roof cube** tiles the
+entire southwest quadrant — roof colour varies, roof **form** does not"* · *"the mid-left band
+is a uniform grey-roof mush."*
+
+**Change.** `midLook(x,y,v)` — the mid-rise gets the two axes 235 gave the tower, and for the
+same reason. **TWO is not a figure of speech:** the walk-up's body was ONE prism of constant
+half-width from pavement to roof, so `silo()` (the half-width at 12 heights — the outline the
+eye traces) read the SAME value at every height, and the city held exactly **two** of them:
+0.34 detached, 0.50 terraced. 99 gave it colour and 216 gave it a stripe rhythm; **a striped
+cube is still a cube.**
+- **PLAN** (free): 3 widths, `fx` mean 1.040.
+- **PROFILE** (the half `silo()` can see): box · **shop plinth with the flats set back above**
+  · **set-back attic storey**. **Every form's base is its widest part** — not a style choice
+  but what keeps the terrace sound: an upper floor may step back from a party wall, **never
+  through it**, so no two walk-ups can overlap however their plans differ.
+- The **party wall is now the NEIGHBOUR'S WEST FACE**, wherever its plan puts it (was a
+  hard-coded `gx+0.66`). At `fx≡1` it reduces to the old `jx=0.16 / ab=0.50` exactly.
+- Bands, rails, roof cap and all roof furniture ride their own storey's width (`rs`), so
+  nothing overhangs a narrowed attic. Means held (98): plan 1.040 × form 0.965 = **1.004**.
+
+**Probe** (`probe-crown`, the instrument cue (al) names, roles swapped: **MID treatment, TOWER
+control**). MID **silhouettes 2.0 → 20.7**, top shape **68.8% → 13.7%**; crowns 32.3 → 136.7.
+**TOWER control byte-unmoved** (12.3 / 21.0%). **Population held: 419.7 → 419.7** (206 — a
+massing rule must not starve its own stock). MID now out-varies the tower it was measured
+against.
+
+**Census.** PASS. Core flat (`pop`/`developed`/`roads` +0); tile histogram **empty** — correct
+and expected for a draw-only vector (`solarRoofs +3` is 226's ±2 tick wobble). hashCell only,
+no `rng()`, no terrain ⇒ stream and pop flat.
+
+**Perf — PAID AND NAMED.** A step is inherently **+1 prism (3 fills)**, taken by ~58% of
+walk-ups. Deterministic instrument (216/222 — frozen world, identical city both builds, 3
+seeds): **+248 prisms/frame ⇒ day +1.85% / night +1.78% draw ops** (+2.3% path objects). **The
+mechanism is fully accounted for — there is no unexplained cost.** ⚠ **The TIMER was unusable
+today and I am not citing it:** two interleaved A/B rounds read day +4.9% then +2.9%, night
++2.9% then **+11.6%**, while **HEAD's own night absolute moved 49.2 → 52.2ms on byte-identical
+code**. A change adding +1.78% night objects **cannot** cost 11.6% of the frame. 216's law
+exactly — *when the timer has no mechanism behind it, count objects.* ~2% to give the city's
+most numerous building (420/seed, **4.5x the towers**) a real massing is the trade 194 made for
+tree shadows and the ledger called good.
+
+**Visual.** PASS on both seeds (`shot-facade`, which aims at the densest MID cluster, so HEAD
+and patch frame the same hex). Seed 7, asked **by file name**: HEAD **~1 distinct silhouette
+("plain cube")**, patch **~4** — it named the plinth and the set-back unprompted — with no
+interpenetration at the party walls, no roof furniture overhanging an edge, no z-tears, whole
+city still coherent.
+
+⚠ **THE GATE ALMOST FAILED A CORRECT CHANGE, AND THE CAUSE WAS THE LABELS.** Seed 42's agent
+was given the pair as **"FRAME A" / "FRAME B"** and **transposed them** — it reported HEAD as
+having 3–4 shapes and the patch as "essentially one shape", i.e. the exact inversion of the
+probe. Its *substance* was right the whole time (it described *"a wider skirt/base course under
+a set-back upper volume"* — a form that exists **only in the patch**) and only its letters were
+crossed. Checked the instrument first (197: working file **is** the patch, md5-verified; the
+two PNGs differ), then looked myself, then re-asked seed 7 **by file name with no letters at
+all** — which came back correct and unambiguous. **Promoted to a law in SKILL.md.**
+
+**Verdict: SHIPPED.** Cue **(al) CLOSED** — the ledger's most-reported defect (six agents,
+three step-backs) is measured shut on the building that was actually causing it.
+

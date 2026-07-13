@@ -1096,7 +1096,8 @@ function genWorld(seed){
   /* a coastal passenger ferry works the shoreline. Math.random so the service
      never perturbs the seeded simulation; it runs the near-to-mid water. */
   for(let i=0;i<fl('ferries',2);i++)ferries.push({y:SEAY0+3+i*(SEAH-6),fr:0.28+i*0.22+Math.random()*0.1,
-     sp:(0.18+Math.random()*0.05)*(i?-1:1),ph:Math.random()*7,c:i?'teal':'terra'});
+     sp:(0.18+Math.random()*0.05)*(i?-1:1),ph:Math.random()*7,c:i?'teal':'terra',
+     dwell:0,call:0});   /* `fr` is now her CRUISING lane; ferryFr eases her off it to berth */
   /* the harbor works are fed by sea. The first ship rides at anchor in the
      roadstead off the warehouse row, waiting on a berth; the rest steam the deep
      lane, seaward of the ferries. Math.random, so the shipping never perturbs
@@ -3100,6 +3101,38 @@ function stepVehicle(v,dt){
    it opens to the public a year later (onPier: where a ped may legally walk) */
 function pierAt(x,y){return year>=1986&&y===pier.y&&x>pier.x0&&x<=pier.x1}
 function onPier(x,y){return year>=1987&&pierAt(x,y)}
+/* THE FERRY CALLS AT THE PIER.
+   Her tooltip has promised "Working the shoreline, EVERY STOP" for the artifact's whole
+   life, and there were no stops. stepFerry was one line -- `f.y+=f.sp*dt*s` -- run at ONE
+   constant speed (probe-ferrycall: DISTINCT SPEEDS = 1 on every seed) along a lane
+   fraction NEVER WRITTEN AGAIN after spawn, bouncing end to end forever. Every pass she
+   crossed the pier's row -- the head is the one thing this city puts out in the water,
+   2.5-4.1 cells seaward of the waterline on all 6 seeds -- and never turned in.
+   The bus has pulled into its stops for 200 iterations (stepVehicle: `v.dwell=16`), so a
+   call is the house's own idiom and `dwell` is the house's own word for it.
+   ONE definition, and every reader shares it: the step (how fast, and how far in), the
+   draw (where the hull sits, and whether she is throwing a wake) and the tooltip. The
+   berth's very EXISTENCE is `pierAt` itself rather than a second copy of 1986, so the
+   call and the deck it calls at cannot drift apart. */
+const FERRYAPP=7.0,     /* rows over which she lines up for, and pulls away from, the berth */
+      FERRYDWELL=9,     /* sim-seconds alongside */
+      FERRYSTAND=0.9;   /* she lies ALONGSIDE the head, not on top of it */
+const ferryPier=()=>pierAt(pier.x1,pier.y);   /* is there a deck out there to call at yet? */
+/* the berth as a seaward FRACTION, in seaXFr's own units -- so she keeps gliding off the
+   unrounded coast (shoreAtF) instead of snapping column to column */
+function ferryBerthFr(y){
+  const sp=seaSpan(y),m=Math.min(1.6,sp*0.3);
+  return clamp((pier.x1+FERRYSTAND-shoreAtF(y)-m)/(sp-m),0,1);
+}
+/* 0 = out in her cruising lane · 1 = alongside. Smoothstepped, so she swings in on a
+   curve instead of a wedge. */
+function ferryApp(f){
+  if(!ferryPier())return 0;
+  const d=Math.abs(f.y-pier.y); if(d>=FERRYAPP)return 0;
+  const a=1-d/FERRYAPP; return a*a*(3-2*a);
+}
+const ferryFr=f=>{const a=ferryApp(f);return f.fr+(ferryBerthFr(f.y)-f.fr)*a};
+const ferryThr=f=>f.dwell>0?0:1-0.75*ferryApp(f);   /* she comes off the throttle alongside */
 function strollable(x,y){
   const n=cellAt(x,y);
   return(n&&(n.t===T.PARK||n.t===T.PLAZA||n.t===T.BEACH||n.t===T.DUNE||n.t===T.SHOREPARK||n.t===T.MARKET||n.t===T.GARDEN||n.t===T.FIELD||n.t===T.STADIUM||n.t===T.QUAD))||onPier(x,y);
@@ -7055,11 +7088,15 @@ function drawSurfer(s){
   ctx.beginPath();ctx.arc(cx,cy-3.4+bob,0.85,0,7);ctx.fill();
 }
 function drawFerry(f){
-  const[cx,cy]=pxc(seaXFr(f.y,f.fr),f.y);
+  const[cx,cy]=pxc(seaXFr(f.y,ferryFr(f)),f.y);
   stamp(f,cx,cy);
   const bob=Math.sin(waveT*1.2+f.ph)*0.6, dir=f.sp>=0?1:-1;
-  ctx.fillStyle=col('foam',1);            /* wake */
-  ctx.beginPath();ctx.ellipse(cx,cy+2.6+bob,6.6,1.7,0,0,7);ctx.fill();
+  /* the wake is thrown by WAY, so it dies back as she comes alongside -- but it never goes
+     to nothing (cf. SHAMT at night): the residual wash is what keeps her sitting IN the
+     water instead of floating on it. Same path object either way, at any throttle. */
+  const wk=0.3+0.7*ferryThr(f);
+  ctx.fillStyle=col('foam',wk);           /* wake */
+  ctx.beginPath();ctx.ellipse(cx,cy+2.6+bob,6.6*wk,1.7,0,0,7);ctx.fill();
   ctx.fillStyle=col(f.c,0.95);            /* hull */
   ctx.beginPath();ctx.moveTo(cx-7,cy+bob);ctx.lineTo(cx+7,cy+bob);
   ctx.lineTo(cx+5,cy+2.6+bob);ctx.lineTo(cx-5,cy+2.6+bob);ctx.closePath();ctx.fill();
@@ -8355,7 +8392,13 @@ function residentWhere(p){
 const ENTINFO=[
   [()=>whales,'Gray whale','Surfacing on a slow cruise up the bay.',12],
   [()=>dolphins,'Dolphin','Rolling through the swell.',8],
-  [()=>ferries,'Harbor ferry','Working the shoreline, every stop.',10],
+  /* the string that started iter 249: it promised "every stop" over a boat that stopped
+     nowhere. It now reads the SAME predicate the rule steers by (ferryPier/ferryApp/dwell),
+     computed live and never stored, so the label and the draw cannot drift apart again. */
+  [()=>ferries,'Harbor ferry',f=>!ferryPier()?'Working the shoreline. No pier yet to call at.'
+     :f.dwell>0?'Alongside the pier head — sailing in '+Math.ceil(f.dwell)+'s.'
+     :ferryApp(f)>0.25?'Coming alongside the pier head.'
+     :'Working the shoreline — the pier is her only call.',10],
   [()=>freighters,'Container ship','Serving the harbor works — at anchor in the roadstead, or steaming the deep lane.',14],
   [()=>boats,'Sailboat','Out for a day on the bay.',8],
   [()=>surfers,'Surfer','Waiting on the next set.',7],
@@ -8473,7 +8516,20 @@ function advanceEntities(dt,s){
       if(nb===h.a)nb=(h.a+1)%heliPads.length; h.b=nb; h.t=0;}}
   for(const b of boats){if(b.moored)continue; b.y+=b.sp*dt*s; if(b.y<SEAY0+1||b.y>SEAY1-1)b.sp*=-1; b.x=seaXFr(b.y,b.fr);}
   for(const su of surfers){su.y+=su.drift*dt*s; if(su.y<SEAY0||su.y>SEAY1)su.drift*=-1;}
-  for(const f of ferries){f.y+=f.sp*dt*s; if(f.y<SEAY0+2||f.y>SEAY1-2)f.sp*=-1;}
+  for(const f of ferries){
+    /* alongside she is making no way; `f.sp` keeps its SIGN throughout (drawFerry reads it
+       for her heading, and the bay-end bounce for her leg), so the throttle -- never the
+       velocity -- is what goes to zero */
+    if(f.dwell>0)f.dwell-=dt*s;
+    else f.y+=f.sp*ferryThr(f)*dt*s;
+    if(f.y<SEAY0+2||f.y>SEAY1-2)f.sp*=-1;
+    const d=Math.abs(f.y-pier.y);
+    /* one call per pass: latched when she berths, released only once she is clear of the
+       approach altogether -- so a pier sited near a bay end (she can turn INSIDE the
+       approach window) cannot bounce her straight back onto the same berth */
+    if(ferryPier()&&d<0.6&&!(f.dwell>0)&&!f.call){f.dwell=FERRYDWELL;f.call=1;}
+    else if(d>=FERRYAPP)f.call=0;
+  }
   for(const f of freighters){if(f.anchored)continue; f.y+=f.sp*dt*s; if(f.y<SEAY0+2||f.y>SEAY1-2)f.sp*=-1;}
   for(const j of joggers){j.y+=j.sp*dt*s; if(j.y<SEAY0+2||j.y>SEAY1-2)j.sp*=-1;}
   for(const d of dolphins){d.y+=d.sp*dt*s; if(d.y<SEAY0+1||d.y>SEAY1-1)d.sp*=-1;}

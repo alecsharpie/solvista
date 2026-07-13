@@ -684,6 +684,28 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **WHEN THE VECTOR IS "MAKE X VARY", HEAD'S *CONSTANT* IS A FREE, EXACT BASELINE — AND IF THE FEATURE HANGS OFF A
+  THING THE WORLD BUILDS AT A KNOWN YEAR, THE ERA BEFORE IT IS A FREE, EXACT *CONTROL* (iter 249).** 236 says the
+  defect is its own perfect control (when you are fixing a constant that should have been a variable, HEAD's
+  `DISTINCT STATES = 1` is an unarguable baseline nobody had to design). 249 is that law with its **second half**
+  attached, and the pair is the cheapest complete gate this loop has found. The ferry's tooltip had promised *"working
+  the shoreline, **every stop**"* for the artifact's whole life over a boat whose `stepFerry` was **one line** and whose
+  lane fraction was **never written again after spawn** — a temporal probe (134) read **DISTINCT SPEEDS = 1 on every
+  seed**, forever, which *is* the bug, stated in a number, with no threshold invented. Then the fix's own control came
+  free: the berth is the **pier head**, and `pierAt` does not exist before **1986** — so at 1985 the new predicate
+  returns 0, every lever collapses to HEAD's literal, and **the patch runs HEAD's byte-identical code**. That control is
+  **exact, not statistical** (it re-reads 1 / 0 / never-closes), it needs no second build, and the census's own 1985 era
+  becomes a genuine untouched cell. ⇒ **Before you design a "make X answer Y" vector, ask (a) what number is CONSTANT in
+  HEAD — that is your baseline — and (b) whether your host has a BIRTHDAY. A year-gated host hands you a dead regime for
+  nothing** (199's law, arriving through the *world* instead of through the light). The tell: your feature is gated on a
+  structure, tile or civic that the city *builds at a known year*.
+  ⇒ **AND THE COROLLARY THAT FOUND THE LAP: `dwell` WAS ALREADY THE HOUSE'S WORD FOR A CALL.** The **bus** has pulled
+  into its stops for 200 iterations (`stepVehicle`: `v.dwell=16`); the ferry was the one transit mode that called
+  nowhere. **Before you invent a mechanism, grep for the one the artifact already ships** — 248's free-positive-control
+  law (*a correct sibling draw validates your rig*) has a **design** twin: a correct sibling *rule* hands you the idiom,
+  the vocabulary, and the reviewer's benchmark (226) in one. ⚠ And keep the SIGN: `f.sp` stays signed throughout and the
+  **THROTTLE** goes to zero, never the velocity — `drawFerry` reads `f.sp`'s sign for her heading, so zeroing it would
+  have spun every berthed boat to face east.
 - **A THRESHOLD INSIDE AN `if / else if` CHAIN IS NOT A GATE — IT IS A *BOUNDARY BETWEEN TWO FEATURES*, SO NARROWING
   ONE ARM SILENTLY WIDENS ITS NEIGHBOUR (iter 247).** 245 says ride the **eligibility** gate, not the alpha, when you
   want real dynamic range — and that is right, and it is exactly how you walk into this. 247 made the beach crowd
@@ -2135,6 +2157,23 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   not `hexDist` · **K constant** ⇒ the *amount* held is identical every seed while the *shape* still wanders, killing
   the lottery that killed 233. ⚠ Its verdict was **negative**, and that is the reusable part: a belt cannot buy
   contiguity because **ROADS fragment every lobe**).
+  The **ferry pair** (249 — reach for these on any vector about a MOVER'S CADENCE, or any feature gated on a host the
+  city builds at a known year): `probe-ferrycall.mjs` (**does this thing ever actually DO the thing its label claims?**
+  Part A is pure world data — no render, no clock, no noise floor — and answers the dead-code question FIRST: *does the
+  host exist, and can the mover REACH it?* (the pier head: 2.5–4.1 cells out in the water on 6 seeds). Parts B/C are
+  **TEMPORAL** (134 — every other gate here is frozen, so *"it never stops"* has no instrument): they let the clock RUN
+  and count **DISTINCT SPEEDS**, then drive the artifact's OWN step loop — never a re-implementation of the rule under
+  test — and measure the call in the **viewer's units** (205: the water between hull and deck, not the design constant).
+  ⚠ **Two free EXACT controls, and they are the reusable idea**: HEAD's *constant* IS the baseline (236), and the
+  **pre-1986 era**, where the deck does not exist, runs HEAD's byte-identical code (199). ⚠ **Approach the host from
+  whichever side has water** — the pier can sit within an approach-length of a bay END, and starting the mover blindly
+  put her OUTSIDE the bay, where the bounce clause flipped her: a defect in the RIG that reads exactly like a dead
+  feature), `shot-ferrycall.mjs` (its camera — **no argmax needed**: unlike a buried ground ornament (226) the host is
+  **published world data** (`pier.x1,pier.y`) floating on open water where nothing can occlude it, so `ctr()` IS the
+  located host (201). Makes the pair comparable by pinning her **ROW, not the clock** — `ferryFr` is a pure function of
+  `f.y`, so freezing at `f.y = pier.y` puts the patch at her berth and HEAD abeam it, same world, same instant, same
+  camera. Every frame **self-reports the gap in cells a viewer can see** (236); `SRC=`/`TAG=` name the FILE, never a
+  letter (239)).
   `probe-rainrim.mjs` (248 — **is this draw bounded by its ANCHOR or by its own EXTENT?** Part A is pure world data
   (no render, no clock, no noise floor): it sweeps the cloud across its row — which IS the traverse it makes in play —
   and reports the hexes of veil painted **past the plate's rim**, weighted by the alpha it is actually drawn at, with

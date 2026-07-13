@@ -1,5 +1,5 @@
 {
- "when": "2026-07-13T16:45:24.154Z",
+ "when": "2026-07-13T17:36:31.756Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -525,7 +525,7 @@
    "G": 67,
    "year": 2035,
    "seed": "16",
-   "pop": 37349,
+   "pop": 37348,
    "parks": 190,
    "towers": 87,
    "tallestFloors": 57,
@@ -853,7 +853,7 @@
    "bridges": 53,
    "developed": 1013,
    "solarRoofs": 416,
-   "greenRoofs": 144,
+   "greenRoofs": 146,
    "towerHt": 6018,
    "tallTowers": 30,
    "helipads": 23,
