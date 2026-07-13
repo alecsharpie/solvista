@@ -732,6 +732,20 @@ vector, whatever it is.
   across all four seasons on BOTH builds.** ⇒ **A removal vector needs a probe that names what SURVIVES, not one that
   measures what MOVED.** The tell: your probe's headline number is a **pixel diff**, and your claim contains a noun
   (*empty*, *gone*, *packed away*) that a pixel diff cannot verify.
+  ⇒ **AND THE SURVIVOR COUNT IS ALSO YOUR TRIPWIRE FOR A DEAD INSTRUMENT — IT IS 196'S POSITIVE CONTROL AND 247'S
+  "WHAT SURVIVES" IN THE SAME COLUMN, WHICH IS WHY IT IS THE CHEAPEST GATE A REMOVAL LAP CAN BUY (iter 250).** 196 says
+  a `BASE = 0` is worthless without a positive control, because *a dead pin and a deaf draw produce the same zero*.
+  250 made the amphitheater's concert seasonal and counted the objects the bowl draws — singer, footlights, audience
+  specks (must go to 0 in winter) **and the CAVEA'S TIER ARCS (stone: must never move)**. The first run came back **all
+  zeros, tiers included** — and a zero there is *impossible*, so the instrument was convicted in ten seconds. (The
+  wrappers had closed over the counter object while the probe swapped in a **fresh** one each frame, so every increment
+  landed on an object nobody read — a hazard of any hook you reset per render: **reach through `window.X` at call time,
+  never close over it.**) **Without the tier column I would have read "singer 0, specks 0, every season, BOTH builds" as
+  a broken feature and gone off to redesign a draw that was fine** — the exact failure 196 warns of, arriving through
+  the *probe* instead of through the *pin*. ⇒ **On any vector whose purpose is to take something away, put a
+  MUST-NOT-MOVE object count beside the must-go one.** It is free (same hook, same run), it names what survives, and it
+  is the only thing standing between you and a confident redesign of a healthy feature. The tell: **your probe's
+  headline is a count going DOWN, and nothing in the run is required to stay UP.**
 - **AN ANCHOR IS NOT AN EXTENT — ANY CULL, FADE OR BOUND EVALUATED AT A DRAW'S ANCHOR POINT SILENTLY UNDER-BOUNDS
   EVERY PIXEL IT PUTS BEYOND THAT POINT (iter 248).** 211 says a per-hex ornament drawn at an **offset** can land in
   the *next hex* and be painted over: draw order is depth order, so an offset is a depth decision. 248 is the same
@@ -2174,6 +2188,21 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `f.y`, so freezing at `f.y = pier.y` puts the patch at her berth and HEAD abeam it, same world, same instant, same
   camera. Every frame **self-reports the gap in cells a viewer can see** (236); `SRC=`/`TAG=` name the FILE, never a
   letter (239)).
+  The **concert pair** (250 — reach for these on any vector that TAKES SOMETHING AWAY, and on any "does X keep a
+  calendar" claim): `probe-concert.mjs` (**counts OBJECTS, not pixels** — the only instrument that can tell *"the stage
+  went dark"* from *"something else got drawn there"* (247). Deterministic, no render diff, **no noise floor at all**.
+  ⚠ **Its `TIER ARCS` column is the reusable idea**: the cavea is stone and MUST draw every frame, so it is 196's
+  positive control and 247's *what survives* **in one column** — and it convicted the probe itself when a botched
+  counter reset made every column read 0. ⚠ Two of its columns (footlights `1x1`, specks `1.2x1.2`) share their
+  signature with other draws in a mature city, so **their ABSOLUTE counts are contaminated and only the DELTA is the
+  measurement** (−3 and −8, exactly, on every seed); the singer (`arc r=0.68`) is unique. ⚠ **An object count sees
+  PRESENCE, not the FADE** — it prints `concertSeason()` beside the counts, or autumn's 4%-alpha singer would be
+  reported as a full house (205). Carries HEAD's **constant** as the baseline (236) and the bowl's **BIRTHDAY**
+  (`year>=2004` ⇒ 1985 runs HEAD's bytes) as a free exact control (249)), `shot-concert.mjs` (its camera — pins the
+  **SEASON at the DUSK showtime hour**, and ⚠ **that hour is taken off the LIGHT CURVE, not guessed**:
+  `CIVHRS.amphitheater===0` ⇒ `so = 1-nightDeep()`, so the show runs at `dayT≈0.70` and is **invisible** at the
+  intuitive "night" pin of 0.92 (202). Freezes in-page, forces the HUD (204), `page.screenshot` (200); frames are
+  named **by file** (239) and each self-reports the objects it actually drew).
   `probe-rainrim.mjs` (248 — **is this draw bounded by its ANCHOR or by its own EXTENT?** Part A is pure world data
   (no render, no clock, no noise floor): it sweeps the cloud across its row — which IS the traverse it makes in play —
   and reports the hexes of veil painted **past the plate's rim**, weighted by the alpha it is actually drawn at, with

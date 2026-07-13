@@ -17102,3 +17102,88 @@ all** — which came back correct and unambiguous. **Promoted to a law in SKILL.
 **Verdict: SHIPPED.** Cue **(al) CLOSED** — the ledger's most-reported defect (six agents,
 three step-backs) is measured shut on the building that was actually causing it.
 
+## Iteration 240 — the floodlights burned every night for a match that never kicked off (2026-07-13) [People & activity × Deepen]
+
+**Vector.** People & activity × Deepen. People was the stalest domain (last touched 226) and
+its cue list was **empty** — the exact case 225's grep-the-seam law is for. Grepped the seam
+instead of trusting the saturation note, and the stadium's own comments confessed in two lines.
+
+**The seam.** `drawCell`'s `T.STADIUM` case had **two gates, and they were inverted**:
+- `if(LITAMT<0.75){ /* match-day crowd on the concourse */ }` — so the **same nine specks**
+  (positions from `hashCell`, a constant) stood on the concourse **every afternoon of every
+  year**, for a match that never kicked off.
+- `if(LITAMT>0.3){ /* floodlit pitch: light cones + green glow */ }` — so the bowl was
+  **floodlit every single night**, cones, halo and all, over stands *that same crowd gate had
+  just emptied*.
+
+The lights burned for nobody, and the crowd stood in broad daylight with the lights off. This
+is **199's tell twice, back to back** (a name asserting a behaviour its value cannot have),
+and it had survived the artifact's entire life. `syncFleet` was in on it too: the ped spawn
+pool weights STADIUM ×3 under the comment *"markets & matches draw a crowd"*.
+
+**Change.** Gave the city a **fixture list**, and made it ONE predicate every reader shares
+(123/199/112). The clock was already there and nobody had noticed: **`dayT+=dt*s/110` never
+wraps**, so `Math.floor(dayT)` is a **real day counter** — read, until now, by nothing but the
+moon (`MOONSYN`). A fixture is hashed off that day index:
+- `fixtureAt(day)` → kickoff in `dayT`-fraction, or −1. ~50% of days; ~1 in 3 is an afternoon
+  kickoff, the rest evening (so dusk falls *during play* and the floodlights have a job).
+- `matchClock()` / `matchLive()` / `matchGate()` → where we are in it. The concourse fills as
+  the crowd arrives, **empties into the stands at kickoff** (a ground during play is loud and
+  its concourse is bare), and floods back out at full time.
+- Readers: the concourse crowd, a new **stands crowd** on the terracing, the floodlights +
+  cones + pitch glow, `matchWord()` in the tooltip, and `residentWhere` (a resident on a
+  stadium hex is now *"In the crowd at the match."*).
+- The masts keep a **0.12 security glim** on a dark night, so the bowl doesn't drop out of the
+  night skyline — but **nothing lights the pitch except a match**.
+
+No `rng()`, no `Math.random`, no terrain: the seeded stream is byte-identical. The spawn pool
+was deliberately **left alone** (`homeCells` is indexed by `rng()` — changing its length would
+reshuffle every downstream seeded draw).
+
+**Census.** PASS. `pop −1 · roads +0 · developed +0`, tile histogram **empty** — correct and
+expected for a draw-only vector, and therefore **vacuous**. The gate is the probe.
+
+**Probe** (`probes/probe-match.mjs`, 3 seeds; `probes/shot-match.mjs` is its camera).
+Isolated by **suppressing the DECISION inside one page** (230: `fixtureAt = () => -1`, re-render
+the same frozen world), so the diff *is* the match, at a floor of **exactly 0**, off the final
+composited canvas — occlusion checked for free, and **build-agnostic** (234), no source swap.
+```
+                                     seed 42   seed 7   seed 1234
+  floor (same frame twice)              0 px     0 px      0 px   <- honest zero (195f/203)
+  EVENING match (crowd + floodlights)  161 px   156 px    148 px
+  AFTERNOON match (the CROWD alone)     17 px    20 px     24 px  <- decomposes the above
+  control: dark night, suppressed        0 px     0 px      0 px
+  control: daylight,   suppressed        0 px     0 px      0 px
+```
+**HEAD is its own perfect control (236's corollary — the defect is a CONSTANT by
+construction).** Pitch luminance at `tod 0.80`, over 12 consecutive nights:
+- **HEAD: `DISTINCT VALUES = 1` on every seed** (97.3 / 101.3 / 104.2, identical all 12 nights)
+  — the pitch is lit exactly the same every night, forever.
+- **Patch:** lit *only* on fixture nights (42: 90.0 dark → 99.4 lit · 7: 94.3 → 102.1 ·
+  1234: 96.3 → 106.2), and HEAD's constant sits **at the lit value** — proving HEAD was
+  floodlighting an empty bowl every night of the city's life.
+
+**Cadence (134 — a claim about MOTION needs a temporal probe).** Play lasts **18 s** and the
+gates **8 s** on the 110 s `dayT` clock. Nothing here can strobe. Fixture rate over 200 days:
+**50% / 50% / 49%**.
+
+**Visual.** Both seeds PASS, and the close-up A/B was called **"obvious at a glance"** on both:
+*"a bright, saturated green oval that glows against the dusk-purple city... crowd clearly
+visible as a speckled cream/red ring filling the stands... all four masts have bright white
+lamp heads"* vs the dark night's *"flat, muted olive/grey-green oval, no glow... stands are a
+plain unspeckled band... masts are bare grey poles."* Whole-city night frames PASS on both.
+✅ **The blind LOCATE landed on ground truth (108).** Told only *"somewhere there is a stadium
+with a floodlit pitch — find it"*, the agent put it at **x≈0.295, y≈0.50** (seed 42) and
+**x≈0.40, y≈0.40** (seed 7). True: **(0.295, 0.50)** and **(0.398, 0.41)**. It found the ground
+*by its light alone*.
+
+⚠ **THE GATE'S ONLY FAIL WAS MY CAMERA, AND BOTH AGENTS CAUGHT IT BY md5.** The first round
+FAILed on both seeds: `city-night.png` was **byte-identical** to `match-night.png`. Cause —
+`scale`/`offX` are page globals that **survive a `page.evaluate`**, so "leave the camera alone"
+left it parked on the stadium and the "whole-city" frame was the zoomed clip. Fixed at source
+(restore the artifact's own published `fitScale`/`fitX`/`fitY`) — **227's law: a documented trap
+you keep walking into is a broken tool, not a law.** Asking **per FILE NAME** (239) is what made
+it catchable: the agents md5'd the paths I named.
+
+**Verdict: SHIPPED.**
+

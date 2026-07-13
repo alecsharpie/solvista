@@ -1500,6 +1500,26 @@ function farmPhase(v){const ph=farmPh(v);
 const BEACHMIN=0.10;
 function beachPhase(){const s=((year%1)+1)%1;
   return BEACHMIN+(1-BEACHMIN)*(0.5+0.5*Math.cos(6.2831853*(s-0.62)));}
+/* The bowl keeps a calendar too, and it always should have. CIVICDESC has promised
+   "Concerts through the summer" since the amphitheater was built, over a stage whose
+   only gate was the SUN: the singer swayed under the beam on 365 nights of the year,
+   in midwinter as readily as in August, and the house sat out in the rain to watch her.
+   ONE predicate — the beam, the footlights, the night audience and the tooltip all read
+   it, so the show and the house can never drift apart (213's invariant: the bowl empties
+   WITH the concert, not on a gate of its own).
+   Centred on the dry peak (s=0.62) so concertSeason()===1 exactly there and the draw is
+   BYTE-IDENTICAL to its old self at that pin (245), and strictly darker every other week.
+   A TRIANGLE, not beachPhase's cosine, because a season has an END (springBloom's shape):
+   a beach in January is still a beach, but a concert in January is simply not on. Outside
+   +/-CONCERTW the stage is dark stone and the tiers are empty. */
+const CONCERTW=0.26;
+function concertSeason(){const s=((year%1)+1)%1;
+  let d=Math.abs(s-0.62); if(d>0.5)d=1-d;            /* the year is a circle */
+  return clamp(1-d/CONCERTW,0,1);}
+/* ...and the tooltip reads the SAME predicate the beam lights by, so the string can
+   never announce a concert the renderer has already struck (123: run the tell forwards). */
+const concertWord=()=>{const cs=concertSeason();
+  return cs<=0?'Dark for the winter':(cs>0.72?'Concert season':'Shoulder of the season');};
 /* woodland spring ephemerals: wildflowers carpet the forest floor in the brief
    window after the thaw and before the canopy closes over it (the same s~0.28
    spring the palette greens the canopy on). Shared so the draw and the tooltip
@@ -6427,7 +6447,10 @@ function drawBuilding(c,x,y,gx,gy){
          did. `so` is ~1 at dusk, so the crowd fades out over the evening rather than
          snapping; by DAY nightDeep() is pinned at 1 (it only means anything after
          dark), hence the daylight branch. */
-      {const aud=LITAMT<0.3?1:so;
+      /* is there a show on tonight? `so` is the hour, concertSeason() the calendar —
+         and the house reads the SAME number the stage does (see below). */
+      const show=so*concertSeason();
+      {const aud=LITAMT<0.3?1:show;
       if(LITAMT<0.75&&aud>0.02){
         ctx.globalAlpha=aud;
         for(let j=0;j<8;j++){const a=0.35+j*0.33, r2=1+(hashCell(x*3+j,y,seedNum^0xAD1)*NT|0);
@@ -6435,15 +6458,18 @@ function drawBuilding(c,x,y,gx,gy){
           ctx.fillRect(cx+Math.cos(a)*(2.6+r2*2.0)-0.6,cy+1.5+Math.sin(a)*(1.4+r2*1.05)-0.6,1.2,1.2);}
         ctx.globalAlpha=1;
       }}
-      if(LITAMT>0.3&&so>0.02){ /* showtime: a spotlit performer under the beam, footlights
+      if(LITAMT>0.3&&show>0.02){ /* showtime: a spotlit performer under the beam, footlights
          — the concert the CIVICDESC promised, over the empty lit stage it drew.
          And now the show ENDS (iter 213). CIVHRS.amphitheater is 0, so the beam, the
          wash, the singer and the footlights all fade out together on one globalAlpha
          and the bowl goes dark stone — instead of the performer swaying on till dawn
          to a house the audience gate (LITAMT<0.75, right above) had emptied hours ago.
          globalAlpha, not per-fill alpha, because the singer is a SOLID fill and would
-         otherwise pop out at the cut. */
-        ctx.globalAlpha=so;
+         otherwise pop out at the cut.
+         ...and now the season ends too: `show` carries concertSeason(), so the bowl is
+         dark stone all winter and the specks above go with it — the two gates read ONE
+         number, which is the only thing that keeps a house from watching a struck stage. */
+        ctx.globalAlpha=show;
         const sway=Math.sin(time*1.5+x*1.3)*0.35;   /* sways to the music */
         /* the beam: a soft cone spilling down from over the stage onto the apron */
         ctx.fillStyle='rgba(255,226,172,'+(0.14*LITAMT)+')';
@@ -8164,8 +8190,10 @@ function describeTile(c,x,y){
   }
   else if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';
     sub=CIVICDESC[c.kind]||'A public institution.';
-    /* the bowl names what it looks out at — off the SAME ray walk that sited it */
-    if(c.kind==='amphitheater')data.push(['Faces',amphView(x,y)]);}
+    /* the bowl names what it looks out at — off the SAME ray walk that sited it, and
+       whether there is a show on — off the SAME predicate the beam lights by (iter 250) */
+    if(c.kind==='amphitheater'){data.push(['Faces',amphView(x,y)]);
+      data.push(['Season',concertWord()]);}}
   else if(c.t===T.ROAD){const art=c.flow>=ARTFLOW;
     /* a treed street is drawn as an alleeed boulevard (both kerbs planted); the
        label had ignored it for the artifact's whole life, so hovering the leafiest
