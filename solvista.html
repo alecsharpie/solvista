@@ -1334,6 +1334,70 @@ function groundLoad(x,y){
   }
   return n;
 }
+/* The six STRAIGHT hex rays out of a cell, with the screen bearing each one walks.
+   A ray is NOT "repeat one entry of nbrDirs()" — that zigzags with row parity (the
+   same reason the invariants forbid a vertical road). These keep the row, or hold
+   `q=x-(y>>1)` (the SE/NW family) or `s=x+((y+1)>>1)` (the SW/NE family), so each
+   step lands the same screen displacement every time. Bearings are DERIVED from the
+   projection, not written down: change TW/TH and they still point where they say. */
+const RAY6=[
+  {n:'east',      s:(x,y)=>[x+1,y],                th:Math.atan2(0,CW)},
+  {n:'west',      s:(x,y)=>[x-1,y],                th:Math.atan2(0,-CW)},
+  {n:'northeast', s:(x,y)=>[x+((y&1)?1:0),y-1],    th:Math.atan2(-ROWY,CW/2)},
+  {n:'northwest', s:(x,y)=>[x-((y&1)?0:1),y-1],    th:Math.atan2(-ROWY,-CW/2)},
+  {n:'southeast', s:(x,y)=>[x+((y&1)?1:0),y+1],    th:Math.atan2(ROWY,CW/2)},
+  {n:'southwest', s:(x,y)=>[x-((y&1)?0:1),y+1],    th:Math.atan2(ROWY,-CW/2)},
+];
+/* protected green: what a hex IS, and will still be. MEADOW/FARM are not here — they
+   are RAISEABLE, i.e. a building that has not been built yet (231). */
+const GREENV=new Set([T.PARK,T.SHOREPARK,T.PLAZA,T.FOREST,T.REDWOOD,T.GARDEN,T.QUAD]);
+/* How good is the view down ray r? Water is the backdrop a bowl wants and protected green
+   is the next best. Nearer counts for more.
+   PURE ADDITION, and deliberately so (219). The obvious rule — also PENALISE the wall you
+   are facing — was built and swept, and it is a DEAD LEVER: penalising the wall alone,
+   even at 20x this weight, never moved a single bowl off a rooftop view, while the
+   subtraction was the only thing that ever cost burial. A bowl does not need to avoid
+   buildings; it needs SOMETHING TO LOOK AT. So nothing here can score below zero, and the
+   un-preferred lot keeps the byte-identical old rule.
+   Only PERMANENT green earns it: MEADOW and FARM are RAISEABLE — a building that has not
+   been built yet — and scoring them would site the bowl facing the ground the upgrade pass
+   is about to build on (231). */
+function viewScore(x,y,r){
+  let s=0,px=x,py=y;
+  for(let k=1;k<=5;k++){
+    [px,py]=RAY6[r].s(px,py);
+    const c=cellAt(px,py); if(!c||c.t===T.VOID)break;
+    s+=(WETSET.has(c.t)?3:GREENV.has(c.t)?1.5:0)/k;
+  }
+  return s;
+}
+/* THE BOWL'S SIGHTLINE. The cavea is drawn facing straight up-screen and cannot be
+   turned (the projection will not carry it — see drawCell). So the audience looks out
+   over the two rays that bracket up-screen, NE and NW: that pair IS the view, and it is
+   the only thing a siting rule can choose. */
+const amphSight=(x,y)=>(viewScore(x,y,2)+viewScore(x,y,3))/2;
+/* How much a view is worth, in units of groundLoad. Swept on BOTH ledgers (probe-amphsight,
+   10 seeds): 0 IS HEAD, so the control is exact and free. 4-6 is a plateau where the view
+   improves +55% and the burial cost is byte-identical to HEAD (worst groundLoad 14, none
+   buried); at 7+ the bowl starts paying visibility for almost no view, and by 10 a seed is
+   buried outright. 6 is the top of the free plateau. Never a gate — the best of a bad lot
+   still takes it, so the one-per-city bowl can never be lost (206). */
+const AMPHVIEW=6;
+/* what the house is actually looking at — the SAME walk the site was chosen by, so the
+   tooltip cannot drift from the rule (123: run the tell forwards) */
+function amphView(x,y){
+  let green=false;
+  for(const r of[2,3]){
+    let px=x,py=y;
+    for(let k=1;k<=5;k++){
+      [px,py]=RAY6[r].s(px,py);
+      const c=cellAt(px,py); if(!c||c.t===T.VOID)break;
+      if(WETSET.has(c.t))return 'the water';
+      if(GREENV.has(c.t))green=true;
+    }
+  }
+  return green?'the parkland':'the rooftops';
+}
 /* TCAP — how tall a tower on this hex is ever allowed to grow (iter 224).
    The skyline is written by TWO rules and only ONE of them knew where downtown was.
    Placement keys height to `core` (iter 98); the 2022+ growth rule then added
@@ -2194,13 +2258,23 @@ function tick(){
      bowl does not sit on the same relative lot in every city; it is the jitter now, which
      is what the old <0.6 filter was really there for. */
   if(year>=2004&&!cells.some(c=>c.t===T.CIVIC&&c.kind==='amphitheater')){
-    let best=null,bs=1e9;
+    let best=null,bs=1e9,bx=0,by=0;
     for(let i=0;i<G*G;i++){
       const x=i%G,y=(i/G)|0,c=cells[i];
       if((c.t===T.EMPTY||c.t===T.RES)&&roadNear(x,y)
          &&countAround(x,y,2,n=>n.t===T.PARK||n.t===T.PLAZA)>0){
-        const s=groundLoad(x,y)+hashCell(x,y,seedNum^0x0A44);
-        if(s<bs){bs=s;best=c;}}
+        /* ...AND IT MUST HAVE SOMETHING TO LOOK AT (iter 244). groundLoad alone scores
+           only the rows at dy=+1/+2 — it takes ground whose SOUTH is open so the flat
+           bowl is not buried, which is right and stays. But the audience faces the other
+           way, up-screen, and NOTHING had ever scored what stands THERE: two gates on one
+           feature, pointing opposite ways (240). Measured over six seeds, the house was
+           looking into a wall of h74 / h69 / h47 — the one direction the city guaranteed
+           was clear was the one it had its back to. The bowl cannot be turned (drawCell
+           says why), so the SITE comes to the bowl: amphSight scores the water, the
+           parkland and the buildings in the sightline. A PREFERENCE, never a gate (206) —
+           the best of a bad lot still takes it, so the one-per-city bowl is never lost. */
+        const s=groundLoad(x,y)-AMPHVIEW*amphSight(x,y)+hashCell(x,y,seedNum^0x0A44);
+        if(s<bs){bs=s;best=c;bx=x;by=y;}}
     }
     if(best){best.t=T.CIVIC;best.kind='amphitheater';best.th=6;best.h=0;best.age=0;}
   }
@@ -6232,7 +6306,16 @@ function drawBuilding(c,x,y,gx,gy){
         ctx.fillStyle='rgba(200,255,240,'+(0.24*openAmt)+')';
         ctx.beginPath();ctx.arc(cx+si*(R2*0.6),dy2-co*(R2*0.6),3.4,0,7);ctx.fill();}}
     } else if(c.kind==='amphitheater'){
-      /* a stone cavea cut into a knoll; the stage lights up after dark */
+      /* a stone cavea cut into a knoll; the stage lights up after dark.
+         THE BOWL DOES NOT TURN, AND IT CANNOT — the projection forbids it (iter 244).
+         A circle on the ground projects to a WIDE, SHALLOW ellipse here, and the cavea
+         reads as a bowl precisely because its seating is the NEAR half of that ellipse:
+         the tiers stack into a visible rake. Swing it 90 degrees and the seating becomes
+         the ellipse's left/right half — a tall NARROW sliver whose five arcs, 2px apart
+         and 2px wide, fuse into a flat blob. Built, measured, and reverted: two agents
+         on two seeds independently called it "a spilled cream blob", and they were right.
+         So the SITE comes to the bowl instead — see the siting rule (~L2245), which now
+         scores what stands in this fixed up-screen sightline. */
       const NT=hashCell(x,y,seedNum^0xA3F1)<0.5?4:5;   /* tier count varies per city */
       hexTile(gx,gy,1.02,col('lawn',1.02));
       ctx.strokeStyle=col('cream',1.08);
@@ -7971,7 +8054,9 @@ function describeTile(c,x,y){
        :'A rubble arm thrown out from the shore. The swell breaks on it, and the roadstead behind lies still.';
   }
   else if(c.t===T.CIVIC){title=CIVICLABEL[c.kind]||'Civic building';
-    sub=CIVICDESC[c.kind]||'A public institution.';}
+    sub=CIVICDESC[c.kind]||'A public institution.';
+    /* the bowl names what it looks out at — off the SAME ray walk that sited it */
+    if(c.kind==='amphitheater')data.push(['Faces',amphView(x,y)]);}
   else if(c.t===T.ROAD){const art=c.flow>=ARTFLOW;
     /* a treed street is drawn as an alleeed boulevard (both kerbs planted); the
        label had ignored it for the artifact's whole life, so hovering the leafiest

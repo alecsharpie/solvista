@@ -16516,3 +16516,130 @@ beam is **NOT too bright** (33rd pct of the buildings it flies over; dTop **+37 
 the **gondola is NOT the culprit** (33x less ink), it is **NOT unsupported** (**41%** of its ink is legs).
 ⚠ **DO NOT re-tune the beam's draw, and DO NOT bound a loop's RADIUS** (measured: homing at R-from-start
 makes stubs, not loops — every line collapsed to ~20 cells).
+
+<!-- Header bodies rotated out at iteration 244 (the header is a fixed 400-line budget;
+     to add a line you must cut a line. These are kept byte-for-byte; only WARNINGS and
+     the closing verdicts remain in GROWTH.md's header, and the LAWS are in SKILL.md). -->
+
+### (an) — closed by 243 (body, rotated from the header at 244)
+
+✅ **(an) CLOSED by 243 — IT WAS THE CABLE CAR, AND THE CUE WAS HALF A MISREAD.** `stepGond`'s value bar **DECAYS
+with the wait, with no floor**, so a line stalling at the coast accepts a **val-0 sea cell** and strings its rope
+into open water. Gated on **`WETSET`** (the ONE wet, 242): it **turns along the coast**, keeping its LENGTH; a
+**BEACH stays rideable** (that is what the tram is FOR). **SEA spans 3 → 0 / 6 seeds**, free (±0.06%). **Monorail
+exonerated** — a CLOSED LOOP crosses water and comes back, never terminates. ⚠ **SEED 42 NEVER REPRODUCED** (SEA 0
+in HEAD); its jetty ends in a **lighthouse**, its pier carries a **ferris wheel** — the referent is the **boardwalk
++ railing** (*"a pair of parallel lines"*), **on sand**. ⇒ **A cue can bundle a REAL defect with a MISREAD, and the
+MISREAD is what escalates it** — grade each seed's half separately. 240's aside stands: *"tiny white chevron glyphs
+on land (x≈0.47,y≈0.47)."* Cheap.
+
+### 243's law (body, rotated from the header at 244 — the LAW itself is in SKILL.md)
+
+🔑 **243'S LAW (SKILL.md): A "BEWARE, PROBE P OVER-REPORTS Y" NOTE IS A BUG REPORT, NOT A LAW.** The harness's own
+locator (`probe-darkline`) **failed at the one cue it was built for**: it scored the rain shafts' `CanvasGradient`
+as **8,160px of black ink** and **filtered the 12–14px rope spans out entirely**. SKILL.md had documented **both**
+traps for **40 iterations** — as prose telling the reader to compensate. **Both are now fixed IN THE TOOL**
+(gradients counted apart; `MINLEN=4` censuses chains). **229's law wearing a probe.**
+
+## Iteration 234 — the boardwalk was never violet, it was grey (2026-07-13) [Water & coast × Polish]
+
+**Vector.** Water & coast × Polish — the stalest domain (last touched 223), taking its one
+banked, measured cue: **(u) the pier/boardwalk deck is still hue-rotated at night**, the last
+warm surface in the city bypassing `col()`'s wash. Cue (u) was raised by a seed-7 agent,
+unprompted: *"flat lavender-mauve slabs"* and *"the boardwalk path is warm brown while the pier
+deck it connects to is violet — same walkway, two colours."*
+
+**The cue's pointer was right and its NOUN was wrong — and that is the finding.** (u)
+prescribed "route the deck's fills through `sandCol()`" *because the deck is violet*. It is
+not, and it never was. Measured on the shipped file over 3 seeds, the deck renders **day hue
+38 / chroma 73 → night hue 2 / chroma 13**: not violet (309), but a **36° rotation with 82% of
+its colour gone** — a dead GREY slab. The arithmetic says why, and it generalises: whether the
+night tint `[.42,.42,.58]` rotates a warm surface all the way to violet depends on **that
+surface's blue channel**, not on the bug. Sand `[238,220,178]` has blue high enough to overtake
+its crushed red (`.58*178 = 103 > .42*238 = 100`), so the channel order **inverts** to B>R>G
+and it lands on hue 309. The deck's blue is only 118, so red still wins (`82 > 68`), the order
+**holds**, and it just goes colourless. ⇒ **214's banked audit criterion — "any warm surface
+landing near hue ~308 with chroma <15 has been rotated" — is a SUFFICIENT test, not a NECESSARY
+one.** It fires only on surfaces blue enough to invert, and it walked past the deck for the
+entire wash ladder (214→220→221→223). **The load-bearing half was always the chroma.** Promoted
+to SKILL.md, with 221's `dHUE` (distance from the surface's OWN daylight hue) as the correct
+universal gate — it is meaningful for a base colour of any hue, and "is it near 308" is not.
+
+**Change (colour-only; 3 lines of code, no geometry).** `deck`/`deckDk` now take the warm wash
+**by NAME, not by call site** — a `WARMN` set in `col()`, mirroring `LEAFN`, dispatching to
+`sandCol()` itself rather than copying its gain triple (so the timber can never drift from the
+sand it runs onto). 220 made the warm wash opt-in per call site "because cream/white/**deck**
+are shared between masonry, boats, foam and signage" — **and a grep refutes that for `deck`**:
+all thirteen of its call sites are warm timber or a warm coat (pier planks + posts, the
+esplanade deck, the lifeguard tower's legs, the beach bench, the river bridge's *timber deck*,
+a trestle table, a barrel, the monorail platform, a **deer**, a balloon's wicker basket). Not
+one draws a hull, a wall, foam or a sign, so **no caller ever needs the cool wash** and the name
+is as unambiguous as green is. Fixing it by name fixes the bench, the bridge and the deer along
+with the pier, instead of leaving them to be found one at a time.
+
+**Probe** (`probes/probe-deckhue.mjs`, banked — the deck has **no tile type**, so `probe-sandhue`
+/ `probe-goldenhue` are structurally blind to it). Isolated by **loud-painting `BASE.deck` and
+diffing inside ONE page**: the changed pixels ARE the deck, by construction (161), at a floor of
+exactly **0** (230), off the final composited canvas (so occlusion is checked for free), and
+**build-agnostic** — the same probe runs unchanged on HEAD and patch with no source swap.
+
+| seed | dHUE (own daylight hue) | chroma day→night | night luma |
+| --- | --- | --- | --- |
+| 7 | 36.2° → **6.9°** | 13.0 → **31.1** | 74.7 → 75.7 |
+| 42 | 36.1° → **6.5°** | 13.2 → **32.2** | 73.0 → 74.2 |
+| 1234 | 34.3° → **6.2°** | 13.7 → **32.5** | 74.2 → 75.4 |
+
+**Controls.** (a) **DAY is byte-identical across builds on all 3 seeds** (hue 37.7 / chroma 71.2
+/ luma 157.9, to the pixel) — `washRGB` crosses over at `LITAMT` 0.35, so daylight runs the same
+code and cannot be leaked into: 199's dead-regime control, free, in the same run. (b) Night luma
+**+1.2 only**, so **222's ladder invariant holds** — the deck at 75 stays far below the LIT band
+(TOWER 109 · COM 108 · MID 101) and below BEACH (105). That is 223's `n` normalisation paying for
+itself: a uniform rescale cannot rotate a colour, so the hue is fixed without buying luminance.
+
+**Census.** PASS — **every metric +0, tile histogram empty.** Correct and expected: a colour-only
+change touches no `rng()`, no terrain, no tick, so the census is *vacuous here by construction*
+and the probe is the gate (`solarRoofs +1` is 226's documented ±2 clock wobble; core `pop` /
+`developed` / `roads` all +0).
+
+**Perf: free, by the deterministic instrument.** Path objects **day 109,233 · night 138,612** vs
+HEAD's 109,247 / 138,668 — **−14 / −56, i.e. zero** (0.01–0.04%, inside the probe's own seed-mean
+wobble). The change alters only the *string* `col()` returns for two names; the draw list is
+untouched. No timing gate needed (216: reach for the deterministic instrument when the cost has no
+mechanism), and no perf lap.
+
+**Visual (`probes/shot-deck.mjs`, banked — aimed by MEASURED INK, 226).** The deck is a thin ribbon
+sited procedurally, so a fixed clip is a coin-flip (201) and no tile predicate can find it (226) —
+but the loud-palette mask already knows exactly where it renders, so the camera takes the **argmax
+window of deck ink** and points there. `AIM=` forces the world point so the HEAD build frames the
+identical hex. **Two agents, blind, on A/B assignments FLIPPED between seeds** (42: A=patch; 7:
+A=head), each asked to LOCATE the timber rather than judge the change (108):
+
+- **Both identified the patch correctly** — 42's agent picked A, 7's picked B. Neither could have
+  guessed both. Their independent numbers match the probe: patch `rgb(90,71,50)` hue ~32° / sat 0.29
+  vs HEAD `rgb(84,68,68)` hue ~0° / sat 0.11 (probe: `[88,73,57]` 31.4° vs `[82,69,69]` 1.7°).
+- **Both checked 222's invariant unprompted** and cleared it: the patched deck is *darker or equal*
+  (luma 77 vs 80), peaking ~97 against lit windows at ~200 — *"the wood reads as wood being lit, not
+  as an emitter"*; *"the lamp posts still clearly read as the only light sources."*
+- Day frames identical (sub-pixel AA shimmer only). Whole-city night frames clean on both seeds — no
+  z-order tears, no floating tiles, no blown-out colour, no compounded clutter or darkness.
+- Seed 7's agent called HEAD's deck *"a dull mauve/violet-grey"* — which is why (u) said violet. At
+  chroma 13 a surface is essentially grey and reads mauve beside warm neighbours, so the original
+  agent's adjective was *perceptually* apt and *numerically* wrong. **Believe a cue's pointer;
+  re-measure its adjective.**
+
+**Verdict: SHIPPED.** Cue (u) CLOSED, and with it **the `col()` wash ladder is complete for every
+surface that goes through `col()`** — the last one still bypassing it was never violet, which is
+precisely why it survived four laps of a ladder built to hunt violet. **FARM (`cropRGB`/`colRGB`)
+remains the one warm surface outside `col()` entirely** — a different mechanism, not this ladder's.
+
+
+### 242's cloud-shade body + the (aj) SHADE half (rotated from the header at 244)
+
+✅ **242 (the 28th step-back): THE CLOUD SHADE FELL ON THE OPEN SEA — FIXED.** Both step-back agents, blind, on two
+different seeds, unprompted: *"dark oval blobs on the water with no cloud above them"* / *"cloud shadows without
+their clouds"* (**212's aside law, tenth payout**). The shade was gated `if(inB(cl.x|0,cl.y|0))` under a comment
+promising *"shade only falls where there is ground to catch it"* — but **`inB()` is the PLATE, and the plate runs
+out to sea.** Now gated on `inB` **× a sampled LAND FRACTION** over the shade's own footprint (`WETSET`, the one
+definition of wet — reused, not re-rolled). Sea ink **−83%** (seed 42: **−100%**); land control **byte-identical**
+on the inland-dominant seed; free (path objects ±0.07%). ⚠ **MARSH/KELP no longer catch cloud shade** (they are in
+`WETSET`) — both agents read that as an improvement (the kelp went teal, not olive).

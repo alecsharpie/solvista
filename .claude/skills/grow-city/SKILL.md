@@ -684,6 +684,38 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **240 SAYS TWO GATES ON ONE FEATURE MUST POINT THE SAME WAY. THE SEQUEL IS *WHICH ONE YOU MAY MOVE* — AND THE
+  PROJECTION, NOT THE CUE, DECIDES (iter 244).** The amphitheater's siting rule scores `groundLoad` (the rows at
+  `dy=+1/+2`), so it deliberately takes a lot whose **south is open** and the flat bowl is not buried — while the
+  draw sat the audience facing **north**, into the leftover. Two gates, one feature, pointing **opposite ways**, for
+  the artifact's whole life: measured, the house looked into a wall on 2 seeds in 10 and its mean sightline was
+  worth 0.79. The cue — and the agent who filed it — **named the fix**: *"face the bowl toward the river."* It was
+  built exactly, and it was **impossible**. ⇒ **ROTATION IS NOT A FREE PARAMETER IN AN AXONOMETRIC PROJECTION.** A
+  circle on the ground projects to a **wide, shallow** ellipse, and the cavea reads as a bowl *precisely because* its
+  seating is the **near half** of it — the tiers stack into a visible rake. Swing it 90° and the seating becomes the
+  ellipse's **left/right half, a tall narrow sliver**, whose five arcs (2px apart, 2px wide) **fuse into a flat
+  blob**. Two agents, blind, on two seeds, independently: *"a spilled cream blob"*, *"a painter's palette lying on
+  the grass"*. **The code was not wrong** — a forced-north control rendered **byte-identical to HEAD**, proving the
+  generalization exact. The *projection* was wrong. **224 already says this for READING** (screen-y is depth, not
+  height — never ask an agent to locate by how high a thing sits). **244 is the same law for WRITING: before you vary
+  a quantity, ask what the projection does to it.** A shape's legibility can depend on its orientation to the
+  privileged axis, and no amount of correct trigonometry buys it back.
+  ⇒ **THE WAY THROUGH: two gates can be made to agree from EITHER side — so when the draw cannot move, MOVE THE
+  WORLD.** Keep the fixed draw and score what stands in the sightline the draw *already has*. Cost: **nothing** —
+  worst-case burial byte-identical (14), placed 10/10, and `ROOFTOPS 2/10 → 0/10`. The tell: your cue prescribes a
+  change to a *draw*, and the draw's freedom is constrained by the camera rather than by the code.
+  Corollary, and it is the one that surprised — **THE DEFECT IS NOT ALWAYS THE MIRROR IMAGE OF THE FIX (219's law,
+  wearing a new face).** The bowl was facing a **wall**, so the obvious rule is *penalise the wall*. Swept as its own
+  variant, that is a **DEAD LEVER**: at 20× the shipped weight it never moved a **single** bowl off a rooftop view,
+  while the subtraction was the only thing that ever **cost** burial. What worked was **pure addition** — *give it
+  something to look at* (water, protected green). 219 says a spatial preference must never score below 1; 244 adds
+  that the subtractive form is not merely *worse*, it can be **inert**. **Sweep the two mechanisms apart before you
+  tune either** (`probes/probe-amphsight.mjs` grades both on both of 206's ledgers in one run).
+  ⚠ And a sharpening of 231's leak law, paid for in this lap: **a variant sweep that builds its world with the
+  ARTIFACT'S OWN RULE is grading inside the PATCHED world — `K=0` is NOT HEAD.** The sweep ranks variants honestly
+  (one world, all variants), but its baseline drifts as you tune the shipped constant. **Carry an END-TO-END section
+  that builds HEAD and the patch as separate pages, lets each grow its own city, and reads each build's own answer
+  with the SAME code** — that, and not the sweep, is the claim.
 - **A CITED STANDARD IS NOT AN ENFORCED ONE — WHEN CODE NAMES A NEIGHBOUR AS THE PRECEDENT FOR AN INVARIANT, GO READ
   THE NEIGHBOUR (iter 242).** 199's tell (a name asserting a behaviour its value cannot have) has now been cashed on a
   tooltip, a constant, a comment (209), a half-finished fix (217) and a palette entry (238). 242 found the rung below,
@@ -1952,6 +1984,16 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   and no close-up would show it; freezes in-page, forces the HUD (204), `SRC=` for a blind HEAD/patch pair, and every
   frame **self-reports its own line count and track total**, which is what caught a one-line city the budget had
   silently left untouched).
+  `probe-amphsight.mjs` (244 — **the two-mechanism sweep.** When a cue says a thing faces the wrong way, there are
+  always TWO rules that could be at fault (the DRAW's orientation and the SITING that chose the ground), and two
+  candidate fixes (*avoid the bad thing* vs *seek the good thing*) — and they do not cost the same. Grades candidate
+  weights on both of 206's ledgers at once (the EFFECT: what the house looks at · the COST: is it buried, is it still
+  placed) **and holds the two mechanisms apart as variants A/B/C**, which is what exposed *avoid the wall* as a dead
+  lever. ⚠ Its sweep builds the world with the artifact's own rule, so **`K=0` is not HEAD** — read the **END-TO-END**
+  section at the bottom, which builds HEAD and the patch as separate pages and reads both with the same code. That is
+  the claim; the sweep is only the ranking), `shot-amphsight.mjs` (its camera — **each build aims at its OWN bowl**,
+  because the whole point of the change is that the bowl may be sited elsewhere and forcing HEAD to the patch's hex
+  would frame bare ground. Reports what each build's bowl looks out at, so a blind agent's read is checkable).
   Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure
