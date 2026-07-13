@@ -3180,6 +3180,12 @@ function stepVehicle(v,dt){
     const cc=cellAt(v.x,v.y);
     if(v.kind==='bus'&&cc&&cc.stop&&!(v.dwell>0)){v.wait=1.2+Math.random()*0.9;v.dwell=16;
       cc.bqs=stopQueue(cc,v.x,v.y).q; cc.blast=time;}   /* whoever was waiting gets on */
+    /* the cab is flagged down where there is something to come out for (cabFree, above).
+       A hired one drives straight past: `dwell` is the ride, so it cannot be hired twice. */
+    if(v.taxi&&cabFree(v)&&livelyKerb(v.x,v.y)&&Math.random()<CABFARE){
+      v.wait=1.6+Math.random()*1.4;    /* pulling over; the fare gets in */
+      v.dwell=10+Math.random()*16;     /* ...and is aboard for the ride across town */
+    }
     /* arrived: back into the bay, or stand at the incident */
     if(v.fld&&v.fld[idx(v.x,v.y)]===0){
       if(v.duty==='home'){v.duty='bay';v.fld=null;v.wait=7+Math.random()*13}
@@ -3386,6 +3392,37 @@ const JOG0=0.16, JOGJ=0.46;
 const VCURF={bike:[0.10,0.45], truck:[0.16,0.50], tram:[0.45,0.90], car:[0.35,1.00]};
 const vehCurfew=k=>{const b=VCURF[k];return b?b[0]+Math.random()*b[1]:undefined};
 const vehHidden=v=>v.out!==undefined&&nightAmt()>v.out;
+/* THE CAB PICKS UP A FARE.
+   230 (just above) gave the taxi flag a meaning after DARK -- the cab keeps no curfew, so
+   its share of the traffic climbs through the small hours. In the DAY it still meant
+   nothing: stepVehicle random-walked a cab exactly like an ordinary car, and its tooltip
+   said "For hire -- flag it down" over a car that had never once stopped for anybody.
+   Measured, and HEAD's own constant IS the baseline (236) -- no threshold had to be
+   invented to call it broken: probe-taxifare, TAXI STOPS = 0, every seed, forever, while
+   the BUS in the same array and the same function reads 72/152/80 (so the zero is a real
+   zero, not a dead instrument -- 248).  It is iter 249's ferry, on wheels.
+   Nothing below is invented. The house already owned both halves:
+     the CALL -- `dwell` is stepVehicle's OWN word for it. The bus has pulled into its
+                 stops for 200 iterations (`v.dwell=16`), in that very loop.
+     the HOST -- `livelyKerb` is "the ONE definition of a lively kerb" (a kerb with
+                 something to come out FOR: buzz >= KERBBUZZ). syncFleet sites residents
+                 by it, homeGround re-anchors by it, and the cab is its THIRD reader --
+                 112's law running FORWARDS instead of being violated. 125-147 of them per
+                 city, and 67-71% of every road cell is within 3 steps of one over the road
+                 graph the cab actually drives, so a cab is never far from a fare.
+   NOT a `peds` vector, and that is deliberate (111): a resident is leashed to its anchor,
+   so only ~a quarter of any road-borne host ever has a live ped beside it, and "somebody
+   hails a cab" would be structurally capped there. The fare is implied by the BUZZ FIELD,
+   not by a drawn figure -- so the cap simply does not apply.
+   ONE predicate, three readers: the STEP (a hired cab drives straight past the next kerb),
+   the DRAW (the roof lamp is a FOR-HIRE sign -- it goes dark with a fare aboard, which is
+   the one thing a roof light has ever meant; it had been keyed to nothing but darkness)
+   and the TOOLTIP.  `dwell` IS the ride: the cooldown and the fare are the same fact, so a
+   cab cannot be hired twice, and no second piece of state can drift from it.
+   Math.random, exactly as the taxi flag and the bus dwell already are, so the seeded rng()
+   stream -- and every census metric -- is byte-identical. */
+const CABFARE=0.14;              /* the roll, per lively kerb crossed while vacant */
+const cabFree=v=>!(v.dwell>0);   /* vacant: no fare aboard */
 function stepPed(p,dt){
   p.tm-=dt;
   const pierBound=onPier(p.x,p.y), onRoad=!pierBound&&pedRoad(p.x,p.y);
@@ -7097,7 +7134,9 @@ function drawVehicle(v){
   if(v.taxi){
     /* the two taxi cues that read at any zoom: a checker band along the flank
        (dark squares alternating with cream, like the truck's fillRect stripe) and
-       a small roof sign that lights amber after dark. */
+       a small roof sign whose lamp is a FOR-HIRE sign -- amber when she is vacant, dark
+       with a fare aboard, which is the one thing a roof light has ever meant. It used to
+       be keyed to nothing but darkness (cabFree, ~L3390). */
     if(alongX){
       const w=ax*CW*1.7, x0=cx-w*0.5, n=5, seg=w/n;
       for(let i=0;i<n;i++){ctx.fillStyle=i%2?col('cream',1.12):col('ink',1.2);ctx.fillRect(x0+i*seg,cy-3.1,seg+0.4,1.2);}
@@ -7107,7 +7146,7 @@ function drawVehicle(v){
     }
     /* roof sign */
     prismS(cx,cy,ax*0.26,ay*0.36,6.6,7.9,col('cream',1.1),col('gold',0.72),col('gold',0.92));
-    if(LITAMT>0.3){ctx.fillStyle='rgba(255,208,112,'+(0.85*LITAMT)+')';ctx.beginPath();ctx.arc(cx,cy-8.0,1.1,0,7);ctx.fill();}
+    if(LITAMT>0.3&&cabFree(v)){ctx.fillStyle='rgba(255,208,112,'+(0.85*LITAMT)+')';ctx.beginPath();ctx.arc(cx,cy-8.0,1.1,0,7);ctx.fill();}
   }
   if(LITAMT>0.35){
     const nose=long*CW*0.9, hx=cx+FX*nose, hy=cy+FY*nose;
@@ -8581,8 +8620,11 @@ function pickEntity(wx,wy){
      Computed live off nightAmt(), never a stored string -- the label and the rule share ONE
      number, so they cannot drift apart. A vehicle that HAS gone home is never named at all:
      it returns before stamp(), so consider() drops it on the _sf test above, free. */
-  const CAB=['Taxi',()=>nightAmt()>0.5?'The night shift — still for hire once the traffic has gone home.'
-                                      :'For hire — flag it down.'];
+  /* the same predicate the rule steers by and the roof lamp draws (cabFree), so the label
+     cannot claim a hire state the cab is not in — which is exactly what it used to do. */
+  const CAB=['Taxi',v=>!cabFree(v)?'Hired — a fare aboard, crossing town.'
+                     :nightAmt()>0.5?'The night shift — still for hire once the traffic has gone home.'
+                                    :'For hire — flag it down.'];
   for(const v of vehicles){const k=v.taxi?CAB:(VKIND[v.kind]||['Car',"Somebody's errand."]);consider(v,k[0],k[1],6);}
   return best;
 }

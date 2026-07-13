@@ -20,7 +20,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~ | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234**, ~~**255**~~ | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
+| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253** | | | 61, 81, 89, **115**, **200**, **242**, **248** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
@@ -31,12 +31,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census hook); `stamp()` also
   draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a FUNCTION of the entity
   (105)** — use it when a thing's interest is its *membership* (which line/route/depot), computed live, never a string.
-- **ROTATION.** Last vector per domain: People **247** · Transport **249** ·
-  Civic **250** · Nature **251** · Sky **253** · Urban **254** · Water **257**. ✅ **256 WAS THE 31st STEP-BACK — both
-  seeds PASS, no compounding drift, and THE PERF ARC HAS STOPPED (flat across FOUR step-backs).**
-  ➡ **NEXT: Civic or Transport × Deepen** (both stale since 249/250; Transport owns the ledger's most-reported defect).
-  257 went off-rotation on 119's law (a banked measured finding outranks rotation) to close **(s)**; **the debt is
-  now due — do not take a third colour/light lap.** ⚠ **NOT Urban, NOT Water × Polish** (254/255 spent those channels).
+- **ROTATION.** Last vector per domain: People **247** · Nature **251** · Sky **253** · Urban **254** ·
+  Water **257** · Transport **258**. ✅ **256 WAS THE 31st STEP-BACK — both seeds PASS, no compounding drift, and
+  THE PERF ARC HAS STOPPED (flat across FOUR step-backs).** 258 paid 257's off-rotation debt.
+  ➡ **NEXT: CIVIC × Deepen or Polish** (stale since 250 — now the OLDEST domain, and the only one untouched for 8
+  laps). ⚠ **NOT Transport** (258), **NOT Urban, NOT Water × Polish** (254/255 spent those channels).
+  ➡ **259 IS THE 32nd STEP-BACK if Civic yields nothing** (252 → 256 → due at ~261; take it early rather than force
+  a lap). ⚠ **A step-back is DUE at 261 regardless.**
   🔑 **THE ONE REMAINING BANKED DEFECT IS `polish-tile` (a)**, the elevated transit — **10x reported, the ledger's
   most-reported defect, and a `polish-tile` lap is BADLY OVERDUE.** It is not a growth lap; see the backlog below.
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
@@ -78,8 +79,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   TIME on a probe this harness already owned** (237×2 · 238 · 251 · 255) ⇒ *read what a probe MEASURES and WHERE IT
   SAMPLES, not what it is CALLED, and apply 228's test **PER METRIC**.* (256 nearly made it 6: `probe-hud` would have
   closed (ar) for the wrong reason — it measures TEXT CLIPPING and is blind to DOM boxes colliding.)
-  ⚠ **ARTIFACT FACTS from 236–251 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
-  lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"): **257:** ⚠ **`GWST` (the OVERHEAD sky) and
+  ⚠ **ARTIFACT FACTS from 236–258 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
+  lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"): **258:** `cabFree`/`CABFARE` — ONE predicate,
+  **three** readers (the step, the roof lamp, the tooltip); **`dwell` IS the ride**, so a cab cannot be hired twice.
+  ⚠ **THE ROOF LAMP IS NOW A FOR-HIRE SIGN — do not re-key it to darkness.** ⚠ **`livelyKerb` SELECTS FOR ITS OWN
+  BURIAL** (≥2 ATTRACT nbrs ⇒ tall frontage in the row in front) — **aim any camera at it by argmax-over-TIME, never
+  at the first instance** (SKILL.md). **257:** ⚠ **`GWST` (the OVERHEAD sky) and
   `GWSB` (the HORIZON) ARE NOT INTERCHANGEABLE** — the sea's BODY mirrors `GWST`; `GWSB` is the colour of the sun
   PATH drawn across it, and blending the two lands in the **mud** (chroma 19). `SEAMIRROR` is the strength.
   **250:** `concertSeason()` — ONE predicate,
@@ -366,15 +371,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED).** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` churn is ruled OUT.
   **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** ⚠ The fire CA is a
   **GHOST** (cannot ignite at 2035) ⇒ almost certainly **LOGGING/clearcut, not BURNT** — **identify the tile first**. Nature × Polish.
-  ✅ **(s) CLOSED AT ITS WORST PIN BY 257 — AND IT WAS THE SEA, NOT THE SUN.** Seven reports across five step-backs
-  (212+217+227+232+242+256×2), and every lap looked at the **LIGHT**; the defect was in the **WATER**. At golden hour
-  every LAND tile **GAINS** chroma (a warm tint saturating a warm albedo) and **WATER was the ONLY surface in the city
-  that LOST it — 66 → 31**: its teal base is *exactly* the channels the tint crushes, so the multiply did not warm the
-  sea, it **CANCELLED** it (214's law, at dusk, on the largest surface in the city — 209). `seaFace` now mirrors
-  **`GWST`, the overhead sky** (hue 157°→203°, luminance held); both agents now read the frame as **one scene**.
-  ⚠ **Residue, and it is NOT the sea — a land-side (s) lap must RE-DERIVE its own cue (228):** 242's lead (*"the SHADOW
-  SIDES go warm"*) is still untested, and the land's own pair-separations still narrow ~20% (PARK↔ROAD 29→24).
-  ⚠ **The sun CANNOT be lowered (200)**; do not raise `seasonCool` at the peak (it breaks 253's fixed point).
+  ✅ **(s) CLOSED AT ITS WORST PIN BY 257 — IT WAS THE SEA, NOT THE SUN** (7 reports / 5 step-backs; every lap looked
+  at the LIGHT and the defect was in the WATER. Body in 257's entry + SKILL.md's terrace law). `seaFace` mirrors
+  **`GWST`, the overhead sky.** ⚠ **The residue is LAND-side and must RE-DERIVE its own cue (228):** 242's *"the
+  SHADOW SIDES go warm"* is untested; land pair-separations still narrow ~20% (PARK↔ROAD 29→24). ⚠ **The sun CANNOT
+  be lowered (200)**; do not raise `seasonCool` at the peak (it breaks 253's fixed point).
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a multi-source hex BFS capped at radius `r`,
   land-only (`WETSET` blocks water/marsh/kelp), filling `out` with steps-to-nearest-source (255 = farther than r).
   `recount()` runs four per tick. Any "how far is X from Y" question should call it, not hand-roll a flood fill.
@@ -386,90 +387,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 250 entries before Iteration 248 live in
+> **Archive:** the 251 entries before Iteration 249 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 248 — the shower cited a neighbour it never read (2026-07-14) [Sky × Polish]
-
-**Vector.** Sky × Polish — cue **(ao)**, the ledger's #1 🔴 (*"the rain shafts cross the water's
-edge and keep raining over the empty cream backdrop"*). Rotation pointed at **Urban** (stalest at
-239); per **225** I grepped its seam first, found the massing/facade/ground/roof cells as closed as
-the header claims, and took the header's own authorised fall-through.
-
-**The seam.** The veil and the bow sit **twenty lines apart** and both fade out near the plate's rim.
-The **bow** tests its **LEGS**: *"test the LEGS, not the cloud: the bow reaches ±r0 sideways, so a
-shower still safely inland can hang a leg past the rim"* — and computes `fl`/`fr` from its own extent.
-The **shaft** tests **`cl.x`, the cloud's CENTRE** — under a comment claiming it is spent *"2 hexes
-short of the rim **(as the bow is)**"*. It is **242's law exactly, and the citation runs the other
-way**: 242 found a draw citing a *broken* neighbour; here the shaft cites a **correct** one and still
-does not do what it says. A false invariant with a *witness* that actually holds.
-
-**Change.** One gate. `pa` now measures its inset from the **veil's own drawn edges** — the quad is
-~`26*s` wide at the belly and `36*s` at the foot, and its foot trails **upwind** by `rlean`, which is
-why the LEFT rim spills worst:
-```js
-const vl=Math.min(cx-26*cl.s,cx-rlean-36*cl.s)/CW-0.25;   /* pxc: X=(gx+0.25)*CW */
-const vr=Math.max(cx+26*cl.s,cx-rlean+36*cl.s)/CW-0.25;
-const inset=(gy2>=0&&gy2<G)?Math.min(vl-ROWMIN[gy2],ROWMAX[gy2]-vr):-1;
-```
-The quad is the **outer envelope** (the drops fall inside it at ±20.7*s / ±28.8*s), so bounding it
-bounds the whole veil. The fade *grammar* is untouched — only its reference point is corrected.
-
-**Probe** (`probes/probe-rainrim.mjs`, pure world data — no render, no clock, no noise floor).
-⇒ **THE BOW IS THE POSITIVE CONTROL, AND IT COST NOTHING**: same rim, same file, one draw that tests
-its extent and one that tests its anchor. It read **0.00 hexes on all 6 seeds** — validating the
-instrument and convicting the shaft in the same run.
-
-| | shaft (gate = cloud **centre**) | bow (gate = its own **legs**) |
-| --- | --- | --- |
-| max overhang **at full alpha** | **1.40 – 2.14 hex past the rim** | **0.00, every seed** |
-| foot off-plate at full alpha | **49 – 57.5%** | — |
-
-**Part B grades the SHIPPED DRAW, not my arithmetic** — it tags the shaft's own gradient
-(`96,116,142`, unique to it) and reads back the quad the artifact actually fills. Build-agnostic, so
-it runs unchanged on HEAD and patch with **no source swap and no cross-build floor** (230):
-
-| build | veil quads filled | quads with a foot **past the rim** | worst overhang |
-| --- | --- | --- | --- |
-| HEAD | 1550 / 1550 / 1558 | **73 · 71 · 73  (4.6 – 4.7%)** | **2.90 – 3.40 hex** |
-| patch | 1442 / 1458 / 1456 | **0 · 0 · 0  (0.0%)** | **0.00 hex** |
-
-**The two ledgers (206).** Off-plate rain ink → **exactly 0.0, by construction**: `pa>0` now *requires*
-the whole veil inside the rim, so no alpha can ever be spent past it — **a drift made impossible beats
-one you agree to look for** (223). Cost to the population: **93.6% of on-plate rain ink retained**
-(6356.8 → 5951.4 over 6 seeds; the shower simply spends itself ~2 hexes earlier as it leaves the
-plate). **It cannot cost draw work**: `pa>0` is now strictly *harder* to satisfy, so the change can
-only ever fill **fewer** quads (measured: 1550 → 1442).
-
-**Census.** PASS. Every metric +0, tile histogram **empty** — the correct, vacuous result for a
-draw-only change (`greenRoofs -1` is the documented ±2 tick wobble, 226).
-
-**Visual** (`probes/shot-rainrim.mjs`; ⚠ the void backdrop is the **body's CSS gradient**, so a
-`getImageData` probe is structurally blind to it — **200 makes `page.screenshot()` mandatory here**).
-Three framings × two builds, named **by file** (239). Both agents **PASS**, and both, blind and
-independently, *located the defect in HEAD*: seed 42 — *"the base straddles the plate's western rim,
-~21% over empty background — **this is the one that looks wrong at a glance**"*; seed 7 — *"the shaft
-hugs the west corner and its left flank hangs over the empty background"*. Whole-city frames: coherent,
-no z-order tears, no clutter. Control (inland shower, identical in both builds): **max per-pixel
-difference 5–7 / 765** — noise, by eye and by number.
-⚠ **Honest caveat:** on **seed 7** the inland frame contains no rain in *either* build (the camera did
-not frame that shower), so the **live** positive control (196 — a dead pin and a deaf draw give the
-same zero) rests on **seed 42**, where both builds rain and are identical.
-⚠ **The fix SUBTRACTS at the rim**: both agents noted the rim shower is *gone* in the patch, not moved.
-That is the fix working — the shower is spent before its veil can reach the void — and the 93.6%
-retention is what prices it.
-
-**Cue (ao) — the SHAFT half is CLOSED; the BOW half is REFRAMED, not closed.** The bow is **correctly
-rim-bounded** (0.00 overhang, 6 seeds), so *"a flat rainbow lying ON the water, its right foot cut off
-mid-water"* is **not a rim bug** and the cue's own prescription is dead. But the bow's comment says
-*"no ground, no bow"* while testing `ROWMIN`/`ROWMAX` — **the PLATE, which runs out to sea** — so a bow
-*can* stand entirely over open water. Per **201**, rain (and a bow) over the sea is **CORRECT**; the
-defect is the **comment**, not the draw. What is left of the cue is a *composition* read, not a bound.
-
-**Verdict — FIXED.**
 
 ## Iteration 249 — the ferry promised "every stop" and stopped nowhere (2026-07-14) [Transport × Deepen]
 
@@ -1178,3 +1100,113 @@ gone and the day/night seas are healthy; no z-order tears, no blown-out colour.
 **Verdict.** **DEEPENED.** Cue **(s)** — the ledger's loudest, 7 reports across 5 step-backs — is
 **CLOSED at its worst pin**, and it closed by fixing the *sea*, not the *sun*, which is why five laps of
 looking at the light never found it. A latent HEAD quilt closed with it, free.
+
+## Iteration 258 — the cab had a livery, a curfew and a tooltip, and no job (2026-07-14) [Transport × Deepen]
+
+**Vector.** Transport × Deepen — the rotation's own call (Transport stale since 249; 257 went
+off-rotation and the header said the debt was due). It is **249's ferry, on wheels**, and the
+seam was found by grepping the Transport seam exactly as 225's law prescribes.
+
+**The tell, stated by the artifact itself.** ~1 in 6 cars has worn a lemon livery and a checker
+band since **164** gave it its paint; **230** gave the flag a meaning after *dark* (the cab keeps
+no curfew, so its share of the traffic climbs through the small hours) and wrote, in the source,
+*"the flag has never MEANT anything. Now it does."* **In the DAY it still meant nothing.**
+`stepVehicle` random-walked a cab exactly like an ordinary car, and its tooltip said
+**"For hire — flag it down"** over a car that had never once stopped for anybody. Its roof sign
+even carried an **amber lamp** — gated on nothing but `LITAMT>0.3`, i.e. on *darkness*, when the
+one thing a roof light has ever meant is **FOR HIRE**.
+
+**Probe before design, and it went 3 for 3 (`probes/probe-taxifare.mjs`).**
+- **PART A — the host is REAL** (the dead-code check first: `T.MARKET`, the plazas, the fire CA).
+  Pure world data, no render, no clock. `livelyKerb` — *"the ONE definition of a lively kerb"*,
+  already read by **two** readers (`syncFleet`'s home pool, `homeGround`'s re-anchor) — gives
+  **125–147 kerbs per city** at 2035 (14–18% of all road cells), and **67–71% of every road cell
+  is within 3 steps of one over the road graph the cab actually drives** (87–96% within 6). A
+  random-walking cab is never far from a fare. ⚠ **No birthday, though**: 1985 already has 43–60
+  kerbs, so 249's free dead-regime control was **not** available and I did not claim one.
+- **PART B — the defect, with no threshold invented** (236: HEAD's constant IS the baseline).
+  Temporal (134 — every other gate here is frozen, so *"it never stops"* has no instrument),
+  driving the artifact's **own** `advanceEntities`, never a re-implementation (249):
+  **TAXI STOPS = 0, on every seed, forever.** ⚠ And the **BUS**, in the same array and the same
+  function, reads **72/152/80** — a **free positive control** (248: a correct sibling draw
+  validates the rig), so the taxi's zero is a **real zero, not a dead instrument** (196/250).
+
+**Change — nothing invented; the house already owned both halves.** `dwell` is `stepVehicle`'s
+**own** word for a call (the bus has pulled into its stops for 200 iterations, ten lines up), and
+`livelyKerb` is the host. So a cab crossing a lively kerb rolls for a fare, stands while it gets
+in, and is then **hired for the ride** — `dwell` **IS** the ride, so the cooldown and the fare are
+the same fact and a cab cannot be hired twice. **ONE predicate (`cabFree`), three readers**: the
+**step** (a hired cab drives straight past the next kerb), the **draw** (the roof lamp becomes a
+FOR-HIRE sign), and the **tooltip** — 112's law running *forwards*.
+⚠ **NOT a `peds` vector, deliberately (111):** a resident is leashed to its anchor, so
+*"somebody hails a cab"* is structurally capped at ~a quarter of any road-borne host. **The fare
+is implied by the BUZZ FIELD, not by a drawn figure**, so the cap simply does not apply.
+
+**Census. PASS — every metric +0, tile histogram empty.** Not even the documented ±2 tick wobble.
+`Math.random` only (as the taxi flag and the bus dwell already are), no `rng()`, no terrain ⇒ the
+seeded stream is byte-identical, **proven rather than asserted**.
+
+**Probes.**
+- **Taxi stops 0 → 58 / 48 / 28.** **HIRED% = 41.1 / 40.3 / 31.3** — at a glance, about a third of
+  the cabs show a dark roof lamp. Stated in the **viewer's** units (205), not in the units of
+  `CABFARE`, so it needed no tuning.
+- **CAR control: 0 on EVERY row of BOTH builds** (250 — the must-not-move count beside the
+  must-move one). The fix did not leak out of its class.
+- **⚠ 204 BIT, AND THE FIX WAS AN EXACT CONTROL.** The first run had seed 42's *taxi count* move
+  **6 → 3** and the bus drift — impossible, since the flag is set in `syncFleet` at spawn. It was
+  the **shared stubbed `Math.random`**: my rolls draw from it, so every consumer downstream walks a
+  different walk. Two fixes, both banked laws: **re-seed IN-PAGE** (248 — `addInitScript` fixes the
+  PRNG *function*, but the stream **position** at load is wall-clock dependent), and a **CABS-OFF
+  control** (230 — suppress the *decision*, not the build: with no car flagged a cab, `v.taxi&&…`
+  short-circuits and the roll is **never drawn**, so the patch runs HEAD's stream **exactly**).
+  ⇒ **CABS-OFF reproduces HEAD byte-identically — bus `77/165/76`, every population — on both
+  builds.** An **exact** control, not a statistical one. The shipped bus column still drifts a
+  little (77→76, 165→167, 76→86); that is the stream, and CABS-OFF is what proves it.
+
+**⚠ THE CAMERA WAS THE HARD PART, AND THE FIRST VISUAL PASS WAS A FALSE POSITIVE I NEARLY BANKED.**
+The first agent returned **PASS** while telling me, in the same breath, *"the centred vehicle isn't
+a taxi at all — a plain red car."* It had reported the hired frame as **DARK** — which is the
+**correct expected answer** — about a frame **with no cab in it**. I looked myself: the frame's
+centre was a **TOWER**.
+- The cab was at exactly the right world point and **buried behind it**: measured, **14 px of
+  visible ink against 154–167 for the vacant cabs**. Not a camera bug — a property of the **HOST**.
+  `livelyKerb` means *a road with ≥2 ATTRACT neighbours*, i.e. precisely the ground with **tall
+  frontage drawn in the row IN FRONT**. Draw order is depth order, so **the predicate that makes a
+  stop MEANINGFUL is the predicate that BURIES it** (206, sharpened).
+- ⚠ **And I HAD obeyed 226 (aim by measured ink) — it still framed a wall, because there was
+  exactly ONE hired cab and an argmax over n=1 is a lottery ticket, not an argmax.** Fixed by
+  taking the **argmax over TIME**, with a **self-calibrating** bar (205): a cab is well-exposed iff
+  its ink clears **70% of the mean VACANT cab in the same frame** — i.e. *as visible as an ordinary
+  car in an ordinary place*, which is the incumbent, not a number I chose.
+- **PART C — measure the POPULATION, not the instance (206), and the n=1 story inverts.** Mean
+  visible ink per cab, by state: **VACANT 37/32/34 · HIRED+MOVING 29/31/30 · STANDING 22/27/26.**
+  ⇒ **A hired cab is as visible as any other car**, so the roof lamp reads wherever a cab drives;
+  only the *stop* sits in dense ground, and it still keeps ~75% of an ordinary car's ink. The 14px
+  cab was an unlucky single draw.
+- ⚠ **A STILL FRAME CANNOT SHOW THAT A CAR IS STOPPED** (134, arriving on the *visual gate*). The
+  day close-up was **deleted**, not tuned: the stop is a claim about **motion**, and its gate is
+  Part B. The gate was re-aimed at the **state the behaviour leaves behind** — the lamp.
+
+**Visual — 2 agents × 2 seeds, blind, files named never lettered (239). BOTH PASS, and both hit
+ground truth on every LOCATE call** (108 — a wrong answer would be *visibly* wrong):
+`cab-hired-night` **DARK** · `cab-vacant-night` **LIT** · HEAD's cab **LIT** (HEAD never darkens a
+lamp). Both discounted the street-lamp bloom and the headlights as distractors, unprompted. Seed 7:
+*"a distinctly bright amber/gold dot sits directly on top of the roof box… **unambiguous versus the
+hired frame**."* Whole-city day+night clean on both seeds: no z-order tears, no floating tiles, no
+blown-out colour.
+⚠ Seed 7 re-raised the `TRANSIT REA…` HUD clip — that is cue **(ar)**, **REFUTED AND CLOSED at 256**
+(0px overlap measured; the 1400×900 camera is the one width where the panels sit *flush*, and
+flush-in-a-PNG reads as colliding). **Fourth agent, same harness artifact. Not acted on.**
+
+**Tooltip.** Both branches resolve off the **same predicate the rule steers by** (`cabFree`), so the
+label cannot drift from the pixels — which is exactly what it had been doing:
+`VACANT → "For hire — flag it down."` · `HIRED → "Hired — a fare aboard, crossing town."`
+
+**Perf. FREE, counted not inferred (222).** No new draw primitive — the change only *gates* an arc
+that already existed (a hired cab draws one *fewer*). `probe-drawbudget` (`SRC=`, no `/bin/cp`):
+day **110,854 → 110,785**, night **139,598 → 139,671** (±0.05%, entity wobble in both directions).
+
+**Verdict. DEEPENED.** The taxi flag has been in the artifact for 94 iterations, wearing paint
+(164) and then a night shift (230), and it has never once done the job its own tooltip advertised.
+Now the cab works the kerbs where there is something to come out for, goes dark with a fare aboard,
+and says so.

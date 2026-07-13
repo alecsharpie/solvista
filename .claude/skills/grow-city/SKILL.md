@@ -684,6 +684,38 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **WHEN THE EXPECTED RESULT IS AN *ABSENCE*, A FRAME WITH THE SUBJECT *MISSING* IS INDISTINGUISHABLE FROM A FRAME
+  WHERE THE SUBJECT CORRECTLY SHOWS NOTHING — SO THE FRAME MUST SELF-REPORT THE SUBJECT'S **PRESENCE** (iter 258).**
+  202 says make every frame self-report its own state; 236 says say it in the *viewer's* units. 258 is the case where
+  a missing self-report produces not a false FAIL but a **false PASS**, which is far worse because nothing argues with
+  it. The cab's roof lamp is a FOR-HIRE sign: **hired ⇒ the lamp goes DARK**. The close-up aimed at a hired cab framed
+  a **TOWER** — the cab was buried behind it — and the agent duly reported the roof lamp as **DARK** and returned
+  **VISUAL: PASS**. *It was right about the pixels and the pixels contained no cab.* **An absent subject and a
+  correctly-negative subject render the same frame.** ⇒ **Any gate whose success condition is "X is not there / X went
+  out / X is empty" must first prove X's HOST is in the frame** — print it in the caption (`nearest cab 0px
+  off-centre, HIRED(lamp must be DARK)`), and make the *positive* twin (the vacant cab, lamp LIT) a required companion
+  frame so the agent has to *discriminate* rather than merely confirm. This is 250's must-not-move column arriving on
+  the **camera** instead of on the probe: a count going *down* needs something required to stay *up*. The tell: your
+  agent's correct answer and its answer on an empty frame are **the same word**.
+  ⇒ **AND THE MECHANISM THAT PUT THE TOWER THERE IS A LAW OF ITS OWN: THE PREDICATE THAT MAKES A BEHAVIOUR
+  *MEANINGFUL* CAN BE THE PREDICATE THAT *BURIES* IT.** 206 says a ground-level thing in dense fabric is often
+  invisible — as if density were bad luck. It is not luck, it is **selection**. The cab stops only at a `livelyKerb`
+  (*a road with ≥2 ATTRACT neighbours*), which is **by construction** the ground with tall shopfront frontage drawn in
+  the row **in front** — draw order is depth order, so **the siting rule is positively correlated with occlusion**
+  (measured: the standing cab rendered **14px** of visible ink against **154–167** for cabs elsewhere). ⇒ **When a
+  feature is sited by "somewhere interesting", ask what "interesting" is MADE OF** — if it is made of tall neighbours,
+  your feature is choosing its own wall. Price it with 206's two ledgers before you shoot.
+  ⇒ **AND THE COROLLARY THAT COST THE ROUND EVEN THOUGH I *OBEYED* 226: AN ARGMAX OVER n=1 IS NOT AN ARGMAX.** 226
+  says aim by measured ink, never by a tile predicate — I did, and it **still** framed the wall, because the frame
+  held exactly **one** hired cab and an argmax with one candidate is a lottery ticket. **A sparse feature's
+  best-exposed instance may not exist in the frame you happen to freeze.** ⇒ **Take the argmax over TIME** (step the
+  sim, re-measure each sample, keep the best), and **set the bar from the INCUMBENT, not from your own constant**
+  (205/226): "well exposed" = *clears 70% of the mean **vacant** cab in the same frame*, i.e. as visible as an
+  ordinary car in an ordinary place. The tell: your host population is a handful of movers.
+  ⇒ **AND: A STILL FRAME CANNOT SHOW THAT SOMETHING *STOPPED*** (134, arriving on the **visual gate** rather than on a
+  probe). *Stopped* is a claim about motion and no photograph can carry it; a stopped car and a moving car are the
+  same pixels. **Do not tune such a frame — DELETE it**, gate the behaviour with a temporal probe, and aim the camera
+  at **the STATE the behaviour leaves behind** (here: the lamp). The tell: your close-up is trying to prove a verb.
 - **A TERRACE IS SEEN AS `STEP ÷ CHROMA`, NOT AS `STEP` — SO ANYTHING THAT *DESATURATES* A TILED SURFACE EXPOSES A
   LATTICE THAT WAS ALREADY THERE AND WAS ALWAYS FINE, AND YOUR DIFF WILL CONTAIN NO GEOMETRY AT ALL (iter 257).**
   255 says a smooth field sampled once per hexagon and painted as a flat fill is piecewise-constant on the lattice, so
@@ -2382,6 +2414,23 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   them — leave them and two builds warp **different populations** into being and the control reads thousands of px),
   `pngdiff.mjs` (count differing pixels between two PNGs, with a tolerance; ⚠ load them as **base64 data URLs** — a
   blank page cannot load `file://` images and will hang).
+  The **cab pair** (258 — reach for these on any vector about a MOVER'S JOB, and on any feature sited by "somewhere
+  interesting"): `probe-taxifare.mjs` (**does this mover ever DO the thing its label claims?** Part A is pure world
+  data — no render, no clock, no noise floor — and answers the DEAD-CODE question FIRST: does the host exist, and can
+  the mover *reach* it over the graph it actually drives? (`livelyKerb`: 125–147 per city, 67–71% of road within 3
+  steps). Part B is **TEMPORAL** (134): it drives the artifact's OWN `advanceEntities` and counts **STOP EVENTS** —
+  HEAD's cab reads **0, forever**, which is the defect with no threshold invented (236). ⚠ **Its three controls are
+  the reusable idea**: the **BUS** is a FREE POSITIVE control (248 — a correct sibling in the same array and the same
+  function, so a taxi 0 is a *real* zero); the **CAR** is the must-not-move column (250); and **CABS-OFF** is 230's
+  suppress-the-decision rig — with no car flagged a cab the roll is never drawn, so the patch runs HEAD's stream
+  **exactly** and reproduces it byte-for-byte. ⚠ **Re-seed `Math.random` IN-PAGE** (248) or 204's shared-stream shift
+  walks the whole fleet and moves the *taxi count*. Part C answers **206** — mean visible ink per cab **by state**),
+  `shot-taxifare.mjs` (its camera, and it is the cautionary one — ⚠ **it framed a TOWER on its first two cuts.** Aims
+  by measured ink (226) **taken as an ARGMAX OVER TIME**, because the frame held exactly ONE hired cab and an argmax
+  over n=1 is a lottery; the bar is **self-calibrating** off the incumbent (70% of the mean *vacant* cab in the same
+  frame), never a constant I chose. ⚠ **Every frame SELF-REPORTS whether a cab is actually at the centre** — the
+  expected result is an *absence* (a dark lamp), and a frame with no cab in it reads exactly like a correct one, which
+  is a false PASS an agent will hand you (see the law)).
   Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure

@@ -17891,3 +17891,82 @@ itself a small perf CREDIT: identical at the peak, strictly fewer objects every 
 **Verdict — DEEPENED.** (And **225's grep-the-seam law is now 5 for 5**: Sky 236, Nature 238,
 People 240, Water 245, **People 247** — every one off a seam a domain's cue list had gone quiet on.)
 
+## Iteration 248 — the shower cited a neighbour it never read (2026-07-14) [Sky × Polish]
+
+**Vector.** Sky × Polish — cue **(ao)**, the ledger's #1 🔴 (*"the rain shafts cross the water's
+edge and keep raining over the empty cream backdrop"*). Rotation pointed at **Urban** (stalest at
+239); per **225** I grepped its seam first, found the massing/facade/ground/roof cells as closed as
+the header claims, and took the header's own authorised fall-through.
+
+**The seam.** The veil and the bow sit **twenty lines apart** and both fade out near the plate's rim.
+The **bow** tests its **LEGS**: *"test the LEGS, not the cloud: the bow reaches ±r0 sideways, so a
+shower still safely inland can hang a leg past the rim"* — and computes `fl`/`fr` from its own extent.
+The **shaft** tests **`cl.x`, the cloud's CENTRE** — under a comment claiming it is spent *"2 hexes
+short of the rim **(as the bow is)**"*. It is **242's law exactly, and the citation runs the other
+way**: 242 found a draw citing a *broken* neighbour; here the shaft cites a **correct** one and still
+does not do what it says. A false invariant with a *witness* that actually holds.
+
+**Change.** One gate. `pa` now measures its inset from the **veil's own drawn edges** — the quad is
+~`26*s` wide at the belly and `36*s` at the foot, and its foot trails **upwind** by `rlean`, which is
+why the LEFT rim spills worst:
+```js
+const vl=Math.min(cx-26*cl.s,cx-rlean-36*cl.s)/CW-0.25;   /* pxc: X=(gx+0.25)*CW */
+const vr=Math.max(cx+26*cl.s,cx-rlean+36*cl.s)/CW-0.25;
+const inset=(gy2>=0&&gy2<G)?Math.min(vl-ROWMIN[gy2],ROWMAX[gy2]-vr):-1;
+```
+The quad is the **outer envelope** (the drops fall inside it at ±20.7*s / ±28.8*s), so bounding it
+bounds the whole veil. The fade *grammar* is untouched — only its reference point is corrected.
+
+**Probe** (`probes/probe-rainrim.mjs`, pure world data — no render, no clock, no noise floor).
+⇒ **THE BOW IS THE POSITIVE CONTROL, AND IT COST NOTHING**: same rim, same file, one draw that tests
+its extent and one that tests its anchor. It read **0.00 hexes on all 6 seeds** — validating the
+instrument and convicting the shaft in the same run.
+
+| | shaft (gate = cloud **centre**) | bow (gate = its own **legs**) |
+| --- | --- | --- |
+| max overhang **at full alpha** | **1.40 – 2.14 hex past the rim** | **0.00, every seed** |
+| foot off-plate at full alpha | **49 – 57.5%** | — |
+
+**Part B grades the SHIPPED DRAW, not my arithmetic** — it tags the shaft's own gradient
+(`96,116,142`, unique to it) and reads back the quad the artifact actually fills. Build-agnostic, so
+it runs unchanged on HEAD and patch with **no source swap and no cross-build floor** (230):
+
+| build | veil quads filled | quads with a foot **past the rim** | worst overhang |
+| --- | --- | --- | --- |
+| HEAD | 1550 / 1550 / 1558 | **73 · 71 · 73  (4.6 – 4.7%)** | **2.90 – 3.40 hex** |
+| patch | 1442 / 1458 / 1456 | **0 · 0 · 0  (0.0%)** | **0.00 hex** |
+
+**The two ledgers (206).** Off-plate rain ink → **exactly 0.0, by construction**: `pa>0` now *requires*
+the whole veil inside the rim, so no alpha can ever be spent past it — **a drift made impossible beats
+one you agree to look for** (223). Cost to the population: **93.6% of on-plate rain ink retained**
+(6356.8 → 5951.4 over 6 seeds; the shower simply spends itself ~2 hexes earlier as it leaves the
+plate). **It cannot cost draw work**: `pa>0` is now strictly *harder* to satisfy, so the change can
+only ever fill **fewer** quads (measured: 1550 → 1442).
+
+**Census.** PASS. Every metric +0, tile histogram **empty** — the correct, vacuous result for a
+draw-only change (`greenRoofs -1` is the documented ±2 tick wobble, 226).
+
+**Visual** (`probes/shot-rainrim.mjs`; ⚠ the void backdrop is the **body's CSS gradient**, so a
+`getImageData` probe is structurally blind to it — **200 makes `page.screenshot()` mandatory here**).
+Three framings × two builds, named **by file** (239). Both agents **PASS**, and both, blind and
+independently, *located the defect in HEAD*: seed 42 — *"the base straddles the plate's western rim,
+~21% over empty background — **this is the one that looks wrong at a glance**"*; seed 7 — *"the shaft
+hugs the west corner and its left flank hangs over the empty background"*. Whole-city frames: coherent,
+no z-order tears, no clutter. Control (inland shower, identical in both builds): **max per-pixel
+difference 5–7 / 765** — noise, by eye and by number.
+⚠ **Honest caveat:** on **seed 7** the inland frame contains no rain in *either* build (the camera did
+not frame that shower), so the **live** positive control (196 — a dead pin and a deaf draw give the
+same zero) rests on **seed 42**, where both builds rain and are identical.
+⚠ **The fix SUBTRACTS at the rim**: both agents noted the rim shower is *gone* in the patch, not moved.
+That is the fix working — the shower is spent before its veil can reach the void — and the 93.6%
+retention is what prices it.
+
+**Cue (ao) — the SHAFT half is CLOSED; the BOW half is REFRAMED, not closed.** The bow is **correctly
+rim-bounded** (0.00 overhang, 6 seeds), so *"a flat rainbow lying ON the water, its right foot cut off
+mid-water"* is **not a rim bug** and the cue's own prescription is dead. But the bow's comment says
+*"no ground, no bow"* while testing `ROWMIN`/`ROWMAX` — **the PLATE, which runs out to sea** — so a bow
+*can* stand entirely over open water. Per **201**, rain (and a bow) over the sea is **CORRECT**; the
+defect is the **comment**, not the draw. What is left of the cue is a *composition* read, not a bound.
+
+**Verdict — FIXED.**
+
