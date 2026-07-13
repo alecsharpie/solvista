@@ -163,4 +163,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 231  Civic & culture × Polish   FIXED               35m52s   $12.72 ddadf5c
 ✔ Iter 232  —                          SHIPPED             33m14s   $9.54  d6b6f90
 ↩ Iter 233  —                          EXPLORED → REVERTED 65m14s   $19.40 c9eb21f
+✔ Iter 234  —                          SHIPPED             24m13s   $9.55  a71514a
 ```
