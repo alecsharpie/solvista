@@ -1489,6 +1489,16 @@ function vinePhase(){const s2=((year%1)+1)%1;
 function farmPh(v){return ((((year%1)+1)%1-(v-0.5)*0.10)%1+1)%1;}
 function farmPhase(v){const ph=farmPh(v);
   return ph<0.06||ph>=0.93?'ploughed':ph<0.20?'sprouting':ph<0.52?'growing':ph<0.80?'ripening':'harvested';}
+/* the sand keeps the calendar too. This is a PACIFIC coast (TILEDESC says so), so the
+   year is a wet winter and a golden dry summer — applySeason's own keyframes — and the
+   crowd answers the SEASON as well as the sun and the tide. 0..1 = "how much of a beach
+   day is it", peaking at the dry peak (s=0.62) and bottoming out mid-winter. ONE
+   predicate: the draw and the tooltip both read it, so they cannot drift (117/123).
+   Centred so that beachPhase()===1 exactly at the dry peak, which makes the draw
+   BYTE-IDENTICAL to its old self there and strictly emptier every other week (245). */
+const BEACHMIN=0.10;
+function beachPhase(){const s=((year%1)+1)%1;
+  return BEACHMIN+(1-BEACHMIN)*(0.5+0.5*Math.cos(6.2831853*(s-0.62)));}
 /* woodland spring ephemerals: wildflowers carpet the forest floor in the brief
    window after the thaw and before the canopy closes over it (the same s~0.28
    spring the palette greens the canopy on). Shared so the draw and the tooltip
@@ -4534,11 +4544,28 @@ function drawCell(x,y){
         ctx.fillStyle=col('ink',1.2);
         ctx.fillRect(cx-4.5,cy-1,1.6,1.6);ctx.fillRect(cx+3,cy-0.5,1.6,1.6);
       }
+      /* UMB is the YEAR-ROUND furniture band, and it is hoisted out for a reason. The
+         umbrella arm and the PALM arm below are adjacent arms of ONE else-if chain on the
+         SAME v, so shrinking the furniture's threshold does not EMPTY those hexes — it hands
+         them straight to the next arm. A threshold inside an if/else chain is not a gate, it
+         is a BOUNDARY BETWEEN TWO FEATURES: narrow one arm and you silently widen its
+         neighbour. (Measured: the first cut of this grew a full palm tree in every deckchair
+         slot the winter crowd vacated — permanent vegetation popping in and out with the
+         calendar.) So the palm keeps its own band [UMB, 0.42), pinned to the year-round
+         threshold and NOT to the seasonal one, and the strip the crowd vacates —
+         [UMB*beachPhase(), UMB) — draws bare sand, which is the whole point of the vector. */
+      const UMB=0.08+0.24*clamp(stats.pop/7000,0,1);
       if(esp){} /* keep umbrellas/palms off the deck */
-      else if(v<0.08+0.24*clamp(stats.pop/7000,0,1)){ /* umbrella + towel: crowds grow with the city.
+      else if(v<UMB*beachPhase()){ /* umbrella + towel: crowds grow with the city.
           Beachgoers follow the sun: the furniture fills in through the morning, peaks at midday and
           is packed away by the time the evening bonfires are lit (LITAMT is the slow ~110s day-clock,
-          0 at midday -> 1 at night, so this reads as a daily rhythm, not a strobe). Draw-only. */
+          0 at midday -> 1 at night, so this reads as a daily rhythm, not a strobe). And they follow the
+          SEASON: the sand empties out over the wet winter and fills again for the golden dry peak.
+          The season rides THIS gate — the one that decides how many hexes ever lay a towel — and not
+          the alpha below it, because scaling the alpha would only leave the same crowd fainter, which
+          reads as haze, not as an empty beach (245: a fixed eligibility gate caps the dynamic range of
+          any threshold beneath it). At the dry peak beachPhase()===1 and this is the old draw exactly.
+          Draw-only: no terrain, no rng(), so pop is flat. */
         const ua=clamp((0.6-LITAMT)/0.25,0,1);
         if(ua>0.02){
         const[cx0,cy0]=px(gx,gy);
@@ -4561,7 +4588,7 @@ function drawCell(x,y){
         ctx.fillStyle=col('gold',1);ctx.fillRect(cx-6,cy+1,4,2.4);
         ctx.globalAlpha=1;
         }
-      } else if(v<0.42) palm(gx-0.1,gy+0.1,0.9);
+      } else if(v>=UMB&&v<0.42) palm(gx-0.1,gy+0.1,0.9);  /* the palm's band is UNSEASONED — a palm does not migrate */
       if(hut&&y===hut.y&&x===shoreAt(y)-2){ /* lifeguard tower */
         prism(gx,gy,0.03,0.03,0,4,col('deckDk',1),col('deckDk',0.6),col('deckDk',0.8));
         prism(gx,gy,0.10,0.09,4,9,col('coral',1),col('coral',0.65),col('coral',0.85));
@@ -8225,6 +8252,9 @@ function describeTile(c,x,y){
   /* the field tells the same per-cell crop calendar the draw colours (shared farmPhase) */
   if(c.t===T.FARM){const fph=farmPhase(c.v);
     data.push(['Fields',fph==='ploughed'?'Ploughed under':fph==='sprouting'?'Sprouting':fph==='growing'?'Standing crop':fph==='ripening'?'Ripening to straw':'Cut for harvest']);}
+  /* the sand tells the same seasonal crowd the draw lays out (shared beachPhase) */
+  if(c.t===T.BEACH){const bp=beachPhase();
+    data.push(['Sands',bp>0.85?'Packed':bp>0.55?'Busy':bp>0.28?'Quiet':'Empty for the winter']);}
   if(c.t===T.BURNT)data.push(['Burnt','~'+Math.round(c.age*0.075)+' yr ago']);
   if(c.fire>0)data.push(['Burning']);   /* live, and drawn: drawFire paints this cell */
   /* a roof row needs a roof: the forecourt and grounds rules pave over a MID or a

@@ -16837,3 +16837,80 @@ Not a perf lap.
 **Verdict: SHIPPED.** The sky has weather. It gathers, it rains, it clears, and it is different
 in every city — and `probes/shot-front.mjs` can pin any of it, at a fixed season, for the next lap.
 
+## Iteration 237 — the twenty-seventh step-back finds two probes acquitting the city (2026-07-13) [holistic step-back]
+
+**Vector.** The 27th holistic step-back (232 was the 26th). No feature. Read the whole
+city at 3 lights × 2 calendars on 2 seeds, price the lap *and the arc*, and ask the
+cumulative question: has anything compounded?
+
+**Census.** PASS on unmodified HEAD (`schools -1`, `CIVIC -1`, `MID -1`, `RES +2` — the
+±2 unfrozen-clock wobble 226 documented; this is the *same file* the baseline was pinned
+from, so it is the harness, not the city).
+
+**Perf.** LAP vs 232 (`d6b6f90`, 5 iters): day **+1.4%** · night **−4.6%** ⇒ free.
+ARC vs 177 (`7e2ac2c`, 60 iters): **+17.2% / +13.8%**; vs 162 (`5f01426`, 75 iters):
+**+15.4% / +14.3%**. At 232 those same refs read +16.4%/+11.9% and +17.9%/+13.7%, so five
+iterations moved the arc ~+0.8pp on one ref and **not at all** on the other. Rate holds at
+~**+0.2%/iteration**, diffuse, not accelerating — **ACCEPTED**. `probe-drawbudget` is
+**unchanged from 207 and 232** (`drawCell` 94.1% · `winBandR` 32.3% · `prismS` 28.2% ·
+`hexTile` 12.2%): still ~48% static terrain re-rasterized, **still no hot ornament.** The
+last four laps added no draw-cost the instrument can see.
+
+**Visual — both agents FAILed, on two seeds, and the FAIL/ASIDE law did NOT hold this
+time: their HEADLINE was right and their DIAGNOSIS was right too.** Both located the night
+core correctly by light alone ((0.47,0.55) and (0.50,0.60) — the CBD is findable, 217/224's
+skyline ladder is holding). Both then made the *same* headline FAIL, independently: **the
+winter frame does not read as winter.** *"Trees still full green, beach still has swimmers
+and umbrellas, palms unchanged, sky identical — a crop-rotation frame, not a winter."*
+
+**Measured — and this is the step-back's finding: 228'S LAW RECURSED TWICE, AND BOTH TIMES
+THE ACQUITTING PROBE WAS ONE THIS HARNESS ALREADY OWNED.**
+
+1. **(ak) The season is mute on 68% of the vegetation.** `probe-season` has been reporting
+   a healthy calendar for laps, and the header had canonized its headline (*"FARM
+   winter→dry-peak ≈ 88 is the tell that the calendar is working"*). It means **per TILE
+   TYPE** — one row per type, so a 7-hex MEADOW weighs the same as a 563-hex PARK — and the
+   calendar is loud on precisely the city's *smallest* surfaces. Re-weighted by footprint
+   (the viewer's unit; the probe now prints it): **PARK 21.1 across 42.0% of the vegetated
+   plate · FOREST 19.0 across 17.6% · REDWOOD 7.1 · GARDEN 6.9**, while **FARM 103.3**
+   carries the season on **8.1%** of the area. ⇒ **912 / 1341 vegetated hexes (68.0%) sit
+   below the legibility floor.** The agents were not failing to see the season; they were
+   describing the measurement exactly.
+2. **(al) The mid-rise is the real wallpaper — 235 fixed the wrong building.** 228 (crown)
+   and 235 (footprint) closed the TOWER LOOK off six agents saying *"the towers are
+   wallpaper"*. One lap later both agents said it **again**. Re-reading them, they never
+   meant the towers: *"the **red-roof cube** tiles the entire southwest quadrant — roof
+   colour varies, roof **form** does not."* `probe-crown` **had the number the whole time,
+   printed as its CONTROL row**, so nobody read it as a finding: **MID = 2.0 silhouettes,
+   top shape 68.8%, over 419.7 buildings per seed — 4.5× the tower count** — against
+   TOWER's post-235 **12.3 / top 21.0%**. The city's most numerous building has two shapes.
+
+**Refuted (again).** Both agents called the elevated transit lines a **z-order tear**
+(*"scratches on the glass… drawn in front of towers they should be occluded by"*). This is
+the **fifth and sixth** such report, and it is measured wrong: 203 and 212 both found the
+rope and the monorail properly depth-sorted (8.4–23.6% and 10.6–19.8% occluded). **Do not
+re-open the z-order.** The fault they are feeling is `polish-tile` cue (a): a **hairline
+reads on top however well it is sorted**, and 215 names the lever — *a hairline ornament
+needs a BODY.* That six independent agents keep mis-diagnosing it as z-order is itself the
+strongest evidence yet that the legibility cue is real.
+
+**Instrument fixed (227's precedent — a step-back repairs its own lying camera).**
+`probes/probe-season.mjs` now prints each tile's **share of the vegetated plate**, an
+**AREA-WEIGHTED** row, and the **mute-area** total. Its legibility floor (25/441) is *not* a
+tuned constant: the data has a clean gap — everything an agent has ever named as turning
+(VINEYARD 36, SHOREPARK 53, FARM 103) sits above it, everything they read as unchanged
+(QUAD 24 … REDWOOD 7) below — so any value in 25..35 classifies identically (231's rule; and
+it brackets an observation rather than a bar the artifact was built to clear, per 205).
+
+**Other asides, banked not acted on.** Palms read as an identical stamp in a near-regular
+lattice (seed 7, unprompted). 236's rain shafts *"cast nothing"* — consistent with 236's own
+`RENDERED 4/7` finding, watch it. Seed 42: the right third of the plate is near-black land,
+*"the city turns its back on its own water"* — that is (ai), the missing fringe, from a new
+direction.
+
+**Verdict: FIXED** (the instrument, not the city — the city's two defects are now *measured*
+and handed to 238 and 239 with gates already written). The city is structurally sound: perf
+accepted, downtown legible, no tears, no collapse. But it has been carrying a season that
+only its farms can feel, and a mid-rise field that is two shapes wearing many colours — and
+in both cases the harness owned a probe that was quietly saying so.
+

@@ -684,6 +684,32 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A THRESHOLD INSIDE AN `if / else if` CHAIN IS NOT A GATE — IT IS A *BOUNDARY BETWEEN TWO FEATURES*, SO NARROWING
+  ONE ARM SILENTLY WIDENS ITS NEIGHBOUR (iter 247).** 245 says ride the **eligibility** gate, not the alpha, when you
+  want real dynamic range — and that is right, and it is exactly how you walk into this. 247 made the beach crowd
+  seasonal by scaling the furniture's eligibility threshold (`v < UMB*beachPhase()`), which is the correct lever. But
+  the umbrella arm and the **PALM** arm are **adjacent arms of ONE `else if` chain, keyed on the SAME `v`**
+  (`...umbrella... } else if(v<0.42) palm(...)`), so shrinking one arm does not **empty** those hexes — **it hands them
+  to the next arm.** Winter grew **a full palm tree in every deckchair slot the crowd vacated**: permanent vegetation
+  popping in and out with the calendar. The fix is to pin the neighbour to its **own, unseasoned** band (`v>=UMB &&
+  v<0.42`), so the strip the crowd vacates draws bare sand. ⇒ **Before you touch ANY threshold that sits in an
+  if/else chain, grep the chain's other arms and ask what inherits the range you are giving up.** A lone `if` has a
+  gate; a chain has a **partition of one noise value**, and a partition conserves area — every hex you take out of one
+  arm lands in another. The tell: your threshold's variable (`v`, `r`, a `hashCell`) is tested again, on the next line,
+  by an `else if`.
+  ⇒ **AND THE COROLLARY IS THE ONE THAT COST THE LAP — IT IS 214'S LAW, AND MY PROBE WALKED INTO IT: WHEN A VECTOR'S
+  PURPOSE IS TO *REMOVE* SOMETHING, DO NOT MEASURE THAT ITS PIXELS MOVED — *COUNT WHAT IS THERE INSTEAD*.** 247's probe
+  was a textbook 196 state-response rig: frozen clock, one `genWorld`, one build, masks swept per 196, controls exactly
+  0, floor exactly 0. It measured **2,076 px of beach changing between winter and the dry peak** and I read that as *"the
+  furniture packs away."* **It never asked what the pixels changed TO.** They had changed into palm trees. *"The sand
+  changed"* is **necessary** for *"the beach emptied"* and is **not sufficient** — and a pixel-count diff is
+  structurally incapable of telling the two apart, however clean its controls are. **Two visual agents caught it, on
+  both seeds, one by reading the source.** The instrument that actually gates it is a **census of objects, in the units
+  of the thing that broke**: hook `palm()` and **count the calls per season** — deterministic, no pixels, no noise
+  floor, and it states the invariant a viewer would state (*a palm does not migrate*): **PALMS flat at 128/109/111
+  across all four seasons on BOTH builds.** ⇒ **A removal vector needs a probe that names what SURVIVES, not one that
+  measures what MOVED.** The tell: your probe's headline number is a **pixel diff**, and your claim contains a noun
+  (*empty*, *gone*, *packed away*) that a pixel diff cannot verify.
 - **A BUDGET WITH SLACK IS NOT ABSORPTION CAPACITY — THE SLACK *IS* THE PREDICATE'S EXHAUSTION, AND IT WILL BE CITED
   AS THE EVIDENCE FOR EXACTLY THE THING IT DISPROVES (iter 246).** 233's law says that when a vector's *purpose* is to
   take something away, the lap is not "tune it down" — it is to **find the PAIRED ADDITION that holds the core metric
