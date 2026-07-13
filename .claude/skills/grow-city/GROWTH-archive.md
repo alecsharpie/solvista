@@ -15315,3 +15315,97 @@ every live ⚠ WARNING inside them was kept in the header (compressed in place).
   again — which would sit on the wash ladder's own invariant.
   ✅ **137's STANDING-CROWD CUE IS CLOSED (226).** Every STANDING figure now casts `shadS` and inherits 225's sun
   vector; the SEATED ones (cafe, picnic, amphitheater) are deliberately not. **People's cue list is EMPTY.**
+
+## Iteration 223 — the sand goes back to bed (2026-07-13) [Water & coast × Polish]
+
+**Vector.** Water & coast × Polish. Cue **(ae)**, banked 🔴 by the 222 step-back: *the night ground
+out-glows the lit city.* Taken ahead of the stale domains under 119's law (a banked, MEASURED
+finding outranks kind-rotation).
+
+**The bug was one unnormalised number, and the function's own comment named the contract it broke.**
+`washRGB` is the shared hue-preserving night wash behind all three rungs of the ladder (214 sand,
+220 masonry, 221 greens). Its comment promises a **"LUMINANCE-MATCHED, HUE-PRESERVING"** tint, and
+`L` — the night tint's own luminance — is precisely what delivers that: a surface washed with a flat
+`L` lands within ~1 unit of where the plain cool tint would have put it, which is *why* the wash can
+correct a hue without brightening anything. Then each caller multiplies `L` by a **gain triple**. A
+triple is chosen for its channel **RATIOS** (it leans the restoration onto whichever channel carries
+the surface's identity) — and **nobody ever normalised its MAGNITUDE**. Both shipped triples average
+well above 1: sand `1.15/1.08/1.06` → a luma-weighted mean of **1.099**; green `1.08/1.15/1.06` →
+**1.119**. So every rung of the ladder handed its own surface **~10% night luminance** as a side
+effect of fixing its hue — and every rung's gate, *correctly per 221's law*, only ever asked about
+its own surface's hue. This is **199's tell one rung down**: not a constant whose name asserts a
+behaviour its value cannot have, but a **comment asserting an invariant that a later per-caller knob
+silently voided**.
+
+**Change.** One line in `washRGB` — divide the triple by its own luma-weighted mean
+(`n = 1/(gr*0.30 + gg*0.59 + gb*0.11)`), then rewrite the comment to state the invariant it restores.
+A uniform rescale of all three channels **cannot rotate a colour**, so every hue 214/220/221 bought is
+preserved *exactly* and only the stolen luminance is handed back. One mechanism, one definition — no
+caller changed, no second wash forked (the header forbids it), and all three rungs fixed at once,
+which is what the cue predicted ("same root cause, ONE fix").
+
+**Probe (the gate — and it now lives in the tool).** Per **222's law** the invariant *spans the set*,
+so no per-surface gate can see it; I taught `probes/probe-goldenhue.mjs` to **assert** it, so it is
+one command forever rather than a thing each lap must remember. Night luminance, 3 seeds:
+
+| | TOWER | COM | MID | BEACH | PARK | ROAD | FARM | WATER | FOREST |
+|---|---|---|---|---|---|---|---|---|---|
+| pre-ladder | 108 | 107 | **99** | **96** | 81 | 81 | — | — | 58 |
+| HEAD (broken) | 109 | 108 | **101** | **105** | 88 | 80 | 73 | 67 | 66 |
+| **patch** | 108 | 107 | **97** | **96** | 82 | 79 | 72 | 67 | 60 |
+
+`VERDICT: PASS — the lit city is the bright thing after dark.` The unlit sand is back **under** the
+lit mid-rises (BEACH 96 < MID 97) and PARK (82) no longer out-glows the ROAD (79); the ordering is
+the pre-ladder one. **Guard held exactly as the arithmetic predicts** — BEACH 7° off its own daylight
+hue, RES 9°, FOREST 9°, PARK 23°: 214/220/221's hue work is untouched.
+
+**Census.** PASS, `pageerrors: 0`, **every metric +0** (pop 178626, roads 5775, developed 6064, tile
+histogram empty). Correct and near-vacuous: a colour-only change touches no terrain and no `rng()`.
+
+**Perf — free, on the deterministic instrument, not the timer.** 222 was burned by *reading a diff*
+and calling a vector free, so I counted objects instead (216's law): **day 108,011 → 108,026 (+0.01%)
+· night 138,716 → 138,770 (+0.04%)** — identical to within render jitter. Colour-only: zero path
+objects, zero geometry, and daylight runs **byte-identical code** (`w=0 ⇒ t===TINT`), so the day
+column is a free dead-regime control (199).
+
+**Visual.** Both seeds PASS. Asked to **LOCATE, not judge** (108), two agents on two seeds
+independently answered in the direction the fix predicts. Brightest surfaces: *"the lit window grids
+on the towers… the beach is clearly below the lit windows"* (42) · *"the shoreline strip is a muted
+dark taupe, clearly darker than any lit tower face"* (7); **both said the shoreline reads MOONLIT,
+not lit** — the exact inverse of 222's two asides (*"the shoreline glows like it's lit at noon"*).
+
+**The one number that fell, and why it is not the score.** `PARK vs ROAD` separation slipped 16 → 14,
+just under the ~15 collapse floor. **221's law says separation is a GUARD, never the SCORE** — and the
+eye settled it: *both* agents, unprompted, located the parks by colour alone and said so in the same
+words — *"distinctly olive/green against the violet-grey asphalt… parks and roads have NOT
+collapsed."* The two surfaces part in **HUE** (104° vs 15°), not luminance, and a pairwise RGB
+distance cannot express that. Banked, not ignored: if a later lap lowers the greens again, this is
+where it will bite.
+
+**Verdict: FIXED.** Cue **(ae)** CLOSED, and 221's "the greens are hot" watch item CLOSED with it
+(one root cause, as the cue said). **The `col()` wash ladder is now complete AND luminance-safe.**
+
+**Law promoted to SKILL.md.** *A knob chosen for its RATIOS must be normalised for its MAGNITUDE —
+and prefer a STRUCTURAL invariant to a CHECKED one.* 222 correctly said: name the dimension your fix
+perturbs and bound it every lap. The deeper fix is to make the drift **impossible** rather than
+**detected**: the ladder could not have walked luminance off a cliff if the triple had been normalised
+at the source, because a uniform rescale has no freedom to move it.
+
+
+
+## Header cue (ab) — body rotated out of the maintained header at iteration 233
+
+  **(ab) THE CALENDAR IS LOUD PER-TILE AND QUIET PER-FRAME (217, Sky × Deepen — LOW; now said by SIX agents).**
+  ⚠ **DO NOT RE-OPEN AS "THE SEASONS ARE DEAD" — `probe-season` REFUTED that THREE TIMES** (217, 227, **232**); at 232
+  it is *louder* than when banked (FARM **92.1**, SHOREPARK 52.6, ORCHARD 41.9, VINEYARD 34.9; ROAD control **0.6**).
+  **232 measured WHY they keep saying it: THE LOUD TILES ARE RARE AND THE COMMON TILES ARE QUIET** — FARM moves 92.1
+  over just **122 hexes**, while **PARK (574 hexes) moves 22.4 and FOREST (232) 19.1**, so the frame is dominated by
+  the surfaces that barely answer. ⚠ Fix = a bigger seasonal **SURFACE** (make PARK/FOREST answer; do NOT make FARM
+  louder); (p) **forbids** raising the lawn. Arguably correct by design (no snow here) ⇒ stays LOW despite six agents.
+
+
+## Perf ARC per-step-back priors — rotated out of the maintained header at iteration 233
+
+Priors (vs the two standing refs, day/night): 202 +7.5/+4.1 & +8.6/+5.7; 207 +7.2/+5.1 & +9.5/+6.0;
+212 +8.7/+4.8 & +10.5/+7.3; 217 +11.9/+7.6 & +14.0/+8.3; 222 +15.0/+12.2 & +15.9/+13.3;
+227 +16.5/+11.5 & +16.9/+12.7; 232 +16.4/+11.9 & +17.9/+13.7.

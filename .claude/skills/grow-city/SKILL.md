@@ -704,6 +704,35 @@ vector, whatever it is.
   returns before `stamp()`, so it has **no `_sx`/`_sy` at all** and 204's "aim at the drawn position" has nothing to
   read. Render **with the feature off** first (everyone back on the road), take the drawn positions *then*, pick your
   argmax knot, and only afterwards let the feature back in — the camera is aimed by the counterfactual.
+- **A CORE-COLLAPSE GATE GUARDS AGAINST *ACCIDENT*, SO IT CANNOT PASS A DELIBERATE, LOCALIZED *REDUCTION* — PRICE
+  YOUR VECTOR AGAINST THE GATE BEFORE YOU DESIGN, NOT AFTER (iter 233).** The census hard-fails on a >5% drop in
+  `pop`/`developed`/`roads`, and that is right: those metrics exist to catch a change that *broke* the city. But some
+  vectors are *supposed* to remove fabric — 233's greenbelt (giving the city a countryside fringe, the ledger's #1
+  measured cue) exists precisely to make `developed` go **down**, and the gate cannot tell "the city correctly stopped
+  sprawling to the edge of its plate" from "the city cratered." 233 measured the fringe strong enough for a viewer to
+  call it open country at **`developed` −5.7..−9.3% ⇒ HARD FAIL**, and everything the gate would pass (ceiling ≈
+  **−4.5%**) was too weak for half the visual reads. **The feature was boxed between two gates and died there.** ⇒ The
+  moment your vector's *purpose* is to take something away, **compute what it will do to the core metrics before you
+  write the rule**, and if the honest version cannot fit, **the lap is not "tune it down" — it is to find the PAIRED
+  ADDITION that holds the metric flat.** (233's: the dev budget has *slack*, so holding the rim only costs pop because
+  nothing makes interior cells eligible to absorb it — hold the rim **and** widen the core in ONE lap and `developed`
+  stays flat, the gate opens, and the belt can be as strong as the eye needs. Priced separately, each half fails.)
+  The tell: your diff's whole point is a *minus sign* on something the census calls core.
+- **A NOISE-DRAWN FEATURE IS A LOTTERY, AND A TWO-SEED VISUAL GATE WILL HAND YOU ONE WIN AND ONE LOSS (iter 233).**
+  195 says a procedural city must hold on **every** seed. 233 is what that costs you in practice: a greenbelt whose
+  shape came from a value-noise field produced, from the *same code*, a convincing wandering hinterland on seed 7
+  (*"the plate's hexagonal outline is NOT legible in the green"* — PASS) and a mechanical rim halo on seed 42
+  (*"a constant-width band tracing the plate's outline"* — FAIL). Three different shapes were built, and **every**
+  round came back one PASS and one FAIL, always failing on whichever seed had drawn the weaker belt (measured: 220
+  held lots vs 161). **On a bad draw a procedural ornament does not merely under-deliver — it ANNOUNCES THE
+  GENERATOR'S RULE, which is a worse artifact than not having the feature at all.** ⇒ When a feature's *quality* (not
+  just its placement) is drawn from noise, **gate it on its WORST seed**: measure the per-seed spread of the thing the
+  eye judges before you shoot anything, and if the spread straddles your bar, the design is wrong — not the tuning.
+  Corollary, and it is a design law: **a mask whose field is a function of `hexDist` from the plate centre has a
+  boundary that IS the plate's hexagon, by construction.** No amount of density noise hides that (an even scatter
+  reads as *speckle*; modulating only the ring's *strength* reads as an *offset halo*). To make such a boundary
+  wander, warp the **distance field itself**, and the warp must **exceed the belt's depth** — otherwise the field
+  clamps at the rim and the city can never touch the plate's edge, which an agent will spot immediately.
 - **A DEFECT ONLY YOUR HARNESS CAN SEE IS A DEFECT IN YOUR HARNESS — REPRODUCE IT IN THE USER'S
   CONFIGURATION BEFORE YOU BELIEVE IT IS THE ARTIFACT'S (iter 229).** 200 says a probe can measure a
   *layer* the user never looks at; 205 says the label-tell has a false-positive mode; 202/227 say a

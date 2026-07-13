@@ -21,7 +21,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
@@ -38,9 +38,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: People **226** ·
-  Transport **230** · Civic **231** · Nature **221** · Water **223** · Sky **225** · Urban **228**.
-  🔴 **NEXT: Nature (stalest, 221)** — and cue **(ai)** below is a Nature-shaped find, so it is the natural lap.
-  Then Water (223) / Sky (225). **232 WAS THE 26th STEP-BACK — the next is 237.**
+  Transport **230** · Civic **231** · Nature **233** · Water **223** · Sky **225** · Urban **228**.
+  🔴 **NEXT: Water (stalest, 223)**, then Sky (225) / People (226). **232 WAS THE 26th STEP-BACK — the next is 237.**
+  ⚠ **233 took (ai) and REVERTED** — NOT closed; do not re-try a bare rim mask, read (ai) below.
   ✅ **232 (26th step-back): CITY CLEAN, ARC UNMOVED — AND THE AGENTS' ASIDE WAS A REAL, MEASURED DEFECT.** Both
   FAILs were refuted (see below); the *asides* paid out for the **eighth lap running**. **NEW cue (ai): THE CITY HAS
   NO FRINGE**, and it is **worse than the agents claimed** — the taper is **NEGATIVE**. ⚠ **The pre-registered TOWER
@@ -53,9 +53,8 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   standing-crowd cue** (226 — **People's cue list is EMPTY**). ⚠ **(y) and (s) were born from agents reading
   `shoot.mjs` output — REPRODUCE either in the user's configuration before designing to it** (229's law).
   **Interaction/UX** (cross-cutting, so it sits here not in the grid) was last touched at **229**; before that 191.
-  **CUES, RANKED** (**(w)+(z)** CLOSED by 229, **(t)** CLOSED by 231): 🔴 **(ai)** THE CITY HAS NO FRINGE — **the
-  only MEASURED cue in this list, and the taper is negative** (232; Nature/Urban × Deepen) · **(af′)** the tower
-  SILHOUETTE — its pre-registered trigger has now FIRED (Urban × Polish) · **(ag)** the night greens stay
+  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) CLOSED 231): 🔴 **(ai)** THE CITY HAS NO FRINGE — **measured; 233 tried
+  and REVERTED, the way through is NAMED** · **(af′)** tower SILHOUETTE, trigger FIRED (Urban × Polish) · **(ag)** the night greens stay
   hot (NEW at 227 — Nature is the stalest domain) · **(u)** the violet pier
   deck (Water × Polish — the LAST warm surface still rotated; the deck bypasses `col()`; one-line lever) · **(y)**
   the scorched inland cluster (Nature × Polish) · **(ah)** the amphitheater's cavea has a **FIXED orientation** —
@@ -142,10 +141,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **228's tower crowns add objects in BOTH regimes, and 230's night curfew REMOVES vehicles at night and cancels
   them** — which is why night alone came back flat. (229 is text-layer, 231 moves one tile.) ARC: vs `7e2ac2c` (177,
   55 iters) **+16.4% / +11.9%**; vs `5f01426` (162, 70 iters) **+17.9% / +13.7%** (abs: day 41.1-42.1ms · night
-  47.2-48.3ms) — **+1.0pp on both columns over 228-231**, i.e. dead on the documented rate. Priors: 202 +7.5/+4.1 &
-  +8.6/+5.7; 207 +7.2/+5.1 & +9.5/+6.0; 212 +8.7/+4.8 & +10.5/+7.3; 217 +11.9/+7.6 & +14.0/+8.3; 222 +15.0/+12.2 &
-  +15.9/+13.3; 227 +16.5/+11.5 & +16.9/+12.7. Arc rate ~**+0.2-0.3%/iteration**; diffuse, **NOT accelerating**;
-  **ACCEPTED — do NOT open a perf lap.** ⚠ **222 FALSIFIED this header's own claim that "219 is world-data only — arc unmoved."** The
+  47.2-48.3ms) — **+1.0pp on both columns over 228-231**, dead on the documented rate. (Per-step-back priors 202→227
+  archived at 233.) Arc rate ~**+0.2-0.3%/iteration**; diffuse, **NOT accelerating**; **ACCEPTED — do NOT open a perf
+  lap.** ⚠ **222 FALSIFIED this header's own claim that "219 is world-data only — arc unmoved."** The
   lap's +3.3/+4.2% had NO mechanism (220/221 colour-only, 219 world-data, 218 reverted), so per 216 the INSTRUMENT was
   changed rather than the timer re-run: `probe-drawbudget` reads **day 104,787 -> 108,007 (+3.1%)** and **night
   132,547 -> 138,734 (+4.7%)** — the two instruments AGREE, so the cost is REAL, and it is **219's downtown** (more
@@ -303,10 +301,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **(p) CLOSED by 208/209 (body archived); the WARNING is live. ⚠ DO NOT RAISE THE LAWN AMPLITUDE FURTHER** — `grass`
   and `lawn` share a base colour `[150,181,122]`, so the dry-season divergence *is* the managed green's identity;
   lawns must stay greener/brighter than the hills **all year**, and any push must re-run the blind locate. **⚠ GARDEN
-  is STILL MUTE (1.8 -> 5.4)** (raised beds, so the lawn lift barely reaches it). **Its own richer cue, which (p)
-  OWNS:** staggered per-bed calendars + ONE shared `gardenPhase()` — beds at different stages is an allotment's whole
-  visual identity, a shape no other ag tile uses (FARM staggers whole FIELDS; this staggers BEDS within one plot);
-  run the tell FORWARDS (123). **Nature × Deepen; host fixed by 206.**
+  is STILL MUTE (1.8 -> 5.4)** (raised beds). **Its own richer cue, which (p) OWNS:** staggered per-bed calendars +
+  ONE shared `gardenPhase()` — beds at different stages is an allotment's whole visual identity, a shape no other ag
+  tile uses (FARM staggers FIELDS; this staggers BEDS); run the tell FORWARDS (123). **Nature × Deepen; host by 206.**
   **(aa)/(ad)/(ae) CLOSED (220 masonry, 221 greens, 223 normalisation); bodies archived. THE `col()` WASH LADDER IS
   COMPLETE** — ONE shared `washRGB(b,f,gr,gg,gb)`, colour-only (**zero path objects**, **byte-identical in daylight**
   ⇒ a free dead-regime control). ⚠ **Do NOT fork a second wash — EXTEND `washRGB`**; **GLASS (TOWER/COM) KEEPS the
@@ -314,8 +311,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   — run it whenever you touch a gain triple.** ⚠ **Still rotated, both bypassing `col()`:** the **pier deck** (cue
   (u)) and **FARM** (`cropRGB`/`colRGB`). ⚠ **Watch: PARK↔ROAD separation is 14, just under the ~15 collapse floor**
   — and **(ag) says the night greens read hot again**, so that is where the next lap bites.
-  **(af) CLOSED by 228 — the tower CROWN was the defect** (body in entry 228; the *"banked instrument was the WRONG
-  one"* lesson is a LAW in SKILL.md). **⚠ (af′) ITS PRE-REGISTERED TRIGGER HAS NOW FIRED (232).** The header said
+  **(af) CLOSED by 228 (crown). ⚠ (af′) ITS PRE-REGISTERED TRIGGER HAS FIRED (232).** The header said
   *"the next Urban lap if the towers are ever called wallpaper again"* — and at 232 **both agents, both seeds,
   unprompted** did exactly that: *"nearly every tall building is the same horizontally-striped slab… at ~110 towers
   this is the single biggest thing flattening the skyline"* (42) · *"dozens of near-identical slab towers… variety
@@ -323,12 +319,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   still 5.3 shapes / top 55%.** ⇒ **Urban × Polish, and the instrument is `probes/probe-crown.mjs` — but re-derive it
   from the complaint's nouns first (228's own law): they said SILHOUETTE/MASS/FOOTPRINT, and `probe-crown` measures
   the CROWN, which 228 already fixed.** Do not let a banked probe acquit the thing the agents keep pointing at.
-  **(ag) THE NIGHT GREENS STAY HOT (227, seed 7, unprompted; NEW).** *"At night the land base reads flat purple-grey
-  and the parks/farms in the middle stay oddly bright green, breaking the night mood."* Sits squarely on 222's
-  ladder invariant (**no UNLIT surface may out-brighten the LIT ones**) and on 223's live watch item (**PARK<->ROAD
-  separation is 14, just under the ~15 collapse floor**) — the two may be one root cause. ⚠ **DO NOT gate it on a
-  pairwise separation — 221 proved separation REWARDS this class of bug**; gate on the surface's distance from its
-  OWN daylight self, and re-run `probes/probe-goldenhue.mjs` (it ASSERTS the ladder invariant). Nature/Water × Polish.
+  **(ag) THE NIGHT GREENS STAY HOT (227, seed 7, unprompted).** *"The parks/farms in the middle stay oddly bright
+  green, breaking the night mood."* Sits on 222's ladder invariant (**no UNLIT surface may out-brighten the LIT
+  ones**) and on 223's live watch item (**PARK↔ROAD separation is 14, just under the ~15 collapse floor**) — likely
+  one root cause. ⚠ **DO NOT gate on a pairwise separation — 221 proved separation REWARDS this class of bug**; gate
+  on the surface's distance from its OWN daylight self, and re-run `probes/probe-goldenhue.mjs`. **Nature × Polish.**
   **🔴 (ai) THE CITY HAS NO FRINGE — IT IS DENSEST AT ITS RIM (232; MEASURED, `probes/probe-fringe.mjs`).** Both
   step-back agents, blind, on two different seeds, unprompted: *"the far edge terminates in an abrupt flat line of
   buildings with no suburban fade — the city ends rather than trails off"* (42) · *"no hinterland left. Density runs
@@ -336,30 +331,36 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   and this time the probe AGREED WITH THEM and found it WORSE.** Developed share of LAND by distance inward from the
   plate rim (6 seeds, sea excluded from the denominator, pure world data): **rim 0-2 = 46.5% vs deep interior = 41.3%
   ⇒ taper −5.3 points, INVERTED.** The rim is the *most* built-up band in the city on **5 of 6 seeds**; WILD land at
-  the rim is **13.4%**. So the diorama's outer boundary is a wall of buildings meeting the void. ⚠ **TWO TRAPS FOR
-  THE LAP THAT TAKES THIS.** (1) **218: the rim carries ~20x more land than the core**, so "just develop less at the
-  rim" is a pop cut over the *largest* bands in the city — **price it with `probe-cascade` (10 seeds, paired) BEFORE
-  designing**, and expect a real trade. (2) **219: a spatial preference must be PURE ADDITION (`m = 1 + B*field`,
-  never below 1)** — scaling development *down* at the rim is a cut dressed as a redistribution, and `COM` is the
-  **substrate towers are built on**, so a naive rim cut compounds downstream. ⇒ Prefer **adding a hinterland**
-  (wild/agricultural preference at the rim) to **subtracting a city**.
-  **(ac) CLOSED by 224 — the 217/218/219 SKYLINE LADDER is COMPLETE** (body archived): mass downtown *and* a taper.
-  ⚠ **THE WHOLE `c.th` LADDER IS SPENT: do not re-open placement (dead lever, 218), the COM fork (219), the height
-  noise, or `TCAP` (224).** (1) ⚠ **`c.th` HAS TWO WRITERS** — placement *and* the 2022+ growth rule; touch one,
-  check the other. (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did (0.125), **219
-  invalidated it** (0.282) unnoticed for 6 laps; normalise by the formula's own max (⇒ SKILL.md).
-  **(ab) THE CALENDAR IS LOUD PER-TILE AND QUIET PER-FRAME (217, Sky × Deepen — LOW; now said by SIX agents).**
-  ⚠ **DO NOT RE-OPEN AS "THE SEASONS ARE DEAD" — `probe-season` REFUTED that THREE TIMES** (217, 227, **232**); at 232
-  it is *louder* than when banked (FARM **92.1**, SHOREPARK 52.6, ORCHARD 41.9, VINEYARD 34.9; ROAD control **0.6**).
-  **232 measured WHY they keep saying it: THE LOUD TILES ARE RARE AND THE COMMON TILES ARE QUIET** — FARM moves 92.1
-  over just **122 hexes**, while **PARK (574 hexes) moves 22.4 and FOREST (232) 19.1**, so the frame is dominated by
-  the surfaces that barely answer. ⚠ Fix = a bigger seasonal **SURFACE** (make PARK/FOREST answer; do NOT make FARM
-  louder); (p) **forbids** raising the lawn. Arguably correct by design (no snow here) ⇒ stays LOW despite six agents.
+  the rim is **13.4%**. So the diorama's outer boundary is a wall of buildings meeting the void.
+  ⚠ **233 TOOK THIS AND REVERTED — STILL OPEN, but the obvious fix is MEASURED-DEAD** (`probes/probe-fringehost.mjs`,
+  banked, runs on HEAD). **(1) The parcel roll is 100.0% SATURATED on every seed** ⇒ per 218 `p` is a **DEAD lever**;
+  the city is exactly *"every lot within 2 hexes of a road"* and only the **PREDICATE** steers it. **(2) ROAD is FLAT
+  across rim bands** (29.5% rim vs 33.6% deep) ⇒ the parcel rule is **INNOCENT** (218's host law) — it fills what the
+  roads reach, and the roads reach the edge. **(3) THE DEV BUDGET HAS SLACK (1153/1382)** ⇒ **a held-back rim lot is
+  NOT re-spent inland**; pop falls ~1:1. ⇒ **THE BOX: strong enough to READ as country ⇒ `developed` (CORE) collapses
+  −5.7..−9.3% and the census HARD-FAILS; weak enough to pass (ceiling ≈ −4.5%) ⇒ the noise-drawn belt is SEED-FRAGILE**
+  (seed 7 rim 46→19% PASSED — *"the hexagon is not legible in the green"*; seed 42 rim 54→36% FAILED — *"a
+  constant-width band tracing the plate's outline"*; **195: it must hold on EVERY seed**). ✅ **THE COST LANDS ENTIRELY
+  OUTSIDE: core (≤8) `developed` +0.2%, MID +5.7%, COM +10.6% — downtown is NOT taxed** (10 seeds paired; all 8 agent
+  reads agreed). ⇒ **THE WAY THROUGH: HOLD THE RIM AND WIDEN THE CORE IN ONE LAP.** The slack means the city *can*
+  absorb the freed development inland if interior cells are made eligible (the predicate's `road within 2` is the
+  lever; widening it in the INTERIOR ONLY is pure addition, 219) — then `developed` stays flat, **the census gate
+  opens**, and the belt can be as strong as the eye needs. **Priced separately each half fails; the PAIR ships.**
+  ⚠ Three SHAPE laws, each paid for by a gate round: a scatter reads as **speckle**; modulating only a ring's
+  *strength* reads as an **offset halo** (`rural` is `hexDist`-based ⇒ its boundary IS the plate's hexagon); the warp
+  must **exceed the belt depth**, or the city can never touch the rim.
+  **(ac) CLOSED by 224 — the SKYLINE LADDER (217/218/219) is COMPLETE** (body archived): mass downtown *and* a taper.
+  ⚠ **THE WHOLE `c.th` LADDER IS SPENT** — do not re-open placement (dead lever, 218), the COM fork (219), the height
+  noise, or `TCAP` (224). (1) ⚠ **`c.th` HAS TWO WRITERS** (placement + the 2022+ growth rule) — touch one, check the
+  other. (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did (0.125), 219 invalidated it
+  (0.282) unnoticed for 6 laps; normalise by the formula's own max (⇒ SKILL.md).
+  **(ab) THE CALENDAR IS LOUD PER-TILE, QUIET PER-FRAME (217, Sky — LOW; body archived at 233).** ⚠ **NOT "the
+  seasons are dead" — `probe-season` REFUTED that 3x** (217/227/232). The loud tiles are RARE (FARM 92.1 over 122
+  hexes) and the common ones quiet (PARK 22.4 over 574). Fix = a bigger seasonal SURFACE; (p) forbids the lawn.
   **(u) THE PIER / BOARDWALK DECK IS STILL VIOLET — (aa)'s bug one tile over (214, Water × Polish; the LAST warm
   surface rotated).** Seed 7, unprompted: *"flat lavender-mauve slabs"* and *"the boardwalk path is warm brown while
   the pier deck it connects to is violet — same walkway, two colours."* Fixing the sand made it **worse**. One-line
-  lever: route the deck's fills through **`sandCol()`** (it bypasses `col()`). ⚠ **GATE ON THE DECK'S DISTANCE FROM
-  ITS OWN DAYLIGHT HUE, NOT a pairwise separation** — 221 proved separation *rewards* the bug.
+  lever: route the deck's fills through **`sandCol()`** (it bypasses `col()`). ⚠ **GATE ON THE DECK'S DISTANCE FROM ITS OWN DAYLIGHT HUE, NOT a pairwise separation** — 221 proved separation *rewards* the bug.
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; see the PERF bullet's "TWO
   HOLES").** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` key churn and per-mark style
   writes are both ruled OUT (measured **zero**).
@@ -390,86 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 225 entries before Iteration 223 live in
+> **Archive:** the 226 entries before Iteration 224 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 223 — the sand goes back to bed (2026-07-13) [Water & coast × Polish]
-
-**Vector.** Water & coast × Polish. Cue **(ae)**, banked 🔴 by the 222 step-back: *the night ground
-out-glows the lit city.* Taken ahead of the stale domains under 119's law (a banked, MEASURED
-finding outranks kind-rotation).
-
-**The bug was one unnormalised number, and the function's own comment named the contract it broke.**
-`washRGB` is the shared hue-preserving night wash behind all three rungs of the ladder (214 sand,
-220 masonry, 221 greens). Its comment promises a **"LUMINANCE-MATCHED, HUE-PRESERVING"** tint, and
-`L` — the night tint's own luminance — is precisely what delivers that: a surface washed with a flat
-`L` lands within ~1 unit of where the plain cool tint would have put it, which is *why* the wash can
-correct a hue without brightening anything. Then each caller multiplies `L` by a **gain triple**. A
-triple is chosen for its channel **RATIOS** (it leans the restoration onto whichever channel carries
-the surface's identity) — and **nobody ever normalised its MAGNITUDE**. Both shipped triples average
-well above 1: sand `1.15/1.08/1.06` → a luma-weighted mean of **1.099**; green `1.08/1.15/1.06` →
-**1.119**. So every rung of the ladder handed its own surface **~10% night luminance** as a side
-effect of fixing its hue — and every rung's gate, *correctly per 221's law*, only ever asked about
-its own surface's hue. This is **199's tell one rung down**: not a constant whose name asserts a
-behaviour its value cannot have, but a **comment asserting an invariant that a later per-caller knob
-silently voided**.
-
-**Change.** One line in `washRGB` — divide the triple by its own luma-weighted mean
-(`n = 1/(gr*0.30 + gg*0.59 + gb*0.11)`), then rewrite the comment to state the invariant it restores.
-A uniform rescale of all three channels **cannot rotate a colour**, so every hue 214/220/221 bought is
-preserved *exactly* and only the stolen luminance is handed back. One mechanism, one definition — no
-caller changed, no second wash forked (the header forbids it), and all three rungs fixed at once,
-which is what the cue predicted ("same root cause, ONE fix").
-
-**Probe (the gate — and it now lives in the tool).** Per **222's law** the invariant *spans the set*,
-so no per-surface gate can see it; I taught `probes/probe-goldenhue.mjs` to **assert** it, so it is
-one command forever rather than a thing each lap must remember. Night luminance, 3 seeds:
-
-| | TOWER | COM | MID | BEACH | PARK | ROAD | FARM | WATER | FOREST |
-|---|---|---|---|---|---|---|---|---|---|
-| pre-ladder | 108 | 107 | **99** | **96** | 81 | 81 | — | — | 58 |
-| HEAD (broken) | 109 | 108 | **101** | **105** | 88 | 80 | 73 | 67 | 66 |
-| **patch** | 108 | 107 | **97** | **96** | 82 | 79 | 72 | 67 | 60 |
-
-`VERDICT: PASS — the lit city is the bright thing after dark.` The unlit sand is back **under** the
-lit mid-rises (BEACH 96 < MID 97) and PARK (82) no longer out-glows the ROAD (79); the ordering is
-the pre-ladder one. **Guard held exactly as the arithmetic predicts** — BEACH 7° off its own daylight
-hue, RES 9°, FOREST 9°, PARK 23°: 214/220/221's hue work is untouched.
-
-**Census.** PASS, `pageerrors: 0`, **every metric +0** (pop 178626, roads 5775, developed 6064, tile
-histogram empty). Correct and near-vacuous: a colour-only change touches no terrain and no `rng()`.
-
-**Perf — free, on the deterministic instrument, not the timer.** 222 was burned by *reading a diff*
-and calling a vector free, so I counted objects instead (216's law): **day 108,011 → 108,026 (+0.01%)
-· night 138,716 → 138,770 (+0.04%)** — identical to within render jitter. Colour-only: zero path
-objects, zero geometry, and daylight runs **byte-identical code** (`w=0 ⇒ t===TINT`), so the day
-column is a free dead-regime control (199).
-
-**Visual.** Both seeds PASS. Asked to **LOCATE, not judge** (108), two agents on two seeds
-independently answered in the direction the fix predicts. Brightest surfaces: *"the lit window grids
-on the towers… the beach is clearly below the lit windows"* (42) · *"the shoreline strip is a muted
-dark taupe, clearly darker than any lit tower face"* (7); **both said the shoreline reads MOONLIT,
-not lit** — the exact inverse of 222's two asides (*"the shoreline glows like it's lit at noon"*).
-
-**The one number that fell, and why it is not the score.** `PARK vs ROAD` separation slipped 16 → 14,
-just under the ~15 collapse floor. **221's law says separation is a GUARD, never the SCORE** — and the
-eye settled it: *both* agents, unprompted, located the parks by colour alone and said so in the same
-words — *"distinctly olive/green against the violet-grey asphalt… parks and roads have NOT
-collapsed."* The two surfaces part in **HUE** (104° vs 15°), not luminance, and a pairwise RGB
-distance cannot express that. Banked, not ignored: if a later lap lowers the greens again, this is
-where it will bite.
-
-**Verdict: FIXED.** Cue **(ae)** CLOSED, and 221's "the greens are hot" watch item CLOSED with it
-(one root cause, as the cue said). **The `col()` wash ladder is now complete AND luminance-safe.**
-
-**Law promoted to SKILL.md.** *A knob chosen for its RATIOS must be normalised for its MAGNITUDE —
-and prefer a STRUCTURAL invariant to a CHECKED one.* 222 correctly said: name the dimension your fix
-perturbs and bound it every lap. The deeper fix is to make the drift **impossible** rather than
-**detected**: the ladder could not have walked luminance off a cliff if the triple had been normalised
-at the source, because a uniform rescale has no freedom to move it.
 
 ## Iteration 224 — the downtown was the only thing that kept rising (2026-07-13) [Urban fabric × Polish]
 
@@ -1213,3 +1139,80 @@ and mechanistically explained, both FAILs refuted by measurement, and the step-b
 real yield is a **measured, inverted-sign compositional defect** that ~230 iterations of
 additive growth had quietly produced and that no per-lap gate could ever have seen. This
 is precisely the drift a step-back exists to catch. **233 should take cue (ai).**
+
+## Iteration 233 — the fringe is boxed between two gates (2026-07-13) [Nature × Deepen]
+
+**Vector.** Nature (stalest, 221) × Deepen, taking cue **(ai)** — the ledger's only
+MEASURED cue and its #1: *the city has no fringe, it is DENSEST AT ITS RIM* (232, two
+blind agents, two seeds, unprompted; taper **inverted**).
+
+**Probe first, and it moved the whole design (`probes/probe-fringehost.mjs`, banked, 6 seeds).**
+The obvious fix — steer development away from the rim — is **impossible**, and the probe
+says so in three numbers:
+- **The parcel roll is 100.0% SATURATED on every seed.** Not one eligible cell is left
+  unbuilt anywhere in any city. Per 218 `p` is a **DEAD lever**: the city is exactly
+  "every lot within 2 hexes of a road", and only the **PREDICATE** can steer it.
+- **ROAD is FLAT across rim bands** (29.5% of land at the rim, 33.6% deep). So the parcel
+  rule is **INNOCENT** — 218's host-layer law: it faithfully fills what the roads reach,
+  and *the roads reach the plate's edge*.
+- **The dev budget has SLACK** (1153 used / 1382). ⇒ **A held-back rim lot is NOT re-spent
+  inland.** There is no free redistribution; pop falls ~1:1 with cells held. This is the
+  fact that kills the elegant version of this vector, and it is the first thing to check.
+
+**Change (built, gated, REVERTED).** `greenbelt(x,y)` — a **fixed spatial mask**, not a
+roll (a mask cannot saturate) — over the plate's outer rings, read by **three rules, one
+definition** (112): parcels may not subdivide a held lot, **logging may not clear its
+woods** (>=2 road/DEV nbrs *is* the rim, so without this the fringe is felled as fast as
+it grows), urbanization may not sell its fields. Roads untouched, so the lanes still
+thread to the edge and the corridor/monorail/gondola passes stay byte-identical.
+
+**Census.** PASS at the shipped tuning (`developed -4.4%`, `pop +8.2%`, `roads -1.0%`, 0 errors).
+
+**THE BOX — why it died.** Three shapes were built and shot, and the two gates close on it
+from opposite sides:
+- **Strong enough to READ as country ⇒ the census core gate COLLAPSES.** `developed`
+  is a **core** metric and this vector's *purpose* is to remove developed cells. Every
+  tuning that took the rim below ~20% built measured **`developed` -5.7% to -9.3% = FAIL**.
+  Ceiling is ~**-4.5%**, and that ceiling is the whole story.
+- **Weak enough to PASS ⇒ it is SEED-FRAGILE.** The belt is drawn from noise, so its
+  quality is a lottery. Final build: seed 7 held 220 lots (rim **46 -> 19%** built) and
+  PASSED decisively — *"it wanders... the plate's hexagonal outline is NOT legible in the
+  green"*. Seed 42 drew 161 lots (rim **54 -> 36%**) and FAILED — *"a near-constant-width
+  band tracing the plate's hexagonal outline."* **195's law: a procedural city must hold on
+  EVERY seed.** On a bad draw the belt *announces the generator's rule*, which is a worse
+  artifact than no fringe at all.
+
+**Visual.** 8 agent reads over 3 shapes, all blind, all correctly identifying the patched
+build. Every single read: **downtown INTACT** and **no render bugs**. Verdict split every
+round — one PASS, one FAIL, the FAIL always on whichever seed drew the weaker belt.
+
+**Three SHAPE findings, each paid for by a failed gate round (these are the reusable part):**
+1. **An even SCATTER reads as SPECKLE, not country.** *"Green appears BETWEEN the buildings
+   rather than replacing them"* — salting every block clears none of them.
+2. **Modulating only the STRENGTH of an unwarped ring reads as an OFFSET HALO.** Of course
+   it does: `rural` is a function of `hexDist` from the plate centre, so **its boundary IS
+   the plate's hexagon by construction**, and no density noise hides that. *"It looks like
+   a rim rule."*
+3. **The warp must be able to ERASE the belt.** Warping the distance field by ±4 rings still
+   clamps `rural` to 1 at rim 0, so **the city can never touch the plate's edge** — an agent
+   caught exactly this (*"never lets the city touch the rim"*). The warp must exceed the belt
+   depth, so the belt *vanishes* in places. That one change is what flipped seed 7 to PASS.
+
+**Where the cost actually lands (this is the good news, and the next lap should keep it).**
+Split by distance from the CBD, 10 seeds, paired: the loss is **entirely OUTER**. Core
+(<=8): `developed` **+0.2%**, MID **+5.7%**, COM **+10.6%** — *downtown is not taxed at all*,
+and every agent read confirms it. Outer (>16): MID -15.5%, TOWER -14.5%, dev -8.4%. **The
+pop a fringe costs is far-flung rim pop, which is exactly the fabric that should not exist.**
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` is byte-identical to HEAD. The city IS
+measurably better with the belt — but not on every seed, and it cannot be strengthened
+without collapsing a core metric. Reverting a change that half the gate loves is the system
+working (82/88/101/114).
+
+**⇒ THE WAY THROUGH, for whoever takes (ai) next — do NOT re-try a bare rim mask.** The
+budget **has slack** (1153/1382), so the city can absorb the freed development *inland* if
+something makes interior cells eligible for it (the parcel predicate's `road within 2` is
+the lever, and widening it in the interior is **pure addition**, 219). **Hold the rim AND
+widen the core in the SAME lap** and `developed` stays flat — the census gate opens, the
+belt can be made as strong as the eye needs, and the city gets a hinterland *and* a denser
+middle. Priced separately, each half fails; the pair is what makes it shippable.
