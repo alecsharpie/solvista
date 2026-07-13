@@ -179,4 +179,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ↩ Iter 246  Nature × Deepen            EXPLORED → REVERTED 18m57s   $7.90  0448ec5
 ✔ Iter 247  People & activity × Deepen DEEPENED            79m48s   $19.67 481602e
 ✔ Iter 248  Sky × Polish               FIXED               51m23s   $12.91 684464e
+✔ Iter 249  Transport × Deepen         DEEPENED            28m38s   $10.63 aa9f75a
 ```
