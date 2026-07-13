@@ -148,14 +148,11 @@ footer a{color:var(--gold);text-decoration:none}footer a:hover{text-decoration:u
   <div id="timeChart" class="svgbox"></div>
 </section>
 
-<section class="chart">
-  <h2>What each iteration would have cost</h2>
-  <p class="sub">One column per iteration, coloured by result:
-  <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
-  <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted;
-  <span class="key k-est"></span>grey columns (#76&ndash;123) predate the verdict log. The
-  unrecorded early runs have no cost figure. Hover for detail.</p>
-  <div id="costChart" class="svgbox"></div>
+<section class="tiles">
+  <div class="tile"><div class="tv">$10.75</div><div class="tl">Recent pace</div><div class="td">avg over the last 30 runs</div></div>
+  <div class="tile"><div class="tv">$6.89</div><div class="tl">Avg run cost</div><div class="td">across 170 measured runs</div></div>
+  <div class="tile"><div class="tv">$25.00</div><div class="tl">Priciest run</div><div class="td">#244</div></div>
+  <div class="tile"><div class="tv">$1.14</div><div class="tl">Cheapest run</div><div class="td">#102</div></div>
 </section>
 
 <section class="chart">
@@ -165,16 +162,6 @@ footer a{color:var(--gold);text-decoration:none}footer a:hover{text-decoration:u
   <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted, and
   <span class="key k-est"></span>the recovered early runs that predate the verdict log. Hover for the split at any point.</p>
   <div id="cumChart" class="svgbox"></div>
-</section>
-
-<section class="chart">
-  <h2>The mix of results, through time</h2>
-  <p class="sub">Every iteration that recorded a verdict (#124&ndash;245), in order. Each tick is one
-  iteration, coloured by how the loop judged its own work:
-  <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
-  <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted. It kept shipping deep
-  into the run — and kept honestly reverting the dead ends too. Hover for detail.</p>
-  <div id="resultChart" class="svgbox"></div>
 </section>
 
 <section class="chart">
@@ -343,22 +330,6 @@ function drawAll(){
   xAxis(s,H);
 })();
 
-// ---- cost per iteration (columns) ----
-(function(){
-  const box=document.getElementById('costChart');const rows=DATA.filter(d=>d.c!=null);
-  const W=CW,H=300,P={l:PL,r:PR,t:14,b:28};const s=svg(box,W,H);
-  const ih=H-P.t-P.b;const maxC=Math.max(...rows.map(d=>d.c));
-  const y=c=>P.t+ih-(c/maxC)*ih;
-  [0,5,10,15].forEach(v=>{if(v>maxC)return;const yy=y(v);
-    s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
-    const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent='$'+v;s.appendChild(t);});
-  rows.forEach(d=>{const bx=xI(d.i)-BW/2,by=y(d.c),bh=P.t+ih-by;
-    const r=el('rect',{x:bx,y:by,width:BW,height:Math.max(0.5,bh),rx:Math.min(2,BW/2),fill:cssv(barFill(d)),'fill-opacity':barOp(d),class:'col'});
-    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtUsd(d.c)+' &middot; '+fmtMin(d.s)+(d.v?'<br><span class=vt>'+VTXT[d.v]+'</span>':'')+(d.g?'<br>'+d.g:'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
-    r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
-  xAxis(s,H);
-})();
-
 // ---- cumulative cost, stacked by the loop's own verdict ----
 (function(){
   const box=document.getElementById('cumChart');const rows=DATA.filter(d=>d.c!=null);if(!rows.length)return;
@@ -390,20 +361,6 @@ function drawAll(){
     const lines=cats.filter(c=>best.v[c[0]]>0).reverse().map(c=>'<span style="color:'+cssv(c[1])+'">'+c[2]+'</span> '+fmtUsd(best.v[c[0]])).join('<br>');
     showTip('<b>Through #'+best.i+'</b><br>'+lines+'<br><b>'+fmtUsd(best.tot)+' total</b>',e.clientX,e.clientY);});
   s.addEventListener('mouseleave',()=>{hv.setAttribute('opacity',0);hideTip();});
-  xAxis(s,H);
-})();
-
-// ---- results through time (verdict strip) ----
-(function(){
-  const box=document.getElementById('resultChart');const rows=DATA.filter(d=>d.v);if(!rows.length)return;
-  const cols={SHIPPED:'--series-1',DEEPENED:'--series-2',FIXED:'--series-3','EXPLORED → REVERTED':'--series-6'};
-  const vtxt={SHIPPED:'shipped',DEEPENED:'deepened',FIXED:'fixed','EXPLORED → REVERTED':'reverted'};
-  const W=CW,H=120,P={l:PL,r:PR,t:12,b:26};const s=svg(box,W,H);
-  const ih=H-P.t-P.b;
-  rows.forEach(d=>{const bx=xI(d.i)-BW/2;
-    const r=el('rect',{x:bx,y:P.t,width:BW,height:ih,rx:Math.min(1.5,BW/2),fill:cssv(cols[d.v]),class:'col'});
-    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br><span class=vt>'+vtxt[d.v]+'</span><br>'+fmtMin(d.s)+' &middot; '+fmtUsd(d.c)+(d.g?'<br>'+d.g:''),e.clientX,e.clientY));
-    r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
   xAxis(s,H);
 })();
 
