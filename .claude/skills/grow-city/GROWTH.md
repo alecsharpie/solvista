@@ -27,7 +27,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
+| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
 - **Interaction/UX — the FEATURE INVENTORY was rotated to the archive at 211 (history, not steering).** ⚠ **229 is
   cross-cutting (the TEXT LAYER: `<meta charset>` ⇒ every tooltip + the stats panel), so it sits here, not in a
@@ -37,22 +37,27 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   `stamp()` also draws the focus ring, so any stamped entity is ringable free — and since 133 a hovered TILE is
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
-- **ROTATION.** Last vector per domain: People **226** · Transport **230** · Civic **231** ·
-  Water **234** · Sky **236** · Nature **238** · Urban **239**. **237 was the 27th step-back; the 28th is due
-  ~242** (5 laps on).
-  ➡ **NEXT: People** — stalest by far (226), and **its cue list is EMPTY** (226 closed 137's), so it is exactly the
-  case **225's grep-the-seam law** is for: *the saturation notes record where you have already LOOKED, not where
-  there is nothing to find.* That law has now shipped Sky (236) and Nature (238) off stale domains; People is its
-  third test. ⚠ **Read the `peds` cap first** (111, below) before designing anything road-borne.
-  The standing 🔴 is **(ai) THE CITY HAS NO FRINGE** — measured, 233 tried and reverted, but **the way through is
-  NAMED** (hold the rim and widen the core in ONE lap, so `developed` stays flat and the census gate opens). It
+- **ROTATION.** Last vector per domain: Transport **230** · Civic **231** ·
+  Water **234** · Sky **236** · Nature **238** · Urban **239** · People **240**. **237 was the 27th step-back; the
+  28th is DUE NOW (~242).**
+  ➡ **NEXT: Transport** (stalest, 230; cue **(am)** is fresh) — or take the 🔴 below. ⚠ **Read the `peds` cap
+  first** (111) before designing anything road-borne.
+  ✅ **225's grep-the-seam law is 3 for 3 — it has now shipped Sky (236), Nature (238) and PEOPLE (240) off domains
+  the header had written off.** ⇒ **An empty cue list is not evidence of saturation; it is evidence nobody has
+  grepped.** The standing 🔴 is **(ai) THE CITY HAS NO FRINGE** — measured, 233 tried and reverted, but **the way
+  through is NAMED** (hold the rim and widen the core in ONE lap, so `developed` stays flat and the gate opens). It
   outranks kind-rotation (119) whenever a Nature/Urban lap comes up.
-  ⚠ **239: NAME THE FILE, NEVER A LETTER, in a visual A/B** — an agent read four PNGs, perceived correctly, and
-  **transposed "A"/"B"**, inverting a result the probe had already settled. Ask **per file path**; 238's crossed
-  mapping guards a *bias*, not the *bookkeeping*. Law in SKILL.md.
+  ⚠ **239: NAME THE FILE, NEVER A LETTER, in a visual A/B** (law in SKILL.md; 238's crossed mapping guards a *bias*,
+  not the *bookkeeping*). **240 is its payoff — both agents, asked per FILE NAME, md5'd the paths and caught a bug in
+  MY CAMERA (a duplicated frame passed off as the whole-city read). Ask per file, and an agent can audit your tool.**
   🔴 **228'S LAW HAS NOW RECURSED THREE TIMES, EVERY TIME ON A PROBE THIS HARNESS ALREADY OWNED** (237 found two;
   **238 found the third INSIDE the probe 237 had just repaired**). The general form is a LAW in SKILL.md — *read
   what a probe MEASURES and WHERE IT SAMPLES, not what it is called, and apply 228's test PER METRIC.*
+  ✅ **240: THE STADIUM HAS A FIXTURE LIST** (`fixtureAt`/`matchClock`/`matchLive`/`matchGate`/`matchWord` — ONE
+  predicate, five readers). Its two gates were **INVERTED**: the "match-day crowd" stood on the concourse
+  `if(LITAMT<0.75)` — every afternoon, forever, for a match that never kicked off — while the floodlights came up
+  `if(LITAMT>0.3)`, blazing over the **empty** bowl that same gate had just emptied. ~50% of nights now have a game;
+  the ground is **dark otherwise** (masts keep a 0.12 security glim). 🔑 **A NEW SLOW CLOCK IS OPEN TO EVERY DOMAIN: `Math.floor(dayT)` is a REAL DAY COUNTER** (`dayT+=dt*s/110` never wraps) — the artifact's only multi-day clock besides `MOONSYN`, and **it cannot strobe** (a day is 110 s).
   ✅ **236: THE SKY HAS A WEATHER FRONT** (`rainFront()`/`cloudWet()`, keyed to **`year`**; body archived at 237).
   ⚠ **`cl.rain` IS GONE** — code written against it reads `undefined`; the ONE predicate is **`cloudWet(cl)` (0..1)**
   and all six readers share it. **`year+k` = same season, different weather.**
@@ -336,37 +341,32 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **(aj) THE SHOWERS FALL WHERE NOBODY LIVES (236, seed 7, unprompted — and MEASURED).** *"Both showers fall on the
   OPEN OCEAN, not the city."* Half that FAIL was refuted; this half is real, and it is **pre-existing cloud siting,
   not 236's front** — clouds spawn `x:rng()*G, y:CTRY-20+rng()*40` with **no reference to the land**, so a seed can
-  park its sky over the sea: seed 7's front frame renders **sky 21,497 px vs ground 10,220**, seed 42's **8,547 vs
-  34,953** — a **4x swing from the same code**. ⚠ **AND ONLY 3–4 OF 7 SOAKED CLOUDS EVER RENDER A VEIL**
-  (`probe-front` D): the draw spends a shower **2 hexes short of the rim**, so the front's range is *half invisible*.
-  **The lever is the SPAWN, not the draw** — bias `cl.x`/`cl.y` onto the live rows (`ROWMIN`/`ROWMAX`, `HEXI`) and the
-  same front buys ~2x the visible weather for **zero new draw work**. ⚠ Rain over the sea is **CORRECT** (201) — this
-  is about *coverage*. **Sky × Polish.**
-  **(ak) THE SEASON — 238 SHIPPED THE TREES AND *REFRAMED THE CUE*. Its headline number is DEAD; the obvious levers
-  are MEASURED-DEAD. Read this before any seasonal vector.** ✅ **The DECIDUOUS CANOPY had NO `dry` term** (at
-  `s=0.62` the other three curves are exactly 0 ⇒ `BASE.canopy` returned to `CAN0` **unchanged**: every broadleaf was
-  inert on the loudest keyframe of this coast's calendar). Swing **~8 → ~28**; both blind agents picked the patch on a
-  crossed A/B. ✅ **The EVERGREEN palette is now real** (`evergreen`/`evergreenLt` — was read by the REDWOOD *only*,
-  while `tree()`'s conifer spire and the PALM drew from the DECIDUOUS `canopy`); the wood reads two-tone, unprompted,
-  both seeds. ⚠ **BUT MUTE AREA DID NOT MOVE: 66.6% → 66.6%** (FOREST 16.1→19.5, PARK 20.2→22.2, still under floor).
-  ⚠ **WHY — AND IT KILLS THE CUE'S OWN PRESCRIPTION.** `probe-season` samples **ONE PIXEL at the hex CENTRE**; PARK
-  draws its trees at grid *offsets* and its pond *at* the centre ⇒ **structurally blind to a park's canopy** (same
-  edit: read PARK *unmoved* AND FOREST *"floor crossed"*). Use **`probes/probe-seasonarea.mjs`** (area sample + **what
-  % of a hex a palette entry actually PAINTS**). It says: **every vegetated GROUND is ALREADY seasonal** — lawn
-  **52.7**, grass 34.4, grassDk 31.8 — and **SHOREPARK (88.7% lawn) reads 44.4, NOT mute. PARK reads 20.2 only because
-  a park hex is 45% LAWN**; the rest is canopy (12%) + **paths, ponds, benches, café furniture with NO calendar.**
-  ⇒ **THE "68% MUTE" IS DILUTION BY THE SEASON-DEAD *CONTENTS* OF EACH HEX — not dead palettes, and NOT the lawn**
-  (which (p) protects and which is *already the city's most seasonal surface*). **A palette lap CANNOT reach the
-  per-tile floor.** Honest moves left: give a park hex's season-dead contents a calendar, or **retire the metric**.
-  ⚠ Canopy amplitude is **AT ITS CEILING** — the dry olive sits ~24 RGB from the **autumn** amber and they must stay
-  distinct. **Nature.**
-  ✅ **(al) CLOSED by 239 — THE BUILDING-LOOK LADDER IS COMPLETE** (228 tower crown · 235 tower footprint · **239
-  the MID-RISE, which was the building actually causing it**). `midLook` gives the walk-up a PLAN (3 widths) and a
-  PROFILE (box · shop plinth · set-back attic): **silhouettes 2.0 → 20.7, top 68.8% → 13.7%**, TOWER control
-  byte-unmoved, population held. ⚠ **EVERY FORM'S BASE IS ITS WIDEST PART** — not style but what keeps the terrace
-  sound (an upper floor steps back from a party wall, **never through it**); **the party wall is now the
-  NEIGHBOUR'S WEST FACE**, not a constant. ⚠ **DO NOT RE-OPEN EITHER BUILDING** (both measured varied; a fifth axis
-  keyed to HEIGHT rebuilds 110's defect) — and its **~+2% draw ops** (a step is inherently +1 prism) are **PAID.**
+  park its sky over the sea (seed 7 renders **sky 21,497 px vs ground 10,220**; seed 42 **8,547 vs 34,953** — a **4x
+  swing from the same code**). ⚠ **AND ONLY 3–4 OF 7 SOAKED CLOUDS EVER RENDER A VEIL** (`probe-front` D): the draw
+  spends a shower **2 hexes short of the rim**. **The lever is the SPAWN, not the draw** — bias `cl.x`/`cl.y` onto the
+  live rows (`ROWMIN`/`ROWMAX`, `HEXI`) for ~2x the visible weather at **zero new draw work**. ⚠ Rain over the sea is
+  **CORRECT** (201) — this is about *coverage*. **Sky × Polish.**
+  **(ak) THE SEASON — REFRAMED by 238; body archived at 240. Read it before ANY seasonal vector.** ⚠ **Its headline
+  "68% mute" number is DEAD**, and so is the cue's own prescription: the mute area is **DILUTION by the season-dead
+  *CONTENTS* of each hex** (a park hex is 45% lawn / 12% canopy / **43% paths, ponds, benches, café furniture with no
+  calendar**) — **not** dead palettes, and **NOT** the lawn, which (p) protects and which is already the city's most
+  seasonal surface (52.7). ⇒ **A PALETTE LAP CANNOT REACH THE PER-TILE FLOOR.** Use **`probes/probe-seasonarea.mjs`**
+  (area sample + **what % of a hex a palette entry PAINTS**), never `probe-season` (ONE centre pixel, blind to a
+  park's canopy). Canopy amplitude is **AT ITS CEILING**. Honest moves left: give a park hex's season-dead contents a
+  calendar, or **retire the metric**. **Nature.**
+  ✅ **(al) CLOSED by 239 — THE BUILDING-LOOK LADDER IS COMPLETE** (228 tower crown · 235 tower footprint · **239 the
+  MID-RISE, the building actually causing it**; body archived at 240). ⚠ **DO NOT RE-OPEN EITHER BUILDING** — both
+  measured varied, a fifth axis keyed to HEIGHT rebuilds 110's defect, and the **~+2% draw ops are PAID**. ⚠ **EVERY
+  FORM'S BASE IS ITS WIDEST PART** (an upper floor steps back from a party wall, never through it; **the party wall
+  is the NEIGHBOUR'S WEST FACE**, not a constant).
+  **(am) THE ELEVATED RAIL IS TOO LOUD AT FIT — the SAME cue as polish-tile's (a), from the OTHER SIDE (240, seed 7,
+  unprompted on a PASSing frame).** *"Long straight grey beams criss-cross nearly the whole diorama in big X patterns,
+  flattening the isometric read... the mid-city is closer to visual noise."* ⚠ **DO NOT re-open the z-order** (cleared
+  by probe 3x: 203/212, and 240's agent called it *"correct for depth"* unprompted). **(a) calls the same structure
+  sub-pixel and ILLEGIBLE — both reads are probably TRUE, and THAT is the finding: a hairline invisible up close and a
+  hard grey X across the plate at fit.** Transport × Polish.
+  **(an) TWO SMALL ASIDES (240, seed 42).** *"Pure-black transmission cables run out over the beach and sea, hard 1px
+  lines against the sand"* · *"tiny white chevron glyphs on land (x≈0.47,y≈0.47), like stray marks."* **IDENTIFY BOTH DRAWS FIRST** (dead-code law) — the chevrons may be a mis-sited entity. Cheap.
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; see the PERF bullet's "TWO
   HOLES").** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` key churn and per-mark style
   writes are both ruled OUT (measured **zero**).
@@ -391,87 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 232 entries before Iteration 230 live in
+> **Archive:** the 233 entries before Iteration 231 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 230 — the cars never went home (2026-07-13) [Transport × Deepen]
-
-**Vector.** Transport was the stalest domain (last touched at 211) and the ledger had no 🔴 cue
-left, so I greped its seam instead of taking a banked one (225's law: the saturation notes record
-where you have *looked*, not where there is nothing to find). The tell was sitting in `syncFleet`:
-the city's PEOPLE learned to go to bed — the windows at 199 (`BEDT`), the crowd, its dogs and its
-runners at 210 (`curfewAt`) — and its TRAFFIC never did. At 3am the streets still carried the same
-**38 cars, 16 cyclists, 7 delivery vans and 6 streetcars** they carried at 5pm, because every fleet
-count is a pure function of `roads.length` and nothing else. And the `taxi` flag — ~1 in 6 cars,
-flagged ever since it got its lemon livery — had never MEANT anything but a colour.
-
-**Change.** The traffic keeps hours too, on the *same* clock the crowd already uses (`nightAmt()`:
-0 all day, ~1 in the small hours, and closed off at dawn by `LITAMT` because `nightDeep` alone is
-monotone and can never end a night). One shared predicate, `vehHidden(v)`, read by `drawVehicle`
-— one predicate, one definition. The hour is per VEHICLE, not per cell (a positional hash makes a
-mover blink as it crosses a hex — 210's finding, and a car crosses hexes constantly), and it thins
-by CLASS, because a class is what a shift IS: `VCURF = {bike:[0.10,0.45], truck:[0.16,0.50],
-tram:[0.45,0.90], car:[0.35,1.00]}` — the vans finish their round first, then the cyclists; the
-streetcars fall back to a night service (the jitter runs past 1, so a few keep running all night);
-ordinary cars thin, but a street never empties.
-
-Three classes keep NO hour, and each is a decision rather than an omission: the **bus** (a night
-service is real, and `stepVehicle` stamps the stop queue whether or not the bus is *drawn*, so
-hiding one would empty a queue nobody ever came for — 226's waiting crowd); the **service fleet**
-(staying out is what it is FOR — 204); and the **taxi**. The cab is the point: as the ordinary
-traffic goes home it stays out, so **the cab's share of the cars still on the street climbs through
-the night** — the same city, read at 3am, is a city of taxis. That is an interconnect, not a new
-object: nothing is spawned or despawned, and the flag that had been decorative for ~200 iterations
-now does the work. Its tooltip reads the same `nightAmt()` its rule does (123's *run the tell
-FORWARDS* — the label and the rule share ONE number, so they cannot drift): *"The night shift —
-still for hire once the traffic has gone home."* A vehicle that has gone in is not hoverable
-either, for free — it returns before `stamp()`, so `consider()` drops it on the `_sf` test.
-
-**Census.** PASS. Every metric **+0**, tile histogram **empty** — the correct and nearly vacuous
-result: the hours come from `Math.random` at spawn (exactly as the taxi flag does), never `rng()`,
-so the seeded stream is byte-identical. The iteration rests on the probe.
-
-**Probe** (`probes/probe-nightfleet.mjs`, 3 seeds). **A** — the city is built ONCE per seed and only
-the HOUR is swept, so the fleet is held fixed and the visible mix is a pure function of the clock:
-`bike 16/16 → 0/16 · truck 7/7 → 0/7 · tram 6/6 → 2–3/6 (the night service) · car 28/28 → 4–8 · bus
-and taxi unmoved`; on-street **70 → 19–24**. **CAB SHARE of the cars still out: 13.0% → 41.1%**
-(mean of 3 seeds) — the claim, in the viewer's units. Control: `nightAmt()` is 0 all day *by
-construction*, so **every class reads 100% visible at day on every seed** (199's free dead-regime
-control). **B** — they must actually stop RENDERING, not merely test hidden: at 3am **46–51 of 70**
-vehicles are in, worth **2,006–2,366 px** of ink off the final composited canvas (occlusion checked
-for free); the identical pair at day is **0 hidden, 0 px**.
-
-⚠ **B is isolated WITHIN one page, and it had to be.** The obvious patch-vs-HEAD diff *cannot see
-this feature*: two loads of the SAME file drift by thousands of px through `genWorld`, and ~45
-hidden vehicles are worth about the same — its DAY control, on provably inert code, read **11,721 px
-against a 7,034 px floor**. Two renders inside one page are byte-identical (measured: **0 px**), so
-the fix was to isolate by **mutating the DATA** instead of swapping the build: render the night as
-shipped, clear every vehicle's hour (`v.out = undefined`), render the same frozen world again — the
-difference IS the traffic that went home, at a floor of exactly 0. (⇒ new law in SKILL.md.)
-
-**Visual.** The first pass FAILed — and it was the **camera**, not the city: at fit zoom a vehicle is
-a few px, and the agent *correctly refused to count them* rather than inventing a number (201: a wide
-frame is not a framing). So I aimed (`probes/shot-nightfleet.mjs`): freeze, put the whole fleet back
-on the road and render once to stamp the true DRAWN positions (a vehicle that has gone home leaves
-no `_sx` at all — the thing to point the camera at is precisely the thing that leaves no trace),
-take the argmax knot of departing traffic, centre on it at 4.2x, then let the hours back in. Shot as
-a **blind A/B** of the identical frozen hex at the identical instant — shipped vs full-fleet — with
-the letters **swapped between the seeds**. Both agents, independently, picked the **correct** frame
-and picked **different letters** (X on 42, Y on 7 — so not positional guessing): *"Every object that
-vanishes is exactly the right class: all 4 cyclists, the delivery van, and three ordinary cars —
-while the taxi, the bus and the ambulance are pixel-identical in both."* Both read the street as a
-living night city (headlights, lit panes, the streetcar glowing along its rail), no tears, no
-floaters. **VISUAL: PASS ×2.**
-
-**Perf.** FREE — and for once it gives a little back. Graded on the deterministic instrument (216:
-path objects, not the timer), hours-on vs hours-off in one page: **day exactly 0** on all three seeds
-(byte-identical, as the code proves) and **3am −1,303 to −1,493 path objects**. This is the first
-iteration in the arc that *removes* night draw work instead of adding it.
-
-**Verdict: SHIPPED.**
 
 ## Iteration 231 — the bowl was picking the lot they were about to build on (2026-07-13) [Civic & culture × Polish]
 
@@ -1171,3 +1095,88 @@ all** — which came back correct and unambiguous. **Promoted to a law in SKILL.
 
 **Verdict: SHIPPED.** Cue **(al) CLOSED** — the ledger's most-reported defect (six agents,
 three step-backs) is measured shut on the building that was actually causing it.
+
+## Iteration 240 — the floodlights burned every night for a match that never kicked off (2026-07-13) [People & activity × Deepen]
+
+**Vector.** People & activity × Deepen. People was the stalest domain (last touched 226) and
+its cue list was **empty** — the exact case 225's grep-the-seam law is for. Grepped the seam
+instead of trusting the saturation note, and the stadium's own comments confessed in two lines.
+
+**The seam.** `drawCell`'s `T.STADIUM` case had **two gates, and they were inverted**:
+- `if(LITAMT<0.75){ /* match-day crowd on the concourse */ }` — so the **same nine specks**
+  (positions from `hashCell`, a constant) stood on the concourse **every afternoon of every
+  year**, for a match that never kicked off.
+- `if(LITAMT>0.3){ /* floodlit pitch: light cones + green glow */ }` — so the bowl was
+  **floodlit every single night**, cones, halo and all, over stands *that same crowd gate had
+  just emptied*.
+
+The lights burned for nobody, and the crowd stood in broad daylight with the lights off. This
+is **199's tell twice, back to back** (a name asserting a behaviour its value cannot have),
+and it had survived the artifact's entire life. `syncFleet` was in on it too: the ped spawn
+pool weights STADIUM ×3 under the comment *"markets & matches draw a crowd"*.
+
+**Change.** Gave the city a **fixture list**, and made it ONE predicate every reader shares
+(123/199/112). The clock was already there and nobody had noticed: **`dayT+=dt*s/110` never
+wraps**, so `Math.floor(dayT)` is a **real day counter** — read, until now, by nothing but the
+moon (`MOONSYN`). A fixture is hashed off that day index:
+- `fixtureAt(day)` → kickoff in `dayT`-fraction, or −1. ~50% of days; ~1 in 3 is an afternoon
+  kickoff, the rest evening (so dusk falls *during play* and the floodlights have a job).
+- `matchClock()` / `matchLive()` / `matchGate()` → where we are in it. The concourse fills as
+  the crowd arrives, **empties into the stands at kickoff** (a ground during play is loud and
+  its concourse is bare), and floods back out at full time.
+- Readers: the concourse crowd, a new **stands crowd** on the terracing, the floodlights +
+  cones + pitch glow, `matchWord()` in the tooltip, and `residentWhere` (a resident on a
+  stadium hex is now *"In the crowd at the match."*).
+- The masts keep a **0.12 security glim** on a dark night, so the bowl doesn't drop out of the
+  night skyline — but **nothing lights the pitch except a match**.
+
+No `rng()`, no `Math.random`, no terrain: the seeded stream is byte-identical. The spawn pool
+was deliberately **left alone** (`homeCells` is indexed by `rng()` — changing its length would
+reshuffle every downstream seeded draw).
+
+**Census.** PASS. `pop −1 · roads +0 · developed +0`, tile histogram **empty** — correct and
+expected for a draw-only vector, and therefore **vacuous**. The gate is the probe.
+
+**Probe** (`probes/probe-match.mjs`, 3 seeds; `probes/shot-match.mjs` is its camera).
+Isolated by **suppressing the DECISION inside one page** (230: `fixtureAt = () => -1`, re-render
+the same frozen world), so the diff *is* the match, at a floor of **exactly 0**, off the final
+composited canvas — occlusion checked for free, and **build-agnostic** (234), no source swap.
+```
+                                     seed 42   seed 7   seed 1234
+  floor (same frame twice)              0 px     0 px      0 px   <- honest zero (195f/203)
+  EVENING match (crowd + floodlights)  161 px   156 px    148 px
+  AFTERNOON match (the CROWD alone)     17 px    20 px     24 px  <- decomposes the above
+  control: dark night, suppressed        0 px     0 px      0 px
+  control: daylight,   suppressed        0 px     0 px      0 px
+```
+**HEAD is its own perfect control (236's corollary — the defect is a CONSTANT by
+construction).** Pitch luminance at `tod 0.80`, over 12 consecutive nights:
+- **HEAD: `DISTINCT VALUES = 1` on every seed** (97.3 / 101.3 / 104.2, identical all 12 nights)
+  — the pitch is lit exactly the same every night, forever.
+- **Patch:** lit *only* on fixture nights (42: 90.0 dark → 99.4 lit · 7: 94.3 → 102.1 ·
+  1234: 96.3 → 106.2), and HEAD's constant sits **at the lit value** — proving HEAD was
+  floodlighting an empty bowl every night of the city's life.
+
+**Cadence (134 — a claim about MOTION needs a temporal probe).** Play lasts **18 s** and the
+gates **8 s** on the 110 s `dayT` clock. Nothing here can strobe. Fixture rate over 200 days:
+**50% / 50% / 49%**.
+
+**Visual.** Both seeds PASS, and the close-up A/B was called **"obvious at a glance"** on both:
+*"a bright, saturated green oval that glows against the dusk-purple city... crowd clearly
+visible as a speckled cream/red ring filling the stands... all four masts have bright white
+lamp heads"* vs the dark night's *"flat, muted olive/grey-green oval, no glow... stands are a
+plain unspeckled band... masts are bare grey poles."* Whole-city night frames PASS on both.
+✅ **The blind LOCATE landed on ground truth (108).** Told only *"somewhere there is a stadium
+with a floodlit pitch — find it"*, the agent put it at **x≈0.295, y≈0.50** (seed 42) and
+**x≈0.40, y≈0.40** (seed 7). True: **(0.295, 0.50)** and **(0.398, 0.41)**. It found the ground
+*by its light alone*.
+
+⚠ **THE GATE'S ONLY FAIL WAS MY CAMERA, AND BOTH AGENTS CAUGHT IT BY md5.** The first round
+FAILed on both seeds: `city-night.png` was **byte-identical** to `match-night.png`. Cause —
+`scale`/`offX` are page globals that **survive a `page.evaluate`**, so "leave the camera alone"
+left it parked on the stadium and the "whole-city" frame was the zoomed clip. Fixed at source
+(restore the artifact's own published `fitScale`/`fitX`/`fitY`) — **227's law: a documented trap
+you keep walking into is a broken tool, not a law.** Asking **per FILE NAME** (239) is what made
+it catchable: the agents md5'd the paths I named.
+
+**Verdict: SHIPPED.**

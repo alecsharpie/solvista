@@ -16030,3 +16030,107 @@ have refuted the loop's loudest cue at any point in 95 iterations.* And note wha
 (the "scorched" hex cluster) and (s) (golden-hour "mud") were also born from agents reading `shoot.mjs`
 frames** — the same camera that manufactured this one. Reproduce them before designing to them.
 
+## Iteration 230 — the cars never went home (2026-07-13) [Transport × Deepen]
+
+**Vector.** Transport was the stalest domain (last touched at 211) and the ledger had no 🔴 cue
+left, so I greped its seam instead of taking a banked one (225's law: the saturation notes record
+where you have *looked*, not where there is nothing to find). The tell was sitting in `syncFleet`:
+the city's PEOPLE learned to go to bed — the windows at 199 (`BEDT`), the crowd, its dogs and its
+runners at 210 (`curfewAt`) — and its TRAFFIC never did. At 3am the streets still carried the same
+**38 cars, 16 cyclists, 7 delivery vans and 6 streetcars** they carried at 5pm, because every fleet
+count is a pure function of `roads.length` and nothing else. And the `taxi` flag — ~1 in 6 cars,
+flagged ever since it got its lemon livery — had never MEANT anything but a colour.
+
+**Change.** The traffic keeps hours too, on the *same* clock the crowd already uses (`nightAmt()`:
+0 all day, ~1 in the small hours, and closed off at dawn by `LITAMT` because `nightDeep` alone is
+monotone and can never end a night). One shared predicate, `vehHidden(v)`, read by `drawVehicle`
+— one predicate, one definition. The hour is per VEHICLE, not per cell (a positional hash makes a
+mover blink as it crosses a hex — 210's finding, and a car crosses hexes constantly), and it thins
+by CLASS, because a class is what a shift IS: `VCURF = {bike:[0.10,0.45], truck:[0.16,0.50],
+tram:[0.45,0.90], car:[0.35,1.00]}` — the vans finish their round first, then the cyclists; the
+streetcars fall back to a night service (the jitter runs past 1, so a few keep running all night);
+ordinary cars thin, but a street never empties.
+
+Three classes keep NO hour, and each is a decision rather than an omission: the **bus** (a night
+service is real, and `stepVehicle` stamps the stop queue whether or not the bus is *drawn*, so
+hiding one would empty a queue nobody ever came for — 226's waiting crowd); the **service fleet**
+(staying out is what it is FOR — 204); and the **taxi**. The cab is the point: as the ordinary
+traffic goes home it stays out, so **the cab's share of the cars still on the street climbs through
+the night** — the same city, read at 3am, is a city of taxis. That is an interconnect, not a new
+object: nothing is spawned or despawned, and the flag that had been decorative for ~200 iterations
+now does the work. Its tooltip reads the same `nightAmt()` its rule does (123's *run the tell
+FORWARDS* — the label and the rule share ONE number, so they cannot drift): *"The night shift —
+still for hire once the traffic has gone home."* A vehicle that has gone in is not hoverable
+either, for free — it returns before `stamp()`, so `consider()` drops it on the `_sf` test.
+
+**Census.** PASS. Every metric **+0**, tile histogram **empty** — the correct and nearly vacuous
+result: the hours come from `Math.random` at spawn (exactly as the taxi flag does), never `rng()`,
+so the seeded stream is byte-identical. The iteration rests on the probe.
+
+**Probe** (`probes/probe-nightfleet.mjs`, 3 seeds). **A** — the city is built ONCE per seed and only
+the HOUR is swept, so the fleet is held fixed and the visible mix is a pure function of the clock:
+`bike 16/16 → 0/16 · truck 7/7 → 0/7 · tram 6/6 → 2–3/6 (the night service) · car 28/28 → 4–8 · bus
+and taxi unmoved`; on-street **70 → 19–24**. **CAB SHARE of the cars still out: 13.0% → 41.1%**
+(mean of 3 seeds) — the claim, in the viewer's units. Control: `nightAmt()` is 0 all day *by
+construction*, so **every class reads 100% visible at day on every seed** (199's free dead-regime
+control). **B** — they must actually stop RENDERING, not merely test hidden: at 3am **46–51 of 70**
+vehicles are in, worth **2,006–2,366 px** of ink off the final composited canvas (occlusion checked
+for free); the identical pair at day is **0 hidden, 0 px**.
+
+⚠ **B is isolated WITHIN one page, and it had to be.** The obvious patch-vs-HEAD diff *cannot see
+this feature*: two loads of the SAME file drift by thousands of px through `genWorld`, and ~45
+hidden vehicles are worth about the same — its DAY control, on provably inert code, read **11,721 px
+against a 7,034 px floor**. Two renders inside one page are byte-identical (measured: **0 px**), so
+the fix was to isolate by **mutating the DATA** instead of swapping the build: render the night as
+shipped, clear every vehicle's hour (`v.out = undefined`), render the same frozen world again — the
+difference IS the traffic that went home, at a floor of exactly 0. (⇒ new law in SKILL.md.)
+
+**Visual.** The first pass FAILed — and it was the **camera**, not the city: at fit zoom a vehicle is
+a few px, and the agent *correctly refused to count them* rather than inventing a number (201: a wide
+frame is not a framing). So I aimed (`probes/shot-nightfleet.mjs`): freeze, put the whole fleet back
+on the road and render once to stamp the true DRAWN positions (a vehicle that has gone home leaves
+no `_sx` at all — the thing to point the camera at is precisely the thing that leaves no trace),
+take the argmax knot of departing traffic, centre on it at 4.2x, then let the hours back in. Shot as
+a **blind A/B** of the identical frozen hex at the identical instant — shipped vs full-fleet — with
+the letters **swapped between the seeds**. Both agents, independently, picked the **correct** frame
+and picked **different letters** (X on 42, Y on 7 — so not positional guessing): *"Every object that
+vanishes is exactly the right class: all 4 cyclists, the delivery van, and three ordinary cars —
+while the taxi, the bus and the ambulance are pixel-identical in both."* Both read the street as a
+living night city (headlights, lit panes, the streetcar glowing along its rail), no tears, no
+floaters. **VISUAL: PASS ×2.**
+
+**Perf.** FREE — and for once it gives a little back. Graded on the deterministic instrument (216:
+path objects, not the timer), hours-on vs hours-off in one page: **day exactly 0** on all three seeds
+(byte-identical, as the code proves) and **3am −1,303 to −1,493 path objects**. This is the first
+iteration in the arc that *removes* night draw work instead of adding it.
+
+**Verdict: SHIPPED.**
+
+
+## Header bullets rotated out at Iteration 240 (bodies preserved verbatim; pointers remain in GROWTH.md)
+
+  **(ak) THE SEASON — 238 SHIPPED THE TREES AND *REFRAMED THE CUE*. Its headline number is DEAD; the obvious levers
+  are MEASURED-DEAD. Read this before any seasonal vector.** ✅ **The DECIDUOUS CANOPY had NO `dry` term** (at
+  `s=0.62` the other three curves are exactly 0 ⇒ `BASE.canopy` returned to `CAN0` **unchanged**: every broadleaf was
+  inert on the loudest keyframe of this coast's calendar). Swing **~8 → ~28**; both blind agents picked the patch on a
+  crossed A/B. ✅ **The EVERGREEN palette is now real** (`evergreen`/`evergreenLt` — was read by the REDWOOD *only*,
+  while `tree()`'s conifer spire and the PALM drew from the DECIDUOUS `canopy`); the wood reads two-tone, unprompted,
+  both seeds. ⚠ **BUT MUTE AREA DID NOT MOVE: 66.6% → 66.6%** (FOREST 16.1→19.5, PARK 20.2→22.2, still under floor).
+  ⚠ **WHY — AND IT KILLS THE CUE'S OWN PRESCRIPTION.** `probe-season` samples **ONE PIXEL at the hex CENTRE**; PARK
+  draws its trees at grid *offsets* and its pond *at* the centre ⇒ **structurally blind to a park's canopy** (same
+  edit: read PARK *unmoved* AND FOREST *"floor crossed"*). Use **`probes/probe-seasonarea.mjs`** (area sample + **what
+  % of a hex a palette entry actually PAINTS**). It says: **every vegetated GROUND is ALREADY seasonal** — lawn
+  **52.7**, grass 34.4, grassDk 31.8 — and **SHOREPARK (88.7% lawn) reads 44.4, NOT mute. PARK reads 20.2 only because
+  a park hex is 45% LAWN**; the rest is canopy (12%) + **paths, ponds, benches, café furniture with NO calendar.**
+  ⇒ **THE "68% MUTE" IS DILUTION BY THE SEASON-DEAD *CONTENTS* OF EACH HEX — not dead palettes, and NOT the lawn**
+  (which (p) protects and which is *already the city's most seasonal surface*). **A palette lap CANNOT reach the
+  per-tile floor.** Honest moves left: give a park hex's season-dead contents a calendar, or **retire the metric**.
+  ⚠ Canopy amplitude is **AT ITS CEILING** — the dry olive sits ~24 RGB from the **autumn** amber and they must stay
+  distinct. **Nature.**
+  ✅ **(al) CLOSED by 239 — THE BUILDING-LOOK LADDER IS COMPLETE** (228 tower crown · 235 tower footprint · **239
+  the MID-RISE, which was the building actually causing it**). `midLook` gives the walk-up a PLAN (3 widths) and a
+  PROFILE (box · shop plinth · set-back attic): **silhouettes 2.0 → 20.7, top 68.8% → 13.7%**, TOWER control
+  byte-unmoved, population held. ⚠ **EVERY FORM'S BASE IS ITS WIDEST PART** — not style but what keeps the terrace
+  sound (an upper floor steps back from a party wall, **never through it**); **the party wall is now the
+  NEIGHBOUR'S WEST FACE**, not a constant. ⚠ **DO NOT RE-OPEN EITHER BUILDING** (both measured varied; a fifth axis
+  keyed to HEIGHT rebuilds 110's defect) — and its **~+2% draw ops** (a step is inherently +1 prism) are **PAID.**

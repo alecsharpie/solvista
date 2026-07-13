@@ -3383,6 +3383,68 @@ const civicHourWord=k=>{
   const o=civOpen(k);
   return o>0.72?'Open late':(o>0.30?'Closing up':'Dark till morning');
 };
+/* ---- match day (iter 240) --------------------------------------------------
+   The stadium's two halves have been inverted since it was built, and its own
+   comments said so. Its nine specks were drawn `if(LITAMT<0.75)` under the words
+   "match-day crowd" — so the SAME nine stood on the concourse every afternoon of
+   every year, for a match that never kicked off; and the four masts came up
+   `if(LITAMT>0.3)`, so the bowl was floodlit — cones, pitch glow, halo — EVERY
+   night, over stands that same gate had just emptied. The lights burned for
+   nobody, and the crowd stood in broad daylight with the lights off. There was
+   never a fixture. (199's tell, twice, back to back: a name asserting a behaviour
+   its value cannot have.)
+   Now there is one, and it is ONE predicate that every reader shares — the
+   crowd, the floodlights, the tooltip and the residents outside (123/199/112).
+   The clock is `dayT`, and the point is that `dayT+=dt*s/110` NEVER WRAPS: so
+   Math.floor(dayT) is a real DAY COUNTER, already in the artifact, and until now
+   read by nothing but the moon (MOONSYN). A fixture is hashed off that day index,
+   so the season is fixed per city and reproducible — about every other day, and
+   the kickoff is usually an evening one, which is what the floodlights are FOR.
+   The ground is dark the rest of the time, and that is the honest half of this.
+   No rng() and no Math.random: the seeded stream, and every census metric, is
+   byte-identical. */
+const MATCHP=0.5,        /* share of days with a home fixture */
+      MATCHDUR=0.16,     /* the match itself, in day-cycles (dayT ~110s) */
+      MATCHGATE=0.07,    /* gates open this long before kickoff, and empty after */
+      MATCHEVE=0.70,     /* evening kickoff: dusk (SUNDN 0.78) falls during play */
+      MATCHAFT=0.32;     /* ...and one fixture in three is an afternoon one */
+/* today's kickoff, in dayT-fraction, or -1 for no game. Both windows end before
+   midnight (0.70+0.16+0.07 = 0.93), so a fixture never straddles a day boundary
+   and the day index alone decides it. */
+function fixtureAt(day){
+  if(hashCell(day,0,seedNum^0x9A7C)>=MATCHP)return -1;   /* salted per city: every
+     seed keeps its own fixture list, and no two grounds play on the same nights */
+  return hashCell(day,1,seedNum^0x1CE0)<0.34?MATCHAFT:MATCHEVE;
+}
+/* where we are in today's fixture, in day-cycles from kickoff — or null if the
+   ground is dark. Negative = the crowd is arriving; 0..MATCHDUR = play. */
+function matchClock(){
+  const day=Math.floor(dayT), ko=fixtureAt(day);
+  if(ko<0)return null;
+  const t=(dayT-day)-ko;
+  return (t>=-MATCHGATE&&t<=MATCHDUR+MATCHGATE)?t:null;
+}
+function matchLive(){const t=matchClock();return t!==null&&t>=0&&t<=MATCHDUR;}
+/* how full the CONCOURSE is (0..1). It fills as the crowd arrives, empties into
+   the stands at kickoff — a ground during play is loud and its concourse is bare,
+   which is the whole reading — and floods back out at full time. */
+function matchGate(){
+  const t=matchClock(); if(t===null)return 0;
+  if(t<0)return clamp(1+t/MATCHGATE,0,1);
+  if(t<=MATCHDUR)return 0.12;                        /* stewards, and the late */
+  return clamp(1-(t-MATCHDUR)/MATCHGATE,0,1);
+}
+/* ...and the tooltip reads the SAME clock the draw does, so it can never call a
+   match the renderer has not lit (123: run the tell FORWARDS). It names the
+   floodlights only when they are actually burning — an afternoon kickoff is
+   played in daylight and says so. */
+function matchWord(){
+  const t=matchClock(), dark=LITAMT>0.3;   /* ...and it may not call the ground DARK in daylight */
+  if(t===null)return dark?'No fixture &mdash; the ground is dark':'No fixture &mdash; the ground is empty';
+  if(t<0)return 'Gates open &mdash; the crowd is arriving';
+  if(t<=MATCHDUR)return dark?'Kick-off &mdash; under the floodlights':'Kick-off &mdash; the ground is full';
+  return 'Full time &mdash; the ground empties';
+}
 function winBandR(gx,gy,ax,ay,z0,z1,x,y,salt,f,litMix){
   const hb=z1-z0;
   const[cx,cy]=px(gx,gy);
@@ -4607,13 +4669,21 @@ function drawCell(x,y){
       ctx.strokeStyle='rgba(255,255,250,0.9)';ctx.lineWidth=0.7; /* markings */
       ctx.beginPath();ctx.moveTo(cx,ty-1.2);ctx.lineTo(cx,ty+4.2);
       ctx.moveTo(cx+2.1,ty+1.5);ctx.ellipse(cx,ty+1.5,2.1,1.1,0,0,7);ctx.stroke();
-      if(LITAMT<0.75){ /* match-day crowd on the concourse */
+      const gate=matchGate(), live=matchLive();
+      if(gate>0){ /* the concourse: the crowd arriving, and pouring back out at full time */
         for(let j=0;j<9;j++){const a=j*0.7+hv*6;
-          if(hashCell(x*7+j,y,seedNum^0x4A17)<0.72){
+          if(hashCell(x*7+j,y,seedNum^0x4A17)<0.72*gate){
             const sx2=cx+Math.cos(a)*(RX-1.2), sy2=ty+Math.sin(a)*(RY-0.6)+0.6; /* feet, at the speck's foot */
             shadS(sx2,sy2,0.05,0.13);   /* a speck this small takes the gull's patch, not a ped's */
             ctx.fillStyle=j&1?col(AC,1.25):col('white',1.15);
             ctx.fillRect(sx2-0.6,sy2-1.2,1.2,1.2);}}
+      }
+      if(live){ /* ...and during play they are IN: the terracing between pitch and rim fills */
+        for(let j=0;j<24;j++){const a=j*0.83+hv*6;
+          if(hashCell(x*13+j,y,seedNum^0x5EA7)<0.88){
+            const sx2=cx+Math.cos(a)*(RX-3.9), sy2=ty+Math.sin(a)*(RY-2.1)+0.35;
+            ctx.fillStyle=j&1?col(AC,1.3):col('white',1.2);   /* home colors and shirtsleeves */
+            ctx.fillRect(sx2-0.55,sy2-1,1.1,1);}}             /* seated: no contact shadow to cast */
       }
       /* four floodlight masts leaning out from the bowl corners */
       ctx.strokeStyle=col('whiteDk',0.9);ctx.lineWidth=1;
@@ -4622,10 +4692,14 @@ function drawCell(x,y){
         ctx.moveTo(cx+mx2*(RX-3.5),ty+my2*(RY-1.6));
         ctx.lineTo(cx+mx2*(RX+2.5),ty-14+my2*2.2);}
       ctx.stroke();
+      const flood=live&&LITAMT>0.3;  /* a night fixture — which is what the masts are FOR */
       for(let j=0;j<4;j++){const mx2=j&1?1:-1,my2=j&2?1:-1;
-        ctx.fillStyle=LITAMT>0.3?'rgba(255,240,190,'+(0.55+0.45*LITAMT)+')':col('whiteDk',1.06);
+        /* a dark ground still keeps a security glim on its masts, so the bowl does not
+           drop out of the night skyline — but nothing lights the pitch except a match */
+        ctx.fillStyle=LITAMT>0.3?'rgba(255,240,190,'+(flood?0.55+0.45*LITAMT:0.12*LITAMT)+')'
+                                :col('whiteDk',1.06);
         ctx.fillRect(cx+mx2*(RX+2.5)-1.9,ty-14+my2*2.2-1.2,3.8,1.9);}
-      if(LITAMT>0.3){ /* floodlit pitch: light cones + green glow */
+      if(flood){ /* floodlit pitch: light cones + green glow */
         ctx.fillStyle='rgba(255,244,200,'+(0.16*LITAMT)+')';
         ctx.beginPath();
         for(let j=0;j<4;j++){const mx2=j&1?1:-1,my2=j&2?1:-1;
@@ -7868,6 +7942,9 @@ function describeTile(c,x,y){
      entry [flag] renders as a single spanning row for boolean features */
   const est=Math.max(1974,Math.round(year-c.age*0.075));
   if(c.t===T.CIVIC||c.t===T.STADIUM)data.push(['Est.',est]);
+  /* live, and off the SAME matchClock() the floodlights and the crowd are drawn from,
+     so the card can never call a fixture the renderer has not lit (iter 240) */
+  if(c.t===T.STADIUM)data.push(['Fixture',matchWord()]);
   else if(DEV.has(c.t))data.push(['Built','~'+est]);
   if(DEV.has(c.t))data.push(['Floors','~'+floorsOf(c.h)]);
   /* how much of the block is still up — live, and read off the SAME windarkAt() the
@@ -8044,7 +8121,8 @@ function residentWhere(p){
   if(t===T.GARDEN)return 'Pottering in the community garden.';
   if(t===T.PLAZA||t===T.QUAD)return 'Crossing the square.';
   if(t===T.BEACH||t===T.DUNE)return 'Down on the sand.';
-  if(t===T.STADIUM)return 'Out by the stadium.';
+  if(t===T.STADIUM)return matchLive()?'In the crowd at the match.'
+                        :matchClock()!==null?'Headed for the ground.':'Out by the stadium.';
   if(t===T.FIELD)return 'Cutting across the field.';
   if(pedRoad(p.x,p.y))return livelyKerb(p.x,p.y)?'Window-shopping the busy street.':'Walking the block.';
   return 'Out for a stroll.';

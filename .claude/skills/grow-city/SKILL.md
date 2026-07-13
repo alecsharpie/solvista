@@ -782,6 +782,28 @@ vector, whatever it is.
   bug, repealed a wrong invariant, *and* stopped the instrument lying, all at once. The tell: **a defect
   that only reproduces under one of your load paths, and a "discipline" in your notes telling you to keep
   working around it.**
+- **WHEN ONE FEATURE IS DRAWN BY TWO GATES, CHECK THEY POINT THE SAME WAY — AND A DOMAIN WITH AN EMPTY CUE LIST IS
+  UNGREPPED, NOT SATURATED (iter 240).** 199's tell (a name asserting a behaviour its value cannot have) has been
+  cashed on tooltips, a constant, a comment, a half-finished fix. 240 found it **twice in one tile, pointing in
+  opposite directions** — which is the form that survives longest, because each gate is defensible alone and only the
+  *pair* is absurd. The stadium's crowd was drawn `if(LITAMT<0.75)` under the comment *"match-day crowd"* — so the
+  same nine hash-placed specks stood on the concourse **every afternoon of every year, for a match that never kicked
+  off** — while its floodlights came up `if(LITAMT>0.3)`, blazing over the stands **that same gate had just emptied**.
+  The lights burned for nobody; the crowd stood in daylight with the lights off. It survived the artifact's entire
+  life because *"the stadium has a crowd"* and *"the stadium is floodlit at night"* are both true, and nobody read
+  them together. ⇒ **When a feature has more than one draw gate, read them TOGETHER and ask what state the pair
+  implies.** Two gates on the same tile that never agree are not two features — they are one missing predicate.
+  Corollary (217's law, one scope wider): grep for a tile/entity whose gates read **different signals for the same
+  idea**, and give them **one shared predicate** with every reader on it (`matchClock`: crowd, floodlights, tooltip,
+  and `residentWhere`, all off one function).
+  ⇒ **AND THE SECOND HALF IS ABOUT WHERE TO LOOK AT ALL: 225's grep-the-seam law is now 3 for 3** (Sky 236, Nature
+  238, People 240 — every one off a domain the ledger header had written off as stale). People's cue list was
+  **empty**, and its seam held the defect above. **An empty cue list records where you have already looked; it is
+  not evidence there is nothing to find.** Before you skip a stale domain, spend one `grep` on its seams.
+  Corollary — **look for a clock the artifact already has and nobody reads.** 240's fixture list needed a multi-day
+  clock and one was sitting there: `dayT += dt*s/110` **never wraps**, so `Math.floor(dayT)` is a real day counter,
+  and in 240 iterations only the moon had ever read it. A cadence vector's hardest part is usually finding a clock
+  that is slow enough not to strobe (134) — **check what the existing accumulators do past their wrap point.**
 - **Probe before you design.** Measure the thing you believe is broken *before*
   writing a line of the fix. Iters 112 and 115 both opened by probing and both found
   the real defect was not the assumed one — 112 discovered monorail trains advanced
