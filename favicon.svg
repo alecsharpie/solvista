@@ -1,0 +1,21 @@
+<!-- Solvista's mark: the city on one cell of its own hex grid, at golden hour —
+     sol + vista, the two things the diorama is about.
+     Two constraints shaped it, both checked by rendering at 16px:
+       - only three masses (hex, sun, skyline), because any finer detail turns to mush;
+       - the skyline is umber, not ink: against a dark browser tab a black silhouette
+         swallows the bottom point of the hexagon and the mark stops being a hexagon. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="sv-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd98a"/>
+      <stop offset=".62" stop-color="#f0982f"/>
+      <stop offset="1" stop-color="#e0762c"/>
+    </linearGradient>
+    <clipPath id="sv-hex"><path d="M32 0 62 17 62 47 32 64 2 47 2 17Z"/></clipPath>
+  </defs>
+  <g clip-path="url(#sv-hex)">
+    <rect width="64" height="64" fill="url(#sv-sky)"/>
+    <circle cx="32" cy="24" r="11" fill="#fff6dc"/>
+    <path d="M0 64 V46 h10 v-10 h9 v10 h3 V22 h11 v24 h4 V32 h10 v14 h17 v18 Z" fill="#43280f"/>
+  </g>
+</svg>

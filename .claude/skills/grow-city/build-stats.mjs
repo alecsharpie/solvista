@@ -63,6 +63,10 @@ const avgCost = knownCost / known.length;
 const avgMin = sum(known, r => r.secs) / known.length / 60;
 const priciest = known.reduce((a, r) => r.cost > a.cost ? r : a);
 const longest = rows.reduce((a, r) => r.secs > a.secs ? r : a);
+// run-length distribution over the measured runs (estimated placeholders excluded)
+const shortest = known.reduce((a, r) => r.secs < a.secs ? r : a);
+const last30 = known.slice(-30);
+const avgLast30Min = last30.length ? sum(last30, r => r.secs) / last30.length / 60 : 0;
 const recFrom = Math.min(...rows.filter(r => r.tier === 'recovered').map(r => r.iter));
 const bilFrom = Math.min(...billed.map(r => r.iter));
 
@@ -243,10 +247,10 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
 </section>
 
 <section class="tiles">
-  <div class="tile"><div class="tv">${fmt$(knownCost)}</div><div class="tl">Would-be API cost</div><div class="td">across ${known.length} measured iterations</div></div>
-  <div class="tile"><div class="tv">${knownHours.toFixed(1)}<span class="tvu">h</span></div><div class="tl">Autonomous compute</div><div class="td">measured; ${totalHours.toFixed(0)}h incl. estimated early runs</div></div>
-  <div class="tile"><div class="tv">${avgMin.toFixed(0)}<span class="tvu">min</span></div><div class="tl">Per iteration</div><div class="td">avg &middot; ${fmt$(avgCost)} would-be</div></div>
-  <div class="tile"><div class="tv">${(longest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Longest iteration</div><div class="td">#${longest.iter} &middot; ${fmt$(priciest.cost)} priciest (#${priciest.iter})</div></div>
+  <div class="tile"><div class="tv">${avgLast30Min.toFixed(0)}<span class="tvu">min</span></div><div class="tl">Recent pace</div><div class="td">avg over the last ${last30.length} runs</div></div>
+  <div class="tile"><div class="tv">${avgMin.toFixed(0)}<span class="tvu">min</span></div><div class="tl">Avg run length</div><div class="td">across ${known.length} measured runs</div></div>
+  <div class="tile"><div class="tv">${(longest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Longest run</div><div class="td">#${longest.iter}</div></div>
+  <div class="tile"><div class="tv">${(shortest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Shortest run</div><div class="td">#${shortest.iter}</div></div>
 </section>
 
 <section class="chart">
