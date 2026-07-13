@@ -51,6 +51,13 @@ for (let i = 1; i < firstKnown; i++) rows.push({ iter: i, vector: null, verdict:
 rows.push(...parsed);
 rows.sort((a, b) => a.iter - b.iter);
 
+// Fold the loop's "DEEPENED" self-label into SHIPPED on the outcome axis. As a
+// verdict it only restated that the change's *kind* was a Deepen — already its
+// own axis ("How the loop changed the city"), and applied inconsistently (a
+// Deepen-kind run landed as either). The verdict axis is now the three real
+// outcomes: shipped (a growth vector landed) / fixed / reverted.
+for (const r of rows) if (r.verdict === 'DEEPENED') r.verdict = 'SHIPPED';
+
 // ---- aggregates ------------------------------------------------------------
 const known = rows.filter(r => r.cost != null);            // recovered + billed
 const billed = rows.filter(r => r.tier === 'billed');      // have verdicts
@@ -72,7 +79,7 @@ const avgLast30Cost = last30.length ? sum(last30, r => r.cost) / last30.length :
 const recFrom = Math.min(...rows.filter(r => r.tier === 'recovered').map(r => r.iter));
 const bilFrom = Math.min(...billed.map(r => r.iter));
 
-const V = ['SHIPPED', 'DEEPENED', 'FIXED', 'EXPLORED → REVERTED'];
+const V = ['SHIPPED', 'FIXED', 'EXPLORED → REVERTED'];
 const verdicts = V.map(v => {
   const rs = billed.filter(r => r.verdict === v);
   const cost = sum(rs, r => r.cost), secs = sum(rs, r => r.secs);
@@ -258,8 +265,8 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
     <div class="tile"><div class="tv">${(shortest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Shortest run</div><div class="td">#${shortest.iter}</div></div>
   </div>
   <p class="sub">Wall-clock runtime per iteration, each bar coloured by the loop's own verdict:
-  <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
-  <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted &mdash;
+  <span class="key k-ship"></span>shipped, <span class="key k-fix"></span>fixed,
+  <span class="key k-rev"></span>reverted &mdash;
   <span class="key k-est"></span>grey are the early runs with no recorded verdict. Reverts run
   <strong>longest on average</strong>; the single longest was ${(longest.secs/60).toFixed(0)} min (#${longest.iter}). Hover for detail.</p>
   <div id="timeChart" class="svgbox"></div>
@@ -274,8 +281,8 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
     <div class="tile"><div class="tv">${fmt$(cheapest.cost)}</div><div class="tl">Cheapest run</div><div class="td">#${cheapest.iter}</div></div>
   </div>
   <p class="sub">The compounding would-be price of ${known.length} autonomous iterations, stacked by the loop's
-  own verdict: <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
-  <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted, and
+  own verdict: <span class="key k-ship"></span>shipped, <span class="key k-fix"></span>fixed,
+  <span class="key k-rev"></span>reverted, and
   <span class="key k-est"></span>the recovered early runs that predate the verdict log. Hover for the split at any point.</p>
   <div id="cumChart" class="svgbox"></div>
 </section>
@@ -388,8 +395,8 @@ const XTICKS=[1,${firstKnown - 1},${bilFrom},200,MAXITER].filter((v,i,a)=>a.inde
 function xAxis(s,H){XTICKS.forEach(i=>{const t=el('text',{x:xI(i),y:H-8,'text-anchor':i===1?'start':i>=MAXITER?'end':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});}
 const TIERSRC = {estimated:'estimated (no record)', recovered:'recovered from logs', billed:'logged live'};
 // Colour bars by the loop's own verdict; grey where no verdict was recorded.
-const VCOL = {SHIPPED:'--series-1',DEEPENED:'--series-2',FIXED:'--series-3','EXPLORED → REVERTED':'--series-6'};
-const VTXT = {SHIPPED:'shipped',DEEPENED:'deepened',FIXED:'fixed','EXPLORED → REVERTED':'reverted'};
+const VCOL = {SHIPPED:'--series-1',FIXED:'--series-3','EXPLORED → REVERTED':'--series-6'};
+const VTXT = {SHIPPED:'shipped',FIXED:'fixed','EXPLORED → REVERTED':'reverted'};
 const barFill = d => d.v ? VCOL[d.v] : '--muted';
 const barOp = d => d.t==='estimated' ? 0.35 : (d.v ? 1 : 0.55);
 
@@ -440,7 +447,7 @@ function drawAll(){
   const W=CW,H=280,P={l:PL,r:PR,t:14,b:28};const s=svg(box,W,H);const ih=H-P.t-P.b;
   // bottom→top: the pre-verdict recovered runs form a grey base, then each verdict stacks on top
   const cats=[['none','--muted','no verdict logged'],['SHIPPED','--series-1','shipped'],
-    ['DEEPENED','--series-2','deepened'],['FIXED','--series-3','fixed'],['EXPLORED → REVERTED','--series-6','reverted']];
+    ['FIXED','--series-3','fixed'],['EXPLORED → REVERTED','--series-6','reverted']];
   const run={};cats.forEach(c=>run[c[0]]=0);
   const pts=rows.map(d=>{run[d.v||'none']+=d.c;const v=Object.assign({},run);
     return {i:d.i,v,tot:cats.reduce((a,c)=>a+v[c[0]],0)};});
@@ -509,8 +516,8 @@ drawAll();
 (function(){
   const tb=document.querySelector('#ledger tbody');
   const rows=DATA.filter(d=>d.v).slice().reverse();
-  const vclass={SHIPPED:'v-ship',DEEPENED:'v-deep',FIXED:'v-fix','EXPLORED → REVERTED':'v-rev'};
-  const vtxt={SHIPPED:'shipped',DEEPENED:'deepened',FIXED:'fixed','EXPLORED → REVERTED':'reverted'};
+  const vclass={SHIPPED:'v-ship',FIXED:'v-fix','EXPLORED → REVERTED':'v-rev'};
+  const vtxt={SHIPPED:'shipped',FIXED:'fixed','EXPLORED → REVERTED':'reverted'};
   for(const d of rows){const tr=document.createElement('tr');
     const vec=d.k||(d.g?'<span class="dim">'+d.g+'</span>':'—');
     tr.innerHTML='<td class="num">'+d.i+'</td><td>'+vec+'</td><td><span class="vb '+vclass[d.v]+'">'+vtxt[d.v]+'</span></td><td class="num">'+fmtMin(d.s)+'</td><td class="num">'+fmtUsd(d.c)+'</td>';
@@ -525,7 +532,7 @@ const head = `<style>
   --surface:#f6efdd; --ink:#2a241b; --ink2:#6b6252; --muted:#9a8f76;
   --grid:#ddd0b3; --axis:#c3b498; --gold:#b47d1c; --border:rgba(58,54,45,.16);
   /* data colours drawn off the map but picked for contrast on parchment:
-     water (shipped), grass (deepened), dusk-plum (fixed), roof-clay (reverted) */
+     water-teal (shipped), grass-green, dusk-plum (fixed), roof-clay (reverted) */
   --series-1:#2f7d9b; --series-2:#4f8a3f; --series-3:#86598a; --series-6:#c15236;
 }
 @media (prefers-color-scheme:dark){:root{
