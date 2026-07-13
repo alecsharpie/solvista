@@ -418,14 +418,57 @@ const KEYS=[
   [0.95,'#1d2640','#463f5e',[.44,.42,.58],1.0],
   [1.00,'#232c48','#7c5f74',[.50,.47,.60],1.0],
 ];
+/* THE SUN KEPT NO CALENDAR (iter 253). KEYS is indexed by the HOUR and carries no `year`
+   term, so the sky, the tint every surface's colour passes through, and the warmth of the
+   low sky were IDENTICAL in January and July. The ground had four seasons and the light
+   falling on it had none — 209's law arriving on the largest surface there is, the
+   ILLUMINATION — and two blind agents, on two seeds, said exactly that in their own nouns:
+   "no cooler light, same sky, same sun."
+   THE LEVER IS COLOUR, NEVER ALTITUDE. SUNUP/SUNDN stay put: they are the light curve's own
+   dawn and dusk keyframes, so the disc must go on touching down exactly as the sky goes
+   dark — and 200 put the sun high on purpose, because the .placard owns the low-left sky.
+   seasonCool() is beachPhase()'s cosine, inverted and sharing its phase: 0 at the dry peak
+   (s=0.62), 1 at the wet trough (s=0.12). Continuous, so it cannot strobe on the fast `year`
+   clock the way a discrete readout does (134). Centred on the peak per 245, so at s=0.62
+   every lever below collapses to its own literal and the golden-hills frame renders
+   BYTE-IDENTICAL — an exact proof that a seasonal light adds no draw work. */
+function seasonCool(){const s=((year%1)+1)%1;
+  return 0.5-0.5*Math.cos(6.2831853*(s-0.62));}
 function daylight(t){
   t=((t%1)+1)%1;
   let i=0; while(KEYS[i+1][0]<t)i++;
   const a=KEYS[i],b=KEYS[i+1],f=(t-a[0])/(b[0]-a[0]||1);
   const hx=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
   const mix=(u,v)=>[lerp(u[0],v[0],f),lerp(u[1],v[1],f),lerp(u[2],v[2],f)];
-  return{skyTop:mix(hx(a[1]),hx(b[1])),skyBot:mix(hx(a[2]),hx(b[2])),
-         tint:mix(a[3],b[3]),lit:lerp(a[4],b[4],f)};
+  const st=mix(hx(a[1]),hx(b[1])), sb=mix(hx(a[2]),hx(b[2])),
+        ti=mix(a[3],b[3]), lit=lerp(a[4],b[4],f);
+  /* the season only reaches the light while the sun is ON it. `lit` is 0 in full day and 1
+     in the deep night, so (1-lit) gates the whole term to daylight: NIGHT RUNS BYTE-IDENTICAL
+     CODE IN EVERY SEASON — a free dead-regime control (199), and the reason the lamplit city
+     and the moon are not dragged around the calendar by a term that means "sunlight". */
+  const c=seasonCool()*(1-lit);
+  if(c>0){
+    /* THE SKY. A wet-season sky is cooler and paler — the marine layer takes the gold out of
+       the horizon. GWARM is derived from skyBot's R-B by its five readers, so the sea's
+       golden sheen, the cloud bellies, the glass rake and THE SUN'S OWN COLOUR all inherit
+       the calendar from this line, at zero new draw work. Bounded on purpose: winter SOFTENS
+       the golden hour, it does not cancel it (GWARM 0.72 -> 0.53 at the golden pin). */
+    const sky=v=>{v[0]*=1-0.055*c; v[2]=Math.min(255,v[2]*(1+0.075*c));};
+    sky(st); sky(sb);
+    /* THE LIGHT ITSELF: a cool cast on the multiplier every surface passes through, so the
+       asphalt, the sand, the roofs and the sea read the season too — not only the things that
+       grow. Chosen for its RATIOS, then NORMALISED for its MAGNITUDE (223): a uniform rescale
+       cannot rotate a hue, so winter comes out COOLER and never DIMMER, and the brightness has
+       no freedom to drift the way the night wash ladder's did before 223 closed it. */
+    const gr=1-0.10*c, gg=1-0.02*c, gb=1+0.10*c,
+    /* the normaliser is written as 1/(1-0.0308c), not 1/(gr*.30+gg*.59+gb*.11): algebraically
+       identical (0.0308 = 0.10*0.30 + 0.02*0.59 - 0.10*0.11, the triple's luma deficit), but
+       EXACTLY 1 at c=0, because 0.30+0.59+0.11 is NOT exactly 1.0 in float64 and would drift
+       tint's last bit at the very pin the fixed point is proved on. Structural, not lucky (223). */
+          n=1/(1-0.0308*c);
+    ti[0]*=gr*n; ti[1]*=gg*n; ti[2]*=gb*n;
+  }
+  return{skyTop:st,skyBot:sb,tint:ti,lit:lit};
 }
 
 /* the moon's phase (0 new .. 0.5 full .. 1 new). Iter 126 drove this off `year`,

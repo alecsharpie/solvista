@@ -17428,3 +17428,88 @@ the header keeps the WARNINGS only. Bodies verbatim as the header carried them:
   mechanism the artifact already ships before inventing one.** 🔑 **ITS LAW (SKILL.md): TWO FREE, EXACT CONTROLS** —
   HEAD's **constant IS the baseline** (236), and a host with a **BIRTHDAY** (no deck before 1986) hands you a **dead
   regime running HEAD's byte-identical code** for nothing (199, arriving through the *world* not the light).
+
+## Iteration 243 — the cable car went for a swim (Transport × Polish, FIXED)
+
+**Vector** — Transport × Polish. Took the ledger's **#1 🔴 cue (an)**: *"a pair of dark lines leaves the shore,
+crosses the beach and open water, and ENDS IN THE WATER with no pylon or terminus — the single ugliest artefact in
+the set"* (both step-back agents, both seeds, 242). It had stood **UNIDENTIFIED** — the most-reported undiagnosed
+defect in the ledger — with an explicit instruction to `grep` the draw before designing.
+
+**The instrument lied first, and that is the lap's real finding.** The harness owns a locator for exactly this
+(`probe-darkline`). Run at the defect it was built for, its census came back headed by **8,160px of "black" ink
+attributed to `render`** — which is **the rain shafts**, whose `CanvasGradient` `strokeStyle` has no luminance and
+was being scored `#000`. Meanwhile the real suspect was **filtered out entirely**: a gondola rope span is ~12–14
+device px and the probe's `len >= 30` per-stroke gate cannot see it. **SKILL.md documented BOTH traps, in detail,
+and had done for 40 iterations** — as *prose telling the reader to compensate*, while the probe went on doing them.
+Fixed in the tool: gradients counted apart and never scored as ink; `MINLEN` an env knob so it censuses chains.
+
+**Change** — `stepGond` extends a line onto a cell only if it clears the value bar `c.val < g.bar - g.wait*0.002`
+— and **that bar DECAYS with the wait, with no floor.** So an aerial line that stalls at the coast (nothing left
+ashore is worth riding over) eventually drops its bar beneath a **val-0 sea cell** and strings its rope out into
+open water, terminating there. The lever is the **predicate, not the rate** (218). One line, reusing **`WETSET`**
+— the artifact's one definition of wet, established at 242 — rather than rolling a second one:
+`if(WETSET.has(c.t)){g.fam=-g.fam;return;}`. It **turns along the coast instead of stopping**, so the line keeps its
+LENGTH and only loses its swim. A **BEACH stays rideable**: an aerial tram over the sand is the good half of this
+feature and is what the line is *for*.
+
+**Probe** (`probes/probe-cablehost.mjs`, banked — pure world data, no render, no clock, no noise floor; `SRC=`
+grades HEAD). Per line: length · **SEA spans (`WETSET`) kept separate from BEACH spans** · the tile it ends on.
+6 seeds:
+
+| | HEAD | patch |
+| --- | --- | --- |
+| seed 7 | len 17, **SEA 2** (idx 14,15 — the tail), ends BEACH | len 14, **SEA 0**, beach 5, ends BEACH |
+| seed 5 | len 19, **SEA 1** (idx 16), ends BEACH | len 19, **SEA 0**, ends IND |
+| 42 · 1234 · 99 · 2024 | SEA 0 | **SEA 0**, byte-identical routes |
+
+**SEA spans 3 → 0 across six seeds; only the seeds that swam changed.** The **monorail is exonerated by the same
+probe** (the control): it is a **closed loop**, crosses water 0–3 cells and comes back — a viaduct, never a terminus.
+
+**Census** — PASS. Core byte-flat (`pop`/`roads`/`developed` +0), tile histogram **empty** — correct, the gondola
+touches no terrain and rolls a private PRNG (`seedNum^0x60D0`). `greenRoofs -3` is **not mine**: re-running the
+**SAME FILE** (226's law — never diff HEAD) moved it again to `-2`. **Free by 222's ledger**: path objects
+**day 111,450 / night 140,102** vs 242's 111,389 / 140,189 = **+0.05% / −0.06%** — it reroutes spans, it doesn't add them.
+
+**Visual** — blind agent, asked to **LOCATE not judge** (108), given **file names not letters** (239), traced
+`head7`'s rope onto **masts standing in the water at ~(0.685,0.68)** and `fix7`'s terminating **on a mast on the
+sand** — matching the world probe with no knowledge of it. No z-order tears, no floating tiles.
+
+⚠ **BUT THE CUE WAS ONLY HALF REAL, AND SEED 42 NEVER REPRODUCED.** Seed 42's gondola has **SEA 0 in HEAD** — it runs
+nowhere near the sea — yet seed 42 is the seed whose agent wrote the quote above. A second agent, asked to locate it
+and told not to be agreeable, ran a **dark-pixel scan of the entire ocean half** and found **nothing**: the two
+things over seed 42's water are a **jetty ending in a red-capped lighthouse** and a **pleasure pier carrying a ferris
+wheel** — both properly terminated. Its read: the reviewer most likely misread the **beach boardwalk and its white
+railing** (*a pair of parallel lines* — the cue's own words) which **stays entirely on sand**. ⇒ The cue bundled
+**one real defect (seed 7's rope, now closed) with one misread (seed 42's boardwalk)**, and the misread is what
+escalated it to 🔴 and to *"the single ugliest artefact in the set."*
+
+**Verdict** — **FIXED.** 🔑 **Its law (in SKILL.md): A "BEWARE, THIS PROBE OVER-REPORTS Y" NOTE IS A BUG REPORT, NOT
+A LAW.** The loop wrote the compensation for two instrument defects into its own prose and left the defects in the
+code, so its banked locator failed at the one cue it was built for. **229's law wearing a probe** — a *discipline*
+written where a *structural* fix was available. When you catch yourself writing "remember that probe P lies in way
+X", stop and spend five minutes inside P.
+
+
+<!-- header bullet moved down from GROWTH.md at iteration 253: cue (ak), the seasonal-vegetation
+     seam, SUPERSEDED by (aq)/253 (the season now reaches the ILLUMINATION, which is the surface
+     every pixel wears). Kept verbatim — the loop's memory rotates, it never vanishes. -->
+
+## Cue (ak) — the season (retired from the header at 253)
+
+  **(ak) THE SEASON — REFRAMED by 238; body archived at 240. Read it before ANY seasonal vector.** ⚠ **Its headline
+  "68% mute" number is DEAD**, and so is its prescription: the mute area is **DILUTION by the season-dead *CONTENTS*
+  of each hex** (a park hex is 45% lawn / 12% canopy / **43% paths, ponds, benches, furniture with no calendar**) —
+  **not** dead palettes, and **NOT** the lawn ((p) protects it; it is already the city's most seasonal surface).
+  ⇒ **A PALETTE LAP CANNOT REACH THE PER-TILE FLOOR.** Use **`probes/probe-seasonarea.mjs`** (area sample + **what %
+  of a hex a palette entry PAINTS**), never `probe-season` (ONE centre pixel, blind to a park's canopy). Canopy
+  amplitude is **AT ITS CEILING**. ⚠ **242 adds the reachable move**: both agents said winter reads as *lusher*, not
+  as winter — **sky, sea, light and the BEACH CROWD are all season-blind.** ✅ **247 TOOK THE BEACH CROWD** (`beachPhase()`,
+  the fourth seasonal predicate) and ✅ **250 TOOK THE CONCERT** (`concertSeason()`, the fifth — and the FIRST on a
+  *cultural* surface rather than a plant, which is one of this cue's own named honest moves: give the season-dead
+  CONTENTS a calendar). ⚠ **BUT (ak) IS STILL OPEN, AND 247 SHARPENED IT: the "winter runs backwards" half is a
+  MISREAD — Solvista is a *Mediterranean/Pacific* coast, so a green wet winter and a golden dry summer is CORRECT (201).
+  DO NOT ship snow, bare trees, or a cooler winter light "to fix" it.** The real residue is that **the model is not
+  COMMUNICATED**: four agents have now read a correct seasonal model as broken. Remaining honest moves: give a park hex's
+  **season-dead contents** (43% paths/ponds/benches) a calendar, make the **sea/sky/light** answer `year`, or **retire the
+  metric**. **Nature / Sky.**

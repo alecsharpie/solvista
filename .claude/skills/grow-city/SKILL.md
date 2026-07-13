@@ -704,6 +704,47 @@ vector, whatever it is.
   is LOOKING AT before re-running either** (200/205) — here the probe was looking at a roof. This is **229's law
   arriving on an INVARIANT instead of a serving condition**: the cue was *re-confirmed twice*, and every
   re-confirmation used the same broken instrument. **A defect only your harness can see is a defect in your harness.**
+- **SUPPRESS THE *PREDICATE* — THE FOURTH MEMBER OF THE SUPPRESSION FAMILY, AND THE ONE THAT NEEDS NO HEAD FILE AT
+  ALL (iter 253).** 226 suppresses the **DRAW** (stack-match its call sites), 230 the **DECISION** (mutate the state
+  the feature reads), 234 the **COLOUR** (loud-paint `BASE[name]`). 253 adds the cheapest: when your feature is
+  written as **`HEAD + K·signal`** — which is what every *centred* lever (245) and every *"make X answer Y"* vector
+  (196) looks like — you can isolate it by forcing its **predicate function** to zero on `window` and re-rendering
+  **inside one page**: `window.seasonCool = () => 0` makes `c=0`, the branch is skipped, and `daylight()` runs HEAD's
+  code path *exactly*. The difference between the two renders **IS** the feature, at a floor of **exactly 0**, off
+  the final composited canvas (occlusion free), and it is **build-agnostic** — no `git show`, no `/bin/cp`, no
+  cross-build floor, no 197-class stale-backup hazard. ⇒ **Reach for it whenever a top-level `function` gates your
+  change.** The tell: your diff adds one predicate and multiplies existing constants by it.
+  ⚠ **AND THIS IS NOT A CONVENIENCE — A CROSS-BUILD DIFF *CANNOT* PROVE AN EXACT ZERO (230, and it cost 253 a round).**
+  253's first cut diffed patch-vs-HEAD and carried a HEAD-vs-HEAD floor **in the same run** (213), doing everything
+  the laws ask: `addInitScript` PRNG stub, clocks pinned before `genWorld`, `STARS`/`flock`/`clouds` cleared, **every
+  mover array emptied**. The floor still read **20,000–34,000 px** — two loads of the same file drift that far — so
+  the fixed point's "0 px" was unprovable and its controls read 31k–34k, *indistinguishable from the drift*. **You
+  cannot claim EXACTLY 0 from under a floor of 20,000.** The way out is never a tighter freeze; it is to stop leaving
+  the page.
+  ⇒ **COROLLARY — A CENTRED LEVER'S FIXED POINT CAN BE DESTROYED BY FLOAT ERROR IN ITS *NORMALISER*, SO WRITE THE
+  NORMALISER IN TERMS OF THE SIGNAL, NOT OF THE GAINS.** 245 says centre the lever so it collapses to HEAD's literal
+  at one pin; 223 says normalise a gain triple's magnitude. Do both the obvious way and they **fight**:
+  `n = 1/(gr*0.30 + gg*0.59 + gb*0.11)` does **not** return exactly `1.0` at `gr=gg=gb=1`, because `0.30+0.59+0.11`
+  is not 1.0 in float64 — so the "byte-identical" pin would have drifted `tint`'s last bit, on the very frame the
+  whole proof rests on. Write it as **`n = 1/(1 − K·c)`** (K = the triple's luma deficit, here 0.0308): algebraically
+  identical, **exactly 1 at c=0 by construction**. A fixed point you can *prove* beats one you got away with.
+- **WHEN YOU RESTORE A SIGNAL THAT WAS MISSING *GLOBALLY*, THE OLD PROBE'S **CONTROL** BECOMES YOUR HEADLINE — AND IF
+  YOUR FIX LIFTS *EVERY* ROW OF A METRIC PAST ITS FLOOR, ASK WHETHER YOU FIXED THE SUBJECT OR MOVED THE INSTRUMENT'S
+  BASELINE (iter 253).** 251 says a metric that flatters you is a metric to distrust. Here is the constructive twin.
+  The season was missing from the **light**, which falls on *everything* — so the honest witness is the surface that
+  is **season-dead by palette**: `probe-seasonarea`'s **`ROAD` control**, its designed "honest zero" (3.5), moved to
+  **20.1**. Asphalt has no seasonal palette entry, so *its entire shift is the illumination* — an unarguable proof
+  that needs no threshold and that the instrument's own author had already validated. ⇒ **When you fix a global
+  signal, go and read the row the old probe put there to represent "nothing is happening."** ⚠ And the same run's
+  headline was a trap: the mute-vegetation area went **66.4% → 0.0%** while **not one plant changed** (the palette is
+  byte-identical). **The metric was SUPERSEDED, not satisfied** — it had always been measuring the *frame*, and the
+  frame's light now moves. Quoting it as a vegetation win would have been the exact self-congratulation 251 punishes.
+  **The tell: your change lifts every row of a table at once.** That is the signature of a *baseline* move, not a
+  *subject* fix — name which one it is, out loud, before you write the verdict.
+  ⇒ **AND A PROBE PARAMETER NAMED AFTER A PAGE GLOBAL *SHADOWS* IT.** 253's probe took `frame(p, seed, year, dayT)`
+  and did `__setTime(dayT)` — pinning **every frame to the same hour**, because `dayT` was the *parameter*. Three
+  hours returned an identical changed-px count and the "night" frame self-reported `LITAMT=0.027`. **Only 202's
+  self-report caught it** — the numbers alone were perfectly plausible. Never name a pin after the global it pins.
 - **WHEN THE VECTOR IS "MAKE X VARY", HEAD'S *CONSTANT* IS A FREE, EXACT BASELINE — AND IF THE FEATURE HANGS OFF A
   THING THE WORLD BUILDS AT A KNOWN YEAR, THE ERA BEFORE IT IS A FREE, EXACT *CONTROL* (iter 249).** 236 says the
   defect is its own perfect control (when you are fixing a constant that should have been a variable, HEAD's

@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236** | | | 61, 81, 89, **115**, **200**, **242**, **248** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253** | | | 61, 81, 89, **115**, **200**, **242**, **248** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
 - **Interaction/UX — the FEATURE INVENTORY was rotated to the archive at 211 (history, not steering).** ⚠ **229 is
@@ -31,21 +31,25 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census hook); `stamp()` also
   draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a FUNCTION of the entity
   (105)** — use it when a thing's interest is its *membership* (which line/route/depot), computed live, never a string.
-- **ROTATION.** Last vector per domain: Urban **239** · Water **245** · People **247** · Sky **248** ·
-  Transport **249** · Civic **250** · Nature **251**. **252 was the 30th step-back; the 31st is due ~257.**
-  ➡ **NEXT: Sky × Deepen — cue (aq), THE SUN KEEPS NO CALENDAR** (252, below: the single best-supported cue in the
-  ledger, named independently by both agents in their OWN nouns and confirmed by grep). Then Urban — but **Urban's
-  seam is DRY** (248 grepped `drawBuilding`/`updateValue`/`POPW`/`midLook`/`towerLook`; only the harbour apron
-  remains). ⚠ **Read the `peds` cap first** (111) before designing anything road-borne.
-  🔴 **252 (30th step-back): THE SUN KEEPS NO CALENDAR — and the cue is NOT the canopy** (full body in the entry).
-  Both agents, both seeds, headline FAIL, in their OWN nouns: *"no cooler light, same sky, **same sun**"* · *"no
-  desaturation, **no low sun**"*. `probe-seasonarea`: **66.4% of vegetated area (893/1345) is MUTE** — PARK **22.9**,
-  FOREST **19.8**, vs FARM 46.6 / SHOREPARK 44.4, ROAD control 3.5. ⚠ **But the vegetation is at its MEASURED CEILING
-  (238's coverage law) and that 66.4% is largely CORRECT** — PARK's lawn is already fully seasonal, FOREST is 83%
-  conifer. 🔑 **The defect is the LIGHT: `sunP=(dayT-SUNUP)/(SUNDN-SUNUP)` has NO `year` term and `SUNUP`/`SUNDN` are
-  CONSTANTS**, so the sun's arc is identical in January and July; the sky and sea carry no seasonal tint. **199's tell
-  on two constants + 209's law** (the large surface wearing a field that cannot carry the signal — here, *the
-  illumination itself*). ⇒ **The loop spent laps on vegetation because that is where its instrument pointed.**
+- **ROTATION.** Last vector per domain: Urban **239** · Water **245** · People **247** · Transport **249** ·
+  Civic **250** · Nature **251** · Sky **253**. **252 was the 30th step-back; the 31st is due ~257.**
+  ➡ **NEXT: Urban × Deepen/Polish — but GREP THE SEAM BEFORE YOU ACCEPT THAT IT IS DRY.** The header has called
+  Urban spent since 118 and been **REFUTED twice from the silhouette side** (232→(af′), 237→(al)); **225's
+  grep-the-seam law is now 5 for 5**, and *an empty cue list records where you have already looked, not that there
+  is nothing to find* (240). Known-closed there: the building look (228/235/239), the ground plane (209), the
+  facades (216); the **harbour apron** is the one named remnant. ⚠ **Read the `peds` cap first** (111) before
+  designing anything road-borne. Water (**(ap)**, 245) is the standing alternative.
+  ✅ **(aq) CLOSED BY 253 — THE SUN NOW KEEPS A CALENDAR.** `seasonCool()` (= `beachPhase()`'s cosine, inverted,
+  sharing its phase) is read in ONE place, `daylight()`, and reaches the **TINT** every surface passes through, the
+  **CSS SKY**, and **`GWARM`** — whose five existing readers (sea sheen, cloud bellies, glass rake, **the sun's own
+  colour**) inherit the season at **zero new draw work**. ⛔ **The sun's ARC is untouched and must stay so**
+  (`SUNUP`/`SUNDN` ARE the light curve's dawn/dusk keyframes; 200 put the sun high on purpose). Measured: `ROAD` —
+  `probe-seasonarea`'s own *honest-zero control*, and season-dead by palette — moved **3.5 → 20.1**, so the shift is
+  **the light**; frame warmth (R−B) winter-minus-peak **−3.7 (HEAD, the ground alone) → −27.8**; `GWARM` at golden
+  **0.72 (dry peak, = HEAD) → 0.52 (winter)** — winter *softens* the golden hour, it does not cancel it.
+  ⚠ **`probe-seasonarea`'s "66.4% mute" went to 0.0% AND NOT ONE PLANT CHANGED** — the vegetation palette is
+  byte-identical. **THE METRIC WAS SUPERSEDED, NOT SATISFIED**; do not read it as a vegetation win. **RETIRE it as a
+  seasonal score** (252 already measured the 66.4% as *largely correct*).
   🔴 **251 KILLED THE #1 CUE AND THE INSTRUMENT THAT MADE IT. Re-read the cue list with suspicion:** (ag) was ranked
   top for **24 iterations**, was **reconfirmed twice**, and was **false on every count** — because every re-measurement
   used the same broken probe. **A cue re-confirmed by the instrument that created it is not corroborated.**
@@ -97,18 +101,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **CUES, RANKED** (CLOSED: (w)/(z) 229 · (t) 231 · (u) 234 · (af′) 235 · (al) 239 · (am) 241 · (an) 243 · **(ah) 244**;
   **(aj)'s SHADE half CLOSED 242 — its cloud-SITING half is still open**; **(ao)'s SHAFT half CLOSED 248 — its BOW half
   is REFRAMED and its prescription REFUTED**; **(ab) RETIRED into (ak) 238**; ⛔ **(ai) RETIRED 246 — UNREACHABLE, do not
-  re-open** · ⛔ **(ag) CLOSED 251 — REFUTED on every count, do not re-open**):
-  🔴 **(aq) THE SUN KEEPS NO CALENDAR** (Sky × Deepen; 252) — **the best-supported cue in the ledger**: raised
-  independently by both agents on both seeds *in their own nouns*, and confirmed by grep — **two DIFFERENT
-  instruments**, which is exactly what 251 says a cue needs. ⚠ **ITS FIVE TRAPS, PRE-NAMED — read before designing:**
-  (1) ⛔ **DO NOT LOWER THE SUN** — cue (s)'s trap and **200's**: the sky is a shallow band (~0.12 of the viewport) and
-  `.placard` owns the top-left, so a low winter sun hides *behind the HUD* while a `getImageData` probe reports it
-  present. A visibility claim here needs **`page.screenshot()`**. (2) ⇒ **The lever is COLOUR/WARMTH (and maybe day
-  LENGTH), never ALTITUDE** — colour-only is **zero path objects, free by the perf model** (214). (3) ⚠ Go through the
-  **WASH LADDER's discipline** (214→234): `washRGB` is **normalised** since 223 — do not re-introduce an un-normalised
-  gain triple; **audit by `dHUE`, never a target hue** (234). (4) 🔑 **CENTRE THE LEVER ON THE DRY PEAK** (245) ⇒ a
-  **byte-identical fixed point** at `s=0.62` that *proves* it adds no draw work. (5) ⚠ **`year` is a FAST clock**
-  (~0.17 yr/s): a *continuous* colour term tolerates it, a *discrete* one strobes (134). ·
+  re-open** · ⛔ **(ag) CLOSED 251 — REFUTED on every count, do not re-open** · ✅ **(aq) CLOSED 253**):
+  ⚠ **253's LEFTOVER, and it is the one thing (aq) did NOT buy: DAY LENGTH.** The sun still rises and sets at the
+  same hour all year (`SUNUP`/`SUNDN`). 253 deliberately left them alone — they ARE `KEYS`' own dawn/dusk keyframes,
+  so moving them **desynchronises the disc from the sky** (it would hang in the dark, or vanish while the sky still
+  burns). ⇒ **A day-length vector is NOT a two-constant edit; it must move the whole `KEYS` curve seasonally.** That
+  is a real Sky × Deepen swing, and it is the honest next one — **but only after Urban.** ·
   **(aj)** the clouds spawn with no reference to the land, so a seed parks its sky over the sea — **the lever is the
   SPAWN, not the draw**: ~2x the visible weather at **zero new draw work** (Sky × Polish, doubly measured) ·
   ⛔ **(ak) MEASURED-CAPPED and its prescription DEAD** (238 + 252) — **(aq) supersedes it; do not re-open the canopy** ·
@@ -333,22 +331,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   draw spends a shower 2 hexes short of the rim). **The lever is the SPAWN, not the draw** — bias `cl.x`/`cl.y` onto
   the live rows (`ROWMIN`/`ROWMAX`, `HEXI`) for ~2x the visible weather at **zero new draw work**. ⚠ Rain over the sea
   is **CORRECT** (201) — this is about *coverage*. **Sky × Polish.**
-  **(ak) THE SEASON — REFRAMED by 238; body archived at 240. Read it before ANY seasonal vector.** ⚠ **Its headline
-  "68% mute" number is DEAD**, and so is its prescription: the mute area is **DILUTION by the season-dead *CONTENTS*
-  of each hex** (a park hex is 45% lawn / 12% canopy / **43% paths, ponds, benches, furniture with no calendar**) —
-  **not** dead palettes, and **NOT** the lawn ((p) protects it; it is already the city's most seasonal surface).
-  ⇒ **A PALETTE LAP CANNOT REACH THE PER-TILE FLOOR.** Use **`probes/probe-seasonarea.mjs`** (area sample + **what %
-  of a hex a palette entry PAINTS**), never `probe-season` (ONE centre pixel, blind to a park's canopy). Canopy
-  amplitude is **AT ITS CEILING**. ⚠ **242 adds the reachable move**: both agents said winter reads as *lusher*, not
-  as winter — **sky, sea, light and the BEACH CROWD are all season-blind.** ✅ **247 TOOK THE BEACH CROWD** (`beachPhase()`,
-  the fourth seasonal predicate) and ✅ **250 TOOK THE CONCERT** (`concertSeason()`, the fifth — and the FIRST on a
-  *cultural* surface rather than a plant, which is one of this cue's own named honest moves: give the season-dead
-  CONTENTS a calendar). ⚠ **BUT (ak) IS STILL OPEN, AND 247 SHARPENED IT: the "winter runs backwards" half is a
-  MISREAD — Solvista is a *Mediterranean/Pacific* coast, so a green wet winter and a golden dry summer is CORRECT (201).
-  DO NOT ship snow, bare trees, or a cooler winter light "to fix" it.** The real residue is that **the model is not
-  COMMUNICATED**: four agents have now read a correct seasonal model as broken. Remaining honest moves: give a park hex's
-  **season-dead contents** (43% paths/ponds/benches) a calendar, make the **sea/sky/light** answer `year`, or **retire the
-  metric**. **Nature / Sky.**
+  ⛔ **(ak) THE SEASONAL-VEGETATION SEAM — CLOSED/SUPERSEDED BY (aq) AT 253** (body moved to `GROWTH-archive.md`).
+  The plants were never the defect: PARK is at its **coverage ceiling** (238) and FOREST is 83% conifer, so the
+  "mute" area 252 measured was *largely correct*. **The season was missing from the LIGHT** — 253 fixed that. ⚠ **DO
+  NOT re-open the canopy, the lawn ((p) protects it), or a palette lap "to fix the seasons".** ⚠ **And Solvista is a
+  Mediterranean/Pacific coast: a GREEN WET WINTER and a GOLDEN DRY SUMMER is CORRECT (201) — do not ship snow or bare
+  trees.** The model is now *communicated* (two blind agents read winter as winter at 253), which was the residue.
   ✅ **(al) CLOSED by 239 — THE BUILDING-LOOK LADDER IS COMPLETE** (228 crown · 235 footprint · 239 the MID-RISE; body
   archived at 241). ⚠ **DO NOT RE-OPEN EITHER BUILDING**; ⚠ **EVERY FORM'S BASE IS ITS WIDEST PART** (the party wall is
   the NEIGHBOUR'S WEST FACE, not a constant).
@@ -380,6 +368,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   CANNOT be lowered — 200 put it high ON PURPOSE** (the `.placard` owns the low-left sky). ⚠ **242 adds a lead: both
   agents said the SHADOW SIDES go warm** (*"warm-tinted shadows kill the form"*) — reconcile the gradient's direction
   with the sun's, or move the warmth. **Do not move the sun down.** Not a quick win.
+  ⚠ **253 PARTIALLY DRAINED IT, AND ONLY OFF-PEAK:** `GWARM` at the golden pin now runs **0.52 winter → 0.72 dry
+  peak**, so the terracotta wash is *seasonally* weaker — but at the **dry peak it is byte-identical to HEAD**, and
+  the dry peak is where every agent has complained. ⇒ **(s) IS STILL LIVE AT ITS WORST PIN.** Do not close it, and
+  do not "fix" it by raising `seasonCool` at the peak — that would break 253's fixed point.
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a multi-source hex BFS capped at radius `r`,
   land-only (`WETSET` blocks water/marsh/kelp), filling `out` with steps-to-nearest-source (255 = farther than r).
   `recount()` runs four per tick. Any "how far is X from Y" question should call it, not hand-roll a flood fill.
@@ -391,72 +383,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 245 entries before Iteration 243 live in
+> **Archive:** the 246 entries before Iteration 244 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 243 — the cable car went for a swim (Transport × Polish, FIXED)
-
-**Vector** — Transport × Polish. Took the ledger's **#1 🔴 cue (an)**: *"a pair of dark lines leaves the shore,
-crosses the beach and open water, and ENDS IN THE WATER with no pylon or terminus — the single ugliest artefact in
-the set"* (both step-back agents, both seeds, 242). It had stood **UNIDENTIFIED** — the most-reported undiagnosed
-defect in the ledger — with an explicit instruction to `grep` the draw before designing.
-
-**The instrument lied first, and that is the lap's real finding.** The harness owns a locator for exactly this
-(`probe-darkline`). Run at the defect it was built for, its census came back headed by **8,160px of "black" ink
-attributed to `render`** — which is **the rain shafts**, whose `CanvasGradient` `strokeStyle` has no luminance and
-was being scored `#000`. Meanwhile the real suspect was **filtered out entirely**: a gondola rope span is ~12–14
-device px and the probe's `len >= 30` per-stroke gate cannot see it. **SKILL.md documented BOTH traps, in detail,
-and had done for 40 iterations** — as *prose telling the reader to compensate*, while the probe went on doing them.
-Fixed in the tool: gradients counted apart and never scored as ink; `MINLEN` an env knob so it censuses chains.
-
-**Change** — `stepGond` extends a line onto a cell only if it clears the value bar `c.val < g.bar - g.wait*0.002`
-— and **that bar DECAYS with the wait, with no floor.** So an aerial line that stalls at the coast (nothing left
-ashore is worth riding over) eventually drops its bar beneath a **val-0 sea cell** and strings its rope out into
-open water, terminating there. The lever is the **predicate, not the rate** (218). One line, reusing **`WETSET`**
-— the artifact's one definition of wet, established at 242 — rather than rolling a second one:
-`if(WETSET.has(c.t)){g.fam=-g.fam;return;}`. It **turns along the coast instead of stopping**, so the line keeps its
-LENGTH and only loses its swim. A **BEACH stays rideable**: an aerial tram over the sand is the good half of this
-feature and is what the line is *for*.
-
-**Probe** (`probes/probe-cablehost.mjs`, banked — pure world data, no render, no clock, no noise floor; `SRC=`
-grades HEAD). Per line: length · **SEA spans (`WETSET`) kept separate from BEACH spans** · the tile it ends on.
-6 seeds:
-
-| | HEAD | patch |
-| --- | --- | --- |
-| seed 7 | len 17, **SEA 2** (idx 14,15 — the tail), ends BEACH | len 14, **SEA 0**, beach 5, ends BEACH |
-| seed 5 | len 19, **SEA 1** (idx 16), ends BEACH | len 19, **SEA 0**, ends IND |
-| 42 · 1234 · 99 · 2024 | SEA 0 | **SEA 0**, byte-identical routes |
-
-**SEA spans 3 → 0 across six seeds; only the seeds that swam changed.** The **monorail is exonerated by the same
-probe** (the control): it is a **closed loop**, crosses water 0–3 cells and comes back — a viaduct, never a terminus.
-
-**Census** — PASS. Core byte-flat (`pop`/`roads`/`developed` +0), tile histogram **empty** — correct, the gondola
-touches no terrain and rolls a private PRNG (`seedNum^0x60D0`). `greenRoofs -3` is **not mine**: re-running the
-**SAME FILE** (226's law — never diff HEAD) moved it again to `-2`. **Free by 222's ledger**: path objects
-**day 111,450 / night 140,102** vs 242's 111,389 / 140,189 = **+0.05% / −0.06%** — it reroutes spans, it doesn't add them.
-
-**Visual** — blind agent, asked to **LOCATE not judge** (108), given **file names not letters** (239), traced
-`head7`'s rope onto **masts standing in the water at ~(0.685,0.68)** and `fix7`'s terminating **on a mast on the
-sand** — matching the world probe with no knowledge of it. No z-order tears, no floating tiles.
-
-⚠ **BUT THE CUE WAS ONLY HALF REAL, AND SEED 42 NEVER REPRODUCED.** Seed 42's gondola has **SEA 0 in HEAD** — it runs
-nowhere near the sea — yet seed 42 is the seed whose agent wrote the quote above. A second agent, asked to locate it
-and told not to be agreeable, ran a **dark-pixel scan of the entire ocean half** and found **nothing**: the two
-things over seed 42's water are a **jetty ending in a red-capped lighthouse** and a **pleasure pier carrying a ferris
-wheel** — both properly terminated. Its read: the reviewer most likely misread the **beach boardwalk and its white
-railing** (*a pair of parallel lines* — the cue's own words) which **stays entirely on sand**. ⇒ The cue bundled
-**one real defect (seed 7's rope, now closed) with one misread (seed 42's boardwalk)**, and the misread is what
-escalated it to 🔴 and to *"the single ugliest artefact in the set."*
-
-**Verdict** — **FIXED.** 🔑 **Its law (in SKILL.md): A "BEWARE, THIS PROBE OVER-REPORTS Y" NOTE IS A BUG REPORT, NOT
-A LAW.** The loop wrote the compensation for two instrument defects into its own prose and left the defects in the
-code, so its banked locator failed at the one cue it was built for. **229's law wearing a probe** — a *discipline*
-written where a *structural* fix was available. When you catch yourself writing "remember that probe P lies in way
-X", stop and spend five minutes inside P.
 
 ## Iteration 244 — the house had its back to the view (2026-07-13) [Civic & culture × Deepen]
 
@@ -1170,3 +1101,90 @@ on the dry peak per 245 for a byte-identical fixed point). Per 198, the step-bac
 the suspect, not the fix.** Also: the elevated transit took its **8th** agent
 misdiagnosis (z-order, cleared by probe twice) — that backlog item is now overdue a
 `polish-tile` lap.
+
+## Iteration 253 — the sun learns the calendar (2026-07-14) [Sky & atmosphere × Deepen]
+
+**Vector** — cue **(aq)**, the ledger's #1 and best-supported cue (252: raised independently
+by both agents on both seeds *in their own nouns*, and confirmed by grep — two different
+instruments, which is exactly what 251 says a cue needs).
+
+**Change** — `daylight()` was indexed by the HOUR and carried no `year` term, so the sky, the
+tint every surface's colour passes through, and the low sky's warmth were **identical in
+January and July**. The ground had four seasons; the light falling on it had none.
+
+ONE new predicate, `seasonCool()` — **`beachPhase()`'s cosine, inverted and sharing its phase**
+(249's law: grep for the mechanism the artifact already ships before inventing one). 0 at the
+dry peak (s=0.62), 1 at the wet trough (s=0.12). Read in exactly one place, `daylight()`, which
+has exactly two callers — so it reaches everything:
+- **the TINT** every surface passes through ⇒ the asphalt, the sand, the roofs and the sea read
+  the season too, not only the things that grow. Chosen for its RATIOS, **normalised for its
+  MAGNITUDE** (223) ⇒ winter comes out COOLER and never DIMMER.
+- **the SKY** (`syncSky`'s CSS gradient) ⇒ a cooler, paler wet-season sky.
+- **`GWARM`** is derived from `skyBot`'s R−B, so the sea's golden sheen, the cloud bellies, the
+  glass rake and **the sun's own colour** inherit the calendar **at zero new draw work** — five
+  existing readers, no new code. That is the Deepen.
+
+⛔ **The sun's ARC is untouched** — `SUNUP`/`SUNDN` stay put (they are the light curve's own
+dawn/dusk keyframes; the disc must go on touching down exactly as the sky goes dark) and 200
+put the sun high on purpose. **The lever is COLOUR, never ALTITUDE**, exactly as 252 pre-named.
+
+**Census: PASS.** Core flat (`pop`/`developed`/`roads` +0), tile histogram empty — as it must be
+for a colour-only change. (`solarRoofs` +1 / `greenRoofs` −2: 226's documented ±2 tick wobble.)
+
+**Probe** — `probes/probe-sunseason.mjs`, and it has **two free EXACT controls**:
+
+    A. THE LEVERS, bit-for-bit (pure JS: no render, no clock, NO NOISE FLOOR AT ALL)
+       controls that moved: 0    treatment cells that differ: 6 / 6
+    B. THE FEATURE'S INK, shipped vs seasonCool()=0, IN ONE PAGE (floor EXACTLY 0)
+       dry-peak  day/golden/night ....  0 / 0 / 0 px      <-- THE FIXED POINT (245)
+       night     all four seasons ....  0 px              <-- THE DEAD REGIME (199)
+       winter    day ................. 1,431,822 px       <-- treatment
+    C. DIRECTION (the viewer's unit — a colour word needs a COLOUR metric, 214)
+       warmth = mean(R)-mean(B), winter minus dry-peak:
+       HEAD (the GROUND's calendar alone) .. -3.7    patch .. -27.8 day / -18.4 golden
+    D. GWARM at the golden pin:  dry-peak 0.72 (= HEAD) -> autumn 0.61 -> spring 0.56
+       -> winter 0.52.  Winter SOFTENS the golden hour; it does not cancel it.
+
+And the **banked** instrument, `probe-seasonarea`, in its own units: **ROAD — its own control,
+the "honest zero" — moved 3.5 → 20.1.** Asphalt has no seasonal palette entry, so *its entire
+shift is the light*. `probe-goldenhue` PASSES; every separation is unchanged (BEACH↔ROAD 92→91)
+and the night ordering invariant still clears by 21 — night is byte-identical, so it cannot move.
+
+⚠ **HONEST READING, because the headline flatters me.** `probe-seasonarea`'s mute area went
+**66.4% → 0.0%** — and **not one plant changed**. The vegetation palette is byte-identical; what
+moved is the light that falls on it. **The metric was SUPERSEDED, not satisfied**, and quoting it
+as "I fixed the mute vegetation" would be exactly the self-congratulation 251 punishes. 252 had
+already measured that the 66.4% is *largely correct* (PARK is at its coverage ceiling; FOREST is
+83% conifer). The honest headline is **ROAD 3.5 → 20.1**.
+
+**Perf: free.** `probe-drawbudget` (deterministic, load-immune — 216): path objects **day −5
+(−0.005%) · night +15 (+0.011%)**. Colour-only ⇒ zero path objects, and the fixed point *proves*
+it at one pin rather than asserting it.
+
+**Visual: PASS, both seeds, both agents, blind — and both LOCATED it correctly** (108). Asked
+which build's *light* keeps a calendar, both named the patch and both correctly called HEAD's sky
+season-invariant, which is checkable against the tint self-reports I already held. s42: *"cool,
+high-key, a scrubbed rain-washed blue… it reads as physically motivated rather than a hue-shift
+filter, because the sun disc, the shadows and the warm roof tones stay consistent; only the air
+changes."* s7: *"the clear cold morning after a front passes."* No tears, no floaters, no muddy
+or blown-out colour.
+
+**Verdict — SHIPPED.** Cue **(aq) CLOSED**, and with it the seasonal ladder that 238/247/250 had
+been walking: the season now reaches the *illumination*, which is the one surface every pixel
+wears. 209's law paid out where the header said it would.
+
+**Three laws promoted to SKILL.md** (bodies there):
+1. **SUPPRESS THE PREDICATE** — the fourth member of the suppression family (226 the draw · 230
+   the decision · 234 the colour). Any feature written as `HEAD + K·signal` is isolated by
+   forcing its *predicate function* to 0 on `window` and re-rendering **in one page**: floor
+   exactly 0, build-agnostic, no HEAD file, no cross-build floor. My first cut *was* a
+   patch-vs-HEAD diff and its HEAD-vs-HEAD floor was **20,000–34,000 px** — you cannot claim
+   "exactly 0" from under that.
+2. **A CENTRED LEVER'S FIXED POINT CAN BE DESTROYED BY FLOAT ERROR IN ITS NORMALISER.**
+   `1/(gr*.30+gg*.59+gb*.11)` is *not* exactly 1.0 at `gr=gg=gb=1` — 0.30+0.59+0.11 is not 1.0 in
+   float64 — so it would have drifted `tint`'s last bit at the very pin the proof rests on. Write
+   the normaliser in terms of the **signal** (`1/(1−0.0308c)`), not of the gains. Structural (223),
+   not lucky.
+3. **WHEN YOU RESTORE A SIGNAL THAT WAS MISSING GLOBALLY, THE OLD PROBE'S *CONTROL* BECOMES YOUR
+   HEADLINE** — and if your fix lifts *every* row of a metric past its floor, ask whether you
+   fixed the subject or moved the instrument's baseline.
