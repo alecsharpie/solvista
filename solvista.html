@@ -6489,6 +6489,20 @@ function stepGond(g){
   const c=cellAt(nx,ny);
   if(!c)return;
   if(gondSet.has(idx(nx,ny))){g.fam=-g.fam;return;} /* keep clear of the other cables */
+  /* and keep clear of the SEA. The value bar below DECAYS with the wait, and has no
+     floor -- so a line that stalls at the coast (nothing left ashore is worth riding
+     over) eventually drops its bar under a val-0 water cell and strings its rope out
+     into open sea, ending there with no terminus. Measured on 3 seeds in 6 before this
+     gate: seed 7's line spent its last EIGHT spans over beach and water. That is cue
+     (an) -- the ledger's most-reported undiagnosed defect, raised by both step-back
+     agents on both seeds at 242 ("a pair of dark lines ... ENDS IN THE WATER with no
+     pylon", "a bare black hairline terminating in mid-air").
+     Turn along the coast rather than stopping, so the line keeps its LENGTH and only
+     loses its swim -- and steer by the same WETSET the cloud shade uses (242), because
+     "wet" gets ONE definition in this artifact, not a second one rolled here. A BEACH
+     is dry land and stays rideable: an aerial tram over the sand is the good half of
+     this feature, and it is what the line is FOR. */
+  if(WETSET.has(c.t)){g.fam=-g.fam;return;}
   if(c.val<g.bar-g.wait*0.002){g.wait++;return;} /* waits for the shore to earn it */
   /* keep the cabins where they are while the line lengthens under them */
   if(L>1){const k=(L-1)/L;for(const cb of g.cabins){cb.p=cb.p<0.5?cb.p*k:1-(1-cb.p)*k;cb.dw=0;}}

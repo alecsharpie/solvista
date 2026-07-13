@@ -16428,3 +16428,91 @@ is precisely the drift a step-back exists to catch. **233 should take cue (ai).*
   **⚠ THE DEAD-REGIME CONTROL (199) and ⚠ NEVER GRADE BY CONSECUTIVE PASSES (117 corrected 99) are both LAWS in
   SKILL.md** (bodies archived at 222): a change **provably inert in one regime** makes that regime its free, same-run
   noise floor; and machine load is autocorrelated, so only an **interleaved A/B/A/B vs pristine HEAD** reads true.
+
+## Iteration 233 — the fringe is boxed between two gates (2026-07-13) [Nature × Deepen]
+
+**Vector.** Nature (stalest, 221) × Deepen, taking cue **(ai)** — the ledger's only
+MEASURED cue and its #1: *the city has no fringe, it is DENSEST AT ITS RIM* (232, two
+blind agents, two seeds, unprompted; taper **inverted**).
+
+**Probe first, and it moved the whole design (`probes/probe-fringehost.mjs`, banked, 6 seeds).**
+The obvious fix — steer development away from the rim — is **impossible**, and the probe
+says so in three numbers:
+- **The parcel roll is 100.0% SATURATED on every seed.** Not one eligible cell is left
+  unbuilt anywhere in any city. Per 218 `p` is a **DEAD lever**: the city is exactly
+  "every lot within 2 hexes of a road", and only the **PREDICATE** can steer it.
+- **ROAD is FLAT across rim bands** (29.5% of land at the rim, 33.6% deep). So the parcel
+  rule is **INNOCENT** — 218's host-layer law: it faithfully fills what the roads reach,
+  and *the roads reach the plate's edge*.
+- **The dev budget has SLACK** (1153 used / 1382). ⇒ **A held-back rim lot is NOT re-spent
+  inland.** There is no free redistribution; pop falls ~1:1 with cells held. This is the
+  fact that kills the elegant version of this vector, and it is the first thing to check.
+
+**Change (built, gated, REVERTED).** `greenbelt(x,y)` — a **fixed spatial mask**, not a
+roll (a mask cannot saturate) — over the plate's outer rings, read by **three rules, one
+definition** (112): parcels may not subdivide a held lot, **logging may not clear its
+woods** (>=2 road/DEV nbrs *is* the rim, so without this the fringe is felled as fast as
+it grows), urbanization may not sell its fields. Roads untouched, so the lanes still
+thread to the edge and the corridor/monorail/gondola passes stay byte-identical.
+
+**Census.** PASS at the shipped tuning (`developed -4.4%`, `pop +8.2%`, `roads -1.0%`, 0 errors).
+
+**THE BOX — why it died.** Three shapes were built and shot, and the two gates close on it
+from opposite sides:
+- **Strong enough to READ as country ⇒ the census core gate COLLAPSES.** `developed`
+  is a **core** metric and this vector's *purpose* is to remove developed cells. Every
+  tuning that took the rim below ~20% built measured **`developed` -5.7% to -9.3% = FAIL**.
+  Ceiling is ~**-4.5%**, and that ceiling is the whole story.
+- **Weak enough to PASS ⇒ it is SEED-FRAGILE.** The belt is drawn from noise, so its
+  quality is a lottery. Final build: seed 7 held 220 lots (rim **46 -> 19%** built) and
+  PASSED decisively — *"it wanders... the plate's hexagonal outline is NOT legible in the
+  green"*. Seed 42 drew 161 lots (rim **54 -> 36%**) and FAILED — *"a near-constant-width
+  band tracing the plate's hexagonal outline."* **195's law: a procedural city must hold on
+  EVERY seed.** On a bad draw the belt *announces the generator's rule*, which is a worse
+  artifact than no fringe at all.
+
+**Visual.** 8 agent reads over 3 shapes, all blind, all correctly identifying the patched
+build. Every single read: **downtown INTACT** and **no render bugs**. Verdict split every
+round — one PASS, one FAIL, the FAIL always on whichever seed drew the weaker belt.
+
+**Three SHAPE findings, each paid for by a failed gate round (these are the reusable part):**
+1. **An even SCATTER reads as SPECKLE, not country.** *"Green appears BETWEEN the buildings
+   rather than replacing them"* — salting every block clears none of them.
+2. **Modulating only the STRENGTH of an unwarped ring reads as an OFFSET HALO.** Of course
+   it does: `rural` is a function of `hexDist` from the plate centre, so **its boundary IS
+   the plate's hexagon by construction**, and no density noise hides that. *"It looks like
+   a rim rule."*
+3. **The warp must be able to ERASE the belt.** Warping the distance field by ±4 rings still
+   clamps `rural` to 1 at rim 0, so **the city can never touch the plate's edge** — an agent
+   caught exactly this (*"never lets the city touch the rim"*). The warp must exceed the belt
+   depth, so the belt *vanishes* in places. That one change is what flipped seed 7 to PASS.
+
+**Where the cost actually lands (this is the good news, and the next lap should keep it).**
+Split by distance from the CBD, 10 seeds, paired: the loss is **entirely OUTER**. Core
+(<=8): `developed` **+0.2%**, MID **+5.7%**, COM **+10.6%** — *downtown is not taxed at all*,
+and every agent read confirms it. Outer (>16): MID -15.5%, TOWER -14.5%, dev -8.4%. **The
+pop a fringe costs is far-flung rim pop, which is exactly the fabric that should not exist.**
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` is byte-identical to HEAD. The city IS
+measurably better with the belt — but not on every seed, and it cannot be strengthened
+without collapsing a core metric. Reverting a change that half the gate loves is the system
+working (82/88/101/114).
+
+**⇒ THE WAY THROUGH, for whoever takes (ai) next — do NOT re-try a bare rim mask.** The
+budget **has slack** (1153/1382), so the city can absorb the freed development *inland* if
+something makes interior cells eligible for it (the parcel predicate's `road within 2` is
+the lever, and widening it in the interior is **pure addition**, 219). **Hold the rim AND
+widen the core in the SAME lap** and `developed` stays flat — the census gate opens, the
+belt can be made as strong as the eye needs, and the city gets a hinterland *and* a denser
+middle. Priced separately, each half fails; the pair is what makes it shippable.
+
+
+
+## (am) — body rotated out of the header at 243 (closed by 241)
+
+✅ **(am) CLOSED by 241 — THE ELEVATED NETWORK HAS A BUDGET (`RAILCAP=130`, shared across the planned
+lines).** The cue's implied spec was WRONG in three ways, all measured (`probes/probe-railink.mjs`): the
+beam is **NOT too bright** (33rd pct of the buildings it flies over; dTop **+37 vs a building's +57**),
+the **gondola is NOT the culprit** (33x less ink), it is **NOT unsupported** (**41%** of its ink is legs).
+⚠ **DO NOT re-tune the beam's draw, and DO NOT bound a loop's RADIUS** (measured: homing at R-from-start
+makes stubs, not loops — every line collapsed to ~20 cells).

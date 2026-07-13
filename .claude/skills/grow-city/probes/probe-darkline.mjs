@@ -38,10 +38,15 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const CAND = [resolve(HERE, '../../../../solvista.html'), resolve(HERE, 'solvista.html')];
 const ART = CAND.find(f => existsSync(f));
 
+/* 203's CHAIN LAW, and it lived in this probe as a bug: a gondola rope span is only
+   ~12-14 device px, so a per-stroke `len >= 30` filter CANNOT SEE THE ROPE — while the
+   eye sees the 15-25 spans chained into an unbroken run across the frame. Group by
+   ISSUER and sum; set MINLEN low to census chains, high for genuinely long strokes. */
+const MINLEN = +(process.env.MINLEN ?? 30);
 const SEEDS = [42, 7];
 const LIGHTS = { day: 0.30, night: 0.88 };
 
-const census = async (page, seed, dayT) => page.evaluate(({ seed, dayT }) => {
+const census = async (page, seed, dayT) => page.evaluate(({ seed, dayT, MINLEN }) => {
   playing = false;
   genWorld(seed);
   __warp(61);
@@ -86,6 +91,7 @@ const census = async (page, seed, dayT) => page.evaluate(({ seed, dayT }) => {
   };
 
   const rows = new Map();
+  let gradN = 0, gradLen = 0;   /* gradient strokes: counted, never scored as ink */
   proto.stroke = function () {
     const r = origStroke.apply(this, arguments);
     try {
@@ -99,10 +105,16 @@ const census = async (page, seed, dayT) => page.evaluate(({ seed, dayT }) => {
           if (i) len += Math.hypot(px - pts[i - 1][0], py - pts[i - 1][1]);
           x0 = Math.min(x0, px); y0 = Math.min(y0, py); x1 = Math.max(x1, px); y1 = Math.max(y1, py);
         }
-        const css = typeof this.strokeStyle === 'string' ? this.strokeStyle : '#000';
-        const { lum, a } = lumOf(css);
+        /* A CanvasGradient/Pattern has NO luminance. Scoring it '#000' (as this probe
+           did until iter 243) makes the RAIN SHAFTS the darkest "line" in the city and
+           buries every real one: on seed 7 they were 8160px of phantom black ink at the
+           top of the census, and they are a SOFT WASH the eye never reads as a line.
+           They are counted apart, never as ink. */
+        const grad = typeof this.strokeStyle !== 'string';
+        if (grad) { gradN++; gradLen += len; }
+        const { lum, a } = grad ? { lum: 1, a: 0 } : lumOf(this.strokeStyle);
         /* the agents' description: LONG, THIN, DARK */
-        if (len >= 30 && lw <= 3.0 && lum <= 0.42 && a * this.globalAlpha >= 0.35) {
+        if (!grad && len >= MINLEN && lw <= 3.0 && lum <= 0.42 && a * this.globalAlpha >= 0.35) {
           const st = (new Error()).stack.split('\n').slice(2, 12);
           let fn = '?';
           for (const l of st) {
@@ -128,8 +140,9 @@ const census = async (page, seed, dayT) => page.evaluate(({ seed, dayT }) => {
   proto.arc = origArc; proto.ellipse = origEll; proto.rect = origRect;
   proto.quadraticCurveTo = origQuad; proto.bezierCurveTo = origBez; proto.stroke = origStroke;
 
-  return { W: cvs.width, H: cvs.height, rows: [...rows].map(([k, v]) => ({ k, ...v })).sort((a, b) => b.len - a.len) };
-}, { seed, dayT });
+  return { W: cvs.width, H: cvs.height, gradN, gradLen,
+    rows: [...rows].map(([k, v]) => ({ k, ...v })).sort((a, b) => b.len - a.len) };
+}, { seed, dayT, MINLEN });
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
@@ -137,7 +150,7 @@ page.on('pageerror', e => console.log('PAGE ERROR:', e.message));
 await page.goto(pathToFileURL(ART).href);
 await page.waitForTimeout(1200);
 
-console.log('THIN DARK LINES — long (>=30 device px), thin (<=3px), dark (lum<=0.42)');
+console.log(`THIN DARK LINES — per-stroke >=${MINLEN} device px, thin (<=3px), dark (lum<=0.42)`);
 console.log('sorted by total device-px of dark linear ink laid down in ONE frame\n');
 
 for (const seed of SEEDS) {
@@ -150,6 +163,7 @@ for (const seed of SEEDS) {
       console.log(`  ${String(Math.round(e.len)).padStart(6)}px  n=${String(e.n).padStart(4)}  max=${String(Math.round(e.maxlen)).padStart(4)}px  ${e.k}`);
       console.log(`          bbox x ${(x0 / r.W).toFixed(2)}..${(x1 / r.W).toFixed(2)}  y ${(y0 / r.H).toFixed(2)}..${(y1 / r.H).toFixed(2)}`);
     }
+    console.log(`          [gradient strokes excluded: n=${r.gradN}, ${Math.round(r.gradLen)}px — soft washes, not lines]`);
     console.log('');
   }
 }

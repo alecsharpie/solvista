@@ -24,7 +24,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241** | **105**, **171** |
+| **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236** | | | 61, 81, 89, **115**, **200**, **242** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
@@ -38,7 +38,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: Civic **231** · Water **234** · Nature **238** · Urban **239** ·
-  People **240** · Transport **241** · Sky **242**. **242 was the 28th step-back; the 29th is due at ~247.**
+  People **240** · Sky **242** · Transport **243**. **242 was the 28th step-back; the 29th is due at ~247.**
   ➡ **NEXT: Civic (stalest, 231)** — or take the 🔴 below. ⚠ **Read the `peds` cap
   first** (111) before designing anything road-borne.
   ✅ **242 (the 28th step-back): THE CLOUD SHADE FELL ON THE OPEN SEA — FIXED.** Both step-back agents, blind, on two
@@ -53,12 +53,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   rainbow's *"cf. the cloud shade above — no ground, no bow"* cites as precedent a gate that was never doing the job.
   **199/209's tell has a new host: a CROSS-REFERENCE.** When code cites a neighbour as the precedent for an
   invariant, **go read the neighbour.**
-  ✅ **241: THE ELEVATED NETWORK HAS A BUDGET** (`RAILCAP=130`, shared across the planned lines; cue (am) CLOSED).
-  Its law (*when every per-pixel property of a "too loud" element measures IN BAND, stop tuning the draw and go
-  count the THINGS*) is in SKILL.md; lap detail archived at 242.
-  ✅ **225's grep-the-seam law is 3 for 3** (Sky 236, Nature 238, People 240 — all off domains the header had written
-  off) ⇒ **an empty cue list is not evidence of saturation; it is evidence nobody has grepped.** **(ai)** outranks
-  kind-rotation (119) whenever a Nature/Urban lap comes up.
+  ✅ **241: THE ELEVATED NETWORK HAS A BUDGET** (`RAILCAP=130`; cue (am) CLOSED — see (am) below; law in SKILL.md).
+  ✅ **225's grep-the-seam law is 3 for 3** (Sky 236, Nature 238, People 240 — all off domains written off as stale)
+  ⇒ **an empty cue list is not saturation; it is evidence nobody has grepped.** **(ai)** outranks kind-rotation (119).
   ⚠ **239: NAME THE FILE, NEVER A LETTER, in a visual A/B** (law in SKILL.md; 238's crossed mapping guards a *bias*,
   not the *bookkeeping*). **240/242 are its payoff — asked per FILE NAME, agents md5'd the paths and audited my own
   camera.**
@@ -86,11 +83,10 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   TWICE, 203/212) — while the ASIDE both agents reached independently, on different seeds, in passing (*"dark blobs
   on the water with no cloud above them"*), was REAL, and became the lap.** **Interaction/UX** (cross-cutting) last
   touched **229**.
-  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) 231, (u) 234, (af′) 235, (al) 239, (am) 241; **(aj)'s SHADE half CLOSED
+  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) 231, (u) 234, (af′) 235, (al) 239, (am) 241, **(an) 243**; **(aj)'s SHADE half CLOSED
   242 — its cloud-SITING half is still open**; **(ab) RETIRED into (ak) at 238**): 🔴 **(ai)** THE CITY HAS NO FRINGE
   — **measured; 233 tried and REVERTED, the way through is
-  NAMED** · 🔴 **(an)** the black cables ending in the sea — **re-reported by BOTH agents on BOTH seeds at 242;
-  still UNIDENTIFIED, and cheap** · **(ao)** the rain shafts / rainbow are not bounded by the ground (Sky × Polish,
+  NAMED** · **(ao)** the rain shafts / rainbow are not bounded by the ground (Sky × Polish,
   cheap — 242 proved the family is real) · **(ak)** the season — ⚠ **242: both agents, both seeds, independently —
   winter reads as "lusher", NOT as winter**; read the cue, its prescription is dead · **(ag)** the night greens stay
   hot — **reconfirmed 242**, squarely on 222's ladder invariant (Nature × Polish) · **(y)** the scorched inland
@@ -157,10 +153,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   are where an agent is WRONG and the ASIDES are where it is RIGHT.** Paid out 213, 214×2, 215, 217, 219, 232, 236.
   ⚠ **237 INVERTED IT** — both agents' headline FAIL was right *and* correctly diagnosed. ⇒ **grade the FAIL by
   MEASURING it; do not assume it is wrong.** Still weight an aside two agents reach independently above any verdict.
-  ⚠ **241 IS ITS NEWEST HOST, A NEW SHAPE: an agent attributed a QUANTITY difference to a STYLE one.** On a blind A/B
-  whose diff has **no draw code at all**, it reported the losing build drew *"the beams darker and thicker, with denser
-  heavier pylons"* — PERCEPTION right (that build has **18% more track**), CAUSE invented. Both still picked the patch,
-  on a CROSSED mapping. ⇒ **An agent can see MORE OF A THING and report it as A HEAVIER DRAW. Check your diff first.**
+  ⚠ **241: an agent attributed a QUANTITY difference to a STYLE one** — on a diff with **no draw code**, it called the
+  losing build's beams *"darker and thicker"* (it has **18% more track**). ⇒ **More of a thing reads as a heavier draw;
+  check your diff first.** ⚠ **243: a cue can bundle a REAL defect with a MISREAD — see (an).**
   Perf ARC (refs as 202/207/212/217/222/227/237/242, directly comparable; per-step-back priors 202→227 archived at
   233, 232's lap-detail at 236). **At 242: ARC vs `7e2ac2c` (177, 65 iters) day +18.6% / night +12.8%** — against
   237's +17.2%/+13.8%, i.e. **the arc did NOT move over this lap.** Arc rate ~**+0.2%/iteration**; diffuse, **NOT
@@ -349,18 +344,23 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ✅ **(al) CLOSED by 239 — THE BUILDING-LOOK LADDER IS COMPLETE** (228 crown · 235 footprint · 239 the MID-RISE; body
   archived at 241). ⚠ **DO NOT RE-OPEN EITHER BUILDING**; ⚠ **EVERY FORM'S BASE IS ITS WIDEST PART** (the party wall is
   the NEIGHBOUR'S WEST FACE, not a constant).
-  ✅ **(am) CLOSED by 241 — THE ELEVATED NETWORK HAS A BUDGET (`RAILCAP=130`, shared across the planned lines).** The
-  cue's implied spec was WRONG in three ways, all measured (`probes/probe-railink.mjs`): the beam is **NOT too bright**
-  (33rd pct of the buildings it flies over; dTop **+37 vs a building's +57**), the **gondola is NOT the culprit** (33x
-  less ink), it is **NOT unsupported** (**41%** of its ink is legs). ⚠ **DO NOT re-tune the beam's draw, and DO NOT
-  bound a loop's RADIUS** (measured: homing at R-from-start makes stubs, not loops — every line collapsed to ~20 cells).
-  ⚠ **polish-tile's (a) (sub-pixel rope/masts) is a DIFFERENT, still-open cue — 241 touched no draw code.**
-  **🔴 (an) THE BLACK CABLES OVER THE BEACH AND SEA — RE-REPORTED BY BOTH AGENTS AT 242, ON BOTH SEEDS. ESCALATED.**
-  *"A pair of dark lines leaves the shore, crosses the beach and open water, and ENDS IN THE WATER with no pylon or
-  terminus — the single ugliest artefact in the set"* (42) · *"a bare black hairline terminating in mid-air"* (7).
-  ⚠ **STILL UNIDENTIFIED — `grep` the draw BEFORE designing** (dead-code law): it may be the transmission line, a
-  mis-sited entity, or the gondola rope. **The most-reported UNDIAGNOSED defect in the ledger.** 240's second aside
-  stands: *"tiny white chevron glyphs on land (x≈0.47,y≈0.47), like stray marks."* Cheap.
+  ✅ **(am) CLOSED by 241 (body archived at 243; WARNINGS only).** ⚠ **DO NOT re-tune the beam's draw** (measured IN
+  BAND on every axis) **and DO NOT bound a loop's RADIUS** (measured: that makes stubs, not loops). ⚠ **polish-tile's
+  (a) (sub-pixel rope/masts) is a DIFFERENT, still-open cue.**
+  ✅ **(an) CLOSED by 243 — IT WAS THE CABLE CAR, AND THE CUE WAS HALF A MISREAD.** `stepGond`'s value bar **DECAYS
+  with the wait, with no floor**, so a line stalling at the coast accepts a **val-0 sea cell** and strings its rope
+  into open water. Gated on **`WETSET`** (the ONE wet, 242): it **turns along the coast**, keeping its LENGTH; a
+  **BEACH stays rideable** (that is what the tram is FOR). **SEA spans 3 → 0 / 6 seeds**, free (±0.06%). **Monorail
+  exonerated** — a CLOSED LOOP crosses water and comes back, never terminates. ⚠ **SEED 42 NEVER REPRODUCED** (SEA 0
+  in HEAD); its jetty ends in a **lighthouse**, its pier carries a **ferris wheel** — the referent is the **boardwalk
+  + railing** (*"a pair of parallel lines"*), **on sand**. ⇒ **A cue can bundle a REAL defect with a MISREAD, and the
+  MISREAD is what escalates it** — grade each seed's half separately. 240's aside stands: *"tiny white chevron glyphs
+  on land (x≈0.47,y≈0.47)."* Cheap.
+  🔑 **243'S LAW (SKILL.md): A "BEWARE, PROBE P OVER-REPORTS Y" NOTE IS A BUG REPORT, NOT A LAW.** The harness's own
+  locator (`probe-darkline`) **failed at the one cue it was built for**: it scored the rain shafts' `CanvasGradient`
+  as **8,160px of black ink** and **filtered the 12–14px rope spans out entirely**. SKILL.md had documented **both**
+  traps for **40 iterations** — as prose telling the reader to compensate. **Both are now fixed IN THE TOOL**
+  (gradients counted apart; `MINLEN=4` censuses chains). **229's law wearing a probe.**
   **(ao) THE WEATHER DRAWS ARE NOT BOUNDED BY THE GROUND (242, seed 7, unprompted) — 242 PROVED THIS FAMILY IS REAL.**
   *"The rain shafts cross the water's edge and keep raining over the empty cream backdrop"* (~0.94,0.38) · *"a flat
   rainbow lying ON the water, its right foot cut off mid-water"* (~0.78,0.31). **Same shape as the cloud shade 242
@@ -391,88 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 235 entries before Iteration 233 live in
+> **Archive:** the 236 entries before Iteration 234 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 233 — the fringe is boxed between two gates (2026-07-13) [Nature × Deepen]
-
-**Vector.** Nature (stalest, 221) × Deepen, taking cue **(ai)** — the ledger's only
-MEASURED cue and its #1: *the city has no fringe, it is DENSEST AT ITS RIM* (232, two
-blind agents, two seeds, unprompted; taper **inverted**).
-
-**Probe first, and it moved the whole design (`probes/probe-fringehost.mjs`, banked, 6 seeds).**
-The obvious fix — steer development away from the rim — is **impossible**, and the probe
-says so in three numbers:
-- **The parcel roll is 100.0% SATURATED on every seed.** Not one eligible cell is left
-  unbuilt anywhere in any city. Per 218 `p` is a **DEAD lever**: the city is exactly
-  "every lot within 2 hexes of a road", and only the **PREDICATE** can steer it.
-- **ROAD is FLAT across rim bands** (29.5% of land at the rim, 33.6% deep). So the parcel
-  rule is **INNOCENT** — 218's host-layer law: it faithfully fills what the roads reach,
-  and *the roads reach the plate's edge*.
-- **The dev budget has SLACK** (1153 used / 1382). ⇒ **A held-back rim lot is NOT re-spent
-  inland.** There is no free redistribution; pop falls ~1:1 with cells held. This is the
-  fact that kills the elegant version of this vector, and it is the first thing to check.
-
-**Change (built, gated, REVERTED).** `greenbelt(x,y)` — a **fixed spatial mask**, not a
-roll (a mask cannot saturate) — over the plate's outer rings, read by **three rules, one
-definition** (112): parcels may not subdivide a held lot, **logging may not clear its
-woods** (>=2 road/DEV nbrs *is* the rim, so without this the fringe is felled as fast as
-it grows), urbanization may not sell its fields. Roads untouched, so the lanes still
-thread to the edge and the corridor/monorail/gondola passes stay byte-identical.
-
-**Census.** PASS at the shipped tuning (`developed -4.4%`, `pop +8.2%`, `roads -1.0%`, 0 errors).
-
-**THE BOX — why it died.** Three shapes were built and shot, and the two gates close on it
-from opposite sides:
-- **Strong enough to READ as country ⇒ the census core gate COLLAPSES.** `developed`
-  is a **core** metric and this vector's *purpose* is to remove developed cells. Every
-  tuning that took the rim below ~20% built measured **`developed` -5.7% to -9.3% = FAIL**.
-  Ceiling is ~**-4.5%**, and that ceiling is the whole story.
-- **Weak enough to PASS ⇒ it is SEED-FRAGILE.** The belt is drawn from noise, so its
-  quality is a lottery. Final build: seed 7 held 220 lots (rim **46 -> 19%** built) and
-  PASSED decisively — *"it wanders... the plate's hexagonal outline is NOT legible in the
-  green"*. Seed 42 drew 161 lots (rim **54 -> 36%**) and FAILED — *"a near-constant-width
-  band tracing the plate's hexagonal outline."* **195's law: a procedural city must hold on
-  EVERY seed.** On a bad draw the belt *announces the generator's rule*, which is a worse
-  artifact than no fringe at all.
-
-**Visual.** 8 agent reads over 3 shapes, all blind, all correctly identifying the patched
-build. Every single read: **downtown INTACT** and **no render bugs**. Verdict split every
-round — one PASS, one FAIL, the FAIL always on whichever seed drew the weaker belt.
-
-**Three SHAPE findings, each paid for by a failed gate round (these are the reusable part):**
-1. **An even SCATTER reads as SPECKLE, not country.** *"Green appears BETWEEN the buildings
-   rather than replacing them"* — salting every block clears none of them.
-2. **Modulating only the STRENGTH of an unwarped ring reads as an OFFSET HALO.** Of course
-   it does: `rural` is a function of `hexDist` from the plate centre, so **its boundary IS
-   the plate's hexagon by construction**, and no density noise hides that. *"It looks like
-   a rim rule."*
-3. **The warp must be able to ERASE the belt.** Warping the distance field by ±4 rings still
-   clamps `rural` to 1 at rim 0, so **the city can never touch the plate's edge** — an agent
-   caught exactly this (*"never lets the city touch the rim"*). The warp must exceed the belt
-   depth, so the belt *vanishes* in places. That one change is what flipped seed 7 to PASS.
-
-**Where the cost actually lands (this is the good news, and the next lap should keep it).**
-Split by distance from the CBD, 10 seeds, paired: the loss is **entirely OUTER**. Core
-(<=8): `developed` **+0.2%**, MID **+5.7%**, COM **+10.6%** — *downtown is not taxed at all*,
-and every agent read confirms it. Outer (>16): MID -15.5%, TOWER -14.5%, dev -8.4%. **The
-pop a fringe costs is far-flung rim pop, which is exactly the fabric that should not exist.**
-
-**Verdict: EXPLORED → REVERTED.** `solvista.html` is byte-identical to HEAD. The city IS
-measurably better with the belt — but not on every seed, and it cannot be strengthened
-without collapsing a core metric. Reverting a change that half the gate loves is the system
-working (82/88/101/114).
-
-**⇒ THE WAY THROUGH, for whoever takes (ai) next — do NOT re-try a bare rim mask.** The
-budget **has slack** (1153/1382), so the city can absorb the freed development *inland* if
-something makes interior cells eligible for it (the parcel predicate's `road within 2` is
-the lever, and widening it in the interior is **pure addition**, 219). **Hold the rim AND
-widen the core in the SAME lap** and `developed` stays flat — the census gate opens, the
-belt can be made as strong as the eye needs, and the city gets a hinterland *and* a denser
-middle. Priced separately, each half fails; the pair is what makes it shippable.
 
 ## Iteration 234 — the boardwalk was never violet, it was grey (2026-07-13) [Water & coast × Polish]
 
@@ -1174,3 +1097,64 @@ now at a **FIFTH** step-back.
 **Verdict** — **FIXED.** The city is otherwise whole: no z-order tears, no blown-out colour, no broken geometry, the
 night frame is the one that "has aged best", and the arc is flat. One 240-iteration-old defect, found by an aside,
 closed by a probe with an honest zero.
+
+## Iteration 243 — the cable car went for a swim (Transport × Polish, FIXED)
+
+**Vector** — Transport × Polish. Took the ledger's **#1 🔴 cue (an)**: *"a pair of dark lines leaves the shore,
+crosses the beach and open water, and ENDS IN THE WATER with no pylon or terminus — the single ugliest artefact in
+the set"* (both step-back agents, both seeds, 242). It had stood **UNIDENTIFIED** — the most-reported undiagnosed
+defect in the ledger — with an explicit instruction to `grep` the draw before designing.
+
+**The instrument lied first, and that is the lap's real finding.** The harness owns a locator for exactly this
+(`probe-darkline`). Run at the defect it was built for, its census came back headed by **8,160px of "black" ink
+attributed to `render`** — which is **the rain shafts**, whose `CanvasGradient` `strokeStyle` has no luminance and
+was being scored `#000`. Meanwhile the real suspect was **filtered out entirely**: a gondola rope span is ~12–14
+device px and the probe's `len >= 30` per-stroke gate cannot see it. **SKILL.md documented BOTH traps, in detail,
+and had done for 40 iterations** — as *prose telling the reader to compensate*, while the probe went on doing them.
+Fixed in the tool: gradients counted apart and never scored as ink; `MINLEN` an env knob so it censuses chains.
+
+**Change** — `stepGond` extends a line onto a cell only if it clears the value bar `c.val < g.bar - g.wait*0.002`
+— and **that bar DECAYS with the wait, with no floor.** So an aerial line that stalls at the coast (nothing left
+ashore is worth riding over) eventually drops its bar beneath a **val-0 sea cell** and strings its rope out into
+open water, terminating there. The lever is the **predicate, not the rate** (218). One line, reusing **`WETSET`**
+— the artifact's one definition of wet, established at 242 — rather than rolling a second one:
+`if(WETSET.has(c.t)){g.fam=-g.fam;return;}`. It **turns along the coast instead of stopping**, so the line keeps its
+LENGTH and only loses its swim. A **BEACH stays rideable**: an aerial tram over the sand is the good half of this
+feature and is what the line is *for*.
+
+**Probe** (`probes/probe-cablehost.mjs`, banked — pure world data, no render, no clock, no noise floor; `SRC=`
+grades HEAD). Per line: length · **SEA spans (`WETSET`) kept separate from BEACH spans** · the tile it ends on.
+6 seeds:
+
+| | HEAD | patch |
+| --- | --- | --- |
+| seed 7 | len 17, **SEA 2** (idx 14,15 — the tail), ends BEACH | len 14, **SEA 0**, beach 5, ends BEACH |
+| seed 5 | len 19, **SEA 1** (idx 16), ends BEACH | len 19, **SEA 0**, ends IND |
+| 42 · 1234 · 99 · 2024 | SEA 0 | **SEA 0**, byte-identical routes |
+
+**SEA spans 3 → 0 across six seeds; only the seeds that swam changed.** The **monorail is exonerated by the same
+probe** (the control): it is a **closed loop**, crosses water 0–3 cells and comes back — a viaduct, never a terminus.
+
+**Census** — PASS. Core byte-flat (`pop`/`roads`/`developed` +0), tile histogram **empty** — correct, the gondola
+touches no terrain and rolls a private PRNG (`seedNum^0x60D0`). `greenRoofs -3` is **not mine**: re-running the
+**SAME FILE** (226's law — never diff HEAD) moved it again to `-2`. **Free by 222's ledger**: path objects
+**day 111,450 / night 140,102** vs 242's 111,389 / 140,189 = **+0.05% / −0.06%** — it reroutes spans, it doesn't add them.
+
+**Visual** — blind agent, asked to **LOCATE not judge** (108), given **file names not letters** (239), traced
+`head7`'s rope onto **masts standing in the water at ~(0.685,0.68)** and `fix7`'s terminating **on a mast on the
+sand** — matching the world probe with no knowledge of it. No z-order tears, no floating tiles.
+
+⚠ **BUT THE CUE WAS ONLY HALF REAL, AND SEED 42 NEVER REPRODUCED.** Seed 42's gondola has **SEA 0 in HEAD** — it runs
+nowhere near the sea — yet seed 42 is the seed whose agent wrote the quote above. A second agent, asked to locate it
+and told not to be agreeable, ran a **dark-pixel scan of the entire ocean half** and found **nothing**: the two
+things over seed 42's water are a **jetty ending in a red-capped lighthouse** and a **pleasure pier carrying a ferris
+wheel** — both properly terminated. Its read: the reviewer most likely misread the **beach boardwalk and its white
+railing** (*a pair of parallel lines* — the cue's own words) which **stays entirely on sand**. ⇒ The cue bundled
+**one real defect (seed 7's rope, now closed) with one misread (seed 42's boardwalk)**, and the misread is what
+escalated it to 🔴 and to *"the single ugliest artefact in the set."*
+
+**Verdict** — **FIXED.** 🔑 **Its law (in SKILL.md): A "BEWARE, THIS PROBE OVER-REPORTS Y" NOTE IS A BUG REPORT, NOT
+A LAW.** The loop wrote the compensation for two instrument defects into its own prose and left the defects in the
+code, so its banked locator failed at the one cue it was built for. **229's law wearing a probe** — a *discipline*
+written where a *structural* fix was available. When you catch yourself writing "remember that probe P lies in way
+X", stop and spend five minutes inside P.

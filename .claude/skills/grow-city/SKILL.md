@@ -1001,6 +1001,19 @@ vector, whatever it is.
   threshold — and note the same census's other trap: a non-string `strokeStyle` (a `CanvasGradient`) has no
   luminance, so defaulting it to black makes the **rain shafts** the darkest "line" in the city. `probes/probe-darkline.mjs`
   is the reusable locator — stack-attributed, so it names the function that issued the ink.
+  **⇒ AND BOTH OF THOSE TRAPS WERE STILL LIVE *IN THE PROBE* WHEN 243 PICKED IT UP — BECAUSE THIS ENTRY WROTE THE
+  COMPENSATION DOWN INSTEAD OF FIXING THE CODE. A "BEWARE, THIS PROBE LIES IN WAY X" NOTE IS A BUG REPORT, NOT A LAW
+  (iter 243).** Read the paragraph above as it stood: it tells you, correctly and in detail, that `probe-darkline`
+  scores gradients as black and cannot see a chain. It had said so for **40 iterations** — and the probe went on doing
+  both, so 243 ran the loop's own banked locator at the loop's own most-reported undiagnosed defect and got, at the top
+  of the census, **8,160px of phantom black ink that was the rain shafts** (a soft wash the eye never reads as a line),
+  with the real suspect — the gondola rope, whose spans are ~12–14px — **filtered out by `len >= 30` and absent from
+  the table entirely**. Every future reader was expected to re-derive the compensation from prose, forever. This is
+  **229's law wearing a probe** (a *discipline* written where a *structural* fix was available), and **202/227's** with
+  the tool now in your own hands: **a documented trap you keep walking into is a broken tool, not a law.** ⇒ **When you
+  find yourself writing "remember that probe P over-reports Y" — stop, and spend the five minutes inside P.** Gradients
+  are now counted apart and never scored as ink; `MINLEN` is an env knob so the same probe censuses chains (`MINLEN=4`)
+  or long strokes (the default 30). The tell: a caveat in your notes whose job is to un-teach an instrument's output.
 - **STUBBING `Math.random` BEFORE `genWorld` IS NOT EARLY ENOUGH — stub it before the PAGE'S OWN SCRIPT, with
   `page.addInitScript` (iter 213, sharpening 203).** 203 says stub the PRNG before `genWorld` because a whole class
   of entities respawns in it. True, and still not enough: a `page.evaluate` runs **after the document's top-level
@@ -1949,8 +1962,16 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   reopening any draw-cost lever), `probe-drawbudget.mjs` (**where the frame goes** —
   path objects per draw fn, in one render; calibrated against `probe-shadcost`),
   `probe-darkline.mjs` (**locate an unexplained linear artifact**: censuses every long/thin/dark
-  stroke and attributes it to the fn that issued it — but read the chain law above before
-  trusting its thresholds), and `probe-gondz.mjs` (**is this drawn OVER that?** — one frame under
+  stroke and attributes it to the fn that issued it. ✅ **REPAIRED at 243 — its two documented lies are now fixed IN
+  THE TOOL, not in a caveat**: a `CanvasGradient` stroke is counted apart and **never scored as black** (the rain
+  shafts used to top the census with 8,160px of phantom ink), and **`MINLEN=4` censuses CHAINS** — the default 30
+  cannot see a 12–14px gondola span, which is how the rope hid from this very probe for 40 iterations),
+  `probe-cablehost.mjs` (243 — **where do the aerial lines actually RUN?** Pure world data — no render, no clock, no
+  noise floor, nothing to stub, and it is the cheapest instrument in the harness. Per line: length, **SEA spans
+  (`WETSET` — the ONE definition of wet)** kept separate from **beach spans**, the tile it ends on, and its pylon
+  indices; monorail loops beside it as the control. `SRC=` grades pristine HEAD. It identified cue (an) in one run
+  after `probe-darkline` had failed to. **Reach for it before designing any route/siting vector — ask what the path
+  RUNS OVER before you touch a draw**), and `probe-gondz.mjs` (**is this drawn OVER that?** — one frame under
   two z-orders, `occluded% = 1 − inkInPlace / inkOnTop`; settles any occlusion claim).
   `probe-ropesteel.mjs` is the rig that graded — and refuted — 203's rope polish; it is the
   template for isolating a draw by *suppressing its own strokes* (stack-matched) rather than
