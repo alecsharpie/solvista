@@ -16643,3 +16643,82 @@ out to sea.** Now gated on `inB` **× a sampled LAND FRACTION** over the shade's
 definition of wet — reused, not re-rolled). Sea ink **−83%** (seed 42: **−100%**); land control **byte-identical**
 on the inland-dominant seed; free (path objects ±0.07%). ⚠ **MARSH/KELP no longer catch cloud shade** (they are in
 `WETSET`) — both agents read that as an improvement (the kelp went teal, not olive).
+
+## Iteration 235 — every tower in the city was the same width (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish — cue **(af′)**, whose pre-registered trigger fired at 232. Urban's
+own rotation was due (last 228) and this is the ledger's loudest standing cue: **six agents across
+three step-backs**, on both seeds, always unprompted, have called downtown wallpaper.
+
+**The instrument had to be re-derived, and 228's own law said so.** The cue arrives holding a probe
+(`probe-crown`), and the trap was to run it, watch it pass, and acquit the towers for a fourth time.
+228 fixed the **CROWN**; the 232 agents said **SILHOUETTE / MASS / FOOTPRINT** — *"variety was added
+in plan but not in MASS/HEIGHT/FOOTPRINT"*. Re-reading `probe-crown` rather than trusting its
+headline showed it already carries the right instrument (`silo()`: the **absolute half-width sampled
+at 12 normalised heights** — the outline the eye traces), and that instrument was **convicting**, not
+acquitting: **TOWER 5.3 distinct silhouettes, top share 54.1%**, against a healthy crown (19.0 / 15.8%).
+
+**The defect was one number.** All four massings are drawn at the same half-extents — `0.32/0.28`,
+`0.33/0.29`, `0.31/0.27`, `0.34/0.30`: **an aspect of 1.14 and a ~10% width spread for every tower in
+the city.** So the styles differ only in what happens near the *top*, and the body below the roofline
+— which is most of a tower — was one shape ~110 times per frame. This is **110's defect surviving on
+the axis 110 did not decouple**: it split colour from silhouette and gave downtown 4 forms × 5 bodies,
+and 228 added 5 crowns, but nothing ever varied the **plan**.
+
+**Change.** A fifth independent seed-salted axis in `towerLook` — the **footprint** (`hashCell(…^0x1F5B)`
+→ point `0.64×0.86` / block `1.00×1.00` / slab `1.32×1.00`, at cuts `.30/.36/.34`). It multiplies every
+half-extent of all four massings, so the axes compose: **4 massings × 3 plans × 5 bodies × 5 crowns.**
+Independent of `style` **and of height** — a footprint keyed to `v` would rebuild 110's *exact* defect
+(corr(style,th) 0.73) on a new axis. **Mean `fx` is held at 1.000 by construction** (98's hold-the-mean),
+so built mass, density and object count are all unchanged.
+Three pieces of geometry assumed the old fixed width and were fixed with it:
+- **The helideck** is a fixed 3.3px arc, and a roof's *shallow* axis binds it (`ay*21.3` vertical vs
+  `ay*32` horizontal). The ziggurat was **already flush** at 3.41px, so a point plan would have hung the
+  pad over its own roof edge. Sized off `fy`, it keeps exactly the fit the artifact already shipped. It
+  **cannot** be gated off instead: `heliPads` is real world data (`c.th>90`) and the helicopter lands there.
+- **The skybridge** spanned a fixed *fraction of the hex spacing* (0.28→0.72), which worked only because
+  every tower was ~10.2px wide against an 8.96px inset. On a 6.6px point tower it would have started
+  **2.4px clear of the building and hung in mid-air.** Both ends now inset 85% of each tower's **own**
+  half-width — reproducing the shipped geometry for a block plan.
+- To do that without a **second** answer to "how wide is a tower", `towerLook` now publishes the body's
+  base half-extents (`bax`/`bay`) and both the draw and the bridge read them. *One predicate, one definition.*
+- The contact shadow follows the plan too — a needle dropping a slab's shadow reads as standing beside
+  its own footing.
+
+**Census.** PASS, 0 page errors, and **every metric exactly +0** — `pop`, `towers`, `towerHt`,
+`tallTowers`, `helipads`, tile histogram empty. Correct and expected: the footprint feeds no
+`rng()`-gated predicate, so the change is stream-neutral and terrain-flat. Vacuous as a growth signal;
+the iteration rests on the probe.
+
+**Probe** (`probes/probe-crown.mjs`, 3 seeds, build-agnostic, **MID as control**):
+
+| | HEAD | patch |
+| --- | --- | --- |
+| TOWER distinct silhouettes | 5.3 | **13.0** |
+| TOWER top silhouette share (*the wallpaper number*) | **54.1%** | **22.0%** |
+| TOWER distinct crowns | 19.0 | 33.7 |
+| MID silhouettes / top (**control**) | 2.0 / 67.7% | **2.0 / 67.7%** — unmoved |
+| `crownable-but-bare` (228's accounted residual) | 0 | **0** |
+
+Crowns rose for free: a crown caps `tax/tay`, so the same crown on a slab and on a needle is a
+different (width,height) pair. Tower counts identical (110/96/68).
+
+**Perf.** Priced by **counting objects**, not by reading the diff (222) and not by the timer (216):
+`probe-drawbudget` reads **day 109,213 → 109,200 (−0.01%)** and **night 138,573 → 138,492 (−0.06%)**.
+Flat — a footprint is a change of **EXTENTS, not of objects**, so it is free by 198's per-path-object
+cost model. `winBandR` does not subdivide by width. No timing gate was run and none is needed.
+
+**Visual.** Blind A/B (`shot-crown.mjs`, day+night, whole-city + CBD close-up), one agent per seed,
+**labels flipped between seeds** so agreement could not come from position. **Both picked the patch**,
+and both described HEAD in the 232 agents' own vocabulary — *"a forest of near-identical slabs… one
+extruded texture"* / *"repeated stamping… an even pincushion"* — against *"a genuine mix: broad plates,
+fat blocks, and slender needles… towers read as individual buildings"*. Both explicitly cleared the two
+failure modes the geometry fixes were aimed at: **no helipad overhangs a roof edge; no skybridge floats.**
+No z-order tears, no blown-out colour, city still coherent. **VISUAL: PASS ×2.**
+
+**Verdict: SHIPPED.** **Cue (af′) CLOSED, and the tower is now varied on all four of its axes**
+(massing × plan × body × crown). The lesson is 228's own law paying out a second time: **the cue handed
+me a probe, and the probe's headline number was about the wrong noun.** Reading what `silo()` actually
+measured — instead of what `probe-crown` is *called* — turned a would-be fourth acquittal into a
+one-command conviction. ⇒ **A banked probe can carry the right instrument under the wrong name.**
+

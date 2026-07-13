@@ -684,6 +684,41 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **WHEN YOU MAKE A CONSTANT INTO A FUNCTION OF A SIGNAL, CENTRE EVERY LEVER ON THAT SIGNAL'S MEAN — IT BUYS A
+  BYTE-IDENTICAL FIXED POINT, WHICH IS AN EXACT, FALSIFIABLE PROOF THAT THE FEATURE ADDS NO DRAW WORK (iter 245).**
+  98 says hold the mean; 216 says a draw change is free if the path count is flat; 222 says the world IS the draw
+  list, so *count objects, don't read the diff*. All three leave you asserting the mean is held. **Make it PROVABLE
+  instead.** 245 made the sea's whitecaps answer the wind by swinging two thresholds — and a threshold on a `crest`
+  **gates a path-object COUNT**, so a drifted mean is a permanent, unbudgeted cost, forever. Writing each lever as
+  `HEAD_CONST + (MEAN − signal)*K` means that at `signal == MEAN` **every lever collapses to HEAD's literal**, so the
+  patch must render **0 px** from HEAD at that one pin — measured on 3 seeds, with a **full-gust control at 736–805 px**
+  proving the builds do diverge elsewhere. The mean is then not a claim you defend but **arithmetic you can run**
+  (mean cap count 8.00% → 8.07% ⇒ **+0.4 path objects**). This is 223's law (*prefer a structural invariant to a checked
+  one*) arriving on the **cost** axis: **a drift you make impossible beats a drift you agree to look for.** The tell:
+  your vector's one-line description is *"X should vary with Y"*, and X currently gates a count.
+  ⇒ **AND ITS COROLLARY IS 217'S LAW, ON A *DRAW* INSTEAD OF A SITING RULE: A FIXED *ELIGIBILITY* GATE CAPS THE DYNAMIC
+  RANGE OF ANY THRESHOLD BENEATH IT.** The whitecaps decide two things on adjacent lines — *may this hex EVER break*
+  (`hashCell > 0.76`) and *does it break NOW* (`crest > 0.5`). 245 made only the second answer the wind, which is the
+  obvious clause, and the calm→gale swing came out **1.5x**: both the pixels and my own eye read it as *"slightly more
+  speckle"*, because the fixed gate let only **24% of the open water EVER break, in any weather.** The ceiling was in
+  the *eligibility*, not the threshold. Riding both (still centred, so the fixed point survives) took it to **3.0x**
+  for **+0.8%** mean cost. ⇒ **When a dynamic range disappoints, do not reach for a bigger K — grep the rule for the
+  clause that decides WHETHER it may happen at all, and check that clause is not a constant.**
+- **AIM A CAMERA BY MEASURED INK OF THE *HOST*, NOT OF THE *FRAME* — WHEN YOUR TREATMENT AND YOUR POSITIVE CONTROL
+  ANSWER THE SAME SIGNAL, AN UNMASKED ARGMAX LANDS ON THE CONTROL (iter 245).** 226 says stop aiming by tile predicates
+  and aim by measured ink; 201 says locate, then aim. 245 obeyed both and still framed a **park**. The rig was a
+  state-response probe (196), whose *positive control* is *"things that provably DO read this signal"* — for the wind,
+  the trees, palms and flags. So the frame's biggest calm→gale pixel difference **is the control, by construction**:
+  the land moved **~5,000 px** against the sea's 21–42. The argmax duly walked to the palm band, the close-up contained
+  no ocean at all, and an agent correctly **FAILed the camera** — costing a full gate round on a feature that was fine.
+  ⇒ **Mask the argmax search to the host before you take it** (234's palette suppression gives the mask for free: loud-
+  paint the host's palette entries and the changed pixels ARE the host). The tell is structural and you can spot it
+  before you shoot: **your probe has a positive control, and your camera does not know about it.**
+  ⚠ Two smaller traps from the same lap, both of which will waste a round: (a) **`| head -n` sends SIGPIPE and can kill
+  a shot script before it writes its later frames** — you then read a *stale* PNG from the previous run and debug a
+  feature against a file that predates it (239's md5 check catches this; so does not truncating). (b) **A whole-frame
+  HASH is not a diff** — it is all-or-nothing, so one anti-aliased pixel of float noise reports "different" exactly as
+  loudly as a broken feature. **Count differing pixels, and carry a floor** (213).
 - **240 SAYS TWO GATES ON ONE FEATURE MUST POINT THE SAME WAY. THE SEQUEL IS *WHICH ONE YOU MAY MOVE* — AND THE
   PROJECTION, NOT THE CUE, DECIDES (iter 244).** The amphitheater's siting rule scores `groundLoad` (the rows at
   `dy=+1/+2`), so it deliberately takes a lot whose **south is open** and the flat bowl is not buried — while the
@@ -1994,6 +2029,21 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   the claim; the sweep is only the ranking), `shot-amphsight.mjs` (its camera — **each build aims at its OWN bowl**,
   because the whole point of the change is that the bowl may be sited elsewhere and forcing HEAD to the patch's hex
   would frame bare ground. Reports what each build's bowl looks out at, so a blind agent's read is checkable).
+  The **sea-state three** (245 — reach for these on any vector that makes an existing draw ANSWER AN EXISTING SIGNAL):
+  `probe-seastate.mjs` (**the 196 state-response rig, in its cleanest form** — ONE build, frozen clock, same `genWorld`,
+  rendered at a sweep of pins of the signal, so every moved pixel IS a response; the host is isolated by 234's palette
+  suppression, so it is **build-agnostic** (runs unchanged on HEAD and patch, no source swap, no cross-build floor) and
+  the floor is **exactly 0**. ⚠ **Its `land` column is a POSITIVE CONTROL, not decoration**: the trees/flags provably
+  read `WINDA`, so a dead pin and a deaf draw produce the same zero and only the control can tell them apart. ⚠ It also
+  demonstrates **196's contaminant**: the rain leans on the wind and is alpha-blended OVER the water, so it lands inside
+  a water-palette mask and masqueraded as the sea answering — clearing `clouds` took seed 7 from 3,398 px to 29),
+  `probe-seamean.mjs` (**the FIXED POINT — the exact proof that a dynamic feature adds no draw work.** Renders patch and
+  HEAD at the one pin where every centred lever collapses to HEAD's literal; **0 px ⇒ the mean is held by construction**,
+  with a full-gust column as the control that the builds *do* diverge. Derives pristine HEAD from git itself. ⚠ It is the
+  one CROSS-BUILD diff here, so it has a floor — **and the floor is the MOVERS** (230): empty the entity arrays or a
+  HEAD-vs-HEAD control reads 5,416 px), `shot-seastate.mjs` (its camera — freezes in-page, pins the wind, and **aims the
+  close-up by measured ink OF THE HOST**: ⚠ the argmax **must** be masked to the sea, or it lands on the palms, which
+  read the same signal and move 8x the ink — see the law).
   Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure

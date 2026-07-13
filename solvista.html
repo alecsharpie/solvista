@@ -3833,6 +3833,23 @@ function cloudWet(cl){ return clamp((rainFront()-cl.wf)/WETRAMP,0,1); }
 const WETMIN=2.4, WETSWING=5;
 function wetReach(){return WETMIN+(1-TIDE)*WETSWING}
 
+/* HOW ROUGH THE SEA IS, 0..1 (iter 245). ONE definition, and every sea draw shares it.
+   WINDA is the gust cycle the trees, the palms, the flags and the clouds all already
+   ride — "so the whole scene gusts together", says its own comment — and the water was
+   the one surface deaf to it. The whitecaps below were commented "wind-driven" and read
+   no wind whatever, so the sea broke exactly as hard in a dead calm as in a full gale.
+   It never reaches 0: a glassy sea reads as the flat teal that iter 185's whitecaps were
+   added to fix, so the swell keeps a residual (cf. SHAMT, which may never reach 0 at
+   night for the same reason — a floor is what stops a thing vanishing).
+   ⚠ Its MEAN over the gust cycle is ~0.5 BY CONSTRUCTION, and the readers below are all
+   centred on 0.5 so that each reproduces HEAD's draw in the mean (98's hold-the-mean).
+   The sea is REDISTRIBUTED, not roughened: same foam on average, spent when it blows. */
+const SEACALM=0.34;
+const CAPK=0.62;   /* how far the BREAKING threshold swings either side of HEAD's 0.5  */
+const HBK=0.30;    /* how far the ELIGIBILITY gate swings either side of HEAD's 0.76.
+                      Both are centred, so seaState()==0.5 reproduces HEAD's sea exactly. */
+function seaState(){return SEACALM+(1-SEACALM)*clamp((WINDA-0.25)/0.75,0,1);}
+
 /* Which way the open sea lies from a beach hex: the mean unit vector toward its WATER
    neighbours, by the same test the damp margin uses (a river is not the sea). Returns
    null when the hex is landlocked — an inland beach has no sea to answer, and keeps its
@@ -4139,11 +4156,12 @@ function drawCell(x,y){
   switch(c.t){
     case T.WATER:{
       hexTile(gx,gy,1.02,seaFace(seaTone(idx(x,y))));
-      if(((x*3+y*5)%7)<2){ /* sparkle */
+      if(((x*3+y*5)%7)<2){ /* sparkle — the chop rides a steeper swell when it blows (245) */
         const[cx,cy]=px(gx,gy);
         const ph=Math.sin(waveT*1.6+x*1.7+y*2.3);
-        if(ph>0.2){ctx.strokeStyle=colA('foam',1,0.22*ph);ctx.lineWidth=1;
-          ctx.beginPath();ctx.moveTo(cx-5,cy+ph*2);ctx.lineTo(cx+5,cy+ph*2);ctx.stroke();}
+        const ch=0.68+0.64*seaState(); /* 1.0 at the cycle's mean ⇒ HEAD's chop */
+        if(ph>0.2){ctx.strokeStyle=colA('foam',1,0.22*ph*(0.8+0.4*seaState()));ctx.lineWidth=1;
+          ctx.beginPath();ctx.moveTo(cx-5,cy+ph*2*ch);ctx.lineTo(cx+5,cy+ph*2*ch);ctx.stroke();}
       }
       /* wind-driven whitecaps (iter 185): on the open swell BEYOND the coastal
          shelf, foam crests break and fade as the swell rolls shoreward — the one
@@ -4154,16 +4172,31 @@ function drawCell(x,y){
          / biolum and nothing is added to the night frame. Draw-only. */
       if(!c.riv&&LITAMT<0.6&&rDeep[idx(x,y)]>SHELF1){
         const hb=hashCell(x,y,seedNum^0x7CA9);
-        if(hb>0.76){
+        /* ...and as of iter 245 they ARE wind-driven. TWO levers, because one is not enough:
+           a gale breaks MORE OF THE SEA (more hexes are eligible to cap at all — the old
+           fixed 0.76 gate let only 24% of the open water EVER break, in any weather, which
+           capped the calm→gale swing at 1.5x and read as "slightly more speckle") and it
+           breaks each crest SOONER and BIGGER. Together: 5.7% of the deep sea capping in the
+           lull, 17.1% at full gust — a 3.0x swing.
+           ⚠ BOTH levers are centred on seaState()'s mean (0.5), so at that ONE wind this
+           draw is BYTE-IDENTICAL to HEAD (measured: 0 px, all 3 seeds) and the mean cap
+           count over the real gust cycle lands at 8.07% against HEAD's 8.00%. The foam is
+           REDISTRIBUTED across the cycle, not added — which is what keeps the draw-cost
+           question shut, since the cap count IS a path-object count (98's hold-the-mean; 222). */
+        const ss=seaState();
+        const hbg=0.76+(0.5-ss)*HBK;               /* eligible: 19% in the lull … 39% at full gust */
+        if(hb>hbg){
+          const ct=0.5+(0.5-ss)*CAPK;              /* breaking: 0.60 in the lull … 0.19 at full gust */
           const crest=Math.sin(waveT*1.25+(x*0.7+y*1.1)+hb*6.2);
-          if(crest>0.5){
+          if(crest>ct){
             const[wcx,wcy]=px(gx,gy);
-            const a=(crest-0.5)/0.5*0.55*(1-LITAMT/0.6);
-            const wob=(hb-0.5)*4, wdy=(0.5-crest)*1.5; /* the cap rides the crest */
+            const rough=0.68+0.64*ss;              /* 1.0 at the cycle's mean ⇒ HEAD's cap */
+            const a=(crest-ct)/(1-ct)*0.55*(1-LITAMT/0.6); /* normalised by ct: the ramp keeps its shape */
+            const wob=(hb-0.5)*4, wdy=(ct-crest)*1.5; /* the cap rides the crest */
             ctx.fillStyle=colA('foam',1,a);
-            ctx.beginPath();ctx.ellipse(wcx+wob,wcy+wdy,3.0,1.1,0,0,7);ctx.fill();
+            ctx.beginPath();ctx.ellipse(wcx+wob,wcy+wdy,3.0*rough,1.1*rough,0,0,7);ctx.fill();
             ctx.strokeStyle=colA('foam',1,a*0.75);ctx.lineWidth=1.1; /* a short streak down the swell face */
-            ctx.beginPath();ctx.moveTo(wcx+wob-2.4,wcy+wdy+0.4);ctx.lineTo(wcx+wob+2.8,wcy+wdy+1.3);ctx.stroke();
+            ctx.beginPath();ctx.moveTo(wcx+wob-2.4*rough,wcy+wdy+0.4);ctx.lineTo(wcx+wob+2.8*rough,wcy+wdy+1.3*rough);ctx.stroke();
           }
         }
       }

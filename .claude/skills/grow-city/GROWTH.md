@@ -22,7 +22,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
@@ -37,34 +37,38 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   `stamp()` also draws the focus ring, so any stamped entity is ringable free — and since 133 a hovered TILE is
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
-- **ROTATION.** Last vector per domain: Water **234** · Nature **238** · Urban **239** ·
-  People **240** · Sky **242** · Transport **243** · Civic **244**. **242 was the 28th step-back; the 29th is due at ~247.**
-  ➡ **NEXT: Water & coast (stalest, 234)** — or take the 🔴 below. ⚠ **Read the `peds` cap
+- **ROTATION.** Last vector per domain: Nature **238** · Urban **239** ·
+  People **240** · Sky **242** · Transport **243** · Civic **244** · Water **245**. **242 was the 28th step-back; the 29th is due at ~247.**
+  ➡ **NEXT: Nature (stalest, 238)** — or take the 🔴 below. ⚠ **Read the `peds` cap
   first** (111) before designing anything road-borne.
-  ✅ **244 (cue (ah)): THE AMPHITHEATER HAD ITS BACK TO THE VIEW — DEEPENED, and the cue's OWN PRESCRIPTION WAS
-  IMPOSSIBLE.** 240's law again: the SITING scores `groundLoad` (rows at `dy=+1/+2`) so the **south** is open and the
-  flat bowl is not buried (231) — and the draw sat the audience facing **north**, into the leftover. **2 seeds in 10
-  faced nothing but ROOFTOPS.** ⚠ **TURNING THE BOWL WAS BUILT AND REVERTED — DO NOT RE-TRY IT.** The code was exact
-  (a forced-north control rendered **byte-identical to HEAD**); the **PROJECTION** cannot carry it — a ground circle
-  projects to a WIDE SHALLOW ellipse, so the cavea only reads as a bowl while its seating is the **NEAR half**; swung
-  90° the arcs fuse into *"a spilled cream blob"* (two agents, two seeds, blind). Fixed from the other side — the
-  **SITE comes to the bowl** (`RAY6`/`viewScore`/`amphSight`, `AMPHVIEW=6`): `ROOFTOPS 2/10 → 0/10`, sightline
-  **0.79 → 1.14**, **burial worst-case UNCHANGED**, placed 10/10, free (path objects flat).
-  🔑 **ITS LAW (SKILL.md): TWO GATES CAN BE MADE TO AGREE FROM EITHER SIDE — AND THE PROJECTION, NOT THE CUE, DECIDES
-  WHICH ONE IS MOVABLE. When the draw cannot move, MOVE THE WORLD.** 224 says screen-y is depth, not height (for
-  READING); **244 is the same law for WRITING — before you vary a quantity, ask what the projection does to it.**
-  ⚠ Corollary (219, new face): **THE DEFECT IS NOT THE MIRROR IMAGE OF THE FIX.** The bowl faced a *wall*, and
-  *penalise the wall* is a **DEAD LEVER** (at 20× weight it moved **zero** bowls, and was the only thing that cost
-  burial). **Pure addition — give it something to LOOK AT — is what worked.** Sweep the two mechanisms apart
-  (`probes/probe-amphsight.mjs`) before tuning either. ⚠ **A sweep that builds its world with the artifact's own rule
-  is grading inside the PATCHED world — `K=0` is NOT HEAD; carry an END-TO-END section.**
+  ✅ **245 (off 225's grep-the-seam law — Water's cue list was stale and its SEAM held this): THE WHOLE SCENE GUSTS
+  TOGETHER, EXCEPT THE SEA — DEEPENED.** `WINDA`'s own comment says *"trees, palms and clouds all read this one signal
+  **so the whole scene gusts together**"* and 236's says *"**the wind gusts and the sea turns**"* — **the water draw
+  contained no `WINDA` at all**, and 185's whitecaps are commented **"wind-driven"** and read no wind. Measured: the
+  sea moved **21–42 px** calm→gale while the land (trees/flags — the POSITIVE CONTROL) moved **~5,000 px** on the same
+  pin. Shipped `seaState()` — ONE predicate, floor `SEACALM` (a glassy sea = the flat teal 185 *fixed*; cf. `SHAMT`).
+  **21–42 px → 725–861 px**, monotonic, floor 0. Both agents, blind, on a **crossed** mapping, correctly LOCATED the
+  gale. ⚠ **225's grep-the-seam law is now 4 for 4** (Sky 236, Nature 238, People 240, **Water 245**).
+  🔑 **ITS LAWS (both in SKILL.md).** (1) **A CENTRED LEVER BUYS A BYTE-IDENTICAL FIXED POINT — the exact, falsifiable
+  proof that a dynamic feature adds NO draw work.** Centre every lever on the signal's mean and the patch must render
+  **0 px** from HEAD at that one pin (measured, 3 seeds; full-gust control 736–805 px). Foam **REDISTRIBUTED**, not
+  added: mean caps 8.00% → 8.07% ⇒ **+0.4 path objects.** (2) ⚠ **AIM BY MEASURED INK OF THE *HOST*, NOT OF THE
+  FRAME** — my camera's argmax found the **palms** (they read `WINDA` too, and move **8x** more ink), framed a park,
+  and an agent correctly FAILed *the camera*. **When your host and your control answer the same signal, an unmasked
+  argmax lands on the control.** ⚠ Corollary (**217's law, new host — a DRAW**): the whitecaps decide *whether a hex
+  may EVER break* (`hb` gate) and *whether it breaks NOW* (crest threshold). Making only the second dynamic capped the
+  swing at **1.5x** ("slightly more speckle") because the fixed gate let only **24%** of the sea ever break in any
+  weather. **A fixed ELIGIBILITY gate caps the dynamic range of any threshold below it.** Both ⇒ **3.0x**.
+  ⚠ **244: TURNING THE AMPHITHEATER'S BOWL WAS BUILT AND REVERTED — DO NOT RE-TRY IT** (the projection cannot carry
+  it; a forced-north control was byte-identical to HEAD). Fixed from the other side — the **SITE comes to the bowl**
+  (`RAY6`/`viewScore`/`amphSight`, `AMPHVIEW=6`). ⚠ *Penalise the wall* is a **DEAD LEVER**; pure addition worked.
+  ⚠ **A sweep that builds its world with the artifact's own rule grades inside the PATCHED world — `K=0` is NOT HEAD.**
   ✅ **242 (the 28th step-back): THE CLOUD SHADE FELL ON THE OPEN SEA — FIXED** (body archived at 244). ⚠ **MARSH/KELP
   no longer catch cloud shade** (they are in `WETSET`) — both agents read that as an improvement.
   🔑 **ITS LAW (in SKILL.md): A LATER DRAW CITED AN EARLIER ONE AS AUTHORITY FOR A STANDARD IT NEVER ENFORCED.**
   **199/209's tell has a new host: a CROSS-REFERENCE.** When code cites a neighbour as the precedent for an
   invariant, **go read the neighbour.**
   ✅ **241: THE ELEVATED NETWORK HAS A BUDGET** (`RAILCAP=130`; cue (am) CLOSED — see (am) below; law in SKILL.md).
-  ✅ **225's grep-the-seam law is 3 for 3** (Sky 236, Nature 238, People 240 — all off domains written off as stale)
   ⇒ **an empty cue list is not saturation; it is evidence nobody has grepped.** **(ai)** outranks kind-rotation (119).
   ⚠ **239: NAME THE FILE, NEVER A LETTER, in a visual A/B** (law in SKILL.md; 238's crossed mapping guards a *bias*,
   not the *bookkeeping*). **240/242 are its payoff — asked per FILE NAME, agents md5'd the paths and audited my own
@@ -86,13 +90,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   lap** (229 — both its cues were the HARNESS, not the city) · **137's standing-crowd cue** (226). ⚠ **230's `taxi`
   flag is LOAD-BEARING** (`VCURF` thins the night fleet by CLASS). ⚠ **(y) and (s) were born from agents reading
   `shoot.mjs` output — REPRODUCE either in the user's configuration before designing to it** (229's law).
-  ✅ **THE FAIL/ASIDE LAW HAS NOW PAID OUT TEN LAPS RUNNING** (232's detail archived at 237) — **237 is its
-  first INVERSION: both agents' HEADLINE FAIL was RIGHT and correctly diagnosed** ⇒ the law is *"grade the FAIL by
-  measuring it"*, **not** *"the FAIL is always wrong"*. **242 is its purest payout yet: seed 7's FAIL named the
-  elevated rail's z-order — the SEVENTH time that has been raised and the seventh time it is wrong (CLEARED BY PROBE
-  TWICE, 203/212) — while the ASIDE both agents reached independently, on different seeds, in passing (*"dark blobs
-  on the water with no cloud above them"*), was REAL, and became the lap.** **Interaction/UX** (cross-cutting) last
-  touched **229**.
+  **Interaction/UX** (cross-cutting) last touched **229**.
   **CUES, RANKED** ((w)/(z) CLOSED 229, (t) 231, (u) 234, (af′) 235, (al) 239, (am) 241, (an) 243, **(ah) 244**; **(aj)'s SHADE half CLOSED
   242 — its cloud-SITING half is still open**; **(ab) RETIRED into (ak) at 238**): 🔴 **(ai)** THE CITY HAS NO FRINGE
   — **measured; 233 tried and REVERTED, the way through is
@@ -102,8 +100,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   hot — **reconfirmed 242**, squarely on 222's ladder invariant (Nature × Polish) · **(y)** the scorched inland
   cluster (Nature × Polish) · **(s)** golden-hour
   contrast collapse (Sky × Polish — CONSTRAINED; strengthened at 227) ·
-  Nature's **GARDEN staggered beds**, held by (p). ✅ **225's grep-the-seam law is PROVEN — 236 shipped Sky off it,
-  238 shipped Nature off it. Apply it to the next stale domain (People).**
+  Nature's **GARDEN staggered beds**, held by (p) · **(ap)** the sea's foam is invisible at fit zoom (Water × Polish).
   **225: THE SHADOWS READ THE SUN.** `shadS` (every shadow routes through it) carries a per-frame sun vector
   (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity). ⚠ **Noon (t=0.415) is BYTE-IDENTICAL ⇒ a free
   dead-regime control for every shadow lap.** ⚠ **`SHAMT` must never reach 0 at night** — the residual patch is what
@@ -126,13 +123,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **⚠ THE FIRE CA IS A GHOST — do not build "X answers the fire"** (`probe-firehost`; body archived at 242).
   Ignition is year-gated ⇒ **at 2035 nothing can ignite at all**, and fire **never spreads**. **`T.MARKET` again.**
   **⚠ THE `polish-tile` BACKLOG — measured cues that are NOT growth laps. Do not spend a domain's lap on one; they
-  need a tile redesign, and each already has a gate written.** (a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit
-  zoom** (0.5px rope, 5px cabins, hairline masts/pylons; body archived at 242). ⚠ **NEVER RE-OPEN THE Z-ORDER —
-  CLEARED BY PROBE TWICE** (203/212); agents have now mis-diagnosed it as a z-order tear **SEVEN times** (217, 232,
-  237×2, **242**). **That persistence IS the evidence: the fault is LEGIBILITY** — a hairline reads on-top however
-  well it is sorted, and **a hairline ornament needs a BODY** (215), not more strokes. *Do NOT re-try a body/halo
-  under the rope (measured — backfires) or a lit top edge (impossible at 0.5px).* **Still the single most-reported
-  defect in the ledger.**
+  need a tile redesign, and each has a gate written.** (a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit zoom**
+  (0.5px rope, 5px cabins, hairline masts; body archived 242). ⚠ **NEVER RE-OPEN THE Z-ORDER — CLEARED BY PROBE TWICE**
+  (203/212); agents have mis-diagnosed it **SEVEN times** (217, 232, 237×2, 242). **That persistence IS the evidence:
+  the fault is LEGIBILITY** — **a hairline ornament needs a BODY** (215), not more strokes. *Do NOT re-try a body/halo
+  under the rope (measured — backfires) nor a lit top edge (impossible at 0.5px).* **Most-reported defect in the ledger.**
   (b) **`university` is the ONLY of the twelve civics with no `LITAMT`** — the one `MAJORK` monument
   pitch dark after sunset; every place to put the light failed (195; `probe-unilight.mjs` + `shot-uni.mjs`).
   (c) **A parked service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204, cue n). (d) **The marsh reeds do not read** — seven sub-pixel strokes round the pool; its calendar is already computed and invisible (cue (i), 113).
@@ -158,7 +153,10 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   constant so they cannot drift — 123; 213's `civOpen()`). **⚠ A tick-rule cannot read the reach maps (151):**
   `recount()` never runs in the sim loop, so `rGreen`/`rShop`/`rServ` are STALE inside `tick()` — recompute locally.
   **THE FAIL/ASIDE LAW (212; a law in SKILL.md — the header keeps only the tally): in a whole-frame read the FAILs
-  are where an agent is WRONG and the ASIDES are where it is RIGHT.** Paid out 213, 214×2, 215, 217, 219, 232, 236.
+  are where an agent is WRONG and the ASIDES are where it is RIGHT.** Paid out 213, 214×2, 215, 217, 219, 232, 236,
+  **242** (seed 7's FAIL named the elevated rail's z-order — the **SEVENTH** raising and the seventh time WRONG,
+  CLEARED BY PROBE TWICE, 203/212 — while the ASIDE both agents reached independently became the lap), **245** (⇒ cue
+  **(ap)**; and its FAIL was real but was **MY CAMERA**, not the city — see (ap)).
   ⚠ **237 INVERTED IT** — both agents' headline FAIL was right *and* correctly diagnosed. ⇒ **grade the FAIL by
   MEASURING it; do not assume it is wrong.** Still weight an aside two agents reach independently above any verdict.
   ⚠ **241: an agent attributed a QUANTITY difference to a STYLE one** — on a diff with **no draw code**, it called the
@@ -352,15 +350,13 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ✅ **(al) CLOSED by 239 — THE BUILDING-LOOK LADDER IS COMPLETE** (228 crown · 235 footprint · 239 the MID-RISE; body
   archived at 241). ⚠ **DO NOT RE-OPEN EITHER BUILDING**; ⚠ **EVERY FORM'S BASE IS ITS WIDEST PART** (the party wall is
   the NEIGHBOUR'S WEST FACE, not a constant).
-  ✅ **(am) CLOSED by 241 (body archived at 243; WARNINGS only).** ⚠ **DO NOT re-tune the beam's draw** (measured IN
-  BAND on every axis) **and DO NOT bound a loop's RADIUS** (measured: that makes stubs, not loops). ⚠ **polish-tile's
-  (a) (sub-pixel rope/masts) is a DIFFERENT, still-open cue.**
-  ✅ **(an) CLOSED by 243 (body archived at 244; WARNINGS only).** ⚠ **`stepGond`'s value bar decays with NO FLOOR** —
-  it is gated on `WETSET` now; do not un-gate it. ⚠ **A cue can bundle a REAL defect with a MISREAD** (seed 42 never
-  reproduced) — **grade each seed's half separately.** 240's aside stands: *"tiny white chevron glyphs on land
-  (x≈0.47,y≈0.47)."* Cheap.
-  🔑 **243'S LAW (in SKILL.md; body archived at 244): A "BEWARE, PROBE P OVER-REPORTS Y" NOTE IS A BUG REPORT, NOT A
-  LAW.** `probe-darkline` is **REPAIRED** (gradients counted apart; `MINLEN=4` censuses chains) — trust it again.
+  ✅ **(am) CLOSED 241 · (an) CLOSED 243 (bodies archived; WARNINGS only).** ⚠ **DO NOT re-tune the elevated beam's
+  draw** (measured IN BAND on every axis) **nor bound a loop's RADIUS** (that makes stubs, not loops). ⚠ **`stepGond`'s
+  value bar decays with NO FLOOR** — gated on `WETSET`; do not un-gate. ⚠ **A cue can bundle a REAL defect with a
+  MISREAD** — grade each seed's half separately. ⚠ **polish-tile's (a) (sub-pixel rope/masts) is a DIFFERENT, OPEN cue.**
+  🔑 **243'S LAW (SKILL.md): A "BEWARE, PROBE P OVER-REPORTS Y" NOTE IS A BUG REPORT, NOT A LAW.** `probe-darkline` is
+  **REPAIRED** (gradients apart; `MINLEN=4` censuses chains) — trust it again. 240's aside stands: *"tiny white chevron
+  glyphs on land (x≈0.47,y≈0.47)."* Cheap.
   **(ao) THE WEATHER DRAWS ARE NOT BOUNDED BY THE GROUND (242, seed 7, unprompted) — 242 PROVED THIS FAMILY IS REAL.**
   *"The rain shafts cross the water's edge and keep raining over the empty cream backdrop"* (~0.94,0.38) · *"a flat
   rainbow lying ON the water, its right foot cut off mid-water"* (~0.78,0.31). **Same shape as the cloud shade 242
@@ -368,6 +364,10 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ALREADY has a `ROWMIN`/`ROWMAX` rim test** (`pa`) — so if its foot still lands in the sea, either that test is
   wrong or the complaint is about **water, not the rim**: measure first. ⚠ Rain over the sea is **CORRECT** (201);
   rain over the **VOID** is not. **Sky × Polish. Cheap.**
+  **(ap) THE SEA'S FOAM IS INVISIBLE AT FIT ZOOM (245 — both agents, both seeds, INDEPENDENTLY, in passing ⇒ 212).**
+  ⚠ **A property of THE WHITECAP FAMILY (185's caps were equally sub-pixel at fit), NOT of 245's wind response** — so
+  it is a cue, not a bug. ⚠ **DO NOT "fix" it with contrast or more strokes**: 159 judges a coast ornament at MODERATE
+  zoom, not fit; 215 says a speckle ornament needs a **BODY**. First ask if the sea *should* read at fit. **Water × Polish.**
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED; see the PERF bullet).** Build a
   **stroke-vs-fill sweep at equal path-object count**; `CCACHE` churn and per-mark style writes are ruled OUT (zero).
   **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** ⚠ The fire CA is a
@@ -391,89 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 237 entries before Iteration 235 live in
+> **Archive:** the 238 entries before Iteration 236 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 235 — every tower in the city was the same width (2026-07-13) [Urban fabric × Polish]
-
-**Vector.** Urban fabric × Polish — cue **(af′)**, whose pre-registered trigger fired at 232. Urban's
-own rotation was due (last 228) and this is the ledger's loudest standing cue: **six agents across
-three step-backs**, on both seeds, always unprompted, have called downtown wallpaper.
-
-**The instrument had to be re-derived, and 228's own law said so.** The cue arrives holding a probe
-(`probe-crown`), and the trap was to run it, watch it pass, and acquit the towers for a fourth time.
-228 fixed the **CROWN**; the 232 agents said **SILHOUETTE / MASS / FOOTPRINT** — *"variety was added
-in plan but not in MASS/HEIGHT/FOOTPRINT"*. Re-reading `probe-crown` rather than trusting its
-headline showed it already carries the right instrument (`silo()`: the **absolute half-width sampled
-at 12 normalised heights** — the outline the eye traces), and that instrument was **convicting**, not
-acquitting: **TOWER 5.3 distinct silhouettes, top share 54.1%**, against a healthy crown (19.0 / 15.8%).
-
-**The defect was one number.** All four massings are drawn at the same half-extents — `0.32/0.28`,
-`0.33/0.29`, `0.31/0.27`, `0.34/0.30`: **an aspect of 1.14 and a ~10% width spread for every tower in
-the city.** So the styles differ only in what happens near the *top*, and the body below the roofline
-— which is most of a tower — was one shape ~110 times per frame. This is **110's defect surviving on
-the axis 110 did not decouple**: it split colour from silhouette and gave downtown 4 forms × 5 bodies,
-and 228 added 5 crowns, but nothing ever varied the **plan**.
-
-**Change.** A fifth independent seed-salted axis in `towerLook` — the **footprint** (`hashCell(…^0x1F5B)`
-→ point `0.64×0.86` / block `1.00×1.00` / slab `1.32×1.00`, at cuts `.30/.36/.34`). It multiplies every
-half-extent of all four massings, so the axes compose: **4 massings × 3 plans × 5 bodies × 5 crowns.**
-Independent of `style` **and of height** — a footprint keyed to `v` would rebuild 110's *exact* defect
-(corr(style,th) 0.73) on a new axis. **Mean `fx` is held at 1.000 by construction** (98's hold-the-mean),
-so built mass, density and object count are all unchanged.
-Three pieces of geometry assumed the old fixed width and were fixed with it:
-- **The helideck** is a fixed 3.3px arc, and a roof's *shallow* axis binds it (`ay*21.3` vertical vs
-  `ay*32` horizontal). The ziggurat was **already flush** at 3.41px, so a point plan would have hung the
-  pad over its own roof edge. Sized off `fy`, it keeps exactly the fit the artifact already shipped. It
-  **cannot** be gated off instead: `heliPads` is real world data (`c.th>90`) and the helicopter lands there.
-- **The skybridge** spanned a fixed *fraction of the hex spacing* (0.28→0.72), which worked only because
-  every tower was ~10.2px wide against an 8.96px inset. On a 6.6px point tower it would have started
-  **2.4px clear of the building and hung in mid-air.** Both ends now inset 85% of each tower's **own**
-  half-width — reproducing the shipped geometry for a block plan.
-- To do that without a **second** answer to "how wide is a tower", `towerLook` now publishes the body's
-  base half-extents (`bax`/`bay`) and both the draw and the bridge read them. *One predicate, one definition.*
-- The contact shadow follows the plan too — a needle dropping a slab's shadow reads as standing beside
-  its own footing.
-
-**Census.** PASS, 0 page errors, and **every metric exactly +0** — `pop`, `towers`, `towerHt`,
-`tallTowers`, `helipads`, tile histogram empty. Correct and expected: the footprint feeds no
-`rng()`-gated predicate, so the change is stream-neutral and terrain-flat. Vacuous as a growth signal;
-the iteration rests on the probe.
-
-**Probe** (`probes/probe-crown.mjs`, 3 seeds, build-agnostic, **MID as control**):
-
-| | HEAD | patch |
-| --- | --- | --- |
-| TOWER distinct silhouettes | 5.3 | **13.0** |
-| TOWER top silhouette share (*the wallpaper number*) | **54.1%** | **22.0%** |
-| TOWER distinct crowns | 19.0 | 33.7 |
-| MID silhouettes / top (**control**) | 2.0 / 67.7% | **2.0 / 67.7%** — unmoved |
-| `crownable-but-bare` (228's accounted residual) | 0 | **0** |
-
-Crowns rose for free: a crown caps `tax/tay`, so the same crown on a slab and on a needle is a
-different (width,height) pair. Tower counts identical (110/96/68).
-
-**Perf.** Priced by **counting objects**, not by reading the diff (222) and not by the timer (216):
-`probe-drawbudget` reads **day 109,213 → 109,200 (−0.01%)** and **night 138,573 → 138,492 (−0.06%)**.
-Flat — a footprint is a change of **EXTENTS, not of objects**, so it is free by 198's per-path-object
-cost model. `winBandR` does not subdivide by width. No timing gate was run and none is needed.
-
-**Visual.** Blind A/B (`shot-crown.mjs`, day+night, whole-city + CBD close-up), one agent per seed,
-**labels flipped between seeds** so agreement could not come from position. **Both picked the patch**,
-and both described HEAD in the 232 agents' own vocabulary — *"a forest of near-identical slabs… one
-extruded texture"* / *"repeated stamping… an even pincushion"* — against *"a genuine mix: broad plates,
-fat blocks, and slender needles… towers read as individual buildings"*. Both explicitly cleared the two
-failure modes the geometry fixes were aimed at: **no helipad overhangs a roof edge; no skybridge floats.**
-No z-order tears, no blown-out colour, city still coherent. **VISUAL: PASS ×2.**
-
-**Verdict: SHIPPED.** **Cue (af′) CLOSED, and the tower is now varied on all four of its axes**
-(massing × plan × body × crown). The lesson is 228's own law paying out a second time: **the cue handed
-me a probe, and the probe's headline number was about the wrong noun.** Reading what `silo()` actually
-measured — instead of what `probe-crown` is *called* — turned a would-be fourth acquittal into a
-one-command conviction. ⇒ **A banked probe can carry the right instrument under the wrong name.**
 
 ## Iteration 236 — the shower that had been raining since 1974 (2026-07-13) [Sky & atmosphere × Deepen]
 
@@ -1135,3 +1057,87 @@ in either whole-city frame.
 
 **Verdict** DEEPENED (the bowl now reads its surroundings), with one EXPLORED → REVERTED
 inside it (turning the cavea). Cue **(ah) CLOSED**. Law promoted to SKILL.md.
+
+## Iteration 245 — the whole scene gusts together, except the sea (2026-07-13) [Water & coast × Deepen]
+
+**Vector** Water & coast × Deepen — the stalest domain (last touched 234), reached the way
+225's grep-the-seam law says to reach a domain whose cue list looks dead: **grep the seam
+before you believe the saturation note.** Water's banked cues were one stale `rng()`-salt
+item; its seam held this.
+
+**The defect — 199's tell, hosted on a CROSS-REFERENCE (242's law), twice.** `WINDA` is a
+seeded gust cycle (0.25 → 1.0). Its own definition says *"trees, palms and clouds all read
+from this one signal **so the whole scene gusts together**"* (~L8381); 236's weather-front
+comment opens *"**The wind gusts (WINDA) and the sea turns (TIDE)**…"*. Both name the sea as
+a live system in the same breath as the wind. **The water draw contains no `WINDA` at all** —
+and the whitecaps, added by 185, are commented **"wind-driven whitecaps"** and read no wind
+whatever. The sea broke exactly as hard in a dead calm as in a full gale, for the artifact's
+whole life, under a comment that said otherwise.
+
+**Probed BEFORE designing** (`probes/probe-seastate.mjs` — a 196 state-response probe: ONE
+build, frozen clock, same `genWorld`, rendered at two pins of the signal, so every moved
+pixel IS a wind-response; sea isolated by 234's palette suppression, floor **0 px**):
+
+| | seed 42 | seed 7 | seed 1234 |
+| --- | --- | --- | --- |
+| sea surface | 83,823 px | 91,250 px | 87,083 px |
+| **sea moves, calm→gale** | **42 px** | **29 px** | **21 px** |
+| land moves (POSITIVE control) | 5,343 px | 4,686 px | 4,736 px |
+
+The land — trees, palms, flags — swings ~5,000 px on the identical pin, so **the pin is live
+and the water is deaf** (0.03% of its own surface). The defect is its own perfect control (236).
+
+⚠ **196's contaminant, caught in the act.** The first run read seed 7's sea at **3,398 px** —
+because the **rain shafts lean on `WINDA` and are alpha-blended OVER the water**, so their
+pixels are part-water and fall inside a water-palette mask. A neighbour answering the same
+signal, masquerading as the host answering it. Clearing the sky took it to **29 px**.
+
+**Change — `seaState()`, ONE predicate, every sea draw shares it** (the one-predicate law).
+`SEACALM=0.34` floor (a glassy sea reads as the flat teal that 185's caps were *added to fix*
+— cf. `SHAMT`, which may never reach 0 at night). Readers: the whitecaps break **sooner**
+(`CAPK`, crest threshold 0.60 → 0.19) **and over more of the sea** (`HBK`, eligibility 0.76 →
+19%..39% of deep hexes), and each cap is bigger; the open-sea sparkle rides a steeper swell.
+
+⚠ **ONE lever was not enough, and the first cut proved it.** With only the crest threshold
+moving, the calm→gale swing was **1.5x** and both the pixels and my own eye read it as
+*"slightly more speckle"*. The old fixed `hb>0.76` gate meant only **24% of the open water
+could EVER break, in any weather** — the ceiling was in the *eligibility*, not the threshold.
+Priced analytically (pure maths off the shipped WINDA formula, no render): `HBK=0.30` triples
+the swing to **3.0x** for **+0.8%** mean cap count. Shipped.
+
+**Census** PASS. `pop`/`roads`/`developed` **+0** — draw-only, no terrain, no `rng()`. Tile
+histogram empty, exactly as a draw-only lap must be; **the probe is the gate here, not the census.**
+
+**Perf — FREE, and by construction rather than by promise** (223). Both levers are *centred on
+`seaState()`'s mean*, so at that one wind the patch is **BYTE-IDENTICAL to HEAD — 0 px on all 3
+seeds** (`probes/probe-seamean.mjs`, with a full-gust control at 736–805 px proving the builds
+do diverge elsewhere). Mean cap count over the real gust cycle: **8.00% → 8.07%**. The deep sea
+is **341 cells**, so caps are ~55 of the frame's ~110,152 day path objects (**0.05%**) ⇒ the lap
+costs **+0.4 path objects**. The sparkle's `ph>0.2` gate is untouched ⇒ its count is exactly flat.
+**The foam is REDISTRIBUTED across the cycle, not added.**
+
+**Visual** PASS, both seeds, **blind, with the A/B mapping CROSSED between seeds** (238/239 —
+files NAMED, never lettered). Both agents were asked to *locate* which frame was blowing, and
+**both got it right**: seed 42 *"sea-2 is the rougher — ~20+ foam caps against ~8–9"* (a 2.4x
+count, against my predicted 3.0x); seed 7 *"sea-1 — ~24% more bright pixels, harder-edged
+caps"*. Whole-frame reads clean on both: no z-order tears, no floating tiles, no blown-out
+colour, city still coherent.
+
+⚠ **THE ASIDE BOTH AGENTS REACHED INDEPENDENTLY (212's law): it is NOT legible at fit zoom.**
+*"Nobody would call it at this scale"* · *"at most a faint speckle"*. True — and it is a property
+of **the whitecap family as a whole** (185's caps were equally sub-pixel at fit), not of this
+change; 159 says explicitly to judge a coast ornament at moderate zoom, not fit. Banked as cue
+**(ap)**, NOT a blocker. The lever, if ever taken, is 215's: **a hairline/speckle ornament needs
+a BODY** — not more contrast.
+
+⚠ **TWO INSTRUMENT BUGS, BOTH MINE, BOTH CAUGHT BY AN AGENT OR A CONTROL.** (1) The camera's
+aim-by-ink searched the **whole frame** for the biggest calm→gale difference — and the land
+moves ~8x more than the sea, so the argmax landed on the **palm band**, i.e. squarely on the
+probe's own POSITIVE CONTROL. It framed a park, and the first agent correctly FAILed *the
+camera*. **Aim by measured ink OF THE HOST, not of the frame** (226). (2) `probe-seamean` is the
+one CROSS-BUILD diff here, and its HEAD-vs-HEAD floor blew out to **5,416 px** — the **movers**
+(230): each page ran a wall-clock-dependent number of RAF frames before its freeze, so its cars
+and boats sit elsewhere. Emptying the mover arrays took the floor to **0**.
+
+**Verdict** DEEPENED. The sea now answers the wind: **21–42 px → 725–861 px** of wind-response,
+monotonic across the sweep, floor 0, land control unmoved — at zero net draw cost.
