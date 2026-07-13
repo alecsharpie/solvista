@@ -15409,3 +15409,106 @@ at the source, because a uniform rescale has no freedom to move it.
 Priors (vs the two standing refs, day/night): 202 +7.5/+4.1 & +8.6/+5.7; 207 +7.2/+5.1 & +9.5/+6.0;
 212 +8.7/+4.8 & +10.5/+7.3; 217 +11.9/+7.6 & +14.0/+8.3; 222 +15.0/+12.2 & +15.9/+13.3;
 227 +16.5/+11.5 & +16.9/+12.7; 232 +16.4/+11.9 & +17.9/+13.7.
+
+<!-- header bullet rotated out of GROWTH.md at iteration 234: cue (u), CLOSED by 234 -->
+
+  **(u) THE PIER / BOARDWALK DECK IS STILL VIOLET — (aa)'s bug one tile over (214, Water × Polish; the LAST warm
+  surface rotated).** Seed 7, unprompted: *"flat lavender-mauve slabs"* and *"the boardwalk path is warm brown while
+  the pier deck it connects to is violet — same walkway, two colours."* Fixing the sand made it **worse**. One-line
+  lever: route the deck's fills through **`sandCol()`** (it bypasses `col()`). ⚠ **GATE ON THE DECK'S DISTANCE FROM ITS OWN DAYLIGHT HUE, NOT a pairwise separation** — 221 proved separation *rewards* the bug.
+
+  > CLOSED by iteration 234, which shipped exactly the prescribed lever (`deck`/`deckDk` now take `sandCol()`'s
+  > warm wash) — but the cue's NOUN was wrong and that turned out to be the lap's finding. The deck was never
+  > violet: measured, it renders night hue **2** / chroma **13** (a 36° rotation with 82% of its colour gone) —
+  > a dead GREY, not a mauve. Whether the night tint carries a warm surface all the way to violet depends on that
+  > surface's BLUE channel, not on the bug: sand's blue (178) is high enough to overtake its crushed red and
+  > invert the channel order to B>R>G (hue 309); the deck's (118) is not, so red still wins and it merely goes
+  > colourless. That is why 214's audit criterion ("near hue ~308 with chroma <15") walked past it for four laps
+  > of a ladder built to hunt violet. The general correction — audit by `dHUE`, the distance from a surface's OWN
+  > daylight hue, never by a target hue — is promoted to SKILL.md, along with the palette-suppression probe rig
+  > (`probes/probe-deckhue.mjs`) that can see a draw with no tile type. Believe a cue's pointer; re-measure its
+  > adjective.
+
+## Iteration 224 — the downtown was the only thing that kept rising (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish — cue **(ac)**, the 🔴 cue: *"a spine, not a crown; no
+tallest-in-the-middle gradient"* (219, said by two blind agents on two seeds, reconfirmed at 222).
+Rotation owed **Sky** (stalest, 208), and I read its only live cue **(s)** first as the header
+instructs: confirmed exactly as documented — the sun sits at `y≈0.075..0.19` **on purpose** (200: the
+`.placard` owns the low sky) while the warmth comes from `dl.skyBot` at the bottom. Reconciling those
+is a sky-gradient redesign, not a lap. Sky had nothing; fell through to (ac) as pre-authorised.
+
+**What the probe found — the cue's DIAGNOSIS was right and its PRESCRIPTION was backwards.**
+The header prescribed: *"NARROW `c.v`'s spread; do NOT steepen `core`."* Measured first (`probe-taper`):
+
+- The **mean** taper was already **strong** — `corr(th,core)` **0.58-0.67**, mean height falling
+  124→105→94→91→82→69 by ring, top-10 tallest at mean distance **5.8** vs 17 for all towers.
+- The **ENVELOPE** was broken — and **a skyline's silhouette IS its envelope, not its mean.** Seed
+  1234's ring 5-8 max (**177**) *out-topped the core's* (163); seed 42's ring 9-12 hit 177 vs 178.
+- **Narrowing the noise ALONE makes the crown WORSE** (`probe-crownsweep`): `crownGap` (= max th
+  within d≤6 minus max th beyond d>8) falls **20.9 → 11.5**, and seed 42 goes **NEGATIVE (−14)** —
+  the tallest building in the city ends up at ring 9-12. It *raises* `corr` to 0.861, because `corr`
+  is a **mean** statistic. **The prescribed metric was anti-correlated with the thing the viewer
+  sees** (221's law, next host).
+
+**The real defect: ONE QUANTITY, TWO RULES, and 98 keyed only one of them to `core`** (217's law).
+`c.th` is written at **placement** *and* by a **2022+ growth rule** — `c.th += 9+c.v*12` while
+`c.th < 160`, a **flat universal ceiling with no `core` anywhere**, whose own comment reads
+*"the downtown keeps rising"* (199's tell: a comment asserting a behaviour the code cannot have — it
+lifted the **whole city, uniformly**, so the rim slowly climbed to the very ceiling downtown already
+sat at). `probe-towergrow`: mean growth is small (~4) and **flat across rings**, but its **tail is fat
+and centrality-blind** — `maxGrow` **42–60**, one seed-42 tower at ring 9-12 grew **+79**. The mean was
+never the problem. **The TAIL sets the envelope.**
+
+**Change.** Two clauses, both stream-neutral (`rng()<0.02` stays LEFT of the cap test):
+1. Placement noise **narrowed** `(54+82v)` → `(74+42v)` — span 2.52x → 1.57x, with `a+b/2` held at 95
+   so `E[height]` is unchanged **by construction**.
+2. New `TCAP(x,y)` — the growth ceiling **tapers on the same centrality shape placement uses**,
+   normalised by that shape's own **max (1.36)** so the core keeps its existing 160 and only the rim
+   is cut (to **82.4**). **Normalised by the formula's max, NOT by the measured mean core, deliberately:**
+   98's hold-the-mean constant was solved against a mean core of **0.125** and it now measures **0.282**
+   — **219 moved COM (the tower substrate) downtown and silently invalidated it.** A cap keyed to a
+   world statistic would rot exactly the same way (223's law: prefer a structural invariant to a
+   checked one). I rejected a higher-scoring variant (crownGap 50.2) for needing a `/0.886` constant
+   derived from that very statistic.
+
+**Census.** PASS, 0 page errors. pop 178623 → **178626 (+3)** · towers **+0** · developed **+0** ·
+**tallTowers 244 → 252 (+8)** and **helipads 188 → 192 (+4)** — the cue's "must not fall" gate passed
+*upward* (narrowing the noise lifts more mid-core towers past 80 in the pre-2022 eras). towerHt −0.2%.
+Per-seed pop **byte-identical** (40786 / 48342 / 32460) — stream-neutrality confirmed.
+
+**Probe (world data — no render, no clock, no noise floor).** `crownGap` **20.9 → 42.6** (2.0x; all
+three seeds strongly positive) · `corr(th,core)` **0.616 → 0.811** · top-10 tallest mean distance
+**5.8 → 4.1** · ring envelopes near-**monotone** on all three seeds (seed 7: `175 155 158 143 103 116`
+→ `168 139 126 116 95 102` — every outer ring down 20%, the core holding at 168).
+
+**Draw budget (222's law — a world-changing vector is priced by COUNTING OBJECTS, not by reading the
+diff).** day **108,069 → 107,937 (−0.12%)** · night **138,666 → 138,450 (−0.16%)**. **FREE, and
+marginally cheaper** — shorter rim towers issue fewer `prismS` bands by day and fewer `winBandR` lit
+panes by night, which is why night falls slightly more: 222's mechanism running in reverse.
+
+**Visual.** 3 agents, 2 seeds, day+night. **Whole-frame health PASS on all** (no z-order tears, no
+floaters, no blown-out colour, still a coherent coastal city). On the crown the first two **disagreed**
+— and the disagreement was **the instrument, not the feature**:
+- Seed 42, blind: located HEAD's tallest tower at **(0.51, 0.11)** and the patch's at **(0.47, 0.46)**
+  — the patch's pick lands within **0.05 of the true CBD (0.493, 0.512)**, HEAD's is 0.40 of a frame
+  away. The cue's own gate, passed.
+- Seed 7, blind: put the tallest at **(0.44, 0.12) in BOTH** frames, against a CBD at y=**0.625**.
+  `probe-apex` settled it: the highest apex on screen at **(0.442, 0.117)** is a **height-91 tower at
+  row 2, ring 39** — a far-back RIM tower. **`corr(screen apex, true height) = 0.262 / −0.289`;
+  `corr(screen apex, ROW/depth) = 0.995 on both seeds.`** Screen-y **is depth, not height**.
+- Re-asked seed 7 **projection-safely** (judge height by the *length of the vertical wall*, never by
+  position in frame): fresh blind agent counts **5–8 massive outskirt slabs in HEAD, "essentially
+  none" in the patch**, and picks the patch's central crown. Matches the world data exactly.
+
+**Verdict: SHIPPED.** The skyline now has a crown: mass downtown (219) *and* a tapering silhouette.
+
+**Two laws promoted to SKILL.md.** (1) *In this oblique projection screen-y conflates height with
+depth — "point at the tallest tower" is NOT a valid locate question.* Phrase a locate in a quantity
+the projection preserves. This sharpens 108's locate-don't-judge: the law says ask an agent to LOCATE,
+and this says **check that the thing you asked it to locate is VISIBLE IN THE PROJECTION AT ALL.**
+(2) *When you fix a QUANTITY, grep for every rule that WRITES it* — 217's law's sibling. 217 says a
+rule decides both whether and how-much; this says one field can be written by **two rules in different
+branches**, and a fix to one is routinely mistaken for a fix to the phenomenon. `c.th` had two writers
+for 126 iterations and only one knew where downtown was.
+

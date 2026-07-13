@@ -704,6 +704,35 @@ vector, whatever it is.
   returns before `stamp()`, so it has **no `_sx`/`_sy` at all** and 204's "aim at the drawn position" has nothing to
   read. Render **with the feature off** first (everyone back on the road), take the drawn positions *then*, pick your
   argmax knot, and only afterwards let the feature back in — the camera is aimed by the counterfactual.
+- **TO ISOLATE A DRAW THAT IS NOT A TILE, SUPPRESS ITS *PALETTE ENTRY* — LOUD-PAINT `BASE[name]`, FLUSH
+  `CCACHE`, RE-RENDER IN ONE PAGE, AND THE CHANGED PIXELS *ARE* THAT DRAW (iter 234).** This is the third
+  member of the suppression family and the cheapest: **226 suppresses the DRAW** (stack-match its call
+  sites), **230 suppresses the DECISION** (mutate the state the feature reads), **234 suppresses the
+  COLOUR**. Reach for it whenever the thing you must measure has **no tile type**, so the per-tile samplers
+  (`probe-sandhue`, `probe-goldenhue`) are structurally blind to it — an ornament laid *over* other hexes:
+  the pier deck, a bridge deck, benches, platforms, an animal's coat. Three properties make it the strongest
+  rig available for a colour claim:
+  ```js
+  const A = grab();                                                   /* as shipped            */
+  const keep = BASE.deck.slice();
+  BASE.deck = [255,0,255]; CCACHE = {};  const B = grab();            /* only that name moved  */
+  BASE.deck = keep;        CCACHE = {};
+  /* mask = (A != B) == every pixel that palette entry draws; deck colour = mean of A over mask */
+  ```
+  (a) **The floor is exactly 0** — both renders are in ONE page with the clock frozen, so nothing can drift
+  between them (230). (b) **It is BUILD-AGNOSTIC**: the mask is derived from each build's *own* render, so
+  the identical probe runs unchanged on HEAD and on the patch with **no source swap and no cross-build
+  floor** — which is the trap 230 spent a whole lap on. (c) **Occlusion is free**: what the mask contains is
+  what the final composited frame actually shows, so it measures the draw *as seen*, not as issued. And the
+  same mask **aims the camera by measured ink** (226): take the argmax window of it and point there, instead
+  of guessing a clip (201) or trusting a tile predicate that does not know what it is looking for.
+  ⚠ Two cautions. **A colour change cannot move geometry** — nothing in the artifact branches on a colour —
+  so if the mask's pixel *count* shifts a little between builds, that is your **threshold** reclassifying
+  antialiased/alpha-blended edge pixels (they now sit a different distance from the loud sentinel), not a
+  real change; say so rather than claiming "count unmoved". And **the daylight mask is the control that
+  proves it**: `washRGB` crosses over at `LITAMT` 0.35, so daylight runs byte-identical code and the day
+  columns must match HEAD **to the pixel** (234's did, on all three seeds — 199's dead-regime control,
+  arriving for free).
 - **A CORE-COLLAPSE GATE GUARDS AGAINST *ACCIDENT*, SO IT CANNOT PASS A DELIBERATE, LOCALIZED *REDUCTION* — PRICE
   YOUR VECTOR AGAINST THE GATE BEFORE YOU DESIGN, NOT AFTER (iter 233).** The census hard-fails on a >5% drop in
   `pop`/`developed`/`roads`, and that is right: those metrics exist to catch a change that *broke* the city. But some
@@ -1290,6 +1319,23 @@ vector, whatever it is.
   surface that is *supposed* to be warm.) The fix is a **luminance-matched, hue-preserving** wash for that
   surface (`sandCol()`), which is colour-only: **zero path objects, zero geometry, and free by the
   perf model.** Gate it at the same `LITAMT` 0.35 cut the lit glass uses and daylight stays byte-identical.
+  **⇒ BUT "hue ~308 / chroma <15" IS A SUFFICIENT TEST, NOT A NECESSARY ONE — IT ONLY FIRES ON SURFACES
+  BLUE ENOUGH TO *INVERT*, AND IT WILL WALK PAST EVERY WARM SURFACE THAT MERELY GOES GREY (iter 234).**
+  Whether the tint rotates a surface all the way to violet is a fact about **that surface's blue channel**,
+  not about the bug. Sand `[238,220,178]`: `.58*178 = 103 > .42*238 = 100`, so blue overtakes red, the
+  channel order inverts to B>R>G, and it lands on hue 309 — the audit fires. The pier deck `[196,164,118]`
+  has the *same bug from the same line of code*, but its blue is only 118, so red still wins (`82 > 68`),
+  **the channel order HOLDS**, and it lands on hue **2** — where the 308 test says nothing is wrong. It is
+  not violet; it is **GREY** (measured: day hue 38 / chroma 73 → night hue 2 / chroma **13**, 82% of its
+  colour gone), and it sat un-fixed through the entire wash ladder (214→220→221→223) *because the banked
+  audit could not see it*. **The load-bearing half of that test was always the CHROMA.** ⇒ **Audit by
+  221's gate — the surface's angular distance from ITS OWN DAYLIGHT HUE, plus its chroma retention — and
+  never by a fixed target hue.** `dHUE` is the honest number in every case (deck: **36° → 6.5°**; sand's
+  old rotation was 91°), and unlike "is it near 308" it is meaningful for a surface of *any* base colour.
+  Corollary, and it is why this is worth a law rather than a note: **a cue's NOUN can be wrong while its
+  MECHANISM is right.** Cue (u) said the deck was *violet* — it never was — and the cue was still pointing
+  at exactly the right line. **Believe a cue's pointer; re-measure its adjective** (the cue-is-a-POINTER-
+  not-a-SPEC law, wearing a colour word).
 - **ON A PER-EDGE DRAW, LEGIBILITY AND GRID-EXPOSURE ARE THE SAME QUANTITY — you cannot escape 159 by
   keeping the shape and changing only the TONE (iter 214).** 159 says a glowing line along a hex edge
   reads as a neon tube and must become dots. 214 read that law, *quoted it in the code comment*, and
@@ -1636,6 +1682,15 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   night, plus the pairwise separation matrix** — the general form of 214's `probe-sandhue`: it answers *"does tile X
   keep its identity from tile Y under light L?"*. Any surface pair collapsing below ~15 RGB units has lost its
   identity; **RES↔ROAD at night is 4**, cue (aa)).
+  `probe-deckhue.mjs` (234 — **the colour of a draw that has NO TILE TYPE.** Loud-paints `BASE.deck`, diffs
+  inside one page, and the changed pixels ARE the deck (see the palette-suppression law): reports its rendered
+  hue / chroma / luminance, and gates on **`dHUE` — its angular distance from its OWN daylight hue** (221),
+  never a pairwise separation. Build-agnostic, floor 0, with the **day columns as the free dead-regime
+  control**. Retarget it at any palette name by changing the two `BASE.*` lines — it is the instrument for
+  every ornament the per-tile samplers cannot see), `shot-deck.mjs` (its camera — **aimed by measured ink**:
+  takes the argmax window of that same mask, so it points at where the timber provably renders rather than at
+  a guessed clip; `AIM=wx,wy` forces the world point so the HEAD build frames the identical hex and the
+  before/after pair is **blind**. Shoots the whole-city night frame too, per the un-zoomed rule).
   The **skyline four** (224, all pure world data — no render, no clock, no noise floor, nothing to stub):
   `probe-taper.mjs` (per-ring tower height: mean, **max (the ENVELOPE)**, `corr(th,core)`, where the tallest
   actually stands, and **the mean `core` over tower sites** — the statistic 98 hard-coded and 219 invalidated;

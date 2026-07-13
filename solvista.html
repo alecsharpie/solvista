@@ -479,13 +479,32 @@ function setLight(dl){ /* called every frame — only flush the color cache when
    ground plane CYAN after dark: PARK measured hue 81 -> 206 with chroma crushed 46 -> 6,
    FOREST 52 -> 6. It is iter 220's bug on the surface the city STANDS on, and two step-back
    agents named it unprompted, on two seeds ("a violet/blue-grey ground plane").
-   Iter 220 made the WARM wash opt-in per call site, and rightly: cream/white/deck are shared
+   Iter 220 made the WARM wash opt-in per call site, and rightly: cream and white are shared
    between masonry, boats, foam and signage, so only the caller knows if it is drawing a wall.
    Green carries no such ambiguity — in this city a green surface is ALWAYS something growing,
    and there is none that should read cyan. So col() dispatches on the NAME, and no future
-   call site can reintroduce the rotation by forgetting to ask for the right wash. */
+   call site can reintroduce the rotation by forgetting to ask for the right wash.
+
+   ...AND NEITHER DOES DECK (iter 234). 220's comment listed `deck` with cream/white as
+   "shared", by association — but it is not: every one of its thirteen call sites is warm
+   timber or a warm coat (the pier planks and posts, the esplanade deck, the lifeguard
+   tower's legs, the beach bench, the river bridge's TIMBER DECK, a trestle table, a
+   barrel, the monorail platform, a DEER, a balloon's wicker basket). Not one draws a
+   hull, a wall, foam or a sign, so no caller ever needs the cool wash and the name is
+   as unambiguous as green is. It rotates exactly as sand did, and for the same reason —
+   it bypassed the wash — but it does NOT land on violet, and cue (u) was wrong about
+   that: sand's blue is high enough (178) that the tint's blue lift overtakes its crushed
+   red (.58*178 = 103 > .42*238 = 100) and the channel order inverts to B>R>G. The deck's
+   blue is only 118, so red still wins (82 > 68) and the order HOLDS. What it loses is not
+   its hue order but its COLOUR: measured over three seeds, the deck renders day hue 38 /
+   chroma 73 and night hue 2 / chroma 13 — a 36 deg rotation with 82% of its chroma gone,
+   i.e. the boardwalk goes GREY, a dead slab, which is what the agent saw and misnamed.
+   So it takes the same WARM lean sandCol() gives the sand it runs onto — and by the name,
+   not by the call site, so the bench and the bridge and the deer are fixed with the pier
+   rather than left to be found one at a time. */
 const LEAFN=new Set(['grass','grassDk','lawn','meadow','canopy','canopyLt',
                      'conifer','coniferLt','turf','sage','sprout']);
+const WARMN=new Set(['deck','deckDk']);
 function col(name,f){ /* f: face brightness */
   const k=name+'|'+f;
   let c=CCACHE[k]; if(c)return c;
@@ -502,6 +521,9 @@ function col(name,f){ /* f: face brightness */
      standing on it — because green simply IS cooler than tan — so the built mass still pops off
      it (220): the bug was the cyan, never the coolness. */
   if(LEAFN.has(name))return CCACHE[k]=washRGB(BASE[name],f,1.08,1.15,1.06);
+  /* the timber takes the SAND's wash, by calling it — not by copying its triple, which
+     could then drift from it. The boardwalk runs onto the beach; they should dim alike. */
+  if(WARMN.has(name))return CCACHE[k]=sandCol(name,f);
   const b=BASE[name];
   c='rgb('+Math.min(255,b[0]*TINT[0]*f|0)+','+Math.min(255,b[1]*TINT[1]*f|0)+','+Math.min(255,b[2]*TINT[2]*f|0)+')';
   return CCACHE[k]=c;
