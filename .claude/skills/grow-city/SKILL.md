@@ -684,6 +684,30 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A SMOOTH FIELD RENDERED AS A FLAT PER-HEX FILL *TERRACES ONTO THE LATTICE* — SO A TILE-BODY WASH MAY BE SUBTLE OR
+  IT MAY BE SEEN, AND IT CAN NEVER BE BOTH (iter 255).** 214 says a per-EDGE stroke cannot be both bright and
+  grid-invisible, *because the hex geometry is always in it and contrast is the dial that reveals it*. 255 is the same
+  law on the **per-HEX FILL**, and the reasoning that walks you into it is seductive: *my field is smooth in (x,y), so
+  adjacent hexes agree, so no edges can pop.* **False.** The field is smooth; the **rendering unit is the hexagon**, so
+  a smooth field sampled once per hex and painted as a flat fill is **piecewise-constant on the lattice** — and any
+  quantisation you added for the colour cache lands its steps exactly on hex boundaries. Measured on the sea: the wash
+  is either **d=0.57** against the surface's own grain (⇒ *both* blind agents, on the cleanest A/B the harness can shoot,
+  reported **no visible difference** and one explicitly refused to invent one) or, at 2.5x gain, **d=1.15** (⇒ *"discrete
+  hexagonal cells flipping between normal and pale — a high-contrast hex QUILT... camouflage / a tiled mosaic, not a
+  sea"*). **There is no middle.** ⇒ **The artifact's own escape is the tell: the sun glitter does exactly this and gets
+  away with it ONLY by being a LOW-ALPHA OVERLAY** (max 0.16) — i.e. by living permanently in the subtle regime and
+  never trying to be seen. **If a signal must be SEEN on a tiled surface, it needs a SHAPE THAT CROSSES TILE
+  BOUNDARIES** (a streak, a ribbon, a scatter of marks), not a fill that obeys them. This is 254's *"a SHAPE, an
+  ORNAMENT, a COUNT — never a hue"* arriving through the **geometry** instead of through the grain. The tell: your diff
+  modulates the colour handed to `hexTile`.
+  ⇒ **AND THE COROLLARY THAT LET IT PASS EVERY GATE: A PIXEL *COUNT* IS NOT AN *AMPLITUDE*, AND YOUR PROBE'S THRESHOLD
+  IS PROBABLY BELOW SIGHT.** `probe-seastate` scores a pixel as *moved* at `d > 6` — **2.7% of range, invisible** — so
+  it reported the feature repainting **18–22% of the ocean (29–35x HEAD)** and I read that as a triumph. Re-stated as
+  an amplitude it was **12.7/255 mean against a surface whose own within-region SD is 22.3**. **A count answers "did
+  pixels change"; the viewer asks "how much".** ⇒ **When a probe's headline is a COUNT and an agent says it cannot see
+  the thing, believe the AGENT and go and measure the MAGNITUDE** — in units of the grain it must be seen against (254's
+  `d`). `probes/probe-seaamp.mjs` is the rig, and it is domain-agnostic: hand it two PNGs. The tell: your gate's
+  tolerance is a small integer nobody chose for a perceptual reason.
 - **A REGIONAL SIGNAL CANNOT BE PAINTED ON A CHANNEL A PER-OBJECT *GRAIN* ALREADY SCATTERS — THE GRAIN IS YOUR NOISE
   FLOOR, AND AN EARLIER LAP MAY HAVE DELIBERATELY *MAXIMISED* IT (iter 254).** 218 says the eye counts objects, not
   ratios; 224 says for a silhouette the viewer's statistic is the `max`, not the mean. 254 is the third member of that

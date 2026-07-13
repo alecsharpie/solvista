@@ -17582,3 +17582,87 @@ in either whole-city frame.
 **Verdict** DEEPENED (the bowl now reads its surroundings), with one EXPLORED → REVERTED
 inside it (turning the cavea). Cue **(ah) CLOSED**. Law promoted to SKILL.md.
 
+## Iteration 245 — the whole scene gusts together, except the sea (2026-07-13) [Water & coast × Deepen]
+
+**Vector** Water & coast × Deepen — the stalest domain (last touched 234), reached the way
+225's grep-the-seam law says to reach a domain whose cue list looks dead: **grep the seam
+before you believe the saturation note.** Water's banked cues were one stale `rng()`-salt
+item; its seam held this.
+
+**The defect — 199's tell, hosted on a CROSS-REFERENCE (242's law), twice.** `WINDA` is a
+seeded gust cycle (0.25 → 1.0). Its own definition says *"trees, palms and clouds all read
+from this one signal **so the whole scene gusts together**"* (~L8381); 236's weather-front
+comment opens *"**The wind gusts (WINDA) and the sea turns (TIDE)**…"*. Both name the sea as
+a live system in the same breath as the wind. **The water draw contains no `WINDA` at all** —
+and the whitecaps, added by 185, are commented **"wind-driven whitecaps"** and read no wind
+whatever. The sea broke exactly as hard in a dead calm as in a full gale, for the artifact's
+whole life, under a comment that said otherwise.
+
+**Probed BEFORE designing** (`probes/probe-seastate.mjs` — a 196 state-response probe: ONE
+build, frozen clock, same `genWorld`, rendered at two pins of the signal, so every moved
+pixel IS a wind-response; sea isolated by 234's palette suppression, floor **0 px**):
+
+| | seed 42 | seed 7 | seed 1234 |
+| --- | --- | --- | --- |
+| sea surface | 83,823 px | 91,250 px | 87,083 px |
+| **sea moves, calm→gale** | **42 px** | **29 px** | **21 px** |
+| land moves (POSITIVE control) | 5,343 px | 4,686 px | 4,736 px |
+
+The land — trees, palms, flags — swings ~5,000 px on the identical pin, so **the pin is live
+and the water is deaf** (0.03% of its own surface). The defect is its own perfect control (236).
+
+⚠ **196's contaminant, caught in the act.** The first run read seed 7's sea at **3,398 px** —
+because the **rain shafts lean on `WINDA` and are alpha-blended OVER the water**, so their
+pixels are part-water and fall inside a water-palette mask. A neighbour answering the same
+signal, masquerading as the host answering it. Clearing the sky took it to **29 px**.
+
+**Change — `seaState()`, ONE predicate, every sea draw shares it** (the one-predicate law).
+`SEACALM=0.34` floor (a glassy sea reads as the flat teal that 185's caps were *added to fix*
+— cf. `SHAMT`, which may never reach 0 at night). Readers: the whitecaps break **sooner**
+(`CAPK`, crest threshold 0.60 → 0.19) **and over more of the sea** (`HBK`, eligibility 0.76 →
+19%..39% of deep hexes), and each cap is bigger; the open-sea sparkle rides a steeper swell.
+
+⚠ **ONE lever was not enough, and the first cut proved it.** With only the crest threshold
+moving, the calm→gale swing was **1.5x** and both the pixels and my own eye read it as
+*"slightly more speckle"*. The old fixed `hb>0.76` gate meant only **24% of the open water
+could EVER break, in any weather** — the ceiling was in the *eligibility*, not the threshold.
+Priced analytically (pure maths off the shipped WINDA formula, no render): `HBK=0.30` triples
+the swing to **3.0x** for **+0.8%** mean cap count. Shipped.
+
+**Census** PASS. `pop`/`roads`/`developed` **+0** — draw-only, no terrain, no `rng()`. Tile
+histogram empty, exactly as a draw-only lap must be; **the probe is the gate here, not the census.**
+
+**Perf — FREE, and by construction rather than by promise** (223). Both levers are *centred on
+`seaState()`'s mean*, so at that one wind the patch is **BYTE-IDENTICAL to HEAD — 0 px on all 3
+seeds** (`probes/probe-seamean.mjs`, with a full-gust control at 736–805 px proving the builds
+do diverge elsewhere). Mean cap count over the real gust cycle: **8.00% → 8.07%**. The deep sea
+is **341 cells**, so caps are ~55 of the frame's ~110,152 day path objects (**0.05%**) ⇒ the lap
+costs **+0.4 path objects**. The sparkle's `ph>0.2` gate is untouched ⇒ its count is exactly flat.
+**The foam is REDISTRIBUTED across the cycle, not added.**
+
+**Visual** PASS, both seeds, **blind, with the A/B mapping CROSSED between seeds** (238/239 —
+files NAMED, never lettered). Both agents were asked to *locate* which frame was blowing, and
+**both got it right**: seed 42 *"sea-2 is the rougher — ~20+ foam caps against ~8–9"* (a 2.4x
+count, against my predicted 3.0x); seed 7 *"sea-1 — ~24% more bright pixels, harder-edged
+caps"*. Whole-frame reads clean on both: no z-order tears, no floating tiles, no blown-out
+colour, city still coherent.
+
+⚠ **THE ASIDE BOTH AGENTS REACHED INDEPENDENTLY (212's law): it is NOT legible at fit zoom.**
+*"Nobody would call it at this scale"* · *"at most a faint speckle"*. True — and it is a property
+of **the whitecap family as a whole** (185's caps were equally sub-pixel at fit), not of this
+change; 159 says explicitly to judge a coast ornament at moderate zoom, not fit. Banked as cue
+**(ap)**, NOT a blocker. The lever, if ever taken, is 215's: **a hairline/speckle ornament needs
+a BODY** — not more contrast.
+
+⚠ **TWO INSTRUMENT BUGS, BOTH MINE, BOTH CAUGHT BY AN AGENT OR A CONTROL.** (1) The camera's
+aim-by-ink searched the **whole frame** for the biggest calm→gale difference — and the land
+moves ~8x more than the sea, so the argmax landed on the **palm band**, i.e. squarely on the
+probe's own POSITIVE CONTROL. It framed a park, and the first agent correctly FAILed *the
+camera*. **Aim by measured ink OF THE HOST, not of the frame** (226). (2) `probe-seamean` is the
+one CROSS-BUILD diff here, and its HEAD-vs-HEAD floor blew out to **5,416 px** — the **movers**
+(230): each page ran a wall-clock-dependent number of RAF frames before its freeze, so its cars
+and boats sit elsewhere. Emptying the mover arrays took the floor to **0**.
+
+**Verdict** DEEPENED. The sea now answers the wind: **21–42 px → 725–861 px** of wind-response,
+monotonic across the sweep, floor 0, land control unmoved — at zero net draw cost.
+

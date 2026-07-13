@@ -74,8 +74,19 @@ for (const seed of SEEDS) {
     const W = cvs.width, H = cvs.height;
     const grab = () => { render(); return g.getImageData(0, 0, W, H).data; };
 
-    /* ---- the sea mask, by palette suppression (234) ---------------------------- */
-    const SEA = ['water', 'waterDk', 'foam', 'glint'];
+    /* ---- the sea mask, by palette suppression (234) ----------------------------
+       ⚠ REPAIRED at 255, and it had been measuring the wrong thing since 245: the list
+       below used to be ['water','waterDk','foam','glint'] — the sea's ORNAMENTS. But
+       `water`/`waterDk` paint the RIVER, the marsh, pools and wakes; the open sea's own
+       BODY is `seaFace` -> colMix('waterSh','waterDp'), and NEITHER WAS IN THE MASK. So
+       "the sea" was really "the glitter wash + the foam caps", and `land` — its COMPLEMENT
+       (see below) — silently contained the entire ocean surface.
+       It read HEAD correctly BY ACCIDENT: in HEAD the sea's body never moves with the wind,
+       so it contributed 0 to either bucket. The first change that moves the BODY (255's
+       roughness wash) lands most of its pixels in `land`, and the POSITIVE CONTROL doubles.
+       That is 228's law again, and this is the fifth recursion: read what a probe MEASURES,
+       and check WHICH palette entries actually paint the surface you named it after. */
+    const SEA = ['water', 'waterDk', 'foam', 'glint', 'waterSh', 'waterDp'];
     const A = grab();
     const keep = {};
     for (const n of SEA) { keep[n] = BASE[n].slice(); BASE[n] = [255, 0, 255]; }
@@ -136,12 +147,21 @@ for (const seed of SEEDS) {
 /* ── MEAN-HOLD (98/216/222) ───────────────────────────────────────────────────────
  * The cap threshold gates a path-object COUNT, so a drifted mean is a permanent,
  * un-budgeted draw cost. The design is centred so seaState()==0.5 reproduces HEAD's
- * draw EXACTLY — which is falsifiable in two independent ways:
- *   (1) the FIXED POINT: at seaState 0.5 the patch must render BYTE-IDENTICALLY to
- *       HEAD. Nothing about the mean is being asserted here; it is arithmetic.
- *   (2) the CYCLE MEAN: mean(seaState) over the REAL gust cycle must land on 0.5.
- *       Pure maths off the artifact's own WINDA formula — no render, no noise floor.
- * (1) and (2) together say: the foam is REDISTRIBUTED across the gust cycle, not added.
+ * draw EXACTLY. Only the CYCLE MEAN is measured here:
+ *   mean(seaState) over the REAL gust cycle must land on 0.5. Pure maths off the
+ *   artifact's own WINDA formula — no render, no noise floor, nothing to stub.
+ *
+ * ⚠ THE FIXED-POINT FRAME HASH THAT USED TO LIVE HERE WAS A DEAD INSTRUMENT (removed
+ *   at 255). It rendered once and hashed the frame, then told you to compare that
+ *   number against a HEAD run. It could NEVER pass: (a) it never cleared the MOVERS,
+ *   so boats and peds drift between page loads (230 — the floor IS the movers), and
+ *   (b) a whole-frame HASH is not a diff — it is all-or-nothing, so ONE anti-aliased
+ *   pixel of float noise reports "different" exactly as loudly as a broken feature
+ *   (245's own law, which this probe then went on to break). Measured at 255: the same
+ *   pristine HEAD file hashed 3129893759, 2450885004 and 3158439912 on three
+ *   consecutive runs. It was three iterations of pure noise wearing a decimal point.
+ *   ⇒ The fixed point is proved by `probe-seamean.mjs`, which COUNTS DIFFERING PIXELS
+ *   and carries a HEAD-vs-HEAD floor in the same run (213). Use that; it works.
  */
 console.log('\n══ MEAN-HOLD ══  (is the foam redistributed, or is there simply more of it?)');
 {
@@ -161,18 +181,12 @@ console.log('\n══ MEAN-HOLD ══  (is the foam redistributed, or is there 
     let acc = 0; const N = 400000;
     for (let i = 0; i < N; i++) acc += ss(i * 0.01);   /* 4000 s ≫ both periods (48 s, 11 s) */
 
-    /* (1) the fixed point: render at seaState 0.5 and hand the pixels back */
-    const g = cvs.getContext('2d'), W = cvs.width, H = cvs.height;
-    WINDA = WFIX; CCACHE = {};
-    render();
-    const d = g.getImageData(0, 0, W, H).data;
-    let h = 0; for (let i = 0; i < d.length; i += 4) h = (h * 31 + d[i] + d[i + 1] * 7 + d[i + 2] * 13) >>> 0;
-    return { meanSS: acc / N, hash: h, WFIX };
+    return { meanSS: acc / N, WFIX };
   }, { WFIX });
-  console.log(`  (2) mean seaState over the real gust cycle = ${mean.meanSS.toFixed(4)}   (target 0.5000)`);
-  console.log(`  (1) fixed point: WINDA=${mean.WFIX.toFixed(4)} ⇒ seaState 0.5 — frame hash ${mean.hash}`);
-  console.log(`      ⇒ compare this hash against the SAME probe run on HEAD (SRC=). Equal ⇒ the patch is`);
-  console.log(`        BYTE-IDENTICAL to HEAD at the cycle's mean, so the foam is redistributed, not added.`);
+  console.log(`  cycle mean seaState = ${mean.meanSS.toFixed(4)}   (target 0.5000)`);
+  console.log(`  fixed point at WINDA=${mean.WFIX.toFixed(4)} ⇒ seaState 0.5.`);
+  console.log(`      ⇒ prove it with  node probes/probe-seamean.mjs  (counts px, carries a floor).`);
+  console.log(`        The frame HASH that used to print here was noise — see the header.`);
 }
 
 console.log('\n══ VERDICT ══');
