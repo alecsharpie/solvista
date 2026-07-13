@@ -15169,3 +15169,149 @@ future step-back sees it on two seeds, dial the G gain 1.15 -> 1.10.**
 
 **Verdict: SHIPPED.**
 
+
+## Header trim — iter 232 (rotated out of the maintained header, verbatim)
+
+The header hit its 400-line budget, so the 26th step-back moved these three
+now-superseded ✅ bodies down here to make room for its own findings. Their live
+⚠ WARNINGS were kept in the header (231's `groundLoad` predicate warning already
+sits in its own bullet; 230's taxi/`VCURF` warning was compressed in place); only
+the *narrative* of each closed lap is archived. 227's step-back line is superseded
+by 232's.
+
+  ✅ **231 (Civic × Polish): CUE (t) CLOSED — and it was 4x bigger than banked.** The amphitheater's siting scanned
+  in RASTER order and took the **first match**, i.e. it always went to the **BACK of the plate** — row 2-3 on **all
+  six seeds**, out of ~150 candidates. Seed 7 rendered **4 px of its 260 (98.5% occluded)** behind five mid-rises.
+  Now sited by **`groundLoad`** (see the ⚠ below) as a **PREFERENCE, never a gate**: mean occlusion **39.4% → 8.1%**,
+  worst **98.5% → 20.9%**, buried **1/6 → 0/6**, population **6/6**. ⚠ **The census's `TOWER −6.9% / pop −3.9%` was
+  the CHAOS, not the change** — paired over 10 seeds (`probe-cascade`) the mean is **+1.4 towers / +1.07% pop**, only
+  **3/10** seeds down. **The 3-seed matrix can show a scary directional-looking move that is centred on zero; pair it
+  before you redesign to protect a metric.** ⚠ **168 gave this bowl a spotlit performer on a tile that showed four
+  pixels — polish the VISIBILITY before the DRAW.**
+  ✅ **230 (Transport × Deepen): THE TRAFFIC KEEPS HOURS** (body in entry 230). `vehHidden(v)` reads the same
+  `nightAmt()` clock, thinning by CLASS (`VCURF`). **The BUS, SERVICE fleet and TAXI keep no hour** — the bus because
+  `stepVehicle` stamps the stop queue whether or not it is DRAWN. ⚠ **The `taxi` flag was DECORATIVE for ~200
+  iterations and is now LOAD-BEARING** (cab share of cars still out 13% → 41%). Day is provably inert.
+  ✅ **227 was the 25th step-back — city CLEAN, arc UNMOVED, and it FIXED ITS OWN CAMERA** (frames self-report `HUD=ok`).
+
+## Iteration 222 — the twenty-fourth step-back finds the sand outshining the towers (2026-07-13) [holistic step-back]
+
+**Vector:** holistic step-back (24th; the last was 217). No source change — this is a read, a
+measurement, and a hand-off. Census PASS, city healthy (every core metric +0, tile histogram empty).
+
+**Frames:** `probes/shot-stepback.mjs`, seeds 42 and 7 — day (t=0.30) / golden (0.68) / night (0.92)
+at `year=2035.62`, plus a winter (2035.02) contrast frame. Every frame self-reported its own state;
+no mis-pinned camera this time.
+
+**The agents:** both FAILed. Per 212's fail/aside law, the FAILs are where they were wrong and the
+asides are where they were right — and **that law has now paid out for the eighth lap running.**
+
+**FAIL 1 (both seeds): "winter is indistinguishable from day."** This is cue **(ab)**, now said by
+SIX agents. `probe-season` refutes the premise (FARM 87.0 seasonal shift, ROAD control 0.6 — the
+calendar is ALIVE); theirs is a frame-SHARE claim, and a dry-Mediterranean city having no snow is
+arguably correct by design. Unchanged, still LOW.
+
+**FAIL 2 (seed 7): "tower wallpaper / no skyline hierarchy."** The hierarchy half is cue **(ac)**,
+already 🔴 and measured. The *wallpaper* half is new — see (af).
+
+**THE ASIDE, AND IT IS THE FINDING — both seeds, independent, unprompted:** *"the sand reads
+full-daylight tan, the shoreline glows like it's lit at noon"* (42) · *"the beach sand reads LIT
+rather than moonlit — it is the least night-graded surface in the frame"* (7) · *"unlit vegetation
+should be the darkest thing on land, but here it out-brightens the roads"* (42).
+
+**Measured, and CAUSAL** (`probes/probe-goldenhue.mjs`, HEAD vs pre-ladder `78f53c2` via its `SRC`
+hook — the same instrument on both builds):
+
+```
+ night lum      pre-ladder(213)   HEAD(221)    delta
+  BEACH               96            105         +9     <- washed (214)
+  FOREST              58             66         +8     <- washed (221)
+  PARK                81             88         +7     <- washed (221)
+  RES                 79             85         +6     <- washed (220)
+  ROAD/TOWER/COM/MID/FARM/WATER                <= +2   <- NOT washed
+```
+
+Every surface the night-wash ladder touched gained **+6..+9** night luminance; every surface it did
+not touch moved **<= +2**. The ladder is unambiguously the cause, and the night brightness ORDERING
+has inverted:
+
+- **before:** TOWER 108 > COM 107 > MID 99 > **BEACH 96** — the three LIT building types on top. Correct.
+- **now:** TOWER 109 > COM 108 > **BEACH 105** > MID 101 — **the unlit sand has crossed INTO the lit
+  city's band**, and PARK (88) now out-brightens ROAD (81), exactly as the agents said.
+
+**Why no gate could see it — and it is a LAW (⇒ SKILL.md).** 214, 220 and 221 each fixed a real hue
+rotation and each passed a *correct* gate — and 221's own law **mandated** the shape of that gate:
+*for an identity/hue claim, gate on the surface's distance from ITS OWN DAYLIGHT SELF, not from other
+surfaces.* That law is right, and it is **exactly why the drift was invisible**: a per-surface
+identity gate is blind, by construction, to a **cross-surface ORDERING**. Three laps each moved their
+own surface +6..+9 and none of them was ever asked about anybody else. ⇒ **A ladder of per-surface
+fixes needs a GLOBAL invariant that no single lap can check.** Here it is, in the viewer's units:
+**no UNLIT surface may out-brighten the LIT ones.**
+
+⚠ **The hue fixes were RIGHT — do not revert them** (BEACH hue 316->33 out of violet; PARK 200->101
+out of cyan; chroma restored 12->37 / 8->15). The lever is the **luminance** the gain triple adds as
+a side-effect, not the hue it corrects.
+
+**PERF — and it FALSIFIES a claim this header was making.** Lap (218-221) vs 217 `466a8b3`:
+**day +3.3% / night +4.2%.** Arc vs `7e2ac2c` (177): **+15.0% / +12.2%** (was +11.9/+7.6 at 217).
+Arc vs `5f01426` (162): **+15.9% / +13.3%** (was +14.0/+8.3). Abs: day 40.6-41.7ms, night 47.3-48.2ms.
+
+That is ~+3pp day / +4.6pp night from four iterations that **should have added no draw work at all**
+(220/221 colour-only; 219 world-data; 218 reverted) — a cost with no mechanism, which by 216's law
+means *change instrument, don't re-run the timer.* `probe-drawbudget` (deterministic, load-immune):
+
+```
+  path objects     217(466a8b3)   HEAD(221)    delta
+    day              104,787       108,007     +3.1%
+    night            132,547       138,734     +4.7%
+```
+
+**The two instruments AGREE to within 0.5pp, so the cost is REAL, not machine load — and it is
+EXPLAINED: it is 219's downtown.** Concentrating COM in the core built more towers, and a tower is
+`prismS`/`bandS` bands by day and `winBandR` lit panes by night — which is precisely why **night grew
+more than day**. This is a paid, legitimate cost (a denser city costs more to draw), and it is
+**ACCEPTED — do NOT open a perf lap.**
+
+⚠ But the header asserted **"219 is world-data only (no new draw call) — arc unmoved"**, and that is
+now **measured false**. ⇒ **LAW (⇒ SKILL.md): "no new draw CALL" is not "no new draw WORK" — the
+WORLD IS THE DRAW LIST.** A rule that changes which tiles *exist* changes how many path objects get
+rasterized every frame, forever, even though the diff adds not one drawing primitive. The loop has
+been pricing CA/siting vectors as free by reading the *diff*; they must be priced by counting
+**objects**, which is one command.
+
+**A FALSE cue, killed before it cost a lap.** Seed 42: *"the moon is bright while the stat bar reads
+0% NEW MOON — contradictory."* Investigated: `moonPhase()` is ONE predicate with two readers (draw
+L6622, HUD L7219 — 135/144 wired it correctly), the lit lune is properly skipped at new moon
+(`MOONF>0.015`), and what the agent saw is the deliberate, documented **earthshine limb** (*"the whole
+disc, dim, so the unlit part still reads as moon"*). Physically correct and intended — 201's
+objection-to-the-model shape. **Do not chase it.**
+
+**Cue (ac) RECONFIRMED, and by a LOCATE answer rather than a judgement** (108's law working as
+designed): asked to *point at the single tallest tower*, both agents, on both seeds, pointed at the
+**rim** — (0.51, 0.09) and (0.44, 0.10), y≈0.1 being the top edge of the plate. That is the noise
+swamping the centrality signal, exactly as (ac) states. Still the top Urban cue.
+
+**Census:** PASS. Every core metric +0, tile histogram empty (no source change). Entities nominal.
+
+**Verdict: FIXED** — nothing shipped to the artifact, but the step-back did its job: it caught a
+three-lap compounding drift that every per-lap gate was structurally blind to, refuted a perf
+suspicion with a second instrument, killed a false cue, and promoted two laws. **The next iteration
+is (ae): put the night ground back under the lit city.**
+
+
+## Header trim — iter 232, part 2 (rotated out of the maintained header, verbatim)
+
+Three more ✅ CLOSED-lap bodies, archived to bring the header back under its 400-line
+budget after 232 added cue (ai) and (af′). Each is a *narrative of a finished ladder*;
+every live ⚠ WARNING inside them was kept in the header (compressed in place).
+
+  ✅ **THE HUD LAP IS DONE (229) — BOTH ITS CUES WERE THE HARNESS, NOT THE CITY** (law in SKILL.md: *a defect only your
+  HARNESS can see is a defect IN your harness*). ⚠ **(y) and (s) were ALSO born from agents reading `shoot.mjs` output
+  — REPRODUCE either in the user's configuration before designing to it.** The **Interaction/UX column** (cross-cutting,
+  so it sits here not in the grid — like U2/42/U5) was last touched at **229**; before that **191**.
+  ✅ **THE SKYLINE LADDER (217→218→219→224) and THE WASH LADDER (223) ARE BOTH COMPLETE** — cues **(ac)** and **(ae)**
+  CLOSED; the `c.th` ladder is **SPENT** (warnings at (ac)); the wash is **luminance-safe**, its invariant **ASSERTED
+  by `probe-goldenhue.mjs`**. Laws in SKILL.md. ⚠ But NEW cue **(ag)**: 227's agent says the night greens read hot
+  again — which would sit on the wash ladder's own invariant.
+  ✅ **137's STANDING-CROWD CUE IS CLOSED (226).** Every STANDING figure now casts `shadS` and inherits 225's sun
+  vector; the SEATED ones (cafe, picnic, amphitheater) are deliberately not. **People's cue list is EMPTY.**
