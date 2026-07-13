@@ -160,7 +160,10 @@ footer a{color:var(--gold);text-decoration:none}footer a:hover{text-decoration:u
 
 <section class="chart">
   <h2>Cumulative would-be cost</h2>
-  <p class="sub">The compounding price of 170 autonomous iterations, if it had been metered.</p>
+  <p class="sub">The compounding would-be price of 170 autonomous iterations, stacked by the loop's
+  own verdict: <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
+  <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted, and
+  <span class="key k-est"></span>the recovered early runs that predate the verdict log. Hover for the split at any point.</p>
   <div id="cumChart" class="svgbox"></div>
 </section>
 
@@ -356,29 +359,37 @@ function drawAll(){
   xAxis(s,H);
 })();
 
-// ---- cumulative cost (area+line) ----
+// ---- cumulative cost, stacked by the loop's own verdict ----
 (function(){
-  const box=document.getElementById('cumChart');const rows=DATA.filter(d=>d.c!=null);let acc=0;const pts=rows.map(d=>({i:d.i,y:(acc+=d.c)}));
-  const W=CW,H=260,P={l:PL,r:PR,t:14,b:28};const s=svg(box,W,H);
-  const ih=H-P.t-P.b;const maxY=pts[pts.length-1].y;
+  const box=document.getElementById('cumChart');const rows=DATA.filter(d=>d.c!=null);if(!rows.length)return;
+  const W=CW,H=280,P={l:PL,r:PR,t:14,b:28};const s=svg(box,W,H);const ih=H-P.t-P.b;
+  // bottom→top: the pre-verdict recovered runs form a grey base, then each verdict stacks on top
+  const cats=[['none','--muted','no verdict logged'],['SHIPPED','--series-1','shipped'],
+    ['DEEPENED','--series-2','deepened'],['FIXED','--series-3','fixed'],['EXPLORED → REVERTED','--series-6','reverted']];
+  const run={};cats.forEach(c=>run[c[0]]=0);
+  const pts=rows.map(d=>{run[d.v||'none']+=d.c;const v=Object.assign({},run);
+    return {i:d.i,v,tot:cats.reduce((a,c)=>a+v[c[0]],0)};});
+  const maxY=pts[pts.length-1].tot;
   const X=i=>xI(i);const Y=v=>P.t+ih-(v/maxY)*ih;
-  [0,200,400,600,800].forEach(v=>{if(v>maxY)return;const yy=Y(v);
+  [0,200,400,600,800,1000].forEach(v=>{if(v>maxY)return;const yy=Y(v);
     s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
     const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent='$'+v;s.appendChild(t);});
-  let dLine='M'+pts.map(p=>X(p.i)+' '+Y(p.y)).join(' L ');
-  const dArea=dLine+' L '+X(pts[pts.length-1].i)+' '+Y(0)+' L '+X(pts[0].i)+' '+Y(0)+' Z';
-  s.appendChild(el('path',{d:dArea,fill:cssv('--series-1'),'fill-opacity':0.1,stroke:'none'}));
-  s.appendChild(el('path',{d:dLine,fill:'none',stroke:cssv('--series-1'),'stroke-width':2,'stroke-linejoin':'round'}));
-  const end=pts[pts.length-1];s.appendChild(el('circle',{cx:X(end.i),cy:Y(end.y),r:4,fill:cssv('--series-1'),stroke:cssv('--surface'),'stroke-width':2}));
-  const lt=el('text',{x:X(end.i)-8,y:Y(end.y)+18,'text-anchor':'end',class:'endlbl'});lt.textContent=fmtUsd(end.y);s.appendChild(lt);
-  const hv=el('line',{y1:P.t,y2:P.t+ih,stroke:cssv('--muted'),'stroke-width':1,opacity:0});s.appendChild(hv);
-  const hd=el('circle',{r:4,fill:cssv('--series-1'),stroke:cssv('--surface'),'stroke-width':2,opacity:0});s.appendChild(hd);
+  const base=pts.map(()=>0);
+  cats.forEach(([key,col])=>{
+    const top=pts.map((p,idx)=>base[idx]+p.v[key]);
+    const topPts=pts.map((p,idx)=>X(p.i)+' '+Y(top[idx]));
+    const botPts=pts.map((p,idx)=>X(p.i)+' '+Y(base[idx])).reverse();
+    s.appendChild(el('path',{d:'M'+topPts.join(' L ')+' L '+botPts.join(' L ')+' Z',fill:cssv(col),'fill-opacity':key==='none'?0.45:0.9,stroke:'none'}));
+    pts.forEach((p,idx)=>base[idx]=top[idx]);});
+  const end=pts[pts.length-1];
+  const lt=el('text',{x:X(end.i)-8,y:Y(end.tot)+18,'text-anchor':'end',class:'endlbl'});lt.textContent=fmtUsd(end.tot);s.appendChild(lt);
+  const hv=el('line',{y1:P.t,y2:P.t+ih,stroke:cssv('--ink'),'stroke-width':1,opacity:0});s.appendChild(hv);
   s.addEventListener('mousemove',e=>{const pt=s.getBoundingClientRect();const px=(e.clientX-pt.left)/pt.width*W;
     let best=pts[0],bd=1e9;for(const p of pts){const dd=Math.abs(X(p.i)-px);if(dd<bd){bd=dd;best=p;}}
     hv.setAttribute('x1',X(best.i));hv.setAttribute('x2',X(best.i));hv.setAttribute('opacity',1);
-    hd.setAttribute('cx',X(best.i));hd.setAttribute('cy',Y(best.y));hd.setAttribute('opacity',1);
-    showTip('<b>Through #'+best.i+'</b><br>'+fmtUsd(best.y)+' cumulative',e.clientX,e.clientY);});
-  s.addEventListener('mouseleave',()=>{hv.setAttribute('opacity',0);hd.setAttribute('opacity',0);hideTip();});
+    const lines=cats.filter(c=>best.v[c[0]]>0).reverse().map(c=>'<span style="color:'+cssv(c[1])+'">'+c[2]+'</span> '+fmtUsd(best.v[c[0]])).join('<br>');
+    showTip('<b>Through #'+best.i+'</b><br>'+lines+'<br><b>'+fmtUsd(best.tot)+' total</b>',e.clientX,e.clientY);});
+  s.addEventListener('mouseleave',()=>{hv.setAttribute('opacity',0);hideTip();});
   xAxis(s,H);
 })();
 
