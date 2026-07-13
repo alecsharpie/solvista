@@ -36,7 +36,11 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 /* resolve the artifact RELATIVE TO THIS FILE, never an absolute path */
 const CAND = [resolve(HERE, '../../../../solvista.html'), resolve(HERE, 'solvista.html'),
               resolve(HERE, 'solvista.html')];
-const ART = CAND.find(f => existsSync(f));
+/* SRC= grades any build (iter 257). 222's law says a lap must COUNT its path objects rather
+   than infer them from its diff -- which needs HEAD's count as well as the patch's, and this
+   probe could only ever read the working tree. `SRC=$(git show HEAD:solvista.html)` now does it
+   with no /bin/cp swap, so there is no stale-backup hazard (197). */
+const ART = process.env.SRC ? resolve(process.env.SRC) : CAND.find(f => existsSync(f));
 
 const SEEDS = [42, 7, 1234];
 /* dayT pins: the light curve's day plateau vs deep night */

@@ -1,5 +1,5 @@
 {
- "when": "2026-07-13T21:38:24.970Z",
+ "when": "2026-07-13T22:06:53.311Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -224,8 +224,8 @@
    "roads": 799,
    "bridges": 57,
    "developed": 1065,
-   "solarRoofs": 476,
-   "greenRoofs": 122,
+   "solarRoofs": 477,
+   "greenRoofs": 121,
    "towerHt": 9804,
    "tallTowers": 64,
    "helipads": 51,
@@ -853,7 +853,7 @@
    "bridges": 53,
    "developed": 1013,
    "solarRoofs": 416,
-   "greenRoofs": 146,
+   "greenRoofs": 144,
    "towerHt": 6018,
    "tallTowers": 30,
    "helipads": 23,

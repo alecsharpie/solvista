@@ -684,6 +684,46 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A TERRACE IS SEEN AS `STEP ÷ CHROMA`, NOT AS `STEP` — SO ANYTHING THAT *DESATURATES* A TILED SURFACE EXPOSES A
+  LATTICE THAT WAS ALREADY THERE AND WAS ALWAYS FINE, AND YOUR DIFF WILL CONTAIN NO GEOMETRY AT ALL (iter 257).**
+  255 says a smooth field sampled once per hexagon and painted as a flat fill is piecewise-constant on the lattice, so
+  its steps land on the hex boundaries and the surface reads as a quilt. 255 learned that by **building** such a field.
+  257 found the artifact **had one all along**: `seaTone` quantises depth to **eighths**, so two adjacent sea hexes have
+  always differed by one eighth of the `waterSh`→`waterDp` ramp, painted as two flat fills. At **DAY** that step is
+  **10.6** RGB units and *nobody in 256 iterations has ever called the day sea a quilt*. At **GOLDEN HOUR** the step is
+  **SMALLER (8.7)** — and two blind agents, on two seeds, at 1:1 crops, unprompted and on **pristine HEAD**, both called
+  it *"a clear hexagonal quilt… exposing the grid."* **The step did not grow. The CHROMA collapsed** (76 → 44: the warm
+  golden tint is near-complementary to teal, so it cancels the sea's colour — 214's law arriving at dusk), and a terrace
+  with no colour to hide behind stops reading as **water depth** and starts reading as **TILING**. Measured as
+  `step/chroma`: day **0.14** (accepted for the artifact's whole life) · golden HEAD **0.20** (its worst) · night
+  **0.08** · golden fixed **0.08** (its best). ⇒ **The quantity the viewer sees is the step RELATIVE TO THE SURFACE'S
+  OWN COLOUR.** Two consequences, and the second is the one that will bite: (a) **you can fix a quilt without touching
+  its geometry**, by giving the surface its colour back; (b) **any change that desaturates a tiled surface — a wash, a
+  tint, a light, a fog, a season — MANUFACTURES a quilt out of a step that was already there and was fine**, and it will
+  pass every geometry review because *it contains no geometry*. The tell: your surface is one flat fill per hex drawn
+  from a quantised field, and something in your lap moves its **chroma**. (`probes/probe-seastep.mjs` — render-free, no
+  clock, no noise floor; it asks `seaFace()` for its colour directly, so glints and foam riding *on top* of the fill
+  cannot confuse it.)
+  ⇒ **AND THE COROLLARY THAT NARROWS 255'S ⛔, WHICH WOULD OTHERWISE HAVE FORBIDDEN THE FIX: 255 BANS A *PER-HEX* FIELD
+  IN A TILE FILL, NOT A *UNIFORM* ONE.** 255's ⛔ was written as *"do not paint a signal into the water's body colour"*,
+  and read literally it kills this lap. But re-read its **mechanism**: the quilt comes from a field that is *sampled per
+  hex*, so its quantisation steps land on hex boundaries. A term with **no `x` and no `y` in it** — one number for the
+  whole ocean — moves every hex by the *same* amount and **introduces not one new spatial step**; it *cannot* terrace,
+  and 257's uniform sky-mirror measurably **halved** the existing one (8.7 → 4.1). ⇒ **When a banked ⛔ would forbid
+  your vector, go and re-read the MECHANISM it was derived from, not the sentence it was written as.** A law generalised
+  one notch too far is indistinguishable from a law, right up until it costs you the fix.
+  ⇒ **AND THE FIX'S OWN PRINCIPLE IS WORTH KEEPING: `albedo × TINT` IS RIGHT FOR LAND AND IS A CATEGORY ERROR ON A
+  MIRROR.** Every land surface is a **diffuse** reflector — its colour *is* albedo × illuminant — which is why the
+  golden tint duly saturates the sand, the roofs and the hills (chroma **+40..140%** on every land tile). **Water is
+  SPECULAR: its colour is the SKY'S, not albedo × sunlight.** Passing it through the diffuse illuminant is the whole
+  bug, and it is 209's law (*what large surface wears a field that cannot carry the signal?*) cashed on **the largest
+  surface in the city**. So the sea takes **`GWST`, the OVERHEAD sky** (what a top-down sea faces), *not* passed through
+  `TINT` — reflected light is not albedo, the same reason the lit windows take a raw literal. ⚠ **Two seductive
+  alternatives, BOTH REFUTED BY ARITHMETIC BEFORE A LINE WAS WRITTEN — do not re-try either:** mirroring the **warm
+  horizon** (`GWSB`) instead lands on `[121,130,111]`, **chroma 19, a murky olive** (teal and orange are complementary,
+  so the blend passes through *grey* — 181's own comment says so, which is why its sun path is carried by **additive**
+  glints and not by a wash); and merely **restoring the teal** the tint cancels hands back a *bright daytime sea*, which
+  is the complaint stated **louder**. **The sea must not keep its noon colour — it must change to the RIGHT one.**
 - **A SMOOTH FIELD RENDERED AS A FLAT PER-HEX FILL *TERRACES ONTO THE LATTICE* — SO A TILE-BODY WASH MAY BE SUBTLE OR
   IT MAY BE SEEN, AND IT CAN NEVER BE BOTH (iter 255).** 214 says a per-EDGE stroke cannot be both bright and
   grid-invisible, *because the hex geometry is always in it and contrast is the dial that reveals it*. 255 is the same
@@ -2350,7 +2390,16 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before
   reopening any draw-cost lever), `probe-drawbudget.mjs` (**where the frame goes** —
-  path objects per draw fn, in one render; calibrated against `probe-shadcost`),
+  path objects per draw fn, in one render; calibrated against `probe-shadcost`. ✅ **`SRC=` since 257**, so a lap can
+  price itself against pristine HEAD — `SRC=$(git show HEAD:solvista.html)` — with **no `/bin/cp` swap and so no
+  197-class stale-backup hazard**. 222 says COUNT your objects rather than infer them from your diff; this is how),
+  `probe-seastep.mjs` (257 — **IS THIS TILED SURFACE A QUILT?** The **cheapest instrument in the harness**: no render,
+  no clock, no pixels, no noise floor, nothing to stub. It asks `seaFace()` directly for the colour of each of the nine
+  depth tones and reports the **LATTICE STEP** between two depth-adjacent hexes — so the glints and foam riding *on top*
+  of the fill cannot confuse it. ⚠ **Read its `step/chroma` column, never `step` alone**: the day sea's raw step is
+  **BIGGER** than the golden sea's, and nobody has ever called the day sea a quilt — *a terrace is seen relative to the
+  surface's own colour* (see the law). Day+night are its free **dead-regime control** (`GWARM=0` ⇒ both builds must
+  match to the unit). Retarget it at any quantised per-hex fill by swapping the function it interrogates),
   `probe-darkline.mjs` (**locate an unexplained linear artifact**: censuses every long/thin/dark
   stroke and attributes it to the fn that issued it. ✅ **REPAIRED at 243 — its two documented lies are now fixed IN
   THE TOOL, not in a caveat**: a `CanvasGradient` stroke is counted apart and **never scored as black** (the rain

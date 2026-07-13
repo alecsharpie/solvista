@@ -17793,3 +17793,101 @@ MEASURES and WHERE IT SAMPLES, not what it is called; apply 228's test PER METRI
 instrument. ⇒ **A cue re-confirmed is NOT corroborated unless a DIFFERENT instrument did it.** 252 is the
 counter-example and the template: agents + a repaired area probe + a grep — three instruments, one answer.
 (This rule is retained in compressed form in the header, because it governs how the cue list is *read*.)
+
+## Iteration 247 — the twenty-ninth step-back finds a beach packed for a winter nobody was having (2026-07-14) [holistic step-back + People & activity × Deepen]
+
+**Vector** — the 29th step-back (due at ~247). Whole-city read at 2 seeds × 4 frames
+(`shot-stepback.mjs`), the perf lap + arc, and the fix the read turned up.
+
+**The read.** Both agents FAILed, independently, on two seeds, with the *same headline*:
+**winter is indistinguishable from summer.** That is cue (ak), reconfirmed — and it is now
+four agents across two step-backs (242, 247) saying it. Graded by measuring it (237's law),
+the FAIL split cleanly into a **misread** and a **real defect** (243: a cue can bundle both):
+- ✗ *"the season runs BACKWARDS — winter is greener; there is no snow, no bare trees."*
+  **201's objection-to-the-MODEL.** `TILEDESC[T.BEACH]` says **'Golden sand along the
+  Pacific'** and `applySeason`'s own keyframe names `.62` **the golden dry peak**: Solvista
+  is a *Mediterranean* coast, so a wet green winter and a golden dry summer is **correct**,
+  and snow on a palm coast would be the bug. Rejected — but note **both agents reached it**,
+  which says the model is not being *communicated*.
+- ✓ *"the beach is still a summer beach — umbrellas, sunbathers, a packed swimming beach in
+  winter."* **Real, and exactly 242's banked reachable move for (ak).**
+
+**The seam** (grepped, not assumed). The beach furniture's own comment says *"Beachgoers
+follow the sun"*, and the draw reads **three** clocks — `stats.pop`, `LITAMT` (the daily
+sun), and `TIDE` (`wetReach`, so a towel is never laid on wet sand). It is deaf to the
+**fourth**: the calendar. And the city holds exactly **three** seasonal predicates —
+`orchardPhase`, `vinePhase`, `farmPhase` — **all agricultural**. The season reached the
+farms and stopped, which is precisely what both agents said independently.
+
+**Change** — `beachPhase()` (0..1, "how much of a beach day is it"), the fourth seasonal
+predicate, in the house idiom of the other three: **ONE** predicate, read by BOTH the draw
+and the tooltip (117/123 — run the tell forwards, so they cannot drift). A new `describeTile`
+row: **Sands — Packed / Busy / Quiet / Empty for the winter.**
+Per **245's law** the season rides the **ELIGIBILITY** gate (`v < UMB*beachPhase()` — the
+clause that decides *how many* hexes ever lay a towel), **not** the alpha beneath it:
+dimming the alpha would leave the *same* crowd fainter, which reads as haze, not as an empty
+beach. Centred so `beachPhase()===1` **exactly** at the dry peak ⇒ the draw is HEAD's, bit
+for bit, there.
+
+**⚠ THE BUG THIS LAP SHIPPED AND THEN CAUGHT — and it is the entry's real value.** The
+first cut simply shrank the umbrella threshold. But the umbrella arm and the **PALM** arm are
+**adjacent arms of ONE `else if` chain on the SAME `v`** (`else if(v<0.42) palm(...)`), so
+shrinking one arm does not EMPTY those hexes — **it hands them to the next arm.** Winter grew
+**a full palm tree in every deckchair slot the crowd vacated**: permanent vegetation popping
+in and out with the calendar. **My probe passed it happily** — it measured *that* 2,076 px of
+sand changed and never asked *what they changed to* (**214's law**: a NECESSARY but not
+SUFFICIENT quantity will pass a change the eye rejects; *"the sand changed"* is necessary for
+*"the beach emptied"* and is not sufficient). **Two visual agents caught it, both seeds, one
+reading the source to diagnose it.** Fixed by pinning the palm to its own **unseasoned** band
+`[UMB, 0.42)`, so the vacated strip `[UMB*beachPhase(), UMB)` draws **bare sand**.
+
+**Census** — PASS, 0 page errors. `roads`/`developed` **exactly +0**; `pop +1` of 172,722
+(0.0006%) is 226's documented ±2 tick wobble — the change is draw-only (no terrain, no
+`rng()`) and *cannot* causally touch pop.
+
+**Probes** (all three now in `probes/`):
+- **`probe-beachpalm.mjs` — THE GATE, and the one the first probe could not be.** Hooks
+  `palm()` and COUNTS THE CALLS per season: deterministic, no pixels, no noise floor.
+  **PALMS flat at 128 / 109 / 111 across all four seasons on BOTH builds, identical to HEAD**
+  ⇒ the migration is gone. **TOWELS swing 3 → 11 → 38 → 15** (seed 42; 11→16→43→23 on 7),
+  against **HEAD's 38, 38, 38, 38 — a constant, forever**, which is 236's corollary: when the
+  vector is *"make X vary"*, HEAD's answer is a constant **by construction** and no threshold
+  had to be invented to call it broken. Fixed point: HEAD **38 towels / 128 palms** ==
+  patch **38 / 128** at the dry peak, all 3 seeds.
+- **`probe-beachfixed.mjs` — 245's fixed point, as a pixel COUNT and not a HASH.** My first
+  cut asserted it with a **hash** and it "failed" on 2 of 3 seeds — **245's own banked warning,
+  walked straight into** (*a whole-frame hash is not a diff: one antialiased pixel shouts as
+  loudly as a broken feature*). Counted properly, with the floor measured in-run (213):
+  **fixed point 0 px (perceptual) on every seed**, inside a byte-floor of 28–45 px, while the
+  **winter control diverges 1,591–1,903 px**. Byte-identity at the peak is proved by
+  **arithmetic** (`beachPhase() === 1` is exactly true; `x*1.0` is IEEE identity), not by pixels.
+- **`probe-beachseason.mjs`** — 196's state-response rig. ⚠ Its first run **failed its own
+  negative control** (ROAD moved 47,908 px). That was **196's contaminant**: a box mask around
+  a host samples its NEIGHBOURS, and roads border every green hex in the city. **Swept**, not
+  shrunk-until-it-passed: as R tightens 13→8→5 the contaminant **walks out** (14.2% → 8.8% →
+  **1.3%**) while the beach **holds** (13.1% → 9.3% → **8.4%**). HEAD's beach at the tight
+  mask reads **0.7% — deaf**; ROAD is **identical across builds** (1012 = 1012 px).
+
+**Visual** — re-gated after the palm fix. **PASS on both seeds.** Both agents, counting at
+pixel level: **palms identical in all four files** (seed 7: the same 10 trunk centroids, ±1px);
+**parasols cull 12 → 1** (seed 42) and **4 → 1** (seed 7); the vacated spots are **bare sand**
+— *"no leftover pole, no orphaned towel, no ghost ellipse"*, verified against the base sand
+RGB; and **summer is pixel-identical to HEAD** (seed 7: *"0 differing pixels"*) — the fixed
+point, confirmed by eye. Whole-city winter frame: coherent, no z-order tears, no floating
+objects. (The lone surviving parasol both agents flagged is `BEACHMIN`'s floor working as
+designed — a hardy handful, not a missing gate.)
+
+**Perf (the step-back's own gate).** Lap vs 242 (`703b2b9`): day **+2.5%** / night **+0.4%**.
+**But the deterministic instrument disagrees, and 242's law says read it beside the timer:**
+path objects went **111,389 → 111,005 day (−0.3%)** and **140,189 → 139,629 night (−0.4%)** —
+the lap **REMOVED** draw work (243 a fix, 244 worst-case byte-identical, **245 held its mean by
+construction**, 246 a revert). So the day timer's +2.5% is **the weather**, exactly as 242
+predicted. **ARC vs `7e2ac2c` (177, 70 iters): day +19.0% / night +12.7%**, against 242's
++18.6% / +12.8% — **the arc did not move over this lap.** `probe-drawbudget` unchanged:
+`drawCell` **95.0%**, `winBandR` **31.9%**, `prismS` **29.1%**, `hexTile` **12.1%** ⇒ still
+~48% static terrain, **still no hot ornament.** **ACCEPTED — no perf lap.** (This vector is
+itself a small perf CREDIT: identical at the peak, strictly fewer objects every other week.)
+
+**Verdict — DEEPENED.** (And **225's grep-the-seam law is now 5 for 5**: Sky 236, Nature 238,
+People 240, Water 245, **People 247** — every one off a seam a domain's cue list had gone quiet on.)
+

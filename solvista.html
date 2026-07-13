@@ -494,8 +494,12 @@ let TINT=[1,1,1], LITAMT=0, CCACHE={};
 /* golden-hour warmth of the low sky, set once per frame from skyBot (iter 181):
    the same cwarm signal iter 161 warms cloud bellies with — ~0.4..0.8 at
    dawn/dusk, 0 at noon and night. GWSB is the horizon colour the sea tints
-   toward. Read by the sea's golden-hour sheen in the T.WATER draw. */
-let GWARM=0, GWSB=[255,200,120];
+   toward. Read by the sea's golden-hour sheen in the T.WATER draw.
+   GWST is its twin, the OVERHEAD sky (iter 257) — the sky a top-down sea actually
+   faces, and so the colour its BODY mirrors, while GWSB stays the colour of the
+   sun PATH drawn across it. Warm horizon, cool zenith: the two are not
+   interchangeable, and blending them lands in the mud (see seaFace). */
+let GWARM=0, GWSB=[255,200,120], GWST=[140,180,220];
 /* THE SUN'S VECTOR, AS THE GROUND SEES IT (iter 225). The sun demonstrably crosses
    the sky — it rises out of the open right corner and sets over downtown on the left
    (sunX, in the sky block) — and it has an altitude (sin(pi*sunP)). shadS() knew
@@ -1300,7 +1304,56 @@ function seaTone(i){return seaT[i]/8} /* quantized to eighths: colMix shares col
    straddle `water`, so only the sea's VARIANCE grows and its mean tone is unchanged
    (iter 98's hold-the-mean law: a third of the canvas is sea, and drifting its mean
    is exactly how kelp darkened the coast for 13 iterations). */
-function seaFace(d){return colMix('waterSh','waterDp',d,1)}
+/* THE SEA IS A MIRROR, NOT A DIFFUSE SURFACE (iter 257) — cue (s), the golden hour.
+   Every LAND surface is a diffuse reflector: its colour is albedo x illuminant, so passing it
+   through TINT is exactly right, and at golden hour TINT [.95,.76,.68] duly saturates the sand,
+   the roofs and the hills into warm orange (measured, probe-goldenhue: every land tile's chroma
+   RISES 40-140%). The sea is the one surface that does not work that way. Its base is a
+   saturated teal — G and B high, R low — and it is precisely the channels the golden tint
+   CRUSHES, so the multiply does not warm the water, it CANCELS it: chroma 66 -> 31, the only
+   surface in the city that DESATURATES as the sun goes down. The ocean is a third of the frame
+   and it turned to grey mush while everything around it caught fire, which is what seven agent
+   reads across five step-backs have called "unlit", "pasted from another frame", "two unrelated
+   colour worlds". It was never a brightness bug and never a missing sun path (181 drew one).
+   It is 214's law — a flat per-channel multiply on a saturated surface is not a tint — arriving
+   at DUSK instead of at night, on the largest surface in the city (209).
+   So the water stops taking the diffuse illuminant and starts taking THE SKY, as water does:
+   a mirror's colour is the sky's, not albedo x sunlight. The reflection is therefore NOT passed
+   through TINT (reflected light is not albedo — the same reason the lit windows take a raw
+   literal), and it mirrors GWST, the OVERHEAD sky, because that is the sky a top-down sea faces.
+   TWO TRAPS, BOTH REFUTED BY ARITHMETIC BEFORE A LINE WAS WRITTEN, so do not re-try either:
+     - mirroring the WARM horizon (GWSB) instead: teal and orange are complementary, so the blend
+       passes through GREY. At the golden pin it lands on [121,130,111], chroma 19 — a murky
+       olive. 181's own comment says so ("a broad ORANGE wash over teal ... only muddies to
+       olive"), which is why its sun path is carried by ADDITIVE glints and not by a wash.
+     - merely restoring the teal the tint cancels: that hands back a bright DAYTIME sea, which is
+       the complaint stated louder. The sea must not keep its noon colour; it must change to the
+       right one.
+   And this is NOT 255's terracing law. That law bites a field that varies PER HEX: a smooth
+   field sampled once per hexagon and painted as a flat fill is piecewise-constant on the
+   lattice, so its steps land on the hex boundaries and the sea reads as a quilt. `r` here has
+   no x or y in it — it is one number for the whole ocean, so every sea hex moves by the same
+   amount and NOT ONE NEW SPATIAL STEP IS INTRODUCED. The only per-hex variation is `d`, the
+   depth, which is HEAD's and is unchanged. (The depth CONTRAST does compress by (1-r) as the
+   mirror comes up, and that is correct rather than lost: at a grazing sun you cannot see into
+   the water.)
+   Zero new path objects — this is a colour, on a fill that was already being drawn — so it is
+   free by the measured cost model (198). GWARM is 0 at noon and at night, where `r` is 0 and
+   the lerp returns colMix's own value: NOON AND NIGHT RENDER HEAD'S BYTES EXACTLY. That is the
+   fixed point (245), and it makes the day and night columns of every probe below a free
+   dead-regime control (199). */
+const SEAMIRROR=0.75;
+function seaFace(d){
+  if(GWARM<=0.02)return colMix('waterSh','waterDp',d,1);   /* noon & night: HEAD, byte-identical */
+  const r=Math.round(GWARM*SEAMIRROR*32)/32;               /* quantized like colMix's t: the cache stays bounded */
+  const k='@sea|'+d+'|'+r;
+  let c=CCACHE[k]; if(c)return c;
+  const a=BASE.waterSh,b=BASE.waterDp;
+  c='rgb('+Math.min(255,lerp((a[0]+(b[0]-a[0])*d)*TINT[0],GWST[0],r)|0)+','
+          +Math.min(255,lerp((a[1]+(b[1]-a[1])*d)*TINT[1],GWST[1],r)|0)+','
+          +Math.min(255,lerp((a[2]+(b[2]-a[2])*d)*TINT[2],GWST[2],r)|0)+')';
+  return CCACHE[k]=c;
+}
 const HOME=new Set([T.RES,T.MID,T.TOWER]);
 /* Traffic, as flow accumulation — the rule that turns rain into rivers.
    Every developed block generates trips; every trip drains downhill along the
@@ -7420,7 +7473,7 @@ function render(){
   FRAMEN++;
   applySeason();
   const dl=daylight(dayT); setLight(dl);
-  {const sb=dl.skyBot; GWARM=clamp((sb[0]-sb[2]-70)/70,0,1); GWSB=sb;} /* golden-hour sea sheen gate (iter 181) */
+  {const sb=dl.skyBot; GWARM=clamp((sb[0]-sb[2]-70)/70,0,1); GWSB=sb; GWST=dl.skyTop;} /* golden-hour sea sheen gate (181); the sky the sea mirrors (257) */
   /* the shadow's sun-vector (iter 225) — the SAME sunP/altitude the disc is drawn from
      up in the sky block, so the shadows and the sun can never disagree about where the
      light is. `e` eases the CAST in and out across the horizon, blending toward the

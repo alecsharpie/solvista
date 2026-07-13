@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~ | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234**, ~~**255**~~ | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234**, ~~**255**~~ | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
@@ -32,18 +32,21 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a FUNCTION of the entity
   (105)** — use it when a thing's interest is its *membership* (which line/route/depot), computed live, never a string.
 - **ROTATION.** Last vector per domain: People **247** · Transport **249** ·
-  Civic **250** · Nature **251** · Sky **253** · Urban **254** · Water **255**. ✅ **256 WAS THE 31st STEP-BACK — both
-  seeds PASS, no compounding drift, and THE PERF ARC HAS STOPPED (see the ARC block: flat across FOUR step-backs).**
-  ➡ **NEXT: Civic or Transport × Deepen** (both stale, and Transport owns the ledger's most-reported defect).
-  ⚠ **NOT Urban, NOT Water × Polish** (255 spent the sea's fill channel; 254 spent the building colour channel).
-  🔑 **256'S TWO LIVE DEFECTS ARE BOTH ALREADY BANKED, BOTH NOW MEASURED, AND NEITHER IS A REGRESSION** — they are
-  the two things the loop has never spent a lap on: **(s)** golden hour (now **7x** reported, and it finally has a
-  CAUSE — see (s)) and **polish-tile (a)** the elevated transit (now **10x** reported — see it).
-  ⛔ **255: THE SEA'S TILE-FILL CHANNEL IS SPENT — DO NOT PAINT A SIGNAL INTO THE WATER'S BODY COLOUR.** A smooth field
-  **sampled per hex and rendered as a flat hexagonal FILL terraces onto the LATTICE**: measured, the wash may be SUBTLE
-  (**d=0.57** vs the sea's own grain ⇒ *both* blind agents saw **nothing**) or BRIGHT (**d=1.15** ⇒ *"a high-contrast hex
-  QUILT... camouflage, not a sea"*), **and there is no middle** (214's law, from per-EDGE strokes to per-HEX fills). The
-  glitter escapes ONLY by being a **low-alpha overlay** (max 0.16) — i.e. by never leaving the subtle regime.
+  Civic **250** · Nature **251** · Sky **253** · Urban **254** · Water **257**. ✅ **256 WAS THE 31st STEP-BACK — both
+  seeds PASS, no compounding drift, and THE PERF ARC HAS STOPPED (flat across FOUR step-backs).**
+  ➡ **NEXT: Civic or Transport × Deepen** (both stale since 249/250; Transport owns the ledger's most-reported defect).
+  257 went off-rotation on 119's law (a banked measured finding outranks rotation) to close **(s)**; **the debt is
+  now due — do not take a third colour/light lap.** ⚠ **NOT Urban, NOT Water × Polish** (254/255 spent those channels).
+  🔑 **THE ONE REMAINING BANKED DEFECT IS `polish-tile` (a)**, the elevated transit — **10x reported, the ledger's
+  most-reported defect, and a `polish-tile` lap is BADLY OVERDUE.** It is not a growth lap; see the backlog below.
+  ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
+  flat hexagonal FILL terraces onto the LATTICE**: the wash may be SUBTLE (**d=0.57** ⇒ both blind agents saw
+  **nothing**) or BRIGHT (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **and there is no middle**. The
+  glitter escapes ONLY by being a **low-alpha overlay** (max 0.16).
+  ⚠ **257 NARROWED THIS, AND THE NARROWING IS ITSELF A LAW (SKILL.md): 255's ⛔ was written as "no signal in the sea's
+  fill" and would have KILLED the fix. Its MECHANISM is per-hex sampling** — so a term with **no `x`/`y`** moves every
+  hex identically, **adds no spatial step, and cannot terrace.** 257's uniform sky-mirror *halved* the existing one.
+  ⇒ **When a banked ⛔ forbids your vector, re-read the MECHANISM it came from, not the sentence it was written as.**
   ✅ **(ap) IS CONFIRMED AND ITS HOST IS STILL LIVE** — HEAD's *entire* calm→gale response is **971–1,055 px of a
   ~165,000 px ocean (0.6%)**, against a **LAND** control of 4,507–5,231: *the wind moves the land 6x harder than the sea.*
   ➡ **The way through is a SHAPE, not a colour: SUB-HEX, wind-aligned streaks that CROSS tile boundaries, ADDING foam
@@ -76,7 +79,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   SAMPLES, not what it is CALLED, and apply 228's test **PER METRIC**.* (256 nearly made it 6: `probe-hud` would have
   closed (ar) for the wrong reason — it measures TEXT CLIPPING and is blind to DOM boxes colliding.)
   ⚠ **ARTIFACT FACTS from 236–251 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
-  lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"): **250:** `concertSeason()` — ONE predicate,
+  lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"): **257:** ⚠ **`GWST` (the OVERHEAD sky) and
+  `GWSB` (the HORIZON) ARE NOT INTERCHANGEABLE** — the sea's BODY mirrors `GWST`; `GWSB` is the colour of the sun
+  PATH drawn across it, and blending the two lands in the **mud** (chroma 19). `SEAMIRROR` is the strength.
+  **250:** `concertSeason()` — ONE predicate,
   four readers. **249:** `ferryApp`/`ferryFr`/`ferryThr` — ONE predicate, four readers; ⚠ **`f.sp` KEEPS ITS SIGN**
   (the THROTTLE goes to zero, never the velocity). ⚠ **NOT cue (o): the PIER has a waterfront, the HARBOUR does not.**
   **245:** `seaState()`, floor `SEACALM`. **242:** ⚠ **MARSH/KELP no longer catch cloud shade** (`WETSET`).
@@ -354,32 +360,21 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   A cap is a `3.0x1.1` **WORLD**-unit ellipse and `fitScale≈0.65` ⇒ **~2 x 0.7 CSS px** at fit (215's hairline exactly).
   HEAD's whole wind response = **0.6% of the ocean**. ⛔ **DO NOT give it a BODY in the sea's TILE FILL — 255 built
   exactly that, it was FREE (0 path objects), MEAN-HELD (0px fixed point) and passed EVERY gate, and it is UNSEEABLE**
-  (see the ⛔ in ROTATION). ➡ **Sub-hex, wind-aligned streaks that CROSS tile boundaries, ADDING foam.** **Water × Polish.**
+  (see the ⛔ in ROTATION). ⚠ **257's narrowing does NOT reopen this**: the wind is a **PER-HEX** field, which is exactly
+  what terraces — 257 was safe only because it is **uniform**. ➡ **Sub-hex, wind-aligned streaks that CROSS tile
+  boundaries, ADDING foam.** **Water × Polish.**
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED).** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` churn is ruled OUT.
   **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** ⚠ The fire CA is a
   **GHOST** (cannot ignite at 2035) ⇒ almost certainly **LOGGING/clearcut, not BURNT** — **identify the tile first**. Nature × Polish.
-  **(s) GOLDEN HOUR: CONTRAST COLLAPSE (212+217+227+232, and a FIFTH at 242 — both agents called golden the WEAKEST
-  frame, *"a single textured mat"* / *"muddy brown-olive mush"*. CONSTRAINED; Sky × Polish; body archived at 237).**
-  **The complaint is CONTRAST COLLAPSE ACROSS SURFACES, not the sun's position** (217 measured chroma RISING — a
-  saturated wash, not mud); use `probe-goldenhue.mjs` to find which pairs collapse **before designing**. ⚠ **The sun
-  CANNOT be lowered — 200 put it high ON PURPOSE** (the `.placard` owns the low-left sky). ⚠ **242 adds a lead: both
-  agents said the SHADOW SIDES go warm** (*"warm-tinted shadows kill the form"*) — reconcile the gradient's direction
-  with the sun's, or move the warmth. **Do not move the sun down.** Not a quick win.
-  ⚠ **253 PARTIALLY DRAINED IT, AND ONLY OFF-PEAK:** `GWARM` at the golden pin now runs **0.52 winter → 0.72 dry
-  peak**, so the terracotta wash is *seasonally* weaker — but at the **dry peak it is byte-identical to HEAD**, and
-  the dry peak is where every agent has complained. ⇒ **(s) IS STILL LIVE AT ITS WORST PIN.** Do not close it, and
-  do not "fix" it by raising `seasonCool` at the peak — that would break 253's fixed point.
-  ✅ **256 GAVE (s) ITS 6th AND 7th REPORT — AND, FOR THE FIRST TIME, A CAUSE. THE SEA DID NOT GET THE MEMO.** Both
-  agents, blind, on both seeds, unprompted: *"sky and sand are peach; the ocean stays essentially its daytime cool
-  teal, with no warm sun path or reflected sky — at sunset the water looks **unlit and pasted from another frame**.
-  This is the single most fixable thing in the set"* · *"land and sea end up in **two unrelated colour worlds**."*
-  ⇒ **The warm wash reaches the LAND and NOT THE WATER**, so golden hour simultaneously *mutes the land's
-  separations* and *leaves the sea unlit* — and the frame splits in two. **That is not the contrast-collapse
-  symptom; it is its mechanism.** ⚠ **This is 209's law waiting to be cashed a second time** (*what LARGE SURFACE
-  wears a field that cannot carry the signal?* — and the **sea is the largest surface in the city**). ⚠ Constraints
-  that still bind: **do NOT lower the sun** (200), **do NOT break 253's fixed point** by raising `seasonCool` at the
-  peak, and ⛔ **do NOT paint it into the sea's TILE FILL** (255 — that channel is spent and it terraces onto the
-  lattice). **Measure with `probe-goldenhue` FIRST** — *which pairs actually collapse* — before designing a line.
+  ✅ **(s) CLOSED AT ITS WORST PIN BY 257 — AND IT WAS THE SEA, NOT THE SUN.** Seven reports across five step-backs
+  (212+217+227+232+242+256×2), and every lap looked at the **LIGHT**; the defect was in the **WATER**. At golden hour
+  every LAND tile **GAINS** chroma (a warm tint saturating a warm albedo) and **WATER was the ONLY surface in the city
+  that LOST it — 66 → 31**: its teal base is *exactly* the channels the tint crushes, so the multiply did not warm the
+  sea, it **CANCELLED** it (214's law, at dusk, on the largest surface in the city — 209). `seaFace` now mirrors
+  **`GWST`, the overhead sky** (hue 157°→203°, luminance held); both agents now read the frame as **one scene**.
+  ⚠ **Residue, and it is NOT the sea — a land-side (s) lap must RE-DERIVE its own cue (228):** 242's lead (*"the SHADOW
+  SIDES go warm"*) is still untested, and the land's own pair-separations still narrow ~20% (PARK↔ROAD 29→24).
+  ⚠ **The sun CANNOT be lowered (200)**; do not raise `seasonCool` at the peak (it breaks 253's fixed point).
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a multi-source hex BFS capped at radius `r`,
   land-only (`WETSET` blocks water/marsh/kelp), filling `out` with steps-to-nearest-source (255 = farther than r).
   `recount()` runs four per tick. Any "how far is X from Y" question should call it, not hand-roll a flood fill.
@@ -391,108 +386,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 249 entries before Iteration 247 live in
+> **Archive:** the 250 entries before Iteration 248 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 247 — the twenty-ninth step-back finds a beach packed for a winter nobody was having (2026-07-14) [holistic step-back + People & activity × Deepen]
-
-**Vector** — the 29th step-back (due at ~247). Whole-city read at 2 seeds × 4 frames
-(`shot-stepback.mjs`), the perf lap + arc, and the fix the read turned up.
-
-**The read.** Both agents FAILed, independently, on two seeds, with the *same headline*:
-**winter is indistinguishable from summer.** That is cue (ak), reconfirmed — and it is now
-four agents across two step-backs (242, 247) saying it. Graded by measuring it (237's law),
-the FAIL split cleanly into a **misread** and a **real defect** (243: a cue can bundle both):
-- ✗ *"the season runs BACKWARDS — winter is greener; there is no snow, no bare trees."*
-  **201's objection-to-the-MODEL.** `TILEDESC[T.BEACH]` says **'Golden sand along the
-  Pacific'** and `applySeason`'s own keyframe names `.62` **the golden dry peak**: Solvista
-  is a *Mediterranean* coast, so a wet green winter and a golden dry summer is **correct**,
-  and snow on a palm coast would be the bug. Rejected — but note **both agents reached it**,
-  which says the model is not being *communicated*.
-- ✓ *"the beach is still a summer beach — umbrellas, sunbathers, a packed swimming beach in
-  winter."* **Real, and exactly 242's banked reachable move for (ak).**
-
-**The seam** (grepped, not assumed). The beach furniture's own comment says *"Beachgoers
-follow the sun"*, and the draw reads **three** clocks — `stats.pop`, `LITAMT` (the daily
-sun), and `TIDE` (`wetReach`, so a towel is never laid on wet sand). It is deaf to the
-**fourth**: the calendar. And the city holds exactly **three** seasonal predicates —
-`orchardPhase`, `vinePhase`, `farmPhase` — **all agricultural**. The season reached the
-farms and stopped, which is precisely what both agents said independently.
-
-**Change** — `beachPhase()` (0..1, "how much of a beach day is it"), the fourth seasonal
-predicate, in the house idiom of the other three: **ONE** predicate, read by BOTH the draw
-and the tooltip (117/123 — run the tell forwards, so they cannot drift). A new `describeTile`
-row: **Sands — Packed / Busy / Quiet / Empty for the winter.**
-Per **245's law** the season rides the **ELIGIBILITY** gate (`v < UMB*beachPhase()` — the
-clause that decides *how many* hexes ever lay a towel), **not** the alpha beneath it:
-dimming the alpha would leave the *same* crowd fainter, which reads as haze, not as an empty
-beach. Centred so `beachPhase()===1` **exactly** at the dry peak ⇒ the draw is HEAD's, bit
-for bit, there.
-
-**⚠ THE BUG THIS LAP SHIPPED AND THEN CAUGHT — and it is the entry's real value.** The
-first cut simply shrank the umbrella threshold. But the umbrella arm and the **PALM** arm are
-**adjacent arms of ONE `else if` chain on the SAME `v`** (`else if(v<0.42) palm(...)`), so
-shrinking one arm does not EMPTY those hexes — **it hands them to the next arm.** Winter grew
-**a full palm tree in every deckchair slot the crowd vacated**: permanent vegetation popping
-in and out with the calendar. **My probe passed it happily** — it measured *that* 2,076 px of
-sand changed and never asked *what they changed to* (**214's law**: a NECESSARY but not
-SUFFICIENT quantity will pass a change the eye rejects; *"the sand changed"* is necessary for
-*"the beach emptied"* and is not sufficient). **Two visual agents caught it, both seeds, one
-reading the source to diagnose it.** Fixed by pinning the palm to its own **unseasoned** band
-`[UMB, 0.42)`, so the vacated strip `[UMB*beachPhase(), UMB)` draws **bare sand**.
-
-**Census** — PASS, 0 page errors. `roads`/`developed` **exactly +0**; `pop +1` of 172,722
-(0.0006%) is 226's documented ±2 tick wobble — the change is draw-only (no terrain, no
-`rng()`) and *cannot* causally touch pop.
-
-**Probes** (all three now in `probes/`):
-- **`probe-beachpalm.mjs` — THE GATE, and the one the first probe could not be.** Hooks
-  `palm()` and COUNTS THE CALLS per season: deterministic, no pixels, no noise floor.
-  **PALMS flat at 128 / 109 / 111 across all four seasons on BOTH builds, identical to HEAD**
-  ⇒ the migration is gone. **TOWELS swing 3 → 11 → 38 → 15** (seed 42; 11→16→43→23 on 7),
-  against **HEAD's 38, 38, 38, 38 — a constant, forever**, which is 236's corollary: when the
-  vector is *"make X vary"*, HEAD's answer is a constant **by construction** and no threshold
-  had to be invented to call it broken. Fixed point: HEAD **38 towels / 128 palms** ==
-  patch **38 / 128** at the dry peak, all 3 seeds.
-- **`probe-beachfixed.mjs` — 245's fixed point, as a pixel COUNT and not a HASH.** My first
-  cut asserted it with a **hash** and it "failed" on 2 of 3 seeds — **245's own banked warning,
-  walked straight into** (*a whole-frame hash is not a diff: one antialiased pixel shouts as
-  loudly as a broken feature*). Counted properly, with the floor measured in-run (213):
-  **fixed point 0 px (perceptual) on every seed**, inside a byte-floor of 28–45 px, while the
-  **winter control diverges 1,591–1,903 px**. Byte-identity at the peak is proved by
-  **arithmetic** (`beachPhase() === 1` is exactly true; `x*1.0` is IEEE identity), not by pixels.
-- **`probe-beachseason.mjs`** — 196's state-response rig. ⚠ Its first run **failed its own
-  negative control** (ROAD moved 47,908 px). That was **196's contaminant**: a box mask around
-  a host samples its NEIGHBOURS, and roads border every green hex in the city. **Swept**, not
-  shrunk-until-it-passed: as R tightens 13→8→5 the contaminant **walks out** (14.2% → 8.8% →
-  **1.3%**) while the beach **holds** (13.1% → 9.3% → **8.4%**). HEAD's beach at the tight
-  mask reads **0.7% — deaf**; ROAD is **identical across builds** (1012 = 1012 px).
-
-**Visual** — re-gated after the palm fix. **PASS on both seeds.** Both agents, counting at
-pixel level: **palms identical in all four files** (seed 7: the same 10 trunk centroids, ±1px);
-**parasols cull 12 → 1** (seed 42) and **4 → 1** (seed 7); the vacated spots are **bare sand**
-— *"no leftover pole, no orphaned towel, no ghost ellipse"*, verified against the base sand
-RGB; and **summer is pixel-identical to HEAD** (seed 7: *"0 differing pixels"*) — the fixed
-point, confirmed by eye. Whole-city winter frame: coherent, no z-order tears, no floating
-objects. (The lone surviving parasol both agents flagged is `BEACHMIN`'s floor working as
-designed — a hardy handful, not a missing gate.)
-
-**Perf (the step-back's own gate).** Lap vs 242 (`703b2b9`): day **+2.5%** / night **+0.4%**.
-**But the deterministic instrument disagrees, and 242's law says read it beside the timer:**
-path objects went **111,389 → 111,005 day (−0.3%)** and **140,189 → 139,629 night (−0.4%)** —
-the lap **REMOVED** draw work (243 a fix, 244 worst-case byte-identical, **245 held its mean by
-construction**, 246 a revert). So the day timer's +2.5% is **the weather**, exactly as 242
-predicted. **ARC vs `7e2ac2c` (177, 70 iters): day +19.0% / night +12.7%**, against 242's
-+18.6% / +12.8% — **the arc did not move over this lap.** `probe-drawbudget` unchanged:
-`drawCell` **95.0%**, `winBandR` **31.9%**, `prismS` **29.1%**, `hexTile` **12.1%** ⇒ still
-~48% static terrain, **still no hot ornament.** **ACCEPTED — no perf lap.** (This vector is
-itself a small perf CREDIT: identical at the peak, strictly fewer objects every other week.)
-
-**Verdict — DEEPENED.** (And **225's grep-the-seam law is now 5 for 5**: Sky 236, Nature 238,
-People 240, Water 245, **People 247** — every one off a seam a domain's cue list had gone quiet on.)
 
 ## Iteration 248 — the shower cited a neighbour it never read (2026-07-14) [Sky × Polish]
 
@@ -1210,3 +1108,73 @@ banked*, both now *measured*, and neither is a regression — they are the two t
 spent a lap on.
 
 **Verdict: PASS (holistic step-back — no source change).**
+
+## Iteration 257 — the sea was the one surface the sunset never reached (2026-07-14) [Water & coast × Deepen]
+
+**Vector.** Water & coast × Deepen — the sea reads the sky (a Sky×Water interconnect; the *draw*
+that changed is the water's, so it is filed under Water). **Deliberately off-rotation**: the header
+steered to Civic/Transport, but 119's law says a banked, measured finding outranks kind-rotation, and
+cue **(s)** is the loudest in the ledger — **7 agent reports across 5 step-backs** — and 256 had just
+handed it a *mechanism*. Water's last lap was 255 (× Polish); this is × Deepen, so the kind still varies.
+
+**Probe before design (and it killed two candidate fixes before a line was written).**
+`probe-goldenhue` states the defect in one row. At golden hour **every land surface GAINS chroma**
+(PARK 55→77, ROAD 37→61, TOWER 25→60, BEACH 66→92 — the warm tint saturating a warm albedo) and
+**WATER is the only surface in the city that LOSES it: 66 → 31.** The sea's base is a saturated teal —
+G and B high, R low — which is *exactly* the channels the golden tint `[.95,.76,.68]` crushes, so the
+multiply does not warm the water, it **cancels** it. That is **214's law arriving at DUSK instead of at
+night**, on **the largest surface in the city** (209). It was never a brightness bug and never a missing
+sun path — 181 drew one. Then the arithmetic refuted the two obvious fixes:
+- **mirror the warm horizon (`GWSB`)** → `[121,130,111]`, **chroma 19, a murky olive**. Teal and orange
+  are complementary, so the blend passes through **grey**. 181's own comment already said so.
+- **just restore the teal** → hands back a *bright daytime sea*, which is the complaint stated louder.
+
+**Change.** `seaFace()` — **the sea is a MIRROR, not a diffuse surface.** Land is a diffuse reflector
+(colour = albedo × illuminant, so `TINT` is right for it); **water's colour is the SKY'S**, not albedo ×
+sunlight. So the water body now lerps toward **`GWST`, the new OVERHEAD-sky global** (the twin of 181's
+`GWSB`, which stays the colour of the sun *path* drawn across it), by `r = GWARM * SEAMIRROR`, and the
+reflection is **not** passed through `TINT` — reflected light is not albedo, the same reason the lit
+windows take a raw literal. **Uniform across the ocean**: `r` has no `x` and no `y` in it.
+
+**Not a 255 violation — and re-reading 255's *mechanism* rather than its *sentence* is the point.**
+255's ⛔ reads *"do not paint a signal into the water's body colour"*, which forbids this lap literally.
+But 255's quilt comes from a field **sampled per hex**, whose quantisation steps land on hex boundaries.
+A term with no x/y moves every hex by the *same* amount and introduces **not one new spatial step**.
+
+**Census.** PASS. Core flat, **tile histogram empty** (correct — draw-only, no `rng()`, no terrain);
+`solarRoofs −1 / greenRoofs +2` is 226's documented ±2 tick wobble.
+
+**Probes.**
+- `probe-goldenhue`: **WATER golden hue 157° → 203°** (46° out of grey-teal into an evening blue),
+  **chroma 31 → 35**, **luminance 121 → 122 (held** — 98). Night ordering invariant still **PASS,
+  clearing by 21**; night hue guards unmoved; the 9 land rows unmoved (±1 on the *coastal* three is
+  196's box-bleed — `seaFace` cannot paint a land hex).
+- **`probe-seastep` (new, render-free — no clock, no pixels, no noise floor): THE UNLOOKED-FOR RESULT.**
+  Both agents, blind, unprompted, at 1:1 crops, on both seeds, reported **pristine HEAD's golden sea as
+  "a clear hexagonal quilt… exposing the grid"** — 255's failure mode, sitting in HEAD, unnamed for the
+  artifact's whole life. Measured, and it is **not** what it looks like: `seaTone` quantises depth to
+  **eighths**, so the lattice step is **10.6 RGB units at DAY** — *bigger* than golden's 8.7 — and nobody
+  has ever called the day sea a quilt. **The step did not grow; the CHROMA collapsed.** In `step/chroma`:
+  day **0.14** · **golden HEAD 0.20 (the artifact's worst)** · night **0.08** · **golden patched 0.08 (its
+  best, tying night)**. The fix halves the terrace (8.7 → 4.1) *as a side-effect of restoring the hue*.
+- **Fixed point (245), and it is structural, not statistical.** `GWARM ≤ 0.02` early-returns
+  `colMix('waterSh','waterDp',d,1)` — textually HEAD's entire body — and GWARM is **0** at both the day and
+  night pins (self-reported by every frame). So **day and night render HEAD's bytes exactly**, confirmed:
+  `probe-seastep`'s day/night rows are identical across builds, and `probe-goldenhue`'s day/night WATER
+  columns are byte-identical. Two of three columns are a **free dead-regime control** (199).
+
+**Perf.** Colour-only, on a fill that was already drawn ⇒ **zero new path objects**, counted not assumed
+(222): `probe-drawbudget` HEAD **110,811 day / 139,616 night** → patch **110,801 / 139,605** (−10/−11 =
+entity wobble). **FREE.** (`probe-drawbudget` gained a `SRC=` hook this lap so a lap can price itself
+against HEAD without a `/bin/cp` swap — 197's stale-backup hazard.)
+
+**Visual.** 2 agents × 2 seeds, **blind, files named never lettered** (239). **BOTH PASS**, both naming the
+patch file. Seed 42: HEAD is *"a bright saturated tropical teal — pure daytime water… the sea reads unlit
+and pasted in from another frame"*; patch is *"a soft dusty slate-blue… picking up the sunset sky. Land and
+sea read as one coherent golden-hour scene."* Seed 7: HEAD *"essentially the SAME teal as the daytime
+frame… two unrelated pictures"*; patch *"clearly lit by the same low warm sun."* Both confirmed the quilt is
+gone and the day/night seas are healthy; no z-order tears, no blown-out colour.
+
+**Verdict.** **DEEPENED.** Cue **(s)** — the ledger's loudest, 7 reports across 5 step-backs — is
+**CLOSED at its worst pin**, and it closed by fixing the *sea*, not the *sun*, which is why five laps of
+looking at the light never found it. A latent HEAD quilt closed with it, free.
