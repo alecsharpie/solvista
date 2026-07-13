@@ -977,6 +977,43 @@ vector, whatever it is.
   by MEASURED INK.** Render the frame with the ornament and again without it, diff per instance, and take the
   argmax: that is where it *provably* renders, and it is the only honest place to aim a camera (201's locate-then-aim,
   with the locating done by measurement instead of by a predicate that does not know what it is looking for).
+- **A SITING RULE RUNS ONCE IN A YOUNG CITY AND IS JUDGED IN AN OLD ONE — SO SCORE THE FRONT BY WHAT IT WILL *BECOME*,
+  NOT BY WHAT STANDS THERE NOW. AN EMPTY LOT IS NOT A CLEAR VIEW; IT IS A BUILDING THAT HAS NOT BEEN BUILT YET (iter
+  231).** 226 (above) tells you a ground-level thing needs *measured ink*, not a tile predicate. 231 built the
+  predicate 226 asked for — `groundLoad`, summing the **drawn height** in the two rows in front (frontLoad counts
+  TALLT *membership*, so an h80 tower and an h5 shed score alike, and RES scores 0) — and it **still shipped a bug**,
+  because a predicate that reads *today's* heights answers the wrong question. The amphitheater is sited at
+  **year 2004** and every frame renders **2035**. Scored on the city as it stands, **all six seeds found a front of
+  `groundLoad` ZERO** — and the hash then broke the tie, so a **vacant lot's** frontage won as often as a road's. But
+  a vacant lot beside a road and a park is the most developable land in the city: by 2035 two of them had become
+  `RES:16 COM:21` and `COM:18 TOWER:89`, burying the bowl at **81% and 63%**. **The rule was SELECTING FOR ITS OWN
+  BURIAL** — it actively preferred the ground the upgrade pass was about to build on. Counting a `RAISEABLE` lot at a
+  nominal future height took it to **6.3% mean occlusion, worst 12%, 0/6 buried**, and the constant's **magnitude is
+  not load-bearing** (30 and 60 pick identically): all that matters is that a buildable front scores **nonzero** while
+  a permanently-open one (road, water, shore, rock) scores **zero**. This is **206's law arriving from the occlusion
+  side** — *ask what a tile BECOMES, never what it is* — and it is the fourth instance of that defect.
+  ⇒ **Corollary, and it is the one that cost the lap: A VARIANT SWEEP MUST LET EACH VARIANT SEE ONLY WHAT THE RULE
+  WILL SEE — grade it at the clock the RULE RUNS AT, not the clock you RENDER at.** 231's first sweep ranked
+  candidates against the **mature** 2035 city and crowned the height predicate at **8.4%** occlusion; shipped, the
+  identical predicate measured **27.7%** — a 3x error, and the sweep had been *letting the variants see the future*.
+  Re-run honestly (pick on the 2004 terrain, judge by measured ink in the 2035 frame) it ranked them correctly and
+  the winner held at 6.3% when shipped. **A sweep that grades on state the rule cannot observe is not a sweep, it is
+  a leak.** `probes/probe-amphfuture.mjs` is the honest rig; `probes/probe-amphgrow.mjs` is the two-line diagnosis
+  (print the host's occlusion predicate **at siting** and again **at render** — if it rises, the city grew up in front
+  of your feature and the rule chose that).
+- **A SCARY CENSUS MOVE ON 3 SEEDS MAY BE THE CHAOS, NOT YOU — PAIR IT ACROSS ~10 SEEDS BEFORE YOU BELIEVE IT, AND
+  BEFORE YOU "FIX" IT (iter 231).** The census matrix is **3 seeds**, and a rule that moves *one cell* of terrain
+  reshuffles the whole downstream `rng()` stream for decades. 231's census read `TOWER -6.9%`, `towerHt -6.1%`,
+  `pop -3.9%` with **`developed` FLAT** — the same land building *shorter*, which looks exactly like a real,
+  directional skyline tax, and a 7% skyline tax to unbury one tile would have been a bad trade (the solar-farm
+  precedent). It was **noise**: paired over 10 seeds the mean TOWER delta is **+1.4 (up)**, mean pop **+1.07% (up)**,
+  and only **3/10** seeds lose towers — swings of −24 and +22 sit side by side. The 3-seed matrix had simply drawn two
+  of the worst. ⚠ Note this **refutes the tempting inference from 218**: yes, the tower *roll* is saturated, but the
+  tower **predicate** (`com>=2`) reads a COM layer that is itself `rng()`-sited, so a stream reshuffle **does** move
+  the skyline — chaotically, ±15% per seed, centred on zero. ⇒ **Before you redesign to protect a metric, spend one
+  render-free probe asking whether the sign is even stable.** `probes/probe-cascade.mjs` is the rig (paired world data,
+  N seeds, HEAD vs patch). The tell: `developed` is flat while a *composition* metric moves, and your change touched
+  terrain at an early year.
 - **WHEN THE VECTOR IS "APPLY THE HOUSE STANDARD TO THE LAST THING THAT LACKS IT", THE CONTROL IS THE HOUSE STANDARD
   — NOT A THRESHOLD YOU CHOOSE (iter 226).** 205 says a probe whose threshold is in the units of your own design
   constant is grading its own homework, and leaves you with: so what threshold *is* honest? Here is one whole class
@@ -1627,7 +1664,22 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   stale while B and C agree ⇒ the camera lies and the artifact is innocent.** It cleared the "night frame says
   DAYTIME" FAIL that two agents raised on two seeds. Reach for it whenever agents report a *readout* — a HUD word, a
   stat, a label — disagreeing with the *canvas*: the canvas is live and the DOM is not.)
-  Six of them are **harness-wide**, not per-feature — reach for these on any lap:
+  The **siting four** (231 — reach for these on any vector that *places* something):
+  `probe-amphvis.mjs` (**can this ground-level thing BE SEEN?** — `occluded% = 1 − inkInPlace/inkOnTop`, isolating the
+  host by suppressing its own `drawCell` **inside one page**, so the floor is exactly **0** and occlusion is checked
+  off the final composited canvas. Carries the **population** count beside it, because a siting preference must never
+  starve a one-per-city tile. Retarget it by changing the `kind` it looks for),
+  `probe-amphgrow.mjs` (**did the city grow up in FRONT of it?** — prints the host's occlusion predicate at **siting**
+  and again at **render**. Pure world data. If it rises, your rule optimized a property the city then destroyed),
+  `probe-amphfuture.mjs` (**the honest siting sweep** — every variant picks on the YOUNG terrain the rule actually
+  sees, and is graded by measured ink in the MATURE frame that actually renders. The mature-world version of this
+  sweep is a **leak** and misranked 231 by 3x — see the law), `shot-amphsite.mjs` (the camera: aims at each build's
+  **own** host, self-reports the front's tile types + heights, day+night, `SRC=` for a blind HEAD/patch pair).
+  Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
+  `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
+  that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure
+  world data and prints the per-seed sign. 231's alarming `TOWER −6.9% / pop −3.9%` came back **mean +1.4 towers,
+  +1.07% pop, only 3/10 seeds down.** Run it before redesigning to protect any metric),
   `perfab.mjs` (interleaved A/B frame time; `REF=<sha>` to price a lap **or an arc**),
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before
   reopening any draw-cost lever), `probe-drawbudget.mjs` (**where the frame goes** —

@@ -25,7 +25,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225** | | | 61, 81, 89, **115**, **200** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
@@ -38,40 +38,41 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: People **226** ·
-  Transport **230** · Civic **213** · Nature **221** · Water **223** · Sky **225** · Urban **228**.
-  🔴 **NEXT: Civic (stalest, 213)**, then People (226) / Urban (228).
-  ✅ **230 (Transport × Deepen): THE TRAFFIC KEEPS HOURS.** The city's PEOPLE went to bed at 199
-  (windows) and 210 (crowd); its TRAFFIC never did — at 3am the streets carried the full 5pm fleet.
-  Now `vehHidden(v)` reads the SAME `nightAmt()` clock, per-vehicle, thinning by CLASS
-  (`VCURF`): vans in first, then cyclists; trams to a night service; cars thin but a street never
-  empties. **The BUS, the SERVICE fleet and the TAXI keep no hour** — the bus because `stepVehicle`
-  stamps the stop queue whether or not it is DRAWN (hiding it empties a queue nobody came for, 226).
-  ⚠ **The `taxi` flag was DECORATIVE for ~200 iterations and is now load-bearing:** cab share of the cars still out
-  **13% → 41%**. **Nothing spawns/despawns** (Math.random at spawn, never `rng()`) ⇒ census byte-identical, day
-  provably inert (free dead-regime control), and it **REMOVES** night draw work (−1,300..−1,500 path objects).
-  The **Interaction/UX column** (cross-cutting, so it sits in the bullet not the grid — like U2/42/U5) was last
-  touched at **229**; before that **191**.
-  ✅ **227 WAS THE 25TH STEP-BACK — city CLEAN, arc UNMOVED, and it FIXED ITS OWN CAMERA** (the frozen frames had
-  been showing a **load-time HUD**: `DAYTIME / 0% NEW MOON` over a night sky, on every step-back ever shot; frames
-  now self-report `HUD=ok`). **232 is the 26th.**
-  ✅ **THE HUD LAP IS DONE (229) — AND BOTH ITS CUES WERE THE HARNESS, NOT THE CITY** (see (w)+(z); law in SKILL.md:
-  *a defect only your HARNESS can see is a defect IN your harness*). ⚠ **Two more of the ledger's cues were born from
-  agents reading `shoot.mjs` output — (y) and (s) — so REPRODUCE either in the user's configuration before designing
-  to it.**
-  No 🔴 cue is left in the ranked list; the survivors are **(u)** (violet pier deck, Water × Polish — the last warm
-  surface still rotated, a one-line lever) and **(ag)** (night greens read hot, Nature/Water × Polish). Both are real
-  and measured; neither is urgent.
+  Transport **230** · Civic **231** · Nature **221** · Water **223** · Sky **225** · Urban **228**.
+  🔴 **NEXT: Nature (stalest, 221)**, then Water (223) / Sky (225). **⚠ 232 IS THE 26th STEP-BACK** (holistic) —
+  do that first if you are iteration 232.
+  ✅ **231 (Civic × Polish): CUE (t) CLOSED — and it was 4x bigger than banked.** The amphitheater's siting scanned
+  in RASTER order and took the **first match**, i.e. it always went to the **BACK of the plate** — row 2-3 on **all
+  six seeds**, out of ~150 candidates. Seed 7 rendered **4 px of its 260 (98.5% occluded)** behind five mid-rises.
+  Now sited by **`groundLoad`** (see the ⚠ below) as a **PREFERENCE, never a gate**: mean occlusion **39.4% → 8.1%**,
+  worst **98.5% → 20.9%**, buried **1/6 → 0/6**, population **6/6**. ⚠ **The census's `TOWER −6.9% / pop −3.9%` was
+  the CHAOS, not the change** — paired over 10 seeds (`probe-cascade`) the mean is **+1.4 towers / +1.07% pop**, only
+  **3/10** seeds down. **The 3-seed matrix can show a scary directional-looking move that is centred on zero; pair it
+  before you redesign to protect a metric.** ⚠ **168 gave this bowl a spotlit performer on a tile that showed four
+  pixels — polish the VISIBILITY before the DRAW.**
+  ✅ **230 (Transport × Deepen): THE TRAFFIC KEEPS HOURS** (body in entry 230). `vehHidden(v)` reads the same
+  `nightAmt()` clock, thinning by CLASS (`VCURF`). **The BUS, SERVICE fleet and TAXI keep no hour** — the bus because
+  `stepVehicle` stamps the stop queue whether or not it is DRAWN. ⚠ **The `taxi` flag was DECORATIVE for ~200
+  iterations and is now LOAD-BEARING** (cab share of cars still out 13% → 41%). Day is provably inert.
+  ✅ **227 was the 25th step-back — city CLEAN, arc UNMOVED, and it FIXED ITS OWN CAMERA** (frames self-report `HUD=ok`).
+  ✅ **THE HUD LAP IS DONE (229) — BOTH ITS CUES WERE THE HARNESS, NOT THE CITY** (law in SKILL.md: *a defect only your
+  HARNESS can see is a defect IN your harness*). ⚠ **(y) and (s) were ALSO born from agents reading `shoot.mjs` output
+  — REPRODUCE either in the user's configuration before designing to it.** The **Interaction/UX column** (cross-cutting,
+  so it sits here not in the grid — like U2/42/U5) was last touched at **229**; before that **191**.
   ✅ **THE SKYLINE LADDER (217→218→219→224) and THE WASH LADDER (223) ARE BOTH COMPLETE** — cues **(ac)** and **(ae)**
   CLOSED; the `c.th` ladder is **SPENT** (warnings at (ac)); the wash is **luminance-safe**, its invariant **ASSERTED
   by `probe-goldenhue.mjs`**. Laws in SKILL.md. ⚠ But NEW cue **(ag)**: 227's agent says the night greens read hot
   again — which would sit on the wash ladder's own invariant.
   ✅ **137's STANDING-CROWD CUE IS CLOSED (226).** Every STANDING figure now casts `shadS` and inherits 225's sun
   vector; the SEATED ones (cafe, picnic, amphitheater) are deliberately not. **People's cue list is EMPTY.**
-  **CUES, RANKED** (no 🔴 left — **(w)+(z)** CLOSED by 229): **(u)** the violet pier deck (Water × Polish — the
-  LAST warm surface still rotated; the deck bypasses `col()`; one-line lever) · **(ag)** the night greens stay hot
-  (NEW at 227) · **(y)** the scorched inland cluster (Nature × Polish) · **(s)** golden-hour contrast collapse (Sky
-  × Polish — CONSTRAINED; strengthened at 227) · **(ab)** (low, arguably correct by design). Nature's **GARDEN
-  staggered beds** (Nature × Deepen) is held by cue (p). ⚠ **(y) and (s) were both born from agents reading
+  **CUES, RANKED** (no 🔴 left — **(w)+(z)** CLOSED by 229, **(t)** CLOSED by 231): **(ag)** the night greens stay
+  hot (NEW at 227 — and Nature is the stalest domain, so this is the natural next lap) · **(u)** the violet pier
+  deck (Water × Polish — the LAST warm surface still rotated; the deck bypasses `col()`; one-line lever) · **(y)**
+  the scorched inland cluster (Nature × Polish) · **(ah)** the amphitheater's cavea has a **FIXED orientation** —
+  it now often sits on the water's edge and does not face it (*"facing the bowl toward the river would look far
+  more intentional"* — 231's agent, unprompted). 199's tell on a **draw**; Civic × Deepen · **(s)** golden-hour
+  contrast collapse (Sky × Polish — CONSTRAINED; strengthened at 227) · **(ab)** (low, arguably correct by design).
+  Nature's **GARDEN staggered beds** (Nature × Deepen) is held by cue (p). ⚠ **(y) and (s) were both born from agents reading
   `shoot.mjs` frames** — and 229 proved that camera can manufacture a defect. **Reproduce either in the user's
   configuration (or with a probe) before designing to it.**
   **225 (Sky × Deepen): THE SHADOWS READ THE SUN.** `shadS` — the ONE function every shadow routes through — carries
@@ -81,12 +82,15 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **STEERING FROM THE LAST LAPS — bodies rotated to the archive at 227; only the WARNINGS live here.**
   ⚠ **226: `census.mjs` DOES NOT FREEZE THE CLOCK** ⇒ tick-sensitive metrics (`solarRoofs`) **wobble ±2**; core
   metrics unaffected. **To test whether an unintended metric move is YOURS, re-run the SAME FILE, not HEAD.**
-  ⚠ **226: `openFront`/`frontLoad` ONLY COUNT `TALLT`** — a mid-height SHOP still buries a ground-level figure's
-  feet. **For a ground-level ornament, aim AND site by MEASURED ink, not by a tile predicate.**
+  ⚠ **231: THREE PREDICATES, DON'T MIX THEM.** `openFront`/`frontLoad` count **TALLT MEMBERSHIP** — fine for the
+  MID-HEIGHT bus shelter they were tuned on, **wrong for anything drawn flat** (an h80 tower and an h5 shed score
+  alike; RES scores 0). **`groundLoad(x,y)` is the ground-level one** (231): sums drawn **HEIGHT**, two rows, near row
+  doubled, reading **`c.th` never `c.h`** (`c.h` is animated in `drawBuilding` ⇒ a `tick()` reader would couple the
+  world to the render clock), and counts a **`RAISEABLE`** lot at `FUTUREH` — **an empty lot is not a clear view, it
+  is a building that has not been built yet.** ⚠ **Aim a CAMERA by measured ink, never by any of the three (226).**
   ⚠ **213: `nightDeep()` IS PINNED AT 1 ALL DAY** — harmless in a draw, a trap for any NON-draw reader; guard every
   reader. **The civic night-light audit is DONE — do not re-run it**; three lights are OFF the curve on purpose
-  (school janitor, hall clock face, parliament lantern) — **do not "fix" them.** ⚠ **Cue (t): THE AMPHITHEATER IS
-  BURIED ON SOME SEEDS** (pre-existing siting; a hard gate would starve a one-per-city tile ⇒ fix is a PREFERENCE).
+  (school janitor, hall clock face, parliament lantern) — **do not "fix" them.**
   ⚠ **211/210: `frontLoad` is the sharper `openFront`** (`openFront` misses a TOWER two rows in front). **Both ship
   as PREFERENCES, NEVER GATES (206)** — the hard gate *starved* the rule (`GARDEN 14 -> 5`, worse than the bug it
   fixed). **137's "the ped/dog system is NON-REPRODUCIBLE" is DISPROVEN** (stub + in-page `genWorld` ⇒ byte-identical
@@ -303,8 +307,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   city): **the night surf light-smear, `hashCell(x,y,77)<0.28`, is the one to fix.** *Ornament jitter* (kelp sway,
   fronds, fruit, fireflies) is cosmetic. Marsh reeds (113) + tower window-lights (110) CLOSED. ⚠ `darkWinR` is **not**
   a breach (it mixes `seedNum^salt` internally — check the callee). When fixing a range, **space the bases**.
-  **(w)+(z) CLOSED BY 229 — both were the HARNESS, not the city (body rotated to the archive at 230; the law, and
-  the `<meta charset>` invariant that repeals 134's pure-ASCII rule, are in SKILL.md).**
+  **(w)+(z) CLOSED BY 229; (t) CLOSED BY 231 — bodies in the archive / entry 231; laws in SKILL.md.**
   **(m) SHOWERS ARE HOST-STARVED — do not build "X responds to the rain"** (201, `probes/probe-rainhost.mjs`).
   Nothing on the ground reads `cl.rain`, and a shower's footprint is **2-5 hexes TOTAL**, so at any moment it rains
   on **less than one** picnic/cafe hex — `T.MARKET` again (dead-code law), **no host.** Widening it is a Sky change
@@ -329,13 +332,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   (`cropRGB`/`colRGB` — a real lap, not a freebie).
   **(ae) CLOSED by 223** (root cause: `washRGB` gain triples chosen for their RATIOS, never normalised for their
   MAGNITUDE; body archived, law ⇒ SKILL.md). ⚠ **The invariant is ASSERTED by `probes/probe-goldenhue.mjs` — run it
-  whenever you touch a gain triple.** ⚠ **Watch: PARK vs ROAD separation is 14, just under the ~15 collapse floor**
-  — and **227's cue (ag) says the night greens read hot again**, so that is where the next lap will bite.
-  **(af) CLOSED by 228 — the tower CROWN was the defect** (body in 228's entry; the *"banked instrument was the
-  WRONG one"* lesson is now a LAW in SKILL.md). Crowns **4.0 -> 18.3**, top share **40.8% -> 15.3%**, MID control
-  byte-identical, **FREE**. ⚠ **227's indictment of the MID drum-roofs was REFUTED by measurement.** ⚠ **The TOWER
-  SILHOUETTE (the body below the roofline) is still 5.3 shapes / top 55%** — untouched, and the obvious next Urban
-  lap if the towers are ever called wallpaper again; the crown was the cheap half.
+  whenever you touch a gain triple.** ⚠ **Watch: PARK vs ROAD separation is 14, just under the ~15 collapse floor** —
+  and **(ag) says the night greens read hot again**, so that is where the next lap bites.
+  **(af) CLOSED by 228 — the tower CROWN was the defect** (body in entry 228; the *"banked instrument was the WRONG
+  one"* lesson is a LAW in SKILL.md). ⚠ **The TOWER SILHOUETTE (the body below the roofline) is still 5.3 shapes /
+  top 55%** — untouched, and the next Urban lap if the towers are ever called wallpaper again.
   **(ag) THE NIGHT GREENS STAY HOT (227, seed 7, unprompted; NEW).** *"At night the land base reads flat purple-grey
   and the parks/farms in the middle stay oddly bright green, breaking the night mood."* Sits squarely on 222's
   ladder invariant (**no UNLIT surface may out-brighten the LIT ones**) and on 223's live watch item (**PARK<->ROAD
@@ -348,10 +349,9 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   check the other. (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did (0.125), **219
   invalidated it** (0.282) unnoticed for 6 laps; normalise by the formula's own max (⇒ SKILL.md).
   **(ab) THE CALENDAR IS LOUD PER-TILE AND QUIET PER-FRAME (217, Sky × Deepen — LOW; said by FOUR agents).**
-  *"Winter is indistinguishable from day"* — but `probe-season` refutes the premise (FARM **87.0**, ROAD control 0.6:
-  the calendar is ALIVE). Theirs is a **frame-share** claim (the biggest-amplitude tiles are the fewest: FARM 130,
-  VINEYARD 26) — 214's shape, and **arguably correct by design** (a dry-Mediterranean city has no snow). ⚠ Fix = a
-  bigger seasonal **SURFACE**, not a louder amplitude; cue (p) **forbids** raising the lawn amplitude.
+  `probe-season` refutes the premise (FARM **87.0**, ROAD control 0.6: the calendar is ALIVE); theirs is a
+  **frame-share** claim (FARM 130, VINEYARD 26 hexes) — **arguably correct by design** (no snow in a dry
+  Mediterranean city). ⚠ Fix = a bigger seasonal **SURFACE**, not amplitude; (p) **forbids** raising the lawn.
   **(u) THE PIER / BOARDWALK DECK IS STILL VIOLET — (aa)'s bug one tile over (214, Water × Polish; the LAST warm
   surface rotated).** Seed 7, unprompted: *"flat lavender-mauve slabs"* and *"the boardwalk path is warm brown while
   the pier deck it connects to is violet — same walkway, two colours."* Fixing the sand made it **worse**. One-line
@@ -391,94 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 223 entries before Iteration 221 live in
+> **Archive:** the 224 entries before Iteration 222 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 221 — the parks were the same colour as the sea (2026-07-13) [Nature × Polish]
-
-**Vector.** Nature × Polish, closing cue **(ad)** — the last rung of 214's hue-rotation ladder, and
-220's direct sequel. 214 fixed the **sand**, 220 the **masonry**; the surface the whole city STANDS
-on was still rotated, and two blind step-back agents named it on two seeds, unprompted, on a PASSing
-frame: *"hazy-violet mid-block interiors"* (7) and *"a violet/blue-grey ground plane"* (42).
-
-**The bug is 214's, and on green it is worse than on warm.** The night tint `[.42,.42,.58]` crushes R
-by `.42` and **lifts B by `.58`**, so on any green — where G is max and R is the *second* channel — B
-overtakes R and the channel order goes **G>R>B -> G>B>R**. Worked by hand on the palette, **every green
-inverts**: `grass`/`lawn` [150,181,122] -> [63,76,71], `canopy`, `grassDk`, `meadow`, `turf`, `sage`,
-`canopyLt`, `sprout`. (`crop` alone survives, by 1 RGB unit — and it goes through `cropRGB`/`colRGB`,
-not `col()`, so FARM is a separate lap.) Measured on HEAD, `probes/probe-goldenhue.mjs`, 3 seeds:
-**PARK night hue 194deg (CYAN) at chroma 6**, against a daylight 81deg/47. **FOREST chroma 7** — grey.
-
-**Change (one dispatch point, colour only).** The greens take their wash from the **PALETTE, not the
-call site**: `LEAFN` + a dispatch in `col()`. 220 made the *warm* wash opt-in per call site, and
-rightly — `cream`/`white`/`deck` are shared between masonry, boats, foam and signage, so only the
-caller knows if it is drawing a wall. **Green carries no such ambiguity: in this city a green surface
-is always something growing, and there is none that should read cyan.** So all 54 green call sites are
-fixed at once and **no future one can reintroduce the rotation by forgetting to ask.** The wash math is
-now a single shared `washRGB(b,f,gr,gg,gb)`; `sandCol` becomes the warm gain triple on it and is
-**byte-identical** (same arithmetic).
-
-**The gain is `sandCol`'s OWN vector, permuted — not a tuned constant.** That wash gives the strongest
-gain to the channel carrying the surface's IDENTITY: for sand that is **R** (its max). A green's
-identity channel is **G**, crushed by exactly the same `.42`, so the symmetric restoration is the same
-triple read in the green's channel order: **`[1.08, 1.15, 1.06]`**. All 11 `LEAFN` entries keep G>R>B
-under it (tightest: `turf` [101,137,97] -> 109.1 vs 102.8). A **FLAT (1,1,1)** wash was built and
-measured FIRST — it is hue-*exact* and it **under-restores**: PARK chroma only 10, a dark grey with a
-hint of green. The shipped gain lands the greens at the chroma where every other surface the night has
-been taught to keep already sits (RES **34**, BEACH **37**).
-
-**Census.** PASS, **vacuous by construction** — no `rng()`, no terrain, tile histogram empty, core
-metrics flat. (`solarRoofs` +1 / `towerHt` -1 = load-timing tick noise, 163(c); `col()` is pure render
-and cannot reach `tick()`.)
-
-**Probe (`probes/probe-goldenhue.mjs`, patch vs HEAD, 3 seeds) — and the cue's OWN GATE WAS WRONG.**
-The header prescribed *"pair PARK<->ROAD (night 15, day 50)"*. That gate is **anti-correlated with
-correctness and would have failed a correct fix**:
-
-| night | HEAD | patch | day (control) |
-| --- | --- | --- | --- |
-| **PARK hue** | **194deg (cyan)** — 113deg off daylight | **101deg (green)** — 20deg off | 81deg |
-| **PARK chroma** | **6** (grey) | **15** | 47 |
-| **FOREST chroma** | **7** (grey) | **25** | 52 |
-| PARK vs ROAD (sep) | 15 | 16 | 50 |
-| PARK vs RES (sep) | **29** | **25** | 36 |
-
-**PARK<->RES separation FELL, and that is the fix working.** HEAD's park was *cyan*, and a cyan is
-maximally distant in RGB from a warm tan house — **the bug was inflating the very number the cue told
-me to maximize.** The claim was never *"the park differs from its neighbours"*; it was *"the park is
-not green"*. Gated in the units of the complaint (214), the surface's distance from **its own daylight
-hue** goes **113deg -> 20deg**, and all separations stay >=16, above the ~15 collapse threshold. ⇒ **Law
-promoted to SKILL.md.**
-
-**Controls, in the same run.** **DAY and GOLDEN are both byte-identical** (PARK day 81/47/172 and
-golden 44/55/141 in *both* builds) — golden hour reads `LITAMT=0.28`, below the wash's 0.35 cut, so
-**two** dead regimes referee the live one for free (199). BEACH night (33deg/37/105) and WATER night
-(210deg/58/67) **exactly unchanged**: 214's fix and the sea undisturbed. Probe noise floor ~1 RGB unit
-(`time`/`waveT` unpinned, 195(f)); the PARK/FOREST moves are 10-90x it.
-
-**Perf — free BY CONSTRUCTION.** Not one path object added, removed or resized; only the *string*
-handed to `fillStyle` changed. 198's cost model is per path object, so per 216's law that deterministic
-mechanism outranks a timing number with no mechanism behind it. (One `Set.has` per cache MISS; `col()`
-caches under its existing key.)
-
-**Visual.** `probes/shot-stepback.mjs`, seeds 42 + 7, frozen in-page, frames self-reporting. Both agents
-**PASS**, both told only that *"some surfaces"* changed after dark — never which, never in which
-direction (108) — and **both, blind, named the ground truth**: *"moss-to-olive green"* with forest
-*"pine/bottle green"* (42), and seed 7 **sampled the pixels itself** — `rgb(83,99,67)`, hue ~82-90deg,
-*"green channel clearly dominant over blue"* — which is the inversion mechanism confirmed from the
-outside. Both confirmed the three-way night separation still reads (**warm low-rise / cool glass tower
-/ green ground**) and that day + winter are untouched.
-
-**Aside, banked as a watch item (ONE seed only — 212's law wants TWO).** Seed 42: *"the green is a
-touch hot for night... park hexes pop as bright cut-outs."* Its *diagnosis* is measurably false (night
-chroma 15 is **32%** of daylight's 47, not "close to daytime saturation") and **seed 7 contradicts it**
-(*"dark olive"*), so it is not actionable now — but PARK night luminance did rise 82 -> 88. **If a
-future step-back sees it on two seeds, dial the G gain 1.15 -> 1.10.**
-
-**Verdict: SHIPPED.**
 
 ## Iteration 222 — the twenty-fourth step-back finds the sand outshining the towers (2026-07-13) [holistic step-back]
 
@@ -1238,3 +1155,81 @@ path objects, not the timer), hours-on vs hours-off in one page: **day exactly 0
 iteration in the arc that *removes* night draw work instead of adding it.
 
 **Verdict: SHIPPED.**
+
+## Iteration 231 — the bowl was picking the lot they were about to build on (2026-07-13) [Civic & culture × Polish]
+
+**Vector.** Civic & culture × Polish. Civic was the stalest domain (last vector 213) and it held a
+banked, measured cue — **(t): "the amphitheater is buried on some seeds"** — with the fix already
+characterized (a PREFERENCE, never a gate: it is a one-per-city tile and a hard gate could starve it
+to zero). A banked finding outranks kind-rotation (119), so this was the lap.
+
+**The cue understated it.** `probe-amphgrow` / `shot-amphsite`, 6 seeds: the siting rule scanned
+`i=0..G*G` in RASTER order and took the **first match** (`break`). That is not a siting — it is a bias
+toward **low y, the BACK of the plate**. Out of **147–173 qualifying candidates** the bowl landed in
+**row 2 or 3 on ALL SIX SEEDS** (the plate spans ~67 rows). Its own comment claimed it was *"sited by a
+deterministic hashCell scan"*, but `hashCell<0.6` only **thins** candidates — raster order **chooses**.
+Measured occlusion (`probe-amphvis`: suppress the host's own `drawCell` in ONE page, `occluded% =
+1 − inkInPlace/inkOnTop`, floor **exactly 0**): mean **39.4%**, and **seed 7 rendered 4 px of its 260
+(98.5% occluded)** behind a wall of five mid-rises. ⚠ **Iter 168 spent a whole Civic lap giving this
+bowl a spotlit performer and a lit stage — on a tile that, in one city in six, showed you four pixels.
+Polish the VISIBILITY before you polish the DRAW.**
+
+**Two wrong turns, both measured, both instructive.**
+1. **`frontLoad` is the wrong instrument** (226's law, paid for again). Scored by it, the bowl moved but
+   the ink barely did (**39.4% → 37.4%**): `frontLoad` counts **TALLT MEMBERSHIP, not HEIGHT**, and RES
+   is not in TALLT at all — so a bowl at `frontLoad` **0** still read 36% buried behind two h11 houses,
+   and one at `frontLoad` **2** read **81%** buried behind an **h80 TOWER at dy=+2**. Hence `groundLoad`:
+   sum the drawn **height** in the two rows in front, near row doubled. Both rows are load-bearing — a
+   dy=+1-only variant measured **worse than no rule at all** (32.4% vs 24.4%), clearing the near kerb and
+   walking into a tower one row back.
+2. **And `groundLoad` on TODAY's heights STILL shipped a bug — the sweep had let the variants see the
+   future.** The first sweep graded candidates against the **mature 2035** city and crowned it at 8.4%;
+   shipped, it measured **27.7%**. The rule fires at **year 2004** and every frame renders **2035**.
+   `probe-amphgrow`: scored on the young city, **all six seeds found a front of `groundLoad` ZERO** — so
+   the **hash broke the tie**, and a **vacant lot's** frontage won as often as a road's. But a vacant lot
+   beside a road and a park is the most developable land in the city: by 2035 two had become `RES:16
+   COM:21` and `COM:18 TOWER:89`. **The rule was selecting for its own burial.** Four seeds stayed clear
+   only because their fronts were ROAD / WATER / SHOREPARK / ROCK — things that *can never be built on*.
+
+**Change.** `groundLoad(x,y)` (beside `frontLoad`, which keeps its tuned bus-shelter job and now carries
+a ⚠ pointing here): sums the height in the two rows ahead, near row doubled, reading **`c.th`** (the
+TARGET) — never `c.h`, which `drawBuilding` animates at DRAW time and would couple the world to the
+render clock. A **`RAISEABLE`** lot (EMPTY/MEADOW/FARM/BURNT) counts at a nominal **`FUTUREH`**: *an empty
+lot in front of you is not a clear view, it is a building that has not been built yet.* The amphitheater
+rule now **scores every candidate and takes the least buried**, hash as tie-break (it is the jitter now —
+what the old `<0.6` filter was really for). **`FUTUREH`'s magnitude is NOT load-bearing** (30 and 60 pick
+identically on every seed); all that matters is buildable = nonzero, permanently-open = zero. It is a
+**PREFERENCE, not a gate** (206): if every candidate is buried the best still takes it, so the bowl can
+never be lost — **placed 6/6 on every seed measured**.
+
+**Probe** (`probe-amphvis`, 6 seeds, floor 0 on every row — HEAD → shipped):
+mean occluded **39.4% → 8.1%** · worst seed **98.5% → 20.9%** · buried (≥60%) **1/6 → 0/6** ·
+visible ink **157px → 234px** (92% of the 255px it draws) · population **6/6 → 6/6**.
+Seed 7 — the city that showed four pixels — now renders **244 of 251**.
+
+**Census.** PASS. `developed` −9 (−0.15%), `roads` −4, `civicKinds` +0, `CIVIC 83 → 84`. But `TOWER
+432 → 402 (−6.9%)`, `towerHt −6.1%`, `pop −3.9%` — same land, building *shorter*, which looks exactly
+like a directional skyline tax, and a 7% skyline tax to unbury one tile would be a bad trade. **It is the
+chaos, not the change** (`probe-cascade`, paired over **10 seeds**): mean TOWER **+1.4 (UP)**, mean pop
+**+1.07% (UP)**, mean developed −0.09%, and only **3/10** seeds lose towers — swings of −24 and +22 sit
+side by side. The 3-seed census matrix simply drew two of the worst. ⚠ This **refutes the tempting
+inference from 218**: the tower *roll* is saturated, but the tower *predicate* (`com>=2`) reads a COM
+layer that is itself `rng()`-sited, so a stream reshuffle **does** move the skyline — chaotically, ±15%
+per seed, centred on zero. **No draw primitive is added; the bowl relocates one cell.**
+
+**Visual.** PASS ×2 (blind LOCATE, HEAD vs patch, each build aimed at its OWN bowl). Seed 7 BEFORE:
+*"I cannot find the amphitheater. The camera is pointed at it and the towers own the whole view.
+Essentially invisible."* AFTER: *"found immediately at ~0.49/0.52 … fully visible."* Seed 42 BEFORE:
+*"only the top arc reads … easy to mistake for a plaza."* AFTER: *"mostly visible … a real improvement,
+not a total fix"* — which matches the residual 20.9% exactly. Grid seating clean, no z-order tears, no
+floating, the land/water edge reads as a bank. Both agents independently noticed the tower re-roll and
+called it *"a small, coherent re-roll, not damage."*
+
+**Banked (new cue (ah)).** Seed 42's agent, unprompted: the bowl now often sits on the water's edge, and
+its **cavea has a FIXED orientation** — *"facing the bowl toward the river would look far more
+intentional."* The tiers are drawn at one hard-coded angle regardless of what the bowl faces. That is
+199's tell on a **draw**, and it is the natural Civic × Deepen follow-up. (Also: 5/6 seeds now put the
+bowl on a water/shore front, because permanently-open fronts are what the rule rewards. It reads well —
+a seaside bowl — but if it ever reads as monotony, that is the cause.)
+
+**Verdict: FIXED.**

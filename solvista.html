@@ -1232,17 +1232,61 @@ const STOPR=2;
    not out on a bridge deck. Both the blind 5% coin and the interchange rule ask
    this — it was inline in the coin, and a second copy would have drifted. */
 const stopOK=(x,y,c)=>c.t===T.ROAD&&!c.bridge&&x!==SHOREX&&countAround(x,y,1,n=>DEV.has(n.t))>=2;
-/* How buried is a ground-level thing on this hex? openFront() asks the same question
+/* How much TALL stuff stands in front of this hex? openFront() asks the same question
    as a boolean, but it only looks at the row at dy=+1 — and a TOWER two rows in front
    is tall enough to reach up the screen and cover the hex anyway (measured: 11 of 42
    interchanges rendered under 20px of ink WITH openFront true). This weights the first
    row double, because a tile there hides a shelter outright. Returns 0 for a clear
-   view. Used as a PREFERENCE, never a gate (iter 206). */
+   view. Used as a PREFERENCE, never a gate (iter 206).
+   ⚠ It counts TALLT MEMBERSHIP, not HEIGHT — which is enough for the MID-HEIGHT bus
+   shelter it was written for, and is the WRONG instrument for anything drawn flat on
+   the ground. Use groundLoad() for those (iter 231). */
 function frontLoad(x,y){
   let n=0;
   for(let yy=y+1;yy<=y+2;yy++)for(let xx=x-2;xx<=x+2;xx++){
     if(hexDist(x,y,xx,yy)>2)continue;
     const c=cellAt(xx,yy); if(c&&TALLT.has(c.t))n+=(yy===y+1?2:1);
+  }
+  return n;
+}
+/* How buried WILL a GROUND-LEVEL draw on this hex be — one painted flat on the tile, with
+   nothing of its own rising above the row in front (the amphitheater's cavea, a garden's
+   beds, a forecourt)? frontLoad() above cannot answer that, and it will tell you a front
+   is clear when it is not (226's law), because it counts TALLT MEMBERSHIP rather than
+   HEIGHT and RES is not in TALLT at all. Measured over 6 seeds (iter 231, cue (t)): a
+   bowl with frontLoad 0 still rendered 36% occluded behind two h11 houses, and one with
+   frontLoad 2 rendered 81% occluded behind an h80 TOWER at dy=+2.
+   So sum the height standing in the two rows in front, nearest row weighted double. Both
+   rows are load-bearing: a variant looking only at dy=+1 measured WORSE than no rule at
+   all (32.4% mean occlusion against 24.4%), because it clears the near kerb and walks
+   straight into a tower one row behind it.
+
+   ⚠ And the height it sums is the height the front WILL REACH, not the one standing there
+   today — this is the whole rule, and scoring the present city instead is worse than
+   useless. A siting rule runs ONCE, at a year when the city is still young; the frame is
+   rendered decades later. Scored on today's heights, all six seeds found a front of
+   groundLoad ZERO and the hash broke the tie — so a VACANT LOT's frontage won as often as
+   a road's. But a vacant lot beside a road and a park is the most developable land in the
+   city: by 2035 two of them had become RES:16 COM:21 and COM:18 TOWER:89, burying the bowl
+   at 81% and 63%. The rule was SELECTING FOR ITS OWN BURIAL — it preferred exactly the
+   ground the upgrade pass was about to build on (206's law, arriving from the occlusion
+   side: ask what a tile BECOMES, never what it is).
+   So a RAISEABLE lot in front of you is not a clear view; it is a building that has not
+   been built yet. Counting it as one takes the bowl to 6.3% mean occlusion, worst 12%, 0/6
+   buried. FUTUREH's magnitude is NOT load-bearing (30 and 60 pick identically on every
+   seed) — what matters is only that a buildable front scores NONZERO while a permanently
+   open one (road, water, shore, rock) scores ZERO.
+   Reads c.th (the TARGET height), never c.h — c.h is animated inside drawBuilding at DRAW
+   time, so a tick() rule reading it would couple the world to the render clock. */
+const TREET=new Set([T.PARK,T.FOREST,T.REDWOOD,T.ORCHARD,T.VINEYARD]), TREEH=14;  /* a canopy */
+const RAISEABLE=new Set([T.EMPTY,T.MEADOW,T.FARM,T.BURNT]), FUTUREH=30;  /* a lot, one day */
+const GLOAD=[[0,1],[-1,1],[1,1],[0,2],[-1,2],[1,2]];   /* the two rows dead ahead */
+function groundLoad(x,y){
+  let n=0;
+  for(const[dx,dy]of GLOAD){
+    const c=cellAt(x+dx,y+dy); if(!c)continue;
+    const h=c.th||(TREET.has(c.t)?TREEH:(RAISEABLE.has(c.t)?FUTUREH:0));
+    n+=h*(dy===1?2:1);
   }
   return n;
 }
@@ -2080,16 +2124,33 @@ function tick(){
         c.t=T.CIVIC;c.kind='aquarium';c.th=15+c.v*6;c.h=0;c.age=0;break;}
     }
   }
-  /* an open-air amphitheater opens beside the parks (2004+), one per city. Sited by
-     a deterministic hashCell scan — no rng() draw. */
+  /* an open-air amphitheater opens beside the parks (2004+), one per city. Sited by a
+     deterministic scan — no rng() draw.
+     The bowl is a GROUND-LEVEL draw (tiers painted flat on the tile under a 0.16 stage
+     house), and draw order is depth order, so whatever stands at dy=+1 is painted last
+     and buries it (206). The old scan took the FIRST raster match and broke — which is
+     not a siting at all but a bias toward low y, i.e. the BACK of the plate: measured,
+     the bowl landed in row 2-3 on all six seeds out of ~150 qualifying candidates, and
+     on seed 7 it rendered 4px of its 260 (98.5% occluded) behind a wall of mid-rises —
+     a one-per-city landmark the city could not show you.
+     So score every candidate and take the least buried, by groundLoad — NOT frontLoad,
+     which is blind to exactly the things that bury a flat bowl and measured barely better
+     than no rule at all here (20.9% mean occlusion against HEAD's 24.4%). It is a
+     PREFERENCE, not a gate (206's hard gate starved the rule it was fixing): if every
+     candidate is buried, the best of them still takes it, so the one-per-city bowl can
+     never be lost — placed 6/6 on every seed measured. The hash breaks the ties, so the
+     bowl does not sit on the same relative lot in every city; it is the jitter now, which
+     is what the old <0.6 filter was really there for. */
   if(year>=2004&&!cells.some(c=>c.t===T.CIVIC&&c.kind==='amphitheater')){
+    let best=null,bs=1e9;
     for(let i=0;i<G*G;i++){
       const x=i%G,y=(i/G)|0,c=cells[i];
       if((c.t===T.EMPTY||c.t===T.RES)&&roadNear(x,y)
-         &&countAround(x,y,2,n=>n.t===T.PARK||n.t===T.PLAZA)>0
-         &&hashCell(x,y,seedNum^0x0A44)<0.6){
-        c.t=T.CIVIC;c.kind='amphitheater';c.th=6;c.h=0;c.age=0;break;}
+         &&countAround(x,y,2,n=>n.t===T.PARK||n.t===T.PLAZA)>0){
+        const s=groundLoad(x,y)+hashCell(x,y,seedNum^0x0A44);
+        if(s<bs){bs=s;best=c;}}
     }
+    if(best){best.t=T.CIVIC;best.kind='amphitheater';best.th=6;best.h=0;best.age=0;}
   }
   /* ball fields open near schools and parks (1980+) */
   if(year>=1980)for(let k=0;k<ks(4);k++){

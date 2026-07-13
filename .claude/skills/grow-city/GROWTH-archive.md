@@ -15086,3 +15086,86 @@ surface it stands on is not.
 
 **Verdict: SHIPPED.**
 
+## Iteration 221 — the parks were the same colour as the sea (2026-07-13) [Nature × Polish]
+
+**Vector.** Nature × Polish, closing cue **(ad)** — the last rung of 214's hue-rotation ladder, and
+220's direct sequel. 214 fixed the **sand**, 220 the **masonry**; the surface the whole city STANDS
+on was still rotated, and two blind step-back agents named it on two seeds, unprompted, on a PASSing
+frame: *"hazy-violet mid-block interiors"* (7) and *"a violet/blue-grey ground plane"* (42).
+
+**The bug is 214's, and on green it is worse than on warm.** The night tint `[.42,.42,.58]` crushes R
+by `.42` and **lifts B by `.58`**, so on any green — where G is max and R is the *second* channel — B
+overtakes R and the channel order goes **G>R>B -> G>B>R**. Worked by hand on the palette, **every green
+inverts**: `grass`/`lawn` [150,181,122] -> [63,76,71], `canopy`, `grassDk`, `meadow`, `turf`, `sage`,
+`canopyLt`, `sprout`. (`crop` alone survives, by 1 RGB unit — and it goes through `cropRGB`/`colRGB`,
+not `col()`, so FARM is a separate lap.) Measured on HEAD, `probes/probe-goldenhue.mjs`, 3 seeds:
+**PARK night hue 194deg (CYAN) at chroma 6**, against a daylight 81deg/47. **FOREST chroma 7** — grey.
+
+**Change (one dispatch point, colour only).** The greens take their wash from the **PALETTE, not the
+call site**: `LEAFN` + a dispatch in `col()`. 220 made the *warm* wash opt-in per call site, and
+rightly — `cream`/`white`/`deck` are shared between masonry, boats, foam and signage, so only the
+caller knows if it is drawing a wall. **Green carries no such ambiguity: in this city a green surface
+is always something growing, and there is none that should read cyan.** So all 54 green call sites are
+fixed at once and **no future one can reintroduce the rotation by forgetting to ask.** The wash math is
+now a single shared `washRGB(b,f,gr,gg,gb)`; `sandCol` becomes the warm gain triple on it and is
+**byte-identical** (same arithmetic).
+
+**The gain is `sandCol`'s OWN vector, permuted — not a tuned constant.** That wash gives the strongest
+gain to the channel carrying the surface's IDENTITY: for sand that is **R** (its max). A green's
+identity channel is **G**, crushed by exactly the same `.42`, so the symmetric restoration is the same
+triple read in the green's channel order: **`[1.08, 1.15, 1.06]`**. All 11 `LEAFN` entries keep G>R>B
+under it (tightest: `turf` [101,137,97] -> 109.1 vs 102.8). A **FLAT (1,1,1)** wash was built and
+measured FIRST — it is hue-*exact* and it **under-restores**: PARK chroma only 10, a dark grey with a
+hint of green. The shipped gain lands the greens at the chroma where every other surface the night has
+been taught to keep already sits (RES **34**, BEACH **37**).
+
+**Census.** PASS, **vacuous by construction** — no `rng()`, no terrain, tile histogram empty, core
+metrics flat. (`solarRoofs` +1 / `towerHt` -1 = load-timing tick noise, 163(c); `col()` is pure render
+and cannot reach `tick()`.)
+
+**Probe (`probes/probe-goldenhue.mjs`, patch vs HEAD, 3 seeds) — and the cue's OWN GATE WAS WRONG.**
+The header prescribed *"pair PARK<->ROAD (night 15, day 50)"*. That gate is **anti-correlated with
+correctness and would have failed a correct fix**:
+
+| night | HEAD | patch | day (control) |
+| --- | --- | --- | --- |
+| **PARK hue** | **194deg (cyan)** — 113deg off daylight | **101deg (green)** — 20deg off | 81deg |
+| **PARK chroma** | **6** (grey) | **15** | 47 |
+| **FOREST chroma** | **7** (grey) | **25** | 52 |
+| PARK vs ROAD (sep) | 15 | 16 | 50 |
+| PARK vs RES (sep) | **29** | **25** | 36 |
+
+**PARK<->RES separation FELL, and that is the fix working.** HEAD's park was *cyan*, and a cyan is
+maximally distant in RGB from a warm tan house — **the bug was inflating the very number the cue told
+me to maximize.** The claim was never *"the park differs from its neighbours"*; it was *"the park is
+not green"*. Gated in the units of the complaint (214), the surface's distance from **its own daylight
+hue** goes **113deg -> 20deg**, and all separations stay >=16, above the ~15 collapse threshold. ⇒ **Law
+promoted to SKILL.md.**
+
+**Controls, in the same run.** **DAY and GOLDEN are both byte-identical** (PARK day 81/47/172 and
+golden 44/55/141 in *both* builds) — golden hour reads `LITAMT=0.28`, below the wash's 0.35 cut, so
+**two** dead regimes referee the live one for free (199). BEACH night (33deg/37/105) and WATER night
+(210deg/58/67) **exactly unchanged**: 214's fix and the sea undisturbed. Probe noise floor ~1 RGB unit
+(`time`/`waveT` unpinned, 195(f)); the PARK/FOREST moves are 10-90x it.
+
+**Perf — free BY CONSTRUCTION.** Not one path object added, removed or resized; only the *string*
+handed to `fillStyle` changed. 198's cost model is per path object, so per 216's law that deterministic
+mechanism outranks a timing number with no mechanism behind it. (One `Set.has` per cache MISS; `col()`
+caches under its existing key.)
+
+**Visual.** `probes/shot-stepback.mjs`, seeds 42 + 7, frozen in-page, frames self-reporting. Both agents
+**PASS**, both told only that *"some surfaces"* changed after dark — never which, never in which
+direction (108) — and **both, blind, named the ground truth**: *"moss-to-olive green"* with forest
+*"pine/bottle green"* (42), and seed 7 **sampled the pixels itself** — `rgb(83,99,67)`, hue ~82-90deg,
+*"green channel clearly dominant over blue"* — which is the inversion mechanism confirmed from the
+outside. Both confirmed the three-way night separation still reads (**warm low-rise / cool glass tower
+/ green ground**) and that day + winter are untouched.
+
+**Aside, banked as a watch item (ONE seed only — 212's law wants TWO).** Seed 42: *"the green is a
+touch hot for night... park hexes pop as bright cut-outs."* Its *diagnosis* is measurably false (night
+chroma 15 is **32%** of daylight's 47, not "close to daytime saturation") and **seed 7 contradicts it**
+(*"dark olive"*), so it is not actionable now — but PARK night luminance did rise 82 -> 88. **If a
+future step-back sees it on two seeds, dial the G gain 1.15 -> 1.10.**
+
+**Verdict: SHIPPED.**
+
