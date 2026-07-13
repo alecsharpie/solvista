@@ -7471,6 +7471,22 @@ function render(){
      (R-B) picks out the low-sun glow and nothing else (iter 161). The TOP of each
      puff stays bright white; only the underside catches the warmth. */
   const sb=dl.skyBot, cwarm=clamp((sb[0]-sb[2]-70)/70,0,1);
+  /* How much GROUND is under a cloud, sampled over the shade's own footprint. inB()
+     is the PLATE, and the plate runs out to sea — so a shade gated on it paints a
+     dark ellipse onto open water, which reads as a hole in the sea rather than as
+     weather. Fading by the land fraction (rather than cutting at the waterline)
+     keeps the shade from popping on as a cloud makes landfall. */
+  const shadeGround=cl=>{
+    const rx=30*cl.s/CW, ry=12*cl.s/ROWY; let hit=0,n=0;
+    for(let j=-1;j<=1;j++)for(let i=-2;i<=2;i++){
+      const c=cellAt(Math.round(cl.x+i*rx*0.5),Math.round(cl.y+j*ry)); n++;
+      if(c&&!WETSET.has(c.t))hit++;
+    }
+    /* half a footprint of land is enough to cast a full shadow: a cloud standing over
+       the coast must not have its shade on the LAND side dimmed just because its other
+       half hangs over the water. Only a cloud well out to sea fades away. */
+    return Math.min(1,2*hit/n);
+  };
   for(const cl of clouds){
     const[cx,cy]=pxc(cl.x,cl.y);
     const w=cloudWet(cl);          /* this cloud's shower, 0..1, as the front finds it */
@@ -7478,8 +7494,12 @@ function render(){
     /* how far downwind the drops trail on their way down. The wet ground has to
        know this too, or it pools where no rain is falling. */
     const rlean=w>0?(cy-(py2+6*cl.s))*(0.06+0.08*WINDA):0;
-    if(inB(cl.x|0,cl.y|0)){ /* shade only falls where there is ground to catch it */
-      ctx.fillStyle='rgba(36,30,20,'+(0.05*(1-LITAMT*0.6))+')';
+    /* inB() keeps the shade on the PLATE (an ellipse is not clipped to the rim, so a
+       cloud past the edge would spill one into the void); the land fraction keeps it
+       on the GROUND. It takes both — the plate runs out to sea. */
+    const gnd=inB(cl.x|0,cl.y|0)?shadeGround(cl):0;
+    if(gnd>0){ /* shade only falls where there is ground to catch it */
+      ctx.fillStyle='rgba(36,30,20,'+(0.05*(1-LITAMT*0.6)*gnd)+')';
       ctx.beginPath();ctx.ellipse(cx,cy,30*cl.s,12*cl.s,0,0,7);ctx.fill();
       if(w>0){
         /* ground the shower has already crossed stays wet, and dries off behind it.
@@ -7489,7 +7509,7 @@ function render(){
            (cx-rlean), not on the cloud: a damp patch that does not sit under the
            falling drops is a smudge with no visible cause. Soft-edged, or it reads
            as a decal rather than as wet ground. */
-        const R=48*cl.s, wa=0.10*w*(1-LITAMT*0.6);
+        const R=48*cl.s, wa=0.10*w*(1-LITAMT*0.6)*gnd;
         ctx.save();
         ctx.translate(cx-rlean*0.55,cy+1);ctx.scale(1,0.30);
         const wg=ctx.createRadialGradient(0,0,0,0,0,R);

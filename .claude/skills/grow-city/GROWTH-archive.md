@@ -16256,3 +16256,175 @@ a seaside bowl — but if it ever reads as monotony, that is the cause.)
   services stay sited by need, and `observatory` is deliberately free to sit at the rim. `siteQuarter()` hugs the
   nearest standing major at `QNEAR..QFAR` = **2-4 hexes** (adjacency would kill the bunting, which needs a ROAD cell
   reachable from two civics), falling back to the scattered search when the core is walled in. Detail archived at 200.
+
+<!-- header bodies rotated out at iteration 242 (the 28th step-back). Preserved verbatim;
+     their LAWS live in SKILL.md and their one-line warnings remain in GROWTH.md's header. -->
+
+### Rotated from the maintained header at 242 — iteration 241's lap detail
+
+  ✅ **241: THE ELEVATED NETWORK HAS A BUDGET** (`RAILCAP=130`, shared across the planned lines; cue (am) CLOSED).
+  🔑 **AND ITS LAW IS THE ONE TO CARRY: A CUE NAMES A SYMPTOM IN THE UNITS OF THE DRAW, AND THE DEFECT WAS IN THE
+  WORLD.** 241 spent its first three probes killing the cue's own implied spec (too bright / the gondola / no legs —
+  all three IN BAND, measured). **The loud thing was not drawn wrong; there was too MUCH of it**, because two
+  independent lotteries (line COUNT × line LENGTH) multiplied with nothing pricing the network as a network.
+  ⇒ **When every per-pixel property of a "too loud" element measures IN BAND, stop tuning the draw and go count the
+  THINGS.** A 10.4x per-seed spread is not a look problem; it is an unbudgeted generator (233's lottery law, one
+  level up — and it is why a 2-seed visual gate passed this for 240 iterations).
+
+### Rotated from the maintained header at 242 — iteration 240's lap detail
+
+  ✅ **240: THE STADIUM HAS A FIXTURE LIST** (`fixtureAt`/`matchClock`/`matchLive`/`matchGate`/`matchWord` — ONE
+  predicate, five readers). Its two gates were **INVERTED**: the "match-day crowd" stood on the concourse
+  `if(LITAMT<0.75)` — every afternoon, forever, for a match that never kicked off — while the floodlights came up
+  `if(LITAMT>0.3)`, blazing over the **empty** bowl that same gate had just emptied. ~50% of nights now have a game;
+  the ground is **dark otherwise** (masts keep a 0.12 security glim).
+
+## Iteration 232 — the twenty-sixth step-back finds the city has no edge (2026-07-13) [holistic step-back]
+
+**Vector** — the 26th holistic step-back (pre-registered in the header at 231). No
+source change to `solvista.html`: a step-back measures, banks, and hands off.
+
+**Census** — PASS, no page errors. (The histogram delta is 231's amphitheater
+siting plus chaos wobble against its pre-change baseline; `probe-cascade` already
+established at 231 that its scary `TOWER −6.9%` is centred on zero.)
+
+**Perf — lap COSTS DAY ONLY, and it has a MECHANISM.** Timer (interleaved A/B vs
+step-back 227, `b953e7d`): **day +1.1% · night +0.0%**. Because a timing delta with
+no mechanism is the weather (216), I ran the deterministic instrument too, and the
+two **AGREE**: path objects **day 107,959 → 109,247 (+1.2%)**, **night 138,520 →
+138,668 (+0.1%)**. So the cost is *real* — and the asymmetry names its own cause:
+**228's tower crowns add objects in both regimes, while 230's night curfew removes
+vehicles at night and cancels them.** Night flat, day up. Paid and accepted.
+ARC (same refs as every prior step-back): vs `7e2ac2c` (177, 55 iters) **+16.4% /
++11.9%**; vs `5f01426` (162, 70 iters) **+17.9% / +13.7%** — **+1.0pp on both
+columns across 228-231**, dead on the documented ~+0.2%/iteration. Diffuse, not
+accelerating. **Do NOT open a perf lap.**
+
+**Visual — 2 seeds × 4 frames (day / golden / night / winter), `shot-stepback.mjs`,
+clock frozen in-page, every frame self-reporting `HUD=ok`.** Both agents FAILed.
+**Both FAILs were refuted, and both asides were real** — the fail/aside law's
+cleanest instance yet, and its **eighth payout running**.
+
+**The FAILs (both wrong):**
+- *"Winter is indistinguishable from day"* — **both seeds. REFUTED by `probe-season`
+  for the THIRD time** (217, 227, 232). The calendar is not merely alive, it is
+  *louder* than when it was banked: FARM **92.1**, SHOREPARK **52.6**, ORCHARD 41.9,
+  VINEYARD 34.9, with the ROAD control at **0.6**. Six agents have now made this
+  claim and one probe has refuted it three times.
+  **But 232 measured WHY they keep saying it, and the diagnosis is now exact: THE
+  LOUD TILES ARE RARE AND THE COMMON TILES ARE QUIET.** FARM moves 92.1 across only
+  **122 hexes**; **PARK, at 574 hexes, moves 22.4, and FOREST (232 hexes) 19.1.** The
+  frame is dominated by exactly the surfaces that barely answer the calendar. That
+  sharpens cue (ab) from "they're wrong" to a specific, actionable target — and it
+  confirms the fix is a bigger seasonal **surface**, never more amplitude.
+- *"Golden hour crushes the city into muddy sepia"* — seed 7. This is the banked,
+  **CONSTRAINED** cue (s), now raised at four step-backs running. Nothing new.
+
+**The ASIDES (both real — and one of them is the find):**
+- 🔴 **THE CITY HAS NO FRINGE — and it is worse than they said.** Both agents,
+  blind, on different seeds, unprompted: *"the far edge terminates in an abrupt flat
+  line of buildings with no suburban fade — the city ends rather than trails off"*
+  (42) · *"no hinterland left. Density runs edge-to-edge right up to the dune line;
+  no fringe, no thinning, no open country"* (7).
+  **Measured it (`probes/probe-fringe.mjs`, new — pure world data, 6 seeds, no
+  render/clock/noise floor), and the probe did not refute them: it AGREED and found
+  the sign INVERTED.** Developed share of land by distance inward from the plate rim
+  (sea excluded from the denominator, or a seaward rim would fake a fringe):
+
+      DEVELOPED % OF LAND    rim 0-2   3-5   6-8  9-12  13-17  18-33
+      MEAN (6 seeds)            46.5  39.4  40.6  38.3   34.4   41.3
+      WILD % OF LAND            13.4  10.6   9.8   8.1    4.5    8.0
+
+  **Rim 46.5% vs deep interior 41.3% ⇒ taper −5.3 points.** The city is not merely
+  missing a fringe — it is **more built-up at its outermost ring than in its middle**,
+  on **5 of 6 seeds**, with wild land at the rim only 13.4%. The diorama's boundary is
+  a wall of buildings meeting the void. Banked as cue **(ai)**, with the two traps the
+  lap that takes it must not walk into: **218** (the rim carries ~20x more land than
+  the core, so "develop less at the rim" is a pop cut over the *largest* bands — price
+  it with `probe-cascade` first) and **219** (a spatial preference must be pure
+  addition; `COM` is the substrate towers stand on, so a naive rim cut compounds).
+  ⇒ **Prefer ADDING a hinterland to SUBTRACTING a city.**
+- ⚠ **The pre-registered TOWER SILHOUETTE trigger FIRED.** The header had written, in
+  advance, *"the next Urban lap if the towers are ever called wallpaper again"* — and
+  both agents, both seeds, unprompted, did exactly that (*"the same horizontally-striped
+  slab… the single biggest thing flattening the skyline"* · *"variety in plan but not in
+  MASS/HEIGHT/FOOTPRINT"*). Banked as **(af′)**. ⚠ And per 228's own law, **re-derive
+  the instrument from the complaint's nouns**: they said SILHOUETTE/MASS/FOOTPRINT, and
+  `probe-crown` measures the CROWN — the thing 228 already fixed. A banked probe must
+  not be allowed to acquit the thing the agents keep pointing at.
+- The elevated transit reads as *"scratches over the image"* on both seeds, with seed 7
+  adding the floating clause (*"no visible pylon at their seaward end"*). This is
+  `polish-tile` BACKLOG (a), unchanged: z-order is CORRECT and cleared four times now —
+  **the fault is legibility, and the lever is a BODY (215), not more strokes.** Not a
+  growth lap; do not re-open the z-order.
+
+**Verdict** — **FIXED** (the loop's memory, not the artifact): city clean, arc unmoved
+and mechanistically explained, both FAILs refuted by measurement, and the step-back's
+real yield is a **measured, inverted-sign compositional defect** that ~230 iterations of
+additive growth had quietly produced and that no per-lap gate could ever have seen. This
+is precisely the drift a step-back exists to catch. **233 should take cue (ai).**
+
+
+### Rotated from the maintained header at 242 — settled audits and superseded bodies
+
+  ⚠ **211/210: `frontLoad` is the sharper `openFront`** (`openFront` misses a TOWER two rows in front). **Both ship
+  as PREFERENCES, NEVER GATES (206)** — the hard gate *starved* the rule (`GARDEN 14 -> 5`, worse than the bug it
+  fixed). **137's "the ped/dog system is NON-REPRODUCIBLE" is DISPROVEN** (stub + in-page `genWorld` ⇒ byte-identical
+  crowds; **People is probe-able like any domain**). **The `LITAMT` night-gate audit is DONE:** `LITAMT` returns to
+  **0.64** by the small hours, so any gate `LITAMT > 0.64` defines a "night" that **ENDS BEFORE DAWN** — both
+  offenders fixed at 210.
+  ⚠ **209: THE GROUND PLANE IS SPENT** (216 spent the FACADES too). **The developed ground is a HUGE surface,
+  MEASURED** (`probes/probe-groundvis.mjs`, reusable): **5.2% of the frame, RES yards alone 2.21%**, and NOT buried.
+  ⇒ **When a domain looks interconnect-saturated, re-ask it as: what LARGE SURFACES wear a palette name that cannot
+  carry the signal?** ⚠ **206: the vacant lot is a MIRAGE** — `EMPTY` with >=2 RES nbrs falls **85 -> 6.5** by 2035,
+  **0.0** with a road adjacent; development eats every gap.
+  ⚠ **213: `nightDeep()` IS PINNED AT 1 ALL DAY** — harmless in a draw, a trap for any NON-draw reader; guard every
+  reader. **The civic night-light audit is DONE — do not re-run it**; three lights are OFF the curve on purpose
+  (school janitor, hall clock face, parliament lantern) — **do not "fix" them.**
+  (ai)'s three SHAPE laws, each paid for by a gate round: a scatter reads as **speckle**; modulating only a ring's
+  *strength* reads as an **offset halo** (`rural` is `hexDist`-based ⇒ its boundary IS the plate's hexagon); the warp
+  must **exceed the belt depth**, or the city can never touch the rim.
+
+### Rotated from the maintained header at 242 — (ai)'s provenance quotes (the NUMBERS stay in the header)
+
+  **🔴 (ai) THE CITY HAS NO FRINGE — IT IS DENSEST AT ITS RIM (232; MEASURED, `probes/probe-fringe.mjs`).** Both
+  step-back agents, blind, on two different seeds, unprompted: *"the far edge terminates in an abrupt flat line of
+  buildings with no suburban fade — the city ends rather than trails off"* (42) · *"no hinterland left. Density runs
+  edge-to-edge right up to the dune line; no fringe, no thinning, no open country"* (7). **212's aside law again —
+  and this time the probe AGREED WITH THEM and found it WORSE.**
+  233's seed-fragility detail: seed 7 rim 46→19% PASSED — *"the hexagon is not legible in the green"*; seed 42 rim
+  54→36% FAILED — *"a constant-width band tracing the plate's outline"*; **195: it must hold on EVERY seed**.
+  The cost-lands-outside detail: core (≤8) `developed` +0.2%, MID +5.7%, COM +10.6% (10 seeds paired; all 8 agent
+  reads agreed).
+
+### Rotated from the maintained header at 242 — polish-tile (a)'s provenance and the fire-CA body
+
+  (a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit zoom** (0.5px rope, 5px cabins, hairline masts/pylons).
+  ⚠ **NEVER RE-OPEN THE Z-ORDER — CORRECT and CLEARED by probe TWICE** (203/212: properly depth-sorted); agents have
+  now mis-diagnosed it as a z-order tear **SIX times** (217, 232, 237×2 — *"scratches on the glass"*). **That very
+  persistence is the evidence: the fault is LEGIBILITY** — a hairline READS on-top however well it is sorted, and 215
+  names the lever: **a hairline ornament needs a BODY**, not more strokes. *Do NOT re-try a body/halo under the rope
+  (measured — backfires) or a lit top edge (impossible at 0.5px).*
+  **⚠ THE FIRE CA IS A GHOST — do not build "X answers the fire" (`probe-firehost`).** Ignition is year-gated
+  (`year<2006`, forest `year<2030`) ⇒ **at 2035 nothing can ignite at all**; before then, **two one-cell episodes
+  across 3 seeds × 61 years**, and fire **never spreads**. **`T.MARKET` again.** Reviving it is a real CA lap, not a
+  freebie.
+  ⚠ **231: THREE PREDICATES, DON'T MIX THEM.** `openFront`/`frontLoad` count **TALLT MEMBERSHIP** — fine for the
+  MID-HEIGHT bus shelter they were tuned on, **wrong for anything drawn flat** (an h80 tower and an h5 shed score
+  alike; RES scores 0). **`groundLoad(x,y)` is the ground-level one** (231): sums drawn **HEIGHT**, two rows, near row
+  doubled, reading **`c.th` never `c.h`** (`c.h` is animated in `drawBuilding` ⇒ a `tick()` reader would couple the
+  world to the render clock), and counts a **`RAISEABLE`** lot at `FUTUREH` — **an empty lot is not a clear view, it
+  is a building that has not been built yet.** ⚠ **Aim a CAMERA by measured ink, never by any of the three (226).**
+
+### Rotated from the maintained header at 242 — the PERF bullet's bodies (its WARNINGS remain in the header)
+
+  **⚠ THE COST MODEL HAS TWO HOLES, BOTH THE SAME SHAPE: 198's TABLE WAS MEASURED ON SOLID FILLS ONLY.** Its findings
+  (per-ellipse; area-independent; sprite worse) hold only for solid `fill()`s, and **two other primitives have each
+  come in ~4x over the model**: (1) **GRADIENTS** — 200's sun is two radial-gradient fills costing **day +2.3%**; a
+  gradient is evaluated **per pixel**, so it may price by **AREA**. (2) **STROKES** — 215's `seamVeg`, 692 path
+  objects (0.7% day) costing **~+3% day**, with the colour-cache and style-write levers both measuring **zero**,
+  leaving its **228 line strokes** as the suspect. Both **PAID and ACCEPTED**; neither **MEASURED**. Do not shrink a
+  gradient or cull a stroke "because 198 said count is what matters" — **it said no such thing about either.**
+  **⚠ THE DEAD-REGIME CONTROL (199) and ⚠ NEVER GRADE BY CONSECUTIVE PASSES (117 corrected 99) are both LAWS in
+  SKILL.md** (bodies archived at 222): a change **provably inert in one regime** makes that regime its free, same-run
+  noise floor; and machine load is autocorrelated, so only an **interleaved A/B/A/B vs pristine HEAD** reads true.

@@ -684,6 +684,25 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A CITED STANDARD IS NOT AN ENFORCED ONE — WHEN CODE NAMES A NEIGHBOUR AS THE PRECEDENT FOR AN INVARIANT, GO READ
+  THE NEIGHBOUR (iter 242).** 199's tell (a name asserting a behaviour its value cannot have) has now been cashed on a
+  tooltip, a constant, a comment (209), a half-finished fix (217) and a palette entry (238). 242 found the rung below,
+  and it is the one that *propagates*: **a later draw that cites an earlier one as authority for a standard the earlier
+  one never actually implemented.** The cloud shade was gated `if(inB(cl.x|0,cl.y|0))` under the comment *"shade only
+  falls where there is ground to catch it"* — but **`inB()` tests the PLATE, and the plate runs out to sea**, so every
+  cloud over the ocean painted a dark ellipse onto open water for the artifact's entire life. That alone is 209. The
+  *new* part: the **rainbow**, written later, builds a careful `ROWMIN`/`ROWMAX` rim test under the comment *"it fades
+  out as the shower leaves the plate (**cf. the cloud shade above — no ground, no bow**)"* — **it cites, as settled
+  precedent, a gate that was never doing the job.** A false invariant had acquired a *witness*, and the witness made it
+  look audited. ⇒ **Grep for `cf.`, "as X does", "same as", "like the Y above" in comments, and check the referent
+  actually does the thing.** A cross-reference is the cheapest way for a wrong assumption to become load-bearing,
+  because the second author *verified nothing* and the reader now sees two places agreeing.
+  Corollary — **the fix's own control must be able to move in only ONE direction, and if it moves the other way, stop.**
+  242's first cut gated the shade on a sampled land-fraction *alone*, dropping `inB` — which let clouds whose centre is
+  **off-plate** cast shade for the first time (an ellipse is not clipped to the rim, so it spills into the void: a *new*
+  floating artifact, the very class being fixed). A change that only ever multiplies an alpha by a fraction ≤1 **cannot
+  increase ink** — and the probe's land control read **+66%**. That impossibility is what caught it, in one run.
+  **Design your control so that the *sign* of an unexpected move is itself a diagnosis.**
 - **A CUE NAMES ITS SYMPTOM IN THE UNITS OF THE DRAW — BUT "TOO LOUD" CAN MEAN "TOO MUCH OF IT". WHEN EVERY
   PER-PIXEL PROPERTY MEASURES IN BAND, STOP TUNING THE DRAW AND GO COUNT THE THINGS (iter 241).** Every colour/
   contrast/occlusion law above teaches you to answer a visual complaint by measuring the *draw*, and 228 teaches you
