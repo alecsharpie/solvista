@@ -234,8 +234,9 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
   ledger, makes <em>one</em> improvement, verifies it with a numeric census and screenshot gates,
   commits, and exits — then the next one starts. No human in the loop. This page is the receipts.</p>
   <div class="herofig">
-    <div><span class="big">${fmt$(knownCost)}</span><span class="unit">would-be API cost &middot; ${known.length} measured iterations</span></div>
-    <div><span class="big">${totalHours.toFixed(0)}<span class="sm">h</span></span><span class="unit">of autonomous compute &middot; ${maxIter} iterations</span></div>
+    <div><span class="big">${maxIter}</span><span class="unit">autonomous iterations, no human in the loop</span></div>
+    <div><span class="big">${totalHours.toFixed(0)}<span class="sm">h</span></span><span class="unit">of autonomous compute</span></div>
+    <div><span class="big">${fmt$(knownCost)}</span><span class="unit">would-be API cost &middot; ${known.length} measured</span></div>
   </div>
   <a class="back" href="./">&larr; open the living city</a>
 </header>
