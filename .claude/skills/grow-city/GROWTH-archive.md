@@ -15698,3 +15698,158 @@ and because 225 put the sun into `shadS`, it got the entire day's arc for free: 
 leans west at breakfast, sits under their feet at noon, and stretches east while they wait for the
 evening bus.
 
+
+---
+
+## Header bullet rotated out at iteration 237 (the 27th step-back)
+
+Superseded only in the sense that its law now lives verbatim in `SKILL.md`
+("THE PROBE READS THE CANVAS; THE USER SEES THE CANVAS *PLUS THE DOM*", iter 200,
+with the scarce-sky corollary). Kept here byte-for-byte; nothing was deleted.
+
+- **⚠ THE PROBES ARE BLIND TO THE HUD, AND THE SKY IS SCARCE (iter 200 — read before siting ANYTHING in screen
+  space).** Every probe in `probes/` reads `cvs.getImageData()`. **The HUD is not in the canvas.** `.placard` is a
+  DOM card owning the whole **top-left corner** (`left:20px`, `max-width:300px`, tall); `.census`/`.controls` own
+  the bottom corners. So a screen-space draw can be *invisible to the user* while a canvas probe calls it present
+  and lovely: 200's first probe scored the golden-hour sun at **11,716 px** on a frame where it sat **entirely
+  behind the placard**, and two agents on two seeds said "no sun" and were **RIGHT**. ⇒ for a VISIBILITY claim
+  about a screen-space draw, diff **`page.screenshot()`** (DOM composited) — which occlusion-checks for free.
+  Anything in a `ctx.setTransform(dpr,0,0,dpr,0,0)` block is screen space: **sun, moon, stars, shooting star.**
+  And the sky is **measured, shallow and mostly spoken for**: the plate is a hexagon, so the open sky is a *band*
+  — skyline **~0.12 of the viewport across the middle**, falling to 0.27–0.43 only in the top corners, and the
+  top-left corner is the placard's. That is why the moon sits at **x=0.80**, and why 200's sun rises out of the
+  **open sea** (right, deep corner sky) and sets **behind downtown** (left — it cannot go low, the placard is
+  there). Little room is left for a second sky object; measure the band first. (General law, incl. the correction
+  to "a probe is the verdict" — *only if it measures what the claim is about* — in SKILL.md.)
+
+## Iteration 227 — the twenty-fifth step-back finds a clean city and a lying HUD (2026-07-13) [holistic step-back]
+
+**Vector** — Holistic step-back (the 25th; 222 was the 24th). No artifact vector: `solvista.html` is
+**byte-identical to HEAD**. The lap under review is **223-226** (wash normalisation · the `TCAP` skyline
+cap · `shadS` reads the sun · the waiting crowds get their contact shadow).
+
+**Change** — **FIXED the step-back's own camera.** `probes/shot-stepback.mjs` froze the world
+(`playing=false`) and never called `syncStats()` or `syncSky()`. Both are gated on the clock actually
+running — `syncStats()` is only ever reached from inside the `if(playing)` branch (L7815), and `syncSky()`
+self-throttles for 400 ms — so **every frozen frame kept the HUD and the CSS sky gradient it had at page
+load, i.e. daytime.** This is 204's law, and SKILL.md has asserted for 23 iterations that this very file
+already obeyed it. It did not.
+
+**How it surfaced (212's law, paid an eighth time)** — Both step-back agents, on **both seeds,
+independently**, read `DAYTIME / 0% NEW MOON` off a **night** frame with a crescent moon plainly drawn, and
+seed 42 **FAILed the city for it**. The moon was the tell: the *canvas* drew the crescent from the live
+`moonPhase()`, while the *DOM* still held the load-time string — one root cause, two symptoms, and the
+canvas was right both times.
+
+**Probe** — `probes/probe-hudfreeze.mjs` (new, tracked), three cases at the night pin `dayT=0.92`, seed 42.
+Truth is `phaseWord(dayT)` / `moonWord(moonPhase())` recomputed in-page:
+
+| case | HUD says | truth | |
+| --- | --- | --- | --- |
+| **A** frozen, exactly as `shot-stepback` freezes | `daytime` / 0% new moon | `night` / 5% waxing crescent | **STALE** |
+| **B** same frozen frame + `syncStats()` | `night` / 5% waxing crescent | `night` / 5% waxing crescent | AGREE |
+| **C** clock actually running (the real user) | `night` / 5% waxing crescent | `night` / 5% waxing crescent | AGREE |
+
+**A stale while B and C agree** ⇒ the artifact is innocent and the camera lies. **The public site was never
+wrong.** Fix is one line (`lastSky=0; syncSky(performance.now()); syncStats();` before `render()`), plus:
+every frame now **self-reports its HUD** (`HUD=ok` / `HUD=STALE:<word>`) — 202's self-reporting law extended
+from the canvas to the DOM, which is exactly the layer 200 warns the probes are blind to. Re-shot: `HUD=ok`
+on all 8 frames, and both agents then **PASSed**, confirming the HUD matched its sky in every frame.
+
+**Census** — PASS, 0 page errors, `solvista.html` untouched (`git diff` empty). pop 178,626 · developed 6,064
+· roads 5,775 · towers 432.
+
+**Perf — the lap is FREE, and the arc did not move.** Two instruments; where they disagree, 216 says take the
+one with a mechanism:
+- **Path objects (deterministic, load-immune):** day **108,007 -> 107,959** (-0.04%) · night **138,734 ->
+  138,520** (-0.15%). **Flat, slightly down.** Mechanism: 223 is colour-only (zero objects), **224's `TCAP`
+  *removed* tower bands**, 225 keeps `shadS`'s primitive count (it re-aims the ellipse; cost is
+  area-independent per 198), and 226 adds a few hundred shadow ellipses — the cap and the shadows nearly cancel.
+- **Timer (interleaved A/B vs 222 `7bfe1e2`):** day +1.5% · night +0.7% — **no mechanism; the weather.**
+- **ARC** (same refs as 202/207/212/217/222, directly comparable): vs `7e2ac2c` (177, 50 iters) **+16.5% /
+  +11.5%**; vs `5f01426` (162, 65 iters) **+16.9% / +12.7%**. Against 222's +15.0/+12.2 and +15.9/+13.3 that is
+  **unmoved within the day column's noise**, which is what the flat object count predicts. Abs: day 40.9-41.9ms
+  · night 47.7-48.2ms. Arc rate still ~+0.3%/iter, diffuse. **ACCEPTED — do not open a perf lap.**
+
+**Visual** — Both seeds **VISUAL: PASS** (after the camera fix). The city still reads as a coherent, balanced
+coastal diorama at day, golden hour, night and winter; both agents independently identified the winter frame
+from vegetation colour alone. **Mining the asides** (212 — the asides are where an agent is right):
+- **(af) TOWER/MID FACADE WALLPAPER — confirmed by BOTH agents on BOTH seeds, unprompted, for the second
+  step-back running.** *"a repeating field of identical horizontally-banded slabs with little silhouette
+  variety"* (7) · *"the drum-roof block is genuinely over-used and is the element most at risk of compounding
+  further"* (42). Now sighted by **six** agents across 222/224/227, and 227's pair indict the **MID drum-roofs**
+  as well as the towers, both naming **SILHOUETTE/roof variety** rather than colour. **It is the loop's loudest
+  open cue and should be the next Urban lap.**
+- **(s) GOLDEN HOUR IS THE WEAKEST FRAME — also both agents, both seeds, unprompted.** *"the orange grade
+  collapses roads, roofs, sand and grass into one narrow tan/salmon band"* (42) · *"muddy tan-brown ...
+  desaturated/washed rather than warm"* (7). Independent re-derivation of 217's finding: the complaint is
+  **contrast collapse across surfaces**, not the sun's position. Cue (s) stands and **strengthens** — but its
+  constraint binds: **the sun cannot simply be lowered** (200 put it high on purpose; the placard owns the
+  low-left sky).
+- **NEW, banked as cue (ag): the night greens stay hot.** Seed 7, unprompted: *"the land base reads flat
+  purple-grey and the parks/farms in the middle stay oddly bright green, breaking the night mood."* This sits on
+  222's ladder invariant (*no UNLIT surface may out-brighten the LIT ones*) and on 223's live watch item
+  (*PARK<->ROAD separation is 14, just under the ~15 collapse floor*). **Do not gate it on a pairwise separation
+  — 221 proved separation rewards the bug.** Nature/Water × Polish.
+- **Cue (w) is BIGGER than recorded — re-measured at 227.** 214 logged the shipped mojibake as two sites; a
+  re-grep for non-ASCII in *rendered* JS string literals finds **at least eight, including the STATS PANEL**
+  (`elTall`'s em-dash at L7320, on screen at all times, and `cafes`' acute-e at L7430). Still live on the public
+  site, still invisible to every `file://` shot.
+- Known non-bugs, re-reported: the sub-pixel elevated transit reading as *"cables terminating in mid-air"*
+  (polish-tile backlog (a) — z-order cleared **four** times now; the fault is legibility, and 215's law names the
+  lever: **a hairline needs a BODY**).
+
+**Verdict — FIXED.** The city is clean: 226 iterations in, both seeds pass a whole-frame read at three lights
+and two calendars, the census is flat, and the arc has stopped advancing. What was broken was the instrument
+that watches it — and it had been broken, in a way SKILL.md explicitly denied, since the camera was written. A
+step-back that finds nothing wrong with the city and one thing wrong with its own eyes is the step-back working.
+
+
+---
+
+## Two more header bullets rotated out at iteration 237
+
+Superseded by 237's own step-back (which re-measured both and folded the live numbers
+into the header's perf-ARC line). Kept byte-for-byte; nothing deleted.
+
+  ✅ **232 (26th step-back): city clean, arc unmoved; both FAILs refuted, and the ASIDES paid out for the EIGHTH lap
+  running** — producing **(ai)**, firing (af′); **236 made it NINE** (see (aj)). **Interaction/UX** (cross-cutting) was
+  last touched at **229**; before that 191.
+
+  **⚠ THE STANDING PERF SUSPECT (207, re-measured UNCHANGED at 232; named NOT mandated per 198): THERE IS NO HOT
+  ORNAMENT — the arc is DIFFUSE, which is exactly why every per-lap gate reads it as free.** `probe-drawbudget`
+  (night): `drawCell` = **94.8%**; hot leaves `winBandR` **32.8%** · `prismS` **27.7%** · `hexTile` **12.2%** ·
+  `bandS` **7.6%** ⇒ **~48% of the night frame is STATIC TERRAIN RE-RASTERIZED EVERY FRAME**, with 230 iterations of
+  features beneath it (`tree` 4.0%, `shadS` 2.1%, `drawBuilding` 1.6%). **Do NOT open a caching lap on that say-so —
+  198's levers are CLOSED (cost is PER PATH OBJECT); the only lever is drawing FEWER objects.**
+
+## 236's Sky narrative, rotated out of the header at 237 (its WARNINGS stay live)
+
+  ✅ **236 SHIPPED Sky × Deepen off 225's OWN LAW** (*a stale domain's cue list is where you LOOKED — **grep its
+  seam***): both Sky cues were dead ends, and the seam held a **199-tell in plain sight** — `cl.rain` was rolled ONCE
+  in `genWorld`, so a cloud that spawned raining **rained for the city's whole life, wrapped the plate, and rained
+  again**, beside a `WINDA` that gusts and a `TIDE` that turns. ⇒ **THE SKY NOW HAS A WEATHER FRONT**
+  (`rainFront()`/`cloudWet()`, keyed to **`year`** so `tick()` stays reproducible under `__warp`; pinnable with
+  `__setYear`, and **`year+k` = same season, different weather**).
+
+## Cue (s)'s full body, rotated out of the header at 237 (the cue stays live, compressed)
+
+  **(s) GOLDEN HOUR: CONTRAST COLLAPSE (212+217+227+232 — CONSTRAINED, read before taking; Sky × Polish).** The
+  disc sits high (**y=0.10**) in the *cool* sky while the warm gradient comes from the bottom. ⚠ **Raised at FOUR
+  step-backs now, always unprompted, always calling golden the WEAKEST frame** (*"collapses roads, roofs, sand and
+  grass into one narrow tan/salmon band"* · *"muddy tan-brown, desaturated rather than warm"* · 232: *"local colour
+  destroyed… less like warm light than a dust storm"*). **The complaint is CONTRAST COLLAPSE ACROSS SURFACES, not the
+  sun's position** (217 measured chroma RISING — a saturated wash, not mud); `probe-goldenhue.mjs` prints the golden
+  separation matrix ⇒ **measure which pairs collapse before designing.** ⚠ **The sun CANNOT be lowered — 200 put it
+  high ON PURPOSE** (the `.placard` owns the low-left sky; a low sun goes behind the HUD — the very bug 200 fixed).
+  **201's law: the FAIL objects to the MODEL.** Reconcile the gradient's direction with the sun's, or move the
+  warmth — **do not move the sun down.** Not a quick win.
+
+## The perf COST MODEL prose, rotated out of the header at 237 (its law is in SKILL.md; the TWO HOLES stay live)
+
+  **The COST MODEL is now MEASURED, not guessed (198, `probes/probe-shadcost.mjs`): a canvas ornament costs
+  PER-ELLIPSE (per path object rasterized) — NOT per `fill()`, NOT per unit area, and a pre-baked `drawImage`
+  sprite is WORSE, not better.** So the levers on any future draw-cost regression are, in order: draw fewer
+  objects (a *visual* decision, price it against what the ornament is worth), or accept it. **Batching fills,
+  shrinking radii, and sprite-blitting are all CLOSED — measured, three ways, and none of them buys anything.**
+  194's tree shadows are the standing example: ~3% for the grounding of every tree, and it is worth paying.

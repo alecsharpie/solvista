@@ -34,6 +34,15 @@ const SEASONS = [
 const KINDS = ['MEADOW', 'FOREST', 'PARK', 'SHOREPARK', 'FARM', 'FIELD',
                'VINEYARD', 'ORCHARD', 'REDWOOD', 'GARDEN', 'QUAD', 'ROAD'];
 
+/* Legibility floor, in RGB-distance units. NOT a tuned constant: the measured
+ * data has a clean gap — every surface a visual agent has ever NAMED as turning
+ * (VINEYARD 36, SHOREPARK 53, FARM 103) sits above it, every surface they read
+ * as unchanged (QUAD 24, MEADOW 21, PARK 21, FOREST 19, REDWOOD 7) sits below.
+ * Any value in 25..35 classifies identically, so the magnitude is not
+ * load-bearing (iter 231's rule). It brackets an observation; it is not a bar
+ * chosen so the artifact clears it (iter 205). */
+const LEGIBLE = 25;
+
 const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: 1600, height: 1000 } });
 const acc = {}; /* kind -> season -> [dists] */
@@ -95,13 +104,42 @@ const mean = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0;
 
 console.log('\nRENDERED-PIXEL DISTANCE FROM WINTER, mean over instances (RGB euclidean, 0-441)');
 console.log('sampled at tile centres, clock frozen, seeds 7/42/1234, warp 61, t=0.30\n');
-console.log('  tile         n     ' + SEASONS.map(([s]) => s.padStart(9)).join(''));
-console.log('  ' + '-'.repeat(66));
+console.log('  tile         n   share     ' + SEASONS.map(([s]) => s.padStart(9)).join(''));
+console.log('  ' + '-'.repeat(74));
+
+/* The viewer sees AREA, not tile types. A 7-hex MEADOW and a 563-hex PARK get
+ * one row each above, so a table that is loud on the small tiles reads as a
+ * working calendar while the green mass of the city sits still. Weight by
+ * footprint (iter 218: grade a distribution in the units the EYE reads, not
+ * the units the RULE is written in). ROAD stays out of the weighting: it is
+ * the control, not vegetation. */
+const VEG = KINDS.filter(k => k !== 'ROAD');
+const vegN = VEG.reduce((s, k) => s + (counts[k] || 0), 0);
+
 for (const k of KINDS) {
   if (!counts[k]) { console.log(`  ${k.padEnd(11)} ${String(0).padStart(4)}   (none on screen)`); continue; }
   const row = SEASONS.map(([s]) => mean(acc[k][s]).toFixed(1).padStart(9)).join('');
   const dry = mean(acc[k]['dry-peak']);
-  const flag = dry < 2 ? '   <-- DEAD to the dry season' : '';
-  console.log(`  ${k.padEnd(11)} ${String(counts[k]).padStart(4)}   ${row}${flag}`);
+  const share = k === 'ROAD' ? '   -- ' : ((counts[k] / vegN) * 100).toFixed(1).padStart(5) + '%';
+  const flag = k === 'ROAD' ? (dry < 2 ? '   <-- control OK' : '   <-- CONTROL MOVED')
+             : dry < LEGIBLE ? `   <-- MUTE (< ${LEGIBLE})` : '';
+  console.log(`  ${k.padEnd(11)} ${String(counts[k]).padStart(4)}  ${share}   ${row}${flag}`);
 }
 console.log('\n(ROAD is the control: it must read ~0 in every column.)');
+
+/* AREA-WEIGHTED — the number a viewer's eye actually integrates. */
+console.log('\nAREA-WEIGHTED over the ' + vegN + ' vegetated hexes on screen (the VIEWER\'S unit):');
+const wrow = SEASONS.map(([s]) => {
+  const w = VEG.reduce((sum, k) => sum + mean(acc[k][s]) * (counts[k] || 0), 0);
+  return (w / vegN).toFixed(1).padStart(9);
+}).join('');
+console.log('  ' + 'all veg'.padEnd(11) + ' ' + String(vegN).padStart(4) + '  100.0%   ' + wrow);
+
+/* How much of the green mass is BELOW the legibility floor at the dry peak? */
+const mute = VEG.filter(k => counts[k] && mean(acc[k]['dry-peak']) < LEGIBLE);
+const muteN = mute.reduce((s, k) => s + counts[k], 0);
+console.log(`\n  MUTE AREA at the dry peak (shift < ${LEGIBLE}/441): ` +
+            `${muteN} / ${vegN} hexes = ${((muteN / vegN) * 100).toFixed(1)}% of the vegetation`);
+console.log('  mute surfaces: ' + (mute.length ? mute.map(k => `${k}(${counts[k]})`).join(' · ') : 'none'));
+console.log('\n  The eye integrates AREA. A calendar that is loud on a small tile and mute on');
+console.log('  the dominant surface reads as "no season" however good the per-tile table looks.');
