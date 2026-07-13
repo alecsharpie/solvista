@@ -188,4 +188,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ↩ Iter 255  Water & coast × Polish     EXPLORED → REVERTED 35m20s   $13.75 d43d208
 ✔ Iter 256  —                          SHIPPED             27m16s   $6.59  3720e79
 ✔ Iter 257  Water & coast × Deepen     SHIPPED             24m51s   $8.86  15ec792
+✔ Iter 258  Transport × Deepen         DEEPENED            46m15s   $15.66 f990c47
 ```
