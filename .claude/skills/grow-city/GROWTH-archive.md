@@ -17513,3 +17513,72 @@ X", stop and spend five minutes inside P.
   COMMUNICATED**: four agents have now read a correct seasonal model as broken. Remaining honest moves: give a park hex's
   **season-dead contents** (43% paths/ponds/benches) a calendar, make the **sea/sky/light** answer `year`, or **retire the
   metric**. **Nature / Sky.**
+
+## Iteration 244 — the house had its back to the view (2026-07-13) [Civic & culture × Deepen]
+
+**Vector** Civic & culture × Deepen — the stalest domain (last touched 231), taking its
+own banked cue **(ah)**: *"the amphitheater's cavea has a FIXED orientation — it now often
+sits on the water's edge and does not face it."*
+
+**The defect, measured (`probes/probe-amphsight.mjs`, pure world data, 10 seeds).** The
+cavea was drawn `ctx.ellipse(..., rotation 0, arc -0.15..PI+0.15)` with its stage house at
+a hard-coded `gy-0.24`: seating always the lower half, skene always up-screen. So the
+audience faced **north in every city ever generated, and nothing in the world had ever
+chosen that.** And the mechanism is **240's law**: the SITING rule scores `groundLoad` —
+the rows at `dy=+1/+2` — so it deliberately takes a lot whose **south** is open and the flat
+bowl is not buried (231's fix, and right). The draw then sat the house facing the leftover.
+**Two gates on one feature, pointing opposite ways.** Measured: the house looked into a wall
+of h74 / h69 / h47; **2 seeds in 10 faced nothing but ROOFTOPS**, mean sightline 0.79.
+
+**EXPLORED → REVERTED: turning the bowl.** The cue named the fix, so I built it — `c.face`
+set once at siting, the whole assembly (seating arc, apron, crowd, skene, beam, wash,
+footlights) swung to one bearing, restricted to the four rays the projection can show. The
+code was **exact**: a forced-north control rendered **byte-identical to HEAD**. It still
+failed, and it could never have worked. **A circle on the ground projects to a WIDE, SHALLOW
+ellipse, and the cavea reads as a bowl precisely because its seating is the NEAR half of it**
+— the tiers stack into a rake. Swung 90°, the seating becomes the ellipse's left/right half,
+a **tall narrow sliver**, and five arcs 2px apart with 2px strokes **fuse into a blob**. Two
+agents, blind, on two seeds, independently: *"a spilled cream blob"* · *"a painter's palette
+lying on the grass"*. I looked myself and they were right. **Reverted to byte-identical.**
+
+**SHIPPED: the site comes to the bowl.** Two gates can be made to agree from **either** side.
+The draw could not move; the siting could. `viewScore`/`amphSight` walk the two straight hex
+rays that bracket the fixed up-screen sightline (`RAY6` — a real straight ray, not a repeated
+`nbrDirs` step, which zigzags with row parity) and score what the house will actually look
+at; the siting rule subtracts it from `groundLoad`. A **PREFERENCE, never a gate** (206) —
+the best of a bad lot still takes it, so the one-per-city bowl can never be lost.
+
+**The sweep refuted the obvious rule.** The bowl faced a *wall*, so the natural fix is
+*penalise the wall*. Held apart as its own variant it is a **DEAD LEVER**: at 20× the shipped
+weight it never moved a **single** bowl off a rooftop view, while the subtraction was the only
+thing that ever **cost** burial. What worked is **pure addition** — *give it something to look
+at* (219's law, and here the subtractive form was not merely worse but **inert**). `AMPHVIEW=6`
+is the top of a free plateau (4–6); at 7+ the bowl starts paying visibility for almost no view.
+Only PERMANENT green scores: MEADOW/FARM are `RAISEABLE`, and scoring them would site the bowl
+facing the ground the upgrade pass is about to build on (231).
+
+**Census** PASS. Core flat: `developed -3`, `roads +2`. But `pop -1.5%`, `TOWER -14 (-3.3%)`,
+`MID +28` — the classic 231 signature (same land, building shorter). **`probes/probe-cascade.mjs`,
+10 seeds, paired: mean TOWER delta -0.4, mean pop -0.08%, 2/10 down and 2/10 UP (+8, +10),
+6/10 unchanged ⇒ CHAOTIC RESHUFFLE, not mine.** The 3-seed matrix drew a bad hand.
+
+**Probe (END-TO-END, both builds grow their own city, 10 seeds)** — `faces ROOFTOPS 2/10 → 0/10`
+(the defect, closed) · mean sightline **0.79 → 1.14 (+44%)** · parkland 6→8, water 2→2 ·
+**burial worst-case UNCHANGED (14)**, mean 2.4→2.8 · **placed 10/10 → 10/10** · and **6/10 seeds
+keep the SAME LOT** — the rule only moves the bowl when it is actually staring at a wall.
+
+**Visual** Both agents PASS, and both *located* the change rather than judging it. Seed 8 HEAD:
+*"a solid wall of buildings... looking straight into tower flanks and rooftops — no park, no
+water, no open horizon"* → patch: *"broad green parkland: two teal ponds, trees, a splash-pad."*
+Seed 2600 HEAD, reproducing the original cue unprompted: *"the audience is looking straight into
+the flank of a downtown block. **The ocean in this frame is down-screen, i.e. behind the
+audience's backs.**"* → patch: *"a green axis to a fountain plaza and a civic dome — buildings
+frame the vista rather than wall it off."* No z-order tears, floating tiles or blown-out colour
+in either whole-city frame.
+
+**Perf** Free, and **counted, not inferred** (222: the world is the draw list). Path objects
+**day 110,931 / night 139,583** against 242's 111,389 / 140,189 — flat-to-slightly-down.
+
+**Verdict** DEEPENED (the bowl now reads its surroundings), with one EXPLORED → REVERTED
+inside it (turning the cavea). Cue **(ah) CLOSED**. Law promoted to SKILL.md.
+

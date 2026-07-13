@@ -684,6 +684,36 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A REGIONAL SIGNAL CANNOT BE PAINTED ON A CHANNEL A PER-OBJECT *GRAIN* ALREADY SCATTERS — THE GRAIN IS YOUR NOISE
+  FLOOR, AND AN EARLIER LAP MAY HAVE DELIBERATELY *MAXIMISED* IT (iter 254).** 218 says the eye counts objects, not
+  ratios; 224 says for a silhouette the viewer's statistic is the `max`, not the mean. 254 is the third member of that
+  family and the one that will pass every gate you own: **your metric is the region MEAN, and the defect lives in the
+  WITHIN-region VARIANCE.** The vector was the richest tell in the file — `c.age` is ticked at 36 sites, dates the
+  current structure, and `describeTile` has published it as *"Built ~1998"* on every developed tile for the artifact's
+  whole life, while **no pixel ever read it**. The host measured *perfect*: full 61-year spread, 81% of the stock ≥15yr,
+  spatial coherence **0.40** (neighbours agree ⇒ quarters, not speckle), and a **monotone** core→rim gradient (inner
+  rings 38–47yr, rim 23–27) — *the old town is downtown*, and the city had never shown it. The fix (RES/MID masonry
+  taking a luma-normalised ochre lean from age) then passed **every gate the loop has**: census flat, luminance held to
+  **0.6/255**, 222's night ordering **byte-identical to HEAD** (`*TOWER 131 *MID 123 *COM 119 | BEACH 98`, clearing by
+  21), path objects **−0.03%**, isolation floor **exactly 0 px** (253), and the headline — **core-rim warmth gap 6.3 →
+  29.9**, with HEAD's gap *changing sign across seeds*, the signature of a signal that does not exist. **And two blind
+  agents, on two seeds, independently returned `NO REGIONAL PATTERN` — both having MEASURED the frame themselves**
+  (251's tell). They were right. The masonry's `cream`/`terra`/`sandDk` lottery already scatters per-building warmth at
+  **SD ~45** (R−B), which is **larger than the biggest core-rim gap the lever can ever reach** (32 on the worst seed, at
+  full saturation): **Cohen's d = 0.87 / 0.40 / 0.73**, and on the seed the agent read, **0.40**. ⇒ **State a regional
+  claim as the gap in units of the WITHIN-region SCATTER (`d`), never as a difference of means** — a ring mean averages
+  the grain away and will happily certify a change nobody can see (214's necessary-but-not-sufficient corollary, on the
+  *spatial* axis). The tell: **your feature is a smooth low-frequency field, and the surface you are painting it on
+  already carries high-frequency per-object noise in the same channel.**
+  ⇒ **AND THE CEILING IS STRUCTURAL, SO DO NOT TUNE — the normaliser SATURATES.** The obvious rescue (my span was too
+  wide: the ring-mean ages span only ~17 years and I divided by 26, spending two-thirds of the lever's range on nothing)
+  is real and it is **not enough**: swept, worst-seed `d` runs **0.40 → 0.58 → 0.65 → 0.65 → 0.64** and **plateaus below
+  0.8**. Once the per-object signal saturates at ±1 the regional gap is capped by the *extreme colours*, while the grain's
+  SD is fixed — so `d_max ≈ (colour range)/(grain SD)` and **only two things can move it: louder extremes (here:
+  implausible blue stucco) or a quieter grain.** The grain was **bought on purpose** by 99/103/239 to kill wallpaper.
+  ⇒ **THE TWO GOALS ARE IN DIRECT CONFLICT AND THE LOOP ALREADY CHOSE VARIANCE. Before designing any "the buildings
+  should show X regionally" vector, price it against that grain first — the building COLOUR CHANNEL IS SPENT.** (`probes/
+  probe-buildingage.mjs` = the host, render-free; `probes/probe-patina.mjs` = the `d` and the saturation sweep.)
 - **A GATE BREACHED BY A HAIR, WHOSE PRESCRIBED FIX COSTS A HEALTHY GUARD, IS A GATE TO SUSPECT — AND "IS IT LIT?"
   IS AN *EXTREME*, NEVER A MEAN (iter 251).** 224 says a SILHOUETTE's statistic is the `max`; 251 is the same error on
   the *brightness* axis, and it had been steering the loop's **#1 🔴 cue for 24 iterations**. 222's invariant (*no UNLIT
