@@ -29,15 +29,15 @@ const EST_MINUTES = 15;                              // flat estimate for the un
 function parseRunlog(txt) {
   const rows = [];
   for (const l of txt.split('\n')) {
-    let m = l.match(/^([✔↩])\s+Iter\s+(\d+)\s+(.*?)\s+(SHIPPED|DEEPENED|FIXED|EXPLORED → REVERTED|REVERTED)\s+(\d+)m(\d+)s\s+\$([0-9.]+)/);
+    let m = l.match(/^([✔↩])\s+Iter\s+(\d+)\s+(.*?)\s+(SHIPPED|DEEPENED|FIXED|EXPLORED → REVERTED|REVERTED)\s+(\d+)m(\d+)s\s+\$([0-9.]+)\s+([0-9a-f]{7})/);
     if (m) {
       rows.push({ iter: +m[2], vector: m[3].trim() === '—' ? null : m[3].trim(), verdict: m[4].replace(/\s+/g, ' '),
-        secs: +m[5] * 60 + +m[6], cost: +m[7], reverted: /REVERTED/.test(m[4]), tier: 'billed' });
+        secs: +m[5] * 60 + +m[6], cost: +m[7], reverted: /REVERTED/.test(m[4]), tier: 'billed', sha: m[8] });
       continue;
     }
-    m = l.match(/^≈\s+Iter\s+(\d+)\s+.*?recovered\s+(\d+)m(\d+)s\s+\$([0-9.]+)/);
+    m = l.match(/^≈\s+Iter\s+(\d+)\s+.*?recovered\s+(\d+)m(\d+)s\s+\$([0-9.]+)\s+([0-9a-f]{7})/);
     if (m) {
-      rows.push({ iter: +m[1], vector: null, verdict: null, secs: +m[2] * 60 + +m[3], cost: +m[4], reverted: null, tier: 'recovered' });
+      rows.push({ iter: +m[1], vector: null, verdict: null, secs: +m[2] * 60 + +m[3], cost: +m[4], reverted: null, tier: 'recovered', sha: m[5] });
     }
   }
   return rows;
@@ -116,6 +116,66 @@ const tags = TAG_ORDER.map(t => {
 }).filter(d => d.n > 0).sort((a, b) => b.n - a.n);
 
 const chartRows = rows.map(r => ({ i: r.iter, c: r.cost, s: r.secs, t: r.tier, v: r.verdict, k: r.vector, g: r.tag }));
+
+// ---- why later iterations cost more: context read per iteration -------------
+// The fresh process re-reads solvista.html + the ledger every iteration. Recover
+// the byte size of each at that iteration's commit, splitting SKILL.md into its
+// growing "Laws the loop derived" wedge vs the rest. Cheap (~1.5s over the run),
+// and every past iteration's sizes are immutable, so this is a faithful history.
+const SKILL_PATH = '.claude/skills/grow-city/SKILL.md';
+const GROWTH_PATH = '.claude/skills/grow-city/GROWTH.md';
+function skillSplit(sha) {
+  try {
+    const t = execFileSync('git', ['show', `${sha}:${SKILL_PATH}`], { encoding: 'utf8', maxBuffer: 1 << 28 });
+    const m = t.match(/## Laws the loop derived[\s\S]*?(?=\n## |$)/);
+    const laws = m ? Buffer.byteLength(m[0]) : 0;
+    return { rest: Buffer.byteLength(t) - laws, laws, lawsN: m ? (m[0].match(/^\s*[-*] \*\*/gm) || []).length : 0 };
+  } catch { return null; }
+}
+function blobSizes(sha, files) {
+  try {
+    const out = execFileSync('git', ['ls-tree', '-l', '-r', sha, '--', ...files], { encoding: 'utf8' });
+    const map = {};
+    for (const line of out.split('\n')) { const tab = line.split('\t'); if (tab[1]) map[tab[1]] = +tab[0].trim().split(/\s+/)[3] || 0; }
+    return map;
+  } catch { return null; }
+}
+const ctx = [];
+for (const r of rows) {
+  if (!r.sha) continue;
+  const sz = blobSizes(r.sha, ['solvista.html', GROWTH_PATH]), sk = skillSplit(r.sha);
+  if (!sz || !sk) continue;
+  ctx.push({ i: r.iter, sv: (sz['solvista.html'] || 0) / 1024, gr: (sz[GROWTH_PATH] || 0) / 1024,
+    skr: sk.rest / 1024, skl: sk.laws / 1024, lawsN: sk.lawsN });
+}
+
+// ---- analysis aggregates for the write-up (auto-update as the loop runs) -----
+const corr = (xs, ys) => {
+  const n = xs.length; if (n < 2) return 0;
+  const mx = xs.reduce((a, b) => a + b, 0) / n, my = ys.reduce((a, b) => a + b, 0) / n;
+  let sxy = 0, sx = 0, sy = 0;
+  for (let k = 0; k < n; k++) { const dx = xs[k] - mx, dy = ys[k] - my; sxy += dx * dy; sx += dx * dx; sy += dy * dy; }
+  return sx && sy ? sxy / Math.sqrt(sx * sy) : 0;
+};
+const SPLIT = 195;                                   // where the regime visibly shifts
+const winMin = rs => rs.length ? sum(rs, r => r.secs) / rs.length / 60 : 0;
+const winPerMin = rs => { const s = sum(rs, r => r.secs) / 60; return s ? sum(rs, r => r.cost) / s : 0; };
+const winRev = rs => rs.length ? billed.filter(r => rs.includes(r) && r.reverted).length / rs.length * 100 : 0;
+const pre = billed.filter(r => r.iter < SPLIT), post = billed.filter(r => r.iter >= SPLIT);
+const ctxByIter = new Map(ctx.map(c => [c.i, c.sv + c.gr + c.skr + c.skl]));
+const joined = billed.filter(r => ctxByIter.has(r.iter));
+const ctxFirst = ctx[0], ctxLast = ctx[ctx.length - 1];
+const analysis = ctx.length ? {
+  preMin: winMin(pre), postMin: winMin(post),
+  perMinPre: winPerMin(pre), perMinPost: winPerMin(post),
+  revPre: winRev(pre), revPost: winRev(post),
+  corrCostTime: corr(billed.map(r => r.secs), billed.map(r => r.cost)),
+  corrCostCtx: corr(joined.map(r => ctxByIter.get(r.iter)), joined.map(r => r.cost)),
+  skFirst: (ctxFirst.skr + ctxFirst.skl), skLast: (ctxLast.skr + ctxLast.skl),
+  lawsFirst: ctxFirst.lawsN, lawsLast: ctxLast.lawsN,
+  lawsPctLast: (ctxLast.skl / (ctxLast.skr + ctxLast.skl)) * 100,
+  iFirst: ctxFirst.i, iLast: ctxLast.i,
+} : null;
 
 // by-result comparison rows (billed tier — the only iterations with verdicts)
 const RCLASS = { SHIPPED: 'v-ship', DEEPENED: 'v-deep', FIXED: 'v-fix', 'EXPLORED → REVERTED': 'v-rev' };
@@ -212,7 +272,37 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
   growth vector. Bars are counts across the ${known.length} measured iterations; hover for would-be cost.</p>
   <div id="tagChart" class="svgbox"></div>
 </section>
+${analysis ? `
+<section class="chart">
+  <h2>Why later iterations cost more</h2>
+  <p class="sub">Cost climbed after #${SPLIT}, and it decomposes cleanly. Iterations didn't get pricier
+  <em>per minute</em> &mdash; ${fmt$(analysis.perMinPre)}/min before #${SPLIT}, ${fmt$(analysis.perMinPost)}/min after, essentially
+  flat. They got <strong>longer</strong>: ${analysis.preMin.toFixed(0)}&nbsp;&rarr;&nbsp;${analysis.postMin.toFixed(0)} min on average, as the easy wins ran
+  out (reverts ${analysis.revPre.toFixed(0)}%&nbsp;&rarr;&nbsp;${analysis.revPost.toFixed(0)}%) and the self-check protocol grew heavier. Runtime is what
+  cost tracks (r&nbsp;=&nbsp;${analysis.corrCostTime.toFixed(2)}). Layered on top, each of those longer iterations re-reads a bigger
+  pile of context (r&nbsp;=&nbsp;${analysis.corrCostCtx.toFixed(2)}) &mdash; so the two compound.</p>
+  <p class="sub">Every iteration is a fresh process that re-reads the artifact plus the ledger it must obey, before
+  it does any work. <span class="key k-billed"></span>solvista.html grows gently;
+  <span class="key k-deep"></span>GROWTH.md is <strong>capped</strong> and stays flat;
+  <span class="key k-est"></span>the SKILL.md skeleton barely moves; and
+  <span class="key k-rev"></span>the <strong>Laws</strong> section of SKILL.md is the wedge that runs away. Hover for the split.</p>
+  <div id="ctxChart" class="svgbox"></div>
+</section>
 
+<section class="chart">
+  <h2>The ledger that never forgets</h2>
+  <p class="sub">That red wedge is the loop's institutional memory. When a lesson is learned the expensive way, the
+  loop <em>promotes</em> it to a permanent &ldquo;Laws the loop derived&rdquo; list so it is never re-learned &mdash;
+  and that list has grown from <strong>${analysis.lawsFirst} laws</strong> (#${analysis.iFirst}) to <strong>${analysis.lawsLast}</strong> (#${analysis.iLast}), now
+  <strong>${analysis.lawsPctLast.toFixed(0)}% of SKILL.md</strong> and read in full on every single run.</p>
+  <p class="sub">It exists because of a trade-off worth seeing plainly. <code>GROWTH.md</code>, the prose ledger, is
+  budget-capped, so old entries rotate into an archive the loop stops reading &mdash; and it began
+  <em>re-deriving</em> lessons it had already paid for. Promoting them to an uncapped list fixed the re-learning, but
+  moved the growth to a file read <em>every</em> iteration: capping one ledger just pushed the cost into another. The
+  clean fix isn't to un-cap <code>GROWTH.md</code> &mdash; it's to <strong>distil and cap the laws too</strong>, since
+  many already supersede one another.</p>
+</section>
+` : ''}
 <section class="chart">
   <h2>What we can and can't see</h2>
   <p class="sub">The cost logger was added at iteration ${bilFrom}; earlier figures were rescued from saved
@@ -257,6 +347,7 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
   });})();
 const DATA = ${JSON.stringify(chartRows)};
 const TAGS = ${JSON.stringify(tags)};
+const CTX = ${JSON.stringify(ctx)};
 const MAXITER = ${maxIter};
 const fmtUsd = n => n==null ? '—' : '$'+n.toFixed(2);
 const fmtMin = s => (s/60).toFixed(0)+' min';
@@ -371,16 +462,47 @@ function drawAll(){
 // ---- what the loop worked on (tag bars) ----
 (function(){
   const box=document.getElementById('tagChart');if(!box||!TAGS.length)return;
-  const fill=t=>t==='Step-back'?'--muted':t==='Fix'?'--series-3':'--series-1';
+  const fill=t=>(t==='Step-back'||t==='Fix')?'--muted':'--series-1';
   const W=CW,rowH=40,P={l:92,r:150,t:6,b:6};const H=P.t+P.b+TAGS.length*rowH;const s=svg(box,W,H);
   const maxN=Math.max(...TAGS.map(d=>d.n));const iw=W-P.l-P.r;
   TAGS.forEach((d,idx)=>{const cy=P.t+idx*rowH+rowH/2;const bw=(d.n/maxN)*iw;
     const lab=el('text',{x:P.l-12,y:cy+4,'text-anchor':'end',class:'vlbl'});lab.textContent=d.t;s.appendChild(lab);
-    const bar=el('rect',{x:P.l,y:cy-10,width:Math.max(2,bw),height:20,rx:4,fill:cssv(fill(d.t)),'fill-opacity':d.t==='Step-back'?0.5:1,class:'col'});
+    const bar=el('rect',{x:P.l,y:cy-10,width:Math.max(2,bw),height:20,rx:4,fill:cssv(fill(d.t)),'fill-opacity':(d.t==='Step-back'||d.t==='Fix')?0.5:1,class:'col'});
     const avgM=(d.secs/60/d.n).toFixed(0),avgC=fmtUsd(d.cost/d.n);
     bar.addEventListener('mousemove',e=>showTip('<b>'+d.t+'</b><br>'+d.n+' iterations<br>'+avgM+' min &middot; '+avgC+' avg<br>'+fmtUsd(d.cost)+' would-be total',e.clientX,e.clientY));
     bar.addEventListener('mouseleave',hideTip);s.appendChild(bar);
     const vt=el('text',{x:P.l+Math.max(2,bw)+8,y:cy+4,class:'vnum'});vt.textContent=d.n+'  ·  '+fmtUsd(d.cost);s.appendChild(vt);});
+})();
+
+// ---- context read each iteration (stacked area: artifact + ledger) ----
+(function(){
+  const box=document.getElementById('ctxChart');if(!box||!CTX.length)return;
+  const W=CW,H=300,P={l:PL,r:PR,t:14,b:28};const s=svg(box,W,H);
+  const ih=H-P.t-P.b;
+  const keys=[['sv','--series-1'],['gr','--series-2'],['skr','--muted'],['skl','--series-6']];
+  const tot=d=>d.sv+d.gr+d.skr+d.skl;
+  const maxY=Math.max(...CTX.map(tot))*1.04;
+  const Y=v=>P.t+ih-(v/maxY)*ih;
+  const step=maxY>1200?400:maxY>600?200:maxY>300?100:50;
+  const lbl=v=>v>=1024?(v/1024).toFixed(1)+'MB':v+'KB';
+  for(let v=0;v<=maxY;v+=step){const yy=Y(v);
+    s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
+    const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent=lbl(v);s.appendChild(t);}
+  const base=CTX.map(()=>0);
+  keys.forEach(([k,col])=>{
+    const top=CTX.map((d,idx)=>base[idx]+d[k]);
+    const topPts=CTX.map((d,idx)=>xI(d.i)+' '+Y(top[idx]));
+    const botPts=CTX.map((d,idx)=>xI(d.i)+' '+Y(base[idx])).reverse();
+    s.appendChild(el('path',{d:'M'+topPts.join(' L ')+' L '+botPts.join(' L ')+' Z',fill:cssv(col),'fill-opacity':k==='skr'?0.4:0.85,stroke:'none'}));
+    CTX.forEach((d,idx)=>base[idx]=top[idx]);});
+  const hv=el('line',{y1:P.t,y2:P.t+ih,stroke:cssv('--ink'),'stroke-width':1,opacity:0});s.appendChild(hv);
+  const kb=v=>v>=1024?(v/1024).toFixed(2)+' MB':Math.round(v)+' KB';
+  s.addEventListener('mousemove',e=>{const pt=s.getBoundingClientRect();const px=(e.clientX-pt.left)/pt.width*W;
+    let best=CTX[0],bd=1e9;for(const d of CTX){const dd=Math.abs(xI(d.i)-px);if(dd<bd){bd=dd;best=d;}}
+    hv.setAttribute('x1',xI(best.i));hv.setAttribute('x2',xI(best.i));hv.setAttribute('opacity',1);
+    showTip('<b>Iteration '+best.i+'</b> reads<br>solvista.html '+kb(best.sv)+'<br>GROWTH.md '+kb(best.gr)+'<br>SKILL.md skeleton '+kb(best.skr)+'<br><span style="color:'+cssv('--series-6')+'">SKILL.md laws '+kb(best.skl)+' &middot; '+best.lawsN+' laws</span><br><b>'+kb(tot(best))+' total</b>',e.clientX,e.clientY);});
+  s.addEventListener('mouseleave',()=>{hv.setAttribute('opacity',0);hideTip();});
+  xAxis(s,H);
 })();
 }
 drawAll();
