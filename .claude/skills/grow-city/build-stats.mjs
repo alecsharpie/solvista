@@ -248,33 +248,30 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
   the costs as <em>"what this scale of autonomy would cost on the metered API"</em>, not a bill.
 </section>
 
-<section class="tiles">
-  <div class="tile"><div class="tv">${avgLast30Min.toFixed(0)}<span class="tvu">min</span></div><div class="tl">Recent pace</div><div class="td">avg over the last ${last30.length} runs</div></div>
-  <div class="tile"><div class="tv">${avgMin.toFixed(0)}<span class="tvu">min</span></div><div class="tl">Avg run length</div><div class="td">across ${known.length} measured runs</div></div>
-  <div class="tile"><div class="tv">${(longest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Longest run</div><div class="td">#${longest.iter}</div></div>
-  <div class="tile"><div class="tv">${(shortest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Shortest run</div><div class="td">#${shortest.iter}</div></div>
-</section>
-
 <section class="chart">
   <h2>How long each iteration ran</h2>
+  <div class="tiles inset">
+    <div class="tile"><div class="tv">${avgLast30Min.toFixed(0)}<span class="tvu">min</span></div><div class="tl">Recent pace</div><div class="td">avg over the last ${last30.length} runs</div></div>
+    <div class="tile"><div class="tv">${avgMin.toFixed(0)}<span class="tvu">min</span></div><div class="tl">Avg run length</div><div class="td">across ${known.length} measured runs</div></div>
+    <div class="tile"><div class="tv">${(longest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Longest run</div><div class="td">#${longest.iter}</div></div>
+    <div class="tile"><div class="tv">${(shortest.secs/60).toFixed(0)}<span class="tvu">min</span></div><div class="tl">Shortest run</div><div class="td">#${shortest.iter}</div></div>
+  </div>
   <p class="sub">Wall-clock runtime per iteration, each bar coloured by the loop's own verdict:
   <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
   <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted &mdash;
   <span class="key k-est"></span>grey are the early runs with no recorded verdict. Reverts run
-  <strong>longest on average</strong>; the single longest was ${(longest.secs/60).toFixed(0)} min (#${longest.iter}). Provenance
-  (estimated / recovered / live) is the strip near the bottom. Hover for detail.</p>
+  <strong>longest on average</strong>; the single longest was ${(longest.secs/60).toFixed(0)} min (#${longest.iter}). Hover for detail.</p>
   <div id="timeChart" class="svgbox"></div>
-</section>
-
-<section class="tiles">
-  <div class="tile"><div class="tv">${fmt$(avgLast30Cost)}</div><div class="tl">Recent pace</div><div class="td">avg over the last ${last30.length} runs</div></div>
-  <div class="tile"><div class="tv">${fmt$(avgCost)}</div><div class="tl">Avg run cost</div><div class="td">across ${known.length} measured runs</div></div>
-  <div class="tile"><div class="tv">${fmt$(priciest.cost)}</div><div class="tl">Priciest run</div><div class="td">#${priciest.iter}</div></div>
-  <div class="tile"><div class="tv">${fmt$(cheapest.cost)}</div><div class="tl">Cheapest run</div><div class="td">#${cheapest.iter}</div></div>
 </section>
 
 <section class="chart">
   <h2>Cumulative would-be cost</h2>
+  <div class="tiles inset">
+    <div class="tile"><div class="tv">${fmt$(avgLast30Cost)}</div><div class="tl">Recent pace</div><div class="td">avg over the last ${last30.length} runs</div></div>
+    <div class="tile"><div class="tv">${fmt$(avgCost)}</div><div class="tl">Avg run cost</div><div class="td">across ${known.length} measured runs</div></div>
+    <div class="tile"><div class="tv">${fmt$(priciest.cost)}</div><div class="tl">Priciest run</div><div class="td">#${priciest.iter}</div></div>
+    <div class="tile"><div class="tv">${fmt$(cheapest.cost)}</div><div class="tl">Cheapest run</div><div class="td">#${cheapest.iter}</div></div>
+  </div>
   <p class="sub">The compounding would-be price of ${known.length} autonomous iterations, stacked by the loop's
   own verdict: <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
   <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted, and
@@ -342,18 +339,6 @@ ${analysis ? `
   many already supersede one another.</p>
 </section>
 ` : ''}
-<section class="chart">
-  <h2>What we can and can't see</h2>
-  <p class="sub">The cost logger was added at iteration ${bilFrom}; earlier figures were rescued from saved
-  terminal scrollback. Iterations 1&ndash;${firstKnown - 1} predate any saved record — shown here as a flat
-  ${EST_MINUTES}-minute estimate with no cost data.</p>
-  <div id="provChart" class="svgbox"></div>
-  <div class="provlegend">
-    <span><span class="sw sw-est"></span><b>1&ndash;${firstKnown - 1}</b> &middot; no record &middot; estimated ${EST_MINUTES} min/iter, no cost</span>
-    <span><span class="sw sw-rec"></span><b>${recFrom}&ndash;${bilFrom - 1}</b> &middot; recovered from terminal logs</span>
-    <span><span class="sw sw-bil"></span><b>${bilFrom}&ndash;${maxIter}</b> &middot; logged live (billed cost + time)</span>
-  </div>
-</section>
 
 <section class="chart">
   <h2>The build log</h2>
@@ -482,15 +467,6 @@ function drawAll(){
   xAxis(s,H);
 })();
 
-// ---- provenance coverage strip ----
-(function(){
-  const box=document.getElementById('provChart');
-  const W=CW,H=64,P={l:PL,r:PR,t:8,b:22};const s=svg(box,W,H);const ih=H-P.t-P.b;
-  const segs=[{a:1,b:${firstKnown - 1},c:'--muted'},{a:${recFrom},b:${bilFrom - 1},c:'--series-2'},{a:${bilFrom},b:MAXITER,c:'--series-1'}];
-  segs.forEach(g=>{const x0=xI(g.a),x1=xI(g.b);s.appendChild(el('rect',{x:x0,y:P.t,width:x1-x0-2,height:ih,rx:3,fill:cssv(g.c),'fill-opacity':g.c==='--muted'?0.35:0.9}));});
-  xAxis(s,H);
-})();
-
 // ---- horizontal count bars, reused for the domain and kind breakdowns ----
 drawBars('tagChart', TAGS, t => ({ c: (t==='Step-back'||t==='Fix') ? '--muted' : '--series-1', o: (t==='Step-back'||t==='Fix') ? 0.5 : 1 }));
 drawBars('kindChart', KINDS, () => ({ c: '--series-1', o: 1 }));
@@ -590,6 +566,7 @@ h1{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New
 /* the four headline figures, set like the city's own bottom read-out bar */
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin:26px 0 8px;
   background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:12px;overflow:hidden}
+.tiles.inset{margin:14px 0 18px}
 .tile{padding:16px 20px;border-left:1px solid var(--border)}
 .tile:first-child{border-left:none}
 .tv{font-size:31px;font-weight:650;letter-spacing:-.02em;color:var(--gold)}
@@ -610,10 +587,6 @@ text.endlbl{fill:var(--ink);font-size:12px;font-weight:600;font-variant-numeric:
 .key{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 2px;vertical-align:baseline}
 .key.k-billed{background:var(--series-1)}.key.k-recovered{background:var(--series-2)}.key.k-est{background:var(--muted);opacity:.55}
 .key.k-ship{background:var(--series-1)}.key.k-deep{background:var(--series-2)}.key.k-fix{background:var(--series-3)}.key.k-rev{background:var(--series-6)}
-.provlegend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;font-size:13px;color:var(--ink2)}
-.provlegend b{color:var(--ink);font-variant-numeric:tabular-nums}
-.sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-.sw-est{background:var(--muted);opacity:.5}.sw-rec{background:var(--series-2)}.sw-bil{background:var(--series-1)}
 .tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--surface);max-height:520px;overflow-y:auto}
 table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border)}
