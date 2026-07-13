@@ -21,7 +21,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**, **234** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~ | **105**, **171** |
@@ -38,15 +38,13 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ringed too. **An `ENTINFO` `sub` may be a FUNCTION of the entity (105)** — use it when a thing's interest is its
   *membership* (which line / route / depot; **211's `Feeds — Line N of M`**), computed live, never a stored string.
 - **ROTATION.** Last vector per domain: People **226** · Transport **230** · Civic **231** ·
-  Nature **233** · Water **234** · Urban **235** · Sky **236**. **237 was the 27th step-back (done).**
-  ➡ **NEXT: the step-back's own two 🔴 cues outrank rotation** (a banked, measured finding beats kind-rotation —
-  119): **(ak) the mute season** (Nature × Deepen) and **(al) the mid-rise wallpaper** (Urban × Polish). After
-  those: People (stalest, 226), then Transport (230).
-  🔴 **237 FOUND 228'S LAW RECURSING TWICE — BOTH TIMES ON A PROBE THIS HARNESS ALREADY OWNED.** Both step-back
-  agents FAILed, on two seeds, and both banked probes were **acquitting the exact thing they pointed at**:
-  `probe-season` reported a working calendar (FARM 103) because it means **per TILE TYPE**; `probe-crown` printed
-  `MID SILHOUETTES=2` **as its CONTROL**, so nobody ever read it as a finding. ⇒ **When agents keep failing a thing
-  your probe passes, re-read the probe's UNITS and its CONTROL ROW — not just its headline.**
+  Water **234** · Urban **235** · Sky **236** · Nature **238**. **237 was the 27th step-back (done); 239 is due
+  the 28th** (5 laps on).
+  ➡ **NEXT: 🔴 (al) the MID-RISE wallpaper** (Urban × Polish) — a banked, measured finding outranks kind-rotation
+  (119), and it is now the only 🔴 with an unspent lever. After it: People (stalest, 226), then Transport (230).
+  🔴 **228'S LAW HAS NOW RECURSED THREE TIMES, EVERY TIME ON A PROBE THIS HARNESS ALREADY OWNED** (237 found two;
+  **238 found the third INSIDE the probe 237 had just repaired**). The general form is a LAW in SKILL.md — *read
+  what a probe MEASURES and WHERE IT SAMPLES, not what it is called, and apply 228's test PER METRIC.*
   ✅ **236: THE SKY HAS A WEATHER FRONT** (`rainFront()`/`cloudWet()`, keyed to **`year`**; body archived at 237).
   ⚠ **`cl.rain` IS GONE** — code written against it reads `undefined`; the ONE predicate is **`cloudWet(cl)` (0..1)**
   and all six readers share it. **`year+k` = same season, different weather.**
@@ -63,20 +61,21 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   ✅ **THE FAIL/ASIDE LAW HAS NOW PAID OUT NINE LAPS RUNNING** (232's detail archived at 237) — **but 237 is its
   first INVERSION: both agents' HEADLINE FAIL was RIGHT and correctly diagnosed.** ⇒ the law is *"grade the FAIL by
   measuring it"*, **not** *"the FAIL is always wrong"*. **Interaction/UX** (cross-cutting) last touched **229**.
-  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) CLOSED 231, (u) CLOSED 234, **(af′) CLOSED 235 — but see (al), it fixed
-  the WRONG BUILDING**): 🔴 **(ak)** THE SEASON IS MUTE ON **68% OF THE VEGETATION** · 🔴 **(al)** THE **MID-RISE** IS
-  THE REAL WALLPAPER · 🔴 **(ai)** THE CITY HAS NO FRINGE — **measured; 233 tried and REVERTED, the way through is
-  NAMED** · **(ag)** the night greens stay hot (Nature × Polish) · **(y)** the scorched inland cluster (Nature ×
-  Polish) · **(ah)** the amphitheater's cavea has a **FIXED orientation** —
-  it now often sits on the water's edge and does not face it (*"facing the bowl toward the river would look far
+  **CUES, RANKED** ((w)/(z) CLOSED 229, (t) 231, (u) 234, **(af′) 235 — but see (al), it fixed the WRONG BUILDING**;
+  **(ab) RETIRED into (ak) at 238**): 🔴 **(al)** THE **MID-RISE** IS THE REAL WALLPAPER — *the only 🔴 with an
+  unspent lever* · 🔴 **(ai)** THE CITY HAS NO FRINGE — **measured; 233 tried and REVERTED, the way through is
+  NAMED** · **(ak)** the season — **238 shipped the trees and REFRAMED it; its headline number is DEAD, read the cue
+  before citing it** · **(ag)** the night greens stay hot (Nature × Polish) · **(y)** the scorched inland cluster
+  (Nature × Polish) · **(ah)** the amphitheater's cavea has a **FIXED orientation** — it now often sits on the
+  water's edge and does not face it (*"facing the bowl toward the river would look far
   more intentional"* — 231's agent, unprompted). 199's tell on a **draw**; Civic × Deepen · **(s)** golden-hour
-  contrast collapse (Sky × Polish — CONSTRAINED; strengthened at 227) · **(ab)** (low, arguably correct by design) ·
-  Nature's **GARDEN staggered beds**, held by (p). ✅ **225's grep-the-seam law is PROVEN — 236 shipped Sky off it
-  while (s)/(ab) sat there looking dead. Apply it to the next stale domain (People).**
-  **225: THE SHADOWS READ THE SUN.** `shadS` (the ONE function every shadow routes through) carries a per-frame sun
-  vector (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity). ⚠ **Noon (t=0.415) is BYTE-IDENTICAL by
-  construction ⇒ a free dead-regime control for every shadow lap.** ⚠ **`SHAMT` must never reach 0 at night** — the
-  residual patch is what keeps every ped, tree and car from FLOATING.
+  contrast collapse (Sky × Polish — CONSTRAINED; strengthened at 227) ·
+  Nature's **GARDEN staggered beds**, held by (p). ✅ **225's grep-the-seam law is PROVEN — 236 shipped Sky off it,
+  238 shipped Nature off it. Apply it to the next stale domain (People).**
+  **225: THE SHADOWS READ THE SUN.** `shadS` (every shadow routes through it) carries a per-frame sun vector
+  (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity). ⚠ **Noon (t=0.415) is BYTE-IDENTICAL ⇒ a free
+  dead-regime control for every shadow lap.** ⚠ **`SHAMT` must never reach 0 at night** — the residual patch is what
+  keeps every ped, tree and car from FLOATING.
   **STEERING FROM THE LAST LAPS — bodies rotated to the archive at 227; only the WARNINGS live here.**
   ⚠ **226: `census.mjs` DOES NOT FREEZE THE CLOCK** ⇒ tick-sensitive metrics (`solarRoofs`) **wobble ±2**; core
   metrics unaffected. **To test whether an unintended metric move is YOURS, re-run the SAME FILE, not HEAD.**
@@ -122,10 +121,12 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **Water's STILL-banked cue (123): the pier/lifeguard are still `rng()`-salted; site them on a depth by
   respending their draws (123's stream-neutral trick) — but that REPEATS 123's mechanism, so vary it.**
   **The asserts-less-than-the-code-knows tell is SPENT for agriculture** (orchard 129 + vineyard 139/148 + FARM 183,
-  off ONE shared `*Phase()`). **GARDEN is the last mute one** — cue **(p)** OWNS it; **(ak)/(al)/(ai)** all outrank
-  it. ⇒ **"Additive inventory spent" is a claim about a domain's ENTITIES, not its SURFACES** (127 put picnics on
-  PARK's 878 hexes — **and (ak) is that law again: PARK is 42% of the vegetated plate and the season cannot reach
-  it**), **and a Deepen that adds no element is the documented way past additive saturation** (126).
+  off ONE shared `*Phase()`; **238 spent the last of it — the CANOPY**). **GARDEN is the last mute one** — cue **(p)**
+  OWNS it; **(al)/(ai)** outrank it. ⇒ **"Additive inventory spent" is a claim about a domain's ENTITIES, not its
+  SURFACES** (127 put picnics on PARK's 878 hexes), **and a Deepen that adds no element is the documented way past
+  additive saturation** (126). ⚠ **238 REFUTED this line's old claim that "the season cannot reach PARK"** — it
+  reaches PARK's *lawn* at full strength (52.7, the city's most seasonal surface); PARK is diluted by the 55% of a
+  park hex that is canopy + season-dead furniture. **Read (ak) before designing any seasonal vector.**
   **124 closed the LAST banked cue that moved a census number; the census is VACUOUS for most vectors now — reach
   for a probe.** Three laws govern step 1: **a cue is a POINTER, NOT A SPEC** (re-grep the seam before designing to
   it); **a banked, measured finding outranks kind-rotation and cell-emptiness** (119); **saturation beats
@@ -146,21 +147,15 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   all.** Arc rate ~**+0.2%/iteration**; diffuse, **NOT accelerating**; **ACCEPTED — do NOT open a perf lap.**
   `probe-drawbudget` (night) is **UNCHANGED from 207/232**: `drawCell` **94.1%**, `winBandR` **32.3%**, `prismS`
   **28.2%**, `hexTile` **12.2%**, `bandS` **7.6%** ⇒ still ~48% static terrain, **still no hot ornament.**
-  ⚠ **222 FALSIFIED this header's own claim that
-  "219 is world-data only — arc unmoved"**: `probe-drawbudget` read day **+3.1%** / night **+4.7%**, AGREEING with the
-  timer, and the cause was **219's downtown** (more core COM => more towers => more `prismS`/`bandS` by day, more
-  `winBandR` by night — which is why night grew more). **PAID and ACCEPTED.** ⇒ **LAW: "no new draw CALL" is NOT "no
-  new draw WORK" — THE WORLD IS THE DRAW LIST** (⇒ SKILL.md): price a CA/siting vector by COUNTING OBJECTS, never by
-  reading the diff.
-  ⚠ **Cue (x) stands** (215's `seamVeg`: 692 path objects / 228 STROKES cost ~4x what the fill model predicts — the
-  stroke-vs-fill sweep at equal path count is the harness's best-supported open perf question).
-  **⚠ THE STANDING PERF SUSPECT (207, re-measured UNCHANGED at 232 and 237; NAMED not mandated per 198): THERE IS
-  NO HOT ORNAMENT — the arc is DIFFUSE, which is why every per-lap gate reads it free.** Numbers in the perf-ARC
-  bullet; body archived at 237. **Do NOT open a caching lap — 198's levers are CLOSED; the only lever is FEWER
-  objects.**
+  ⚠ **A WORLD-CHANGING VECTOR IS NOT FREE just because its diff has no draw call — THE WORLD IS THE DRAW LIST**
+  (222, body archived; the LAW is in SKILL.md). Price a CA/siting vector with `probe-drawbudget`, never by reading the diff.
+  ⚠ **Cue (x) stands** (215's `seamVeg`: 692 path objects / 228 STROKES cost ~4x the fill model — a stroke-vs-fill sweep at equal path count is the best-supported open perf question).
+  **⚠ THE STANDING PERF SUSPECT (207, UNCHANGED at 232/237; NAMED not mandated per 198): THERE IS NO HOT ORNAMENT —
+  the arc is DIFFUSE**, which is why every per-lap gate reads it free. **No caching lap — 198's levers are CLOSED;
+  the only lever is FEWER objects.**
   **The GAP-CLOSING trick (111/112/113) is SPENT in four domains; the TELL that replaced it (a label asserting what
-  the draw ignores) is CASHED 7x** (117, 122, 129, 140, 148, 183) **and its host keeps moving DOWN: 199 found a
-  CONSTANT, 209 a COMMENT, 217 a HALF-FINISHED FIX — see SKILL.md.** Still MUTE: `[T.IND]` (no calendar) and GARDEN
+  the draw ignores) is CASHED 8x** (117, 122, 129, 140, 148, 183, **238**) **and its host keeps moving DOWN: 199 a
+  CONSTANT, 209 a COMMENT, 217 a HALF-FINISHED FIX, 238 a palette entry NO DRAW COULD REACH — see SKILL.md.** Still MUTE: `[T.IND]` (no calendar) and GARDEN
   (season-frozen draw — needs a Deepen first; and see **(ak)**, which now owns the season question). ⚠ 122: a
   tooltip vector needs a probe checking the claim against INDEPENDENTLY RECOMPUTED truth, not a screenshot.
   **Kind-picking, compressed (full text rotated to `GROWTH-archive.md` at 204).** **Scale** is the coldest kind and a
@@ -332,8 +327,7 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   noise, or `TCAP` (224). (1) ⚠ **`c.th` HAS TWO WRITERS** (placement + the 2022+ growth rule) — touch one, check the
   other. (2) ⚠ **DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core`** — 98 did (0.125), 219 invalidated it
   (0.282) unnoticed for 6 laps; normalise by the formula's own max (⇒ SKILL.md).
-  **(ab) CALENDAR LOUD PER-TILE, QUIET PER-FRAME (217, Sky — LOW; body archived 233).** ⚠ **NOT "the seasons are dead"**
-  (`probe-season` refuted it 3x). Loud tiles are RARE (FARM 92.1/122 hexes) vs PARK 22.4/574. Fix = a bigger seasonal SURFACE; (p) forbids the lawn.
+  **(ab) RETIRED INTO (ak) at 238** (body archived) — right observation, now EXPLAINED (dilution); its fix is measured-dead, and its "`probe-season` refuted it 3x" was the wrong instrument.
   **(aj) THE SHOWERS FALL WHERE NOBODY LIVES (236, seed 7, unprompted — and MEASURED).** *"Both showers fall on the
   OPEN OCEAN, not the city."* Half that FAIL was refuted; this half is real, and it is **pre-existing cloud siting,
   not 236's front** — clouds spawn `x:rng()*G, y:CTRY-20+rng()*40` with **no reference to the land**, so a seed can
@@ -343,18 +337,24 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
   **The lever is the SPAWN, not the draw** — bias `cl.x`/`cl.y` onto the live rows (`ROWMIN`/`ROWMAX`, `HEXI`) and the
   same front buys ~2x the visible weather for **zero new draw work**. ⚠ Rain over the sea is **CORRECT** (201) — this
   is about *coverage*. **Sky × Polish.**
-  🔴 **(ak) THE SEASON IS MUTE ON 68% OF THE VEGETATION (237 — MEASURED, both step-back agents, both seeds, their
-  HEADLINE FAIL).** *"Trees still full green, beach still has swimmers, sky identical — that is a crop-rotation
-  frame, not a winter."* The calendar **is alive**, and `probe-season` has been reporting so for laps — because it
-  means **per TILE TYPE**, and it is loud on the city's *smallest* surfaces. Area-weighted (the viewer's unit, now
-  printed by the probe): winter→dry-peak shifts **PARK 21.1** (**42.0% of the vegetated plate**), **FOREST 19.0**
-  (17.6%), REDWOOD 7.1, GARDEN 6.9 — while **FARM 103.3** carries the whole season on **8.1%** of the area.
-  ⇒ **912 / 1341 vegetated hexes (68.0%) sit below the legibility floor.** ⚠ **The MASS is PARK+FOREST (60% of the
-  vegetation between them) — a fix that does not move those two cannot move the frame** (218: the eye integrates
-  AREA, not tile types). ⚠ **`BASE`'s comments say parks are *deliberately* irrigated and evergreens *deliberately*
-  sit the dry season out** — so this is a **design argument to WIN or RESPECT, not a bug to swat** (201: the FAIL
-  may object to the MODEL). A deciduous/stressed-grass response on PARK alone would move 42% of the vegetation.
-  **Nature × Deepen.** Gate: `probes/probe-season.mjs` (area-weighted; ROAD is the control, must stay ~0).
+  **(ak) THE SEASON — 238 SHIPPED THE TREES AND *REFRAMED THE CUE*. Its headline number is DEAD; the obvious levers
+  are MEASURED-DEAD. Read this before any seasonal vector.** ✅ **The DECIDUOUS CANOPY had NO `dry` term** (at
+  `s=0.62` the other three curves are exactly 0 ⇒ `BASE.canopy` returned to `CAN0` **unchanged**: every broadleaf was
+  inert on the loudest keyframe of this coast's calendar). Swing **~8 → ~28**; both blind agents picked the patch on a
+  crossed A/B. ✅ **The EVERGREEN palette is now real** (`evergreen`/`evergreenLt` — was read by the REDWOOD *only*,
+  while `tree()`'s conifer spire and the PALM drew from the DECIDUOUS `canopy`); the wood reads two-tone, unprompted,
+  both seeds. ⚠ **BUT MUTE AREA DID NOT MOVE: 66.6% → 66.6%** (FOREST 16.1→19.5, PARK 20.2→22.2, still under floor).
+  ⚠ **WHY — AND IT KILLS THE CUE'S OWN PRESCRIPTION.** `probe-season` samples **ONE PIXEL at the hex CENTRE**; PARK
+  draws its trees at grid *offsets* and its pond *at* the centre ⇒ **structurally blind to a park's canopy** (same
+  edit: read PARK *unmoved* AND FOREST *"floor crossed"*). Use **`probes/probe-seasonarea.mjs`** (area sample + **what
+  % of a hex a palette entry actually PAINTS**). It says: **every vegetated GROUND is ALREADY seasonal** — lawn
+  **52.7**, grass 34.4, grassDk 31.8 — and **SHOREPARK (88.7% lawn) reads 44.4, NOT mute. PARK reads 20.2 only because
+  a park hex is 45% LAWN**; the rest is canopy (12%) + **paths, ponds, benches, café furniture with NO calendar.**
+  ⇒ **THE "68% MUTE" IS DILUTION BY THE SEASON-DEAD *CONTENTS* OF EACH HEX — not dead palettes, and NOT the lawn**
+  (which (p) protects and which is *already the city's most seasonal surface*). **A palette lap CANNOT reach the
+  per-tile floor.** Honest moves left: give a park hex's season-dead contents a calendar, or **retire the metric**.
+  ⚠ Canopy amplitude is **AT ITS CEILING** — the dry olive sits ~24 RGB from the **autumn** amber and they must stay
+  distinct. **Nature.**
   🔴 **(al) THE MID-RISE IS THE REAL WALLPAPER — 235 FIXED THE WRONG BUILDING (237, MEASURED).** 228 (crown) and 235
   (footprint) closed the TOWER LOOK off six agents' *"the towers are wallpaper"* — and at 237, one lap later, **both
   agents said it again**, on two seeds. They were **not** talking about the towers, and re-reading them says so
@@ -391,84 +391,11 @@ cross-cutting ones (U2, 42, U5) stay in the bullet below.
 
 <!-- rotated -->
 
-> **Archive:** the 230 entries before Iteration 228 live in
+> **Archive:** the 231 entries before Iteration 229 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 228 — the towers all wore the same hat (2026-07-13) [Urban fabric × Polish]
-
-**Vector.** Urban fabric × Polish. Cue **(af)** — the loudest in the ledger: six agents
-across 222/224/227, both seeds, every time unprompted, called downtown wallpaper. Every
-one of them named the **SILHOUETTE** and the **ROOF**; not one named colour or banding.
-
-**Probe first (the loop's first law), and it RELOCATED the bug.** `probe-facade` was the
-banked instrument, and it is the WRONG one: it measures stripe RHYTHM, and it had already
-measured TOWER *innocent* (42-47 rhythms, top 6%) while six agents went on pointing at the
-towers. Both are true — **a tower can wear a unique stripe rhythm and still be the same
-SHAPE as every other tower.** So the cue needed a new instrument, not the banked one (*a cue
-is a POINTER, NOT A SPEC*). `probes/probe-crown.mjs` wraps `drawBuilding`+`prism`+`bandR` and
-records the massing the frame ACTUALLY draws (build-agnostic: runs unchanged on HEAD and
-patch). HEAD, 3 seeds, ~101 towers each:
-
-- **TOWER: 4.0 distinct CROWNS city-wide, top share 40.8%** — and **41% of towers `flat`**.
-- MID: **32.3 crowns, top 11.3%** — already richly varied by 216. **227's indictment of the
-  MID drum-roofs does not survive measurement** (212's law: grade the FAIL by measuring it).
-
-Iter 110 decoupled a tower's COLOUR from its silhouette (4 forms x 5 bodies). What it never
-decoupled is **what sits at the ROOFLINE**, which stayed a property of `style` — and styles 1
-and 3 put their setbacks low down and then simply **STOP**. The eye reads a skyline by its
-**TOPS**, so downtown had a crown vocabulary of four.
-
-**...and the `flat` bucket was the real find.** The fix took crowns 4 -> 17 and the 41% `flat`
-bucket **did not move** — a number that will not move is a tell that the INSTRUMENT is deciding
-it. It was: `flatShort` (crownable-but-bare) is **0**, and every `flat` tower is an **h>90
-helipad tower** — invisible to a prism/bandR hook because the helideck is raw `ctx.arc`. That is
-**~40% of the tower stock (54/134, 44/102, 25/68) — the TALLEST towers, read hardest against the
-sky — all wearing ONE identical bare deck.** Stopping there would have been **217's law exactly**
-(a fix to one clause, mistaken for a fix to the phenomenon).
-
-**Change.** The crown becomes the **fourth independent seed-salted axis** (`towerLook.crown`), so
-any massing can wear any crown: **4 styles x 5 bodies x 5 crowns**. New `towerCrown()`: cornice /
-roof garden / mech penthouse / stepped cap / **spire** (a SOLID tapered needle on a plinth — 215's
-law: a hairline ornament needs a BODY). The helipad towers keep their deck (`heliPads` is real world
-data — the city helicopter lands on those roofs), but it now rides a **plinth** from the same hash
-(parapet / stepped cap / bare). Mast suppressed under a spire; helideck ineligible for spire/garden.
-Draw-only: `hashCell`, no `rng()`, no terrain.
-
-**Census.** PASS. Core flat (`pop`/`developed`/`roads` +0), **tile histogram empty** — correct for
-draw-only. `solarRoofs -2 / greenRoofs -1 / towerHt +1` is the harness, not the edit: **re-running
-the SAME FILE** gave `-1 / -1 / +0` (226's law — do NOT diff against HEAD to test this).
-
-**Probe.** `probe-crown.mjs`, 3 seeds:
-
-| | crowns (distinct) | top crown share | crownable-but-bare |
-| --- | --- | --- | --- |
-| **TOWER** HEAD | 4.0 | 40.8% | 41% |
-| **TOWER** patch | **18.3** | **15.3%** | **0** |
-| MID (control) | 32.3 -> **32.3** | 11.3% -> **11.3%** | 0 |
-
-MID is **byte-identical** on every number — the control holds. The tower crown is now as varied as
-the mid-rise crown 216 built.
-
-**Cost.** Priced by **COUNTING PATH OBJECTS** (222 — never by reading the diff): day **108,888 ->
-108,905 (+17, +0.016%)** · night **139,401 -> 139,452 (+51, +0.037%)**. **FREE.** Hold-the-mean (98/216)
-did the work: two per-style roof prisms came OUT, five crowns averaging ~1.4 went in.
-
-**Visual.** Blind A/B, both seeds, **order flipped between them**, asking agents to COUNT roof shapes
-(a quantity the projection PRESERVES — 224 forbids asking them to judge by height/position). Both
-PASS, no z-tears, no floating, no blown colour. **Seed 42 (A=HEAD, B=patch) picked the patch, clearly**
-— "2-3 vs 6-7", naming the exact five crowns shipped (stepped setback, tapered needle, cornice lip,
-penthouse, green roof) and calling HEAD's deck *"a stamp repeated across the skyline"*, which is the
-40%-helideck defect found **independently, by eye**. **Seed 7 (A=patch, B=HEAD) picked HEAD** — and its
-read is **refuted by the draw**: it claimed HEAD shows *"spire/needle, penthouse, stepped cap, cornice
-rim"* and *"teal/olive helipad discs"*, **none of which HEAD contains** (its 4 crowns are sage garden /
-sage cap / bare / deck). It confabulated the patch's vocabulary onto both frames. ⚠ **Both agents picked
-"B"**, so the blind A/B carries position bias and is WEAK evidence; the verdict rests on the draw census,
-which is not a matter of interpretation.
-
-**Verdict: SHIPPED.** Cue (af) — the loudest cue in the ledger, six agents, three step-backs — is CLOSED.
 
 ## Iteration 229 — the bug was in the camera, not the city (2026-07-13) [Interaction/UX × Polish]
 
@@ -1196,3 +1123,67 @@ and handed to 238 and 239 with gates already written). The city is structurally 
 accepted, downtown legible, no tears, no collapse. But it has been carrying a season that
 only its farms can feel, and a mid-rise field that is two shapes wearing many colours — and
 in both cases the harness owned a probe that was quietly saying so.
+
+## Iteration 238 — the trees were the one green thing that never felt the summer (2026-07-13) [Nature × Deepen]
+
+**Vector.** Cue **(ak)**, the step-back's #1 🔴: *the season is mute on 68% of the
+vegetation*. Both 237 agents, blind, on two seeds, made the same headline FAIL — and both
+used the same noun: ***"Trees* still full green… a crop-rotation frame, not a winter."*
+
+**Change — two defects, stacked, both in the seam the cue pointed at.**
+1. **The deciduous canopy had no `dry` term.** `applySeason` drives every other green off the
+   drought curve — `grass`, `grassDk`, `meadow`, `lawn`, `turf` — and drove `canopy`/`canopyLt`
+   off *autumn, spring and winter only*. At the dry peak (`s=0.62`) those three curves are all
+   **exactly 0**, so `BASE.canopy` was returned to `CAN0` **unchanged**: every broadleaf in the
+   city was *mathematically inert* on the loudest keyframe of this coast's calendar. It now dusts
+   to a drought olive (`[176,152,84]` at `dry`), mixed FIRST so autumn's amber still lands on top
+   of an already-dried canopy.
+2. **The evergreen palette was read by everything except the evergreens.** `conifer`/`coniferLt`
+   carried the comment *"evergreens sit out the seasons"* and were read by **exactly one draw —
+   the REDWOOD** — while the thing actually *named* a conifer (`tree()`'s spire, `sp===1`) and the
+   **palm** both drew from the **deciduous** `canopy`. Renamed **`evergreen`/`evergreenLt`** and
+   pointed the spire and the palm at it. A palm no longer drought-stresses; a pine no longer ambers
+   in autumn; and the mixed wood now reads **two-tone**.
+   ⚠ I found this only after a `col('conifer'` grep came back clean and the page then threw:
+   the redwood's call is `col(t===0?'coniferLt':'conifer',…)` — **a ternary hides a palette name
+   from an anchored grep.** Grep `col([^)]*'name'`, never `col('name'`.
+
+**Census.** PASS. Every metric flat, tile histogram empty (`pop -1`, `solarRoofs -2` = 226's
+unfrozen-clock wobble). Colour-only: **zero path objects, zero geometry** ⇒ free by 198's cost
+model. Byte-identical in **winter** (`dry=0`) — 199's free dead-regime control, which is also why
+`probe-goldenhue`'s default-calendar assertions are untouched.
+
+**Probe — and the probe is the finding.** `probes/probe-seasonarea.mjs` (new, banked).
+- Canopy rendered swing winter→dry: **~8 → ~28** (3.5×), consistent across FOREST/PARK/ORCHARD.
+- Area-weighted all-veg **26.8 → 28.4**. **FOREST 16.1 → 19.5 · PARK 20.2 → 22.2 — both still
+  below the 25 floor. MUTE AREA UNCHANGED: 66.6% → 66.6%. (ak) IS NOT CLOSED.** Logged as measured,
+  not as claimed.
+
+**Visual.** Blind A/B, **crossed** between seeds (42: A=patch · 7: B=patch, so "the second one" is
+wrong on one). **Both agents picked the patched build correctly**, and both — *unprompted, never
+told the distinction existed* — reported the conifer spires and the palms staying green while only
+the broadleaf rounds turn: *"two populations behave differently… a nice two-tone stipple instead of
+a flat wash."* Both: drought-stressed, **not** autumnal ("no orange, no rust, no bare trunks"). Both
+whole-city frames clean — no tears, no clutter. **VISUAL: PASS ×2.** One caveat banked: *"near the
+far end of the safe range in the sunniest hexes"* — the amplitude is at its ceiling, and the reason
+is structural: the dry olive sits only ~24 RGB from the **autumn** amber, and they must stay distinct.
+
+**Verdict: DEEPENED.** The trees answer the calendar; the evergreens are finally real.
+
+**⇒ THE HANDOFF, AND IT IS WORTH MORE THAN THE SHIP: (ak)'S OWN GATE WAS THE WRONG INSTRUMENT —
+228'S LAW RECURSING A *THIRD* TIME, INSIDE THE PROBE 237 REPAIRED.** `probe-season` samples **ONE
+PIXEL, at the hex centre**. PARK draws its trees at grid *offsets* and its pond/fountain *at* the
+centre ⇒ **it is structurally blind to a park's canopy.** On the *same* change it reported **PARK
+20.8 → 20.9 (unmoved)** and **FOREST 18.9 → 27.1 ("crossed the floor")** — both artifacts of where
+one pixel happened to land. 237 fixed that probe's weighting **BETWEEN** tile types and left the
+sample **WITHIN** a hex at one pixel: **two different unit errors, only the first closed.**
+⇒ **And the area probe REFRAMES (ak) entirely. Every vegetated GROUND is already seasonal** — lawn
+swings **52.7**, grassDk **31.8**, grass **34.4** — and **SHOREPARK, which is 88.7% lawn, reads 44.4
+and is NOT mute.** The greens turn fine. **PARK reads 20.2 because a park hex is only 45% lawn**;
+the rest is canopy (12%) plus **paths, ponds, benches, playgrounds and café furniture that have no
+calendar at all**. FOREST is 17% canopy over a `grassDk` floor darkened by canopy-closure shade.
+⇒ **(ak)'s "68% mute" is dominated by DILUTION — season-dead furniture, hardscape, shadow and
+understory INSIDE each hex — not by dead palettes, and NOT by the lawn (which (p) rightly forbids
+touching, and which is already the most seasonal surface in the city).** A palette lap cannot reach
+the per-tile floor. The next lap on (ak) must either give the season-dead *contents* of a park hex a
+calendar, or accept the floor as unreachable and retire the metric.

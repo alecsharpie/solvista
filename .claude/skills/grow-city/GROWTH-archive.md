@@ -15853,3 +15853,99 @@ into the header's perf-ARC line). Kept byte-for-byte; nothing deleted.
   objects (a *visual* decision, price it against what the ornament is worth), or accept it. **Batching fills,
   shrinking radii, and sprite-blitting are all CLOSED — measured, three ways, and none of them buys anything.**
   194's tree shadows are the standing example: ~3% for the grounding of every tree, and it is worth paying.
+
+## Iteration 228 — the towers all wore the same hat (2026-07-13) [Urban fabric × Polish]
+
+**Vector.** Urban fabric × Polish. Cue **(af)** — the loudest in the ledger: six agents
+across 222/224/227, both seeds, every time unprompted, called downtown wallpaper. Every
+one of them named the **SILHOUETTE** and the **ROOF**; not one named colour or banding.
+
+**Probe first (the loop's first law), and it RELOCATED the bug.** `probe-facade` was the
+banked instrument, and it is the WRONG one: it measures stripe RHYTHM, and it had already
+measured TOWER *innocent* (42-47 rhythms, top 6%) while six agents went on pointing at the
+towers. Both are true — **a tower can wear a unique stripe rhythm and still be the same
+SHAPE as every other tower.** So the cue needed a new instrument, not the banked one (*a cue
+is a POINTER, NOT A SPEC*). `probes/probe-crown.mjs` wraps `drawBuilding`+`prism`+`bandR` and
+records the massing the frame ACTUALLY draws (build-agnostic: runs unchanged on HEAD and
+patch). HEAD, 3 seeds, ~101 towers each:
+
+- **TOWER: 4.0 distinct CROWNS city-wide, top share 40.8%** — and **41% of towers `flat`**.
+- MID: **32.3 crowns, top 11.3%** — already richly varied by 216. **227's indictment of the
+  MID drum-roofs does not survive measurement** (212's law: grade the FAIL by measuring it).
+
+Iter 110 decoupled a tower's COLOUR from its silhouette (4 forms x 5 bodies). What it never
+decoupled is **what sits at the ROOFLINE**, which stayed a property of `style` — and styles 1
+and 3 put their setbacks low down and then simply **STOP**. The eye reads a skyline by its
+**TOPS**, so downtown had a crown vocabulary of four.
+
+**...and the `flat` bucket was the real find.** The fix took crowns 4 -> 17 and the 41% `flat`
+bucket **did not move** — a number that will not move is a tell that the INSTRUMENT is deciding
+it. It was: `flatShort` (crownable-but-bare) is **0**, and every `flat` tower is an **h>90
+helipad tower** — invisible to a prism/bandR hook because the helideck is raw `ctx.arc`. That is
+**~40% of the tower stock (54/134, 44/102, 25/68) — the TALLEST towers, read hardest against the
+sky — all wearing ONE identical bare deck.** Stopping there would have been **217's law exactly**
+(a fix to one clause, mistaken for a fix to the phenomenon).
+
+**Change.** The crown becomes the **fourth independent seed-salted axis** (`towerLook.crown`), so
+any massing can wear any crown: **4 styles x 5 bodies x 5 crowns**. New `towerCrown()`: cornice /
+roof garden / mech penthouse / stepped cap / **spire** (a SOLID tapered needle on a plinth — 215's
+law: a hairline ornament needs a BODY). The helipad towers keep their deck (`heliPads` is real world
+data — the city helicopter lands on those roofs), but it now rides a **plinth** from the same hash
+(parapet / stepped cap / bare). Mast suppressed under a spire; helideck ineligible for spire/garden.
+Draw-only: `hashCell`, no `rng()`, no terrain.
+
+**Census.** PASS. Core flat (`pop`/`developed`/`roads` +0), **tile histogram empty** — correct for
+draw-only. `solarRoofs -2 / greenRoofs -1 / towerHt +1` is the harness, not the edit: **re-running
+the SAME FILE** gave `-1 / -1 / +0` (226's law — do NOT diff against HEAD to test this).
+
+**Probe.** `probe-crown.mjs`, 3 seeds:
+
+| | crowns (distinct) | top crown share | crownable-but-bare |
+| --- | --- | --- | --- |
+| **TOWER** HEAD | 4.0 | 40.8% | 41% |
+| **TOWER** patch | **18.3** | **15.3%** | **0** |
+| MID (control) | 32.3 -> **32.3** | 11.3% -> **11.3%** | 0 |
+
+MID is **byte-identical** on every number — the control holds. The tower crown is now as varied as
+the mid-rise crown 216 built.
+
+**Cost.** Priced by **COUNTING PATH OBJECTS** (222 — never by reading the diff): day **108,888 ->
+108,905 (+17, +0.016%)** · night **139,401 -> 139,452 (+51, +0.037%)**. **FREE.** Hold-the-mean (98/216)
+did the work: two per-style roof prisms came OUT, five crowns averaging ~1.4 went in.
+
+**Visual.** Blind A/B, both seeds, **order flipped between them**, asking agents to COUNT roof shapes
+(a quantity the projection PRESERVES — 224 forbids asking them to judge by height/position). Both
+PASS, no z-tears, no floating, no blown colour. **Seed 42 (A=HEAD, B=patch) picked the patch, clearly**
+— "2-3 vs 6-7", naming the exact five crowns shipped (stepped setback, tapered needle, cornice lip,
+penthouse, green roof) and calling HEAD's deck *"a stamp repeated across the skyline"*, which is the
+40%-helideck defect found **independently, by eye**. **Seed 7 (A=patch, B=HEAD) picked HEAD** — and its
+read is **refuted by the draw**: it claimed HEAD shows *"spire/needle, penthouse, stepped cap, cornice
+rim"* and *"teal/olive helipad discs"*, **none of which HEAD contains** (its 4 crowns are sage garden /
+sage cap / bare / deck). It confabulated the patch's vocabulary onto both frames. ⚠ **Both agents picked
+"B"**, so the blind A/B carries position bias and is WEAK evidence; the verdict rests on the draw census,
+which is not a matter of interpretation.
+
+**Verdict: SHIPPED.** Cue (af) — the loudest cue in the ledger, six agents, three step-backs — is CLOSED.
+
+
+<!-- header bullet rotated out of GROWTH.md at iter 238 (superseded/EXPLAINED by cue (ak)) -->
+
+**(ab) CALENDAR LOUD PER-TILE, QUIET PER-FRAME (217, Sky — LOW; body archived 233).** ⚠ **NOT "the seasons are dead"**
+(`probe-season` refuted it 3x). Loud tiles are RARE (FARM 92.1/122 hexes) vs PARK 22.4/574. Fix = a bigger seasonal SURFACE; (p) forbids the lawn.
+
+> **238's note on retiring this cue.** (ab) was RIGHT — the calendar *is* loud per-tile and quiet per-frame — and
+> its evidence was ironic: the three "refutations" by `probe-season` were the WRONG INSTRUMENT (a one-pixel centre
+> sample, see 238). The area probe both confirms (ab)'s observation and EXPLAINS it, which is why the cue is
+> retired into (ak) rather than left standing: the per-frame quietness is **dilution by the season-dead contents of
+> each hex** (paths, ponds, furniture, shadow, understory — 43% of a PARK), not a shortage of seasonal surface. Its
+> prescribed fix ("a bigger seasonal SURFACE") is measured-dead: the grounds are already the most seasonal thing in
+> the city (lawn 52.7), and (p) rightly protects the lawn. See (ak) in the maintained header.
+
+<!-- header bullet rotated out of GROWTH.md at iter 238 (body superseded by the SKILL.md law it names) -->
+
+⚠ **222 FALSIFIED this header's own claim that
+"219 is world-data only — arc unmoved"**: `probe-drawbudget` read day **+3.1%** / night **+4.7%**, AGREEING with the
+timer, and the cause was **219's downtown** (more core COM => more towers => more `prismS`/`bandS` by day, more
+`winBandR` by night — which is why night grew more). **PAID and ACCEPTED.** ⇒ **LAW: "no new draw CALL" is NOT "no
+new draw WORK" — THE WORLD IS THE DRAW LIST** (⇒ SKILL.md): price a CA/siting vector by COUNTING OBJECTS, never by
+reading the diff.

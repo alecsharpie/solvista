@@ -1,6 +1,29 @@
 #!/usr/bin/env node
 /* probe-season.mjs — which vegetation actually responds to the calendar?
  *
+ * ############################################################################
+ * ⚠ THIS PROBE SAMPLES ONE PIXEL PER INSTANCE, AT THE HEX CENTRE (iter 238).
+ * Its per-tile numbers are a POINT sample, not an area one, and for any tile
+ * whose draw puts something specific at its centre they are actively wrong:
+ *   - PARK draws its TREES at grid OFFSETS (tree(gx-0.28,gy-0.05,...)) and its
+ *     pond/fountain AT the centre, so this probe is STRUCTURALLY BLIND to a
+ *     park's canopy. 238 tripled every deciduous tree's seasonal swing and this
+ *     probe reported PARK 20.8 -> 20.9, i.e. unmoved.
+ *   - FOREST's trees are dense enough to cover its centre, so the SAME change
+ *     read 18.9 -> 27.1 here and "crossed the legibility floor". In area units
+ *     it went 16.1 -> 19.5 and is still below it. The floor-crossing was an
+ *     artifact of where one pixel landed.
+ * Iter 237 fixed this probe's weighting BETWEEN tile types (area-weighting the
+ * rows) and left the sample WITHIN a hex at one pixel. Those are two different
+ * unit errors and only the first was closed.
+ * ⇒ USE probes/probe-seasonarea.mjs FOR ANY AREA / "does the viewer see it"
+ *   CLAIM. It samples the hex's whole box, and it also reports what fraction of
+ *   each hex a given palette entry actually paints (234's palette-suppression),
+ *   which is what says whether a change CAN reach a surface at all.
+ * This probe remains useful for one thing: a fast per-type check that a given
+ * draw reads `year` AT ALL (a palette no draw reads still shows up here as 0).
+ * ############################################################################
+ *
  * Iter 120's holistic step-back: a visual agent claimed the golden dry peak
  * reads as "blighted brown patches in a green city" — i.e. the season stops at
  * the farm boundary. The BASE comments say otherwise (parks are *deliberately*

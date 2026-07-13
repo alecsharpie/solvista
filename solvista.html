@@ -291,7 +291,14 @@ const BASE={
   sand:[238,220,178], sandDk:[212,190,146],
   grass:[150,181,122], grassDk:[122,155,100], meadow:[163,190,128],
   canopy:[104,146,92], canopyLt:[139,173,110], trunk:[122,90,62],
-  conifer:[104,146,92], coniferLt:[139,173,110], /* evergreens sit out the seasons */
+  evergreen:[104,146,92], evergreenLt:[139,173,110], /* THE EVERGREEN PALETTE — redwoods, conifer
+                        spires, palm fronds. applySeason must NOT touch these: sitting out the year
+                        is the whole of what these entries ARE. Named `conifer`/`coniferLt` for 237
+                        iterations, they were read by exactly ONE draw — the REDWOOD — while the
+                        thing actually named a conifer (tree()'s spire) and the palm both drew from
+                        the DECIDUOUS `canopy`. The entry named for the conifer was read by
+                        everything except the conifer; renamed for what it is, so a new evergreen
+                        cannot miss it. Grep the ternaries: `col(k?'xLt':'x')` hides from `col('x'`. */
   water:[92,172,178], waterDk:[62,138,148], foam:[255,251,240], glint:[235,248,250],
   /* the seabed's two ends, placed SYMMETRICALLY about `water` (each is water
      ±0.8·(water−waterDk)), so a depth blend between them has water as its exact
@@ -334,7 +341,8 @@ const BASE={
 /* the seasons, calendar-aligned on s=year%1: winter cools (~Jan, s≈0),
    spring freshens (~Apr, s≈0.28), the hills go gold in late summer (s≈0.62,
    the original golden-hills pass), deciduous canopies amber in autumn
-   (s≈0.87). Evergreens (conifer/coniferLt) sit it out. California coast:
+   (s≈0.87) and dust through the long drought (s≈0.62, with the hills).
+   Evergreens (evergreen/evergreenLt) sit it out. California coast:
    winter means cool light and deep dull greens, never snow. */
 const GRASS0=BASE.grass.slice(), GRASSDK0=BASE.grassDk.slice(), MEAD0=BASE.meadow.slice(),
       CAN0=BASE.canopy.slice(), CANL0=BASE.canopyLt.slice(),
@@ -349,10 +357,21 @@ function applySeason(){
   BASE.grass=mixA(GRASS0,[199,174,105],dry);
   BASE.grassDk=mixA(GRASSDK0,[168,142,82],dry);
   BASE.meadow=mixA(MEAD0,[206,182,112],dry);
-  let can=mixA(CAN0,[176,138,70],autumn*0.75);
+  /* the DECIDUOUS canopy feels the drought too. It read autumn, spring and winter and
+     NOT `dry` — the loudest season on this coast — so at the dry peak (s=0.62, where the
+     other three curves are all exactly 0) it was returned to CAN0 unchanged: the canopy
+     was mathematically inert on the very keyframe the hills burn on. That is why the two
+     biggest green surfaces in the city were mute (probe-season, iter 238: PARK 20.8 across
+     42% of the vegetated plate, FOREST 18.9 across 18% — 68% of the vegetation below the
+     legibility floor while the FARM swung 103 over 8%). A live oak does not go gold like
+     the grass, but it dusts: duller, yellower, flatter by September. Mixed FIRST so
+     autumn's amber still lands on top of a canopy that has already dried. */
+  let can=mixA(CAN0,[176,152,84],dry);
+  can=mixA(can,[176,138,70],autumn*0.75);
   can=mixA(can,[118,172,96],spring*0.5);
   BASE.canopy=mixA(can,[86,118,84],winter*0.5);
-  let cl=mixA(CANL0,[201,158,84],autumn*0.75);
+  let cl=mixA(CANL0,[204,182,100],dry);
+  cl=mixA(cl,[201,158,84],autumn*0.75);
   cl=mixA(cl,[158,199,114],spring*0.5);
   BASE.canopyLt=mixA(cl,[112,142,102],winter*0.45);
   /* the managed greens — park lawn, institutional turf — are IRRIGATED, so they
@@ -503,7 +522,7 @@ function setLight(dl){ /* called every frame — only flush the color cache when
    not by the call site, so the bench and the bridge and the deer are fixed with the pier
    rather than left to be found one at a time. */
 const LEAFN=new Set(['grass','grassDk','lawn','meadow','canopy','canopyLt',
-                     'conifer','coniferLt','turf','sage','sprout']);
+                     'evergreen','evergreenLt','turf','sage','sprout']);
 const WARMN=new Set(['deck','deckDk']);
 function col(name,f){ /* f: face brightness */
   const k=name+'|'+f;
@@ -3550,7 +3569,7 @@ function tree(gx,gy,s,shade){
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,cy-3.2*s);ctx.stroke();
     for(let i=0;i<3;i++){
       const ty=cy-3.2*s-i*2.6*s, hw=(3.9-i*1.05)*s, lean=w*(0.3+i*0.35);
-      ctx.fillStyle=col(i===2?'canopyLt':'canopy',shade*(0.93+i*0.05));
+      ctx.fillStyle=col(i===2?'evergreenLt':'evergreen',shade*(0.93+i*0.05));
       ctx.beginPath();
       ctx.moveTo(cx+lean,ty-4.2*s);
       ctx.lineTo(cx+hw+lean*0.45,ty);
@@ -3599,7 +3618,7 @@ function palm(gx,gy,s){
      stays at the base even though the bole curves away downwind above it */
   ctx.strokeStyle=col('trunk',1);ctx.lineWidth=1.3;
   ctx.beginPath();ctx.moveTo(cx,cy);ctx.quadraticCurveTo(cx+2*s+w*0.4,cy-6*s,cx+3*s+w,cy-11*s);ctx.stroke();
-  ctx.strokeStyle=col('canopy',1.05);ctx.lineWidth=1.4;
+  ctx.strokeStyle=col('evergreen',1.05);ctx.lineWidth=1.4; /* a palm does not feel the drought */
   for(let i=0;i<5;i++){
     const a=-0.4-i*0.55, fl=w*(0.5+i*0.18); /* leeward fronds flutter more */
     ctx.beginPath();ctx.moveTo(cx+3*s+w,cy-11*s);
@@ -4403,7 +4422,7 @@ function drawCell(x,y){
         ctx.fillStyle=col('brickDk',0.9);ctx.fillRect(cx-0.8*sc,cy-H*0.22,1.6*sc,H*0.22); /* reddish trunk */
         for(let t=0;t<3;t++){
           const w=4.4*sc*(1-t*0.2), yb=cy-H*0.22-t*H*0.27, yt=yb-H*0.36;
-          ctx.fillStyle=col(t===0?'coniferLt':'conifer',0.8-t*0.05);
+          ctx.fillStyle=col(t===0?'evergreenLt':'evergreen',0.8-t*0.05);
           ctx.beginPath();ctx.moveTo(cx-w,yb);ctx.lineTo(cx,yt);ctx.lineTo(cx+w,yb);ctx.closePath();ctx.fill();
         }
       }

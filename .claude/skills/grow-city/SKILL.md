@@ -1246,6 +1246,31 @@ vector, whatever it is.
   test ("does the banked probe *pass* the thing the agents *fail*?") must be applied **per metric, not per probe** —
   `probe-crown` passed on `crown` and failed on `silo` **in the same output**. The tell: the cue tells you a probe is
   the wrong instrument, and the reason given is *the name of the lap that wrote it*.
+- **A PROBE THAT SAMPLES A *POINT* CANNOT ANSWER A QUESTION ABOUT AN *AREA* — AND IT WILL ANSWER ANYWAY, WITH A
+  NUMBER THAT MOVES. CHECK *WHERE* YOUR PROBE SAMPLES, NOT ONLY WHAT IT WEIGHTS (iter 238).** 235 says read what a
+  banked probe *measures*, not what it is *called*. 238 is the rung below, and it is the **third** recursion of 228's
+  law — this time **inside the probe the previous step-back had just repaired.** `probe-season` samples **one pixel,
+  at the hex centre** (`getImageData(sx, sy, 1, 1)`). PARK draws its trees at grid *offsets* and its pond/fountain
+  *at* the centre, so the probe is **structurally blind to a park's canopy**. On one single edit it therefore
+  reported **PARK 20.8 → 20.9 ("unmoved")** and **FOREST 18.9 → 27.1 ("crossed the legibility floor")** — both pure
+  artifacts of where one pixel happened to land; in area units the same edit read 20.2→22.2 and 16.1→19.5, *neither*
+  crossing anything. ⚠ **237 had "fixed" this probe by area-weighting BETWEEN tile types and left the sample WITHIN
+  a hex at one pixel: two different unit errors, and closing one does not close the other** — the survivor will
+  then flatter or damn your change at random, and it looks authoritative because the *other* unit error was just
+  fixed. ⇒ **Before trusting any per-instance number, ask what fraction of the instance the probe actually looked
+  at.** A point sample is only valid where the host is *homogeneous*; the moment a hex contains furniture, a pond, a
+  path or an off-centre ornament, it is a lottery.
+  **⇒ AND THE COMPANION MEASUREMENT IS THE ONE THAT SHOULD COME FIRST: BEFORE YOU BELIEVE A PALETTE/DRAW CHANGE CAN
+  MOVE A SURFACE, MEASURE WHAT FRACTION OF THAT SURFACE IT ACTUALLY *PAINTS*.** 234's palette-suppression gives it
+  for free (loud-paint `BASE[name]`, flush `CCACHE`, re-render in ONE page, and the changed pixels **are** that
+  entry — floor exactly 0, occlusion included, build-agnostic). 238 measured it *after* designing and the table
+  ended the argument in one line: PARK is **45% lawn, 12% canopy**, and the other **43% is season-dead paths, ponds,
+  benches and café furniture** — so a canopy fix could move PARK by ~2 and **no design could have done better**,
+  which was knowable before a line was written. The tell: you are about to change one palette entry / one draw and
+  claim it will move a whole tile type. **Ask for its coverage first; it is one probe run, and it can save you a
+  lap** — or tell you the cue you were handed is unreachable and must be reframed rather than attempted.
+  Corollary, cheap and it cost a page crash: **a TERNARY hides a palette name from an anchored grep.**
+  `col(t===0?'coniferLt':'conifer', …)` does **not** match `grep "col('conifer'"`. Grep `col([^)]*'name'`.
 - **A SELF-REPORTING FRAME MUST SELF-REPORT IN THE *VIEWER'S* UNITS — A CAPTION IN THE RULE'S UNITS IS WORSE THAN NO
   CAPTION, BECAUSE IT LOOKS AUTHORITATIVE AND IT WILL MAKE CORRECT AGENTS LOOK WRONG (iter 236).** 202 says make every
   frame self-report its own state so a mis-pinned frame is caught by the tool, not by a gate round. 205 says state the
@@ -1803,6 +1828,16 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   freezes in-page and **searches for the `year` that hits a target front while HOLDING THE SEASON FIXED** — season is
   `year%1`, the front a ~20yr cycle, so `year+k` varies one and not the other. Every frame self-reports — ⚠ **and
   236's law: self-report in the VIEWER'S units, or the caption lies with authority**).
+  `probe-seasonarea.mjs` (238 — **the AREA form of `probe-season`, and the one to use for any "does the viewer see
+  it" claim.** Samples the hex's whole **box** (mean per-pixel |dRGB| — an integral, so it cannot cancel) instead of
+  `probe-season`'s ONE CENTRE PIXEL, which is blind to anything a tile draws off-centre. **Its second table is the
+  reusable one:** the **% of each hex a given palette entry actually PAINTS** (234's suppression — loud-paint
+  `BASE[name]`, ⚠ **no-op `applySeason` too, or `render()` rebuilds the entry from `CAN0` before a single tree is
+  drawn and you will read 0.0% canopy on a FOREST**). That coverage number is what tells you, *before you design*,
+  whether a palette change can move a surface at all: PARK is **45% lawn / 12% canopy / 43% season-dead furniture**),
+  `shot-canopy.mjs` (its camera — one frozen world at **winter vs the dry peak**, whole-city + a close-up **aimed by
+  measured canopy ink** (226), `AIM=wx,wy` so HEAD frames the identical hex for a **blind** A/B. 238 crossed the
+  A/B mapping between seeds so "the second one is the fix" fails on one — both agents still picked the patch).
   Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure
