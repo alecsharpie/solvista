@@ -1,5 +1,5 @@
 {
- "when": "2026-07-13T05:14:27.238Z",
+ "when": "2026-07-13T05:44:30.700Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -225,7 +225,7 @@
    "bridges": 58,
    "developed": 1068,
    "solarRoofs": 486,
-   "greenRoofs": 143,
+   "greenRoofs": 144,
    "towerHt": 10957,
    "tallTowers": 69,
    "helipads": 54,

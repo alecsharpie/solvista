@@ -16134,3 +16134,125 @@ iteration in the arc that *removes* night draw work instead of adding it.
   sound (an upper floor steps back from a party wall, **never through it**); **the party wall is now the
   NEIGHBOUR'S WEST FACE**, not a constant. ⚠ **DO NOT RE-OPEN EITHER BUILDING** (both measured varied; a fifth axis
   keyed to HEIGHT rebuilds 110's defect) — and its **~+2% draw ops** (a step is inherently +1 prism) are **PAID.**
+
+## Header bullet rotated out at iteration 241 — cue (al), CLOSED by 239
+
+  ✅ **(al) CLOSED by 239 — THE BUILDING-LOOK LADDER IS COMPLETE** (228 tower crown · 235 tower footprint · **239 the
+  MID-RISE, the building actually causing it**; body archived at 240). ⚠ **DO NOT RE-OPEN EITHER BUILDING** — both
+  measured varied, a fifth axis keyed to HEIGHT rebuilds 110's defect, and the **~+2% draw ops are PAID**. ⚠ **EVERY
+  FORM'S BASE IS ITS WIDEST PART** (an upper floor steps back from a party wall, never through it; **the party wall
+  is the NEIGHBOUR'S WEST FACE**, not a constant).
+
+## Header bullet rotated out at iteration 241 — cue (am) as 240 raised it (CLOSED by 241)
+
+  **(am) THE ELEVATED RAIL IS TOO LOUD AT FIT — the SAME cue as polish-tile's (a), from the OTHER SIDE (240, seed 7,
+  unprompted on a PASSing frame).** *"Long straight grey beams criss-cross nearly the whole diorama in big X patterns,
+  flattening the isometric read... the mid-city is closer to visual noise."* ⚠ **DO NOT re-open the z-order** (cleared
+  by probe 3x: 203/212, and 240's agent called it *"correct for depth"* unprompted). **(a) calls the same structure
+  sub-pixel and ILLEGIBLE — both reads are probably TRUE, and THAT is the finding: a hairline invisible up close and a
+  hard grey X across the plate at fit.** Transport × Polish.
+
+## Iteration 231 — the bowl was picking the lot they were about to build on (2026-07-13) [Civic & culture × Polish]
+
+**Vector.** Civic & culture × Polish. Civic was the stalest domain (last vector 213) and it held a
+banked, measured cue — **(t): "the amphitheater is buried on some seeds"** — with the fix already
+characterized (a PREFERENCE, never a gate: it is a one-per-city tile and a hard gate could starve it
+to zero). A banked finding outranks kind-rotation (119), so this was the lap.
+
+**The cue understated it.** `probe-amphgrow` / `shot-amphsite`, 6 seeds: the siting rule scanned
+`i=0..G*G` in RASTER order and took the **first match** (`break`). That is not a siting — it is a bias
+toward **low y, the BACK of the plate**. Out of **147–173 qualifying candidates** the bowl landed in
+**row 2 or 3 on ALL SIX SEEDS** (the plate spans ~67 rows). Its own comment claimed it was *"sited by a
+deterministic hashCell scan"*, but `hashCell<0.6` only **thins** candidates — raster order **chooses**.
+Measured occlusion (`probe-amphvis`: suppress the host's own `drawCell` in ONE page, `occluded% =
+1 − inkInPlace/inkOnTop`, floor **exactly 0**): mean **39.4%**, and **seed 7 rendered 4 px of its 260
+(98.5% occluded)** behind a wall of five mid-rises. ⚠ **Iter 168 spent a whole Civic lap giving this
+bowl a spotlit performer and a lit stage — on a tile that, in one city in six, showed you four pixels.
+Polish the VISIBILITY before you polish the DRAW.**
+
+**Two wrong turns, both measured, both instructive.**
+1. **`frontLoad` is the wrong instrument** (226's law, paid for again). Scored by it, the bowl moved but
+   the ink barely did (**39.4% → 37.4%**): `frontLoad` counts **TALLT MEMBERSHIP, not HEIGHT**, and RES
+   is not in TALLT at all — so a bowl at `frontLoad` **0** still read 36% buried behind two h11 houses,
+   and one at `frontLoad` **2** read **81%** buried behind an **h80 TOWER at dy=+2**. Hence `groundLoad`:
+   sum the drawn **height** in the two rows in front, near row doubled. Both rows are load-bearing — a
+   dy=+1-only variant measured **worse than no rule at all** (32.4% vs 24.4%), clearing the near kerb and
+   walking into a tower one row back.
+2. **And `groundLoad` on TODAY's heights STILL shipped a bug — the sweep had let the variants see the
+   future.** The first sweep graded candidates against the **mature 2035** city and crowned it at 8.4%;
+   shipped, it measured **27.7%**. The rule fires at **year 2004** and every frame renders **2035**.
+   `probe-amphgrow`: scored on the young city, **all six seeds found a front of `groundLoad` ZERO** — so
+   the **hash broke the tie**, and a **vacant lot's** frontage won as often as a road's. But a vacant lot
+   beside a road and a park is the most developable land in the city: by 2035 two had become `RES:16
+   COM:21` and `COM:18 TOWER:89`. **The rule was selecting for its own burial.** Four seeds stayed clear
+   only because their fronts were ROAD / WATER / SHOREPARK / ROCK — things that *can never be built on*.
+
+**Change.** `groundLoad(x,y)` (beside `frontLoad`, which keeps its tuned bus-shelter job and now carries
+a ⚠ pointing here): sums the height in the two rows ahead, near row doubled, reading **`c.th`** (the
+TARGET) — never `c.h`, which `drawBuilding` animates at DRAW time and would couple the world to the
+render clock. A **`RAISEABLE`** lot (EMPTY/MEADOW/FARM/BURNT) counts at a nominal **`FUTUREH`**: *an empty
+lot in front of you is not a clear view, it is a building that has not been built yet.* The amphitheater
+rule now **scores every candidate and takes the least buried**, hash as tie-break (it is the jitter now —
+what the old `<0.6` filter was really for). **`FUTUREH`'s magnitude is NOT load-bearing** (30 and 60 pick
+identically on every seed); all that matters is buildable = nonzero, permanently-open = zero. It is a
+**PREFERENCE, not a gate** (206): if every candidate is buried the best still takes it, so the bowl can
+never be lost — **placed 6/6 on every seed measured**.
+
+**Probe** (`probe-amphvis`, 6 seeds, floor 0 on every row — HEAD → shipped):
+mean occluded **39.4% → 8.1%** · worst seed **98.5% → 20.9%** · buried (≥60%) **1/6 → 0/6** ·
+visible ink **157px → 234px** (92% of the 255px it draws) · population **6/6 → 6/6**.
+Seed 7 — the city that showed four pixels — now renders **244 of 251**.
+
+**Census.** PASS. `developed` −9 (−0.15%), `roads` −4, `civicKinds` +0, `CIVIC 83 → 84`. But `TOWER
+432 → 402 (−6.9%)`, `towerHt −6.1%`, `pop −3.9%` — same land, building *shorter*, which looks exactly
+like a directional skyline tax, and a 7% skyline tax to unbury one tile would be a bad trade. **It is the
+chaos, not the change** (`probe-cascade`, paired over **10 seeds**): mean TOWER **+1.4 (UP)**, mean pop
+**+1.07% (UP)**, mean developed −0.09%, and only **3/10** seeds lose towers — swings of −24 and +22 sit
+side by side. The 3-seed census matrix simply drew two of the worst. ⚠ This **refutes the tempting
+inference from 218**: the tower *roll* is saturated, but the tower *predicate* (`com>=2`) reads a COM
+layer that is itself `rng()`-sited, so a stream reshuffle **does** move the skyline — chaotically, ±15%
+per seed, centred on zero. **No draw primitive is added; the bowl relocates one cell.**
+
+**Visual.** PASS ×2 (blind LOCATE, HEAD vs patch, each build aimed at its OWN bowl). Seed 7 BEFORE:
+*"I cannot find the amphitheater. The camera is pointed at it and the towers own the whole view.
+Essentially invisible."* AFTER: *"found immediately at ~0.49/0.52 … fully visible."* Seed 42 BEFORE:
+*"only the top arc reads … easy to mistake for a plaza."* AFTER: *"mostly visible … a real improvement,
+not a total fix"* — which matches the residual 20.9% exactly. Grid seating clean, no z-order tears, no
+floating, the land/water edge reads as a bank. Both agents independently noticed the tower re-roll and
+called it *"a small, coherent re-roll, not damage."*
+
+**Banked (new cue (ah)).** Seed 42's agent, unprompted: the bowl now often sits on the water's edge, and
+its **cavea has a FIXED orientation** — *"facing the bowl toward the river would look far more
+intentional."* The tiers are drawn at one hard-coded angle regardless of what the bowl faces. That is
+199's tell on a **draw**, and it is the natural Civic × Deepen follow-up. (Also: 5/6 seeds now put the
+bowl on a water/shore front, because permanently-open fronts are what the rule rewards. It reads well —
+a seaside bowl — but if it ever reads as monotony, that is the cause.)
+
+**Verdict: FIXED.**
+
+
+## Header bullets compressed at iteration 241 — full bodies preserved here
+
+- **Traffic flow exists — `c.flow` + `ARTFLOW` (iter 77).** `trafficFlow()` runs each
+  tick: trips are generated by developed hexes and drain along the road network to the
+  value core, accumulating like a river's drainage tree. `c.flow` is that accumulated
+  load; `flow>=ARTFLOW` (64) is an **arterial** (~15% of roads, ~97/city). Unlike `busy`
+  (a *local* ≥3-developed-neighbours test that calls a third of the city an avenue),
+  flow is a **network** measure — ~200 high-flow roads are not `busy` and vice versa.
+  **Bridges come out as the trunks unprompted** (seed 42's global max, 635, is a bridge
+  deck), and the spine is connected: 153 of 155 arterial hexes touch another. `__find`
+  now answers `'arterial'`. Reuse `c.flow` for anything that should follow the main
+  roads — don't hand-roll a second notion of "important street". **Iter 80 is the
+  first reuse:** civic forecourts pick the lot fronting the loudest street.
+  **⚠ But flow is a bad host for *land use* (iter 82).** `RES→COM` on arterial
+  frontage produced 85% **singletons** — by the time a street carries flow its
+  frontage is already `COM`/`MID`/`TOWER`, so the houses left to convert are
+  scattered. Flow suits *point* decisions (which lot fronts the loudest street) far
+  better than *linear* ones (grow a high street). Don't re-try RES→COM on arterials.
+
+- **Institutions cluster: `MAJORK` / `QUARTER` / `siteQuarter()` (iter 91).** `MAJORK` = the five monumental kinds
+  (`hall museum parliament university library`) — the shared vocabulary for "major institution", used by BOTH the
+  civic quarter and the 2020+ forecourt rule. `QUARTER` = the three that *seek* it (library, museum, parliament);
+  services stay sited by need, and `observatory` is deliberately free to sit at the rim. `siteQuarter()` hugs the
+  nearest standing major at `QNEAR..QFAR` = **2-4 hexes** (adjacency would kill the bunting, which needs a ROAD cell
+  reachable from two civics), falling back to the scattered search when the core is walled in. Detail archived at 200.

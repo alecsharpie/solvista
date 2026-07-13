@@ -684,6 +684,37 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A CUE NAMES ITS SYMPTOM IN THE UNITS OF THE DRAW — BUT "TOO LOUD" CAN MEAN "TOO MUCH OF IT". WHEN EVERY
+  PER-PIXEL PROPERTY MEASURES IN BAND, STOP TUNING THE DRAW AND GO COUNT THE THINGS (iter 241).** Every colour/
+  contrast/occlusion law above teaches you to answer a visual complaint by measuring the *draw*, and 228 teaches you
+  to re-derive the instrument from the complaint's own nouns. 241 is the case where **the complaint's nouns are all
+  about the draw and the defect is entirely in the WORLD.** An agent reported the elevated rail as *"long straight
+  grey beams criss-crossing the whole diorama, flattening the isometric read... visual noise"*, which reads as a
+  brightness/weight problem and invites you to dim it. Measured against **the house standard** (226 — isolate an
+  *ordinary building* with the same rig and read the two side by side), the beam's ink sat at the **33rd percentile
+  of the building faces it flies over**, cutting **dTop +37 / dBot −53 against a building's +57 / −55: in band on
+  every axis.** Two more hypotheses died the same way (the gondola was **33x less ink**; **41% of the structure was
+  already legs**). Nothing was drawn wrong — **there was simply too much of it**, because `minLen` was fresh noise
+  per line and the line COUNT was rolled by a **different rule that never read it**: two lotteries multiplying, total
+  track **28..291 cells (a 10.4x spread)** on a plate 66 cells wide, and **nothing in the system had ever priced the
+  network AS a network.** ⇒ **A large per-seed SPREAD is not a look problem, it is an unbudgeted generator** (233's
+  lottery law, one level up — and it is exactly why a 2-seed visual gate passed this for 240 iterations: most seeds
+  draw fine). The tell: your cue says *loud / cluttered / noisy*, and the thing it points at is **procedurally
+  replicated**. Count the instances across ~10 seeds *before* you touch a colour.
+  Three corollaries, each paid for in this lap:
+  (a) **LOUDNESS LIVES IN THE TAILS — a mean contrast will ACQUIT the hardest line in the frame.** The beam's *mean*
+  contrast against what it covers is **−9** (it looks innocent, and that is how it survived every gate); its
+  **brightest decile is +37**, which is the thin bright deck stroke the eye actually reads. **The eye reads EDGES,
+  not means.** Report `dTop`/`dBot` (the 90th/10th percentile of *signed* contrast), never `mean(dL)` alone.
+  (b) **TO BOUND A THING'S EXTENT, DO NOT BOUND ITS RADIUS — for a closed circuit, radius and length are COUPLED.**
+  "It spans the plate" begs for a cap on how far the railhead may stray from its start. Measured: that sends the line
+  **straight out and straight back**, which is not a loop but a **stub** — every line collapsed to ~20 cells and the
+  feature was gutted (mean track 127 → 50). Bound the **length**, via a budget the whole network shares, and note the
+  route home costs **~65% again** on top of wherever it turns around — that overshoot is where a naive budget leaks.
+  (c) **A "LESS OF IT" VECTOR IS A PERF CREDIT, AND 222'S LAW RUNS IN REVERSE.** 222 says a world-changing diff is
+  never free just because it contains no draw call — the world *is* the draw list. The converse pays: budgeting the
+  network measured **path objects −3.2% day / −2.9% night**, the first give-back against the ~+0.2%/iteration arc.
+  **Count the objects when a lap SUBTRACTS, not only when it adds.**
 - **WHEN PATCH-vs-HEAD CANNOT GET BELOW ITS OWN SIGNAL, STOP SWAPPING THE BUILD AND MUTATE THE DATA (iter 230).**
   161 says a whole-frame patch-vs-HEAD diff locates your change *by construction*, and 213 says measure the floor
   in the same run. Do both and you can still be stuck: **two loads of the SAME file drift by thousands of px through
@@ -1879,6 +1910,16 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `shot-canopy.mjs` (its camera — one frozen world at **winter vs the dry peak**, whole-city + a close-up **aimed by
   measured canopy ink** (226), `AIM=wx,wy` so HEAD frames the identical hex for a **blind** A/B. 238 crossed the
   A/B mapping between seeds so "the second one is the fix" fails on one — both agents still picked the patch).
+  `probe-railink.mjs` (241 — **is this element too LOUD, or is there too MUCH of it?** Isolates the elevated transit
+  by suppressing its own draw fns and re-rendering **in one page** (floor exactly 0, occlusion free, build-agnostic),
+  then reads its ink against **the house standard — an ordinary BUILDING, isolated with the same rig** (226), so no
+  threshold is invented. Reports `dTop`/`dBot` — the **TAILS** of signed contrast, because a mean acquits a hairline
+  (see the law) — plus the columns it crosses and its ink thickness. It killed three hypotheses in one run. **Reach
+  for it for any "X is too loud / cluttered / noisy" cue, and read its EXTENT columns before its contrast ones**),
+  `shot-railnet.mjs` (its camera — the whole un-zoomed plate, since the defect is a property of the network's EXTENT
+  and no close-up would show it; freezes in-page, forces the HUD (204), `SRC=` for a blind HEAD/patch pair, and every
+  frame **self-reports its own line count and track total**, which is what caught a one-line city the budget had
+  silently left untouched).
   Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure

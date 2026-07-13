@@ -2382,9 +2382,26 @@ function buildMonoPlan(){
   for(let i=0;i<target;i++){years.push(y|0); y+=9+(rr()*15|0);} /* staggered openings */
   monoPlan={rr,target,years};
 }
+/* The whole elevated network's track budget, in cells — and the reason it exists.
+   `minLen` was fresh noise on every line (32..81) and the line COUNT (1..3) was
+   rolled by a DIFFERENT rule that never read it, so the two lotteries multiplied:
+   the city's total elevated track ran 28..291 cells across seeds, a 10.4x spread,
+   and nothing in the system ever knew how much of it was already up. On a bad draw
+   that is three loops each roughly twice the plate's 66-cell width, laying a hard
+   grey X across the whole diorama — measured at 57% of the frame's columns against
+   29% on a good draw, which is why a two-seed visual gate kept passing it.
+   Every per-pixel property of the beam is IN BAND (its ink sits at the 33rd
+   percentile of the building faces it flies over, and 41% of that ink is already
+   legs), so the defect was never the draw — it was a network nobody had priced AS
+   a network. Each line now takes a SHARE of one city-wide budget: a city that opens
+   three lines gets three compact circuits instead of three monsters, and the total
+   lands in the same place whatever the dice say. RAILCAP sits at the old median, so
+   the typical city keeps the monorail it always had; only the fat tail is clipped. */
+const RAILCAP=130;
 /* break ground on line `li`: survey the richest developed parcel that isn't
    already close to existing track, then hand the line its own route PRNG and
-   randomized temperament (heading, run length, target size, value bar). */
+   randomized temperament (heading, run length, value bar) — and its slice of
+   the network budget, which sets how far it may wander before it turns home. */
 function seedMono(li){
   let best=null,bv=-1;
   for(let y=2;y<G-2;y++)for(let x=2;x<=SHOREX-3;x++){
@@ -2399,7 +2416,21 @@ function seedMono(li){
   if(!best)return false; /* nothing built yet — keep waiting */
   let rs=((seedNum^0xC17A^((li+1)*0x9E3779B1))>>>0);
   const lr=()=>((rs=(rs*1664525+1013904223)>>>0)/4294967296);
-  const g={rr:lr,d:(lr()*6)|0,run:3+(lr()*12|0),minLen:32+(lr()*50|0),
+  /* This line's slice of the network: a one-line city still earns a grand circuit, a
+     three-line city gets three local ones. `wander` is how far past minLen the value
+     hunt may run before homing — it used to be a flat +30 on EVERY line, which is what
+     let a three-line city overshoot its own size three times over.
+     The /1.65 is the route home. A line does not stop at minLen+wander; that is only
+     where it TURNS FOR HOME, and coming back costs it about another 65% again (a loop's
+     radius and its length are coupled, so a line that hunted value far afield has far to
+     return). Bounding the radius directly instead is a TRAP, and was measured: homing the
+     moment the railhead is R hexes from its start sends it straight out and straight back,
+     which is not a loop but a stub — every line collapsed to ~20 cells. The floors are what
+     a loop needs in order to BE a loop; on a three-line city they are what binds. */
+  const share=RAILCAP/Math.max(1,monoPlan?monoPlan.target:1)/1.65;
+  const g={rr:lr,d:(lr()*6)|0,run:3+(lr()*12|0),
+           minLen:clamp(Math.round(share*0.75),24,60)+(lr()*8|0),
+           wander:clamp(Math.round(share*0.25),8,26),
            bar:0.44+lr()*0.20,deadline:(year+12+(lr()*14|0))|0,wait:0,relax:0};
   monos.push({path:[best],closed:false,trains:[{p:0},{p:0.5}],g});
   buildMonoSet();
@@ -2429,7 +2460,7 @@ function stepMono(m){
     }
     /* homeward mode: after enough wandering (or a stubborn decade past its
        deadline, or a boxed-in railhead) the value hunt gives way to closing */
-    if(L>=g.minLen+30||year>=g.deadline||g.relax>=2)g.homing=true;
+    if(L>=g.minLen+g.wander||year>=g.deadline||g.relax>=2)g.homing=true;
     if(g.homing){
       if(!g.route||!g.route.length){
         g.route=monoRouteHome(m);
