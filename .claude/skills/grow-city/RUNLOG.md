@@ -142,6 +142,7 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 209  Urban fabric × Deepen      SHIPPED             22m16s   $6.83  17877fa
 ✔ Iter 210  People & activity × Deepen DEEPENED            36m12s   $13.83 d57bec6
 ✔ Iter 211  Transport × Connect        SHIPPED             49m14s   $16.99 2fbaa72
+✔ Iter 212  —                          SHIPPED             30m27s   $5.89  432617c
 ✔ Iter 213  —                          DEEPENED            111m01s  $15.57 78f53c2
 ✔ Iter 214  —                          FIXED               47m43s   $14.34 e4b6103
 ✔ Iter 215  —                          SHIPPED             82m38s   $10.18 1f1e761
@@ -174,4 +175,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 242  —                          SHIPPED             71m43s   $18.94 703b2b9
 ✔ Iter 243  Transport × Polish         SHIPPED             23m05s   $7.80  7c5b7d7
 ✔ Iter 244  Civic × Deepen             SHIPPED             76m41s   $25.00 6f2fd5b
+✔ Iter 245  Water × Deepen             SHIPPED             50m07s   $13.23 c1b49c7
 ```
