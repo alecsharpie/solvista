@@ -40,7 +40,8 @@ const git = (...a) => execFileSync('git', ['-C', REPO, ...a], { encoding: 'utf8'
 const sha = git('rev-parse', '--short', 'HEAD');
 
 /* Already recorded? Then HEAD did not move and this iteration landed nothing. */
-if (existsSync(RUNLOG) && readFileSync(RUNLOG, 'utf8').includes(sha)) {
+const existingLog = existsSync(RUNLOG) ? readFileSync(RUNLOG, 'utf8') : '';
+if (existingLog.includes(sha)) {
   console.log(`runlog: ${sha} already recorded — nothing to append.`);
   process.exit(0);
 }
@@ -49,13 +50,24 @@ const subject = git('log', '-1', '--format=%s');
 const body = git('log', '-1', '--format=%b');
 
 /* `Iter 121: the cable cars agree on a speed` — anything else is not an iteration
- * (an infra commit, a hand edit), and gets no line. */
-const m = subject.match(/^Iter (\d+):\s*(.+?)\s*(?:\(explored -> reverted\))?$/i);
+ * (an infra commit, a hand edit), and gets no line. An iteration can land as more
+ * than one commit (`Iter 212 (cont.): …`), and runlog only ever sees the final
+ * HEAD — so tolerate parenthetical(s) between the number and the colon, or a whole
+ * run's data goes unrecorded when a follow-up commit is on top. */
+const m = subject.match(/^Iter (\d+)\s*(?:\([^)]*\)\s*)*:\s*(.+?)\s*(?:\(explored -> reverted\))?$/i);
 if (!m) {
   console.log(`runlog: HEAD "${subject.slice(0, 40)}…" is not an iteration — skipped.`);
   process.exit(0);
 }
 const [, num, title] = m;
+
+/* The sha guard above only catches the exact same commit; a second commit for an
+ * already-logged iteration would otherwise append a duplicate line. Skip if this
+ * iteration number is already in the log. */
+if (new RegExp(`^[✔↩≈]\\s+Iter ${num}\\b`, 'm').test(existingLog)) {
+  console.log(`runlog: Iter ${num} already recorded — nothing to append.`);
+  process.exit(0);
+}
 
 /* The ledger entry is the authority on both the verdict and (as a fallback) the
  * vector — an iteration's commit body often opens with prose, not `Domain × Kind`
@@ -76,7 +88,10 @@ const entry = entryOf(num);
 
 const vmatch = (s) => s && s.match(/([A-Z][A-Za-z& ]+?)\s+(?:x|×)\s+\**([A-Za-z/ ]+?)\**(?:,|\.|\s+\(|$)/);
 const vEntry = entry.match(/\*\*Vector\*?\*?\s*[.—-]*\s*(.+)/);
-const vm = vmatch(body.split('\n')[0]) || vmatch(vEntry ? vEntry[1] : '');
+/* Last-ditch fallback: the commit subject usually ends with `(Domain × Kind)`
+ * even when the body opens with prose — keep the tag rather than logging `—`. */
+const vParen = subject.match(/\(([^)]*(?:x|×)[^)]*)\)/);
+const vm = vmatch(body.split('\n')[0]) || vmatch(vEntry ? vEntry[1] : '') || vmatch(vParen ? vParen[1] : '');
 const vector = vm ? `${vm[1].trim()} × ${vm[2].trim()}` : '—';
 
 const vd = entry.match(/\*\*Verdict[^*]*?(SHIPPED|DEEPENED|FIXED|EXPLORED\s*(?:→|->)\s*REVERTED|REVERTED)/i);

@@ -16,6 +16,7 @@
  * with no cost — clearly labelled as such.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -68,12 +69,61 @@ const bilFrom = Math.min(...billed.map(r => r.iter));
 const V = ['SHIPPED', 'DEEPENED', 'FIXED', 'EXPLORED → REVERTED'];
 const verdicts = V.map(v => {
   const rs = billed.filter(r => r.verdict === v);
-  return { v, label: v === 'EXPLORED → REVERTED' ? 'Reverted' : v[0] + v.slice(1).toLowerCase(), n: rs.length, cost: sum(rs, r => r.cost) };
+  const cost = sum(rs, r => r.cost), secs = sum(rs, r => r.secs);
+  return { v, label: v === 'EXPLORED → REVERTED' ? 'Reverted' : v[0] + v.slice(1).toLowerCase(),
+    n: rs.length, cost, secs,
+    avgCost: rs.length ? cost / rs.length : 0, avgMin: rs.length ? secs / rs.length / 60 : 0 };
 });
 
 const fmt$ = n => '$' + n.toFixed(n < 100 ? 2 : 0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 const asOf = new Date().toISOString().slice(0, 10);
-const chartRows = rows.map(r => ({ i: r.iter, c: r.cost, s: r.secs, t: r.tier, v: r.verdict, k: r.vector }));
+
+// ---- what each iteration worked on (a "tag") --------------------------------
+// The RUNLOG vector is often blank, so recover the tag from three sources in
+// order: the RUNLOG vector column, the commit subject's `(Domain × Kind)`, then
+// step-back / fix keywords. Domains are normalised to seven canonical buckets.
+const subjOf = {};
+try {
+  for (const s of execFileSync('git', ['log', '--format=%s'], { encoding: 'utf8', maxBuffer: 1 << 28 }).split('\n')) {
+    const im = s.match(/^Iter (\d+):/);
+    if (im && !subjOf[+im[1]]) subjOf[+im[1]] = s;
+  }
+} catch { /* not a git checkout — tags degrade to RUNLOG vector only */ }
+const canonDomain = d => {
+  if (!d) return null;
+  for (const [re, name] of [[/^urban/i, 'Urban'], [/^nature/i, 'Nature'], [/^sky/i, 'Sky'],
+    [/^civic/i, 'Civic'], [/^water/i, 'Water'], [/^people/i, 'People'], [/^transport/i, 'Transport']])
+    if (re.test(d.trim())) return name;
+  return null;
+};
+function tagFor(r) {
+  const v = r.vector || '', s = subjOf[r.iter] || '';
+  let d = canonDomain((v.match(/^(.*?)\s*(?:x|×)/) || [])[1]); if (d) return d;
+  const p = s.match(/\(([A-Za-z][A-Za-z& ]+?)\s*(?:x|×)\s*[^)]*\)/);
+  d = canonDomain(p && p[1]); if (d) return d;
+  if (/step-back/i.test(s)) return 'Step-back';
+  if (r.verdict === 'FIXED' || /\bfix|\bbug/i.test(s)) return 'Fix';
+  return null;
+}
+for (const r of rows) r.tag = tagFor(r);
+
+// aggregate tags over measured iterations (the ones with a cost/time figure)
+const DOMAIN_TAGS = ['Urban', 'Transport', 'Nature', 'People', 'Sky', 'Water', 'Civic'];
+const TAG_ORDER = [...DOMAIN_TAGS, 'Step-back', 'Fix'];
+const tags = TAG_ORDER.map(t => {
+  const rs = known.filter(r => r.tag === t);
+  return { t, n: rs.length, cost: sum(rs, r => r.cost), secs: sum(rs, r => r.secs) };
+}).filter(d => d.n > 0).sort((a, b) => b.n - a.n);
+
+const chartRows = rows.map(r => ({ i: r.iter, c: r.cost, s: r.secs, t: r.tier, v: r.verdict, k: r.vector, g: r.tag }));
+
+// by-result comparison rows (billed tier — the only iterations with verdicts)
+const RCLASS = { SHIPPED: 'v-ship', DEEPENED: 'v-deep', FIXED: 'v-fix', 'EXPLORED → REVERTED': 'v-rev' };
+const RTXT = { SHIPPED: 'shipped', DEEPENED: 'deepened', FIXED: 'fixed', 'EXPLORED → REVERTED': 'reverted' };
+const resultRows = verdicts.map(d =>
+  `<tr><td><span class="vb ${RCLASS[d.v]}">${RTXT[d.v]}</span></td><td class="num">${d.n}</td>` +
+  `<td class="num">${d.avgMin.toFixed(0)} min</td><td class="num">${fmt$(d.avgCost)}</td>` +
+  `<td class="num">${fmt$(d.cost)}</td></tr>`).join('');
 
 const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/dark" title="Toggle theme">◐</button>
 <div class="wrap">
@@ -86,9 +136,8 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
   ledger, makes <em>one</em> improvement, verifies it with a numeric census and screenshot gates,
   commits, and exits — then the next one starts. No human in the loop. This page is the receipts.</p>
   <div class="herofig">
-    <div><span class="big">${maxIter}</span><span class="unit">iterations run</span></div>
-    <div><span class="big">${totalHours.toFixed(0)}<span class="sm">h</span></span><span class="unit">of autonomous compute</span></div>
-    <div><span class="big">${verdicts[0].n + verdicts[1].n + verdicts[2].n}</span><span class="unit">shipped &middot; ${verdicts[3].n} reverted</span></div>
+    <div><span class="big">${fmt$(knownCost)}</span><span class="unit">would-be API cost &middot; ${known.length} measured iterations</span></div>
+    <div><span class="big">${totalHours.toFixed(0)}<span class="sm">h</span></span><span class="unit">of autonomous compute &middot; ${maxIter} iterations</span></div>
   </div>
   <a class="back" href="./">&larr; open the living city</a>
 </header>
@@ -131,11 +180,32 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
 </section>
 
 <section class="chart">
-  <h2>How the loop judged its own work</h2>
-  <p class="sub">Of the ${billed.length} iterations with a recorded verdict (#${bilFrom}&ndash;${maxIter}), the loop shipped
-  most — but honestly <strong>reverted ${verdicts[3].n}</strong> after exploring dead ends. Self-assessment,
-  not just self-generation.</p>
-  <div id="verdictChart" class="svgbox"></div>
+  <h2>The mix of results, through time</h2>
+  <p class="sub">Every iteration that recorded a verdict (#${bilFrom}&ndash;${maxIter}), in order. Each tick is one
+  iteration, coloured by how the loop judged its own work:
+  <span class="key k-ship"></span>shipped, <span class="key k-deep"></span>deepened,
+  <span class="key k-fix"></span>fixed, <span class="key k-rev"></span>reverted. It kept shipping deep
+  into the run — and kept honestly reverting the dead ends too. Hover for detail.</p>
+  <div id="resultChart" class="svgbox"></div>
+</section>
+
+<section class="chart">
+  <h2>Time &amp; cost, by result</h2>
+  <p class="sub">What each kind of outcome costs, across the ${billed.length} iterations with a verdict. A
+  revert isn't free — a dead end still burns compute before the loop backs out — while a quick
+  <em>fix</em> is the cheapest thing it does. Would-be API prices; no money was actually spent.</p>
+  <div class="tablewrap">
+    <table id="byresult"><thead><tr><th>Result</th><th class="num">Count</th><th class="num">Avg time</th><th class="num">Avg would-be $</th><th class="num">Total would-be $</th></tr></thead><tbody>${resultRows}</tbody></table>
+  </div>
+</section>
+
+<section class="chart">
+  <h2>What the loop worked on</h2>
+  <p class="sub">Each iteration is tagged by the part of the city it touched — recovered from the ledger
+  and commit log, so even iterations that logged a blank vector are placed. <strong>Step-back</strong>
+  is the loop's periodic whole-city review (no single domain); <strong>Fix</strong> is a repair with no
+  growth vector. Bars are counts across the ${known.length} measured iterations; hover for would-be cost.</p>
+  <div id="tagChart" class="svgbox"></div>
 </section>
 
 <section class="chart">
@@ -181,11 +251,19 @@ const html = `<button id="themeBtn" class="themebtn" aria-label="Toggle light/da
     document.querySelectorAll('.svgbox').forEach(b=>b.innerHTML='');drawAll();
   });})();
 const DATA = ${JSON.stringify(chartRows)};
-const V = ${JSON.stringify(verdicts)};
+const TAGS = ${JSON.stringify(tags)};
 const MAXITER = ${maxIter};
 const fmtUsd = n => n==null ? '—' : '$'+n.toFixed(2);
 const fmtMin = s => (s/60).toFixed(0)+' min';
 const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+// Shared geometry so every iteration-indexed chart lines up on the same x axis:
+// identical plot width, left/right margins, iteration domain [1..MAXITER], ticks.
+const CW=920, PL=52, PR=16, IW=CW-PL-PR;
+const xI=i=>PL+IW*((i-1)/(MAXITER-1));
+const BW=Math.max(1.6, IW/MAXITER-0.6);
+const XTICKS=[1,${firstKnown - 1},${bilFrom},200,MAXITER].filter((v,i,a)=>a.indexOf(v)===i&&v>=1&&v<=MAXITER);
+function xAxis(s,H){XTICKS.forEach(i=>{const t=el('text',{x:xI(i),y:H-8,'text-anchor':i===1?'start':i>=MAXITER?'end':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});}
 const TIERSRC = {estimated:'estimated (no record)', recovered:'recovered from logs', billed:'logged live'};
 const TIERFILL = {estimated:'--muted', recovered:'--series-2', billed:'--series-1'};
 
@@ -203,43 +281,41 @@ function drawAll(){
 // ---- runtime per iteration (columns, full run, all tiers) ----
 (function(){
   const box=document.getElementById('timeChart');const rows=DATA;
-  const W=920,H=300,P={l:44,r:12,t:14,b:28};const s=svg(box,W,H);
-  const iw=W-P.l-P.r,ih=H-P.t-P.b;const maxM=Math.max(...rows.map(d=>d.s/60));
-  const x=i=>P.l+iw*((i-1)/(MAXITER-1));const bw=Math.max(1.4,iw/rows.length-0.8);
+  const W=CW,H=300,P={l:PL,r:PR,t:14,b:28};const s=svg(box,W,H);
+  const ih=H-P.t-P.b;const maxM=Math.max(...rows.map(d=>d.s/60));
   const y=m=>P.t+ih-(m/maxM)*ih;
   [0,30,60,90].forEach(v=>{if(v>maxM)return;const yy=y(v);
     s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
     const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent=v+'m';s.appendChild(t);});
-  rows.forEach(d=>{const m=d.s/60;const bx=x(d.i)-bw/2,by=y(m),bh=P.t+ih-by;
-    const r=el('rect',{x:bx,y:by,width:bw,height:Math.max(0.5,bh),rx:Math.min(1.5,bw/2),fill:cssv(TIERFILL[d.t]),'fill-opacity':d.t==='estimated'?0.4:1,class:'col'});
-    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtMin(d.s)+(d.c!=null?' &middot; '+fmtUsd(d.c):'')+(d.k?'<br>'+d.k:'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
+  rows.forEach(d=>{const m=d.s/60;const bx=xI(d.i)-BW/2,by=y(m),bh=P.t+ih-by;
+    const r=el('rect',{x:bx,y:by,width:BW,height:Math.max(0.5,bh),rx:Math.min(1.5,BW/2),fill:cssv(TIERFILL[d.t]),'fill-opacity':d.t==='estimated'?0.4:1,class:'col'});
+    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtMin(d.s)+(d.c!=null?' &middot; '+fmtUsd(d.c):'')+(d.g?'<br>'+d.g:'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
     r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
-  [1,${firstKnown - 1},${bilFrom},MAXITER].forEach(i=>{const t=el('text',{x:x(i),y:H-8,'text-anchor':i===1?'start':i===MAXITER?'end':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});
+  xAxis(s,H);
 })();
 
 // ---- cost per iteration (columns) ----
 (function(){
   const box=document.getElementById('costChart');const rows=DATA.filter(d=>d.c!=null);
-  const W=920,H=300,P={l:44,r:12,t:14,b:28};const s=svg(box,W,H);
-  const iw=W-P.l-P.r,ih=H-P.t-P.b;const maxC=Math.max(...rows.map(d=>d.c));
-  const x=i=>P.l+iw*((i-rows[0].i)/(rows[rows.length-1].i-rows[0].i));const bw=Math.max(2,iw/rows.length-1.2);
+  const W=CW,H=300,P={l:PL,r:PR,t:14,b:28};const s=svg(box,W,H);
+  const ih=H-P.t-P.b;const maxC=Math.max(...rows.map(d=>d.c));
   const y=c=>P.t+ih-(c/maxC)*ih;
   [0,5,10,15].forEach(v=>{if(v>maxC)return;const yy=y(v);
     s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
     const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent='$'+v;s.appendChild(t);});
-  rows.forEach(d=>{const bx=x(d.i)-bw/2,by=y(d.c),bh=P.t+ih-by;
-    const r=el('rect',{x:bx,y:by,width:bw,height:Math.max(0.5,bh),rx:Math.min(2,bw/2),fill:cssv(TIERFILL[d.t]),class:'col'});
-    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtUsd(d.c)+' &middot; '+fmtMin(d.s)+(d.k?'<br>'+d.k:'')+(d.v?'<br><span class=vt>'+d.v.replace('EXPLORED → REVERTED','reverted').toLowerCase()+'</span>':'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
+  rows.forEach(d=>{const bx=xI(d.i)-BW/2,by=y(d.c),bh=P.t+ih-by;
+    const r=el('rect',{x:bx,y:by,width:BW,height:Math.max(0.5,bh),rx:Math.min(2,BW/2),fill:cssv(TIERFILL[d.t]),class:'col'});
+    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br>'+fmtUsd(d.c)+' &middot; '+fmtMin(d.s)+(d.g?'<br>'+d.g:'')+(d.v?'<br><span class=vt>'+d.v.replace('EXPLORED → REVERTED','reverted').toLowerCase()+'</span>':'')+'<br><span class=src>'+TIERSRC[d.t]+'</span>',e.clientX,e.clientY));
     r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
-  [rows[0].i,${bilFrom},160,200,rows[rows.length-1].i].forEach(i=>{const t=el('text',{x:x(i),y:H-8,'text-anchor':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});
+  xAxis(s,H);
 })();
 
 // ---- cumulative cost (area+line) ----
 (function(){
   const box=document.getElementById('cumChart');const rows=DATA.filter(d=>d.c!=null);let acc=0;const pts=rows.map(d=>({i:d.i,y:(acc+=d.c)}));
-  const W=920,H=260,P={l:52,r:12,t:14,b:28};const s=svg(box,W,H);
-  const iw=W-P.l-P.r,ih=H-P.t-P.b;const maxY=pts[pts.length-1].y;
-  const X=i=>P.l+iw*((i-pts[0].i)/(pts[pts.length-1].i-pts[0].i));const Y=v=>P.t+ih-(v/maxY)*ih;
+  const W=CW,H=260,P={l:PL,r:PR,t:14,b:28};const s=svg(box,W,H);
+  const ih=H-P.t-P.b;const maxY=pts[pts.length-1].y;
+  const X=i=>xI(i);const Y=v=>P.t+ih-(v/maxY)*ih;
   [0,200,400,600,800].forEach(v=>{if(v>maxY)return;const yy=Y(v);
     s.appendChild(el('line',{x1:P.l,y1:yy,x2:W-P.r,y2:yy,stroke:cssv('--grid'),'stroke-width':1}));
     const t=el('text',{x:P.l-8,y:yy+4,'text-anchor':'end',class:'axis'});t.textContent='$'+v;s.appendChild(t);});
@@ -257,31 +333,45 @@ function drawAll(){
     hd.setAttribute('cx',X(best.i));hd.setAttribute('cy',Y(best.y));hd.setAttribute('opacity',1);
     showTip('<b>Through #'+best.i+'</b><br>'+fmtUsd(best.y)+' cumulative',e.clientX,e.clientY);});
   s.addEventListener('mouseleave',()=>{hv.setAttribute('opacity',0);hd.setAttribute('opacity',0);hideTip();});
-  [pts[0].i,${bilFrom},160,200,end.i].forEach(i=>{const t=el('text',{x:X(i),y:H-8,'text-anchor':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});
+  xAxis(s,H);
 })();
 
-// ---- verdict breakdown (horizontal bars) ----
+// ---- results through time (verdict strip) ----
 (function(){
-  const box=document.getElementById('verdictChart');
+  const box=document.getElementById('resultChart');const rows=DATA.filter(d=>d.v);if(!rows.length)return;
   const cols={SHIPPED:'--series-1',DEEPENED:'--series-2',FIXED:'--series-3','EXPLORED → REVERTED':'--series-6'};
-  const W=920,rowH=52,P={l:110,r:120,t:6,b:6};const H=P.t+P.b+V.length*rowH;const s=svg(box,W,H);
-  const maxN=Math.max(...V.map(d=>d.n));const iw=W-P.l-P.r;
-  V.forEach((d,idx)=>{const cy=P.t+idx*rowH+rowH/2;const bw=(d.n/maxN)*iw;
-    const lab=el('text',{x:P.l-12,y:cy+4,'text-anchor':'end',class:'vlbl'});lab.textContent=d.label;s.appendChild(lab);
-    const bar=el('rect',{x:P.l,y:cy-11,width:Math.max(2,bw),height:22,rx:4,fill:cssv(cols[d.v]),class:'col'});
-    bar.addEventListener('mousemove',e=>showTip('<b>'+d.label+'</b><br>'+d.n+' iterations<br>'+fmtUsd(d.cost)+' would-be',e.clientX,e.clientY));
-    bar.addEventListener('mouseleave',hideTip);s.appendChild(bar);
-    const vt=el('text',{x:P.l+bw+8,y:cy+4,class:'vnum'});vt.textContent=d.n+'  ·  '+fmtUsd(d.cost);s.appendChild(vt);});
+  const vtxt={SHIPPED:'shipped',DEEPENED:'deepened',FIXED:'fixed','EXPLORED → REVERTED':'reverted'};
+  const W=CW,H=120,P={l:PL,r:PR,t:12,b:26};const s=svg(box,W,H);
+  const ih=H-P.t-P.b;
+  rows.forEach(d=>{const bx=xI(d.i)-BW/2;
+    const r=el('rect',{x:bx,y:P.t,width:BW,height:ih,rx:Math.min(1.5,BW/2),fill:cssv(cols[d.v]),class:'col'});
+    r.addEventListener('mousemove',e=>showTip('<b>Iteration '+d.i+'</b><br><span class=vt>'+vtxt[d.v]+'</span><br>'+fmtMin(d.s)+' &middot; '+fmtUsd(d.c)+(d.g?'<br>'+d.g:''),e.clientX,e.clientY));
+    r.addEventListener('mouseleave',hideTip);s.appendChild(r);});
+  xAxis(s,H);
 })();
 
 // ---- provenance coverage strip ----
 (function(){
   const box=document.getElementById('provChart');
-  const W=920,H=64,P={l:8,r:8,t:8,b:22};const s=svg(box,W,H);const iw=W-P.l-P.r,ih=H-P.t-P.b;
-  const X=i=>P.l+iw*((i-1)/(MAXITER-1));
+  const W=CW,H=64,P={l:PL,r:PR,t:8,b:22};const s=svg(box,W,H);const ih=H-P.t-P.b;
   const segs=[{a:1,b:${firstKnown - 1},c:'--muted'},{a:${recFrom},b:${bilFrom - 1},c:'--series-2'},{a:${bilFrom},b:MAXITER,c:'--series-1'}];
-  segs.forEach(g=>{const x0=X(g.a),x1=X(g.b);s.appendChild(el('rect',{x:x0,y:P.t,width:x1-x0-2,height:ih,rx:3,fill:cssv(g.c),'fill-opacity':g.c==='--muted'?0.35:0.9}));});
-  [1,${firstKnown - 1},${bilFrom - 1},MAXITER].forEach(i=>{const t=el('text',{x:X(i),y:H-6,'text-anchor':i===1?'start':i===MAXITER?'end':'middle',class:'axis'});t.textContent='#'+i;s.appendChild(t);});
+  segs.forEach(g=>{const x0=xI(g.a),x1=xI(g.b);s.appendChild(el('rect',{x:x0,y:P.t,width:x1-x0-2,height:ih,rx:3,fill:cssv(g.c),'fill-opacity':g.c==='--muted'?0.35:0.9}));});
+  xAxis(s,H);
+})();
+
+// ---- what the loop worked on (tag bars) ----
+(function(){
+  const box=document.getElementById('tagChart');if(!box||!TAGS.length)return;
+  const fill=t=>t==='Step-back'?'--muted':t==='Fix'?'--series-3':'--series-1';
+  const W=CW,rowH=40,P={l:92,r:150,t:6,b:6};const H=P.t+P.b+TAGS.length*rowH;const s=svg(box,W,H);
+  const maxN=Math.max(...TAGS.map(d=>d.n));const iw=W-P.l-P.r;
+  TAGS.forEach((d,idx)=>{const cy=P.t+idx*rowH+rowH/2;const bw=(d.n/maxN)*iw;
+    const lab=el('text',{x:P.l-12,y:cy+4,'text-anchor':'end',class:'vlbl'});lab.textContent=d.t;s.appendChild(lab);
+    const bar=el('rect',{x:P.l,y:cy-10,width:Math.max(2,bw),height:20,rx:4,fill:cssv(fill(d.t)),'fill-opacity':d.t==='Step-back'?0.5:1,class:'col'});
+    const avgM=(d.secs/60/d.n).toFixed(0),avgC=fmtUsd(d.cost/d.n);
+    bar.addEventListener('mousemove',e=>showTip('<b>'+d.t+'</b><br>'+d.n+' iterations<br>'+avgM+' min &middot; '+avgC+' avg<br>'+fmtUsd(d.cost)+' would-be total',e.clientX,e.clientY));
+    bar.addEventListener('mouseleave',hideTip);s.appendChild(bar);
+    const vt=el('text',{x:P.l+Math.max(2,bw)+8,y:cy+4,class:'vnum'});vt.textContent=d.n+'  ·  '+fmtUsd(d.cost);s.appendChild(vt);});
 })();
 }
 drawAll();
@@ -293,7 +383,8 @@ drawAll();
   const vclass={SHIPPED:'v-ship',DEEPENED:'v-deep',FIXED:'v-fix','EXPLORED → REVERTED':'v-rev'};
   const vtxt={SHIPPED:'shipped',DEEPENED:'deepened',FIXED:'fixed','EXPLORED → REVERTED':'reverted'};
   for(const d of rows){const tr=document.createElement('tr');
-    tr.innerHTML='<td class="num">'+d.i+'</td><td>'+(d.k||'—')+'</td><td><span class="vb '+vclass[d.v]+'">'+vtxt[d.v]+'</span></td><td class="num">'+fmtMin(d.s)+'</td><td class="num">'+fmtUsd(d.c)+'</td>';
+    const vec=d.k||(d.g?'<span class="dim">'+d.g+'</span>':'—');
+    tr.innerHTML='<td class="num">'+d.i+'</td><td>'+vec+'</td><td><span class="vb '+vclass[d.v]+'">'+vtxt[d.v]+'</span></td><td class="num">'+fmtMin(d.s)+'</td><td class="num">'+fmtUsd(d.c)+'</td>';
     tb.appendChild(tr);}
 })();
 </script>`;
@@ -345,6 +436,7 @@ text.endlbl{fill:var(--ink);font-size:12px;font-weight:600;font-variant-numeric:
 .col{cursor:pointer;transition:opacity .1s}.col:hover{opacity:.75}
 .key{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 2px;vertical-align:baseline}
 .key.k-billed{background:var(--series-1)}.key.k-recovered{background:var(--series-2)}.key.k-est{background:var(--muted);opacity:.55}
+.key.k-ship{background:var(--series-1)}.key.k-deep{background:var(--series-2)}.key.k-fix{background:var(--series-3)}.key.k-rev{background:var(--series-6)}
 .provlegend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;font-size:13px;color:var(--ink2)}
 .provlegend b{color:var(--ink);font-variant-numeric:tabular-nums}
 .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
@@ -355,6 +447,7 @@ th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border)}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);position:sticky;top:0;background:var(--surface)}
 tbody tr:last-child td{border-bottom:none}
 .num{text-align:right;font-variant-numeric:tabular-nums}
+.dim{color:var(--muted)}
 .vb{font-size:12px;font-weight:600;padding:2px 8px;border-radius:20px}
 .v-ship{color:var(--series-1);background:color-mix(in srgb,var(--series-1) 14%,transparent)}
 .v-deep{color:var(--series-2);background:color-mix(in srgb,var(--series-2) 14%,transparent)}
