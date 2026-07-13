@@ -167,4 +167,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 235  —                          SHIPPED             22m09s   $7.38  6cc8638
 ✔ Iter 236  —                          SHIPPED             46m01s   $15.33 ba24787
 ✔ Iter 237  —                          FIXED               34m24s   $8.99  8aa998a
+✔ Iter 238  —                          DEEPENED            31m13s   $12.00 062ac39
 ```
