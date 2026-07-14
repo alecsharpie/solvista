@@ -20098,3 +20098,71 @@ zoom 7.** They were right both times, and both times the artifact was innocent.
 - The elevated transit was reported **for the 14th time** (*"thin grey polylines… like scratches on
   the image"*). The "tower wallpaper" aside is **224's projection law** and stays closed.
 
+## Iteration 270 — the capitol was named for a roof it could not raise (2026-07-14) [Civic & culture × Polish]
+
+**Vector.** Civic & culture × Polish (rotation: Civic was 10 laps overdue; last Civic kind was
+Deepen at 259, so the kind varies too). Found by **225's grep-the-seam law (now 12 for 12)** crossed
+with **267's**: read the placard/label claims as a *checklist* and ask of each whether the code
+behind it can deliver. `CIVICDESC.parliament` promises *"The seat of the region, and **the tallest
+civic roof in Solvista**"* — the one civic label making a **comparative, falsifiable claim about the
+pixels**.
+
+**The defect (measured, two ways, and the second contradicts the first).**
+`c.th = kind==='parliament' ? 34 : CIVTH0 + c.v*14` — and **`20 + 14 = 34` IS the parliament's
+constant**: the landmark's height was set to the **supremum of the very distribution it is meant to
+tower over**, so it can be *tied* but never *beaten*. `probes/probe-civicstock.mjs` (pure world data):
+parliament is #1 on 6/6 seeds **by a mean margin of 0.9 in 34 — 2.6%** (hospital 33.9 · school 33.7 ·
+observatory 33.6 · firehouse 32.3). True, and invisible.
+Then restated in **the viewer's units** (205) by `probes/probe-parlheight.mjs` — the **drawn
+silhouette rise** above the hex centre, in CSS px, off the final composited canvas (occlusion free,
+floor **exactly 0 px** on all six seeds) — and **the world-data probe turns out to be WRONG about the
+winner**: the **UNIVERSITY out-tops the parliament on 4 seeds in 6** (rank **#2**, worst −3.1 px,
+**mean margin −0.5 px** — the capitol is on average *shorter* than its tallest rival). Two causes,
+and **fixing either alone ships nothing** (267): (a) the constant is the stock's ceiling; (b) the
+capitol's own draw then takes **`hb = max(16, h*0.8)` — a 20% body haircut** — while the university's
+campanile (`h+8`, spire to `h+14.6`) takes none. **The claim is false under BOTH readings**: the
+parliament's *cornice* (27.2) is not even in the **top four** civic roofs.
+⚠ And the tell had already been **quoted as fact by the harness itself**: iter 175's
+`probes/probe-parliament.mjs` header calls it *"the grander **'tallest civic roof'**"* — an earlier lap
+read the label, believed it, and never checked it.
+
+**What was built, and why it did not earn its place.**
+One predicate, three readers (`civicTh()`, replacing three copies of the literal), with the lead
+**derived from the stock** (`PARLTH=(CIVTH0+CIVTHV)*PARLLEAD`) rather than typed beside it, so a later
+lap that widens the civic range cannot silently re-tie the capitol. A **two-ledger sweep** (206) picked
+the constant from the *artifact's own* bars — clear the tallest rival civic on the **WORST** seed (233),
+stay under the tower stock — never from a number I chose: ×1.0 fails (2/6), ×1.2 fails (4/6),
+**×1.6 clears 6/6 by +6.9 px worst-case**, and the towers are never threatened (they rise **88–172 px**
+to the capitol's 40). Cost: census **PASS**, `developed/towerHt/civicKinds +0`, **tile histogram empty**,
+path objects **+0.065% day / +0.045% night**. Must-not-move (250): every other civic **identical**.
+**Two rounds of blind agents killed it, and they were right both times.**
+- **Round 1 (raise `c.th`).** Both agents, on a **crossed** map, identified the patch *by wall length*
+  (82 px vs 45) — and both, independently, on two seeds, reached the same aside: *"a striped office slab
+  wearing a dome as a hat"* · *"a domed tower rather than a low wide capitol; the columns get quite
+  slender."* One FAIL, one PASS-with-the-same-objection.
+- **Round 2 (hold the portico at the stock's ceiling; put every unit above it into a DRUM).** The
+  portico became **byte-identical to HEAD** (proved: the sweep's `th=34` column reproduces HEAD's rises
+  **exactly** — at `dr=0` the drum vanishes, a free **exact fixed point**, 245), the capitol cleared every
+  rival **6/6 by +9.9 px worst (+23%)**, and **both agents FAILed again, independently, on the crossed
+  map, in the same words**: *"too tall and too narrow, striped like the colonnade… a minaret / clocktower,
+  not a legislature."* (Their *diagnosis* was wrong — seed 7's agent said the portico had been "squashed
+  to a base pad", and it provably had not; **212's law**: the FAIL is where an agent is *wrong*, the
+  converged *perception* is where it is right. The portico only *looked* smaller because the drum towered
+  over it.)
+
+**Verdict: EXPLORED → REVERTED** (`solvista.html` byte-identical to HEAD, md5 confirmed). Reverting a
+change that passed the census, passed its probe 6/6, cost nothing, and held its controls **identical** —
+because it failed the one bar the numbers cannot express — is the system working (82/88/101/114/233/244).
+
+**What I would avoid next time — and it is the law (promoted to SKILL.md).** Every remaining route was
+measured and blocked: a taller *body* is the slab; a taller *drum* is the stalk; removing the `*0.8`
+haircut alone gets the cornice over the stock but still loses to the campanile's apex (a 7% tie). The
+reason is structural and it is **244's law arriving through the GRID instead of the camera**: **a per-hex
+draw's WIDTH is capped by the hex, so making it TALLER necessarily makes it more SLENDER — and any shape
+whose identity IS being wide and low (a capitol, a bowl, a basilica) cannot be made tall on one hex.**
+Height and identity are in direct conflict and the tile decides the winner. ⇒ The parliament needs a
+**massing redesign** (a drum wider than tall, a dome scaled to it, no colonnade stripes on the drum), and
+**a single-tile massing redesign is `polish-tile`'s job, not a growth lap's** — so it is banked as
+`polish-tile` cue **(g)**, with its gate already written (`probe-parlheight.mjs`: rank + margin in CSS px,
+worst seed, must-not-move column, exact fixed point).
+

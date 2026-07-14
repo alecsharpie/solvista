@@ -22,20 +22,18 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
   hook) — `stamp()` also draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (line/route/depot), computed live.
-- ✅ **279 PAID THE TRIM the budget had been warning about since ~122** (277/278 both declined it): the ARTIFACT-FACTS
-  bodies for **259–269** AND **272–275** are now in `GROWTH-archive.md`, the header keeping their **live ⚠ warnings
-  only**. ⇒ **The METHOD, not the number: a block is cuttable when its LAW is in SKILL.md and its ARTIFACT FACTS
-  compress to their imperatives.** 278 looked for a block it could *delete* — there is never one — and paid nothing.
-  **To add a line, cut a line: compress the OLDEST block, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last vector per domain: Sky **273** · Urban **274** · Water **275** · Transport **276** ·
-  Civic **277** · People **278** · Nature **279**. ➡ **NEXT: Sky (273) is oldest**, then Urban (274), then Water (275).
+- ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
+  FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
+  There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
+- **ROTATION.** Last vector per domain: Urban **274** · Water **275** · Transport **276** · Civic **277** ·
+  People **278** · Nature **279** · Sky **280**. ➡ **NEXT: Urban (274) is oldest**, then Water (275), then Transport (276).
   ⚠ **CIVIC's stale cells are still New CA rule (36/107) and Connect (45/204)** — 277 took Deepen.
   ⛔ **Transport's two named cues are `polish-tile` jobs, NOT growth laps** — (a) the elevated transit and (av) the
   tram's catenary are the SAME 0.5px hairline family; do not spend a growth lap on either.
@@ -46,7 +44,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ago. Its Deepen/Connect/Scale cells are the stale ones ⇒ **non-Polish when Water next comes up.**
   ✅ **PEOPLE's four-Deepen run is BROKEN (278 took Interaction/UX, its stalest cell at 191).** Its **Polish** (226) is
   now the stale one. **Interaction/UX is no longer the stale COLUMN** — it ran at 278 after 49 laps dormant.
-  🔑 **225'S GREP-THE-SEAM LAW IS 18 FOR 18 AT *FINDING*** (**278: the seam was a COMMENT THAT CONCEDED THE DEFECT WHILE EXPLAINING A FEATURE — `stamp()`'s ring is "tracked per frame, so it follows a walker *the tooltip has stopped updating*"; ⇒ GREP YOUR COMMENTS FOR A CLAUSE THAT ADMITS A BUG IN THE COURSE OF JUSTIFYING A WORKAROUND**) (277 the census's own scalars vs the placard · 267 a rule that had NEVER RUN · 268 a seabed built from the wrong noise · 269 a tram at 1.04x on its named avenue · 271 nine surfers who never went home · 272 an autumn CA that blinked the whole wood as ONE · 274 a new feature that never told the TYPE-KEYED TABLES it existed · 276 the BUS, which could not see the stop network it exists to serve) — **AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue list — or a passing probe — records where you have LOOKED, not what is THERE; and a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.** ⚠ **Grep `tick()`, the TABLES (`BEDT`/`CIVHRS`/`TILEDESC`/`valueSrc`/`VKIND`) AND THE COMMENTS — never the cue list.**
+  🔑 **225'S GREP-THE-SEAM LAW IS 19 FOR 19 AT *FINDING*** (**280: the seam was a COMMENT THAT ENUMERATED ITS OWN CATEGORY — `WINDA` is "the gust cycle the trees, the palms, the flags and the clouds all already ride", and the KITE and the BALLOON were not on the list and had never read it; ⇒ A COMMENT'S CATEGORY LIST IS A CHANGELOG OF WHO HAS BEEN FIXED, NOT A TAXONOMY OF WHO SHOULD READ IT — GREP THE MECHANISM, NEVER THE COMMENT'S NOUNS**) (278 a comment that conceded the defect while justifying a workaround · 277 the census's own scalars vs the placard · 267 a rule that had NEVER RUN · 268 a seabed built from the wrong noise · 269 a tram at 1.04x on its named avenue · 271 nine surfers who never went home · 272 an autumn CA that blinked the whole wood as ONE · 274 a new feature that never told the TYPE-KEYED TABLES it existed · 276 the BUS, which could not see the stop network it exists to serve) — **AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue list — or a passing probe — records where you have LOOKED, not what is THERE; and a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.** ⚠ **Grep `tick()`, the TABLES (`BEDT`/`CIVHRS`/`TILEDESC`/`valueSrc`/`VKIND`) AND THE COMMENTS — never the cue list.**
   ✅ **278 = 36th STEP-BACK: BOTH SEEDS PASS, no compounding drift; 261'S SEASON IS ALIVE** (both agents named winter by
   the LIGHT ALONE). **Perf ARC priced in PATH OBJECTS vs 177 (101 laps): day 102,267 → 111,660 = +9.2%; night 137,258 →
   138,098 = +0.6%** ⇒ ~**+0.09%/lap day, night FLAT. The arc is still stopped.** ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT
@@ -81,6 +79,14 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ⛔ **259: `c.lit` CANNOT EXPRESS DARKNESS** — `lit=LITAMT*(0.35+0.65*c.lit)`, a **0.35 floor** ⇒ range **2.9:1**. **Fine as a CHOOSER, dead as a LOOK ⇒ do NOT build "X answers the night glow" in COLOUR.** (Body archived at 271.)
   ⚠ **ARTIFACT FACTS from 236–276 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
   lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"):
+  **280:** **`windForce()` · `windDrift()` · `kiteGust()` — the sky's gust, as THREE predicates.** ⚠ **`windDrift()` IS THE CLOUDS' OWN EXPRESSION** (`0.55+0.9*WINDA`); balloons share it — **do not fork a second.**
+  ⚠ **EVERY LEVER IN `drawKite` IS A MULTIPLE OF `kiteGust()`, WHICH IS 1.0 AT FULL GALE = HEAD'S LITERALS** ⇒ an
+  EXACT fixed point, and `window.kiteGust=()=>1` renders HEAD **in-page** (253). **Do not "simplify" that centring away.**
+  ✅ **`__setWind(v)` / `__wind()` — THE HOOK `WINDA` NEVER HAD** (recomputed from `time` inside `advanceEntities`,
+  which runs ONLY while `playing`, so a FROZEN page holds a pin). ⚠ **No `?wind=`** (a playing page would overwrite
+  it). ⚠ **A KITE IS NOT SINGLE-FREQUENCY**: `drawKite` runs **FOUR** (`t`,
+  `t*1.33`, `t*2`, `t*2.4`), so a "null step" of one period of `t` is **NOT null**. ⚠ **`px()` RETURNS *WORLD* COORDS**
+  — device = `(px*scale+off)*dpr`; scoring ink at `px()*dpr` returns a clean, plausible **ZERO** (273).
   **279:** 🔴 **THE WILDFIRE CA NOW RUNS — IT NEVER HAD** (HEAD: **3 sparks, 0 JUMPS, 6 seeds x 61 yr**).
   `FIRESPK`/`TIMBSPK` are per-cell rolls **WALKED over `HEXI`** on `hashCell(x,y,seedNum^SALT^TICKN)` ⇒ **zero
   `rng()` draws** — do NOT "tidy" them back onto `rc()` (a 2%-of-plate host cannot be found by a lottery).
@@ -90,15 +96,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   EXACT FIXED POINT** — keep it. ⚠ **NOTHING BURNS AT 2035** (`year<2030`/`<2006`) ⇒ **a `?warp=61` frame can
   NEVER show a fire**; `probes/shot-firespark.mjs` drives `tick()` to a live episode and aims by measured ink.
   ⚠ **`tick()` DOES NOT ADVANCE `year` — `__warp` does (`year += 0.45/6`)**; drive the clock or `while(year<Y)` hangs.
-  ⇒ 🔑 **A FIRE IS AN EMITTER, AND `col()` IS FOR REFLECTORS** (257, on an emitter not a mirror). `drawFire` AND the
-  **BEACH BONFIRE** (271: grep the CATEGORY) both painted through `col('gold')` ⇒ luminance **FELL 225→141→106**
-  noon→night, hue rotating to **muddy brown** — the city's fires were **dimmest at midnight** (214). Both now take a
-  **RAW LITERAL** (peak **241 at EVERY hour**) under a **radial gradient falling to alpha 0** (195: a flat arc is a
-  **coin** — an agent said so unprompted). ⚠ **NEVER put a fire, a lamp or a lit window through the illuminant.**
-  ⇒ 🆕 **CUE (bb) — THE FLAME SILHOUETTE IS A `polish-tile` JOB (banked per 270; DO NOT reshape it in a growth lap —
-  I already did, three times).** **Four blind agents on two seeds** called HEAD's two flat triangles *"a tent" / "a
-  traffic cone" / "a glowing teepee"*; it is now an asymmetric bezier tongue (*"the triangle problem is fixed"*) and
-  they call it a **candle/teardrop** — wants bulge-and-neck, a visible lick, a **red→white temperature gradient**.
+  ⚠ **`drawFire` AND THE BEACH BONFIRE TAKE A RAW LITERAL, NOT `col()`** — do not "tidy" them back onto the palette
+  (law promoted to SKILL.md at 280: **an emitter is not a reflector**).
+  ⇒ **CUE (bb) (flame silhouette) MOVED TO `POLISH.md` (g2) at 280** — a `polish-tile` job; **not a growth lap (279 tried 3x).**
   ⇒ 🆕 **CUE (bc) — THE FIRE'S GLOW IS EATEN BY LATER ROWS IN DENSE FABRIC** (266's z-order law): painted **during its
   own cell**, so rows in FRONT paint it out — the warm spill lands in seed 7's open forest and **not** in seed 42's
   core (agent-measured). **A mark that must light its neighbours must trail back over cells ALREADY PAINTED.**
@@ -131,8 +131,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **275:** **`wrowHalf(t)` — the windrow's half-width profile; `WROWN` normalises its MEAN to 1.** ⚠ **`WROWN` IS
   SUMMED OVER THE POLYGON, NOT THE CURVE** (a chord cuts inside a concave profile ⇒ rows 4.5% under HEAD).
   ⚠ **DO NOT RAISE `WROWSEG`** (the row is 2.5 CSS px WIDE; its faceting is sub-pixel and it doubles the cost).
-  ⚠ **`WINDA` IS A THIRD CLOCK AND `playing=false` DOES NOT STOP IT** — `seaState()` is a pure function of it.
-  **PIN IT IN EVERY SEA/TREE/FLAG PROBE.** ⚠ **`colA()` PUTS THE PALETTE THROUGH THE ILLUMINANT** — foam's base
+  ⚠ **`WINDA` IS A THIRD CLOCK AND `playing=false` DOES NOT STOP IT** — **pin it with `__setWind` (280).**
+  ⚠ **`colA()` PUTS THE PALETTE THROUGH THE ILLUMINANT** — foam's base
   `[255,251,240]` is issued as `rgba(242,250,249)` at noon, so a signature match on the `BASE` literal **never
   fires**. ⚠ **THERE IS NO `setZoom`** — the contract is `zoom=n; scale=fitScale*zoom`.
   **274:** **`windarkAt(c)` TAKES THE CELL, NOT THE TYPE — `bedOf(c)` is the ONE predicate, THREE readers**; a
@@ -391,79 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 272 entries before Iteration 270 live in
+> **Archive:** the 273 entries before Iteration 271 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 270 — the capitol was named for a roof it could not raise (2026-07-14) [Civic & culture × Polish]
-
-**Vector.** Civic & culture × Polish (rotation: Civic was 10 laps overdue; last Civic kind was
-Deepen at 259, so the kind varies too). Found by **225's grep-the-seam law (now 12 for 12)** crossed
-with **267's**: read the placard/label claims as a *checklist* and ask of each whether the code
-behind it can deliver. `CIVICDESC.parliament` promises *"The seat of the region, and **the tallest
-civic roof in Solvista**"* — the one civic label making a **comparative, falsifiable claim about the
-pixels**.
-
-**The defect (measured, two ways, and the second contradicts the first).**
-`c.th = kind==='parliament' ? 34 : CIVTH0 + c.v*14` — and **`20 + 14 = 34` IS the parliament's
-constant**: the landmark's height was set to the **supremum of the very distribution it is meant to
-tower over**, so it can be *tied* but never *beaten*. `probes/probe-civicstock.mjs` (pure world data):
-parliament is #1 on 6/6 seeds **by a mean margin of 0.9 in 34 — 2.6%** (hospital 33.9 · school 33.7 ·
-observatory 33.6 · firehouse 32.3). True, and invisible.
-Then restated in **the viewer's units** (205) by `probes/probe-parlheight.mjs` — the **drawn
-silhouette rise** above the hex centre, in CSS px, off the final composited canvas (occlusion free,
-floor **exactly 0 px** on all six seeds) — and **the world-data probe turns out to be WRONG about the
-winner**: the **UNIVERSITY out-tops the parliament on 4 seeds in 6** (rank **#2**, worst −3.1 px,
-**mean margin −0.5 px** — the capitol is on average *shorter* than its tallest rival). Two causes,
-and **fixing either alone ships nothing** (267): (a) the constant is the stock's ceiling; (b) the
-capitol's own draw then takes **`hb = max(16, h*0.8)` — a 20% body haircut** — while the university's
-campanile (`h+8`, spire to `h+14.6`) takes none. **The claim is false under BOTH readings**: the
-parliament's *cornice* (27.2) is not even in the **top four** civic roofs.
-⚠ And the tell had already been **quoted as fact by the harness itself**: iter 175's
-`probes/probe-parliament.mjs` header calls it *"the grander **'tallest civic roof'**"* — an earlier lap
-read the label, believed it, and never checked it.
-
-**What was built, and why it did not earn its place.**
-One predicate, three readers (`civicTh()`, replacing three copies of the literal), with the lead
-**derived from the stock** (`PARLTH=(CIVTH0+CIVTHV)*PARLLEAD`) rather than typed beside it, so a later
-lap that widens the civic range cannot silently re-tie the capitol. A **two-ledger sweep** (206) picked
-the constant from the *artifact's own* bars — clear the tallest rival civic on the **WORST** seed (233),
-stay under the tower stock — never from a number I chose: ×1.0 fails (2/6), ×1.2 fails (4/6),
-**×1.6 clears 6/6 by +6.9 px worst-case**, and the towers are never threatened (they rise **88–172 px**
-to the capitol's 40). Cost: census **PASS**, `developed/towerHt/civicKinds +0`, **tile histogram empty**,
-path objects **+0.065% day / +0.045% night**. Must-not-move (250): every other civic **identical**.
-**Two rounds of blind agents killed it, and they were right both times.**
-- **Round 1 (raise `c.th`).** Both agents, on a **crossed** map, identified the patch *by wall length*
-  (82 px vs 45) — and both, independently, on two seeds, reached the same aside: *"a striped office slab
-  wearing a dome as a hat"* · *"a domed tower rather than a low wide capitol; the columns get quite
-  slender."* One FAIL, one PASS-with-the-same-objection.
-- **Round 2 (hold the portico at the stock's ceiling; put every unit above it into a DRUM).** The
-  portico became **byte-identical to HEAD** (proved: the sweep's `th=34` column reproduces HEAD's rises
-  **exactly** — at `dr=0` the drum vanishes, a free **exact fixed point**, 245), the capitol cleared every
-  rival **6/6 by +9.9 px worst (+23%)**, and **both agents FAILed again, independently, on the crossed
-  map, in the same words**: *"too tall and too narrow, striped like the colonnade… a minaret / clocktower,
-  not a legislature."* (Their *diagnosis* was wrong — seed 7's agent said the portico had been "squashed
-  to a base pad", and it provably had not; **212's law**: the FAIL is where an agent is *wrong*, the
-  converged *perception* is where it is right. The portico only *looked* smaller because the drum towered
-  over it.)
-
-**Verdict: EXPLORED → REVERTED** (`solvista.html` byte-identical to HEAD, md5 confirmed). Reverting a
-change that passed the census, passed its probe 6/6, cost nothing, and held its controls **identical** —
-because it failed the one bar the numbers cannot express — is the system working (82/88/101/114/233/244).
-
-**What I would avoid next time — and it is the law (promoted to SKILL.md).** Every remaining route was
-measured and blocked: a taller *body* is the slab; a taller *drum* is the stalk; removing the `*0.8`
-haircut alone gets the cornice over the stock but still loses to the campanile's apex (a 7% tie). The
-reason is structural and it is **244's law arriving through the GRID instead of the camera**: **a per-hex
-draw's WIDTH is capped by the hex, so making it TALLER necessarily makes it more SLENDER — and any shape
-whose identity IS being wide and low (a capitol, a bowl, a basilica) cannot be made tall on one hex.**
-Height and identity are in direct conflict and the tile decides the winner. ⇒ The parliament needs a
-**massing redesign** (a drum wider than tall, a dome scaled to it, no colonnade stripes on the drum), and
-**a single-tile massing redesign is `polish-tile`'s job, not a growth lap's** — so it is banked as
-`polish-tile` cue **(g)**, with its gate already written (`probe-parlheight.mjs`: rank + margin in CSS px,
-worst seed, must-not-move column, exact fixed point).
 
 ## Iteration 271 — nine people sat in the dark water off a beach that had packed itself away (2026-07-14) [People & activity × Deepen]
 
@@ -1109,3 +1041,59 @@ both probes are banked.
 
 **Verdict: FIXED.** A city that has always had a fire brigade, a burnt-ground tile, a smoke plume and a
 placard promising flames, and that had never, on any seed, in sixty-one years, caught fire.
+
+## Iteration 280 — the flag beside it had gone limp in the calm for 230 iterations (2026-07-15) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky × Deepen (rotation: Sky was the oldest domain at 273; Sky is post-saturation ⇒ Deepen/Polish only).
+
+**The seam, found by grep, not by the cue list** (225's law, 19 for 19). `WINDA`'s own comment names its
+readers: *"the gust cycle the trees, the palms, the flags and the clouds all already ride"* — and 245 added the
+sea. **Two things in the sky were not in that list and had never read it:**
+- **`drawKite`** — gated only on `LITAMT`. A kite flew at exactly the same height, the same downwind offset,
+  the same line tension and the same tail-flap in a **dead calm** as in a **full gale**. `windFlag` sits
+  **twenty lines below it** and has gone *"limp in the calm, snapping straight in a gust"* since **iter 50**.
+  (262's law, exactly: the unfixed sibling is next to the fix.)
+- **`balloons`** — `b.x += b.sp*dt*s`. The **clouds they drift among** read `(0.55+0.9*WINDA)`. A free balloon
+  that does not drift at wind speed is not a free balloon.
+
+**Change.** Three predicates, every existing reader left **byte-identical**:
+- `windForce()` = `clamp((WINDA-0.25)/0.75,0,1)` — seaState's own normalisation, lifted out, not reinvented.
+- `windDrift()` = `0.55+0.9*WINDA` — **ONE definition, two readers**: the clouds (byte-identical: it is literally
+  their existing expression) and now the balloons.
+- `kiteGust()` = `KITECALM+(1-KITECALM)*windForce()`, `KITECALM=0.45`. **Every lever in `drawKite` is written as a
+  multiple of it, so `kiteGust()==1` (full gale) reproduces HEAD's literals byte-for-byte** (245's centred lever) —
+  which is to say **HEAD drew every kite as though it were always blowing a full gale.** Lift, downwind offset, line
+  belly and tail streaming all ride it. The diamond keeps its size: a kite does not shrink, it comes **DOWN** (270).
+- `window.__setWind` / `__wind()` — **the hook `WINDA` never had.** 275's law ordered every sea/tree/flag probe to
+  pin `WINDA`, and the artifact made that **impossible**: it is recomputed from `time` inside `advanceEntities`,
+  which only runs while `playing`, so a frozen page held whatever gust it loaded on. (229/243: a documented trap you
+  keep walking into is a broken tool — fix the tool.)
+- The balloon's `ENTINFO` `sub` is now a **live function** of the air it is riding (cashing 278's `hoverRefresh`).
+
+**Census.** Tile histogram **EMPTY**; `pop`/`developed`/`roads` **+0**; entity counts unchanged. `solarRoofs +3` is
+226's documented tick-count wobble. ⚠ **I skipped step 2 and the first census run was against a STALE baseline** —
+it showed `TOWER +77 / BURNT 0→4`, which is **279's fire cascade, quoted verbatim in 279's own entry**. Re-pinned
+from pristine HEAD, the histogram is empty, as a draw-only change must be.
+
+**Probe** (`probes/probe-windkite.mjs`, `probes/shot-windkite.mjs`). Isolation is **253's predicate suppression in
+ONE page** — `window.kiteGust = () => 1` renders HEAD's kite exactly ⇒ **no HEAD file, no cross-build floor,
+build-agnostic**, floor **exactly 0 px**.
+- **HEAD's kite: `0 px` between a dead calm and a full gale, on 3 seeds in 3.** No threshold invented — the defect
+  states itself (236).
+- Patch: **195–231 px moved**, the kite flying **+14..+17 px higher** in the gale.
+- **FIXED POINT: `0 px`** — the shipped kite at full gale is byte-identical to HEAD (245).
+- **MUST-NOT-MOVE: 0 px outside the kite's own layer.**
+- **POSITIVE CONTROL (248): the FLAG** — the correct sibling twenty lines below — moved on **both** builds.
+- **Balloon/cloud drift ratio: SD `0.0000`** (patch) against **HEAD's SD 0.32–0.34, range 1.08x..2.19x**. The
+  balloon now rides exactly the air the clouds ride. Measured `E[WINDA] = 0.421`.
+
+**Perf.** Path objects **day +0.06%, night +0.07%** — the kite change adds **zero** path objects (same fills and
+strokes, different coordinates); the residue is the balloons/clouds sitting at slightly different x. **FREE** (198/216).
+
+**Visual.** Discriminating pair (264): same world, same frozen instant, same hex, **only the wind differs**, tokens
+meaningless and the map **CROSSED between seeds** (238/268). **Both blind agents named the gale correctly, and named
+OPPOSITE tokens** (s42→sigma, s7→kappa) — so they were reading the kite, not the ordering. Both described the calm
+kite as *"sagging in still air"* and *"attached, not detached"*; both PASSed the un-zoomed city. One noted, unprompted,
+the sea's wind-driven chop in the windy frame — the same `WINDA`, confirming the pin from a second draw.
+
+**Verdict: SHIPPED.**

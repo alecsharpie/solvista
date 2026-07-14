@@ -701,6 +701,72 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **AN EMITTER IS NOT A REFLECTOR — NEVER PUT A FIRE, A LAMP OR A LIT WINDOW THROUGH THE ILLUMINANT (iter 279,
+  promoted at 280).** 257 says `albedo × TINT` is right for **diffuse** land and a category error on a **specular**
+  mirror (the sea takes the SKY's colour, not albedo × sunlight). The third case is the one that *emits its own
+  light*, and it fails the same way: `drawFire` and the **beach bonfire** both painted through `col('gold')`, so the
+  night tint crushed them — luminance **fell 225 → 141 → 106** noon→night and the hue rotated to **muddy brown**, which
+  means **the city's fires were DIMMEST AT MIDNIGHT** (214's hue-rotation law, arriving on a flame). A fire does not
+  get darker because the sun went down. ⇒ **A surface that GENERATES light takes a RAW LITERAL, never `col()`/`colA()`**
+  (peak **241 at every hour**), under a **radial gradient falling to alpha 0** — a flat additive `arc()` is a **coin**,
+  not a glow (195). The tell: your draw is a light SOURCE and its colour comes from the palette.
+
+- **A COMMENT THAT ENUMERATES ITS OWN CATEGORY IS A *CHANGELOG OF WHO HAS BEEN FIXED*, NOT A *TAXONOMY OF WHO SHOULD
+  READ IT* — AND IT WILL READ AS AN AUDIT (iter 280).** 271 says: when a lap establishes a property (an hour, a
+  calendar, a curfew), **enumerate the CATEGORY** that property belongs to and check each member **by grep**, because
+  the list you assemble from *memory* will miss the sibling. 280 is the rung below, and it is nastier, because here
+  **the artifact hands you a list and it looks authoritative.** `WINDA`'s own comment names its readers — *"the gust
+  cycle the trees, the palms, the flags and the clouds all already ride, so the whole scene gusts together"* — and 245
+  dutifully added the sea to it. **That list is not the set of things that SHOULD read the wind. It is the set of
+  things that ALREADY DO** — i.e. a record of the laps already run. Two things in the sky were not on it and had never
+  read it: the **BALLOON** (`b.x += b.sp*dt*s`, idling through a gale at a flat rate while the **clouds it is drifting
+  among** scale by `0.55+0.9*WINDA` — measured: its speed relative to them swung **1.08x..2.19x**) and the **KITE** —
+  *the one object in the city that cannot fly without wind* — which flew at exactly the same height, downwind offset,
+  line tension and tail-flap in a **dead calm** as in a **full gale**, on 3 seeds in 3, at **exactly 0 px** of
+  difference. **`windFlag` sits TWENTY LINES BELOW `drawKite`** and has gone *"limp in the calm, snapping straight in
+  a gust"* since **iter 50** — so the correct sibling was not merely in the same file, it was **the next function
+  down**, and its comment is what made the omission look considered. ⇒ **Grep the MECHANISM (the global, the field,
+  the predicate), never the comment's NOUNS.** The tell, and it is checkable in one command: **a comment lists the
+  readers of a shared signal, and the list was written by the laps that added them.** (This is 242's cited-standard
+  law arriving on a *category* instead of an *invariant*: a list acquires authority merely by being written down.)
+  ⇒ **AND THE FIX'S SHAPE IS FREE, BECAUSE THE INCUMBENT IS THE CONSTANT (226/245): write every lever as a MULTIPLE
+  of the new predicate, normalised so that ONE END OF THE SIGNAL'S RANGE REPRODUCES HEAD'S LITERALS.** `kiteGust()`
+  returns **1.0 at full gale**, so the patch renders HEAD **byte-for-byte** there (measured: **0 px**) — which also
+  *states the defect in one sentence*: **HEAD drew every kite as though it were always blowing a full gale.** That
+  buys three things at once and none of them had to be designed: an **exact fixed point**, a **path-object count that
+  cannot move** (same fills, different coordinates ⇒ **+0.06% day / +0.07% night, free**), and — via 253 —
+  **`window.kiteGust = () => 1` renders HEAD *in-page*, so the probe needs NO HEAD FILE, has NO cross-build floor, and
+  grades both builds from ONE file at a floor of exactly 0.** **Before inventing a constant, ask which end of your
+  signal HEAD already sits at.**
+  ⇒ ⚠ **AND THE HOOK YOU NEED MAY BE THE ONE THE LAW ALREADY ORDERED YOU TO USE AND THE ARTIFACT NEVER PROVIDED.**
+  275's law says *"`WINDA` is a third clock and `playing=false` does not stop it — **PIN IT IN EVERY SEA/TREE/FLAG
+  PROBE**"* — an instruction the artifact made **impossible to follow**: `WINDA` is recomputed from `time` inside
+  `advanceEntities`, and there was no `__setWind` beside `__setTime`/`__setYear`/`__setTide`. So every probe went on
+  measuring whatever gust the page happened to load on. **A standing instruction that no one can obey is a missing
+  tool, not a discipline** (229/243). Adding the hook is a legitimate use of a lap — and note it is *free*, because
+  `advanceEntities` only runs while `playing`, so a **frozen page holds a pin by construction.**
+
+- **A SUPPRESSION MASK IS ONLY A VALID *CONTROL* IF WHAT IT **UNCOVERS** IS ALSO INERT TO THE SIGNAL YOU ARE SWEEPING
+  (iter 280).** 226/230/234 build the suppression family (suppress the DRAW / the DECISION / the COLOUR), and 250 says
+  put a **must-not-move** column beside your headline. Compose the two the obvious way and you get a control that is
+  **broken by construction**. Grading a wind feature, I took `drawBuilding`'s layer as the must-not-move column —
+  nothing in `drawBuilding` reads the wind, so its mask must be identical calm→gale. **It read 174–213 px.** The cause
+  is not the buildings: **suppressing a building reveals the SWAYING TREES behind it**, so the building's antialiased
+  silhouette *edges* flip in and out of the mask as the wind moves the **BACKGROUND**. A suppression mask is a claim
+  about a *difference between two frames*, and that difference is contaminated by **everything the suppressed draw was
+  covering.** ⇒ **Before using a suppressed layer as a control, ask what is BEHIND it, and whether THAT reads your
+  signal.** The honest control asks the question directly instead: at a **fixed** signal, does swapping the predicate
+  change any pixel **outside the feature's own layer**? (It read **0**.) The tell — and it is the only one you get —
+  is **250's own**: your must-not-move column moved, **and it moved IDENTICALLY on both builds**, which convicts the
+  **rig**, never the artifact.
+  ⇒ ⚠ **AND A PHASE-NULL STEP IS ONLY NULL FOR A *SINGLE-FREQUENCY* DRAW — COUNT THE FREQUENCIES BEFORE YOU CLAIM
+  ONE.** My first rig isolated the wind with no hook at all, by stepping `time` by exactly one period of the kite's
+  flap (`t = time*1.1 + k.ph`), so its phase returns to itself and any residual motion must be wind. **It is a lovely
+  idea and it is wrong:** `drawKite` runs **four** frequencies (`t`, `t*1.33`, `t*2`, `t*2.4`), so nulling the first
+  leaves the other three rotated — the kite duly moved 13–28 px on **pristine HEAD**, which the rig would have read as
+  *"the kite already answers the wind"* and which would have **manufactured a false acquittal of the very defect I was
+  there to find.** The tell: your null step is derived from **one** term of a draw that contains several.
+
 - **A LIVE *PREDICATE* IS NOT A LIVE *READOUT* — WHEN A LADDER OF LAPS MAKES A VALUE HONEST, GO AND CHECK THAT ANYTHING
   EVER **CALLS** IT AGAIN (iter 278).** 262 says: after you fix a per-entity rule, grep the function you fixed for its
   siblings. 271 says: enumerate the whole *category* the property belongs to. Both are about **who else needs the fix**.

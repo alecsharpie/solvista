@@ -220,3 +220,11 @@ crossed, both rounds; cause is structural, SKILL.md). ➡ The lever is **MASS, n
 **(av) THE TRAM'S CATENARY IS A 0.5px HAIRLINE** (269) — drawn unconditionally and *correctly*, yet **every agent that
 looked reported "no overhead wire visible"** ⇒ **215's law: it TINTS rather than MARKS.** Same bug as the elevated
 transit's 0.5px rope ⇒ **`polish-tile`, cue (a) FAMILY — the lever is a BODY/WIDTH, never more strokes.**
+
+(g2) **THE FLAME SILHOUETTE** (banked by grow-city iter 279; moved here 280 per 270's scope law — **DO NOT reshape it
+in a growth lap; 279 already tried three times**). **Four blind agents on two seeds** called HEAD's two flat triangles
+*"a tent" / "a traffic cone" / "a glowing teepee"*. It is now an asymmetric bezier tongue (agents: *"the triangle
+problem is fixed"*) and they call it a **candle/teardrop** — it wants **bulge-and-neck**, a visible **lick**, and a
+**red→white temperature gradient**. ⚠ **The fire is an EMITTER: it takes a RAW LITERAL, never `col()`** — do not put
+it back through the illuminant (279). ⚠ **Nothing burns at 2035** (`year<2030`) ⇒ a `?warp=61` frame can NEVER show a
+fire; drive `tick()` to a live episode (`probes/shot-firespark.mjs` aims by measured ink).

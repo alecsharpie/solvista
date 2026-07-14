@@ -4486,6 +4486,32 @@ function palm(gx,gy,s){
 }
 
 let time=0, waveT=0, WINDA=0.5; /* breeze strength 0..1: seeded gust cycle */
+
+/* HOW HARD IT IS BLOWING, 0 (dead calm) .. 1 (full gale) — seaState's own normalisation
+   of WINDA, lifted out so the sky can share it rather than reinvent it. WINDA never sits
+   below 0.25, so this is the honest 0-to-1 the readers below want. */
+function windForce(){ return clamp((WINDA-0.25)/0.75,0,1); }
+
+/* HOW FAST A FREE-DRIFTING THING CROSSES, as a multiple of its own still-air speed.
+   ONE definition, two readers: the clouds have ridden this exact expression since they
+   were written, and the BALLOONS -- which are free balloons, and so drift at wind speed
+   BY DEFINITION -- crossed at a flat `b.sp` regardless of the gale around them. Measured
+   on HEAD: the balloon's speed relative to the wind-riding clouds swung 1.08x..2.19x.
+   It returns 1 at WINDA 0.5, which is HEAD's balloon exactly. */
+function windDrift(){ return 0.55+0.9*WINDA; }
+
+/* A KITE FLIES *ON* THE WIND: it sinks back toward its flier in a lull, its line goes
+   slack and its tail hangs limp; in a gust it rides high and far downwind on a taut line
+   with the tail streaming. windFlag -- twenty lines below drawKite, and reading this same
+   gust cycle since iter 50 -- has gone "limp in the calm, snapping straight in a gust" for
+   its whole life. The kite beside it never did: it flew at exactly the same height, angle
+   and tautness in a dead calm as in a full gale.
+   1.0 IS HEAD'S KITE, EXACTLY -- which is to say HEAD drew every kite as though it were
+   always blowing a full gale. Every lever in drawKite is written as a multiple of this, so
+   at windForce()==1 the patch renders HEAD byte-for-byte (an exact fixed point, 245). */
+const KITECALM=0.45;            /* how far a kite sinks back when the air goes still */
+function kiteGust(){ return KITECALM+(1-KITECALM)*windForce(); }
+
 let TIDE=0.5; /* sea level 0..1 on a slow seeded cycle: 1=high water, 0=low */
 let TIDEV=1;  /* sign of dTIDE/dt: >0 flooding, <0 ebbing (the tooltip reads it) */
 let TIDEPH=0; /* phase offset: lets ?tide= pin the cycle without stopping it (see __setTide) */
@@ -4797,14 +4823,21 @@ function drawKite(k){
   if(LITAMT>0.6)return; /* kites come down at night */
   const[ax,ay]=px(k.x+0.5,k.y+0.5);
   const t=time*1.1+k.ph;
-  const kx=ax+10+Math.sin(t)*7, ky=ay-44+Math.cos(t*1.33)*5;
+  const g=kiteGust();   /* 0.45 in a dead calm .. 1.0 in a full gale (= HEAD's kite) */
+  /* lift and downwind offset both ride the gust: in a lull the kite settles back toward
+     the hand that is flying it. The diamond keeps its size -- a kite does not shrink, it
+     comes DOWN -- so the silhouette stays a kite at every wind (270). */
+  const kx=ax+(10+Math.sin(t)*7)*g, ky=ay-(44-Math.cos(t*1.33)*5)*g;
+  /* the line bellies downward as it goes slack, and pulls straight as the wind takes it */
   ctx.strokeStyle='rgba(90,80,66,'+(0.5-LITAMT*0.4)+')';ctx.lineWidth=0.7;
-  ctx.beginPath();ctx.moveTo(ax,ay-3);ctx.quadraticCurveTo(ax+6,ay-26,kx,ky);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(ax,ay-3);
+  ctx.quadraticCurveTo(ax+6*g,ay-26*g+(1-g)*18,kx,ky);ctx.stroke();
   ctx.fillStyle=col(k.c,1.1);
   ctx.beginPath();ctx.moveTo(kx,ky-4.5);ctx.lineTo(kx+3.4,ky);ctx.lineTo(kx,ky+4.5);ctx.lineTo(kx-3.4,ky);ctx.closePath();ctx.fill();
+  /* the tail streams downwind in a gust and hangs almost straight down in the calm */
   ctx.strokeStyle=col(k.c,0.9);ctx.lineWidth=0.8;
   ctx.beginPath();ctx.moveTo(kx,ky+4.5);
-  ctx.quadraticCurveTo(kx-3+Math.sin(t*2)*3,ky+9,kx+Math.sin(t*2.4)*4,ky+13);ctx.stroke();
+  ctx.quadraticCurveTo(kx-3*g+Math.sin(t*2)*3*g,ky+9,kx+Math.sin(t*2.4)*4*g,ky+13);ctx.stroke();
 }
 /* a flag flying from a pole-top at (bx,by), streaming in the +dir direction and
    rippling with the same WINDA gust cycle the trees and clouds ride (iter 50):
@@ -9277,7 +9310,11 @@ const ENTINFO=[
   [()=>herons,'Great heron','Stalking the marsh shallows.',7],
   [()=>deer,'Mule deer','Grazing where the meadow meets the woods.',7],
   [()=>joggers,'Jogger','Logging shoreline miles.',7],
-  [()=>balloons,'Hot-air balloon','Drifting over on the fair-day breeze.',13],
+  /* the balloon reports the air it is actually riding. Computed live, never stored --
+     and since iter 278 the card is re-read under a still cursor, so it stays true while
+     you watch the gust come through rather than freezing at the instant you arrived. */
+  [()=>balloons,'Hot-air balloon',()=>windForce()<0.2?'Hanging almost still in the calm air.'
+     :windForce()>0.7?'Running downwind before the gust.':'Drifting over on the fair-day breeze.',13],
   [()=>copters,'City helicopter','Hopping between the rooftop helipads.',10],
   /* the two aerial lines: `sub` is a function, so each car describes the LINE it
      belongs to rather than its species. Hovering also traces the route (render). */
@@ -9422,8 +9459,11 @@ function advanceEntities(dt,s){
   for(const v of trucks)stepVehicle(v,dt*s);
   for(const p of peds)stepPed(p,dt*s);
   for(const d of dogs)stepDog(d,dt*s);
-  for(const cl of clouds){cl.x+=cl.sp*(0.55+0.9*WINDA)*dt*s; if(cl.x>G+6)cl.x=-6;}
-  for(const b of balloons){b.x+=b.sp*dt*s; if(b.x>G+8){b.x=-8;b.y=CTRY-18+Math.random()*36;}}
+  for(const cl of clouds){cl.x+=cl.sp*windDrift()*dt*s; if(cl.x>G+6)cl.x=-6;}
+  /* a free balloon goes where the air goes -- same term as the clouds it is drifting
+     among, so the whole sky crosses together instead of the balloons idling through a
+     gale at a flat rate (iter 280). No new random draw: the wrap is untouched. */
+  for(const b of balloons){b.x+=b.sp*windDrift()*dt*s; if(b.x>G+8){b.x=-8;b.y=CTRY-18+Math.random()*36;}}
   for(const h of copters){h.t+=h.sp*dt*s;
     if(h.t>=1.4&&heliPads.length){ /* dwell on the pad, then lift for a new one */
       h.a=h.b; let nb=(Math.random()*heliPads.length)|0;
@@ -9494,6 +9534,17 @@ window.__setTide=v=>{v=clamp(v,0,1);
 /* test hook: advance entity motion n seconds without real time — lets warp
    screenshots catch drift-in entities (balloons, flock) and animation phases */
 window.__step=n=>{for(let r=n;r>0;r-=0.1)advanceEntities(Math.min(0.1,r),1);};
+
+/* PIN THE BREEZE (iter 280). WINDA is the gust cycle the trees, palms, flags, clouds, the
+   sea and now the kites all ride, and it was the one clock with no hook: it is recomputed
+   from `time` inside advanceEntities, which only runs while playing, so a frozen page holds
+   whatever gust it happened to load on. Two loads of the SAME file therefore rendered a
+   different sea (iter 275 measured the drift and had no way to stop it).
+   Assigning WINDA pins it for as long as the world is frozen — which is exactly the state
+   every probe and every screenshot runs in. `__wind()` reads it back, so a frame can
+   self-report the weather it was shot in (202). */
+window.__setWind=v=>{WINDA=clamp(v,0,1);};
+window.__wind=()=>({winda:WINDA,force:windForce(),drift:windDrift(),kite:kiteGust()});
 
 /* test hook: the live seabed. Every wet hex with its distance offshore, its drawn
    tone, and clip-ready screen coords — so a probe can grade the tone AGAINST the
