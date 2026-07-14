@@ -3429,6 +3429,62 @@ function servSend(v,duty){
   }
   v.duty='call'; v.fld=null;   /* nowhere reachable to be: stay out on the streets */
 }
+/* ---- THE BUS RUNS A ROUTE (iter 276) ---------------------------------------------
+   The city has published a stop network since long before the ledger: `stopOK` sites a
+   shelter on a built-up street, `stopQueue` builds a queue under its canopy that "empties
+   when one comes", and the tooltip prints "3 waiting". The BUS that is supposed to come
+   was spawned on a UNIFORMLY RANDOM road and then RANDOM-WALKED it — stepVehicle's
+   straightest-72%-else-any rule, byte-identical to an ordinary car — and only called at a
+   shelter it happened to blunder into. It is iter 249's ferry and 269's streetcar, on the
+   one vehicle whose entire job IS the network.
+   Measured (probe-busroute, 6 seeds, 900s of sim): 45 of 244 shelters — 18%, and 38% on
+   the worst seed — never saw a bus at all. And that is not a queue that fills: `stopQueue`
+   reads `since = c.blast===undefined ? 1e4 : ...`, so a shelter no bus has EVER reached is
+   pinned at its own stopCap forever. DISTINCT QUEUE STATES = 1 (236).
+   A ROUTE, not a preference — and the HOST is what decides which is allowed. 269 could
+   not give the streetcar a rail because the avenue is not a rideable network (9-16
+   components, 20% dead ends), so a tram confined to it strands in a block. The ROAD graph
+   is not that: probe-busroute Part A reads ONE connected component on 6 seeds in 6, every
+   stop inside it. A field route over the streets can always descend, so the bus may have
+   the rail the tram could not (263: a thing that must TRAVEL a host needs a NEIGHBOUR).
+   Nothing below is invented. The house already owned every piece:
+     the ROUTER -- `roadField` is servSend's own BFS, the field the cruiser, the ambulance
+                   and the engine have driven since iter 204. The bus is its fourth reader.
+     the SCHEDULE -- `c.blast` is the sim-time the last bus called, stamped by stepVehicle
+                   itself and already read by the DRAW and the TOOLTIP. Sorting on it is a
+                   headway rule that needs no new state and no new constant: the bus goes to
+                   the shelter that has waited longest, and a shelter nobody has ever called
+                   at (blast undefined) is the stalest there is. Coverage follows by
+                   construction rather than by a probability anyone had to tune (218).
+   Claimed, so five buses do not all run to one shelter; and it stays OPPORTUNISTIC -- the
+   dwell clause below still fires at any stop it crosses en route, so a bus picks up on the
+   way past exactly as it always did.
+   ONE predicate, three readers: the STEP (the field it descends), the TOOLTIP (the bus, and
+   the shelter, both name the same v.stopTo) and the probe -- so the sentence and the pixels
+   cannot drift apart (112).
+   Math.random only, exactly as the tram's route and the bus's own dwell already are, so the
+   seeded rng() stream -- and every census metric -- is untouched. And with no shelter yet
+   standing it returns null and the bus drives HEAD's byte-identical rule, so the young city
+   is a free dead-regime control (199). */
+function busNext(v){
+  const taken=new Set();
+  for(const u of vehicles)if(u!==v&&u.kind==='bus'&&u.stopTo)taken.add(idx(u.stopTo[0],u.stopTo[1]));
+  let best=null,bb=Infinity,bd=Infinity;
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){
+    const c=cells[idx(x,y)];
+    if(c.t!==T.ROAD||!c.stop)continue;
+    if(x===v.x&&y===v.y)continue;                   /* not the one it is standing at */
+    if(taken.has(idx(x,y)))continue;                /* another bus is already running to it */
+    const b=c.blast===undefined?-1e9:c.blast;       /* never called at = the stalest there is */
+    const d=hexDist(v.x,v.y,x,y);
+    if(b<bb||(b===bb&&d<bd)){bb=b;bd=d;best=[x,y]}
+  }
+  if(!best)return null;
+  const f=roadField([best]);
+  if(f[idx(v.x,v.y)]<0)return null;                 /* not reachable over the streets: drive on */
+  v.stopTo=best; v.fld=f;
+  return best;
+}
 function stepVehicle(v,dt){
   if(v.wait>0){v.wait-=dt;   /* a bus pulled in at its stop; a service vehicle is standing */
     if(v.wait<=0){
@@ -3449,16 +3505,21 @@ function stepVehicle(v,dt){
     v.p-=1;
     const lx=v.x,ly=v.y; v.x=v.nx; v.y=v.ny;
     const cc=cellAt(v.x,v.y);
+    /* the bus has reached the shelter it was running to: drop the field, and pick the next
+       one that has been waiting longest (busNext, below the comment above) */
+    if(v.kind==='bus'&&v.stopTo&&v.x===v.stopTo[0]&&v.y===v.stopTo[1]){v.fld=null;v.stopTo=null}
     if(v.kind==='bus'&&cc&&cc.stop&&!(v.dwell>0)){v.wait=1.2+Math.random()*0.9;v.dwell=16;
       cc.bqs=stopQueue(cc,v.x,v.y).q; cc.blast=time;}   /* whoever was waiting gets on */
+    if(v.kind==='bus'&&!v.fld)busNext(v);              /* re-target on hex entry, never per frame */
     /* the cab is flagged down where there is something to come out for (cabFree, above).
        A hired one drives straight past: `dwell` is the ride, so it cannot be hired twice. */
     if(v.taxi&&cabFree(v)&&livelyKerb(v.x,v.y)&&Math.random()<CABFARE){
       v.wait=1.6+Math.random()*1.4;    /* pulling over; the fare gets in */
       v.dwell=10+Math.random()*16;     /* ...and is aboard for the ride across town */
     }
-    /* arrived: back into the bay, or stand at the incident */
-    if(v.fld&&v.fld[idx(v.x,v.y)]===0){
+    /* arrived: back into the bay, or stand at the incident. Never a bus — it has no `duty`,
+       and it clears its own field at the shelter above. */
+    if(v.fld&&v.kind!=='bus'&&v.fld[idx(v.x,v.y)]===0){
       if(v.duty==='home'){v.duty='bay';v.fld=null;v.wait=7+Math.random()*13}
       else{v.duty=v.duty==='fire'?'atfire':'onscene';v.fld=null;v.wait=4+Math.random()*7}
     }
@@ -8916,7 +8977,11 @@ function describeTile(c,x,y){
   if(c.t===T.ROAD&&c.treed){const n=boulevardSize(x,y);
     data.push(['Length',n+(n===1?' block':' blocks')]);}
   if(c.t===T.ROAD&&c.stop){const{q,bl}=stopQueue(c,x,y);   /* live, like Tide (iter 97) */
-    data.push([c.stop===2?'Interchange':'Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);}
+    data.push([c.stop===2?'Interchange':'Bus stop',bl?'boarding':(q?q+' waiting':'nobody waiting')]);
+    /* ...and since iter 276 a bus is actually running here, so the shelter can say so — off
+       the SAME v.stopTo the router steers by, recomputed live and never stored (105) */
+    if(!bl&&vehicles.some(v=>v.kind==='bus'&&v.stopTo&&v.stopTo[0]===x&&v.stopTo[1]===y))
+      data.push(['Next bus','On its way here']);}
   /* an interchange exists because a railway platform reached for this street
      (iter 211), so it can say which line it feeds — recomputed live off the same
      m.sta every other reader shares, never a stored string (iter 105) */
@@ -9123,9 +9188,21 @@ const SERVDUTY={
   fireeng:{bay:'Back behind the roll-up doors at the firehouse.',call:'Out on patrol.',
     fire:'Lights on, heading to the smoke.',atfire:'At the fire, working the hose.',
     home:'Heading back to the apron.'}};
+/* ...and VKIND is TYPE-KEYED, so the one road vehicle it had no row for fell through to
+   ['Car', "Somebody's errand."] — the city's only public transport, drawn in its own gold
+   livery precisely "so a taxi reads apart from a bus at a glance", has been named a CAR for
+   the artifact's whole life (274's law, on Transport's table). Named now, and off the SAME
+   v.stopTo the router steers by and the SAME c.blast the queue is drawn from, so the card
+   can never claim a run the bus is not making. */
 const VKIND={fireeng:['Fire engine',v=>SERVDUTY.fireeng[v.duty]||'Out on patrol.'],
   ambo:['Ambulance',v=>SERVDUTY.ambo[v.duty]||'On a call.'],
-  police:['Police cruiser',v=>SERVDUTY.police[v.duty]||'On patrol.']};
+  police:['Police cruiser',v=>SERVDUTY.police[v.duty]||'On patrol.'],
+  bus:['City bus',v=>{
+    if(v.wait>0)return 'Pulled in at the shelter — the queue is getting on.';
+    if(!v.stopTo)return 'Working the streets between shelters.';
+    const c=cellAt(v.stopTo[0],v.stopTo[1]);
+    return c&&c.blast===undefined?'Running to a shelter nobody has called at yet.'
+      :'Running to the shelter that has waited longest.';}]};
 /* the entity the cursor is naming right now (null when hovering a tile) */
 let hoverEnt=null,hoverR=0,hoverTile=null;
 function pickEntity(wx,wy){

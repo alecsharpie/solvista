@@ -19610,3 +19610,123 @@ render a veil (`probe-front` D). **The lever is the SPAWN, not the draw** — bi
 (census histogram, 2035; 206's siting fix under-delivered), each ~40% occluded, its beds tiny prisms — so staggered
 per-bed calendars would be **a perfect field nobody can see (259)**. The tell is real and the HOST is starved. If
 GARDEN is ever reopened it is a **population** question first, not a calendar one.
+
+## Iteration 266 — the foam could never be given a size, so it was given a length (2026-07-14) [Water & coast × Polish]
+
+**Vector.** Water & coast × Polish — the ledger's **#1 cue (ap)**: *the sea's foam is invisible at
+fit zoom*, banked at 255 with its obvious fix already refuted. A banked, measured finding outranks
+kind-rotation (119), so it beat Urban's turn.
+
+**The defect, restated in the units that matter.** 245 made the whitecaps answer the wind and they
+still could not be SEEN, because a cap is a `3.0 x 1.1` **WORLD**-unit ellipse and `fitScale≈0.65` ⇒
+**2 x 0.7 CSS px** at the zoom the city is actually looked at — 215's hairline law exactly. Both
+closed fixes are closed for good reasons: a **bigger/brighter** cap is still a speck, and a wash in
+the sea's **TILE FILL** was *built* at 255 — free, mean-held, byte-exact at its fixed point, passing
+every gate — and **unseeable**, because a field sampled per hex and painted as a flat hexagonal fill
+terraces onto the lattice, so it is either invisible (d=0.57) or a quilt (d=1.15), with **no middle**.
+
+**Change.** **Langmuir windrows** (`WROWK`/`WROWL`, drawn last of the sea's overlays). Real foam
+organises into long streaks lying **parallel to the wind**; a streak is **sub-hex in WIDTH** (1.8–2.7
+world units ⇒ ~1.4–1.8 CSS px: never an edge, nothing to terrace) and **multi-hex in LENGTH** (up to
+~4 cells ⇒ ~90 CSS px), which is the one dimension a hexagon cannot quantize. Density, length, alpha
+and width all ride `seaState()`, so the sea now *stiffens* as it blows. Each row trails **UPWIND** —
+west and slightly north of its anchor hex — and that is **not a look, it is a Z-ORDER decision**:
+draw order is depth order, so the tail lies over water already painted, where no later row or column
+can paint it out. The upwind run is truncated at the first cell that is not open sea, so a streak can
+never touch land. Day-only on the caps' own `LITAMT` gate (the night hands off to moonglade/biolum
+untouched — and daylight-inert code is a free noise floor, 199).
+
+**Census.** PASS. Core **flat** (`pop`/`developed`/`roads` +0), tile histogram **empty** — correct for
+a draw-only lap. `solarRoofs -2 / greenRoofs -1` is 226's documented tick wobble.
+
+**Probe** (`probes/probe-seastate.mjs`, build-agnostic, floor **exactly 0**, `land` = positive control):
+the sea's calm→gale response, in moved sea pixels at full gust —
+
+| build | seed 42 | seed 7 | seed 1234 | land (positive control) |
+| --- | --- | --- | --- | --- |
+| HEAD | 949 | 1,042 | 1,012 | 4,457–5,036 (LIVE) |
+| patch | **9,329** | **8,725** | **11,101** | 4,566–5,057 (LIVE, unmoved) |
+
+**9–11x**, and the sign of the old complaint is **inverted**: the header's *"the wind moves the land
+6x harder than the sea"* is now sea/land **1.9–2.4x**. Per-moved-pixel amplitude ≈ **20** max-channel
+against a within-sea grain SD of **22** ⇒ the mark sits at **d≈0.9 where it is drawn** — and it is
+drawn as a coherent 60px line, not a speck.
+
+⚠ **AND THE BANKED PROBE FOR THIS CUE WOULD HAVE TOLD ME TO REVERT IT.** `probe-seaamp` (255's rig,
+the instrument the cue *names*) graded the same frames at **mean d 0.38 vs HEAD's 0.34** — i.e. *no
+change* — because it averages the shift over **all 456,863 sea px** while a windrow paints **~2%** of
+them. It is the right instrument for a **WASH** and the wrong one for a **MARK**. Law promoted to
+SKILL.md; 228's law recursing an **eighth** time, on the probe the cue handed me.
+
+**Visual** (4 blind agents, 2 seeds × 2 builds, files named — never letters (239); each agent saw ONE
+build and was asked *which file is the windy one, looking ONLY at the open water*):
+- **BOTH HEAD agents, unprompted, independently reproduced cue (ap) at fit zoom** — *"I honestly
+  cannot tell them apart on the water alone"* (42) · *"they look identical to me… Whatever the sea
+  does with wind, it does not survive downscaling. That is a real gap, not a hedge"* (7). **A cue
+  re-confirmed by a DIFFERENT instrument is corroborated** (the header's own standard).
+- **BOTH patch agents named the gale from the water alone, at fit zoom** — *"the sea alone gives it
+  away"* (42) · *"faint pale striping over the bay that city-calm.png lacks"* (7) — and both read the
+  form as **foam, not scratches, not an exposed grid**. Whole-frame: no z-order tears, no floating
+  tiles, no blown-out colour, no clutter, on either seed. **4/4 VISUAL: PASS.**
+
+**Perf.** Path objects **day 111,090 → 111,193 (+0.09%)**. The draw is **provably inert at night**
+(`LITAMT<0.6`; 199's free dead-regime control), and the night column reads **+0.11%** — so the day
+cost sits *inside its own noise floor*. Free.
+
+**Verdict: SHIPPED.** ✅ **(ap) IS CLOSED.**
+
+⚠ **BANKED ASIDE — both patch agents, independently, on two seeds** (212: weight an aside two agents
+reach independently above any verdict): *"the longest streaks are perfectly straight and uniform in
+thickness, so a few read a touch ruler-drawn rather than organic — a little length jitter or a taper
+would sell it harder."* The spine is a single `quadraticCurveTo` and a **stroke cannot taper**. ➡ The
+fix is to draw the row as a **filled tapered lozenge** (still ONE path object, so still free) with an
+S-curved spine, feathering to nothing at the upwind tail. New cue **(as)**.
+
+
+<!-- header bullets rotated out at 276 (superseded; laws live in SKILL.md) -->
+
+**268 — `probe-seastep` vs `probe-seaquilt` (rotated from the header at 276).**
+`probe-seastep` (257) IS STILL CORRECT AND STILL THE WRONG PAIR — it measures the DEPTH-adjacent step
+(tone `k` vs `k+1`), which need not be neighbours in the world. For anything a viewer sees, use
+`probe-seaquilt`: the step between hexes that TOUCH. (This supersession is stated in SKILL.md's probe
+roster, which is why the header line was redundant.)
+
+**268 — the stale golden pin (rotated from the header at 276).**
+TEN harness files still TYPE `golden t=0.68` — measured at 92% of golden, so LOW PRIORITY (body archived
+at 272). DERIVE, never type, in anything new. (264/265's law is in SKILL.md.)
+
+**262 — the kid's bedtime (rotated from the header at 276; cue CLOSED, law in SKILL.md).**
+`kidOut`/`kidHidden` — ONE predicate, three readers (draw, tooltip `withChild`, probe). LADDER OF HOURS:
+KID (in by `nightAmt` 0.34) < JOG (0.62) < CURF (1.85) — take a new entity's hour from this ladder, never
+invent one (226). ⚠ `kidOut` is DERIVED, NOT DRAWN — `p.kid` is already a `Math.random` uniform ⇒
+`(kid/6)%1` costs no new draw; a fresh `Math.random()` at spawn shifts the shared stream and walks every
+dog's owner (204). ⚠ `Math.min(p.out,…)` is STRUCTURAL.
+
+**259 — the observatory's dark sky (rotated from the header at 276; law in SKILL.md).**
+`siteDark` — the dome is chosen by `c.lit + DARKGL*groundLoad + DARKJIT*hash`, a PREFERENCE,
+deterministic, no `rng()` draw (the caller's 90-try scatter still runs and still spends its draws — do
+not "tidy" it away, that is a −22% pop / −47% tower stream shift). ⚠ `seedNum^0x0B5E` IS THE DOME'S SLIT
+AZIMUTH (158) — an ARGMIN sharing a salt is a SELECTION on it, and would pin `sd` to −1 in every city.
+A tie-break must never share a salt with anything that reads the cell it picks.
+
+**263 — the wildflower CA (rotated from the header at 276; law in SKILL.md).**
+`bloomHost` — ONE predicate, FOUR readers (the `tick()` spread, the rain front that seeds it, `bloomAt()`,
+the tooltip). Host = MEADOW + SHOREPARK. ⚠ THE BLOOM CA DRAWS NO `rng()` AT ALL (spread *and* spark are
+`hashCell(…^TICKN)`) ⇒ wholly inert — do not "tidy" it back onto `rng()`. ⚠ THE REFRACTORY IS JITTERED
+(`-(9+(c.v*10|0))`, mean 13.5 ≈ HEAD's 14) AND THAT IS LOAD-BEARING — a *shared* constant SYNCHRONISES the
+band (41% of ticks had zero flowers). ⚠ DUNE and PARK were MEASURED and REJECTED as hosts (components
+6/14 vs SHOREPARK's 34) — they can only speckle. Do not add them.
+
+**258/257/250/249/245/242/241/236 — the compressed artifact-facts block (rotated from the header at 276;
+every law is in SKILL.md, and the live do-not-retry warnings are kept in the header).**
+**258:** `cabFree`/`CABFARE` — ONE predicate, three readers (step, roof lamp, tooltip); `dwell` IS the ride.
+⚠ THE ROOF LAMP IS A FOR-HIRE SIGN — do not re-key it to darkness. ⚠ `livelyKerb` SELECTS FOR ITS OWN
+BURIAL (≥2 ATTRACT nbrs ⇒ tall frontage in front) — aim by argmax-over-TIME/INK, never at the first
+instance (269 generalised this: any superlative aiming predicate made of DENSITY frames a wall).
+**257:** ⚠ `GWST` (OVERHEAD sky) and `GWSB` (HORIZON) ARE NOT INTERCHANGEABLE — the sea's BODY mirrors
+`GWST`; blending the two lands in the mud (chroma 19). `SEAMIRROR` is the strength.
+**250:** `concertSeason()` — ONE predicate, four readers.
+**249:** `ferryApp`/`ferryFr`/`ferryThr`; ⚠ `f.sp` KEEPS ITS SIGN (the THROTTLE goes to zero, never the
+velocity). ⚠ NOT cue (o): the PIER has a waterfront, the HARBOUR does not.
+**245:** `seaState()`, floor `SEACALM`.  **242:** ⚠ MARSH/KELP no longer catch cloud shade (`WETSET`).
+**241:** `RAILCAP=130`.  **236:** ⚠ `cl.rain` IS GONE ⇒ `cloudWet(cl)`.
