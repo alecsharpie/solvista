@@ -21,36 +21,31 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
-- **Interaction/UX — the FEATURE INVENTORY was rotated to the archive at 211 (history, not steering).** ⚠ **229 is
-  cross-cutting (the TEXT LAYER: `<meta charset>`) and REPEALED 134's rule** — raw UTF-8 in JS string literals is now
-  SAFE (`probes/probe-charset.mjs` asserts it), so **do not hand-escape a `·` or an `é`.** What steers: when adding an
-  entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census hook); `stamp()` also
-  draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a FUNCTION of the entity
-  (105)** — use it when a thing's interest is its *membership* (line/route/depot), computed live, never a string.
-- **ROTATION.** Last vector per domain: Civic **259** · People **262** · Nature **263** ·
-  Sky **265** · Urban **267** · Water **268** · Transport **269**. ➡ **NEXT: Civic (259) is BADLY overdue (10 laps) —
-  take it.** ✅ **(s) CLOSED BY 265 · (ap) CLOSED BY 266.** ➡ **Top open cue is (aj)** (the clouds spawn
+- **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
+  steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
+  hook) — `stamp()` also draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a
+  FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (line/route/depot), computed live.
+- **ROTATION.** Last vector per domain: People **262** · Nature **263** ·
+  Sky **265** · Urban **267** · Water **268** · Transport **269** · Civic **270**. ➡ **NEXT: People (262) is oldest (8
+  laps).** ➡ **Top open cue is (aj)** (the clouds spawn
   with no reference to the land — Sky × Polish, doubly measured, ~2x the visible weather at zero new draw work);
   **(as)** (the windrows read ruler-drawn — Water × Polish) is the freshest.
-  🔑 **225'S GREP-THE-SEAM LAW IS NOW 11 FOR 11.** 267 is its loudest payout (Urban, written off hardest with four ⛔s,
-  was hiding **a whole RULE THAT HAD NEVER RUN**); **268 is its subtlest** (the sea, whose banked probe had *acquitted*
-  it, was hiding a seabed **built from the wrong kind of noise**); **269 is its cheapest** (Transport's tooltip AND its
-  code comment BOTH named the avenue, over a tram that rode it at **1.04x chance** — *less than a random car*).
-  ⇒ **An empty cue list — or a passing probe — records where you have LOOKED, not what is THERE.** Spend the grep.
-  ✅ **268 WAS THE 34th STEP-BACK — NO COMPOUNDING DRIFT ON LAND; 261'S SEASON IS ALIVE** (both blind agents named
-  winter **by the light alone**, on a crossed map). **The SEA was the finding** (see 268) — and it was the FAIL/ASIDE law
-  **inverted**: the headline FAIL was right and the banked probe had acquitted it. ➡ **NEXT STEP-BACK ~273.**
-  ⚠ **A STEP-BACK'S BLIND A/B MUST USE NON-ORDINAL FILE NAMES.** 239 says name the FILE, never a letter — **but
-  `one`/`two` are ordinals and carry the same implicit order**: 268's first round had **both agents pick "two" on a
-  CROSSED map** (⇒ agreeing with the POSITION, disagreeing about the BUILD). Use meaningless tokens (`kappa`/`sigma`)
-  **and cross the POSITION too**, or the pair is not blind.
-  🔑 **THE ONE REMAINING BANKED DEFECT IS `polish-tile` (a)**, the elevated transit — **13x reported (264 makes it
-  #13), the ledger's most-reported defect by a wide margin, and a `polish-tile` lap is BADLY OVERDUE.** ⚠ **259
-  ADDED A SECOND `polish-tile` CUE (e) — see the backlog.**
+  🔑 **225'S GREP-THE-SEAM LAW IS 12 FOR 12 AT *FINDING* — AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*.** 267 is its
+  loudest payout (Urban, written off hardest, hid **a RULE THAT HAD NEVER RUN**); **268 its subtlest** (the sea's banked
+  probe had *acquitted* a seabed built from the wrong kind of noise); **269 its cheapest** (a tram rode its named avenue
+  at **1.04x chance**); **270 its most humbling** — the capitol's label was false, and the fix was **structurally
+  unbuildable on one hex** (SKILL.md's width-caps-height law). ⇒ **An empty cue list — or a passing probe — records
+  where you have LOOKED, not what is THERE. But a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.**
+  ✅ **268 WAS THE 34th STEP-BACK — NO COMPOUNDING DRIFT ON LAND; 261'S SEASON IS ALIVE** (both blind agents named winter
+  **by the light alone**). **The SEA was the finding**, and it INVERTED the FAIL/ASIDE law: the headline FAIL was right
+  and the banked probe had acquitted it. ➡ **NEXT STEP-BACK ~273.** ⚠ **BLIND A/B NAMES MUST BE NON-ORDINAL** (268's law,
+  now in SKILL.md): `one`/`two` carry the same order a letter does — use meaningless tokens **and cross the position**.
+  🔑 **`polish-tile` IS BADLY OVERDUE AND NOW HAS THREE CUES**: **(a)** the elevated transit (**13x reported**, the
+  ledger's most-reported defect by a wide margin), **(e)** the observatory (259), **(g)** the capitol (270).
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -151,8 +146,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ✅ **CLOSED LADDERS — DO NOT RE-OPEN** (roster rotated to the archive at 268; every law is in SKILL.md): the **WASH**
   ladder · the **TOWER LOOK** · the **SKYLINE** ladder · the **HUD** lap · **137's standing crowd** · the
   **SEASONAL-VEGETATION** seam. ⚠ **230's `taxi` flag is LOAD-BEARING** (`VCURF` thins the night fleet by CLASS).
-  ⚠ **(y) came from an agent reading `shoot.mjs` output — REPRODUCE it in the user's configuration first** (229).
-  **Interaction/UX** last touched **229**.
+  ⚠ **(y) came from an agent reading `shoot.mjs` output — REPRODUCE it in the user's configuration first** (229). **Interaction/UX** last touched **229**.
   **CUES, RANKED.** ⚠ **The CLOSED/RETIRED roster — (w)(z)(t)(u)(ab)(af′)(ag)(ah)(ai)(al)(am)(an)(aq)(s)(ap) — and its
   live do-not-re-open warnings were rotated to the archive at 268; every law is in SKILL.md.** Half-closed: **(aj)'s
   SHADE half CLOSED 242 — its cloud-SITING half is still OPEN**; **(ao)'s SHAFT half CLOSED 248, its BOW half REFRAMED
@@ -184,6 +178,14 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   not build "X answers the fire"**: ignition is year-gated ⇒ at 2035 nothing can ignite, and fire **never spreads**.
   **⚠ THE `polish-tile` BACKLOG — measured cues that are NOT growth laps. Do not spend a domain's lap on one; they need a tile redesign, and each has a gate written. Full bodies archived at 264; the live warnings only.** ⚠ **(a), (e) and (f) ARE ONE FINDING — 215's HAIRLINE LAW** (a sub-pixel ornament *tints* its background instead of marking it; **the lever is a BODY / SIZE / CONTRAST — never more strokes, never placement**).
   (a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit zoom** (0.5px rope, 5px cabins). ⚠ **NEVER RE-OPEN THE Z-ORDER — CLEARED BY PROBE TWICE** (203/212); **15 mis-diagnoses** (269 makes two more — an agent called the rope *"scratches on the image"*, and another filed it as a z-tear **in the HEAD frame** while naming it *"a grey aerial-tramway cable, a different feature"* one frame earlier), and *that persistence IS the evidence: the fault is LEGIBILITY*. Suspect named + priced (256): **`drawMonoAt`, 2.1% of the frame.** *Do NOT re-try a body/halo under the rope (measured — backfires) nor a lit top edge (impossible at 0.5px).* **MOST-REPORTED DEFECT BY A WIDE MARGIN; a `polish-tile` lap is BADLY OVERDUE.** ⚠ **269 adds cue (av): the TRAM's catenary is the SAME 0.5px bug — the family is bigger than the two aerial lines.**
+  (g) **THE CAPITOL CANNOT CARRY ITS OWN LABEL — IT NEEDS A MASSING REDESIGN** (270; gate already written).
+  `CIVICDESC.parliament` promises *"the tallest civic roof in Solvista"* and it is **FALSE**: in the viewer's units the
+  **university out-tops it on 4 seeds in 6** and its cornice is not in the **top four** civic roofs (its draw takes an
+  `h*0.8` haircut the campanile does not). ⛔ **DO NOT RE-TRY IT AS A HEIGHT CONSTANT — BOTH ROUTES MEASURED AND DEAD**:
+  a taller BODY = *"a striped office slab wearing a dome as a hat"*; the height moved into a DRUM = *"a minaret, not a
+  legislature"* — **two blind agents, two seeds, crossed map, BOTH ROUNDS.** Cause is structural (SKILL.md: width is
+  capped by the hex ⇒ taller means slenderer, and a capitol's identity **IS** being wide and low). ➡ The lever is **MASS,
+  not height**: a drum **wider than tall**, a dome scaled to it, no stripes on the drum. Gate: `probe-parlheight.mjs`.
   (e) **THE OBSERVATORY IS TOO SMALL TO READ** (259; ≈ **5.5 CSS px at fit**, on a frame where it is 96.3% visible). ⚠ **SMALL, not BURIED — do NOT re-open the siting.**
   (f) **THE WILDFLOWERS ARE SUB-PIXEL** (263; ≈ **1.1 CSS px at fit**, true of HEAD's meadow bloom too). ⛔ **DO NOT RAISE THE PER-HEX BODY LIFT — that is 255's ⛔** (⇒ a hex quilt). ➡ The only way through is **a SHAPE THAT CROSSES TILE BOUNDARIES** (a drift of petals, a streak), never a brighter fill.
   (b) **`university` is the ONLY of the twelve civics with no `LITAMT`** — pitch dark after sunset; every place to put the light failed (195). (c) **A parked service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204). (d) **The marsh reeds do not read** — seven sub-pixel strokes round the pool (cue (i), 113).
@@ -192,12 +194,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **slow clock FIRST**; don't add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac. ⚠ **236's front is
   ALSO on `year` and is NOT that slow clock.**) **Water's banked cue (123): the pier/lifeguard are still `rng()`-salted
   — site them on a depth by respending their draws, but that REPEATS 123's mechanism, so vary it.**
-  **The asserts-less-than-the-code-knows tell is SPENT for agriculture** (orchard 129 + vineyard 139/148 + FARM 183;
-  **238 spent the CANOPY**). **GARDEN is the last mute one** — cue **(p)** OWNS it. ⇒ **"Additive inventory spent" is a
-  claim about a domain's ENTITIES, not its SURFACES** (127 put picnics on PARK's 878 hexes), **and a Deepen that adds no
-  element is the documented way past additive saturation** (126). ⚠ **THE SEASONAL-VEGETATION SEAM IS MEASURED-CLOSED
-  (238 + 252)** — PARK is at its ceiling, FOREST is 83% conifer, and the 66.4% mute area is **largely CORRECT.**
-  ⇒ **Do not open a canopy/vegetation seasonal vector; (aq) — THE LIGHT — supersedes it.**
+  ⇒ **"Additive inventory spent" is a claim about a domain's ENTITIES, not its SURFACES** (127 put picnics on PARK's 878
+  hexes), **and a Deepen that adds no element is the documented way past additive saturation** (126). *(The agriculture
+  tell + the measured-closed SEASONAL-VEGETATION seam were stated three times over; bodies archived at 270 — the closed
+  ladder above and ⛔ (ak) below carry them.)*
   **124 closed the LAST banked cue that moved a census number; the census is VACUOUS for most vectors — reach for a
   probe.** Three laws govern step 1: **a cue is a POINTER, NOT A SPEC** (re-grep the seam before designing to it); **a
   banked, measured finding outranks kind-rotation and cell-emptiness** (119); **saturation beats kind-rotation** — when
@@ -391,93 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 262 entries before Iteration 260 live in
+> **Archive:** the 263 entries before Iteration 261 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 260 — the season was there all along, painted on the one channel nobody can see (2026-07-14) [holistic step-back, 32nd]
-
-**Vector.** The 32nd whole-city step-back (due at 256+4; every domain has now had a lap). No artifact
-code was written: `solvista.html` is **byte-identical to HEAD**. The lap is 257 (sea sky-mirror) +
-258 (taxi fares) + 259 (observatory siting).
-
-**Visual.** `shot-stepback.mjs`, 2 seeds x 3 lights x 2 calendars; every frame self-reported clean
-(`sun=UP` at day/golden, `down` at night, `HUD=ok`, day/night pinned off winter at `year=2035.62`).
-**Both agents FAILed, on both seeds** — and all three of their FAILs had to be graded, not obeyed:
-
-- **"No downtown — uniform tower sprawl, no taper."** ⇒ **REFUTED.** `probe-taper` (pure world data):
-  the tallest tower stands at **ring 1** (seed 42, th 173) and **ring 5** (1234); `corr(th,core)` =
-  **0.82 / 0.80**; top-10 tallest mean distance **5.7 / 3.8** against **21.2 / 23.5** for developed
-  land; the envelope tapers monotonically (173 -> 139 -> 135 -> 102 -> 88). This is **224's projection
-  law** paying out exactly as it predicts — `corr(screen apex, true height)` is **0.26** while
-  `corr(screen apex, depth)` is **0.995**, so *an eye cannot judge a skyline from a whole-city frame*.
-  An unanswerable question, confidently answered wrong. **Do not re-open `c.th`.**
-- **"Golden hour collapses beach/road/farm into one terracotta mass."** ⇒ **the KNOWN (s) residue, and
-  its loudest claim is false.** `probe-goldenhue` reproduces the banked number exactly (PARK<->ROAD
-  **29 -> 24**, a ~20% narrowing) and **BEACH<->ROAD measures 72 at golden — the WIDEST pair in the
-  table.** Nothing crosses the 15 collapse floor that was not already under it by day (RES<->ROAD is
-  11 at day, 10 at golden). 222's night ordering invariant still **PASSes by 21**. Not new drift.
-- **"Winter is indistinguishable from summer."** ⇒ **CONFIRMED — and it is the finding.**
-
-**The finding (LAW in SKILL.md).** 253 gave the sunlight a calendar and proved it: real, centred,
-byte-identical at its fixed point. It is also **invisible**, and the two facts are not in tension.
-My first instinct was the banked magnitude rig `probe-seaamp` — domain-agnostic, takes two PNGs,
-exactly the right shape — which graded the season at **mean 6.4, median 2.0, d=0.27** and would have
-had me file *"real but sub-threshold, tune it up."* **`probe-seaamp` measures LUMINANCE, and 253's
-tint is NORMALISED TO HOLD LUMINANCE FLAT** (*"winter comes out COOLER and never DIMMER"*, L461). I
-had aimed a greyscale instrument at a design's own null space — **228's law recursing a SIXTH time,
-on a probe this harness already owned.** The complaint's noun was *"cooler"*: a colour word (214).
-
-Re-measured in the units the feature is written in (`probes/probe-seasonhue.mjs`, new; identical-pin
-floor **exactly 0.00** on all 3 seeds), with **golden hour carried as an incumbent bar I did not
-invent** (226) — a light change every agent calls obvious:
-
-| light change | warm-cool (R-B) | **luminance** | seen? |
-| --- | --- | --- | --- |
-| golden hour **[BAR]** | +24.9 (d **0.43**) | **-24.7 (d 0.69)** | instantly, by everyone |
-| winter (253's season) | **-30.2 (d 0.52)** | **-3.4 (d 0.09)** | **by nobody** |
-
-**The season moves the colour axis 1.2x HARDER than the golden hour does, and is invisible; the golden
-hour moves LUMINANCE 8x harder, and is unmissable.** (Seeds 42/7/1234: 121% / 120% / 125%.) The chroma
-amplitude was never the problem. **A global multiplicative cast on every surface at once is precisely
-the transform human vision divides out** — it is what colour constancy is *for* — so a viewer reading
-one frame at a time re-normalises it away and sees a normal daylit city. **The season carries no
-luminance, no contrast and no shadow signature: every channel the eye actually reads is flat across
-the calendar.** And the cause is a law of our own: **223's normaliser** (`n=1/(1-0.0308c)`), which is
-*correct* on a ladder of per-surface washes where luminance drift is a bug (222), is on a **whole-scene
-illuminant** the thing that zeroed the only channel it could have been seen on.
-
-**SUSPECT, NOT FIX (198).** The season needs a **non-chromatic** channel. I name no lever — but note
-the convergence: the header's own banked leftover from 253 (*"day length: the sun still rises and sets
-at the same hour all year; it must move the whole `KEYS` curve seasonally — a real Sky x Deepen swing,
-still unspent"*) is the one candidate that would move `lit`, brightness **and** shadow length at once.
-The next Sky lap should re-derive its own instrument from that (228), not inherit mine.
-
-**Census.** PASS. Artifact byte-unchanged, so every metric +0 and the tile histogram is empty — the
-correct and vacuous result for a step-back; it proves only that no page threw.
-
-**Perf.** LAP (vs 256, `3720e79`): day **+1.3%**, night **-0.3%**. And never `perfab` alone (216) —
-`probe-drawbudget` gives the mechanism: path objects **110,783 -> 111,018 day (+0.21%)** and
-**139,579 -> 139,890 night (+0.22%)** across three iterations. Night profile unchanged (`winBandR`
-32.1% · `prismS` 29.1% · `hexTile` 12.0% · `bandS` 7.5%). **ARC** (vs 177, `7e2ac2c`): day **+18.8%**,
-night **+13.0%** — inside both banded series (day 18.1-19.0, night 12.4-13.2 since 242). **The arc has
-now been flat across FIVE consecutive step-backs / 18 iterations.** Still structural, not luck: a
-domain past additive saturation stops costing frame time. **Do not open a perf lap.**
-
-**Elevated transit.** Both agents raised it again, unprompted (*"dark overhead wire/transit lines
-crisscross the entire plate like scratches"*, *"the overhead-wire lattice is the single noisiest
-element"*). That is **reports #11 and #12** — the most-reported defect in the ledger by a wide margin,
-already named with a number (256: `drawMonoAt`, 2,747px, 2.1% of the frame). Both agents again
-confabulated a cause (power lines; a stray arc with no source). **The fault is LEGIBILITY, and it is a
-`polish-tile` lap that is now badly overdue.**
-
-**Verdict. FIXED (the harness).** No new compounding drift: the skyline is measurably intact, the
-golden-hour residue is the one already on the books, and the perf arc is still stopped. The city is
-healthy. What the step-back found was in the *instrument* and in a *law* — the loop had shipped a
-season, measured it with a probe built on the one axis the season deliberately does not move, and
-believed itself. Two blind agents were right for eleven iterations and no gate could hear them.
 
 ## Iteration 261 — the season was invisible because it had no clock (2026-07-14) [Sky & atmosphere × Deepen]
 
@@ -1188,3 +1106,71 @@ zoom 7.** They were right both times, and both times the artifact was innocent.
   found 0 clipped labels. REPRODUCE IT IN A REAL BROWSER BEFORE BUILDING TO IT.**
 - The elevated transit was reported **for the 14th time** (*"thin grey polylines… like scratches on
   the image"*). The "tower wallpaper" aside is **224's projection law** and stays closed.
+
+## Iteration 270 — the capitol was named for a roof it could not raise (2026-07-14) [Civic & culture × Polish]
+
+**Vector.** Civic & culture × Polish (rotation: Civic was 10 laps overdue; last Civic kind was
+Deepen at 259, so the kind varies too). Found by **225's grep-the-seam law (now 12 for 12)** crossed
+with **267's**: read the placard/label claims as a *checklist* and ask of each whether the code
+behind it can deliver. `CIVICDESC.parliament` promises *"The seat of the region, and **the tallest
+civic roof in Solvista**"* — the one civic label making a **comparative, falsifiable claim about the
+pixels**.
+
+**The defect (measured, two ways, and the second contradicts the first).**
+`c.th = kind==='parliament' ? 34 : CIVTH0 + c.v*14` — and **`20 + 14 = 34` IS the parliament's
+constant**: the landmark's height was set to the **supremum of the very distribution it is meant to
+tower over**, so it can be *tied* but never *beaten*. `probes/probe-civicstock.mjs` (pure world data):
+parliament is #1 on 6/6 seeds **by a mean margin of 0.9 in 34 — 2.6%** (hospital 33.9 · school 33.7 ·
+observatory 33.6 · firehouse 32.3). True, and invisible.
+Then restated in **the viewer's units** (205) by `probes/probe-parlheight.mjs` — the **drawn
+silhouette rise** above the hex centre, in CSS px, off the final composited canvas (occlusion free,
+floor **exactly 0 px** on all six seeds) — and **the world-data probe turns out to be WRONG about the
+winner**: the **UNIVERSITY out-tops the parliament on 4 seeds in 6** (rank **#2**, worst −3.1 px,
+**mean margin −0.5 px** — the capitol is on average *shorter* than its tallest rival). Two causes,
+and **fixing either alone ships nothing** (267): (a) the constant is the stock's ceiling; (b) the
+capitol's own draw then takes **`hb = max(16, h*0.8)` — a 20% body haircut** — while the university's
+campanile (`h+8`, spire to `h+14.6`) takes none. **The claim is false under BOTH readings**: the
+parliament's *cornice* (27.2) is not even in the **top four** civic roofs.
+⚠ And the tell had already been **quoted as fact by the harness itself**: iter 175's
+`probes/probe-parliament.mjs` header calls it *"the grander **'tallest civic roof'**"* — an earlier lap
+read the label, believed it, and never checked it.
+
+**What was built, and why it did not earn its place.**
+One predicate, three readers (`civicTh()`, replacing three copies of the literal), with the lead
+**derived from the stock** (`PARLTH=(CIVTH0+CIVTHV)*PARLLEAD`) rather than typed beside it, so a later
+lap that widens the civic range cannot silently re-tie the capitol. A **two-ledger sweep** (206) picked
+the constant from the *artifact's own* bars — clear the tallest rival civic on the **WORST** seed (233),
+stay under the tower stock — never from a number I chose: ×1.0 fails (2/6), ×1.2 fails (4/6),
+**×1.6 clears 6/6 by +6.9 px worst-case**, and the towers are never threatened (they rise **88–172 px**
+to the capitol's 40). Cost: census **PASS**, `developed/towerHt/civicKinds +0`, **tile histogram empty**,
+path objects **+0.065% day / +0.045% night**. Must-not-move (250): every other civic **identical**.
+**Two rounds of blind agents killed it, and they were right both times.**
+- **Round 1 (raise `c.th`).** Both agents, on a **crossed** map, identified the patch *by wall length*
+  (82 px vs 45) — and both, independently, on two seeds, reached the same aside: *"a striped office slab
+  wearing a dome as a hat"* · *"a domed tower rather than a low wide capitol; the columns get quite
+  slender."* One FAIL, one PASS-with-the-same-objection.
+- **Round 2 (hold the portico at the stock's ceiling; put every unit above it into a DRUM).** The
+  portico became **byte-identical to HEAD** (proved: the sweep's `th=34` column reproduces HEAD's rises
+  **exactly** — at `dr=0` the drum vanishes, a free **exact fixed point**, 245), the capitol cleared every
+  rival **6/6 by +9.9 px worst (+23%)**, and **both agents FAILed again, independently, on the crossed
+  map, in the same words**: *"too tall and too narrow, striped like the colonnade… a minaret / clocktower,
+  not a legislature."* (Their *diagnosis* was wrong — seed 7's agent said the portico had been "squashed
+  to a base pad", and it provably had not; **212's law**: the FAIL is where an agent is *wrong*, the
+  converged *perception* is where it is right. The portico only *looked* smaller because the drum towered
+  over it.)
+
+**Verdict: EXPLORED → REVERTED** (`solvista.html` byte-identical to HEAD, md5 confirmed). Reverting a
+change that passed the census, passed its probe 6/6, cost nothing, and held its controls **identical** —
+because it failed the one bar the numbers cannot express — is the system working (82/88/101/114/233/244).
+
+**What I would avoid next time — and it is the law (promoted to SKILL.md).** Every remaining route was
+measured and blocked: a taller *body* is the slab; a taller *drum* is the stalk; removing the `*0.8`
+haircut alone gets the cornice over the stock but still loses to the campanile's apex (a 7% tie). The
+reason is structural and it is **244's law arriving through the GRID instead of the camera**: **a per-hex
+draw's WIDTH is capped by the hex, so making it TALLER necessarily makes it more SLENDER — and any shape
+whose identity IS being wide and low (a capitol, a bowl, a basilica) cannot be made tall on one hex.**
+Height and identity are in direct conflict and the tile decides the winner. ⇒ The parliament needs a
+**massing redesign** (a drum wider than tall, a dome scaled to it, no colonnade stripes on the drum), and
+**a single-tile massing redesign is `polish-tile`'s job, not a growth lap's** — so it is banked as
+`polish-tile` cue **(g)**, with its gate already written (`probe-parlheight.mjs`: rank + margin in CSS px,
+worst seed, must-not-move column, exact fixed point).

@@ -701,6 +701,32 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A PER-HEX DRAW'S *WIDTH* IS CAPPED BY THE HEX — SO MAKING IT TALLER NECESSARILY MAKES IT MORE SLENDER, AND ANY
+  SHAPE WHOSE IDENTITY *IS* BEING WIDE AND LOW CANNOT BE MADE TALL. HEIGHT AND IDENTITY ARE IN DIRECT CONFLICT, AND
+  THE TILE DECIDES THE WINNER (iter 270).** 244 says rotation is not a free parameter in an axonometric projection —
+  the amphitheater's bowl reads as a bowl *because* its seating is the near half of the ellipse, and no correct
+  trigonometry buys that back. 270 is the same law arriving through the **GRID** instead of the **CAMERA**, and it is
+  the one you will walk into while doing everything else right. `CIVICDESC.parliament` promised *"the tallest civic
+  roof in Solvista"* and the capitol was **beaten by the university on 4 seeds in 6** (its own cornice was not in the
+  **top four** civic roofs) — a real, measured, label-tell defect. Every fix is blocked by one fact: **a capitol's
+  identity is that it is WIDE and LOW with a dome riding above**, and its width is fixed by the tile. Raise the body
+  and two blind agents, on two seeds, on a crossed map, independently call it *"a striped office slab wearing a dome
+  as a hat"*; move the height into a **drum** instead (portico held **byte-identical** to HEAD, proved by an exact
+  fixed point) and the same two agents independently call it *"a minaret / clocktower, not a legislature."* **They
+  were right both times, and the arithmetic was right both times.** ⇒ **Before you make a per-hex thing taller, ask
+  what its identity is MADE OF.** If the answer contains the word *wide*, *low*, *broad*, *squat* or *horizontal*,
+  you cannot buy height with a constant — the lever does not exist, and no amount of tuning will find it. The tell,
+  and it is checkable before you write a line: **your vector raises a height on a draw whose silhouette is currently
+  wider than it is tall.**
+  ⇒ **AND THE COROLLARY IS A SCOPE BOUNDARY, NOT A DEFEAT: a claim about a draw's MASS is a `polish-tile` job, and a
+  growth lap's contribution is to FIND it and GATE it, not to redesign it.** Once you are choosing drum width, dome
+  radius and stripe count you have left grow-city and entered a single-tile massing redesign — which this skill
+  explicitly assigns elsewhere. **Bank the finding with its gate already written and stop**; a measured defect handed
+  over with a working probe is worth more than a third reshaping nobody asked for.
+  ⇒ ⚠ **AND NOTE WHERE THE TELL WAS HIDING: THE HARNESS HAD ALREADY QUOTED THE LABEL AS FACT.** Iter 175's
+  `probe-parliament.mjs` header calls it *"the grander **'tallest civic roof'**"* — an earlier lap **read the claim,
+  believed it, and built on top of it.** A label repeated inside your own tooling has not been *checked*; it has been
+  **laundered**. `grep` your probes' prose for the artifact's own marketing copy.
 - **A CAMERA SET THROUGH A *DERIVED* QUANTITY RENDERS A FRAME THAT CONTRADICTS ITS OWN HUD — DRIVE THE STATE THE APP
   DRIVES, NEVER THE VARIABLE IT COMPUTES (iter 269).** 264 says a camera pin must be *derived from the curve at shoot
   time, never stored*. 269 is its structural sibling and it is about **which variable you are allowed to write.** The
@@ -2937,6 +2963,24 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   frames the **most buried** instance by construction (see the law). Terrain is identical across builds, so the
   whole-city frame is a genuinely blind A/B; frames named **by FILE** (239), map **CROSSED** between seeds (238), tokens
   **meaningless** not ordinal (268), pins **DERIVED** from `sunWarp`/`SUNUP`/`SUNDN` (264)).
+  The **capitol pair** (270 — reach for these on any claim about a draw's HEIGHT or MASS, and on any comparative
+  label-tell (*"the tallest / biggest / busiest X"*)): `probe-civicstock.mjs` (**does every civic kind actually
+  STAND, and what is the height stock?** Pure world data — no render, no clock, no noise floor, nothing to stub, and
+  the cheapest instrument in the harness. ⚠ **And it is the CAUTIONARY one: it graded the claim TRUE (parliament #1 on
+  6/6) and it was WRONG**, because `c.th` is the rule's unit and not the viewer's — each kind's draw adds its own
+  superstructure (the university's campanile) and the parliament's own draw takes a **0.8 haircut**. **Use it for the
+  POPULATION question; never for a comparative claim about what is SEEN**), `probe-parlheight.mjs` (**the same claim
+  in the VIEWER'S units (205)** — the **drawn silhouette rise** above a hex's own centre, in CSS px, which is the
+  projection-safe quantity (224: screen-y is DEPTH, so never grade height by position). Isolation is 230's
+  suppress-the-DECISION rig **inside ONE page** — retype the hex to `EMPTY`, re-render, and the changed pixels ARE
+  that building, read off the final composited canvas ⇒ **occlusion measured for free, floor exactly 0 px**, and
+  **BUILD-AGNOSTIC** (no source swap, no cross-build floor). ⚠ **Its MUST-NOT-MOVE column (250) is every OTHER civic
+  kind** — a one-constant lap that moves a school has leaked. ⚠ **Its SWEEP takes both bars from the ARTIFACT** (206):
+  clear the tallest rival on the **WORST seed** (233) *and* stay under the tower stock — the capitol is *"the tallest
+  civic roof"*, not the tallest building. Retarget it at any tile type by changing the kind it looks for),
+  `shot-parlheight.mjs` (its camera — drives **`zoom`, never `scale`** (269), frames named **by FILE** (239) with
+  **meaningless tokens** and the map **CROSSED between seeds** (238/268), and every frame self-reports its state but
+  **never the treatment**, so the pair stays blind).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

@@ -19060,3 +19060,85 @@ life; the rule dropped it anywhere, and three seeds in six the city buried the l
 built — one of them down to eight pixels. It now stands where its label always said, and where you
 can see it.
 
+## Iteration 260 — the season was there all along, painted on the one channel nobody can see (2026-07-14) [holistic step-back, 32nd]
+
+**Vector.** The 32nd whole-city step-back (due at 256+4; every domain has now had a lap). No artifact
+code was written: `solvista.html` is **byte-identical to HEAD**. The lap is 257 (sea sky-mirror) +
+258 (taxi fares) + 259 (observatory siting).
+
+**Visual.** `shot-stepback.mjs`, 2 seeds x 3 lights x 2 calendars; every frame self-reported clean
+(`sun=UP` at day/golden, `down` at night, `HUD=ok`, day/night pinned off winter at `year=2035.62`).
+**Both agents FAILed, on both seeds** — and all three of their FAILs had to be graded, not obeyed:
+
+- **"No downtown — uniform tower sprawl, no taper."** ⇒ **REFUTED.** `probe-taper` (pure world data):
+  the tallest tower stands at **ring 1** (seed 42, th 173) and **ring 5** (1234); `corr(th,core)` =
+  **0.82 / 0.80**; top-10 tallest mean distance **5.7 / 3.8** against **21.2 / 23.5** for developed
+  land; the envelope tapers monotonically (173 -> 139 -> 135 -> 102 -> 88). This is **224's projection
+  law** paying out exactly as it predicts — `corr(screen apex, true height)` is **0.26** while
+  `corr(screen apex, depth)` is **0.995**, so *an eye cannot judge a skyline from a whole-city frame*.
+  An unanswerable question, confidently answered wrong. **Do not re-open `c.th`.**
+- **"Golden hour collapses beach/road/farm into one terracotta mass."** ⇒ **the KNOWN (s) residue, and
+  its loudest claim is false.** `probe-goldenhue` reproduces the banked number exactly (PARK<->ROAD
+  **29 -> 24**, a ~20% narrowing) and **BEACH<->ROAD measures 72 at golden — the WIDEST pair in the
+  table.** Nothing crosses the 15 collapse floor that was not already under it by day (RES<->ROAD is
+  11 at day, 10 at golden). 222's night ordering invariant still **PASSes by 21**. Not new drift.
+- **"Winter is indistinguishable from summer."** ⇒ **CONFIRMED — and it is the finding.**
+
+**The finding (LAW in SKILL.md).** 253 gave the sunlight a calendar and proved it: real, centred,
+byte-identical at its fixed point. It is also **invisible**, and the two facts are not in tension.
+My first instinct was the banked magnitude rig `probe-seaamp` — domain-agnostic, takes two PNGs,
+exactly the right shape — which graded the season at **mean 6.4, median 2.0, d=0.27** and would have
+had me file *"real but sub-threshold, tune it up."* **`probe-seaamp` measures LUMINANCE, and 253's
+tint is NORMALISED TO HOLD LUMINANCE FLAT** (*"winter comes out COOLER and never DIMMER"*, L461). I
+had aimed a greyscale instrument at a design's own null space — **228's law recursing a SIXTH time,
+on a probe this harness already owned.** The complaint's noun was *"cooler"*: a colour word (214).
+
+Re-measured in the units the feature is written in (`probes/probe-seasonhue.mjs`, new; identical-pin
+floor **exactly 0.00** on all 3 seeds), with **golden hour carried as an incumbent bar I did not
+invent** (226) — a light change every agent calls obvious:
+
+| light change | warm-cool (R-B) | **luminance** | seen? |
+| --- | --- | --- | --- |
+| golden hour **[BAR]** | +24.9 (d **0.43**) | **-24.7 (d 0.69)** | instantly, by everyone |
+| winter (253's season) | **-30.2 (d 0.52)** | **-3.4 (d 0.09)** | **by nobody** |
+
+**The season moves the colour axis 1.2x HARDER than the golden hour does, and is invisible; the golden
+hour moves LUMINANCE 8x harder, and is unmissable.** (Seeds 42/7/1234: 121% / 120% / 125%.) The chroma
+amplitude was never the problem. **A global multiplicative cast on every surface at once is precisely
+the transform human vision divides out** — it is what colour constancy is *for* — so a viewer reading
+one frame at a time re-normalises it away and sees a normal daylit city. **The season carries no
+luminance, no contrast and no shadow signature: every channel the eye actually reads is flat across
+the calendar.** And the cause is a law of our own: **223's normaliser** (`n=1/(1-0.0308c)`), which is
+*correct* on a ladder of per-surface washes where luminance drift is a bug (222), is on a **whole-scene
+illuminant** the thing that zeroed the only channel it could have been seen on.
+
+**SUSPECT, NOT FIX (198).** The season needs a **non-chromatic** channel. I name no lever — but note
+the convergence: the header's own banked leftover from 253 (*"day length: the sun still rises and sets
+at the same hour all year; it must move the whole `KEYS` curve seasonally — a real Sky x Deepen swing,
+still unspent"*) is the one candidate that would move `lit`, brightness **and** shadow length at once.
+The next Sky lap should re-derive its own instrument from that (228), not inherit mine.
+
+**Census.** PASS. Artifact byte-unchanged, so every metric +0 and the tile histogram is empty — the
+correct and vacuous result for a step-back; it proves only that no page threw.
+
+**Perf.** LAP (vs 256, `3720e79`): day **+1.3%**, night **-0.3%**. And never `perfab` alone (216) —
+`probe-drawbudget` gives the mechanism: path objects **110,783 -> 111,018 day (+0.21%)** and
+**139,579 -> 139,890 night (+0.22%)** across three iterations. Night profile unchanged (`winBandR`
+32.1% · `prismS` 29.1% · `hexTile` 12.0% · `bandS` 7.5%). **ARC** (vs 177, `7e2ac2c`): day **+18.8%**,
+night **+13.0%** — inside both banded series (day 18.1-19.0, night 12.4-13.2 since 242). **The arc has
+now been flat across FIVE consecutive step-backs / 18 iterations.** Still structural, not luck: a
+domain past additive saturation stops costing frame time. **Do not open a perf lap.**
+
+**Elevated transit.** Both agents raised it again, unprompted (*"dark overhead wire/transit lines
+crisscross the entire plate like scratches"*, *"the overhead-wire lattice is the single noisiest
+element"*). That is **reports #11 and #12** — the most-reported defect in the ledger by a wide margin,
+already named with a number (256: `drawMonoAt`, 2,747px, 2.1% of the frame). Both agents again
+confabulated a cause (power lines; a stray arc with no source). **The fault is LEGIBILITY, and it is a
+`polish-tile` lap that is now badly overdue.**
+
+**Verdict. FIXED (the harness).** No new compounding drift: the skyline is measurably intact, the
+golden-hour residue is the one already on the books, and the perf arc is still stopped. The city is
+healthy. What the step-back found was in the *instrument* and in a *law* — the loop had shipped a
+season, measured it with a probe built on the one axis the season deliberately does not move, and
+believed itself. Two blind agents were right for eleven iterations and no gate could hear them.
+
