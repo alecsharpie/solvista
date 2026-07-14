@@ -20,7 +20,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~ | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
+| **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
@@ -32,8 +32,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Water **289** · Transport **283** · Sky **284** · Civic **285** · People **286** · Nature **287** ·
-  Urban **288**. ➡ **NEXT: Transport (283)** — grep its `tick()`/`stepVehicle` seam + FLAGS, not its `polish-tile` cues. ⚠ **NATURE'S
+- **ROTATION.** Last: Water **289** · Transport **290** · Sky **284** · Civic **285** · People **286** · Nature **287** ·
+  Urban **288**. ➡ **NEXT: Sky (284, oldest)** — grep `syncSky`/`applySeason`/`daylight` + the TABLES/COMMENTS, not the cue list. (Transport's entity rules are confirmed-saturated — 290 carded the last un-carded entity, the air shuttle.) ⚠ **NATURE'S
   POLISH CELL IS TWO-DEEP IN DEBT AND IS ITS STALE KIND** (287 took CA again — the seam beat the cue list). **Its next
   Nature lap is Polish, with TWO paired cues banked: (ax)** fairy-ring contrast + 🆕 **(bg)** the solar blue. **Together.**
   ⚠ **PEOPLE's Deepen cell is now 14 deep and is CLOSED for rotation purposes** — its stale cells are
@@ -391,67 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 282 entries before Iteration 280 live in
+> **Archive:** the 283 entries before Iteration 281 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 280 — the flag beside it had gone limp in the calm for 230 iterations (2026-07-15) [Sky & atmosphere × Deepen]
-
-**Vector.** Sky × Deepen (rotation: Sky was the oldest domain at 273; Sky is post-saturation ⇒ Deepen/Polish only).
-
-**The seam, found by grep, not by the cue list** (225's law, 19 for 19). `WINDA`'s own comment names its
-readers: *"the gust cycle the trees, the palms, the flags and the clouds all already ride"* — and 245 added the
-sea. **Two things in the sky were not in that list and had never read it:**
-- **`drawKite`** — gated only on `LITAMT`. A kite flew at exactly the same height, the same downwind offset,
-  the same line tension and the same tail-flap in a **dead calm** as in a **full gale**. `windFlag` sits
-  **twenty lines below it** and has gone *"limp in the calm, snapping straight in a gust"* since **iter 50**.
-  (262's law, exactly: the unfixed sibling is next to the fix.)
-- **`balloons`** — `b.x += b.sp*dt*s`. The **clouds they drift among** read `(0.55+0.9*WINDA)`. A free balloon
-  that does not drift at wind speed is not a free balloon.
-
-**Change.** Three predicates, every existing reader left **byte-identical**:
-- `windForce()` = `clamp((WINDA-0.25)/0.75,0,1)` — seaState's own normalisation, lifted out, not reinvented.
-- `windDrift()` = `0.55+0.9*WINDA` — **ONE definition, two readers**: the clouds (byte-identical: it is literally
-  their existing expression) and now the balloons.
-- `kiteGust()` = `KITECALM+(1-KITECALM)*windForce()`, `KITECALM=0.45`. **Every lever in `drawKite` is written as a
-  multiple of it, so `kiteGust()==1` (full gale) reproduces HEAD's literals byte-for-byte** (245's centred lever) —
-  which is to say **HEAD drew every kite as though it were always blowing a full gale.** Lift, downwind offset, line
-  belly and tail streaming all ride it. The diamond keeps its size: a kite does not shrink, it comes **DOWN** (270).
-- `window.__setWind` / `__wind()` — **the hook `WINDA` never had.** 275's law ordered every sea/tree/flag probe to
-  pin `WINDA`, and the artifact made that **impossible**: it is recomputed from `time` inside `advanceEntities`,
-  which only runs while `playing`, so a frozen page held whatever gust it loaded on. (229/243: a documented trap you
-  keep walking into is a broken tool — fix the tool.)
-- The balloon's `ENTINFO` `sub` is now a **live function** of the air it is riding (cashing 278's `hoverRefresh`).
-
-**Census.** Tile histogram **EMPTY**; `pop`/`developed`/`roads` **+0**; entity counts unchanged. `solarRoofs +3` is
-226's documented tick-count wobble. ⚠ **I skipped step 2 and the first census run was against a STALE baseline** —
-it showed `TOWER +77 / BURNT 0→4`, which is **279's fire cascade, quoted verbatim in 279's own entry**. Re-pinned
-from pristine HEAD, the histogram is empty, as a draw-only change must be.
-
-**Probe** (`probes/probe-windkite.mjs`, `probes/shot-windkite.mjs`). Isolation is **253's predicate suppression in
-ONE page** — `window.kiteGust = () => 1` renders HEAD's kite exactly ⇒ **no HEAD file, no cross-build floor,
-build-agnostic**, floor **exactly 0 px**.
-- **HEAD's kite: `0 px` between a dead calm and a full gale, on 3 seeds in 3.** No threshold invented — the defect
-  states itself (236).
-- Patch: **195–231 px moved**, the kite flying **+14..+17 px higher** in the gale.
-- **FIXED POINT: `0 px`** — the shipped kite at full gale is byte-identical to HEAD (245).
-- **MUST-NOT-MOVE: 0 px outside the kite's own layer.**
-- **POSITIVE CONTROL (248): the FLAG** — the correct sibling twenty lines below — moved on **both** builds.
-- **Balloon/cloud drift ratio: SD `0.0000`** (patch) against **HEAD's SD 0.32–0.34, range 1.08x..2.19x**. The
-  balloon now rides exactly the air the clouds ride. Measured `E[WINDA] = 0.421`.
-
-**Perf.** Path objects **day +0.06%, night +0.07%** — the kite change adds **zero** path objects (same fills and
-strokes, different coordinates); the residue is the balloons/clouds sitting at slightly different x. **FREE** (198/216).
-
-**Visual.** Discriminating pair (264): same world, same frozen instant, same hex, **only the wind differs**, tokens
-meaningless and the map **CROSSED between seeds** (238/268). **Both blind agents named the gale correctly, and named
-OPPOSITE tokens** (s42→sigma, s7→kappa) — so they were reading the kite, not the ordering. Both described the calm
-kite as *"sagging in still air"* and *"attached, not detached"*; both PASSed the un-zoomed city. One noted, unprompted,
-the sea's wind-driven chop in the windy frame — the same `WINDA`, confirming the pin from a second draw.
-
-**Verdict: SHIPPED.**
 
 ## Iteration 281 — the city kept opening corner shops and then quietly bricking them up (2026-07-15) [Urban fabric × New CA rule/FIX]
 
@@ -1153,3 +1097,40 @@ dotted with tiny sails, nothing compounded into clutter or darkness."*
 
 **Verdict: SHIPPED** (and FIXED — 286's category enumeration missed its own named sibling; the recreational
 water craft now answer ONE season, and the last board, kayak, kite and sail come off the water together).
+
+## Iteration 290 — Transport × Interaction/UX (+ Deepen): the flying shuttle nobody could name, droning over the farms
+
+**Vector.** Transport rotation. The rules seam (bus/tram/cab/ferry/freighter/monorail/gondola/copter) is genuinely
+saturated — every one has a live tooltip off the same predicate its rule steers by, and both aerial transit cars
+light their glass at night. The one gap left, found by grepping the entity arrays against `ENTINFO`: the **air
+shuttle**. Drawn since 2012 (3 of them, 6 by 2030) as a teal capsule floating at `z=34` with a blinking light —
+and **never stamped, never in `ENTINFO`**: the one transport entity the city could not identify (Transport's
+stale Interaction/UX cell, 171). Its `stepShuttle` also retargeted to a **UNIFORMLY RANDOM inland point**, so a
+"city air shuttle" spent half its runs droning over the empty meadow and farmland north of the built-up strip.
+
+**Change.** (a) **Deepen** — `stepShuttle` now aims at a **developed cell** (`DEV`), sampling the same 24-try
+loop but keeping the first `DEV` hit; falls back to any inland point only in a young city with little built yet.
+(b) **Interaction/UX** — `stamp(s,cx,cy-z-1.8)` in `drawShuttle` (ring rides on the capsule at cruising height),
+and an `ENTINFO` row `'Autonomous air shuttle'` whose `sub` is a live function (105): *"On autopilot over the
+city grid."* / *"On the leg between two districts."*, off the SAME `DEV` test the run now steers by. `Math.random`
+only, never `rng()` — the runs cannot perturb the seeded simulation.
+
+**Census.** Core **byte-identical** (`pop`/`developed`/`roads` **+0**; tile histogram empty; `solarRoofs +2 /
+greenRoofs +1` is the RAF tick-timing wobble, 226). Draw + `Math.random` + tooltip only — inert by construction.
+
+**Probe** (`probes/probe-shuttle.mjs`, pure world data off the artifact's own `stepShuttle`, same seeded stream
+both builds). *What share of a shuttle's TARGETS land on DEVELOPED ground?* Control = the developed share of the
+inland box (the uniform null, byte-identical HEAD/patch). 2035, 6 seeds: **HEAD 43.9%** sitting exactly on its
+own **uniform baseline 43.1%** — a uniform random walker, the defect stated (236); **PATCH 100.0%** on every
+seed, 0 off-plate. 2012 fallback (young city, baseline ~34%): PATCH **100.0%**, no strand, no crash.
+**Naming** verified deterministically (frozen render, `pickEntity` at each capsule's stamped position): all 6
+shuttles → `'Autonomous air shuttle'` on both seeds (hovershot can't — it doesn't freeze the clock, so a fast
+high mover drifts off the cursor between the `__ents` read and the hover, landing on the tile below).
+
+**Visual.** Both seeds **PASS** (blind whole-city): *"balanced, coherent coastal city … no z-order tears,
+floating tiles, blown-out color, or stray artifacts anywhere"*; the shuttles are tiny at fit zoom (as expected —
+the change is distributional, and a still can't show a target moved) and *"sit within/over the built area and
+sky, nothing torn, clipped, or stranded over open countryside."*
+
+**Verdict: DEEPENED** (and the Interaction/UX gap closed) — the city's autonomous shuttles now run over the
+grid they serve, and can finally be named. One transport entity remained un-carded since 2012; it is carded now.

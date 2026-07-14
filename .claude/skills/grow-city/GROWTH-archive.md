@@ -21048,3 +21048,59 @@ both probes are banked.
 **Verdict: FIXED.** A city that has always had a fire brigade, a burnt-ground tile, a smoke plume and a
 placard promising flames, and that had never, on any seed, in sixty-one years, caught fire.
 
+## Iteration 280 — the flag beside it had gone limp in the calm for 230 iterations (2026-07-15) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky × Deepen (rotation: Sky was the oldest domain at 273; Sky is post-saturation ⇒ Deepen/Polish only).
+
+**The seam, found by grep, not by the cue list** (225's law, 19 for 19). `WINDA`'s own comment names its
+readers: *"the gust cycle the trees, the palms, the flags and the clouds all already ride"* — and 245 added the
+sea. **Two things in the sky were not in that list and had never read it:**
+- **`drawKite`** — gated only on `LITAMT`. A kite flew at exactly the same height, the same downwind offset,
+  the same line tension and the same tail-flap in a **dead calm** as in a **full gale**. `windFlag` sits
+  **twenty lines below it** and has gone *"limp in the calm, snapping straight in a gust"* since **iter 50**.
+  (262's law, exactly: the unfixed sibling is next to the fix.)
+- **`balloons`** — `b.x += b.sp*dt*s`. The **clouds they drift among** read `(0.55+0.9*WINDA)`. A free balloon
+  that does not drift at wind speed is not a free balloon.
+
+**Change.** Three predicates, every existing reader left **byte-identical**:
+- `windForce()` = `clamp((WINDA-0.25)/0.75,0,1)` — seaState's own normalisation, lifted out, not reinvented.
+- `windDrift()` = `0.55+0.9*WINDA` — **ONE definition, two readers**: the clouds (byte-identical: it is literally
+  their existing expression) and now the balloons.
+- `kiteGust()` = `KITECALM+(1-KITECALM)*windForce()`, `KITECALM=0.45`. **Every lever in `drawKite` is written as a
+  multiple of it, so `kiteGust()==1` (full gale) reproduces HEAD's literals byte-for-byte** (245's centred lever) —
+  which is to say **HEAD drew every kite as though it were always blowing a full gale.** Lift, downwind offset, line
+  belly and tail streaming all ride it. The diamond keeps its size: a kite does not shrink, it comes **DOWN** (270).
+- `window.__setWind` / `__wind()` — **the hook `WINDA` never had.** 275's law ordered every sea/tree/flag probe to
+  pin `WINDA`, and the artifact made that **impossible**: it is recomputed from `time` inside `advanceEntities`,
+  which only runs while `playing`, so a frozen page held whatever gust it loaded on. (229/243: a documented trap you
+  keep walking into is a broken tool — fix the tool.)
+- The balloon's `ENTINFO` `sub` is now a **live function** of the air it is riding (cashing 278's `hoverRefresh`).
+
+**Census.** Tile histogram **EMPTY**; `pop`/`developed`/`roads` **+0**; entity counts unchanged. `solarRoofs +3` is
+226's documented tick-count wobble. ⚠ **I skipped step 2 and the first census run was against a STALE baseline** —
+it showed `TOWER +77 / BURNT 0→4`, which is **279's fire cascade, quoted verbatim in 279's own entry**. Re-pinned
+from pristine HEAD, the histogram is empty, as a draw-only change must be.
+
+**Probe** (`probes/probe-windkite.mjs`, `probes/shot-windkite.mjs`). Isolation is **253's predicate suppression in
+ONE page** — `window.kiteGust = () => 1` renders HEAD's kite exactly ⇒ **no HEAD file, no cross-build floor,
+build-agnostic**, floor **exactly 0 px**.
+- **HEAD's kite: `0 px` between a dead calm and a full gale, on 3 seeds in 3.** No threshold invented — the defect
+  states itself (236).
+- Patch: **195–231 px moved**, the kite flying **+14..+17 px higher** in the gale.
+- **FIXED POINT: `0 px`** — the shipped kite at full gale is byte-identical to HEAD (245).
+- **MUST-NOT-MOVE: 0 px outside the kite's own layer.**
+- **POSITIVE CONTROL (248): the FLAG** — the correct sibling twenty lines below — moved on **both** builds.
+- **Balloon/cloud drift ratio: SD `0.0000`** (patch) against **HEAD's SD 0.32–0.34, range 1.08x..2.19x**. The
+  balloon now rides exactly the air the clouds ride. Measured `E[WINDA] = 0.421`.
+
+**Perf.** Path objects **day +0.06%, night +0.07%** — the kite change adds **zero** path objects (same fills and
+strokes, different coordinates); the residue is the balloons/clouds sitting at slightly different x. **FREE** (198/216).
+
+**Visual.** Discriminating pair (264): same world, same frozen instant, same hex, **only the wind differs**, tokens
+meaningless and the map **CROSSED between seeds** (238/268). **Both blind agents named the gale correctly, and named
+OPPOSITE tokens** (s42→sigma, s7→kappa) — so they were reading the kite, not the ordering. Both described the calm
+kite as *"sagging in still air"* and *"attached, not detached"*; both PASSed the un-zoomed city. One noted, unprompted,
+the sea's wind-driven chop in the windy frame — the same `WINDA`, confirming the pin from a second draw.
+
+**Verdict: SHIPPED.**
+

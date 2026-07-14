@@ -4172,11 +4172,21 @@ function stepDog(d,dt){
     }}
   d.ox=lerp(d.ox,d.tx,dt*1.6); d.oy=lerp(d.oy,d.ty,dt*1.6);
 }
+/* THE AIR SHUTTLE RUNS OVER THE CITY, NOT THE COUNTRY.
+   It used to pick a UNIFORMLY RANDOM inland point, so a city air shuttle spent
+   half its runs droning over empty meadow and farmland north of the built-up
+   strip. An autopilot passenger drone flies between DISTRICTS: it now aims at a
+   developed cell (DEV), falling back to any inland point only in a young city
+   that has little built yet. Math.random, never rng() -- the runs never perturb
+   the seeded simulation, so pop/roads/tiles stay byte-identical. */
 function stepShuttle(s,dt){
   s.tm-=dt;
-  if(s.tm<=0){/* a target on the plate, inland of the shore */
+  if(s.tm<=0){
+    let fb=null;
     for(let i=0;i<24;i++){const tx=3+Math.random()*(SHOREX-6),ty=3+Math.random()*(G-6);
-      if(inB(tx|0,ty|0)){s.tx=tx;s.ty=ty;break;}}
+      if(!inB(tx|0,ty|0))continue; fb=[tx,ty];
+      const c=cellAt(tx|0,ty|0); if(c&&DEV.has(c.t)){s.tx=tx;s.ty=ty;fb=null;break;}}
+    if(fb){s.tx=fb[0];s.ty=fb[1];}   /* nothing built worth crossing to yet */
     s.tm=10+Math.random()*8;}
   s.x=lerp(s.x,s.tx,dt*0.10); s.y=lerp(s.y,s.ty,dt*0.10);
 }
@@ -8433,6 +8443,7 @@ function drawDolphin(d){
 function drawShuttle(s){
   const z=34+Math.sin(time*0.8)*2;
   const[cx,cy]=pxc(s.x,s.y);
+  stamp(s,cx,cy-z-1.8);   /* the ring rides on the capsule, up at cruising height */
   shadS(cx,cy,0.2,0.10);
   prismS(cx,cy,0.22,0.10,z,z+3.6,col('white',1.05),col('teal',0.62),col('teal',0.9));
   if(LITAMT>0.2){ctx.fillStyle='rgba(140,230,220,'+(0.7*LITAMT)+')';ctx.fillRect(cx-2,cy-z-2,4,1.6);}
@@ -9648,6 +9659,12 @@ const ENTINFO=[
   [()=>balloons,'Hot-air balloon',()=>windForce()<0.2?'Hanging almost still in the calm air.'
      :windForce()>0.7?'Running downwind before the gust.':'Drifting over on the fair-day breeze.',13],
   [()=>copters,'City helicopter','Hopping between the rooftop helipads.',10],
+  /* drawn since 2012 and never named -- the one transport entity with no card.
+     Its `sub` reads what it is doing NOW (105): over the built-up grid, or the
+     leg between two districts. Off the same DEV test its run now steers by, so
+     the label cannot claim a city crossing it is not making. */
+  [()=>shuttles,'Autonomous air shuttle',s=>{const c=cellAt(s.x|0,s.y|0);
+     return c&&DEV.has(c.t)?'On autopilot over the city grid.':'On the leg between two districts.';},9],
   /* the two aerial lines: `sub` is a function, so each car describes the LINE it
      belongs to rather than its species. Hovering also traces the route (render). */
   [()=>monos.flatMap(m=>m.closed?m.trains:[]),'Monorail train',
