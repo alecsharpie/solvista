@@ -4439,6 +4439,22 @@ function seaState(){return SEACALM+(1-SEACALM)*clamp((WINDA-0.25)/0.75,0,1);}
    to the moonglade and the biolum untouched. */
 const WROWK=0.12;   /* share of the deep sea that anchors a row: ~10% in the lull … ~17% at full gust */
 const WROWL=3.6;    /* its length in cells at full gust, before the upwind water runs out */
+const WROWT=0.55;   /* where the row is fattest, as a power of its length: 0.55 puts the belly ~28% down from the head, so the nose is blunt and the tail is long */
+
+/* The row's half-width along its spine (0 = the hex that anchors it, 1 = the upwind tail).
+   266 drew the row as a STROKE, and both its agents — independently, on two seeds — read
+   the rows as ruler-drawn, "perfectly straight and uniform in thickness". A stroke has
+   exactly ONE width, so that was not a tuning miss: no constant in the file could have
+   answered them. This is the shape they asked for, and WROWN normalises the profile's MEAN
+   to 1, so the fill carries the same ink as the stroke it replaces — a change of SHAPE, not
+   of brightness (245), and still one path object. */
+function wrowHalf(t){ return Math.sin(Math.PI*Math.pow(t,WROWT)); }
+const WROWSEG=6;    /* segments in the outline. A segment is a PATH OBJECT and the cost is per object, so this is the row's price: 12 buys nothing the eye can see on a shape 2.5 CSS px WIDE (its faceting is sub-pixel ACROSS the row), and costs twice as much. Six carry the spine. */
+/* Normalise against the POLYGON WE ACTUALLY DRAW, not the curve it approximates: a chord
+   cuts inside a concave profile, so integrating the continuous sin() left the shipped rows
+   4.5% under HEAD's ink. Summed as trapezoids at the drawn N, the mean is 1 by CONSTRUCTION
+   at any WROWSEG (245) — the taper cannot become a brightness change behind my back. */
+const WROWN=(()=>{ let s=0; for(let i=0;i<=WROWSEG;i++){ const w=wrowHalf(i/WROWSEG); s+=(i===0||i===WROWSEG)?w/2:w; } return WROWSEG/s; })();
 
 /* Which way the open sea lies from a beach hex: the mean unit vector toward its WATER
    neighbours, by the same test the damp margin uses (a river is not the sea). Returns
@@ -4888,12 +4904,33 @@ function drawCell(x,y){
             const pulse=0.55+0.45*Math.sin(waveT*0.35+hr*6.2);       /* foam gathers and disperses — slow, so it cannot strobe (134) */
             const a=(0.08+0.26*ss)*pulse*(1-LITAMT/0.6);
             if(a>0.02){
-              ctx.strokeStyle=colA('foam',1,a);
-              ctx.lineWidth=1.8+0.9*ss;   /* ~1.4–1.8 CSS px at fit: sub-hex, and never a hairline */
-              ctx.lineCap='round';
-              ctx.beginPath(); ctx.moveTo(fx,fy);
-              ctx.quadraticCurveTo(fx-L*CW*0.5, fy-rise*0.5+Math.sin(waveT*0.8+hr*5)*2.4, fx-L*CW, fy-rise);
-              ctx.stroke();
+              /* Spine: a cubic whose two controls sit on OPPOSITE sides of the chord, so the
+                 row lies in an S rather than a bow. It breathes on the caps' own slow clock,
+                 which is far too slow to strobe (134). */
+              const tx=fx-L*CW, ty=fy-rise;
+              const dx=tx-fx, dy=ty-fy, dl=Math.hypot(dx,dy)||1;
+              const nx=-dy/dl, ny=dx/dl;
+              const sw=(L*CW)*0.09*(hashCell(x,y,seedNum^0x3B74)<0.5?-1:1)
+                       *(0.6+0.4*Math.sin(waveT*0.8+hr*5));
+              const c1x=fx+dx/3+nx*sw,   c1y=fy+dy/3+ny*sw;
+              const c2x=fx+dx*2/3-nx*sw, c2y=fy+dy*2/3-ny*sw;
+              const h0=(0.9+0.45*ss)*WROWN;   /* the belly; mean(WROWN*wrowHalf) = 1, so the ink is HEAD's */
+              const N=WROWSEG, lx=[],ly=[],rx=[],ry=[];
+              for(let i=0;i<=N;i++){
+                const t=i/N, u=1-t;
+                const bx=u*u*u*fx+3*u*u*t*c1x+3*u*t*t*c2x+t*t*t*tx;
+                const by=u*u*u*fy+3*u*u*t*c1y+3*u*t*t*c2y+t*t*t*ty;
+                const ex=3*u*u*(c1x-fx)+6*u*t*(c2x-c1x)+3*t*t*(tx-c2x);
+                const ey=3*u*u*(c1y-fy)+6*u*t*(c2y-c1y)+3*t*t*(ty-c2y);
+                const m=Math.hypot(ex,ey)||1, w=h0*wrowHalf(t);
+                lx[i]=bx-ey/m*w; ly[i]=by+ex/m*w;
+                rx[i]=bx+ey/m*w; ry[i]=by-ex/m*w;
+              }
+              ctx.fillStyle=colA('foam',1,a);
+              ctx.beginPath(); ctx.moveTo(lx[0],ly[0]);
+              for(let i=1;i<=N;i++)ctx.lineTo(lx[i],ly[i]);
+              for(let i=N;i>=0;i--)ctx.lineTo(rx[i],ry[i]);
+              ctx.closePath(); ctx.fill();
             }
           }
         }

@@ -197,3 +197,26 @@ retired — leave it on the historical entries, don't add it to new ones.)
 - reviewed at dsf-3 zoom, day + night, seeds 42/7/1234: WATER, KELP, BEACH, FOREST, REDWOOD, MEADOW, FARM, ORCHARD, VINEYARD, GARDEN, MARKET, BURNT, MARSH, PARK, ROAD, FIELD, LIGHTHOUSE, EMPTY + RES/MID/COM/TOWER/IND
 - verdict: all pass TRUE/BEAUTIFUL/FAST as-is — each has a working silhouette, signature element, night behavior, and seeded variation (see shots/<type>_before/ which double as their verification shots). No changes made; restraint preferred over piling on detail.
 - notable existing cues (implicitly reserved): lighthouse red bands + sweeping beam; market striped stalls + string lights; farm gold/sage crop rows on soil; vineyard green trellis rows on pale gold; orchard fruit-tree grid; marsh tidal pools + reeds; kelp swaying fronds; beach boardwalk + bonfire + umbrellas.
+
+## BACKLOG — measured cues banked by the grow-city loop (moved here at iter 275)
+
+These lived in `GROWTH.md`'s maintained header, where the grow-city loop re-read them on EVERY
+iteration while being explicitly forbidden to act on them ("do not spend a domain's lap on one").
+They are tile redesigns, so they belong to THIS skill. Each has a gate already written.
+⚠ **(a), (e) and (f) ARE ONE FINDING — 215's HAIRLINE LAW**: a sub-pixel ornament *tints* its
+background instead of marking it, so **the lever is a BODY / SIZE / CONTRAST — never more strokes,
+never placement**. Full bodies for the closed ones were archived at grow-city iter 264.
+
+(a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit zoom** (0.5px rope, 5px cabins). ⚠ **NEVER RE-OPEN THE Z-ORDER — CLEARED BY PROBE TWICE** (203/212); **15 mis-diagnoses** (269 makes two more — an agent called the rope *"scratches on the image"*, and another filed it as a z-tear **in the HEAD frame** while naming it *"a grey aerial-tramway cable, a different feature"* one frame earlier), and *that persistence IS the evidence: the fault is LEGIBILITY*. Suspect named + priced (256): **`drawMonoAt`, 2.1% of the frame.** *Do NOT re-try a body/halo under the rope (measured — backfires) nor a lit top edge (impossible at 0.5px).* **MOST-REPORTED DEFECT BY A WIDE MARGIN; a `polish-tile` lap is BADLY OVERDUE.** ⚠ **269 adds cue (av): the TRAM's catenary is the SAME 0.5px bug — the family is bigger than the two aerial lines.**
+(g) **THE CAPITOL CANNOT CARRY ITS OWN LABEL — IT NEEDS A MASSING REDESIGN** (270; full body in the 270 entry; gate
+written: `probe-parlheight.mjs`). `CIVICDESC.parliament` promises *"the tallest civic roof"* and it is **FALSE** (the
+university out-tops it **4 seeds in 6**). ⛔ **DO NOT RE-TRY IT AS A HEIGHT CONSTANT — BOTH ROUTES MEASURED AND DEAD**
+(taller BODY = *"an office slab wearing a dome as a hat"*; height in a DRUM = *"a minaret"* — two agents, two seeds,
+crossed, both rounds; cause is structural, SKILL.md). ➡ The lever is **MASS, not height**: a drum wider than tall.
+(e) **THE OBSERVATORY IS TOO SMALL TO READ** (259; ≈ **5.5 CSS px at fit**, on a frame where it is 96.3% visible). ⚠ **SMALL, not BURIED — do NOT re-open the siting.**
+(f) **THE WILDFLOWERS ARE SUB-PIXEL** (263; ≈ **1.1 CSS px at fit**, true of HEAD's meadow bloom too). ⛔ **DO NOT RAISE THE PER-HEX BODY LIFT — that is 255's ⛔** (⇒ a hex quilt). ➡ The only way through is **a SHAPE THAT CROSSES TILE BOUNDARIES** (a drift of petals, a streak), never a brighter fill.
+(b) **`university` is the ONLY of the twelve civics with no `LITAMT`** — pitch dark after sunset; every place to put the light failed (195). (c) **A parked service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204). (d) **The marsh reeds do not read** — seven sub-pixel strokes round the pool (cue (i), 113).
+
+**(av) THE TRAM'S CATENARY IS A 0.5px HAIRLINE** (269) — drawn unconditionally and *correctly*, yet **every agent that
+looked reported "no overhead wire visible"** ⇒ **215's law: it TINTS rather than MARKS.** Same bug as the elevated
+transit's 0.5px rope ⇒ **`polish-tile`, cue (a) FAMILY — the lever is a BODY/WIDTH, never more strokes.**

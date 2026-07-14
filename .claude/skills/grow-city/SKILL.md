@@ -701,6 +701,29 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **THE FREEZE LIST WAS ASSEMBLED BY ACCRETION, NOT BY ENUMERATION — SO IT IS A LIST OF THE CLOCKS THAT HAVE ALREADY
+  BURNED SOMEONE, AND `WINDA` IS THE ONE THAT HAD NOT (iter 275).** 272's law says a freeze list is a **CLAIM that the
+  DRAW is a pure function of the world** — go and check the *output* side (`render()` mutates `c.h`). 275 is the same
+  law on the **INPUT** side, and it is the half that is still wrong: every item in the list (163's `genWorld`+`__warp`,
+  `STARS`, the mover arrays, `time`/`waveT` · 195f · 199's `flock` · 213's `addInitScript` PRNG stub · 272's height
+  settle) was added by **one lap that got burned by it**, and nobody has ever gone and *enumerated* the mutable globals
+  the frame loop writes. **`WINDA` — the gust strength — is one, and `playing=false` does not stop it.** `seaState()` is
+  a **pure function of it**, and the whitecaps, the windrows' anchor share, their length, their alpha and their belly
+  are all pure functions of `seaState()`. Unpinned, two loads of the **SAME FILE** read `ss` **0.8002** and **0.8024** —
+  which moved a whitecap, and drifted a **must-not-move control by exactly ±1 draw**. ⇒ **A ±1 wobble in a control that
+  is required to be EXACT is not noise to be excused — it is an unpinned clock, and it is the only warning you get**
+  (250's must-not-move column, arriving on the *freeze* rather than on the *feature*). **Before trusting any probe,
+  `grep` the frame loop for every global it assigns (`WINDA`, `TIDE`, `time`, `waveT`, `year`, `dayT`) and pin them
+  ALL** — do not wait to be burned once per clock. The tell: your control is off by a hair between two loads of a file
+  you did not change, and you are about to write "within noise."
+  ⇒ **AND THE COROLLARY THAT COST THE FIRST HOUR: TO ISOLATE A DRAW BY ITS COLOUR *SIGNATURE*, ASK THE ARTIFACT WHAT
+  THAT COLOUR **IS RIGHT NOW** — NEVER MATCH THE `BASE` PALETTE'S LITERAL.** 234 loud-paints `BASE[name]`, which is
+  exact; 273 warns that Chromium **canonicalises** the string on read. 275 is the rung between and it defeats both: the
+  palette entry **never reaches the canvas unchanged**, because `col()`/`colA()` put it through the **illuminant**.
+  Foam's base is `[255,251,240]` and at noon it is issued as **`rgba(242, 250, 249, …)`** — so a signature match on the
+  base literal **silently never fires**, and my probe confidently reported **0 windrows in a frame that draws 48**.
+  Compute the key in-page from the artifact's own accessor (`rgbOf(colA('foam',1,1))`), **refresh it whenever the light
+  moves**, and compare **parsed numbers**, not strings. The tell: your suppression rig returns a clean, plausible ZERO.
 - **A LOOKUP TABLE KEYED BY *TYPE* IS STRUCTURALLY BLIND TO A PER-CELL *FLAG* — SO A FEATURE WHOSE IDENTITY IS A FLAG
   SHIPS WITHOUT EVER TELLING THE TABLES IT EXISTS, AND EVERY ONE OF THEM GOES ON ANSWERING FOR THE TILE IT SITS ON
   (iter 274).** 199's tell is a *constant* whose name asserts a behaviour its value cannot have; 262 says a fix to a
@@ -3222,6 +3245,26 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   ASSIGNS `dayT`** — `SUNT`/`LITAMT` are recomputed once a frame **inside `render()`** (261), so a pin search reading
   `LITAMT` right after `__setTime` reads the **PREVIOUS frame's light** and silently collapses every pin onto ONE
   instant. **Only the frames' self-report caught it** (202). Derive with `SUNT = sunWarp(t); daylight(SUNT).lit`).
+  The **windrow pair** (275 — reach for these on any claim about a draw's **SHAPE** (a taper, a curve, a profile), and
+  on any lap that swaps one canvas PRIMITIVE for another): `probe-windrow.mjs` (**it reads NO PIXELS for the geometry** —
+  it hooks the artifact's own path ops and reads back the shape the frame actually **issues**, so it is deterministic
+  with **no noise floor at all**. **BUILD-AGNOSTIC**: it classifies a row by its foam style + its EXTENT, so ONE file
+  grades HEAD and the patch with no source swap and no cross-build floor (230). ⚠ **Its headline needs no threshold**
+  (236): HEAD reads **DISTINCT WIDTHS PER ROW = 1** — *a stroke has exactly ONE width* — which IS the defect, stated,
+  and it is why no constant in the file could ever have answered the cue. ⚠ **Its INK column is the MUST-HOLD one**
+  (245): a taper is a change of **SHAPE**, not of brightness, and the normaliser is summed **over the polygon actually
+  drawn**, not the curve it approximates — a chord cuts inside a concave profile, and integrating the continuous `sin()`
+  left the rows **4.5% under HEAD**. ⚠ **A long foam path is NOT automatically a windrow** — the **mole's break** and the
+  **shore surf** are foam and long too; gate on the feature's **OWN precondition**, read off the cell being drawn.
+  ⚠ **The NIGHT column is the free dead-regime control** (199) and it is what *caught* that contaminant: 11 "rows"
+  survived at an hour where a windrow **cannot exist**), `shot-windrow.mjs` (its camera — a genuinely **blind** A/B,
+  honest **because** the lap draws zero `rng()` and changes no terrain, so both builds generate the identical city with
+  the rows on the identical hexes and *both argmaxes independently land on the same hex*. Aimed by **argmax of measured
+  ink scored per ROW**, then panned to that row's own anchor `ctr()` (226/272), summed at **full resolution** (the rows
+  are sparse), with the **HUD boxes zeroed first** (200). Drives **`zoom`, never `scale`** — ⚠ **there is no `setZoom`
+  in this artifact**; the contract is `zoom=n; scale=fitScale*zoom`, which is what `zoomAt` and the `0` key both do
+  (269). Pins **DERIVED** from the light curve (264), frames named **by FILE** with **meaningless tokens**, map
+  **CROSSED** between seeds (238/239/268).)
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

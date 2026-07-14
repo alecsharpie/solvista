@@ -19522,3 +19522,91 @@ the sea: they stand over land **55% of their lives** (**3.86 of 7** cast a shado
 `shadS`, the shadow under every tree — `probe-cloudink`) nor small (its **30·s** half-width **equals the puff's own**).
 ➡ **The cue was MANUFACTURED BY THE QUESTION** — the puff draws **250–400 px ABOVE its ground anchor**, so an agent
 asked *"where are the clouds"* reports a **screen** position that encodes ALTITUDE (224). Law in SKILL.md.
+
+## Iteration 265 — the night guarded the warm surfaces from a blue light; nobody guarded the cool ones from an orange one (2026-07-14) [Sky & atmosphere × Polish]
+
+**Vector.** Cue **(s)**, the ledger's top cue, **re-graded from scratch** as 264 ordered. 264 found the
+step-back's camera had been shooting golden hour at **GWARM 0.36 of a possible 0.779** and fixed
+`shot-stepback`'s pins — but **`probe-goldenhue`, the cue's own NAMED instrument, still pinned golden at a
+literal `t=0.68`**. So the loop's measurement of its loudest defect had *also* never been taken at golden.
+Fixed first: the pin is now the **argmax of the shipped `GWARM`**, derived in-page by driving the artifact's
+own code (249), exactly as `shot-stepback` does. It lands at **t=0.775, GWARM 0.779**.
+
+**The defect, measured properly for the first time.** At the true pin, **every land surface in the city
+converges into a 9-degree hue band**: PARK 32° · FOREST 33° · FARM 29° · RES 26° · TOWER 25° · BEACH 25° ·
+ROAD/COM/MID 24°. Chroma *rises* everywhere (PARK 55→76), so this is not desaturation — it is **hue
+convergence**, and `PARK↔RES` separation falls to **15 RGB units, the probe's own collapse floor**. That is
+**214's law at the other end of the day**: a flat per-channel multiply on a saturated surface is a HUE
+ROTATION, not a tint. The whole wash ladder (214 sand · 220 masonry · 221 greens · 223 · 234 timber) exists
+because the **NIGHT** tint `[.42,.42,.58]` crushes R and swings every **WARM** surface to violet. **The GOLDEN
+tint `[.92,.72,.66]` is that bug's exact mirror — it crushes G and B, so on any surface whose identity is its
+GREEN, R overtakes G — and in 264 iterations nobody had read it as the same bug.**
+
+**Change.** One dial on the wash the file already has. `goldenWash()` — a pure function of `TINT` — is passed
+by the **`LEAFN`** caller (the set the artifact itself calls *"anything that grows"*) into the shared
+`washRGB`, which now takes `w = max(nightDial, gold)`. `sandCol`/`WARMN` pass **no dial and are byte-identical
+at every hour**: the land is diffuse and it *should* blaze at dusk (257), so this does not fight the warm
+light — it only holds a green far enough off the asphalt to still be read as a green, through the **same wash
+and the same triple** that already holds the sand off the asphalt after dark. `GOLDW=0.50`.
+⚠ **The dial reads `TINT`, never `GWARM`** — `CCACHE` is flushed precisely when `TINT` changes, so a
+`TINT`-derived dial *cannot* serve a stale colour, where a `GWARM`-derived one would make the cache depend on
+call order (**261's law, obeyed structurally rather than remembered**).
+
+**Probe** (`probes/probe-greenhue.mjs`, new — 234's palette suppression: loud-paint the entry, diff in ONE
+page, floor exactly 0, occlusion free, **build-agnostic**). Score is **221's** `dHUE` (distance from the
+surface's OWN daylight self, never a pairwise separation), plus the one binary that needs **no threshold**:
+**is G still the max channel — is the grass still green?**
+
+| | HEAD | patch |
+| --- | --- | --- |
+| greens at golden | `[123,119,75]` **hue 55°, dHUE 32°, NOT GREEN 3/3** | `[117,123,77]` **hue 69°, dHUE 18–21°, GREEN 3/3** |
+| **warm palette** (control, must not move) | `[184,124,90]`, dHUE 12° | `[184,124,90]`, dHUE 12° — **identical** |
+| **day** (dead-regime control, 199) | `[138,163,106]` | `[138,163,106]` — **identical** |
+| luminance (223, must not move) | 116 / 114 / 114 | 116 / 114 / 115 |
+
+**Census.** PASS — `pop`/`roads`/`developed` **+0**, tile histogram empty (correct and near-vacuous for a
+colour-only lap). `solarRoofs −1 / greenRoofs +1` is 226's documented ±2 tick wobble.
+**Perf.** Path objects **day −42 (−0.04%) · night −35 (−0.03%)** — colour-only, **free** by the measured cost
+model. Whole-frame day control: **17/26 px** against a golden signal of **125,000 px**.
+
+**Visual.** PASS ×2. Blind, **codenamed by file (239), mapping CROSSED between seeds (238)** — and **both
+agents independently chose the PATCH, naming different codenames** (s42 `lime`, s7 `navy`). Both reproduced
+the cue unprompted on HEAD (*"the vegetation hue has migrated onto the road/sand/terracotta axis"*; *"collapses
+into one near-monochrome terracotta mass"*), and both cleared the one failure mode that mattered — *do the
+parks now look UNLIT?* — with the mechanism: *"a tinted-under-warm-light green, not raw daytime green punched
+through"*; *"they read as green grass under low warm sun, not a green layer that missed the lighting pass."*
+Both confirmed the day pair identical; no z-order tears, no blowout.
+
+**Verdict: SHIPPED.** ⚠ Two instrument findings, both promoted to SKILL.md: **(a) 264's stale-pin law recursed
+immediately** — 264 fixed the camera's pins and left the *probe's*, because **a lap that fixes a stale pin must
+grep every OTHER reader of that curve** (262's sibling law, arriving on the harness). **(b) A SUPPRESSION MASK'S
+THRESHOLD SELECTS OPACITY, AND A LOW ONE MEASURES THE BACKGROUND**: at `d>24` the mask admitted ~6%-opacity
+green specks lying on TAN ground, whose shipped colour is mostly the *ground's* — dragging the aggregate **8 RGB
+units toward orange** and reporting the grass R-dominant when the grass FILL was not. `probe-goldenhue`'s
+PARK-hex sample has the same disease from the other side (238: a park hex is 45% lawn and **43% season-dead**
+paths/ponds/furniture, so it reported a **3°** move where the grass itself moved **15°**). **Measure the palette
+entry, not the tile — and threshold the mask by opacity.**
+
+
+<!-- header bullet rotated out at 275: the BODY of cue (aj), which iter 273 REFUTED ON EVERY
+     COUNT and RETIRED. Line 189 of the header had claimed this body was "archived at 274" while
+     it was in fact still sitting in the live cue list, reading as an open cue and prescribing a
+     lever (bias the cloud SPAWN onto the land) that 273 measured as arithmetically unreachable
+     (`cl.y` is a DEAD lever: the best row in the city is worth 1.10x a uniform pick). Kept here
+     byte-for-byte because the loop's memory is the one thing it cannot re-derive. -->
+
+**(aj) THE SHOWERS FALL WHERE NOBODY LIVES (236; SHADE half CLOSED by 242, SITING half OPEN, DOUBLY MEASURED).**
+Clouds spawn `x:rng()*G, y:CTRY-20+rng()*40` with **no reference to the land**, so a seed parks its sky over the sea —
+**242's probe counted 4/7, 6/7 and 3/7 clouds off-land** (seeds 42/7/1234), and only **3–4 of 7** soaked clouds ever
+render a veil (`probe-front` D). **The lever is the SPAWN, not the draw** — bias `cl.x`/`cl.y` onto the live rows
+(`ROWMIN`/`ROWMAX`, `HEXI`) for ~2x the visible weather at **zero new draw work**. ⚠ Rain over the sea is **CORRECT**
+(201) — this is about *coverage*. **Sky × Polish.**
+
+<!-- header bullet rotated out at 275: the BODY of cue (p)'s GARDEN half, RETIRED at 263. The
+     header carries a separate one-line retirement ("GARDEN is RETIRED — host starved, see (p)"),
+     so this rationale was duplicated. The lawn-amplitude warning stays live in the header. -->
+
+⛔ **(p)'s GARDEN HALF IS RETIRED (263) — DO NOT SPEND A LAP ON IT.** GARDEN is **2–5 hexes a city**
+(census histogram, 2035; 206's siting fix under-delivered), each ~40% occluded, its beds tiny prisms — so staggered
+per-bed calendars would be **a perfect field nobody can see (259)**. The tell is real and the HOST is starved. If
+GARDEN is ever reopened it is a **population** question first, not a calendar one.
