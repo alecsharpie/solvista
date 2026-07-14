@@ -1678,6 +1678,15 @@ const isWood=c=>c.t===T.FOREST||c.t===T.REDWOOD;
    fragmented — biggest component 6 and 14 — and could only speckle). It already
    drew static wildflowers with no calendar; now they keep one. */
 const bloomHost=c=>c.t===T.MEADOW||c.t===T.SHOREPARK;
+/* WHAT LIGHTS A FIRE — the per-cell, per-tick chance that a hex of standing forest
+   (FIRESPK) or an old timber block (TIMBSPK) catches. Both are WALKED over the host
+   (see the spark in tick()), not lotteried for over the plate, which is why the fire
+   CA can run at all; and both are hashCell rolls, so they spend no rng() draw.
+   FIREHOUSE is what the 1991 engine is worth: the placard's "fires jump block to
+   block UNTIL the 1991 firehouse", as a factor on the timber spark rather than a
+   second year literal — the SPREAD clause already stops jumping at 1992, so the
+   ignition steps down on the same date, off the same idea. */
+const FIRESPK=1.1e-4, TIMBSPK=1.6e-4, FIREHOUSE=0.22;
 /* THE AUTUMN FLUSH — one predicate, three readers (the tick() pass, the draw's
    fade, the tooltip). Iter 272: every ring in the city used to surface and vanish
    on the SAME TICK. The gate asked one GLOBAL question ("is it autumn?") and rolled
@@ -2466,6 +2475,40 @@ function tick(){
   if(year<2030&&rng()<0.03){
     const[x,y,c]=rc();
     if(c&&c.t===T.FOREST&&c.fire===0&&rng()<0.4)c.fire=4;
+  }
+  /* ...and in the artifact's whole life neither of those two sparks has ever lit a fire
+     anybody saw. Measured over 6 seeds x the full 61-year run: THREE ignitions in total,
+     three seeds in six that never burn at all, and every one of them a SINGLE hex that
+     goes out in three ticks. The fire has never once SPREAD, and BURNT reads 0 in every
+     seed and every era of the census. Meanwhile the placard promises fires that "jump
+     block to block", the firehouse is "ready for the fires on the hill", the engine has
+     an `atfire` duty and a fireDoor() BFS to route it, and this whole BURNT tile — char,
+     stumps, smoke, a regrowth rule and a tooltip — describes a fire that never happens.
+
+     The spread and the refractory were always correct. The SPARK is a UNIFORM LOTTERY
+     over the plate: rc() draws ONE ticket a tick out of 3,367 live cells, and the forest
+     it is hunting is 55-98 of them (~2%), so the hill fire is expected 0.18 times per
+     CITY. A tiny host cannot be found by a uniform sample of a large space, and the RATE
+     is irrelevant until the SPACE is right (iter 267) — an excitable medium is spark +
+     spread + refractory, and this one had no spark (iter 263).
+
+     So WALK the host, exactly as the wildflower CA above does. hashCell salted with TICKN
+     stays stochastic per cell and per tick while spending NO rng() draw, so the ignition
+     itself cannot reshuffle the seeded stream — only the terrain a fire BURNS can, which
+     is the honest, unavoidable cost of a rule that writes terrain. HEAD's two lotteries
+     are KEPT, draws and all, so the stream still spends exactly what it always spent. */
+  for(const i of HEXI){
+    const c=cells[i]; if(c.fire!==0)continue;
+    const x=i%G, y=(i/G)|0;
+    if(year<2030&&c.t===T.FOREST){
+      if(hashCell(x,y,(seedNum^0xF12E^TICKN)>>>0)<FIRESPK)c.fire=4;
+    }
+    /* the timber block smolders only until the city has an engine to answer it — the
+       placard's own claim, and the SPREAD clause below already ends at 1992, so the
+       spark steps down with it rather than being gated on a second, unrelated year. */
+    else if(year<2006&&(c.t===T.RES||c.t===T.COM)&&c.age>26){
+      if(hashCell(x,y,(seedNum^0x8B27^TICKN)>>>0)<(year<1992?TIMBSPK:TIMBSPK*FIREHOUSE))c.fire=4;
+    }
   }
   firesNow=false;
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
@@ -5291,14 +5334,28 @@ function drawCell(x,y){
       }
       const esp=x===shoreAt(y)-1&&espAt(y); /* the boardwalk runs over this tile */
       if(esp)drawEspAt(x,y);
+      /* the bonfire is drawFire's SIBLING, and it had the SAME TWO BUGS (271: a per-entity
+         rule is a property of a CATEGORY — after you fix one, grep every draw that puts the
+         same KIND of thing on the plate). It is a FIRE, so (a) it was painting its flame
+         through col('gold') — the illuminant — which is the category error a fire cannot
+         afford (257), and (b) its glow was a FLAT additive arc, which is a coin and not a
+         glow (195), and a blind agent duly reported "hard-edged amber coins along the coast"
+         without being asked about them. Same fix, same reasons: a raw emissive literal out of
+         the illuminant's reach, and a radial gradient falling to alpha 0 at the rim. */
       if(!esp&&v>0.42&&v<0.47&&LITAMT>0.5){ /* beach bonfire */
         const[cx,cy]=px(gx,gy);
-        ctx.fillStyle='rgba(255,170,80,'+(0.25*LITAMT)+')';
-        ctx.beginPath();ctx.arc(cx,cy-2,6,0,7);ctx.fill();
-        ctx.fillStyle=col('gold',1.5);
+        const bg=ctx.createRadialGradient(cx,cy-2,0,cx,cy-2,8);
+        bg.addColorStop(0,'rgba(255,178,86,'+(0.30*LITAMT).toFixed(3)+')');
+        bg.addColorStop(1,'rgba(240,120,40,0)');
+        ctx.fillStyle=bg;
+        ctx.beginPath();ctx.arc(cx,cy-2,8,0,7);ctx.fill();
+        ctx.fillStyle='rgb(255,196,64)';                  /* EMISSIVE — no col(), no TINT */
         const bfl=Math.sin(time*11+x)*1.2;
-        ctx.beginPath();ctx.moveTo(cx-2,cy);ctx.lineTo(cx,cy-5-bfl);ctx.lineTo(cx+2,cy);ctx.closePath();ctx.fill();
-        ctx.fillStyle=col('ink',1.2);
+        ctx.beginPath();ctx.moveTo(cx-2,cy);
+        ctx.quadraticCurveTo(cx-1.9,cy-3.4, cx+0.5,cy-5.6-bfl);
+        ctx.quadraticCurveTo(cx+1.7,cy-2.6, cx+2,cy);
+        ctx.closePath();ctx.fill();
+        ctx.fillStyle=col('ink',1.2);                     /* the logs are TIMBER — they reflect */
         ctx.fillRect(cx-4.5,cy-1,1.6,1.6);ctx.fillRect(cx+3,cy-0.5,1.6,1.6);
       }
       /* UMB is the YEAR-ROUND furniture band, and it is hoisted out for a reason. The
@@ -6228,17 +6285,67 @@ function drawParty(x,y,c,gx,gy){ /* the street party out front of a home */
   ctx.globalAlpha=1;
 }
 
+/* A FIRE IS AN EMITTER, AND col() IS FOR REFLECTORS. This drew its flame with
+   col('gold')/col('coral') — i.e. BASE x TINT — which is the right model for every
+   diffuse surface in the city and a CATEGORY ERROR on the one thing in it that makes
+   its own light (iter 257's law, arriving on an emitter instead of on a mirror; the lit
+   windows already take a raw literal for exactly this reason). Measured, the flame's
+   rendered luminance FELL 225 (noon) -> 141 (dusk) -> 106 (night) and its hue rotated
+   gold -> muddy brown (255,235,89 -> 144,98,49): the city's fires were DIMMEST at
+   midnight and a blaze read duller than the lit windows beside it. That is 214's
+   hue-rotation law, and it survived the artifact's entire life because the fire CA had
+   never once run — A DEAD RULE HIDES ITS OWN DRAW BUGS.
+   So the flame is issued as a RAW LITERAL, out of the illuminant's reach, and it now
+   carries a glow that GROWS as the light falls — a radial gradient falling to alpha 0 at
+   the rim, never a flat arc (iter 195: a flat additive arc is a coin, not a glow). The
+   glow is drawn at ground level inside its own cell, so a nearer row occludes it together
+   with the fire that casts it and it can never orphan into open sky (195's orphan law). */
 function drawFire(x,y,c,gx,gy){
   const[cx,cy]=px(gx,gy);
   const hh=c.h*0.8;
   const fl=Math.sin(time*13+x*3)*1.6;
-  ctx.fillStyle=col('gold',1.45);
-  ctx.beginPath();ctx.moveTo(cx-4.5,cy-hh);ctx.lineTo(cx,cy-hh-10-fl);ctx.lineTo(cx+4.5,cy-hh);ctx.closePath();ctx.fill();
-  ctx.fillStyle=col('coral',1.35);
-  ctx.beginPath();ctx.moveTo(cx-2.6,cy-hh);ctx.lineTo(cx+1,cy-hh-6-fl*0.6);ctx.lineTo(cx+3.6,cy-hh);ctx.closePath();ctx.fill();
-  ctx.fillStyle='rgba(96,90,82,0.5)';
-  for(let j=0;j<3;j++){const sm=(time*9+j*2.4)%10;
-    ctx.beginPath();ctx.arc(cx+Math.sin(time*2+j*2)*2.5,cy-hh-9-sm,1.8+sm*0.35,0,7);ctx.fill();}
+  const fy=cy-hh;
+  /* the darker the hour, the further the firelight throws */
+  const glow=0.30+0.70*nightAmt();
+  const gr=ctx.createRadialGradient(cx,fy-5,0,cx,fy-5,15+7*glow);
+  gr.addColorStop(0,'rgba(255,176,72,'+(0.34*glow+0.10).toFixed(3)+')');
+  gr.addColorStop(0.45,'rgba(240,124,44,'+(0.16*glow+0.04).toFixed(3)+')');
+  gr.addColorStop(1,'rgba(220,90,30,0)');
+  ctx.fillStyle=gr;
+  ctx.beginPath();ctx.arc(cx,fy-5,15+7*glow,0,7);ctx.fill();
+  /* ...and the flame is a TONGUE, not a TRIANGLE. It was two flat symmetric triangles, and
+     two blind agents on two seeds independently reported the same thing — "it reads as a
+     tent / a traffic cone", one of them on a frame it otherwise passed. A fire's silhouette
+     is asymmetric and CONCAVE: it leans, its edges curve in, and it licks to a point. Same
+     two path objects, same ink, no new draw work — a curve costs what a line costs here. */
+  /* ...and the flame is a TONGUE, not a TRIANGLE. It was two flat symmetric triangles, and
+     FOUR blind agents across two seeds independently reported the same thing — "a tent", "a
+     traffic cone", "a glowing teepee" — one of them on a frame it otherwise passed, and one
+     admitting it had first parsed the pair as CAMPSITE TENTS in a forest. A first pass at
+     curving it did not help, and the arithmetic says why: the lean was `fl*0.55`, i.e. UNDER
+     ONE PIXEL on a 10px flame, with near-mirrored control points — a symmetric shape with a
+     sub-pixel wobble is a symmetric shape. What makes a flame read is not curvature, it is
+     ASYMMETRY plus a CONCAVE leeward edge: it bulges on the windward side, necks in, and
+     licks to an offset point. Same two path objects, same ink, no new draw work. */
+  const tipx=cx+2.1+fl*0.7, tipy=fy-13.5-fl;
+  ctx.fillStyle='rgb(255,196,64)';                       /* EMISSIVE — no col(), no TINT */
+  ctx.beginPath();ctx.moveTo(cx-4.2,fy);
+  ctx.bezierCurveTo(cx-4.8,fy-5.5, cx-2.8,fy-9, tipx,tipy);      /* windward: bulge, then sweep up */
+  ctx.bezierCurveTo(cx+1.4,fy-7.4, cx+3.6,fy-4.2, cx+3.5,fy);    /* leeward: CONCAVE, necks back in */
+  ctx.closePath();ctx.fill();
+  ctx.fillStyle='rgb(255,242,196)';                      /* the hot core reads near-white */
+  ctx.beginPath();ctx.moveTo(cx-2.1,fy);
+  ctx.bezierCurveTo(cx-2.4,fy-3.4, cx-1.2,fy-5.6, cx+1.1+fl*0.4,fy-8.2-fl*0.5);
+  ctx.bezierCurveTo(cx+0.9,fy-4.6, cx+2.2,fy-2.6, cx+2.2,fy);
+  ctx.closePath();ctx.fill();
+  /* a lick breaking off the tip — the one cue no tent has */
+  ctx.fillStyle='rgba(255,214,110,0.85)';
+  ctx.beginPath();ctx.ellipse(tipx+1.1,tipy-2.6-Math.abs(fl)*0.5,1.05,2.0,0.5,0,7);ctx.fill();
+  /* a wildfire's plume is bigger and dirtier than a chimney's two thin puffs, or the two
+     read as the same thing at a glance (they did: an agent could not tell them apart) */
+  ctx.fillStyle='rgba(74,68,62,0.55)';
+  for(let j=0;j<4;j++){const sm=(time*9+j*2.4)%13;
+    ctx.beginPath();ctx.arc(cx+Math.sin(time*2+j*2)*3.2,fy-10-sm,2.4+sm*0.42,0,7);ctx.fill();}
 }
 
 /* A tower's massing and its palette, from two independent seed-salted draws.
