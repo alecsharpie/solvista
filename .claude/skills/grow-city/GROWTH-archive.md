@@ -20879,3 +20879,90 @@ genuine civic quarter… density feels like a real city, not a pile-up."*
 **Verdict: FIXED.** The city builds the schools its own placard has promised for 277 iterations — and,
 more than that, **the instrument the loop measures with now builds the city the artifact actually grows.**
 
+## Iteration 278 — six laps made the label live and nobody re-read the card (2026-07-15) [People & activity × Interaction/UX + holistic step-back, 36th]
+
+**Vector.** People & activity × **Interaction/UX** — the stalest cell in the grid (191, ~87 laps
+ago; the whole column last touched at 229). People had taken **Deepen four laps running**
+(240/247/262/271), so the header's own rotation note forbade a fifth.
+
+**The seam, and it was hosted on a comment that documented the defect as a feature.** Six
+separate laps — 249's ferry, 262's child, 269's tram, 271's surfer, 276's bus, and the cab —
+each rewrote an `ENTINFO` `sub` from a frozen sentence into a **live function of its entity**,
+every one of them for the same stated reason: *"computed live, never stored, so the label and
+the draw cannot drift apart."* That work is real and it is correct. **And the card that
+delivers it is built exactly once, inside the `mousemove` listener, and never again** — so all
+of that liveness is snapshotted at the instant the cursor last twitched, over a diorama whose
+entire subject is things that move. `stamp()`'s own comment said so out loud and treated it as
+settled: *"tracked per frame, so it follows a walker **the tooltip has stopped updating**."*
+The focus ring was a **workaround for a stale card, written down as a feature.**
+
+**Probe first, and it REFUTED the hypothesis I opened with.** I expected the pick *reach* to be
+the defect (`pickEntity` tests `d < r*r` in WORLD units, so a resident's `r=5` disc is only
+**3.2 CSS px** at fit zoom). `probes/probe-hoverreach.mjs` says no: **100% of a resident's own
+drawn pixels name a Resident** — a ped is small enough to sit inside its own disc. Reach is
+fine. (It did find vehicles under-reaching: 23–29% of a car's body names nothing. Banked as a
+cue, not this lap's vector.)
+
+**Census.** PASS, core flat. Tile histogram moved (`ROAD −11 / EMPTY +11 / RES +4 / MID −3`) on
+a change that touches no terrain and no `rng()` — and it **reproduced exactly on a re-run**, which
+226's rule ("re-run the SAME FILE") reads as *guilty*. It is not: `probe-cascade` over **10 seeds**
+comes back **+0.0% on every column, every seed — the two builds build the same world.** See the
+law below.
+
+**Probe (`probes/probe-hoverstale.mjs`).** TEMPORAL (134): every other gate here is frozen, so
+*"the card goes stale"* has no instrument. It drives the artifact's own `advanceEntities` +
+`render()`, holds a cursor still for 20s, and grades **what the card SAYS** (`tipEl.innerHTML`,
+driven through the real `mousemove` listener) against what is under the cursor now. BUILD-AGNOSTIC
+(230): HEAD has no `hoverRefresh`, so one file grades both builds with no source swap.
+
+| 20s dwell | card CORRECT | GHOST | STALE | t=0 fixed pt | median s until it left its own pick disc |
+| --- | --- | --- | --- | --- | --- |
+| Resident — HEAD | **31–38%** | 62–69% | 0% | 10/10 | 2.0–5.0s |
+| Resident — patch | **100.0%** | 0% | 0% | 10/10 | (same) |
+| Vehicle — HEAD | **0.8–1.5%** | 98.5–99.3% | 0–0.3% | 10/10 | **0.5s** |
+| Vehicle — patch | **100.0%** | 0% | 0% | 10/10 | (same) |
+| TILE [control] | 95.8–99.6% → **100%** | | | 6/6 | (never left) |
+
+**TILE is 248's free positive control** — a correct sibling readout on the same code path that
+*cannot* move, so a flat resident column is a real flatness and not a dead rig. **t=0 is the
+fixed point (245/253)** and it is exact in BOTH builds: at the instant of the mousemove the two
+cards are identical by construction.
+
+**Change.** The `mousemove` body is factored into **`hoverAt(mx,my)`**; the cursor is remembered
+in screen px (`hoverMX/hoverMY`); **`hoverRefresh()`** re-reads the hover from it, and `frame()`
+calls it on a **120ms throttle** — the `syncSky` idiom, and it only ever serves the cursor
+standing *still*, because a moving mouse already fires `mousemove` at full rate. The DOM is
+written **only when the sentence actually changed**. `__hover` drops the remembered cursor, or the
+refresh would overwrite the pinned tile on the next frame. ⇒ **the ring, the card and the pointer
+are one thing again**, and every one of those six live `sub` functions is finally *called*.
+
+**Perf: FREE, and proven by the deterministic instrument, not the timer.** `perfab` was
+unusable today (the *same* patched file read **44.61ms** and then **55.33ms** — a 24% swing on
+identical code; one pass even reported a physically impossible **−62.7% night**). 216's law:
+when a timing delta has no mechanism, **count path objects.** Night **138,098 → 138,098 (exactly
+identical)**; day **111,650 → 111,660 (+0.009%)**. And the mechanism is airtight: with no cursor
+on the canvas `hoverRefresh()` is a single null check per 120ms, so there is no draw work to add.
+
+**Visual.** A still cannot prove a verb (134/258) — but the defect leaves a **static, spatial**
+trace, and `probes/shot-hoverstale.mjs` shoots it: hover a car, hold the cursor still 6s, and in
+HEAD the focus ring sails **653px** and **1108px** away while the card still says *"City bus"* /
+*"Car"*. A blind agent, on a **crossed** map, both seeds, confirmed it unprompted: in the HEAD
+frames the card names a vehicle that **is not under the pointer**; in the patch frames the card
+names the road that **is** (Arterial / Boulevard), ringed. **It also caught a real bug in my
+camera** (see the law), and a second agent, after the fix, **measured** the corrected captions
+straight (claimed 32/42px, measured 30/42px) and re-confirmed the ghost independently.
+
+**Step-back (36th).** Both seeds **VISUAL: PASS**, no compounding drift. Both agents named
+**winter by the light alone** (261's day-length season is alive and legible). Their asides
+re-confirm two *already-banked, deliberate* items and neither is new: golden hour's peach wash
+(**265 chose that on purpose** — protect the complement, do not de-warm the scene) and the sea's
+residual one-tone lattice (**255/257/268: structural** — 268 removed the seams, not the lattice).
+Seed 7 also raised skyline monotony, which is the **CLOSED** skyline ladder (224). **Perf ARC,
+priced in path objects vs 177 (101 laps): day 102,267 → 111,660 = +9.2%; night 137,258 → 138,098
+= +0.6%** ⇒ ~**+0.09%/lap day, night flat.** The arc is still stopped.
+
+**Verdict: SHIPPED.** The city had spent six iterations teaching its labels to tell the truth, and
+had never once re-read them aloud.
+
+
+- (moved from header at iter 288) ✅ **(aw)'s KAYAK HALF IS CLOSED BY 286** (with the KITE as its pair). **(aw-HUD) is still live and still UNVERIFIED — see the Water cue line in the header.**

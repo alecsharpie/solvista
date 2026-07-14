@@ -2568,7 +2568,7 @@ function tick(){
      Time-salted hashCell gives fresh per-tick chance without touching rng(). */
   if(year>=2010)for(let i=0;i<G*G;i++){
     const x=i%G,y=(i/G)|0,c=cells[i];
-    if(!c.solar&&(c.t===T.RES||c.t===T.MID||c.t===T.COM)){
+    if(!c.solar&&(c.t===T.RES||c.t===T.MID||c.t===T.COM||c.t===T.TOWER)){
       const adopt=countAround(x,y,1,n=>n.solar&&DEV.has(n.t));
       const p=Math.min(0.05,0.0004+0.009*adopt);
       if(hashCell(x,y,(seedNum^0x501A^((year*23)|0))>>>0)<p)c.solar=true;
@@ -2578,7 +2578,7 @@ function tick(){
      shopfronts. Time-salted hashCell; a roof goes green OR solar, not both. */
   if(year>=2015)for(let i=0;i<G*G;i++){
     const x=i%G,y=(i/G)|0,c=cells[i];
-    if(!c.groof&&!c.solar&&(c.t===T.MID||c.t===T.COM)){
+    if(!c.groof&&!c.solar&&(c.t===T.MID||c.t===T.COM||c.t===T.TOWER)){
       const adopt=countAround(x,y,1,n=>n.groof&&DEV.has(n.t));
       const p=Math.min(0.05,0.0004+0.01*adopt);
       if(hashCell(x,y,(seedNum^0x6807^((year*31)|0))>>>0)<p)c.groof=true;
@@ -7175,6 +7175,21 @@ function drawBuilding(c,x,y,gx,gy){
        salted crown hash: a parapet, a stepped cap, or the bare roof it always had.
        Only the flat-topped crowns are eligible -- a helideck on a spire is absurd,
        and one on a roof garden would pave it. */
+    if(!under&&(c.solar||c.groof)){
+      /* rooftop solar / green roof, now wearable by a TOWER (iter 288). c.solar and
+         c.groof are set on RES/MID/COM and RIDE the saturating COM->TOWER upgrade,
+         but the TOWER branch drew NEITHER for the artifact's whole life — so downtown's
+         tallest, most-visible roofs were structurally incapable of carrying the tech
+         the HUD counts (stats.solar) and the tooltip names. 285's law: a type-keyed
+         rule confers a property on the DEVELOPED-ROOF category, and its tallest member
+         lived at a level the writer's list never reached. Drawn on the flat roof deck
+         at height h, wide enough that whatever crown follows rises through its centre;
+         the mast and helipad still ride above it. */
+      if(c.solar)
+        prism(gx,gy,tax*0.82,tay*0.82,h,h+0.7,col('solar',1.12),col('solar',0.68),col('solar',0.88));
+      else
+        prism(gx,gy,tax*0.8,tay*0.8,h,h+1.1,col('sage',1.04),col('sage',0.6),col('sage',0.84));
+    }
     const pad=!under&&h>90;
     const deckZ=pad?towerCrown(gx,gy,tax,tay,h,[0,3,-1][crown%3],bodyN,capN)
                    :(towerCrown(gx,gy,tax,tay,h,crown,bodyN,capN),0);
