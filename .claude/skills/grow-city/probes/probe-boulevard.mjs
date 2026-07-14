@@ -25,7 +25,10 @@ const PW = join(homedir(), '.claude/skills/screenshot-verify/node_modules/playwr
 const { chromium } = (await import(pathToFileURL(PW).href)).default;
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CAND = [resolve(HERE, '../../../../solvista.html'), resolve(HERE, 'solvista.html'), resolve(HERE, '../../../solvista.html')];
-const ROOT = CAND.find(existsSync);
+/* SRC= grades pristine HEAD without a /bin/cp swap (197's stale-backup hazard). It had
+   none, so `SRC=… node probe-boulevard.mjs` silently measured the WORKTREE and handed
+   back the patch's numbers under HEAD's name — iter 283. */
+const ROOT = process.env.SRC || CAND.find(existsSync);
 const fileUrl = pathToFileURL(ROOT).href;
 
 const SEEDS = [7, 42, 1234];
@@ -43,7 +46,13 @@ for (const seed of SEEDS) {
     const treed = [], busyPlain = [], quietPlain = [];
     for (let y = 0; y < G; y++) for (let x = 0; x < G; x++) {
       const c = cells[idx(x, y)];
-      if (c.t !== T.ROAD || c.bridge) continue;
+      /* describeTile's title chain PREEMPTS on both flags -- `c.fete ? 'Festival street'
+         : c.bridge ? 'Bridge' : (c.treed ? 'Boulevard' : ...)` -- so a treed FESTIVAL
+         street correctly titles 'Festival street', and asserting 'Boulevard' on it is a
+         false positive. This probe skipped `bridge` and not `fete`, so it had been FAILing
+         on pristine HEAD (16 fete collisions on seed 42) for as long as anyone re-ran it.
+         Fix the tool, don't document the trap (243). -- iter 283 */
+      if (c.t !== T.ROAD || c.bridge || c.fete) continue;
       if (c.treed) treed.push([x, y]);
       else if (c.busy) busyPlain.push([x, y]);
       else quietPlain.push([x, y]);

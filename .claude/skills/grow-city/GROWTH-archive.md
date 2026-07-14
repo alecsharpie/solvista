@@ -20320,3 +20320,158 @@ are ≤11 per city (~0.1% of a 105k-object frame), in autumn only. **A small cre
 
 **Verdict: DEEPENED.**
 
+
+---
+
+## Header blocks rotated out at 283 (277–280, preserved byte-for-byte from the maintained header)
+
+  **280 (re-compressed 282):** **`windForce()` · `windDrift()` · `kiteGust()` — the sky's gust, as THREE predicates.**
+  ⚠ **`windDrift()` IS THE CLOUDS' OWN EXPRESSION** (`0.55+0.9*WINDA`); balloons share it — **do not fork a second.**
+  ⚠ **EVERY LEVER IN `drawKite` IS A MULTIPLE OF `kiteGust()`, WHICH IS 1.0 AT FULL GALE = HEAD'S LITERALS** ⇒ an EXACT
+  fixed point, and `window.kiteGust=()=>1` renders HEAD **in-page** (253). **Do not "simplify" that centring away.**
+  ✅ **`__setWind(v)` / `__wind()` — THE HOOK `WINDA` NEVER HAD** (recomputed from `time` inside `advanceEntities`, which
+  runs ONLY while `playing`, so a FROZEN page holds a pin). ⚠ **No `?wind=`.** ⚠ **A KITE IS NOT SINGLE-FREQUENCY** —
+  `drawKite` runs **FOUR** ⇒ a "null step" of one period is **NOT null**. ⚠ **`px()` RETURNS *WORLD* COORDS** (device =
+  `(px*scale+off)*dpr`; scoring ink at `px()*dpr` returns a clean, plausible **ZERO** — 273).
+  **279 (re-compressed 282):** 🔴 **THE WILDFIRE CA NOW RUNS — IT NEVER HAD** (HEAD: 3 sparks, 0 JUMPS, 6 seeds × 61 yr).
+  `FIRESPK`/`TIMBSPK` are per-cell rolls **WALKED over `HEXI`** on `hashCell(x,y,seedNum^SALT^TICKN)` ⇒ **zero `rng()`
+  draws — do NOT "tidy" them back onto `rc()`.** ⚠ **HEAD'S TWO LOTTERIES ARE KEPT ON PURPOSE** (they are the stream's
+  draws). ⚠ **`FIREHOUSE` is the 1991 engine as a FACTOR on the timber spark.** ⚠ **THE FIRE WRITES TERRAIN ⇒ it CANNOT
+  be inert like the bloom**: expect the cascade (`towers +77`, `developed` flat). ⚠ **SPARK RATES AT 0 IS AN EXACT FIXED
+  POINT.** ⚠ **NOTHING BURNS AT 2035** (`year<2030`/`<2006`) ⇒ **a `?warp=61` frame can NEVER show a fire**;
+  `probes/shot-firespark.mjs` drives `tick()` to a live episode. ⚠ **`tick()` DOES NOT ADVANCE `year` — `__warp` does.**
+  ⚠ **`drawFire` AND THE BEACH BONFIRE TAKE A RAW LITERAL, NOT `col()`** (280's emitter law).
+  ⇒ **CUE (bb) (flame silhouette) MOVED TO `POLISH.md` (g2) at 280** — a `polish-tile` job; **not a growth lap (279 tried 3x).**
+  ⇒ 🆕 **CUE (bc) — THE FIRE'S GLOW IS EATEN BY LATER ROWS IN DENSE FABRIC** (266's z-order law): painted **during its
+  own cell**, so rows in FRONT paint it out — the warm spill lands in seed 7's open forest and **not** in seed 42's
+  core (agent-measured). **A mark that must light its neighbours must trail back over cells ALREADY PAINTED.**
+  **278 (compressed 281):** **`hoverAt(mx,my)` — ONE hover, TWO callers** (the `mousemove` listener, and `frame()` via
+  `hoverRefresh()` on a **120ms** throttle). ⚠ **THE CURSOR IS REMEMBERED IN *SCREEN* PX** (`hoverMX/hoverMY`). ⚠ **THE
+  DOM IS WRITTEN ONLY WHEN THE SENTENCE CHANGES** (`hoverHTML`). ⚠ **`__hover` MUST DROP `hoverMX`**, or the refresh
+  overwrites the pinned tile. ⚠ **NO CURSOR ⇒ `hoverRefresh()` IS ONE NULL CHECK** = a free dead-regime control (199).
+  ⚠ **THE ARTIFACT DRAWS *TWO* FOCUS RINGS** — `stamp()`'s **entity ellipse** and `render()`'s post-pass **tile hex
+  outline**; anything reporting "the ring" must name both. ⚠ **`pickEntity` TESTS `d<r*r` IN *WORLD* UNITS** (a
+  resident's `r=5` ⇒ **3.2 CSS px** at fit) — **FINE, measured**; do not widen without `probe-hoverreach`.
+  ⇒ 🆕 **CUE (az) — VEHICLES UNDER-REACH THEIR OWN BODIES** (Transport × Interaction/UX): **23–29% of a car's own drawn
+  pixels name NOTHING** (`r=6` world vs a longer body). Measured, cheap, rig banked. ⇒ 🆕 **CUE (ba) — THE TILE HOVER
+  PICKS BY GROUND-PLANE CENTRE**, so pointing at a TOWER'S FACADE names and rings the **ROAD HEX BEHIND IT**.
+  **Pre-existing HEAD behaviour, not 278's** ⇒ an **occlusion** problem (206/226); price it first.
+  **277 (re-compressed 282):** 🔴 **`recount()`'s pop NO LONGER READS `c.h`** — `c.h` grows ONLY inside `render()` and
+  **`__warp` NEVER RENDERS**, so under every warp **every TOWER stood at `h=0` and housed NOBODY**. ⚠ **`c.h` IS A DRAW
+  VARIABLE — NEVER LET A WORLD QUANTITY READ IT AGAIN.** ✅ **WARP == LIVE == INSTANT is an EXACT fixed point**
+  (`probe-warppop`). ⚠ **272's settle-the-heights rule STILL STANDS for PIXEL diffs.** ⚠ **The school/university/stadium
+  rules were INNOCENT — the siting lottery hits 98–100%** (`probes/probe-school.mjs` decomposes any siting rule's
+  clauses; **run it BEFORE blaming a roll**).
+  **276 (re-compressed 282):** **`busNext(v)` — ONE predicate, THREE readers.** ⚠ **THE ROAD GRAPH IS *ONE* CONNECTED
+  COMPONENT on 6 seeds in 6** — that is what LICENSES a **rail** here where 269 could only have a **preference**.
+  ⚠ **`roadField` IS THE HOUSE ROUTER** (204's servSend BFS) — do not hand-roll a second. ⚠ **`c.blast` IS THE SCHEDULE**
+  (the sim-time the last bus called) ⇒ sorting on it is a headway rule needing **no new constant and no new cell state**
+  (218). ⚠ **Targets are CLAIMED**; the dwell stays **OPPORTUNISTIC**. ⚠ **`busNext` is called on HEX ENTRY, never per
+  frame** (O(G²)+BFS ⇒ 1.3M ops/frame). ⚠ **`Math.random` only ⇒ seeded `rng()` untouched, core +0** — but it DOES shift
+  the shared stream ⇒ **aggregate any control** (204).
+
+## Header blocks 225/231/213/211/210 re-compressed at 283 (full text, byte-for-byte)
+
+  **225: THE SHADOWS READ THE SUN.** `shadS` (every shadow routes through it) carries a per-frame sun vector
+  (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity). ⚠ **Noon (t=0.415) is BYTE-IDENTICAL ⇒ a free
+  dead-regime control for every shadow lap.** ⚠ **`SHAMT` must never reach 0 at night** — the residual patch is what
+  keeps every ped, tree and car from FLOATING. ⚠ **226: `census.mjs` DOES NOT FREEZE THE CLOCK** ⇒ tick-sensitive
+  metrics (`solarRoofs`) **wobble ±2**; core metrics unaffected. **To test whether an unintended metric move is YOURS,
+  re-run the SAME FILE, not HEAD.**
+  ⚠ **231: THREE PREDICATES, DON'T MIX THEM (body archived at 242).** `openFront`/`frontLoad` count **TALLT MEMBERSHIP**
+  — wrong for anything drawn flat. **`groundLoad(x,y)` is the ground-level one**: sums drawn **HEIGHT**, reads **`c.th`
+  never `c.h`**, counts a `RAISEABLE` lot at `FUTUREH` — **an empty lot is a building that has not been built yet.**
+  ⚠ **Aim a CAMERA by measured ink, never by any of the three (226) — nor by a position (271: it framed the pier).**
+  ⚠ **Settled audits, bodies archived at 242 — the live warnings only.** **213:** `nightDeep()` is **pinned at 1 all
+  day** (a trap for any NON-draw reader); the civic night-light audit is **DONE** — three lights are off the curve on
+  purpose (school janitor, hall clock face, parliament lantern), **do not "fix" them**. **211/210:** both `frontLoad`
+  and `openFront` ship as **PREFERENCES, NEVER GATES (206)**, and `LITAMT` returns to **0.64** by the small hours ⇒ any
+  gate `LITAMT > 0.64` defines a "night" that **ENDS BEFORE DAWN**. **137's "the ped/dog system is NON-REPRODUCIBLE" is
+  DISPROVEN** ⇒ **People is probe-able like any domain**. **209:** the **GROUND PLANE is SPENT** (216 spent the FACADES);
+  its law is in SKILL.md and paid out again at **253/261 (the LIGHT)** and **268 (the SEABED)**.
+
+## Perf-ARC header block, re-compressed at 283 (full text, byte-for-byte)
+
+  Perf ARC (arc ref `7e2ac2c` = 177; per-step-back refs + priors archived at 233/236/268/274). ✅ **THE ARC IS STOPPED —
+  FLAT ACROSS SIX STEP-BACKS. THE OLD `+0.2%/iteration` IS NOT BEING PAID; DO NOT QUOTE IT.** ARC vs 177 held day
+  **+18.1..+19.4** · night **+12.4..+14.1** across 242→**268**; night profile `winBandR` 32.1% · `prismS` 29.1% ·
+  `hexTile` 12.0%; `drawCell` 94%. 🔑 **STRUCTURAL: a domain past ADDITIVE saturation STOPS COSTING FRAME TIME** ⇒ **Do
+  NOT open a perf lap.** ⚠ **THE STANDING SUSPECT (207): NO HOT ORNAMENT — the arc is DIFFUSE**, which is why every
+  per-lap gate reads it free. **No caching lap (198's levers CLOSED); the only lever is FEWER OBJECTS.** 🔑 **THE LAP
+  TIMER OVER-READS — GRADE WITH `probe-drawbudget` BESIDE `perfab`, NEVER `perfab` ALONE** (216; **3x** it reported a
+  stable +2–3% over a lap that added NO draw work). ⚠ **`probe-drawbudget` HAS ITS OWN ~±100 OBJECT NOISE FLOOR** (274)
+  ⇒ **read a small delta against a dead-regime control, not against 0.** ⚠ **A WORLD-CHANGING VECTOR IS NOT FREE just
+  because its diff has no draw call — THE WORLD IS THE DRAW LIST** (222); ✅ it runs in **REVERSE** too (241, −3.2% day).
+  ⚠ **Cue (x) stands.** ⚠ **281: a lap that RESTORES a feature the rules already placed but never DREW pays a real,
+  mechanised cost (+0.56% day) — not arc drift, but the bill for 92% of a feature nobody could see.**
+
+## 258–236 imperatives + closed/retired cue roster, re-compressed at 283 (full text)
+
+  **258–236 (bodies archived at 276; IMPERATIVES ONLY):** ⚠ **THE CAB'S ROOF LAMP IS A FOR-HIRE SIGN — do not re-key it
+  to darkness.** ⚠ **`livelyKerb` SELECTS FOR ITS OWN BURIAL** ⇒ **aim by argmax-over-TIME/INK, never at the first
+  instance** (269: *any superlative aiming predicate made of DENSITY frames a wall*). ⚠ **`GWST` (overhead sky) and
+  `GWSB` (horizon) ARE NOT INTERCHANGEABLE** — the sea's body mirrors `GWST`; blending them lands in the mud. ⚠ **`f.sp`
+  KEEPS ITS SIGN** (the ferry's THROTTLE goes to zero, never the velocity). ⚠ **NOT cue (o): the PIER has a waterfront,
+  the HARBOUR does not.** ⚠ **MARSH/KELP no longer catch cloud shade** (`WETSET`). ⚠ **`cl.rain` IS GONE ⇒
+  `cloudWet(cl)`.** **`RAILCAP=130`** · **`seaState()`, floor `SEACALM`** · **`concertSeason()`**. ⚠ **244: TURNING THE
+  AMPHITHEATER'S BOWL WAS BUILT AND REVERTED — DO NOT RE-TRY** (the projection cannot carry it). ⚠ **230's `taxi` flag is
+  LOAD-BEARING** (`VCURF` thins the night fleet by CLASS).
+  ✅ **CLOSED LADDERS — DO NOT RE-OPEN** (roster archived at 268; laws in SKILL.md): the **WASH** ladder · the **TOWER LOOK** · the **SKYLINE** ladder · the **HUD** lap · **137's standing crowd** · the **SEASONAL-VEGETATION** seam.
+  ⚠ **The CLOSED/RETIRED cue roster — (w)(z)(t)(u)(ab)(af′)(ag)(ah)(al)(am)(an)(aq)(s)(ap) — and its live
+  do-not-re-open warnings were archived at 268.** Half-closed: **(ao)'s SHAFT half CLOSED 248, its BOW half REFRAMED.**
+  ⛔ **ALSO RETIRED, DO NOT RE-OPEN:** **(ai)** the greenbelt (246 — unreachable; **the ROADS fragment every lobe**; the
+  complaint is real, re-derive it from its nouns) · **(aj)** the cloud spawn (273 — refuted on every count; **`cl.y` is
+  a DEAD LEVER**, best row = 1.10x uniform) · **(y)** the mojibake (273) · **(ak)** the canopy (238+252 —
+  measured-capped) · **GARDEN's staggered beds** (263 — host starved).
+  ⚠ **THE LETTERS (y) AND (aw) EACH NAME TWO DIFFERENT CUES — read the parenthetical, not the letter.** Live:
+  **(aw)** **the KAYAKERS keep no hour and no calendar** (271 — the last person in Solvista who does not). `drawKayak` has no gate at all, exactly as `drawSurfer` had none. **The fix is already written: `surfSession()` is the predicate, and a kayak is a fair-weather boat.** Cheap, but it REPEATS 271's mechanism ⇒ **pair it with something, or wait for People's non-Deepen lap**
+
+## Iteration 273 — the sky was never over the sea; the projection had hoisted it out of the city (2026-07-14) [holistic step-back, 35th + Sky & atmosphere × Polish → cue REFUTED]
+
+**Vector.** Rotation said Sky (oldest, 7 laps) and the cue list said **(aj)** — *"the clouds spawn with no
+reference to the land, so a seed parks its sky over the sea; the lever is the SPAWN, not the draw: ~2x the
+visible weather at zero new draw work"* — the ledger's **#1 open cue**, marked *doubly measured*. The 35th
+step-back was also due. Both were done in one lap, and the step-back's own agents **re-reported the cue a
+third time**, which is what made it worth probing before building.
+
+**Step-back (35th).** `shot-stepback` on seeds 42/7, 3 lights × 2 calendars, every pin derived from the light
+curve. **Both seeds PASS.** No z-order tears, no floating elements, no blown-out colour after ~270 laps. Both
+blind agents, on a crossed map, **named the winter dusk frame from the light alone** (*"the sun is already
+below the horizon at the identical wall clock — earlier sunset"*) ⇒ **261's day-length season is alive.**
+Perf, interleaved: **lap (vs 268) day +2.9% / night +0.0%; ARC (vs 232, 41 laps back) day +3.9% / night
++1.8%** — ~**+0.1%/iteration**, half the historical +0.2% rate. No perf-fix lap needed.
+
+**The cue, refuted on every count.** `probe-cloudland` (pure world data; the metric is the artifact's OWN
+shade gate, `inB(anchor) ? shadeGround(cl) : 0`, averaged over the cloud's whole x-traverse — `cl.x` drifts
+and wraps, `cl.y` never changes, so **`y` is the only permanent lever the spawn has**):
+- **The clouds are NOT parked over the sea.** They stand over land **55% of their lives**: **3.86 of 7 cast a
+  shadow at a random instant** (4.0 of 7 at spawn), on 6 seeds in 6.
+- **`cl.y` IS A DEAD LEVER.** The row profile is flat: the single **best row in the city** is worth **1.10x**
+  a uniform pick (0.607 vs 0.550; worst row 0.456). So a hard gate pinning all 7 clouds to the best row buys
+  **+10%**, and a soft preference buys less. **The promised ~2x is not under-tuned — it is arithmetically
+  unreachable.**
+- And the shade is not too faint either. `probe-cloudink` (suppression by fillStyle signature in ONE page,
+  floor **exactly 0**) reads it against **the incumbent bar** (226) — `shadS`, the contact shadow under every
+  tree, ped and car, which the artifact has shipped and every agent has accepted for 270 iterations:
+  **cloud shade amp 5.29 (d 0.15) vs shadS 4.77 (d 0.13) = 1.11x.** Nor is it too small: the shade ellipse is
+  **30·s** half-width and the puff's own lobes reach **~30·s** — *the shadow is exactly the size of the cloud
+  casting it.*
+
+**So why do the agents keep saying it?** Because **I asked a question the projection destroys.** The puff is
+drawn at `py2 = cy − 185 − cy*0.52` — **250–400 px ABOVE its ground anchor**, where `cy` is the ground point
+the shade is painted on. Screen-y in this artifact is **depth + altitude**, not ground position (224). So an
+agent asked *"where are the clouds?"* answers with a **screen** position that encodes how high the cloud is,
+reads the sky band behind it, and truthfully reports *"over the sea."* The cue was **manufactured by the
+question**, re-confirmed three times because every re-confirmation asked it the same way.
+
+**Census.** PASS, `pop/roads/developed` **+0 / +0 / +0**, tile histogram empty — the artifact is byte-identical
+(no source change).
+
+**Verdict.** **EXPLORED → REVERTED.** Cue (aj) is **RETIRED — do not re-open the cloud spawn.** Nothing shipped;
+two instruments banked (`probes/probe-cloudland.mjs`, `probes/probe-cloudink.mjs`) and the law promoted to
+SKILL.md. ⚠ **A near-miss worth recording:** `probe-cloudink`'s first run read **0 px for BOTH the treatment
+and the incumbent** — and a zero on the incumbent is *impossible*, which convicted the probe in ten seconds
+(250). Cause: **Chromium CANONICALISES `fillStyle` on read** (`'rgba(36,30,20,.05)'` comes back as
+`'rgba(36, 30, 20, 0.05)'`), so a prefix match silently never fires. **Without the incumbent column I would
+have read "the shade renders nothing" and gone off to redesign a draw that is fine.**
+

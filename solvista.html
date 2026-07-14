@@ -1484,6 +1484,15 @@ const ARTFLOW=64;                    /* trip-units above which a street is an ar
    dispatch (servTarget), the hover's `__find('arterial')` and the streetcar's route
    all answered this question separately; they now all ask it here. */
 const isAvenue=(x,y)=>{const c=cellAt(x,y);return !!c&&c.t===T.ROAD&&c.flow>=ARTFLOW};
+const BLVDGRAND=2;                   /* a boulevard is planted on the GRANDEST trunk: 2x the arterial cut */
+const BLVDSPK=0.002;                 /* ...at HEAD's own planting rate, which is unchanged */
+/* Where a boulevard is PLANTED (iter 283). A spark is ONE cell, so it may demand
+   frontage and needs no connectivity; the SPREAD may not — see the canopy pass in tick().
+   The SITE is a structural set, never a lottery: the grandest built-up trunk cells, of
+   which every city has 3–28. A rare spontaneous coin left one seed in six with a single
+   tree (233 — gate on the WORST seed, never the mean), and BLVDGRAND=3 starves that same
+   seed. The rate then only sets WHEN a planting takes, never WHETHER (218). */
+function blvdSpark(c){return c.busy&&c.flow>=ARTFLOW*BLVDGRAND?BLVDSPK:0}
 /* How far a home may be from a stop and still count as served by transit — and,
    since iter 211, how far a railway platform may reach for the street that feeds
    it. recount()'s rTransit and the interchange rule are the same claim about the
@@ -2534,15 +2543,31 @@ function tick(){
       if(hashCell(x,y,(seedNum^0x6807^((year*31)|0))>>>0)<p)c.groof=true;
     }
   }
-  /* grand avenues grow a tree canopy that spreads block to block (2000+) — a
-     contagion along the busy street network. Time-salted hashCell, no rng(). */
+  /* grand avenues (2000+): the city plants its TRUNK ROUTES, and the canopy spreads
+     block to block ALONG them — a contagion whose substrate is the arterial network
+     (c.flow>=ARTFLOW, the drainage trunk published since iter 77), not the whole
+     built-up street grid.
+
+     HEAD sparked on c.busy at 0.002/tick, and over the ~470 ticks since 2000 that
+     converted 94% of every busy street in the city: a "Boulevard" was the DEFAULT
+     state of a developed road (333/city against 29 Avenues), the contagion beat its
+     own null by only 1.34x — the spontaneous term did the work, not the neighbour —
+     and the trunk, which is the thing a grand avenue actually IS, was 60% bare. Only
+     15% of the canopy stood on a main road at all (iter 283).
+
+     A SPARK is one cell, so it may demand frontage and needs no connectivity; only the
+     SPREAD needs a percolated substrate, and the trunk is the only one there is: its
+     biggest run is 36 hexes, against 8 for trunk-AND-frontage, which shatters into ~20
+     islands a contagion cannot cross (iter 282's law). So the city plants rarely, where
+     the trunk already fronts built-up blocks, and the allee then runs OUT along the
+     main road. The backstreets keep their scattered street trees and stay Avenues.
+     Time-salted hashCell, no rng(). */
   if(year>=2000)for(let i=0;i<G*G;i++){
     const x=i%G,y=(i/G)|0,c=cells[i];
-    if(c.t===T.ROAD&&c.busy&&!c.treed&&!c.bridge){
-      const adopt=countAround(x,y,1,n=>n.t===T.ROAD&&n.treed);
-      const p=Math.min(0.16,0.002+0.05*adopt);
-      if(hashCell(x,y,(seedNum^0x7EE5^((year*29)|0))>>>0)<p)c.treed=true;
-    }
+    if(c.t!==T.ROAD||c.treed||c.bridge||!(c.flow>=ARTFLOW))continue;
+    const adopt=countAround(x,y,1,n=>n.t===T.ROAD&&n.treed);
+    const p=adopt?Math.min(0.16,0.05*adopt):blvdSpark(c);
+    if(p>0&&hashCell(x,y,(seedNum^0x7EE5^((year*29)|0))>>>0)<p)c.treed=true;
   }
   /* fire: timber blocks smolder until the 1991 firehouse (gone by 2006);
      dry-season lightning takes a patch of forest now and then */
