@@ -189,4 +189,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 256  —                          SHIPPED             27m16s   $6.59  3720e79
 ✔ Iter 257  Water & coast × Deepen     SHIPPED             24m51s   $8.86  15ec792
 ✔ Iter 258  Transport × Deepen         DEEPENED            46m15s   $15.66 f990c47
+✔ Iter 259  Civic & culture × Deepen   DEEPENED            58m22s   $20.33 674c6ce
 ```
