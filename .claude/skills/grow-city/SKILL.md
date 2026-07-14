@@ -419,15 +419,32 @@ is identical to summer"), and *both* were the instrument:
 - **Guessed light pins land on the wrong phase.** 202 shot "golden hour" at `t=0.80`.
   The artifact's own `phaseWord()` calls `t>=0.80` **`'night'`**, and past `SUNDN=0.78`
   the sun block *"draws nothing whatever"*. **Take the pins from the light curve, never
-  from intuition:** day `0.30`, golden `0.68` (`GWARM` peaks 0.786 at 0.70), night `0.92`.
+  from intuition.**
+
+⚠ **AND THEN 202 WROTE ITS PINS DOWN AS LITERALS, AND THEY ROTTED — SEE THE LAW BELOW
+(iter 264).** This recipe used to name them here (`day 0.30, golden 0.68, night 0.92`)
+and `shot-stepback.mjs` hard-coded them. **261 gave the light curve a `year` term
+(`sunWarp`: the season is now a DAY LENGTH), the curve moved under the literals, and
+they silently became guesses again** — golden slid to **GWARM 0.36 of 0.786**, and the
+seasonal frame was being shot at **mid-morning, where a day-length season is ~0 BY
+CONSTRUCTION** (`d(LUMA)` **0.15**, against **1.58** at dusk). Four agent FAILs, two
+seeds, all instrument. **`shot-stepback.mjs` now DERIVES every pin in-page from the
+artifact's own `sunWarp`/`SUNDN`/`GWARM` at the year being shot — there is no `t`
+literal left in it, and you should not add one.** Golden is the **argmax of `GWARM`**;
+the season is a **DISCRIMINATING PAIR** (258) — `dusk-summer` / `dusk-winter` at the
+**same wall-clock instant**, taken midway between the two seasons' sunsets, so the sun
+is provably **UP in one frame and DOWN in the other**.
 
 `shot-stepback.mjs` freezes the world in-page (`playing=false` stops *both* clocks),
 pins `genWorld`+`__warp`+`__setYear`+`__setTime`, renders once with **no wait**, and
 shoots with `page.screenshot()` (DOM-composited, per 200's law). Every frame
-**self-reports** its own state (`golden t=0.68 GWARM=0.72 sun=UP phase=golden hour`),
-so a mis-pinned frame is caught by the tool instead of by an agent. Re-shot that way,
-both seeds PASSed and two blind agents put the sun within **0.003** of the shipped
-formula.
+**self-reports** its own state — now in the *viewer's* units (236), e.g.
+`dusk-winter t=0.766 LITAMT=0.95 sun=DOWN (sets 0.701)` — so a mis-pinned frame is
+caught by the tool instead of by an agent. ⚠ **`SUNUP`/`SUNDN` are thresholds on the
+WARPED axis `SUNT`, not on `dayT`**; testing them against the wall clock printed
+`sun=UP` on a winter dusk whose sun had already set. Re-shot this way, both seeds
+PASSed and **both blind agents named the winter frame by the light alone, on a crossed
+mapping** (238).
 ```bash
 node .claude/skills/grow-city/probes/shot-stepback.mjs 42 .claude/skills/grow-city/shots/sb
 ```
@@ -683,6 +700,38 @@ even if the census looks fine:
 Each of these was learned the expensive way, then re-learned because it lived in an
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
+
+- **A PIN IS A LITERAL ONLY UNTIL SOMEBODY GIVES THE CURVE A NEW INPUT — AND THE LAP THAT ROTS YOUR CAMERA IS THE LAP
+  THAT *IMPROVES THE ARTIFACT*, SO NOTHING WILL EVER FAIL AT THE TIME (iter 264).** 202 says: take the light pins from
+  the curve, never from intuition. It is right, it fixed a real bug — and then it **wrote the answers down as literals**
+  (`day 0.30, golden 0.68, night 0.92`), in the recipe *and* in the tool, under a header boasting that the pins came
+  "from the light curve's own keyframes rather than from a guess." **That was TRUE when written**: the curve had no
+  `year` term, so a fixed `t` really was a fixed phase. Then **261 gave the season a DAY LENGTH** (`sunWarp` warps the
+  curve's time axis) — an unambiguously *good* change, which passed every gate — and **every pin in the camera silently
+  became a guess again.** Cost, measured at the next step-back: golden shot at **`GWARM` 0.36 of a possible 0.786**
+  (under half strength, for four iterations, so *every golden read in that window was of a frame that wasn't golden*),
+  and the seasonal-contrast frame shot at **`t=0.30`, mid-morning — where a day-length season is ZERO BY CONSTRUCTION**
+  (`probe-daylen`: `d(LUMA)` **0.15**, *below* 254's `d<0.4` floor and **sitting on top of the probe's own NOON
+  CONTROL at 0.09**, against **1.58** at the evening margin). **The camera was shooting the control and calling it the
+  treatment**, and four agents on two seeds duly FAILed the city for *"winter is indistinguishable from day."* **They
+  were right about the pixels. The city was innocent. The feature was enormous.** ⇒ **A camera pin must be DERIVED
+  FROM THE CURVE AT SHOOT TIME, never stored** — `shot-stepback` now searches for the argmax of `GWARM` and inverts
+  `sunWarp` for sunset, so it re-derives itself against whatever the light has become. This is 223's law (*prefer a
+  structural invariant to a checked one*) arriving on **the instrument**: a stale pin cannot be *noticed*, because the
+  frame it produces is a perfectly valid frame of the wrong moment. **The tell — and it is the only one you get:** your
+  feature is a *function of a signal*, and your camera names that signal with a **number you typed**. Two corollaries:
+  ⇒ **(a) A THRESHOLD IN THE MODEL AND A PIN IN THE CAMERA LIVE ON DIFFERENT AXES THE MOMENT ANYONE WARPS ONE.**
+  `SUNUP`/`SUNDN` are thresholds on the **warped** clock (`SUNT`); the camera tested them against the **wall** clock
+  (`dayT`) and so printed `sun=UP` on a winter dusk whose sun had **already set** — the caption denying the one fact
+  the frame existed to show (258). **When a lap introduces a remap, `grep` every reader of the remapped quantity and
+  ask which axis it is on.**
+  ⇒ **(b) FOR A SIGNAL THAT IS ZERO SOMEWHERE BY CONSTRUCTION, SHOOT IT AS A *DISCRIMINATING PAIR*, NEVER AS A SINGLE
+  FRAME.** A day-length season is null at noon and loud at dusk; a single "winter" frame gives an agent nothing to
+  compare against and it will confidently report an absence. Shoot **both seasons at ONE wall-clock instant chosen so
+  the two disagree maximally** (here: midway between the two sunsets ⇒ sun **UP** in summer, **DOWN** in winter), hide
+  the labels, and **cross the mapping between seeds** (238). Both blind agents then named winter **from the light
+  alone**, one of them reciting the mechanism unprompted (*"sun already set = shorter day = winter"*). **A pair the
+  agent must discriminate is worth more than any number of frames it can merely describe.**
 
 - **A SPREADING RULE IS *SPARK + SPREAD + REFRACTORY*, AND A LAP THAT ONLY FIXES ITS *HOST* WILL SHIP A RULE THAT STILL
   CANNOT RUN. CHECK THE SPARK'S **SAMPLE SPACE**, NEVER ITS RATE (iter 263).** 218 says measure a roll's conversion rate

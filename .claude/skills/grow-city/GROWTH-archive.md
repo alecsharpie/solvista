@@ -18439,3 +18439,126 @@ wears. 209's law paid out where the header said it would.
   n=350, bbox x 0.11–0.64 y 0.14–0.78**, matching that agent's own reported box almost exactly. 🔑 `probe-drawbudget`
   prices it at **2.1% of the frame**: ***the loudest complaint in the artifact is also one of the cheapest things in
   it.*** Mis-diagnosed TWELVE times by agents: 217, 232, 237×2, 242, 252×2, 256×2, 260×2.
+
+## Iteration 254 — the city has always known its own age, and cannot show it (2026-07-14) [Urban fabric × Deepen]
+
+**Vector.** Urban × Deepen — the header's rotation call, with 225's grep-the-seam law attached
+(*"Urban is spent" has been REFUTED twice; an empty cue list records where you have already
+looked*). The seam paid immediately, and it was the richest tell in the file.
+
+**The tell.** `c.age` is written at **36 sites**, incremented every tick (0.075yr), and reset by
+every siting/upgrade — so it dates the **current structure**. `describeTile` has published exactly
+that, as **`Built ~1998`**, on every developed tile for the artifact's whole life. **No pixel has
+ever read it.** A house from 1974 and one from 2034 wear the same stucco. Label-asserts-what-the-
+draw-ignores, cashed a 10th time, hosted this time on a field with 36 writers and a tooltip for its
+only reader.
+
+**The host measured PERFECT** (`probes/probe-buildingage.mjs`, pure world data, 6 seeds): the stock
+spans the **full 61 years**, **81.5% is ≥15yr old**, and age is **spatially COHERENT (0.40** —
+neighbours agree, so it forms quarters, not speckle**)** and falls **monotonically** from the
+founding crossroads outward — inner rings **38–47yr**, the rim **23–27**. `genWorld` lays a founding
+crossroads and grows the old town around it, so **THE OLD TOWN IS DOWNTOWN** — the city has had a
+history all along and has never once shown it.
+
+**Change (REVERTED).** `patina(c)` — one predicate off `c.age` — gave RES + MID masonry (67% of the
+stock; MID is the commonest building by 4x) a **luma-normalised ochre lean**: old masonry bakes warm,
+new render stays cool. The lever was **HUE, not the palette NAME** — riding `tone` would only
+re-partition the three body shades between arms of an if/else chain (247) and would spend the
+per-building grain 99/103/239 bought. So it rode **on top**: grain × gradient. Luma-normalised (223)
+⇒ brightness could not move; centred on the stock's mean (245) ⇒ a byte-identical fixed point. Glass
+kept its cool tint (214). Colour-only: zero path objects.
+
+**Census.** PASS. **Every metric +0, tile histogram empty** — no `rng()`, no terrain, world provably
+identical (pop/towers identical across builds).
+
+**Probe.** `probes/probe-patina.mjs`. It **passed on every gate I could name, and every one of them
+was the wrong question:** luminance held to **0.6/255** in every ring on every seed · 222's night
+ordering **byte-identical to HEAD** (`*TOWER 131 *MID 123 *COM 119 | BEACH 98`, clearing by **21**) ·
+`dHUE` guard unmoved (RES 10°→9°) · path objects **−0.03%** (110,901→110,863 day) · isolation floor
+**exactly 0 px** (253's predicate suppression) · and the headline, **core-rim warmth gap 6.3 → 29.9**,
+with HEAD's gap *changing sign across seeds* — the signature of a signal that does not exist.
+
+**Visual — TWO BLIND AGENTS, TWO SEEDS, CROSSED MAPPING (238), INDEPENDENTLY: `NO REGIONAL PATTERN`.**
+Both **measured the frame themselves** before answering (251's tell). Seed 7's agent diagnosed it
+unprompted and exactly: *"the signal is there in the data and invisible in the picture — the tint
+needs several times more range."* Seed 7 is my **best** seed (d=0.87).
+
+**They were right, and my probe was not wrong — we measured different things.** The ring MEAN averages
+the grain away. **A viewer never sees a ring mean; they see BUILDINGS** — and the `cream`/`terra`/
+`sandDk` lottery already scatters per-building warmth at **SD ~45** (R−B), *larger than the biggest
+core-rim gap the lever can ever reach* (32 on the worst seed, at full saturation).
+**Cohen's d = 0.87 / 0.40 / 0.73** — and on the seed the agent read, **0.40**. 233's lottery law again:
+the quality straddles the bar and a 2-seed gate hands you one of each.
+
+**And the ceiling is STRUCTURAL, not a tuning failure.** The obvious rescue is real — my `PATSPAN=26`
+was too wide (ring-mean ages span only ~17 years, so the *regional* means used just 0.65 of the ±1
+range) — **and it is not enough.** Swept, worst-seed `d` = **0.40 → 0.58 → 0.65 → 0.65 → 0.64**: it
+**plateaus below 0.8**. Once the per-object signal saturates at ±1 the regional gap is capped by the
+*extreme colours* while the grain's SD is fixed, so `d_max ≈ (colour range)/(grain SD)`. Only two
+things can move it: **louder extremes** (here: implausible blue stucco — a Mediterranean city does not
+have blue houses) or **a quieter grain** — and the grain was bought **on purpose**, by three laps, to
+kill wallpaper.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` is **byte-identical to HEAD** (md5-verified). The
+change was free, correct, invariant-safe and invisible — and invisible was the entire point. This is
+214's necessary-but-not-sufficient corollary arriving on the **spatial** axis, and it is the system
+working: the census, the invariants and the perf model can all pass a change the eye rejects.
+
+**What I'd avoid next time / what this closes.** ⛔ **THE BUILDING COLOUR CHANNEL IS SPENT.** Do not
+re-try *any* "the buildings should show X regionally" vector in colour — age, value, density, flow,
+anything. Price it against the grain (SD 45) **first**; the two goals are in direct conflict and the
+loop already chose variance. **The host is still live and still unread** — if a later lap wants the
+city's history visible, it must use a channel the grain does NOT scatter (a *shape*, an *ornament*, a
+*count*), not a hue. Both probes are banked; `probe-buildingage.mjs` carries the warning in its own
+verdict so the next reader cannot repeat this.
+
+**Law promoted to SKILL.md:** *A REGIONAL SIGNAL CANNOT BE PAINTED ON A CHANNEL A PER-OBJECT GRAIN
+ALREADY SCATTERS — the grain is your noise floor, and an earlier lap may have deliberately MAXIMISED
+it. State a regional claim as the gap in units of the WITHIN-region SCATTER (`d`), never as a
+difference of MEANS.*
+
+**Aside, banked (212 — both agents, both seeds, independently, unprompted):** the HUD's bottom stat
+strip **clips** — `TRANSIT REA…` — where the PAUSE/1×/NEW CITY panel overlaps it, in all four frames
+and in **both** builds (pre-existing, not mine). ⚠ **229's law first: `probe-hud.mjs` REFUTED a
+near-identical cue (z) at 6 widths.** Reproduce it in the user's configuration before designing to it.
+
+
+---
+### Header bodies rotated out at 264 (the `polish-tile` backlog's three sub-pixel cues)
+
+Moved from the maintained header to keep it inside its 400-line budget. **Nothing is deleted** — the
+live one-line warnings remain in `GROWTH.md`; these are the full bodies. All three are the SAME finding
+(**215's hairline law**: a sub-pixel ornament tints its background instead of marking it, and the lever
+is a BODY / SIZE / CONTRAST, never more strokes and never placement), which is why they are archived
+together and why the law itself lives in `SKILL.md` rather than here.
+
+**(a) THE WHOLE ELEVATED TRANSIT is sub-pixel at fit zoom** (0.5px rope, 5px cabins, hairline masts).
+⚠ **NEVER RE-OPEN THE Z-ORDER — CLEARED BY PROBE TWICE** (203/212); agents have now mis-diagnosed it
+**THIRTEEN times** (264 is the latest: *"long straight dark utility/rail spans… scratchy overlay lines
+rather than infrastructure"*). **That persistence IS the evidence: the fault is LEGIBILITY** — a hairline
+ornament needs a **BODY** (215), not more strokes. *Do NOT re-try a body/halo under the rope (measured —
+backfires) nor a lit top edge (impossible at 0.5px).* ✅ **256 named the suspect with a number:** the ink
+is **`drawMonoAt`** (`probe-darkline`, `MINLEN=4` so it sees CHAINS), priced at **2.1% of the frame** —
+*the loudest complaint in the artifact is one of the cheapest things in it.*
+
+**(f) THE WILDFLOWERS ARE SUB-PIXEL AT FIT ZOOM (263** — both blind agents, independently, on both seeds,
+on a PASSing frame). *"Neither city plate shows flowering at whole-plate zoom; the specks fall below ~1px."*
+The specks are **1.7 world units ≈ 1.1 CSS px** at `fitScale` — 215's hairline law exactly, and it is true
+of HEAD's meadow bloom too (the identical draw), so it is a fact about the *vocabulary*, not about 263.
+⛔ **DO NOT RAISE THE PER-HEX BODY LIFT — that is 255's ⛔** (a per-hex signal in a tile's body fill
+terraces onto the lattice ⇒ a hex quilt). ➡ Per 255 the only way through is **a SHAPE THAT CROSSES TILE
+BOUNDARIES** (a drift of petals, a streak), never a brighter fill.
+
+**(e) THE OBSERVATORY IS TOO SMALL TO READ AS A LANDMARK (259).** 259 unburied it (occlusion
+**54.5% → 5.9%**, 0/6 buried); the residue is the DRAW — both blind agents, both seeds, called it a small
+teal cap (*"you would never spot it unless told"*) on a frame where it is **96.3% visible**. The dome is
+`R2=8.4` world units ≈ **5.5 CSS px at fit**. ⚠ **That is `SMALL`, not `BURIED` — do NOT re-open the
+siting. The lever is the dome's SIZE/CONTRAST, not its place.**
+
+**Closed-cue bodies rotated out of the header at 264** (laws are all in `SKILL.md`; kept here, not deleted):
+- ✅ **(aq′) CLOSED 261 — THE SEASON HAS A DAY LENGTH.** ⚠ **RETIRE `probe-seasonarea` as a seasonal score**;
+  `probe-seaamp` is LUMINANCE-only (235). ⚠ **264 adds: the season is ~0 at mid-day BY CONSTRUCTION** — measure or
+  shoot it at the **evening margin**, never at noon.
+- ✅ **262: THE `LITAMT`-AS-A-BEDTIME GATE IS EXTINCT** (199 windows · 210 residents+joggers · 230 traffic · 262 the
+  CHILD). **Do not add another global-light gate to anything that keeps hours.** The ladder (still live in the header):
+  `KID` (in by 0.34) < `JOG` (0.62) < `CURF` (to 1.85).
