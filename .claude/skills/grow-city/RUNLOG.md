@@ -204,4 +204,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 271  People & activity × Deepen SHIPPED             42m08s   $22.27 8814f02
 ✔ Iter 272  Nature × Deepen            DEEPENED            47m26s   $21.75 470f63c
 ✔ Iter 273  Sky × Polish               SHIPPED             28m55s   $8.85  55b00ca
+✔ Iter 274  Urban fabric × Polish      SHIPPED             28m54s   $13.58 fbcd805
 ```
