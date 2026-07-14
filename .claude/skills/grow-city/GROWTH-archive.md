@@ -20475,3 +20475,65 @@ and the incumbent** — and a zero on the incumbent is *impossible*, which convi
 `'rgba(36, 30, 20, 0.05)'`), so a prefix match silently never fires. **Without the incumbent column I would
 have read "the shade renders nothing" and gone off to redesign a draw that is fine.**
 
+## Iteration 274 — Urban fabric × Polish — the loft learns to go to bed (cue (at) CLOSED)
+
+**Vector.** Urban fabric × Polish. Rotation put Urban next (oldest, 267) and its Polish cell was 34 laps
+cold (239), so the kind does not repeat 267's Deepen. Cue **(at)**, banked by 267's seed-7 agent: *"the
+loft's windows never go to bed."*
+
+**Change.** `BEDT` is a table of **TILE TYPES**, so it could never see the loft conversion — a loft is
+**HOUSING wearing an industrial tile** (`T.IND` + `c.loft`), and `BEDT[T.IND]` is undefined. That is **199's
+law recursing onto a per-cell FLAG rather than a type.** But the seam was worse than the cue said: the loft
+never even *called* `windarkAt`. Its glass was a **solid ribbon** (`bandR`), so it had **no panes that could
+go out at all**. Two lines, one predicate:
+- `windarkAt(c)` now takes the **CELL**, not the type, and `bedOf(c)` hands a loft the **MID-RISE's hours** —
+  taken from the existing ladder, not invented (226), because that is what a loft *is*: a dense inner-city
+  home. **All three readers share the one predicate** (the draw, `winBandR`, the tooltip).
+- the loft's glass is drawn by **`winBandR`**, so it has panes to put out.
+The working shed beside it keeps its night shift (173) — **which is exactly why this is a per-cell predicate
+and NOT a `BEDT[T.IND]` entry**, which would have bedded the shed's clerestory too.
+
+**Probe** (`probes/probe-loftbed.mjs`, `shot-loftbed.mjs`). **It counts OBJECTS, not pixels (247/250), and
+that is the finding.** The first cut measured each building's mean rendered **LUMINANCE** and was **useless**:
+the working **SHED**, which has no panes and no bedtime whatever, "fell" ~11 units dusk→small-hours, because a
+whole-building mean is dominated by the **AMBIENT LIGHT CURVE**, not the glass (**254** — the signal lives in a
+few panes and an area-mean averages it away). Hooking `winQuad` instead counts the **LIT PANES the frame
+actually issues**: deterministic, **no noise floor at all**, no ambient term, build-agnostic.
+- **Headline needs no threshold (236).** HEAD's loft: **0 lit panes, every hour, every night, all 6 seeds** —
+  `DISTINCT LIT-PANE COUNTS = 1`, a constant by construction. **That IS the defect, stated.**
+- **Patch: 175 → 69 panes across the night (−61%), DISTINCT 4–5.**
+- **HOME (MID) = free POSITIVE CONTROL *and* THE BAR (248/226):** a correct sibling home drawn by the same
+  `winBandR`, which provably keeps an hour — **140 → 56 (−60%)**, and **IDENTICAL on both builds**. So the rig
+  is alive, and *"is −61% enough?"* is answered by the artifact (**the loft now empties exactly like a home
+  does**) rather than by a number I picked.
+- **SHED = must-not-move (250): IDENTICAL across builds** (0 panes, 6 bands, every hour).
+- **DAY = free dead-regime control (199): BYTE-IDENTICAL across builds.** `winBandR` falls back to the *same*
+  solid band below `LITAMT<0.35`, so daylight is unchanged **by construction**.
+
+**Census.** PASS. Core **`pop`/`roads`/`developed` +0**; tile histogram **EMPTY**; `solarRoofs +1` is the
+documented ±2 clock wobble (226). Draw-only, zero `rng()` draws ⇒ vacuous by design, as expected — **the probe
+is the gate.**
+
+**Perf.** Path objects **night 138,593 → 138,561 (−32, −0.02%)**. And **199's dead-regime control refereed it
+for free**: daylight is byte-identical *by construction* (proved exactly by the pane probe), yet
+`probe-drawbudget` still read **−98** on the day column ⇒ **its own noise floor is ~±100** and the night
+reading sits inside it. **Free.**
+
+**Visual.** Blind HEAD-vs-patch pair — honest here (unlike 267's camera) because the lap draws **zero `rng()`**
+and changes no terrain, so **both builds generate the identical city with the loft on the identical hex**
+(confirmed: same hex, same ink, 371/381 px). Names by FILE, **meaningless tokens, map CROSSED between seeds**
+(238/239/268). **Both agents named the patch correctly, on opposite tokens** (seed 7 → `kappa`, seed 42 →
+`sigma`) — so it is not positional. Both **measured the frames themselves**: seed 7's patch reads **2,216 →
+1,490 bright px (−33%)** against the control's **+0.5% (static ribbon)** — the mechanism corroborated by a
+*different instrument*. Both called the day twins **indistinguishable** (max 3/255 and 7/255, nothing at the
+loft) and both whole-city frames coherent, no compounding drift. **VISUAL: PASS ×2.**
+
+⚠ **THE CAMERA LIED FIRST, AND ITS OWN SELF-REPORT CAUGHT IT (202/261).** `__setTime(t)` **only assigns
+`dayT`** — `SUNT` and `LITAMT` are recomputed **once a frame, inside `render()`** — so a pin search that reads
+`LITAMT` straight after `__setTime` reads the **PREVIOUS frame's light**. All four pins silently collapsed onto
+**one instant** (`dayT=0.000` on every frame). Nothing crashed; the frames were perfectly valid frames of the
+wrong moment. **The self-report printed it in one line instead of costing an agent round.** Drive the curve
+directly (`SUNT = sunWarp(t); daylight(SUNT)`).
+
+**Verdict: SHIPPED.** Cue **(at) CLOSED**. (au) — the loft's rooftop studio reads as a green roof — stands.
+

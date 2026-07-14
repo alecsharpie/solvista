@@ -701,6 +701,44 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **264 SAYS GREP EVERY READER OF A REMAPPED QUANTITY. 284 IS THE PART THAT TELLS YOU *WHICH ONES ARE WRONG*: A READER'S
+  AXIS IS DECIDED BY THE **QUESTION IT ASKS**, NOT BY THE CLOCK IT HAPPENS TO HOLD — AND THE TELL IS THAT **ITS CONSTANTS
+  ARE ANOTHER FUNCTION'S KEYFRAMES** (iter 284).** 261 warped the light curve's time axis, so the sun's state became a
+  pure function of `SUNT`. Its comment claimed *"ONE PREDICATE, FOUR READERS"*; **two more were still on the wall clock,
+  23 laps later**, and `grep dayT` returns **30 readers** — most of which are *correct* and must not be touched (the
+  moon, the hall clock, the school run, the stadium fixture: those are **timetables**). So the grep is not the work; the
+  **classification** is. ⇒ **Ask of each reader: does it ask about the THING THAT MOVED (the sun's rising, its setting,
+  the light it casts) — or about the WALL CLOCK (the hour, a schedule, a lunation)?** The first kind is on the remapped
+  axis; the second must stay. The tell for the first kind is exact and greppable: **`phaseWord`'s band edges *are*
+  `SUNUP`/`SUNDN`**. *A function whose constants are another function's keyframes is reading that function's clock — or
+  it is broken.* (Measured: the HUD's pill contradicted the sun **21.5% of a winter day**, printing "sunset" over a plate
+  rendering as full night; the dawn fog peaked at **the same `dayT` in every season** — `DISTINCT=1`, 236 — while sunrise
+  moved 0.15, so in winter it burnt off **before the sun was up**.)
+  ⇒ **AND THE FIX GOES ON THE READER'S OWN CLOCK, NOT ON THE CACHED GLOBAL, UNLESS YOU HAVE CHECKED THE CALL ORDER.**
+  The cached `SUNT` is set inside `render()` — but `syncStats()` runs **before** `render()` and again on world rebuild,
+  where the cache is **stale or still 0**. A per-frame reader should recompute (`sunWarp(dayT)`): one `sin()` a frame is
+  free, and it **deletes the call-order dependency** instead of documenting it (261). Read the cache **only** where you
+  have proved you are downstream of the write *and* the call count makes it matter (a per-hex draw).
+  ⇒ ⚠ **AND THE SIBLING THAT *LOOKS* IDENTICAL MAY ALREADY BE CORRECT — PROBE IT BEFORE YOU RE-KEY IT.** The sea's sun
+  glitter is `(1-LITAMT)*max(0,1-|dayT-0.47|/0.30)` under a comment promising it thins *"to nothing by dusk"* — a
+  textbook 199 tell about a dusk the remap had made a moving target. **It is not a defect:** `LITAMT` is *itself* derived
+  from `SUNT`, so the `(1-LITAMT)` factor **already carries the season** (measured: it never glitters on a set sun, and
+  its cutoff already moves 0.440→0.550). **A reader can be on the wrong axis and still be correct, because something else
+  in its expression is on the right one.** The tell: your suspect multiplies by a quantity that is already downstream of
+  the remap. *One probe stood between me and a confident fix, on the largest surface in the city, for a defect that did
+  not exist.*
+  ⇒ ⚠ **AND TWO RIG LAWS, EACH OF WHICH PRINTED PLAUSIBLE NUMBERS. (a) `delete window.fn` SILENTLY FAILS ON A TOP-LEVEL
+  `function`** — the declaration creates a **non-configurable** global property, so in sloppy mode `delete` is a **no-op**
+  and your stub **survives for the rest of the run**. 253's stub-the-predicate rig is built on exactly this, so any probe
+  that stubs a predicate *and then restores it* is exposed: my first equinox block **poisoned every later seed**, which
+  duly printed its "winter" and its "summer" **at the equinox** — the CONTROL, labelled as the treatment. **Keep the
+  original and restore BY ASSIGNMENT.** The tell was 250's and it was unmissable: **two seasons reading an identical day
+  length**, on a curve the previous lap had *proved* was alive. **(b) A FIELD THAT SATURATES CANNOT EXPRESS ITS OWN
+  SIGNAL — 259, ARRIVING ON THE CAMERA.** The fog is `clamp(dawn*0.85 + max(0,spell)*1.25, 0, 1)`, and at an arbitrary
+  `time` the *seeded* `spell` alone pins it at **1.0** — so both builds came back "foggy", the discriminating cross was
+  invisible, and the frame's own self-report is what caught it. **Pin the contaminating term to zero** so the term under
+  test is the whole signal. **Do this in the CAMERA as well as the probe** — I fixed it in one and forgot the other.
+
 - **A ONE-SHOT PLACEMENT RULE AND A SPREADING RULE READ THE SAME GATES DIFFERENTLY — SO WHEN YOU MAKE A STAMPED RULE
   *SPREAD*, ITS EXISTING THINNING GATE STOPS BEING A **DENSITY** AND SILENTLY BECOMES A **PERCOLATION THRESHOLD**
   (iter 282).** 263 says a spread rule needs a NEIGHBOUR, not a population. 282 is the rung below, and it is the one you
@@ -3586,6 +3624,26 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   largest bed by the artifact's own `bedSize` flood fill, never a fixed clip (201); `AIM=` forces HEAD to the identical
   hex, and since the pass draws zero `rng()` the two builds share a byte-identical city ⇒ a **genuinely blind** A/B.
   Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds (238/239/268)).
+  The **clock pair** (284 — reach for these on any vector about a REMAPPED QUANTITY, a HUD READOUT, or a "does X keep
+  the right clock" claim): `probe-suntclock.mjs` (**is the remapped curve read by ALL its readers?** Pure clock/DOM/
+  object data — **no pixels, so NO NOISE FLOOR AT ALL**, nothing to stub but the clocks. Reads the HUD in the **VIEWER'S
+  UNITS** (205/236: the actual DOM text of the phase pill, driven through the artifact's own `syncStats()`), and counts
+  the sea's shimmer by **hooking `hexTile`** and matching the glint colour **computed in-page from `colA()`** (275: the
+  palette goes through the ILLUMINANT, so a match on the `BASE` literal never fires; and the shimmer is the ONLY
+  hexTile-with-glint, so the hook excludes the river sparkle and the crest strokes). **BUILD-AGNOSTIC** — ONE file grades
+  HEAD and the patch with no source swap and no cross-build floor (230). ⚠ **Its headline needs no threshold** (236):
+  HEAD's fog peaks at the SAME `dayT` in every season, `DISTINCT=1`. ⚠ **Its SHIMMER column is the must-not-move one**
+  (250) — and it is what **REFUTED** the sea-glitter half of the vector. ⚠ **Its FIXED POINT stubs the PREDICATE, never
+  the year** (261) — and ⚠ **`delete window.seasonCool` DOES NOT RESTORE IT** (see the law: a `function` declaration is a
+  non-configurable global; the stub survives and every later seed silently runs at the equinox). ⚠ **PIN THE SEEDED FOG
+  `spell` TO ZERO** or `FOGAMT` saturates at 1.0 and cannot express the dawn term),
+  `shot-suntclock.mjs` (its camera — a **CROSSED DISCRIMINATING PAIR** (264), because a single "is there fog" frame
+  proves nothing: at ONE wall-clock instant the builds must disagree in **OPPOSITE directions by season**. Uses
+  `page.screenshot()`, because **the HUD is DOM and no canvas readback can see it** (200); renders BEFORE the DOM sync,
+  as `frame()` does (261); forces `lastSky=0; syncSky(); syncStats()` (204). Frames named **by FILE** with
+  **meaningless, non-ordinal tokens** and the map **CROSSED between seeds** (238/239/268), and every frame
+  **self-reports** its `dayT`/`SUNT`/`sun`/`sunset`/`FOG`/pill — **which is what caught the saturating fog in the camera
+  itself**.)
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

@@ -521,9 +521,16 @@ const SUNUP=0.05, SUNDN=0.78, SUNR=12;
    backwards) at 1/(2*PI) = 0.159, so 0.10 keeps d(SUNT)/d(dayT) in [0.37, 1.63] — always
    forwards. It buys a sunset that swings dayT 0.680 (deep winter) to 0.831 (the dry peak),
    ~3.6 hours of a 24-hour clock.
-   ONE PREDICATE, FOUR READERS — the sky/tint (daylight), the shadows (SHOFF/SHLEN/SHAMT),
-   the disc (sunP) and the city's bedtime (nightDeep) all read SUNT, so they can never
-   disagree about where the light is. */
+   ONE PREDICATE, SIX READERS — the sky/tint (daylight), the shadows (SHOFF/SHLEN/SHAMT),
+   the disc (sunP), the city's bedtime (nightDeep), the HUD's phase word (phaseWord) and the
+   dawn fog (fogDepth) all read this warped clock, so they can never disagree about where the
+   light is. THE LIST IS NOT THE SPEC — it is a record of who has been wired up so far. The
+   TEST is: does the reader ask a question about the SUN (its position, its rising, its
+   setting, the light it casts)? Then it is on SUNT. Does it ask about the WALL CLOCK (the
+   hour, the moon, a timetable)? Then it is on dayT, and must stay there. The moon
+   (moonPhase), the hall clock (clockWord), the school run and the stadium fixture are all
+   correctly on dayT and MUST NOT be moved. Iter 284 found phaseWord and fogDepth still on
+   the wall clock, 23 laps after the warp landed; grep every reader before adding a seventh. */
 const NOONT=(SUNUP+SUNDN)/2;                             /* solar noon: the fixed point of the warp */
 const DAYLEN=0.10;
 /* +DAYLEN in the deep wet winter, -DAYLEN at the golden dry peak, EXACTLY 0 at the equinoxes.
@@ -8328,7 +8335,15 @@ function fogDepth(){
   /* two weather clocks: the dawn layer that burns off by mid-morning, and the
      seeded spell that makes some cities foggy for a stretch of days. Both are
      time-driven (no rng), so __step can reach a foggy window. */
-  const dawn=clamp(1-Math.abs(dayT-0.10)/0.09,0,1);
+  /* on SUNT, not dayT (iter 284): radiation fog forms overnight and BURNS OFF WHEN THE SUN
+     COMES UP, so "dawn" is a fact about the light curve, not about the wall clock — and 261
+     gave the season a day length, which moved sunrise (dayT 0.150 in deep winter, 0.000 at
+     the dry peak). Keyed to the wall clock this peaked at dayT 0.100 in EVERY season, so in
+     winter the fog was thinning out BEFORE the sun had risen. The 0.10 constant is unchanged
+     and now means what it always said: the fog peaks just after SUNUP (0.05), whenever that
+     is. It warps its own clock rather than reading the cached SUNT, so it cannot depend on
+     being called after render() sets it (261) — it runs once a frame, so the sin() is free. */
+  const dawn=clamp(1-Math.abs(sunWarp(dayT)-0.10)/0.09,0,1);
   const spell=Math.sin(time*0.028+(seedNum%97)*0.7)-0.25;
   return clamp(dawn*0.85+Math.max(0,spell)*1.25,0,1);
 }
@@ -9019,7 +9034,15 @@ function moonWord(l){
 }
 function syncStats(){
   elYear.textContent=year|0;
-  elPhase.textContent=phaseWord(dayT);
+  /* phaseWord's bands ARE the light curve's own keyframes (0.05 = SUNUP, 0.80 ~ SUNDN 0.78),
+     so it is a question about the SUN and belongs on the sun's clock — SUNT, not dayT (iter
+     284; 261's FIFTH reader, missed when the season got a day length). On the wall clock the
+     pill contradicted the sun for 21.5% of a winter day, printing "sunset" at dayT 0.766 on a
+     dusk whose sun had set at 0.680 and a plate rendering as full night. It warps its own
+     clock rather than reading the cached SUNT, because syncStats() runs BEFORE render() in
+     frame() and again on genWorld/newCity, where SUNT is stale or still 0 (261: delete the
+     call-order dependency, do not document it). One sin() per HUD update. */
+  elPhase.textContent=phaseWord(sunWarp(dayT));
   const ml=moonPhase();
   elMoonPct.textContent=Math.round((1-Math.cos(ml*6.2832))/2*100)+'%';
   elMoonName.textContent=moonWord(ml);
