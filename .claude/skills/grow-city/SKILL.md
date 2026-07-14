@@ -701,6 +701,36 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A LOOKUP TABLE KEYED BY *TYPE* IS STRUCTURALLY BLIND TO A PER-CELL *FLAG* — SO A FEATURE WHOSE IDENTITY IS A FLAG
+  SHIPS WITHOUT EVER TELLING THE TABLES IT EXISTS, AND EVERY ONE OF THEM GOES ON ANSWERING FOR THE TILE IT SITS ON
+  (iter 274).** 199's tell is a *constant* whose name asserts a behaviour its value cannot have; 262 says a fix to a
+  per-entity rule is not applied to its dependents. 274 is the rung between, and it is the one a **new feature** walks
+  into by construction. Solvista's warehouse→loft conversion (267) is **HOUSING**, and it is expressed as `T.IND` plus
+  a per-cell flag `c.loft`. But `BEDT` — the table that decides when a building's windows go dark — is keyed by **TILE
+  TYPE**, so `BEDT[T.IND]` is undefined and the loft got the flat baseline: measured, its glass burned at **full on
+  every face until dawn, on 6 seeds in 6, at every hour**, while every home around it shed **60%** of its panes.
+  ⇒ **When you add a feature whose identity is a FLAG on top of an existing type, `grep` every TYPE-KEYED TABLE in the
+  file and ask whether each still answers correctly** (here: `BEDT`, `CIVHRS`, `TILELABEL`, `TILEDESC`, `valueSrc`).
+  The fix is to key the predicate on the **CELL**, not the type (`windarkAt(c)`, `bedOf(c)`) — and to take the new
+  member's value **from the existing ladder rather than inventing one** (226: a loft is a dense inner-city home ⇒ it
+  gets the **MID-RISE's** hours, and no new constant enters the file). ⚠ **And it must stay per-CELL, not become a new
+  table ROW**: a `BEDT[T.IND]` entry would have bedded the working shed's **night-shift clerestory** (173) — the
+  sibling that shares the tile and must *not* inherit the property. The tell: **your feature is a `c.<flag>` on a
+  borrowed tile type, and something in the file does `TABLE[c.t]`.**
+  ⇒ **AND THE COROLLARY THAT WAS THE REAL SEAM: "PUT SOME OF THEM OUT" REQUIRES THAT THERE *BE* SOME OF THEM.** The
+  cue said the loft's windows never went to bed. It was worse: the loft's glass was **ONE SOLID RIBBON** (`bandR`), so
+  it never even *called* the bedtime function — **you cannot extinguish 40% of a single object.** A vector that thins,
+  dims, or empties a population is a **no-op unless the population exists as DISCRETE OBJECTS**, and a draw made of
+  one path has no members to lose. **Before designing "some of X turn off", go and check X is plural in the draw.**
+  The tell: your fix is a *rate* or a *threshold*, and its subject is rendered as a single fill.
+  ⇒ ⚠ **AND THE INSTRUMENT MUST COUNT THE OBJECTS, NOT AVERAGE THE REGION (247/250/254, recursing).** The first probe
+  scored each building's mean rendered **LUMINANCE** and was **useless**: the working **SHED** — which has no panes and
+  no bedtime whatever — "fell" ~11 units from dusk to the small hours, because a whole-building mean is dominated by
+  the **AMBIENT LIGHT CURVE** and not by the glass. Hooking the artifact's own `winQuad` and counting the **LIT PANES
+  the frame actually issues** is deterministic, has **no noise floor at all**, carries no ambient term, and states the
+  claim in the units a viewer reads. **The must-not-move control is what exposed the bad instrument**: a column that
+  *cannot* move, and moved.
+
 - **A CUE IS A *RECORDED ANSWER*, AND AN ANSWER INHERITS EVERY DEFECT OF THE QUESTION — SO BEFORE YOU BUILD TO A CUE,
   RE-ASK WHETHER THE PROJECTION EVEN *PRESERVES* THE QUANTITY THE AGENT WAS NAMING (iter 273).** 224 says: before you
   ask a blind locate, ask what the projection does to the quantity you name — because **screen-y is DEPTH, not
@@ -3169,6 +3199,29 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   ⚠ Amplitude is stated **per pixel WHERE DRAWN** (266) and as `d` against the ground's own grain (254) — never a count.
   ⚠ **It does NOT supersede 242's `probe-cloudshade`** — that one measures **WHERE** the shade ink lands (sea vs land);
   this one measures **HOW HARD**. Different pairs; keep both).
+  The **loft-bedtime pair** (274 — reach for these on any vector about a DRAW THAT MUST THIN/DIM/EMPTY, and on any
+  "does X keep an hour" claim about a thing whose identity is a per-cell FLAG): `probe-loftbed.mjs` (**it counts
+  OBJECTS, not pixels — and that IS the finding.** It hooks the artifact's own `winQuad`/`bandR`/`drawCell` and counts
+  the **LIT PANES the frame actually issues**, per building, per hour: deterministic, **NO NOISE FLOOR AT ALL**, no
+  ambient term, nothing to stub. **BUILD-AGNOSTIC** — it only hooks the artifact's own draw fns, so ONE file grades HEAD
+  and the patch with no source swap and no cross-build floor (230). ⚠ **ITS FIRST CUT MEASURED MEAN LUMINANCE AND WAS
+  USELESS** — the working SHED, which has no panes and no bedtime whatever, "fell" ~11 units across the night, because
+  a whole-building mean is dominated by the **AMBIENT LIGHT CURVE** (254). **The must-not-move column is what exposed
+  it.** ⚠ **Its headline needs no threshold** (236): HEAD reads **0 lit panes, every hour, every seed** — `DISTINCT = 1`.
+  ⚠ **The HOME (MID) column is the FREE POSITIVE CONTROL *and* THE BAR in one** (248/226): a correct sibling home drawn
+  by the same `winBandR` that provably keeps an hour, so a flat loft is a real flatness — and *"is −61% enough?"* is
+  answered by the artifact (**the loft now empties exactly like a home does: −61% vs −60%**), not by a constant I chose.
+  ⚠ **The SHED is the must-not-move column** (250) and **DAY is the free dead-regime control** (199)),
+  `shot-loftbed.mjs` (its camera — a **genuinely blind HEAD-vs-patch pair**, which is honest here *because* the lap
+  draws **zero `rng()`** and changes no terrain, so both builds generate the **identical city with the host on the
+  identical hex**. Aimed by **argmax of measured ink over HOSTS** (272: score each loft by the ink in its own
+  neighbourhood, then pan to *that* loft's `ctr()`), summed at **full resolution**, with the **HUD boxes zeroed first**
+  (200). Drives **`zoom`, never `scale`** (269). Frames named **by FILE** with **meaningless tokens**, map **CROSSED**
+  between seeds (238/239/268). ⚠ **Its DAY frame is a REQUIRED POSITIVE TWIN** (258): the night result is an *absence*,
+  and the two day frames must be **indistinguishable** or the patch has leaked into daylight. ⚠ **`__setTime(t)` ONLY
+  ASSIGNS `dayT`** — `SUNT`/`LITAMT` are recomputed once a frame **inside `render()`** (261), so a pin search reading
+  `LITAMT` right after `__setTime` reads the **PREVIOUS frame's light** and silently collapses every pin onto ONE
+  instant. **Only the frames' self-report caught it** (202). Derive with `SUNT = sunWarp(t); daylight(SUNT).lit`).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

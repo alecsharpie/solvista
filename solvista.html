@@ -4007,8 +4007,17 @@ function nightDeep(){
    SHARPENS as the night deepens rather than flattening — the differential is the whole
    point, not the dimming. [dusk, small hours] share of panes with nobody home. */
 const BEDT={[T.RES]:[0.10,0.52],[T.MID]:[0.14,0.40],[T.COM]:[0.15,0.36],[T.TOWER]:[0.17,0.28]};
-function windarkAt(t){
-  const b=BEDT[t]; if(!b)return WINDARK;
+/* ...and the hours belong to what the building IS, not to the tile it stands on.
+   BEDT is a table of TILE TYPES, so it could never see the loft conversion (267):
+   a loft is HOUSING wearing an industrial tile, and it kept a mid-rise's mass with
+   a warehouse's hours — its glass burning at full on every face until dawn while
+   every home around it went dark. It takes the MID-RISE's hours, because that is
+   what it is: a dense inner-city home. The working shed beside it keeps its night
+   shift (173) — which is exactly why this is a per-cell predicate and NOT a
+   BEDT[T.IND] entry, which would have bedded the shed's clerestory too. */
+function bedOf(c){ return c && c.loft ? BEDT[T.MID] : (c ? BEDT[c.t] : undefined); }
+function windarkAt(c){
+  const b=bedOf(c); if(!b)return WINDARK;
   return b[0]+(b[1]-b[0])*nightDeep();
 }
 /* The homes got an hour (199) and the residents got one (210); the TWELVE
@@ -4122,7 +4131,7 @@ function winBandR(gx,gy,ax,ay,z0,z1,x,y,salt,f,litMix){
        city IS darker) and clipping the survivors to white at the top of the sweep. So
        the lit panes keep exactly the colour they have always had, and the night's
        darkening is carried honestly, by panes going out. */
-    const wc=cellAt(x,y), wd=windarkAt(wc?wc.t:-1);
+    const wd=windarkAt(cellAt(x,y));
     const a=(n-1)*mt+WINDARK*(1-(n-1)*mt); /* share of the band left to the wall */
     /* ...and the share the band it replaces already had: one notch, on the 64% of faces
        that rolled one. Holding THAT mean is what keeps downtown's tone where it was. */
@@ -6734,7 +6743,13 @@ function drawBuilding(c,x,y,gx,gy){
   } else if(c.t===T.IND){
     if(c.loft){ /* converted brick lofts: the old bones, new glass */
       prism(gx,gy,0.36,0.31,0,h,col('brick',1),col('brick',0.6),col('brick',0.85));
-      for(let z=3;z<h-3;z+=6)bandR(gx,gy,0.36,0.31,z,z+3,colLit('glass',0.9,lit));
+      /* ...and the new glass is PANED, like every other home's. It was a solid ribbon,
+         so there was nothing in it that could go out: measured, the loft drew ZERO lit
+         panes at every hour of every night on every seed, while the mid-rise beside it
+         shed 60% of its own. winBandR is byte-for-byte this same solid band below its
+         LITAMT<0.35 cut, so daylight is unchanged; after dark the panes now wink out
+         one by one on the loft's own bedtime (windarkAt above). (iter 274) */
+      for(let z=3;z<h-3;z+=6)winBandR(gx,gy,0.36,0.31,z,z+3,x,y,0x1DE7,0.9,lit);
       bandR(gx,gy,0.368,0.318,h-3,h-0.5,col('coral',1)); /* arts-district sign */
       prism(gx,gy,0.2,0.16,h,h+1.8,col('sage',1),col('sage',0.6),col('sage',0.85));
     } else { /* sawtooth warehouse */
@@ -8824,7 +8839,7 @@ function describeTile(c,x,y){
      panes are drawn from, so the tooltip can never claim a lit block the renderer has
      put to bed. Shown only while the panes are actually drawn (LITAMT>=0.35, which is
      winBandR's own cut), never in daylight where there is no pattern to name. */
-  if(BEDT[c.t]&&LITAMT>=0.35){const wd=windarkAt(c.t);
+  if(bedOf(c)&&LITAMT>=0.35){const wd=windarkAt(c);
     data.push(['Windows',wd<0.22?'Nearly all lit':wd<0.34?'Lights going out'
                         :wd<0.45?'Most are asleep':'Dark &mdash; the block sleeps']);}
   if(c.t===T.TOWER&&c.h>90)data.push(['Helipad']);

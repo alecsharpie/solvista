@@ -19415,3 +19415,110 @@ exactly that** — 5 lights × 2 calendars × 2 seeds, whole-frame, both agents 
 could see in every frame — and **neither agent mentioned a scorched or burnt cluster at any light on either seed**.
 Retired as unobserved under the current light, not as fixed. If a future step-back re-reports it *from a fresh frame*,
 it comes back as a new cue with new evidence.
+
+## Iteration 264 — the season was shot at the one hour it cannot be seen (2026-07-14) [holistic step-back, 33rd]
+
+**Vector.** The 33rd step-back (33 laps; 260 was the 32nd). No new feature under test.
+
+**The gates, in the order they ran.**
+
+**Perf — the ARC is healthy, and the arc is the only reading that means anything here (202).**
+`perfab.mjs REF=9cecd2e` (the lap, 261+262+263): **day +1.3% · night +0.6%**.
+`perfab.mjs REF=d6b6f90` (**the ARC**, iter 232, 32 laps back): **day +3.7% · night +1.5%** — i.e.
+**~+0.12%/iteration**, comfortably under the loop's historic **+0.2%/iter** and far under the +8.6%/40
+that 202 measured. 241's network budget (−3.2%) is still paying for itself. **No perf-fix lap is owed.**
+
+**Visual — FOUR FAILS, TWO SEEDS, AND EVERY ONE OF THEM WAS THIS HARNESS.**
+The first pass FAILed both seeds. Both agents, independently, converged on the same headline:
+*"winter is visually indistinguishable from day"*, *"no snow, no frost, no bare trees — winter is not
+legible at all"*. Both also called the golden frame *"barely warmer than day"*, *"no visible long shadows"*.
+
+**Probe — and it convicted the CAMERA, not the city.** `probe-daylen.mjs` (261's banked instrument), read
+on the `d(LUMA)` column, because **luminance is the channel the eye actually reads and chroma is the one it
+divides out** (260):
+
+| pin | d(LUMA) | what it is |
+| --- | --- | --- |
+| 0.42 — noon | 0.09 | the probe's own **must-not-move CONTROL** |
+| **0.30 — the step-back's winter pin** | **0.15** | **below 254's `d<0.4` "nobody sees it" floor** |
+| 0.74 — evening | **1.58** | ~17x, and **4x** the golden-hour incumbent bar |
+| 0.10 — morning | 1.55 | the other margin |
+
+**The step-back had been shooting the season at its NULL HOUR — sitting essentially on top of the probe's
+own NOON CONTROL (0.15 vs 0.09) and calling it the treatment.** Iter 261 stopped the season being a
+*colour* and made it a **CLOCK** (a day length: winter's sun rises late and sets early), and a day-length
+season is **~0 at mid-day BY CONSTRUCTION** and lives at the **margins**. The agents were **right about the
+pixels**; the city was innocent; the feature is alive and enormous.
+
+**Change — the camera, and it is 202's OWN TRAP, recursed onto 202's OWN TOOL.** `shot-stepback.mjs`'s
+header says, in as many words, *"takes the light pins FROM THE LIGHT CURVE'S OWN KEYFRAMES rather than from
+a guess"* — and then **hard-codes `t=0.30` / `t=0.68` as LITERALS.** That was honest when written: the light
+curve had **no `year` term**, so a fixed `t` really was a fixed phase. **261 gave the curve a `year` term,
+the curve moved under the literals, and they silently became guesses again.** Three stale things, not one:
+- **(a) the season shot at mid-morning** (`d(LUMA)` 0.15 — above).
+- **(b) the golden pin stale**: the sun now sets at **0.831** at the dry peak, so `t=0.68` lands in
+  **mid-afternoon** — it self-reported **`GWARM=0.36`** against the curve's peak of **0.786**. *Every golden
+  frame this loop has read since 261 has been at UNDER HALF STRENGTH.*
+- **(c) the caption's own sun state was WRONG**: `SUNUP`/`SUNDN` are thresholds on the **warped** axis
+  (`SUNT`), and the file tested them against the **wall clock** (`dayT`) — so it printed `sun=UP` on a winter
+  dusk whose sun had **already set**, denying the one fact the frame exists to show (258).
+
+**Nothing in the file is a literal `t` any more.** Every pin is **DERIVED in-page from the artifact's own
+`sunWarp`/`SUNDN`/`GWARM` at the year being shot** — a **structural** fix, not a checked one (223), so the
+pins **cannot go stale again** whatever a later lap does to the light. Golden is now the **argmax of GWARM**
+(found, not guessed). The seasonal contrast is now a **DISCRIMINATING PAIR** (258): `dusk-summer` and
+`dusk-winter` at the **same wall-clock instant**, taken **midway between the two seasons' sunsets**, so the
+sun is provably UP in one and DOWN in the other.
+
+**Re-shot, the camera is honest, and it says so in its own caption:**
+```
+pins  sunset dry=0.831 winter=0.701  ->  dusk t=0.766   golden t=0.775 (GWARM peaks 0.779)
+golden       t=0.775  GWARM=0.78  sun=UP   (sets 0.831)      <- was GWARM=0.36
+dusk-summer  t=0.766  LITAMT=0.30 sun=UP   (sets 0.831)
+dusk-winter  t=0.766  LITAMT=0.95 sun=DOWN (sets 0.701)      <- same instant, night has fallen
+```
+
+**Visual, re-run — BOTH SEEDS PASS, and the blind discrimination is the proof.** Asked, blind, *which dusk
+frame is winter, by the light alone* — with the A/B mapping **CROSSED between seeds** (238) so "the second
+one is winter" fails on one of them — **both agents got it right, on both seeds.** Seed 42 named the
+mechanism unprompted: *"sun disc still visible… vs fully night, moon up, stars, windows lit. **Sun already
+set = shorter day = winter.**"* Seed 7 (the crossed one) read `duskB` as sun-still-up and `duskA` as night —
+also correct. **The season was always visible. The camera was pointed at the one hour it isn't.**
+
+**Census.** PASS, tile histogram empty, `git diff solvista.html` **empty** — the artifact is byte-untouched.
+Correctly vacuous: this lap changed a harness camera and nothing else. (`greenRoofs +1` = 226's ±2 tick wobble.)
+
+**Cues — 212's law (the verdict is where an agent is wrong; the ASIDE is where it is right).**
+- 🔴 **(s) MUST BE RE-GRADED, AND IT IS NOW THE TOP CUE.** Both agents, both seeds, independently, on the
+  **first correctly-pinned golden frames the loop has ever taken**: *"the amber wash flattens the whole plate
+  into near-monochrome terracotta"* · *"ground/greens/roads nearly collapse into a single hue"* · *"the river
+  band almost disappears"* · *"reads as flattening rather than lighting"*. **(s) has only ever been measured
+  through a HALF-STRENGTH pin** (GWARM 0.36 of 0.786), which is why it kept coming back "mild". **It was
+  never mild; it was never seen.** Instrument: `probe-goldenhue.mjs` (per-tile hue/chroma/luminance at
+  day/golden/night **+ the pairwise separation matrix** — a pair collapsing below ~15 RGB units has lost its
+  identity). ⚠ 257's law says LAND is **diffuse** (`albedo × TINT`) and *should* saturate under a warm
+  illuminant — so a land collapse at golden is a **real** finding, not the sea bug wearing a new coat.
+- **The elevated transit, reported a 13th time** (seed 7: *"long straight dark utility/rail spans… scratchy
+  overlay lines rather than infrastructure"*). Still the most-reported defect in the artifact's life.
+  `polish-tile` cue (a). **Badly overdue.**
+- **"No skyline hierarchy / mid-rise wallpaper" — GRADED, NOT OBEYED.** Both agents said it; the banked
+  instruments (`probe-crown` silo **2.0 → 20.7**, `probe-taper`'s `crownGap`) measured it **fixed** at
+  228/235/239, and 260 already refuted this FAIL as **224's projection law**. Per 251: *a cue re-confirmed is
+  not corroborated unless a DIFFERENT instrument did it.* Standing.
+
+**Verdict: FIXED.** The loop has spent two step-backs grading its own broken camera and filing the result
+against the city — 260 called the season invisible and was right for the wrong reason; 264's agents called it
+invisible and were right about the pixels of a frame that could not contain it. **A documented trap you keep
+walking into is a broken tool, not a law** (202/227/243) — and this one was documented, in the header of the
+very file that had the bug. The pins are derived now; they cannot rot again.
+
+
+### Header bullet rotated out at 274 — cue (aj), RETIRED at 273 (full body)
+
+⛔ **(aj) RETIRED (273) — REFUTED ON EVERY COUNT, DO NOT RE-OPEN THE CLOUD SPAWN.** The clouds are **not** parked over
+the sea: they stand over land **55% of their lives** (**3.86 of 7** cast a shadow at any instant, 6 seeds in 6).
+**`cl.y` is a DEAD LEVER** — the *best row in the city* is worth **1.10x** a uniform pick, so the promised ~2x is
+**unreachable, not under-tuned** (`probe-cloudland`). And the shade is neither faint (**1.11x** the amplitude of
+`shadS`, the shadow under every tree — `probe-cloudink`) nor small (its **30·s** half-width **equals the puff's own**).
+➡ **The cue was MANUFACTURED BY THE QUESTION** — the puff draws **250–400 px ABOVE its ground anchor**, so an agent
+asked *"where are the clouds"* reports a **screen** position that encodes ALTITUDE (224). Law in SKILL.md.
