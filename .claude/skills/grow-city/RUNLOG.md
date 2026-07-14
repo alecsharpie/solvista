@@ -216,4 +216,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 283  Transport × New CA rule    FIXED               47m29s   $22.53 3d18202
 ✔ Iter 284  Sky & atmosphere × Deepen/FIX SHIPPED             44m56s   $24.56 191968a
 ✔ Iter 285  Civic & culture × Deepen/FIX DEEPENED            44m11s   $22.87 b523698
+✔ Iter 286  People × Deepen            DEEPENED            41m31s   $16.21 21cadbf
 ```
