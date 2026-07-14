@@ -22,18 +22,16 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
   hook) — `stamp()` also draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (line/route/depot), computed live.
-- **ROTATION.** Last vector per domain: Sky **265** · Urban **267** · Water **268** · Transport **269** · Civic **270** ·
-  People **271** · Nature **272**. ➡ **NEXT: Sky (265) is oldest (7 laps) — AND ITS CUE IS THE TOP ONE, so rotation and
-  the cue list AGREE for once.** ➡ **Top open cue is (aj)** (the clouds spawn with no reference to the land — Sky ×
-  Polish, doubly measured, ~2x the visible weather at zero new draw work); **(as)** (the windrows read ruler-drawn —
-  Water × Polish) is the freshest.
+- **ROTATION.** Last vector per domain: Sky **273** · Urban **267** · Water **268** · Transport **269** · Civic **270** ·
+  People **271** · Nature **272**. ➡ **NEXT: Urban fabric (267) is oldest.** ➡ **(aj) IS RETIRED (273, refuted below), so
+  the cue list HAS NO #1.** **(as)** (windrows read ruler-drawn — Water × Polish) is freshest; **(aw)** (kayakers keep no hour) is cheapest.
   ⚠ **PEOPLE HAS TAKEN *Deepen* FOUR LAPS RUNNING** (240/247/262/271). Its **Polish** (226) and **Interaction/UX** (191,
   80 laps ago) are the stale cells ⇒ **non-Deepen next.**
   🔑 **225'S GREP-THE-SEAM LAW IS 14 FOR 14 AT *FINDING*** (267 hid **a RULE THAT HAD NEVER RUN** · 268 a seabed built
@@ -43,9 +41,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   list — or a passing probe — records where you have LOOKED, not what is THERE. But a found defect is not a fixable
   one: PRICE THE FIX BEFORE YOU PROMISE IT.**
   ⚠ **272: NATURE'S CUE LIST WAS STALE AND ITS SEAM HELD A WHOLE UNMENTIONED CA.** `grep tick()`, never the cue list.
-  ✅ **268 WAS THE 34th STEP-BACK — NO COMPOUNDING DRIFT ON LAND; 261'S SEASON IS ALIVE.** **The SEA was the finding**,
-  and it INVERTED the FAIL/ASIDE law: the headline FAIL was right and the banked probe had acquitted it. ➡ **NEXT
-  STEP-BACK IS DUE NOW (~273).** ⚠ **BLIND A/B NAMES MUST BE NON-ORDINAL** (268; SKILL.md) — meaningless tokens, **and cross them**.
+  ✅ **273 = 35th STEP-BACK: BOTH SEEDS PASS, no compounding drift; 261'S SEASON IS ALIVE** (both blind agents named the
+  winter dusk from the light alone). **Perf ARC vs 41 laps back: day +3.9% / night +1.8% ≈ +0.1%/lap, HALF the historic
+  rate.** Its finding was that **the loop's #1 CUE WAS FALSE.** ➡ **NEXT ~278.** ⚠ **BLIND A/B NAMES: NON-ORDINAL, AND
+  CROSS THEM** (268). ⚠ **Both agents again called golden hour *"a near-monochrome peach wash"* — 265 CHOSE THAT
+  DELIBERATELY** (*protect the complement; do NOT de-warm the scene — the land is diffuse and SHOULD blaze at dusk*).
   🔑 **`polish-tile` IS BADLY OVERDUE AND NOW HAS THREE CUES**: **(a)** the elevated transit (**13x reported**, the
   ledger's most-reported defect by a wide margin), **(e)** the observatory (259), **(g)** the capitol (270).
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
@@ -167,9 +167,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   live do-not-re-open warnings were rotated to the archive at 268; every law is in SKILL.md.** Half-closed: **(aj)'s
   SHADE half CLOSED 242 — its cloud-SITING half is still OPEN**; **(ao)'s SHAFT half CLOSED 248, its BOW half REFRAMED
   and its prescription REFUTED.** Live:
-  **(aj)** the clouds spawn with no reference to the land, so a seed parks its sky over the sea — **the lever is the SPAWN, not the draw**: ~2x the visible weather at **zero new draw work** (Sky × Polish, doubly measured) ·
+  ⛔ **(aj) RETIRED (273) — REFUTED ON EVERY COUNT, DO NOT RE-OPEN THE CLOUD SPAWN.** The clouds are **not** parked over the sea: they stand over land **55% of their lives** (**3.86 of 7** cast a shadow at any instant, 6 seeds in 6). **`cl.y` is a DEAD LEVER** — the *best row in the city* is worth **1.10x** a uniform pick, so the promised ~2x is **unreachable, not under-tuned** (`probe-cloudland`). And the shade is neither faint (**1.11x** the amplitude of `shadS`, the shadow under every tree — `probe-cloudink`) nor small (its **30·s** half-width **equals the puff's own**). ➡ **The cue was MANUFACTURED BY THE QUESTION** — the puff draws **250–400 px ABOVE its ground anchor**, so an agent asked *"where are the clouds"* reports a **screen** position that encodes ALTITUDE (224). Law in SKILL.md. ·
   **(aw)** **the KAYAKERS keep no hour and no calendar** (271 — the last person in Solvista who does not). `drawKayak` has no gate at all, exactly as `drawSurfer` had none. **The fix is already written: `surfSession()` is the predicate, and a kayak is a fair-weather boat.** Cheap, but it REPEATS 271's mechanism ⇒ **pair it with something, or wait for People's non-Deepen lap** ·
-  **(y)** the scorched inland cluster (Nature × Polish; ⚠ **a 216-era aside — the light was rebuilt at 253/261, so RE-DERIVE it from a fresh frame**) · ⛔ **(ak) MEASURED-CAPPED, prescription DEAD** (238+252) — **do not re-open the canopy** · ⛔ **GARDEN's staggered beds RETIRED (263, host starved).**
+  ⛔ **(y) RETIRED (273): its own instruction was "re-derive it from a fresh frame"; 273's 5-light × 2-seed step-back did, and NEITHER agent saw it. Body archived.** · ⛔ **(ak) MEASURED-CAPPED, prescription DEAD** (238+252) — **do not re-open the canopy** · ⛔ **GARDEN's staggered beds RETIRED (263, host starved).**
   **225: THE SHADOWS READ THE SUN.** `shadS` (every shadow routes through it) carries a per-frame sun vector
   (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity). ⚠ **Noon (t=0.415) is BYTE-IDENTICAL ⇒ a free
   dead-regime control for every shadow lap.** ⚠ **`SHAMT` must never reach 0 at night** — the residual patch is what
@@ -391,94 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 265 entries before Iteration 263 live in
+> **Archive:** the 266 entries before Iteration 264 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 263 — the wildflowers had no spark, and the city had eaten their meadow (2026-07-14) [Nature × Deepen]
-
-**Vector.** Nature × Deepen. Rotation put Nature most overdue (last 251), and the header's live cue
-said GARDEN was the last mute Nature tile. It is not the lap: the census histogram says **GARDEN is
-2–5 hexes a city** (206's fix under-delivered), so a per-bed calendar there would have been a perfect
-field nobody could see (259). Grepped the domain's seam instead — 225's law, now **8 for 8**.
-
-**The seam.** `tick()` (~L2373) carries a real **excitable-media CA**: a bloom lives 7 ticks, falls
-into a 14-tick refractory, spreads to quiescent neighbours, and is seeded by the rain front. Its draw
-is the richest ornament on any green tile — a body lift, five gold/lavender/coral specks, and
-**butterflies**. A tooltip row has printed `In bloom / Gone over / Not in flower` for the artifact's
-whole life. And its entire host was one tile: `if(c.t!==T.MEADOW)continue;`
-
-**T.MEADOW is in `RAISEABLE` (L1475) — the set the development pass BUILDS ON.** So the host is eaten
-*by construction*: **68.3 → 4.5 hexes (93%)** between 1985 and 2035, two seeds in six reaching zero.
-That is **206's law arriving on a CA's host** instead of a siting rule's pool.
-
-**But the host was only half of it, and the POSITIVE CONTROL is what found the other half (250).** The
-gate probe carries the MEADOW at 1985 — a correct sibling of the very mechanism under test — as the
-column that *must* move. It came back **dead on 5 seeds in 6, with 61–96 meadows standing.** An
-excitable medium that dense cannot be that quiet, so the rig or the CA was broken. It was the CA:
-the spontaneous spark samples **`(rng()*G)|0` over the BOUNDING SQUARE**, three quarters of which is
-`VOID` (the plate is a hexagon — the invariant's own warning), so its chance of landing on a host is
-**~0.0017 a tick: one spark per 574 ticks.** *The wildflower CA has essentially never run, in any era,
-in the artifact's life.* Without that control I would have shipped a host swap and called the
-remaining silence a tuning problem.
-
-**Change.** One predicate, four readers (`bloomHost` — the spread, the rain front, the draw, the
-tooltip row). Host = MEADOW **+ SHOREPARK**, the coastal grassland the city *cannot build on*: ~100
-hexes, **mean 4.0 same-host neighbours**, so a wave actually propagates (DUNE and PARK are fragmented
-— biggest component **6** and **14** — and could only speckle). It already drew *static* wildflower
-specks that never opened or went over. `bloomAt()` is the shared draw, so MEADOW's look is unchanged.
-- **The CA now draws ZERO `rng()`.** The spread roll is terrain-gated, so a wider host would spend more
-  draws every tick and reshuffle the whole downstream city — *a wildflower would move a tower*. It is
-  `hashCell(x,y,seedNum^SALT^TICKN)` instead: stochastic per cell and per tick, and **wholly inert** —
-  it writes `c.bloom` and nothing else. The rain seeder re-hosts for **free** (236 made its draws
-  unconditional on purpose). The grid-wide lottery keeps its draws (259: do not tidy them away).
-- **A per-host spark it can actually get** (`<0.004`, hashCell, no draw).
-- **The refractory is JITTERED** — and that is what keeps the coast in flower. With one shared `-14`
-  the band **synchronised**: it bloomed together, went over together, and **41% of all ticks had not one
-  flower anywhere in the city**, so half the seeds opened on bare grass. `c.v` is a uniform every cell
-  **already carries**, so the jitter costs **no random draw at all** (262), and `9..18` holds HEAD's
-  mean of 14. Desynchronised, the waves overlap and the grass is never bare.
-- **`TICKN` is reset in `genWorld`** — the camera caught this (202): the bloom's salt was surviving a
-  world rebuild, so the same seed gave *different flowers* depending on how many frames had run. A
-  `?seed=7` URL must always be the same city. Fixed; four load paths now agree.
-
-**Probe** (`probes/probe-bloomhost.mjs` = the host, render-free; `probes/probe-bloomwave.mjs` = the
-gate — TEMPORAL (134), drives the artifact's OWN `tick()`, reads no pixels, **build-agnostic** so one
-file grades HEAD and patch with no source swap). **The headline needed no threshold** (236):
-
-| in the rendered year (2035), 6 seeds | HEAD | patch |
-| --- | --- | --- |
-| hexes in flower **at load** | **0.0** (0 on every seed) | **21.0** (min **6**, max 32) |
-| mean hexes in flower | **0.0** | **20.3** (peak 59.7) |
-| seeds where the wave never lights in 150 ticks | **6 / 6** | **0 / 6** |
-| MEADOW @1985 — the positive control | dead on **5/6** | blooms on **6/6** |
-
-**Census: PASS** — `pop`, `roads`, `developed`, `towers`, `towerHt` **all +0**, tile histogram **empty**,
-0 page errors. The CA is inert by construction. (`developed` over 6 seeds moves `0/0/0/−1/+1/−4` — the
-dead CA never spent its spread draws, so moving them to `hashCell` cost the stream almost nothing.)
-**Path objects: day +185 (+0.17%) · night +98 (+0.07%)** — the honest price of the flowers, and cheap.
-
-**Visual: PASS, both seeds, both agents BLIND with the build→file map CROSSED between seeds** (238/239)
-— and **both named the patch correctly** (`one` on 42, `two` on 7). Flowers sit inside the hexes, no
-spill onto sand/sea/road, no z-order tears, "on-palette, a scatter not a carpet"; both whole-plate
-frames "balanced… nothing compounded into clutter or darkness."
-
-⚠ **THE ASIDE, REACHED INDEPENDENTLY BY BOTH AGENTS (212 — weight it above either verdict): the bloom
-is a CLOSE-UP-ONLY payoff.** *"Neither city plate shows flowering at whole-plate zoom; the specks fall
-below ~1px."* True, and **it is 215's hairline law**: the specks are 1.7px world units, ~1.1px at
-`fitScale`. It is also true of **HEAD's own meadow bloom, which is the identical draw** — so "invisible
-at fit zoom" is a statement about Solvista's wildflowers *as a vocabulary*, not an objection to this lap
-(226: the incumbent is the bar). ⛔ **And the obvious fix is FORBIDDEN: raising the per-hex body lift is
-exactly 255's ⛔** — a per-hex signal painted into a tile's body fill terraces onto the lattice and reads
-as a hex quilt. Per 255 the only way through is **a shape that CROSSES tile boundaries**. Banked as a
-`polish-tile` cue (f), not chased here.
-
-**Verdict: FIXED.** Solvista has had an excitable-media wildflower CA — with butterflies — since its
-first iteration, and it had never once run in the year anybody looks at. The meadow it was written for
-was built over, and its only spark was aimed at the void. The coast is in flower now, and the wave
-moves through it.
 
 ## Iteration 264 — the season was shot at the one hour it cannot be seen (2026-07-14) [holistic step-back, 33rd]
 
@@ -1174,3 +1091,52 @@ whole city is clean and coherent. ⚠ **Both, independently, added the same asid
 are ≤11 per city (~0.1% of a 105k-object frame), in autumn only. **A small credit, not a cost.**
 
 **Verdict: DEEPENED.**
+
+## Iteration 273 — the sky was never over the sea; the projection had hoisted it out of the city (2026-07-14) [holistic step-back, 35th + Sky & atmosphere × Polish → cue REFUTED]
+
+**Vector.** Rotation said Sky (oldest, 7 laps) and the cue list said **(aj)** — *"the clouds spawn with no
+reference to the land, so a seed parks its sky over the sea; the lever is the SPAWN, not the draw: ~2x the
+visible weather at zero new draw work"* — the ledger's **#1 open cue**, marked *doubly measured*. The 35th
+step-back was also due. Both were done in one lap, and the step-back's own agents **re-reported the cue a
+third time**, which is what made it worth probing before building.
+
+**Step-back (35th).** `shot-stepback` on seeds 42/7, 3 lights × 2 calendars, every pin derived from the light
+curve. **Both seeds PASS.** No z-order tears, no floating elements, no blown-out colour after ~270 laps. Both
+blind agents, on a crossed map, **named the winter dusk frame from the light alone** (*"the sun is already
+below the horizon at the identical wall clock — earlier sunset"*) ⇒ **261's day-length season is alive.**
+Perf, interleaved: **lap (vs 268) day +2.9% / night +0.0%; ARC (vs 232, 41 laps back) day +3.9% / night
++1.8%** — ~**+0.1%/iteration**, half the historical +0.2% rate. No perf-fix lap needed.
+
+**The cue, refuted on every count.** `probe-cloudland` (pure world data; the metric is the artifact's OWN
+shade gate, `inB(anchor) ? shadeGround(cl) : 0`, averaged over the cloud's whole x-traverse — `cl.x` drifts
+and wraps, `cl.y` never changes, so **`y` is the only permanent lever the spawn has**):
+- **The clouds are NOT parked over the sea.** They stand over land **55% of their lives**: **3.86 of 7 cast a
+  shadow at a random instant** (4.0 of 7 at spawn), on 6 seeds in 6.
+- **`cl.y` IS A DEAD LEVER.** The row profile is flat: the single **best row in the city** is worth **1.10x**
+  a uniform pick (0.607 vs 0.550; worst row 0.456). So a hard gate pinning all 7 clouds to the best row buys
+  **+10%**, and a soft preference buys less. **The promised ~2x is not under-tuned — it is arithmetically
+  unreachable.**
+- And the shade is not too faint either. `probe-cloudink` (suppression by fillStyle signature in ONE page,
+  floor **exactly 0**) reads it against **the incumbent bar** (226) — `shadS`, the contact shadow under every
+  tree, ped and car, which the artifact has shipped and every agent has accepted for 270 iterations:
+  **cloud shade amp 5.29 (d 0.15) vs shadS 4.77 (d 0.13) = 1.11x.** Nor is it too small: the shade ellipse is
+  **30·s** half-width and the puff's own lobes reach **~30·s** — *the shadow is exactly the size of the cloud
+  casting it.*
+
+**So why do the agents keep saying it?** Because **I asked a question the projection destroys.** The puff is
+drawn at `py2 = cy − 185 − cy*0.52` — **250–400 px ABOVE its ground anchor**, where `cy` is the ground point
+the shade is painted on. Screen-y in this artifact is **depth + altitude**, not ground position (224). So an
+agent asked *"where are the clouds?"* answers with a **screen** position that encodes how high the cloud is,
+reads the sky band behind it, and truthfully reports *"over the sea."* The cue was **manufactured by the
+question**, re-confirmed three times because every re-confirmation asked it the same way.
+
+**Census.** PASS, `pop/roads/developed` **+0 / +0 / +0**, tile histogram empty — the artifact is byte-identical
+(no source change).
+
+**Verdict.** **EXPLORED → REVERTED.** Cue (aj) is **RETIRED — do not re-open the cloud spawn.** Nothing shipped;
+two instruments banked (`probes/probe-cloudland.mjs`, `probes/probe-cloudink.mjs`) and the law promoted to
+SKILL.md. ⚠ **A near-miss worth recording:** `probe-cloudink`'s first run read **0 px for BOTH the treatment
+and the incumbent** — and a zero on the incumbent is *impossible*, which convicted the probe in ten seconds
+(250). Cause: **Chromium CANONICALISES `fillStyle` on read** (`'rgba(36,30,20,.05)'` comes back as
+`'rgba(36, 30, 20, 0.05)'`), so a prefix match silently never fires. **Without the incumbent column I would
+have read "the shade renders nothing" and gone off to redesign a draw that is fine.**

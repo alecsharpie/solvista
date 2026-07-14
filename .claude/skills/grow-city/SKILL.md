@@ -701,6 +701,41 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A CUE IS A *RECORDED ANSWER*, AND AN ANSWER INHERITS EVERY DEFECT OF THE QUESTION — SO BEFORE YOU BUILD TO A CUE,
+  RE-ASK WHETHER THE PROJECTION EVEN *PRESERVES* THE QUANTITY THE AGENT WAS NAMING (iter 273).** 224 says: before you
+  ask a blind locate, ask what the projection does to the quantity you name — because **screen-y is DEPTH, not
+  height** — and it cost a gate round. 273 is the same law arriving **one lap later, through the LEDGER**, where it is
+  far more expensive: the bad answer does not fail a gate, it gets **written down as a cue**, ranked **#1**, marked
+  *"doubly measured"*, and steers the loop's rotation. Cue (aj) — *"the clouds spawn with no reference to the land, so
+  a seed parks its sky over the sea"* — was reported by **six agents across three step-backs**, and it was **false on
+  every count**: the clouds stand over land **55% of their lives** (3.86 of 7 casting a shadow at any instant, 6 seeds
+  in 6); the shade is **1.11x** the amplitude of the shadow under every tree in the city; and its **30·s** half-width
+  **equals the puff's own**. The cause is one line of geometry: the puff is drawn at `py2 = cy − 185 − cy*0.52`, i.e.
+  **250–400 px ABOVE the ground point its shadow is painted on**. Screen-y encodes **altitude + depth**, so an agent
+  asked *"where are the clouds?"* answers with the **sky band behind the puff** — and truthfully says *"over the sea."*
+  **Every re-confirmation asked the same broken question, so every re-confirmation agreed.** ⇒ **A cue that has been
+  "confirmed N times" by N agents reading N frames has been confirmed ONCE, by one question** (255's *a cue
+  re-confirmed is not corroborated unless a DIFFERENT instrument did it*, arriving on the **agents** rather than on a
+  probe). The tell, and it is checkable before you write a line: **your cue is a claim about WHERE something is, and
+  the thing is drawn at an OFFSET from the world point it belongs to** (a cloud above its shade, a balloon, a bird, a
+  cable car, a puff of smoke, any halo or glow). **Go and measure it in WORLD coordinates first.**
+  ⇒ **AND THE COROLLARY THAT DECIDES THE LAP: PRICE THE CUE'S PRESCRIBED LEVER *BEFORE* YOU BUILD IT — ITS CEILING IS
+  USUALLY COMPUTABLE IN ONE RENDER-FREE PROBE.** (aj) named its own lever (*"the lever is the SPAWN, not the draw"*)
+  and its own payoff (*"~2x the visible weather"*). But `cl.x` **drifts and wraps** while `cl.y` **never changes**, so
+  the spawn's only permanent freedom is `y` — and the row profile is **FLAT**: the single **best row in the city** is
+  worth **1.10x** a uniform pick. **A hard gate pinning all seven clouds to the best row buys +10%.** The promised 2x
+  was not under-tuned, it was **arithmetically unreachable** (246's law, on a cue's *payoff* instead of its *host*).
+  **When a cue quotes a number, go and compute that number's ceiling first.** It is usually pure world data — no
+  render, no clock, no noise floor — and it costs one command against a lap you would otherwise spend.
+  ⇒ ⚠ **AND THE PROBE THAT REFUTES A CUE MUST STILL CARRY 250'S POSITIVE CONTROL, BECAUSE A DEAD RIG AND A DEAD
+  FEATURE PRINT THE SAME ZERO.** `probe-cloudink`'s first run read **0 px for the treatment AND for the incumbent** —
+  and a zero on `shadS`, the shadow under every tree in the city, is **impossible**, which convicted the instrument in
+  ten seconds instead of the artifact. Cause, and it will bite any suppression-by-signature rig: **Chromium
+  CANONICALISES `fillStyle` on read** — you set `'rgba(36,30,20,.05)'` and it returns `'rgba(36, 30, 20, 0.05)'`, so a
+  prefix match **silently never fires**. Strip the whitespace. **Without the incumbent column I would have read "the
+  cloud shade renders nothing" and gone off to redesign a draw that is fine** — i.e. the broken probe would have
+  *manufactured a second cue to replace the one it was killing.*
+
 - **`render()` MUTATES THE WORLD — SO A "FROZEN" WORLD IS NOT IDEMPOTENT UNDER RENDER, AND THE FREEZE LIST YOU
   INHERITED IS A LIST OF *INPUTS* THAT CANNOT SEE IT (iter 272).** 163/199/203/213 build the freeze list one painful
   item at a time — `genWorld`+`__warp`, `STARS`, `flock`, the mover arrays, `time`/`waveT`, and finally 213's
@@ -3115,6 +3150,25 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   ⚠ **The pin is DERIVED from the frame's own mean luminance, NOT from `nightAmt`** — `nightAmt` is **saturated at 0
   across all of daylight**, so its argmin returns DAWN (199). ⚠ **DO NOT ask it to grade the cadence** — 134/258: a still
   cannot prove a verb, and the draw's `alpha=min(1,shroom/2)` **saturates** so ages 3 and 2 render identically anyway.)
+  The **cloud pair** (273 — reach for these before building to ANY cue about WHERE a thing is, and on any "is this
+  ornament too faint to see" claim): `probe-cloudland.mjs` (**does the cue's PRESCRIBED LEVER even have the range it
+  promises?** Pure world data — no render, no clock, no pixels, no noise floor, nothing to stub, and it is the cheapest
+  instrument in the harness. It scores the clouds on **the artifact's OWN shade gate** (`inB(anchor)?shadeGround(cl):0`)
+  averaged over the cloud's whole **x-traverse** — because `cl.x` drifts and wraps while `cl.y` never changes, so `y` is
+  the spawn's only permanent freedom. ⚠ **Its ROW PROFILE is the DESIGN GATE and it must run BEFORE a line of the fix**
+  (218/263): it reports what the **best row in the city** is worth against a **uniform pick**, and that ratio is the
+  lever's **CEILING**. It read **1.10x** and killed the ledger's #1 cue in one command. **Retarget it at any spawn
+  parameter by swapping the field it profiles**), `probe-cloudink.mjs` (**can this ornament be SEEN — against what the
+  artifact already ships and accepts?** Isolation is by **fillStyle SIGNATURE** in ONE page (226/230/234): suppress the
+  fill, diff, and the changed pixels ARE that draw — floor **exactly 0**, occlusion free, **BUILD-AGNOSTIC**. ⚠ **Its
+  `shadS` column is the INCUMBENT BAR and it is the whole point** (226): *"is alpha 0.05 enough?"* is a number I would
+  invent; *"does it reach the shadow under every tree in the city?"* is one the artifact answers (**1.11x** — the cloud
+  shade is *fine*). ⚠ **That column is ALSO the positive control that convicted the probe** (250): its first run read
+  **0 px for BOTH**, and a zero on `shadS` is impossible — **Chromium CANONICALISES `fillStyle` on read**
+  (`'rgba(36,30,20,.05)'` → `'rgba(36, 30, 20, 0.05)'`), so a prefix match never fires. **Strip the whitespace.**
+  ⚠ Amplitude is stated **per pixel WHERE DRAWN** (266) and as `d` against the ground's own grain (254) — never a count.
+  ⚠ **It does NOT supersede 242's `probe-cloudshade`** — that one measures **WHERE** the shade ink lands (sea vs land);
+  this one measures **HOW HARD**. Different pairs; keep both).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

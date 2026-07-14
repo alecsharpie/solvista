@@ -19323,3 +19323,95 @@ diffed the two city frames at **75 px (0.0015%)**.
 frame of the evening. They go in one at a time, ahead of the runners and long before the crowd, and
 you can hover a resident and be told whether the little one is still with them.
 
+## Iteration 263 — the wildflowers had no spark, and the city had eaten their meadow (2026-07-14) [Nature × Deepen]
+
+**Vector.** Nature × Deepen. Rotation put Nature most overdue (last 251), and the header's live cue
+said GARDEN was the last mute Nature tile. It is not the lap: the census histogram says **GARDEN is
+2–5 hexes a city** (206's fix under-delivered), so a per-bed calendar there would have been a perfect
+field nobody could see (259). Grepped the domain's seam instead — 225's law, now **8 for 8**.
+
+**The seam.** `tick()` (~L2373) carries a real **excitable-media CA**: a bloom lives 7 ticks, falls
+into a 14-tick refractory, spreads to quiescent neighbours, and is seeded by the rain front. Its draw
+is the richest ornament on any green tile — a body lift, five gold/lavender/coral specks, and
+**butterflies**. A tooltip row has printed `In bloom / Gone over / Not in flower` for the artifact's
+whole life. And its entire host was one tile: `if(c.t!==T.MEADOW)continue;`
+
+**T.MEADOW is in `RAISEABLE` (L1475) — the set the development pass BUILDS ON.** So the host is eaten
+*by construction*: **68.3 → 4.5 hexes (93%)** between 1985 and 2035, two seeds in six reaching zero.
+That is **206's law arriving on a CA's host** instead of a siting rule's pool.
+
+**But the host was only half of it, and the POSITIVE CONTROL is what found the other half (250).** The
+gate probe carries the MEADOW at 1985 — a correct sibling of the very mechanism under test — as the
+column that *must* move. It came back **dead on 5 seeds in 6, with 61–96 meadows standing.** An
+excitable medium that dense cannot be that quiet, so the rig or the CA was broken. It was the CA:
+the spontaneous spark samples **`(rng()*G)|0` over the BOUNDING SQUARE**, three quarters of which is
+`VOID` (the plate is a hexagon — the invariant's own warning), so its chance of landing on a host is
+**~0.0017 a tick: one spark per 574 ticks.** *The wildflower CA has essentially never run, in any era,
+in the artifact's life.* Without that control I would have shipped a host swap and called the
+remaining silence a tuning problem.
+
+**Change.** One predicate, four readers (`bloomHost` — the spread, the rain front, the draw, the
+tooltip row). Host = MEADOW **+ SHOREPARK**, the coastal grassland the city *cannot build on*: ~100
+hexes, **mean 4.0 same-host neighbours**, so a wave actually propagates (DUNE and PARK are fragmented
+— biggest component **6** and **14** — and could only speckle). It already drew *static* wildflower
+specks that never opened or went over. `bloomAt()` is the shared draw, so MEADOW's look is unchanged.
+- **The CA now draws ZERO `rng()`.** The spread roll is terrain-gated, so a wider host would spend more
+  draws every tick and reshuffle the whole downstream city — *a wildflower would move a tower*. It is
+  `hashCell(x,y,seedNum^SALT^TICKN)` instead: stochastic per cell and per tick, and **wholly inert** —
+  it writes `c.bloom` and nothing else. The rain seeder re-hosts for **free** (236 made its draws
+  unconditional on purpose). The grid-wide lottery keeps its draws (259: do not tidy them away).
+- **A per-host spark it can actually get** (`<0.004`, hashCell, no draw).
+- **The refractory is JITTERED** — and that is what keeps the coast in flower. With one shared `-14`
+  the band **synchronised**: it bloomed together, went over together, and **41% of all ticks had not one
+  flower anywhere in the city**, so half the seeds opened on bare grass. `c.v` is a uniform every cell
+  **already carries**, so the jitter costs **no random draw at all** (262), and `9..18` holds HEAD's
+  mean of 14. Desynchronised, the waves overlap and the grass is never bare.
+- **`TICKN` is reset in `genWorld`** — the camera caught this (202): the bloom's salt was surviving a
+  world rebuild, so the same seed gave *different flowers* depending on how many frames had run. A
+  `?seed=7` URL must always be the same city. Fixed; four load paths now agree.
+
+**Probe** (`probes/probe-bloomhost.mjs` = the host, render-free; `probes/probe-bloomwave.mjs` = the
+gate — TEMPORAL (134), drives the artifact's OWN `tick()`, reads no pixels, **build-agnostic** so one
+file grades HEAD and patch with no source swap). **The headline needed no threshold** (236):
+
+| in the rendered year (2035), 6 seeds | HEAD | patch |
+| --- | --- | --- |
+| hexes in flower **at load** | **0.0** (0 on every seed) | **21.0** (min **6**, max 32) |
+| mean hexes in flower | **0.0** | **20.3** (peak 59.7) |
+| seeds where the wave never lights in 150 ticks | **6 / 6** | **0 / 6** |
+| MEADOW @1985 — the positive control | dead on **5/6** | blooms on **6/6** |
+
+**Census: PASS** — `pop`, `roads`, `developed`, `towers`, `towerHt` **all +0**, tile histogram **empty**,
+0 page errors. The CA is inert by construction. (`developed` over 6 seeds moves `0/0/0/−1/+1/−4` — the
+dead CA never spent its spread draws, so moving them to `hashCell` cost the stream almost nothing.)
+**Path objects: day +185 (+0.17%) · night +98 (+0.07%)** — the honest price of the flowers, and cheap.
+
+**Visual: PASS, both seeds, both agents BLIND with the build→file map CROSSED between seeds** (238/239)
+— and **both named the patch correctly** (`one` on 42, `two` on 7). Flowers sit inside the hexes, no
+spill onto sand/sea/road, no z-order tears, "on-palette, a scatter not a carpet"; both whole-plate
+frames "balanced… nothing compounded into clutter or darkness."
+
+⚠ **THE ASIDE, REACHED INDEPENDENTLY BY BOTH AGENTS (212 — weight it above either verdict): the bloom
+is a CLOSE-UP-ONLY payoff.** *"Neither city plate shows flowering at whole-plate zoom; the specks fall
+below ~1px."* True, and **it is 215's hairline law**: the specks are 1.7px world units, ~1.1px at
+`fitScale`. It is also true of **HEAD's own meadow bloom, which is the identical draw** — so "invisible
+at fit zoom" is a statement about Solvista's wildflowers *as a vocabulary*, not an objection to this lap
+(226: the incumbent is the bar). ⛔ **And the obvious fix is FORBIDDEN: raising the per-hex body lift is
+exactly 255's ⛔** — a per-hex signal painted into a tile's body fill terraces onto the lattice and reads
+as a hex quilt. Per 255 the only way through is **a shape that CROSSES tile boundaries**. Banked as a
+`polish-tile` cue (f), not chased here.
+
+**Verdict: FIXED.** Solvista has had an excitable-media wildflower CA — with butterflies — since its
+first iteration, and it had never once run in the year anybody looks at. The meadow it was written for
+was built over, and its only spark was aimed at the void. The coast is in flower now, and the wave
+moves through it.
+
+
+<!-- rotated out of the header at 273 -->
+**Cue (y) — the scorched inland cluster** (Nature × Polish). A 216-era *aside*, banked from an agent reading a frame
+lit by a light model that has since been rebuilt twice (253's seasonal sunlight, 261's `sunWarp` day-length). The cue
+itself carried the instruction *"RE-DERIVE it from a fresh frame"* and was never re-derived. **273's step-back did
+exactly that** — 5 lights × 2 calendars × 2 seeds, whole-frame, both agents asked for the single worst thing they
+could see in every frame — and **neither agent mentioned a scorched or burnt cluster at any light on either seed**.
+Retired as unobserved under the current light, not as fixed. If a future step-back re-reports it *from a fresh frame*,
+it comes back as a new cue with new evidence.
