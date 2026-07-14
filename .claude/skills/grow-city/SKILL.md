@@ -701,6 +701,40 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **274 SAYS A *TYPE*-KEYED TABLE IS BLIND TO A PER-CELL *FLAG*. THE RUNG ABOVE IS THAT A ***SUB-TYPE***-KEYED TABLE IS
+  BLIND TO A SIBLING THAT IS A ***TOP-LEVEL TYPE*** — SO A LADDER CAN GIVE A PROPERTY TO "EVERY MEMBER OF A CATEGORY",
+  LOOK COMPLETE, AND STRUCTURALLY NEVER REACH HALF OF THEM (iter 285).** 271 says: when a lap establishes a property,
+  **enumerate the CATEGORY** — and 280 warns that the list you assemble from a *comment* is a changelog, not a spec.
+  285 is the case where **the TYPE SYSTEM itself hides the members**, so even an honest enumeration misses them.
+  Solvista's institutions all keep hours (`CIVHRS`, iter 213) — a table keyed on **`c.kind`**, and **only `T.CIVIC`
+  cells HAVE a kind.** The **MARKET** and the **STADIUM** are civic-culture institutions that are **top-level TILE
+  TYPES**, so the entire hours ladder was *incapable* of naming them, and the table looked finished. The stadium got
+  hours anyway (240, bespoke); the market got nothing, and traded **at 4am, every night, forever** — six stall prisms,
+  `DISTINCT = 1` on 6 seeds in 6, standing **100%** of all hours, under string lights burning on **80 of 80** sampled
+  night hours over a market nobody was minding. ⇒ **When you build a table that confers a property on a CATEGORY, ask
+  whether every member of that category is even REPRESENTABLE AS A KEY.** The members that live at a *different level
+  of the type hierarchy* are invisible to it — and they are missed **silently**, because a table with no gaps in it
+  reads as complete. The tell, and it is one grep: **your category has members at two levels (`c.t` and `c.kind`; a
+  class and a subclass; a tag and a variant), and your table keys on one of them.**
+  ⇒ **AND THE SIBLING WAS ON THE SAME LINE, WHICH IS WHY 271'S LAW DID NOT SAVE IT.** 240 gave the ground its fixture,
+  wired four readers to it, and **wrote 271's enumerate-the-category law down while doing so** — and `T.MARKET` sits
+  beside `T.STADIUM` in `ATTRACT`, in `PEDDEST`, and in **`syncFleet`'s literal expression** `if(t===T.MARKET||
+  t===T.STADIUM)` under the comment *"markets & matches draw a crowd"*, while `residentWhere` reads `matchClock()`
+  **three lines below** the market's frozen `'Browsing the market stalls.'` (262). **A lap can state the law, and
+  still not run the grep the law asks for.** ⇒ **Grep the OTHER MEMBERS OF EVERY SET YOUR HOST BELONGS TO** — the set
+  literals (`ATTRACT`, `PEDDEST`, `DEV`, `HOMES`) *are* the artifact's own category list, and unlike a comment they
+  cannot rot.
+  ⇒ ⚠ **AND THE INSTRUMENT TRAP IS NEW AND IT REPORTED THE FIX AS A NO-OP: A COLUMN WHOSE *DEFINITION* YOUR PATCH
+  CHANGES IS NOT A MEASUREMENT, IT IS A MOVING TARGET.** My probe counted the string lights as *"`fillRect` calls
+  inside a MARKET hex"* — exact on HEAD. The patch then drew the **packed-away** square (bare pitches + stacked
+  trestles) **with `fillRect` too**, so on the patched build the same column silently came to mean *"lights + pitch
+  marks + trestles"*, and it duly read **80/80 on BOTH builds** — i.e. it reported a working fix as **no change at
+  all**, and I nearly believed it. This is 228's law arriving through the **PATCH** rather than through the cue: the
+  probe was right about HEAD and wrong about the thing it was built to grade. ⇒ **Count a thing by a signature your
+  own diff cannot forge** — here the lights are the artifact's only **1.3 × 1.3** rect, a *geometric* signature, so no
+  `fillStyle` round-trip through Chromium's canonicaliser either (273). The tell: **your probe counts a PRIMITIVE
+  (`fillRect`, `arc`, `prism`), and your patch adds a new draw that issues the same primitive.**
+
 - **264 SAYS GREP EVERY READER OF A REMAPPED QUANTITY. 284 IS THE PART THAT TELLS YOU *WHICH ONES ARE WRONG*: A READER'S
   AXIS IS DECIDED BY THE **QUESTION IT ASKS**, NOT BY THE CLOCK IT HAPPENS TO HOLD — AND THE TELL IS THAT **ITS CONSTANTS
   ARE ANOTHER FUNCTION'S KEYFRAMES** (iter 284).** 261 warped the light curve's time axis, so the sun's state became a
@@ -3624,6 +3658,35 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   largest bed by the artifact's own `bedSize` flood fill, never a fixed clip (201); `AIM=` forces HEAD to the identical
   hex, and since the pass draws zero `rng()` the two builds share a byte-identical city ⇒ a **genuinely blind** A/B.
   Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds (238/239/268)).
+  The **market pair** (285 — reach for these on any vector about a DRAW THAT SHOULD KEEP AN HOUR, A DAY OR A SCHEDULE,
+  and on any "does this thing ever CLOSE / pack up / go home" claim): `probe-marketday.mjs` (**it counts OBJECTS, not
+  pixels** — hooks the artifact's own `drawCell`/`prism`/`fillRect` and counts what the frame ISSUES per hex, per hour,
+  per day: deterministic, **NO NOISE FLOOR AT ALL**, no ambient term, nothing to stub. **BUILD-AGNOSTIC** — it only
+  hooks the artifact's own fns, so ONE file grades HEAD and the patch with no source swap and no cross-build floor
+  (230). ⚠ **Its headline needs no threshold** (236): HEAD reads **`DISTINCT STALL COUNTS = 1`** over 8 days × 16 hours
+  on 6 seeds — a draw with no clock has exactly ONE output, forever, and that IS the defect stated. ⚠ **The STADIUM is
+  the FREE POSITIVE CONTROL** (248) — a correct sibling institution on the same day counter, drawn by the same
+  `drawCell`, so a flat market column beside a live stadium column convicts the **city**, not the rig; **FARM is the
+  must-not-move column** (250). ⚠ **ITS `rect` COLUMN CONVICTED ITSELF** — see the law: the patch draws the
+  packed-away square with `fillRect` too, so the column silently changed meaning between builds and reported the fix as
+  **no change**. It now counts the lights by their **1.3 × 1.3 geometric signature**, which the patch cannot forge),
+  `shot-marketday.mjs` (its camera — a **DISCRIMINATING PAIR** (264) at the **`shut`** pin, because that is the ONLY
+  pin that discriminates: at `marketAmt===1` the patch's levers collapse to HEAD's literals and the two builds are
+  **byte-identical BY CONSTRUCTION** (the fixed point — an `-open` A/B *should* read 0 px, and an agent will otherwise
+  report it as a broken camera). ⚠ **Aimed by ARGMAX OVER (TIME × HEX)** — only ~a third of the squares trade at any
+  one noon, so a same-instant argmax has **n=1** and is a lottery ticket (258). Isolation is 253's suppress-the-
+  PREDICATE rig in ONE page; ⚠ **`marketAmt` is a top-level `function`, so `delete` is a silent no-op — restore BY
+  ASSIGNMENT** (284). ⚠ **CLIP TIGHTLY** (204): a ~30px stall in a 1400×900 frame is a needle you are asking an agent
+  to find, and the first round FAILed on exactly that. ⚠ Every frame **self-reports its HOST's presence** (258 — the
+  success condition is an ABSENCE, and a missed camera renders identically). Frames named by FILE, tokens meaningless,
+  map CROSSED between seeds (238/239/268) — **both blind agents named the patch from the pixels alone**),
+  `probe-civicmile.mjs` (285 — **is this "district-tying" flag a SHORT STRETCH, or the DEFAULT STATE of the street?**
+  Pure world data: no render, no clock, no pixels, no noise floor. Reports the flag's share of the road network, its
+  **CONNECTED COMPONENTS** (a *mile* is a few short runs, not one blob), the institutions actually in reach of each
+  flagged cell, and — the reusable column — **what the flag PREEMPTS in the label ladder**, since `describeTile` tests
+  `c.fete` FIRST. ⚠ **It ACQUITTED the civic mile** (11–30 cells, 1.4–3.7% of road, 2–5 runs, 2.2–2.8 institutions in
+  reach) and **saved a lap I was about to spend "fixing" a rule that works** — reach for it before building to any cue
+  about a flag that "over-fires").
   The **clock pair** (284 — reach for these on any vector about a REMAPPED QUANTITY, a HUD READOUT, or a "does X keep
   the right clock" claim): `probe-suntclock.mjs` (**is the remapped curve read by ALL its readers?** Pure clock/DOM/
   object data — **no pixels, so NO NOISE FLOOR AT ALL**, nothing to stub but the clocks. Reads the HUD in the **VIEWER'S

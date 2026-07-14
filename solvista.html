@@ -4350,6 +4350,60 @@ function matchWord(){
   if(t<=MATCHDUR)return dark?'Kick-off &mdash; under the floodlights':'Kick-off &mdash; the ground is full';
   return 'Full time &mdash; the ground empties';
 }
+/* ...and the MARKET, which is the fixture's sibling and never got one (iter 285).
+   T.MARKET sits beside T.STADIUM in ATTRACT and in PEDDEST, and on the SAME LINE of
+   syncFleet -- "markets & matches draw a crowd" -- and residentWhere reads matchClock()
+   for the ground three lines below the market's flat 'Browsing the market stalls.'
+   240 gave the ground a fixture and wrote down the law (enumerate the CATEGORY); the
+   market was the member it did not enumerate. CIVHRS could never have caught it: that
+   table is keyed on c.kind, and MARKET is a TILE with no kind.
+   So the stalls stood, all six prisms of them, at every hour of every day for the
+   artifact's whole life (measured: DISTINCT STALL COUNTS = 1 on six seeds in six,
+   standing 100% of the time), under string lights that burned on 80 of 80 sampled
+   night hours over a market nobody was minding.
+   Same clock as the fixture -- Math.floor(dayT), the day counter that never wraps --
+   and a market is a TIMETABLE, so it is correct on dayT and not on the warped SUNT
+   (iter 284). Salted per HEX as well as per day, so the squares keep their own trading
+   days and the city always has some market on and some square bare, rather than
+   blinking as one. No rng() and no Math.random: the seeded stream, the terrain and
+   every census metric are byte-identical. */
+const MKTP=0.45,         /* share of days a given square trades */
+      MKTEVE=0.28,       /* ...and this share of those are EVENING markets */
+      MKTMOO=0.10,       /* the morning market: the vans arrive at first light (SUNUP 0.05) */
+      MKTMOC=0.52,       /* ...and it is packed away by mid-afternoon */
+      MKTEVO=0.62,       /* the evening market opens before dusk... */
+      MKTEVC=0.92,       /* ...and trades late. SUNDN (0.78) falls mid-market, which is
+                            what the string lights are FOR -- they now burn only here. */
+      MKTSET=0.06;       /* setting up / packing down, in day-cycles */
+/* today's trading window for THIS square, or null for a dark pitch. Both windows end
+   before midnight (0.92+0.06 = 0.98), so a market never straddles a day boundary and
+   the day index alone decides it -- the same guarantee fixtureAt documents. */
+function marketHours(x,y){
+  const day=Math.floor(dayT), i=idx(x,y);
+  if(hashCell(day,i,seedNum^0x4D4B)>=MKTP)return null;
+  return hashCell(day,i+9973,seedNum^0x7B21)<MKTEVE?[MKTEVO,MKTEVC]:[MKTMOO,MKTMOC];
+}
+/* how much of the market is standing (0..1): it goes up over MKTSET, trades, and comes
+   down again. matchGate()'s shape, and the one predicate every reader below shares --
+   the stalls, the string lights, the tooltip and the residents (123/199/240). */
+function marketAmt(x,y){
+  const h=marketHours(x,y); if(!h)return 0;
+  const t=dayT-Math.floor(dayT);
+  if(t<h[0]-MKTSET||t>h[1]+MKTSET)return 0;
+  if(t<h[0])return clamp((t-(h[0]-MKTSET))/MKTSET,0,1);   /* setting up */
+  if(t<=h[1])return 1;                                     /* trading */
+  return clamp(1-(t-h[1])/MKTSET,0,1);                     /* packing away */
+}
+/* ...and the tooltip reads the SAME predicate the stalls are drawn from, so it can never
+   cry a market the renderer has already packed away (123: run the tell FORWARDS). */
+function marketWord(x,y){
+  const a=marketAmt(x,y); if(a<=0)return 'Dark pitch &mdash; no market today';
+  const h=marketHours(x,y), t=dayT-Math.floor(dayT), eve=h[0]===MKTEVO;
+  if(t<h[0])return 'Setting up &mdash; the vans are unloading';
+  if(t>h[1])return 'Packing away &mdash; the last stalls come down';
+  return eve?'Evening market &mdash; trading under the lights'
+            :'Market day &mdash; the stalls are trading';
+}
 function winBandR(gx,gy,ax,ay,z0,z1,x,y,salt,f,litMix){
   const hb=z1-z0;
   const[cx,cy]=px(gx,gy);
@@ -5942,14 +5996,25 @@ function drawCell(x,y){
       hexTile(gx,gy,1.02,col('cream',0.96));
       const dc=DISTCOL[c.dist];
       const spots=[[-0.22,0.10],[0.16,-0.18],[0.18,0.24]];
-      for(let si=0;si<3;si++){ /* striped stalls */
+      /* the square keeps a market DAY and market HOURS (iter 285) */
+      const ma=marketAmt(x,y);
+      for(let si=0;si<3;si++){ /* striped stalls -- they go up, and they come down */
+        const up=clamp(ma*3-si,0,1);        /* one pitch at a time, so setting up READS as setting up */
+        if(up<=0)continue;
         const[ox,oy]=spots[si];
         const sc=si===1?'white':dc;
-        prism(gx+ox,gy+oy,0.10,0.08,0,4.6,col(sc,1.05),col(dc,0.65),col(dc,0.85));
-        prism(gx+ox,gy+oy,0.14,0.12,4.6,6.2,col(si===2?'white':dc,1.08),col(dc,0.6),col(dc,0.82));
+        prism(gx+ox,gy+oy,0.10,0.08,0,4.6*up,col(sc,1.05),col(dc,0.65),col(dc,0.85));
+        prism(gx+ox,gy+oy,0.14,0.12,4.6*up,6.2*up,col(si===2?'white':dc,1.08),col(dc,0.6),col(dc,0.82));
       }
-      if(LITAMT>0.25){ /* string lights */
-        ctx.fillStyle='rgba(255,214,140,'+(0.9*LITAMT)+')';
+      if(ma<=0){ /* packed away: bare pitches, and the trestles stacked to one side */
+        const[cx,cy]=px(gx,gy);
+        ctx.fillStyle=col('sandDk',0.9);
+        for(const[ox,oy]of spots){const[sx,sy]=px(gx+ox,gy+oy);ctx.fillRect(sx-2.2,sy-0.7,4.4,1.5);}
+        ctx.fillStyle=col('deck',0.95);ctx.fillRect(cx+4.2,cy-3.4,3.6,1.3);
+        ctx.fillStyle=col('deckDk',0.9);ctx.fillRect(cx+4.2,cy-2.1,3.6,1.2);
+      }
+      if(ma>0&&LITAMT>0.25){ /* string lights -- over a market that is actually trading */
+        ctx.fillStyle='rgba(255,214,140,'+(0.9*LITAMT*ma)+')';
         const[cx,cy]=px(gx,gy);
         for(let j=0;j<5;j++)ctx.fillRect(cx-8+j*4,cy-8+Math.sin(j*1.7)*1.5,1.3,1.3);
       }
@@ -9166,7 +9231,8 @@ const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats 
   [T.MARSH]:'Reedy tidal wetland where the river meets the sea.',[T.KELP]:'A bed of kelp, holding to the bottom wherever the light still reaches it.',
   [T.DUNE]:'Wind-piled sand along the back beach, held down by marram grass.',
   [T.SOLARF]:'A field of solar panels.',[T.LIGHTHOUSE]:'Guards the headland; sweeps the bay at night.',
-  [T.MARKET]:'Open-air market stalls.',[T.GARDEN]:'Allotments tucked between the houses.',
+  [T.MARKET]:'Open-air market stalls. The square trades on its own days &mdash; some mornings, some evenings under the lights.',
+  [T.GARDEN]:'Allotments tucked between the houses.',
   [T.STADIUM]:'Home of the local side.',[T.FIELD]:'A neighborhood sports pitch.',
   [T.IND]:'Warehouses and light industry.',[T.MEADOW]:'Wild grass and wildflowers.',
   [T.SHOREPARK]:'A palm-lined park by the water.',[T.PLAZA]:'A paved civic square.',
@@ -9356,6 +9422,8 @@ function describeTile(c,x,y){
   /* the field tells the same per-cell crop calendar the draw colours (shared farmPhase) */
   if(c.t===T.FARM){const fph=farmPhase(c.v);
     data.push(['Fields',fph==='ploughed'?'Ploughed under':fph==='sprouting'?'Sprouting':fph==='growing'?'Standing crop':fph==='ripening'?'Ripening to straw':'Cut for harvest']);}
+  /* the market tells the same trading day its stalls are drawn from (shared marketAmt) */
+  if(c.t===T.MARKET)data.push(['Market',marketWord(x,y)]);
   /* the sand tells the same seasonal crowd the draw lays out (shared beachPhase) */
   if(c.t===T.BEACH){const bp=beachPhase();
     data.push(['Sands',bp>0.85?'Packed':bp>0.55?'Busy':bp>0.28?'Quiet':'Empty for the winter']);}
@@ -9440,7 +9508,8 @@ function residentDoing(p){return residentWhere(p)+withChild(p)+outLate(p)}
 function residentWhere(p){
   if(onPier(p.x,p.y))return 'Out on the pier for the view.';
   const n=cellAt(p.x,p.y), t=n?n.t:-1;
-  if(t===T.MARKET)return 'Browsing the market stalls.';
+  if(t===T.MARKET)return marketAmt(p.x|0,p.y|0)>0?'Browsing the market stalls.'
+                        :'Crossing the empty market square.';
   if(t===T.PARK||t===T.SHOREPARK)return 'Out for a walk in the green.';
   if(t===T.GARDEN)return 'Pottering in the community garden.';
   if(t===T.PLAZA||t===T.QUAD)return 'Crossing the square.';
