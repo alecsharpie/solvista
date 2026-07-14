@@ -1801,6 +1801,27 @@ function updateValue(){
   }
   for(let i=0;i<G*G;i++)cells[i].val=valBuf[i];
 }
+/* What is the BLOCK around this lot worth? — the same neighbour mean updateValue
+   takes above, without the lot's own valueSrc term.
+
+   A warehouse does not gentrify because the warehouse became valuable; it
+   gentrifies because the CITY arrived at its door. c.val on an industrial lot
+   carries 40% of valueSrc(T.IND) = 0.18 — the lowest source in the city bar burnt
+   ground — so the lot's own low worth is subtracted from the very signal meant to
+   lift it, and warehouses cluster with warehouses, which drags it lower still. The
+   loft rule below asked `c.val > 0.45` and so could never fire: measured over six
+   seeds, no warehouse in any city has ever reached 0.425, the loft has NEVER once
+   been built, and not one warehouse anywhere was even left eligible (iter 267).
+   Ask the neighbourhood instead. 0.5 is the artifact's own neutral — valueSrc's
+   default, and the fallback on the line above. */
+function blockValue(x,y){
+  let s=0,n=0;
+  nbrs6(x,y,(a,b)=>{const c=cellAt(a,b);if(c){s+=c.val;n++;}});
+  return n?s/n:0.5;
+}
+const LOFTVAL=0.5;                       /* neutral ground: the city has arrived */
+const LOFTP=0.006;                       /* per-tick conversion: a yard turns over decades, not years */
+const WORKSMIN=1;                        /* the works never spends its last shed */
 
 /* the monumental institutions — the ones that make a civic quarter, and the only
    ones that earn a paved forecourt. Services (school, police, firehouse, hospital,
@@ -2099,13 +2120,43 @@ function tick(){
       if(near>=1&&near<4){c.t=T.IND;c.th=10+c.v*4;c.h=0;c.age=0;}
     }
   }
-  /* rising land value turns old warehouses into lofts and market halls */
-  if(year>=2006)for(let k=0;k<ks(8);k++){
-    const[x,y,c]=rc();
-    if(c&&c.t===T.IND&&!c.loft&&c.val>0.45&&rng()<0.08){
-      if(rng()<0.25){c.t=T.MARKET;c.th=0;c.h=0;}
-      else {c.loft=true;c.th=16+c.v*8;}
-      c.age=0;
+  /* Rising land value turns old warehouses into lofts — and it is the value of the
+     BLOCK that turns them, not the lot's own (see blockValue).
+
+     This pass used to hunt its host with rc(), a lottery over the whole 3,400-cell
+     plate, for a warehouse yard of THREE TO SIX cells. It therefore saw a given
+     warehouse less than once in three decades: with the gate opened it still
+     converted only 6.7% of what it admitted, and no probability could fix that —
+     swept to 0.8 it left two seeds in six with no loft at all. A rule's ignition is
+     a distribution over a space, and the space was wrong before the rate was. So
+     walk the host, exactly as the corner shop above walks its own.
+
+     It also used to fork a quarter of its conversions to T.MARKET. That fork was
+     never in the placard's promise ('warehouses become lofts'), MARKET has a
+     healthy pass of its own below, and on a three-shed yard it ATE the host: it
+     took both convertible sheds on one seed in six and left no loft at all. Gone.
+     What remains writes c.loft and c.th — which no other rule reads — and rolls on
+     a TICKN-salted hashCell rather than rng(), so the pass changes no tile type and
+     draws nothing from the seeded stream: it is inert to the city it stands in.
+     LOFTP is a per-tick rate, so the yard turns over decades, not in one year.
+     (iter 267) */
+  if(year>=2006){
+    /* Gentrification takes the EDGE of the works, and on a big yard the blockValue
+       gate says so by itself. But a small yard is ALL edge — on two seeds in six
+       every shed qualified and the port converted to the last one, costing the city
+       the sawtooth warehouse and its clerestory (iter 173) altogether. A working
+       port keeps a working core: count the sheds still working, and never spend the
+       last of them. */
+    let works=0;
+    for(const i of HEXI)if(cells[i].t===T.IND&&!cells[i].loft)works++;
+    for(const i of HEXI){
+      if(works<=WORKSMIN)break;
+      const c=cells[i];
+      if(c.t!==T.IND||c.loft)continue;
+      const x=i%G,y=(i/G)|0;
+      if(blockValue(x,y)<=LOFTVAL)continue;                        /* the city has not reached it */
+      if(hashCell(x,y,seedNum^0x10F7^TICKN)>=LOFTP)continue;       /* paced, and free of the stream */
+      c.loft=true; c.th=16+c.v*8; c.age=0; works--;
     }
   }
   /* A market is open ground the shops grew around — not a shop.
@@ -8645,6 +8696,12 @@ function describeTile(c,x,y){
       sub='Mown lawns kept behind the '+inst+'.';}}
   else if(c.t===T.RES&&c.corner){title='Corner shop';
     sub="A home with a store on its ground floor — the neighbourhood's own, on a block that had no other shop within a short walk.";}
+  /* a converted warehouse is drawn as an arts district — brick bones, new glass, a
+     coral sign on the parapet — and named 'Warehouses and light industry' for the
+     artifact's whole life. Name it off the SAME c.loft the draw gates on, as the
+     corner shop above is named off c.corner (iter 267). */
+  else if(c.t===T.IND&&c.loft){title='Loft conversion';
+    sub='An old warehouse in new use — brick bones, new glass, studios above. The block around it went up-market and took the works with it.';}
   else{title=TILELABEL[c.t]||'Land';sub=TILEDESC[c.t]||'';}
   /* the CA already remembers when every parcel last changed: age ticks up
      once per tick (0.075yr), and siting/upgrades reset it — so age dates the

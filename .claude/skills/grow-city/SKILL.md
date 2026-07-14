@@ -701,6 +701,48 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A DIFFUSED FIELD CARRIES THE CELL'S OWN SOURCE TERM — SO A RULE THAT ASKS A CHEAP TILE "ARE YOU VALUABLE YET?" IS
+  ASKING IT TO CONTRADICT ITS OWN DEFINITION, AND IT WILL NEVER FIRE. SCORE THE NEIGHBOURHOOD, NOT THE LOT (iter 267).**
+  218 says a *saturated* roll is a dead lever; 263 says a rule's ignition is a *distribution over a space*. 267 is the
+  third member and the one that hides best, because **the rule reads like good sense and its field is real**. Solvista
+  has shipped a full warehouse→loft conversion — brick prism, strips of new glass, a coral arts-district sign, a rooftop
+  studio, **and a line in the placard promising it** (*"Warehouses become lofts… once the rent says so"*) — since long
+  before the ledger, and it had produced **0 lofts, on 6 seeds in 6, at every era, for the artifact's entire life**. Its
+  gate was `c.val > 0.45`. But `c.val` is a **diffusion**: `updateValue` mixes **60% neighbour mean + 40%
+  `valueSrc(t)`**, and `valueSrc(T.IND)` is **0.18**, the lowest source in the city bar burnt ground — so **an
+  industrial lot's own cheapness is subtracted from the very signal meant to lift it**, and warehouses cluster with
+  warehouses, which drags it lower still. Measured ceiling across six cities: **`c.val` 0.425 against a 0.450 gate.**
+  *Not improbable — unreachable.* ⇒ **When a rule keys a cell's fate to a diffused field, check whether that field
+  contains the cell's OWN source term, and whether that term points the wrong way.** The fix is not a threshold, it is a
+  **change of subject**: `blockValue(x,y)` = the neighbour mean *the diffusion already computes*, minus the self term.
+  A warehouse does not gentrify because the warehouse got valuable; **it gentrifies because the city arrived at its
+  door.** The tell, and it is checkable before you run anything: **your rule's predicate names a property the subject is
+  DEFINED as lacking** (a *cheap* lot must become *valuable*; a *derelict* tile must become *desirable*; a *dark* hex
+  must become *lit*) — and the field it reads is a diffusion the subject is a source of.
+  ⇒ **AND THE THRESHOLD YOU REPLACE IT WITH SHOULD BE THE ARTIFACT'S OWN CONSTANT, NOT ONE YOU PICK.** 205 warns that a
+  gate whose threshold is in the units of your own design constant can only confirm you implemented what you
+  implemented. The escape here was free: **0.5 is `valueSrc`'s DEFAULT RETURN and `updateValue`'s own `n?s/n:0.5`
+  FALLBACK** — *the artifact's existing definition of neutral land* — so the rule reads, in English, *"a shed converts
+  when the block around it is worth more than neutral ground."* Swept, it is also the **only** cut that works: **0.45
+  admits 26 of 27 sheds and the yard vanishes** (206: a lever that improves every instance can still destroy the
+  population) while **0.55 starves 4 seeds in 6** (233: gate on the WORST seed). **Before inventing a constant, grep the
+  file for the one it already means.**
+  ⇒ ⚠ **AND 263'S LAW RECURRED IN THE SAME LAP, ON THE SAME RULE, AFTER THE GATE WAS FIXED — SO FIX THE SPACE *AND* THE
+  GATE, AND EXPECT THE SECOND LIMITER.** Opening the gate shipped almost nothing: the pass still converted **6.7%** of
+  what it admitted, and **no probability could rescue it** — swept to `p=0.8` it *still* left **2 seeds in 6 with no
+  loft at all**. Cause: it hunted a **3–6 cell** host with `rc()`, **a lottery over the whole 3,400-cell plate**, so it
+  saw a given warehouse **less than once in three decades**. **A tiny host cannot be found by a uniform sample of a
+  large space, and the rate is irrelevant until the space is right.** The house's own idiom for a small host is to
+  **walk it** (the corner-shop pass does), rolling on `hashCell(x,y,seed^SALT^TICKN)` ⇒ **zero `rng()` draws**, so the
+  rule becomes **inert to the seeded stream** (263). ⇒ **A dead rule usually has TWO causes, and fixing either alone
+  ships nothing — after you fix the gate, RE-MEASURE before you believe you are done.**
+  ⇒ ⚠ **AND A RULE THAT CONSUMES ITS OWN HOST NEEDS A FLOOR, BECAUSE A SMALL HOST IS *ALL EDGE*.** `blockValue` is an
+  *edge* predicate by construction (the block around a rim shed is city; around a core shed it is more sheds), and on a
+  big yard it self-limits. **On a 3-shed yard every shed IS an edge shed** — unguarded, 2 seeds in 6 converted the port
+  to its last building and the city lost the sawtooth warehouse and its clerestory **altogether**. One counter
+  (`works`, floored at 1) fixes it. **The tell: your rule's predicate is a spatial gradient, and its host's population
+  is small enough that the gradient has no interior.**
+
 - **AN ILLUMINANT PROTECTS ONE SET OF SURFACES AND DESTROYS ITS COMPLEMENT — AND YOU WILL ONLY EVER BUILD THE
   LADDER FOR THE HALF THAT BROKE FIRST (iter 265).** 214's law says a flat per-channel multiply on a saturated
   surface is a **HUE ROTATION**, not a tint. It is right, it is one of the loop's best findings, and it built a
@@ -2778,6 +2820,21 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   takes the argmax of the flowers' own ink, then **forces the same aim onto HEAD** so the pair is blind. Every frame
   **self-reports in the VIEWER'S units** (236: *"29 hexes IN FLOWER of 102 grassland"*, never `bloom=7`) — **that caption
   is what caught `TICKN` surviving `genWorld`**. Frames named **by FILE** (239), map **crossed between seeds** (238)).
+  The **loft pair** (267 — reach for these on any vector about a `tick()` RULE THAT MAY NEVER HAVE FIRED, or any siting/
+  conversion gated on a DIFFUSED FIELD): `probe-loft.mjs` (**does this rule EVER fire?** Pure world data — no render, no
+  clock, no noise floor, nothing to stub, and the cheapest instrument in the harness. Part A counts the feature across
+  seeds × eras beside **218's conversion rate** (`converted / (converted + still-eligible)`) — ⚠ **its headline needs no
+  threshold: HEAD reads 0 lofts AND 0 eligible, which is the gate never opening, stated** (236). It also prints the
+  host's **median and MAX** value against the gate's own constant, and that one column is the whole diagnosis: a max of
+  **0.425** under a **0.450** gate is *unreachable*, not unlucky. Part B is the **predicate sweep** — it grades candidate
+  thresholds on both of 206's ledgers (the EFFECT: eligible sheds · the COST: does it starve the WORST seed, or flood
+  and eat the host) and it picks its own constant. ⚠ **Read its `works` column** — a conversion rule that consumes its
+  host must leave some), `shot-loft.mjs` (its camera — the before/after is taken **INSIDE ONE PAGE** by clearing
+  `c.loft` (230's suppress-the-DECISION), which draws exactly the warehouse HEAD drew: floor **0**, no source swap, no
+  cross-build drift. ⚠ **That is not a convenience here — it is the only honest option**: the lap deletes a dead rule's
+  `rng()` draws, so HEAD's city is a *different* city and the same hex need not even be industrial in it. Aimed by
+  **measured ink** (226), pins **derived** from the light curve (264), frames named **by FILE** with the map **CROSSED**
+  between seeds (238/239), and every frame **self-reports what is standing at its centre** (258)).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

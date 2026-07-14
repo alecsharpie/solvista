@@ -18747,3 +18747,74 @@ makes stubs). `stepGond`'s value bar decays with NO FLOOR — gated on `WETSET`;
 `probe-darkline` is REPAIRED (243) — trust it again. THE RAINBOW IS NOT A RIM BUG (6 seeds, 0.00 hex
 overhang; it already tests its LEGS — a bow over open water is CORRECT (201); the defect was the COMMENT).
 ⛔ (ar) WAS THE HARNESS, FOR THE THIRD TIME (229) — 0px panel overlap, 0 clipped labels.
+
+## Iteration 257 — the sea was the one surface the sunset never reached (2026-07-14) [Water & coast × Deepen]
+
+**Vector.** Water & coast × Deepen — the sea reads the sky (a Sky×Water interconnect; the *draw*
+that changed is the water's, so it is filed under Water). **Deliberately off-rotation**: the header
+steered to Civic/Transport, but 119's law says a banked, measured finding outranks kind-rotation, and
+cue **(s)** is the loudest in the ledger — **7 agent reports across 5 step-backs** — and 256 had just
+handed it a *mechanism*. Water's last lap was 255 (× Polish); this is × Deepen, so the kind still varies.
+
+**Probe before design (and it killed two candidate fixes before a line was written).**
+`probe-goldenhue` states the defect in one row. At golden hour **every land surface GAINS chroma**
+(PARK 55→77, ROAD 37→61, TOWER 25→60, BEACH 66→92 — the warm tint saturating a warm albedo) and
+**WATER is the only surface in the city that LOSES it: 66 → 31.** The sea's base is a saturated teal —
+G and B high, R low — which is *exactly* the channels the golden tint `[.95,.76,.68]` crushes, so the
+multiply does not warm the water, it **cancels** it. That is **214's law arriving at DUSK instead of at
+night**, on **the largest surface in the city** (209). It was never a brightness bug and never a missing
+sun path — 181 drew one. Then the arithmetic refuted the two obvious fixes:
+- **mirror the warm horizon (`GWSB`)** → `[121,130,111]`, **chroma 19, a murky olive**. Teal and orange
+  are complementary, so the blend passes through **grey**. 181's own comment already said so.
+- **just restore the teal** → hands back a *bright daytime sea*, which is the complaint stated louder.
+
+**Change.** `seaFace()` — **the sea is a MIRROR, not a diffuse surface.** Land is a diffuse reflector
+(colour = albedo × illuminant, so `TINT` is right for it); **water's colour is the SKY'S**, not albedo ×
+sunlight. So the water body now lerps toward **`GWST`, the new OVERHEAD-sky global** (the twin of 181's
+`GWSB`, which stays the colour of the sun *path* drawn across it), by `r = GWARM * SEAMIRROR`, and the
+reflection is **not** passed through `TINT` — reflected light is not albedo, the same reason the lit
+windows take a raw literal. **Uniform across the ocean**: `r` has no `x` and no `y` in it.
+
+**Not a 255 violation — and re-reading 255's *mechanism* rather than its *sentence* is the point.**
+255's ⛔ reads *"do not paint a signal into the water's body colour"*, which forbids this lap literally.
+But 255's quilt comes from a field **sampled per hex**, whose quantisation steps land on hex boundaries.
+A term with no x/y moves every hex by the *same* amount and introduces **not one new spatial step**.
+
+**Census.** PASS. Core flat, **tile histogram empty** (correct — draw-only, no `rng()`, no terrain);
+`solarRoofs −1 / greenRoofs +2` is 226's documented ±2 tick wobble.
+
+**Probes.**
+- `probe-goldenhue`: **WATER golden hue 157° → 203°** (46° out of grey-teal into an evening blue),
+  **chroma 31 → 35**, **luminance 121 → 122 (held** — 98). Night ordering invariant still **PASS,
+  clearing by 21**; night hue guards unmoved; the 9 land rows unmoved (±1 on the *coastal* three is
+  196's box-bleed — `seaFace` cannot paint a land hex).
+- **`probe-seastep` (new, render-free — no clock, no pixels, no noise floor): THE UNLOOKED-FOR RESULT.**
+  Both agents, blind, unprompted, at 1:1 crops, on both seeds, reported **pristine HEAD's golden sea as
+  "a clear hexagonal quilt… exposing the grid"** — 255's failure mode, sitting in HEAD, unnamed for the
+  artifact's whole life. Measured, and it is **not** what it looks like: `seaTone` quantises depth to
+  **eighths**, so the lattice step is **10.6 RGB units at DAY** — *bigger* than golden's 8.7 — and nobody
+  has ever called the day sea a quilt. **The step did not grow; the CHROMA collapsed.** In `step/chroma`:
+  day **0.14** · **golden HEAD 0.20 (the artifact's worst)** · night **0.08** · **golden patched 0.08 (its
+  best, tying night)**. The fix halves the terrace (8.7 → 4.1) *as a side-effect of restoring the hue*.
+- **Fixed point (245), and it is structural, not statistical.** `GWARM ≤ 0.02` early-returns
+  `colMix('waterSh','waterDp',d,1)` — textually HEAD's entire body — and GWARM is **0** at both the day and
+  night pins (self-reported by every frame). So **day and night render HEAD's bytes exactly**, confirmed:
+  `probe-seastep`'s day/night rows are identical across builds, and `probe-goldenhue`'s day/night WATER
+  columns are byte-identical. Two of three columns are a **free dead-regime control** (199).
+
+**Perf.** Colour-only, on a fill that was already drawn ⇒ **zero new path objects**, counted not assumed
+(222): `probe-drawbudget` HEAD **110,811 day / 139,616 night** → patch **110,801 / 139,605** (−10/−11 =
+entity wobble). **FREE.** (`probe-drawbudget` gained a `SRC=` hook this lap so a lap can price itself
+against HEAD without a `/bin/cp` swap — 197's stale-backup hazard.)
+
+**Visual.** 2 agents × 2 seeds, **blind, files named never lettered** (239). **BOTH PASS**, both naming the
+patch file. Seed 42: HEAD is *"a bright saturated tropical teal — pure daytime water… the sea reads unlit
+and pasted in from another frame"*; patch is *"a soft dusty slate-blue… picking up the sunset sky. Land and
+sea read as one coherent golden-hour scene."* Seed 7: HEAD *"essentially the SAME teal as the daytime
+frame… two unrelated pictures"*; patch *"clearly lit by the same low warm sun."* Both confirmed the quilt is
+gone and the day/night seas are healthy; no z-order tears, no blown-out colour.
+
+**Verdict.** **DEEPENED.** Cue **(s)** — the ledger's loudest, 7 reports across 5 step-backs — is
+**CLOSED at its worst pin**, and it closed by fixing the *sea*, not the *sun*, which is why five laps of
+looking at the light never found it. A latent HEAD quilt closed with it, free.
+
