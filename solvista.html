@@ -572,8 +572,13 @@ let FRAMEN=0;
    of a crowd the tooltip is naming. Drawn from stamp() — i.e. inside the
    entity's own bucket, just under its body — so it shares the entity's z: a
    ped hidden behind a tower gets no ring rather than a ring floating on the
-   tower's roof. Squashed into the iso plane; tracked per frame, so it follows a
-   walker the tooltip has stopped updating. */
+   tower's roof. Squashed into the iso plane; tracked per frame, so it sits under
+   the walker wherever the walker now is. Until iter 278 this comment read "so it
+   follows a walker the tooltip has stopped updating" — the ring sailing off across
+   the city with a resident while the card, pinned at the cursor, went on describing
+   them. The ring was a workaround for a stale card, written down as a feature. The
+   card is re-read from the cursor now (hoverRefresh), so the ring, the card and the
+   pointer are one thing again: the ring marks what the card is naming. */
 const stamp=(e,x,y)=>{e._sx=x;e._sy=y;e._sf=FRAMEN;
   if(e===hoverEnt){
     /* strokes stay thinner than the figure they ring — a ped is only 1.8 wide */
@@ -9243,9 +9248,21 @@ function pickEntity(wx,wy){
   return best;
 }
 const tipEl=$('tip');
-cvs.addEventListener('mousemove',e=>{
+/* The cursor, remembered in SCREEN px — so the hover survives the mouse standing still.
+   Every `sub` above is a live FUNCTION of its entity, written that way over six iterations
+   (249's ferry, 262's child, 269's tram, 271's surfer, 276's bus) precisely so that a label
+   can never claim something the draw is not doing. But the CARD that delivers them was
+   built once, inside the mousemove listener, and never again — so all that liveness was
+   snapshotted at the instant the cursor last twitched, over a diorama whose entire subject
+   is things that move. Hold still and a resident's card is right for a median 2s and a
+   car's for 0.5s; over a 20s look it is correct 24-36% and 0.5% of the time. The rest is a
+   GHOST: a card naming somebody who has walked out from under the cursor. hoverAt() is now
+   called BOTH from the listener and from the frame loop, off this remembered cursor, so the
+   card names what is under the pointer NOW. */
+let hoverMX=null,hoverMY=null,hoverHTML='';
+function hoverAt(mx,my){
   if(panning&&dragMoved>4){tipEl.style.display='none';hoverEnt=null;hoverTile=null;return;}
-  const wx=(e.clientX-offX)/scale, wy=(e.clientY-offY)/scale;
+  const wx=(mx-offX)/scale, wy=(my-offY)/scale;
   const pe=pickEntity(wx,wy);
   hoverEnt=pe?pe[2]:null; hoverR=pe?pe[3]:0;
   let html;
@@ -9263,15 +9280,25 @@ cvs.addEventListener('mousemove',e=>{
     hoverTile={x,y};
     html=describeTile(c,x,y);
   }
-  tipEl.innerHTML=html;
-  const flipX=e.clientX>innerWidth-260, flipY=e.clientY>innerHeight-120;
+  /* only touch the DOM when the sentence actually changed: a resident crossing a park is
+     re-picked 8x a second and says the same thing every time, and rewriting the card's
+     innerHTML at that rate would thrash layout for nothing */
+  if(html!==hoverHTML){tipEl.innerHTML=html;hoverHTML=html;}
+  const flipX=mx>innerWidth-260, flipY=my>innerHeight-120;
   tipEl.style.transform='translate('+(flipX?'calc(-100% - 16px)':'16px')+','+(flipY?'calc(-100% - 4px)':'18px')+')';
-  tipEl.style.left=e.clientX+'px'; tipEl.style.top=e.clientY+'px';
+  tipEl.style.left=mx+'px'; tipEl.style.top=my+'px';
   tipEl.style.display='block';
-});
-cvs.addEventListener('mouseleave',()=>{tipEl.style.display='none';hoverEnt=null;hoverTile=null;});
+}
+/* re-read the hover from the remembered cursor. Called by frame() on a throttle (the mouse
+   being still is the only case that matters — a moving mouse fires mousemove anyway), and
+   directly by probes, which drive render() themselves and never run frame(). */
+function hoverRefresh(){ if(hoverMX!==null)hoverAt(hoverMX,hoverMY); }
+cvs.addEventListener('mousemove',e=>{hoverMX=e.clientX;hoverMY=e.clientY;hoverAt(e.clientX,e.clientY);});
+cvs.addEventListener('mouseleave',()=>{tipEl.style.display='none';hoverEnt=null;hoverTile=null;
+  hoverMX=hoverMY=null;hoverHTML='';});
 
 let tickAcc=0,lastT=performance.now();
+const HOVMS=120; let lastHov=0;
 /* entity motion + animation clocks, factored out of frame() so the __step test
    hook can advance them without real time (drift-in entities, stride phases) */
 function advanceEntities(dt,s){
@@ -9333,6 +9360,10 @@ function frame(now){
     advanceEntities(dt,s);
   }
   render(); syncSky(now);
+  /* the card re-reads what is under the still cursor (iter 278). Throttled like syncSky:
+     a moving mouse already fires mousemove at full rate, so this only serves the cursor
+     standing still, and 8Hz is well under what the eye reads as lag on a sentence. */
+  if(now-lastHov>HOVMS){lastHov=now; hoverRefresh();}
   requestAnimationFrame(frame);
 }
 
@@ -9410,7 +9441,9 @@ window.__obs=()=>{const out=[];
 /* test hook: pin the hovered-tile focus ring by grid coords (cue l), so a probe
    or screenshot can mark a hex the way a real mousemove does — shoot.mjs can't
    hover. null/out-of-bounds clears it; setting a tile clears any hovered entity. */
-window.__hover=(x,y)=>{hoverTile=(x!=null&&inB(x,y))?{x,y}:null;if(hoverTile)hoverEnt=null;};
+/* it also drops the remembered cursor (iter 278), or the frame loop's hover refresh would
+   overwrite the pinned tile on the very next frame */
+window.__hover=(x,y)=>{hoverMX=hoverMY=null;hoverTile=(x!=null&&inB(x,y))?{x,y}:null;if(hoverTile)hoverEnt=null;};
 
 /* test hook: stamped screen coords of live entities (by ENTINFO name, or all) —
    lets the verification loop aim clips at movers without sweeping the mouse. */

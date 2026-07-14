@@ -19825,3 +19825,72 @@ them). Original text:
 **The 126/127 saturation parenthetical — rotated out of the header at 277.** Original text:
 > *(The agriculture tell + the measured-closed SEASONAL-VEGETATION seam were stated three times over; bodies archived
 > at 270 — the closed ladder above and ⛔ (ak) below carry them.)*
+
+## Iteration 268 — the seabed was a hash, and a hash cannot be a shoal (2026-07-14) [holistic step-back, 34th + Water & coast × Polish]
+
+**Vector.** The 34th step-back (due). 3 lights × 2 calendars × 2 seeds via `probes/shot-stepback.mjs`, two blind
+whole-frame agents, the perf arc, and — because both agents FAILed the same surface on both seeds — one FIX.
+
+**The step-back read.** ✅ **261's SEASON IS ALIVE AND LEGIBLE.** On a **crossed** mapping both blind agents named the
+winter frame **by the light alone**, one reciting the mechanism unprompted (*"the sun has already set … so its day is
+shorter"*). The discriminating-pair camera (264) works and needs no further defence.
+❌ **But both agents, independently, on both seeds, FAILed the SEA as a hexagonal quilt** — *"stepped hexagon terraces"*,
+*"you count the tiles before you see water"* — **including in the DAY frames.** This is the FAIL/ASIDE law INVERTED for
+the 4th time: the headline FAIL was right.
+
+**The banked probe ACQUITTED it (228's law, 9th recursion — and this time on the ADJACENCY, not the units).**
+`probe-seastep` (257) asks: what is the RGB step between two **DEPTH-ADJACENT** sea hexes? It answers 10.6 at day,
+step/chroma **0.14**, and 257 banked that as *the bar the artifact has always accepted*. Every number is true. **It is
+the wrong pair.** Tone `k` vs tone `k+1` need not be **neighbours in the world** — and the step the eye reads is between
+two hexes that **TOUCH**.
+
+**The defect (`probes/probe-seaquilt.mjs` — render-free: the artifact's own `rDeep` + `seaFace()`, no pixels, no clock,
+no noise floor, nothing to stub).** `seaT` is not depth. It is depth **plus a "two-octave seabed"**:
+`n = 0.62*hashCell(x>>1,y>>1,SEASALT) + 0.38*hashCell(x>>2,y>>2,…)`, under a comment promising *"shoals and channels
+rather than contour lines"*. **`hashCell` is a spatial HASH — white noise — and downsampling it does not SMOOTH it, it
+makes it BLOCKY**: constant inside a 2×2 block, an **independent uniform draw across every block edge**. A shoal has to
+be *continuous* to be a shoal. Measured, on the step between hexes that actually touch:
+
+| variant | nbr step | max | step/chroma | **≥2-tone jumps** | tone SD (the shoals) |
+| --- | --- | --- | --- | --- | --- |
+| HEAD (blocky hash) | 5.4 | **31.2** | 0.07 | **5.0%** | 0.361 |
+| DEPTH (noise off = the floor) | 4.6 | 11.0 | 0.06 | **0.0%** | 0.356 |
+| **SHIPPED (interpolated)** | 5.2 | **21.5** | 0.07 | **1.4%** | **0.364** |
+
+⚠ **THE MEAN ACQUITS AND THE TAIL CONVICTS (224/241a).** HEAD's *mean* neighbour step (5.4) is barely above the
+noise-free floor (4.6), and its step/chroma (**0.07**) is **half** the 0.14 that 257 certified. **The quilt is entirely
+in the tail:** HEAD puts a **≥2-tone jump on 5.0% of all touching sea-hex pairs**, up to **31 RGB** (step/chroma 0.41,
+~3× the accepted bar) — hard seams scattered at random through open water. `DEPTH` **cannot produce one** (0.0%). That
+5% is the honeycomb, and no mean will ever show it to you.
+
+**Change.** `seaOct(x,y,sh,salt)` — the same two octaves, same weights, same amplitude, same mean, **smoothstep-
+interpolated between the hash lattice points** instead of held constant across each block. Hard jumps **5.0% → 1.4%**,
+max **31.2 → 21.5**, and the **must-not-move column holds: tone SD 0.361 → 0.364** — the seabed is *smoothed, not
+flattened*. The probe carries a **SHIPPED** column reading the artifact's real `seaT` (248's Part B), and it lands
+**exactly** on the modelled `SMOOTH` row.
+
+**Census.** PASS. `pop`/`roads`/`developed` **+0**, **tile histogram empty** — correct: `seaT` picks a *colour*, changes
+no terrain and draws no `rng()`. `solarRoofs +4` is the **harness's own tick wobble** (226): re-running the **same file**
+read **+3**.
+
+**Perf.** Path objects **day 111,121 → 111,168 (+0.04%) · night 138,636 → 138,596 (−0.03%)** — sign-inconsistent, i.e.
+noise, and structurally so: a colour cannot change how many paths are rasterized. ⚠ The lap **timer** said day +3.4% /
+night −1.9% — **over-reading for the 3rd time** (216). **ARC vs 177: day +19.4% · night +14.1% — the same band held
+since 242. The arc is STOPPED (26 iterations, no growth). Do not open a perf lap.**
+
+**Visual.** ⚠ **THE FIRST BLIND ROUND WAS MY OWN INSTRUMENT (239, and I re-introduced it).** I named the pair
+`one`/`two` — **ordinal labels carry an implicit order** — and **both agents chose "two", on a CROSSED map**, i.e. they
+agreed with the *position* and disagreed about the *build*. Re-shot with **non-ordinal** names (`kappa`/`sigma`), with
+**position crossed as well**: seed 42's agent named the patch as the weaker quilt and **measured the frames itself** to
+prove it (mean cell-boundary step **7.1 → 4.9**, p95 **16.0 → 10.7**, variance undiminished — *"smoothed, not
+flattened"*); seed 7's agent, also measuring, **could not distinguish them** (86% of water px identical) and **said so
+rather than inventing a difference.** Both whole-city frames PASS. ⇒ **The effect is real, directional and free; its
+SALIENCE is seed-dependent.** Nobody preferred HEAD; nobody saw a flattened sea.
+
+**What is NOT fixed, and cannot be by this lever.** The **one-tone** terrace survives untouched (p90 = 11.0 in *every*
+variant, `DEPTH` included). That is 255's ⛔ — a per-hex flat fill terraces onto the lattice **by construction** — and it
+is why both agents still say *"hex edges are perceptible."* **268 removed the hard SEAMS (the tail); it did not and
+cannot remove the LATTICE.** Anything further needs a different rendering unit, not a different field.
+
+**Verdict: FIXED** (step-back + Water & coast × Polish). The sea's comment now describes what its value does.
+

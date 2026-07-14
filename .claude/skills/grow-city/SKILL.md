@@ -701,6 +701,74 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A LIVE *PREDICATE* IS NOT A LIVE *READOUT* — WHEN A LADDER OF LAPS MAKES A VALUE HONEST, GO AND CHECK THAT ANYTHING
+  EVER **CALLS** IT AGAIN (iter 278).** 262 says: after you fix a per-entity rule, grep the function you fixed for its
+  siblings. 271 says: enumerate the whole *category* the property belongs to. Both are about **who else needs the fix**.
+  278 is the rung nobody checked: **who *reads* the fix.** Six separate laps (249's ferry · 262's child · 269's tram ·
+  271's surfer · 276's bus · the cab) each rewrote an `ENTINFO` `sub` from a frozen sentence into a **live function of
+  its entity**, every one of them for the same stated reason — *"computed live, never stored, so the label and the draw
+  cannot drift apart."* Every one of them is correct. **And the card that delivers them is built exactly once, inside
+  the `mousemove` listener, and never again** — so all that liveness was snapshotted at the instant the cursor last
+  twitched, over a diorama whose whole subject is **things that move**. Measured: hold the cursor still and a
+  resident's card is right for a median **2s** and a car's for **0.5s**; over a 20s look the card is correct **31–38%**
+  and **0.8–1.5%** of the time. The rest is a **GHOST** — a card naming somebody who has walked out from under the
+  pointer. ⇒ **A `sub` that is a pure function of live state is worth exactly as much as its call frequency.** The tell,
+  and it is checkable in one grep: **your fix's own comment says "computed live, never stored" — and the only thing that
+  invokes it is an EVENT HANDLER.** An event is not a clock. Ask what re-runs it when nothing happens, and if the answer
+  is *nothing*, the value is as frozen as the string it replaced.
+  ⇒ **AND ITS HOST WAS A COMMENT THAT DOCUMENTED THE DEFECT AS A FEATURE (199/209's family, a new rung).** 209 finds a
+  comment stating a standard the adjacent branch is exempted from. 278's is worse and reads as *design*: `stamp()`'s
+  focus ring is described as *"tracked per frame, so it follows a walker **the tooltip has stopped updating**."* The ring
+  was a **workaround for a stale card, written down and accepted**, and it made the defect *look* handled — the ring
+  duly sailed 653–1108px across the frame with the departing vehicle while the card, pinned at the cursor, went on
+  describing it. **Grep your comments for a clause that CONCEDES a defect in the course of explaining a feature.**
+  ⇒ ⚠ **AND THE HYPOTHESIS I OPENED WITH WAS WRONG, WHICH IS WHY YOU PROBE FIRST.** The obvious defect is *reach*
+  (`pickEntity` tests `d < r*r` in **WORLD** units, so a resident's `r=5` disc is **3.2 CSS px** at fit zoom — you would
+  swear it is unhittable). It is fine: **100% of a resident's own drawn pixels name a Resident**, because the ped is
+  drawn small enough to sit inside its own disc. *A tiny target and a tiny subject cancel.* Measure the reach before you
+  widen it (`probes/probe-hoverreach.mjs`).
+
+- **A CENSUS MOVE THAT *REPRODUCES* IS NOT THEREBY *SEMANTIC* — 226'S "RE-RUN THE SAME FILE" CANNOT TELL A STABLE-LOAD
+  TIMING ARTIFACT FROM A REAL CHANGE. TO PROVE A DRAW/DOM-ONLY CHANGE IS INERT, LEAVE THE FRAME LOOP (iter 278).** 226's
+  law is right and it is incomplete. It says: `census.mjs` never sets `playing=false`, so a wall-clock-dependent number
+  of `tick()`s land in its 500ms window; therefore *to test whether an unintended metric move is YOURS, re-run the SAME
+  FILE, not HEAD.* The unstated premise is that the artifact's noise **varies between runs** — and when the box happens
+  to be *quiet*, it does not. 278's DOM-only change moved `ROAD −11 / EMPTY +11 / RES +4 / MID −3`, and **re-running the
+  same file reproduced it to the cell**, which 226's rule reads as a conviction. ⇒ **Reproducibility under a stable load
+  is indistinguishable from semantics, so do not ask the RAF loop the question at all.** `genWorld` + `__warp` **never
+  renders** (277), so a draw-only or DOM-only change *cannot* participate in it: build the world that way on both builds
+  and diff the world data. `probes/probe-cascade.mjs` is the rig, and it came back **+0.0% on every column, on 10 seeds
+  in 10** — the two builds build **the same city**, and the census's 11 road cells were the harness's own tick count.
+  The tell: **your diff contains no `rng()`, no terrain and no `tick()`, and a tile histogram moved anyway.**
+
+- **A BROWSER API HANDS BACK ITS OWN NORMALISATION, NOT YOUR VALUE — AND IT WILL MANUFACTURE A PLAUSIBLE FAKE DEFECT IN
+  YOUR PROBE (iter 278, generalising 273).** 273 found that Chromium **canonicalises `fillStyle` on read**, so a
+  suppression rig matching the string it just set silently never fires. That is not a fact about `fillStyle`; it is a
+  fact about **round-tripping a value through a browser API**, and 278 paid for it twice in one probe, in two different
+  APIs, each time as a *credible* residual defect in the fix I was grading:
+  **(a) `.innerHTML` IS RE-SERIALIZED ON READ.** Comparing the html string the artifact *built* to the html the DOM
+  *returns* convicted the artifact of the DOM's own canonicalisation — and the tell was the **TILE control**, which
+  **cannot move** and still read **16.7% stale** (250: a must-not-move column that moves is the only warning you get).
+  Push the truth string through the **same serializer** (`div.innerHTML = h; return div.innerHTML`) before you compare.
+  **(b) `MouseEvent`'s `clientX`/`clientY` ARE `long` — A FRACTIONAL PIXEL IS TRUNCATED ON THE WAY IN.** So the listener
+  picked at a point up to **1px** from where the probe's own truth re-picked, and on a **3.2 CSS-px** pick disc that is
+  enough to flip the answer at the rim. It read as a **5–11% residual GHOST rate** — exactly the shape of a fix that
+  *almost* works, and I nearly shipped it as one. Round the cursor before it goes anywhere. **With both closed, the
+  patch reads a clean 100.0% on every class and seed.**
+  ⇒ **The general rule: any value you SET through a browser API and later READ BACK is the browser's value, not yours.**
+  The tell: your probe compares something you constructed against something the platform returned.
+
+- **236 RECURSES ON THE *VARIANTS* OF THE THING YOU NAME: A SELF-REPORTING CAPTION MUST REPORT EVERY FORM THE SUBJECT
+  TAKES, OR IT WILL CONFIDENTLY DENY ONE THAT IS PLAINLY DRAWN (iter 278).** 236 says a caption in the *rule's* units
+  rather than the *viewer's* is worse than no caption. 278's camera obeyed that and still lied, because **the artifact
+  draws TWO kinds of focus ring** — `stamp()` rings a hovered **ENTITY** with an ellipse at its feet, and `render()`'s
+  post-pass rings a hovered **TILE** with a hex outline — and my caption only knew about the first. It therefore printed
+  *"focus ring is ABSENT"* on a frame with a ring drawn **32px from the pointer**, and a visual agent correctly called
+  the tooling a bug on all four frames. ⇒ **Before you caption "X is absent", grep for every draw that issues an X.**
+  The tell: your caption's subject is a *category* (a ring, a light, a label, a marker) and your code reads **one**
+  variable. (And note the shape: **the agent was right, the artifact was innocent, and the instrument was mine** — 269's
+  law, arriving on the caption.)
+
 - **A RENDERER THAT MUTATES THE WORLD DOES NOT MERELY SPOIL YOUR PROBE'S FLOOR — IF ANY *WORLD* QUANTITY READS THE
   MUTATED FIELD, THEN A FAST-FORWARD THAT DOES NOT RENDER **BUILDS A DIFFERENT CITY**, AND YOUR ENTIRE HARNESS HAS BEEN
   MEASURING IT (iter 277).** 272 found the mutation (`drawBuilding` grows `c.h` toward `c.th`, *inside* `render()`) and
@@ -3311,6 +3379,29 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   surviving pool — **it is what ACQUITTED the school's placement (98–100%) and sent 277 looking upstream at `pop`
   instead.** ⚠ **Run it BEFORE you tune any roll** (218) or blame any siting rule; retarget it at any rule by swapping
   its clauses. Carries the UNIVERSITY — a deterministic full-grid sibling that provably works — as its control).
+  The **hover trio** (278 — reach for these on any vector about a READOUT, a TOOLTIP, a CARD or a HUD, and on any
+  "does the label still tell the truth" claim): `probe-hoverstale.mjs` (**HOW LONG CAN YOU LOOK AT THIS READOUT BEFORE
+  IT IS A LIE?** TEMPORAL (134 — every other gate here is frozen, so *"the card goes stale"* has no instrument): it
+  drives the artifact's own `advanceEntities`+`render()`, holds a cursor still for 20s, and grades **what the card
+  SAYS** — `tipEl.innerHTML`, driven through the **real `mousemove` listener** — against what is under the cursor now.
+  Never against a re-pick: a probe that re-implements the delivery is grading its own homework (205). **BUILD-AGNOSTIC**
+  — HEAD has no `hoverRefresh`, so ONE file grades both builds with no source swap and no cross-build floor (230).
+  ⚠ **Its headline needs no threshold** (236): HEAD's card is a **GHOST** 62–69% (resident) and **98.5–99.3%** (vehicle)
+  of a 20s dwell. ⚠ **Its TILE column is 248's FREE POSITIVE CONTROL *and* the must-not-move column in one** (250): a
+  tile cannot move, so its card is right forever in BOTH builds — **and a stale reading there convicted the PROBE
+  twice** (the `.innerHTML` re-serialization, then the truncated `clientX`; see the law). ⚠ **`t=0` is the FIXED POINT**
+  (245/253) and it is exact in both builds), `probe-hoverreach.mjs` (**CAN A VIEWER EVEN HIT THIS THING?** Of the CSS px
+  where a class is actually DRAWN, what fraction return it from `pickEntity`? Ink isolated by suppressing the class's own
+  draw fn in ONE page (230/234) ⇒ floor **exactly 0**, occlusion free, build-agnostic. ⚠ **It REFUTED the obvious
+  hypothesis** — a resident's pick disc is only **3.2 CSS px** at fit zoom and is nonetheless **100%** sufficient,
+  because the ped is drawn small enough to sit inside it. **Run it before widening any pick radius**),
+  `shot-hoverstale.mjs` (its camera — a still **cannot prove a verb** (134/258), so it shoots the defect's **static,
+  spatial** trace instead: hover a **CAR** (0.5s out of its disc, against a resident's 2–5s), hold the cursor 6s, and in
+  HEAD the focus ring is **653–1108px** from the pointer while the card still names the vehicle. The pointer is marked
+  with a crosshair — an instrument mark, drawn identically in both builds. ⚠ **The artifact draws TWO focus rings**
+  (`stamp()`'s entity ellipse and `render()`'s tile hex) and the caption must name both, or it will deny one that is
+  plainly drawn (see the law). Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds
+  (238/239/268); `page.screenshot()`, because the card is **DOM** (200); drives **`zoom`, never `scale`** (269)).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will
