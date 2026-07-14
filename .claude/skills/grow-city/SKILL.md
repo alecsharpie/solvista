@@ -684,6 +684,31 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A FIELD WITH A FLOOR CANNOT EXPRESS AN ABSENCE — WHEN YOU DRIVE A SIGNAL TO ITS MINIMUM, GO AND LOOK AT WHAT THAT
+  MINIMUM *RENDERS* AS (iter 259).** 205 says state the claim in the viewer's units; 254 says a regional signal dies
+  under a per-object grain. 259 is the third member, and it is the one you will walk into while doing everything else
+  right, because **your probe will award you a PERFECT SCORE.** The observatory's label had promised *"a dome out on
+  the dark rim"* for the artifact's whole life while the siting rule was a uniform random scatter — a real defect (10
+  seeds: `obs.lit` **0.389** against a random-lot expectation of **0.310**; on one seed the dome stood at `c.lit`
+  **1.000**, the field's maximum, **two hexes from the CBD**). The fix drove `c.lit` to **0.000 on every seed**:
+  capture of the available darkness **0.057 → 1.000**. Flawless — **and the ambient luminance around the dome moved
+  −1.9%, which is nothing, and a blind agent said so in as many words** (*"ringed by lit towers… neither is stranded
+  out in the dark"*) **and was RIGHT.** The reason is one constant: the draw is `lit = LITAMT*(0.35 + 0.65*c.lit)`, so
+  **`c.lit = 0` is not *dark*, it is *35% lit*** — the rendered range is **2.9:1**, not ∞:1, and it is swamped by
+  everything else in the hex that never reads the field at all. ⇒ **Before you optimise a field, read the LINE THAT
+  CONSUMES IT and compute its rendered dynamic range.** A field can be perfectly real, monotone, and rot-proof — and
+  still be **fine as a CHOOSER and dead as a LOOK**. The tell: **your feature's success metric is "signal X goes to its
+  extreme", and X reaches the pixels through an expression with an additive floor** (`a + b*X`), a clamp, or a `max()`.
+  ⇒ **AND THE COROLLARY THAT SAVED THE LAP: WHEN THE HEADLINE DIES, THE PROBE YOU BUILT TO KILL IT IS USUALLY STILL
+  HOLDING THE REAL FINDING.** The probe written to answer the *viewer's* question (how much lit city SURROUNDS the
+  dome) also measured, in the same run, the thing nobody had asked: **HEAD buried its own one-per-city landmark at a
+  mean of 54.5%, three seeds in six more than HALF buried, and on one seed the observatory rendered EIGHT PIXELS**
+  (97.8% occluded, behind the towers of the CBD it had been dropped into) — independently confirmed, blind, by an
+  agent who said *"I cannot find it."* **Siting for darkness alone halved that BY LUCK and buried one seed WORSE than
+  HEAD did** (80.8% vs 28.0%), because nothing scored the sightline. Two gates on one feature, made to point the same
+  way (244) with the predicate the artifact already ships (`groundLoad`, 231): **54.5% → 5.9%, 0/6 buried, worst seed
+  97.8% → 12.2%.** ⇒ **A dead headline is not a dead lap. Re-read your own instrument's other columns before you
+  revert** — and note the shape: *the label was right about the PLACE and silent about the thing that mattered.*
 - **WHEN THE EXPECTED RESULT IS AN *ABSENCE*, A FRAME WITH THE SUBJECT *MISSING* IS INDISTINGUISHABLE FROM A FRAME
   WHERE THE SUBJECT CORRECTLY SHOWS NOTHING — SO THE FRAME MUST SELF-REPORT THE SUBJECT'S **PRESENCE** (iter 258).**
   202 says make every frame self-report its own state; 236 says say it in the *viewer's* units. 258 is the case where
@@ -2440,7 +2465,9 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `probe-shadcost.mjs` (the draw-**cost model**: cost is per path object — rerun before
   reopening any draw-cost lever), `probe-drawbudget.mjs` (**where the frame goes** —
   path objects per draw fn, in one render; calibrated against `probe-shadcost`. ✅ **`SRC=` since 257**, so a lap can
-  price itself against pristine HEAD — `SRC=$(git show HEAD:solvista.html)` — with **no `/bin/cp` swap and so no
+  price itself against pristine HEAD — ⚠ **`SRC=` takes a PATH, not the file's CONTENTS** (the recipe banked here read
+  `SRC=$(git show HEAD:solvista.html)`, which passes ~200KB of HTML *as a filename* and dies in `page.goto`; iter 259).
+  Use `git show HEAD:solvista.html > /tmp/head.html && SRC=/tmp/head.html node …` — **no `/bin/cp` swap, so no
   197-class stale-backup hazard**. 222 says COUNT your objects rather than infer them from your diff; this is how),
   `probe-seastep.mjs` (257 — **IS THIS TILED SURFACE A QUILT?** The **cheapest instrument in the harness**: no render,
   no clock, no pixels, no noise floor, nothing to stub. It asks `seaFace()` directly for the colour of each of the nine
@@ -2464,6 +2491,25 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `probe-ropesteel.mjs` is the rig that graded — and refuted — 203's rope polish; it is the
   template for isolating a draw by *suppressing its own strokes* (stack-matched) rather than
   boxing it.
+  The **observatory pair** (259 — reach for these on any SITING vector, and on any "X should answer signal Y" where Y
+  is a LIGHT/GLOW field): `probe-darksky.mjs` (**does this siting rule do what its label says?** Pure world data — no
+  render, no clock, no noise floor. Reproduces the rule's OWN eligible pool, then scores the chosen lot against it:
+  **CAPTURE = (poolMean − chosen)/(poolMean − poolMin)** = *the share of the available signal the rule captures* — and
+  **a uniform random rule scores ~0, which is a baseline you do not have to invent** (236). ⚠ **Its AQUARIUM column is
+  a FREE POSITIVE CONTROL** (248): a *correct sibling siting rule*, scored the same way on its own predicate
+  (dist-to-water **1** on 6/6, vs a random inland lot's 7–9) — so a flat treatment column is a real flatness and not a
+  dead probe. ⚠ Its **azimuth** column exists because an ARGMIN over a shared `hashCell` salt is a **SELECTION** on it.
+  Part B is the **paired 10-seed cascade** (231) — it is what proved the census's alarming `schools −3` was the chaos
+  (**4 → 4 on every seed**)), `probe-domedark.mjs` (**...and can a VIEWER see it?** The instrument that killed 259's own
+  headline and then handed it a better one. **A. AMBIENT** — mean rendered luminance of the live hexes *around* the
+  host, sampled over each hex's AREA (238) off a frame with **the host itself suppressed**, so its own glow cannot
+  contaminate the thing it is supposed to be standing away from. **B. VISIBILITY** — `occluded% = 1 −
+  inkInPlace/inkOnTop` (probe-amphvis's rig, retargeted): floor **exactly 0**, one page, read off the final composited
+  canvas. **C. HUD** — is the host behind the placard (200), measured against the real DOM box. ⚠ **Run B even when you
+  came for A**), `shot-darksky.mjs` (its camera — each build aims at its **OWN** host, because the whole point is that
+  it may be sited elsewhere (244); frames are named **by FILE** with the HEAD/patch map **CROSSED between seeds**
+  (238/239), and every frame self-reports the host's hex, `c.lit`, hexDist-from-CBD and its **TRUE screen fraction —
+  the answer key for a blind locate** (108)).
 - `probes/shot-stepback.mjs` — **the step-back's camera.** 3 lights × 2 calendars with
   the clock **frozen in-page** and the light pins taken from the light curve, because
   `shoot.mjs` + `?t=`/`?year=` drifts the calendar ~0.167 yr/s while it waits and will

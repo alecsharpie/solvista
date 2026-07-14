@@ -17970,3 +17970,91 @@ defect is the **comment**, not the draw. What is left of the cue is a *compositi
 
 **Verdict — FIXED.**
 
+## Iteration 249 — the ferry promised "every stop" and stopped nowhere (2026-07-14) [Transport × Deepen]
+
+**Vector.** Transport × **Deepen** — the stalest live domain (243), whose cue list was **empty**. Per
+240's law (*an empty cue list records where you have ALREADY LOOKED; it is not evidence there is
+nothing to find*) I spent one `grep` on its seam instead of skipping it, and the seam held the
+artifact's richest tell, uncashed for the file's entire life.
+
+**The tell.** `ENTINFO`'s ferry row has read **`'Working the shoreline, every stop.'`** since the ferry
+was written. **There are no stops.** `stepFerry` was ONE LINE — `f.y+=f.sp*dt*s`, bounce at the bay's
+ends — and `f.fr` (her seaward lane) is **never written again after spawn**. This is the
+label-asserts-what-the-draw-ignores tell (cashed 8x: 117, 122, 129, 140, 148, 183, 238…), now on a
+**verb in a tooltip** over a boat with no capacity to do it.
+
+**The host is real, and that is the whole question** (the dead-code law: `T.MARKET`, and cue (o)'s
+portless harbour, both died here). `probes/probe-ferrycall.mjs` Part A — pure world data, 6 seeds, no
+render, no clock, no noise floor: **the pier head stands 2.5–4.1 cells OUT IN THE WATER on every seed**
+(`x0=shoreAt-2`, `x1=x0+4..6`), with dinghies already moored beyond it. It is the one structure this
+city puts to sea, and **she crosses its row on every single pass** (the bay bounces at `SEAY0+2`/
+`SEAY1-2`; `pier.y` is always strictly inside). She passed it, every pass, forever, and never turned in.
+⚠ **This is NOT cue (o).** (o) says the *harbour* has no waterfront and the anchored freighter is
+therefore correct. The **pier** is the opposite: a deck standing in open water, with a public boardwalk
+on it since 1987. The host existed all along.
+
+**Change.** She calls at the pier. **ONE predicate, four readers** (112's law): `ferryApp(f)` (0 = out in
+her lane, 1 = alongside, smoothstepped) drives the **step** (how far in, and the throttle), the **draw**
+(where the hull sits, and how much wake she throws), and the **tooltip**. The berth's *existence* is
+**`pierAt` itself** — not a second copy of the constant `1986` — so the call and the deck it calls at
+**cannot drift apart** (123, running the tell FORWARDS). `dwell` is the artifact's own word: the **bus**
+has pulled into its stops for 200 iterations (`stepVehicle`: `v.dwell=16`), and the ferry was the one
+transit mode that called nowhere. `f.sp` keeps its **sign** throughout — the *throttle*, never the
+velocity, goes to zero — so `drawFerry`'s heading (`dir`) and the bay-end bounce are untouched.
+
+**Probe** (`probes/probe-ferrycall.mjs`; Part B/C are **temporal** — 134: every other gate in this
+harness is frozen, so a claim about *cadence* has no instrument, and *"it never stops"* is pure cadence).
+
+| | distinct speeds | dwells | gap, hull → pier head |
+| --- | --- | --- | --- |
+| **HEAD** | **1** on every seed | 0 | 0.04–7.51 cells, **never closes** |
+| **patch, 2035** (deck stands) | 116–133 | **9.0 s** | **0.88–0.90 cells** (10.9–15.4 px of water) |
+| **patch, 1985** (no deck yet) | **1** | **0** | never closes |
+
+🔑 **HEAD's `distinct speeds = 1` is 236's free perfect control**: when the vector is *"make X vary"*,
+HEAD's answer is a **constant BY CONSTRUCTION**, so no threshold had to be invented to call it broken.
+🔑 **The 1985 row is 199's dead-regime control, and it is EXACT, not statistical**: before 1986 `pierAt`
+is false ⇒ `ferryApp()` returns 0 ⇒ `ferryFr` collapses to `f.fr` and `ferryThr` to 1, so **the patch
+runs HEAD's byte-identical code**. It must read 1 / 0 / never-closes, and it does. The census's 1985 era
+is therefore a genuine untouched control cell, for free.
+⚠ **The gap is stated in the VIEWER'S units (205), not the design constant's** — it is the water the eye
+sees between her hull and the deck, the same quantity Part A measured on HEAD. A threshold I could pass
+by editing the threshold would be grading my own homework.
+
+**Census.** PASS. Core flat, **tile histogram empty** — the correct, vacuous result for a vector that
+touches no terrain and no `rng()` (`greenRoofs -1` is the documented ±2 tick wobble, 226). `ferries 18`,
+unchanged: this adds **no object**, it closes a gap between two that already existed (the Connect trick,
+109/111/112/204, arriving inside a Deepen).
+
+**Perf — free, and by construction.** The wake fill is **unconditional in both builds**; I scaled its
+radius and alpha, and added no draw call. Path objects: **day 110,773 / night 139,606** against 247's
+banked 111,005 / 139,629 (−0.2% / −0.02%) — flat. Per **222**, this vector cannot change the draw list:
+it moves two entities, it does not change *which tiles exist*.
+
+**Visual** (`probes/shot-ferrycall.mjs`; no argmax needed — unlike a buried ground ornament (226), the
+host is **published world data** (`pier.x1,pier.y`) on open water, where nothing can occlude her, so
+`ctr()` IS the located host, 201). The pair is made comparable by pinning her **row**, not by running the
+clock: `ferryFr` is a pure function of `f.y`, so freezing at `f.y = pier.y` puts the patched ferry exactly
+at her berth and the HEAD ferry exactly abeam it, out in her lane — same world, same instant, same camera.
+Files **named, never lettered** (239); agents asked to **LOCATE, not judge** (108), against ground truth I
+already held. Both seeds **PASS**, and both agents independently landed on it: seed 7 — *"alongside…
+~0.2–0.3 boat-widths"* in the patch files vs *"~5–6 boat-widths of open sea"* in the head files; seed 42
+went further and edge-detected it — *"pier deck's rightmost edge ≈ x=779–784, ferry hull's leftmost edge
+≈ x=780–784"*, and the safety property in its own words: **"hull always starts 1+ px after the pier's last
+pixel, never before — no overlap or clipping through the pier deck."** She lies alongside, touching but
+never through. Whole-city frames: coherent, no z-order tears, no clutter; the two builds are
+indistinguishable at fit zoom, which is honest — she is a small entity, and the change is a *cadence*, not
+a mass.
+
+**The wake is the tell running forwards.** A wake is thrown by WAY, so it dies back as she comes
+alongside — but it never goes to **nothing**: the residual wash is what keeps her sitting **IN** the water
+rather than floating on it (the same law as `SHAMT` never reaching 0 at night, 225). Same path object at
+any throttle.
+
+**Tooltip** (the string that started the lap), computed live off the rule's own predicate, never stored:
+`far → "Working the shoreline — the pier is her only call."` · `approach → "Coming alongside the pier
+head."` · `alongside → "Alongside the pier head — sailing in 9s."` · `1985 → "Working the shoreline. No
+pier yet to call at."`
+
+**Verdict — DEEPENED.**
+

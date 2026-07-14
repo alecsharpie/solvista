@@ -1782,6 +1782,62 @@ function siteQuarter(kind){
   }
   return false;
 }
+/* ...and the observatory wants the DARK. Its own tooltip has promised 'a dome out on
+   the dark rim of the city, open to the night' for the artifact's whole life; the
+   comment above says it 'wants the dark rim'; CIVICDESC's own preamble says 'the
+   observatory the dark rim'; and CIVHRS holds it at 1 because 'its whole night is
+   just beginning'. Four readers, one story — and the dome went through the SAME
+   uniform random scatter as the police station, with no darkness term anywhere in it.
+   Measured (probe-darksky, six seeds): it captured 0.057 of the darkness its own pool
+   had on offer, which is what a uniform random draw scores, and on one seed it stood
+   at c.lit 0.634, FIFTEEN hexes from the founding crossroads — inside CORER, downtown,
+   under the brightest sky in the city — while a lot at c.lit 0.000 lay 42 hexes out.
+   c.lit is not a proxy for that sky. genWorld builds it from hexDist-to-CBD (the LITR
+   glow + the CORESIG core bump) and it is drawBuilding's ONLY window-light term, so it
+   IS how bright the night frame renders a lot — and it is fixed at genWorld, so unlike
+   the amphitheater's frontage (231) this predicate cannot rot as the city grows up
+   around the dome.
+   A PREFERENCE, never a gate (206): the darkest of the pool always takes it, so the
+   one-per-city dome can never be lost. The pool clamps 10-33 of its lots to exactly 0,
+   so an argmin alone would hand the dome to raster order — the bias toward the back of
+   the plate that broke the amphitheater's old scan — and the hash is what picks among
+   the dark, so the dome does not stand on the same relative lot in every city.
+   Deterministic, no rng() draw, exactly like siteQuarter above: the caller's scattered
+   search still runs and still spends its draws, so the stream is untouched and the only
+   thing that changes is which lot the dome stands on. */
+/* ...AND IT MUST BE VISIBLE, which is the SECOND gate and the one that carries the lap.
+   Siting for darkness alone is blind to occlusion, and draw order is depth order: measured
+   (probe-domedark), HEAD buries its own dome at a mean of 54% — 3 seeds in 6 more than HALF
+   buried, and on seed 1234 the one-per-city landmark renders EIGHT PIXELS, 97.8% occluded
+   behind the towers of the CBD it had been dropped into. A dark-sky rule alone halves that
+   by luck (the rim is thinner than the core) and still buried seed 42 WORSE than HEAD did,
+   80.8% against 28.0% — because nothing was scoring the sightline. Two gates on one feature,
+   pointing different ways (244), so score both: groundLoad is the ground-level occlusion
+   predicate the amphitheater already uses (231 — it sums the DRAWN HEIGHT of the two rows in
+   front and counts a RAISEABLE lot at FUTUREH, because an empty lot is not a clear view, it
+   is a building that has not been built yet).
+   DARKGL is what a fully-built front costs in units of c.lit; swept end-to-end, not guessed. */
+const DARKJIT=0.06;   /* breaks the zero plateau; too small to outrank real darkness */
+const DARKGL=0.005;   /* the sightline's weight against the sky's */
+function siteDark(kind){
+  let best=1e9,bi=-1;
+  for(const i of HEXI){
+    const x=i%G,y=(i/G)|0,c=cells[i];
+    if((c.t!==T.EMPTY&&c.t!==T.RES)||!roadNear(x,y))continue;
+    if(x<2||x>SHOREX-1||y<2||y>G-2)continue;    /* the same pool the scattered search draws from */
+    /* NOT 0x0B5E: the dome's own draw flips its slit azimuth on hashCell(x,y,seedNum^0x0B5E),
+       and an ARGMIN over a shared salt is a SELECTION on it — the winning lot would always
+       be the one with the smallest hash, so `sd` would come back -1 in every city and the
+       per-city azimuth (158) would silently die. A tie-break must not share a salt with
+       anything that reads the cell it picks. */
+    const s=c.lit+DARKGL*groundLoad(x,y)+DARKJIT*hashCell(x,y,seedNum^0xDA25);
+    if(s<best){best=s;bi=i;}
+  }
+  if(bi<0)return false;
+  const c=cells[bi];
+  c.t=T.CIVIC;c.kind=kind;c.th=kind==='parliament'?34:20+c.v*14;c.h=0;c.age=0;
+  return true;
+}
 
 /* ---------------- cellular automata tick ---------------- */
 function tick(){
@@ -2316,6 +2372,7 @@ function tick(){
         if(c&&(c.t===T.EMPTY||c.t===T.RES)&&roadNear(x,y)){lot=idx(x,y);break;}
       }
       if(QUARTER.has(kind)&&siteQuarter(kind))continue;   /* joins the civic quarter */
+      if(kind==='observatory'&&siteDark(kind))continue;   /* stands out under the dark sky */
       if(lot>=0){const c=cells[lot];
         c.t=T.CIVIC;c.kind=kind;c.th=kind==='parliament'?34:20+c.v*14;c.h=0;c.age=0;}
     }
@@ -3685,6 +3742,11 @@ const civicHourWord=k=>{
   const o=civOpen(k);
   return o>0.72?'Open late':(o>0.30?'Closing up':'Dark till morning');
 };
+/* ...and the dome names the sky it was SITED for, off the SAME c.lit the siting rule
+   minimises and the window-light draw brightens by: one field, three readers, so the
+   label can never promise a dark rim the rule has not delivered (123, forwards). */
+const seeingWord=v=>v<0.10?'Dark — good seeing'
+  :(v<0.25?'Dark, out past the glow':(v<0.45?'Washed by the city glow':'Lost to the city glow'));
 /* ---- match day (iter 240) --------------------------------------------------
    The stadium's two halves have been inverted since it was built, and its own
    comments said so. Its nine specks were drawn `if(LITAMT<0.75)` under the words
@@ -8328,7 +8390,8 @@ function describeTile(c,x,y){
     /* the bowl names what it looks out at — off the SAME ray walk that sited it, and
        whether there is a show on — off the SAME predicate the beam lights by (iter 250) */
     if(c.kind==='amphitheater'){data.push(['Faces',amphView(x,y)]);
-      data.push(['Season',concertWord()]);}}
+      data.push(['Season',concertWord()]);}
+    if(c.kind==='observatory')data.push(['Sky',seeingWord(c.lit)]);}
   else if(c.t===T.ROAD){const art=c.flow>=ARTFLOW;
     /* a treed street is drawn as an alleeed boulevard (both kerbs planted); the
        label had ignored it for the artifact's whole life, so hovering the leafiest
