@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259** | 45, **204** | | 73, ~~**114**~~, **168**, **231** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253** | | | 61, 81, 89, **115**, **200**, **242**, **248** | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261** | | | 61, 81, 89, **115**, **200**, **242**, **248** | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
 - **Interaction/UX — the FEATURE INVENTORY was rotated to the archive at 211 (history, not steering).** ⚠ **229 is
@@ -31,8 +31,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census hook); `stamp()` also
   draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a FUNCTION of the entity
   (105)** — use it when a thing's interest is its *membership* (which line/route/depot), computed live, never a string.
-- **ROTATION.** Last vector per domain: People **247** · Nature **251** · Sky **253** · Urban **254** ·
-  Water **257** · Transport **258** · Civic **259**. ✅ **260 WAS THE 32nd STEP-BACK — NO NEW COMPOUNDING DRIFT.** Both
+- **ROTATION.** Last vector per domain: People **247** · Nature **251** · Urban **254** ·
+  Water **257** · Transport **258** · Civic **259** · Sky **261**. ➡ **NEXT: People (247) is the most overdue**, then
+  Nature (251). ✅ **260 WAS THE 32nd STEP-BACK — NO NEW COMPOUNDING DRIFT.** Both
   agents FAILed both seeds; **all three FAILs were GRADED, not obeyed, and two were REFUTED by measurement** — see
   **(ac)** (the skyline is intact; the FAIL is 224's projection law) and **(s)** (the golden residue is mild and its
   loudest claim is false). The third is the finding: **(aq′)**. ➡ **NEXT STEP-BACK ~264.**
@@ -66,19 +67,18 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   PURPOSE to kill wallpaper — variance and regional legibility are in DIRECT CONFLICT, and the loop chose variance.**
   ✅ **THE HOST IS STILL LIVE AND UNREAD** — `c.age` is coherent (0.40) and monotone core→rim, *the old town IS
   downtown* — **but only a SHAPE, an ORNAMENT, a COUNT can show it. Never a hue.** (`probes/probe-buildingage.mjs`.)
-  🔴 **(aq′) — THE #1 CUE, AND THE 32nd STEP-BACK'S FINDING: THE SEASON IS REAL, IS *BIGGER THAN GOLDEN HOUR*, AND IS
-  INVISIBLE.** 253's calendar is not the bug. Measured on the axis it is *written* on (`probes/probe-seasonhue.mjs`,
-  floor **exactly 0**): winter moves warm-cool **−30.2 (d 0.52)** vs golden hour's **+24.9 (d 0.43)** — **1.2x HARDER
-  than the light change every agent calls obvious** — but golden hour also moves **LUMINANCE −24.7 (d 0.69)** where the
-  season moves it **−3.4 (d 0.09)**. **A global multiplicative cast on every surface is exactly what colour constancy
-  divides out** ⇒ four blind agents, two seeds: *"no cooler light."* ⛔ **DO NOT TUNE THE CHROMA UP — it is already the
-  loudest in the artifact.** The season needs a **NON-CHROMATIC** channel (luminance / contrast / shadow), and **223's
-  normaliser is what removed it** (*"COOLER and never DIMMER"* — right for a per-surface wash ladder, a castration on a
-  whole-scene illuminant). **LAW in SKILL.md.** ➡ **Lone convergent candidate, still unspent: DAY LENGTH** — `SUNUP`/
-  `SUNDN` are `KEYS`' own dawn/dusk keyframes, so this is **NOT a two-constant edit: it must move the whole `KEYS` curve
-  seasonally** (moving `lit`, brightness *and* shadow length at once). Re-derive the instrument from the complaint (228).
-  ⚠ **`probe-seaamp` MEASURES LUMINANCE and is BLIND to this** (it graded the season d=0.27 ⇒ "tune it up" — 228's 6th
-  recursion). ⚠ **RETIRE `probe-seasonarea` as a seasonal score.** ⛔ **The sun's ARC must not be *lowered*** (200).
+  ✅ **(aq′) CLOSED AT 261 — THE SEASON NOW HAS A DAY LENGTH, AND IT IS THE FIRST THING ANYONE SEES.** 260 proved the
+  season real (warm-cool d 0.52, *louder* than golden hour's 0.43) and invisible (luminance d **0.09** vs 0.69): a global
+  chroma cast is what colour constancy divides out. 261 gave it the non-chromatic channel — **WHEN THE SUN IS UP**.
+  `sunWarp` is ONE sine on the light curve's **TIME axis** (fixed at solar noon + solar midnight); **the ALTITUDE is
+  never touched**, so ⛔ 200's arc still holds *structurally*: `sunP` is a pure function of `SUNT` and `SUNT` has dayT's
+  range, so **the disc cannot reach a screen position HEAD did not already reach**, and it hits its identical peak at
+  solar noon in every season. Measured (`probes/probe-daylen.mjs`): sunset **0.780 CONSTANT → 0.701 winter / 0.831 dry
+  peak**; season's luminance **d 0.09 → 1.59 at the evening**, i.e. **2.3x the golden-hour bar**, while **NOON is the
+  must-not-move control and does not move (d 0.09)**. Three blind agents, two seeds, crossed map: all ranked the frames
+  correctly and named the two HEAD frames as the indistinguishable pair. ⚠ **RETIRE `probe-seasonarea` as a seasonal
+  score.** ⚠ `probe-seaamp` is LUMINANCE-only and was blind to 253 (228's 6th recursion) — but it is the RIGHT
+  instrument for 261, which *is* a luminance feature. **Read what a probe measures (235).**
   🔴 **HOW TO READ THIS CUE LIST (251/255; narrative rotated at 256).** A bad probe does not merely misgrade a lap — it
   **MANUFACTURES A CUE** that steers the loop for tens of iterations and gets "reconfirmed" by the same broken
   instrument ((ag) was #1 for **24 iterations**, reconfirmed twice, **false on every count**). 🔑 **A CUE RE-CONFIRMED
@@ -92,8 +92,17 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   reads `c.lit`. Siting the observatory at `c.lit` **0.000** moved the ambient luminance around it by **−1.9%** —
   **invisible**, and a blind agent said so and was right. ⇒ **Do NOT build "X answers the night glow" in COLOUR.**
   The field is fine as a *chooser* (it is real, monotone and rot-proof); it is dead as a *look*. **LAW in SKILL.md.**
-  ⚠ **ARTIFACT FACTS from 236–259 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
-  lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"): **259:** `siteDark` — the dome is chosen by
+  ⚠ **ARTIFACT FACTS from 236–261 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
+  lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"):
+  **261:** **`SUNT` IS THE LIGHT CURVE'S CLOCK — NOT `dayT`. ONE predicate (`sunWarp`), FOUR readers**: `daylight()`
+  (sky/tint/`LITAMT`), the shadow vector (`SHOFF`/`SHLEN`/`SHAMT`), the sun disc (`sunP`) and `nightDeep()`. **Anything
+  new that asks "where in the day are we" must read `SUNT`, never `dayT`** — `dayT` is now only the raw *counter* (the
+  moon, `matchClock`, the hall clock still read it, and MUST: they want days, not hours). `SUNT` is set once a frame in
+  `render()` because `windarkAt()` reads it ~2.7k times a night frame. ⚠ **`syncSky` warps its OWN clock on purpose** —
+  reading `render()`'s `SUNT` made the CSS backdrop depend on render having already run, and 261's own camera duly
+  painted a night sky behind a daylit noon city. ⚠ **THE GOLDEN HOUR IS NOW SEASONAL TOO** — at the dry peak the sun
+  sets at 0.831, so the old **`t=0.68` golden pin lands in mid-afternoon in summer**; `shot-stepback`'s pins are still
+  right at the *default* year but a golden frame at `year=2035.62` is no longer golden. **259:** `siteDark` — the dome is chosen by
   `c.lit + DARKGL*groundLoad + DARKJIT*hash`, a PREFERENCE, deterministic, **no `rng()` draw** (the caller's 90-try
   scatter still runs and still spends its draws — **do not "tidy" it away**, that is a −22% pop / −47% tower stream
   shift). ⚠ **`seedNum^0x0B5E` IS THE DOME'S SLIT AZIMUTH (158) — an ARGMIN sharing a salt is a SELECTION on it, and
@@ -391,84 +400,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 253 entries before Iteration 251 live in
+> **Archive:** the 254 entries before Iteration 252 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 251 — the invariant had never once sampled a lit window (2026-07-14) [Nature × Polish → the harness]
-
-**Vector.** Nature × Polish, taken on the ledger's ranked **#1 🔴 cue (ag)** — *"the night greens
-stay hot: the parks out-brighten the LIT streets and the sand glows like it's still dusk"* — banked
-at 227, **reconfirmed at 242**, and carried at the top of the cue list for 24 iterations. Rotation
-pointed at Urban, whose seam 248 recorded as dry; **119's law** (a banked, measured finding outranks
-kind-rotation) sent me here instead.
-
-**Probe first — and it refuted the cue twice before I wrote a line.**
-`probe-goldenhue` on HEAD: **PARK 81, BELOW the ROAD (82)** and 14 under the dimmest lit surface. The
-greens are not hot. Then the mechanism: I rebuilt the file with **`washRGB` switched off entirely**
-(`w=0` — the pre-214 city on the plain cool tint) and the night ordering came back **IDENTICAL**
-(BEACH 96, MID 95, same breach). So **223's luminance neutralisation is sound and steals nothing**,
-and the cue's named surface *and* its named mechanism are both innocent. What survived was one real
-line: **BEACH 96 >= MID 95**, the unlit sand level with the dimmest lit building type — intrinsic to
-sand's albedo (base `[238,220,178]`, day luminance **221**; the next brightest thing in the palette
-is 173), not to any gain triple.
-
-**Change (built, measured, REVERTED).** An **albedo knee** on the night wash — a real night compresses
-its highlights instead of scaling them — opted into by the seven open-ground draws (beach, dune, the
-sand the wind throws into the lawn), *not* by name, because `sand`/`sandDk` are **shared with the
-building walls** (`towerLook`/RES/MID bodies) and keying it by name would dim the masonry hardest of
-all (cream's night luminance is **103**, above the sand's own) and drag MID's mean *down*. Subtractive,
-not multiplicative: subtracting a constant from all three channels leaves `max-min` and `mid-min`
-untouched, so **hue and chroma both survive exactly** while luminance falls. It worked: **BEACH 96 -> 91**,
-ordering invariant **FAIL -> PASS** (clears by 4), hue guard unmoved (6deg), daylight byte-identical,
-zero path objects.
-
-**...and the guard I added caught it.** `probe-goldenhue` never carried **`BEACH <-> ROAD`** — **214's own
-headline pair** (*"the sand and the asphalt literally become the same colour"*), the exact collapse the
-whole wash ladder exists to prevent. Added, it reads **HEAD 24 -> patch 18** (multiplicative: **14**, under
-the ~15 floor). **Every unit the sand falls walks it toward the asphalt**, because the window between
-ROAD (82) and MID (95) is only **13 units wide**. The two inherited gates squeeze from both sides and
-the sand cannot sit between them with margin on both.
-
-**Visual — and it is what turned the lap.** Two agents, two seeds, blind, **crossed A/B** (238), naming
-files not letters (239). Both PASSed; both correctly identified the patch as the dimmer build (the
-checkable locate). But **both, unprompted, on both seeds, said the shoreline does not glow — in EITHER
-build.** Seed 7 measured it: the shore is **"a quiet dark ribbon"** at ~87-92 against a **frame max of
-237-244** from the tower windows and the moon. HEAD's beach was never glowing.
-
-**The root cause: the invariant had never once sampled a lit window.** `probe-goldenhue` sampled
-`getImageData(sx, sy, 1, 1)` — **ONE pixel, at the hex centre** — for its whole life (**238's defect,
-recursing a fourth time, inside the probe the header already warns about**). For flat sand that is
-fine. For a **building** the centre pixel lands on its **ROOF**, so the night luminance of every LIT
-type was measured **without ever sampling a lit pane**, and the invariant was comparing *the beach's
-sand to a building's roof*. Worse, it scored the **MEAN** — and a building reads as lit because of its
-**windows**, not because its hex average is high, so averaging discards exactly the information that
-makes it lit. A flat pale surface therefore "out-brightens" a lit high-variance one on the mean while
-looking obviously dimmer to any eye.
-
-**Fixed the instrument (the artifact needed nothing).** Area sample (the hex's own box, per 238) +
-score the invariant on the **p90 ENVELOPE** — what the lit panes actually put on the facade (**224:
-the eye reads the EXTREME, not the mean**) — with the mean kept as a diagnostic. On **pristine,
-unmodified HEAD**:
-```
-p90: *TOWER 131  *MID 123  *COM 119 |  BEACH 98  ROAD 98  PARK 97  FOREST 85  FARM 82  WATER 72
-     -> the lit city clears the brightest unlit surface by 21.        VERDICT: PASS
-mean: BEACH 91  *TOWER 84  *COM 84  *MID 81 ...  -> the artifact of the old score, entire.
-```
-The area sample also exposes how badly the centre pixel distorted the **hue guards**: PARK's alarming
-**26deg off its daylight self** — part of what (ag) rested on — is **1deg** when you sample the park
-instead of one pixel of its pond.
-
-**Census.** PASS, and vacuous by construction (colour-only). Final tree: `solvista.html` is
-**byte-identical to HEAD** (`git diff` empty — a proof, not a sample).
-
-**Verdict — FIXED (the harness), the artifact change EXPLORED -> REVERTED.** The city was never broken.
-A probe that could not see a lit window generated a FAIL, the FAIL became the loop's #1 cue, the cue
-was re-confirmed twice **by the same broken instrument**, and its prescription — dim the sand — would
-have damaged 214's guard by 25% to buy a number no viewer can see. **Cue (ag) is CLOSED, refuted on
-every count.**
 
 ## Iteration 252 — the sun keeps no calendar (2026-07-14) [holistic step-back, 30th]
 
@@ -1228,3 +1164,74 @@ golden-hour residue is the one already on the books, and the perf arc is still s
 healthy. What the step-back found was in the *instrument* and in a *law* — the loop had shipped a
 season, measured it with a probe built on the one axis the season deliberately does not move, and
 believed itself. Two blind agents were right for eleven iterations and no gate could hear them.
+
+## Iteration 261 — the season was invisible because it had no clock (2026-07-14) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × Deepen — the ledger's **#1 cue (aq′)**, banked by the 32nd step-back, whose
+lone named candidate was **day length**. (Law 119: a banked, measured finding outranks kind-rotation.)
+
+**The defect, restated.** 253 gave the sunlight a calendar and 260 proved that calendar **real and invisible**:
+winter moves the warm-cool axis **d 0.52** — *harder than the golden hour's 0.43, the light change every agent
+calls obvious* — and moves **luminance d 0.09**, where the golden hour moves **0.69**. A season painted as a
+**global multiplicative chroma cast is precisely the transform colour constancy divides out**, so four blind
+agents on two seeds reported *"no cooler light."* Both they and 253 were right. The season needed a channel the
+eye cannot normalise away, and the one the sky owns is **when the sun is up**.
+
+**Change.** `sunWarp(t)` — **one sine on the light curve's TIME axis**, never on its altitude:
+`u = t + dayLen()·sin(2π(t − NOONT))`, pinned at two fixed points (solar noon `NOONT`=(SUNUP+SUNDN)/2, and solar
+midnight, where `sin` is 0). Winter *advances* the curve through the evening and *retards* it through the morning;
+summer the reverse. `SUNUP`/`SUNDN` keep their values — they are still the curve's own dawn/dusk keyframes.
+**ONE predicate, FOUR readers** (`SUNT`, set once a frame): `daylight()` (sky, tint, `LITAMT`), the shadow vector
+(`SHOFF`/`SHLEN`/`SHAMT`), the sun disc (`sunP`), and `nightDeep()` (the city's bedtime — read raw, a summer city
+was 42% into its night at the moment the sun set). `DAYLEN=0.10` is bounded by **monotonicity, not taste**: the warp
+folds at 1/2π = 0.159.
+
+**Two structural guarantees, not checked ones (223).** (1) **The sun's arc is untouchable.** `sunP` is a pure
+function of `SUNT`, and `SUNT` has `dayT`'s range ⇒ **the disc cannot reach a screen position HEAD did not already
+reach** (so ⛔ 200's placard law holds by construction, not by care), and `sunWarp(NOONT)===NOONT` because `sin(0)`
+is 0 ⇒ **it hits its identical peak at solar noon in every season.** Only the *timing* moves. (2) **The fixed point**
+(245): `dayLen()` is centred on the season's mean, so at the mean it is **exactly 0** and `sunWarp` returns `t` to the
+last bit — the patch runs HEAD's byte-identical code path.
+
+**Census.** PASS, 0 page errors. `pop`/`roads`/`developed` **+0**; whole matrix flat; tile histogram empty — correct,
+and *vacuous*, which is why the probe is the gate.
+
+**Probe** (`probes/probe-daylen.mjs`, `probes/shot-daylen.mjs`).
+- **A — the defect as a number** (pure world data, no render, drives *the artifact's own* `sunWarp`): HEAD's sunset is
+  **0.780 in every season — DISTINCT DAY LENGTHS = 1**, a baseline nobody had to design (236). Patch: sunset
+  **0.701 (winter) / 0.780 (equinox) / 0.831 (dry peak)**; day length **0.572 → 0.730 → 0.831**.
+- **B — is it VISIBLE?** The season's **luminance d, swept across the whole day** (not at the one hour my feature is
+  loudest — 205), against **golden hour as the incumbent bar I did not invent** (226). HEAD is luminance-dead at
+  *every* hour (**d 0.06–0.15**). Patch: **evening d 1.59 / dawn 1.55** — i.e. **2.3× the golden-hour bar (0.69)** —
+  while **NOON, the free must-not-move control, does not move (0.09 → 0.09)**. Identical-pin floor **exactly 0 px**.
+- **C — the fixed point**, by 253's predicate suppression *inside one page* (floor exactly 0, build-agnostic): at the
+  season's mean, live-vs-suppressed = **0 px**; in winter, **3,800,369 px**. ⚠ **The pin cannot be a YEAR** —
+  `year=2035.87` is not representable in float64, so `dayLen()` lands on −1.8e−10, the guard never fires, and the
+  artifact's own colour quantizers (`seaFace`'s round-to-32nds) flip a bucket worth ~332 px. **Pin the SIGNAL, not the
+  year** (`seasonCool = () => 0.5` ⇒ `dayLen()` is 0 by arithmetic).
+- ⚠ **C2 (cross-build patch-vs-HEAD) was built, run, and CUT — 230's law, re-confirmed.** The HEAD-vs-HEAD floor came
+  back at **98,000–706,000 px**, and at noon the "signal" (478,871) sat **below its own floor** (706,045). *Do not
+  re-add the build swap.*
+
+**Perf.** FREE, and by the deterministic instrument (216/222, never `perfab` alone): path objects
+**day 111,002 → 111,039 (+0.03%)**, **night 140,017 → 138,471 (−1.1%)**. It is a coordinate remap of a lookup the
+frame was doing anyway — no new draw call, and the world is unchanged (census flat), so 222's "the world is the draw
+list" does not bite.
+
+**Visual.** Three blind agents, two seeds, **crossed A/B map, named by FILE never by a letter** (238/239), asked to
+**rank and pair** rather than judge (108). All three were right: they ranked patch-summer as **DAYLIGHT**,
+patch-winter as **NIGHT**, and — unprompted — **named the two HEAD frames as the indistinguishable pair**, which is
+exactly the ground truth (HEAD's light curve carries no `year` term). Seed 7's agent added, correctly: *"frame1 is
+full night while frame4 is full daylight at the same late-afternoon clock — a large seasonal swing, worth confirming
+it is intended."* It is the feature.
+
+**One real bug found, and it was MINE — in the camera, then fixed at SOURCE.** Seed 42's first read FAILed: *"a night
+sky, stars and a full moon, behind a fully daylit midday city."* `syncSky` read `SUNT`, which is only set **inside**
+`render()`, and the camera called `syncSky` *before* `render()` — so it painted the CSS backdrop from the **previous
+frame's** clock. The app happens to call `render(); syncSky()` in that order and was never wrong. But **a correctness
+that rests on call order is a latent bug, not a design** (223): `syncSky` now warps its own clock
+(`daylight(sunWarp(dayT))`), one `sin()` per 400 ms, and the coupling is gone. Re-shot, both noon frames PASS and a
+blind agent calls patch and HEAD at noon *"essentially the same image"* — the control the probe predicted.
+
+**Verdict: SHIPPED.** The ledger's #1 cue, closed. The season is now the first thing you see: at the same clock, the
+winter city is dark and lamplit while the summer city is still in full afternoon sun.

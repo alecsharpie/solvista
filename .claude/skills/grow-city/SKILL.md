@@ -684,6 +684,39 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A SIGNAL THAT CANNOT BE SEEN ON THE CHANNEL YOU PAINTED IT ON IS USUALLY NOT A LOOK AT ALL — ASK WHAT THE SIGNAL
+  IS A SIGNAL *OF*, AND PAY IT IN THAT COIN (iter 261).** 260's law is the diagnosis (a global multiplicative chroma
+  cast is exactly what colour constancy divides out, so the season was 1.2x *louder* than the golden hour and seen by
+  nobody). 261 is the **way through**, and it generalises past colour: **the season is not a colour, it is a CLOCK.**
+  The fix touched no palette and no draw — it warped **the light curve's TIME AXIS** (`sunWarp`: one sine, fixed at
+  solar noon and solar midnight), so winter's sun *rises late and sets early*. The season's luminance went
+  **d 0.09 → 1.59**, i.e. **2.3x the golden-hour bar**, and three blind agents ranked it correctly on the first try.
+  ⇒ **When a feature measures large and reads as nothing, stop tuning its amplitude and re-ask what DIMENSION the
+  thing actually lives in.** The tell: your feature is a *property of the world* (a season, an hour, an age, a
+  weather) and you have implemented it as *a tint*.
+  ⇒ **AND THE DESIGN THAT MADE IT SAFE IS REUSABLE: WARP THE *INPUT* OF AN EXISTING CURVE, NEVER THE CURVE'S OUTPUT.**
+  Every downstream quantity (the sky, the tint, `LITAMT`, the sun's x and y, `SHOFF`/`SHLEN`/`SHAMT`) is a **pure
+  function of the clock**, and the warped clock has the **same range** as the clock ⇒ **nothing can leave the envelope
+  HEAD already renders.** The sun literally *cannot* be lowered into the placard (200's ⛔, satisfied **structurally**
+  rather than by care — 223), and it hits its identical peak in every season because `sin(0)===0`. A remap of a lookup
+  the frame was doing anyway is also **free**: path objects **+0.03% day / −1.1% night**. **Before adding a new field,
+  check whether the thing you want already exists as a curve you can re-index.**
+  ⚠ **AND THE COROLLARY THAT COST A ROUND — TO PROVE AN *EXACT* FIXED POINT, PIN THE **SIGNAL**, NEVER THE PARAMETER
+  THAT PRODUCES IT.** 245 says centre the lever so it collapses to HEAD's literal at one pin; 253 says write the
+  normaliser so that pin is exact by construction. Both assume **you can reach the pin.** You often cannot: `year =
+  2035.87` **is not representable in float64**, so `year%1` lands ~1e-13 off, `seasonCool()` ~1e-9 off 0.5, and the
+  lever comes out **−1.8e−10 instead of 0** — the `if(d===0)` guard never fires. And a 1e−10 nudge is not harmless,
+  because **the artifact is full of QUANTIZERS** (`seaFace` rounds to 32nds, `colMix` quantizes `t`, `CCACHE` keys):
+  one bucket flips **for the whole sea at once**, and the "byte-identical" frame reads **332 px**. ⇒ **Stub the
+  PREDICATE to its mean** (`seasonCool = () => 0.5` ⇒ the lever is 0 *by arithmetic*) — it is build-symmetric, exact,
+  and it took the fixed point to **0 px**. The tell: your fixed point is "the year where X = its mean", and you are
+  about to reach it by setting a float.
+  ⚠ **AND: A CORRECTNESS THAT RESTS ON CALL ORDER IS A LATENT BUG, NOT A DESIGN.** 261 cached the warped clock in a
+  global set inside `render()`; `syncSky` read it, and the app's `frame()` happens to call `render(); syncSky()` — so
+  the app was never wrong. **My own camera called them the other way and painted a night sky behind a daylit noon
+  city**, and an agent correctly FAILed it. The fix is not to document the order — it is to **delete the dependency**
+  (`syncSky` now warps its own clock; one `sin()` per 400ms). This is 227/243's law arriving on a *hidden invariant*
+  instead of a probe: **a rule you must remember is worse than a rule you cannot break.**
 - **THE EYE DISCOUNTS AN ILLUMINANT — A *PURE-CHROMA* CHANGE IS INVISIBLE NO MATTER HOW BIG IT MEASURES, AND THE
   NORMALISER YOU ADDED TO KEEP IT HONEST IS WHAT REMOVED THE ONLY CHANNEL IT COULD HAVE BEEN SEEN ON (iter 260).**
   214 says a greyscale probe cannot see "mauve" ⇒ *measure colour*. 260 is that law's **converse**, and it is the one
@@ -2489,6 +2522,19 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   frame), never a constant I chose. ⚠ **Every frame SELF-REPORTS whether a cab is actually at the centre** — the
   expected result is an *absence* (a dark lamp), and a frame with no cab in it reads exactly like a correct one, which
   is a false PASS an agent will hand you (see the law)).
+  The **day-length pair** (261 — reach for these on any vector that makes an existing CURVE answer an existing signal,
+  and on any "is this light/season/hour change VISIBLE" claim): `probe-daylen.mjs` (**A** — pure world data, no render,
+  no clock, no noise floor: drives *the artifact's own* `sunWarp`/`SUNUP`/`SUNDN` (249) and reports sunrise/sunset/day
+  length per season. ⚠ **HEAD's answer is a CONSTANT by construction ⇒ `DISTINCT DAY LENGTHS = 1` is a baseline nobody
+  had to design** (236). **B** — the visibility sweep: the season's warm-cool *and* luminance `d` **across the WHOLE
+  day**, never at the one hour the feature is loudest (205), with **golden hour as the incumbent bar** (226) and **NOON
+  as the free must-not-move control**. **C** — the fixed point by 253's predicate suppression in ONE page, floor exactly
+  0. ⚠ **PIN THE SIGNAL, NOT THE YEAR** — see the law; and ⚠ **its C2 cross-build arm was BUILT, RUN AND CUT** (floor
+  98k–706k px, signal *below* its own floor: 230, re-confirmed — **do not re-add the build swap**)),
+  `shot-daylen.mjs` (its camera — the evening pin, where a day-length feature *lives*, plus noon as the control; both
+  builds × both seasons, **named by FILE** (239) with the map **CROSSED between seeds** (238), each frame self-reporting
+  in the **VIEWER'S** units (236: *"sun is DOWN · today's sunset 0.701"*, never `dayLen=0.08`). ⚠ It calls `render()`
+  **before** the DOM sync, exactly as `frame()` does — the reverse order painted a stale sky and drew a false FAIL).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

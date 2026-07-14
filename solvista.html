@@ -424,9 +424,10 @@ const KEYS=[
    falling on it had none — 209's law arriving on the largest surface there is, the
    ILLUMINATION — and two blind agents, on two seeds, said exactly that in their own nouns:
    "no cooler light, same sky, same sun."
-   THE LEVER IS COLOUR, NEVER ALTITUDE. SUNUP/SUNDN stay put: they are the light curve's own
-   dawn and dusk keyframes, so the disc must go on touching down exactly as the sky goes
-   dark — and 200 put the sun high on purpose, because the .placard owns the low-left sky.
+   THE LEVER HERE IS COLOUR, AND COLOUR ALONE WAS NOT ENOUGH — see the day-length warp below
+   SUNUP/SUNDN (iter 261), which is what the eye actually reads this season by. This block
+   still owns the season's HUE; it never touches the sun's ALTITUDE, and it never will: 200
+   put the sun high on purpose, because the .placard owns the low-left sky.
    seasonCool() is beachPhase()'s cosine, inverted and sharing its phase: 0 at the dry peak
    (s=0.62), 1 at the wet trough (s=0.12). Continuous, so it cannot strobe on the fast `year`
    clock the way a discrete readout does (134). Centred on the peak per 245, so at s=0.62
@@ -488,6 +489,56 @@ function moonPhase(){ return ((dayT/MOONSYN + seedNum*0.61803398875)%1+1)%1; }
    byte-identical. SUNR matches the moon's mr: the two discs are the same size in the
    sky, as they are in life. */
 const SUNUP=0.05, SUNDN=0.78, SUNR=12;
+
+/* THE SEASON HAD NO DAY LENGTH (iter 261). Iter 253 gave the sunlight a calendar and the
+   32nd step-back proved that calendar INVISIBLE: measured, winter moves the warm-cool axis
+   1.2x HARDER than the golden hour every agent calls obvious (d 0.52 vs 0.43) — and four
+   blind agents, on two seeds, reported "no cooler light, winter is indistinguishable from
+   summer." Both were right. A season painted as a global multiplicative CHROMA cast is
+   precisely the transform colour constancy divides out; the golden hour is seen because it
+   also drops LUMINANCE (d 0.69), where the season dropped it 0.09. So the season needed a
+   channel the eye cannot normalise away, and the one the sky actually owns is WHEN THE SUN
+   IS UP: in winter it rises late, sets early, and hangs low all afternoon.
+   THE WARP IS ON THE TIME AXIS, NEVER ON THE ALTITUDE. SUNUP/SUNDN keep their values — they
+   are still the light curve's own dawn and dusk keyframes — and the disc's arc is still
+   sin(PI*sunP) over the same sunX/sunY track. What moves is the CLOCK the curve is read at:
+   a single sine, ADVANCING the curve through the evening and RETARDING it through the
+   morning in winter (and the reverse in summer), pinned at two fixed points — solar noon
+   (NOONT, the midpoint of SUNUP/SUNDN) and solar midnight, where sin() is 0.
+   TWO CONSEQUENCES, AND THEY ARE STRUCTURAL RATHER THAN CHECKED (223):
+   (1) sunP is a pure function of SUNT, and SUNT has the same range as dayT, so every
+   downstream quantity — the disc's x and y, SHOFF/SHLEN/SHAMT, the sky, the tint — is
+   confined to the exact envelope HEAD already draws. The sun CANNOT reach a screen position
+   it did not already reach, so it cannot be lowered into the .placard (200), and it hits
+   its identical peak at solar noon in EVERY season: sunWarp(NOONT)===NOONT, because
+   sin(0)===0. Only the TIMING moves.
+   (2) dayLen() is centred on the season's mean (245), so it is EXACTLY 0 at the equinoxes
+   (seasonCool()===0.5) — where `t + 0*sin(...)` is t to the last bit, the guard returns t
+   unconditionally, and the whole patch renders BYTE-IDENTICAL to HEAD. An exact, falsifiable
+   proof that a seasonal day length adds no draw work whatever: it is a coordinate remap of a
+   lookup the frame was doing anyway.
+   DAYLEN is bounded by monotonicity, not by taste: the warp folds (the day would run
+   backwards) at 1/(2*PI) = 0.159, so 0.10 keeps d(SUNT)/d(dayT) in [0.37, 1.63] — always
+   forwards. It buys a sunset that swings dayT 0.680 (deep winter) to 0.831 (the dry peak),
+   ~3.6 hours of a 24-hour clock.
+   ONE PREDICATE, FOUR READERS — the sky/tint (daylight), the shadows (SHOFF/SHLEN/SHAMT),
+   the disc (sunP) and the city's bedtime (nightDeep) all read SUNT, so they can never
+   disagree about where the light is. */
+const NOONT=(SUNUP+SUNDN)/2;                             /* solar noon: the fixed point of the warp */
+const DAYLEN=0.10;
+/* +DAYLEN in the deep wet winter, -DAYLEN at the golden dry peak, EXACTLY 0 at the equinoxes.
+   seasonCool() is 1 at the wet trough and 0 at the dry peak, so this rides the calendar the
+   whole rest of the season already keeps — one phase, not a second one to drift out of sync. */
+function dayLen(){ return DAYLEN*(2*seasonCool()-1); }
+function sunWarp(t){
+  const d=dayLen();
+  if(d===0)return t;                                     /* the equinox fixed point, exactly */
+  const u=t+d*Math.sin(6.2831853*(t-NOONT));
+  return ((u%1)+1)%1;
+}
+/* the light curve's own clock. Set ONCE a frame in render(), because windarkAt() reads it
+   once per building (~2.7k times a night frame) and a sin() per call is not free. */
+let SUNT=0;
 
 /* per-frame tinted color cache */
 let TINT=[1,1,1], LITAMT=0, CCACHE={};
@@ -3701,7 +3752,10 @@ const WINDK=0.42, WINDARK=0.16;   /* unlit-glass shade; BASELINE share of panes 
    runs over; smoothstepped, because a city settles, it does not snap. */
 const NIGHT0=0.70, NIGHTSPAN=0.36;
 function nightDeep(){
-  const u=clamp((((dayT-NIGHT0)%1)+1)%1/NIGHTSPAN,0,1);
+  /* SUNT, not dayT (iter 261): the span this runs over is defined by the light curve
+     ("the glass is only drawn while LITAMT>=0.35"), and the season now moves that span.
+     Read raw, a summer city would be 42% into its night at the moment the sun set. */
+  const u=clamp((((SUNT-NIGHT0)%1)+1)%1/NIGHTSPAN,0,1);
   return u*u*(3-2*u);
 }
 /* ...and who is still up depends on what the building IS. A home empties fastest; an
@@ -7573,13 +7627,14 @@ function fogAt(x,y,i){
 function render(){
   FRAMEN++;
   applySeason();
-  const dl=daylight(dayT); setLight(dl);
+  SUNT=sunWarp(dayT);                    /* the season's day length: set before anything reads the light */
+  const dl=daylight(SUNT); setLight(dl);
   {const sb=dl.skyBot; GWARM=clamp((sb[0]-sb[2]-70)/70,0,1); GWSB=sb; GWST=dl.skyTop;} /* golden-hour sea sheen gate (181); the sky the sea mirrors (257) */
   /* the shadow's sun-vector (iter 225) — the SAME sunP/altitude the disc is drawn from
      up in the sky block, so the shadows and the sun can never disagree about where the
      light is. `e` eases the CAST in and out across the horizon, blending toward the
      sunless ambient patch rather than toward zero, so nothing pops at dawn or dusk. */
-  {const sp=(dayT-SUNUP)/(SUNDN-SUNUP);
+  {const sp=(SUNT-SUNUP)/(SUNDN-SUNUP);
    if(sp>0&&sp<1){
      const alt=Math.sin(Math.PI*sp), lo=1-alt, e=Math.min(1,Math.min(sp,1-sp)/0.06);
      SHOFF=e*(2*sp-1)*(0.30+1.15*lo);
@@ -7668,7 +7723,7 @@ function render(){
      at the rim — never a flat additive arc, which has a hard circular edge and reads
      as a coin pasted on the sky (iter 195's law; the rain damp-patch above is the
      house precedent). */
-  const sunP=(dayT-SUNUP)/(SUNDN-SUNUP);
+  const sunP=(SUNT-SUNUP)/(SUNDN-SUNUP);
   if(sunP>0&&sunP<1){
     ctx.setTransform(dpr,0,0,dpr,0,0);
     const sunA=Math.sin(Math.PI*sunP);                    /* altitude: 0 at the horizon, 1 at noon */
@@ -8182,7 +8237,11 @@ function render(){
 let lastSky=0;
 function syncSky(now){
   if(now-lastSky<400)return; lastSky=now;
-  const dl=daylight(dayT);
+  /* warps its OWN clock rather than reading render()'s SUNT: this is the CSS backdrop, and
+     making it depend on render() having already run this frame is a coupling that bites the
+     moment anything calls it out of order (it duly did — 261's own camera painted a night sky
+     behind a daylit noon city). One sin() per 400ms is not a cost worth a hidden ordering rule. */
+  const dl=daylight(sunWarp(dayT));
   const c=v=>'rgb('+(v[0]|0)+','+(v[1]|0)+','+(v[2]|0)+')';
   document.documentElement.style.setProperty('--sky-top',c(dl.skyTop));
   document.documentElement.style.setProperty('--sky-bot',c(dl.skyBot));

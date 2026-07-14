@@ -18138,3 +18138,76 @@ the must-go one — it is the control that names what survives (247) AND the tri
 dead instrument (196), and it is the same column.** The tell: your probe's headline is a count going
 *down*, and nothing in the run is required to stay *up*.
 
+## Iteration 251 — the invariant had never once sampled a lit window (2026-07-14) [Nature × Polish → the harness]
+
+**Vector.** Nature × Polish, taken on the ledger's ranked **#1 🔴 cue (ag)** — *"the night greens
+stay hot: the parks out-brighten the LIT streets and the sand glows like it's still dusk"* — banked
+at 227, **reconfirmed at 242**, and carried at the top of the cue list for 24 iterations. Rotation
+pointed at Urban, whose seam 248 recorded as dry; **119's law** (a banked, measured finding outranks
+kind-rotation) sent me here instead.
+
+**Probe first — and it refuted the cue twice before I wrote a line.**
+`probe-goldenhue` on HEAD: **PARK 81, BELOW the ROAD (82)** and 14 under the dimmest lit surface. The
+greens are not hot. Then the mechanism: I rebuilt the file with **`washRGB` switched off entirely**
+(`w=0` — the pre-214 city on the plain cool tint) and the night ordering came back **IDENTICAL**
+(BEACH 96, MID 95, same breach). So **223's luminance neutralisation is sound and steals nothing**,
+and the cue's named surface *and* its named mechanism are both innocent. What survived was one real
+line: **BEACH 96 >= MID 95**, the unlit sand level with the dimmest lit building type — intrinsic to
+sand's albedo (base `[238,220,178]`, day luminance **221**; the next brightest thing in the palette
+is 173), not to any gain triple.
+
+**Change (built, measured, REVERTED).** An **albedo knee** on the night wash — a real night compresses
+its highlights instead of scaling them — opted into by the seven open-ground draws (beach, dune, the
+sand the wind throws into the lawn), *not* by name, because `sand`/`sandDk` are **shared with the
+building walls** (`towerLook`/RES/MID bodies) and keying it by name would dim the masonry hardest of
+all (cream's night luminance is **103**, above the sand's own) and drag MID's mean *down*. Subtractive,
+not multiplicative: subtracting a constant from all three channels leaves `max-min` and `mid-min`
+untouched, so **hue and chroma both survive exactly** while luminance falls. It worked: **BEACH 96 -> 91**,
+ordering invariant **FAIL -> PASS** (clears by 4), hue guard unmoved (6deg), daylight byte-identical,
+zero path objects.
+
+**...and the guard I added caught it.** `probe-goldenhue` never carried **`BEACH <-> ROAD`** — **214's own
+headline pair** (*"the sand and the asphalt literally become the same colour"*), the exact collapse the
+whole wash ladder exists to prevent. Added, it reads **HEAD 24 -> patch 18** (multiplicative: **14**, under
+the ~15 floor). **Every unit the sand falls walks it toward the asphalt**, because the window between
+ROAD (82) and MID (95) is only **13 units wide**. The two inherited gates squeeze from both sides and
+the sand cannot sit between them with margin on both.
+
+**Visual — and it is what turned the lap.** Two agents, two seeds, blind, **crossed A/B** (238), naming
+files not letters (239). Both PASSed; both correctly identified the patch as the dimmer build (the
+checkable locate). But **both, unprompted, on both seeds, said the shoreline does not glow — in EITHER
+build.** Seed 7 measured it: the shore is **"a quiet dark ribbon"** at ~87-92 against a **frame max of
+237-244** from the tower windows and the moon. HEAD's beach was never glowing.
+
+**The root cause: the invariant had never once sampled a lit window.** `probe-goldenhue` sampled
+`getImageData(sx, sy, 1, 1)` — **ONE pixel, at the hex centre** — for its whole life (**238's defect,
+recursing a fourth time, inside the probe the header already warns about**). For flat sand that is
+fine. For a **building** the centre pixel lands on its **ROOF**, so the night luminance of every LIT
+type was measured **without ever sampling a lit pane**, and the invariant was comparing *the beach's
+sand to a building's roof*. Worse, it scored the **MEAN** — and a building reads as lit because of its
+**windows**, not because its hex average is high, so averaging discards exactly the information that
+makes it lit. A flat pale surface therefore "out-brightens" a lit high-variance one on the mean while
+looking obviously dimmer to any eye.
+
+**Fixed the instrument (the artifact needed nothing).** Area sample (the hex's own box, per 238) +
+score the invariant on the **p90 ENVELOPE** — what the lit panes actually put on the facade (**224:
+the eye reads the EXTREME, not the mean**) — with the mean kept as a diagnostic. On **pristine,
+unmodified HEAD**:
+```
+p90: *TOWER 131  *MID 123  *COM 119 |  BEACH 98  ROAD 98  PARK 97  FOREST 85  FARM 82  WATER 72
+     -> the lit city clears the brightest unlit surface by 21.        VERDICT: PASS
+mean: BEACH 91  *TOWER 84  *COM 84  *MID 81 ...  -> the artifact of the old score, entire.
+```
+The area sample also exposes how badly the centre pixel distorted the **hue guards**: PARK's alarming
+**26deg off its daylight self** — part of what (ag) rested on — is **1deg** when you sample the park
+instead of one pixel of its pond.
+
+**Census.** PASS, and vacuous by construction (colour-only). Final tree: `solvista.html` is
+**byte-identical to HEAD** (`git diff` empty — a proof, not a sample).
+
+**Verdict — FIXED (the harness), the artifact change EXPLORED -> REVERTED.** The city was never broken.
+A probe that could not see a lit window generated a FAIL, the FAIL became the loop's #1 cue, the cue
+was re-confirmed twice **by the same broken instrument**, and its prescription — dim the sand — would
+have damaged 214's guard by 25% to buy a number no viewer can see. **Cue (ag) is CLOSED, refuted on
+every count.**
+
