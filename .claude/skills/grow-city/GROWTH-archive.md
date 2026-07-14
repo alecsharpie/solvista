@@ -18960,3 +18960,103 @@ day **110,854 → 110,785**, night **139,598 → 139,671** (±0.05%, entity wobb
 Now the cab works the kerbs where there is something to come out for, goes dark with a fare aboard,
 and says so.
 
+## Iteration 259 — the observatory was dropped on downtown, under the brightest sky it had (2026-07-14) [Civic & culture × Deepen]
+
+**Vector.** Civic & culture × Deepen. Civic was the oldest domain (stale since 250, 8 laps).
+Its cue list was empty, so I grepped the seam instead of trusting it (225) — and the seam held
+a four-witness tell.
+
+**The tell.** `CIVICDESC.observatory` has promised *"A dome out on the **dark rim** of the city,
+open to the night"* for the artifact's whole life. `siteQuarter`'s comment says the observatory
+*"wants the dark rim"*. `CIVICDESC`'s own preamble says *"the observatory the dark rim"*.
+`CIVHRS.observatory=1` because *"its whole night is just beginning"*. **Four readers, one story
+— and the dome went through the same uniform random scatter as the police station** (`rcIn(2,
+SHOREX-1,2,G-2)` + `roadNear`), with no darkness term anywhere in it. 199's tell, on its richest
+host yet: not one label but a label, two comments and an hours-constant, all asserting a siting
+the rule cannot perform.
+
+**Probe first (`probes/probe-darksky.mjs` — pure world data, no render, no clock, no noise floor).**
+The quantity is not a proxy: `genWorld` builds `c.lit` from `hexDist`-to-CBD (the `LITR`=34 glow +
+the `CORESIG` core bump) and it is `drawBuilding`'s ONLY window-light term, so it *is* how bright
+the night frame renders a lot — and it is fixed at `genWorld`, so unlike the amphitheater's frontage
+(231) the predicate cannot rot as the city grows. HEAD, paired over 10 seeds at 2035:
+**mean `obs.lit` 0.389** against a random-lot expectation of **0.310** — *statistically
+indistinguishable from a random lot, if anything slightly brighter*. Range **0.026 → 1.000**. On
+seed 1234 the dome stood at **`c.lit` 1.000, the field's MAXIMUM, TWO hexes from the founding
+crossroads** — the city put its observatory on the CBD. The **AQUARIUM is the positive control**
+(248): a real siting rule, scored the same way on its own predicate, reads dist-to-water **1 on all
+six seeds** against a random inland lot's 7–9 — so the rig can see a preference, and the
+observatory's flatness is real flatness.
+
+**Change.** `siteDark(kind)`, beside `siteQuarter` and in its idiom (248: grep for the neighbour
+that already solves your problem) — a deterministic scan, **no `rng()` draw**, so the caller's
+90-try scatter still runs and still spends its draws and the stream is untouched; only the lot
+changes. A **PREFERENCE, never a gate** (206): the best of the pool always takes it, so the
+one-per-city dome can never be lost (placed 6/6, 10/10). The tooltip now names the sky off the
+**same `c.lit`** the rule minimises and the draw brightens by — one field, three readers (123,
+forwards).
+
+**⚠ Two bugs caught before shipping, both by a gate rather than by luck:**
+1. **A salt collision that would have killed iter 158.** My tie-break first used `seedNum^0x0B5E`
+   — which is the salt the dome's own draw flips its **slit azimuth** on. *An argmin over a shared
+   salt is a **selection** on it*: the winner is always the lowest hash, so `sd` would have come back
+   **−1 in every city** and the per-city azimuth would have silently died. Caught by adding an
+   azimuth column to the probe; now `0xDA25`, and the column reads `[1,1,−1,−1,1,−1]`.
+2. **My own probe was measuring a city nobody renders.** Part A warped in two hops
+   (`__warp(43.5)` then `__warp(17.5)`); `__warp` ticks `while(year<target)`, so two hops land a
+   **different tick count** than one, and it built a different city than the census, the camera and
+   Part B (which all use a single `__warp(61)`). A *prefix* warp is on the trajectory; a two-hop
+   warp is not.
+
+**The headline claim FAILED in the viewer's units, and the probe that found that is the lap.**
+`probes/probe-domedark.mjs` asked the question a viewer actually asks — *how much lit city
+SURROUNDS the dome* (mean rendered luminance of the live hexes within 5, sampled over each hex's
+AREA per 238, off a frame with the dome itself suppressed). Answer: **HEAD 76.2 → patch 74.6,
+−1.9%. Invisible.** Only seed 1234 moves (−19.4%); on two seeds the patch is *brighter*. **A blind
+agent said exactly this** (*"ringed by lit towers… neither is stranded out in the dark"*) and it
+was right. The cause is in the draw: **`lit = LITAMT*(0.35 + 0.65*c.lit)` has a 0.35 FLOOR**, so
+`c.lit=0` is not *dark*, it is *35% lit* — the rendered dynamic range is 2.9:1 and it is swamped by
+everything else in the hex that never reads `c.lit` at all. **I scored a perfect 0.000 on a
+quantity the viewer cannot see** (205 + 254). ⇒ **LAW promoted to SKILL.md.**
+
+**But the same probe found the defect that carries the lap: THE DOME WAS BURIED.** Draw order is
+depth order, and nothing had ever scored the observatory's sightline. Measured
+(`occluded% = 1 − inkInPlace/inkOnTop`, probe-amphvis's rig retargeted; one page, floor exactly 0,
+read off the final composited canvas):
+
+| | HEAD | siteDark, darkness only | **shipped (+ sightline)** |
+| --- | --- | --- | --- |
+| mean occluded | **54.5%** | 25.4% | **5.9%** |
+| >half buried | **3 / 6** | 1 / 6 | **0 / 6** |
+| worst seed | **97.8%** (seed 1234: **8 px**) | 80.8% (seed 42) | **12.2%** |
+
+A darkness-only rule halved burial *by luck* (the rim is thinner than the core) and **buried seed 42
+WORSE than HEAD did — 80.8% vs 28.0%** — because nothing scored the sightline. So: **two gates on one
+feature, made to point the same way (244)**, using the predicate the artifact already ships —
+`groundLoad` (231: it sums the DRAWN HEIGHT of the two rows in front and counts a `RAISEABLE` lot at
+`FUTUREH`, because an empty lot is not a clear view, it is a building that has not been built yet).
+`DARKGL=0.005` **swept end-to-end, not guessed** (0.002 leaves seed 99 at 29.9%; 0.012 is
+indistinguishable from 0.005). The sightline term costs a little darkness — capture 0.997 → **0.844**,
+`obs.lit` **0.050** — still far below the random-lot 0.310, and **no seed in `CORER`** (d = 20–33).
+
+**Census.** PASS, 0 page errors. `pop` +1.25%, `roads` +1, `developed` −0.1%, `civicKinds` flat.
+`schools −3` looked alarming and was **the chaos, not me** (231): paired over 10 seeds at 2035,
+**schools 4 → 4 on every seed, mean delta 0.00, down on 0/10**, `CIVIC` identical. The −3 was a
+mid-growth timing wobble in the 2005 era from the reshuffled stream. Path objects (222 — a
+world-changing vector is not free just because its diff has no draw call): day **+0.12%**, night
+**+0.26%** — flat.
+
+**Visual.** Two agents, blind, crossed A/B mapping (238), asked to LOCATE with an answer key I held
+(108). **Both convicted HEAD.** Seed 7: HEAD *"almost buried… at 1x you would never find it"*; the
+patch *"reads instantly as an observatory… nothing tall in front"* — and it said outright that the
+patch **"is the correct behaviour"**. Seed 1234: HEAD *"I cannot find it. Frame centre is a solid
+wall of lit towers… 100% buried"* — which is the probe's 97.8% / 8 px, confirmed blind by an eye.
+Its patch read (*"only the cap, 25–30%"*) contradicted the measured 3.7%, so I **looked at that one
+PNG myself**: the dome sits in the open on a green hex beside a pond, nothing in front of it. The
+agent conflated **small** with **buried** — which is a real, separate cue, banked below.
+
+**Verdict. DEEPENED.** The observatory's label has promised the dark rim for the artifact's whole
+life; the rule dropped it anywhere, and three seeds in six the city buried the landmark it had just
+built — one of them down to eight pixels. It now stands where its label always said, and where you
+can see it.
+

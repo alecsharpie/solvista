@@ -701,6 +701,42 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A CAMERA SET THROUGH A *DERIVED* QUANTITY RENDERS A FRAME THAT CONTRADICTS ITS OWN HUD — DRIVE THE STATE THE APP
+  DRIVES, NEVER THE VARIABLE IT COMPUTES (iter 269).** 264 says a camera pin must be *derived from the curve at shoot
+  time, never stored*. 269 is its structural sibling and it is about **which variable you are allowed to write.** The
+  artifact's camera contract is `zoom` (1 = the fitted diorama), and `setZoom` does **`scale = fitScale * zoom`** — so
+  **`scale` is an OUTPUT, not an input.** I set `scale = 4.6` directly. The canvas duly rendered at **7.2x** while the
+  HUD's zoom pill, which reads `zoom`, went on truthfully reporting **`1x`** — and an agent that read the pill
+  **correctly** called the frame un-zoomed and *refused to grade it*. That is a whole gate round spent on a frame that
+  was internally inconsistent, and note the shape: **the agent was right, the artifact was innocent, and the
+  contradiction was invisible to me because I never looked at the HUD.** ⇒ **Before you write ANY page global from a
+  probe or camera, `grep` for the function the app uses to set it and check what else that function writes.** If the app
+  never assigns your variable directly, neither may you. The tell — and it is the only one you get: **your frame's own
+  self-report (202) disagrees with your frame**, which is precisely the condition 202's self-reporting exists to catch,
+  arriving on a quantity you did not think to print. (Corollary: this is 204's HUD-does-not-follow-a-frozen-clock law
+  one rung deeper — 204 says *force* `syncStats()`; 269 says the value it syncs must have been **set correctly in the
+  first place**, or forcing it merely publishes your error with more authority.)
+- **AN AIMING PREDICATE THAT CORRELATES WITH YOUR FEATURE'S *MEANING* USUALLY CORRELATES WITH ITS *OCCLUSION* — SO
+  "AIM AT THE MOST X" FRAMES THE MOST BURIED INSTANCE, BY CONSTRUCTION (iter 269, cashing 258).** 226 says aim by
+  measured ink, never by a tile predicate; 258 says the predicate that makes a behaviour *meaningful* can be the
+  predicate that *buries* it (the cab stops at a `livelyKerb`, which is by definition ground with tall frontage). 269
+  is the two laws **colliding inside the camera**, and it is the form that feels most obviously correct while you write
+  it. I aimed the streetcar's close-up at *"the tram nearest the BIGGEST avenue"* — an eminently sensible framing. But
+  the biggest avenue is the **highest-flow trunk**, and the highest-flow trunk is **downtown**, and downtown is **where
+  the towers are** — so my aiming rule was **positively correlated with occlusion** and framed the single most buried
+  streetcar in the city. Two agents, on two rounds, duly FAILed a frame whose centre was a tower wall. Re-aimed by
+  **argmax of measured ink** (suppress each candidate in one page, diff, take the best), the same build PASSed with a
+  full unprompted confirmation. ⇒ **When your camera's aiming rule contains a superlative — the biggest, the busiest,
+  the densest, the most central, the liveliest — stop and ask what that superlative is MADE OF.** If it is made of
+  *tall neighbours* or *dense fabric*, you are aiming at a wall. **Aim by ink; let the predicate choose the CANDIDATE
+  POOL, never the WINNER.** The tell: your aim is a `min`/`max` over a field that also drives development.
+  ⇒ **AND THE COROLLARY THAT SAVED THE LAP: THE SAME CORRELATION IS A REAL COST, NOT ONLY A CAMERA BUG — SO PRICE IT ON
+  THE AGGREGATE BEFORE YOU BELIEVE EITHER THE CROP OR YOUR FEAR.** The burial was *also* genuinely happening (on the
+  worst seed the best on-avenue tram rendered **13px**), and a crop is an **n=1 sample of exactly the tail** (258). The
+  honest instrument is the **population**: visible ink per instance, HEAD vs patch, over all seeds — which came back
+  **+23%, up on 5 of 6.** The feature makes the thing MORE visible on average and less visible in one tail. **A single
+  damning close-up and a healthy aggregate are not in conflict; they are the distribution.** Report both.
+
 - **A PROBE'S *ADJACENCY* IS AS WRONG-ABLE AS ITS UNITS — AND A "SMOOTHED" HASH IS NOT A SMOOTH FIELD, IT IS A
   BLOCKY ONE (iter 268).** 228's law says re-derive the instrument from the complaint's nouns; 238 says check *where*
   it samples; 235 says read what it *measures*. 268 is the fourth axis, and it is the one that will hand you a passing
@@ -2877,6 +2913,30 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `rng()` draws, so HEAD's city is a *different* city and the same hex need not even be industrial in it. Aimed by
   **measured ink** (226), pins **derived** from the light curve (264), frames named **by FILE** with the map **CROSSED**
   between seeds (238/239), and every frame **self-reports what is standing at its centre** (258)).
+  The **avenue pair** (269 — reach for these on any vector about a MOVER'S ROUTE, and on any "does X follow the main
+  roads / the network / the trunk" claim): `probe-avenue.mjs` (**does this mover go where its label says?** TEMPORAL
+  (134 — every other gate here is frozen, so *"she never rides the avenue"* has no instrument): it drives the artifact's
+  **OWN `advanceEntities`** and samples where each vehicle actually stands, tick by tick. ⚠ **Its THREE controls are the
+  reusable idea, and they are what make the headline believable.** The **POLICE is a FREE POSITIVE CONTROL** (248) — a
+  *correct sibling in the same array and the same step function* that provably reads `c.flow` (`servTarget`), so at
+  **1.74x chance** it proves the probe **can see an avenue-rider** and a tram's 1.04x is a *real* flatness, not a dead
+  rig. **CAR/BIKE/TRUCK are the must-not-move column** (250) — uniform walkers that must sit **on** the chance line —
+  and they also **MEASURE the chance line** instead of my assuming it (205: the bar is the artifact's, not mine).
+  ⚠ **Part A is the DESIGN GATE and it runs BEFORE you write a line**: it counts the host's **CONNECTED COMPONENTS,
+  DEAD ENDS and mean DEGREE** (263: a rule that must *travel* a host needs a NEIGHBOUR, not a population). It is what
+  forbade the obvious fix — a tram *confined* to the trunk **strands in a block**, so the mechanism had to be a
+  PREFERENCE. ⚠ **Part C is 206's SECOND LEDGER**: distinct hexes reached, because *a mover pinned to a stub is a worse
+  artifact than a wanderer*. ⚠ **Part D is the other second ledger — CAN SHE STILL BE SEEN?** — ink per instance,
+  isolated by suppressing the layer **in ONE page** (230; floor exactly 0, occlusion free, build-agnostic). **Run D even
+  when you came for B**: it is the only thing that can tell a real burial from a cherry-picked crop),
+  `shot-avenue.mjs` (its camera, and it is the **cautionary** one — **it framed a TOWER twice.** ⚠ **Drive `zoom`, NEVER
+  `scale`** (`setZoom` derives `scale = fitScale*zoom`; setting `scale` renders a zoomed canvas under a HUD still saying
+  `1x`, and an agent will correctly refuse to grade it). ⚠ **Aim at `_sx`/`_sy`, NEVER `ctr(x,y)`** (204 — measured here
+  at **7–27 world-px = 32–119 screen px** of miss). ⚠ **Aim by ARGMAX OF MEASURED INK, never by "nearest the biggest
+  avenue"** — the biggest avenue is the highest-flow trunk, which is *downtown, among the towers*, so that predicate
+  frames the **most buried** instance by construction (see the law). Terrain is identical across builds, so the
+  whole-city frame is a genuinely blind A/B; frames named **by FILE** (239), map **CROSSED** between seeds (238), tokens
+  **meaningless** not ordinal (268), pins **DERIVED** from `sunWarp`/`SUNUP`/`SUNDN` (264)).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

@@ -1459,6 +1459,10 @@ const HOME=new Set([T.RES,T.MID,T.TOWER]);
    trunks on their own — a river crossing is a bottleneck every trip must share.
    Reads topology + val, writes only c.flow: no rng(), no hashCell, no terrain. */
 const ARTFLOW=64;                    /* trip-units above which a street is an arterial */
+/* ...and the ONE definition of "this hex is an avenue" (112's law). The cruiser's
+   dispatch (servTarget), the hover's `__find('arterial')` and the streetcar's route
+   all answered this question separately; they now all ask it here. */
+const isAvenue=(x,y)=>{const c=cellAt(x,y);return !!c&&c.t===T.ROAD&&c.flow>=ARTFLOW};
 /* How far a home may be from a stop and still count as served by transit — and,
    since iter 211, how far a railway platform may reach for the street that feeds
    it. recount()'s rTransit and the interchange rule are the same claim about the
@@ -3055,6 +3059,11 @@ function roadNbrOpts(x,y,ex,ey){
   }
   return out;
 }
+/* the streetcar's two levers (stepVehicle + syncFleet): how hard she looks for the
+   trunk when she rolls out, and how hard she holds it at a junction. Both are
+   PREFERENCES — with no avenue in reach she drives HEAD's byte-identical rule. */
+const AVESPAWN=6,     /* re-rolls for an avenue to start her run on */
+      AVESTAY=0.85;   /* chance she takes the avenue when one is on offer */
 const CARCOLS=['cream','terra','sage','teal','white','coral'];
 function syncFleet(){
   const roads=roadCells();
@@ -3103,11 +3112,15 @@ function syncFleet(){
   }
   /* streetcars ride the avenues from the mid-80s. Spawn picks use Math.random
      (like vehicle steering) so the fleet never perturbs the seeded CA stream —
-     the count is deterministic (roads.length), only the placement varies. */
+     the count is deterministic (roads.length), only the placement varies.
+     She now STARTS her run on the trunk: AVESPAWN re-rolls for an avenue and
+     settles for any street if the young city has not grown one yet, so an
+     ordinary road is never forbidden — only asked for less often (219). */
   const wantTrams=year>=1985?fl('trams',Math.min(6,2+(roads.length/60|0))):0;
   let tguard=0;
   while(trams.length<wantTrams&&roads.length>2&&tguard++<200){
-    const[x,y]=roads[(Math.random()*roads.length)|0];
+    let x,y;
+    for(let k=0;k<AVESPAWN;k++){[x,y]=roads[(Math.random()*roads.length)|0];if(isAvenue(x,y))break}
     const opts=roadNbrOpts(x,y);
     if(!opts.length)continue;
     const[nx,ny]=opts[(Math.random()*opts.length)|0];
@@ -3372,7 +3385,7 @@ function servTarget(v){
   const roads=roadCells(); if(!roads.length)return null;
   const want=[];
   for(const[x,y]of roads){
-    if(v.kind==='police'){ if(cellAt(x,y).flow>=ARTFLOW)want.push([x,y]) }
+    if(v.kind==='police'){ if(isAvenue(x,y))want.push([x,y]) }
     else if(v.kind==='ambo'){
       for(const[dx,dy]of nbrDirs(y)){const n=cellAt(x+dx,y+dy);if(n&&AMBOCALL.has(n.t)){want.push([x,y]);break}}
     }
@@ -3453,6 +3466,28 @@ function stepVehicle(v,dt){
       /* only if it actually descends — it may not, since roadNbrOpts forbids the U-turn.
          Then it takes the ordinary rule, drives on, and comes back around. */
       if(cands.length&&(here<0||bd<here))pick=cands[(Math.random()*cands.length)|0];
+    }
+    /* THE STREETCAR RIDES THE AVENUES.
+       Her tooltip has read "Riding the avenues since 1985" — and her spawn comment
+       "streetcars ride the avenues" — for the artifact's whole life, over a vehicle
+       that picked a UNIFORMLY RANDOM road (byte-identical to the bike and truck
+       spawns either side of it) and then random-walked it. probe-avenue measured
+       her at 1.04x the chance line: LESS avenue than an ordinary car (1.10x), while
+       the cruiser, which genuinely reads c.flow, rides at 1.74x. The city has
+       published the avenue since iter 77 (`flow>=ARTFLOW`, the drainage trunk),
+       DRAWS it with its own centre line and a lit night corridor, and routes the
+       cruiser down it. The one vehicle NAMED for it could not see it.
+       A PREFERENCE, never a rail (206) — and it MUST be: the avenue is not a
+       rideable network. probe-avenue's host table reads 9-16 components, the
+       biggest holding 23% of arterial cells, 20% of them dead ends, mean degree
+       1.85 — while roadNbrOpts forbids the U-turn, so a tram CONFINED to the trunk
+       would strand within a block. She keeps to the avenue while there IS one and
+       takes the ordinary rule when it runs out, which is what a streetcar does.
+       Pure addition (219): with no avenue in reach this is byte-identical to HEAD. */
+    if(!pick&&v.kind==='tram'){
+      const av=opts.filter(o=>isAvenue(o[0],o[1]));
+      if(av.length&&Math.random()<AVESTAY)
+        pick=(straight&&av.includes(straight))?straight:av[(Math.random()*av.length)|0];
     }
     if(!pick)pick=(straight&&Math.random()<0.72)?straight:opts[(Math.random()*opts.length)|0];
     v.nx=pick[0];v.ny=pick[1];
@@ -8952,7 +8987,13 @@ const ENTINFO=[
       const body=plur(g.path.length-1,'span')+' over the low-rise strip.';
       const head=gonds.length>1?'Line '+(cb._li+1)+' of '+gonds.length+' — '+body:'An aerial line — '+body;
       return head+(cb.dw>0?' Standing at the terminal.':'');},7],
-  [()=>trams,'Streetcar','Riding the avenues since 1985.',9],
+  /* the string that started iter 269: it promised "the avenues" over a car that rode
+     them at 1.04x chance — less than an ordinary sedan. It now reads the SAME
+     predicate the route steers by (isAvenue), computed live and never stored, so the
+     label and the draw cannot drift apart again. */
+  [()=>trams,'Streetcar',v=>isAvenue(v.x,v.y)
+     ?'Riding the avenue — the trunk the whole city drains down.'
+     :'Working a side street, back to the avenue.',9],
   [()=>trucks,'Delivery truck','Stock for the shopfronts.',9],
   [()=>bikes,'Cyclist','Two wheels beat the traffic.',6],
   [()=>peds,'Resident',residentDoing,5],
@@ -9127,7 +9168,7 @@ window.__find=n=>{
   const tv=T[String(n).toUpperCase()], out=[];
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];if(!c)continue;
-    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='interchange'&&c.stop===2)||(n==='arterial'&&c.t===T.ROAD&&c.flow>=ARTFLOW)||(n==='highst'&&c.hstr)){
+    if((tv!==undefined&&c.t===tv)||(c.t===T.CIVIC&&c.kind===n)||(n==='fete'&&c.fete)||(n==='hedge'&&c.hedge)||(n==='party'&&c.party>0)||(n==='shroom'&&c.shroom>0)||(n==='stop'&&c.stop)||(n==='interchange'&&c.stop===2)||(n==='arterial'&&isAvenue(x,y))||(n==='highst'&&c.hstr)){
       const[cx,cy]=ctr(x,y);out.push({x,y,sand:c.sand,sx:cx*scale+offX,sy:cy*scale+offY});}}
   return out;};
 /* test hook: locate every town-hall clock face + its live hand (iter 149). sx/sy
