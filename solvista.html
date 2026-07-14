@@ -3473,6 +3473,31 @@ const curfewAt=(x,y)=>CURF0+CURFB*buzzN(x,y)+Math.random()*CURFJ;
    no buzz term: the esplanade is quiet ground, an evening run is a thing and a 3am one is
    not. Every runner is in by nightAmt 0.62. */
 const JOG0=0.16, JOGJ=0.46;
+/* ...AND SO DOES THE CHILD (iter 262), who until now kept the oldest bug in the house.
+   drawPed draws a little one beside ~18% of residents, and hid it on `LITAMT < 0.5` --
+   the very gate the comment above this one was written to condemn. LITAMT is GLOBAL and
+   monotone through dusk, so that threshold fires for EVERY child in the city in the SAME
+   FRAME. Measured (probe-kidbed): DISTINCT BEDTIMES = 1 on every seed -- all 13-19 of
+   them blink out together, at nightAmt 0.009, which is the first dark frame there is.
+   Their parents walk on for hours (mean `out` 0.85), and not one child in any city was
+   ever taken home by one. 199 taught the windows to go to bed, 210 the residents and the
+   joggers, 230 the traffic; the child is the third recursion of that gate and the last.
+   The hour is taken from the ladder above, not invented: a child is in before a runner
+   (0.62) and long before the crowd (up to 1.85), so it keeps the EARLIEST hour in the
+   city -- every child in by nightAmt 0.34.
+   `Math.min(p.out, ...)` is the invariant, and it is STRUCTURAL rather than checked (223):
+   a child can never be left out later than the parent holding its hand. On quiet ground,
+   where the parent turns in early, they go in together; on a lively kerb the child goes
+   first and the parent stays.
+   DERIVED, NOT DRAWN: `p.kid` is already a Math.random uniform (1 + rand*6), so (kid/6)%1
+   is EXACTLY uniform on [0,1) and costs no new random draw. The seeded rng() stream and
+   the shared Math.random stream are both byte-identical, so every adult's curfew, every
+   dog's owner and every jogger is provably untouched -- which is what lets probe-kidbed
+   carry the adults as an exact must-not-move control (250) rather than an approximate one.
+   ONE predicate, three readers: the DRAW (drawPed), the TOOLTIP (residentDoing) and the
+   probe -- so the sentence and the pixels cannot drift apart (112). */
+const KID0=0.04, KIDJ=0.30;
+const kidOut=p=>Math.min(p.out,KID0+KIDJ*((p.kid/6)%1));
 /* ---- the traffic keeps hours too (iter 230) -------------------------------
    The city's PEOPLE learned to go to bed -- the windows at 199 (BEDT), the crowd and its
    dogs and runners at 210 (curfewAt) -- and its TRAFFIC never did: at 3am the streets still
@@ -4335,6 +4360,10 @@ const nightAmt=()=>nightDeep()*clamp((LITAMT-NIGHTLO)/NIGHTFADE,0,1);
    leashed dog goes home when its human does, so both draws consult that same hour rather
    than stranding a dog on a leash held by nobody. */
 const pedHidden=p=>nightAmt()>p.out;
+/* ...and the little one goes in first, on its own hour (kidOut), one at a time — the same
+   clock, one rung earlier. A hidden parent already returns before the child is drawn, so
+   the pair can never come apart: child in, then parent. */
+const kidHidden=p=>nightAmt()>kidOut(p);
 function drawDog(d){
   const p=ownerOf(d);
   if(p&&pedHidden(p))return;
@@ -7315,7 +7344,9 @@ function drawPed(p){
   ctx.fillRect(cx-0.9,gy-3.6-bob,1.8,2);
   ctx.fillStyle=col('ink',1.4);
   ctx.beginPath();ctx.arc(cx,gy-4.4-bob,1,0,7);ctx.fill();
-  if(p.kid&&LITAMT<0.5){ /* a little one skips alongside; home by dark */
+  if(p.kid&&!kidHidden(p)){ /* a little one skips alongside, and is in before the grown-ups
+    — on its own hour now (kidOut), not on the global light: the whole city's children used
+    to leave in a single frame, at the first dark frame of the evening (iter 262) */
     const sk=Math.abs(Math.sin(time*5.5+p.kid))*1.1; /* skipping bounce */
     const kx=cx+1.9,ky=gy-sk;
     shadS(kx,gy,0.06,0.15); /* the little one's shadow stays on the ground it skips over */
@@ -8659,7 +8690,13 @@ function outLate(p){
   if(p.out>=1)return ' Out till dawn.';
   return n>p.out-0.18?' About to call it a night.':' Staying out a while yet.';
 }
-function residentDoing(p){return residentWhere(p)+outLate(p)}
+/* The little one, if they have one out with them — the THIRD reader of `kidOut` (iter 262),
+   off the same hour the draw hides it by, so the sentence and the pixels cannot drift. */
+function withChild(p){
+  if(!p.kid)return '';
+  return kidHidden(p)?' The little one has gone in.':' A little one in tow.';
+}
+function residentDoing(p){return residentWhere(p)+withChild(p)+outLate(p)}
 function residentWhere(p){
   if(onPier(p.x,p.y))return 'Out on the pier for the view.';
   const n=cellAt(p.x,p.y), t=n?n.t:-1;

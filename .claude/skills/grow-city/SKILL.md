@@ -684,6 +684,31 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **WHEN YOU FIX A RULE, GREP THE *DRAW FUNCTION* FOR THE OTHER THINGS IT DRAWS — A FIX APPLIED TO AN ENTITY IS NOT
+  APPLIED TO ITS *DEPENDENTS*, AND THE UNFIXED SIBLING IS USUALLY *INSIDE THE FUNCTION YOU JUST EDITED* (iter 262).**
+  217 says: when a rule decides both *whether* and *how much*, a fix to one clause is mistaken for a fix to the
+  phenomenon. 224 says: grep for every rule that **writes** the field. 262 is the third sibling and the most embarrassing,
+  because the defect does not hide in another file — **it hides three lines below the fix.** Iter 210 gave every resident
+  a per-resident bedtime (`pedHidden`), explicitly to stop the crowd "blinking out in a single frame at dusk", and wrote
+  that reasoning into a comment. **`drawPed` also draws a CHILD beside ~18% of residents, and the child stayed on the very
+  gate 210 was written to condemn** (`if(p.kid && LITAMT < 0.5)`). `LITAMT` is **global and monotone**, so that threshold
+  fires for **every child in the city in the same frame**: measured, `DISTINCT BEDTIMES = 1` on every seed, mean
+  `nightAmt` **0.009** — *the first dark frame there is* — while their parents walked on for hours (mean `out` 0.85) and
+  **not one child in any city was ever taken home by one.** It survived 52 iterations because *"the children go home at
+  dark"* is **true**, and nobody read it beside the line above it. This was the **fourth** recursion of one gate (199 the
+  windows · 210 the residents + joggers · 230 the traffic · 262 the child). ⇒ **After you fix a per-entity rule, `grep`
+  the function you fixed for every OTHER draw it issues, and ask whether each keeps the same kind of state.** The tell:
+  your fix's own comment explains why a *global* signal was the wrong gate, and the same function still contains one.
+  ⇒ **AND THE COROLLARY IS A FREE, EXACT CONTROL: TAKE A PER-ENTITY JITTER FROM A UNIFORM THE ENTITY *ALREADY HAS*,
+  NEVER FROM A FRESH `Math.random()`.** 204 warns that a stubbed **shared** stream makes a per-entity control worthless,
+  because your patch draws a different *number* of values and everything downstream walks a different walk. The escape is
+  not a better control — it is **to draw nothing at all**. `p.kid` was already `1 + Math.random()*6`, so `(p.kid/6)%1` is
+  **exactly** uniform on [0,1) *by construction* and costs **zero** draws ⇒ the seeded `rng()` stream **and** the shared
+  `Math.random` stream both stay **byte-identical**, and the probe's must-not-move column (the adults' curfews) comes back
+  **identical rather than merely close** — which is what makes a "nothing else moved" claim provable instead of asserted.
+  **Before adding a random draw to an entity, check what uniforms it is already carrying.** (This is 249/261's
+  re-index-an-existing-curve law, arriving on the *PRNG* instead of on a lookup.) (`probes/probe-kidbed.mjs`.)
+
 - **A SIGNAL THAT CANNOT BE SEEN ON THE CHANNEL YOU PAINTED IT ON IS USUALLY NOT A LOOK AT ALL — ASK WHAT THE SIGNAL
   IS A SIGNAL *OF*, AND PAY IT IN THAT COIN (iter 261).** 260's law is the diagnosis (a global multiplicative chroma
   cast is exactly what colour constancy divides out, so the season was 1.2x *louder* than the golden hour and seen by
@@ -2535,6 +2560,20 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   builds × both seasons, **named by FILE** (239) with the map **CROSSED between seeds** (238), each frame self-reporting
   in the **VIEWER'S** units (236: *"sun is DOWN · today's sunset 0.701"*, never `dayLen=0.08`). ⚠ It calls `render()`
   **before** the DOM sync, exactly as `frame()` does — the reverse order painted a stale sky and drew a false FAIL).
+  The **bedtime pair** (262 — reach for these on any vector about an entity's SCHEDULE, HOUR or CADENCE, and on any
+  "does X keep its own clock" claim): `probe-kidbed.mjs` (**TEMPORAL** (134 — every other gate here is frozen, so
+  *"they all leave at once"* has no instrument) and it reads **NO PIXELS**, so it has **no noise floor at all**. ⚠ **It
+  is BUILD-AGNOSTIC** — it asks the page whether the new predicate exists and falls back to HEAD's literal gate, so ONE
+  file grades both builds with **no source swap and no cross-build floor** (230). ⚠ **Its headline needs no threshold**:
+  when the vector is "make X vary", HEAD's answer is a CONSTANT by construction, so **`DISTINCT BEDTIMES = 1` IS the
+  defect, stated** (236). ⚠ **Its ADULTS column is a FREE POSITIVE CONTROL *and* the must-not-move column in one** (248 +
+  250): the parents' curfew is a *correct sibling mechanism in the same function*, so if it does not read a spread the
+  **probe** is broken, not the city — and because the fix draws no new random values it must come back **identical**, not
+  merely close), `shot-kidbed.mjs` (its camera — ⚠ **the expected result on HEAD is an ABSENCE, so every frame
+  SELF-REPORTS its host's presence** (258: an absent subject and a correctly-negative subject render the same frame) and
+  the **day close-up is a REQUIRED POSITIVE TWIN** — by day both builds *must* show the child, or the camera is broken.
+  Aims by **measured ink** (226): suppresses the children in ONE page (230) and takes the argmax of their own ink, then
+  **forces the same aim onto HEAD** so the pair is blind. Frames named **by FILE** (239), map **crossed between seeds**).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will
