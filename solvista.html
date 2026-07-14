@@ -846,7 +846,7 @@ function blob(cx,cy,r,fn){
 function genWorld(seed){
   seedNum=seed; rng=mulberry32(seed);
   sAmp=1.2+rng()*1.6; sFreq=0.22+rng()*0.24; sPh=rng()*7;
-  year=1974; dayT=0.30; devBudgetUsed=0;
+  year=1974; dayT=0.30; devBudgetUsed=0; TICKN=0;   /* the bloom's clock is part of the world */
   vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];ferries=[];freighters=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
   /* the coast highway hugs the shore in long hex-diagonal runs
      (a straight vertical column would wiggle across hex rows) */
@@ -1614,6 +1614,18 @@ function greenNear(x,y,r){return countAround(x,y,r,c=>c.t===T.PARK||c.t===T.MEAD
 /* the woods, defined once. The draw shades a canopy by canopyK, tick() matures
    old growth on deepWoods, and the tooltip names both — one rule, three readers. */
 const isWood=c=>c.t===T.FOREST||c.t===T.REDWOOD;
+/* WHERE THE WILDFLOWERS RUN — one predicate, four readers (the excitable-media
+   spread in tick(), the rain front that seeds it, the draw, and the tooltip row).
+   It was T.MEADOW alone, and MEADOW is in RAISEABLE: the development pass BUILDS
+   ON IT, so the host was eaten 68 -> 4 hexes by 2035 and the wave had nowhere to
+   run — measured, ZERO cells in bloom in the rendered year on every seed (206's
+   law: a rule keyed to a tile the upgrade pass consumes starves itself).
+   SHOREPARK is the grassland the city CANNOT build on: ~100 hexes, mean 4.0
+   same-host neighbours, so a wave actually propagates (DUNE and PARK are
+   fragmented — biggest component 6 and 14 — and could only speckle). It already
+   drew static wildflowers with no calendar; now they keep one. */
+const bloomHost=c=>c.t===T.MEADOW||c.t===T.SHOREPARK;
+let TICKN=0;   /* tick counter: salts the bloom's hashCell so the CA draws NO rng() */
 function canopyK(x,y){return countAround(x,y,1,isWood)}
 function deepWoods(x,y){return countAround(x,y,2,isWood)>=9
   &&countAround(x,y,2,n=>n.t===T.ROAD||DEV.has(n.t))===0}
@@ -1892,6 +1904,7 @@ function siteDark(kind){
 
 /* ---------------- cellular automata tick ---------------- */
 function tick(){
+  TICKN++;                                      /* the bloom's clock — costs no rng() draw */
   updateValue();
   if(year>=1988)growMonorail();
   growGondola();
@@ -2367,20 +2380,43 @@ function tick(){
     for(let i=0;i<3;i++){
       const c=cellAt((cl.x|0)+((rng()*5)|0)-2,(cl.y|0)+((rng()*5)|0)-2);
       const r=rng();
-      if(wet&&c&&c.t===T.MEADOW&&c.bloom===0&&r<0.3)c.bloom=7;
+      if(wet&&c&&bloomHost(c)&&c.bloom===0&&r<0.3)c.bloom=7;
     }
   }
-  /* wildflower blooms ripple across the meadows (excitable-media CA);
-     everything ages; busy streets grade up to avenues */
+  /* wildflower blooms ripple across the grassland (excitable-media CA);
+     everything ages; busy streets grade up to avenues.
+
+     The spread roll is drawn from hashCell, NOT rng(): it is TERRAIN-GATED (it
+     only fires for a quiescent host beside a blooming one), so on the shared
+     seeded stream a wider host would spend more draws every tick and reshuffle
+     the whole downstream city — a wildflower would move a tower. Salted with
+     TICKN it stays stochastic per tick and per cell while the CA becomes wholly
+     inert: it writes c.bloom and NOTHING else, and can no longer perturb a metric
+     it does not touch. The spontaneous spark keeps HEAD's draws exactly. */
   const sx=rng()<0.10?(rng()*G)|0:-1, sy=sx<0?-1:(rng()*G)|0;
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];
     c.age++;
     if(c.t===T.ROAD){c.busy=countAround(x,y,1,n=>DEV.has(n.t))>=3;continue}
-    if(c.t!==T.MEADOW)continue;
-    if(c.bloom>0){c.bloom--; if(c.bloom===0)c.bloom=-14;}
+    if(!bloomHost(c))continue;
+    /* the refractory is JITTERED, and that is what keeps the coast in flower. With one
+       shared -14 the whole band synchronised: it bloomed together, went over together,
+       and 41% of all ticks had NOT ONE flower anywhere in the city — so half the seeds
+       opened on a bare park. c.v is a uniform the cell ALREADY carries (hashCell at
+       genWorld), so the jitter costs no random draw at all (iter 262), and 9..18 holds
+       HEAD's mean of 14. Desynchronised, the waves overlap and the grass is never bare. */
+    if(c.bloom>0){c.bloom--; if(c.bloom===0)c.bloom=-(9+(c.v*10|0));}
     else if(c.bloom<0)c.bloom++;
-    else if((x===sx&&y===sy)||(countAround(x,y,1,n=>n.t===T.MEADOW&&n.bloom>3)>0&&rng()<0.6))c.bloom=7;
+    else if((x===sx&&y===sy)||(countAround(x,y,1,n=>bloomHost(n)&&n.bloom>3)>0&&hashCell(x,y,seedNum^0xB10F^TICKN)<0.6))c.bloom=7;
+    /* ...and the medium needs a SPARK it can actually get. The grid-wide lottery
+       above samples the BOUNDING SQUARE (sx,sy), three quarters of which is VOID,
+       so its chance of landing on a host is ~0.0017 a tick: one spark per 574
+       ticks. Measured, that is why nothing ever flowered — at 1985, with 78 meadows
+       standing, the wave lit on only 2 seeds in 6. An excitable medium is spark +
+       spread + refractory, and this one had no spark. Per-host, hashCell (so it
+       still spends no rng()), rare enough that the WAVE does the work, not the
+       spark. The lottery keeps its draws: it is HEAD's, and it still fires. */
+    else if(hashCell(x,y,seedNum^0x51F0^TICKN)<0.004)c.bloom=7;
   }
   trafficFlow();          /* trips drain to the core; the trunks become arterials */
   /* park zoning: dense areas without a park plant one */
@@ -4453,6 +4489,29 @@ function hallClockCtr(gx,gy,hb){
    made by two hexes interdigitating, not by one spilling across.
    hashCell-gated — no rng(), no terrain: pop stays flat. */
 const SEAMGREEN=new Set([T.SHOREPARK,T.PARK,T.MEADOW]);
+/* THE BLOOM WAVE, drawn once for every host it can run on (bloomHost). The flowers,
+   and the butterflies that ride them, were written for the meadow and stranded
+   there when the city ate it; the coastal park drew static specks that never
+   opened or went over. Same medium, same draw, one definition. The body-colour
+   lift stays with each tile's own case: meadow and lawn are not the same green. */
+function bloomAt(c,x,y,gx,gy,v){
+  const bl=c.bloom>0?c.bloom/7:0;
+  if(bl<=0)return;
+  const[cx,cy]=px(gx,gy);
+  ctx.globalAlpha=0.4+0.6*bl;
+  ctx.fillStyle=col(v<0.5?'gold':'lav',1.2);
+  ctx.fillRect(cx-4,cy-1,1.7,1.7);ctx.fillRect(cx+3,cy+1,1.7,1.7);ctx.fillRect(cx-1,cy+2.5,1.7,1.7);
+  ctx.fillStyle=col(v<0.5?'lav':'coral',1.15);
+  ctx.fillRect(cx+1,cy-2.5,1.7,1.7);ctx.fillRect(cx-6,cy+2,1.7,1.7);
+  ctx.globalAlpha=1;
+  if(bl>0.3&&LITAMT<0.4){ /* butterflies ride the wave */
+    const bt=time*3+x*1.7+y;
+    ctx.fillStyle=col('lav',1.25);
+    ctx.fillRect(cx+Math.sin(bt)*5-0.8,cy-6+Math.sin(bt*2.3)*2,1.6,1.6);
+    ctx.fillStyle=col('gold',1.3);
+    ctx.fillRect(cx+Math.cos(bt*0.8)*6-0.8,cy-8+Math.sin(bt*1.7)*2,1.6,1.6);
+  }
+}
 function seamVeg(x,y,gx,gy,sandSide){
   const[cx,cy]=px(gx,gy);
   const dirs=nbrDirs(y);
@@ -5212,22 +5271,7 @@ function drawCell(x,y){
     case T.MEADOW:{
       const bl=c.bloom>0?c.bloom/7:0;
       hexTile(gx,gy,1.02,col('meadow',0.97+0.06*Math.sin(x*3+y*2)+bl*0.08));
-      if(bl>0){ /* the bloom wave passing through */
-        const[cx,cy]=px(gx,gy);
-        ctx.globalAlpha=0.4+0.6*bl;
-        ctx.fillStyle=col(v<0.5?'gold':'lav',1.2);
-        ctx.fillRect(cx-4,cy-1,1.7,1.7);ctx.fillRect(cx+3,cy+1,1.7,1.7);ctx.fillRect(cx-1,cy+2.5,1.7,1.7);
-        ctx.fillStyle=col(v<0.5?'lav':'coral',1.15);
-        ctx.fillRect(cx+1,cy-2.5,1.7,1.7);ctx.fillRect(cx-6,cy+2,1.7,1.7);
-        ctx.globalAlpha=1;
-        if(bl>0.3&&LITAMT<0.4){ /* butterflies ride the wave */
-          const bt=time*3+x*1.7+y;
-          ctx.fillStyle=col('lav',1.25);
-          ctx.fillRect(cx+Math.sin(bt)*5-0.8,cy-6+Math.sin(bt*2.3)*2,1.6,1.6);
-          ctx.fillStyle=col('gold',1.3);
-          ctx.fillRect(cx+Math.cos(bt*0.8)*6-0.8,cy-8+Math.sin(bt*1.7)*2,1.6,1.6);
-        }
-      }
+      bloomAt(c,x,y,gx,gy,v);
       if(v<0.22)tree(gx,gy+0.05,0.85+v,0.95);
       else if(v<0.28){const[cx,cy]=px(gx,gy);ctx.fillStyle=col('gold',1.1);
         ctx.fillRect(cx-3,cy-1,1.6,1.6);ctx.fillRect(cx+2,cy+1,1.6,1.6);}
@@ -5356,9 +5400,14 @@ function drawCell(x,y){
       }
       break;}
     case T.SHOREPARK:{
-      hexTile(gx,gy,1.02,col('lawn',1.02));
+      /* the coastal grassland is the one green the city cannot build on, so it is
+         where the wildflower CA can still run (bloomHost). The body lifts with the
+         wave exactly as the meadow's does — five 1.7px specks are a hairline at fit
+         zoom, and it is the lift that carries the wave at city scale (iter 215). */
+      hexTile(gx,gy,1.02,col('lawn',1.02+(c.bloom>0?c.bloom/7:0)*0.08));
       if((y%2)===0)palm(gx-0.12,gy,1.0);
       else if(v<0.3)tree(gx,gy,0.8,1);
+      bloomAt(c,x,y,gx,gy,v);
       {const[cx,cy]=px(gx,gy); /* seaside-park life, sprinkled by v */
       if(v>0.34&&v<0.42){ /* picnic blanket */
         ctx.fillStyle=col(v<0.38?'coral':'lav',1.08);
@@ -8605,7 +8654,9 @@ function describeTile(c,x,y){
      shallows). This turns a run of dark hexes into one named bed. */
   if(c.t===T.KELP){const n=bedSize(x,y);
     data.push(['Bed',n+(n===1?' hex':' hexes')]);}
-  if(c.t===T.MEADOW)data.push(['Wildflowers',
+  /* the coastal park keeps the same calendar the meadow does — one predicate,
+     four readers (the spread, the rain front that seeds it, the draw, this row) */
+  if(bloomHost(c))data.push(['Wildflowers',
     c.bloom>0?'In bloom':c.bloom<0?'Gone over':'Not in flower']);
   /* the grove tells the same calendar the draw paints (shared orchardPhase) */
   if(c.t===T.ORCHARD){const ph=orchardPhase();

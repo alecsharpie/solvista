@@ -18296,3 +18296,146 @@ the suspect, not the fix.** Also: the elevated transit took its **8th** agent
 misdiagnosis (z-order, cleared by probe twice) — that backlog item is now overdue a
 `polish-tile` lap.
 
+## Iteration 253 — the sun learns the calendar (2026-07-14) [Sky & atmosphere × Deepen]
+
+**Vector** — cue **(aq)**, the ledger's #1 and best-supported cue (252: raised independently
+by both agents on both seeds *in their own nouns*, and confirmed by grep — two different
+instruments, which is exactly what 251 says a cue needs).
+
+**Change** — `daylight()` was indexed by the HOUR and carried no `year` term, so the sky, the
+tint every surface's colour passes through, and the low sky's warmth were **identical in
+January and July**. The ground had four seasons; the light falling on it had none.
+
+ONE new predicate, `seasonCool()` — **`beachPhase()`'s cosine, inverted and sharing its phase**
+(249's law: grep for the mechanism the artifact already ships before inventing one). 0 at the
+dry peak (s=0.62), 1 at the wet trough (s=0.12). Read in exactly one place, `daylight()`, which
+has exactly two callers — so it reaches everything:
+- **the TINT** every surface passes through ⇒ the asphalt, the sand, the roofs and the sea read
+  the season too, not only the things that grow. Chosen for its RATIOS, **normalised for its
+  MAGNITUDE** (223) ⇒ winter comes out COOLER and never DIMMER.
+- **the SKY** (`syncSky`'s CSS gradient) ⇒ a cooler, paler wet-season sky.
+- **`GWARM`** is derived from `skyBot`'s R−B, so the sea's golden sheen, the cloud bellies, the
+  glass rake and **the sun's own colour** inherit the calendar **at zero new draw work** — five
+  existing readers, no new code. That is the Deepen.
+
+⛔ **The sun's ARC is untouched** — `SUNUP`/`SUNDN` stay put (they are the light curve's own
+dawn/dusk keyframes; the disc must go on touching down exactly as the sky goes dark) and 200
+put the sun high on purpose. **The lever is COLOUR, never ALTITUDE**, exactly as 252 pre-named.
+
+**Census: PASS.** Core flat (`pop`/`developed`/`roads` +0), tile histogram empty — as it must be
+for a colour-only change. (`solarRoofs` +1 / `greenRoofs` −2: 226's documented ±2 tick wobble.)
+
+**Probe** — `probes/probe-sunseason.mjs`, and it has **two free EXACT controls**:
+
+    A. THE LEVERS, bit-for-bit (pure JS: no render, no clock, NO NOISE FLOOR AT ALL)
+       controls that moved: 0    treatment cells that differ: 6 / 6
+    B. THE FEATURE'S INK, shipped vs seasonCool()=0, IN ONE PAGE (floor EXACTLY 0)
+       dry-peak  day/golden/night ....  0 / 0 / 0 px      <-- THE FIXED POINT (245)
+       night     all four seasons ....  0 px              <-- THE DEAD REGIME (199)
+       winter    day ................. 1,431,822 px       <-- treatment
+    C. DIRECTION (the viewer's unit — a colour word needs a COLOUR metric, 214)
+       warmth = mean(R)-mean(B), winter minus dry-peak:
+       HEAD (the GROUND's calendar alone) .. -3.7    patch .. -27.8 day / -18.4 golden
+    D. GWARM at the golden pin:  dry-peak 0.72 (= HEAD) -> autumn 0.61 -> spring 0.56
+       -> winter 0.52.  Winter SOFTENS the golden hour; it does not cancel it.
+
+And the **banked** instrument, `probe-seasonarea`, in its own units: **ROAD — its own control,
+the "honest zero" — moved 3.5 → 20.1.** Asphalt has no seasonal palette entry, so *its entire
+shift is the light*. `probe-goldenhue` PASSES; every separation is unchanged (BEACH↔ROAD 92→91)
+and the night ordering invariant still clears by 21 — night is byte-identical, so it cannot move.
+
+⚠ **HONEST READING, because the headline flatters me.** `probe-seasonarea`'s mute area went
+**66.4% → 0.0%** — and **not one plant changed**. The vegetation palette is byte-identical; what
+moved is the light that falls on it. **The metric was SUPERSEDED, not satisfied**, and quoting it
+as "I fixed the mute vegetation" would be exactly the self-congratulation 251 punishes. 252 had
+already measured that the 66.4% is *largely correct* (PARK is at its coverage ceiling; FOREST is
+83% conifer). The honest headline is **ROAD 3.5 → 20.1**.
+
+**Perf: free.** `probe-drawbudget` (deterministic, load-immune — 216): path objects **day −5
+(−0.005%) · night +15 (+0.011%)**. Colour-only ⇒ zero path objects, and the fixed point *proves*
+it at one pin rather than asserting it.
+
+**Visual: PASS, both seeds, both agents, blind — and both LOCATED it correctly** (108). Asked
+which build's *light* keeps a calendar, both named the patch and both correctly called HEAD's sky
+season-invariant, which is checkable against the tint self-reports I already held. s42: *"cool,
+high-key, a scrubbed rain-washed blue… it reads as physically motivated rather than a hue-shift
+filter, because the sun disc, the shadows and the warm roof tones stay consistent; only the air
+changes."* s7: *"the clear cold morning after a front passes."* No tears, no floaters, no muddy
+or blown-out colour.
+
+**Verdict — SHIPPED.** Cue **(aq) CLOSED**, and with it the seasonal ladder that 238/247/250 had
+been walking: the season now reaches the *illumination*, which is the one surface every pixel
+wears. 209's law paid out where the header said it would.
+
+**Three laws promoted to SKILL.md** (bodies there):
+1. **SUPPRESS THE PREDICATE** — the fourth member of the suppression family (226 the draw · 230
+   the decision · 234 the colour). Any feature written as `HEAD + K·signal` is isolated by
+   forcing its *predicate function* to 0 on `window` and re-rendering **in one page**: floor
+   exactly 0, build-agnostic, no HEAD file, no cross-build floor. My first cut *was* a
+   patch-vs-HEAD diff and its HEAD-vs-HEAD floor was **20,000–34,000 px** — you cannot claim
+   "exactly 0" from under that.
+2. **A CENTRED LEVER'S FIXED POINT CAN BE DESTROYED BY FLOAT ERROR IN ITS NORMALISER.**
+   `1/(gr*.30+gg*.59+gb*.11)` is *not* exactly 1.0 at `gr=gg=gb=1` — 0.30+0.59+0.11 is not 1.0 in
+   float64 — so it would have drifted `tint`'s last bit at the very pin the proof rests on. Write
+   the normaliser in terms of the **signal** (`1/(1−0.0308c)`), not of the gains. Structural (223),
+   not lucky.
+3. **WHEN YOU RESTORE A SIGNAL THAT WAS MISSING GLOBALLY, THE OLD PROBE'S *CONTROL* BECOMES YOUR
+   HEADLINE** — and if your fix lifts *every* row of a metric past its floor, ask whether you
+   fixed the subject or moved the instrument's baseline.
+
+
+<!-- header bullets rotated out at 263 (superseded/closed; kept byte-for-byte). The header
+     is a fixed 400-line budget: to add a line, cut a line. Every law below is in SKILL.md. -->
+
+  ✅ **(aq′) CLOSED AT 261 — THE SEASON HAS A DAY LENGTH** (body rotated to the archive at 262; the law is in SKILL.md,
+  the live facts are in ARTIFACT FACTS below). Sunset **0.780 CONSTANT → 0.701 winter / 0.831 dry peak**; the season's
+  luminance **d 0.09 → 1.59** at the evening (**2.3x the golden-hour bar**), NOON the must-not-move control (unmoved).
+  ⚠ **RETIRE `probe-seasonarea` as a seasonal score.** ⚠ `probe-seaamp` is LUMINANCE-only (228's 6th recursion) — but it
+  is the RIGHT instrument for 261, which *is* a luminance feature. **Read what a probe MEASURES (235).**
+
+  ⛔ **(ai) RETIRED (246) — UNREACHABLE, DO NOT RE-OPEN. LAW in SKILL.md** (*a budget with slack is not absorption
+  capacity — the slack IS the exhaustion; count the eligible cells*). ⚠ **DO NOT re-try a belt, a mask, or a
+  core-widening**: no paired addition exists (2→3 ADMITS 25, **2→4 admits the SAME 25**) and **the ROADS fragment every
+  lobe**. ➡ **The COMPLAINT is still real** (232) — **re-derive it from its own nouns (228/235); stop spending laps on
+  the density statistic.**
+
+  ⛔ **(ag) CLOSED 251 — REFUTED ON EVERY COUNT. DO NOT RE-OPEN THE NIGHT SAND OR THE NIGHT GREENS** (greens + wash
+  ladder innocent; the `BEACH>=MID` breach was the probe's own centre-pixel MEAN. Dimming the sand is a MEASURED dead
+  end: costs `BEACH↔ROAD` 24→18. `probe-goldenhue` REPAIRED — area + p90 envelope; HEAD PASSES by 21).
+
+  ✅ **(s) CLOSED AT ITS WORST PIN BY 257 — IT WAS THE SEA, NOT THE SUN**; **260 RE-MEASURED THE LAND RESIDUE AND IT IS
+  MILD** (~20% narrowing, PARK↔ROAD 29→24; ⛔ the agents' loudest claim is **FALSE** — **BEACH↔ROAD = 72 at golden, the
+  WIDEST pair in the table**, and nothing crosses the 15 floor). ⚠ **The sun CANNOT be lowered (200)**; do not raise
+  `seasonCool` at the peak (it breaks 253's fixed point). Untested residue: 242's *"the SHADOW SIDES go warm."*
+
+  <!-- FAIL/ASIDE block, rotated out at 263 (the law is in SKILL.md; the header keeps the tally) -->
+  **THE FAIL/ASIDE LAW (212; a law in SKILL.md — the header keeps only the tally): in a whole-frame read the FAILs
+  are where an agent is WRONG and the ASIDES are where it is RIGHT.** Paid out 213, 214×2, 215, 217, 219, 232, 236,
+  **242**, **245** (⇒ cue **(ap)**; its FAIL was real but was **MY CAMERA**, not the city).
+  ⚠ **237/252 INVERTED IT and 255 CONFIRMED THE INVERSION — the headline FAIL was RIGHT, both times** (255: two blind
+  agents FAILed a feature that passed EVERY numeric gate, and a magnitude probe proved them right). ⇒ **Grade a FAIL by
+  MEASURING it — but when agents say "I cannot see it", the burden is on your PROBE, not their eyes** (they are the only
+  instrument that measures *salience*). Still weight an aside two agents reach independently above any verdict.
+  ✅ **262 IS THE CLEANEST PAYOUT YET AND IT INVERTS THE FORM: BOTH AGENTS RETURNED `VISUAL: FAIL` AND BOTH CONVICTED
+  *HEAD*** — with the build map **crossed between seeds**, each blind agent named the build that drops the child at dusk.
+  ⇒ **A FAIL is a FINDING, not a verdict on your patch: read WHICH FILE it convicts before you touch anything.**
+  ⚠ **241: an agent attributed a QUANTITY difference to a STYLE one** (*"darker and thicker"* beams = **18% more
+  track**) ⇒ **more of a thing reads as a heavier draw; check your diff first.** ⚠ **243: a cue can bundle a REAL defect
+  with a MISREAD — see (an).**
+
+  <!-- perf ARC per-step-back series, rotated out at 263 (the conclusion is stable; the header keeps it) -->
+  ✅ **AT 260 THE ARC IS STILL STOPPED — FLAT ACROSS FIVE STEP-BACKS. THE OLD `+0.2%/iteration` IS NOT BEING PAID; DO NOT
+  QUOTE IT.** ARC vs `7e2ac2c` (177): day **242 +18.6 → 247 +19.0 → 252 +18.2 → 256 +18.1 → 260 +18.8** · night **+12.8
+  → +12.7 → +12.4 → +13.2 → +13.0** — **EIGHTEEN iterations for NO measurable arc growth.** LAP (257+258+259): day
+  +1.3% / night −0.3%; path objects **+0.21% day / +0.22% night**. Night profile unchanged (`winBandR` 32.1% · `prismS`
+  29.1% · `hexTile` 12.0%; `drawCell` 94%). **262: +0.03% day / +0.01% night** (⚠ but both `probe-drawbudget` pins are
+  regimes where 262's builds draw the SAME children by construction — it is **structurally blind** to that feature; its
+  real cost is bounded at **≤57 objects**, evening only).
+
+  <!-- polish-tile cue (a) diagnosis history, rotated out at 263 (the live warnings stay in the header) -->
+  ✅ **256 NAMED THE SUSPECT WITH A NUMBER AND REFUTED EVERY AGENT CAUSE** (kites, power lines: `drawKite` appears
+  NOWHERE in the census and there are no power lines — **a confabulated cause on a correct perception, 212 in its purest
+  form**). `probe-darkline` (`MINLEN=4`, so it sees CHAINS): the ink is **`drawMonoAt`** — seed 7 night **2,747px,
+  n=350, bbox x 0.11–0.64 y 0.14–0.78**, matching that agent's own reported box almost exactly. 🔑 `probe-drawbudget`
+  prices it at **2.1% of the frame**: ***the loudest complaint in the artifact is also one of the cheapest things in
+  it.*** Mis-diagnosed TWELVE times by agents: 217, 232, 237×2, 242, 252×2, 256×2, 260×2.

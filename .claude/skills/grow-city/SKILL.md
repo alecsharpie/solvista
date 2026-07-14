@@ -684,6 +684,42 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A SPREADING RULE IS *SPARK + SPREAD + REFRACTORY*, AND A LAP THAT ONLY FIXES ITS *HOST* WILL SHIP A RULE THAT STILL
+  CANNOT RUN. CHECK THE SPARK'S **SAMPLE SPACE**, NEVER ITS RATE (iter 263).** 218 says measure a roll's conversion rate
+  before tuning it; 231 says a rule can select for its own burial. 263 is the third member and it hides in the one clause
+  nobody reads, because *the rest of the rule is correct*: Solvista has shipped a genuine **excitable-media CA** — bloom
+  7 ticks, 14-tick refractory, neighbour spread, rain-front seeding, five flower specks and **butterflies**, and a tooltip
+  printing `In bloom / Gone over / Not in flower` — since its **first iteration**, and it **had never once run in the year
+  anybody looks at** (measured: **0 hexes in flower, on 6 seeds in 6**). Two independent causes, and *fixing either alone
+  ships nothing*: (a) its host `T.MEADOW` is in **`RAISEABLE`**, the set the development pass **builds on**, so the city
+  ate it — **68 → 4 hexes (93%)** — which is **206's law arriving on a CA's HOST** instead of a siting rule's pool; and
+  (b) its spontaneous spark samples **`(rng()*G)|0` over the BOUNDING SQUARE**, three quarters of which is **`VOID`** (the
+  plate is a hexagon — the invariants' own warning), so its chance of landing on a host is **~0.0017/tick: one spark per
+  574 ticks.** ⇒ **A spread rule's ignition is a *distribution over a space*, and the space is usually wrong before the
+  rate is.** Ask what fraction of the sampled space is *eligible* — if the answer is 2%, the rate is irrelevant and no
+  amount of host-fixing will light it. The tell: **your CA is textbook-correct, its draw is beautiful, and its output is
+  a flat ZERO that nobody has ever questioned** (236: when the answer is a constant by construction, the constant *is* the
+  defect, and no threshold need be invented).
+  ⇒ **AND THE HALF I WOULD HAVE MISSED WAS FOUND *ONLY* BY 250'S POSITIVE CONTROL — PUT THE MECHANISM'S OWN CORRECT
+  SIBLING IN A COLUMN THAT MUST MOVE.** The gate carried **the MEADOW at 1985**, where the host still stands (61–96
+  hexes) — a correct sibling of the very rule under test. It came back **dead on 5 seeds in 6.** *An excitable medium
+  that dense cannot be that quiet*, so the instrument or the rule was broken — and that impossibility is what convicted
+  the spark. **Without it I would have swapped the host, seen the wave still fail, and called it a tuning problem.** The
+  tell: your fix targets a *host*, and you have nothing in the run that is required to work *for the host it already had*.
+  ⇒ **AND THE SECOND CONSTRUCTIVE HALF: A POPULATION THAT SHARES A CONSTANT TIMER *SYNCHRONISES*, AND THE FIX IS FREE.**
+  With one shared `-14` refractory the whole band bloomed and went over **as one**, so **41% of all ticks had not a single
+  flower anywhere in the city** and half the seeds *opened on bare grass* — a passing mean hiding an all-or-nothing
+  medium. Jittering it (`9..18`, mean **13.5 ≈ HEAD's 14**, so 98's hold-the-mean is free) desynchronises the waves and
+  the grass is never bare. **Take the jitter from a uniform the cell ALREADY carries** (`c.v = hashCell(x,y,seed)`) ⇒
+  **zero new random draws** (262's law, arriving on a *cell* instead of an entity). The tell: every member of a population
+  runs the same clock, and your metric is a *mean* rather than a *worst case* (233: gate on the worst seed).
+  ⇒ ⚠ **AND THE TRAP THAT ONLY THE CAMERA CAUGHT: A TICK-SALTED HASH NEEDS ITS COUNTER RESET BY `genWorld`.** Moving the
+  CA's randomness off the shared `rng()` onto `hashCell(x,y,seed^SALT^TICKN)` is right — it makes the rule **wholly
+  inert** (it writes one field and *cannot* perturb a metric it does not touch, so a wildflower can no longer move a
+  tower; census `pop`/`roads`/`developed` came back **+0**). But `TICKN` **survived a world rebuild**, so the same seed
+  rendered *different flowers* depending on how many frames had run — the artifact's first invariant, broken. **Only the
+  self-reporting frame caught it** (202): the caption said `0 hexes IN FLOWER` where the probe had measured 6. **Any
+  per-tick salt is part of the WORLD — reset it with the world.**
 - **WHEN YOU FIX A RULE, GREP THE *DRAW FUNCTION* FOR THE OTHER THINGS IT DRAWS — A FIX APPLIED TO AN ENTITY IS NOT
   APPLIED TO ITS *DEPENDENTS*, AND THE UNFIXED SIBLING IS USUALLY *INSIDE THE FUNCTION YOU JUST EDITED* (iter 262).**
   217 says: when a rule decides both *whether* and *how much*, a fix to one clause is mistaken for a fix to the
@@ -2574,6 +2610,25 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   the **day close-up is a REQUIRED POSITIVE TWIN** — by day both builds *must* show the child, or the camera is broken.
   Aims by **measured ink** (226): suppresses the children in ONE page (230) and takes the argmax of their own ink, then
   **forces the same aim onto HEAD** so the pair is blind. Frames named **by FILE** (239), map **crossed between seeds**).
+  The **bloom pair** (263 — reach for these on any vector about a SPREADING/CA rule, a HOST the city may consume, or a
+  "does this thing ever actually HAPPEN" claim): `probes/probe-bloomhost.mjs` (**has the city EATEN this rule's host?**
+  Pure world data — no render, no clock, no noise floor. Reports the host's **collapse curve across eras** (MEADOW
+  **68 → 4**, 93% eaten, because it sits in `RAISEABLE`), and — the reusable column — each candidate host's
+  **CONTIGUITY**: biggest connected component + mean same-host neighbours. ⚠ **A spread rule needs a NEIGHBOUR, not a
+  POPULATION**: PARK has 185 hexes and can only *speckle* (biggest component **14**), while SHOREPARK's 100 hexes carry a
+  wave (**34**, mean **4.0** neighbours). **Count the component, not the tiles.** Its Part C also prints the
+  **eligible-spread events per tick**, which IS the extra `rng()` draws a wider host would spend from the shared seeded
+  stream — the number that decides whether your fix may use `rng()` at all), `probes/probe-bloomwave.mjs` (**the gate:
+  does the rule actually FIRE in the year we render?** TEMPORAL (134 — every other gate here is frozen, so *"it never
+  runs"* has no instrument): it drives the artifact's **OWN `tick()`** and reads **no pixels**, so it has **no noise floor
+  at all**. **BUILD-AGNOSTIC** — one file grades HEAD and the patch with no source swap and no cross-build floor (230).
+  ⚠ **Its headline needs no threshold**: HEAD reads **0, on every seed** (236). ⚠ **Its POSITIVE CONTROL is the whole
+  lap** — the same mechanism on the host it *already had*, at the era where that host still exists; **it is what proved
+  the spark, not the host, was the bug** (see the law). Carries `developed` as the must-not-move column (250)),
+  `probes/shot-bloomwave.mjs` (its camera — aims by **measured ink** (226): suppresses `bloomAt()` in ONE page (230) and
+  takes the argmax of the flowers' own ink, then **forces the same aim onto HEAD** so the pair is blind. Every frame
+  **self-reports in the VIEWER'S units** (236: *"29 hexes IN FLOWER of 102 grassland"*, never `bloom=7`) — **that caption
+  is what caught `TICKN` surviving `genWorld`**. Frames named **by FILE** (239), map **crossed between seeds** (238)).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will
