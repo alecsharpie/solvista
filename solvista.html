@@ -3664,6 +3664,39 @@ const JOG0=0.16, JOGJ=0.46;
    probe -- so the sentence and the pixels cannot drift apart (112). */
 const KID0=0.04, KIDJ=0.30;
 const kidOut=p=>Math.min(p.out,KID0+KIDJ*((p.kid/6)%1));
+/* ...AND SO DOES THE LINEUP (iter 271), which kept no hour AND no calendar.
+   drawSurfer opened on `const[cx,cy]=pxc(...)`: nine surfers are spawned once in
+   genWorld and were drawn on EVERY frame of the artifact's life. Every other person in
+   Solvista keeps an hour -- the residents (curfewAt), the children (kidOut), the runners
+   (j.out), the traffic (VCURF), the match crowd (matchClock) -- and 247 gave the SAND a
+   calendar, so the umbrellas and deckchairs pack away in winter. The water crowd learned
+   NEITHER: measured (probe-surfsession), DISTINCT LINEUP SIZES = 1 on every seed, 9 of 9
+   still sitting in the break at the darkest hour of midwinter, off a beach whose own
+   furniture had gone (beachPhase 0.19). And they were not invisible out there: their
+   foam wakes are bright on a black sea, so the night lineup renders as much ink as the
+   noon one (120px, ~13/surfer). This is 262's law one scope wider -- grep every draw
+   that puts a PERSON on the plate, not just the function you last fixed.
+   TWO PREDICATES THE ARTIFACT ALREADY OWNS, and no third invented: the SUN (nightAmt --
+   the same clock the crowd, the runners and the traffic keep) and the CALENDAR
+   (beachPhase -- 247's own, so the water and the sand now answer ONE season).
+   THE HOUR IS TAKEN FROM THE LADDER, NOT INVENTED (226): the last board leaves the water
+   exactly as the last runner leaves the strand, so SURF and JOG end together and the
+   ladder reads KID (0.34) < SURF = JOG (0.62) < CURF (1.85).
+   CENTRED (245): at the dry peak, in daylight, session === 1 and every board is out, so
+   the draw is BYTE-IDENTICAL to HEAD at that pin -- and strictly emptier at every other
+   hour and every other week. The fixed point is arithmetic, not a claim. */
+const SURFDARK=JOG0+JOGJ;
+function surfSession(){return clamp(1-nightAmt()/SURFDARK,0,1)*beachPhase();}
+/* ...and each board keeps its OWN threshold, so the lineup THINS one at a time instead
+   of blinking out in a single frame -- the cliff 210 was written to end and 262 found
+   still standing. DERIVED, NOT DRAWN: s.ph is already Math.random()*7, so ph/7 is
+   EXACTLY uniform on [0,1) by construction and costs NO new random draw. The shared
+   Math.random stream stays byte-identical, so every kayak, jogger, balloon and resident
+   is provably untouched (204/262) -- which is what lets the probe carry them as an EXACT
+   must-not-move control rather than an approximate one.
+   ONE predicate, three readers: the DRAW (drawSurfer), the TOOLTIP (ENTINFO) and the
+   probe -- so the sentence and the pixels cannot drift apart (112). */
+const surfOut=s=>s.ph/7;
 /* ---- the traffic keeps hours too (iter 230) -------------------------------
    The city's PEOPLE learned to go to bed -- the windows at 199 (BEDT), the crowd and its
    dogs and runners at 210 (curfewAt) -- and its TRAFFIC never did: at 3am the streets still
@@ -7620,6 +7653,10 @@ function drawBoat(b){
   ctx.beginPath();ctx.moveTo(cx,cy-1+bob);ctx.lineTo(cx,cy-10+bob);ctx.lineTo(cx+4.5,cy-2.5+bob);ctx.closePath();ctx.fill();
 }
 function drawSurfer(s){
+  if(surfSession()<surfOut(s))return; /* this board has paddled in — the session is the sun
+    times the calendar, and every board keeps its own threshold, so the lineup thins one at
+    a time (iter 271). Before stamp(), as drawPed does: a surfer who has gone in is not out
+    there to be hovered either. */
   const[cx,cy]=pxc(seaXF(s.y,s.off),s.y);
   stamp(s,cx,cy);
   const bob=Math.sin(waveT*1.7+s.ph)*0.9;
@@ -8967,7 +9004,11 @@ const ENTINFO=[
      :'Working the shoreline — the pier is her only call.',10],
   [()=>freighters,'Container ship','Serving the harbor works — at anchor in the roadstead, or steaming the deep lane.',14],
   [()=>boats,'Sailboat','Out for a day on the bay.',8],
-  [()=>surfers,'Surfer','Waiting on the next set.',7],
+  /* the third reader of surfSession's two terms (iter 271): the string used to say
+     "Waiting on the next set" over a surfer sitting in the dark in midwinter. Computed
+     live, never stored, off the SAME predicates the draw gates on. */
+  [()=>surfers,'Surfer',()=>nightAmt()>0?'Catching the last of the light.'
+     :beachPhase()<0.5?'Out in a thin winter lineup.':'Waiting on the next set.',7],
   [()=>kayaks,'Kayaker','Paddling the river.',7],
   [()=>herons,'Great heron','Stalking the marsh shallows.',7],
   [()=>deer,'Mule deer','Grazing where the meadow meets the woods.',7],

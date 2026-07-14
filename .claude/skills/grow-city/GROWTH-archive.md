@@ -19142,3 +19142,96 @@ healthy. What the step-back found was in the *instrument* and in a *law* — the
 season, measured it with a probe built on the one axis the season deliberately does not move, and
 believed itself. Two blind agents were right for eleven iterations and no gate could hear them.
 
+## Iteration 261 — the season was invisible because it had no clock (2026-07-14) [Sky & atmosphere × Deepen]
+
+**Vector.** Sky & atmosphere × Deepen — the ledger's **#1 cue (aq′)**, banked by the 32nd step-back, whose
+lone named candidate was **day length**. (Law 119: a banked, measured finding outranks kind-rotation.)
+
+**The defect, restated.** 253 gave the sunlight a calendar and 260 proved that calendar **real and invisible**:
+winter moves the warm-cool axis **d 0.52** — *harder than the golden hour's 0.43, the light change every agent
+calls obvious* — and moves **luminance d 0.09**, where the golden hour moves **0.69**. A season painted as a
+**global multiplicative chroma cast is precisely the transform colour constancy divides out**, so four blind
+agents on two seeds reported *"no cooler light."* Both they and 253 were right. The season needed a channel the
+eye cannot normalise away, and the one the sky owns is **when the sun is up**.
+
+**Change.** `sunWarp(t)` — **one sine on the light curve's TIME axis**, never on its altitude:
+`u = t + dayLen()·sin(2π(t − NOONT))`, pinned at two fixed points (solar noon `NOONT`=(SUNUP+SUNDN)/2, and solar
+midnight, where `sin` is 0). Winter *advances* the curve through the evening and *retards* it through the morning;
+summer the reverse. `SUNUP`/`SUNDN` keep their values — they are still the curve's own dawn/dusk keyframes.
+**ONE predicate, FOUR readers** (`SUNT`, set once a frame): `daylight()` (sky, tint, `LITAMT`), the shadow vector
+(`SHOFF`/`SHLEN`/`SHAMT`), the sun disc (`sunP`), and `nightDeep()` (the city's bedtime — read raw, a summer city
+was 42% into its night at the moment the sun set). `DAYLEN=0.10` is bounded by **monotonicity, not taste**: the warp
+folds at 1/2π = 0.159.
+
+**Two structural guarantees, not checked ones (223).** (1) **The sun's arc is untouchable.** `sunP` is a pure
+function of `SUNT`, and `SUNT` has `dayT`'s range ⇒ **the disc cannot reach a screen position HEAD did not already
+reach** (so ⛔ 200's placard law holds by construction, not by care), and `sunWarp(NOONT)===NOONT` because `sin(0)`
+is 0 ⇒ **it hits its identical peak at solar noon in every season.** Only the *timing* moves. (2) **The fixed point**
+(245): `dayLen()` is centred on the season's mean, so at the mean it is **exactly 0** and `sunWarp` returns `t` to the
+last bit — the patch runs HEAD's byte-identical code path.
+
+**Census.** PASS, 0 page errors. `pop`/`roads`/`developed` **+0**; whole matrix flat; tile histogram empty — correct,
+and *vacuous*, which is why the probe is the gate.
+
+**Probe** (`probes/probe-daylen.mjs`, `probes/shot-daylen.mjs`).
+- **A — the defect as a number** (pure world data, no render, drives *the artifact's own* `sunWarp`): HEAD's sunset is
+  **0.780 in every season — DISTINCT DAY LENGTHS = 1**, a baseline nobody had to design (236). Patch: sunset
+  **0.701 (winter) / 0.780 (equinox) / 0.831 (dry peak)**; day length **0.572 → 0.730 → 0.831**.
+- **B — is it VISIBLE?** The season's **luminance d, swept across the whole day** (not at the one hour my feature is
+  loudest — 205), against **golden hour as the incumbent bar I did not invent** (226). HEAD is luminance-dead at
+  *every* hour (**d 0.06–0.15**). Patch: **evening d 1.59 / dawn 1.55** — i.e. **2.3× the golden-hour bar (0.69)** —
+  while **NOON, the free must-not-move control, does not move (0.09 → 0.09)**. Identical-pin floor **exactly 0 px**.
+- **C — the fixed point**, by 253's predicate suppression *inside one page* (floor exactly 0, build-agnostic): at the
+  season's mean, live-vs-suppressed = **0 px**; in winter, **3,800,369 px**. ⚠ **The pin cannot be a YEAR** —
+  `year=2035.87` is not representable in float64, so `dayLen()` lands on −1.8e−10, the guard never fires, and the
+  artifact's own colour quantizers (`seaFace`'s round-to-32nds) flip a bucket worth ~332 px. **Pin the SIGNAL, not the
+  year** (`seasonCool = () => 0.5` ⇒ `dayLen()` is 0 by arithmetic).
+- ⚠ **C2 (cross-build patch-vs-HEAD) was built, run, and CUT — 230's law, re-confirmed.** The HEAD-vs-HEAD floor came
+  back at **98,000–706,000 px**, and at noon the "signal" (478,871) sat **below its own floor** (706,045). *Do not
+  re-add the build swap.*
+
+**Perf.** FREE, and by the deterministic instrument (216/222, never `perfab` alone): path objects
+**day 111,002 → 111,039 (+0.03%)**, **night 140,017 → 138,471 (−1.1%)**. It is a coordinate remap of a lookup the
+frame was doing anyway — no new draw call, and the world is unchanged (census flat), so 222's "the world is the draw
+list" does not bite.
+
+**Visual.** Three blind agents, two seeds, **crossed A/B map, named by FILE never by a letter** (238/239), asked to
+**rank and pair** rather than judge (108). All three were right: they ranked patch-summer as **DAYLIGHT**,
+patch-winter as **NIGHT**, and — unprompted — **named the two HEAD frames as the indistinguishable pair**, which is
+exactly the ground truth (HEAD's light curve carries no `year` term). Seed 7's agent added, correctly: *"frame1 is
+full night while frame4 is full daylight at the same late-afternoon clock — a large seasonal swing, worth confirming
+it is intended."* It is the feature.
+
+**One real bug found, and it was MINE — in the camera, then fixed at SOURCE.** Seed 42's first read FAILed: *"a night
+sky, stars and a full moon, behind a fully daylit midday city."* `syncSky` read `SUNT`, which is only set **inside**
+`render()`, and the camera called `syncSky` *before* `render()` — so it painted the CSS backdrop from the **previous
+frame's** clock. The app happens to call `render(); syncSky()` in that order and was never wrong. But **a correctness
+that rests on call order is a latent bug, not a design** (223): `syncSky` now warps its own clock
+(`daylight(sunWarp(dayT))`), one `sin()` per 400 ms, and the coupling is gone. Re-shot, both noon frames PASS and a
+blind agent calls patch and HEAD at noon *"essentially the same image"* — the control the probe predicted.
+
+**Verdict: SHIPPED.** The ledger's #1 cue, closed. The season is now the first thing you see: at the same clock, the
+winter city is dark and lamplit while the summer city is still in full afternoon sun.
+
+
+---
+
+## Header bullets rotated out at 271 (bodies preserved; the header keeps the ⛔ warning + a pointer)
+
+**⛔ 254 — THE BUILDING COLOUR CHANNEL IS SPENT (full body).** Do not re-try *any* "the buildings should show X
+regionally" in COLOUR (age, value, density, flow — anything; law in SKILL.md). The `cream`/`terra`/`sandDk` grain
+scatters per-building warmth at **SD ~45**, *larger than any gap the lever can ever reach* (worst-seed `d` plateaus
+below 0.8 however hard the normaliser is driven); **99/103/239 bought that grain ON PURPOSE to kill wallpaper**, so
+the two goals are in direct conflict and the loop already chose variance. ✅ The HOST is still live and unread
+(`c.age` — *the old town IS downtown*: full 61-year spread, spatial coherence 0.40, a monotone core→rim gradient) —
+**but only a SHAPE, an ORNAMENT, a COUNT can show it. Never a hue.** (`probes/probe-buildingage.mjs` = the host;
+`probes/probe-patina.mjs` = the `d` and the saturation sweep.)
+
+**⛔ 259 — `c.lit` CANNOT EXPRESS DARKNESS (full body).** `lit = LITAMT*(0.35 + 0.65*c.lit)` has a **0.35 additive
+floor**, so `c.lit = 0` is not *dark*, it is *35% lit*: the rendered dynamic range is **2.9:1, not ∞:1**, and it is
+swamped by everything else in the hex that never reads the field at all. Driving the observatory's `c.lit` to **0.000
+on every seed** (capture of the available darkness 0.057 → 1.000 — a flawless score) moved the ambient luminance
+around the dome by **−1.9%**, which is nothing, and a blind agent said so in as many words (*"ringed by lit towers…
+neither is stranded out in the dark"*) **and was right**. **Fine as a CHOOSER, dead as a LOOK ⇒ do not build "X
+answers the night glow" in COLOUR.** (Law in SKILL.md: *a field with a floor cannot express an absence — read the line
+that CONSUMES it and compute its rendered dynamic range.*)

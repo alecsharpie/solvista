@@ -701,6 +701,52 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A PER-ENTITY RULE IS A PROPERTY OF A *CATEGORY*, NOT OF A FUNCTION — SO AFTER YOU FIX ONE, GREP EVERY DRAW THAT PUTS
+  THE SAME *KIND OF THING* ON THE PLATE, NOT JUST THE FUNCTION YOU EDITED (iter 271, generalising 262).** 262 says: after
+  you fix a per-entity rule, grep the **function** you fixed for the other things it draws — and it found the child three
+  lines below the fix. 271 is the same law one scope out, and it is where the last holdout hides: **the sibling need not
+  be in your function at all.** Solvista's people had learned to keep hours in four separate laps (`curfewAt` 210 · `VCURF`
+  230 · `matchClock` 240 · `kidOut` 262), and 247 had given the *sand* a calendar so the beach furniture packs away in
+  winter. **`drawSurfer` opened on `const[cx,cy]=pxc(...)` — no gate at all.** Nine surfers, spawned once in `genWorld`,
+  drawn on **every frame of the artifact's life**: measured, **DISTINCT LINEUP SIZES = 1** on every seed, 9 of 9 still in
+  the break at the darkest hour of midwinter, off a beach whose own furniture had gone. ⇒ **When a lap establishes a
+  property (an hour, a calendar, a curfew, a season), enumerate the CATEGORY that property belongs to — every person,
+  every vehicle, every plant — and check each member, by grep, in the same lap.** The tell: your fix's comment lists the
+  siblings that already have the property, and the list was assembled by *memory* rather than by a grep.
+  ⇒ **AND RUN 259'S CHECK *BEFORE* YOU DESIGN, BECAUSE IT DECIDES WHICH HALF OF THE VECTOR IS REAL.** A thing you are
+  about to *remove at night* may render nothing at night, in which case removing it is a change nobody can see and the
+  hours half is dead — leaving only the season half, which lands in daylight. Here it went the other way and that is why
+  the lap shipped: a surfer's **foam wake is BRIGHT on a black sea**, so HEAD's night lineup renders **120–129 px, ~13
+  px/surfer — as much as at noon**. **One probe, before a line of the fix, told me both halves were worth building.**
+  ⇒ **AND THE FREE, EXACT CONTROL IS THE CORRECT SIBLING (248) — HERE, THE JOGGER.** A dead rig and a flat feature print
+  the same constant. The jogger is a Math.random-spawned person on the same shoreline, two functions away, who *provably*
+  keeps an hour on the very clock the surfer ignores: it read **DISTINCT 3–4, and 0 in the dark**, which is what turns
+  "the surfers read 1" from a suspicion into a conviction. **When you find an entity that keeps no state, put its
+  nearest correct sibling in a column that MUST move.**
+- **A DERIVED PIN IS A FUNCTION OF *ALL* THE CURVE'S INPUTS — DERIVE IT AT THE FULL STATE YOU ARE ABOUT TO SHOOT, NOT
+  MERELY FROM THE RIGHT FUNCTION (iter 271, sharpening 264).** 264 says a camera pin must be **derived from the curve at
+  shoot time, never stored** — and it is right, and I obeyed it: my night pin was the **argmax of the artifact's own
+  `nightAmt()`**, searched in-page, with no literal anywhere. It still shot the **control**. Cause: **261 gave the season
+  a DAY LENGTH** (`sunWarp` warps the light curve's *time axis*), so `nightAmt()` is **not a pure function of `dayT`** —
+  the same `dayT` is deep night in winter and broad daylight in summer. I ran the search once, while `year` was still
+  whatever `__warp` happened to leave, then applied the result at a *different* year — and the "night" frame came out at
+  **`nightAmt = 0`**. ⇒ **A pin derived on one axis of a multi-input curve is still a literal on the others.** Set every
+  input first (`__setYear`), *then* search. The tell: your derivation loop pins one variable and reads a quantity that
+  depends on two. **202's self-report is what caught it** — the frame printed its own `nightAmt=0` and convicted the
+  camera in one line, instead of costing an agent round.
+- **"IT FLOATS ON OPEN WATER, SO NOTHING CAN OCCLUDE IT" IS AN OCCLUSION *CLAIM*, AND 226 SAYS YOU MAY NOT MAKE ONE BY
+  REASONING (iter 271).** 249 grants a genuine exemption from the argmax: a host that is **published world data floating
+  where nothing can cover it** (the pier head) needs no ink search — `ctr()` *is* the located host. That exemption is
+  real and it is **conditional**, and I cashed it without checking the condition. A surfer floats on open water, so I
+  aimed at the **median board by world-y** — and on one seed the boards nearest that aim sit **behind the pier deck**.
+  The patch's DAY frame, in which the probe measures **140 px of surfer**, **showed no surfer at all**, and the agent
+  **correctly refused to grade it**. ⇒ **Before claiming 249's exemption, name the things that could stand in front —
+  and if the host's water has a pier, a breakwater, a boat or a bridge over it, you do not have the exemption; aim by
+  the argmax of the host's OWN measured ink** (226/230/234: suppress its draw in one page, diff, take the densest
+  window). The tell: your aiming rule is a **position** and your justification is a **sentence**. (Bonus: with the
+  builds byte-identical at the day pin, both argmaxes land on the *same* pixel — so the blind pair frames the identical
+  water for free.)
+
 - **A PER-HEX DRAW'S *WIDTH* IS CAPPED BY THE HEX — SO MAKING IT TALLER NECESSARILY MAKES IT MORE SLENDER, AND ANY
   SHAPE WHOSE IDENTITY *IS* BEING WIDE AND LOW CANNOT BE MADE TALL. HEIGHT AND IDENTITY ARE IN DIRECT CONFLICT, AND
   THE TILE DECIDES THE WINNER (iter 270).** 244 says rotation is not a free parameter in an axonometric projection —
@@ -2981,6 +3027,26 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `shot-parlheight.mjs` (its camera — drives **`zoom`, never `scale`** (269), frames named **by FILE** (239) with
   **meaningless tokens** and the map **CROSSED between seeds** (238/268), and every frame self-reports its state but
   **never the treatment**, so the pair stays blind).
+  The **lineup pair** (271 — reach for these on any vector about an entity that keeps NO STATE, and on any "does X keep
+  an hour / a calendar" claim): `probe-surfsession.mjs` (**does this entity ever go home?** Part A is **TEMPORAL** (134 —
+  every other gate here is frozen, so *"they never leave"* has no instrument) and reads **NO PIXELS**, so it has **no
+  noise floor at all**; **BUILD-AGNOSTIC** — it asks the page whether `surfSession` exists and falls back to HEAD's
+  (absent) gate, so ONE file grades both builds with **no source swap and no cross-build floor** (230). ⚠ **Its headline
+  needs no threshold**: HEAD reads **DISTINCT LINEUP SIZES = 1**, which is the defect stated (236). ⚠ **Its JOGGER column
+  is a FREE POSITIVE CONTROL** (248) — a *correct sibling person on the same shoreline reading the same clock*, so a flat
+  surfer column is a real flatness and not a dead rig; **kayaks+boats are the must-not-move column** (250). ⚠ **Part B is
+  259'S CHECK AND IT MUST RUN BEFORE YOU DESIGN**: it isolates the lineup by suppressing `drawSurfer` in ONE page (floor
+  exactly **0**, occlusion free) and asks whether the thing you are about to remove at night is even *visible* at night —
+  if it renders nothing, the hours half of your vector is dead before you write it. ⚠ **Part C is the FIXED POINT by
+  253's predicate suppression**: force `surfSession = () => 1` (**= HEAD, which has no gate**) and re-render — **0 px**,
+  with the deep-night control proving the suppression is live), `shot-surfsession.mjs` (its camera, and it is the
+  **cautionary** one — **it framed the PIER**. ⚠ **Do NOT claim 249's no-argmax exemption for a thing on open water**:
+  aim by the **argmax of the lineup's own ink** (226/230). ⚠ **DERIVE the night pin AT THE YEAR BEING SHOT** — `sunWarp`
+  (261) makes `nightAmt()` a function of `dayT` **and** `year`, so a pin searched at the wrong season shoots the control
+  and captions it the treatment (the frame's self-report caught it). ⚠ **The DAY frame is a REQUIRED POSITIVE TWIN**
+  (258): the success condition at night is an **absence**, and a frame that simply misses the lineup renders exactly like
+  a correct one. ⚠ Pin `time`/`waveT` and clear `flock`/`STARS` (195f/199/163d) or the blind day pair is not a control,
+  it is a wave. Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds (238/239/268)).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

@@ -23,27 +23,27 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265** | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
+| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
   hook) — `stamp()` also draws the focus ring, so any stamped entity is ringable free. **An `ENTINFO` `sub` may be a
   FUNCTION of the entity (105)** — use it when a thing's interest is its *membership* (line/route/depot), computed live.
-- **ROTATION.** Last vector per domain: People **262** · Nature **263** ·
-  Sky **265** · Urban **267** · Water **268** · Transport **269** · Civic **270**. ➡ **NEXT: People (262) is oldest (8
-  laps).** ➡ **Top open cue is (aj)** (the clouds spawn
+- **ROTATION.** Last vector per domain: Nature **263** ·
+  Sky **265** · Urban **267** · Water **268** · Transport **269** · Civic **270** · People **271**. ➡ **NEXT: Nature (263)
+  is oldest (8 laps).** ➡ **Top open cue is (aj)** (the clouds spawn
   with no reference to the land — Sky × Polish, doubly measured, ~2x the visible weather at zero new draw work);
   **(as)** (the windrows read ruler-drawn — Water × Polish) is the freshest.
-  🔑 **225'S GREP-THE-SEAM LAW IS 12 FOR 12 AT *FINDING* — AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*.** 267 is its
-  loudest payout (Urban, written off hardest, hid **a RULE THAT HAD NEVER RUN**); **268 its subtlest** (the sea's banked
-  probe had *acquitted* a seabed built from the wrong kind of noise); **269 its cheapest** (a tram rode its named avenue
-  at **1.04x chance**); **270 its most humbling** — the capitol's label was false, and the fix was **structurally
-  unbuildable on one hex** (SKILL.md's width-caps-height law). ⇒ **An empty cue list — or a passing probe — records
-  where you have LOOKED, not what is THERE. But a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.**
-  ✅ **268 WAS THE 34th STEP-BACK — NO COMPOUNDING DRIFT ON LAND; 261'S SEASON IS ALIVE** (both blind agents named winter
-  **by the light alone**). **The SEA was the finding**, and it INVERTED the FAIL/ASIDE law: the headline FAIL was right
-  and the banked probe had acquitted it. ➡ **NEXT STEP-BACK ~273.** ⚠ **BLIND A/B NAMES MUST BE NON-ORDINAL** (268's law,
-  now in SKILL.md): `one`/`two` carry the same order a letter does — use meaningless tokens **and cross the position**.
+  ⚠ **PEOPLE HAS TAKEN *Deepen* FOUR LAPS RUNNING** (240/247/262/271 — each a real measured defect, so the kind was right
+  every time). Its **Polish** (226) and **Interaction/UX** (191, 80 laps ago) are the stale cells ⇒ **non-Deepen next.**
+  🔑 **225'S GREP-THE-SEAM LAW IS 13 FOR 13 AT *FINDING*** (267 hid **a RULE THAT HAD NEVER RUN** · 268 a seabed built
+  from the wrong kind of noise · 269 a tram at **1.04x chance** on its named avenue · **271 nine surfers who never went
+  home**) — **AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue
+  list — or a passing probe — records where you have LOOKED, not what is THERE. But a found defect is not a fixable
+  one: PRICE THE FIX BEFORE YOU PROMISE IT.**
+  ✅ **268 WAS THE 34th STEP-BACK — NO COMPOUNDING DRIFT ON LAND; 261'S SEASON IS ALIVE.** **The SEA was the finding**,
+  and it INVERTED the FAIL/ASIDE law: the headline FAIL was right and the banked probe had acquitted it. ➡ **NEXT
+  STEP-BACK ~273.** ⚠ **BLIND A/B NAMES MUST BE NON-ORDINAL** (268; SKILL.md) — meaningless tokens, **and cross them**.
   🔑 **`polish-tile` IS BADLY OVERDUE AND NOW HAS THREE CUES**: **(a)** the elevated transit (**13x reported**, the
   ledger's most-reported defect by a wide margin), **(e)** the observatory (259), **(g)** the capitol (270).
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
@@ -55,25 +55,30 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   luminance **SD 22.3**, which a blind agent on *pristine HEAD* called a honeycomb over *"90–100% of the open water."*
   ⚠ **Read the `peds` cap first** (111) before designing anything road-borne.
   ⛔ **254: THE BUILDING COLOUR CHANNEL IS SPENT — DO NOT RE-TRY *ANY* "THE BUILDINGS SHOULD SHOW X REGIONALLY" IN
-  COLOUR** (age, value, density, flow — anything; law in SKILL.md). The `cream`/`terra`/`sandDk` grain scatters
-  per-building warmth at **SD ~45**, *larger than any gap the lever can reach*; **99/103/239 bought that grain ON
-  PURPOSE to kill wallpaper.** ✅ **THE HOST IS STILL LIVE AND UNREAD** (`c.age`: *the old town IS downtown*) — **but
-  only a SHAPE, an ORNAMENT, a COUNT can show it. Never a hue.** (`probes/probe-buildingage.mjs`.)
+  COLOUR** (age, value, density, flow — anything). **Body archived at 271; law in SKILL.md.** ✅ **THE HOST IS STILL LIVE
+  AND UNREAD** (`c.age`: *the old town IS downtown*) — **but only a SHAPE, an ORNAMENT, a COUNT can show it. Never a
+  hue.** (`probes/probe-buildingage.mjs`.)
   ✅ **CLOSED, bodies archived at 264: (aq′) the season has a DAY LENGTH** (⚠ retire `probe-seasonarea` as a seasonal
   score; ⚠ **264: the season is ~0 at MID-DAY by construction — measure/shoot it at the EVENING MARGIN**) · **262: the
   `LITAMT`-as-a-bedtime gate is EXTINCT** (⚠ **do not add another global-light gate to anything that keeps hours**).
   🔴 **HOW TO READ THIS CUE LIST (251/255).** A bad instrument does not misgrade a lap — it **MANUFACTURES A CUE** that
   steers the loop for tens of iterations ((ag) was #1 for **24 iterations**, false on every count). 🔑 **A CUE
-  RE-CONFIRMED IS NOT CORROBORATED UNLESS A *DIFFERENT* INSTRUMENT DID IT.** 🔴 **228's law has now recursed NINE times,
-  EVERY TIME on an instrument this harness already owned** (237×2 · 238 · 251 · 255 · 260 · 264 the step-back's own
-  CAMERA · **268 the ADJACENCY — `probe-seastep` compared two tones one step apart on a QUANTISED SCALE, where the eye
-  compares two hexes that TOUCH**) ⇒ *read what an instrument MEASURES, WHERE IT SAMPLES, and **WHICH PAIR IT
-  COMPARES**.* ⚠ **263: a cue can be RIGHT about the tell and WRONG about the host** — check the host's **POPULATION**.
-  ⛔ **259: `c.lit` CANNOT EXPRESS DARKNESS** — `lit = LITAMT*(0.35+0.65*c.lit)` has a **0.35 floor** ⇒ `c.lit=0` is *35%
-  lit* (range **2.9:1**); the observatory at 0.000 moved ambient luminance **−1.9%**, invisible. **Fine as a CHOOSER,
-  dead as a LOOK ⇒ do NOT build "X answers the night glow" in COLOUR.** (Law in SKILL.md.)
+  RE-CONFIRMED IS NOT CORROBORATED UNLESS A *DIFFERENT* INSTRUMENT DID IT.** 🔴 **228's law has recursed NINE times, EVERY
+  TIME on an instrument this harness already owned** (roster + bodies in SKILL.md) ⇒ *read what an instrument MEASURES,
+  WHERE IT SAMPLES, and **WHICH PAIR IT COMPARES**.* ⚠ **263: a cue can be RIGHT about the tell and WRONG about the
+  host** — check the host's **POPULATION**.
+  ⛔ **259: `c.lit` CANNOT EXPRESS DARKNESS** — `lit=LITAMT*(0.35+0.65*c.lit)`, a **0.35 floor** ⇒ range **2.9:1**. **Fine as a CHOOSER, dead as a LOOK ⇒ do NOT build "X answers the night glow" in COLOUR.** (Body archived at 271.)
   ⚠ **ARTIFACT FACTS from 236–261 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
   lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"):
+  **271:** **`surfSession()` — ONE predicate, THREE readers** (the `drawSurfer` gate, the `Surfer` ENTINFO row, the
+  probe) `= clamp(1 − nightAmt()/SURFDARK,0,1) × beachPhase()`; **each board keeps its own threshold `surfOut(s)=s.ph/7`.**
+  ⚠ **`SURFDARK = JOG0+JOGJ` — TAKEN FROM THE LADDER, NOT INVENTED. THE HOURS LADDER IS NOW KID 0.34 < SURF = JOG 0.62 <
+  CURF 1.85** — take a new entity's hour from it (226). ⚠ **`surfOut` IS DERIVED, NOT DRAWN**: `s.ph` is already
+  `Math.random()*7` ⇒ `ph/7` is **exactly uniform by construction** at **zero** new draws, so the shared stream is
+  byte-identical and every kayak/jogger/resident is *provably* untouched — **do not "tidy" it into a fresh
+  `Math.random()`.** ⚠ **CENTRED (245): at the dry peak in daylight `surfSession()===1` EXACTLY ⇒ the patch runs HEAD's
+  draw byte-for-byte** (**0 px** in-page, 253). Gate returns **before `stamp()`** (as `drawPed` does) ⇒ not hoverable.
+  ⚠ **`drawKayak` IS THE LAST PERSON WITH NO HOUR AND NO CALENDAR** (cue **(aw)**; `surfSession()` already fits it).
   **269:** **`isAvenue(x,y)` — ONE predicate, THREE readers** (`servTarget`, `__find('arterial')`, the streetcar's route).
   ⚠ **`AVESPAWN`/`AVESTAY` are PREFERENCES, never rails, and that is LOAD-BEARING**: the avenue is **NOT a rideable
   network** (9–16 components, biggest holds 23%, **20% dead ends**, degree **1.85**) and `roadNbrOpts` **forbids the
@@ -152,40 +157,35 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   SHADE half CLOSED 242 — its cloud-SITING half is still OPEN**; **(ao)'s SHAFT half CLOSED 248, its BOW half REFRAMED
   and its prescription REFUTED.** Live:
   **(aj)** the clouds spawn with no reference to the land, so a seed parks its sky over the sea — **the lever is the SPAWN, not the draw**: ~2x the visible weather at **zero new draw work** (Sky × Polish, doubly measured) ·
-  ⛔ **(ak) MEASURED-CAPPED and its prescription DEAD** (238 + 252) — **do not re-open the canopy** ·
-  **(y)** the scorched inland cluster (Nature × Polish; ⚠ **a 216-era aside — the light was rebuilt at 253/261, so RE-DERIVE it from a fresh frame**) · ⛔ **GARDEN's staggered beds RETIRED (263, host starved).**
+  **(aw)** **the KAYAKERS keep no hour and no calendar** (271 — the last person in Solvista who does not). `drawKayak` has no gate at all, exactly as `drawSurfer` had none. **The fix is already written: `surfSession()` is the predicate, and a kayak is a fair-weather boat.** Cheap, but it REPEATS 271's mechanism ⇒ **pair it with something, or wait for People's non-Deepen lap** ·
+  **(y)** the scorched inland cluster (Nature × Polish; ⚠ **a 216-era aside — the light was rebuilt at 253/261, so RE-DERIVE it from a fresh frame**) · ⛔ **(ak) MEASURED-CAPPED, prescription DEAD** (238+252) — **do not re-open the canopy** · ⛔ **GARDEN's staggered beds RETIRED (263, host starved).**
   **225: THE SHADOWS READ THE SUN.** `shadS` (every shadow routes through it) carries a per-frame sun vector
   (**`SHOFF`** throw · **`SHLEN`** stretch · **`SHAMT`** opacity). ⚠ **Noon (t=0.415) is BYTE-IDENTICAL ⇒ a free
   dead-regime control for every shadow lap.** ⚠ **`SHAMT` must never reach 0 at night** — the residual patch is what
   keeps every ped, tree and car from FLOATING. ⚠ **226: `census.mjs` DOES NOT FREEZE THE CLOCK** ⇒ tick-sensitive
   metrics (`solarRoofs`) **wobble ±2**; core metrics unaffected. **To test whether an unintended metric move is YOURS,
   re-run the SAME FILE, not HEAD.**
-  ⚠ **231: THREE PREDICATES, DON'T MIX THEM (body archived at 242).** `openFront`/`frontLoad` count **TALLT
-  MEMBERSHIP** — wrong for anything drawn flat. **`groundLoad(x,y)` is the ground-level one**: sums drawn **HEIGHT**,
-  reads **`c.th` never `c.h`**, and counts a `RAISEABLE` lot at `FUTUREH` — **an empty lot is not a clear view, it is
-  a building that has not been built yet.** ⚠ **Aim a CAMERA by measured ink, never by any of the three (226).**
+  ⚠ **231: THREE PREDICATES, DON'T MIX THEM (body archived at 242).** `openFront`/`frontLoad` count **TALLT MEMBERSHIP**
+  — wrong for anything drawn flat. **`groundLoad(x,y)` is the ground-level one**: sums drawn **HEIGHT**, reads **`c.th`
+  never `c.h`**, counts a `RAISEABLE` lot at `FUTUREH` — **an empty lot is a building that has not been built yet.**
+  ⚠ **Aim a CAMERA by measured ink, never by any of the three (226) — nor by a position (271: it framed the pier).**
   ⚠ **Settled audits, bodies archived at 242 — the live warnings only.** **213:** `nightDeep()` is **pinned at 1 all
   day** (a trap for any NON-draw reader); the civic night-light audit is **DONE** — three lights are off the curve on
   purpose (school janitor, hall clock face, parliament lantern), **do not "fix" them**. **211/210:** both `frontLoad`
-  and `openFront` ship as **PREFERENCES, NEVER GATES (206)**, and `LITAMT` returns to **0.64** by the small hours, so
-  any gate `LITAMT > 0.64` defines a "night" that **ENDS BEFORE DAWN**. **137's "the ped/dog system is
-  NON-REPRODUCIBLE" is DISPROVEN** ⇒ **People is probe-able like any domain**. **209:** the **GROUND PLANE is SPENT**
-  (216 spent the FACADES); its law — *when a domain looks interconnect-saturated, ask what LARGE SURFACES wear a field
-  that cannot carry the signal* — is in SKILL.md. It paid out at **253/261 (the LIGHT)** and again at **268 (the SEABED
-  — a field whose MECHANISM could not carry the structure its own comment named).**
+  and `openFront` ship as **PREFERENCES, NEVER GATES (206)**, and `LITAMT` returns to **0.64** by the small hours ⇒ any
+  gate `LITAMT > 0.64` defines a "night" that **ENDS BEFORE DAWN**. **137's "the ped/dog system is NON-REPRODUCIBLE" is
+  DISPROVEN** ⇒ **People is probe-able like any domain**. **209:** the **GROUND PLANE is SPENT** (216 spent the FACADES);
+  its law is in SKILL.md and paid out again at **253/261 (the LIGHT)** and **268 (the SEABED)**.
   **206:** the vacant lot is a **MIRAGE** (`EMPTY` with ≥2 RES nbrs falls **85 → 6.5** by 2035); development eats every
-  gap — **and it eats CA HOSTS too: anything in `RAISEABLE` will be built over** (263). **⚠ THE FIRE CA IS A GHOST — do
-  not build "X answers the fire"**: ignition is year-gated ⇒ at 2035 nothing can ignite, and fire **never spreads**.
+  gap — **and it eats CA HOSTS too: anything in `RAISEABLE` will be built over** (263). **⚠ THE FIRE CA IS A GHOST — do not
+  build "X answers the fire"**: ignition is year-gated ⇒ at 2035 nothing can ignite, and fire **never spreads**.
   **⚠ THE `polish-tile` BACKLOG — measured cues that are NOT growth laps. Do not spend a domain's lap on one; they need a tile redesign, and each has a gate written. Full bodies archived at 264; the live warnings only.** ⚠ **(a), (e) and (f) ARE ONE FINDING — 215's HAIRLINE LAW** (a sub-pixel ornament *tints* its background instead of marking it; **the lever is a BODY / SIZE / CONTRAST — never more strokes, never placement**).
   (a) **THE WHOLE ELEVATED TRANSIT is sub-pixel at fit zoom** (0.5px rope, 5px cabins). ⚠ **NEVER RE-OPEN THE Z-ORDER — CLEARED BY PROBE TWICE** (203/212); **15 mis-diagnoses** (269 makes two more — an agent called the rope *"scratches on the image"*, and another filed it as a z-tear **in the HEAD frame** while naming it *"a grey aerial-tramway cable, a different feature"* one frame earlier), and *that persistence IS the evidence: the fault is LEGIBILITY*. Suspect named + priced (256): **`drawMonoAt`, 2.1% of the frame.** *Do NOT re-try a body/halo under the rope (measured — backfires) nor a lit top edge (impossible at 0.5px).* **MOST-REPORTED DEFECT BY A WIDE MARGIN; a `polish-tile` lap is BADLY OVERDUE.** ⚠ **269 adds cue (av): the TRAM's catenary is the SAME 0.5px bug — the family is bigger than the two aerial lines.**
-  (g) **THE CAPITOL CANNOT CARRY ITS OWN LABEL — IT NEEDS A MASSING REDESIGN** (270; gate already written).
-  `CIVICDESC.parliament` promises *"the tallest civic roof in Solvista"* and it is **FALSE**: in the viewer's units the
-  **university out-tops it on 4 seeds in 6** and its cornice is not in the **top four** civic roofs (its draw takes an
-  `h*0.8` haircut the campanile does not). ⛔ **DO NOT RE-TRY IT AS A HEIGHT CONSTANT — BOTH ROUTES MEASURED AND DEAD**:
-  a taller BODY = *"a striped office slab wearing a dome as a hat"*; the height moved into a DRUM = *"a minaret, not a
-  legislature"* — **two blind agents, two seeds, crossed map, BOTH ROUNDS.** Cause is structural (SKILL.md: width is
-  capped by the hex ⇒ taller means slenderer, and a capitol's identity **IS** being wide and low). ➡ The lever is **MASS,
-  not height**: a drum **wider than tall**, a dome scaled to it, no stripes on the drum. Gate: `probe-parlheight.mjs`.
+  (g) **THE CAPITOL CANNOT CARRY ITS OWN LABEL — IT NEEDS A MASSING REDESIGN** (270; full body in the 270 entry; gate
+  written: `probe-parlheight.mjs`). `CIVICDESC.parliament` promises *"the tallest civic roof"* and it is **FALSE** (the
+  university out-tops it **4 seeds in 6**). ⛔ **DO NOT RE-TRY IT AS A HEIGHT CONSTANT — BOTH ROUTES MEASURED AND DEAD**
+  (taller BODY = *"an office slab wearing a dome as a hat"*; height in a DRUM = *"a minaret"* — two agents, two seeds,
+  crossed, both rounds; cause is structural, SKILL.md). ➡ The lever is **MASS, not height**: a drum wider than tall.
   (e) **THE OBSERVATORY IS TOO SMALL TO READ** (259; ≈ **5.5 CSS px at fit**, on a frame where it is 96.3% visible). ⚠ **SMALL, not BURIED — do NOT re-open the siting.**
   (f) **THE WILDFLOWERS ARE SUB-PIXEL** (263; ≈ **1.1 CSS px at fit**, true of HEAD's meadow bloom too). ⛔ **DO NOT RAISE THE PER-HEX BODY LIFT — that is 255's ⛔** (⇒ a hex quilt). ➡ The only way through is **a SHAPE THAT CROSSES TILE BOUNDARIES** (a drift of petals, a streak), never a brighter fill.
   (b) **`university` is the ONLY of the twelve civics with no `LITAMT`** — pitch dark after sunset; every place to put the light failed (195). (c) **A parked service vehicle needs its CIVIC TILE to have a visible apron on its front edge** (204). (d) **The marsh reeds do not read** — seven sub-pixel strokes round the pool (cue (i), 113).
@@ -391,82 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 263 entries before Iteration 261 live in
+> **Archive:** the 264 entries before Iteration 262 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 261 — the season was invisible because it had no clock (2026-07-14) [Sky & atmosphere × Deepen]
-
-**Vector.** Sky & atmosphere × Deepen — the ledger's **#1 cue (aq′)**, banked by the 32nd step-back, whose
-lone named candidate was **day length**. (Law 119: a banked, measured finding outranks kind-rotation.)
-
-**The defect, restated.** 253 gave the sunlight a calendar and 260 proved that calendar **real and invisible**:
-winter moves the warm-cool axis **d 0.52** — *harder than the golden hour's 0.43, the light change every agent
-calls obvious* — and moves **luminance d 0.09**, where the golden hour moves **0.69**. A season painted as a
-**global multiplicative chroma cast is precisely the transform colour constancy divides out**, so four blind
-agents on two seeds reported *"no cooler light."* Both they and 253 were right. The season needed a channel the
-eye cannot normalise away, and the one the sky owns is **when the sun is up**.
-
-**Change.** `sunWarp(t)` — **one sine on the light curve's TIME axis**, never on its altitude:
-`u = t + dayLen()·sin(2π(t − NOONT))`, pinned at two fixed points (solar noon `NOONT`=(SUNUP+SUNDN)/2, and solar
-midnight, where `sin` is 0). Winter *advances* the curve through the evening and *retards* it through the morning;
-summer the reverse. `SUNUP`/`SUNDN` keep their values — they are still the curve's own dawn/dusk keyframes.
-**ONE predicate, FOUR readers** (`SUNT`, set once a frame): `daylight()` (sky, tint, `LITAMT`), the shadow vector
-(`SHOFF`/`SHLEN`/`SHAMT`), the sun disc (`sunP`), and `nightDeep()` (the city's bedtime — read raw, a summer city
-was 42% into its night at the moment the sun set). `DAYLEN=0.10` is bounded by **monotonicity, not taste**: the warp
-folds at 1/2π = 0.159.
-
-**Two structural guarantees, not checked ones (223).** (1) **The sun's arc is untouchable.** `sunP` is a pure
-function of `SUNT`, and `SUNT` has `dayT`'s range ⇒ **the disc cannot reach a screen position HEAD did not already
-reach** (so ⛔ 200's placard law holds by construction, not by care), and `sunWarp(NOONT)===NOONT` because `sin(0)`
-is 0 ⇒ **it hits its identical peak at solar noon in every season.** Only the *timing* moves. (2) **The fixed point**
-(245): `dayLen()` is centred on the season's mean, so at the mean it is **exactly 0** and `sunWarp` returns `t` to the
-last bit — the patch runs HEAD's byte-identical code path.
-
-**Census.** PASS, 0 page errors. `pop`/`roads`/`developed` **+0**; whole matrix flat; tile histogram empty — correct,
-and *vacuous*, which is why the probe is the gate.
-
-**Probe** (`probes/probe-daylen.mjs`, `probes/shot-daylen.mjs`).
-- **A — the defect as a number** (pure world data, no render, drives *the artifact's own* `sunWarp`): HEAD's sunset is
-  **0.780 in every season — DISTINCT DAY LENGTHS = 1**, a baseline nobody had to design (236). Patch: sunset
-  **0.701 (winter) / 0.780 (equinox) / 0.831 (dry peak)**; day length **0.572 → 0.730 → 0.831**.
-- **B — is it VISIBLE?** The season's **luminance d, swept across the whole day** (not at the one hour my feature is
-  loudest — 205), against **golden hour as the incumbent bar I did not invent** (226). HEAD is luminance-dead at
-  *every* hour (**d 0.06–0.15**). Patch: **evening d 1.59 / dawn 1.55** — i.e. **2.3× the golden-hour bar (0.69)** —
-  while **NOON, the free must-not-move control, does not move (0.09 → 0.09)**. Identical-pin floor **exactly 0 px**.
-- **C — the fixed point**, by 253's predicate suppression *inside one page* (floor exactly 0, build-agnostic): at the
-  season's mean, live-vs-suppressed = **0 px**; in winter, **3,800,369 px**. ⚠ **The pin cannot be a YEAR** —
-  `year=2035.87` is not representable in float64, so `dayLen()` lands on −1.8e−10, the guard never fires, and the
-  artifact's own colour quantizers (`seaFace`'s round-to-32nds) flip a bucket worth ~332 px. **Pin the SIGNAL, not the
-  year** (`seasonCool = () => 0.5` ⇒ `dayLen()` is 0 by arithmetic).
-- ⚠ **C2 (cross-build patch-vs-HEAD) was built, run, and CUT — 230's law, re-confirmed.** The HEAD-vs-HEAD floor came
-  back at **98,000–706,000 px**, and at noon the "signal" (478,871) sat **below its own floor** (706,045). *Do not
-  re-add the build swap.*
-
-**Perf.** FREE, and by the deterministic instrument (216/222, never `perfab` alone): path objects
-**day 111,002 → 111,039 (+0.03%)**, **night 140,017 → 138,471 (−1.1%)**. It is a coordinate remap of a lookup the
-frame was doing anyway — no new draw call, and the world is unchanged (census flat), so 222's "the world is the draw
-list" does not bite.
-
-**Visual.** Three blind agents, two seeds, **crossed A/B map, named by FILE never by a letter** (238/239), asked to
-**rank and pair** rather than judge (108). All three were right: they ranked patch-summer as **DAYLIGHT**,
-patch-winter as **NIGHT**, and — unprompted — **named the two HEAD frames as the indistinguishable pair**, which is
-exactly the ground truth (HEAD's light curve carries no `year` term). Seed 7's agent added, correctly: *"frame1 is
-full night while frame4 is full daylight at the same late-afternoon clock — a large seasonal swing, worth confirming
-it is intended."* It is the feature.
-
-**One real bug found, and it was MINE — in the camera, then fixed at SOURCE.** Seed 42's first read FAILed: *"a night
-sky, stars and a full moon, behind a fully daylit midday city."* `syncSky` read `SUNT`, which is only set **inside**
-`render()`, and the camera called `syncSky` *before* `render()` — so it painted the CSS backdrop from the **previous
-frame's** clock. The app happens to call `render(); syncSky()` in that order and was never wrong. But **a correctness
-that rests on call order is a latent bug, not a design** (223): `syncSky` now warps its own clock
-(`daylight(sunWarp(dayT))`), one `sin()` per 400 ms, and the coupling is gone. Re-shot, both noon frames PASS and a
-blind agent calls patch and HEAD at noon *"essentially the same image"* — the control the probe predicted.
-
-**Verdict: SHIPPED.** The ledger's #1 cue, closed. The season is now the first thing you see: at the same clock, the
-winter city is dark and lamplit while the summer city is still in full afternoon sun.
 
 ## Iteration 262 — the city lost its children all at once, at the first dark frame (2026-07-14) [People & activity × Deepen]
 
@@ -1174,3 +1103,80 @@ Height and identity are in direct conflict and the tile decides the winner. ⇒ 
 **a single-tile massing redesign is `polish-tile`'s job, not a growth lap's** — so it is banked as
 `polish-tile` cue **(g)**, with its gate already written (`probe-parlheight.mjs`: rank + margin in CSS px,
 worst seed, must-not-move column, exact fixed point).
+
+## Iteration 271 — nine people sat in the dark water off a beach that had packed itself away (2026-07-14) [People & activity × Deepen]
+
+**Vector.** People & activity × Deepen. Rotation put People oldest (8 laps); its cue list was
+empty, so — 225's law, now 13 for 13 — I grepped the seam instead of trusting it.
+
+**The finding.** 262's law says: after you fix a per-entity rule, grep the *function* you fixed
+for the other things it draws. Run one scope wider — grep every draw that puts a **person** on the
+plate and ask which of them keeps state — and `drawSurfer` opens on `const[cx,cy]=pxc(...)`. **No
+gate. None.** Nine surfers are spawned once in `genWorld` and were drawn on **every frame of the
+artifact's life**, while every other person in the city keeps an hour (`curfewAt` 210 · `kidOut`
+262 · `j.out` 210 · `VCURF` 230 · `matchClock` 240) and 247 gave the **sand** a calendar, so the
+umbrellas and deckchairs pack away in winter. The water crowd learned **neither**.
+
+**Probe (`probes/probe-surfsession.mjs`), and it was run BEFORE a line of the fix.**
+- **A — temporal (134), no pixels, no noise floor.** HEAD: **DISTINCT LINEUP SIZES = 1**, on every
+  seed — 9 of 9 still in the break at the darkest hour. *The constant IS the defect* (236), no
+  threshold invented. **The POSITIVE CONTROL is the JOGGER** (248): a correct sibling, same
+  shoreline, same clock, two functions away — it reads **DISTINCT 3–4 and 0 in the dark**, which is
+  what makes the surfers' flatness a real flatness and not a dead rig. Kayaks+boats = the
+  must-not-move column (250): **18, unmoved.**
+- **A2 — the season.** 9/9 in **every** season while `beachPhase()` runs **0.19 (winter) → 1.0**.
+- **B — 259's check, and the reason to run it FIRST.** Is the night lineup even *visible*? If it
+  renders 20px of dark ink on a dark sea, the hours half is a nothing and only the season half is
+  real. It is **not**: their foam wakes are **bright on a black sea**, so HEAD's night lineup
+  renders **120–129 px, ~13 px/surfer — as much as at noon.** Isolated by suppressing `drawSurfer`
+  in ONE page (226/230): floor **exactly 0**, occlusion free, build-agnostic.
+
+**Change.** `surfSession()` — **two predicates the artifact already owns, and no third invented**:
+the **sun** (`nightAmt()`, the clock the whole city keeps) × the **calendar** (`beachPhase()`,
+247's own — so the water and the sand now answer **one** season). Each board keeps its own
+threshold so the lineup **thins one at a time** rather than blinking out (the cliff 210 was
+written to end). `SURFDARK = JOG0+JOGJ` is **taken from the ladder, not invented** (226): the last
+board leaves the water as the last runner leaves the strand. `surfOut(s) = s.ph/7` is **derived,
+not drawn** — `ph` is already `Math.random()*7`, so it is exactly uniform on [0,1) and costs
+**zero** new random draws ⇒ the shared stream is byte-identical and every kayak, jogger, balloon
+and resident is *provably* untouched (204/262). Three readers: the draw, the tooltip (which used
+to say *"Waiting on the next set"* over a surfer sitting in the dark in midwinter), the probe.
+
+**Census.** PASS, `pageerrors: 0`. Core **exactly flat** — `pop +0 · roads +0 · developed +0` —
+as a draw-only, `rng()`-free change must be. Tile histogram empty (correct). `solarRoofs +1 /
+greenRoofs +1`: re-ran the **same file** per 226 and got **−3 / −1**, so it is the harness's own
+tick wobble, not the edit (which is unreachable from `tick()`).
+
+**Fixed point (245), and it is arithmetic rather than a claim.** At the dry peak in daylight
+`surfSession()` returns **exactly 1**, so `1 < ph/7` is false for every board and the patch runs
+HEAD's draw byte-for-byte. Proved by **predicate suppression inside ONE page** (253): force
+`surfSession = () => 1` (= HEAD, which has no gate) and re-render — **0 px on all three seeds**,
+with a deep-night control at **137/161/146 px** proving the suppression is live. **⇒ the feature
+adds no draw work at its reference condition, and strictly removes it elsewhere** (241's credit).
+
+**Visual.** Both seeds **PASS**, blind, on a **crossed** map, and both agents named the treatment
+*by counting*: seed 42 (patch=`kappa`) — kappa day 4 / night **0** / winter **0**, sigma 4/4/4;
+seed 7 (patch=`sigma`) — sigma day 4 / night **0** / winter **0**, kappa 4/4/4. Both called the
+**day pair identical** (36 px; max channel delta 8) — the fixed point, confirmed by eye. Whole-city
+frames clean on both seeds.
+
+**Two instrument failures, both mine, both caught by the tool and not by a gate round.**
+1. **The night pin was derived — at the wrong year.** 261 gave the season a **day length**
+   (`sunWarp`), so `nightAmt()` is **not a pure function of `dayT`**: the same `dayT` is deep night
+   in winter and broad daylight in summer. I derived the pin once, while `year` was still whatever
+   `__warp` left, then applied it at 2035.62 — and **the "night" frame self-reported
+   `nightAmt=0`.** The camera was shooting the control and captioning it the treatment. **202's
+   self-report caught it in one line.** 264 says *derive the pin from the curve at shoot time*; the
+   sharpening is that a derived pin is a function of **all** the curve's inputs.
+2. **"No argmax needed" framed the pier.** I reasoned my way to 249 — a surfer floats on open water
+   where *"nothing can occlude it"* — and aimed at the **median board by world-y**. On seed 42 the
+   boards nearest that aim sit **behind the pier deck**, so the patch's DAY frame, in which the
+   probe measures 140 px of surfer, **showed no surfer at all**, and the agent **correctly refused
+   to grade it**. A board's position says where it *is*; it says nothing about whether it can be
+   **seen**. Re-aimed by the **argmax of the lineup's own measured ink** (226/230/234) and both
+   builds land on the *identical* world point (the day frames being byte-identical), so the blind
+   pair frames the same water. *(The `1×` I briefly took for a 269 violation is `btnSpeed` — the
+   sim speed. The artifact has no zoom pill.)*
+
+**Verdict: SHIPPED.** The last people in Solvista who never went home now do — **and the kayakers
+are the last holdout** (cue (aw); the predicate is already written for them).
