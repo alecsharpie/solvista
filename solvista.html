@@ -1673,6 +1673,23 @@ const isWood=c=>c.t===T.FOREST||c.t===T.REDWOOD;
    fragmented — biggest component 6 and 14 — and could only speckle). It already
    drew static wildflowers with no calendar; now they keep one. */
 const bloomHost=c=>c.t===T.MEADOW||c.t===T.SHOREPARK;
+/* THE AUTUMN FLUSH — one predicate, three readers (the tick() pass, the draw's
+   fade, the tooltip). Iter 272: every ring in the city used to surface and vanish
+   on the SAME TICK. The gate asked one GLOBAL question ("is it autumn?") and rolled
+   a hash salted by (year|0) — which is CONSTANT across the season — so all ~3
+   in-season ticks read the identical value and the whole wood fired at the first of
+   them. Measured: a perfect square wave, 0 -> N -> N -> N -> 0, every autumn, on
+   every seed; at speed 1 that is a 1.35 s flash every 6 s, in unison.
+   Now each ring keeps its OWN hour of the flush: SHRM0 is the first rains and SHRMW
+   is how long the flush keeps opening, so a cell surfaces once s2 passes SHRM0 +
+   c.v*SHRMW. Both c.v and the span hash are uniforms the cell ALREADY carries, so
+   this costs NO rng() draw and the CA stays wholly inert to the seeded stream
+   (263's law on a shared constant timer; 262's on a global gate). SHRMEND closes the
+   flush, so a cell that missed its hour waits for next autumn rather than fruiting
+   in spring. */
+const SHRM0=0.72, SHRMW=0.18, SHRMEND=0.99, SHRMP=0.06;
+const shroomDue=(c,s2)=>s2>SHRM0+c.v*SHRMW&&s2<SHRMEND;
+const shroomLife=(x,y)=>2+(hashCell(x,y,seedNum^0x5A17)<0.5?0:1);  /* 2-3 ticks, mean 2.5 */
 let TICKN=0;   /* tick counter: salts the bloom's hashCell so the CA draws NO rng() */
 function canopyK(x,y){return countAround(x,y,1,isWood)}
 function deepWoods(x,y){return countAround(x,y,2,isWood)>=9
@@ -2709,16 +2726,18 @@ function tick(){
       c.party=5;
   }
   /* fairy rings: after the first autumn rains, mushroom rings surface on the
-     woodland floor for a spell, then fade and the ground rests. Year-keyed
-     hash so the rings roam; no rng(), decoration state only. */
-  {const s2=((year%1)+1)%1, shroomSeason=s2>0.76&&s2<0.98;
+     woodland floor, each in its own hour, and fade away through early winter.
+     Year-keyed hash so the rings roam; no rng(), decoration state only.
+     The flush is shroomDue/shroomLife — see the woods seam for why each ring keeps
+     its own clock rather than the whole wood blinking on and off as one. */
+  {const s2=((year%1)+1)%1;
    for(let y=0;y<G;y++)for(let x=0;x<G;x++){
      const c=cells[idx(x,y)];
-     if(c.t!==T.FOREST&&c.t!==T.REDWOOD){c.shroom=0;continue;}
+     if(!isWood(c)){c.shroom=0;continue;}
      if(c.shroom>0){c.shroom--; if(c.shroom===0)c.shroom=-20;}
      else if(c.shroom<0)c.shroom++;
-     else if(shroomSeason&&hashCell(x,y+(year|0)*37,seedNum^0xF469)<0.06)
-       c.shroom=3; /* ~a fifth of a year, gone by winter */
+     else if(shroomDue(c,s2)&&hashCell(x,y+(year|0)*37,seedNum^0xF469)<SHRMP)
+       c.shroom=shroomLife(x,y);
    }}
   /* bus stops: shelters take root where a quiet street fronts the built-up
      blocks — and the buses actually pull in (stepVehicle). Pure derivation

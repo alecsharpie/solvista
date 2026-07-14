@@ -701,6 +701,51 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **`render()` MUTATES THE WORLD — SO A "FROZEN" WORLD IS NOT IDEMPOTENT UNDER RENDER, AND THE FREEZE LIST YOU
+  INHERITED IS A LIST OF *INPUTS* THAT CANNOT SEE IT (iter 272).** 163/199/203/213 build the freeze list one painful
+  item at a time — `genWorld`+`__warp`, `STARS`, `flock`, the mover arrays, `time`/`waveT`, and finally 213's
+  `addInitScript` PRNG stub, which subsumes the lot *"and it is the difference between a probe that measures your
+  feature and one that measures the weather."* Every one of those is an **INPUT** to the draw. 272 found the item that
+  is not: **`drawBuilding` GROWS THE CITY WHILE IT DRAWS IT** — `if(c.h<c.th) c.h = Math.min(c.th, c.h+0.35+…)`, a
+  write to world state, *inside the render path*. So two renders of a world you have frozen with every law above are
+  **still not byte-identical while anything is mid-growth**: 272's floor read **544–788 px**, the same order as an
+  entire feature's signal, and its first visibility table was pure noise dressed up as three tidy columns (the
+  incumbent's "party" control read **672 px with ZERO parties in the city** — the tell, and I nearly filed it).
+  ⇒ **Before any two-render diff, SETTLE THE HEIGHTS: `for(const c of cells) if(c.h<c.th) c.h=c.th;`** Floor: **exactly 0.**
+  ⇒ **AND THE REASON NOBODY FOUND IT IN 271 ITERATIONS IS THE REASON YOU WILL WALK INTO IT: `__warp` HIDES IT.** Its
+  last line is `for(const c of cells) if(DEV.has(c.t)) c.h=c.th;` — it settles the growth on the way out. So **every
+  warp-and-stop probe in `probes/` is fine and always was**, and the bug is invisible until you do the thing the
+  modern probes all do: **drive `tick()` DIRECTLY** (263's `probe-bloomwave`, 267's `probe-loft`, 272's own) to get
+  per-tick resolution `__warp` cannot give you. The moment you step the sim yourself, you leave the city mid-growth
+  and the renderer starts editing it under you. **The tell: your probe calls `tick()` in a loop, and its
+  HEAD-vs-HEAD floor is in the hundreds when every law you obeyed promises zero.**
+  ⇒ **AND THE GENERAL FORM IS WORTH MORE THAN THE FIX: A FREEZE LIST IS A CLAIM THAT THE DRAW IS A PURE FUNCTION OF
+  THE WORLD. GO AND CHECK.** `grep` the draw path for assignments to world state (`c.h=`, `c.x=`, `e.phase=`, any
+  `++`) before you trust a two-render diff. A renderer with a side effect defeats **every** law above simultaneously,
+  and it does it *silently* — it does not crash, it just quietly makes your floor the same size as your signal.
+- **"AIM BY MEASURED INK" IS THREE SEPARATE CLAIMS, AND A SPARSE FEATURE BREAKS ALL THREE — RESOLVE THE INK, PICK THE
+  *HOST*, THEN PAN TO ITS OWN `ctr()` (iter 272, sharpening 226/271).** 226 says aim by measured ink, never by a tile
+  predicate; 271 says do not claim an exemption from that. Both are right and **neither tells you how**, and a sparse
+  ornament (Solvista's whole autumn ring crop is **~100 changed px in a 1.26M-px frame**) will defeat a naive reading of
+  them **three different ways, each of which produces a confident, wrong crop that an agent correctly refuses to grade**:
+  **(a) A STRIDED ARGMAX CANNOT SEE A SPARSE SIGNAL.** Summing the ink map every 4th pixel samples **1/16** of it — of
+  ~100 px, it sees ~6 — so the argmax is **noise**, and it duly framed downtown. **Sum every pixel; the map is sparse,
+  so it is cheap.** The tell: your window scan has a stride, and your feature's total ink is smaller than your window.
+  **(b) THE ARGMAX *WINDOW'S* CENTRE IS NOT THE *HOST*.** A 200-px window containing a 20-px ring can have its geometric
+  midpoint 90 px off the ring — so panning to *the window's centre* walks to a world point with no feature in it.
+  **Score each candidate host by the ink in ITS OWN neighbourhood, take the argmax over HOSTS, then pan to that host's
+  `ctr()`.** Ink chooses **WHICH** (so it is provably visible, un-occluded, un-buried); `ctr()` supplies **WHERE** (so
+  you provably land on it). Neither alone is an aim.
+  **(c) `zoomAt(target, f)` DOES NOT LEAVE YOUR TARGET AT THE TARGET — `clampPan()` MOVES IT.** Zooming toward a point
+  near the plate's edge gets clamped to keep the plate in frame, which **stranded the ring at x=6..35, the extreme left
+  edge, half-clipped**, inside a crop that "contained" it and read as a wall of towers. **Zoom about the viewport CENTRE,
+  then pan explicitly** (`offX = mid − wx*scale; clampPan()`) — `offX`/`offY` are pan **inputs** (`zoomAt` and the `0`
+  key both assign them); only `scale` is derived (269).
+  ⇒ ⚠ **AND 200'S LAW IS STILL WAITING AT THE END OF ALL THREE: THE CANVAS IS NOT WHAT THE USER SEES.** A
+  `getImageData` ink map scores ink sitting **behind the DOM placard** exactly as brightly as ink in open ground — so
+  the argmax will happily aim at a feature the viewer **cannot see**, which is 200's sun-behind-the-placard, arriving
+  through the *camera* instead of the *probe*. **Zero the ink inside every HUD box before you take the argmax**, and
+  print what you zeroed. The tell: your crop is full of the thing that is *near* your feature.
 - **A PER-ENTITY RULE IS A PROPERTY OF A *CATEGORY*, NOT OF A FUNCTION — SO AFTER YOU FIX ONE, GREP EVERY DRAW THAT PUTS
   THE SAME *KIND OF THING* ON THE PLATE, NOT JUST THE FUNCTION YOU EDITED (iter 271, generalising 262).** 262 says: after
   you fix a per-entity rule, grep the **function** you fixed for the other things it draws — and it found the child three
@@ -3047,6 +3092,29 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   (258): the success condition at night is an **absence**, and a frame that simply misses the lineup renders exactly like
   a correct one. ⚠ Pin `time`/`waveT` and clear `flock`/`STARS` (195f/199/163d) or the blind day pair is not a control,
   it is a wave. Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds (238/239/268)).
+  The **fairy-ring trio** (272 — reach for these on any vector about a SEASONAL/CADENCE rule, and on any "does this
+  population share one clock" claim): `probe-fairyring.mjs` (**does the flush BREATHE, or does the whole wood BLINK?**
+  TEMPORAL (134 — every other gate here is frozen, so *"they all come up on the same tick"* has no instrument): it drives
+  the artifact's **OWN `tick()`** and reads **NO PIXELS**, so it has **no noise floor at all** and nothing to stub.
+  **BUILD-AGNOSTIC** via `SRC=` — it only reads `cells[].shroom`, so ONE file grades HEAD and the patch with **no source
+  swap and no cross-build floor** (230). ⚠ **Its headline needs no threshold**: HEAD reads **DISTINCT NONZERO COUNTS PER
+  AUTUMN = 1** — a perfect square wave — which IS the defect, stated (236). ⚠ **Its SPRING+SUMMER column is the
+  must-not-move guard** (250) and it is the one that can kill the lap: the flush may spread into early winter, but **a
+  mushroom in MAY is a broken season**. ⚠ **Its BLOOM column is a FREE POSITIVE CONTROL** (248) — the wildflower CA is a
+  *correct sibling excitable-medium in the same `tick()`*, so a flat ring column is a real flatness and not a dead rig),
+  `probe-shroomvis.mjs` (**259's CHECK, and it must run BEFORE you design**: can the thing even be SEEN? Suppresses
+  `drawShroom` in ONE page (230) and reports **CSS px per ring at FIT zoom**, against the **incumbent bar** the artifact
+  already ships and accepts (226) — a ped's contact shadow at **4.4 px**. The rings read **15.8–20.8**, so they are NOT
+  the sub-pixel hairline family and the vector was live. ⚠ **It is where `render()`-mutates-the-world was found** — its
+  first run measured a "party" control at **672 px in a city with ZERO parties**),
+  `shot-fairyring.mjs` (its camera, and it is the **cautionary** one — **it framed downtown TWICE and the placard once.**
+  ⚠ **Sum the ink map at FULL RESOLUTION** — a stride-4 argmax sees ~6 of ~100 sparse px and aims at noise. ⚠ **Score each
+  RING by its own ink, then pan to that ring's `ctr()`** — an ink *window's* geometric centre need not sit on any ring.
+  ⚠ **Zero the ink inside the HUD boxes first** (200) — a canvas diff scores ink hidden behind `.placard` just as brightly.
+  ⚠ **Zoom about the CENTRE then pan explicitly**; `zoomAt(target,f)` + `clampPan()` stranded a ring at the frame's edge.
+  ⚠ **The pin is DERIVED from the frame's own mean luminance, NOT from `nightAmt`** — `nightAmt` is **saturated at 0
+  across all of daylight**, so its argmin returns DAWN (199). ⚠ **DO NOT ask it to grade the cadence** — 134/258: a still
+  cannot prove a verb, and the draw's `alpha=min(1,shroom/2)` **saturates** so ages 3 and 2 render identically anyway.)
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

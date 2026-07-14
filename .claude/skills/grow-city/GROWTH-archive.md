@@ -19235,3 +19235,91 @@ around the dome by **−1.9%**, which is nothing, and a blind agent said so in a
 neither is stranded out in the dark"*) **and was right**. **Fine as a CHOOSER, dead as a LOOK ⇒ do not build "X
 answers the night glow" in COLOUR.** (Law in SKILL.md: *a field with a floor cannot express an absence — read the line
 that CONSUMES it and compute its rendered dynamic range.*)
+
+<!-- header bullets rotated out at 272 (budget trim; every law below lives in SKILL.md) -->
+
+**The COST MODEL is MEASURED (198, `probe-shadcost.mjs`; prose archived at 237): cost is PER PATH OBJECT rasterized —
+NOT per `fill()`, NOT per unit area; a sprite blit is WORSE. Batching fills, shrinking radii and sprite-blitting are
+all CLOSED; the only lever is drawing FEWER objects** (a *visual* decision — be willing to pay).
+**⚠ TWO HOLES, SAME SHAPE (body archived at 242): 198's table was measured on SOLID FILLS ONLY.** **GRADIENTS** (may
+price by AREA) and **STROKES** (215's `seamVeg`) have each come in **~4x over the model** — PAID and ACCEPTED, neither
+MEASURED. **Do not shrink a gradient or cull a stroke "because 198 said count is what matters".** ⚠ **THE DEAD-REGIME
+CONTROL (199)** and ⚠ **NEVER GRADE BY CONSECUTIVE PASSES (117)** are LAWS in SKILL.md.
+(**A 2+-round interleave overruns the 120s Bash timeout — do NOT pipe it through `tee`** (node block-buffers to a
+pipe; 197 lost a run that way): run it foreground, long timeout. **⚠ `cp` is aliased `-i` — use `/bin/cp`**, iter 147.)
+
+**TEN harness files still TYPE `golden t=0.68`** (264/265 fixed only the camera + `probe-goldenhue`). **MEASURED (268):
+worth `GWARM` 0.720 of 0.786 = 92% of golden** ⇒ mildly under-strength, **NOT** 265's 36% disaster. **Low priority — do
+not escalate; but DERIVE, never type, in anything new.**
+
+## Iteration 262 — the city lost its children all at once, at the first dark frame (2026-07-14) [People & activity × Deepen]
+
+**Vector.** People was the most overdue domain (last: 247). I did not pick a feature — I ran 225's
+grep-the-seam law on it, and the seam handed me the defect in one read. It is now **7 for 7**.
+
+**The find.** `drawPed` draws a resident, and beside ~18% of them a child. The parent is hidden by
+`pedHidden(p) = nightAmt() > p.out` — the per-resident curfew iter 210 built, whose whole stated
+purpose is that a crowd must thin *"one door at a time"* rather than blink out in a single frame.
+The child, three lines below, inside the same function, was still on the gate 210 was written to
+**condemn**: `if(p.kid && LITAMT < 0.5)`. `LITAMT` is **global** and monotone through dusk, so that
+threshold fires for **every child in the city in the same frame**. 199 taught the windows to go to
+bed, 210 the residents and the joggers, 230 the traffic — each replacing exactly this gate with a
+per-entity hour. The child is the **third recursion and the last one**, and it had survived because
+*"the children go home at dark"* is true, and nobody read it beside the line above it.
+
+**Change.** `KID0/KIDJ` + `kidOut(p)` + `kidHidden(p)`. The band is taken from the artifact's **own
+ladder of hours**, not invented (226 — set the bar from the incumbent): a child is in before a runner
+(`JOG` ceiling 0.62) and long before the crowd (`CURF` to 1.85), so it keeps the **earliest hour in
+the city** — every child in by `nightAmt` 0.34. `Math.min(p.out, ...)` makes *"a child is never left
+out later than the parent holding its hand"* **structural, not checked** (223): on quiet ground they
+go in together, on a lively kerb the child goes first and the parent stays.
+**Derived, not drawn.** `p.kid` is already a `Math.random` uniform (`1 + rand*6`), so `(kid/6)%1` is
+**exactly** uniform on [0,1) and costs **no new random draw** — both the seeded `rng()` stream *and*
+the shared `Math.random` stream stay byte-identical. That is what lets the probe carry the adults as
+an **exact** must-not-move control (250) instead of an approximate one.
+**ONE predicate, three readers** (112 forwards): the DRAW, the TOOLTIP (`withChild` — *"A little one
+in tow."* / *"The little one has gone in."*) and the probe.
+
+**Probe** (`probes/probe-kidbed.mjs` — temporal (134: no frozen gate can see a cadence), reads **no
+pixels** so it has **no noise floor at all**, and **build-agnostic**: it detects `kidHidden` and falls
+back to HEAD's literal gate, so ONE file grades both builds — no source swap, no cross-build floor).
+**HEAD's constant IS the baseline (236), so no threshold had to be invented:**
+
+| | HEAD | patch |
+| --- | --- | --- |
+| **DISTINCT CHILD BEDTIMES** | **1**, every seed | 14/19 · 11/13 · 17/18 |
+| max children lost per pin | **19 · 13 · 18** (all of them) | **2** |
+| mean bedtime (`nightAmt`) | **0.009** — the first dark frame there is | 0.143–0.191 |
+| left-by-parent | **0** — not one child, ever, in any city | 0 |
+| **ADULTS** (must not move) | 81/84/81 distinct, mean .853/.954/.872 | **identical** |
+| NOON (dead regime, 199) | 19/19 · 13/13 · 18/18 out | identical |
+| child-in-before-parent | — | **0 violations** (structural) |
+
+The adults are also the **free positive control** (248 — a correct sibling mechanism in the same
+function): they read **81–84** distinct bedtimes, so the probe can plainly see a spread, and the
+children's **1** is a real 1 and not a dead instrument.
+
+**Census.** PASS. `pop`/`roads`/`developed` **+0**, tile histogram empty (draw-only). `solarRoofs +3 /
+greenRoofs −1` on the first run was the harness, not me — re-run on the **same file** (226) it read
+**+0/+0**.
+
+**Cost.** Path objects **+0.03% day / +0.01% night** — but note *both* of `probe-drawbudget`'s pins are
+regimes where the two builds draw the **same** children by construction (day: all; deep night: none),
+so they are structurally blind to this feature and those deltas are noise. The real added work lives
+only in the evening band and is **bounded by ~19 children × 3 path objects ≈ 57 objects (≤0.05%)**.
+
+**Visual.** Both agents returned **`VISUAL: FAIL` — and both convicted HEAD.** With the build mapping
+**crossed between seeds** (238), each independently named the build that drops the child at dusk:
+seed 7 (`buildone`=patch) → *"buildtwo drops the child once lighting goes to dusk — a real
+regression"*; seed 42 (`buildone`=HEAD) → *"buildone's child is not drawn at dusk... a time-of-day
+bug"*. **They could not both have been right by guessing a letter.** Two blind agents, from pixels
+alone, rediscovered the defect the probe found in the source and attributed it to the right file both
+times. The **day twin** (258 — a required positive companion, since an absent subject and a correctly
+absent subject render the same frame) showed the child in **both** builds, proving the camera works;
+the un-zoomed city read balanced with no z-order tears, no floating, no clutter — one agent pixel-
+diffed the two city frames at **75 px (0.0015%)**.
+
+**Verdict: FIXED.** The children of Solvista no longer vanish in a single frame at the first dark
+frame of the evening. They go in one at a time, ahead of the runners and long before the crowd, and
+you can hover a resident and be told whether the little one is still with them.
+
