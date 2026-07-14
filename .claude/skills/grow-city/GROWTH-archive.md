@@ -19730,3 +19730,98 @@ instance (269 generalised this: any superlative aiming predicate made of DENSITY
 velocity). ⚠ NOT cue (o): the PIER has a waterfront, the HARBOUR does not.
 **245:** `seaState()`, floor `SEACALM`.  **242:** ⚠ MARSH/KELP no longer catch cloud shade (`WETSET`).
 **241:** `RAILCAP=130`.  **236:** ⚠ `cl.rain` IS GONE ⇒ `cloudWet(cl)`.
+
+## Iteration 267 — the warehouse could never gentrify, because its own cheapness was the thing being measured (2026-07-14) [Urban fabric × Deepen]
+
+**Vector.** Urban fabric × Deepen — 12 laps overdue, and the header's own steer said its
+colour channel (254), massing (235), facades (216) and ground plane (209) are all
+measured-closed, so the lap had to come from **225's grep-the-seam law**. It did.
+`grep`ping the upgrade pass turned up `c.loft`: a full draw (brick prism, strips of new
+glass, a coral arts-district sign on the parapet, a rooftop studio), **advertised in the
+placard** — *"Warehouses become lofts and far fields go solar once the rent says so."* —
+and **read by nothing else in the file.** No tooltip branch, no population, no life.
+
+**The defect (measured before a line was written; `probes/probe-loft.mjs`, pure world
+data).** **0 lofts. On 6 seeds in 6, at every era, for the artifact's entire life.** And
+**0 warehouses even left eligible** — 218's signature: not a tuning problem, *the gate
+never opens.* The rule's own comment says *"rising land value turns old warehouses into
+lofts"* and it gates on **`c.val > 0.45`** — but `valueSrc(T.IND)` is **0.18**, the lowest
+source in the city bar burnt ground, and `updateValue` mixes 60% neighbour / 40% source,
+so **an industrial lot's own cheapness is subtracted from the very signal meant to lift
+it** — and warehouses cluster with warehouses, which drags it lower still. Highest `c.val`
+any warehouse reaches in any city: **0.425**. The gate demands 0.450. It is not reachable.
+
+**Change.** ONE predicate, and every reader on it.
+- **`blockValue(x,y)`** — the mean `c.val` over the six neighbours, i.e. *the statistic
+  `updateValue` already computes*, minus the lot's self-suppressing term. A warehouse does
+  not gentrify because the warehouse got valuable; it gentrifies because **the city arrived
+  at its door.** Gate: `blockValue > LOFTVAL`, and **`LOFTVAL = 0.5` is not a number I
+  chose** — it is `valueSrc`'s default return and `updateValue`'s own `n?s/n:0.5` fallback,
+  *the artifact's own definition of neutral land.* Swept (Part B): **0.45 admits 26 of 27
+  warehouses and the yard vanishes; 0.55 starves 4 seeds in 6** (233); **0.50 fires on 6/6,
+  worst seed 2, and leaves a gradient** — the sheds on the city side convert, the ones deep
+  in the works do not.
+- **The pass now WALKS ITS HOST.** Opening the gate alone shipped almost nothing: it still
+  converted **6.7%** of what it admitted, and **no probability could fix that** — swept to
+  `p=0.8` it still left **2 seeds in 6 with no loft at all**. The cause is 263's law: the
+  pass hunted a **3–6 cell** host with `rc()`, *a lottery over the whole 3,400-cell plate*,
+  so it saw a given warehouse **less than once in three decades.** **A rule's ignition is a
+  distribution over a space, and the space was wrong before the rate was.** It now iterates
+  `HEXI` like the corner-shop pass above it, rolling on `hashCell(x,y,seedNum^SALT^TICKN)`
+  ⇒ **zero `rng()` draws** (263), and `LOFTP=0.006`/tick ⇒ the yard turns **over decades**
+  (0 lofts at 2006 → 1–2 by 2015 → the yard turned by 2035), not in one year.
+- **The MARKET fork is GONE.** It was never in the placard's promise, MARKET has a healthy
+  pass of its own, and on a three-shed yard **it ate the host** — it took both convertible
+  sheds on one seed in six and left no loft. Dropping it makes the pass write **only
+  `c.loft` and `c.th`, which no rule reads**: it changes **no tile type at all.**
+- **`WORKSMIN=1` — the works never spends its last shed.** Gentrification takes the *edge*
+  of the yard and on a big yard `blockValue` says so by itself, but **a small yard is ALL
+  EDGE**: unguarded, 2 seeds in 6 converted to the last shed and the city lost the sawtooth
+  warehouse and its clerestory (173) **altogether** — 206's law, inverted (the rule eating
+  its own host population).
+- **The tooltip names it** off the SAME `c.loft` the draw gates on, as the corner shop is
+  named off `c.corner`. Verified against **independently recomputed truth** (122, not a
+  screenshot): every loft says *Loft conversion*, every working shed still says *Industry*,
+  3 seeds, 0 misses.
+
+**Census.** PASS, 0 page errors. Core **flat**: `roads +0` (byte-identical), `developed
+−22 (−0.36%)`, `pop +1632 (+0.93%)`. **`IND` does not appear in the tile histogram at
+all** — 27 across 6 seeds on HEAD, **27 on the patch**: the proof the pass changes no
+terrain. The MID −50 / RES +32 / TOWER +13 shuffle is the **known** cascade from deleting
+the dead `rc()` loop's ~11 `rng()` draws/tick from 2006; all <5%, mechanism named.
+**Path objects (222 — count, don't infer): day −64 (−0.06%), night +5 (+0.004%). FREE.**
+
+**Probe.** `LOFTS 0 → 14 across 6 seeds, and 6/6 seeds now carry one` (HEAD: 0/6).
+Conversion **93%** of eligible. **Every city still keeps working warehouses** (3/1/1/4/1/3).
+
+**Visual.** Both seeds PASS — and **both agents named the converted loft BLIND, on a
+crossed mapping** (42→`alpha`, 7→`beta`), each citing the intended cues unprompted
+(*"strip glazing + coloured sign band + rooftop box"*) against the warehouse's sawtooth
+roof. Before/after taken **inside one page** by clearing `c.loft` (230) — same world, same
+instant, floor 0, so the pair is honest despite the stream shift. Whole-plate reads clean
+on both seeds; no compounding drift.
+
+**Verdict: FIXED** — a rule that had never once run in the artifact's life now runs, on
+every seed, and the placard's promise is true for the first time.
+
+**Header.** 397 → 406 lines (budget 400, **6 over**): ~45 lines of superseded material moved to
+the archive (the 264 step-back narrative, the closed (s)/(ap) bodies, the stale *"NOT Urban"*
+steer this lap refuted) against ~35 added. Next lap should trim before its vector.
+
+
+<!-- header bullets rotated out at 277 (kept verbatim; the header carries pointers + the live warnings) -->
+
+**(aq′) / 262 — rotated out of the header at 277.** Original text:
+> ✅ **CLOSED, bodies archived at 264: (aq′) the season has a DAY LENGTH** (⚠ retire `probe-seasonarea` as a seasonal
+> score; ⚠ **264: the season is ~0 at MID-DAY by construction — measure/shoot it at the EVENING MARGIN**) · **262: the
+> `LITAMT`-as-a-bedtime gate is EXTINCT** (⚠ **do not add another global-light gate to anything that keeps hours**).
+
+**272's fairy-ring constants — rotated out of the header at 277** (they are NAMED constants in `solvista.html`; grep
+them). Original text:
+> **272:** **`shroomDue(c,s2)` — ONE predicate; the pass now reuses `isWood`.** `SHRM0=0.72` (first rains) ·
+> `SHRMW=0.18` (how long the flush keeps OPENING) · `SHRMEND=0.99` · `SHRMP=0.06`; a ring surfaces once
+> `s2 > SHRM0 + c.v*SHRMW` and lives `shroomLife` = **2–3 ticks (mean 2.5)**.
+
+**The 126/127 saturation parenthetical — rotated out of the header at 277.** Original text:
+> *(The agriculture tell + the measured-closed SEASONAL-VEGETATION seam were stated three times over; bodies archived
+> at 270 — the closed ladder above and ⛔ (ak) below carry them.)*

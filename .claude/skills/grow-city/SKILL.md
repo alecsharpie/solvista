@@ -701,6 +701,38 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A RENDERER THAT MUTATES THE WORLD DOES NOT MERELY SPOIL YOUR PROBE'S FLOOR — IF ANY *WORLD* QUANTITY READS THE
+  MUTATED FIELD, THEN A FAST-FORWARD THAT DOES NOT RENDER **BUILDS A DIFFERENT CITY**, AND YOUR ENTIRE HARNESS HAS BEEN
+  MEASURING IT (iter 277).** 272 found the mutation (`drawBuilding` grows `c.h` toward `c.th`, *inside* `render()`) and
+  drew the *measurement* conclusion: settle the heights before a two-render diff, or your floor is the size of your
+  signal. That is correct, and it is **half the law** — it treats a world-mutating renderer as a **noise** problem.
+  The other half is a **semantics** problem, and it is far worse: `recount()` scaled a TOWER's residents by **`c.h/c.th`**,
+  and `recount()`'s `pop` is what the CA's own demand rules (school, university, stadium) **gate on**. **`__warp` never
+  renders** — it is a tight `while(year<target){tick()}` loop — so under **every warp**, which is what `census.mjs`,
+  every probe in `probes/`, every `?warp=` screenshot and every agent read this loop has *ever* taken uses, **every tower
+  in the city stood at `h=0` and housed NOBODY for all 813 ticks.** The city built its institutions against a **third of
+  its own population** and ended with **`SCHOOLS = 4` on every seed, at every era, forever** — against a placard
+  promising one per ~3500 residents (owed **8–13**). A city that is merely **PLAYED** interleaves `render()` with
+  `tick()`, so its towers grow and it builds **all** of them (12/12, 11/11, 9/9). ⇒ **THE WARPED CITY AND THE LIVED CITY
+  WERE DIFFERENT CITIES, AND THE LOOP HAD ONLY EVER LOOKED AT THE WARPED ONE.**
+  ⇒ **So `grep` the draw path for world writes (272) — and then, for each one, `grep` for who READS that field.** A
+  mutated field that only the draw consumes is a *noise* bug you settle around. **A mutated field that any world
+  quantity consumes is a SIMULATION bug, and no amount of freezing will find it**, because every instrument you own
+  runs down the same broken path and they all agree with each other. The tell, and it is checkable in one command:
+  **your fast-forward hook and your frame loop do not call the same set of functions**, and something in the set only
+  one of them calls **writes to the world**.
+  ⇒ **AND THE FIX IS A CONSTANT YOU DO NOT INVENT (226/267): every other home in the city already contributed its full
+  `POPW` at any height — the tower's ramp was the ANOMALY, not the rule** — so the term collapses to `POPW[c.t]||0`
+  and `c.h` goes back to being what the file's *own comment eighteen hundred lines earlier* already said it was
+  (*"reads `c.th` (the TARGET height), never `c.h` — `c.h` is animated inside `drawBuilding` at DRAW"*). **199's tell,
+  hosted on a FUNCTION: the file documented the invariant in one place and broke it in the one function whose output
+  the rules gate on.**
+  ⇒ ✅ **AND IT BUYS AN EXACT FIXED POINT, WHICH IS THE ONLY GATE WORTH HAVING HERE: with no world quantity reading
+  `c.h`, the renderer cannot reach the simulation at all, so `WARP == LIVE == INSTANT` must be BYTE-IDENTICAL** — and it
+  is, on every seed, every column (`probes/probe-warppop.mjs`). A divergence you make **impossible** beats one you agree
+  to look for (223).
+  ⚠ **272's settle-the-heights rule STILL STANDS for PIXEL diffs** — `render()` still mutates `c.h`. What died is the
+  channel from `c.h` into the **world**.
 - **THE FREEZE LIST WAS ASSEMBLED BY ACCRETION, NOT BY ENUMERATION — SO IT IS A LIST OF THE CLOCKS THAT HAVE ALREADY
   BURNED SOMEONE, AND `WINDA` IS THE ONE THAT HAD NOT (iter 275).** 272's law says a freeze list is a **CLAIM that the
   DRAW is a pure function of the world** — go and check the *output* side (`render()` mutates `c.h`). 275 is the same
@@ -3265,6 +3297,20 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   in this artifact**; the contract is `zoom=n; scale=fitScale*zoom`, which is what `zoomAt` and the `0` key both do
   (269). Pins **DERIVED** from the light curve (264), frames named **by FILE** with **meaningless tokens**, map
   **CROSSED** between seeds (238/239/268).)
+  The **warp pair** (277 — ⚠ **reach for these on ANY lap whose vector is gated on `stats.pop`, and on ANY suspicion
+  that a rule "never fires"**): `probe-warppop.mjs` (**IS THE FAST-FORWARD A FAITHFUL ONE?** Runs the artifact's own
+  `tick()` under three regimes — **WARP** (no render, = the census + every probe), **LIVE** (`c.h` grown
+  FRAMES_PER_TICK times a tick, = what a visitor actually sees) and **INSTANT** (the bound) — on pure world data, no
+  pixels, no clock, **no noise floor at all**. ⚠ **Its headline needs no threshold** (236): HEAD's warp read
+  **`SCHOOLS = 4` on 3 seeds in 3**, a CONSTANT, which IS the defect stated. ⚠ **UNI and STAD are FREE POSITIVE
+  CONTROLS** (248) — pop-gated siblings in the same `tick()`, so a flat school column would have been a dead rig;
+  **ROADS/dev are the must-not-move column** (250) — they read no pop. ✅ **Post-277 it is a FIXED-POINT test: the three
+  regimes must come back BYTE-IDENTICAL**, and a divergence means somebody has let a world quantity read a draw
+  variable again), `probe-school.mjs` (**WHICH CLAUSE STARVES THIS SITING RULE?** Pure world data. Decomposes a rule's
+  own predicate clause by clause against the LIVE plate (`HEXI`) and prints the lottery's hit probability against the
+  surviving pool — **it is what ACQUITTED the school's placement (98–100%) and sent 277 looking upstream at `pop`
+  instead.** ⚠ **Run it BEFORE you tune any roll** (218) or blame any siting rule; retarget it at any rule by swapping
+  its clauses. Carries the UNIVERSITY — a deterministic full-grid sibling that provably works — as its control).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

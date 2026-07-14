@@ -3045,7 +3045,23 @@ function recount(){
   seaFill();
   for(let i=0;i<cells.length;i++){
     const c=cells[i];
-    const w=POPW[c.t]?POPW[c.t]*(c.t===T.TOWER?clamp(c.h/Math.max(c.th,1),0,1):1):0;
+    /* A home houses its residents because the city BUILT it, not because its growth
+       animation has finished playing. This term used to scale a tower's population by
+       c.h/c.th — and c.h is grown ONLY inside drawBuilding(), i.e. inside render(). The
+       line at 1520 already states the invariant this broke ("reads c.th, never c.h — c.h
+       is animated at DRAW"); recount() was the one place in the sim layer still reading
+       it, and recount()'s pop is what the school, university and stadium rules gate on.
+       __warp never renders, so under every warp — the census, every probe, every ?warp=
+       screenshot — every tower in the city stood at h=0 and housed NOBODY for all 813
+       ticks. The city therefore built its institutions against a third of its own
+       population and ended with FOUR schools on every seed, forever, where its own
+       placard promises one per ~3500 residents (owed 8-13). A city that is merely PLAYED
+       renders as it ticks, so its towers grow and it builds all of them: 12/12, 11/11,
+       9/9. The warped city and the lived city were different cities.
+       Every other home in Solvista already contributes its full POPW at any height — the
+       tower's ramp was the anomaly, not the rule — so the fix is to drop it, and c.h goes
+       back to being what 1520 says it is: a draw variable. */
+    const w=POPW[c.t]||0;
     pop+=w;
     if(c.t===T.PARK||c.t===T.GARDEN)parks++;
     if(c.t===T.TOWER)towers++;
