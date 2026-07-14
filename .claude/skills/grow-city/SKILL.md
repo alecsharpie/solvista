@@ -701,6 +701,20 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **230'S IN-PAGE SUPPRESSION IS SOUND FOR A `getImageData` DIFF AND SILENTLY DEAD FOR A `page.screenshot()` — THE TWO
+  DIFFER BY EXACTLY ONE RAF, AND THE SAME RIG WILL BE RIGHT IN ONE INSTRUMENT AND LIE IN THE OTHER, IN THE SAME FILE
+  (iter 287).** 230's law — isolate a feature by mutating the state it reads, re-render, diff, floor exactly 0 — is the
+  workhorse of this harness, and every probe that uses it is correct. 287 pointed it at a **CAMERA** and it produced a
+  **perfect, silent lie**: the "suppressed" PNG came back **byte-identical to the shipped one**, on both seeds, and two
+  blind agents duly **refused to grade it** (*"I cannot tell them apart — I am not going to invent a difference"*).
+  Cause, and it is a new rung on **204**: `frame()` calls `render()` on **EVERY RAF regardless of `playing`** — so a
+  world mutation you apply *and undo inside one `page.evaluate`* is **repainted away by the frame loop before
+  `p.screenshot()` lands**, because the screenshot is a **separate round-trip**. A `getImageData` diff never notices,
+  because both renders happen **inside** the evaluate, with no RAF between them. ⇒ **Any world mutation made for a SHOT
+  must SURVIVE until the screenshot lands: restore in a SEPARATE evaluate, AFTER `p.screenshot()`, never in the one that
+  rendered.** The tell is unmissable if you look for it and invisible if you don't: **your probe's ink number is right
+  and your camera's A/B is byte-identical** — `md5` the pair before you spend an agent round (239), and make the frame
+  **self-report the mutated quantity itself** (`panels-ON-PLATE=0`, 202/258), so the tool catches it instead of a gate.
 - **280 SAYS A COMMENT ENUMERATING ITS CATEGORY IS A CHANGELOG, NOT A TAXONOMY. 286 IS THE RUNG BELOW, AND IT IS THE ONE THAT
   HANDS YOU THE SUSPECT AND DARES YOU NOT TO LOOK: **A FIX'S OWN COMMENT LISTS WHAT IT PROVABLY DID *NOT* TOUCH — AND THAT LIST
   IS A LIST OF *SUSPECTS*, NOT A LIST OF THINGS THAT ARE FINE** (iter 286).** 262's law is that a per-entity jitter should be

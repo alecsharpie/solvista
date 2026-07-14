@@ -1902,6 +1902,11 @@ function blockValue(x,y){
 }
 const LOFTVAL=0.5;                       /* neutral ground: the city has arrived */
 const LOFTP=0.006;                       /* per-tick conversion: a yard turns over decades, not years */
+/* the solar array: SOLARMAX is the knee of the sweep — 12 does not build a BIGGER
+   array (mean run 5.3 -> 5.5), it starts a second one, and costs more farmland.
+   SOLARP only sets how fast the array builds out (0.04 and 0.08 reach the same
+   size by 2035; 218 — the roll cannot steer a rule whose placement is a predicate). */
+const SOLARMAX=8, SOLARP=0.08;
 const WORKSMIN=1;                        /* the works never spends its last shed */
 
 /* the monumental institutions — the ones that make a civic quarter, and the only
@@ -2419,10 +2424,39 @@ function tick(){
     if(best&&hashCell(best[0],best[1],seedNum^0xB09D)<0.85){
       const n=best[2];n.t=T.QUAD;n.h=0;n.th=0;n.age=0;n.own=idx(x,y);}
   }
-  /* far fields quietly go solar (2012+) */
-  if(year>=2012)for(let k=0;k<ks(6);k++){
-    const[x,y,c]=rc();
-    if(c&&c.t===T.FARM&&countAround(x,y,2,n=>DEV.has(n.t))===0&&rng()<0.02){c.t=T.SOLARF;c.age=0;}
+  /* far fields quietly go solar (2012+): one grower breaks ground, and the array
+     creeps field by field along the fence line until it is built out.
+
+     It used to be an rc() lottery — ks(6) picks a tick against a pool of a handful
+     of far farms — and it had produced ZERO panels on every seed at every era for
+     the artifact's whole life. The lottery's own arithmetic says why: over the
+     entire 2012-2035 window it expects 0.00-0.34 conversions, even on the seed
+     carrying 51 far fields. So WALK the host, exactly as the vineyard and orchard
+     below already do on this same FARM — and roll on a TICKN-salted hashCell, so
+     the pass draws no rng() and cannot perturb the seeded stream.
+
+     Accretion, not a scatter: a per-parcel hash gate ships lone panels (biggest
+     connected run 1 hex on 4 seeds in 6), and a dusting of single hexes is not a
+     solar farm. Preferring a field on the fence line grows one coherent array
+     instead (run 2-8, mean 5.3). Its size is what the countryside allows: the
+     cap bounds it at SOLARMAX, but a seed with only three far fields builds
+     three. (probes/probe-solarfield.mjs) */
+  if(year>=2012){
+    let solar=0,best=-1,bestScore=-1;
+    for(const i of HEXI){
+      const c=cells[i];
+      if(c.t===T.SOLARF){solar++;continue;}
+      if(c.t!==T.FARM)continue;
+      const x=i%G,y=(i/G)|0;
+      if(countAround(x,y,2,n=>DEV.has(n.t))>0)continue;      /* a FAR field, or nothing */
+      /* the array extends along its own fence line; failing that, the grower the
+         hash picked breaks ground somewhere out past the edge of town */
+      const s=(countAround(x,y,1,n=>n.t===T.SOLARF)>0?1e6:0)+hashCell(x,y,seedNum^0x5A17);
+      if(s>bestScore){bestScore=s;best=i;}
+    }
+    if(best>=0&&solar<SOLARMAX
+       &&hashCell(best%G,(best/G)|0,(seedNum^0x5A17^TICKN)>>>0)<SOLARP){
+      const c=cells[best];c.t=T.SOLARF;c.h=0;c.th=0;c.age=0;}
   }
   /* dry inland farms terrace into vineyards — wine country on the golden hills
      (1990+). hashCell-gated (no rng()), so retiring farmland perturbs nothing. */

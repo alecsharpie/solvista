@@ -20806,3 +20806,76 @@ siting rule is positively correlated with occlusion). The bar is the **INCUMBENT
 **Verdict: SHIPPED.** 18% → 2% of shelters never called at; worst seed 38% → 5%; ~50% more calls on
 every seed; and the city's only public transport finally knows its own name.
 
+## Iteration 277 — the warped city and the lived city were different cities (2026-07-14) [Civic & culture × Deepen/FIX]
+
+**Vector.** Civic & culture (oldest domain — 270, and that lap was a revert). Per 225's grep-the-seam
+law I ignored the cue list and read the seam: `CIVICDESC` as a checklist (267), then the `tick()` rules
+behind it. The census answered before any probe did — **`schools` reads 1 at pop 16–21k on 3 seeds in 3,
+and 4 at pop 31–46k**, against a placard that promises *"another with every few thousand residents"* and
+a rule that says `pop > 3500*(schools+1)`. Owed 8–13. Built 4.
+
+**The diagnosis, and it inverted twice.**
+1. *Not the siting.* `probe-school` decomposed the rule's own clauses on live plate data: the pool
+   (`EMPTY|RES` + `roadNear` + not-within-4-of-a-school) holds **164–463 lots**, and the 60-try lottery's
+   hit chance is **98–100%**. The placement is innocent — it lands whenever it fires (218's law run
+   backwards: measure the roll's conversion *before* you tune anything).
+2. *Not the rule either.* Driving `tick()` directly, the school count tracked demand **exactly**. The
+   population it was reading was the wrong one.
+
+**The defect.** `recount()` scaled a TOWER's residents by **`c.h/c.th`** — and **`c.h` is grown ONLY inside
+`drawBuilding()`, i.e. inside `render()`** (272's finding). **`__warp` never renders** (it is a tight
+`while(year<target){tick()}` loop). So under every warp — **the census, every probe in `probes/`, every
+`?warp=` screenshot, every agent read this loop has ever taken** — **every tower in the city stood at
+`h=0` and housed NOBODY, for all 813 ticks.** The city built its institutions against a third of its own
+population. A city that is merely *played* interleaves `render()` with `tick()`, so its towers grow and it
+builds all of them.
+
+⇒ **The warped city and the lived city were different cities, and the loop has only ever looked at the
+warped one.** Measured (`probe-warppop`, 3 regimes, same tick loop, pure world data):
+
+| seed | regime | pop | owed | **SCHOOLS** | uni | dev | roads |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 7 | WARP (= census + every probe) | 45848 | 13 | **4** | 1 | 1062 | 800 |
+| 7 | LIVE (= what a visitor sees) | 43434 | 12 | **12** | 3 | 1063 | 803 |
+| 42 | WARP | 39514 | 11 | **4** | 1 | 1073 | 835 |
+| 42 | LIVE | 38774 | 11 | **11** | 2 | 1092 | 833 |
+| 1234 | WARP | 30988 | 8 | **4** | 1 | 1005 | 873 |
+| 1234 | LIVE | 34006 | 9 | **9** | 2 | 992 | 874 |
+
+**HEAD's warp reads `SCHOOLS = 4` on every seed — a CONSTANT, which is the defect stated with no threshold
+invented** (236). `UNI` and `STAD` are pop-gated siblings in the same `tick()` and move the same way
+(free positive controls, 248); `ROADS`/`dev` read no pop and are the must-not-move column (250) — flat.
+
+**Change.** One line. `recount()`'s pop term becomes **`POPW[c.t] || 0`**. The file **already states this
+invariant and broke it in exactly one place**: line 1520 reads *"Reads `c.th` (the TARGET height), never
+`c.h` — `c.h` is animated inside `drawBuilding` at DRAW"*, and `recount()` was the **only** place in the
+sim layer still reading `c.h`. `tick()` reads it nowhere. **Every other home in Solvista already
+contributes its full `POPW` at any height — the tower's ramp was the anomaly, not the rule** — so the
+constant is taken from the artifact's own ladder and none is invented (226/267).
+
+**Probe — an EXACT fixed point, not a close one.** With `c.h` no longer feeding any world quantity, the
+renderer cannot reach the simulation at all, so **WARP == LIVE == INSTANT byte-for-byte**: pop 42162 /
+42162 / 42162 (seed 7), and every column — schools, uni, stad, towers, dev, walk%, roads — **identical on
+all three seeds**. And the headline: **schools == owed on every seed (12/12, 10/10, 9/9)**.
+
+**Census.** PASS, 0 page errors. Core flat: **pop 176510 → 175254 (−0.7%)**, **roads +8**, **developed +4**
+(the per-seed signs disagree — −5.3 / −1.9 / +9.7% — which is the cascade, 231, not a direction). The
+treatment moved hard: **schools 19 → 48 (+29)**, **CIVIC 82 → 112**, **QUAD 21 → 41** and **PLAZA 8 → 13**
+(the grounds and forecourts that attach to the new institutions — a downstream consequence, correct), paid
+for out of **RES −38 / TOWER −10 / MID −8**. `walkPct` rises (seed 7 **39 → 56**) because **services are
+walkability's binding constraint** — `recount()`'s own comment says so, and the city can now walk to a school.
+
+**Perf.** Priced by COUNTING OBJECTS, because a world-changing diff is never free just because it has no
+draw call (222): path objects **day 111483 → 111785 (+0.27%)**, **night 138689 → 137971 (−0.52%)**, against
+a ±100 floor. The city traded ~10 towers — the most expensive night draw (`winBandR` is 32% of the night
+frame) — for schools and quads, so **the night column gives back** (241's law in reverse).
+
+**Visual.** Both seeds PASS, whole-frame, un-zoomed. No z-order tears, floating tiles or blown-out colour
+anywhere; both agents independently checked the plate rim, the beach seam, the river crossings and the
+dense core. Seed 42: *"they read as neighbourhood anchors rather than a repeated motif — they break up the
+residential fabric instead of adding to it."* Seed 7: *"the columned/domed institution cluster reads as a
+genuine civic quarter… density feels like a real city, not a pile-up."*
+
+**Verdict: FIXED.** The city builds the schools its own placard has promised for 277 iterations — and,
+more than that, **the instrument the loop measures with now builds the city the artifact actually grows.**
+
