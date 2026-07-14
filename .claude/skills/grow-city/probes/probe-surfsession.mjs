@@ -88,10 +88,10 @@ for (const seed of SEEDS) {
     playing = false;
     genWorld(seed); __warp(warp); __setYear(year);
 
-    const hasNew = typeof surfSession === 'function';
+    const hasNew = typeof waterSession === 'function';
     /* build-agnostic: the patch's OWN predicate if it exists, else HEAD's (no gate at all).
        This is the shipped rule, not a re-implementation of it (249). */
-    const surferOn = s => hasNew ? !(surfSession() < surfOut(s)) : true;
+    const surferOn = s => hasNew ? !(waterSession() < waterOut(s)) : true;
 
     const pins = [];
     for (let t = 0; t < 1; t += 0.01) pins.push(Math.round(t * 1000) / 1000);
@@ -122,7 +122,7 @@ for (const seed of SEEDS) {
     + `jog ${r.minJog}..${r.maxJog} of ${r.joggers} (DISTINCT ${r.distinctJog}, in the dark ${r.darkJog})  |  `
     + `kayaks+boats ${r.movers}`);
 }
-console.log(`  build: ${A[0].hasNew ? 'PATCH (surfSession present)' : 'HEAD (no gate)'}`);
+console.log(`  build: ${A[0].hasNew ? 'PATCH (waterSession present)' : 'HEAD (no gate)'}`);
 
 /* ─── PART A2 ── the season sweep ────────────────────────────────────────────── */
 console.log('\nPART A2 — the season sweep at NOON (the hour the surfers are provably visible)');
@@ -131,8 +131,8 @@ for (const seed of SEEDS) {
   const r = await p.evaluate(({ seed, warp }) => {
     playing = false;
     genWorld(seed); __warp(warp);
-    const hasNew = typeof surfSession === 'function';
-    const surferOn = s => hasNew ? !(surfSession() < surfOut(s)) : true;
+    const hasNew = typeof waterSession === 'function';
+    const surferOn = s => hasNew ? !(waterSession() < waterOut(s)) : true;
     const out = [];
     for (const [name, yr] of [['winter', 2035.02], ['spring', 2035.30], ['dry peak', 2035.62], ['autumn', 2035.87]]) {
       __setYear(yr); __setTime(0.415); render();
@@ -142,11 +142,11 @@ for (const seed of SEEDS) {
        every board is out — so the patch runs HEAD's draw, byte-for-byte, at that pin.
        Arithmetic, not a claim: no threshold, no second build, no cross-build floor. */
     __setYear(2035.62); __setTime(0.415); render();
-    const sess = hasNew ? surfSession() : 1;
+    const sess = hasNew ? waterSession() : 1;
     return { out, surfers: surfers.length, sess, allOut: surfers.filter(surferOn).length };
   }, { seed, warp: WARP });
   console.log(`  seed ${String(seed).padStart(4)}  ` + r.out.map(o => `${o.name} ${o.n}/${r.surfers} (beachPhase ${o.beach})`).join('  |  '));
-  console.log(`            FIXED POINT  dry-peak noon: surfSession()=${r.sess}  -> ${r.allOut}/${r.surfers} out `
+  console.log(`            FIXED POINT  dry-peak noon: waterSession()=${r.sess}  -> ${r.allOut}/${r.surfers} out `
     + `${r.sess === 1 && r.allOut === r.surfers ? '✅ byte-identical to HEAD at this pin' : '❌ the lever is not centred'}`);
 }
 
@@ -166,12 +166,12 @@ for (const seed of SEEDS) {
       if (d > 8) n++; } return n; };
 
     const real = window.drawSurfer;
-    const hasNew = typeof surfSession === 'function';
+    const hasNew = typeof waterSession === 'function';
     /* ⚠ count what actually RENDERS, not what gets CALLED: the call site invokes
        drawSurfer for all 9 every frame and the gate returns early inside it, so a
        wrapper that increments on entry reports 9/9 at midnight (236 — a caption in the
        rule's units, not the viewer's). Ask the shipped predicate instead. */
-    const surferOn = s => hasNew ? !(surfSession() < surfOut(s)) : true;
+    const surferOn = s => hasNew ? !(waterSession() < waterOut(s)) : true;
 
     const pins = [
       ['noon      (dry peak)', 2035.62, 0.415],
@@ -204,7 +204,7 @@ for (const seed of SEEDS) {
 
 /* ─── PART C ── the FIXED POINT, proved in pixels (253) ──────────────────────── */
 console.log('\nPART C — the fixed point, by PREDICATE SUPPRESSION inside ONE page (253).');
-console.log('        HEAD has no gate, so HEAD === "surfSession() is always 1". Force that on the');
+console.log('        HEAD has no gate, so HEAD === "waterSession() is always 1". Force that on the');
 console.log('        patch and re-render: if the shipped frame equals it, the patch RUNS HEAD\'S DRAW.');
 console.log('        No source swap, no cross-build floor (230) — the zero is exact or it is not.');
 console.log('        pin                     patch vs forced-1     verdict');
@@ -217,7 +217,7 @@ for (const seed of SEEDS) {
     const diff = (a, b2) => { let n = 0; for (let i = 0; i < a.length; i += 4) {
       const d = Math.max(Math.abs(a[i] - b2[i]), Math.abs(a[i + 1] - b2[i + 1]), Math.abs(a[i + 2] - b2[i + 2]));
       if (d > 0) n++; } return n; };
-    const real = window.surfSession;
+    const real = window.waterSession;
     const out = [];
     /* dry-peak noon IS the fixed point; deep night is the CONTROL that must NOT be 0 —
        the builds have to actually diverge somewhere, or a broken suppression would read
@@ -226,9 +226,9 @@ for (const seed of SEEDS) {
                                  ['deep night   (CONTROL) ', 2035.62, 0.920]]) {
       __setYear(yr); __setTime(t);
       render(); const A0 = grab();
-      window.surfSession = () => 1;            /* = HEAD: no gate, every board out */
+      window.waterSession = () => 1;            /* = HEAD: no gate, every board out */
       render(); const B0 = grab();
-      window.surfSession = real;
+      window.waterSession = real;
       out.push({ name, px: diff(A0, B0) });
     }
     return out;

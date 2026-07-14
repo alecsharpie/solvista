@@ -3939,18 +3939,50 @@ const kidOut=p=>Math.min(p.out,KID0+KIDJ*((p.kid/6)%1));
    CENTRED (245): at the dry peak, in daylight, session === 1 and every board is out, so
    the draw is BYTE-IDENTICAL to HEAD at that pin -- and strictly emptier at every other
    hour and every other week. The fixed point is arithmetic, not a claim. */
-const SURFDARK=JOG0+JOGJ;
-function surfSession(){return clamp(1-nightAmt()/SURFDARK,0,1)*beachPhase();}
-/* ...and each board keeps its OWN threshold, so the lineup THINS one at a time instead
+const WATERDARK=JOG0+JOGJ;
+/* ...AND SO DO THE PADDLERS, who were named in the comment above as one of the things the
+   surfers' fix provably did NOT touch -- and nobody asked whether they NEEDED touching.
+   271 enumerated the category off the comment three screens up (residents, children,
+   runners, traffic, match crowd), and 280's law says that list is a CHANGELOG OF WHO HAS
+   BEEN FIXED, not a taxonomy of who should READ it. drawKayak opened on
+   `const[cx,cy]=pxc(...)` -- no gate at all, exactly as drawSurfer had none. Measured
+   (probe-hours): DISTINCT KAYAK COUNTS = 1 on 6 seeds in 6, nine paddlers on the river at
+   every hour of every season, forever. And they were not invisible out there: at 4am in
+   midwinter a kayak still renders 12-13.7 px, as much ink as at noon -- so 259's check
+   passes and the hours half is a change a viewer can actually see.
+   THE SESSION IS THE WATER CROWD'S, NOT THE LINEUP'S: the same sun and the same calendar
+   take the last board and the last boat off the water together, so this stays ONE predicate
+   and no second constant enters the file. It is renamed from `surfSession` for exactly that
+   reason -- a predicate called `surf` is one the next lap greps and misses the kayak (199). */
+function waterSession(){return clamp(1-nightAmt()/WATERDARK,0,1)*beachPhase();}
+/* ...and each craft keeps its OWN threshold, so the water THINS one at a time instead
    of blinking out in a single frame -- the cliff 210 was written to end and 262 found
-   still standing. DERIVED, NOT DRAWN: s.ph is already Math.random()*7, so ph/7 is
-   EXACTLY uniform on [0,1) by construction and costs NO new random draw. The shared
-   Math.random stream stays byte-identical, so every kayak, jogger, balloon and resident
-   is provably untouched (204/262) -- which is what lets the probe carry them as an EXACT
-   must-not-move control rather than an approximate one.
-   ONE predicate, three readers: the DRAW (drawSurfer), the TOOLTIP (ENTINFO) and the
-   probe -- so the sentence and the pixels cannot drift apart (112). */
-const surfOut=s=>s.ph/7;
+   still standing. DERIVED, NOT DRAWN: s.ph and k.ph are both already uniforms on [0,7),
+   so ph/7 is EXACTLY uniform on [0,1) by construction and costs NO new random draw. The
+   shared Math.random stream and the seeded rng() stream both stay byte-identical, so every
+   jogger, balloon, dog and resident is provably untouched (204/262) -- which is what lets
+   the probe carry them as an EXACT must-not-move control rather than an approximate one.
+   ONE predicate, FOUR readers: the two DRAWS (drawSurfer, drawKayak) and their two TOOLTIPS
+   -- so the sentence and the pixels cannot drift apart (112). */
+const waterOut=e=>e.ph/7;
+/* ...AND THE KITES COME DOWN ONE AT A TIME TOO. drawKite HAD an hour -- `LITAMT > 0.6` --
+   but a GLOBAL, MONOTONE one, which is the very gate 210 and 262 were written to condemn:
+   it fires for every kite in the city in the SAME FRAME. Measured: DISTINCT KITE COUNTS = 2
+   (either 0 or all 3) -- a binary cliff, the child's bug one array over, and the fourth
+   recursion of that gate (199 the windows, 210 the residents, 230 the traffic, 262 the
+   child). The category was never enumerated because the kites, unlike the kayakers, DID
+   have an hour -- so a grep for "is there a gate?" found one and moved on. The question is
+   not whether a draw keeps an hour but whether it keeps its OWN.
+   THE HOUR IS TAKEN FROM THE LADDER, NOT INVENTED (226): a kite has to be SEEN by the
+   person on the other end of the line, so the last one is down as the children go in --
+   KITEJ tops out at 0.36, level with KID's 0.34, and the ladder now reads
+       KITE = KID (~0.35)  <  SURF = KAYAK = JOG (0.62)  <  CURF (1.85).
+   DERIVED, NOT DRAWN: k.ph is already rng()*7, so waterOut reads it here too and no kite
+   draws a value of its own. nightAmt() is 0 through all of daylight, so every kite is out
+   whenever HEAD had it out and THE WHOLE DAY IS BYTE-IDENTICAL -- a free dead-regime
+   control (199), and the reason this costs no path objects by day. */
+const KITE0=0.06, KITEJ=0.30;
+const kiteOut=k=>KITE0+KITEJ*waterOut(k);
 /* ---- the traffic keeps hours too (iter 230) -------------------------------
    The city's PEOPLE learned to go to bed -- the windows at 199 (BEDT), the crowd and its
    dogs and runners at 210 (curfewAt) -- and its TRAFFIC never did: at 3am the streets still
@@ -4984,7 +5016,9 @@ function drawDog(d){
   ctx.quadraticCurveTo(cx-2.4*f,cy-3.2,(cx-2.3*f)+wag*0.6,cy-4.1);ctx.stroke();
 }
 function drawKite(k){
-  if(LITAMT>0.6)return; /* kites come down at night */
+  if(nightAmt()>kiteOut(k))return; /* this kite has been wound in — its OWN hour, off the
+    same clock the crowd keeps, so the three come down one at a time instead of vanishing
+    together on a global threshold (iter 262's cliff, one array over). */
   const[ax,ay]=px(k.x+0.5,k.y+0.5);
   const t=time*1.1+k.ph;
   const g=kiteGust();   /* 0.45 in a dead calm .. 1.0 in a full gale (= HEAD's kite) */
@@ -8146,7 +8180,7 @@ function drawBoat(b){
   ctx.beginPath();ctx.moveTo(cx,cy-1+bob);ctx.lineTo(cx,cy-10+bob);ctx.lineTo(cx+4.5,cy-2.5+bob);ctx.closePath();ctx.fill();
 }
 function drawSurfer(s){
-  if(surfSession()<surfOut(s))return; /* this board has paddled in — the session is the sun
+  if(waterSession()<waterOut(s))return; /* this board has paddled in — the session is the sun
     times the calendar, and every board keeps its own threshold, so the lineup thins one at
     a time (iter 271). Before stamp(), as drawPed does: a surfer who has gone in is not out
     there to be hovered either. */
@@ -8254,6 +8288,10 @@ function drawFreighter(f){
   ctx.restore();
 }
 function drawKayak(k){
+  if(waterSession()<waterOut(k))return; /* this boat has taken out — the same session the
+    lineup keeps (the sun times the calendar), and each hull keeps its own threshold, so the
+    river empties one paddler at a time. Before stamp(), as drawSurfer and drawPed do: a
+    kayaker who has landed is not out there to be hovered either. */
   const[cx,cy]=pxc(k.x+k.ox,k.y);
   stamp(k,cx,cy);
   const bob=Math.sin(waveT*1.4+k.ph)*0.5;
@@ -9532,12 +9570,14 @@ const ENTINFO=[
      :'Working the shoreline — the pier is her only call.',10],
   [()=>freighters,'Container ship','Serving the harbor works — at anchor in the roadstead, or steaming the deep lane.',14],
   [()=>boats,'Sailboat','Out for a day on the bay.',8],
-  /* the third reader of surfSession's two terms (iter 271): the string used to say
-     "Waiting on the next set" over a surfer sitting in the dark in midwinter. Computed
-     live, never stored, off the SAME predicates the draw gates on. */
+  /* the third and fourth readers of waterSession's two terms (271, and the paddlers this
+     lap): the strings used to say "Waiting on the next set" over a surfer sitting in the
+     dark in midwinter, and "Paddling the river" over a kayaker doing the same. Computed
+     live, never stored, off the SAME predicates the two draws gate on. */
   [()=>surfers,'Surfer',()=>nightAmt()>0?'Catching the last of the light.'
      :beachPhase()<0.5?'Out in a thin winter lineup.':'Waiting on the next set.',7],
-  [()=>kayaks,'Kayaker','Paddling the river.',7],
+  [()=>kayaks,'Kayaker',()=>nightAmt()>0?'Paddling in before the light goes.'
+     :beachPhase()<0.5?'A cold-water paddle, with the river to themselves.':'Paddling the river.',7],
   [()=>herons,'Great heron','Stalking the marsh shallows.',7],
   [()=>deer,'Mule deer','Grazing where the meadow meets the woods.',7],
   [()=>joggers,'Jogger','Logging shoreline miles.',7],

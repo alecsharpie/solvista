@@ -701,6 +701,36 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **280 SAYS A COMMENT ENUMERATING ITS CATEGORY IS A CHANGELOG, NOT A TAXONOMY. 286 IS THE RUNG BELOW, AND IT IS THE ONE THAT
+  HANDS YOU THE SUSPECT AND DARES YOU NOT TO LOOK: **A FIX'S OWN COMMENT LISTS WHAT IT PROVABLY DID *NOT* TOUCH — AND THAT LIST
+  IS A LIST OF *SUSPECTS*, NOT A LIST OF THINGS THAT ARE FINE** (iter 286).** 262's law is that a per-entity jitter should be
+  **derived** from a uniform the entity already carries, so the patch draws **zero** new random values and every other entity is
+  **provably** untouched. It is right, and it produces a comment naming the untouched — 271's reads: *"the shared Math.random
+  stream stays byte-identical, so every **kayak**, jogger, balloon and resident is provably untouched."* **271 cited the KAYAK as
+  the PROOF ITS FIX WAS CLEAN, and never once asked whether the kayak NEEDED the fix.** It did: `drawKayak` had **no gate at all**
+  — `DISTINCT LINEUP = 1`, nine paddlers on the river at 4am in midwinter, on 6 seeds in 6, for the artifact's whole life, exactly
+  the defect 271 had just spent a lap removing from the surfers **one array over**. ⇒ **The must-not-move column is a list of
+  things you have proved you did not CHANGE. It is not a list of things you have proved are CORRECT.** The tell, and it is one
+  grep: **your fix's comment names a sibling as a control, and the sibling is in the same category as the thing you just fixed.**
+  Read your own control list as a **to-do list**.
+  ⇒ **AND THE QUESTION THAT LETS THE SECOND MEMBER HIDE IS "DOES IT HAVE A GATE?" — THE RIGHT QUESTION IS "DOES IT KEEP ITS
+  *OWN*?"** The kayak was found because it had **no** gate. The **KITE** was missed for 286 iterations because it **had** one
+  (`LITAMT > 0.6`, *"kites come down at night"*) — so every grep for *"is this draw gated?"* found a gate and moved on. But
+  `LITAMT` is **global and monotone**, so that threshold fires for **every kite in the city in the same frame**: `DISTINCT = 2`
+  (either 0 or all 3), which is 262's cliff wearing a gate as camouflage, and the **fourth** recursion of one defect (199 windows ·
+  210 residents · 230 traffic · 262 the child). ⇒ **Grep for the gate's SIGNAL, not for its existence.** A gate on a **global**
+  (`LITAMT`, `year`, `TIDE`, `WINDA`) is a **cliff**; only a gate on a **per-entity** quantity is an hour. The tell: your draw's
+  condition mentions no property of the thing being drawn.
+  ⇒ ⚠ **AND THE RIG TRAP IS NEW AND IT PRODUCED A PERFECT, SILENT LIE: `page.addInitScript` FIXES THE PRNG *FUNCTION*, NOT ITS
+  *STREAM POSITION*.** 213's law (stub `Math.random` before the page's own script) is necessary and it is **not sufficient for a
+  camera that calls `genWorld` TWICE**. The stub is one advancing LCG, so a **second** `genWorld()` draws *different* values and
+  **respawns every `Math.random` entity somewhere else** — my aim pass and my shot pass therefore built **two different cities**,
+  and the camera panned to a kayak **that no longer existed**. Both builds duly rendered an *empty crop*, **identically**, and the
+  night A/B came back **byte-identical while the probe said 9 vs 0**. ⇒ **Re-seed the stream IN-PAGE before EVERY `genWorld`**
+  (expose a `__reseed()` in the init script and call it each time), and **make the camera self-report the distance from its aim to
+  the nearest real host** (`aim-miss`), so it throws instead of shooting nothing. The tell — and an **agent** is what caught it,
+  by running `md5` and refusing to grade: **your two builds' frames are byte-identical where your probe says they must differ.**
+  **Believe the md5 over your self-report** (239).
 - **274 SAYS A *TYPE*-KEYED TABLE IS BLIND TO A PER-CELL *FLAG*. THE RUNG ABOVE IS THAT A ***SUB-TYPE***-KEYED TABLE IS
   BLIND TO A SIBLING THAT IS A ***TOP-LEVEL TYPE*** — SO A LADDER CAN GIVE A PROPERTY TO "EVERY MEMBER OF A CATEGORY",
   LOOK COMPLETE, AND STRUCTURALLY NEVER REACH HALF OF THEM (iter 285).** 271 says: when a lap establishes a property,
@@ -3658,6 +3688,28 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   largest bed by the artifact's own `bedSize` flood fill, never a fixed clip (201); `AIM=` forces HEAD to the identical
   hex, and since the pass draws zero `rng()` the two builds share a byte-identical city ⇒ a **genuinely blind** A/B.
   Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds (238/239/268)).
+  The **hours pair** (286 — ⚠ **reach for these on ANY vector about an entity's HOUR, CALENDAR or SCHEDULE, and run
+  `probe-hours` FIRST on any "does every X keep a clock?" claim — it censuses the WHOLE CATEGORY in one command**):
+  `probe-hours.mjs` (**does every leisure draw in the city keep an hour — and does it keep its OWN?** It counts **THE OBJECTS THE
+  FRAME ACTUALLY ISSUES** per draw fn (by instrumenting the ctx ops each emits: a draw that returned early emits none), swept over
+  the day × 2 seasons. **NO PIXELS ⇒ NO NOISE FLOOR AT ALL**, nothing to stub but the clocks. **BUILD-AGNOSTIC** — it hooks only
+  the artifact's own fns, so ONE file grades HEAD and the patch with no source swap and no cross-build floor (230). ⚠ **Its
+  headline needs no threshold** (236): `DISTINCT COUNTS = 1` **IS** the defect, stated — a draw with no clock has exactly one
+  output, forever. ⚠ **The SURFER and JOGGER are FREE POSITIVE CONTROLS** (248) — correct siblings on the same shoreline reading
+  the same clock — so a flat kayak column beside a live surfer column convicts the **city**, not the rig; **DOG/PED are the
+  must-not-move columns** (250), and because the fix draws **zero** new random values they come back **IDENTICAL, not merely
+  close**. ⚠ **READ THE `deepNight` BRACKET, NOT JUST `DISTINCT`** — and ⚠ **RESOLVE THE SWEEP TO THE POPULATION**: at 24 pins/day
+  the whole dusk is ~2 samples and a 3-object thinning is invisible; the kite read a false `DISTINCT=2` until the sweep went to 96.
+  ⚠ **Part B is 259'S CHECK AND IT MUST RUN BEFORE YOU DESIGN**: does the thing you are about to remove at night even RENDER at
+  night? (A kayak does: **12–13.7 px, as much as at noon** — so the vector was live.)),
+  `shot-waterhours.mjs` (its camera — a genuinely **blind, CROSSED** A/B, honest **because** the lap draws zero `rng()` and no
+  terrain, so both builds build the identical city. Aimed by **argmax of measured ink scored per HOST**, then panned to that
+  host's own `_sx`/`_sy` (226/272). ⚠ **Its DAY frame is a REQUIRED POSITIVE TWIN** (258): the night result is an **ABSENCE**, and
+  a camera that simply MISSES the river renders identically to a correct one — the day pair must come back **byte-identical by
+  md5**, which is also the lap's exact fixed point. ⚠ **RE-SEED `Math.random` IN-PAGE BEFORE EVERY `genWorld`** — see the law; the
+  camera **self-reports `aim-miss`** and throws if it aims at nothing, because it once aimed at a boat that did not exist and
+  **two builds rendered the empty crop identically**. ⚠ **CLIP TIGHTLY** (204/285) around the target's **post-`clampPan`** position,
+  never the viewport centre. Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds (238/239/268)).
   The **market pair** (285 — reach for these on any vector about a DRAW THAT SHOULD KEEP AN HOUR, A DAY OR A SCHEDULE,
   and on any "does this thing ever CLOSE / pack up / go home" claim): `probe-marketday.mjs` (**it counts OBJECTS, not
   pixels** — hooks the artifact's own `drawCell`/`prism`/`fillRect` and counts what the frame ISSUES per hex, per hour,

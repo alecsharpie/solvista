@@ -1,5 +1,5 @@
 {
- "when": "2026-07-14T20:19:52.683Z",
+ "when": "2026-07-14T21:04:06.921Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -216,7 +216,7 @@
    "towers": 118,
    "tallestFloors": 62,
    "density": 42,
-   "solarPct": 42,
+   "solarPct": 43,
    "transitPct": 47,
    "walkPct": 75,
    "schools": 12,
@@ -224,7 +224,7 @@
    "roads": 805,
    "bridges": 62,
    "developed": 1068,
-   "solarRoofs": 453,
+   "solarRoofs": 454,
    "greenRoofs": 141,
    "towerHt": 10586,
    "tallTowers": 68,
@@ -852,7 +852,7 @@
    "roads": 869,
    "bridges": 54,
    "developed": 1008,
-   "solarRoofs": 396,
+   "solarRoofs": 395,
    "greenRoofs": 144,
    "towerHt": 6605,
    "tallTowers": 42,

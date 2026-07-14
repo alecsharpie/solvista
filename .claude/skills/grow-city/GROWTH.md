@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -32,8 +32,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last vector per domain: People **278** · Nature **279** · Urban **281** · Water **282** ·
-  Transport **283** · Sky **284** · Civic **285**. ➡ **NEXT: People (278) is oldest**, then Nature (279).
+- **ROTATION.** Last vector per domain: Nature **279** · Urban **281** · Water **282** ·
+  Transport **283** · Sky **284** · Civic **285** · People **286**. ➡ **NEXT: Nature (279) is oldest**,
+  then Urban (281). **Nature's cue is (ax)** (fairy-ring contrast, Nature × **Polish** — and Nature's
+  last three were CA/Deepen, so Polish is BOTH the stale kind and the banked cue: take it).
+  ⚠ **PEOPLE's Deepen cell is now 14 deep and is CLOSED for rotation purposes** — its stale cells are
+  **Polish (226)** and **New CA rule (49)**. Do not take another People Deepen without a measured seam.
   ✅ **CIVIC'S TWO-LAP DEBT IS PAID (285).** ⚠ **CIVIC's stale cells are STILL New CA rule (36/107) and Connect
   (45/204)** — 277 and 285 both took Deepen. ✅ **BUT CONNECT IS NOW *MEASURED* STALE: 285 probed the civic mile
   (`c.fete`) and the seam is SOUND** (11–30 cells, 1.4–3.7% of road, 2–5 short runs, 2.2–2.8 institutions in
@@ -101,6 +105,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ⛔ **259: `c.lit` CANNOT EXPRESS DARKNESS** — `lit=LITAMT*(0.35+0.65*c.lit)`, a **0.35 floor** ⇒ range **2.9:1**. **Fine as a CHOOSER, dead as a LOOK ⇒ do NOT build "X answers the night glow" in COLOUR.** (Body archived at 271.)
   ⚠ **ARTIFACT FACTS from 236–276 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
   lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"):
+  **286 (law in SKILL.md; numbers in the entry):** 🔴 **THE KAYAKERS KEPT NO HOUR AND NO CALENDAR** (`drawKayak` had **NO GATE**; `DISTINCT = 1`, 9 of 9 on the river at 4am in midwinter, 6 seeds) **AND THE KITES KEPT THE WRONG KIND** (`LITAMT>0.6` — a GLOBAL MONOTONE gate ⇒ all 3 blink out in ONE frame; `DISTINCT = 2`). **`waterSession()` / `waterOut(e)` — ONE predicate, FOUR readers** (drawSurfer · drawKayak · both tooltips). ⚠ **RENAMED from `surfSession`/`surfOut` ON PURPOSE — a predicate called `surf` is one the next lap greps and MISSES the kayak (199); `probes/probe-surfsession.mjs`'s build-detector was repointed in the same lap, or it would have graded the patch as HEAD and cried a FALSE regression on the surfers.** ⚠ **THE PADDLERS TAKE THE EXISTING PREDICATE — no new constant; the water crowd answers ONE season** (249). ⚠ **THE KITE'S HOUR IS FROM THE LADDER**: a kite must be SEEN by the person on the line ⇒ **KITE = KID (~0.35) < SURF = KAYAK = JOG (0.62) < CURF (1.85)**. ⚠ **ZERO NEW RANDOM DRAWS** (`ph/7` on the uniforms both already carry) ⇒ every control (surfer/jogger/dog/ped) reads **IDENTICAL, not merely close**; census core **+0**, path objects **−36 night (a credit)**, day **byte-identical (md5-proven)**. ⛔ **THE STRAY DOG IS A FALSE POSITIVE — DO NOT "FIX" IT** (205): `drawDog` hides only through the owner, so a stray (`own=-1`, 2–5/city) never goes in — **and it has no home to go to.** ⚠ **RIG LAW: `addInitScript` FIXES THE PRNG *FUNCTION*, NOT ITS STREAM POSITION** — a second `genWorld()` respawns every `Math.random` entity ELSEWHERE, so an aim pass and a shot pass build DIFFERENT cities and the camera aims at a boat that no longer exists (two builds then render an identical empty crop, and an agent's `md5` caught it). **RE-SEED IN-PAGE BEFORE EVERY `genWorld`** (248).
   **285 (law in SKILL.md; numbers in the entry):** 🔴 **THE MARKET NOW KEEPS A DAY AND AN HOUR — IT NEVER HAD** (`DISTINCT STALL COUNTS = 1`, 6 seeds; stalls up **100%** of hours; lights on **80/80** night hours). **`marketHours`/`marketAmt`/`marketWord`(x,y) — ONE predicate, FOUR readers** (stalls · lights · tooltip · `residentWhere`), in `fixtureAt`/`matchClock`'s idiom and beside it. ⚠ **A MARKET IS A TIMETABLE ⇒ CORRECT ON `dayT`, NOT the warped `SUNT`** (284). ⚠ **SALTED PER HEX AS WELL AS PER DAY, ON PURPOSE — do NOT collapse it to one city-wide market day** (the population would blink as one; 263). ⚠ **THE STRING LIGHTS ARE WHAT THE EVENING MARKET IS FOR** (`MKTEVE=0.28`, 0.62→0.92, so `SUNDN` falls mid-market); **a MORNING market (0.10→0.52) is never lit, and that is CORRECT.** ⚠ **WHOLLY INERT** (zero `rng()`/`Math.random`, no terrain, **unreachable from `tick()`**) ⇒ census core BYTE-IDENTICAL; path objects **−0.47% day / −0.18% night** (a credit). ⚠ **AT `marketAmt===1` THE PATCH IS BYTE-IDENTICAL TO HEAD** — an exact fixed point, so a HEAD/patch A/B at the OPEN pin is *supposed* to read 0 px. **ONLY THE SHUT PIN DISCRIMINATES.** ⇒ 🆕 **CUE (bf) — THE PACKED-AWAY SQUARE READS A TOUCH BALD** (Civic × Polish; both blind agents, both seeds, unprompted). Cheap, cosmetic; the bones are there.
   **284 (law in SKILL.md; numbers in the entry):** 🔴 **`SUNT` HAD TWO READERS LEFT ON THE WALL CLOCK — `phaseWord` AND `fogDepth`'s DAWN TERM.** ⚠ **BOTH WARP THEIR OWN CLOCK (`sunWarp(dayT)`), NOT the cached `SUNT` — `syncStats()` runs BEFORE `render()` and again on `genWorld`, where `SUNT` is STALE or 0.** Read the cache ONLY in a per-hex draw. ⚠ **THE TEST FOR A NEW READER: does it ask about the SUN, or about the HOUR?** The moon, `clockWord`, the school run and the stadium fixture are **TIMETABLES — correct on `dayT`, DO NOT MOVE THEM** (`sunWarp`'s reader list is a **changelog, not a spec** — 280). ⛔ **THE SEA GLITTER IS NOT A DEFECT — DO NOT RE-KEY IT:** `glit`'s `(1-LITAMT)` **already carries the season** ⇒ `AFTERSET=0`, cutoff already moves 0.440→0.550. ⚠ **`gs` (`drawBuilding`'s sun-facing face) IS AUDITED AND PROVABLY INERT** (`GWARM=0` across 0.415–0.5) — **left as-is on purpose, do not "fix".** ⚠ **WHOLLY INERT**: neither fn is reachable from `tick()` ⇒ census core **BYTE-IDENTICAL**, path objects −91d/−1n. ⚠ **`fogDepth`'s seeded `spell` SATURATES `FOGAMT` at 1.0** ⇒ **any fog probe/camera MUST pin `time` so `sin(time*0.028+(seedNum%97)*0.7) = −1`** (⚠ `ph` reaches 67.2 — wind forward by whole periods or `time` goes NEGATIVE).
   **283:** 🔴 **THE BOULEVARD NOW *IS* ONE — IT NEVER WAS** (HEAD: **93.9% of every busy street treed**; `Boulevard` 333/city vs `Avenue` **29**; contagion **1.34x its own null**; only **15% of the canopy on a trunk route**. Full numbers in the 283 entry.) **`blvdSpark(c)` — ONE predicate: the grandest built-up trunk (`c.busy && c.flow>=ARTFLOW*BLVDGRAND`, `BLVDGRAND=2`).** ⚠ **THE SUBSTRATE IS THE BARE TRUNK AND MUST STAY SO** — a frontage gate on top SHATTERS it (biggest run **36 → 8 hexes**; 282's percolation law). **A SPARK is ONE cell so it MAY demand frontage; the SPREAD may not.** ⚠ **`BLVDGRAND=2` IS WORST-SEED GATED** (3 starves seed 99; a Poisson coin left it with **ONE tree** — 233). ⚠ **THE RATE IS HEAD'S OWN 0.002 — only the PREDICATE steers a saturated roll (218); do not tune it.** ⚠ **WHOLLY INERT** (zero `rng()`, writes only `c.treed`) ⇒ census core **BYTE-IDENTICAL**; path objects **−2.0% day**. ⚠ **`c.flow`/`c.busy` ARE LAST TICK'S** — the artifact's own idiom; do not "fix". ⚠ **A NON-TREED ROAD STILL DRAWS A SCATTERED STREET TREE** (`(x*3+y)%4===0`) so de-treeing does NOT bald a street — **and that fallback CONTAMINATES any `c.treed=false` suppression mask on 25% of hexes; suppress only the other 75%.** ⛔ **DO NOT RE-SHOOT AS AN A/B: THE VISUAL GATE CANNOT GRADE A REDISTRIBUTION** (law in SKILL.md) — at fit zoom a tree is ~3px and **HEAD's canopy is equally invisible**. Gate on `probes/probe-blvdnet.mjs` + the tooltip. ✅ **171's `probe-boulevard.mjs` HAD BEEN FAILING ON PRISTINE HEAD** (`describeTile` **preempts on `c.fete`**); **repaired, and given the `SRC=` it never had.** 🔑 **ITS CONTROL WAS THE FINDING: `Avenue` read 33 on HEAD seed 7 against a target of 327.**
@@ -190,10 +195,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   248, its BOW half REFRAMED.** ⛔ **ALSO RETIRED:** **(ai)** greenbelt (246 — the ROADS fragment every lobe) · **(aj)** cloud
   spawn (273 — `cl.y` is a DEAD LEVER) · **(y)** mojibake (273) · **(ak)** canopy (238+252 — measured-capped) · **GARDEN's
   staggered beds** (263 — host starved).
-  ⚠ **THE LETTERS (y) AND (aw) EACH NAME TWO CUES — read the parenthetical.** Live: **(aw) the KAYAKERS keep no hour and no
-  calendar** (271). `drawKayak` has NO gate, exactly as `drawSurfer` had none; **`surfSession()` is the predicate.** ⚠ **285
-  REFUTED ITS "the last one who does not" CLAIM — the MARKET kept none either.** Cheap, but it REPEATS 271's mechanism ⇒ **pair
-  it, or wait for People's non-Deepen lap.**
+  ✅ **(aw)'s KAYAK HALF IS CLOSED BY 286** (with the KITE as its pair). **(aw-HUD) is still live and still UNVERIFIED — see below.**
   ⚠ **SETTLED AUDITS — LIVE WARNINGS ONLY (bodies archived at 242/283/285).** **225:** `shadS` (every shadow routes through it)
   carries a per-frame sun vector (`SHOFF`·`SHLEN`·`SHAMT`). ⚠ **Noon (t=0.415) is BYTE-IDENTICAL ⇒ a free dead-regime control for
   every shadow lap.** ⚠ **`SHAMT` must never reach 0 at night** — the residual patch keeps every ped, tree and car from FLOATING.
@@ -379,99 +381,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 278 entries before Iteration 276 live in
+> **Archive:** the 279 entries before Iteration 277 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 276 — Transport × Connect — the bus could not see the network it exists to serve (2026-07-14)
-
-**Vector.** Transport × **Connect** (last touched **211**; Transport's last lap was 269 = Deepen, and
-its Deepen cell is by far its fullest). Its cue list was **EMPTY** — which 225's law says records
-where you have LOOKED, not what is THERE — so this lap came from a fresh grep of `stepVehicle` /
-`syncFleet` and of Transport's **type-keyed TABLES** (274).
-
-**The defect, and it is two things that are one thing.** Solvista has published a bus-stop network
-since long before the ledger: `stopOK` sites a shelter on built-up street, `stopQueue` builds a queue
-under its canopy that *"empties when one comes"*, and the tooltip prints *"3 waiting"*.
-1. **The bus could not see it.** It was spawned on a uniformly random road and then **random-walked**
-   — `stepVehicle`'s straightest-72%-else-any rule, **byte-identical to an ordinary car** — and only
-   called at a shelter it happened to blunder into. It is **249's ferry and 269's streetcar**, on the
-   one vehicle whose entire job *is* the network.
-2. **`VKIND` had no `bus` row.** The table is **TYPE-KEYED**, so line 9149 fell through to
-   `['Car', "Somebody's errand."]`: the city's only public transport, drawn in its own gold livery
-   expressly *"so a taxi reads apart from a bus at a glance"*, has been **named a CAR** in the hover
-   card for the artifact's entire life. **274's law, arriving on Transport's table.**
-
-**Probe (`probes/probe-busroute.mjs`) — and it REFUTED my hypothesis before I wrote a line, then
-handed me a better one.** I went in expecting unreachable stops. **Part A says no:** the road graph is
-**ONE connected component on 6 seeds in 6**, every stop inside it. What it found instead is that the
-random walk *works, badly, and by luck* — and **Part A is also what LICENSED the fix**. 269 could not
-give the streetcar a rail because the avenue is **not a rideable network** (9–16 components, 20% dead
-ends) and a tram confined to it **strands in a block**. The **ROAD** graph is not that. *The same
-measurement that forbade a rail for the tram permits one for the bus.*
-
-| shelters NEVER called at, 900s of sim | HEAD | patch |
-| --- | --- | --- |
-| all 6 seeds | **45/244 (18%)** | **4/244 (2%)** |
-| worst seed (99, 3 buses) | **15/39 (38%)** | 2/39 (5%) |
-| best seed (42, 11 buses) | 2/41 (5%) | 2/41 (5%) |
-| total calls / seed | 68–278 | **119–365 (+~50% on every seed)** |
-
-⚠ **HEAD's answer needed NO THRESHOLD (236):** `stopQueue` reads
-`since = c.blast===undefined ? 1e4 : …`, so a shelter no bus has **ever** reached is pinned at its own
-`stopCap` — **DISTINCT QUEUE STATES = 1, forever.** The city was drawing a permanently-full shelter and
-telling you people were waiting there.
-⚠ **THE TAXI IS THE FREE POSITIVE CONTROL (248)** — a correct sibling mover in the same array and the
-same function that provably stops (258) — so the bus's zero was a **real** zero and not a dead rig.
-⚠ **THE CAR IS THE MUST-NOT-MOVE COLUMN, AND IT IS AN AGGREGATE, NEVER AN INDIVIDUAL (204/250):** a
-patched bus draws a different number of values from the **shared `Math.random`** stream and walks every
-car downstream. Aggregate: 23–29 cars, still covering the **whole** road graph (807/807 hexes) on both
-builds.
-
-**Change.** Nothing invented; the house already owned every piece.
-- **The router** is **`roadField`** — servSend's own BFS, the field the cruiser, ambulance and engine
-  have driven since **204**. The bus is its **fourth reader**.
-- **The schedule** is **`c.blast`** — the sim-time the last bus called, stamped by `stepVehicle` itself
-  and already read by the DRAW and the TOOLTIP. `busNext` sorts on it: **the bus goes to the shelter
-  that has waited longest**, and one nobody has *ever* called at (`blast === undefined`) is the stalest
-  there is. ⇒ **Coverage follows BY CONSTRUCTION, not from a probability anyone had to tune (218).
-  No new constant enters the file, and no new state is stored on a cell.**
-- Targets are **claimed**, so five buses do not all run to one shelter; and it stays **opportunistic** —
-  the dwell clause still fires at any stop crossed en route, exactly as it always did.
-- **ONE predicate, THREE readers** (112): the STEP (the field it descends), the TOOLTIP (`VKIND.bus`
-  names the bus off the same `v.stopTo`; the *shelter* now says `Next bus — On its way here` off the
-  same flag), and the probe.
-
-**Census.** PASS — **every metric +0, tile histogram EMPTY.** `Math.random` only (as the tram's route
-and the bus's own dwell already are), so the seeded `rng()` stream is untouched. ⚠ **And with no shelter
-yet standing `busNext` returns null and the bus drives HEAD's byte-identical rule ⇒ the young city is a
-free dead-regime control (199).**
-
-**Visual.** Both seeds **PASS**. Both agents, independently, read the tooltip verbatim: **`City bus` /
-*"Pulled in at the shelter — the queue is getting on."*** — the `Car` fallback is gone. Seed 42's agent
-described the gold bus at the kerb with its shelter canopy **unprompted**. Whole-plate frames clean on
-both: no z-order tears, no floating tiles, no compounding into clutter or darkness.
-
-⚠ **THE CAMERA'S FIRST CUT DREW A FALSE FAIL, AND IT WAS THE INSTRUMENT (202/258).** `shot-busroute`
-searched over time for the best-exposed standing bus — and then **kept stepping the sim**, so it
-photographed a **later** instant in which the bus had driven on. An agent correctly reported an empty
-street and a *tile* tooltip. **A camera must not advance the world past the state it just scored.**
-It now **breaks the loop at the instant it measures**. Two more, both banked laws paid again:
-`_sx`/`_sy` are **WORLD** coords, not CSS px (scoring ink at `_sx*dpr` sampled the top-left corner —
-inside the placard I had just zeroed, so the rig returned a clean plausible **0px**, 250's tell); and
-**`clampPan()` does not leave your target at the target** (272c) — it now reads the bus's position back
-**after** the clamp and hovers there (0px off centre, both seeds).
-
-**Aim.** By **measured ink**, never by the stop's position — `stopOK` requires ≥2 DEV neighbours, so a
-shelter sits **by construction** on ground with tall frontage drawn in the row in front (**258**: the
-siting rule is positively correlated with occlusion). The bar is the **INCUMBENT, not a number I chose**
-(226): a standing bus must clear 70% of the mean **moving** bus's ink in the same frame. It reads
-**187px vs 85 (seed 42)** and **59px vs 57 (seed 7)** — both clear.
-
-**Verdict: SHIPPED.** 18% → 2% of shelters never called at; worst seed 38% → 5%; ~50% more calls on
-every seed; and the city's only public transport finally knows its own name.
 
 ## Iteration 277 — the warped city and the lived city were different cities (2026-07-14) [Civic & culture × Deepen/FIX]
 
@@ -1167,3 +1081,76 @@ designing saved the lap**: I would have spent it "fixing" a rule that works. Con
 *measured* stale rather than merely unvisited.
 
 **Verdict: DEEPENED** (and FIXED — the market had no clock at all).
+
+## Iteration 286 — People × Deepen — the last two draws that never went home (2026-07-15)
+
+**Vector.** People × **Deepen** (rotation: People at 278 was the oldest domain). Not from the cue
+list — from a **grep of People's seam**, per 225. The banked cue **(aw)** (kayakers keep no hour)
+was live but the header said *"cheap, but it REPEATS 271's mechanism ⇒ **pair it**"*. The grep found
+the pair, and it found it in the place 280's law says to look: **a comment enumerating its own
+category.**
+
+**The tell.** `curfewAt`'s comment ladder (L3924) lists who keeps an hour — *"the residents
+(curfewAt), the children (kidOut), the runners (j.out), the traffic (VCURF), the match crowd
+(matchClock)"*. **That list is a CHANGELOG OF WHO HAS BEEN FIXED, not a taxonomy of who should
+READ it** (280). Two members of the category were never in it — and one of them is **named in the
+fix's own comment as a CONTROL**: 271 wrote *"the shared Math.random stream stays byte-identical,
+so every **kayak**, jogger, balloon and resident is provably untouched."* **271 cited the kayak as
+proof its fix touched nothing, and never asked whether the kayak NEEDED touching.**
+
+**Measured (`probes/probe-hours.mjs`, 6 seeds × 96 pins/day × 2 seasons, no pixels ⇒ no noise floor):**
+
+| draw | HEAD distinct | patch | ceiling | |
+| --- | --- | --- | --- | --- |
+| **KAYAK** | **1** (9 of 9 out at 4am in midwinter, forever) | **7–9** | 10 | `drawKayak` had **no gate at all**, exactly as `drawSurfer` had none |
+| **KITE** | **2** (0 or all 3 — a binary cliff) | **3–4** | 4 | had an hour, but a **GLOBAL MONOTONE** one (`LITAMT>0.6`) ⇒ all three vanish in the SAME FRAME |
+| SURFER *(control)* | 7,8,7,6,7,7 | **identical** | | 271's fix, provably alive (0 at deep night) |
+| JOGGER *(control)* | 8,7,4,6,8,7 | **identical** | | |
+| DOG / PED *(controls)* | 6,7,6,5,5,6 / 39,38,36,33,35,39 | **identical** | | |
+
+**259's check ran BEFORE the design and is what licensed the lap:** a kayak at 4am in midwinter
+renders **12–13.7 px — as much ink as at noon**, so the hours half is a change a viewer can
+actually see, not an invisible one.
+
+**Change.** `surfSession` → **`waterSession()`**, `surfOut` → **`waterOut(e)`** — **ONE predicate,
+FOUR readers** (the two draws + the two tooltips). Renamed *because* `surfSession` gating a kayaker
+is the next lap's 199-tell: a predicate called `surf` is one you grep and miss the kayak.
+- The paddlers take the **existing** predicate — the same sun × the same calendar — so **no new
+  constant enters the file** and the water crowd answers ONE season (249: grep for the mechanism
+  the artifact already ships).
+- The kite gets its own hour **from the ladder, not invented** (226): a kite must be *seen* by the
+  person on the line, so the last one is down as the children go in. Ladder now reads
+  **KITE = KID (~0.35) < SURF = KAYAK = JOG (0.62) < CURF (1.85)**.
+- **DERIVED, NOT DRAWN** (262): `k.ph`/`s.ph` are already uniforms on [0,7), so `ph/7` is exactly
+  uniform on [0,1) and costs **zero new random draws** ⇒ both streams byte-identical, which is why
+  every control column above is **IDENTICAL rather than merely close.**
+- Kayak `ENTINFO` `sub` frozen string → **live function** (278).
+
+**Census.** PASS. **Every metric +0, tile histogram EMPTY** — wholly inert (zero `rng()`, no
+terrain, unreachable from `tick()`). The census is *vacuous* here by construction; the probe is the gate.
+
+**Perf.** Path objects day 110,310 → 110,351 (+41), night 138,104 → **138,068 (−36, a credit)** —
+both inside `probe-drawbudget`'s ±100 floor. **Free**, as a draw-*removing* change should be.
+
+**Visual.** Blind, crossed A/B (`probes/shot-waterhours.mjs`), both seeds. **Both agents named the
+correct file from the pixels alone** (s42 → `sigma`, s7 → `kappa`; both = HEAD). Day pairs
+**BYTE-IDENTICAL by md5** (`62f4381`==`62f4381`, `0355847`==`0355847`) — the required positive twin
+(258) *and* the exact daylight fixed point, proven not asserted. s42's agent, told the intent,
+confirmed **no orphan wake tick / paddle stroke with no hull** and said of HEAD unprompted:
+*"they read as leftover daytime sprites forgotten in the night pass."* Whole-city frames clean.
+
+**⚠ THE RIG LIED FIRST, AND AN AGENT CAUGHT IT (239).** The first shoot came back with s7's night
+pair **byte-identical** while the self-report said `9/9` vs `0/9`. The agent ran `md5` itself and
+refused to grade it — **correctly.** Cause: **`addInitScript` fixes the PRNG *function*, but its
+STREAM POSITION keeps advancing**, so the shot pass's `genWorld` drew *different* `Math.random`
+values than the aim pass's and **respawned the kayaks somewhere else** — I aimed at a boat that no
+longer existed, and two builds render an empty crop identically. **Re-seed the stream in-page before
+EVERY `genWorld`** (248). The camera now **self-reports `aim-miss`** and throws if it aims at nothing.
+
+**Explored and REJECTED — the STRAY DOG.** `drawDog` hides a dog only *through its owner*
+(`if(p&&pedHidden(p))return;`), so a stray (`own=-1`, **2–5/city**) is never hidden — and the
+comment *concedes* it (*"a leashed dog goes home when its human does"*). It has the exact shape of
+the tell. **It is a FALSE POSITIVE (205): a stray has no home to go to**, and a dog roaming a park
+at night is the correct depiction, not a bug. Logged so the next lap does not re-find it.
+
+**Verdict: DEEPENED** (and FIXED — the kayakers had no clock at all, and the kites had the wrong kind).

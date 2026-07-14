@@ -20717,3 +20717,92 @@ the LAWS are in SKILL.md. Kept here byte-for-byte.
   it is (283's two FAILs were both TRUE of HEAD as well). ⇒ **When agents say "I CANNOT SEE IT" the burden is on your
   PROBE** (they alone measure *salience*). ⇒ **262: read WHICH FILE a FAIL names.** Weight an aside two agents reach
   independently above any verdict.
+
+## Iteration 276 — Transport × Connect — the bus could not see the network it exists to serve (2026-07-14)
+
+**Vector.** Transport × **Connect** (last touched **211**; Transport's last lap was 269 = Deepen, and
+its Deepen cell is by far its fullest). Its cue list was **EMPTY** — which 225's law says records
+where you have LOOKED, not what is THERE — so this lap came from a fresh grep of `stepVehicle` /
+`syncFleet` and of Transport's **type-keyed TABLES** (274).
+
+**The defect, and it is two things that are one thing.** Solvista has published a bus-stop network
+since long before the ledger: `stopOK` sites a shelter on built-up street, `stopQueue` builds a queue
+under its canopy that *"empties when one comes"*, and the tooltip prints *"3 waiting"*.
+1. **The bus could not see it.** It was spawned on a uniformly random road and then **random-walked**
+   — `stepVehicle`'s straightest-72%-else-any rule, **byte-identical to an ordinary car** — and only
+   called at a shelter it happened to blunder into. It is **249's ferry and 269's streetcar**, on the
+   one vehicle whose entire job *is* the network.
+2. **`VKIND` had no `bus` row.** The table is **TYPE-KEYED**, so line 9149 fell through to
+   `['Car', "Somebody's errand."]`: the city's only public transport, drawn in its own gold livery
+   expressly *"so a taxi reads apart from a bus at a glance"*, has been **named a CAR** in the hover
+   card for the artifact's entire life. **274's law, arriving on Transport's table.**
+
+**Probe (`probes/probe-busroute.mjs`) — and it REFUTED my hypothesis before I wrote a line, then
+handed me a better one.** I went in expecting unreachable stops. **Part A says no:** the road graph is
+**ONE connected component on 6 seeds in 6**, every stop inside it. What it found instead is that the
+random walk *works, badly, and by luck* — and **Part A is also what LICENSED the fix**. 269 could not
+give the streetcar a rail because the avenue is **not a rideable network** (9–16 components, 20% dead
+ends) and a tram confined to it **strands in a block**. The **ROAD** graph is not that. *The same
+measurement that forbade a rail for the tram permits one for the bus.*
+
+| shelters NEVER called at, 900s of sim | HEAD | patch |
+| --- | --- | --- |
+| all 6 seeds | **45/244 (18%)** | **4/244 (2%)** |
+| worst seed (99, 3 buses) | **15/39 (38%)** | 2/39 (5%) |
+| best seed (42, 11 buses) | 2/41 (5%) | 2/41 (5%) |
+| total calls / seed | 68–278 | **119–365 (+~50% on every seed)** |
+
+⚠ **HEAD's answer needed NO THRESHOLD (236):** `stopQueue` reads
+`since = c.blast===undefined ? 1e4 : …`, so a shelter no bus has **ever** reached is pinned at its own
+`stopCap` — **DISTINCT QUEUE STATES = 1, forever.** The city was drawing a permanently-full shelter and
+telling you people were waiting there.
+⚠ **THE TAXI IS THE FREE POSITIVE CONTROL (248)** — a correct sibling mover in the same array and the
+same function that provably stops (258) — so the bus's zero was a **real** zero and not a dead rig.
+⚠ **THE CAR IS THE MUST-NOT-MOVE COLUMN, AND IT IS AN AGGREGATE, NEVER AN INDIVIDUAL (204/250):** a
+patched bus draws a different number of values from the **shared `Math.random`** stream and walks every
+car downstream. Aggregate: 23–29 cars, still covering the **whole** road graph (807/807 hexes) on both
+builds.
+
+**Change.** Nothing invented; the house already owned every piece.
+- **The router** is **`roadField`** — servSend's own BFS, the field the cruiser, ambulance and engine
+  have driven since **204**. The bus is its **fourth reader**.
+- **The schedule** is **`c.blast`** — the sim-time the last bus called, stamped by `stepVehicle` itself
+  and already read by the DRAW and the TOOLTIP. `busNext` sorts on it: **the bus goes to the shelter
+  that has waited longest**, and one nobody has *ever* called at (`blast === undefined`) is the stalest
+  there is. ⇒ **Coverage follows BY CONSTRUCTION, not from a probability anyone had to tune (218).
+  No new constant enters the file, and no new state is stored on a cell.**
+- Targets are **claimed**, so five buses do not all run to one shelter; and it stays **opportunistic** —
+  the dwell clause still fires at any stop crossed en route, exactly as it always did.
+- **ONE predicate, THREE readers** (112): the STEP (the field it descends), the TOOLTIP (`VKIND.bus`
+  names the bus off the same `v.stopTo`; the *shelter* now says `Next bus — On its way here` off the
+  same flag), and the probe.
+
+**Census.** PASS — **every metric +0, tile histogram EMPTY.** `Math.random` only (as the tram's route
+and the bus's own dwell already are), so the seeded `rng()` stream is untouched. ⚠ **And with no shelter
+yet standing `busNext` returns null and the bus drives HEAD's byte-identical rule ⇒ the young city is a
+free dead-regime control (199).**
+
+**Visual.** Both seeds **PASS**. Both agents, independently, read the tooltip verbatim: **`City bus` /
+*"Pulled in at the shelter — the queue is getting on."*** — the `Car` fallback is gone. Seed 42's agent
+described the gold bus at the kerb with its shelter canopy **unprompted**. Whole-plate frames clean on
+both: no z-order tears, no floating tiles, no compounding into clutter or darkness.
+
+⚠ **THE CAMERA'S FIRST CUT DREW A FALSE FAIL, AND IT WAS THE INSTRUMENT (202/258).** `shot-busroute`
+searched over time for the best-exposed standing bus — and then **kept stepping the sim**, so it
+photographed a **later** instant in which the bus had driven on. An agent correctly reported an empty
+street and a *tile* tooltip. **A camera must not advance the world past the state it just scored.**
+It now **breaks the loop at the instant it measures**. Two more, both banked laws paid again:
+`_sx`/`_sy` are **WORLD** coords, not CSS px (scoring ink at `_sx*dpr` sampled the top-left corner —
+inside the placard I had just zeroed, so the rig returned a clean plausible **0px**, 250's tell); and
+**`clampPan()` does not leave your target at the target** (272c) — it now reads the bus's position back
+**after** the clamp and hovers there (0px off centre, both seeds).
+
+**Aim.** By **measured ink**, never by the stop's position — `stopOK` requires ≥2 DEV neighbours, so a
+shelter sits **by construction** on ground with tall frontage drawn in the row in front (**258**: the
+siting rule is positively correlated with occlusion). The bar is the **INCUMBENT, not a number I chose**
+(226): a standing bus must clear 70% of the mean **moving** bus's ink in the same frame. It reads
+**187px vs 85 (seed 42)** and **59px vs 57 (seed 7)** — both clear.
+
+**Verdict: SHIPPED.** 18% → 2% of shelters never called at; worst seed 38% → 5%; ~50% more calls on
+every seed; and the city's only public transport finally knows its own name.
+
