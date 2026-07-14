@@ -196,4 +196,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 263  Nature × Deepen            FIXED               45m58s   $18.34 058b716
 ✔ Iter 264  —                          FIXED               31m10s   $12.34 7f61b96
 ✔ Iter 265  Sky & atmosphere × Polish  SHIPPED             36m16s   $14.10 00f7409
+✔ Iter 266  Water & coast × Polish     SHIPPED             19m21s   $8.14  1f6ad37
 ```
