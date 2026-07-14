@@ -701,6 +701,61 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A ONE-SHOT PLACEMENT RULE AND A SPREADING RULE READ THE SAME GATES DIFFERENTLY — SO WHEN YOU MAKE A STAMPED RULE
+  *SPREAD*, ITS EXISTING THINNING GATE STOPS BEING A **DENSITY** AND SILENTLY BECOMES A **PERCOLATION THRESHOLD**
+  (iter 282).** 263 says a spread rule needs a NEIGHBOUR, not a population. 282 is the rung below, and it is the one you
+  walk into *while obeying 263*: **the neighbour must be REACHABLE**, and a random per-cell thinning of the substrate
+  below the site-percolation threshold (**~0.5 on a hex lattice**) breaks the eligible ground into **islands the rule
+  cannot cross**. Solvista's kelp gate (`hashCell(x,y,…) < 0.62`) was pure *texture* for the artifact's whole life
+  because the rule **STAMPED** — it converted every qualifying cell on tick 1, so connectivity was irrelevant. The
+  moment the rule **SPREADS**, that same constant becomes the *connectivity of the ground the bed must travel over*:
+  thinned to a seemingly-safe 0.30 the bed **never left the sand** (shelf 0% on every seed) and **HALVED** (mean 10.2 vs
+  HEAD's 17.7) — and every symptom reads exactly like "my growth rate is too low", so you will tune the rate, and the
+  rate is not the problem. ⇒ **When you convert a placement rule into a spreading one, re-read EVERY gate it already
+  has and ask what each one now MEANS.** A gate that was a *density* is now a *connectivity*; a gate that was a *filter*
+  is now a *maze*. Keep the substrate above ~0.5 and buy your size somewhere else (here: a light/depth bound + a scour).
+  The tell: **your spread rule under-performs, its host is randomly thinned below half, and raising the rate does not
+  fix it.**
+  ⇒ **AND ITS COROLLARY IS WHERE THE SIZE MUST COME FROM: A SCOUR/DECAY TERM THAT VANISHES IN THE INTERIOR CANNOT BOUND
+  A SPREADING RULE — THE BED WILL FILL ITS ENTIRE POOL.** The natural form (`decay ∝ exposure`, i.e. `1 − shelter`) is
+  exactly zero for a fully-surrounded cell, so once a cell is enclosed it is **immortal** and the rule converges on its
+  whole eligible pool — which, measured, was **a third of the ocean**. Let the *bounding* variable (here depth/light)
+  keep the last word: `decay ∝ (1 − light) · (1 − 0.6·shelter)` — shelter *helps* but never fully protects. The
+  equilibrium edge is then **a DEPTH the world decides**, not a count you tuned (223: prefer a structural invariant).
+  ⇒ **AND GATE IT ON THE INCUMBENT, NOT ON A CONSTANT YOU CHOOSE (226/233): the shipped bed is never larger than HEAD's
+  on ANY seed** (worst 34 vs 36), which makes the feared regression — kelp famously *"lined the entire coast dark for
+  ~13 iterations"* — **impossible by arithmetic** rather than merely unobserved. When a vector re-opens a known past
+  regression, the gate is *"it cannot exceed what already shipped"*, and it is worth designing for.
+
+- **A COMMENT THAT DECLARES ITS SUBJECT HAS *NO STATE* IS A DIAGNOSIS, NOT A FACT — AND IT WILL BE **OBSERVATIONALLY
+  TRUE**, BECAUSE THE RULE IS DEAD (iter 282).** 199's tell is a *name asserting a behaviour its value cannot have*.
+  282 found its inverse, and it is better camouflaged, because **nothing ever contradicts it**: a comment asserting an
+  **ABSENCE** that the code flatly contradicts, where the absence is nevertheless real *because the code does nothing*.
+  Solvista's kelp tooltip said *"Kelp carries no CA state (placed once in `genWorld`, never ticked)"* — and the kelp
+  pass **sits in `tick()` and runs 813 times a run.** The comment was **false about the mechanism and true about the
+  observable**, so it read as settled design, *explained away the very silence that was the defect*, and talked every
+  reader out of looking for 280 iterations. ⇒ **Grep your comments for a clause that says X *has no state / never
+  changes / is placed once / is static* — then grep whether X is in `tick()`.** If it is, the comment is not
+  documentation, it is a **bug report nobody filed**. The tell: a comment explains why there is nothing to see.
+  ⇒ **AND THE CHEAPEST INSTRUMENT FOR THIS IS ALREADY IN THE HARNESS: A FROZEN COLUMN OF THE TILE HISTOGRAM.** The
+  census prints every tile type at 3 eras × 3 seeds. **MARSH and KELP read the SAME COUNT at 1985, 2005 and 2035 on
+  every seed** — while the DUNE, in the same `tick()`, on the same coast, climbs 20→35. **A tile whose count never
+  moves across the eras is either terrain or a DEAD RULE**, and telling those apart is one grep. This was visible in
+  every census the loop has ever run.
+
+- **A ONE-HEX ADJACENCY TEST USED AS A PROXY FOR A CONTINUOUS FIELD DOES NOT *SAMPLE* THAT FIELD — IT **PINS ITS
+  SUBJECT TO THE FIELD'S EXTREME** (iter 282).** The kelp's eligibility was `countAround(x,y,1,n=>n.t===T.BEACH) > 0` —
+  *"is a beach beside me?"*, which is *"am I shallow?"* written as an adjacency. It is not a rough approximation of
+  depth: it is a **selection of the minimum**. Measured, **every kelp hex in every city stood at `rDeep` EXACTLY 1.000**,
+  at every era, on every seed, forever — a one-hex ribbon welded to the sand, on a seabed (268's `rDeep`, with its
+  shoals and channels) it **never read**, in an ocean whose shelf band the artifact **names** (`SHELF0..SHELF1`), whose
+  tooltip **reports**, and whose **wind farm stands on**, under a comment reading *"one constant, so the word and the
+  siting cannot drift apart."* ⇒ **When a predicate names a NEIGHBOUR but means a QUANTITY, go and check whether the
+  artifact already computes that quantity as a field — and if it does, read the FIELD.** The proxy is not merely
+  imprecise; it collapses a distribution to a point, and it will hold your feature there for the artifact's entire life.
+  The tell: your rule asks *"is X beside me?"* where the honest question is *"how deep / how high / how far / how dense
+  am I?"*, and a field answering exactly that is already in the file with a published constant.
+
 - **274 SAYS A FLAG ON A BORROWED TYPE IS INVISIBLE TO THE TYPE-KEYED *TABLES*. THE RUNG BELOW IS THAT THE TYPE ITSELF
   CAN CHANGE UNDER THE FLAG — SO GREP EVERY PASS THAT *UPGRADES* YOUR HOST, AND DECIDE, PER PASS, WHETHER THE FLAG
   RIDES THE CHANGE OR DIES WITH IT (iter 281).** 274's law: when a feature's identity is a `c.<flag>` on an existing
@@ -3508,6 +3563,29 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   (`stamp()`'s entity ellipse and `render()`'s tile hex) and the caption must name both, or it will deny one that is
   plainly drawn (see the law). Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds
   (238/239/268); `page.screenshot()`, because the card is **DOM** (200); drives **`zoom`, never `scale`** (269)).
+  The **kelp four** (282 — reach for these on any vector that makes a STAMPED rule SPREAD, on any CA that may be DEAD,
+  and on any vector that re-opens a KNOWN PAST REGRESSION): `probe-kelplife.mjs` (**the gate: is this CA alive?** Pure
+  world data — it drives the artifact's own `tick()` and reads `cells[]`: **no pixels, NO NOISE FLOOR AT ALL**, nothing
+  to stub. **BUILD-AGNOSTIC** via `SRC=`. ⚠ **Its headline needs no threshold** (236): HEAD reads **`DISTINCT BED SIZES
+  = 1`** over 800 ticks, on 6 seeds in 6 — a rule that fires on tick 1 and never again has exactly ONE output, forever,
+  and that IS the defect stated. ⚠ **Its DUNE column is a FREE POSITIVE CONTROL** (248) — a *correct sibling accretion
+  CA in the SAME `tick()` on the SAME coast* (22–37 distinct sizes), so a flat kelp column beside a live dune column
+  convicts the **city**, not the probe. ⚠ **Its `pop`/`dev`/`roads` column is the MUST-NOT-MOVE one** (250) and it comes
+  back **BYTE-IDENTICAL**, which is what makes the inertness claim *provable* rather than asserted),
+  `probe-kelppool.mjs` (**HOW DARK COULD THE COAST GO? — run this BEFORE choosing any rate.** Counts the pool a depth
+  predicate would admit, with and without the coarse stretch gate. **The space decides the rule; the rate is irrelevant
+  until the space is right** (263). It read **up to 206 cells — a third of the ocean** — which is what forced the scour
+  to bite in the interior. Retarget it at any spread rule's substrate), `probe-kelpsweep.mjs` (**the two-ledger sweep**
+  (206): the EFFECT (does the bed come alive / leave the sand) against the COST (does the coast darken / does a seed
+  STARVE). ⚠ **It is the CAUTIONARY one — its first cut let HEAD's pass keep re-stamping the fringe, so it measured
+  *HEAD + patch* and not the REPLACEMENT**, and duly reported every variant as simultaneously flooding *and* starving,
+  which is 233's "the design is wrong, not the tuning" — but the design was fine and the RIG was wrong. **When a sweep
+  says every variant fails in both directions at once, check that your candidate REPLACES the incumbent**),
+  `shot-kelp.mjs` (its camera — the **un-zoomed whole plate is REQUIRED and is the frame that matters**, because kelp
+  "lined the entire coast dark for ~13 iterations" precisely by being checked only in close-up. Aims the close-up at the
+  largest bed by the artifact's own `bedSize` flood fill, never a fixed clip (201); `AIM=` forces HEAD to the identical
+  hex, and since the pass draws zero `rng()` the two builds share a byte-identical city ⇒ a **genuinely blind** A/B.
+  Frames named **by FILE** with **meaningless tokens**, map **CROSSED** between seeds (238/239/268)).
   Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
   `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
   the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will

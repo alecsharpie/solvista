@@ -1352,6 +1352,22 @@ const DEEPR=10, rDeep=new Uint8Array(G*G); /* DEEPR is set so the MEAN sea tone 
    The tooltip NAMES this band and the wind farm STANDS on it — one constant, so the
    word and the siting cannot drift apart. */
 const SHELF0=3, SHELF1=5;
+/* ...and the KELP is the third reader of that band. A holdfast roots where the LIGHT
+   still reaches the bottom, so the bed's outer edge is where recruitment and scour
+   balance — and that edge is a DEPTH, which falls out of the seabed instead of being
+   a count somebody tuned. KELPLIT sits one step past the shelf, so no holdfast can
+   EVER take beyond it: the bed is bounded BY CONSTRUCTION, not by care. (It matters.
+   The bed is drawn dark, and a kelp rule allowed to converge on its whole eligible
+   pool would put weed on a third of the ocean — measured, 6 seeds.) */
+const KELPLIT=SHELF1+1;
+/* Rates are per TICK (0.075yr), like the dune's above — ~813 ticks by 2035, so they
+   look implausibly tiny and are not. KELPP is HEAD's OWN 0.62, kept deliberately:
+   see the percolation note in the pass. Scour is tuned against the ONE bar that is
+   not mine to choose — the incumbent bed (226): HEAD ships 8–36 hexes, and at these
+   rates the living bed lands at 8–34, so it is never larger than HEAD's on ANY seed
+   while gaining a margin that breathes. The coast cannot darken. */
+const KELPP=0.62, KELPG=0.020, KELPS=0.060;  /* thinning · recruitment · scour */
+const kelpLight=i=>clamp(1-rDeep[i]/KELPLIT,0,1);   /* 1 in the shoals, 0 at the light limit */
 const SEASALT=0x5EA;
 /* One octave of the seabed: the hash is sampled on a lattice of spacing 2^sh and
    INTERPOLATED between its points. Sampling hashCell(x>>sh,…) instead would hold each
@@ -2417,16 +2433,55 @@ function tick(){
        &&countAround(x,y,1,n=>DEV.has(n.t)||n.t===T.ROAD)===0
        &&hashCell(x,y,seedNum^0x3A27)<0.7){c.t=T.MARSH;c.h=0;c.th=0;c.age=0;}
   }
-  /* kelp beds sway in the shallows just off the beach — only OCCASIONAL beds, grouped
-     into short stretches, so most of the coast stays clean light sand + open water.
-     Coarse band gate (y>>2) picks which stretches are kelpy; per-cell gate thins it. */
-  for(let i=0;i<G*G;i++){
-    const x=i%G,y=(i/G)|0,c=cells[i];
-    if(c.t===T.WATER&&!c.riv&&!moleSet.has(i)  /* nothing takes root under the rubble */
-       &&countAround(x,y,1,n=>n.t===T.BEACH)>0
-       &&countAround(x,y,1,n=>n.t===T.WATER&&n.riv)===0
-       &&hashCell(5,y>>2,seedNum^0x4E1F)<0.34
-       &&hashCell(x,y,seedNum^0x4E1F)<0.62){c.t=T.KELP;c.h=0;c.th=0;c.age=0;}
+  /* kelp beds strike against the shoal and fray out across the shelf. A holdfast takes
+     where the light still reaches the bottom AND a neighbour has already taken; the
+     swell tears back the exposed outer margin. So the bed is never "placed" — it
+     recruits outward over the decades and its edge sits where growth and scour balance,
+     which is a DEPTH the seabed decides and nobody tuned.
+       HEAD asked one question instead — "is a beach beside me?" — a ONE-HEX PROXY FOR
+     DEPTH, and it stamped the entire bed on tick 1 and then never fired again for the
+     other 812 ticks of the run (measured: 100% conversion, ZERO still-eligible, on 6
+     seeds in 6, while the dune CA in this same tick() grew all the way to 2035). Every
+     kelp hex in every city therefore stood at rDeep exactly 1.000 — a ribbon welded to
+     the sand, on a seabed it never read, in an ocean whose shelf the tooltip names and
+     the wind farm stands on. Its own tooltip had concluded, reasonably, that "kelp
+     carries no CA state".
+       Only OCCASIONAL beds, still: the coarse band gate (y>>2) picks which stretches
+     are kelpy, so most of the coast stays clean light sand and open water.
+       TICKN-salted hashCell => ZERO rng() draws, so the bed cannot perturb the seeded
+     stream; and WATER and KELP are both in WETSET, so nothing that asks "is this wet?"
+     — the dune's own gate included — can tell the difference. */
+  const kelpShel=(x,y)=>countAround(x,y,1,n=>n.t===T.KELP)/6;   /* how sheltered, 0..1 */
+  for(const i of HEXI){
+    const c=cells[i];
+    if(c.t===T.KELP){
+      const x=i%G,y=(i/G)|0;
+      /* the swell scours what is deep and exposed. Shelter HELPS but never fully
+         protects: a crowded holdfast in poor light still loses its grip eventually,
+         which is what stops a bed from simply filling its whole eligible pool — and
+         that pool is a third of the ocean. Depth, not crowding, has the last word. */
+      if(hashCell(x,y,(seedNum^0x4E1F^TICKN)>>>0)<KELPS*(1-kelpLight(i))*(1-0.6*kelpShel(x,y))){
+        c.t=T.WATER;c.h=0;c.th=0;c.age=0;}
+      continue;
+    }
+    /* the cheap tests FIRST: this pass walks the whole live plate every tick, and
+       countAround is not free — no land cell should ever pay for one. */
+    if(c.t!==T.WATER||c.riv||moleSet.has(i))continue;  /* nothing takes root under the rubble */
+    if(rDeep[i]>=KELPLIT)continue;                     /* past the light, no holdfast ever */
+    const x=i%G,y=(i/G)|0;
+    const shel=kelpShel(x,y);
+    const strike=countAround(x,y,1,n=>n.t===T.BEACH)>0;
+    if(!strike&&shel===0)continue;                     /* strike against the sand, or recruit from the bed */
+    if(countAround(x,y,1,n=>n.t===T.WATER&&n.riv)>0)continue;   /* not in the river plume */
+    if(hashCell(5,y>>2,seedNum^0x4E1F)>=0.34)continue; /* which stretches of coast are kelpy */
+    /* thins the bed within a stretch. It is HEAD's own 0.62 and it must STAY above
+       ~0.5: this is the substrate a spreading bed has to travel over, and site
+       percolation on a hex lattice dies below about half — thinned to 0.30 the
+       eligible ground breaks into islands the bed cannot cross, and it never leaves
+       the sand (measured: shelf 0%, and the bed HALVED). Texture, not size. */
+    if(hashCell(x,y,seedNum^0x4E1F)>=KELPP)continue;
+    if(hashCell(x,y,(seedNum^0x4E1F^TICKN)>>>0)<KELPG*kelpLight(i)*(strike?1:0.35+0.65*shel))
+      {c.t=T.KELP;c.h=0;c.th=0;c.age=0;}
   }
   /* wind-blown sand piles into a dune ridge along the BACK of the beach. Accretion,
      not placement: every tick a dry cell gains sand at a rate set by its own exposure
@@ -9060,7 +9115,7 @@ const TILEDESC={[T.RES]:'Low-rise homes and apartments.',[T.MID]:'Walk-up flats 
   [T.PARK]:'Public green space.',[T.BEACH]:'Golden sand along the Pacific.',[T.WATER]:'The open sea.',
   [T.FARM]:'Row crops on the golden hills.',[T.VINEYARD]:'Terraced grapevines — wine country.',
   [T.ORCHARD]:'Fruit groves.',[T.FOREST]:'Coastal woodland.',[T.REDWOOD]:'Old-growth redwoods, deep in the hills.',
-  [T.MARSH]:'Reedy tidal wetland where the river meets the sea.',[T.KELP]:'A bed of kelp rooted in the cold, shallow water off the beach.',
+  [T.MARSH]:'Reedy tidal wetland where the river meets the sea.',[T.KELP]:'A bed of kelp, holding to the bottom wherever the light still reaches it.',
   [T.DUNE]:'Wind-piled sand along the back beach, held down by marram grass.',
   [T.SOLARF]:'A field of solar panels.',[T.LIGHTHOUSE]:'Guards the headland; sweeps the bay at night.',
   [T.MARKET]:'Open-air market stalls.',[T.GARDEN]:'Allotments tucked between the houses.',
@@ -9228,13 +9283,18 @@ function describeTile(c,x,y){
     if(c.shroom>0)data.push(['Mushrooms up']);
   }
   /* the kelp bed names its own extent, exactly as the woods name their stand
-     (iter 117) — a bed is contiguous KELP by the SAME flood fill (floodSize). Kelp
-     carries no CA state (placed once in genWorld, never ticked) and every hex abuts
-     the beach, so extent is the one honest datum: depth is invariantly shoal here,
-     which would print as constant noise, so it is left off (the sub already says
-     shallows). This turns a run of dark hexes into one named bed. */
-  if(c.t===T.KELP){const n=bedSize(x,y);
-    data.push(['Bed',n+(n===1?' hex':' hexes')]);}
+     (iter 117) — a bed is contiguous KELP by the SAME flood fill (floodSize).
+       It also names the bottom it is holding onto, which it could not do before. The
+     old note here reasoned that "depth is invariantly shoal here, which would print
+     as constant noise" — and it was RIGHT: measured, every kelp hex in every city
+     stood at rDeep exactly 1.000, because the pass asked "is a beach beside me?" and
+     stamped a ribbon onto the sand. Now the bed recruits out along the seabed, so its
+     depth VARIES and the row carries a real datum — the same DEPTH the open water
+     beside it reports, off the same field, so a bed and the sea it sits in can never
+     disagree about how deep it is there. */
+  if(c.t===T.KELP){const n=bedSize(x,y), d=rDeep[idx(x,y)];
+    data.push(['Bed',n+(n===1?' hex':' hexes')]);
+    data.push(['Depth',d<SHELF0?'Shoals':d<=SHELF1?'Coastal shelf':'Open water']);}
   /* the coastal park keeps the same calendar the meadow does — one predicate,
      four readers (the spread, the rain front that seeds it, the draw, this row) */
   if(bloomHost(c))data.push(['Wildflowers',

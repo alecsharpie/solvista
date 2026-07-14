@@ -20254,3 +20254,69 @@ don't trust a catalogue (L-numbers drift): `grep -noE 'hashCell\([^;]{0,60}' sol
 city): **the night surf light-smear, `hashCell(x,y,77)<0.28`, is the one to fix.** *Ornament jitter* (kelp sway,
 fronds, fruit, fireflies) is cosmetic. Marsh reeds (113) + tower window-lights (110) CLOSED. ⚠ `darkWinR` is **not** a
 breach (it mixes `seedNum^salt` internally — **check the callee**). When fixing a range, **space the bases**.
+
+## Iteration 272 — the whole wood came up on the same tick, every autumn, for the artifact's entire life (2026-07-14) [Nature × Deepen]
+
+**Vector.** Nature × Deepen. Rotation put Nature oldest (8 laps since 263), and the header
+ordered its lap to come from **a fresh grep of its seam, not from its stale cue list**. It
+did: `grep`ping `tick()` for Nature's passes surfaced **`c.shroom` — an autumn fairy-ring CA
+that the ledger has never once mentioned in 271 iterations.** Fully wired (a `tick()` pass, a
+`drawShroom`, a `TILEDESC` row, a `__find` hook) and, unlike 263's bloom, **genuinely alive**.
+225's grep-the-seam law is now **14 for 14 at FINDING**.
+
+**The defect (measured, and it needs no threshold).** The rings fire — but **every ring in
+the city surfaces and vanishes on the SAME TICK**:
+
+```
+HEAD   rings: 0 0 0 0 0 0 0 0 0   4 4 4   0 0 0 … 0   3 3 3   0 … 0   9 9 9   0
+```
+
+A **perfect square wave**, every autumn, on every seed: `ticks>0` = **exactly 24 = 8 autumns
+x 3 ticks**, and **DISTINCT NONZERO COUNTS PER AUTUMN = 1** — the count never once changes
+while the rings are up (236: when the answer is a constant by construction, the constant IS
+the defect). At speed 1 a year is 6 s, so the wood **blinks on for 1.35 s and off for 4.65 s,
+in unison, forever** — a strobe (134).
+
+**Cause — 262'S LAW, ARRIVING ON A CA.** The gate asked **one GLOBAL question** (`shroomSeason
+= s2>0.76 && s2<0.98`) and then rolled `hashCell(x, y+(year|0)*37, …)`. **`(year|0)` is CONSTANT
+across a season**, so all ~2.9 in-season ticks evaluate the **identical** hash for a given cell
+⇒ it is **ONE roll, taken city-wide at the first in-season tick**. There was no per-cell phase
+anywhere in the rule. (The season window is 0.22 yr and a tick is 0.075 yr — the whole autumn
+is **2.93 ticks**, so the CA had no temporal resolution to express anything.)
+
+**Change.** `SHRM0`/`SHRMW`/`SHRMEND`/`SHRMP` + **`shroomDue(c,s2)` — ONE predicate, and the
+pass now reuses the woods' existing `isWood`** rather than re-implementing it inline. Each ring
+keeps its **own hour of the flush** (`s2 > SHRM0 + c.v*SHRMW`) and its **own span**
+(`shroomLife`, 2-3 ticks, mean **2.5**). Both uniforms are ones the cell **ALREADY carries**
+(`c.v`, a `hashCell`) ⇒ **zero new random draws**, so the CA stays **wholly inert to the seeded
+stream** (263's law).
+
+**Census.** PASS. `pop`/`roads`/`developed` **+0**, **tile histogram EMPTY** (the pass changes no
+tile type). `solarRoofs +3 / greenRoofs -1` is **226's harness wobble, not mine** — re-running the
+**same patched file** read `+3`, then `-1`. Not a HEAD diff.
+
+**Probe** (`probes/probe-fairyring.mjs` — temporal (134), no pixels, no noise floor,
+build-agnostic via `SRC=`):
+
+| | HEAD | patch |
+| --- | --- | --- |
+| **distinct nonzero counts / autumn** | **1.00** (square wave) | **2.77** |
+| peak rings | 6–11 | 6–11 (**held**) |
+| ring-ticks / yr | 3.0 | 4.1 |
+| **spring+summer rings (GUARD)** | 0 | **0** ✅ |
+| bloom (positive control, 248) | 46–63 | **identical** ✅ |
+| developed (must-not-move) | — | **identical, all 6 seeds** ✅ |
+
+The flush now **breathes** instead of blinking: `0 → 1 3 5 4 2 → 0`.
+
+**Visual.** PASS, both seeds. Both agents **located** the rings, confirmed they are bedded
+correctly on forest hexes (not straddling seams, not on road/roof/water), and confirmed the
+whole city is clean and coherent. ⚠ **Both, independently, added the same aside: the rings are
+"on the small side… a hair more cap contrast would help"** ⇒ cue **(ax)**, below.
+
+**Perf.** No new path objects. Mean ring life **2.5 ticks vs HEAD's 3.0** at the same rings/autumn
+⇒ the frame draws **~17% FEWER ring-instances on average**; a ring is 12 path objects and there
+are ≤11 per city (~0.1% of a 105k-object frame), in autumn only. **A small credit, not a cost.**
+
+**Verdict: DEEPENED.**
+

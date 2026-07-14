@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~ | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90 | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77 | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
@@ -32,11 +32,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last vector per domain: Water **275** · Transport **276** · Civic **277** ·
-  People **278** · Nature **279** · Sky **280** · Urban **281**. ➡ **NEXT: Water (275) is oldest**, then Transport (276).
-  🔴 **AND WATER'S KIND IS DECIDED: NOT Polish** — it has taken **Polish FOUR laps running** (255/266/268/275), its **New
-  CA rule** cell is **90** (*191 laps ago*), and its cue **(ay)** is itself a Polish job ⇒ **grep Water's `tick()` seam
-  instead** (267 · 274 · 281: three straight laps where the RULES seam beat the cue list).
+- **ROTATION.** Last vector per domain: Transport **276** · Civic **277** · People **278** ·
+  Nature **279** · Sky **280** · Urban **281** · Water **282**. ➡ **NEXT: Transport (276) is oldest**, then Civic (277).
+  ⛔ **BUT TRANSPORT'S TWO NAMED CUES ARE `polish-tile` JOBS, NOT GROWTH LAPS** — (a) the elevated transit and (av) the
+  tram's catenary are the SAME 0.5px hairline family. ⇒ **Grep Transport's `tick()`/`stepVehicle` seam and its FLAGS
+  instead** (267 · 274 · 281 · **282**: four straight laps where the RULES seam beat the cue list). Its stale cells are
+  **New CA rule (77)** and **Interaction/UX (171)**.
   ⚠ **CIVIC's stale cells are still New CA rule (36/107) and Connect (45/204)** — 277 took Deepen.
   ⛔ **Transport's two named cues are `polish-tile` jobs, NOT growth laps** — (a) the elevated transit and (av) the
   tram's catenary are the SAME 0.5px hairline family; do not spend a growth lap on either.
@@ -45,7 +46,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **(ay)** (windrow LENGTH distribution) is Water's, and **(az)/(ba)** are 278's two new ones (below).
   ✅ **PEOPLE's four-Deepen run is BROKEN (278 took Interaction/UX, its stalest cell at 191).** Its **Polish** (226) is
   now the stale one. **Interaction/UX is no longer the stale COLUMN** — it ran at 278 after 49 laps dormant.
-  🔑 **225'S GREP-THE-SEAM LAW IS 20 FOR 20 AT *FINDING*** (**281: the seam was a PASS WHOSE COMMENT PROMISED WHAT ITS FIRST LINE FORBADE — `c.corner` re-validates and vetoes across ALL types, while `if(c.t!==T.RES)continue` skips every cell that upgraded, so 92% of every corner shop the city ever opened was an INVISIBLE flag STILL VETOING its own replacement**) (280 a comment enumerating its own category · 278 a comment conceding the defect while justifying a workaround · 277 the census's scalars vs the placard · 267 a rule that had NEVER RUN · 268 a seabed built from the wrong noise · 269 a tram at 1.04x on its named avenue · 271 nine surfers who never went home · 272 an autumn CA that blinked the whole wood as ONE · 274 a new feature that never told the TYPE-KEYED TABLES it existed · 276 the BUS, which could not see the stop network it exists to serve) — **AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue list — or a passing probe — records where you have LOOKED, not what is THERE; and a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.** ⚠ **Grep `tick()`, the TABLES (`BEDT`/`CIVHRS`/`TILEDESC`/`valueSrc`/`VKIND`) AND THE COMMENTS — never the cue list.**
+  🔑 **225'S GREP-THE-SEAM LAW IS 21 FOR 21 AT *FINDING*** (**282: a `tick()` pass that fires on TICK 1 and then converts
+  NOTHING for 812 more ticks, whose own tooltip had written the silence down as a design fact — *"kelp carries no CA
+  state (placed once in `genWorld`, never ticked)"* — FALSE about the mechanism and TRUE about the observable, which is
+  exactly why nobody looked**) (281 a flag whose WRITER skipped a type its VETO still counted · 280 a comment enumerating
+  its own category · 278 a comment conceding the defect while justifying a workaround · 277 the census's scalars vs the placard · 267 a rule that had NEVER RUN · 268 a seabed built from the wrong noise · 269 a tram at 1.04x on its named avenue · 271 nine surfers who never went home · 272 an autumn CA that blinked the whole wood as ONE · 274 a new feature that never told the TYPE-KEYED TABLES it existed · 276 the BUS, which could not see the stop network it exists to serve) — **AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue list — or a passing probe — records where you have LOOKED, not what is THERE; and a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.** ⚠ **Grep `tick()`, the TABLES (`BEDT`/`CIVHRS`/`TILEDESC`/`valueSrc`/`VKIND`) AND THE COMMENTS — never the cue list.**
+  🔑 **282: AND A FROZEN CENSUS COLUMN IS A SEAM.** The tile histogram is the cheapest seam-grep there is: **MARSH and KELP read the SAME COUNT at 1985, 2005 and 2035 on every seed** while the DUNE beside them in the same `tick()` climbs 20→35. ⚠ **A tile whose count never moves across the eras is either terrain or a DEAD RULE — check which.** (MARSH is still frozen: **unaudited**, its pass right beside the kelp's.)
   🔑 **281: AND NOW GREP THE *FLAG LIFECYCLE*, THE FOURTH SEAM** (law in SKILL.md). ⚠ **For every per-cell flag
   (`corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv`), grep the passes that UPGRADE its host: does the flag RIDE the
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
@@ -85,33 +91,30 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ⛔ **259: `c.lit` CANNOT EXPRESS DARKNESS** — `lit=LITAMT*(0.35+0.65*c.lit)`, a **0.35 floor** ⇒ range **2.9:1**. **Fine as a CHOOSER, dead as a LOOK ⇒ do NOT build "X answers the night glow" in COLOUR.** (Body archived at 271.)
   ⚠ **ARTIFACT FACTS from 236–276 that are NOT laws and CANNOT be re-derived from SKILL.md** (the law-recaps these
   lines used to carry are in `GROWTH-archive.md`, "rotated out at 256"):
-  **281:** 🔴 **`c.corner` IS A PROPERTY OF A *HOME*, NOT A *HOUSE* — `HOMES`={RES,MID}, ONE predicate, FOUR readers**
-  (pass · veto · draw · tooltip). ⚠ **THE STORE RIDES THE BUILDING UP**; a **DEMOLISHED** home (PARK/PLAZA/QUAD)
+  **282:** 🔴 **THE KELP CA NOW RUNS — IT NEVER HAD** (HEAD: bed stamped on TICK 1, `DISTINCT BED SIZES = 1`, turnover **0**, 6 seeds × 813 ticks). **`kelpLight(i)=1−rDeep[i]/KELPLIT`, `KELPLIT=SHELF1+1` — the KELP is the THIRD reader of the shelf band** (with the tooltip and the wind farm). ⚠ **`KELPP=0.62` IS HEAD'S OWN CONSTANT AND IS *PERCOLATION*, NOT DENSITY — DO NOT TUNE IT DOWN** (at 0.30 the substrate breaks into islands, the bed never leaves the sand and HALVES; law in SKILL.md). ⚠ **THE SCOUR MUST BITE IN THE INTERIOR** (`1−0.6*shel`, never `1−shel`) — with shelter fully protecting, a deep cell once surrounded is immortal and the bed fills its whole pool, which is **a third of the ocean** (`probe-kelppool`). ⚠ **THE BED IS NEVER LARGER THAN HEAD'S ON ANY SEED** (worst **34** vs 36; mean 16.0 vs 17.7) — *that* is what keeps the coast from darkening, and it is the ONE number to re-check after any kelp change. ⚠ **WHOLLY INERT**: zero `rng()` (TICKN-salted), and **WATER and KELP are BOTH in `WETSET`** ⇒ `pop`/`dev`/`roads` come back **BYTE-IDENTICAL** to HEAD on 6 seeds; census core **+0**, only KELP↔WATER swap (−15/+15). ⛔ **DO NOT BUILD "THE KELP ANSWERS THE CITY"** (runoff/turbidity): `dist(kelp→DEV/ROAD)` is **4.44–5.73 hexes and BYTE-IDENTICAL at 1985 and 2035 on every seed** — the city never comes ONE hex closer in fifty years. The field is a CONSTANT (`probe-kelphost`). ➡ 🆕 **MARSH IS THE SAME SHAPE AND IS UNAUDITED** (frozen 18/18/18, its pass adjacent).
+  **281 (re-compressed 282):** 🔴 **`c.corner` IS A PROPERTY OF A *HOME*, NOT A *HOUSE* — `HOMES`={RES,MID}, ONE
+  predicate, FOUR readers** (pass · veto · draw · tooltip). ⚠ **THE STORE RIDES THE BUILDING UP**; a **DEMOLISHED** home
   **clears** its flag — that clear kills the ghost veto, **do not drop it.** ⚠ **THE MID SHOPFRONT READS `midLook`'s
-  PUBLISHED BODY** (`ab`/`dy`/`gx+jx`, base segment, width 1.00) — **never the RES body's hard-coded `0.30/0.26`.**
-  ⚠ **`ph` IS LIFTED TO 5.2 ON A CORNER MID** so the flats' bands clear the 4.6-high fascia — **do not "tidy" it away.**
-  ⚠ **STILL INERT** (no terrain, no `rng()`; `POPW` is keyed on TYPE ⇒ census **+0 on every metric**). ⚠ **The MID pool
-  is 5.0/city against 413 MID ⇒ it CANNOT flood — do not add a rate.** ⚠ **`drawBuilding`'s FIRST LINE is
-  `const ML=c.t===T.MID?…`, ABOVE the RES branch** ⇒ a source-matching build detector must split on
-  **`else if(c.t===T.MID)`**, or it reports HEAD as patched (it did: an exact TRANSPOSE).
-  **280 (compressed 281):** **`windForce()` · `windDrift()` · `kiteGust()` — the sky's gust, as THREE predicates.**
+  PUBLISHED BODY** — never the RES body's hard-coded `0.30/0.26`; **`ph` IS LIFTED TO 5.2 ON A CORNER MID** (do not
+  "tidy" away). ⚠ **STILL INERT** (census **+0**). ⚠ **The MID pool is 5.0/city vs 413 MID ⇒ CANNOT flood — no rate.**
+  ⚠ **`drawBuilding`'s FIRST LINE is `const ML=c.t===T.MID?…`, ABOVE the RES branch** ⇒ a source-matching build detector
+  must split on **`else if(c.t===T.MID)`**, or it reports HEAD as patched (it did: an exact TRANSPOSE).
+  **280 (re-compressed 282):** **`windForce()` · `windDrift()` · `kiteGust()` — the sky's gust, as THREE predicates.**
   ⚠ **`windDrift()` IS THE CLOUDS' OWN EXPRESSION** (`0.55+0.9*WINDA`); balloons share it — **do not fork a second.**
   ⚠ **EVERY LEVER IN `drawKite` IS A MULTIPLE OF `kiteGust()`, WHICH IS 1.0 AT FULL GALE = HEAD'S LITERALS** ⇒ an EXACT
   fixed point, and `window.kiteGust=()=>1` renders HEAD **in-page** (253). **Do not "simplify" that centring away.**
-  ✅ **`__setWind(v)` / `__wind()` — THE HOOK `WINDA` NEVER HAD** (it is recomputed from `time` inside
-  `advanceEntities`, which runs ONLY while `playing`, so a FROZEN page holds a pin). ⚠ **No `?wind=`** (a playing page
-  would overwrite it). ⚠ **A KITE IS NOT SINGLE-FREQUENCY**: `drawKite` runs **FOUR** (`t`, `t*1.33`, `t*2`, `t*2.4`),
-  so a "null step" of one period of `t` is **NOT null**. ⚠ **`px()` RETURNS *WORLD* COORDS** — device =
-  `(px*scale+off)*dpr`; scoring ink at `px()*dpr` returns a clean, plausible **ZERO** (273).
-  **279 (compressed 281):** 🔴 **THE WILDFIRE CA NOW RUNS — IT NEVER HAD** (HEAD: 3 sparks, 0 JUMPS, 6 seeds × 61 yr).
+  ✅ **`__setWind(v)` / `__wind()` — THE HOOK `WINDA` NEVER HAD** (recomputed from `time` inside `advanceEntities`, which
+  runs ONLY while `playing`, so a FROZEN page holds a pin). ⚠ **No `?wind=`.** ⚠ **A KITE IS NOT SINGLE-FREQUENCY** —
+  `drawKite` runs **FOUR** ⇒ a "null step" of one period is **NOT null**. ⚠ **`px()` RETURNS *WORLD* COORDS** (device =
+  `(px*scale+off)*dpr`; scoring ink at `px()*dpr` returns a clean, plausible **ZERO** — 273).
+  **279 (re-compressed 282):** 🔴 **THE WILDFIRE CA NOW RUNS — IT NEVER HAD** (HEAD: 3 sparks, 0 JUMPS, 6 seeds × 61 yr).
   `FIRESPK`/`TIMBSPK` are per-cell rolls **WALKED over `HEXI`** on `hashCell(x,y,seedNum^SALT^TICKN)` ⇒ **zero `rng()`
-  draws — do NOT "tidy" them back onto `rc()`** (a 2%-of-plate host cannot be found by a lottery). ⚠ **HEAD'S TWO
-  LOTTERIES ARE KEPT ON PURPOSE** (they are the stream's draws). ⚠ **`FIREHOUSE` is the 1991 engine as a FACTOR on the
-  timber spark**, not a second year literal. ⚠ **THE FIRE WRITES TERRAIN ⇒ it CANNOT be inert like the bloom**: expect
-  the cascade (`towers +77`, `developed` flat). ⚠ **SPARK RATES AT 0 IS AN EXACT FIXED POINT — keep it.** ⚠ **NOTHING
-  BURNS AT 2035** (`year<2030`/`<2006`) ⇒ **a `?warp=61` frame can NEVER show a fire**; `probes/shot-firespark.mjs`
-  drives `tick()` to a live episode. ⚠ **`tick()` DOES NOT ADVANCE `year` — `__warp` does**; drive the clock or
-  `while(year<Y)` hangs. ⚠ **`drawFire` AND THE BEACH BONFIRE TAKE A RAW LITERAL, NOT `col()`** (280's emitter law).
+  draws — do NOT "tidy" them back onto `rc()`.** ⚠ **HEAD'S TWO LOTTERIES ARE KEPT ON PURPOSE** (they are the stream's
+  draws). ⚠ **`FIREHOUSE` is the 1991 engine as a FACTOR on the timber spark.** ⚠ **THE FIRE WRITES TERRAIN ⇒ it CANNOT
+  be inert like the bloom**: expect the cascade (`towers +77`, `developed` flat). ⚠ **SPARK RATES AT 0 IS AN EXACT FIXED
+  POINT.** ⚠ **NOTHING BURNS AT 2035** (`year<2030`/`<2006`) ⇒ **a `?warp=61` frame can NEVER show a fire**;
+  `probes/shot-firespark.mjs` drives `tick()` to a live episode. ⚠ **`tick()` DOES NOT ADVANCE `year` — `__warp` does.**
+  ⚠ **`drawFire` AND THE BEACH BONFIRE TAKE A RAW LITERAL, NOT `col()`** (280's emitter law).
   ⇒ **CUE (bb) (flame silhouette) MOVED TO `POLISH.md` (g2) at 280** — a `polish-tile` job; **not a growth lap (279 tried 3x).**
   ⇒ 🆕 **CUE (bc) — THE FIRE'S GLOW IS EATEN BY LATER ROWS IN DENSE FABRIC** (266's z-order law): painted **during its
   own cell**, so rows in FRONT paint it out — the warm spill lands in seed 7's open forest and **not** in seed 42's
@@ -127,33 +130,31 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   pixels name NOTHING** (`r=6` world vs a longer body). Measured, cheap, rig banked. ⇒ 🆕 **CUE (ba) — THE TILE HOVER
   PICKS BY GROUND-PLANE CENTRE**, so pointing at a TOWER'S FACADE names and rings the **ROAD HEX BEHIND IT**.
   **Pre-existing HEAD behaviour, not 278's** ⇒ an **occlusion** problem (206/226); price it first.
-  **277 (compressed 281):** 🔴 **`recount()`'s pop NO LONGER READS `c.h`** — `c.h` grows ONLY inside `render()` and
-  **`__warp` NEVER RENDERS**, so under every warp (census, every probe, every `?warp=` shot) **every TOWER stood at
-  `h=0` and housed NOBODY**. ⚠ **`c.h` IS A DRAW VARIABLE — NEVER LET A WORLD QUANTITY READ IT AGAIN.** ✅ **WARP ==
-  LIVE == INSTANT is an EXACT fixed point** (`probe-warppop`). ⚠ **272's settle-the-heights rule STILL STANDS for PIXEL
-  diffs.** ⚠ **The school/university/stadium rules were INNOCENT — the siting lottery hits 98–100%**
-  (`probes/probe-school.mjs` decomposes any siting rule's clauses; **run it BEFORE blaming a roll**).
-  **276 (compressed 281):** **`busNext(v)` — ONE predicate, THREE readers.** ⚠ **THE ROAD GRAPH IS *ONE* CONNECTED
+  **277 (re-compressed 282):** 🔴 **`recount()`'s pop NO LONGER READS `c.h`** — `c.h` grows ONLY inside `render()` and
+  **`__warp` NEVER RENDERS**, so under every warp **every TOWER stood at `h=0` and housed NOBODY**. ⚠ **`c.h` IS A DRAW
+  VARIABLE — NEVER LET A WORLD QUANTITY READ IT AGAIN.** ✅ **WARP == LIVE == INSTANT is an EXACT fixed point**
+  (`probe-warppop`). ⚠ **272's settle-the-heights rule STILL STANDS for PIXEL diffs.** ⚠ **The school/university/stadium
+  rules were INNOCENT — the siting lottery hits 98–100%** (`probes/probe-school.mjs` decomposes any siting rule's
+  clauses; **run it BEFORE blaming a roll**).
+  **276 (re-compressed 282):** **`busNext(v)` — ONE predicate, THREE readers.** ⚠ **THE ROAD GRAPH IS *ONE* CONNECTED
   COMPONENT on 6 seeds in 6** — that is what LICENSES a **rail** here where 269 could only have a **preference**.
-  ⚠ **`roadField` IS THE HOUSE ROUTER** (204's servSend BFS) — do not hand-roll a second. ⚠ **`c.blast` IS THE
-  SCHEDULE** (the sim-time the last bus called) ⇒ sorting on it is a headway rule needing **no new constant and no new
-  cell state** — **coverage BY CONSTRUCTION, not a tuned probability** (218). ⚠ **Targets are CLAIMED**; the dwell stays
-  **OPPORTUNISTIC**. ⚠ **`busNext` is called on HEX ENTRY, never per frame** (O(G²)+BFS ⇒ 1.3M ops/frame).
-  ⚠ **`Math.random` only ⇒ seeded `rng()` untouched, core +0** — but it DOES shift the shared stream ⇒ **aggregate any
-  control** (204).
-  **275–272 (compressed at 281; bodies archived at 279 — IMPERATIVES ONLY):**
-  **275:** **`wrowHalf(t)` — the windrow's half-width profile; `WROWN` normalises its MEAN to 1.** ⚠ **`WROWN` IS SUMMED
-  OVER THE POLYGON, NOT THE CURVE** (a chord cuts inside a concave profile ⇒ rows 4.5% under HEAD). ⚠ **DO NOT RAISE
-  `WROWSEG`** (the row is 2.5 CSS px wide; its faceting is sub-pixel and it doubles the cost). ⚠ **`WINDA` IS A THIRD
-  CLOCK AND `playing=false` DOES NOT STOP IT — pin it with `__setWind`** (280). ⚠ **`colA()` PUTS THE PALETTE THROUGH THE
-  ILLUMINANT** (foam `[255,251,240]` is issued as `rgba(242,250,249)` at noon) ⇒ **a signature match on the `BASE`
-  literal NEVER FIRES.** ⚠ **THERE IS NO `setZoom`** — the contract is `zoom=n; scale=fitScale*zoom`.
-  **274:** **`windarkAt(c)` TAKES THE CELL, NOT THE TYPE — `bedOf(c)` is the ONE predicate, THREE readers**; a **loft
-  gets `BEDT[T.MID]`**, taken from the ladder, not invented (226). ⚠ **NEVER re-key it to a `BEDT[T.IND]` ROW** — that
-  beds the working shed's **night-shift clerestory** (173). ⚠ **`winBandR` IS BYTE-FOR-BYTE `bandR` below
-  `LITAMT<0.35`** ⇒ daylight unchanged BY CONSTRUCTION = a free dead-regime control (199). ⚠ **`__setTime(t)` ONLY
-  ASSIGNS `dayT`; `SUNT`/`LITAMT` are recomputed once a frame INSIDE `render()`** (261) ⇒ reading `LITAMT` right after
-  `__setTime` reads the **PREVIOUS frame's light**. Derive: `SUNT = sunWarp(t); daylight(SUNT).lit`.
+  ⚠ **`roadField` IS THE HOUSE ROUTER** (204's servSend BFS) — do not hand-roll a second. ⚠ **`c.blast` IS THE SCHEDULE**
+  (the sim-time the last bus called) ⇒ sorting on it is a headway rule needing **no new constant and no new cell state**
+  (218). ⚠ **Targets are CLAIMED**; the dwell stays **OPPORTUNISTIC**. ⚠ **`busNext` is called on HEX ENTRY, never per
+  frame** (O(G²)+BFS ⇒ 1.3M ops/frame). ⚠ **`Math.random` only ⇒ seeded `rng()` untouched, core +0** — but it DOES shift
+  the shared stream ⇒ **aggregate any control** (204).
+  **275–272 (re-compressed at 282; bodies archived at 279 — IMPERATIVES ONLY):**
+  **275:** **`wrowHalf(t)`; `WROWN` normalises its MEAN to 1.** ⚠ **`WROWN` IS SUMMED OVER THE POLYGON, NOT THE CURVE**
+  (a chord cuts inside a concave profile ⇒ rows 4.5% under HEAD). ⚠ **DO NOT RAISE `WROWSEG`** (sub-pixel faceting, and
+  it doubles the cost). ⚠ **`WINDA` IS A THIRD CLOCK AND `playing=false` DOES NOT STOP IT — pin it with `__setWind`**
+  (280). ⚠ **`colA()` PUTS THE PALETTE THROUGH THE ILLUMINANT** (foam `[255,251,240]` is issued as `rgba(242,250,249)` at
+  noon) ⇒ **a signature match on the `BASE` literal NEVER FIRES.** ⚠ **THERE IS NO `setZoom`** — the contract is
+  `zoom=n; scale=fitScale*zoom`. **274:** **`windarkAt(c)` TAKES THE CELL, NOT THE TYPE — `bedOf(c)` is the ONE
+  predicate, THREE readers**; a **loft gets `BEDT[T.MID]`**, from the ladder, not invented (226). ⚠ **NEVER re-key it to
+  a `BEDT[T.IND]` ROW** — that beds the working shed's **night-shift clerestory** (173). ⚠ **`winBandR` IS BYTE-FOR-BYTE
+  `bandR` below `LITAMT<0.35`** ⇒ a free dead-regime control (199). ⚠ **`__setTime(t)` ONLY ASSIGNS `dayT`;
+  `SUNT`/`LITAMT` are recomputed once a frame INSIDE `render()`** (261) ⇒ reading `LITAMT` right after `__setTime` reads
+  the **PREVIOUS frame's light**. Derive: `SUNT = sunWarp(t); daylight(SUNT).lit`.
   **272:** **`shroomDue(c,s2)` — ONE predicate; the pass reuses `isWood`.** ⚠ **ONE TICK = 0.075 yr ⇒ the whole autumn is
   only ~2.9 TICKS** — a seasonal CA has almost NO temporal resolution; **check that BEFORE designing any cadence.**
   ⚠ **`(year|0)` IN A HASH SALT IS CONSTANT ALL SEASON** ⇒ ONE roll evaluated N times — **never pace anything WITHIN a
@@ -161,27 +162,24 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   SATURATES** (`alpha=min(1,c.shroom/2)`) ⇒ **do not gate the cadence visually.** ⚠ **`render()` MUTATES THE WORLD**
   (`drawBuilding` grows `c.h`) ⇒ **SETTLE THE HEIGHTS before any two-render diff** (`for(const c of cells) if(c.h<c.th)
   c.h=c.th;`) — `__warp` hides it; driving `tick()` directly does not.
-  **269–259 (compressed at 281 to pay for its own additions; bodies archived at 279 — IMPERATIVES ONLY):**
-  **269:** **`isAvenue(x,y)`, 3 readers.** ⚠ **`AVESPAWN`/`AVESTAY` are PREFERENCES, NEVER rails** (20% dead ends ⇒ a
-  confined tram **strands**); **`AVESTAY` IS AT ITS CEILING.** ⚠ **`c.flow` peaks at the CORE**, so the avenue **SELECTS
-  FOR ITS OWN BURIAL** ⇒ judge on the AGGREGATE. **268:** **`seaOct(x,y,sh,salt)`, smoothstep-INTERPOLATED.** ⚠ **NEVER
-  "simplify" back to `hashCell(x>>sh,…)`** — a downsampled hash is **blocky white noise**, a *different field*.
-  ⚠ **`seaT` is COLOUR-ONLY + BUILD-TIME.** ⚠ **THE ONE-TONE TERRACE IS STRUCTURAL — do NOT re-open the sea's body
-  colour** (255/257). ⚠ **Use `probe-seaquilt`, NOT `probe-seastep` (wrong pair).**
-  **267:** **`c.loft`, 3 readers.** ⚠ **`blockValue(x,y)` = mean `c.val` over the SIX NEIGHBOURS — use it for any "has
-  the city arrived here?" question, NEVER a lot's OWN `c.val`.** ⚠ **`LOFTVAL=0.5` is the artifact's own neutral — do
-  NOT tune.** ⚠ **The pass WALKS `HEXI`, no `rng()`.** ⚠ **`WORKSMIN=1` IS LOAD-BEARING.** (Its cue **(at)** CLOSED 274.)
-  **266:** ⚠ **A WINDROW TRAILS UPWIND — that is a Z-ORDER decision, not a look.** Day-only ⇒ night is a free perf
-  floor. ⚠ **`probe-seaamp` CANNOT GRADE IT** (area-means the ocean; a row paints 2%). **263:** **`bloomHost` = MEADOW +
-  SHOREPARK; the bloom CA draws NO `rng()` ⇒ wholly inert.** ⚠ **`TICKN` IS PART OF THE WORLD — reset in `genWorld`.**
-  ⚠ **DUNE/PARK REJECTED as hosts; the refractory jitter is LOAD-BEARING.** **262:** **LADDER OF HOURS: `KID` 0.34 <
-  `SURF`=`JOG` 0.62 < `CURF` 1.85 — take a new entity's hour from it** (226). **261:** **`SUNT` IS THE LIGHT CURVE'S
-  CLOCK, NOT `dayT` — one predicate (`sunWarp`), FOUR readers; anything asking "where in the day are we" reads `SUNT`.**
-  ⚠ **`syncSky` warps its OWN clock on purpose.** ⚠ **`SUNUP`/`SUNDN` ARE THRESHOLDS ON `SUNT`, NOT `dayT`.**
-  **259:** ⚠ **`siteDark` is a PREFERENCE — do NOT "tidy" its 90-try scatter; a TIE-BREAK must NEVER share a salt with a
-  reader of the cell it picks.**
-  ⚠ **`__warp(a)` then `__warp(b)` IS NOT `__warp(a+b)`** — it ticks `while(year<target)`, so two hops build a DIFFERENT
-  city. A *prefix* warp is on the trajectory; a two-hop warp is not.
+  **269–259 (re-compressed at 282 to pay for its own additions; bodies archived at 279 — IMPERATIVES ONLY):**
+  **269:** **`isAvenue`, 3 readers.** ⚠ **`AVESPAWN`/`AVESTAY` are PREFERENCES, NEVER rails** (20% dead ends ⇒ a confined
+  tram **strands**); **at its CEILING.** ⚠ **`c.flow` peaks at the CORE ⇒ the avenue SELECTS FOR ITS OWN BURIAL**; judge
+  on the AGGREGATE. **268:** **`seaOct`, smoothstep-INTERPOLATED.** ⚠ **NEVER "simplify" back to `hashCell(x>>sh,…)`** —
+  a downsampled hash is **blocky white noise**, a *different field*. ⚠ **`seaT` is COLOUR-ONLY + BUILD-TIME.** ⚠ **THE
+  ONE-TONE TERRACE IS STRUCTURAL — do NOT re-open the sea's body colour** (255/257). ⚠ **Use `probe-seaquilt`, NOT
+  `probe-seastep` (wrong pair).** **267:** **`c.loft`, 3 readers.** ⚠ **`blockValue(x,y)` = mean `c.val` over the SIX
+  NEIGHBOURS — use it for any "has the city arrived here?" question, NEVER a lot's OWN `c.val`.** ⚠ **`LOFTVAL=0.5` is
+  the artifact's own neutral; `WORKSMIN=1` is LOAD-BEARING; the pass WALKS `HEXI`, no `rng()`.** **266:** ⚠ **A WINDROW
+  TRAILS UPWIND — a Z-ORDER decision, not a look.** ⚠ **`probe-seaamp` CANNOT GRADE IT** (area-means the ocean; a row
+  paints 2%). **263:** **`bloomHost` = MEADOW + SHOREPARK; the bloom CA draws NO `rng()` ⇒ wholly inert.** ⚠ **`TICKN` IS
+  PART OF THE WORLD — reset in `genWorld`.** ⚠ **DUNE/PARK REJECTED as hosts; the refractory jitter is LOAD-BEARING.**
+  **262:** **LADDER OF HOURS: `KID` 0.34 < `SURF`=`JOG` 0.62 < `CURF` 1.85 — take a new entity's hour from it** (226).
+  **261:** **`SUNT` IS THE LIGHT CURVE'S CLOCK, NOT `dayT` — one predicate (`sunWarp`), FOUR readers.** ⚠ **`syncSky`
+  warps its OWN clock on purpose.** ⚠ **`SUNUP`/`SUNDN` ARE THRESHOLDS ON `SUNT`, NOT `dayT`.** **259:** ⚠ **`siteDark`
+  is a PREFERENCE — do NOT "tidy" its 90-try scatter; a TIE-BREAK must NEVER share a salt with a reader of the cell it
+  picks.** ⚠ **`__warp(a)` then `__warp(b)` IS NOT `__warp(a+b)`** — it ticks `while(year<target)`, so two hops build a
+  DIFFERENT city; a *prefix* warp is on the trajectory, a two-hop warp is not.
   **258–236 (bodies archived at 276; IMPERATIVES ONLY):** ⚠ **THE CAB'S ROOF LAMP IS A FOR-HIRE SIGN — do not re-key it
   to darkness.** ⚠ **`livelyKerb` SELECTS FOR ITS OWN BURIAL** ⇒ **aim by argmax-over-TIME/INK, never at the first
   instance** (269: *any superlative aiming predicate made of DENSITY frames a wall*). ⚠ **`GWST` (overhead sky) and
@@ -223,7 +221,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **⚠ THE `polish-tile` BACKLOG LIVES IN `.claude/skills/polish-tile/POLISH.md` (moved 275)** — TILE REDESIGNS this
   loop is FORBIDDEN to spend a lap on: (a) the elevated transit (**13x reported**, the ledger's most-reported defect) ·
   (e) the observatory · (f) the wildflowers · (g) the capitol · (b)/(c)/(d). ⚠ **`polish-tile` IS BADLY OVERDUE.**
-  **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban: additive spent (118), Connect measured-hard TWICE** (160 RES terracing · 165 the `hstr` parade — neither forms a straight-hex-axis run ≥3, so neither is an arcade host); **Roof-furniture CLOSED city-wide**; **GROUND PLANE SPENT (209)**; **216 spent the FACADES**; **colour channel SPENT (254)** — the **harbour apron** is the last named look-remnant (cue **(o)**: a port vector must **build the waterfront FIRST**). ⚠ **"Urban is spent" HAS BEEN REFUTED TWICE** — from the SILHOUETTE side (232/237, CLOSED by 235+239) and, at **267**, from the **RULES** side: its `tick()` seam hid **a conversion that had never once fired.** ⇒ **Urban's LOOK is done; its RULES were not audited. Grep `tick()`, not `drawBuilding`.** ⚠ **274 REFUTED IT A THIRD TIME, from the TABLES side**: the loft — Urban's newest feature — had shipped without ever telling the **type-keyed** lookup tables it existed, so its glass burned all night. **Grep the TABLES too** (`BEDT`, `CIVHRS`, `TILELABEL`, `TILEDESC`, `valueSrc`): a feature whose identity is a **per-cell FLAG** is invisible to every one of them. ⚠ **AND 281 REFUTED IT A FOURTH TIME, from the FLAG-LIFECYCLE side**: `c.corner` — Urban's OLDEST flag (151) — was orphaned every time its host **upgraded**, so **92%** of the city's corner shops were invisible ghosts still vetoing their own replacements. ⇒ **Urban's LOOK is done four times over; its RULES keep paying. Grep `tick()` and the FLAGS, never `drawBuilding`.** Live Urban cue: **(au)** (the loft's rooftop studio). (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
+  **Sky is post-saturation (Deepen/Fix ONLY — its additive/CA cells are traps).** **Urban's LOOK is SPENT FIVE WAYS**: additive (118) · Connect measured-hard twice (160/165 — no straight-hex run ≥3, so no arcade host) · roof-furniture · GROUND PLANE (209) · FACADES (216) · COLOUR (254). The **harbour apron** is the last named look-remnant (cue **(o)**: a port vector must **build the waterfront FIRST**). ⚠ **BUT "URBAN IS SPENT" HAS NOW BEEN REFUTED FOUR TIMES, EVERY TIME FROM ITS *RULES*, NEVER ITS LOOK** — silhouette (232/237, closed 235/239) · **267** a conversion that had NEVER FIRED · **274** a feature that never told the **TYPE-KEYED TABLES** it existed (`BEDT`/`CIVHRS`/`TILELABEL`/`TILEDESC`/`valueSrc` — a per-cell **FLAG** is invisible to every one of them) · **281** a flag ORPHANED by its host's upgrade (92% ghosts, still vetoing). ⇒ **Grep `tick()` and the FLAGS, never `drawBuilding`.** Live Urban cue: **(au)** (the loft's rooftop studio). (**Sky's moon is FIXED (135) and NAMED (144)**, both closed.
   **STILL banked for Sky: the SEASON word** — it reads the fast `year` and would strobe ~0.7 Hz (134), so it needs a
   **slow clock FIRST**; don't add `seasonWord(year)` to the HUD nor re-ship 134's REVERTED almanac. ⚠ **236's front is ALSO on `year` and is NOT that slow clock.**) **Water's banked cue (123): the pier/lifeguard are still `rng()`-salted — site them on a depth by respending their draws, but that REPEATS 123's mechanism, so vary it.**
   ⇒ **"Additive inventory spent" is a claim about a domain's ENTITIES, not its SURFACES** (127 put picnics on PARK's 878
@@ -391,76 +389,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 274 entries before Iteration 272 live in
+> **Archive:** the 275 entries before Iteration 273 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 272 — the whole wood came up on the same tick, every autumn, for the artifact's entire life (2026-07-14) [Nature × Deepen]
-
-**Vector.** Nature × Deepen. Rotation put Nature oldest (8 laps since 263), and the header
-ordered its lap to come from **a fresh grep of its seam, not from its stale cue list**. It
-did: `grep`ping `tick()` for Nature's passes surfaced **`c.shroom` — an autumn fairy-ring CA
-that the ledger has never once mentioned in 271 iterations.** Fully wired (a `tick()` pass, a
-`drawShroom`, a `TILEDESC` row, a `__find` hook) and, unlike 263's bloom, **genuinely alive**.
-225's grep-the-seam law is now **14 for 14 at FINDING**.
-
-**The defect (measured, and it needs no threshold).** The rings fire — but **every ring in
-the city surfaces and vanishes on the SAME TICK**:
-
-```
-HEAD   rings: 0 0 0 0 0 0 0 0 0   4 4 4   0 0 0 … 0   3 3 3   0 … 0   9 9 9   0
-```
-
-A **perfect square wave**, every autumn, on every seed: `ticks>0` = **exactly 24 = 8 autumns
-x 3 ticks**, and **DISTINCT NONZERO COUNTS PER AUTUMN = 1** — the count never once changes
-while the rings are up (236: when the answer is a constant by construction, the constant IS
-the defect). At speed 1 a year is 6 s, so the wood **blinks on for 1.35 s and off for 4.65 s,
-in unison, forever** — a strobe (134).
-
-**Cause — 262'S LAW, ARRIVING ON A CA.** The gate asked **one GLOBAL question** (`shroomSeason
-= s2>0.76 && s2<0.98`) and then rolled `hashCell(x, y+(year|0)*37, …)`. **`(year|0)` is CONSTANT
-across a season**, so all ~2.9 in-season ticks evaluate the **identical** hash for a given cell
-⇒ it is **ONE roll, taken city-wide at the first in-season tick**. There was no per-cell phase
-anywhere in the rule. (The season window is 0.22 yr and a tick is 0.075 yr — the whole autumn
-is **2.93 ticks**, so the CA had no temporal resolution to express anything.)
-
-**Change.** `SHRM0`/`SHRMW`/`SHRMEND`/`SHRMP` + **`shroomDue(c,s2)` — ONE predicate, and the
-pass now reuses the woods' existing `isWood`** rather than re-implementing it inline. Each ring
-keeps its **own hour of the flush** (`s2 > SHRM0 + c.v*SHRMW`) and its **own span**
-(`shroomLife`, 2-3 ticks, mean **2.5**). Both uniforms are ones the cell **ALREADY carries**
-(`c.v`, a `hashCell`) ⇒ **zero new random draws**, so the CA stays **wholly inert to the seeded
-stream** (263's law).
-
-**Census.** PASS. `pop`/`roads`/`developed` **+0**, **tile histogram EMPTY** (the pass changes no
-tile type). `solarRoofs +3 / greenRoofs -1` is **226's harness wobble, not mine** — re-running the
-**same patched file** read `+3`, then `-1`. Not a HEAD diff.
-
-**Probe** (`probes/probe-fairyring.mjs` — temporal (134), no pixels, no noise floor,
-build-agnostic via `SRC=`):
-
-| | HEAD | patch |
-| --- | --- | --- |
-| **distinct nonzero counts / autumn** | **1.00** (square wave) | **2.77** |
-| peak rings | 6–11 | 6–11 (**held**) |
-| ring-ticks / yr | 3.0 | 4.1 |
-| **spring+summer rings (GUARD)** | 0 | **0** ✅ |
-| bloom (positive control, 248) | 46–63 | **identical** ✅ |
-| developed (must-not-move) | — | **identical, all 6 seeds** ✅ |
-
-The flush now **breathes** instead of blinking: `0 → 1 3 5 4 2 → 0`.
-
-**Visual.** PASS, both seeds. Both agents **located** the rings, confirmed they are bedded
-correctly on forest hexes (not straddling seams, not on road/roof/water), and confirmed the
-whole city is clean and coherent. ⚠ **Both, independently, added the same aside: the rings are
-"on the small side… a hair more cap contrast would help"** ⇒ cue **(ax)**, below.
-
-**Perf.** No new path objects. Mean ring life **2.5 ticks vs HEAD's 3.0** at the same rings/autumn
-⇒ the frame draws **~17% FEWER ring-instances on average**; a ring is 12 path objects and there
-are ≤11 per city (~0.1% of a 105k-object frame), in autumn only. **A small credit, not a cost.**
-
-**Verdict: DEEPENED.**
 
 ## Iteration 273 — the sky was never over the sea; the projection had hoisted it out of the city (2026-07-14) [holistic step-back, 35th + Sky & atmosphere × Polish → cue REFUTED]
 
@@ -1114,3 +1047,82 @@ and carry a number you already know. (Law promoted to SKILL.md.)
 **Verdict: FIXED.** (Also 268's law on my own probe: its first cut hard-coded HEAD's definition of
 "live" and duly filed the *feature* under the *defect*, calling a patched MID's shop a ghost. **Read
 what your instrument COMPARES — even when you wrote it twenty minutes ago.**)
+
+## Iteration 282 — the bed was a ribbon welded to the sand, and its own tooltip explained why nobody should look (2026-07-15) [Water & coast × New CA rule/FIX]
+
+**Vector.** Water & coast × **New CA rule** — the header's own instruction: Water was the
+oldest domain (275), its **Polish cell had taken four laps running** (255/266/268/275), and its
+**New CA rule cell was 191 laps stale (90)** ⇒ *grep Water's `tick()` seam, not its cue list*.
+225's grep-the-seam law is now **21 for 21 at finding**.
+
+**The seam.** `tick()` has three water passes (marsh · kelp · dune). The census told the story
+before I read a line of them: **MARSH and KELP are FROZEN CONSTANTS** — 18/18/18, 14/14/14,
+13/13/13 and 17/17/17, 10/10/10, 8/8/8 across 1985/2005/2035 on every seed — while the **DUNE
+beside them in the same `tick()` climbs 20 → 35**.
+
+**What was wrong.** The kelp pass sits in `tick()` (L2423) and runs **813 times a run**. It
+converts its entire bed on **tick 1** and then **converts nothing for the remaining 812 ticks**:
+`DISTINCT BED SIZES = 1`, turnover **0**, on **6 seeds in 6** (218's conversion rate: **100.0%,
+with ZERO still-eligible cells** — the roll is saturated and `p` steers nothing). And its own
+tooltip comment had **written the silence down as a design fact**: *"Kelp carries no CA state
+(placed once in `genWorld`, never ticked)"* — **false about the mechanism, and TRUE about the
+observable**, which is exactly why nobody ever looked.
+  The cause is one predicate: eligibility was **`countAround(BEACH) > 0`** — *"is a beach beside
+me?"*, a **ONE-HEX PROXY FOR DEPTH**. It does not *approximate* depth, it **PINS** it: measured,
+every kelp hex in every city stood at `rDeep` **EXACTLY 1.000**, at every era, forever. A ribbon
+welded to the sand — on a seabed (268's `rDeep`, smoothstepped shoals and channels) it **never
+read**, in an ocean whose shelf band the artifact **names** (`SHELF0..SHELF1`), whose tooltip
+**reports** it, and whose **wind farm STANDS on it** under a comment reading *"one constant, so
+the word and the siting cannot drift apart."* The kelp was the one marine thing that never
+became a reader.
+
+**Change.** The kelp is the **third reader of that band**. A holdfast roots where the **LIGHT**
+still reaches the bottom (`kelpLight = 1 − rDeep/KELPLIT`, `KELPLIT = SHELF1+1` — *no new
+constant*), **strikes** against the sand, **recruits outward** along the bottom from a neighbour
+that has already taken, and the swell **SCOURS** its deep, exposed margin. So the bed is never
+*placed*: it grows over the decades and its outer edge sits where recruitment and scour balance
+— **a DEPTH the seabed decides, not a count anybody tuned**. `TICKN`-salted `hashCell` ⇒ **zero
+`rng()` draws**; and WATER and KELP are both in `WETSET`, so nothing that asks *"is this wet?"*
+— the dune's own gate included — can tell the difference. Tooltip now names the bed's **Depth**
+off the same field the open water beside it uses, and `TILEDESC` no longer says *"off the beach"*.
+
+**Census.** `pop / roads / developed / towers / towerHt / bridges` **+0, byte-flat**; 0 page
+errors. Tile histogram moved **exactly** the intended tile and **nothing else**, conserved:
+**KELP 105 → 90 (−15) · WATER 6789 → 6804 (+15)**. (`solarRoofs +3` = 226's RAF tick-count
+wobble; had the stream been perturbed, `pop` and `towers` would have moved. They did not.)
+
+**Probe** (`probes/probe-kelplife.mjs` — pure world data, drives the artifact's own `tick()`,
+**no pixels, no noise floor**, build-agnostic via `SRC=`):
+
+| | HEAD | patch |
+| --- | --- | --- |
+| distinct bed sizes (800 ticks) | **1, 1, 1, 1, 1, 1** | **14, 18, 12, 14, 28, 38** |
+| turnover (cells changing state) | 0 | 6–23 |
+| mean depth | **1.000** flat | 1.19–1.38 |
+| on the Coastal shelf | 0% | 0–7% |
+| bed size / **WORST seed** | 17.7 / **36** | 16.0 / **34** |
+| **pop / dev / roads** | — | **BYTE-IDENTICAL, all 6 seeds** |
+| **DUNE positive control** | 22–37 sizes | **identical, still alive** |
+
+The must-not-move column is the load-bearing one: the rule draws no `rng()` and swaps only
+inside `WETSET`, so it grows the **byte-for-byte same city** — inertness *proved*, not asserted.
+And the bed is **never larger than HEAD's on ANY seed** (34 ≤ 36) ⇒ **the coast CANNOT darken**,
+which is the whole point, because kelp is this loop's most notorious regression.
+
+**Visual.** PASS ×2, blind, **crossed** map, meaningless tokens (238/239/268). The seed-7 agent
+named the treatment **unprompted**, in the probe's own terms: HEAD = *"a thin, mostly single-hex
+RIBBON tracing the sand's edge… always touching sand, never pushing out to sea. A fringe/outline,
+**not a habitat**"*; patch = *"a BED with real area and depth… stands off the beach with open
+water between it and the sand. It has an **interior and an outer edge**; it reads as something
+**growing** in the shallows."* Both agents, both seeds, on the **un-zoomed plate**: *"neither
+coast is lined with dark weed… the sand/sea edge stays clean, bright, and unlined in both."*
+
+**⛔ REFUTED BEFORE IT WAS BUILT — do not re-try "the kelp answers the CITY".** The obvious
+Deepen (runoff/turbidity kills the bed as the coast develops) is **arithmetically dead**:
+`dist(kelp → DEV/ROAD)` is **4.44–5.73 hexes and BYTE-IDENTICAL at 1985 and 2035 on every
+seed** — the city never comes **one hex** closer to the kelp in fifty years. The field is a
+CONSTANT (267's law, paid before a line was written). `probes/probe-kelphost.mjs`.
+
+**Verdict: SHIPPED / FIXED.** Probes banked: `probe-kelplife` (the gate) · `probe-kelpsweep`
+(the two-ledger sweep) · `probe-kelppool` (how dark could the coast go) · `probe-kelphost`
+(the refutation) · `shot-kelp` (the camera).
