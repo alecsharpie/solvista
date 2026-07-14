@@ -200,4 +200,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 267  Urban fabric × Deepen      FIXED               48m42s   $18.57 10723f1
 ✔ Iter 268  Water & coast × Polish     FIXED               46m08s   $16.40 6ef2cc0
 ✔ Iter 269  Transport × Deepen         SHIPPED             38m22s   $20.69 2fecf91
+↩ Iter 270  Civic & culture × Polish   EXPLORED → REVERTED 41m13s   $16.47 e48fccd
 ```
