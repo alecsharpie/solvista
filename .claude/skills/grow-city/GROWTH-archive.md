@@ -20966,3 +20966,85 @@ had never once re-read them aloud.
 
 
 - (moved from header at iter 288) ✅ **(aw)'s KAYAK HALF IS CLOSED BY 286** (with the KITE as its pair). **(aw-HUD) is still live and still UNVERIFIED — see the Water cue line in the header.**
+
+## Iteration 279 — the city had a fire brigade, a burnt-ground tile and a placard promising flames, and had never once burned (2026-07-15) [Nature × New CA rule/FIX]
+
+**Vector.** Nature × **New CA rule (FIX)** — the domain was stalest (last at 272) and its Deepen cell
+had run twice running, so the kind had to change; its New CA rule cell had not been touched since **206**.
+Header trim first, per 278's standing 🛑 (below).
+
+**The seam (225's grep-the-seam law, 19 for 19).** Not the cue list — the **`tick()` seam**, and the
+**census tile histogram**, which reads **`BURNT: 0`** in every seed and era of the artifact's life. Four
+separate places promise Solvista burns: the placard (*"Fires jump block to block until the 1991
+firehouse; the engine still patrols"*), `CIVICDESC.firehouse` (*"ready for the fires on the hill"*),
+`VKIND.fireeng` (*"Lights on, heading to the smoke"*), and `TILEDESC[T.BURNT]` (*"Scorched ground after
+a wildfire. The scrub takes it back."*). Behind them sits a **complete, textbook excitable medium** —
+`c.fire=4` counting down, neighbour spread at `fire===2`, a `T.BURNT` tile with char, stumps and drifting
+smoke, a regrowth rule, a `Burning` tooltip row, `drawFire` with flames and a plume, and a fire **engine**
+with its own `atfire` duty and a `fireDoor()` BFS to route it.
+
+**It had never run.** Measured on 6 seeds × the full 61-year run (`probes/probe-firespark.mjs`, pure world
+data, driving the artifact's own `tick()`): **3 sparks and 0 JUMPS.** Three seeds in six never burn at all;
+every one of the three fires was a **single hex** that went out in three ticks. **The placard's own verb had
+happened exactly zero times.**
+
+**Cause — 267's law, exactly.** The spread and the refractory were always correct. The **spark** is a
+**uniform lottery over the plate**: `rc()` draws ONE ticket a tick out of **3,367 live cells**, and the
+forest it hunts is **55–98 of them (1.6–2.9%)**. The hill fire is expected **0.18 times per CITY**. *A tiny
+host cannot be found by a uniform sample of a large space, and the RATE is irrelevant until the SPACE is
+right.* An excitable medium is spark + spread + refractory (263), and this one had no spark.
+
+**Change.** **Walk the host**, exactly as 263's wildflower CA does — a per-cell roll on
+`hashCell(x,y,seedNum^SALT^TICKN)` over `HEXI`, so the ignition **spends no `rng()` draw** and cannot
+reshuffle the seeded stream (only the terrain a fire *burns* can, which is the honest cost of a rule that
+writes terrain). **HEAD's two lotteries are KEPT, draws and all.** New: `FIRESPK`, `TIMBSPK`, and
+**`FIREHOUSE`** — the 1991 engine expressed as a *factor on the timber spark* rather than a second year
+literal, off the same idea the spread clause already stops jumping on.
+
+**Census.** **PASS.** `BURNT 0 → 4` — **the first burnt ground in the artifact's life** — `FOREST 696 → 666`
+(fire eats forest), `MEADOW +25` (the scrub taking it back). Core within gate; `towers 420 → 497` is the
+chaotic cascade of a terrain-changing rule (231), and `developed` is **flat across 6 seeds** (mean −0.5%).
+
+**Probe.** `probe-firespark`: **3 sparks / 0 jumps → 102 sparks / 35 JUMPS**, biggest episode **11 hexes**.
+✅ **The BLOOM CA is the free positive control** (248) — a correct sibling excitable medium in the same
+`tick()` — **alive on every seed in both builds, and unmoved** (101–102 lit ticks), so the zero was the rule
+and not the rig. ✅ **EXACT FIXED POINT** (245/253): with both spark rates at **0** the walk cannot ignite,
+so the patch runs HEAD's fire code byte-for-byte — and it **reproduces HEAD to the number on every seed and
+every column**. Rates swept on both of 206's ledgers; gated on the **worst seed** (233).
+
+**...and then the fire, having never burned, had never been LOOKED at.** A dead rule hides its own draw bugs.
+`drawFire` painted its flame with `col('gold')` — i.e. **BASE × TINT, through the illuminant** — which is the
+right model for every diffuse surface in the city and a **category error on the one thing in it that makes
+its own light** (257's law, arriving on an **emitter** instead of on a mirror; the lit windows already take a
+raw literal for exactly this reason). Measured: the flame's rendered luminance **FELL 225 (noon) → 141 (dusk)
+→ 106 (night)** and its hue rotated **gold → muddy brown** (`255,235,89 → 144,98,49`) — **the city's fires
+were dimmest at midnight** (214's hue-rotation law). Fixed: a **raw emissive literal**, out of the
+illuminant's reach, plus a **radial gradient falling to alpha 0** (195: a flat additive arc is a coin, not a
+glow), drawn at ground level so it occludes with its own cell and cannot orphan. Now: **peak 241 at EVERY
+hour — 95% of the frame max — flat by construction**, and its footprint *grows* into the dark (426 → 797 px).
+
+⇒ **AND 271'S LAW CAUGHT THE SIBLING: the BEACH BONFIRE had BOTH bugs.** After fixing a per-entity rule,
+grep the **CATEGORY** — and the category here is *things that are on fire*. The bonfire (shipped, accepted,
+unquestioned for 279 iterations) was a flat symmetric triangle painted through `col('gold',1.5)` under a
+**flat additive `arc()`** — and a blind agent, unprompted, reported *"hard-edged amber **coins** along the
+coast."* Same fix, same reasons. Re-read blind: *"no visible circular boundary, no hard-edged coin… they hold
+their saturation against the blue-violet night illuminant."*
+
+**Visual.** Whole-plate integrity **PASSES unanimously** — every agent, every round, both seeds, both
+lights: no z-order tears, no floating tiles, no blown-out colour, city coherent and balanced. Emitter
+confirmed by agents *and* by measurement (*"the flame core is pixel-identical in both frames while its
+surroundings drop hard"*). Bonfire fix **PASS**.
+
+⚠ **BUT THE FLAME'S SILHOUETTE FAILS, AND I AM BANKING IT RATHER THAN RESHAPING IT A FOURTH TIME (270).**
+HEAD's flame was two flat symmetric triangles; **four blind agents on two seeds** independently called it *"a
+tent"*, *"a traffic cone"*, *"a glowing teepee"* — one admitting it first parsed the pair as **campsite tents
+in a forest**. I reshaped it twice (curved → asymmetric bezier tongue with a lick). Agents agree the **triangle
+is gone** (*"it is not a symmetric tent/cone — the previous problem is fixed"*) and now call it a **candle /
+teardrop**: no bulge-and-neck, no visible detached lick, no temperature gradient. **270's scope boundary is
+explicit — a claim about a draw's shape is a `polish-tile` job, and a growth lap's contribution is to FIND it
+and GATE it, not to redesign it. Bank the finding with its gate already written and stop.** Both cameras and
+both probes are banked.
+
+**Verdict: FIXED.** A city that has always had a fire brigade, a burnt-ground tile, a smoke plume and a
+placard promising flames, and that had never, on any seed, in sixty-one years, caught fire.
+

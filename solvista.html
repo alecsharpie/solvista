@@ -8220,6 +8220,15 @@ function drawJogger(j){
   ctx.beginPath();ctx.arc(cx,cy-5-bob,0.95,0,7);ctx.fill();
 }
 function drawBoat(b){
+  if(!b.moored&&waterSession()<waterOut(b))return; /* the day-sailers come in at dusk and
+    through the winter, on the SAME waterSession() the surfers and kayakers keep. 286's
+    comment ("the last board and the last BOAT off the water together") meant the surfboard
+    and the KAYAK; the pleasure sailboats scattered offshore were the un-enumerated member
+    of the recreational-craft category (271/280 -- a comment enumerates who was fixed, not
+    who should read). Moored boats stay tied off the pier. Before stamp(), as drawSurfer and
+    drawKayak do: a boat that has come in is not out there to be hovered. b.ph is rng()*7, so
+    waterOut(b)=b.ph/7 is exactly uniform and draws no value -- ONE predicate, SIX readers,
+    census byte-identical. */
   const[cx,cy]=pxc(b.x,b.y);
   stamp(b,cx,cy);
   const bob=Math.sin(waveT*1.5+b.ph)*0.8;
@@ -9618,11 +9627,14 @@ const ENTINFO=[
      :ferryApp(f)>0.25?'Coming alongside the pier head.'
      :'Working the shoreline — the pier is her only call.',10],
   [()=>freighters,'Container ship','Serving the harbor works — at anchor in the roadstead, or steaming the deep lane.',14],
-  [()=>boats,'Sailboat','Out for a day on the bay.',8],
-  /* the third and fourth readers of waterSession's two terms (271, and the paddlers this
-     lap): the strings used to say "Waiting on the next set" over a surfer sitting in the
-     dark in midwinter, and "Paddling the river" over a kayaker doing the same. Computed
-     live, never stored, off the SAME predicates the two draws gate on. */
+  [()=>boats,'Sailboat',b=>b.moored?'Moored off the pier head.'
+     :nightAmt()>0?'Making for the harbour before dark.'
+     :beachPhase()<0.5?'A brisk winter sail on an empty bay.':'Out for a day on the bay.',8],
+  /* the third, fourth and fifth readers of waterSession's two terms (271, and the paddlers
+     and day-sailers this lap): the strings used to say "Waiting on the next set" over a
+     surfer sitting in the dark in midwinter, "Paddling the river" over a kayaker doing the
+     same, and "Out for a day" over a sailboat coming in at dusk. Computed live, never
+     stored, off the SAME predicates the three draws gate on. */
   [()=>surfers,'Surfer',()=>nightAmt()>0?'Catching the last of the light.'
      :beachPhase()<0.5?'Out in a thin winter lineup.':'Waiting on the next set.',7],
   [()=>kayaks,'Kayaker',()=>nightAmt()>0?'Paddling in before the light goes.'
