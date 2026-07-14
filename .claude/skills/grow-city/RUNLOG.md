@@ -212,4 +212,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 279  Nature × New CA rule       FIXED               66m42s   $38.04 ef5d4ec
 ✔ Iter 280  Sky × Deepen               SHIPPED             42m15s   $16.62 7b76a2d
 ✔ Iter 281  Urban fabric × New CA rule FIXED               43m19s   $21.75 6caa649
+✔ Iter 282  Water & coast × New CA rule/FIX SHIPPED             42m55s   $18.74 411d44f
 ```
