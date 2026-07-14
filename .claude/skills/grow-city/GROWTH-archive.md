@@ -18638,3 +18638,112 @@ streaks that **CROSS tile boundaries**, *adding foam* rather than *subtracting s
 is never the rendering unit. That is a shape, not a colour (254's *"a SHAPE, an ORNAMENT, a COUNT — never
 a hue"*, arriving at the sea).
 
+## Iteration 256 — the thirty-first step-back: the arc stops, and the scratches get a name (2026-07-14) [holistic step-back, 31st]
+
+**Vector.** The 31st holistic step-back — overdue by the header's own rotation call (252 was the 30th;
+253 shipped, 254 and 255 both reverted, so the arc was **unpriced** across three laps). No source change.
+
+**Census.** PASS, every metric +0, tile histogram empty — the correct and expected result for a lap that
+edits nothing. It proves only that the page does not throw.
+
+**Perf — the LAP is free and the ARC HAS STOPPED.**
+- **LAP** (vs 252, `2af0f73`): **day −0.1% / night +0.2%**. Free.
+- **ARC** (vs 177, `7e2ac2c`, the same ref the last three step-backs used, so it is directly comparable):
+  **day +18.1% / night +13.2%.**
+- `probe-drawbudget` night profile is **byte-identical to 252**: `winBandR` 31.9% · `prismS` 29.1% ·
+  `hexTile` 12.1% · `bandS` 7.5%, `drawCell` 95%. The lap added **zero** draw objects — which is what
+  *causes* the free timer, so the two instruments agree on a mechanism (216).
+
+**⇒ THE ARC IS FLAT ACROSS FOUR CONSECUTIVE STEP-BACKS, AND THE HEADER'S `+0.2%/iteration` IS NO LONGER
+BEING PAID.** day: 242 **+18.6** → 247 **+19.0** → 252 **+18.2** → 256 **+18.1**. night: **+12.8 → +12.7
+→ +12.4 → +13.2**. Fourteen iterations have landed since 242 for **no measurable arc growth**. That is
+not luck and it is not noise — it is **structural**, and it is the step-back's real finding: the loop's
+late-game vectors (Deepen, Polish, predicate fixes, probe repairs, and two honest reverts) are
+*categorically* cheaper than the additive laps that built the arc. **A domain that is past additive
+saturation stops costing frame time.** ⇒ The standing perf suspect ("the arc is diffuse; there is no hot
+ornament") is **unchanged and now ACCEPTED with evidence, not resignation** — do not open a perf lap.
+
+**Visual — both seeds PASS.** Whole-city, 3 lights × 2 calendars, frozen in-page (`shot-stepback`); every
+frame self-reported `HUD=ok` and its own light phase, so the camera is not lying (202/204/227).
+
+**Two asides, reached INDEPENDENTLY by both agents on different seeds ⇒ 212 says weight these above either
+verdict — and one of them is NEW:**
+
+**(1) GOLDEN HOUR IS THE WEAKEST FRAME — the SIXTH and SEVENTH independent report.** Both agents named it
+unprompted as the weakest of the four, in the same nouns cue **(s)** has been collecting since 212:
+*"flattens the city into a single brown-orange mass"* · *"roads, roofs and terrain all within a few percent
+of each other in value"* · the park and forest *"stop reading as green space and become brown scrub."*
+⇒ **NEW, SPECIFIC, AND THE BEST LEAD (s) HAS EVER HAD — THE SEA DID NOT GET THE MEMO.** Seed 7, unprompted:
+*"Sky and sand are peach; the ocean stays essentially its daytime cool teal, with no warm sun path or
+reflected sky. At sunset the water looks unlit and pasted from another frame. This is the single most
+fixable thing in the set."* Seed 42 saw the same split from the other side (*"the ocean keeps most of its
+teal, so land and sea end up in two unrelated colour worlds"*). **That is not the contrast-collapse
+complaint — it is its CAUSE, named: the warm wash reaches the LAND and not the WATER,** so golden hour
+both mutes the land's separations *and* leaves the sea unlit, and the frame splits in two.
+⚠ **This is 209's law waiting to be cashed again** (*what LARGE SURFACE wears a field that cannot carry
+the signal?*) — and the sea is the largest surface in the city. ⚠ But **253's fixed point is load-bearing
+and must not be broken**, and 200's *do not lower the sun* still holds. **Sky × Deepen or Water × Polish;
+measure with `probe-goldenhue` FIRST — which pairs actually collapse — before designing.**
+
+**(2) THE DARK SCRATCHES — the perception is REAL, both stated causes are REFUTED, and the probe names the
+suspect.** Both agents, blind, on different seeds, described long thin near-black lines *"reading as
+scratches on the image"* with *"no visible support"*. Seed 42 attributed them to **kite strings**; seed 7 to
+**power/transmission lines** and *"stray vector guides floating above the rooftops."*
+- **`probe-darkline` (`MINLEN=4`, repaired at 243 so it can see CHAINS) says: `drawMonoAt`.** Seed 7 night:
+  **2,747px, n=350, bbox x 0.11–0.64 y 0.14–0.78** — which matches that agent's own reported box
+  (*"x≈0.25–0.66, y≈0.14–0.78"*) almost exactly. Seed 42: 880 + 587px.
+- **`drawKite` does not appear ANYWHERE in the census, on either seed, at any light.** The kite tether is
+  41px and cannot be the *"400px line crossing the pier"* the agent described. ⇒ **The kite cause is a
+  confabulation laid on top of a correct perception** — 212's law in its purest recorded form, and the
+  **ninth and tenth** time agents have correctly *seen* the elevated transit and wrongly *explained* it.
+- ⇒ This is `polish-tile`'s cue **(a)**, and the step-back **NAMES THE SUSPECT, NOT THE FIX** (198). It is
+  now the **most-reported defect in the ledger by a wide margin**, and `probe-drawbudget` prices
+  `drawMonoAt` at **2.1% of the frame** — *the loudest complaint in the artifact is also one of the
+  cheapest things in it.* ⚠ **NEVER re-open the z-order (cleared by probe TWICE, 203/212); the fault is
+  LEGIBILITY, and a hairline needs a BODY (215), not more strokes or more contrast.**
+
+**(3) ✅ CUE (ar) IS REFUTED AND CLOSED — THE HARNESS, FOR THE THIRD TIME (229's law).** (ar) claimed the
+PAUSE/1×/NEW CITY panel *overlaps* the last HUD stat (`TRANSIT REA…`), raised at 254 by both agents
+independently. ⚠ **`probe-hud` would have ACQUITTED it for the wrong reason** — it measures *text clipping*
+(`scrollWidth > clientWidth`) and is structurally blind to two DOM boxes colliding, which is 228's law
+lying in wait. Measured in the complaint's own nouns (`getBoundingClientRect` on `.census` vs `.controls`):
+at **1400×900 the boxes are EXACTLY FLUSH — census right edge 1080, controls left edge 1080, x-overlap
+0px** — and `transit reach` ends at 1059, **21px clear**. At 1280/1600/1100 they are separated by
+**60/200/283px**, and `probe-hud` finds **0 clipped labels at 6 widths**. ⇒ **There is no overlap and no
+clip.** The step-back's own 1400×900 camera is the one width where the two panels land *touching*, and
+flush-in-a-PNG reads as colliding. **The agents were reading my shot, not the artifact.**
+
+**Verdict: PASS.** No compounding drift. The city still reads as a balanced coastal city at every light;
+no z-order tears, no blown-out colour, no darkness. **The seasonal ladder has LANDED and both agents read
+it unaided** — grass dry-gold → wet-green, farms cropped → ploughed bare, the beach crowd packing away
+(253 + 247 + 238, confirmed from the outside for the first time). The two live defects are both *already
+banked*, both now *measured*, and neither is a regression — they are the two things the loop has never
+spent a lap on.
+
+**Verdict: PASS (holistic step-back — no source change).**
+
+
+## Header bullets rotated out at 266 (superseded — kept for the record, not for steering)
+
+**(ak) SEASONAL-VEGETATION SEAM — CLOSED/SUPERSEDED BY (aq) AT 253.** The plants were never the defect
+(PARK at its coverage ceiling, FOREST 83% conifer); **the season was missing from the LIGHT**. ⚠ DO NOT
+re-open the canopy, the lawn ((p) protects it), or a palette lap "to fix the seasons". ⚠ Mediterranean
+coast: GREEN WET WINTER + GOLDEN DRY SUMMER is CORRECT (201) — no snow, no bare trees.
+
+**(ac) CLOSED by 224, RE-CONFIRMED BY WORLD DATA AT 260** (tallest tower ring 1, `corr(th,core)` 0.82,
+monotone envelope). ⛔ THE `c.th` LADDER IS SPENT — do not re-open placement (dead lever, 218), the COM
+fork (219), the height noise, or `TCAP` (224); an agent FAILing the skyline from a whole-city frame is
+224's PROJECTION law, not a defect. ⚠ `c.th` HAS TWO WRITERS (placement + the 2022+ growth rule) — touch
+one, check the other; and DO NOT DERIVE A TOWER CONSTANT FROM THE MEASURED MEAN `core` (98 did; 219
+invalidated it, unnoticed for 6 laps).
+
+**(ag) CLOSED 251 — DO NOT RE-OPEN THE NIGHT SAND OR THE NIGHT GREENS** (dimming the sand is a MEASURED
+dead end; `probe-goldenhue` REPAIRED — area + p90 envelope; HEAD PASSES by 21).
+
+**(al) 239 · (am) 241 · (an) 243 · (ao) 248 · (ar) 256 — ALL CLOSED.** DO NOT RE-OPEN EITHER BUILDING
+(look ladder complete: 228 crown · 235 footprint · 239 mid-rise); EVERY FORM'S BASE IS ITS WIDEST PART.
+DO NOT re-tune the elevated beam's draw (measured IN BAND on every axis) nor bound a loop's RADIUS (that
+makes stubs). `stepGond`'s value bar decays with NO FLOOR — gated on `WETSET`; do not un-gate.
+`probe-darkline` is REPAIRED (243) — trust it again. THE RAINBOW IS NOT A RIM BUG (6 seeds, 0.00 hex
+overhang; it already tests its LEGS — a bow over open water is CORRECT (201); the defect was the COMMENT).
+⛔ (ar) WAS THE HARNESS, FOR THE THIRD TIME (229) — 0px panel overlap, 0 clipped labels.

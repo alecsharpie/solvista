@@ -4254,6 +4254,31 @@ const HBK=0.30;    /* how far the ELIGIBILITY gate swings either side of HEAD's 
                       Both are centred, so seaState()==0.5 reproduces HEAD's sea exactly. */
 function seaState(){return SEACALM+(1-SEACALM)*clamp((WINDA-0.25)/0.75,0,1);}
 
+/* WINDROWS (iter 266) — the foam gets a SHAPE, because it could never get a SIZE.
+   245 made the caps answer the wind and they still could not be SEEN: a cap is a
+   3.0 x 1.1 WORLD-unit ellipse, and fitScale is ~0.65, so at the zoom the city is
+   actually looked at it is 2 x 0.7 CSS px — a speck under the eye's reach (215's
+   hairline law), and the sea's whole calm->gale response measured 0.6% of the ocean
+   against a LAND control six times that: the trees answered the gust and the water
+   did not. The obvious fixes are both closed. Bigger/brighter caps stay specks. And
+   a wash in the sea's TILE FILL was BUILT (255): free, mean-held, byte-exact at its
+   fixed point, passing every gate — and UNSEEABLE, because a field sampled per hex
+   and painted as a flat hexagonal fill terraces onto the LATTICE, so it is either
+   invisible or a quilt, with nothing in between.
+   The way out is the one dimension a hexagon cannot quantize: LENGTH. Real foam
+   organises into Langmuir windrows — long streaks lying PARALLEL TO THE WIND, tens
+   of metres apart — and a streak is sub-hex in WIDTH (never an edge, nothing to
+   terrace) while running for CELLS along its length, which is what makes it
+   traceable at fit. It can only ever grow ALONG the swell, never around a hexagon.
+   The rows trail UPWIND — west and slightly north of the hex that anchors them —
+   and that is not a look, it is a Z-ORDER decision: draw order is depth order, so
+   the tail lies over water already painted, where no later row or column can paint
+   it out. Its run is truncated at the first cell that is not open sea, so a streak
+   can never touch land. Day-only, on the caps' own LITAMT gate: the night hands off
+   to the moonglade and the biolum untouched. */
+const WROWK=0.12;   /* share of the deep sea that anchors a row: ~10% in the lull … ~17% at full gust */
+const WROWL=3.6;    /* its length in cells at full gust, before the upwind water runs out */
+
 /* Which way the open sea lies from a beach hex: the mean unit vector toward its WATER
    neighbours, by the same test the damp margin uses (a river is not the sea). Returns
    null when the hex is landlocked — an inland beach has no sea to answer, and keeps its
@@ -4678,6 +4703,38 @@ function drawCell(x,y){
               ctx.beginPath();ctx.moveTo(cx-4,cy+oy-ph*0.6);ctx.lineTo(cx+4,cy+oy+ph*0.6);ctx.stroke();}
           }
           ctx.restore();
+        }
+      }
+      /* the wind's windrows (iter 266 — see WROWK). Same open swell the caps break on,
+         and drawn LAST of the sea's overlays so a row lies over the whole stack of the
+         water it crosses, its own hex included. */
+      if(!c.riv&&LITAMT<0.6&&rDeep[idx(x,y)]>SHELF1){
+        const ss=seaState(), hr=hashCell(x,y,seedNum^0x3B71);
+        if(hr>1-WROWK*(0.55+0.85*ss)){
+          /* how far upwind open sea actually runs. This walk is also what keeps the
+             streak on hexes that are already PAINTED, so nothing can cover it. */
+          const want=WROWL*(0.45+0.55*ss)*(0.7+0.6*hashCell(x,y,seedNum^0x3B72));
+          let run=0;
+          while(run<want+1){
+            const a1=cellAt(x-run-1,y), a2=cellAt(x-run-1,y-1);
+            if(!a1||a1.t!==T.WATER||a1.riv||!a2||a2.t!==T.WATER||a2.riv)break;
+            run++;
+          }
+          const L=Math.min(want,run-0.5);
+          if(L>1.2){
+            const[fx,fy]=px(gx,gy);
+            const rise=(0.35+0.9*hashCell(x,y,seedNum^0x3B73))*ROWY; /* tilt it off the row axis, or a field of E-W streaks would trace the grid */
+            const pulse=0.55+0.45*Math.sin(waveT*0.35+hr*6.2);       /* foam gathers and disperses — slow, so it cannot strobe (134) */
+            const a=(0.08+0.26*ss)*pulse*(1-LITAMT/0.6);
+            if(a>0.02){
+              ctx.strokeStyle=colA('foam',1,a);
+              ctx.lineWidth=1.8+0.9*ss;   /* ~1.4–1.8 CSS px at fit: sub-hex, and never a hairline */
+              ctx.lineCap='round';
+              ctx.beginPath(); ctx.moveTo(fx,fy);
+              ctx.quadraticCurveTo(fx-L*CW*0.5, fy-rise*0.5+Math.sin(waveT*0.8+hr*5)*2.4, fx-L*CW, fy-rise);
+              ctx.stroke();
+            }
+          }
         }
       }
       if(c.riv){ /* the current is visible: glints slide downstream */

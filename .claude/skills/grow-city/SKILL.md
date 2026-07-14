@@ -731,6 +731,35 @@ vector, whatever it is.
   remember is worse than a rule you cannot break*) arriving on a **cache** instead of on a call order. **Before
   keying a draw to a global, ask what invalidates the memo in front of it.**
 
+- **AN AREA-MEAN IS THE INSTRUMENT FOR A *WASH* AND IS STRUCTURALLY BLIND TO A *MARK* — IT DIVIDES YOUR FEATURE BY ITS
+  OWN COVERAGE RATIO, AND IT WILL TELL YOU TO REVERT SOMETHING TWO BLIND AGENTS CAN SEE (iter 266).** 255's law is right:
+  a pixel COUNT is not an AMPLITUDE, so state the magnitude as `d` against the surface's own grain — and 255 built
+  `probe-seaamp` to do it. 260 then warns: check your banked probe is not built on the one dimension your feature holds
+  flat. **266 is the third member, and it is about the DENOMINATOR.** `probe-seaamp` averages the luminance shift over
+  **every pixel of the host region** (456,863 sea px). That is exactly correct for what 255 built it for — a *wash*, a
+  field painted over the whole surface. A **windrow paints 2% of the ocean**, so the same instrument divides a mark
+  sitting at **d≈0.9 where it is actually drawn** down to **d=0.38 over the region** — *below 255's own "invisible"
+  case (0.57)*. **The banked probe that the cue itself NAMES would have graded a 9–11x improvement as "no change" and
+  killed it.** ⇒ **Before pointing a region-mean probe at an ornament, compute what fraction of the region the ornament
+  COVERS.** For a sparse mark the amplitude is **per-pixel-where-it-is-drawn** (`ink / movedPx`), never `ink / regionPx`
+  — and the *salience* question does not belong to a probe at all: **it belongs to the blind agents, who are the only
+  instrument this loop owns that measures whether a thing is SEEN.** The tell, and it is checkable before you run
+  anything: **your feature is SPARSE and LOCAL, and your instrument's denominator is the WHOLE HOST.** (This is 228's
+  law recursing an **eighth** time — every time, on an instrument the harness already owned.)
+  ⇒ **AND THE CONSTRUCTIVE HALF IS THE WAY PAST A LATTICE: LENGTH IS THE ONE DIMENSION A HEXAGON CANNOT QUANTIZE.**
+  255's ⛔ (a per-hex field painted as a flat fill terraces onto the lattice, so it is invisible or a quilt with nothing
+  between) forecloses *width* and *tone* on a tiled surface, and 214 forecloses the per-EDGE stroke. What is left is a
+  shape that runs **ALONG** the tiling rather than **WITHIN** it: sub-hex in **width** (so it never lands on an edge and
+  has nothing to terrace) and **multi-hex in length** (so the eye integrates it as a coherent mark and it survives the
+  downscale to fit zoom). A 2 CSS-px × 60 CSS-px streak at d≈0.9 is *seen*; the same ink as a 2×0.7 px speck is not.
+  ⇒ ⚠ **AND ITS DIRECTION IS A Z-ORDER DECISION, NOT A LOOK.** A mark that crosses tile boundaries is, by construction,
+  drawn during ONE cell and lying across OTHERS — so **draw order is depth order** applies to it (211). Point it at
+  cells still to come and every one of them paints it out; **trail it back over cells already painted** (here: upwind,
+  west and slightly north of its anchor) and nothing can cover it, with no z-sorting, no second pass and no clip. Walk
+  its own extent to truncate it at the first cell that is not a valid host, and it can never stray onto one that is
+  wrong (248's bound-by-EXTENT-not-by-ANCHOR, arriving as a *constructor* rather than as a cull). The tell: your new
+  ornament is longer than the cell that owns it.
+
 - **A PIN IS A LITERAL ONLY UNTIL SOMEBODY GIVES THE CURVE A NEW INPUT — AND THE LAP THAT ROTS YOUR CAMERA IS THE LAP
   THAT *IMPROVES THE ARTIFACT*, SO NOTHING WILL EVER FAIL AT THE TIME (iter 264).** 202 says: take the light pins from
   the curve, never from intuition. It is right, it fixed a real bug — and then it **wrote the answers down as literals**
