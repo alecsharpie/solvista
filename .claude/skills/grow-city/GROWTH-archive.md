@@ -18058,3 +18058,83 @@ pier yet to call at."`
 
 **Verdict — DEEPENED.**
 
+## Iteration 250 — the concert played every night of the year (2026-07-14) [Civic & culture × Deepen]
+
+**Vector.** Civic & culture × Deepen. Civic was the stalest live domain (244) and its cue list
+was **empty** — so, per 240's law, I grepped its seam instead of skipping it. That law is now
+**5 for 5** (Sky 236 · Nature 238 · People 240 · Transport 249 · Civic 250): *an empty cue list
+records where you have already looked; it is not evidence there is nothing to find.*
+
+**The defect.** `CIVICDESC.amphitheater` has read *"An open-air bowl beside the parks. **Concerts
+through the summer**."* since the bowl was built. Its showtime draw was gated
+`if(LITAMT>0.3 && so>0.02)` — **the sun and the opening hours, and nothing else.** There was no
+`year` term anywhere in the amphitheater block. So the spotlit performer swayed under the beam on
+**365 nights of the year**, in midwinter as readily as in August, and the night audience sat out on
+the stone to watch her. The label-tell (a label asserting a relationship the draw ignores), cashed
+for the 9th time — and its host has moved again: from a tooltip (117/183) to a constant (199), a
+comment (209), a half-finished fix (217), a palette entry (238), and now **a promise about the
+CALENDAR made by a draw that had never heard of one.**
+
+**Change.** `concertSeason()` (beside `beachPhase`, the seasonal-predicate family) — **ONE
+predicate, four readers**: the beam/wash/singer/footlights, the *night audience*, and a new
+`Season` tooltip row off `concertWord()`. Two design points that are the whole lap:
+- **A TRIANGLE, not `beachPhase`'s cosine.** A beach in January is still a beach (hence `BEACHMIN`);
+  a concert in January is simply **not on**. Outside ±`CONCERTW` (0.26 yr of the dry peak) the value
+  is exactly 0 and the stage is dark stone — `springBloom`'s bounded shape, not the sand's floor.
+- **The night audience had to move WITH the show.** Gating only the stage would have re-shipped the
+  exact bug 213 fixed — a full house sitting in the dark watching a struck stage. `show = so *
+  concertSeason()` is read by both gates, so they *cannot* drift (240's two-gates law).
+- **Centred on the dry peak** ⇒ `concertSeason()===1` at s=0.62, so the draw is **byte-identical to
+  HEAD** at that pin (245's fixed point) and strictly darker every other week.
+
+**Census.** PASS. Core flat (`pop`/`developed`/`roads` +0), tile histogram **empty**, `solarRoofs -1`
+= the known ±2 tick-wobble (226). Correct and **vacuous**, as expected for a draw-only lap — the
+probe is the gate.
+
+**Probe** (`probes/probe-concert.mjs`, `probes/shot-concert.mjs`). 247's law governs this lap:
+**a removal vector needs a probe that names what SURVIVES, not one that measures what MOVED** — a
+pixel diff cannot tell "the stage went dark" from "something else got drawn there" (247 read 2,076px
+of beach emptying and it was palm trees moving in). So it **counts objects**, deterministic, no
+pixels, no noise floor:
+
+| | HEAD | patch winter/spring | patch dry peak |
+| --- | --- | --- | --- |
+| `concertSeason()` | **1.00, every season** | 0.00 | 1.00 |
+| singer / footlights / specks | 1 / 3 / 8 | **−1 / −3 / −8** | **0 / 0 / 0** |
+| **TIER ARCS (control)** | — | **0** | **0** |
+
+- **DISTINCT SHOW STATES = 1 on HEAD, on every seed, forever.** The constant *is* the defect, stated
+  as a number, with **no threshold invented** (236).
+- The **tier arcs never move**: the stone survives, so what the winter bowl loses is exactly the show.
+- **Autumn is a shoulder, not a full house** — `cs=0.04`: the objects are still issued but at 4%
+  alpha. The probe prints `cs` beside the counts precisely because an object count sees *presence*,
+  not the fade, and would have let me overclaim (205: state the claim in the viewer's units).
+- **Two free EXACT controls (249's law), both cashed:** HEAD's constant is the baseline; and the bowl
+  has a **BIRTHDAY** (`year>=2004`), so 1985 has no amphitheater and the patch runs HEAD's
+  byte-identical code. **Fixed point HOLDS** — patch === HEAD at the dry peak on all 3 seeds.
+- The showtime hour was **taken off the light curve, not guessed** (202): `CIVHRS.amphitheater===0`
+  ⇒ `so = 1-nightDeep()`, so the show runs at **dusk** (`dayT=0.70`), and would have been *invisible*
+  at the intuitive "night" pin of 0.92.
+
+**Visual.** Two agents, two seeds, asked **per file name** (239) and asked to **LOCATE** (108) —
+*"in which of these four files is the stage lit?"*, an answer I already held. Both got it **exactly
+right** (only `patch-winter-close` dark; head lit in both calendars), and both independently
+answered the survival question: *"reads as closed for the season / unlit, not broken, not
+half-erased, no hole in the ground."* Whole-city dusk frames clean on both seeds — no z-order tears,
+no floating tiles, no blown-out colour. **VISUAL: PASS ×2.**
+
+**Verdict. DEEPENED.**
+
+**A law for SKILL.md — a removal vector's probe must name what SURVIVES, and its POSITIVE CONTROL
+will convict the INSTRUMENT before it convicts the city.** 196 says a `BASE = 0` is worthless
+without a positive control. This lap paid for the sharpest form of that: my first probe run came
+back **all zeros — including the TIER ARCS**, which are stone and draw every frame. A zero there is
+*impossible*, so the instrument was dead, and it took ten seconds to see it. (The wrappers closed
+over the counter object while the probe swapped in a *fresh* one each frame, so every increment
+landed on an object nobody read.) **Without the tier control I would have read "singer 0, specks 0
+in every season on both builds" as a broken feature and started redesigning a draw that was fine.**
+⇒ **On any vector whose purpose is to take something away, put a MUST-NOT-MOVE object count beside
+the must-go one — it is the control that names what survives (247) AND the tripwire that catches a
+dead instrument (196), and it is the same column.** The tell: your probe's headline is a count going
+*down*, and nothing in the run is required to stay *up*.
+

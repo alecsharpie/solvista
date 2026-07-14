@@ -684,6 +684,39 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **THE EYE DISCOUNTS AN ILLUMINANT — A *PURE-CHROMA* CHANGE IS INVISIBLE NO MATTER HOW BIG IT MEASURES, AND THE
+  NORMALISER YOU ADDED TO KEEP IT HONEST IS WHAT REMOVED THE ONLY CHANNEL IT COULD HAVE BEEN SEEN ON (iter 260).**
+  214 says a greyscale probe cannot see "mauve" ⇒ *measure colour*. 260 is that law's **converse**, and it is the one
+  that will cost you a whole feature: **the viewer's instrument is not symmetric.** 253 gave the sunlight a calendar —
+  correctly, provably, with a byte-identical fixed point — and at the 32nd step-back **four blind agents, on two seeds,
+  reported no season at all** (*"no cooler light"*, *"winter is indistinguishable from summer"*). They were right, and
+  so was 253. The natural experiment settles it, because the artifact ships a light change everybody *does* see:
+  | light change | warm-cool (R−B) | **luminance** | seen? |
+  | --- | --- | --- | --- |
+  | golden hour (the **incumbent bar**, 226) | +24.9 (d **0.43**) | **−24.7 (d 0.69)** | instantly, every agent |
+  | winter (253's season) | **−30.2 (d 0.52)** | **−3.4 (d 0.09)** | **by nobody** |
+  **The season moves the colour axis 1.2x HARDER than the golden hour does and is invisible; the golden hour moves
+  LUMINANCE 8x harder and is unmissable.** The chroma amplitude is not the problem — *the season is a global
+  multiplicative cast on every surface at once, which is precisely the transform the visual system divides out.* It is
+  what colour constancy is FOR, and it is what a white-balance algorithm is built to remove. A viewer reading one frame
+  at a time (which is how the visual gate reads them) re-normalises it away and sees "a normal daylit city." ⇒ **A
+  global illuminant is the one signal you cannot deliver in chroma.** ⚠ **AND THE TRAP IS THAT THE FIX IS A LAW: 223
+  says normalise a gain triple's magnitude so luminance cannot drift — and it is RIGHT, on a ladder of PER-SURFACE
+  washes, where drift is a bug (222).** Applied to a **whole-scene illuminant**, that same normaliser (`n = 1/(1−K·c)`,
+  *"winter comes out COOLER and never DIMMER"*) is not a safeguard, it is a **castration**: it zeroes the only channel
+  the eye reads. **A law derived on a per-surface mechanism does not automatically hold on a global one** (257's
+  re-read-the-mechanism law, arriving on a law of our own). The tell: **your feature is a multiplicative tint applied
+  to every surface in the frame, and you are proud of holding its luminance flat.**
+  ⇒ **AND THE COROLLARY THAT NEARLY COST THE STEP-BACK ITS FINDING — 228'S LAW, RECURSING A *SIXTH* TIME, ON THE PROBE
+  I REACHED FOR FIRST.** The banked magnitude rig (`probe-seaamp`, 255) is domain-agnostic, takes two PNGs, and is
+  exactly the instrument the situation calls for. It reports **LUMINANCE** — its header says so in the first line — and
+  it duly graded the season at **mean 6.4, median 2.0, d=0.27** and would have let me file *"the season is real but
+  sub-threshold; tune it up"*, which is **false in both halves**. I was measuring, with a greyscale instrument, the one
+  dimension the feature is **normalised to hold at zero.** ⇒ **Before you point a banked probe at a feature, read the
+  feature's own diff for the dimension it deliberately DID NOT move — and check your probe is not built on it.** A
+  probe aimed at a design's own null space returns a small honest number and a completely wrong verdict.
+  (`probes/probe-seasonhue.mjs`: warm-cool **and** luminance, both as `d` against the plate's own grain, with the
+  identical-pin floor at **exactly 0** and golden hour carried as the bar I did not invent.)
 - **A FIELD WITH A FLOOR CANNOT EXPRESS AN ABSENCE — WHEN YOU DRIVE A SIGNAL TO ITS MINIMUM, GO AND LOOK AT WHAT THAT
   MINIMUM *RENDERS* AS (iter 259).** 205 says state the claim in the viewer's units; 254 says a regional signal dies
   under a per-object grain. 259 is the third member, and it is the one you will walk into while doing everything else
@@ -2456,7 +2489,18 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   frame), never a constant I chose. ⚠ **Every frame SELF-REPORTS whether a cab is actually at the centre** — the
   expected result is an *absence* (a dark lamp), and a frame with no cab in it reads exactly like a correct one, which
   is a false PASS an agent will hand you (see the law)).
-  Seven of them are **harness-wide**, not per-feature — reach for these on any lap:
+  Eight of them are **harness-wide**, not per-feature — reach for these on any lap:
+  `probe-seasonhue.mjs` (260 — **IS THIS LIGHT/COLOUR CHANGE ACTUALLY VISIBLE?** The companion to `probe-seaamp`, and
+  the one to reach for **first** on any illuminant claim, because `probe-seaamp` measures **LUMINANCE ONLY** and will
+  return a small honest number about a feature that deliberately holds luminance flat (228's law, 6th recursion). It
+  reports the shift on **BOTH** axes — **warm-cool `(R−B)`, the units of every "cooler/warmer" complaint, AND
+  luminance** — each as **Cohen's `d` against the plate's own within-frame grain** (254/255: an amplitude, never a
+  count). ⚠ **Its GOLDEN-HOUR row is the reusable idea: an INCUMBENT BAR I did not invent** (226) — a light change every
+  agent calls obvious, measured in the same units, in the same frame, so "is d=0.5 a lot?" is answered by the artifact
+  instead of by me. ⚠ The plate mask is **free and exact**: `render()` `clearRect()`s, so the void is **alpha=0** on the
+  canvas and the CSS sky cannot inflate anything — it measures the CITY, which is what the agents read. All renders in
+  **ONE page on ONE world** ⇒ identical-pin floor **exactly 0**, printed as the first row. Retarget it at any two light
+  pins by changing `DAY`/`GOLDEN`/`WINTER`/`DRYPEAK`),
   `probe-cascade.mjs` (**is this census move MINE, or the CHAOS?** — the census matrix is only **3 seeds**, and a rule
   that moves one cell of terrain reshuffles the `rng()` stream for decades. Pairs HEAD vs patch over ~10 seeds on pure
   world data and prints the per-seed sign. 231's alarming `TOWER −6.9% / pop −3.9%` came back **mean +1.4 towers,
