@@ -18562,3 +18562,79 @@ siting. The lever is the dome's SIZE/CONTRAST, not its place.**
 - ✅ **262: THE `LITAMT`-AS-A-BEDTIME GATE IS EXTINCT** (199 windows · 210 residents+joggers · 230 traffic · 262 the
   CHILD). **Do not add another global-light gate to anything that keeps hours.** The ladder (still live in the header):
   `KID` (in by 0.34) < `JOG` (0.62) < `CURF` (to 1.85).
+
+## Iteration 255 — the sea can be seen or it can be smooth, and it cannot be both (2026-07-14) [Water & coast × Polish]
+
+**Vector.** Water × Polish — the header's rotation call (Water was the stalest domain, last touched
+at 245) taking cue **(ap)**, *"the sea's foam is invisible at fit zoom"*, an aside two agents reached
+independently at 245 (⇒ 212).
+
+**The cue is TRUE, and the banked probe stated it in the viewer's units.** A whitecap is a `3.0x1.1`
+**WORLD**-unit ellipse and `fitScale≈0.65`, so at the zoom a user actually looks at the city each cap
+is **~2 x 0.7 CSS px** with a sub-pixel streak — 215's law exactly, a hairline that *tints* its
+background instead of *marking* it. Measured (`probe-seastate`, repaired — see below): HEAD's **entire**
+calm→gale response repaints **971–1,055 px of a 156,562–175,361 px ocean — 0.6%** — while the trees and
+flags on **LAND** (the positive control) move **4,507–5,231**. *The wind moved the land six times harder
+than it moved the sea, on a feature whose whole subject is the sea.*
+
+**Change (REVERTED).** `seaFaceR(d,w)` — the caps' low-frequency **BODY**, in the currency the sun
+glitter twenty lines below already uses and names in its own comment (*"LIFT THE WHOLE HEX TONE ... not
+sub-pixel speckle"*). The sea's own base tile, **drawn anyway**, was pulled along ONE signed axis toward
+`foam`: positive (it blows) whitens and desaturates; negative (a lull) extrapolates *away* from foam,
+which darkens and **saturates** — glass. One axis, both ends, straight out of the palette. Centred on
+`seaState()`'s mean (245), because `seaFace`'s own comment forbids drifting the sea's **MEAN** tone (98).
+
+**Every gate the loop owns PASSED.** Census PASS, 0 page errors, histogram empty (no `rng()`, no
+terrain). **Path objects −32 day** against a **+97 night** reading on code that is provably inert at
+night ⇒ its own free noise floor (199) — the wash modulates a fill that was already being drawn, so it
+is **free**. **Fixed point: 0 px / 0 px / 2 px** patch-vs-HEAD at `seaState()==0.5`, floor **0**, with a
+**29,271–33,153 px full-gust control** proving the builds do diverge (`probe-seamean`). Land control
+**byte-flat** (5231→5231, 4507→4507, 4591→4590). Sea response **971 → 33,763 px: 29–35x**, 0.6% → **18–22%
+of the ocean**. On paper, a clean ship.
+
+**And it is INVISIBLE.** Two blind agents, two seeds, on the cleanest A/B the harness can shoot (HEAD's
+gale vs the patch's gale — same seed, same frozen world, same wind, **only the build differs**):
+*"effectively indistinguishable"*, *"I will not claim it shows an effect I cannot see."* They were right
+and **the count was flattering me**: `probe-seastate` scores a pixel as *moved* at `d > 6`, i.e. **2.7% of
+range — below sight.** Re-stated as an **AMPLITUDE** (`probes/probe-seaamp.mjs`): the wash shifts the sea
+**12.7/255 mean**, against a sea that **already carries a within-sea luminance SD of 22.3** ⇒ **Cohen's
+d = 0.57 / 0.68 (p90).**
+
+**This is 254'S LAW, ONE LAP LATER, ON A DIFFERENT SURFACE** — *a regional signal cannot be painted on a
+channel a per-object GRAIN already scatters*, and its tell fits to the letter: **my feature is a smooth
+low-frequency field, and the sea already carries high-frequency per-hex noise in the same channel**
+(`seaT[]`: depth quantized to eighths **+ two `hashCell` octaves**, L1294). A blind agent reading
+**pristine HEAD** independently reported that grain as a visible honeycomb over *"roughly 90–100% of the
+open water"*. I checked the **caps'** size (215) and never once checked the **sea body's variance**.
+
+**But the ceiling is NOT 254's, and that is the new law.** 254 plateaus under tuning; this lever does
+**not** — at `ROUGHK` 0.30→0.75 the signal clears the grain outright (**d = 1.15 / 1.90**). It fails for a
+*different* reason, and the third agent named it: ***"discrete hexagonal cells flipping between normal and
+pale... a high-contrast hex QUILT... camouflage / a tiled mosaic, not a sea."*** I had reasoned *a SMOOTH
+band ⇒ no hex edges*. **False.** The field is smooth, but it is **sampled per hex and rendered as a flat
+hexagonal FILL** — so a smooth field **TERRACES ONTO THE LATTICE**. The glitter escapes only by being a
+**low-alpha overlay** (max 0.16), i.e. by living permanently in the subtle regime. ⇒ **214's law, generalised
+from per-EDGE strokes to per-HEX FILLS: the wash may be SUBTLE (d=0.57 — invisible to both agents) or
+BRIGHT (d=1.15 — a visible hexagon), and there is no middle.** The sea's **tile-fill channel is spent.**
+
+**HARNESS — two dead instruments found and REPAIRED (243: fix the tool, don't write a caveat).**
+(1) **`probe-seastate`'s sea mask never contained the sea.** It loud-painted `['water','waterDk','foam',
+'glint']` — but `water`/`waterDk` paint the **river, marsh, pools and wakes**, and the open sea's BODY is
+`seaFace` → `colMix('waterSh','waterDp')`, **and neither was in the list**. So "the sea" was really *the
+sea's ORNAMENTS*, and `land` — its **complement** — silently contained the entire ocean. It read HEAD
+correctly **by accident** (in HEAD the body never moves with wind); the first change that moves the BODY
+put most of its pixels in `land` and **doubled the positive control** (4,857 → 10,341), which is what
+caught it. **228's law, recursing a 5th time, on the probe the cue itself handed me.**
+(2) **Its fixed-point frame HASH was pure noise** — it never cleared the movers (230) and *a whole-frame
+hash is not a diff* (**245's own law, which 245's own probe then broke**). The same pristine HEAD file
+hashed **3129893759 / 2450885004 / 3158439912** on three consecutive runs. Removed; it now points at
+`probe-seamean`, which counts pixels and carries a floor.
+
+**Verdict. EXPLORED → REVERTED** (artifact byte-identical to HEAD, md5-verified; census re-run PASS).
+Free, mean-held, gate-passing and **unseeable** is not a ship — 254's precedent, one lap old, is exactly
+this. Kept: both probe repairs + `probe-seaamp.mjs` (states a claim in units of the grain it must be seen
+against). **The way through is named and it is NOT a fill:** the effect must be **SUB-HEX** — wind-aligned
+streaks that **CROSS tile boundaries**, *adding foam* rather than *subtracting saturation*, so the lattice
+is never the rendering unit. That is a shape, not a colour (254's *"a SHAPE, an ORNAMENT, a COUNT — never
+a hue"*, arriving at the sea).
+

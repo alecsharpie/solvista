@@ -623,6 +623,31 @@ function setLight(dl){ /* called every frame — only flush the color cache when
 const LEAFN=new Set(['grass','grassDk','lawn','meadow','canopy','canopyLt',
                      'evergreen','evergreenLt','turf','sage','sprout']);
 const WARMN=new Set(['deck','deckDk']);
+/* THE NIGHT WASH GUARDS THE WARM SURFACES FROM A BLUE ILLUMINANT. NOTHING GUARDED THE COOL
+   ONES FROM AN ORANGE ONE (iter 265). The whole wash ladder — 214 sand, 220 masonry, 221
+   greens, 234 timber — exists because of 214's law: a flat per-channel multiply on a saturated
+   surface is a HUE ROTATION, not a tint, and the night tint [.42,.42,.58] crushes R until every
+   WARM surface swings to violet. THE GOLDEN TINT IS THAT BUG'S MIRROR IMAGE, and it had never
+   once been read as one: [.92,.72,.66] crushes G and B, so on any surface whose identity is its
+   GREEN the red overtakes it and the hue swings to orange. Measured on 3 seeds at the golden pin
+   (derived, not typed — see probe-goldenhue): PARK 55deg -> 32deg, FOREST 57 -> 33, landing on
+   top of ROAD (24), BEACH (25) and RES (26) — so EVERY LAND SURFACE IN THE CITY sits inside a
+   9-degree band, and PARK<->RES separation falls to 15 RGB units, the collapse floor. Both
+   step-back agents, both seeds, blind: "near-monochrome terracotta ... flattening rather than
+   lighting."
+   This does NOT fight the warm light. The land is DIFFUSE and it SHOULD saturate at dusk (257),
+   so the sand, the roofs and the asphalt are left to blaze exactly as HEAD paints them — sandCol
+   passes no dial and is byte-identical at every hour. It only holds a GREEN far enough off the
+   asphalt to still be read as a green, through the SAME wash and the SAME triple that already
+   holds the sand off the asphalt after dark.
+   THE DIAL IS A PURE FUNCTION OF TINT, and that is structural rather than tidy: CCACHE is flushed
+   precisely when TINT changes (setLight), so a dial read from TINT can never serve a stale colour
+   — where one read from GWARM (set later, in the sky block) would make the cache depend on call
+   order, which is a latent bug and not a design (261). It is 0 at noon (TINT's R-B is .09, under
+   the cut) and 0 all night, so BOTH REGIMES RUN BYTE-IDENTICAL CODE: two free dead-regime controls
+   (199), and they are exactly the day and night columns probe-goldenhue already prints. */
+const GOLDW=0.50;                    /* how much of its own hue a green keeps under a golden sun */
+function goldenWash(){ return GOLDW*clamp((TINT[0]-TINT[2]-0.12)/0.18,0,1); }
 function col(name,f){ /* f: face brightness */
   const k=name+'|'+f;
   let c=CCACHE[k]; if(c)return c;
@@ -638,7 +663,7 @@ function col(name,f){ /* f: face brightness */
      the same rule and to the same degree. The ground stays COOLER than the warm-washed masonry
      standing on it — because green simply IS cooler than tan — so the built mass still pops off
      it (220): the bug was the cyan, never the coolness. */
-  if(LEAFN.has(name))return CCACHE[k]=washRGB(BASE[name],f,1.08,1.15,1.06);
+  if(LEAFN.has(name))return CCACHE[k]=washRGB(BASE[name],f,1.08,1.15,1.06,goldenWash());
   /* the timber takes the SAND's wash, by calling it — not by copying its triple, which
      could then drift from it. The boardwalk runs onto the beach; they should dim alike. */
   if(WARMN.has(name))return CCACHE[k]=sandCol(name,f);
@@ -672,8 +697,13 @@ function col(name,f){ /* f: face brightness */
    only the stolen luminance is handed back. THE INVARIANT THIS RESTORES SPANS THE SET, so no
    single caller's gate can see it: NO UNLIT SURFACE MAY OUT-BRIGHTEN THE LIT ONES. Check it
    with probes/probe-goldenhue.mjs, which now asserts it, whenever you touch a triple. */
-function washRGB(b,f,gr,gg,gb){
-  const w=clamp((LITAMT-0.35)/0.35,0,1);
+function washRGB(b,f,gr,gg,gb,gold){
+  /* two ends of the day, ONE wash (iter 265). The night dial rises as the light dies; the golden
+     dial is supplied by the caller and is nonzero ONLY for a surface an ORANGE illuminant rotates
+     (the greens). They barely overlap — at the golden pin LITAMT is 0.34, just under this cut — so
+     the max() is a handover, not a blend. `gold` defaults to 0, which is what keeps sandCol and the
+     timber byte-identical at every hour: they are warm, and a warm light is not their enemy. */
+  const w=Math.max(clamp((LITAMT-0.35)/0.35,0,1), gold||0);
   const L=TINT[0]*0.30+TINT[1]*0.59+TINT[2]*0.11;   /* the wash's own luminance */
   const n=1/(gr*0.30+gg*0.59+gb*0.11);              /* ...and the triple, luminance-neutralised */
   const t=[lerp(TINT[0],L*gr*n,w),lerp(TINT[1],L*gg*n,w),lerp(TINT[2],L*gb*n,w)];

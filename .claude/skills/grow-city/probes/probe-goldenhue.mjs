@@ -40,7 +40,15 @@ const PAGE = pathToFileURL(process.env.SRC || join(HERE, '../../../../solvista.h
 
 const SEEDS = [7, 42, 1234];
 const WARP = 61;
-const LIGHTS = [['day', 0.30], ['golden', 0.68], ['night', 0.92]];
+/* ⚠ THE GOLDEN PIN IS DERIVED IN-PAGE, NEVER TYPED (iter 265; 264's law, arriving on THIS probe).
+   For its whole life this probe pinned golden at a literal `t=0.68`. That was TRUE when written:
+   the light curve had no `year` term, so a fixed `t` really was a fixed phase. Then 261 gave the
+   season a DAY LENGTH (`sunWarp` warps the curve's TIME AXIS) -- an unambiguously good change that
+   passed every gate -- the curve moved under the literal, and 0.68 silently slid into MID-AFTERNOON:
+   GWARM 0.36 of a possible 0.786, UNDER HALF STRENGTH. So every golden reading this probe has ever
+   taken -- including the ones cue (s) was closed on -- was of a frame that was not golden.
+   `null` = derived below, as the argmax of the shipped GWARM, exactly as shot-stepback does (264). */
+const LIGHTS = [['day', 0.30], ['golden', null], ['night', 0.92]];
 const KINDS = ['PARK', 'FOREST', 'ROAD', 'RES', 'MID', 'TOWER', 'COM', 'FARM', 'BEACH', 'WATER'];
 /* the pairs whose distinctness the agents said golden hour destroys.
    BEACH vs ROAD is 214'S OWN HEADLINE PAIR -- "the sand and the asphalt literally become the
@@ -108,8 +116,18 @@ for (const seed of SEEDS) {
     const R = Math.max(2, Math.round(hexW * 0.42 * dpr));   /* inside the hex, clear of neighbours */
     const W = cvs.width, H = cvs.height;
 
-    const out = { hexW, box: {} };
-    for (const [nm, t] of LIGHTS) {
+    /* golden hour = the ARGMAX of the curve's own warmth signal, FOUND not guessed (264).
+       Drive the shipped GWARM rather than re-implementing it (249), and search the DUSK band
+       only, as shot-stepback does -- dawn ties on GWARM and is not the hour anyone shoots. */
+    let goldenT = 0, best = -1;
+    for (let t = 0.55; t <= 0.95; t += 0.005) {
+      __setTime(t); render();
+      if (GWARM > best) { best = GWARM; goldenT = t; }
+    }
+    const lights = LIGHTS.map(([nm, t]) => [nm, nm === 'golden' ? goldenT : t]);
+
+    const out = { hexW, box: {}, goldenT: +goldenT.toFixed(3), goldenGW: +best.toFixed(3) };
+    for (const [nm, t] of lights) {
       __setTime(t);
       lastSky = 0; render();             /* 204: force the sky, frozen clock won't */
       const img = ctx.getImageData(0, 0, W, H).data;
@@ -138,7 +156,12 @@ for (const seed of SEEDS) {
   }, { KINDS, LIGHTS, seed, WARP });
 
   for (const [nm] of LIGHTS) for (const k of KINDS) acc[nm][k].push(...res.box[nm][k]);
-  if (seed === SEEDS[0]) console.log(`\n(area sample: hex is ${res.hexW.toFixed(1)}px on screen; each instance read over its own box, not one centre pixel — iter 251)`);
+  if (seed === SEEDS[0]) {
+    console.log(`\n(area sample: hex is ${res.hexW.toFixed(1)}px on screen; each instance read over its own box, not one centre pixel — iter 251)`);
+    /* 202: the frame self-reports its own pin, so a stale one is caught by the TOOL. The old
+       literal 0.68 reads GWARM 0.36 here — under half of what the curve actually offers. */
+    console.log(`(golden pin DERIVED, not typed — iter 265: t=${res.goldenT}, where GWARM peaks at ${res.goldenGW}. The old literal t=0.68 was shooting GWARM 0.36.)`);
+  }
 }
 await b.close();
 
@@ -235,4 +258,21 @@ for (const k of ['BEACH', 'RES', 'PARK', 'FOREST']) {
   const off = Math.min(dh, 360 - dh);
   console.log(`  ${k.padEnd(7)} day ${String(Math.round(rgb2hc(M[k]['day']).h)).padStart(3)}deg -> night ${String(Math.round(rgb2hc(M[k]['night']).h)).padStart(3)}deg   ${off.toFixed(0).padStart(3)}deg off its daylight self${off > 60 ? '   <-- ROTATED' : ''}`);
 }
+
+/* THE SAME GATE, AT THE OTHER END OF THE DAY (iter 265) -- and it is the SCORE of the golden lap,
+   not a guard. 221's law is explicit: for an IDENTITY/HUE claim, gate on the surface's distance
+   from ITS OWN DAYLIGHT SELF, never on its separation from other surfaces -- a pairwise metric can
+   reward the very bug you are fixing. The greens are the treatment (an ORANGE illuminant rotates a
+   green); the WARM surfaces are the CONTROL and MUST NOT MOVE, because a warm light is not their
+   enemy and sandCol deliberately passes no dial. If BEACH/RES rotate here, the wash has leaked. */
+console.log('\nGOLDEN GUARD -- each surface\'s GOLDEN hue vs its OWN daylight hue (221, and the score of iter 265)');
+console.log('  greens = TREATMENT (an orange light rotates a green) | warm surfaces = CONTROL (must not move)\n');
+for (const k of ['PARK', 'FOREST', 'BEACH', 'RES', 'ROAD']) {
+  const dh = Math.abs(rgb2hc(M[k]['golden']).h - rgb2hc(M[k]['day']).h);
+  const off = Math.min(dh, 360 - dh);
+  const role = (k === 'PARK' || k === 'FOREST') ? 'treatment' : 'control  ';
+  console.log(`  ${k.padEnd(7)} ${role}  day ${String(Math.round(rgb2hc(M[k]['day']).h)).padStart(3)}deg -> golden ${String(Math.round(rgb2hc(M[k]['golden']).h)).padStart(3)}deg   ${off.toFixed(0).padStart(3)}deg off its daylight self`);
+}
+console.log('\n  HEAD: PARK 23deg off, FOREST 24deg off — rotated onto ROAD (24deg) and BEACH (25deg).');
+console.log('  The land SHOULD warm at dusk (257); it should not all warm onto ONE hue.');
 process.exit(breaches.length ? 1 : 0);

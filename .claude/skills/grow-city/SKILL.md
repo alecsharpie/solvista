@@ -701,6 +701,36 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **AN ILLUMINANT PROTECTS ONE SET OF SURFACES AND DESTROYS ITS COMPLEMENT — AND YOU WILL ONLY EVER BUILD THE
+  LADDER FOR THE HALF THAT BROKE FIRST (iter 265).** 214's law says a flat per-channel multiply on a saturated
+  surface is a **HUE ROTATION**, not a tint. It is right, it is one of the loop's best findings, and it built a
+  five-lap ladder (214 sand · 220 masonry · 221 greens · 223 · 234 timber) — **all of it at NIGHT**, because the
+  night tint `[.42,.42,.58]` crushes R and swings every **WARM** surface to violet. The **GOLDEN** tint
+  `[.92,.72,.66]` is that bug's **exact mirror** — it crushes G and B, so on any surface whose identity is its
+  **GREEN**, R overtakes G and the grass renders **orange** — and in **264 iterations nobody read it as the same
+  bug**, while the ledger's #1 cue (*"the amber wash flattens the whole plate into near-monochrome terracotta"*)
+  pointed straight at it. Measured: every land surface converges into a **9-degree hue band** (PARK 32° · ROAD
+  24° · BEACH 25°), the greens rotate **32°** against the warm surfaces' **14°**, and the grass **crosses the
+  channel-order boundary** (G→R max) — *the qualitative break, and it needs no threshold*. ⇒ **A correction
+  mechanism gated on ONE light regime has a twin you have not written.** When you find a wash/tint/adaptation
+  keyed to one end of the day, **ask what the illuminant looks like at the OTHER end, and which surfaces are
+  its complement.** The tell, and it is precise: **214's own audit was banked as a SUFFICIENT test on a SPECIFIC
+  HUE** (*"any warm surface landing near hue ~308 with chroma <15 has been rotated"*) — a test that **can only
+  ever fire at night**, and so was structurally incapable of ever finding this. **Audit by `dHUE` — the
+  surface's angular distance from its OWN daylight self (221) — which is meaningful under ANY illuminant.**
+  ⇒ **AND THE FIX IS A DIAL ON THE MECHANISM YOU ALREADY HAVE, NOT A SECOND ONE.** `washRGB` took one extra
+  argument (`w = max(nightDial, gold)`, defaulting to 0) and the complement set — `LEAFN`, *the artifact's own
+  word for "anything that grows"* — passed it. The warm callers pass **nothing** and stay **byte-identical at
+  every hour**, which is what keeps the lap from *fighting the light*: the land is diffuse and it **should**
+  blaze at dusk (257). **Do not de-warm the scene to fix this; protect the complement.** The lap that damps the
+  whole illuminant is the one that makes the parks look *unlit*, and an agent will say so.
+  ⇒ ⚠ **AND THE DIAL MUST READ THE QUANTITY THE COLOUR CACHE IS KEYED ON.** The obvious signal was `GWARM` — and
+  it is **wrong**, because `CCACHE` is flushed precisely when **`TINT`** changes, so a `GWARM`-derived dial can
+  serve a **stale colour** whenever the two fail to co-vary. Deriving it from `TINT` instead (`TINT[0]-TINT[2]`,
+  the illuminant's own warm-cool) makes the cache correct **by construction** — 261's law (*a rule you must
+  remember is worse than a rule you cannot break*) arriving on a **cache** instead of on a call order. **Before
+  keying a draw to a global, ask what invalidates the memo in front of it.**
+
 - **A PIN IS A LITERAL ONLY UNTIL SOMEBODY GIVES THE CURVE A NEW INPUT — AND THE LAP THAT ROTS YOUR CAMERA IS THE LAP
   THAT *IMPROVES THE ARTIFACT*, SO NOTHING WILL EVER FAIL AT THE TIME (iter 264).** 202 says: take the light pins from
   the curve, never from intuition. It is right, it fixed a real bug — and then it **wrote the answers down as literals**
@@ -732,6 +762,24 @@ vector, whatever it is.
   the labels, and **cross the mapping between seeds** (238). Both blind agents then named winter **from the light
   alone**, one of them reciting the mechanism unprompted (*"sun already set = shorter day = winter"*). **A pair the
   agent must discriminate is worth more than any number of frames it can merely describe.**
+  ⇒ ⚠ **AND THE LAW RECURSED ON THE VERY NEXT LAP, BECAUSE 264 FIXED THE *CAMERA* AND LEFT THE *PROBE* (iter 265).** 264
+  derived `shot-stepback`'s pins from the curve and declared they *"cannot rot again."* They cannot. But
+  **`probe-goldenhue` — the instrument the ledger's #1 cue NAMES — still pinned golden at a literal `t=0.68`**, so the
+  loop's *measurement* of its loudest defect had never been taken at golden either (**`GWARM` 0.36 of 0.779**), and the
+  cue had been graded through a half-strength pin for its whole life. ⇒ **A stale pin is a property of a CURVE, not of a
+  FILE: when you fix one, `grep` every OTHER reader of that curve and fix them in the same lap.** This is **262's law
+  arriving on the HARNESS** (*a fix applied to an entity is not applied to its dependents*), and the tell is identical —
+  your fix's own header explains why a typed constant is the wrong way to name a signal, and another file in the same
+  directory still types it.
+  ⇒ ⚠ **AND A SUPPRESSION MASK'S THRESHOLD SELECTS *OPACITY*, SO A LOW ONE MEASURES THE BACKGROUND (iter 265; sharpening
+  234).** 234 says loud-paint `BASE[name]`, diff in one page, and the changed pixels **are** that draw. True — but *how
+  much* a pixel changes is proportional to **how much of that draw is IN it**, so a threshold of `d>24` against a
+  ~419-unit full-opacity swing admits pixels that are only **~6% the thing you are measuring** and **94% whatever lies
+  under it**. Averaging their *shipped* colour then reports the **background**: faint alpha-blended green specks lying on
+  TAN ground dragged the greens' mean **8 RGB units toward orange** and reported the grass as R-dominant when the grass
+  **FILL** was not — which nearly cost a correct fix a doubling of its constant. ⇒ **Set the mask threshold as a fraction
+  of the loud-paint's OWN full-opacity swing, not as a small integer**, and say which opacity you kept. The tell: your
+  mask's cutoff is a number nobody chose for a reason, and your subject is drawn with **alpha**.
 
 - **A SPREADING RULE IS *SPARK + SPREAD + REFRACTORY*, AND A LAP THAT ONLY FIXES ITS *HOST* WILL SHIP A RULE THAT STILL
   CANNOT RUN. CHECK THE SPARK'S **SAMPLE SPACE**, NEVER ITS RATE (iter 263).** 218 says measure a roll's conversion rate
@@ -2418,7 +2466,30 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   *the eye reads the EXTREME* (224) — under which **pristine HEAD PASSES by 21**. ⚠ It also carries **`BEACH↔ROAD`**,
   **214's own headline pair**, which it never had: that is the guard any change to the night sand must clear, and it
   is what convicted 251's own patch. **Trust it again; do NOT re-open the night sand or the night greens (cue (ag) is
-  CLOSED, refuted).**
+  CLOSED, refuted).** ✅ **REPAIRED AGAIN at 265, and this time it was the CLOCK**: it pinned golden at a literal
+  **`t=0.68`** — the pin 261's `sunWarp` rotted and 264 fixed *in the camera but not here* — so it had been grading the
+  ledger's #1 cue at **`GWARM` 0.36 of 0.779**, under half strength, for its whole life. The pin is now **DERIVED
+  in-page as the argmax of the shipped `GWARM`** (249) and the frame **self-reports it** (202). ⚠ **But it samples the
+  PARK HEX, and a park hex is only 45% lawn + 12% canopy — the other 43% is season-dead paths, ponds and furniture
+  (238)** — so it **dilutes a vegetation change by more than half** and reported a **3°** move where the grass itself
+  moved **15°**. **For any claim about the GREENS themselves, use `probe-greenhue`, not this.**
+  The **green pair** (265 — reach for these on any vector about an ILLUMINANT, a wash, or a surface's COLOUR IDENTITY
+  under a light): `probe-greenhue.mjs` (**does this light rotate the greens off their own hue?** 234's palette
+  suppression aimed at **`LEAFN`** — loud-paint the entry, diff in ONE page, and the changed pixels ARE the greens:
+  floor exactly **0**, occlusion free, **BUILD-AGNOSTIC** (the mask comes from each build's own render, so it runs
+  unchanged on HEAD and patch with no source swap and no cross-build floor). Scored on **221's `dHUE`** — the surface's
+  distance from its OWN daylight self, never a pairwise separation — beside the one binary that needs **no threshold at
+  all**: **is G still the MAX CHANNEL, i.e. is the grass still GREEN?** (HEAD reads **NOT GREEN on 3/3 seeds**, which is
+  the defect stating itself — 236.) ⚠ **Its WARM-palette column is the must-not-move control** (250): `sandCol` passes
+  no golden dial *on purpose*, so if the sand rotates, the wash has leaked and the lap is **fighting the light** instead
+  of fixing the collapse. ⚠ **Its DAY column is the free dead-regime control** (199) — the dial is 0 at noon, so daylight
+  must come back **identical**. ⚠ **Its mask threshold is 150, ≈36% opacity, and that is LOAD-BEARING** — see the law:
+  at 24 it measures the tan ground under the specks), `shot-greenhue.mjs` (its camera — whole plate **un-zoomed** (the
+  complaint is a whole-plate one) plus a close-up **aimed by measured ink** (226/234), pin **DERIVED** from `GWARM` never
+  typed (264), frames named **by FILE** (239) with the map **CROSSED between seeds** (238). ⚠ **Its DAY frame is a
+  REQUIRED POSITIVE TWIN, not decoration** (258): the two day frames must be indistinguishable, and if an agent can tell
+  them apart the patch has leaked into daylight. ⚠ **`window.__fit` DOES NOT EXIST** — the fit camera is the globals
+  `fitScale`/`fitX`/`fitY` (L8467); `shot-canopy.mjs` still carries the dead reference).
   `probe-deckhue.mjs` (234 — **the colour of a draw that has NO TILE TYPE.** Loud-paints `BASE.deck`, diffs
   inside one page, and the changed pixels ARE the deck (see the palette-suppression law): reports its rendered
   hue / chroma / luminance, and gates on **`dHUE` — its angular distance from its OWN daylight hue** (221),
