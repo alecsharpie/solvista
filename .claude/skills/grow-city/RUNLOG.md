@@ -207,4 +207,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 274  Urban fabric × Polish      SHIPPED             28m54s   $13.58 fbcd805
 ✔ Iter 275  Water & coast × Polish     SHIPPED             59m40s   $19.84 4a70365
 ✔ Iter 276  Transport × Connect        SHIPPED             81m01s   $18.66 25c4786
+✔ Iter 277  Civic & culture × Deepen/FIX FIXED               27m34s   $14.05 8ed0855
 ```
