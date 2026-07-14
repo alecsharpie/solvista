@@ -1,6 +1,18 @@
 #!/usr/bin/env node
 /* IS THE SEA A QUILT? — the lattice-step probe (iter 257).
  *
+ * ⚠⚠ READ THIS FIRST (iter 268). THIS PROBE MEASURES THE WRONG PAIR, AND IT WILL ACQUIT A REAL QUILT.
+ * It reports the step between two DEPTH-ADJACENT hexes — tone k vs tone k+1. But two tones one step
+ * apart on a quantised scale NEED NOT BE NEIGHBOURS IN THE WORLD, and the step the eye reads is
+ * between two hexes that TOUCH. Every number below is true and it certified the day sea at
+ * step/chroma 0.14 while both step-back agents, blind, on both seeds, called that same day frame
+ * "a hexagonal quilt". The seabed was putting a >=2-tone jump on 5% of TOUCHING pairs (up to 31 RGB)
+ * and this probe cannot see one. ⇒ For any claim a VIEWER makes, use `probe-seaquilt.mjs`.
+ * Use THIS one only for the depth ramp itself (i.e. 257's own question: does the golden tint
+ * desaturate the sea until its depth terrace has no colour to hide behind?).
+ * ⚠ It also still TYPES `golden: 0.68` (see PINS below) — 92% of golden at the dry peak, mildly
+ * under-strength. DERIVE the pin from GWARM's argmax in anything new (264/265).
+ *
  * 255's law: a smooth field sampled once per hexagon and painted as a FLAT FILL is
  * piecewise-constant on the lattice, so its steps land exactly on the hex boundaries and
  * the surface reads as a tiled mosaic rather than as a sea. 255 learned that by BUILDING

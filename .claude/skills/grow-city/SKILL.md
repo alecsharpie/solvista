@@ -701,6 +701,48 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **A PROBE'S *ADJACENCY* IS AS WRONG-ABLE AS ITS UNITS — AND A "SMOOTHED" HASH IS NOT A SMOOTH FIELD, IT IS A
+  BLOCKY ONE (iter 268).** 228's law says re-derive the instrument from the complaint's nouns; 238 says check *where*
+  it samples; 235 says read what it *measures*. 268 is the fourth axis, and it is the one that will hand you a passing
+  number about the wrong pair of things: **check WHICH TWO THINGS your probe COMPARES.** `probe-seastep` (257) grades
+  the sea's terracing by the RGB step between two **DEPTH-ADJACENT** hexes — tone `k` vs tone `k+1`. Every number it
+  prints is true, it certified the day sea at step/chroma **0.14** as *the bar the artifact has always accepted*, and it
+  is **the wrong pair**: two tones one step apart on a *quantised scale* need not be **neighbours in the world**, and the
+  step the eye reads is between two hexes that **TOUCH**. Re-measured on touching pairs, the mean *acquits* (5.4 against
+  a noise-free floor of 4.6; step/chroma **0.07**, half the certified bar) — **and the defect is entirely in the TAIL**
+  (224/241a, again): the seabed put a **≥2-tone jump on 5.0% of all touching sea-hex pairs**, up to **31 RGB**
+  (step/chroma **0.41**, ~3× the accepted bar), scattered at random through open water. Both step-back agents, blind, on
+  both seeds, called it *"a hexagonal quilt… you count the tiles before you see water"* — **in the DAY frames the banked
+  probe had certified.** ⇒ **When a probe and two agents disagree, ask what PAIR each is comparing** (200/205's
+  what-is-each-looking-at, on the *relation* rather than the *layer*). The tell: your metric is a difference, and the two
+  operands are adjacent in a **VALUE** space (a tone, a rank, a bucket) rather than in the **SPACE THE VIEWER SEES**.
+  ⇒ **AND THE CAUSE IS A DESIGN LAW WORTH MORE THAN THE FIX: `hashCell(x>>1, y>>1)` IS NOT A SMOOTHED HASH — IT IS A
+  BLOCKY ONE.** A spatial hash is **white noise**; downsampling its *coordinates* does not low-pass it, it makes it
+  **piecewise-constant** — constant inside each 2×2 block and an **independent uniform draw across every block edge**.
+  So a field built this way is *maximally discontinuous exactly at the boundaries a viewer can see*, and the comment
+  above it promising **"shoals and channels rather than contour lines"** named a structure its own mechanism **cannot
+  produce** (199's tell, hosted one rung below a comment's *claim*: a comment's **MECHANISM**). A coherent shoal must be
+  **CONTINUOUS**; interpolate between the lattice points (`seaOct`: same octaves, same weights, same amplitude, same
+  mean, smoothstep-interpolated) and the hard seams fall **5.0% → 1.4%** with the **must-not-move column holding** (the
+  seabed's own variance, 0.361 → 0.364 — *smoothed, not flattened*). **Before trusting any `hash(x>>k, …)`, ask whether
+  you wanted a BLOCK or a GRADIENT.** They are different fields, and only one of them is noise you can see through.
+  ⇒ ⚠ **AND WHAT IT CANNOT FIX IS THE LAW YOU MUST NOT THEN RE-OPEN: the ONE-TONE terrace survives in EVERY variant**
+  (p90 = 11.0, noise-free included) — **255's ⛔, a per-hex flat fill terraces onto the lattice BY CONSTRUCTION.** 268
+  removed the hard **SEAMS**; it did not and cannot remove the **LATTICE**. **A field fix buys you the tail, never the
+  quantisation** — that needs a different rendering unit, not a different field.
+- **AN A/B GIVEN *ORDINAL* NAMES IS NOT BLIND — `one`/`two` CARRIES THE SAME ORDER `A`/`B` DOES (iter 268, sharpening
+  239).** 239 says: name the FILE, never a letter, because a letter is a pointer the agent must maintain and pointers
+  get swapped. Correct — and it is **half** the defence, which is exactly how 268 walked back into it. I named the blind
+  pair `s42-one-sea.png` / `s42-two-sea.png`: file names, self-identifying, per the law — **and ordinals**. On a
+  **crossed** map, *both* agents chose **"two"**, i.e. they agreed with the **POSITION** and thereby disagreed about the
+  **BUILD**; one of them also described the patch with a property (*"per-cell independent, high-frequency"*) that is
+  **arithmetically impossible** for it to have. Re-shot with **meaningless tokens** (`kappa`/`sigma`) and the **position
+  crossed as well**, the same question came back honest: one agent named the fix and **measured the frames itself** to
+  prove it, the other said **"I truly cannot tell them apart"** rather than inventing a difference — *which is the
+  answer a working blind gate is allowed to give.* ⇒ **A blind pair's names must carry NO order, NO alphabet and NO
+  seniority, and the treatment must not sit in the same POSITION on every seed.** The tell: you could sort your frame
+  names. (And note the payoff: the crossing is what *detected* the bias — with an uncrossed map both agents would have
+  "agreed", and I would have shipped on a consensus that was purely positional.)
 - **A DIFFUSED FIELD CARRIES THE CELL'S OWN SOURCE TERM — SO A RULE THAT ASKS A CHEAP TILE "ARE YOU VALUABLE YET?" IS
   ASKING IT TO CONTRADICT ITS OWN DEFINITION, AND IT WILL NEVER FIRE. SCORE THE NEIGHBOURHOOD, NOT THE LOT (iter 267).**
   218 says a *saturated* roll is a dead lever; 263 says a rule's ignition is a *distribution over a space*. 267 is the
@@ -2859,6 +2901,20 @@ marginal filler instead — until a framing was found that made it low-risk. So:
   `SRC=$(git show HEAD:solvista.html)`, which passes ~200KB of HTML *as a filename* and dies in `page.goto`; iter 259).
   Use `git show HEAD:solvista.html > /tmp/head.html && SRC=/tmp/head.html node …` — **no `/bin/cp` swap, so no
   197-class stale-backup hazard**. 222 says COUNT your objects rather than infer them from your diff; this is how),
+  The **sea-quilt pair** (268 — reach for these on any claim about a TILED SURFACE's continuity, and on any field built
+  from a `hash(x>>k, …)`): `probe-seaquilt.mjs` (**the step between hexes that actually TOUCH** — the pair
+  `probe-seastep` does *not* measure. Render-free: the artifact's own `rDeep` + `seaFace()`, no pixels, no clock, no
+  noise floor, nothing to stub. ⚠ **Read its `>=2-tone jumps` column, NEVER its mean** — the mean sits on the noise-free
+  floor and *acquits* (the defect is 5.0% of pairs, in the tail: 224/241a). ⚠ **Its `tone SD` is the MUST-NOT-MOVE
+  column** (250): the two octaves exist to give the sea *shoals*, and a "fix" that flattens them into depth contours has
+  destroyed the feature to fix its render. ⚠ **`DEPTH` (noise off) is the FLOOR** — if HEAD sits on it, the noise is
+  innocent and you are in the wrong file; ⚠ **`SHIPPED` reads the artifact's REAL `seaT`** (248's Part B), so the table
+  grades the draw the city makes and not your model of it. Retarget it at any quantised per-hex field),
+  `shot-seaquilt.mjs` (its camera — **aimed by the measured DEFECT**: it centres on the sea hex with the most hard
+  jumps around it, i.e. where the quilt provably *is*, and `AIM=wx,wy` forces the identical hex onto the other build so
+  the pair is blind. ⚠ **Every frame SELF-REPORTS what fraction of it is actually SEA** (202) — the first cut framed a
+  crop that was **45% sky**, and the tool caught it instead of an agent. ⚠ **Bound the crop by its EXTENT, not its
+  anchor** (248): a rim hex can have six sea neighbours and still sit at the plate's edge),
   `probe-seastep.mjs` (257 — **IS THIS TILED SURFACE A QUILT?** The **cheapest instrument in the harness**: no render,
   no clock, no pixels, no noise floor, nothing to stub. It asks `seaFace()` directly for the colour of each of the nine
   depth tones and reports the **LATTICE STEP** between two depth-adjacent hexes — so the glints and foam riding *on top*

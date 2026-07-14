@@ -18818,3 +18818,145 @@ gone and the day/night seas are healthy; no z-order tears, no blown-out colour.
 **CLOSED at its worst pin**, and it closed by fixing the *sea*, not the *sun*, which is why five laps of
 looking at the light never found it. A latent HEAD quilt closed with it, free.
 
+
+---
+
+## Rotated out of the maintained header at 268 (header was 406/400 lines)
+
+**The tell's HOST HISTORY (the label/name/comment asserting what the draw ignores), cashed 11x — its host kept moving
+DOWN the stack:** 199 a CONSTANT · 209 a COMMENT · 217 a HALF-FINISHED FIX · 238 a palette entry NO DRAW COULD REACH ·
+252 TWO CONSTANTS naming an event that never moves · 262 A SIBLING DRAW INSIDE THE FUNCTION A PRIOR FIX HAD ALREADY
+EDITED · 263 A WHOLE CA THAT HAD NEVER RUN (a tooltip printed `In bloom / Gone over / Not in flower` over a rule whose
+host the city had eaten and whose spark was aimed at the VOID) · 267 THE PLACARD ITSELF (*"Warehouses become lofts…
+once the rent says so"* — over a gate the rent could never reach) · **268 A COMMENT NAMING A STRUCTURE THE VALUE'S
+MECHANISM CANNOT PRODUCE** (the seabed's *"shoals and channels"*, built from `hashCell(x>>1,y>>1)` — a downsampled
+spatial hash, i.e. blocky white noise, which cannot be a coherent shoal). The law is in SKILL.md.
+
+**The FAIL/ASIDE LAW's per-iteration TALLY (212).** Paid out: 213, 214×2, 215, 217, 219, 232, 236, 242, 245, 263 (both
+agents' aside ⇒ cue (f)). INVERTED (the headline FAIL was RIGHT): 237, 252, 255, **268**. The law and its corollaries
+live in SKILL.md; the header keeps only the count and the inversions.
+
+**The CLOSED / RETIRED CUE ROSTER, rotated out of the header at 268.** (w)/(z) closed 229 · (t) 231 · (u) 234 ·
+(af′) 235 · (al) 239 · (am) 241 · (an) 243 · (ah) 244 · (ab) RETIRED into (ak) 238 · ⛔ (ai) RETIRED 246 (UNREACHABLE —
+no paired addition exists; the ROADS fragment every lobe) · ⛔ (ag) CLOSED 251 (REFUTED on every count) · (aq) CLOSED
+253 · ✅ (s) CLOSED 265 · ✅ (ap) CLOSED 266. Their live warnings, all of which are also carried as laws in SKILL.md:
+⚠ **(s): DO NOT DE-WARM THE SCENE — protect the complement.** `goldenWash()` reads **`TINT`, NEVER `GWARM`** (`CCACHE`
+is keyed on TINT's flush ⇒ a GWARM-derived dial serves a stale colour). Instrument it with **`probe-greenhue`**, NOT
+`probe-goldenhue` (which samples the PARK HEX, 43% season-dead).
+⚠ **(ag)/(ap): do not re-open the night sand, the night greens, or the sea's foam.**
+
+**CLOSED LADDERS, rotated out of the header at 268 — DO NOT RE-OPEN. Every law is in SKILL.md.** The WASH ladder
+(214→220→221→223→234; audit by `dHUE`, never a target hue) · the TOWER LOOK (228 crown + 235 footprint) · the SKYLINE
+ladder (217→224, `c.th` SPENT) · the HUD lap (229 — both cues were the HARNESS) · 137's standing-crowd cue (226) · the
+SEASONAL-VEGETATION seam (238 + 252, measured-capped).
+
+## Iteration 258 — the cab had a livery, a curfew and a tooltip, and no job (2026-07-14) [Transport × Deepen]
+
+**Vector.** Transport × Deepen — the rotation's own call (Transport stale since 249; 257 went
+off-rotation and the header said the debt was due). It is **249's ferry, on wheels**, and the
+seam was found by grepping the Transport seam exactly as 225's law prescribes.
+
+**The tell, stated by the artifact itself.** ~1 in 6 cars has worn a lemon livery and a checker
+band since **164** gave it its paint; **230** gave the flag a meaning after *dark* (the cab keeps
+no curfew, so its share of the traffic climbs through the small hours) and wrote, in the source,
+*"the flag has never MEANT anything. Now it does."* **In the DAY it still meant nothing.**
+`stepVehicle` random-walked a cab exactly like an ordinary car, and its tooltip said
+**"For hire — flag it down"** over a car that had never once stopped for anybody. Its roof sign
+even carried an **amber lamp** — gated on nothing but `LITAMT>0.3`, i.e. on *darkness*, when the
+one thing a roof light has ever meant is **FOR HIRE**.
+
+**Probe before design, and it went 3 for 3 (`probes/probe-taxifare.mjs`).**
+- **PART A — the host is REAL** (the dead-code check first: `T.MARKET`, the plazas, the fire CA).
+  Pure world data, no render, no clock. `livelyKerb` — *"the ONE definition of a lively kerb"*,
+  already read by **two** readers (`syncFleet`'s home pool, `homeGround`'s re-anchor) — gives
+  **125–147 kerbs per city** at 2035 (14–18% of all road cells), and **67–71% of every road cell
+  is within 3 steps of one over the road graph the cab actually drives** (87–96% within 6). A
+  random-walking cab is never far from a fare. ⚠ **No birthday, though**: 1985 already has 43–60
+  kerbs, so 249's free dead-regime control was **not** available and I did not claim one.
+- **PART B — the defect, with no threshold invented** (236: HEAD's constant IS the baseline).
+  Temporal (134 — every other gate here is frozen, so *"it never stops"* has no instrument),
+  driving the artifact's **own** `advanceEntities`, never a re-implementation (249):
+  **TAXI STOPS = 0, on every seed, forever.** ⚠ And the **BUS**, in the same array and the same
+  function, reads **72/152/80** — a **free positive control** (248: a correct sibling draw
+  validates the rig), so the taxi's zero is a **real zero, not a dead instrument** (196/250).
+
+**Change — nothing invented; the house already owned both halves.** `dwell` is `stepVehicle`'s
+**own** word for a call (the bus has pulled into its stops for 200 iterations, ten lines up), and
+`livelyKerb` is the host. So a cab crossing a lively kerb rolls for a fare, stands while it gets
+in, and is then **hired for the ride** — `dwell` **IS** the ride, so the cooldown and the fare are
+the same fact and a cab cannot be hired twice. **ONE predicate (`cabFree`), three readers**: the
+**step** (a hired cab drives straight past the next kerb), the **draw** (the roof lamp becomes a
+FOR-HIRE sign), and the **tooltip** — 112's law running *forwards*.
+⚠ **NOT a `peds` vector, deliberately (111):** a resident is leashed to its anchor, so
+*"somebody hails a cab"* is structurally capped at ~a quarter of any road-borne host. **The fare
+is implied by the BUZZ FIELD, not by a drawn figure**, so the cap simply does not apply.
+
+**Census. PASS — every metric +0, tile histogram empty.** Not even the documented ±2 tick wobble.
+`Math.random` only (as the taxi flag and the bus dwell already are), no `rng()`, no terrain ⇒ the
+seeded stream is byte-identical, **proven rather than asserted**.
+
+**Probes.**
+- **Taxi stops 0 → 58 / 48 / 28.** **HIRED% = 41.1 / 40.3 / 31.3** — at a glance, about a third of
+  the cabs show a dark roof lamp. Stated in the **viewer's** units (205), not in the units of
+  `CABFARE`, so it needed no tuning.
+- **CAR control: 0 on EVERY row of BOTH builds** (250 — the must-not-move count beside the
+  must-move one). The fix did not leak out of its class.
+- **⚠ 204 BIT, AND THE FIX WAS AN EXACT CONTROL.** The first run had seed 42's *taxi count* move
+  **6 → 3** and the bus drift — impossible, since the flag is set in `syncFleet` at spawn. It was
+  the **shared stubbed `Math.random`**: my rolls draw from it, so every consumer downstream walks a
+  different walk. Two fixes, both banked laws: **re-seed IN-PAGE** (248 — `addInitScript` fixes the
+  PRNG *function*, but the stream **position** at load is wall-clock dependent), and a **CABS-OFF
+  control** (230 — suppress the *decision*, not the build: with no car flagged a cab, `v.taxi&&…`
+  short-circuits and the roll is **never drawn**, so the patch runs HEAD's stream **exactly**).
+  ⇒ **CABS-OFF reproduces HEAD byte-identically — bus `77/165/76`, every population — on both
+  builds.** An **exact** control, not a statistical one. The shipped bus column still drifts a
+  little (77→76, 165→167, 76→86); that is the stream, and CABS-OFF is what proves it.
+
+**⚠ THE CAMERA WAS THE HARD PART, AND THE FIRST VISUAL PASS WAS A FALSE POSITIVE I NEARLY BANKED.**
+The first agent returned **PASS** while telling me, in the same breath, *"the centred vehicle isn't
+a taxi at all — a plain red car."* It had reported the hired frame as **DARK** — which is the
+**correct expected answer** — about a frame **with no cab in it**. I looked myself: the frame's
+centre was a **TOWER**.
+- The cab was at exactly the right world point and **buried behind it**: measured, **14 px of
+  visible ink against 154–167 for the vacant cabs**. Not a camera bug — a property of the **HOST**.
+  `livelyKerb` means *a road with ≥2 ATTRACT neighbours*, i.e. precisely the ground with **tall
+  frontage drawn in the row IN FRONT**. Draw order is depth order, so **the predicate that makes a
+  stop MEANINGFUL is the predicate that BURIES it** (206, sharpened).
+- ⚠ **And I HAD obeyed 226 (aim by measured ink) — it still framed a wall, because there was
+  exactly ONE hired cab and an argmax over n=1 is a lottery ticket, not an argmax.** Fixed by
+  taking the **argmax over TIME**, with a **self-calibrating** bar (205): a cab is well-exposed iff
+  its ink clears **70% of the mean VACANT cab in the same frame** — i.e. *as visible as an ordinary
+  car in an ordinary place*, which is the incumbent, not a number I chose.
+- **PART C — measure the POPULATION, not the instance (206), and the n=1 story inverts.** Mean
+  visible ink per cab, by state: **VACANT 37/32/34 · HIRED+MOVING 29/31/30 · STANDING 22/27/26.**
+  ⇒ **A hired cab is as visible as any other car**, so the roof lamp reads wherever a cab drives;
+  only the *stop* sits in dense ground, and it still keeps ~75% of an ordinary car's ink. The 14px
+  cab was an unlucky single draw.
+- ⚠ **A STILL FRAME CANNOT SHOW THAT A CAR IS STOPPED** (134, arriving on the *visual gate*). The
+  day close-up was **deleted**, not tuned: the stop is a claim about **motion**, and its gate is
+  Part B. The gate was re-aimed at the **state the behaviour leaves behind** — the lamp.
+
+**Visual — 2 agents × 2 seeds, blind, files named never lettered (239). BOTH PASS, and both hit
+ground truth on every LOCATE call** (108 — a wrong answer would be *visibly* wrong):
+`cab-hired-night` **DARK** · `cab-vacant-night` **LIT** · HEAD's cab **LIT** (HEAD never darkens a
+lamp). Both discounted the street-lamp bloom and the headlights as distractors, unprompted. Seed 7:
+*"a distinctly bright amber/gold dot sits directly on top of the roof box… **unambiguous versus the
+hired frame**."* Whole-city day+night clean on both seeds: no z-order tears, no floating tiles, no
+blown-out colour.
+⚠ Seed 7 re-raised the `TRANSIT REA…` HUD clip — that is cue **(ar)**, **REFUTED AND CLOSED at 256**
+(0px overlap measured; the 1400×900 camera is the one width where the panels sit *flush*, and
+flush-in-a-PNG reads as colliding). **Fourth agent, same harness artifact. Not acted on.**
+
+**Tooltip.** Both branches resolve off the **same predicate the rule steers by** (`cabFree`), so the
+label cannot drift from the pixels — which is exactly what it had been doing:
+`VACANT → "For hire — flag it down."` · `HIRED → "Hired — a fare aboard, crossing town."`
+
+**Perf. FREE, counted not inferred (222).** No new draw primitive — the change only *gates* an arc
+that already existed (a hired cab draws one *fewer*). `probe-drawbudget` (`SRC=`, no `/bin/cp`):
+day **110,854 → 110,785**, night **139,598 → 139,671** (±0.05%, entity wobble in both directions).
+
+**Verdict. DEEPENED.** The taxi flag has been in the artifact for 94 iterations, wearing paint
+(164) and then a night shift (230), and it has never once done the job its own tooltip advertised.
+Now the cab works the kerbs where there is something to come out for, goes dark with a fare aboard,
+and says so.
+

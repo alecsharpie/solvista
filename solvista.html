@@ -1348,6 +1348,20 @@ const DEEPR=10, rDeep=new Uint8Array(G*G); /* DEEPR is set so the MEAN sea tone 
    word and the siting cannot drift apart. */
 const SHELF0=3, SHELF1=5;
 const SEASALT=0x5EA;
+/* One octave of the seabed: the hash is sampled on a lattice of spacing 2^sh and
+   INTERPOLATED between its points. Sampling hashCell(x>>sh,…) instead would hold each
+   block constant and redraw independently across every block edge — which is not a
+   seabed but a quilt: it puts a 2–3 tone jump on 5% of touching sea hexes, three times
+   the step the eye already accepts, scattered at random through open water. A shoal has
+   to be CONTINUOUS to read as one. */
+function seaOct(x,y,sh,salt){
+  const s=1<<sh, fx=x/s, fy=y/s, x0=Math.floor(fx), y0=Math.floor(fy);
+  const tx=fx-x0, ty=fy-y0, sx=tx*tx*(3-2*tx), sy=ty*ty*(3-2*ty);
+  const a=hashCell(x0,y0,salt), b=hashCell(x0+1,y0,salt);
+  const c=hashCell(x0,y0+1,salt), d=hashCell(x0+1,y0+1,salt);
+  const t=a+(b-a)*sx;
+  return t+((c+(d-c)*sx)-t)*sy;
+}
 /* The drawn tone, in eighths: 0 shoal -> 8 deep. Derived once per tick with the
    depth, never per frame — the seabed only moves when the coastline does. */
 const seaT=new Uint8Array(G*G);
@@ -1376,7 +1390,7 @@ function seaFill(){
   for(const i of HEXI){
     if(!rDeep[i]){seaT[i]=0;continue}
     const x=i%G, y=(i/G)|0;
-    const n=0.62*hashCell(x>>1,y>>1,SEASALT)+0.38*hashCell(x>>2,y>>2,SEASALT^0x9E3);
+    const n=0.62*seaOct(x,y,1,SEASALT)+0.38*seaOct(x,y,2,SEASALT^0x9E3);
     seaT[i]=Math.round(clamp((rDeep[i]-1)/DEEPR+(n-0.5)*0.30,0,1)*8);
   }
 }
