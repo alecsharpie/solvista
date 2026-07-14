@@ -2151,7 +2151,30 @@ function tick(){
      qualifying house claim the corner and veto any other within 2 hexes (~3 apart). */
   if(year>=1990)for(const i of HEXI){
     const c=cells[i];
-    if(c.t!==T.RES)continue;
+    /* A corner shop belongs to a HOME, not to a HOUSE (iter 281). This pass opened its
+       store on a RES with >=3 developed neighbours — which is precisely the RES->MID
+       upgrade's own precondition — and then skipped every cell that was not still a RES.
+       So it sited its stores on exactly the houses most likely to be redeveloped, and the
+       moment one rose into flats its flag became a GHOST: drawn by nothing (the shopfront
+       lived in drawBuilding's RES branch), named by nothing (the tooltip gated on RES),
+       never absorbed (this pass `continue`d before reaching the re-validation) — and still
+       vetoing every replacement store within 2 hexes, forever. Measured at 2035 over 6
+       seeds: 9 live corner shops against 98 ghosts. 92% of every store the city ever
+       opened was invisible, and the count FELL as the city grew (3.5 -> 1.5) while the
+       ghosts piled up (1.3 -> 16.3). This is the GARDEN's defect, one pass down and 75
+       iterations later (iter 206: a siting rule keyed to a tile the upgrade pass consumes
+       starves itself as the city matures — key it to the CATEGORY, not the TILE), and the
+       category is already in the file: HOMES = {RES, MID}, the same set 206 used.
+         So the store rides the building up, the way a real one does — retail at street
+       level, flats above — which is the idiom the artifact already ships for `c.hstr`
+       (a DRAW property, not a zoning veto; see drawBuilding's TOWER shop podium). A home
+       that is DEMOLISHED (to a garden, a plaza, an institution's grounds) loses its store
+       with its house, which is what finally kills the ghost veto.
+         Still stream-neutral: HOMES changes no tile type, POPW is keyed on type so a
+       corner shop weighs nothing, and eligibility is hashCell — this pass calls no rng().
+       The MID pool is small by construction (measured: 5.0 mid-rises a city clear the
+       retail-gap test, against 413 MID) so re-keying cannot flood the fabric. */
+    if(!HOMES.has(c.t)){if(c.corner)c.corner=false;continue;}  /* the house is gone; so is its store */
     const x=i%G,y=(i/G)|0;
     const nearShop=countAround(x,y,2,n=>n.t===T.COM||n.t===T.MARKET)>0;
     if(c.corner){if(nearShop)c.corner=false; continue;}              /* absorbed when the shops reach it */
@@ -6644,7 +6667,12 @@ function drawBuilding(c,x,y,gx,gy){
        object per band — stays flat and the frame pays nothing. hashCell, no rng(),
        no terrain: stream and pop flat. */
     const fp=5.6+hashCell(x,y,seedNum^0x2B8D)*2.8;   /* floor pitch, mean 7.0 */
-    const ph=3.6+hashCell(x,y,seedNum^0x6C4A)*2.8;   /* first sill,  mean 5.0 */
+    let ph=3.6+hashCell(x,y,seedNum^0x6C4A)*2.8;     /* first sill,  mean 5.0 */
+    /* a corner shop takes the ground floor, so the flats start above its fascia (which
+       tops out at 4.6) rather than through it. midLook's `form===1` already calls its
+       base segment a "shop plinth, flats set back above it" — a corner MID is that
+       plinth, given a shopfront. At most one band is displaced, on ~5 buildings a city. */
+    if(c.corner&&ph<5.2)ph=5.2;
     const bt=fp*0.43;                                /* window:wall ratio, held at the old 3/7 */
     const rails=hashCell(x,y,seedNum^0x11C3)<0.24;   /* balconies were a tell for 'terra' — now their own draw */
     const cv=hashCell(x,y,seedNum^0x9A57);           /* the crown: overhanging eave / parapet / set-back attic */
@@ -6692,6 +6720,26 @@ function drawBuilding(c,x,y,gx,gy){
       const bz1=h*t;
       prism(gx+jx,gy,ab*w,dy*w,bz,bz1,sandCol(bodyN,1),sandCol(bodyN,0.62),sandCol(bodyN,0.85));
       bz=bz1;
+    }
+    if(c.corner){ /* the block's own corner shop, kept as the house rose into flats (iter 281).
+        The same shopfront helpers the RES draw uses, but sized to the WALK-UP's own drawn
+        street wall — `ab`/`dy`/`gx+jx`, the base segment midLook publishes (whose width
+        factor is always 1.00) — rather than to the RES body's hard-coded 0.30/0.26. A
+        joined terrace's frontage is wider, and its shop is wider with it. Reading the
+        body's published plan is the same discipline the skybridge and helideck owe
+        towerLook: a point plan would have floated the awning off the face. */
+      const[bcx,bcy]=px(gx+jx,gy);
+      const fs=frontSide(x,y,hashCell(x,y,seedNum^0x5A0F)<0.5?-1:1);
+      bandR(gx+jx,gy,ab,dy,0,1.0,col('whiteDk',0.55));                  /* stallriser */
+      bandR(gx+jx,gy,ab,dy,1.0,3.6,colLit('glass',0.85,lit));           /* shopfront glass */
+      slotS(bcx,bcy,ab,dy,fs*0.42,0.5,3.2,1.8,col('ink',0.8),false);    /* the door */
+      bandR(gx+jx,gy,ab,dy,3.6,4.6,col('sage',0.95));                   /* green fascia sign */
+      awnS(bcx,bcy,ab,dy,fs,4.1,2.4,col('white',1.02),col('sage',1.05));/* grocer's awning */
+      if(LITAMT>0.4){ /* the shop stays lit after the flats above it dim */
+        ctx.globalAlpha=(LITAMT-0.4)*0.85;
+        bandR(gx+jx,gy,ab+0.005,dy+0.005,3.6,4.6,col('sage',1.5));
+        ctx.globalAlpha=1;
+      }
     }
     for(let z=ph;z<h-4;z+=fp){
       const bw=wAt(z);                                     /* a band rides its own storey's width */
@@ -9073,8 +9121,14 @@ function describeTile(c,x,y){
       sub='The paved public square that fronts the '+inst+'.';}
     else{title=CIVICLABEL[squareOwner(x,y)]+' grounds';
       sub='Mown lawns kept behind the '+inst+'.';}}
-  else if(c.t===T.RES&&c.corner){title='Corner shop';
-    sub="A home with a store on its ground floor — the neighbourhood's own, on a block that had no other shop within a short walk.";}
+  /* HOMES, not RES: the store rides the building up when the house becomes flats, so the
+     name must follow it (iter 281 — the same c.corner the draw now gates on, in both
+     branches). A walk-up says so, because a shop under three storeys of flats is a
+     different thing to see than a shop in a terraced house. */
+  else if(HOMES.has(c.t)&&c.corner){title='Corner shop';
+    sub=c.t===T.MID
+      ? "A store on the ground floor of a walk-up — the neighbourhood's own, kept when the house it started in rose into flats. The block still has no other shop within a short walk."
+      : "A home with a store on its ground floor — the neighbourhood's own, on a block that had no other shop within a short walk.";}
   /* a converted warehouse is drawn as an arts district — brick bones, new glass, a
      coral sign on the parapet — and named 'Warehouses and light industry' for the
      artifact's whole life. Name it off the SAME c.loft the draw gates on, as the

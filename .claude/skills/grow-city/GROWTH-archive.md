@@ -20166,3 +20166,91 @@ Height and identity are in direct conflict and the tile decides the winner. ⇒ 
 `polish-tile` cue **(g)**, with its gate already written (`probe-parlheight.mjs`: rank + margin in CSS px,
 worst seed, must-not-move column, exact fixed point).
 
+## Iteration 271 — nine people sat in the dark water off a beach that had packed itself away (2026-07-14) [People & activity × Deepen]
+
+**Vector.** People & activity × Deepen. Rotation put People oldest (8 laps); its cue list was
+empty, so — 225's law, now 13 for 13 — I grepped the seam instead of trusting it.
+
+**The finding.** 262's law says: after you fix a per-entity rule, grep the *function* you fixed
+for the other things it draws. Run one scope wider — grep every draw that puts a **person** on the
+plate and ask which of them keeps state — and `drawSurfer` opens on `const[cx,cy]=pxc(...)`. **No
+gate. None.** Nine surfers are spawned once in `genWorld` and were drawn on **every frame of the
+artifact's life**, while every other person in the city keeps an hour (`curfewAt` 210 · `kidOut`
+262 · `j.out` 210 · `VCURF` 230 · `matchClock` 240) and 247 gave the **sand** a calendar, so the
+umbrellas and deckchairs pack away in winter. The water crowd learned **neither**.
+
+**Probe (`probes/probe-surfsession.mjs`), and it was run BEFORE a line of the fix.**
+- **A — temporal (134), no pixels, no noise floor.** HEAD: **DISTINCT LINEUP SIZES = 1**, on every
+  seed — 9 of 9 still in the break at the darkest hour. *The constant IS the defect* (236), no
+  threshold invented. **The POSITIVE CONTROL is the JOGGER** (248): a correct sibling, same
+  shoreline, same clock, two functions away — it reads **DISTINCT 3–4 and 0 in the dark**, which is
+  what makes the surfers' flatness a real flatness and not a dead rig. Kayaks+boats = the
+  must-not-move column (250): **18, unmoved.**
+- **A2 — the season.** 9/9 in **every** season while `beachPhase()` runs **0.19 (winter) → 1.0**.
+- **B — 259's check, and the reason to run it FIRST.** Is the night lineup even *visible*? If it
+  renders 20px of dark ink on a dark sea, the hours half is a nothing and only the season half is
+  real. It is **not**: their foam wakes are **bright on a black sea**, so HEAD's night lineup
+  renders **120–129 px, ~13 px/surfer — as much as at noon.** Isolated by suppressing `drawSurfer`
+  in ONE page (226/230): floor **exactly 0**, occlusion free, build-agnostic.
+
+**Change.** `surfSession()` — **two predicates the artifact already owns, and no third invented**:
+the **sun** (`nightAmt()`, the clock the whole city keeps) × the **calendar** (`beachPhase()`,
+247's own — so the water and the sand now answer **one** season). Each board keeps its own
+threshold so the lineup **thins one at a time** rather than blinking out (the cliff 210 was
+written to end). `SURFDARK = JOG0+JOGJ` is **taken from the ladder, not invented** (226): the last
+board leaves the water as the last runner leaves the strand. `surfOut(s) = s.ph/7` is **derived,
+not drawn** — `ph` is already `Math.random()*7`, so it is exactly uniform on [0,1) and costs
+**zero** new random draws ⇒ the shared stream is byte-identical and every kayak, jogger, balloon
+and resident is *provably* untouched (204/262). Three readers: the draw, the tooltip (which used
+to say *"Waiting on the next set"* over a surfer sitting in the dark in midwinter), the probe.
+
+**Census.** PASS, `pageerrors: 0`. Core **exactly flat** — `pop +0 · roads +0 · developed +0` —
+as a draw-only, `rng()`-free change must be. Tile histogram empty (correct). `solarRoofs +1 /
+greenRoofs +1`: re-ran the **same file** per 226 and got **−3 / −1**, so it is the harness's own
+tick wobble, not the edit (which is unreachable from `tick()`).
+
+**Fixed point (245), and it is arithmetic rather than a claim.** At the dry peak in daylight
+`surfSession()` returns **exactly 1**, so `1 < ph/7` is false for every board and the patch runs
+HEAD's draw byte-for-byte. Proved by **predicate suppression inside ONE page** (253): force
+`surfSession = () => 1` (= HEAD, which has no gate) and re-render — **0 px on all three seeds**,
+with a deep-night control at **137/161/146 px** proving the suppression is live. **⇒ the feature
+adds no draw work at its reference condition, and strictly removes it elsewhere** (241's credit).
+
+**Visual.** Both seeds **PASS**, blind, on a **crossed** map, and both agents named the treatment
+*by counting*: seed 42 (patch=`kappa`) — kappa day 4 / night **0** / winter **0**, sigma 4/4/4;
+seed 7 (patch=`sigma`) — sigma day 4 / night **0** / winter **0**, kappa 4/4/4. Both called the
+**day pair identical** (36 px; max channel delta 8) — the fixed point, confirmed by eye. Whole-city
+frames clean on both seeds.
+
+**Two instrument failures, both mine, both caught by the tool and not by a gate round.**
+1. **The night pin was derived — at the wrong year.** 261 gave the season a **day length**
+   (`sunWarp`), so `nightAmt()` is **not a pure function of `dayT`**: the same `dayT` is deep night
+   in winter and broad daylight in summer. I derived the pin once, while `year` was still whatever
+   `__warp` left, then applied it at 2035.62 — and **the "night" frame self-reported
+   `nightAmt=0`.** The camera was shooting the control and captioning it the treatment. **202's
+   self-report caught it in one line.** 264 says *derive the pin from the curve at shoot time*; the
+   sharpening is that a derived pin is a function of **all** the curve's inputs.
+2. **"No argmax needed" framed the pier.** I reasoned my way to 249 — a surfer floats on open water
+   where *"nothing can occlude it"* — and aimed at the **median board by world-y**. On seed 42 the
+   boards nearest that aim sit **behind the pier deck**, so the patch's DAY frame, in which the
+   probe measures 140 px of surfer, **showed no surfer at all**, and the agent **correctly refused
+   to grade it**. A board's position says where it *is*; it says nothing about whether it can be
+   **seen**. Re-aimed by the **argmax of the lineup's own measured ink** (226/230/234) and both
+   builds land on the *identical* world point (the day frames being byte-identical), so the blind
+   pair frames the same water. *(The `1×` I briefly took for a 269 violation is `btnSpeed` — the
+   sim speed. The artifact has no zoom pill.)*
+
+**Verdict: SHIPPED.** The last people in Solvista who never went home now do — **and the kayakers
+are the last holdout** (cue (aw); the predicate is already written for them).
+
+
+<!-- moved out of the GROWTH.md header at iter 281 to pay the 400-line budget (TRIM METHOD: compress the oldest, pay for your own additions). Nothing here is deleted — the imperatives remain in the header. -->
+
+### Cue (g), full body (rotated out of the header at 281)
+
+**(g) ~SIXTEEN seedless `hashCell` calls — each paints the IDENTICAL pattern in EVERY city.** RE-RUN the audit,
+don't trust a catalogue (L-numbers drift): `grep -noE 'hashCell\([^;]{0,60}' solvista.html | grep -v seedNum`.
+**Only PRESENCE decisions are a breach worth a vector** (a thing being there, or not, in the same place in every
+city): **the night surf light-smear, `hashCell(x,y,77)<0.28`, is the one to fix.** *Ornament jitter* (kelp sway,
+fronds, fruit, fireflies) is cosmetic. Marsh reeds (113) + tower window-lights (110) CLOSED. ⚠ `darkWinR` is **not** a
+breach (it mixes `seedNum^salt` internally — **check the callee**). When fixing a range, **space the bases**.

@@ -701,6 +701,46 @@ Each of these was learned the expensive way, then re-learned because it lived in
 entry that rotated into the archive. They are general: they apply to the *next*
 vector, whatever it is.
 
+- **274 SAYS A FLAG ON A BORROWED TYPE IS INVISIBLE TO THE TYPE-KEYED *TABLES*. THE RUNG BELOW IS THAT THE TYPE ITSELF
+  CAN CHANGE UNDER THE FLAG — SO GREP EVERY PASS THAT *UPGRADES* YOUR HOST, AND DECIDE, PER PASS, WHETHER THE FLAG
+  RIDES THE CHANGE OR DIES WITH IT (iter 281).** 274's law: when a feature's identity is a `c.<flag>` on an existing
+  tile type, every `TABLE[c.t]` is structurally blind to it. 281 is the same defect on the **time** axis, and it is
+  worse, because the flag does not merely go *unanswered* — it goes on **constraining the world after it has stopped
+  being drawn.** Solvista's corner shop (`c.corner`, iter 151) is a store on a house's ground floor. Its **DRAW** lives
+  inside `drawBuilding`'s `if(c.t===T.RES)` branch and its **TOOLTIP** gates on `T.RES` — but the pass's **VETO**
+  (`countAround(x,y,2,n=>n.corner)`) and its **RE-VALIDATION** do not check the type, and the pass's first line was
+  `if(c.t!==T.RES)continue`. So the instant a corner house upgraded to a `MID`, its flag became a **GHOST**: drawn by
+  nothing, named by nothing, never absorbed — and still vetoing every replacement store within 2 hexes, **forever**.
+  Measured at 2035 on 6 seeds: **9 live corner shops against 98 ghosts — 92% of every store the city ever opened was
+  INVISIBLE**, and the count *fell* as the city grew (3.5 → 1.5) while the ghosts piled up (1.3 → **16.3/city**).
+  ⇒ **A flag that draws nothing and still vetoes is worse than no flag.** The tell, and it is checkable in one grep:
+  **your flag's WRITER skips a type its VETO still counts.**
+  ⇒ **AND THE RULE WAS SELECTING FOR ITS OWN DESTRUCTION (231's law, arriving on a TYPE CHANGE instead of an
+  occlusion).** The corner shop's precondition is `countAround(x,y,1,DEV)>=3` — *a built-up block* — which is
+  **verbatim the RES→MID upgrade's own precondition** (`dev>=3`). It therefore opened its stores on precisely the
+  houses most likely to be redeveloped. **When your siting rule and the rule that will EAT your host share a clause,
+  you have not been unlucky; you have been aiming at the tail.**
+  ⇒ **AND THE FIX IS 206'S, WHOSE *SECOND HALF* NOBODY HAD WRITTEN DOWN.** 206 says: a siting rule keyed to a tile the
+  upgrade pass consumes starves itself — **key it to the CATEGORY, not the TILE** — and it fixed the GARDEN's *inputs*
+  (count `HOMES`={RES,MID} as neighbours). **The corner shop, in the same `tick()`, 75 iterations later, had the
+  identical defect in its *OUTPUT*.** 206's law governs **every** predicate a rule owns: what it *reads*, what it
+  *writes*, what it *vetoes on*, and **who draws it**. The whole fix is one line — `if(!HOMES.has(c.t)){if(c.corner)
+  c.corner=false;continue;}` — and the category was **already in the file**, on the set 206 itself introduced. ⇒ **The
+  store rides the building up, the way a real one does** (retail at street level, flats above), which is the idiom the
+  artifact **already ships** for `c.hstr` — *"a DRAW property, not a zoning veto"*, cashed by `drawBuilding`'s TOWER
+  shop podium (249: before you invent a mechanism, grep for the one the artifact already has). And `midLook`'s
+  `form===1` was **already called a "shop plinth, flats set back above it"** — the walk-up had been drawing the empty
+  plinth for the shop it was never given. Result: shops **shown** 1.5 → **14.0/city**, ghosts **16.3 → 0**, never-absorbed
+  **4.8 → 0**, and the count now **GROWS with the city** (5.2 → 8.0 → 14.0) instead of decaying. Census **+0 on every
+  metric** (no terrain, no `rng()`; `POPW` is keyed on type, so the flag weighs nothing).
+  ⇒ ⚠ **AND THE INSTRUMENT CONVICTED ITSELF, VIA A TRANSPOSE.** The probe's build-detector asked *"does `drawBuilding`'s
+  MID branch mention `c.corner`?"* by splitting the source on `c.t===T.MID` — but `drawBuilding`'s **first line** is
+  `const ML=c.t===T.MID?midLook(...):null`, which sits **ABOVE the RES branch**, so the tail handed back contained the
+  RES shopfront and it reported **HEAD as patched**. The tell was unmissable and it is the reusable part: HEAD came back
+  **98 shown / 9 ghosts — the exact TRANSPOSE of the truth I had measured ten minutes earlier.** ⇒ **When you detect a
+  build by string-matching its own source, match the BRANCH (`else if(c.t===T.MID)`), never the first occurrence of its
+  TEST** — and **carry a number you already know**, because a detector that inverts produces perfectly plausible output.
+
 - **AN EMITTER IS NOT A REFLECTOR — NEVER PUT A FIRE, A LAMP OR A LIT WINDOW THROUGH THE ILLUMINANT (iter 279,
   promoted at 280).** 257 says `albedo × TINT` is right for **diffuse** land and a category error on a **specular**
   mirror (the sea takes the SKY's colour, not albedo × sunlight). The third case is the one that *emits its own
