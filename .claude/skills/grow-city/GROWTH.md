@@ -21,7 +21,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
@@ -32,11 +32,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Civic **299** · People **300** · Nature **301** · Urban **302** · Water **303** ·
-  Transport (examined **304**, no cell shipped) · Sky **305** · People **306** (recovered killed iter: school-run
-  half-schedule FIX, off-rotation). ➡ **NEXT: Civic (299, oldest)** — grep its
-  `tick()`/CA/TABLE seam + the frozen-census/comment tells, not the cue list (stale kind = New CA rule 36/107, cue list
-  empty; 292/285 found Civic's recent defects in the enumerate-the-category / type-hierarchy seam).
+- **ROTATION.** Last: Nature **301** · Urban **302** · Water **303** · Transport (examined **304**) · Sky **305** ·
+  People **306** · Civic **307** (FIELD pickup-game schedule — the 4th venue in the {stadium,market,amphitheater}
+  category, the last with no clock; 285's enumerate-the-category law). ➡ **NEXT: Nature (301, oldest)** — grep its
+  `tick()`/CA seam + the frozen-census/comment tells, not the cue list (Nature additive spent 301, Polish debt paid
+  294; the 287/279 pattern = grep the tick()/CA seam. A ZERO/flat census row is louder than any cue).
   ✅ **305 SHIPPED Sky × Deepen — the front now greys the SKY ITSELF** (deaf backdrop; `overcast()`=rainFront's 4th
   reader, gated above the patchy band ⇒ dry sky BYTE-IDENTICAL, one `overcastSky` shared by `syncSky`+`render`;
   `probe-overcast.mjs`). **Sky Deepen 19-deep but additive NOT spent (291 lightning).**
@@ -391,62 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 299 entries before Iteration 297 live in
+> **Archive:** the 300 entries before Iteration 298 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 297 — the ship rode at anchor waiting on a berth, and no one came out to work her (2026-07-15) [Transport × New element]
-
-**Vector.** Transport rotation (oldest, 290). The rules seam is genuinely deep — I grepped `tick()`, `stepVehicle`,
-`syncFleet`, every mover's step + tooltip + `ENTINFO` row, and the transport FLAGS (`bridge`/`riv`): every craft
-keeps an hour (`vehCurfew`/`VCURF`/`waterSession`), has a live tooltip off the predicate its rule steers by, and
-does an honest job (the tram rides the avenue, the ferry calls the pier, the copter hops the helipads, the shuttle
-runs the grid). No dead rule, no unhonoured label — and the frozen-census-column law (282/287) found nothing:
-Transport is entity-driven, not tile-driven. So the seam that has beaten the cue list for five laps is, for once,
-clean. **Transport's stalest ADDITIVE cell is New element (untouched since iter 164)**, and the harbour — which just
-gained a pier+ferry (249), moored boats, a lighthouse, channel buoys (296) and an anchored container ship "at anchor
-in the roadstead, **waiting on a berth**" — had the one working craft a real roadstead never lacks: **a harbour
-launch** to work the ship at anchor. Nothing tended her; the roadstead had no life of its own.
-
-**Change (New element — `launches`).** A small harbour launch runs the short leg between the harbour waterline and
-the anchored ship's side, ping-ponging out-and-back with a dwell at each end (the copter's idiom: smoothstep along
-the leg, `dir` flips at `t>=1.3`). Endpoints derived LIVE from the ship it works — `launchPts()` returns
-`[[shoreAtF(f.y)+1.3, f.y], [seaXFr(f.y,f.fr)-1.2, f.y+0.6]]` (off the waterline · alongside the hull) — so `launchPos`,
-the `bucketAdd`, the draw and the tooltip all read ONE predicate and the launch cannot drift from the ship it tends.
-`drawLaunch`: a low workboat hull, a white wheelhouse with a coral livery band, a mast, a wake thrown only while
-making way (dies at the dwell), and a warm wheelhouse + white masthead at night (raw literals — a light SOURCE, in
-the harbour boats' marine vocabulary, cf. the ferry/buoys). `stamp()` + an `ENTINFO` row whose `sub` reads the leg
-she is on NOW (105): *Running out / Standing by the ship / Putting back / Made fast*. She exists only while a ship
-rides at anchor (`launchAnchor` = `freighters.find(f=>f.anchored)`). **Math.random only, never `rng()`** — the
-service cannot perturb the seeded simulation.
-
-**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw + Math.random,
-no terrain). `launches 0 → 9` (1/city × 9-cell matrix), `transportModes +9` (a new mode in every cell). `solarRoofs
-+2` is the RAF tick-count wobble (226), core untouched.
-
-**Probe** (`probes/probe-launch.mjs`, pure world data off the artifact's OWN `launchPts`/`launchPos`, 6 seeds ×
-2 eras, no render). Three gates, each falsifiable: (1) **EXIST 1↔1** — one launch per anchored ship, every seed:
-PASS. (2) **PATH ALL WATER** — sampling her whole ping-pong (both legs, dwell included), **100.0%** of positions land
-on WATER/KELP/MARSH (the artifact's own `WETSET`; a launch floats over a kelp bed just as over open water) with **0**
-on the ship's own hex: PASS. (3) **GEOMETRY threads shore→ship** — shore end **+1.30** seaward of the waterline, ship
-end **+1.20** inshore of the hull, on every seed: PASS. Controls (250): the anchored freighter's own cell is WATER
-(the water test is meaningful, the ship genuinely offshore) on 6/6; the discriminator (one column inshore of the
-shore end is non-wet) fires on 3/6, confirming she sits right at the water's edge. *The kelp beds are the reason the
-first, too-strict `T.WATER`-only test read 56–93% on two seeds — the launch was over a kelp bed, which is water; the
-year-dependence (100% at 2035, 56% at 1990 on seed 99) was the now-live kelp CA (282) retreating between the eras.*
-
-**Visual.** Both seeds **PASS** (`probes/shot-launch.mjs` — freezes in-page, aims at the anchored ship, poses the
-launch mid-leg (moving, wake up) and alongside (night, lights lit), day + night + un-zoomed whole-city). The launch
-reads as a small reddish workboat with a white wheelhouse, out on the water between shore and the navy container
-ship, running out to her; the night frame shows her masthead light beside the ship's deck lights, buoys flashing
-along the shore. Whole-city on both seeds: balanced, coherent coastal city — no z-order tears, floating tiles,
-blown-out color, or compounded clutter (she is tiny at fit zoom, as a sparse water craft should be).
-
-**Verdict: SHIPPED** — the roadstead has its working craft; the ship "waiting on a berth" is now tended, a launch
-running out to her side and putting back to the harbour, named and lit on her own hours. ~6 path objects, one per
-city — free by construction.
 
 ## Iteration 298 — the moon traverses the night (2026-07-15) [Sky & atmosphere × Deepen]
 
@@ -860,3 +809,51 @@ balanced, coherent coastal city on both seeds.
 
 **Verdict: FIXED** — the school run now happens twice, morning and afternoon, where a real one does; the gate is no
 longer empty every home-time. The half-schedule (199's tell on a draw gate) is closed.
+
+## Iteration 307 — the local pitch had two players who never left, and no game ever kicked off (2026-07-15) [Civic & culture × Deepen/FIX]
+
+**Vector.** Civic rotation (oldest domain). Civic's additive is complete (292) and its recent defects were found in
+the **enumerate-the-category / type-hierarchy** seam (240 stadium fixture, 285 market day), so grep the venue
+category rather than the cue list. The event-venue category is {STADIUM, MARKET, amphitheater} — each keeps a
+schedule — but there is a **fourth** venue that never got one: **`T.FIELD`, the neighbourhood sports pitch**. Its
+draw was `if(LITAMT<0.4){ two players }` — a GLOBAL MONOTONE gate (262/286 cliff), so the SAME two players stood on
+EVERY pitch in the city at every daylit hour of every day, forever, and a game was never on or off. `probe-pitchgame`:
+HEAD reads **DISTINCT daytime states/field = 1, game-days 10/10, DESYNC maxCorr = 1.00** (every pitch identical) — the
+defect stated (236). It is the last member of the category iter 285's law told us to enumerate.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).**
+- **`pitchGame(x,y)`** — a lighter calendar than the stadium fixture, in `fixtureAt`/`matchClock`'s idiom and beside
+  it: a pickup game runs on ~half of afternoons (`PITCHP=0.5`, kickoff `0.52`, `PITCHDUR=0.22`, ending `0.74 < SUNDN`
+  so it is always daylit — no floodlights on a chalked local ground). **Salted per HEX and per DAY**
+  (`hashCell(x*7+day, y, seed^SALT)`), so two pitches rarely fill on the same afternoon and the crowd never blinks on
+  as one (263). Most days the pitch is an empty ring.
+- **The FIELD draw** now, when `pitchGame>0 && LITAMT<0.5`, scatters `round(8*g)` small players in the two team
+  colours (`coral`/`teal`) across the pitch (within `±0.45·HW / ±0.4·VR`, stable per-player via `hashCell` + a time
+  wobble), each with the stadium speck's contact shadow (`shadS(…,0.05,0.13)`), plus a chased white ball. On off-days
+  it draws nothing — the empty chalked ground, which is correct and realistic.
+- **Tooltip** `pitchWord(x,y)` (a `['Now', …]` data row beside the stadium's `Fixture`) and **`residentWhere`**
+  (`'In a game on the pitch.'` vs `'Cutting across the field.'`) both read the SAME `pitchGame` the draw does
+  (123, forwards).
+
+**Census.** Draw-only → **PASS, 0 page errors**, core **byte-identical** (`pop`/`roads`/`developed` +0, tile
+histogram empty). `greenRoofs −1` is the 226 tick-wobble (a draw/tooltip-only change cannot move it semantically —
+278). Vacuous by construction; the gate is the probe + the eyes.
+
+**Probe** (`probes/probe-pitchgame.mjs`, TEMPORAL, build-agnostic, no pixels/no noise floor). Patch vs HEAD, 3 seeds:
+- **DISTINCT daytime states/field 1.0 → 3.0** (the game turns on, ramps, and off — HEAD's was a constant);
+- **game-days/10 10.0 → 4.0–5.8** (matches `PITCHP=0.5` — the pitch is mostly empty, as a real one is);
+- **DESYNC maxCorr 1.00 → 0.45–0.82** (< 1 on every seed — pitches fill on different afternoons, off the 262 cliff).
+
+**Visual.** `probes/shot-pitchgame.mjs` (freezes in-page, pins dayT to a game-day and an empty-day afternoon on the
+**least-occluded** field — 206/231, scored by front-row height — clips tightly on its post-`clampPan` screen
+position, 285). Seed 42 (agent): the pitch shows a scatter of coral/teal players + a ball sitting correctly ON the
+chalked hex; the empty frame is the same pitch with the players gone (clean control); whole-city coherent. Seed 7
+(direct read): same — game frame shows players on the ball-diamond pitch, empty frame is the bare chalked ground;
+city reads balanced. No z-order tears, floating tiles or blown-out colour. ⚠ *Camera note:* the first seed-7 aim
+picked a field buried in the downtown core (206) and framed towers — fixed by scoring fields on open frontage before
+aiming (226/258's spirit); banked in the shot script.
+
+**Verdict: FIXED** — the neighbourhood pitch is the last venue in the category to get a schedule (240/285/292): a
+pickup game now fills it on some afternoons and it is an empty chalked ground the rest of the time, off a per-hex
+per-day clock, instead of two frozen players who stood there every daylit hour forever. Draw-only, path count roughly
+neutral (more players during a game, none otherwise); free by construction.

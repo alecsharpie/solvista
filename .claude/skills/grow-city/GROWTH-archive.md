@@ -22178,3 +22178,54 @@ approach without adding clutter or darkness."*
 **Verdict: SHIPPED** — the harbour now has a marked channel; the red-can/green-cone marks lead the fairway in to the
 pier head and flash after dark.
 
+## Iteration 297 — the ship rode at anchor waiting on a berth, and no one came out to work her (2026-07-15) [Transport × New element]
+
+**Vector.** Transport rotation (oldest, 290). The rules seam is genuinely deep — I grepped `tick()`, `stepVehicle`,
+`syncFleet`, every mover's step + tooltip + `ENTINFO` row, and the transport FLAGS (`bridge`/`riv`): every craft
+keeps an hour (`vehCurfew`/`VCURF`/`waterSession`), has a live tooltip off the predicate its rule steers by, and
+does an honest job (the tram rides the avenue, the ferry calls the pier, the copter hops the helipads, the shuttle
+runs the grid). No dead rule, no unhonoured label — and the frozen-census-column law (282/287) found nothing:
+Transport is entity-driven, not tile-driven. So the seam that has beaten the cue list for five laps is, for once,
+clean. **Transport's stalest ADDITIVE cell is New element (untouched since iter 164)**, and the harbour — which just
+gained a pier+ferry (249), moored boats, a lighthouse, channel buoys (296) and an anchored container ship "at anchor
+in the roadstead, **waiting on a berth**" — had the one working craft a real roadstead never lacks: **a harbour
+launch** to work the ship at anchor. Nothing tended her; the roadstead had no life of its own.
+
+**Change (New element — `launches`).** A small harbour launch runs the short leg between the harbour waterline and
+the anchored ship's side, ping-ponging out-and-back with a dwell at each end (the copter's idiom: smoothstep along
+the leg, `dir` flips at `t>=1.3`). Endpoints derived LIVE from the ship it works — `launchPts()` returns
+`[[shoreAtF(f.y)+1.3, f.y], [seaXFr(f.y,f.fr)-1.2, f.y+0.6]]` (off the waterline · alongside the hull) — so `launchPos`,
+the `bucketAdd`, the draw and the tooltip all read ONE predicate and the launch cannot drift from the ship it tends.
+`drawLaunch`: a low workboat hull, a white wheelhouse with a coral livery band, a mast, a wake thrown only while
+making way (dies at the dwell), and a warm wheelhouse + white masthead at night (raw literals — a light SOURCE, in
+the harbour boats' marine vocabulary, cf. the ferry/buoys). `stamp()` + an `ENTINFO` row whose `sub` reads the leg
+she is on NOW (105): *Running out / Standing by the ship / Putting back / Made fast*. She exists only while a ship
+rides at anchor (`launchAnchor` = `freighters.find(f=>f.anchored)`). **Math.random only, never `rng()`** — the
+service cannot perturb the seeded simulation.
+
+**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw + Math.random,
+no terrain). `launches 0 → 9` (1/city × 9-cell matrix), `transportModes +9` (a new mode in every cell). `solarRoofs
++2` is the RAF tick-count wobble (226), core untouched.
+
+**Probe** (`probes/probe-launch.mjs`, pure world data off the artifact's OWN `launchPts`/`launchPos`, 6 seeds ×
+2 eras, no render). Three gates, each falsifiable: (1) **EXIST 1↔1** — one launch per anchored ship, every seed:
+PASS. (2) **PATH ALL WATER** — sampling her whole ping-pong (both legs, dwell included), **100.0%** of positions land
+on WATER/KELP/MARSH (the artifact's own `WETSET`; a launch floats over a kelp bed just as over open water) with **0**
+on the ship's own hex: PASS. (3) **GEOMETRY threads shore→ship** — shore end **+1.30** seaward of the waterline, ship
+end **+1.20** inshore of the hull, on every seed: PASS. Controls (250): the anchored freighter's own cell is WATER
+(the water test is meaningful, the ship genuinely offshore) on 6/6; the discriminator (one column inshore of the
+shore end is non-wet) fires on 3/6, confirming she sits right at the water's edge. *The kelp beds are the reason the
+first, too-strict `T.WATER`-only test read 56–93% on two seeds — the launch was over a kelp bed, which is water; the
+year-dependence (100% at 2035, 56% at 1990 on seed 99) was the now-live kelp CA (282) retreating between the eras.*
+
+**Visual.** Both seeds **PASS** (`probes/shot-launch.mjs` — freezes in-page, aims at the anchored ship, poses the
+launch mid-leg (moving, wake up) and alongside (night, lights lit), day + night + un-zoomed whole-city). The launch
+reads as a small reddish workboat with a white wheelhouse, out on the water between shore and the navy container
+ship, running out to her; the night frame shows her masthead light beside the ship's deck lights, buoys flashing
+along the shore. Whole-city on both seeds: balanced, coherent coastal city — no z-order tears, floating tiles,
+blown-out color, or compounded clutter (she is tiny at fit zoom, as a sparse water craft should be).
+
+**Verdict: SHIPPED** — the roadstead has its working craft; the ship "waiting on a berth" is now tended, a launch
+running out to her side and putting back to the harbour, named and lit on her own hours. ~6 path objects, one per
+city — free by construction.
+

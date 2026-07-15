@@ -4562,6 +4562,35 @@ function matchWord(){
   if(t<=MATCHDUR)return dark?'Kick-off &mdash; under the floodlights':'Kick-off &mdash; the ground is full';
   return 'Full time &mdash; the ground empties';
 }
+/* ...and the NEIGHBOURHOOD PITCH, the fourth venue in the same category (285) and the
+   last member never enumerated: the market got a trading day (285), the ground a fixture
+   (240), the bowl a season (250) -- the FIELD drew exactly two players on `LITAMT<0.4`,
+   a GLOBAL MONOTONE gate, so the SAME two stood on EVERY pitch in the city at every
+   daylit hour of every day, forever, and a game was never on or off (262's cliff, the
+   tell 286 warns of). Now it keeps a lighter calendar than the stadium: a pickup game
+   runs on some afternoons after school, in daylight (no floodlights on a chalked local
+   ground), and most days the pitch is an empty ring. Salted per HEX and per DAY off the
+   same Math.floor(dayT) counter, so two pitches rarely fill on the same afternoon and the
+   crowd never blinks on as one (263). Draw-only: hashCell + dayT, no rng(). */
+const PITCHP=0.5,        /* share of days a given pitch has a game */
+      PITCHKO=0.52,      /* after-school kickoff, in dayT-fraction (early afternoon) */
+      PITCHDUR=0.22,     /* a couple of hours of play, ending well before dusk (0.74<SUNDN) */
+      PITCHIN=0.05;      /* players drift in / break up over this */
+/* 0..1: how full the game on this pitch is right now (0 = empty ground). */
+function pitchGame(x,y){
+  const day=Math.floor(dayT);
+  if(hashCell(x*7+day,y,seedNum^0x3F5B)>=PITCHP)return 0;   /* no game on this pitch today */
+  const t=(dayT-day)-PITCHKO;
+  if(t<-PITCHIN||t>PITCHDUR+PITCHIN)return 0;
+  if(t<0)return clamp(1+t/PITCHIN,0,1);                     /* players drifting in */
+  if(t<=PITCHDUR)return 1;
+  return clamp(1-(t-PITCHDUR)/PITCHIN,0,1);                 /* game breaking up */
+}
+/* ...and the tooltip reads the SAME game the draw does (123, forwards). */
+function pitchWord(x,y){
+  if(LITAMT>=0.5)return 'Empty &mdash; the pitch is dark';
+  return pitchGame(x,y)>0?'A pickup game is on':'An empty chalked ground';
+}
 /* ...and the MARKET, which is the fixture's sibling and never got one (iter 285).
    T.MARKET sits beside T.STADIUM in ATTRACT and in PEDDEST, and on the SAME LINE of
    syncFleet -- "markets & matches draw a crowd" -- and residentWhere reads matchClock()
@@ -6089,11 +6118,20 @@ function drawCell(x,y){
         ctx.fillStyle=col('sandDk',1.05);
         ctx.beginPath();ctx.ellipse(cx-2,cy+0.5,2,1.2,0,0,7);ctx.fill();
       }
-      if(LITAMT<0.4){ /* a few players */
-        ctx.fillStyle=col('coral',1.1);
-        ctx.fillRect(cx-3+Math.sin(time*1.3+x)*3-0.8,cy-2.6,1.6,2.2);
-        ctx.fillStyle=col('teal',1.1);
-        ctx.fillRect(cx+3+Math.cos(time*1.1+y)*3-0.8,cy-1.6,1.6,2.2);
+      const g=pitchGame(x,y);
+      if(g>0&&LITAMT<0.5){ /* a pickup game: two teams on the chalked ground */
+        const N=Math.max(2,Math.round(8*g));
+        for(let j=0;j<N;j++){
+          const hx=hashCell(x*11+j,y*5,seedNum^0x2B9D), hy=hashCell(x*5,y*11+j,seedNum^0x2B9D);
+          const bx=cx+(hx-0.5)*HW*0.9+Math.sin(time*1.4+j*1.7+x)*2.4;
+          const by=cy+(hy-0.5)*VR*0.8+Math.cos(time*1.2+j*2.1+y)*1.3;
+          shadS(bx,by+1.0,0.05,0.13);   /* a speck this small takes the gull's patch, not a ped's */
+          ctx.fillStyle=col(j&1?'coral':'teal',1.15);
+          ctx.fillRect(bx-0.8,by-2.2,1.6,2.4);
+        }
+        /* the ball, chased across the middle */
+        ctx.fillStyle=col('white',1.15);
+        ctx.beginPath();ctx.ellipse(cx+Math.sin(time*2.3+x)*4,cy+Math.cos(time*1.9+y)*2,1,0.8,0,0,7);ctx.fill();
       }}
       break;}
     case T.STADIUM:{
@@ -9859,6 +9897,7 @@ function describeTile(c,x,y){
   /* live, and off the SAME matchClock() the floodlights and the crowd are drawn from,
      so the card can never call a fixture the renderer has not lit (iter 240) */
   if(c.t===T.STADIUM)data.push(['Fixture',matchWord()]);
+  else if(c.t===T.FIELD)data.push(['Now',pitchWord(x,y)]);
   else if(DEV.has(c.t))data.push(['Built','~'+est]);
   if(DEV.has(c.t))data.push(['Floors','~'+floorsOf(c.h)]);
   /* how much of the block is still up — live, and read off the SAME windarkAt() the
@@ -10071,7 +10110,7 @@ function residentWhere(p){
      by, so the string never seats a house at a struck stage */
   if(t===T.CIVIC&&n.kind==='amphitheater')return concertLive()?'In the crowd at the concert.'
                         :concertSeason()>0?'Down at the amphitheater.':'By the quiet amphitheater.';
-  if(t===T.FIELD)return 'Cutting across the field.';
+  if(t===T.FIELD)return pitchGame(p.x|0,p.y|0)>0?'In a game on the pitch.':'Cutting across the field.';
   if(pedRoad(p.x,p.y))return livelyKerb(p.x,p.y)?'Window-shopping the busy street.':'Walking the block.';
   return 'Out for a stroll.';
 }
