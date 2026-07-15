@@ -826,7 +826,7 @@ function colWin(f,litMix,a,k){
 /* ---------------- world ---------------- */
 let rng, seedNum, cells, year, dayT, monos, monoPlan, gonds, gondPlan, stats, pier, hut, harborY;
 let YC=[], turbines=[], turbSet=new Map(), moleSet=new Map();
-let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], ferries=[], freighters=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
+let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], buoys=[], ferries=[], freighters=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
 /* debug flood (?flood=joggers:30,whales:8): overrides entity spawn counts so
    sparse features can be screenshot-verified without a source edit to revert */
 let FLOOD={};
@@ -894,7 +894,7 @@ function genWorld(seed){
   seedNum=seed; rng=mulberry32(seed);
   sAmp=1.2+rng()*1.6; sFreq=0.22+rng()*0.24; sPh=rng()*7;
   year=1974; dayT=0.30; devBudgetUsed=0; TICKN=0;   /* the bloom's clock is part of the world */
-  vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];ferries=[];freighters=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
+  vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];buoys=[];ferries=[];freighters=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
   /* the coast highway hugs the shore in long hex-diagonal runs
      (a straight vertical column would wiggle across hex rows) */
   const coastX=new Int16Array(G);
@@ -1238,6 +1238,17 @@ function genWorld(seed){
   /* sailboats scatter across the whole bay — near the break to far offshore */
   for(let i=0;i<6;i++)boats.push({y:SEAY0+2+rng()*(SEAH-4),fr:0.12+rng()*0.8,ph:rng()*7,sp:(0.12+rng()*0.1)*(rng()<.5?1:-1)});
   for(let i=0;i<3;i++)boats.push({moored:true,x:Math.min(pier.x1+1.2+rng()*1.8,ROWMAX[pier.y]-0.4),y:pier.y-2.6+i*2.4,ph:rng()*7,off:0,sp:0});
+  /* channel marks lead the fairway in to the pier head — red cans to port, green
+     cones to starboard, anchored on the swell and flashing to seaward after dark.
+     Math.random so the aids never perturb the seeded simulation; each only spawns
+     where there is open water to float it, so a pier hard against the rim simply
+     carries a shorter channel. */
+  for(let k=0;k<3;k++){const bx=pier.x1+2.5+k*1.7;
+    for(const[dy,can,cc]of[[-1.7,true,'coral'],[1.7,false,'sage']]){
+      const by=pier.y+dy, gx=Math.round(bx), gy=Math.round(by), e=cellAt(gx,gy);
+      if(e&&e.t===T.WATER&&!e.riv&&gx<=ROWMAX[gy]-1)
+        buoys.push({x:bx,y:by,ph:Math.random()*7,can,c:cc});
+    }}
   /* a coastal passenger ferry works the shoreline. Math.random so the service
      never perturbs the seeded simulation; it runs the near-to-mid water. */
   for(let i=0;i<fl('ferries',2);i++)ferries.push({y:SEAY0+3+i*(SEAH-6),fr:0.28+i*0.22+Math.random()*0.1,
@@ -8365,6 +8376,32 @@ function drawBoat(b){
   ctx.fillStyle=col('white',1.05);
   ctx.beginPath();ctx.moveTo(cx,cy-1+bob);ctx.lineTo(cx,cy-10+bob);ctx.lineTo(cx+4.5,cy-2.5+bob);ctx.closePath();ctx.fill();
 }
+function drawBuoy(b){
+  const[cx,cy]=pxc(b.x,b.y);
+  stamp(b,cx,cy);
+  const bob=Math.sin(waveT*1.3+b.ph)*0.7, y0=cy+bob;
+  ctx.fillStyle=col('foam',0.85);                       /* a ring of wash at the waterline */
+  ctx.beginPath();ctx.ellipse(cx,y0+2.6,3.1,0.9,0,0,7);ctx.fill();
+  const lit=col(b.c,1.05), shd=col(b.c,0.62);
+  if(b.can){                                            /* red port-hand CAN: a flat-topped drum */
+    ctx.fillStyle=lit;ctx.fillRect(cx-2,y0-2.4,4,5);
+    ctx.fillStyle=shd;ctx.fillRect(cx+0.5,y0-2.4,1.5,5);
+    ctx.fillStyle=lit;ctx.beginPath();ctx.ellipse(cx,y0-2.4,2,0.7,0,0,7);ctx.fill();
+    ctx.fillStyle=lit;ctx.fillRect(cx-1.1,y0-7.2,2.2,2.2);   /* square topmark */
+  }else{                                                /* green starboard CONE: point up */
+    ctx.fillStyle=lit;ctx.beginPath();ctx.moveTo(cx-2.1,y0+2.6);ctx.lineTo(cx+2.1,y0+2.6);ctx.lineTo(cx,y0-3);ctx.closePath();ctx.fill();
+    ctx.fillStyle=shd;ctx.beginPath();ctx.moveTo(cx,y0-3);ctx.lineTo(cx+2.1,y0+2.6);ctx.lineTo(cx+0.4,y0+2.6);ctx.closePath();ctx.fill();
+    ctx.fillStyle=lit;ctx.beginPath();ctx.moveTo(cx-1.3,y0-6);ctx.lineTo(cx+1.3,y0-6);ctx.lineTo(cx,y0-8.2);ctx.closePath();ctx.fill(); /* triangle topmark */
+  }
+  ctx.strokeStyle=col('ink',1.1);ctx.lineWidth=0.7;     /* mast */
+  ctx.beginPath();ctx.moveTo(cx,y0-2.6);ctx.lineTo(cx,y0-6);ctx.stroke();
+  if(LITAMT>0.28&&Math.sin(time*1.4+b.ph*2)>0.25){      /* a slow flash to seaward (raw literal — a light SOURCE, not a surface) */
+    const rgb=b.can?'255,74,74':'74,220,120';
+    const g=ctx.createRadialGradient(cx,y0-6.6,0,cx,y0-6.6,5);
+    g.addColorStop(0,'rgba('+rgb+','+(0.95*LITAMT)+')');g.addColorStop(1,'rgba('+rgb+',0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,y0-6.6,5,0,7);ctx.fill();
+  }
+}
 function drawSurfer(s){
   if(waterSession()<waterOut(s))return; /* this board has paddled in — the session is the sun
     times the calendar, and every board keeps its own threshold, so the lineup thins one at
@@ -8818,6 +8855,7 @@ function render(){
   for(const k of kites)bucketAdd(k.x,k.y,()=>drawKite(k));
   for(const s of surfers)bucketAdd(seaXF(s.y,s.off)|0,s.y|0,()=>drawSurfer(s));
   for(const b of boats)bucketAdd(b.x|0,b.y|0,()=>drawBoat(b));
+  for(const b of buoys)bucketAdd(b.x|0,b.y|0,()=>drawBuoy(b));
   for(const f of ferries)bucketAdd(seaXFr(f.y,f.fr)|0,f.y|0,()=>drawFerry(f));
   for(const f of freighters)bucketAdd(seaXFr(f.y,f.fr)|0,f.y|0,()=>drawFreighter(f));
   for(const d of dolphins)bucketAdd(seaXFr(d.y,d.fr)|0,d.y|0,()=>drawDolphin(d));
@@ -9807,6 +9845,8 @@ const ENTINFO=[
      :beachPhase()<0.5?'Out in a thin winter lineup.':'Waiting on the next set.',7],
   [()=>kayaks,'Kayaker',()=>nightAmt()>0?'Paddling in before the light goes.'
      :beachPhase()<0.5?'A cold-water paddle, with the river to themselves.':'Paddling the river.',7],
+  [()=>buoys,'Channel buoy',b=>b.can?'Red port-hand mark on the harbour approach.'
+     :'Green starboard-hand mark on the harbour approach.',7],
   [()=>herons,'Great heron','Stalking the marsh shallows.',7],
   [()=>deer,'Mule deer','Grazing where the meadow meets the woods.',7],
   [()=>joggers,'Jogger','Logging shoreline miles.',7],
@@ -10159,7 +10199,7 @@ window.__census=()=>{
   const stations=monoStationCount();
   let cafes=0;
   for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(cells[idx(x,y)].t===T.PARK&&countAround(x,y,1,n=>n.t===T.COM||n.t===T.MARKET||n.t===T.CIVIC)>0)cafes++;
-  const transport={cars:vehicles.length,bikes:bikes.length,trams:trams.length,trucks:trucks.length,boats:boats.length,
+  const transport={cars:vehicles.length,bikes:bikes.length,trams:trams.length,trucks:trucks.length,boats:boats.length,buoys:buoys.length,
     ferries:ferries.length,freighters:freighters.length,shuttles:shuttles.length,
     monoLines:monos.length,monorail:monos.reduce((a,m)=>a+(m.closed?m.trains.length:0),0),
     gondLines:gonds.length,gondola:gonds.reduce((a,g)=>a+(g.path&&g.path.length>1?g.cabins.length:0),0),copters:copters.length};

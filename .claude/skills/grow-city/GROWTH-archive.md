@@ -21504,3 +21504,76 @@ designing saved the lap**: I would have spent it "fixing" a rule that works. Con
 
 **Verdict: DEEPENED** (and FIXED — the market had no clock at all).
 
+## Iteration 286 — People × Deepen — the last two draws that never went home (2026-07-15)
+
+**Vector.** People × **Deepen** (rotation: People at 278 was the oldest domain). Not from the cue
+list — from a **grep of People's seam**, per 225. The banked cue **(aw)** (kayakers keep no hour)
+was live but the header said *"cheap, but it REPEATS 271's mechanism ⇒ **pair it**"*. The grep found
+the pair, and it found it in the place 280's law says to look: **a comment enumerating its own
+category.**
+
+**The tell.** `curfewAt`'s comment ladder (L3924) lists who keeps an hour — *"the residents
+(curfewAt), the children (kidOut), the runners (j.out), the traffic (VCURF), the match crowd
+(matchClock)"*. **That list is a CHANGELOG OF WHO HAS BEEN FIXED, not a taxonomy of who should
+READ it** (280). Two members of the category were never in it — and one of them is **named in the
+fix's own comment as a CONTROL**: 271 wrote *"the shared Math.random stream stays byte-identical,
+so every **kayak**, jogger, balloon and resident is provably untouched."* **271 cited the kayak as
+proof its fix touched nothing, and never asked whether the kayak NEEDED touching.**
+
+**Measured (`probes/probe-hours.mjs`, 6 seeds × 96 pins/day × 2 seasons, no pixels ⇒ no noise floor):**
+
+| draw | HEAD distinct | patch | ceiling | |
+| --- | --- | --- | --- | --- |
+| **KAYAK** | **1** (9 of 9 out at 4am in midwinter, forever) | **7–9** | 10 | `drawKayak` had **no gate at all**, exactly as `drawSurfer` had none |
+| **KITE** | **2** (0 or all 3 — a binary cliff) | **3–4** | 4 | had an hour, but a **GLOBAL MONOTONE** one (`LITAMT>0.6`) ⇒ all three vanish in the SAME FRAME |
+| SURFER *(control)* | 7,8,7,6,7,7 | **identical** | | 271's fix, provably alive (0 at deep night) |
+| JOGGER *(control)* | 8,7,4,6,8,7 | **identical** | | |
+| DOG / PED *(controls)* | 6,7,6,5,5,6 / 39,38,36,33,35,39 | **identical** | | |
+
+**259's check ran BEFORE the design and is what licensed the lap:** a kayak at 4am in midwinter
+renders **12–13.7 px — as much ink as at noon**, so the hours half is a change a viewer can
+actually see, not an invisible one.
+
+**Change.** `surfSession` → **`waterSession()`**, `surfOut` → **`waterOut(e)`** — **ONE predicate,
+FOUR readers** (the two draws + the two tooltips). Renamed *because* `surfSession` gating a kayaker
+is the next lap's 199-tell: a predicate called `surf` is one you grep and miss the kayak.
+- The paddlers take the **existing** predicate — the same sun × the same calendar — so **no new
+  constant enters the file** and the water crowd answers ONE season (249: grep for the mechanism
+  the artifact already ships).
+- The kite gets its own hour **from the ladder, not invented** (226): a kite must be *seen* by the
+  person on the line, so the last one is down as the children go in. Ladder now reads
+  **KITE = KID (~0.35) < SURF = KAYAK = JOG (0.62) < CURF (1.85)**.
+- **DERIVED, NOT DRAWN** (262): `k.ph`/`s.ph` are already uniforms on [0,7), so `ph/7` is exactly
+  uniform on [0,1) and costs **zero new random draws** ⇒ both streams byte-identical, which is why
+  every control column above is **IDENTICAL rather than merely close.**
+- Kayak `ENTINFO` `sub` frozen string → **live function** (278).
+
+**Census.** PASS. **Every metric +0, tile histogram EMPTY** — wholly inert (zero `rng()`, no
+terrain, unreachable from `tick()`). The census is *vacuous* here by construction; the probe is the gate.
+
+**Perf.** Path objects day 110,310 → 110,351 (+41), night 138,104 → **138,068 (−36, a credit)** —
+both inside `probe-drawbudget`'s ±100 floor. **Free**, as a draw-*removing* change should be.
+
+**Visual.** Blind, crossed A/B (`probes/shot-waterhours.mjs`), both seeds. **Both agents named the
+correct file from the pixels alone** (s42 → `sigma`, s7 → `kappa`; both = HEAD). Day pairs
+**BYTE-IDENTICAL by md5** (`62f4381`==`62f4381`, `0355847`==`0355847`) — the required positive twin
+(258) *and* the exact daylight fixed point, proven not asserted. s42's agent, told the intent,
+confirmed **no orphan wake tick / paddle stroke with no hull** and said of HEAD unprompted:
+*"they read as leftover daytime sprites forgotten in the night pass."* Whole-city frames clean.
+
+**⚠ THE RIG LIED FIRST, AND AN AGENT CAUGHT IT (239).** The first shoot came back with s7's night
+pair **byte-identical** while the self-report said `9/9` vs `0/9`. The agent ran `md5` itself and
+refused to grade it — **correctly.** Cause: **`addInitScript` fixes the PRNG *function*, but its
+STREAM POSITION keeps advancing**, so the shot pass's `genWorld` drew *different* `Math.random`
+values than the aim pass's and **respawned the kayaks somewhere else** — I aimed at a boat that no
+longer existed, and two builds render an empty crop identically. **Re-seed the stream in-page before
+EVERY `genWorld`** (248). The camera now **self-reports `aim-miss`** and throws if it aims at nothing.
+
+**Explored and REJECTED — the STRAY DOG.** `drawDog` hides a dog only *through its owner*
+(`if(p&&pedHidden(p))return;`), so a stray (`own=-1`, **2–5/city**) is never hidden — and the
+comment *concedes* it (*"a leashed dog goes home when its human does"*). It has the exact shape of
+the tell. **It is a FALSE POSITIVE (205): a stray has no home to go to**, and a dog roaming a park
+at night is the correct depiction, not a bug. Logged so the next lap does not re-find it.
+
+**Verdict: DEEPENED** (and FIXED — the kayakers had no clock at all, and the kites had the wrong kind).
+

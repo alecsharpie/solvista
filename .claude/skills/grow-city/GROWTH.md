@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
@@ -33,7 +33,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
 - **ROTATION.** Last: Transport **290** · Sky **291** · Civic **292** · People **293** · Nature **294** ·
-  Water **289** · Urban **295**. ➡ **NEXT: Water (289, oldest).** ⚠ **295 SPENT Urban's stale New element cell** (surface car parks on downtown gap-tooth lots — draw-only on EMPTY). Urban's stale kind is now **Interaction/UX (133, ancient)**; its flag/TABLE seam was grepped CLEAN this lap (solar/groof/corner/loft/hstr all agree WRITER/DRAW/TOOLTIP/VETO; BEDT/CIVHRS/valueSrc/VKIND all cover their category). Do NOT default to the banked (au) Polish cue (Polish is 18 laps deep).
+  Urban **295** · Water **296**. ➡ **NEXT: Transport (290, oldest)** — grep its `tick()`/`stepVehicle` seam + FLAGS
+  (per the ⛔ Transport directive below), not the two named hairline `polish-tile` cues. ⚠ **296 broke Water's
+  Deepen/Polish streak with a NEW ELEMENT (first since 169) — channel buoys, draw-only/`Math.random`, census
+  byte-identical; Water's stale kinds are now Connect (22) and Interaction/UX (176).** ⚠ **295 SPENT Urban's stale New element cell** (surface car parks on downtown gap-tooth lots — draw-only on EMPTY). Urban's stale kind is now **Interaction/UX (133, ancient)**; its flag/TABLE seam was grepped CLEAN this lap (solar/groof/corner/loft/hstr all agree WRITER/DRAW/TOOLTIP/VETO; BEDT/CIVHRS/valueSrc/VKIND all cover their category). Do NOT default to the banked (au) Polish cue (Polish is 18 laps deep).
   ✅ **292 CLOSED CIVIC's additive: the event-venue category {market, stadium, amphitheater} is COMPLETE** (crowd pool + `residentWhere` enumerate all three off the shared `concertShow`/`concertLive`; the bowl was the un-enumerated third — 285's type blindness). Civic stale stays New CA rule (36/107) + Connect (measured-sound).
   **291 broke Sky's Deepen streak with a NEW ELEMENT — the sparsest Sky cell (3rd ever). Sky's additive was NOT fully
   spent: the elaborate weather front was a live host with no dramatic payoff, and lightning was the missing one.**
@@ -388,84 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 288 entries before Iteration 286 live in
+> **Archive:** the 289 entries before Iteration 287 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 286 — People × Deepen — the last two draws that never went home (2026-07-15)
-
-**Vector.** People × **Deepen** (rotation: People at 278 was the oldest domain). Not from the cue
-list — from a **grep of People's seam**, per 225. The banked cue **(aw)** (kayakers keep no hour)
-was live but the header said *"cheap, but it REPEATS 271's mechanism ⇒ **pair it**"*. The grep found
-the pair, and it found it in the place 280's law says to look: **a comment enumerating its own
-category.**
-
-**The tell.** `curfewAt`'s comment ladder (L3924) lists who keeps an hour — *"the residents
-(curfewAt), the children (kidOut), the runners (j.out), the traffic (VCURF), the match crowd
-(matchClock)"*. **That list is a CHANGELOG OF WHO HAS BEEN FIXED, not a taxonomy of who should
-READ it** (280). Two members of the category were never in it — and one of them is **named in the
-fix's own comment as a CONTROL**: 271 wrote *"the shared Math.random stream stays byte-identical,
-so every **kayak**, jogger, balloon and resident is provably untouched."* **271 cited the kayak as
-proof its fix touched nothing, and never asked whether the kayak NEEDED touching.**
-
-**Measured (`probes/probe-hours.mjs`, 6 seeds × 96 pins/day × 2 seasons, no pixels ⇒ no noise floor):**
-
-| draw | HEAD distinct | patch | ceiling | |
-| --- | --- | --- | --- | --- |
-| **KAYAK** | **1** (9 of 9 out at 4am in midwinter, forever) | **7–9** | 10 | `drawKayak` had **no gate at all**, exactly as `drawSurfer` had none |
-| **KITE** | **2** (0 or all 3 — a binary cliff) | **3–4** | 4 | had an hour, but a **GLOBAL MONOTONE** one (`LITAMT>0.6`) ⇒ all three vanish in the SAME FRAME |
-| SURFER *(control)* | 7,8,7,6,7,7 | **identical** | | 271's fix, provably alive (0 at deep night) |
-| JOGGER *(control)* | 8,7,4,6,8,7 | **identical** | | |
-| DOG / PED *(controls)* | 6,7,6,5,5,6 / 39,38,36,33,35,39 | **identical** | | |
-
-**259's check ran BEFORE the design and is what licensed the lap:** a kayak at 4am in midwinter
-renders **12–13.7 px — as much ink as at noon**, so the hours half is a change a viewer can
-actually see, not an invisible one.
-
-**Change.** `surfSession` → **`waterSession()`**, `surfOut` → **`waterOut(e)`** — **ONE predicate,
-FOUR readers** (the two draws + the two tooltips). Renamed *because* `surfSession` gating a kayaker
-is the next lap's 199-tell: a predicate called `surf` is one you grep and miss the kayak.
-- The paddlers take the **existing** predicate — the same sun × the same calendar — so **no new
-  constant enters the file** and the water crowd answers ONE season (249: grep for the mechanism
-  the artifact already ships).
-- The kite gets its own hour **from the ladder, not invented** (226): a kite must be *seen* by the
-  person on the line, so the last one is down as the children go in. Ladder now reads
-  **KITE = KID (~0.35) < SURF = KAYAK = JOG (0.62) < CURF (1.85)**.
-- **DERIVED, NOT DRAWN** (262): `k.ph`/`s.ph` are already uniforms on [0,7), so `ph/7` is exactly
-  uniform on [0,1) and costs **zero new random draws** ⇒ both streams byte-identical, which is why
-  every control column above is **IDENTICAL rather than merely close.**
-- Kayak `ENTINFO` `sub` frozen string → **live function** (278).
-
-**Census.** PASS. **Every metric +0, tile histogram EMPTY** — wholly inert (zero `rng()`, no
-terrain, unreachable from `tick()`). The census is *vacuous* here by construction; the probe is the gate.
-
-**Perf.** Path objects day 110,310 → 110,351 (+41), night 138,104 → **138,068 (−36, a credit)** —
-both inside `probe-drawbudget`'s ±100 floor. **Free**, as a draw-*removing* change should be.
-
-**Visual.** Blind, crossed A/B (`probes/shot-waterhours.mjs`), both seeds. **Both agents named the
-correct file from the pixels alone** (s42 → `sigma`, s7 → `kappa`; both = HEAD). Day pairs
-**BYTE-IDENTICAL by md5** (`62f4381`==`62f4381`, `0355847`==`0355847`) — the required positive twin
-(258) *and* the exact daylight fixed point, proven not asserted. s42's agent, told the intent,
-confirmed **no orphan wake tick / paddle stroke with no hull** and said of HEAD unprompted:
-*"they read as leftover daytime sprites forgotten in the night pass."* Whole-city frames clean.
-
-**⚠ THE RIG LIED FIRST, AND AN AGENT CAUGHT IT (239).** The first shoot came back with s7's night
-pair **byte-identical** while the self-report said `9/9` vs `0/9`. The agent ran `md5` itself and
-refused to grade it — **correctly.** Cause: **`addInitScript` fixes the PRNG *function*, but its
-STREAM POSITION keeps advancing**, so the shot pass's `genWorld` drew *different* `Math.random`
-values than the aim pass's and **respawned the kayaks somewhere else** — I aimed at a boat that no
-longer existed, and two builds render an empty crop identically. **Re-seed the stream in-page before
-EVERY `genWorld`** (248). The camera now **self-reports `aim-miss`** and throws if it aims at nothing.
-
-**Explored and REJECTED — the STRAY DOG.** `drawDog` hides a dog only *through its owner*
-(`if(p&&pedHidden(p))return;`), so a stray (`own=-1`, **2–5/city**) is never hidden — and the
-comment *concedes* it (*"a leashed dog goes home when its human does"*). It has the exact shape of
-the tell. **It is a FALSE POSITIVE (205): a stray has no home to go to**, and a dog roaming a park
-at night is the correct depiction, not a bug. Logged so the next lap does not re-find it.
-
-**Verdict: DEEPENED** (and FIXED — the kayakers had no clock at all, and the kites had the wrong kind).
 
 ## Iteration 287 — the placard promised panels, and the rule that would have built them was hunting a handful of fields with nine darts a year (2026-07-15) [Nature × New CA rule/FIX]
 
@@ -999,3 +929,42 @@ coherent, **no z-order tear, no floating, no blowout**. All three PASS; whole fr
 **Verdict: SHIPPED** — downtown's gap-tooth vacant lots now read as surface car parks
 (paved, striped, a few parked cars) instead of sheep-country pasture; lighter than the grass
 it replaces, so it darkens nothing, and it names itself on hover.
+
+## Iteration 296 — the harbour had a pier, a ferry, moored boats and a lighthouse, but no channel to bring them in (2026-07-15) [Water & coast × New element]
+
+**Vector.** Water & coast (oldest domain — 289), and this time a **New element** to break the domain's long
+Deepen/Polish/CA streak (289 boats-hour · 282 kelp · 275/268/266 polish · 257 deepen — the additive cell hadn't
+run since **169**). Grepped the Water seam first (225): the frozen census columns are all accounted for
+(SHOREPARK/MARSH/LIGHTHOUSE/ROCK are terrain with live draws; KELP now ticks; the `riv`/`bridge` flags are terrain,
+not upgraded), so no dead-rule defect this lap — but a real **absence**: the bay is dotted with a pier, a ferry,
+freighters, six day-sailers, three moored boats, kayaks, surfers and a one-per-city lighthouse, and **grep-confirmed
+zero navigation marks**. A working harbour marks its approach; Solvista's did not.
+
+**The element.** Channel buoys leading the fairway in to the pier head — **red flat-topped "can" marks to port,
+green pointed "cone" marks to starboard** (real IALA shapes: a can is a cylinder with a square topmark, a cone a
+triangle with a triangular topmark), anchored on the swell (bob off `waveT`) and **flashing red/green to seaward
+after dark** (a slow `sin(time…)` flash, drawn as a raw-literal radial glow per 279's emitter law — a light SOURCE,
+not a surface). Spawned in `genWorld` seaward of `pier.x1` (published world data — no argmax needed, 201/249), three
+marks a side at `pier.x1+2.5+k*1.7`, flanking the lane at `pier.y±1.7`. **`Math.random`, so the aids never perturb
+the seeded stream** (the guaranteed-clean-ship rule), and **each only spawns where `cellAt` is on-plate open WATER**
+(`!riv`, `x<=ROWMAX-1`), so a pier hard against the rim simply carries a shorter channel — 6/6 on both test seeds.
+
+**Discipline.** New entity array `buoys` (declared, reset in `genWorld`, drawn via `bucketAdd` for z-order); `stamp()`
++ an `ENTINFO` row (a live function of the mark: *"Red port-hand mark on the harbour approach."* / *"Green
+starboard-hand…"*) so it names on hover and rings free; census hook `transport.buoys` in sync.
+
+**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw-only, no terrain,
+no `rng()`). `buoys 0 → 45` across the 9-cell matrix (~5/city), `transportModes +9` (a new mode in every cell).
+`solarRoofs −2 / greenRoofs −1` is the harness's tick-count wobble (226 — a draw-only change slows the frame a hair,
+so fewer `tick()`s land in census's 500ms window; core is untouched).
+
+**Visual.** Both seeds **PASS** on aimed pier close-ups (`probes/shot-buoy.mjs` — freezes in-page, aims the camera at
+`ctr(pier.x1+2.5, pier.y)`, day + night + an un-zoomed whole-city frame). Blind reads, both seeds: *"an upper line of
+RED flat-topped cans with square topmarks and a lower line of GREEN pointed cones with triangular topmarks, each ON
+the water with a small wash ring, none on land or in the sky"*; the night frame shows *"a bright red glow on a can
+and a green glow on a cone, others dark — consistent with intermittent flashing"*; *"no z-order tears… buoys layer
+cleanly over water and behind the pier deck"*; whole city *"balanced and coherent… tiny buoys dotting the harbour
+approach without adding clutter or darkness."*
+
+**Verdict: SHIPPED** — the harbour now has a marked channel; the red-can/green-cone marks lead the fairway in to the
+pier head and flash after dark.
