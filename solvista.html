@@ -4112,6 +4112,29 @@ function buskerAt(x,y){return BUSK&&livelyKerb(x,y)&&hashCell(x,y,seedNum^0x8C48
    nightAmt() is 0 all day so the WHOLE DAY is byte-identical too (a free dead-regime control). */
 const STRIP0=0.45, STRIPJ=0.52;
 const stripOut=(x,y)=>STRIP0+STRIPJ*hashCell(x,y,seedNum^0x5B27);
+/* ...AND THE DEER BED DOWN IN THE TREES AT NIGHTFALL (iter 301). drawDeer opened on
+   `const[cx,cy]=px(...)` -- NO GATE AT ALL, the same holdout drawSurfer (271) and drawKayak
+   (286) were before their hours: nine head grazing the meadow-and-woods edge at 4am in
+   midwinter, identically to noon, on every seed for the artifact's whole life. The DEER were
+   the LAST animate thing in Solvista that kept no hour -- every person (curfewAt/kidOut),
+   every boat/surfer/kayak/kite (waterOut/kiteOut), the busker and its strip crowd (buskOut/
+   stripOut) keep a nightAmt() session, and the beach keeps a season (247) -- the one holdout
+   the enumerate-the-CATEGORY grep (271/286) had missed because a DEER is not a person, a boat
+   or a kite. THE HOUR IS TAKEN FROM THE LADDER, NOT INVENTED (226): the herd is shy, so it
+   melts back into the cover as the dark comes down, the last head bedded about where the
+   joggers are all in -- and the ladder now reads
+       KITE=KID(~0.35) < DEER ≲ JOG=SURF=KAYAK(0.62) ≈ STRIP≈BUSK(0.55..0.97) < CURF(1.85).
+   DERIVED, NOT DRAWN: d.ph is already Math.random()*7, so deerOut reads it here and no deer
+   draws a value of its own -- the shared Math.random stream stays byte-identical, so every
+   heron, jogger and resident is provably untouched (204/262). And each head keeps its OWN
+   threshold, so the herd thins one at a time instead of blinking out together (the 262 cliff).
+   nightAmt() is 0 through all of daylight, so every deer is out whenever HEAD had it out and
+   THE WHOLE DAY IS BYTE-IDENTICAL -- a free dead-regime control (199), and no path objects by
+   day. (The deer bed for the deep NIGHT only; a nightAmt() gate cannot express a midday siesta,
+   and mule deer graze the cool evening anyway.) */
+const DEERDARK=0.6;
+const deerOut=d=>d.ph/7;
+function deerSession(){return clamp(1-nightAmt()/DEERDARK,0,1);}
 /* ---- the traffic keeps hours too (iter 230) -------------------------------
    The city's PEOPLE learned to go to bed -- the windows at 199 (BEDT), the crowd and its
    dogs and runners at 210 (curfewAt) -- and its TRAFFIC never did: at 3am the streets still
@@ -8682,6 +8705,10 @@ function drawHeron(h){
   ctx.beginPath();ctx.moveTo(cx+1.3,cy-7-bob);ctx.lineTo(cx+3,cy-6.6-bob);ctx.lineTo(cx+1.4,cy-6.3-bob);ctx.closePath();ctx.fill();
 }
 function drawDeer(d){
+  if(deerSession()<deerOut(d))return; /* this head has bedded down in the trees for the night --
+    the same nightAmt() session every mover keeps, each with its own threshold so the herd melts
+    into cover one at a time. Before stamp(), as drawSurfer/drawKayak/drawPed do: a bedded deer is
+    not out there to be hovered either. */
   const[cx,cy]=px(d.x+0.5+d.ox,d.y+0.5+d.oy);
   stamp(d,cx,cy);
   const s=d.fawn?0.7:1, f=d.a;

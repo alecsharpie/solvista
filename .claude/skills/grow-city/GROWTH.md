@@ -17,7 +17,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
@@ -32,13 +32,18 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Nature **294** · Urban **295** · Water **296** ·
-  Transport **297** · Sky **298** · Civic **299** · People **300**. ➡ **NEXT: Nature (294, oldest)** — its stale kinds
-  are **New element (156/174)** and **Connect (all ~~struck~~)**; grep the `tick()`/CA seam (287/279 pattern) first.
-  ✅ **300 SPENT People's Polish, closing the last global-`LITAMT` CLIFF** (7th recursion of 262): `drawBuilding`'s COM
-  neon crowd stood all night, all-at-once, while the busker in front kept an hour; now thins per-hex on `stripOut`
-  (`probes/probe-stripcrowd.mjs`: HEAD DISTINCT=1 → PATCH 7). **Every People/entity draw is off the cliff — do not
-  re-open.** People's ONLY stale kind is now **New CA rule (49)** (Deepen CLOSED 14-deep).
+- **ROTATION.** Last: Nature **301** · Urban **295** · Water **296** ·
+  Transport **297** · Sky **298** · Civic **299** · People **300**. ➡ **NEXT: Urban (295, oldest)** — its stale kind is
+  **Interaction/UX (133)**; flag/TABLE seam grepped CLEAN at 295. Standing cue **(au)** loft roof-studio reads as green
+  roof (274's half, Urban × Polish).
+  ✅ **301 CLOSED THE LAST ANIMATE NO-HOUR HOLDOUT** (8th recursion of the 262 cliff): `drawDeer` had **NO gate at all**
+  — 9 mule deer grazed the meadow edge at 4am in midwinter identically to noon, on every seed, for the artifact's whole
+  life. Now `deerSession()`/`deerOut` bed the herd in the trees at nightfall, one head at a time, off the ladder (226,
+  zero new draws; `probes/probe-deerhour.mjs`: HEAD DISTINCT=1 → PATCH 5, surfer control identical both builds). **EVERY
+  animate draw in the city is now off the global-`nightAmt`/`LITAMT` cliff — do not re-open; the enumerate-the-CATEGORY
+  grep now spans fauna too.** Nature's additive stays spent (New element 156/174, Connect all ~~struck~~); its next lap
+  greps the `tick()` seam (287/279 pattern).
+  ⚠ **300 SPENT People's Polish** (strip-crowd cliff, archived) ⇒ People's ONLY stale kind is **New CA rule (49)** (Deepen CLOSED 14-deep).
   ⚠ **297 SPENT Transport's stale New element cell** (harbour launch); its rules seam grepped genuinely CLEAN (every
   mover keeps an hour + a live tooltip + an honest job; no dead rule; FLAGS agree) ⇒ **Transport's stale kinds are New
   CA rule (77) and Interaction/UX (171/290)**, its cues stay `polish-tile` jobs (⛔). ⚠ **295 SPENT Urban's New element
@@ -391,48 +396,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 293 entries before Iteration 291 live in
+> **Archive:** the 294 entries before Iteration 292 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 291 — the storm that greyed the clouds and wet the ground but never once lit the sky (2026-07-15) [Sky & atmosphere × New element]
-
-**Vector.** Sky (rotation target, 284 oldest), and the KIND deliberately varied off the domain's over-worked
-Deepen cell to its SPARSEST — **New element** (only 27 and 43 before this, the 3rd ever). The header warned Sky
-was post-saturation; the seam said otherwise. The weather front (236) is one of the artifact's most elaborate
-systems — a two-clock front that greys cloud bellies, wets the ground on a trailing tail, hangs a rainbow, and
-falls as a dashed veil — and a heavy shower had **no dramatic payoff whatever**: the sky never lit. Lightning
-was the one missing sky element, and it interconnects with a host already built.
-
-**Change.** `drawCloud`'s loop, before the belly puffs: a cloud clearing the rainbow's own bar (`cloudWet(cl) >
-LIGHTN0=0.6`) flickers from within — a bluish-white RADIAL GRADIENT to alpha 0 (195: never a flat arc), an
-ELLIPSE matched to the cloud's own crown (rx 28·s, ry 11·s) centred on the belly, drawn UNDER the puffs so the
-cloud lights up over it. The flash is `pow(sin(time·1.15 + cl.y·4.3 + cl.x·1.1), 30)` — deterministic in `time`
-(no rng → genWorld+__warp reproducible, a probe can pin it), keyed to THIS cloud's own position so the storm's
-cells fire out of step (262: a global-monotone gate like LITAMT would strobe the whole sky as one). Scaled by
-`(0.30 + 0.62·LITAMT)` — washed out at noon, dramatic at dusk, the way a real flash is. `LIGHTN` is a probe
-suppressor (253). Two constants: `LIGHTN0=0.6`, `let LIGHTN=1`.
-
-**Census.** Draw-only, no rng, no terrain → **BYTE-IDENTICAL core**, empty tile histogram (expected: the census
-is vacuous for a draw-only vector — the gate here is the probe + the eyes). VERDICT: PASS.
-
-**Probe** (`probes/probe-lightning.mjs`, isolation by the `LIGHTN` suppressor in ONE page, floor exactly 0,
-build-agnostic). Frozen dusk, wettest front swept from clouds' own `cloudWet`. **(1)** a WET front (a cloud
-clears the bar) at the flash phase → **902 / 627 px of ink** (s42 / s7), the cloud lights up. **(2)** the control
-that is the whole point — a DRY front (no cloud clears the bar) → **0 px / 0 ink at any time**, on both seeds:
-the flash CANNOT fire on a fair sky. That is the gate, and it holds exactly.
-
-**Visual.** Both seeds **PASS** (blind whole-city + close-up, dusk). First cut FAILed on both seeds with one
-checkable geometric cause — the glow (R 44·s) was LARGER than the cloud (~30·s), spilling into empty sky and
-reading as *"a floating orb"* / *"a glow resting on the beach"*; confining it to a crown-matched ellipse fixed
-both. Re-shot: s7 clean — *"the middle cloud clearly lights up from within, contained inside the puff body …
-never clipping to pure white … no z-order tears"*; s42 PASS with a minor aside (that hero cloud happens to sit
-low over the coast). The city stays *"a balanced, coherent dusk coastal city."*
-
-**Verdict: SHIPPED** — a heavy shower now flashes. The front greyed the clouds and wet the ground for 55
-iterations and never lit the sky; it does now, and only a real shower does. Sky's additive cell was not spent.
 
 ## Iteration 292 — the third house nobody was drawn to, and the resident who stood in it with nothing to say (2026-07-15) [Civic & culture × Deepen/FIX]
 
@@ -880,3 +848,47 @@ z-order tears / floating tiles / blown-out colour; each frame reads as a coheren
 
 **Verdict: FIXED** — the seventh recursion of the 262 cliff, on the last People holdout: the neon strip crowd now keeps
 an hour like everyone else in the city, and the busker no longer plays to a frozen audience.
+
+## Iteration 301 — the herd grazed the meadow edge at 4am in midwinter, the same nine head as noon (2026-07-15) [Nature × Deepen/FIX]
+
+**Vector.** Nature rotation (294 oldest). Its additive is spent and its Polish debt paid (294) ⇒ **grep the CA/entity
+seam**, not the cue list (the header's own instruction). Grepping every animate draw for a global-monotone gate — the
+recurring cliff (199 windows · 210 residents · 230 traffic · 262 child · 286 kite/kayak · 300 strip crowd) — turned up
+the one holdout the enumerate-the-CATEGORY grep (271/286) had walked past, because it is not a person, a boat or a
+kite: **`drawDeer` opened on `const[cx,cy]=px(...)` with NO GATE AT ALL.** Nine mule deer, spawned once per city,
+grazing the meadow-and-woods edge, drawn at full detail at 4am in midwinter identically to noon in midsummer, on every
+seed for the artifact's whole life — the **last animate thing in Solvista that kept no hour** (every person keeps
+`curfewAt`/`kidOut`, every boat/surfer/kayak/kite `waterOut`/`kiteOut`, the busker and its crowd `buskOut`/`stripOut`,
+and the beach a season, 247).
+
+**Change.** `deerSession()=clamp(1−nightAmt()/DEERDARK,0,1)` (`DEERDARK=0.6`) and `deerOut=d=>d.ph/7`, and one line at
+the top of `drawDeer`: `if(deerSession()<deerOut(d))return;` (before `stamp()`, as drawSurfer/drawKayak/drawPed do — a
+bedded deer is not out there to be hovered). The herd melts into the cover one head at a time as the dark comes down,
+last bedded about where the joggers are all in, and refills at dawn (like the residents, `pedHidden`). **THE HOUR IS
+TAKEN FROM THE LADDER (226)**: `KITE=KID(~0.35) < DEER ≲ JOG=SURF=KAYAK(0.62) ≈ STRIP≈BUSK(0.55..0.97) < CURF(1.85)`.
+**DERIVED, NOT DRAWN (262):** `d.ph` is already `Math.random()*7`, so `deerOut` reads it here and no deer draws a value
+of its own — the shared `Math.random` stream stays byte-identical, every other entity provably untouched. A `nightAmt()`
+gate cannot express a midday siesta (it is 0 all day), and mule deer graze the cool evening anyway — so night-bedding
+only, and the whole DAY is byte-identical (a free dead-regime control, 199).
+
+**Census.** Draw-only, no rng, no terrain ⇒ **core BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram
+empty; `deer` spawn count 54 unchanged — only the DRAW gates). VERDICT: PASS (vacuous here; the gate is the probe + eyes).
+
+**Probe** (`probes/probe-deerhour.mjs`, TEMPORAL, no pixels for the headline, build-agnostic via `deerSession` detection).
+Counts the deer the draw's own gate admits, swept across the lit night, 2 seeds at 2035.62. **HEAD: 6 head CONSTANT
+across the whole lit night — `DISTINCT COUNTS = 1`** (the cliff, the defect stated, 236). **PATCH: thins one at a time
+6→5→3→1→0 through the evening and deep night, `DISTINCT = 5`, refills at dawn (day control 6).** Controls all hold:
+**HOST** (deer spawned) 6 identical HEAD↔patch; **DAY** 6 in both (dead-regime, 199); **positive control SURFERS**
+(`waterOut`, untouched) reads `DISTINCT = 6` and **byte-identical between HEAD and patch** (9→8→5→3→2→0) — so the sweep
+is live and the surfers are provably unperturbed (248/271). **259 CHECK**: deer render **28/30 px at deep night** (all
+forced out, diffed against deer-emptied) ⇒ bedding them is a *visible* change, not a no-op.
+
+**Visual** (`probes/shot-deerhour.mjs`, discriminating pair — DAY (deer out) vs DEEP-NIGHT (bedded) — aimed at the
+densest deer cluster by its own `ctr`, zoomed 4.8×, plus a whole-city frame). Both seeds **PASS**, both blind agents
+found deer grazing the meadow/woods edge in the day crop (1 clear on s42, 4–5 on s7) and **none** in the same crop at
+deep night; both read the whole city as a coherent, balanced coast with no z-order tears, floating tiles or blown-out
+colour.
+
+**Verdict: FIXED** — the eighth recursion of the 262 cliff, and the last animate holdout in the city: Solvista's deer
+now keep an hour like every person, boat and kite, bedding down in the trees at nightfall instead of grazing a frozen
+midnight meadow. Every animate draw in the diorama is now off the global-`nightAmt`/`LITAMT` cliff.

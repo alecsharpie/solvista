@@ -21849,3 +21849,47 @@ grid they serve, and can finally be named. One transport entity remained un-card
 - **(bg) COUNTRYSIDE SOLAR BLUE — CLOSED by 294.** The uncorroborated aside was measured before touching it:
   `col('solar',1.25)` was chroma 83 / lum 99, the only cool surface among a warm/green countryside ⇒ real.
   `solar[62,82,120]→[54,66,96]` (chroma 58→42, hue held 219→222); shared coherently by field/rooftop/hull.
+
+## Iteration 291 — the storm that greyed the clouds and wet the ground but never once lit the sky (2026-07-15) [Sky & atmosphere × New element]
+
+**Vector.** Sky (rotation target, 284 oldest), and the KIND deliberately varied off the domain's over-worked
+Deepen cell to its SPARSEST — **New element** (only 27 and 43 before this, the 3rd ever). The header warned Sky
+was post-saturation; the seam said otherwise. The weather front (236) is one of the artifact's most elaborate
+systems — a two-clock front that greys cloud bellies, wets the ground on a trailing tail, hangs a rainbow, and
+falls as a dashed veil — and a heavy shower had **no dramatic payoff whatever**: the sky never lit. Lightning
+was the one missing sky element, and it interconnects with a host already built.
+
+**Change.** `drawCloud`'s loop, before the belly puffs: a cloud clearing the rainbow's own bar (`cloudWet(cl) >
+LIGHTN0=0.6`) flickers from within — a bluish-white RADIAL GRADIENT to alpha 0 (195: never a flat arc), an
+ELLIPSE matched to the cloud's own crown (rx 28·s, ry 11·s) centred on the belly, drawn UNDER the puffs so the
+cloud lights up over it. The flash is `pow(sin(time·1.15 + cl.y·4.3 + cl.x·1.1), 30)` — deterministic in `time`
+(no rng → genWorld+__warp reproducible, a probe can pin it), keyed to THIS cloud's own position so the storm's
+cells fire out of step (262: a global-monotone gate like LITAMT would strobe the whole sky as one). Scaled by
+`(0.30 + 0.62·LITAMT)` — washed out at noon, dramatic at dusk, the way a real flash is. `LIGHTN` is a probe
+suppressor (253). Two constants: `LIGHTN0=0.6`, `let LIGHTN=1`.
+
+**Census.** Draw-only, no rng, no terrain → **BYTE-IDENTICAL core**, empty tile histogram (expected: the census
+is vacuous for a draw-only vector — the gate here is the probe + the eyes). VERDICT: PASS.
+
+**Probe** (`probes/probe-lightning.mjs`, isolation by the `LIGHTN` suppressor in ONE page, floor exactly 0,
+build-agnostic). Frozen dusk, wettest front swept from clouds' own `cloudWet`. **(1)** a WET front (a cloud
+clears the bar) at the flash phase → **902 / 627 px of ink** (s42 / s7), the cloud lights up. **(2)** the control
+that is the whole point — a DRY front (no cloud clears the bar) → **0 px / 0 ink at any time**, on both seeds:
+the flash CANNOT fire on a fair sky. That is the gate, and it holds exactly.
+
+**Visual.** Both seeds **PASS** (blind whole-city + close-up, dusk). First cut FAILed on both seeds with one
+checkable geometric cause — the glow (R 44·s) was LARGER than the cloud (~30·s), spilling into empty sky and
+reading as *"a floating orb"* / *"a glow resting on the beach"*; confining it to a crown-matched ellipse fixed
+both. Re-shot: s7 clean — *"the middle cloud clearly lights up from within, contained inside the puff body …
+never clipping to pure white … no z-order tears"*; s42 PASS with a minor aside (that hero cloud happens to sit
+low over the coast). The city stays *"a balanced, coherent dusk coastal city."*
+
+**Verdict: SHIPPED** — a heavy shower now flashes. The front greyed the clouds and wet the ground for 55
+iterations and never lit the sky; it does now, and only a real shower does. Sky's additive cell was not spent.
+
+
+<!-- header bullet moved out at iter 301 (subsumed by 301's animate-cliff-closed note) -->
+✅ **300 SPENT People's Polish, closing the last global-`LITAMT` CLIFF** (7th recursion of 262): `drawBuilding`'s COM
+neon crowd stood all night, all-at-once, while the busker in front kept an hour; now thins per-hex on `stripOut`
+(`probes/probe-stripcrowd.mjs`: HEAD DISTINCT=1 → PATCH 7). **Every People/entity draw is off the cliff — do not
+re-open.** People's ONLY stale kind is now **New CA rule (49)** (Deepen CLOSED 14-deep).
