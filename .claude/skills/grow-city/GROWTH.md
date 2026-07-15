@@ -19,7 +19,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
+| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
@@ -32,8 +32,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Transport **290** · Sky **291** · Civic **292** · People **293** · Nature **287** ·
-  Urban **288** · Water **289** · Nature **294**. ➡ **NEXT: Urban (288, oldest).** ⚠ **Urban's Polish is well-fed (18 laps) — do NOT default to the banked (au) Polish cue.** Its STALE kinds are **New element (32, 62 — both ancient)** and **Interaction/UX (133 — ancient)**; and 225's law is 25/25 — **grep its `tick()`/flags/TABLES seam first** (New CA rule is only 7/23/151/281). 294 took Nature × **Polish**, spending the two banked paired cues (ax)+(bg) together — both measured before a line was written.
+- **ROTATION.** Last: Transport **290** · Sky **291** · Civic **292** · People **293** · Nature **294** ·
+  Water **289** · Urban **295**. ➡ **NEXT: Water (289, oldest).** ⚠ **295 SPENT Urban's stale New element cell** (surface car parks on downtown gap-tooth lots — draw-only on EMPTY). Urban's stale kind is now **Interaction/UX (133, ancient)**; its flag/TABLE seam was grepped CLEAN this lap (solar/groof/corner/loft/hstr all agree WRITER/DRAW/TOOLTIP/VETO; BEDT/CIVHRS/valueSrc/VKIND all cover their category). Do NOT default to the banked (au) Polish cue (Polish is 18 laps deep).
   ✅ **292 CLOSED CIVIC's additive: the event-venue category {market, stadium, amphitheater} is COMPLETE** (crowd pool + `residentWhere` enumerate all three off the shared `concertShow`/`concertLive`; the bowl was the un-enumerated third — 285's type blindness). Civic stale stays New CA rule (36/107) + Connect (measured-sound).
   **291 broke Sky's Deepen streak with a NEW ELEMENT — the sparsest Sky cell (3rd ever). Sky's additive was NOT fully
   spent: the elaborate weather front was a live host with no dramatic payoff, and lightning was the missing one.**
@@ -388,77 +388,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 287 entries before Iteration 285 live in
+> **Archive:** the 288 entries before Iteration 286 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 285 — the last public place in Solvista that never packed up (2026-07-15) [Civic & culture × Deepen/FIX]
-
-**Vector.** Civic & culture × Deepen/FIX. Rotation owed Civic two laps (284 jumped the queue on law 119).
-Its cue list was empty, so I greped the seam instead (225) — and found the defect in the one member of the
-domain that every "institutions keep hours" ladder had been structurally unable to reach.
-
-**The find.** Iter 240 gave the STADIUM a fixture — `matchClock()`, hashed off `Math.floor(dayT)`, the
-artifact's own never-wrapping day counter — wired the crowd, the floodlights, the tooltip and
-`residentWhere` to that one predicate, and **wrote 271's law down in the process** (*when a lap establishes
-a property, enumerate the CATEGORY*). It did not enumerate. `T.MARKET` is the stadium's sibling on three
-lists — `ATTRACT`, `PEDDEST`, and **`syncFleet` L3336, the SAME LINE**: `if(t===T.MARKET||t===T.STADIUM)
-{openCells.push(...)}` under the comment *"markets & matches draw a crowd"* — and `residentWhere` reads
-`matchClock()` for the ground **three lines below** the market's flat `'Browsing the market stalls.'`
-(262: the unfixed sibling is inside the function you just edited).
-
-So the market never closed. Measured (`probes/probe-marketday.mjs`, 6 seeds, 8 days × 16 hours, counting the
-OBJECTS the frame issues per hex — deterministic, no noise floor):
-
-| | HEAD | patch |
-| --- | --- | --- |
-| DISTINCT stall counts | **1** (six prisms, every hour of every day, forever) | **6–10** |
-| square-hours with the stalls up | **100%** | **23.6–29.1%** |
-| night square-hours lit | **100%** (80 of 80, every seed) | **18–21%** |
-| lit-but-closed square-hours | 0 *(trivially — nothing is ever closed)* | **0 by construction** |
-| STADIUM (free positive control, 248) | 4–5 | 4–5 ✓ |
-| FARM (must-not-move, 250) | 1 | 1 ✓ |
-
-**Why `CIVHRS` could never have caught it.** 213's hours table is keyed on **`c.kind`** — and only `T.CIVIC`
-cells *have* a kind. The market and the stadium are civic-culture institutions that are **top-level TILE
-TYPES**, so the entire ladder was structurally incapable of reaching them, and the table looked complete.
-274's law, one level up the type hierarchy. (Law promoted to `SKILL.md`.)
-
-**Change.** `marketHours(x,y)` / `marketAmt(x,y)` / `marketWord(x,y)` — **ONE predicate, FOUR readers**
-(the stalls, the string lights, the tooltip, `residentWhere`), in `fixtureAt`/`matchClock`'s own idiom and
-sitting beside it. Salted per **HEX** as well as per day, so squares keep their own trading days and the city
-always has some market on and some square bare rather than blinking as one. `MKTP=0.45` of days trade;
-`MKTEVE=0.28` of those are **evening** markets (0.62→0.92) — and the string lights, which used to burn every
-night over nobody, now burn **only** there, which is what they were always for. The stalls go up and come
-down one pitch at a time over `MKTSET`; a shut square draws bare pitches and the trestles stacked to one side.
-
-**Census.** PASS. Core **byte-identical** (`pop`/`roads`/`developed` **+0**), tile histogram empty. **Wholly
-inert, structurally**: zero `rng()`, zero `Math.random`, no terrain, and `marketAmt` has exactly three callers
-— the draw, the tooltip, `residentWhere` — and **none inside `tick()`** (`grep` = 0). `solarRoofs +1` is 226's
-documented harness wobble (the census never freezes the clock), not reachable from this diff.
-
-**Perf.** A **credit**, in path objects (241's law in reverse — count the objects when a lap subtracts):
-day **110,716 → 110,199 (−0.47%)**, night **138,411 → 138,156 (−0.18%)**. The square is shut most hours.
-
-**Visual.** PASS on both seeds. `probes/shot-marketday.mjs` — a **discriminating pair** (264) at the `shut`
-pin, where the builds must disagree: HEAD draws its three stalls (it has no closed state), the patch draws
-bare paving. Frames named by FILE with meaningless tokens, map **CROSSED between seeds** (238/239/268) — and
-**both blind agents named the patched build from the pixels alone**, one of them observing unprompted that
-HEAD's shut frame is *"identical to its `-open` frame — stalls never pack down"*, which is the defect stated
-by an agent who did not know which build it was reading. Both whole-city frames clean.
-
-**Also EXPLORED — Civic × Connect, and the seam is SOUND.** Civic's stalest cell is Connect (204). The
-"civic mile" (`c.fete`, iter 178) looked like 283's boulevard: `describeTile` **preempts on `c.fete`**
-(L9209), so an over-firing mile would silently outrank the whole road-label ladder 283 had just repaired.
-It does not. Measured (`probes/probe-civicmile.mjs`, 6 seeds): fete is **11–30 cells, 1.4–3.7% of road**, in
-**2–5 short runs** (biggest 9–14), with **2.2–2.8 institutions in reach** — exactly the *"short stretch
-between two institutions"* its comment promises — and it eats only **2–13** labels a city. **Probing before
-designing saved the lap**: I would have spent it "fixing" a rule that works. Connect stays stale, and is now
-*measured* stale rather than merely unvisited.
-
-**Verdict: DEEPENED** (and FIXED — the market had no clock at all).
 
 ## Iteration 286 — People × Deepen — the last two draws that never went home (2026-07-15)
 
@@ -1003,3 +937,65 @@ nothing compounded.
 read as domed toadstools instead of flat specks, and the countryside solar reads as dark tilted panels
 instead of park-bench blue. Both were measured before a line was written; (bg)'s uncorroborated aside was
 confirmed by the panel-vs-countryside chroma read, not taken on faith.
+
+## Iteration 295 — downtown's vacant lots were sheep-country pasture (2026-07-15) [Urban fabric × New element]
+
+**Vector.** Urban fabric (rotation: Urban at 288 was the oldest). The header nudged the
+`tick()`/flags/TABLES seam first (225's law, 25/25), so I grepped it — and it came back
+**clean**: every per-cell flag (`solar`/`groof`/`corner`/`loft`/`hstr`) has its WRITER,
+DRAW, TOOLTIP and VETO/count agreeing (all gate `... && DEV.has(c.t)`, so the burn-ghost
+where fire clears `c.loft` but not `c.solar`/`c.groof` is neutralised, not a defect); the
+tables (`BEDT` with its deliberate IND exclusion, `CIVHRS`'s 12 kinds, `valueSrc`, `VKIND`)
+all name their whole category. 288's flag-lifecycle grep already took the last real defect
+there. So the RULES seam is genuinely saturated for Urban — and rather than force the sparse
+New CA rule cell in a saturated domain (285–289's discouraged move), I took the **stale New
+element cell** (32, 62 — both ancient) with a real, verifiable, guaranteed-flat addition.
+
+**The gap.** An EMPTY block ringed by the city — `dev>=3` developed neighbours, `>=2` of
+them commercial/tall — drew as **rural pasture** (the default EMPTY succession: grass, a
+tree, wildflower specks, 209). A real downtown fills that gap-tooth vacant lot with parked
+cars, not sheep. That mismatch (a green meadow wedged between towers) is a genuine
+legibility wrongness the artifact carried its whole life.
+
+**Change.** A **surface car park** on those lots. `carPark(x,y,c)` — ONE predicate, TWO
+readers (the draw's base fill + branch, and the tooltip), so paint and name can never drift
+(112). Draw: the base hex paved in **`paving` [190,184,170]** (the city's own hardstanding,
+which is *lighter* than the pasture it replaces — kelp's darkening law met **by
+construction**), white bay-lines slanted along the iso ground, and 2–4 hashCell-placed
+parked cars (body in the city palette + a dark cabin), each on a house-style contact shadow.
+- **Draw-only, hashCell-gated (`hashCell(x,y,seedNum^0x4C17)<0.5`), no `rng()`, no terrain,
+  no new tile type** ⇒ pop and the seeded stream stay flat. It rides no upgrade because the
+  instant the lot develops it is no longer EMPTY. `let CARPARK=1` is a probe suppressor (253).
+- Tooltip: a `'Parking lot'` case in `describeTile`, off the SAME `carPark()` the draw gates
+  on (the corner-shop/loft idiom, 281/267).
+
+**Census.** Draw-only → **PASS, 0 page errors**, core byte-flat (`pop`/`roads`/`developed`
++0, empty tile histogram, solar/green roofs flat). Vacuous by construction; the gate is the
+probe + the eyes.
+
+**Probe** (`probes/probe-carpark.mjs`, predicate-suppression in ONE page, build-agnostic).
+**HOST:** 13 · 18 · 3 lots at seeds 7/42/1234 (and 15/16 at seeds 99/2024) — a handful per
+city, not a flood. **FLOOR:** two `CARPARK=0` renders are **byte-identical (0 px) on every
+seed**, so the ink is real. **INK:** ~740/1007/62 px, **~56 px/lot** on the dense seeds
+(well above the visible floor — a ped shadow is ~4.4 px, a busker ~76 px total).
+
+**Occlusion (206/258, measured, not a defect).** The `com>=2` siting predicate *requires*
+commercial/tall neighbours — which is exactly what occludes a ground-level lot. Measured
+across 5 seeds: **open-front lots are rare everywhere (0–7/seed) and ZERO on seed 1234**, so
+an open-front *gate* would starve the feature and kill seed 1234 outright (206's dilemma: a
+constraint that admits almost none). Relaxing `com>=2`→`dev>=3` changes counts negligibly
+(seed 1234 stays 3). ⇒ the honest outcome is 206's: **do not gate on visibility**; a vacant
+downtown lot IS hemmed in by towers, and a partial glimpse of pavement/cars between buildings
+is realistic, not broken.
+
+**Visual.** Seed 7: agent **located** the paved lots + cars among downtown, whole frame
+PASS. Seed 42: the downtown *clip* first drew a "cannot-locate" (agent confused farm crop-rows
+and market stalls at that zoom — a framing miss, not a defect: the probe measures 18 lots /
+1007 px there); an **aimed close-up** (argmax of measured ink, 226) then read a clean car park
+sitting flush on its hex — the aim-don't-redesign-on-a-locate-FAIL discipline. Seed 1234
+(sparse, 3 lots, all tower-hemmed): the grey lot reads present-but-partially-occluded, scene
+coherent, **no z-order tear, no floating, no blowout**. All three PASS; whole frames balanced.
+
+**Verdict: SHIPPED** — downtown's gap-tooth vacant lots now read as surface car parks
+(paved, striped, a few parked cars) instead of sheep-country pasture; lighter than the grass
+it replaces, so it darkens nothing, and it names itself on hover.

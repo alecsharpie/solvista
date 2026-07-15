@@ -6595,11 +6595,15 @@ function drawCell(x,y){
                  patches). Open grass gets a gentle patchwork (low-frequency waves +
                  per-cell fleck) so the green sheets read as pasture, not paint */
       const gnd=GROUND[c.t];
+      const lot=c.t===T.EMPTY&&carPark(x,y,c);   /* the downtown gap-tooth block: paved, not pasture */
       hexTile(gx,gy,1.02, gnd
         ? col(gnd[0],gnd[1]+((hashCell(x,y,seedNum^0x3B7C)*5|0)-2)*0.015)
+        : lot
+        ? col('paving',0.95+((hashCell(x,y,seedNum^0x3B7C)*5|0)-2)*0.015)
         : col(c.t===T.EMPTY?'grass':'sandDk',
             c.t===T.EMPTY?0.93+0.05*Math.sin(x*0.85+y*0.6)+0.04*hashCell(x,y,seedNum^0x6EAF):0.9));
       if(DEV.has(c.t))drawBuilding(c,x,y,gx,gy);
+      else if(lot)drawLot(x,y,c,gx,gy);
       else if(c.t===T.EMPTY){ /* succession: idle lots grow back on their own */
         if(c.hedge)hedge(c,x,y,gx,gy);
         if(v>0.86)tree(gx,gy,0.7,0.9);
@@ -6644,6 +6648,45 @@ function drawParty(x,y,c,gx,gy){ /* the street party out front of a home */
     ctx.fillRect(cx-4.5+j*3+Math.sin(time*2.3+j)*1,cy-0.5+(j%2)*1.8,1.1,1.1);
   }
   ctx.globalAlpha=1;
+}
+
+/* A SURFACE CAR PARK on the downtown gap-tooth lot (iter 295). An EMPTY block ringed
+   by the city — >=3 developed neighbours, >=2 of them commercial/tall — is not a rural
+   pasture; a real downtown fills that vacant lot with parked cars until someone builds
+   on it, and until now the artifact drew it as sheep-country grass with the odd tree
+   (the default EMPTY succession, 209). ONE predicate, TWO readers (the draw's base fill
+   + branch, and the tooltip), so the paint and the name can never drift (112). It is
+   hashCell-gated (no rng(), no terrain, no new tile type), so pop and the seeded stream
+   stay flat; it rides no upgrade because the instant the lot develops it is no longer
+   EMPTY. It DARKENS NOTHING: `paving` [190,184,170] is the city's own hardstanding, and
+   is LIGHTER than the pasture it replaces (kelp's law, met by construction). `CARPARK`
+   is a probe suppressor (253): 0 reverts every lot to HEAD's pasture, exactly. */
+let CARPARK=1; const CARPARKP=0.5;
+function carPark(x,y,c){
+  if(c.t!==T.EMPTY||c.hedge)return false;
+  let dev=0,com=0;
+  nbrs6(x,y,(a,b)=>{const n=cellAt(a,b);
+    if(n&&DEV.has(n.t)){dev++; if(n.t===T.COM||n.t===T.MID||n.t===T.TOWER)com++;}});
+  return dev>=3&&com>=2&&hashCell(x,y,seedNum^0x4C17)<CARPARKP*CARPARK;
+}
+function drawLot(x,y,c,gx,gy){ /* stall bay-lines + a scatter of parked cars */
+  const[cx,cy]=px(gx,gy);
+  ctx.strokeStyle=col('whiteDk',0.85);ctx.lineWidth=0.45;
+  for(let j=-2;j<=2;j++){                      /* white bay lines, slanted along the iso ground */
+    const bx=cx+j*1.6;
+    ctx.beginPath();ctx.moveTo(bx-0.45,cy-1.1);ctx.lineTo(bx+0.45,cy+1.2);ctx.stroke();
+  }
+  const CB=['coral','teal','white','sand','gold','lav'];
+  const nc=2+(hashCell(x,y,seedNum^0x7A31)*2.6|0);  /* 2-4 cars, hashed so the lot is never empty nor twice the same */
+  for(let j=0;j<nc;j++){
+    const ox=(hashCell(x*3+j+1,y,seedNum^0x11B7)-0.5)*6.0;
+    const oy=(hashCell(x,y*3+j+1,seedNum^0x2C5D)-0.5)*3.0;
+    shadS(cx+ox,cy+oy+0.7,0.07,0.10);
+    ctx.fillStyle=col(CB[(x+y*2+j)%6],1.0);         /* body — the city's own palette */
+    ctx.fillRect(cx+ox-1.05,cy+oy-0.65,2.1,1.3);
+    ctx.fillStyle=col('ink',0.72);                  /* dark cabin/glazing */
+    ctx.fillRect(cx+ox-0.55,cy+oy-0.55,1.1,0.55);
+  }
 }
 
 /* A FIRE IS AN EMITTER, AND col() IS FOR REFLECTORS. This drew its flame with
@@ -9517,6 +9560,10 @@ function describeTile(c,x,y){
      corner shop above is named off c.corner (iter 267). */
   else if(c.t===T.IND&&c.loft){title='Loft conversion';
     sub='An old warehouse in new use — brick bones, new glass, studios above. The block around it went up-market and took the works with it.';}
+  /* a paved gap-tooth lot is named off the SAME carPark() predicate its draw gates on,
+     the way the corner shop and loft above are named off c.corner / c.loft (iter 295). */
+  else if(c.t===T.EMPTY&&carPark(x,y,c)){title='Parking lot';
+    sub='Surface parking on a downtown vacant lot — the gap-tooth block the city fills with cars until someone builds on it.';}
   else{title=TILELABEL[c.t]||'Land';sub=TILEDESC[c.t]||'';}
   /* the CA already remembers when every parcel last changed: age ticks up
      once per tick (0.075yr), and siting/upgrades reset it — so age dates the

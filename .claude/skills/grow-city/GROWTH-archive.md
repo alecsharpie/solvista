@@ -21438,3 +21438,69 @@ far past the target, so wind forward by whole periods or `time` comes out **nega
 **Verdict: SHIPPED.** (cue (bd) CLOSED — and it was **two** readers, not the one the cue named. A cue is a POINTER, NOT
 A SPEC.)
 
+## Iteration 285 — the last public place in Solvista that never packed up (2026-07-15) [Civic & culture × Deepen/FIX]
+
+**Vector.** Civic & culture × Deepen/FIX. Rotation owed Civic two laps (284 jumped the queue on law 119).
+Its cue list was empty, so I greped the seam instead (225) — and found the defect in the one member of the
+domain that every "institutions keep hours" ladder had been structurally unable to reach.
+
+**The find.** Iter 240 gave the STADIUM a fixture — `matchClock()`, hashed off `Math.floor(dayT)`, the
+artifact's own never-wrapping day counter — wired the crowd, the floodlights, the tooltip and
+`residentWhere` to that one predicate, and **wrote 271's law down in the process** (*when a lap establishes
+a property, enumerate the CATEGORY*). It did not enumerate. `T.MARKET` is the stadium's sibling on three
+lists — `ATTRACT`, `PEDDEST`, and **`syncFleet` L3336, the SAME LINE**: `if(t===T.MARKET||t===T.STADIUM)
+{openCells.push(...)}` under the comment *"markets & matches draw a crowd"* — and `residentWhere` reads
+`matchClock()` for the ground **three lines below** the market's flat `'Browsing the market stalls.'`
+(262: the unfixed sibling is inside the function you just edited).
+
+So the market never closed. Measured (`probes/probe-marketday.mjs`, 6 seeds, 8 days × 16 hours, counting the
+OBJECTS the frame issues per hex — deterministic, no noise floor):
+
+| | HEAD | patch |
+| --- | --- | --- |
+| DISTINCT stall counts | **1** (six prisms, every hour of every day, forever) | **6–10** |
+| square-hours with the stalls up | **100%** | **23.6–29.1%** |
+| night square-hours lit | **100%** (80 of 80, every seed) | **18–21%** |
+| lit-but-closed square-hours | 0 *(trivially — nothing is ever closed)* | **0 by construction** |
+| STADIUM (free positive control, 248) | 4–5 | 4–5 ✓ |
+| FARM (must-not-move, 250) | 1 | 1 ✓ |
+
+**Why `CIVHRS` could never have caught it.** 213's hours table is keyed on **`c.kind`** — and only `T.CIVIC`
+cells *have* a kind. The market and the stadium are civic-culture institutions that are **top-level TILE
+TYPES**, so the entire ladder was structurally incapable of reaching them, and the table looked complete.
+274's law, one level up the type hierarchy. (Law promoted to `SKILL.md`.)
+
+**Change.** `marketHours(x,y)` / `marketAmt(x,y)` / `marketWord(x,y)` — **ONE predicate, FOUR readers**
+(the stalls, the string lights, the tooltip, `residentWhere`), in `fixtureAt`/`matchClock`'s own idiom and
+sitting beside it. Salted per **HEX** as well as per day, so squares keep their own trading days and the city
+always has some market on and some square bare rather than blinking as one. `MKTP=0.45` of days trade;
+`MKTEVE=0.28` of those are **evening** markets (0.62→0.92) — and the string lights, which used to burn every
+night over nobody, now burn **only** there, which is what they were always for. The stalls go up and come
+down one pitch at a time over `MKTSET`; a shut square draws bare pitches and the trestles stacked to one side.
+
+**Census.** PASS. Core **byte-identical** (`pop`/`roads`/`developed` **+0**), tile histogram empty. **Wholly
+inert, structurally**: zero `rng()`, zero `Math.random`, no terrain, and `marketAmt` has exactly three callers
+— the draw, the tooltip, `residentWhere` — and **none inside `tick()`** (`grep` = 0). `solarRoofs +1` is 226's
+documented harness wobble (the census never freezes the clock), not reachable from this diff.
+
+**Perf.** A **credit**, in path objects (241's law in reverse — count the objects when a lap subtracts):
+day **110,716 → 110,199 (−0.47%)**, night **138,411 → 138,156 (−0.18%)**. The square is shut most hours.
+
+**Visual.** PASS on both seeds. `probes/shot-marketday.mjs` — a **discriminating pair** (264) at the `shut`
+pin, where the builds must disagree: HEAD draws its three stalls (it has no closed state), the patch draws
+bare paving. Frames named by FILE with meaningless tokens, map **CROSSED between seeds** (238/239/268) — and
+**both blind agents named the patched build from the pixels alone**, one of them observing unprompted that
+HEAD's shut frame is *"identical to its `-open` frame — stalls never pack down"*, which is the defect stated
+by an agent who did not know which build it was reading. Both whole-city frames clean.
+
+**Also EXPLORED — Civic × Connect, and the seam is SOUND.** Civic's stalest cell is Connect (204). The
+"civic mile" (`c.fete`, iter 178) looked like 283's boulevard: `describeTile` **preempts on `c.fete`**
+(L9209), so an over-firing mile would silently outrank the whole road-label ladder 283 had just repaired.
+It does not. Measured (`probes/probe-civicmile.mjs`, 6 seeds): fete is **11–30 cells, 1.4–3.7% of road**, in
+**2–5 short runs** (biggest 9–14), with **2.2–2.8 institutions in reach** — exactly the *"short stretch
+between two institutions"* its comment promises — and it eats only **2–13** labels a city. **Probing before
+designing saved the lap**: I would have spent it "fixing" a rule that works. Connect stays stale, and is now
+*measured* stale rather than merely unvisited.
+
+**Verdict: DEEPENED** (and FIXED — the market had no clock at all).
+
