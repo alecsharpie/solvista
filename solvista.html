@@ -1790,6 +1790,14 @@ function concertSeason(){const s=((year%1)+1)%1;
    never announce a concert the renderer has already struck (123: run the tell forwards). */
 const concertWord=()=>{const cs=concertSeason();
   return cs<=0?'Dark for the winter':(cs>0.72?'Concert season':'Shoulder of the season');};
+/* Is a show ON right now? The bowl's own draw (~L7586) reads `so*concertSeason()`
+   inline; lift it to ONE predicate so the crowd pool and the resident tooltip read
+   the SAME number the stage lights by, and a house can never fill for a concert the
+   renderer has struck (123/285: one predicate, N readers). `so` there is
+   civOpen('amphitheater'), the hour; concertSeason() the calendar. concertLive
+   mirrors the draw's own showtime gate (LITAMT>0.3 && show>0.02) exactly. */
+function concertShow(){return civOpen('amphitheater')*concertSeason();}
+function concertLive(){return LITAMT>0.3&&concertShow()>0.02;}
 /* woodland spring ephemerals: wildflowers carpet the forest floor in the brief
    window after the thaw and before the canopy closes over it (the same s~0.28
    spring the palette greens the canopy on). Shared so the draw and the tooltip
@@ -3365,9 +3373,14 @@ function syncFleet(){
     trucks.push({x,y,nx,ny,p:Math.random(),sp:0.7+Math.random()*0.25,kind:'truck',out:vehCurfew('truck'),c:TRKC[(Math.random()*TRKC.length)|0]});
   }
   const openCells=[], kerbCells=[];
-  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const t=cells[idx(x,y)].t;
+  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const c=cells[idx(x,y)],t=c.t;
     if(t===T.PARK||t===T.PLAZA||t===T.BEACH||t===T.DUNE||t===T.SHOREPARK||t===T.GARDEN||t===T.FIELD||t===T.QUAD)openCells.push([x,y]);
-    if(t===T.MARKET||t===T.STADIUM){openCells.push([x,y],[x,y],[x,y]);} /* markets & matches draw a crowd */
+    /* the city's three event venues draw a crowd. The market and stadium are
+       top-level tile types; the amphitheater is a T.CIVIC with a kind, so this
+       line — like CIVHRS before it (285) — could not NAME it, and the one bowl
+       that fills a full house every summer night never drew a resident to live by
+       it. Enumerate the whole category (280): {market, stadium, amphitheater}. */
+    if(t===T.MARKET||t===T.STADIUM||(t===T.CIVIC&&c.kind==='amphitheater')){openCells.push([x,y],[x,y],[x,y]);}
     if(livelyKerb(x,y))kerbCells.push([x,y]);}
   if(year>=1987)for(let x=pier.x0+1;x<=pier.x1;x++)openCells.push([x,pier.y]);
   /* Where residents LIVE. Open ground alone is 54% coastline by area, so a uniform
@@ -7583,7 +7596,7 @@ function drawBuilding(c,x,y,gx,gy){
          dark), hence the daylight branch. */
       /* is there a show on tonight? `so` is the hour, concertSeason() the calendar —
          and the house reads the SAME number the stage does (see below). */
-      const show=so*concertSeason();
+      const show=concertShow();   /* == so*concertSeason(); one predicate, read here + by the tooltip + the crowd */
       {const aud=LITAMT<0.3?1:show;
       if(LITAMT<0.75&&aud>0.02){
         ctx.globalAlpha=aud;
@@ -9655,6 +9668,10 @@ function residentWhere(p){
   if(t===T.BEACH||t===T.DUNE)return 'Down on the sand.';
   if(t===T.STADIUM)return matchLive()?'In the crowd at the match.'
                         :matchClock()!==null?'Headed for the ground.':'Out by the stadium.';
+  /* the third event venue (285's category): off the SAME predicate the beam lights
+     by, so the string never seats a house at a struck stage */
+  if(t===T.CIVIC&&n.kind==='amphitheater')return concertLive()?'In the crowd at the concert.'
+                        :concertSeason()>0?'Down at the amphitheater.':'By the quiet amphitheater.';
   if(t===T.FIELD)return 'Cutting across the field.';
   if(pedRoad(p.x,p.y))return livelyKerb(p.x,p.y)?'Window-shopping the busy street.':'Walking the block.';
   return 'Out for a stroll.';

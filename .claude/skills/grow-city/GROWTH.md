@@ -21,7 +21,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
 
@@ -32,9 +32,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Transport **290** · Sky **291** · Civic **285** · People **286** · Nature **287** ·
-  Urban **288** · Water **289**. ➡ **NEXT: Civic (285, oldest)** — stale cells **New CA rule (36/107)** and **Connect
-  (45/204, but 285 proved it MEASURED-SOUND — do not "fix" the civic mile)**; grep `tick()`'s civics pass + the TABLES.
+- **ROTATION.** Last: Transport **290** · Sky **291** · Civic **292** · People **286** · Nature **287** ·
+  Urban **288** · Water **289**. ➡ **NEXT: People (286, oldest)** — Deepen CLOSED (14 deep); stale cells **Polish (226)** / **New CA rule (49)**; grep `stepPed`/`syncFleet`/`drawPed` + the arrays.
+  ✅ **292 CLOSED CIVIC's additive: the event-venue category {market, stadium, amphitheater} is COMPLETE** (crowd pool + `residentWhere` enumerate all three off the shared `concertShow`/`concertLive`; the bowl was the un-enumerated third — 285's type blindness). Civic stale stays New CA rule (36/107) + Connect (measured-sound).
   **291 broke Sky's Deepen streak with a NEW ELEMENT — the sparsest Sky cell (3rd ever). Sky's additive was NOT fully
   spent: the elaborate weather front was a live host with no dramatic payoff, and lightning was the missing one.**
   ⚠ **NATURE'S
@@ -391,90 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 284 entries before Iteration 282 live in
+> **Archive:** the 285 entries before Iteration 283 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 282 — the bed was a ribbon welded to the sand, and its own tooltip explained why nobody should look (2026-07-15) [Water & coast × New CA rule/FIX]
-
-**Vector.** Water & coast × **New CA rule** — the header's own instruction: Water was the
-oldest domain (275), its **Polish cell had taken four laps running** (255/266/268/275), and its
-**New CA rule cell was 191 laps stale (90)** ⇒ *grep Water's `tick()` seam, not its cue list*.
-225's grep-the-seam law is now **21 for 21 at finding**.
-
-**The seam.** `tick()` has three water passes (marsh · kelp · dune). The census told the story
-before I read a line of them: **MARSH and KELP are FROZEN CONSTANTS** — 18/18/18, 14/14/14,
-13/13/13 and 17/17/17, 10/10/10, 8/8/8 across 1985/2005/2035 on every seed — while the **DUNE
-beside them in the same `tick()` climbs 20 → 35**.
-
-**What was wrong.** The kelp pass sits in `tick()` (L2423) and runs **813 times a run**. It
-converts its entire bed on **tick 1** and then **converts nothing for the remaining 812 ticks**:
-`DISTINCT BED SIZES = 1`, turnover **0**, on **6 seeds in 6** (218's conversion rate: **100.0%,
-with ZERO still-eligible cells** — the roll is saturated and `p` steers nothing). And its own
-tooltip comment had **written the silence down as a design fact**: *"Kelp carries no CA state
-(placed once in `genWorld`, never ticked)"* — **false about the mechanism, and TRUE about the
-observable**, which is exactly why nobody ever looked.
-  The cause is one predicate: eligibility was **`countAround(BEACH) > 0`** — *"is a beach beside
-me?"*, a **ONE-HEX PROXY FOR DEPTH**. It does not *approximate* depth, it **PINS** it: measured,
-every kelp hex in every city stood at `rDeep` **EXACTLY 1.000**, at every era, forever. A ribbon
-welded to the sand — on a seabed (268's `rDeep`, smoothstepped shoals and channels) it **never
-read**, in an ocean whose shelf band the artifact **names** (`SHELF0..SHELF1`), whose tooltip
-**reports** it, and whose **wind farm STANDS on it** under a comment reading *"one constant, so
-the word and the siting cannot drift apart."* The kelp was the one marine thing that never
-became a reader.
-
-**Change.** The kelp is the **third reader of that band**. A holdfast roots where the **LIGHT**
-still reaches the bottom (`kelpLight = 1 − rDeep/KELPLIT`, `KELPLIT = SHELF1+1` — *no new
-constant*), **strikes** against the sand, **recruits outward** along the bottom from a neighbour
-that has already taken, and the swell **SCOURS** its deep, exposed margin. So the bed is never
-*placed*: it grows over the decades and its outer edge sits where recruitment and scour balance
-— **a DEPTH the seabed decides, not a count anybody tuned**. `TICKN`-salted `hashCell` ⇒ **zero
-`rng()` draws**; and WATER and KELP are both in `WETSET`, so nothing that asks *"is this wet?"*
-— the dune's own gate included — can tell the difference. Tooltip now names the bed's **Depth**
-off the same field the open water beside it uses, and `TILEDESC` no longer says *"off the beach"*.
-
-**Census.** `pop / roads / developed / towers / towerHt / bridges` **+0, byte-flat**; 0 page
-errors. Tile histogram moved **exactly** the intended tile and **nothing else**, conserved:
-**KELP 105 → 90 (−15) · WATER 6789 → 6804 (+15)**. (`solarRoofs +3` = 226's RAF tick-count
-wobble; had the stream been perturbed, `pop` and `towers` would have moved. They did not.)
-
-**Probe** (`probes/probe-kelplife.mjs` — pure world data, drives the artifact's own `tick()`,
-**no pixels, no noise floor**, build-agnostic via `SRC=`):
-
-| | HEAD | patch |
-| --- | --- | --- |
-| distinct bed sizes (800 ticks) | **1, 1, 1, 1, 1, 1** | **14, 18, 12, 14, 28, 38** |
-| turnover (cells changing state) | 0 | 6–23 |
-| mean depth | **1.000** flat | 1.19–1.38 |
-| on the Coastal shelf | 0% | 0–7% |
-| bed size / **WORST seed** | 17.7 / **36** | 16.0 / **34** |
-| **pop / dev / roads** | — | **BYTE-IDENTICAL, all 6 seeds** |
-| **DUNE positive control** | 22–37 sizes | **identical, still alive** |
-
-The must-not-move column is the load-bearing one: the rule draws no `rng()` and swaps only
-inside `WETSET`, so it grows the **byte-for-byte same city** — inertness *proved*, not asserted.
-And the bed is **never larger than HEAD's on ANY seed** (34 ≤ 36) ⇒ **the coast CANNOT darken**,
-which is the whole point, because kelp is this loop's most notorious regression.
-
-**Visual.** PASS ×2, blind, **crossed** map, meaningless tokens (238/239/268). The seed-7 agent
-named the treatment **unprompted**, in the probe's own terms: HEAD = *"a thin, mostly single-hex
-RIBBON tracing the sand's edge… always touching sand, never pushing out to sea. A fringe/outline,
-**not a habitat**"*; patch = *"a BED with real area and depth… stands off the beach with open
-water between it and the sand. It has an **interior and an outer edge**; it reads as something
-**growing** in the shallows."* Both agents, both seeds, on the **un-zoomed plate**: *"neither
-coast is lined with dark weed… the sand/sea edge stays clean, bright, and unlined in both."*
-
-**⛔ REFUTED BEFORE IT WAS BUILT — do not re-try "the kelp answers the CITY".** The obvious
-Deepen (runoff/turbidity kills the bed as the coast develops) is **arithmetically dead**:
-`dist(kelp → DEV/ROAD)` is **4.44–5.73 hexes and BYTE-IDENTICAL at 1985 and 2035 on every
-seed** — the city never comes **one hex** closer to the kelp in fifty years. The field is a
-CONSTANT (267's law, paid before a line was written). `probes/probe-kelphost.mjs`.
-
-**Verdict: SHIPPED / FIXED.** Probes banked: `probe-kelplife` (the gate) · `probe-kelpsweep`
-(the two-ledger sweep) · `probe-kelppool` (how dark could the coast go) · `probe-kelphost`
-(the refutation) · `shot-kelp` (the camera).
 
 ## Iteration 283 — every built-up street in the city was a "grand avenue", and the grandest avenue had no trees (2026-07-15) [Transport × New CA rule/FIX + holistic step-back, 37th]
 
@@ -1077,3 +998,62 @@ low over the coast). The city stays *"a balanced, coherent dusk coastal city."*
 
 **Verdict: SHIPPED** — a heavy shower now flashes. The front greyed the clouds and wet the ground for 55
 iterations and never lit the sky; it does now, and only a real shower does. Sky's additive cell was not spent.
+
+## Iteration 292 — the third house nobody was drawn to, and the resident who stood in it with nothing to say (2026-07-15) [Civic & culture × Deepen/FIX]
+
+**Vector.** Civic & culture (rotation: Civic at 285 was the oldest domain). Its cue list was empty and
+its stale cells (New CA rule 36/107, Connect 45/204) are either forced-into-a-saturated-domain or
+measured-sound (285: don't touch the civic mile). So I grepped the seam (225) — and the seam handed
+back the same defect shape the last several laps found: **285's type-hierarchy blindness, on the
+event-venue category.**
+
+**The find.** The city has exactly **three event venues**, and each got its cadence in a separate lap:
+the STADIUM its match fixtures (240, `matchClock`), the MARKET its trading days (285, `marketAmt`), the
+AMPHITHEATER its concert seasons (250, `concertSeason`). But the two places residents are *drawn to* — the
+crowd-draw pool in `syncFleet` (L3370: `if(t===T.MARKET||t===T.STADIUM){openCells.push 3x}` *"markets &
+matches draw a crowd"*) and `residentWhere` — both key on **top-level TILE TYPES**. The amphitheater is a
+`T.CIVIC` with a `kind`, so — exactly like `CIVHRS` before it (285) — **neither line could NAME it.**
+Result, measured (`probes/probe-concertcrowd.mjs`, 3 seeds, HEAD vs patch):
+- **No resident ever lived by the bowl.** No civic tile is in the residency pool at all, so a resident
+  standing on the amphitheater during a full-house summer-night concert was told **"Out for a stroll."**
+  on HEAD — at every state, every seed. The one bowl that fills a house every August night drew nobody.
+- 280's law exactly (and 285's, and 286's, and 289's): *a crowd list is a changelog of who was fixed, not
+  a taxonomy of who should read it.* The category {market, stadium, amphitheater} was two-thirds enumerated.
+
+**Change.** ONE predicate, three readers.
+- `concertShow()` = `civOpen('amphitheater')*concertSeason()` — lifted out of the bowl's own inline
+  `so*concertSeason()` (L7586), so the draw, the crowd and the tooltip read the SAME number the beam
+  lights by and a house can never fill for a struck stage (123/285). `concertLive()` =
+  `LITAMT>0.3 && concertShow()>0.02`, mirroring the draw's own showtime gate exactly.
+- The crowd pool enumerates the whole category: `t===T.MARKET||t===T.STADIUM||(t===T.CIVIC&&c.kind==='amphitheater')`.
+- `residentWhere` gets the third event-venue case, symmetric with the stadium's:
+  `concertLive() ? 'In the crowd at the concert.' : concertSeason()>0 ? 'Down at the amphitheater.' :
+  'By the quiet amphitheater.'`
+
+**Probe** (`probes/probe-concertcrowd.mjs`, build-HONEST — it asks the page whether `concertLive` exists,
+so ONE file grades both builds). PATCH names the concert crowd at **live** (`concertLive=true`, dusk in
+season), **day-in-season** (*"Down at the amphitheater."*) and **winter** (*"By the quiet amphitheater."*);
+HEAD reads **"Out for a stroll."** in all four states on all three seeds — the defect stated (236).
+**STADIUM control (250):** its match strings are IDENTICAL HEAD↔patch (untouched). **Residency:** peds now
+anchor ON the amphitheater **0–1/130**, exactly the order the stadium reads (**0–2/130**); HEAD **0 on
+every seed** (civic was never in the pool).
+
+**Census.** PASS, **byte-identical core** (`pop`/`roads`/`developed` **+0**; tile histogram empty; every
+metric flat, solar/green roofs **+0** too — fully inert). Peds draw the same NUMBER of `rng()` values from a
+longer `homeCells` pool (the explicit invariant at L3386), so the seeded stream — and every downstream CA —
+is untouched; `residentWhere`/`concertShow`/`concertLive` are unreachable from `tick()`.
+
+**Perf.** Trivial: `concertShow()` adds one `civOpen` call per amphitheater draw (1 per city); the crowd
+pool loop grabs the cell it already indexes. Draw work unchanged (the bowl's `show` is the same number).
+
+**Visual.** Both seeds **PASS** (blind whole-city, dusk). The only visual delta is ~1 extra tiny ped near
+the bowl; both agents confirmed a *"coherent, balanced dusk coastal city … no z-order tears, floating tiles,
+blown-out color, or stray/clustered artifacts anywhere,"* nothing compounded into clutter or darkness.
+
+**Note on rotation.** This is a Deepen/FIX, not the stale New CA rule cell — the seam handed a real defect
+(the third un-enumerated event venue) and a real defect in the right domain beats a forced new CA in a
+saturated one (285–289 all did this). Civic's New CA rule and Connect cells stay stale; Civic's additive is
+now genuinely spent, and the event-venue category {market, stadium, amphitheater} is **CLOSED**.
+
+**Verdict: DEEPENED** (and FIXED — the amphitheater was the third event venue, and the only one with no
+resident drawn to it and no word for its concert crowd; the trilogy 240/250/285 built is now complete).

@@ -21198,3 +21198,82 @@ and carry a number you already know. (Law promoted to SKILL.md.)
 "live" and duly filed the *feature* under the *defect*, calling a patched MID's shop a ghost. **Read
 what your instrument COMPARES — even when you wrote it twenty minutes ago.**)
 
+## Iteration 282 — the bed was a ribbon welded to the sand, and its own tooltip explained why nobody should look (2026-07-15) [Water & coast × New CA rule/FIX]
+
+**Vector.** Water & coast × **New CA rule** — the header's own instruction: Water was the
+oldest domain (275), its **Polish cell had taken four laps running** (255/266/268/275), and its
+**New CA rule cell was 191 laps stale (90)** ⇒ *grep Water's `tick()` seam, not its cue list*.
+225's grep-the-seam law is now **21 for 21 at finding**.
+
+**The seam.** `tick()` has three water passes (marsh · kelp · dune). The census told the story
+before I read a line of them: **MARSH and KELP are FROZEN CONSTANTS** — 18/18/18, 14/14/14,
+13/13/13 and 17/17/17, 10/10/10, 8/8/8 across 1985/2005/2035 on every seed — while the **DUNE
+beside them in the same `tick()` climbs 20 → 35**.
+
+**What was wrong.** The kelp pass sits in `tick()` (L2423) and runs **813 times a run**. It
+converts its entire bed on **tick 1** and then **converts nothing for the remaining 812 ticks**:
+`DISTINCT BED SIZES = 1`, turnover **0**, on **6 seeds in 6** (218's conversion rate: **100.0%,
+with ZERO still-eligible cells** — the roll is saturated and `p` steers nothing). And its own
+tooltip comment had **written the silence down as a design fact**: *"Kelp carries no CA state
+(placed once in `genWorld`, never ticked)"* — **false about the mechanism, and TRUE about the
+observable**, which is exactly why nobody ever looked.
+  The cause is one predicate: eligibility was **`countAround(BEACH) > 0`** — *"is a beach beside
+me?"*, a **ONE-HEX PROXY FOR DEPTH**. It does not *approximate* depth, it **PINS** it: measured,
+every kelp hex in every city stood at `rDeep` **EXACTLY 1.000**, at every era, forever. A ribbon
+welded to the sand — on a seabed (268's `rDeep`, smoothstepped shoals and channels) it **never
+read**, in an ocean whose shelf band the artifact **names** (`SHELF0..SHELF1`), whose tooltip
+**reports** it, and whose **wind farm STANDS on it** under a comment reading *"one constant, so
+the word and the siting cannot drift apart."* The kelp was the one marine thing that never
+became a reader.
+
+**Change.** The kelp is the **third reader of that band**. A holdfast roots where the **LIGHT**
+still reaches the bottom (`kelpLight = 1 − rDeep/KELPLIT`, `KELPLIT = SHELF1+1` — *no new
+constant*), **strikes** against the sand, **recruits outward** along the bottom from a neighbour
+that has already taken, and the swell **SCOURS** its deep, exposed margin. So the bed is never
+*placed*: it grows over the decades and its outer edge sits where recruitment and scour balance
+— **a DEPTH the seabed decides, not a count anybody tuned**. `TICKN`-salted `hashCell` ⇒ **zero
+`rng()` draws**; and WATER and KELP are both in `WETSET`, so nothing that asks *"is this wet?"*
+— the dune's own gate included — can tell the difference. Tooltip now names the bed's **Depth**
+off the same field the open water beside it uses, and `TILEDESC` no longer says *"off the beach"*.
+
+**Census.** `pop / roads / developed / towers / towerHt / bridges` **+0, byte-flat**; 0 page
+errors. Tile histogram moved **exactly** the intended tile and **nothing else**, conserved:
+**KELP 105 → 90 (−15) · WATER 6789 → 6804 (+15)**. (`solarRoofs +3` = 226's RAF tick-count
+wobble; had the stream been perturbed, `pop` and `towers` would have moved. They did not.)
+
+**Probe** (`probes/probe-kelplife.mjs` — pure world data, drives the artifact's own `tick()`,
+**no pixels, no noise floor**, build-agnostic via `SRC=`):
+
+| | HEAD | patch |
+| --- | --- | --- |
+| distinct bed sizes (800 ticks) | **1, 1, 1, 1, 1, 1** | **14, 18, 12, 14, 28, 38** |
+| turnover (cells changing state) | 0 | 6–23 |
+| mean depth | **1.000** flat | 1.19–1.38 |
+| on the Coastal shelf | 0% | 0–7% |
+| bed size / **WORST seed** | 17.7 / **36** | 16.0 / **34** |
+| **pop / dev / roads** | — | **BYTE-IDENTICAL, all 6 seeds** |
+| **DUNE positive control** | 22–37 sizes | **identical, still alive** |
+
+The must-not-move column is the load-bearing one: the rule draws no `rng()` and swaps only
+inside `WETSET`, so it grows the **byte-for-byte same city** — inertness *proved*, not asserted.
+And the bed is **never larger than HEAD's on ANY seed** (34 ≤ 36) ⇒ **the coast CANNOT darken**,
+which is the whole point, because kelp is this loop's most notorious regression.
+
+**Visual.** PASS ×2, blind, **crossed** map, meaningless tokens (238/239/268). The seed-7 agent
+named the treatment **unprompted**, in the probe's own terms: HEAD = *"a thin, mostly single-hex
+RIBBON tracing the sand's edge… always touching sand, never pushing out to sea. A fringe/outline,
+**not a habitat**"*; patch = *"a BED with real area and depth… stands off the beach with open
+water between it and the sand. It has an **interior and an outer edge**; it reads as something
+**growing** in the shallows."* Both agents, both seeds, on the **un-zoomed plate**: *"neither
+coast is lined with dark weed… the sand/sea edge stays clean, bright, and unlined in both."*
+
+**⛔ REFUTED BEFORE IT WAS BUILT — do not re-try "the kelp answers the CITY".** The obvious
+Deepen (runoff/turbidity kills the bed as the coast develops) is **arithmetically dead**:
+`dist(kelp → DEV/ROAD)` is **4.44–5.73 hexes and BYTE-IDENTICAL at 1985 and 2035 on every
+seed** — the city never comes **one hex** closer to the kelp in fifty years. The field is a
+CONSTANT (267's law, paid before a line was written). `probes/probe-kelphost.mjs`.
+
+**Verdict: SHIPPED / FIXED.** Probes banked: `probe-kelplife` (the gate) · `probe-kelpsweep`
+(the two-ledger sweep) · `probe-kelppool` (how dark could the coast go) · `probe-kelphost`
+(the refutation) · `shot-kelp` (the camera).
+
