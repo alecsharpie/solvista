@@ -229,4 +229,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 296  Water & coast × New element SHIPPED             16m53s   $9.29  c8c1881
 ✔ Iter 297  Transport × New element    SHIPPED             26m11s   $15.69 e523d46
 ✔ Iter 298  Sky & atmosphere × Deepen  SHIPPED             17m32s   $8.27  76a0578
+✔ Iter 299  Civic & culture × Polish   SHIPPED             22m01s   $11.44 8680548
 ```
