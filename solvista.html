@@ -4095,6 +4095,23 @@ const BUSK0=0.55, BUSKJ=0.42, BUSKP=0.12; /* BUSKP: only ~1 in 8 lively kerbs dr
 const buskOut=(x,y)=>BUSK0+BUSKJ*hashCell(x,y,seedNum^0x8C4A);
 let BUSK=1; /* probe suppressor (253) */
 function buskerAt(x,y){return BUSK&&livelyKerb(x,y)&&hashCell(x,y,seedNum^0x8C48)<BUSKP&&nightAmt()<buskOut(x,y);}
+/* ...AND ITS AUDIENCE KEEPS THE SAME KIND OF HOUR (iter 300). The busker just above
+   "packs the guitar away as the crowd finally thins" -- but the evening crowd it plays
+   to (drawBuilding's COM branch, "evening crowd out on the strip, under the neon") was
+   the LAST holdout of the very cliff 210/262/286 kept ending: gated on the raw global
+   LITAMT>0.35, so every lit shopfront strip filled with the SAME crowd at the SAME instant
+   at dusk and stood there, identical, all night -- while the busker in front of it went in
+   on its own hour. The audience outlasted the performer. Now the crowd thins one strip at a
+   time on a per-HEX hour, exactly as buskOut staggers the buskers: quiet strips empty in the
+   evening, the liveliest stay out till nearly dawn, and (like the residents, pedHidden) the
+   strip fills again as the sky comes up. THE BAND IS TAKEN FROM THE LADDER (226): the crowd
+   sits just under BUSK so the busker is, on average, the last to leave its own audience --
+       KITE=KID(~0.35) < JOG=SURF=KAYAK(0.62) ≈ STRIP(0.45..0.97) ≲ BUSK(0.55..0.97) < CURF(1.85).
+   hashCell-staggered (a per-cell draw, so its stagger is the ground, not a carried phase) --
+   no rng()/Math.random and no terrain, so pop and the seeded stream stay byte-identical, and
+   nightAmt() is 0 all day so the WHOLE DAY is byte-identical too (a free dead-regime control). */
+const STRIP0=0.45, STRIPJ=0.52;
+const stripOut=(x,y)=>STRIP0+STRIPJ*hashCell(x,y,seedNum^0x5B27);
 /* ---- the traffic keeps hours too (iter 230) -------------------------------
    The city's PEOPLE learned to go to bed -- the windows at 199 (BEDT), the crowd and its
    dogs and runners at 210 (curfewAt) -- and its TRAFFIC never did: at 3am the streets still
@@ -4860,6 +4877,33 @@ function rainFront(){
 /* 0 = dry, 1 = a shower at full weight. ONE definition, and every reader shares it —
    the sky, the wet ground, the bow and the CA (the loop's one-predicate law). */
 function cloudWet(cl){ return clamp((rainFront()-cl.wf)/WETRAMP,0,1); }
+
+/* Is rain falling on world hex (x,y), and how hard (0..1)? A shower is a cloud's own
+   ground footprint — the wet patch cloudWet/shadeGround already paint under the drifting
+   clouds — so the street crowd reads the SAME predicate the wet ground, the veil and the
+   meadow-bloom CA do (the one-definition law). The beach furniture packs away for the
+   winter and the water crowd keeps a season, but the STREET crowd answered no weather at
+   all: it walked the same through a downpour as through August sun. Draw-only, read at
+   draw time: no rng(), no Math.random, no terrain, so pop and the seeded stream are
+   byte-identical. Soft-edged and strongest under the cloud, so an umbrella comes up as the
+   shower arrives and drops as it drifts past (134: no pop, no strobe). */
+const RAINRX=1.9, RAINRY=1.15;   /* the shower's ground reach, in hex units (~ the wet patch's) */
+function rainingAt(x,y){
+  let w=0;
+  for(const cl of clouds){
+    const cw=cloudWet(cl); if(cw<=0)continue;
+    const dx=(x-cl.x)/(RAINRX*cl.s), dy=(y-cl.y)/(RAINRY*cl.s);
+    const d2=dx*dx+dy*dy; if(d2>=1)continue;
+    w=Math.max(w,cw*(1-Math.sqrt(d2)));
+  }
+  return w;
+}
+const RAINUMB=0.25,               /* the shower is heavy enough here to put an umbrella up */
+      UMBSHARE=0.78;              /* ...and this share of the crowd carries one; the rest get caught out */
+/* Does THIS resident have an umbrella up? Derived from the gait phase (an index uniform)
+   via a golden-ratio hash, so it costs no random draw and the DRAW (drawPed) and the
+   TOOLTIP (residentDoing) share ONE predicate and can never drift (105/123/199). */
+const pedUmbrella=p=>((p.ph*0.6180339887)%1)<UMBSHARE;
 
 /* How far the sea's damp band reaches up the sand, in px — widest after the ebb.
    ONE definition, because two readers depend on it: the margin that STROKES the wet
@@ -7262,7 +7306,9 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.strokeStyle=col('ink',0.6);ctx.lineWidth=0.9;
       ctx.beginPath();ctx.moveTo(rcx+1.4,rcy-h-3.4);ctx.lineTo(rcx+1.4,rcy-h-6.1);ctx.stroke(); /* vent stack */
     }
-    if(LITAMT>0.35&&v>0.6){ /* evening crowd out on the strip, under the neon */
+    if(LITAMT>0.35&&v>0.6&&nightAmt()<stripOut(x,y)){ /* evening crowd out on the strip, under the neon --
+      it thins one strip at a time now, on a per-hex hour (stripOut, ~L4098), instead of standing
+      all night on the global LITAMT cliff; the busker in front of it already went in this way */
       const[cx,cy]=px(gx,gy);
       ctx.globalAlpha=Math.min(1,(LITAMT-0.35)*3);
       const n=2+(hashCell(x,y,seedNum^0x216E)*2.6|0);
@@ -8387,6 +8433,20 @@ function drawPed(p){
     ctx.fillRect(kx-0.6,ky-2.2,1.2,1.8);
     ctx.fillStyle=col('ink',1.4);
     ctx.beginPath();ctx.arc(kx,ky-2.7,0.75,0,7);ctx.fill();
+  }
+  if(rainingAt(p.x,p.y)>RAINUMB&&pedUmbrella(p)){ /* up goes the umbrella as a shower crosses
+    the street — the crowd's answer to the weather the meadows and the wet ground already
+    read. Drawn last, so the canopy sits over the head (and the little one beside it). */
+    const uy=gy-6.7-bob, uc=['coral','gold','teal','lav'][(p.ph*13|0)%4];
+    ctx.strokeStyle=col('ink',1.1);ctx.lineWidth=0.6;      /* the stem, down to the hand */
+    ctx.beginPath();ctx.moveTo(cx,uy-0.3);ctx.lineTo(cx,gy-2-bob);ctx.stroke();
+    ctx.fillStyle=col(uc,1.06);                            /* the canopy: a shallow domed hex */
+    ctx.beginPath();ctx.moveTo(cx-2.8,uy);
+    ctx.quadraticCurveTo(cx,uy-2.7,cx+2.8,uy);             /* the top */
+    ctx.quadraticCurveTo(cx+1.2,uy-0.5,cx,uy);             /* the scalloped rim, back... */
+    ctx.quadraticCurveTo(cx-1.2,uy-0.5,cx-2.8,uy);ctx.closePath();ctx.fill();
+    ctx.strokeStyle=col('ink',0.85);ctx.lineWidth=0.4;     /* a rib + finial */
+    ctx.beginPath();ctx.moveTo(cx,uy-0.1);ctx.lineTo(cx,uy-3);ctx.stroke();
   }
 }
 function drawJogger(j){
@@ -9886,7 +9946,14 @@ function withChild(p){
   if(!p.kid)return '';
   return kidHidden(p)?' The little one has gone in.':' A little one in tow.';
 }
-function residentDoing(p){return residentWhere(p)+withChild(p)+outLate(p)}
+/* And whether the shower has caught them — the SAME rainingAt() the umbrella is drawn
+   from and the SAME pedUmbrella() share, so the sentence and the canopy cannot drift
+   (123: run the tell forwards). */
+function underCover(p){
+  if(rainingAt(p.x,p.y)<=RAINUMB)return '';
+  return pedUmbrella(p)?' Umbrella up in the shower.':' Caught in a passing shower.';
+}
+function residentDoing(p){return residentWhere(p)+withChild(p)+underCover(p)+outLate(p)}
 function residentWhere(p){
   if(onPier(p.x,p.y))return 'Out on the pier for the view.';
   const n=cellAt(p.x,p.y), t=n?n.t:-1;

@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -32,9 +32,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: People **293** · Nature **294** · Urban **295** · Water **296** ·
-  Transport **297** · Sky **298** · Civic **299**. ➡ **NEXT: People (293, oldest)** — Deepen is CLOSED for rotation
-  (14 deep); take **Polish (226)** or **New CA rule (49)**, grep `stepPed`/`syncFleet`/`ENTINFO` + the FLAGS first.
+- **ROTATION.** Last: Nature **294** · Urban **295** · Water **296** ·
+  Transport **297** · Sky **298** · Civic **299** · People **300**. ➡ **NEXT: Nature (294, oldest)** — its stale kinds
+  are **New element (156/174)** and **Connect (all ~~struck~~)**; grep the `tick()`/CA seam (287/279 pattern) first.
+  ✅ **300 SPENT People's Polish, closing the last global-`LITAMT` CLIFF** (7th recursion of 262): `drawBuilding`'s COM
+  neon crowd stood all night, all-at-once, while the busker in front kept an hour; now thins per-hex on `stripOut`
+  (`probes/probe-stripcrowd.mjs`: HEAD DISTINCT=1 → PATCH 7). **Every People/entity draw is off the cliff — do not
+  re-open.** People's ONLY stale kind is now **New CA rule (49)** (Deepen CLOSED 14-deep).
   ⚠ **297 SPENT Transport's stale New element cell** (harbour launch); its rules seam grepped genuinely CLEAN (every
   mover keeps an hour + a live tooltip + an honest job; no dead rule; FLAGS agree) ⇒ **Transport's stale kinds are New
   CA rule (77) and Interaction/UX (171/290)**, its cues stay `polish-tile` jobs (⛔). ⚠ **295 SPENT Urban's New element
@@ -45,8 +49,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ✅ **NATURE'S POLISH DEBT IS PAID (294)** — spent both banked paired cues **(ax)** fairy-ring cap contrast +
   **(bg)** the countryside solar blue together, both CLOSED. Nature's stale kinds are now **New element (156/174)**
   and **Connect (all ~~struck~~)**; its next lap should grep the `tick()`/CA seam (287/279 pattern) before the cue list.
-  ⚠ **PEOPLE's Deepen cell is now 14 deep and is CLOSED for rotation purposes** — its stale cells are
-  **Polish (226)** and **New CA rule (49)**. Do not take another People Deepen without a measured seam.
+  ⚠ **PEOPLE's Deepen cell is 14 deep and CLOSED for rotation** — after 300 spent **Polish**, its ONLY stale kind is
+  **New CA rule (49)**. Do not take another People Deepen without a measured seam.
   ✅ **CIVIC'S TWO-LAP DEBT IS PAID (285).** ⚠ **CIVIC's stale cells are STILL New CA rule (36/107) and Connect
   (45/204)** — 277 and 285 both took Deepen. ✅ **BUT CONNECT IS NOW *MEASURED* STALE: 285 probed the civic mile
   (`c.fete`) and the seam is SOUND** (11–30 cells, 1.4–3.7% of road, 2–5 short runs, 2.2–2.8 institutions in
@@ -60,9 +64,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   (POLISH ⇒ not Water's next), **(az)/(ba)** 278's two (below), **(bh)** over-bright plaza flame-blob (Nature/park
   Polish, 293). ✅ **(ax)+(bg) CLOSED by 294; (bf) market packed-away square CLOSED by 299** (permanent stone cross +
   folded trestles + crates + chalk bays; draw-only, census byte-flat).
-  ✅ **PEOPLE's four-Deepen run is BROKEN (278 took Interaction/UX, its stalest cell at 191).** Its **Polish** (226) is
-  now the stale one. **Interaction/UX is no longer the stale COLUMN** — it ran at 278 after 49 laps dormant.
-  🔑 **225'S GREP-THE-SEAM LAW IS 25 FOR 25 AT *FINDING*** (**288: the FLAG-LIFECYCLE grep — `c.solar`/`c.groof`, the two rooftop-tech CAs the HUD counts and the tooltip names, were written on RES/MID/COM and DRAWN nowhere on a TOWER, so downtown's tallest roofs could never carry them — 285's type-hierarchy blindness, found by grepping the WRITER against the DRAW branch.**) (**287: `SOLARF` — fully drawn, promised on the placard,
+  ✅ **PEOPLE: Interaction/UX ran at 278, Polish at 300 — its ONLY stale kind is New CA rule (49); Deepen CLOSED.**
+  🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
+  neon evening crowd stood all night, all-at-once, while the busker in front of it kept an hour; found by grepping
+  every entity/People draw for a gate on a global-monotone signal, the tell 262/286 warn of.**) (**288: the FLAG-LIFECYCLE grep — `c.solar`/`c.groof`, the two rooftop-tech CAs the HUD counts and the tooltip names, were written on RES/MID/COM and DRAWN nowhere on a TOWER, so downtown's tallest roofs could never carry them — 285's type-hierarchy blindness, found by grepping the WRITER against the DRAW branch.**) (**287: `SOLARF` — fully drawn, promised on the placard,
   banked as an open question at iter 107 — had NEVER ONCE EXISTED; the FROZEN CENSUS COLUMN found it in ten seconds,
   while Nature's banked cue was a fairy-ring contrast nudge.**) (**285: the MARKET kept no hours and no day, because
   `CIVHRS` keys on `c.kind` and a MARKET is a TILE TYPE — the hours ladder could not NAME it. 240 gave the STADIUM
@@ -371,11 +376,6 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **row-length distribution** (`L = min(want, run−0.5)` is truncated by open sea upwind ⇒ coastal rows are stubs).
   **Measure the histogram first** (`probes/probe-windrow.mjs`). ⚠ **NOT brightness or width — do not reach for alpha.**
   ⚠ **A *POLISH* cue, and Water's next lap must not be Polish** — bank it, take the seam. · **(aw-HUD) UNVERIFIED — a 269 agent read the controls card as clipping *"TRANSIT REA…"* at 1400x900.** ⚠ **229'S LAW: `probe-hud` swept 6 widths and found 0 clipped labels ⇒ SUSPECT THE HARNESS** ((ar)'s shape a 4th time). Reproduce in a real browser before spending a lap.
-  ✅ **(ax) FAIRY-RING CAP CONTRAST — CLOSED by 294.** Two-tone dome (shaded rim + bright crown, same footprint) in
-  `drawShroom`; footprint held at 20–21 CSS px, both agents PASS on both seeds.
-  ✅ **(bg) COUNTRYSIDE SOLAR BLUE — CLOSED by 294.** The uncorroborated aside was measured before touching it:
-  `col('solar',1.25)` was chroma 83 / lum 99, the only cool surface among a warm/green countryside ⇒ real.
-  `solar[62,82,120]→[54,66,96]` (chroma 58→42, hue held 219→222); shared coherently by field/rooftop/hull.
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED).** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` churn is ruled OUT.
   **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** ⚠ The fire CA is a
   **GHOST** (cannot ignite at 2035) ⇒ almost certainly **LOGGING/clearcut, not BURNT** — **identify the tile first**. Nature × Polish.
@@ -391,48 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 292 entries before Iteration 290 live in
+> **Archive:** the 293 entries before Iteration 291 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 290 — Transport × Interaction/UX (+ Deepen): the flying shuttle nobody could name, droning over the farms
-
-**Vector.** Transport rotation. The rules seam (bus/tram/cab/ferry/freighter/monorail/gondola/copter) is genuinely
-saturated — every one has a live tooltip off the same predicate its rule steers by, and both aerial transit cars
-light their glass at night. The one gap left, found by grepping the entity arrays against `ENTINFO`: the **air
-shuttle**. Drawn since 2012 (3 of them, 6 by 2030) as a teal capsule floating at `z=34` with a blinking light —
-and **never stamped, never in `ENTINFO`**: the one transport entity the city could not identify (Transport's
-stale Interaction/UX cell, 171). Its `stepShuttle` also retargeted to a **UNIFORMLY RANDOM inland point**, so a
-"city air shuttle" spent half its runs droning over the empty meadow and farmland north of the built-up strip.
-
-**Change.** (a) **Deepen** — `stepShuttle` now aims at a **developed cell** (`DEV`), sampling the same 24-try
-loop but keeping the first `DEV` hit; falls back to any inland point only in a young city with little built yet.
-(b) **Interaction/UX** — `stamp(s,cx,cy-z-1.8)` in `drawShuttle` (ring rides on the capsule at cruising height),
-and an `ENTINFO` row `'Autonomous air shuttle'` whose `sub` is a live function (105): *"On autopilot over the
-city grid."* / *"On the leg between two districts."*, off the SAME `DEV` test the run now steers by. `Math.random`
-only, never `rng()` — the runs cannot perturb the seeded simulation.
-
-**Census.** Core **byte-identical** (`pop`/`developed`/`roads` **+0**; tile histogram empty; `solarRoofs +2 /
-greenRoofs +1` is the RAF tick-timing wobble, 226). Draw + `Math.random` + tooltip only — inert by construction.
-
-**Probe** (`probes/probe-shuttle.mjs`, pure world data off the artifact's own `stepShuttle`, same seeded stream
-both builds). *What share of a shuttle's TARGETS land on DEVELOPED ground?* Control = the developed share of the
-inland box (the uniform null, byte-identical HEAD/patch). 2035, 6 seeds: **HEAD 43.9%** sitting exactly on its
-own **uniform baseline 43.1%** — a uniform random walker, the defect stated (236); **PATCH 100.0%** on every
-seed, 0 off-plate. 2012 fallback (young city, baseline ~34%): PATCH **100.0%**, no strand, no crash.
-**Naming** verified deterministically (frozen render, `pickEntity` at each capsule's stamped position): all 6
-shuttles → `'Autonomous air shuttle'` on both seeds (hovershot can't — it doesn't freeze the clock, so a fast
-high mover drifts off the cursor between the `__ents` read and the hover, landing on the tile below).
-
-**Visual.** Both seeds **PASS** (blind whole-city): *"balanced, coherent coastal city … no z-order tears,
-floating tiles, blown-out color, or stray artifacts anywhere"*; the shuttles are tiny at fit zoom (as expected —
-the change is distributional, and a still can't show a target moved) and *"sit within/over the built area and
-sky, nothing torn, clipped, or stranded over open countryside."*
-
-**Verdict: DEEPENED** (and the Interaction/UX gap closed) — the city's autonomous shuttles now run over the
-grid they serve, and can finally be named. One transport entity remained un-carded since 2012; it is carded now.
 
 ## Iteration 291 — the storm that greyed the clouds and wet the ground but never once lit the sky (2026-07-15) [Sky & atmosphere × New element]
 
@@ -880,3 +843,40 @@ CLOSED pin (a day the square holds no market → bald in daylight) and the OPEN 
 **Verdict: SHIPPED** — the closed market square now reads as a market: a stone cross standing over folded trestles and
 chalked pitches, whether the stalls are up or down. Draw-only, path count flat (a handful of fills on a few market
 tiles), free by construction. Cue (bf) CLOSED.
+
+## Iteration 300 — the busker packed up as the crowd finally thinned, but the crowd it played to never did (2026-07-15) [People & activity × Polish/FIX]
+
+**Vector.** People rotation (293 oldest), Deepen CLOSED (14 deep) ⇒ **Polish** (its stale cell, last 226). Not the
+cue list — grep the seam. Grepping every People/entity draw for a gate on a **global-monotone** signal (the recurring
+cliff: 199 windows · 210 residents · 230 traffic · 262 child · 286 kite/kayak) surfaced the last holdout:
+`drawBuilding`'s COM branch, *"evening crowd out on the strip, under the neon"*, gated `if(LITAMT>0.35&&v>0.6)`. So
+every lit shopfront strip (COM, `c.v>0.6`) filled with the **same crowd at the same instant** at dusk and stood there,
+identical, **all night** — while the **busker on that very kerb** (`buskerAt`, `buskOut`) went in on its own per-hex
+hour. The busker's own comment names the defect: it *"packs the guitar away as the crowd finally thins"* over a crowd
+whose *"evening crowd is its audience"* — **the audience outlasted the performer, for the artifact's whole life.**
+
+**Change.** Add `&& nightAmt()<stripOut(x,y)` to the crowd gate, and a per-hex closing hour beside `buskOut`:
+`const STRIP0=0.45, STRIPJ=0.52; const stripOut=(x,y)=>STRIP0+STRIPJ*hashCell(x,y,seedNum^0x5B27)`. The band is
+**taken from the ladder** (226), sitting just under BUSK so the busker is on average the last to leave its own audience
+(`KID~0.35 < JOG=SURF=KAYAK 0.62 ≈ STRIP 0.45..0.97 ≲ BUSK 0.55..0.97 < CURF 1.85`). hashCell-staggered (per-cell draw
+⇒ the stagger is the ground, not a carried phase), no `rng()`/`Math.random`/terrain. The crowd thins one strip at a
+time through the small hours — quiet strips empty first, the liveliest stay till nearly dawn — and (like the residents,
+`pedHidden`) the strip fills again as the sky comes up.
+
+**Census.** Draw-only, no rng, no terrain ⇒ **core BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram
+empty). VERDICT: PASS. The census is vacuous here (the gate is the probe + eyes).
+
+**Probe** (`probes/probe-stripcrowd.mjs`, TEMPORAL, no pixels, build-agnostic via `stripOut` detection). Counts the
+strip cells the draw's own gate admits, swept across the lit night, 2 seeds at 2035. **HEAD: crowd CONSTANT at 99/73
+across the whole lit night — `DISTINCT COUNTS = 1`** (the cliff, the defect stated, 236). **PATCH: evening peak 99→2
+(seed 42, 2% of peak) / 73→0 (seed 7); `DISTINCT = 7`; refills at dawn** (na 0.03 ⇒ full, matching the residents).
+Controls all hold: **HOST** (COM strip cells) 99/73 identical HEAD↔patch; **DAY crowd** 0 in both (dead-regime, 199);
+**BUSKER** (untouched, `__buskers`) varies in BOTH builds (15→0 / 22→1) — the sweep is live (248). The **evening peak
+equals HEAD exactly** ⇒ the change adds nothing at the dusk fixed point (245).
+
+**Visual** (`probes/shot-stripcrowd.mjs`, discriminating pair, evening vs small-hours, whole-city, frozen). Both seeds
+**PASS**, both blind agents correctly named the *evening* frame as the busier one (crowd 99/73 vs 16/13) and found no
+z-order tears / floating tiles / blown-out colour; each frame reads as a coherent night city.
+
+**Verdict: FIXED** — the seventh recursion of the 262 cliff, on the last People holdout: the neon strip crowd now keeps
+an hour like everyone else in the city, and the busker no longer plays to a frozen audience.

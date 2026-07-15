@@ -21805,3 +21805,47 @@ dotted with tiny sails, nothing compounded into clutter or darkness."*
 **Verdict: SHIPPED** (and FIXED — 286's category enumeration missed its own named sibling; the recreational
 water craft now answer ONE season, and the last board, kayak, kite and sail come off the water together).
 
+## Iteration 290 — Transport × Interaction/UX (+ Deepen): the flying shuttle nobody could name, droning over the farms
+
+**Vector.** Transport rotation. The rules seam (bus/tram/cab/ferry/freighter/monorail/gondola/copter) is genuinely
+saturated — every one has a live tooltip off the same predicate its rule steers by, and both aerial transit cars
+light their glass at night. The one gap left, found by grepping the entity arrays against `ENTINFO`: the **air
+shuttle**. Drawn since 2012 (3 of them, 6 by 2030) as a teal capsule floating at `z=34` with a blinking light —
+and **never stamped, never in `ENTINFO`**: the one transport entity the city could not identify (Transport's
+stale Interaction/UX cell, 171). Its `stepShuttle` also retargeted to a **UNIFORMLY RANDOM inland point**, so a
+"city air shuttle" spent half its runs droning over the empty meadow and farmland north of the built-up strip.
+
+**Change.** (a) **Deepen** — `stepShuttle` now aims at a **developed cell** (`DEV`), sampling the same 24-try
+loop but keeping the first `DEV` hit; falls back to any inland point only in a young city with little built yet.
+(b) **Interaction/UX** — `stamp(s,cx,cy-z-1.8)` in `drawShuttle` (ring rides on the capsule at cruising height),
+and an `ENTINFO` row `'Autonomous air shuttle'` whose `sub` is a live function (105): *"On autopilot over the
+city grid."* / *"On the leg between two districts."*, off the SAME `DEV` test the run now steers by. `Math.random`
+only, never `rng()` — the runs cannot perturb the seeded simulation.
+
+**Census.** Core **byte-identical** (`pop`/`developed`/`roads` **+0**; tile histogram empty; `solarRoofs +2 /
+greenRoofs +1` is the RAF tick-timing wobble, 226). Draw + `Math.random` + tooltip only — inert by construction.
+
+**Probe** (`probes/probe-shuttle.mjs`, pure world data off the artifact's own `stepShuttle`, same seeded stream
+both builds). *What share of a shuttle's TARGETS land on DEVELOPED ground?* Control = the developed share of the
+inland box (the uniform null, byte-identical HEAD/patch). 2035, 6 seeds: **HEAD 43.9%** sitting exactly on its
+own **uniform baseline 43.1%** — a uniform random walker, the defect stated (236); **PATCH 100.0%** on every
+seed, 0 off-plate. 2012 fallback (young city, baseline ~34%): PATCH **100.0%**, no strand, no crash.
+**Naming** verified deterministically (frozen render, `pickEntity` at each capsule's stamped position): all 6
+shuttles → `'Autonomous air shuttle'` on both seeds (hovershot can't — it doesn't freeze the clock, so a fast
+high mover drifts off the cursor between the `__ents` read and the hover, landing on the tile below).
+
+**Visual.** Both seeds **PASS** (blind whole-city): *"balanced, coherent coastal city … no z-order tears,
+floating tiles, blown-out color, or stray artifacts anywhere"*; the shuttles are tiny at fit zoom (as expected —
+the change is distributional, and a still can't show a target moved) and *"sit within/over the built area and
+sky, nothing torn, clipped, or stranded over open countryside."*
+
+**Verdict: DEEPENED** (and the Interaction/UX gap closed) — the city's autonomous shuttles now run over the
+grid they serve, and can finally be named. One transport entity remained un-carded since 2012; it is carded now.
+
+
+<!-- header bullets rotated out at iter 300 (closed cues, laws in SKILL.md) -->
+- **(ax) FAIRY-RING CAP CONTRAST — CLOSED by 294.** Two-tone dome (shaded rim + bright crown, same footprint) in
+  `drawShroom`; footprint held at 20–21 CSS px, both agents PASS on both seeds.
+- **(bg) COUNTRYSIDE SOLAR BLUE — CLOSED by 294.** The uncorroborated aside was measured before touching it:
+  `col('solar',1.25)` was chroma 83 / lum 99, the only cool surface among a warm/green countryside ⇒ real.
+  `solar[62,82,120]→[54,66,96]` (chroma 58→42, hue held 219→222); shared coherently by field/rooftop/hull.
