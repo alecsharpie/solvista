@@ -4919,6 +4919,35 @@ function rainFront(){
    the sky, the wet ground, the bow and the CA (the loop's one-predicate law). */
 function cloudWet(cl){ return clamp((rainFront()-cl.wf)/WETRAMP,0,1); }
 
+/* THE FRONT GREYS THE SKY ITSELF (iter 305). The weather front (236) greyed the cloud
+   bellies, wet the ground, put up the umbrellas and — since 291 — lit the lightning, but the
+   SKY BACKDROP behind all of it stayed the same clear blue/gold: the biggest surface in the
+   scene was the one thing deaf to the weather every other surface reads (209's law — a large
+   surface wearing a field that carries no signal). A heavy band now hauls an overcast across
+   the sky. It reads rainFront (the front's OWN strength — no new signal, the sky's fourth
+   reader of it after the clouds, the ground and the CA), and it is gated ABOVE the
+   scattered-shower band so a dry spell — or a light, patchy front — is BYTE-IDENTICAL to HEAD
+   (overcast()===0, and overcastSky/ the sun dimming are no-ops there): the sky only leadens
+   under a genuine overhead band, the same "buys the ARC, not a greyer city" the front's own
+   hold-the-mean keeps. year-keyed like the rest of the front, so it freezes with playing=false
+   and pins with __setYear, and it perturbs no rng()/terrain — pop and the stream stay flat. */
+const OVC0=0.58, OVCRAMP=0.34;   /* dry/patchy below 0.58 (byte-identical); full leaden by ~0.92 */
+const OVCMAX=0.82;               /* a floor of gradient always survives — the sky never goes DEAD flat (cf SHAMT) */
+function overcast(){ return clamp((rainFront()-OVC0)/OVCRAMP,0,1)*OVCMAX; }
+/* Pull a [skyTop, skyBot] pair toward a shared leaden grey, in place: both stops converge on
+   the MEAN of their own two luminances (so the top-to-bottom gradient FLATTENS — an overcast
+   sky is uniform, not a bright zenith over a warm horizon), dimmed a touch, and desaturated
+   toward it (an overcast sky is achromatic). ONE transform, shared by the CSS backdrop
+   (syncSky) and the canvas sky/sea/cloud colours (render), so the two can never disagree about
+   how grey the sky is. A no-op at oc<=0, which is what makes a dry frame byte-identical. */
+const OVCDIM=0.84;
+function overcastSky(top,bot,oc){
+  if(oc<=0)return;
+  const L=v=>0.30*v[0]+0.59*v[1]+0.11*v[2];
+  const g=(L(top)+L(bot))/2*OVCDIM;
+  for(let i=0;i<3;i++){ top[i]=lerp(top[i],g,oc); bot[i]=lerp(bot[i],g,oc); }
+}
+
 /* Is rain falling on world hex (x,y), and how hard (0..1)? A shower is a cloud's own
    ground footprint — the wet patch cloudWet/shadeGround already paint under the drifting
    clouds — so the street crowd reads the SAME predicate the wet ground, the veil and the
@@ -8902,6 +8931,8 @@ function render(){
   applySeason();
   SUNT=sunWarp(dayT);                    /* the season's day length: set before anything reads the light */
   const dl=daylight(SUNT); setLight(dl);
+  const OVCNOW=overcast();                /* 305: how leaden the sky is right now — reused by the sun's own dimming below */
+  overcastSky(dl.skyTop,dl.skyBot,OVCNOW);/* the front greys the sky BEFORE the sea/clouds/sun read it, so a storm mutes the golden sheen too */
   {const sb=dl.skyBot; GWARM=clamp((sb[0]-sb[2]-70)/70,0,1); GWSB=sb; GWST=dl.skyTop;} /* golden-hour sea sheen gate (181); the sky the sea mirrors (257) */
   /* the shadow's sun-vector (iter 225) — the SAME sunP/altitude the disc is drawn from
      up in the sky block, so the shadows and the sun can never disagree about where the
@@ -9018,7 +9049,7 @@ function render(){
     const X0=innerWidth*0.94, X1=Math.max(innerWidth*0.30,342+70);
     const sunX=X0+(X1-X0)*sunP;
     const sunY=innerHeight*(0.075+0.115*Math.pow(1-sunP,4)+0.050*Math.pow(sunP,3));
-    const sunF=Math.min(1,Math.min(sunP,1-sunP)/0.05);    /* eased in and out at the horizon, never popped */
+    const sunF=Math.min(1,Math.min(sunP,1-sunP)/0.05)*(1-OVCNOW);    /* eased in and out at the horizon; and hidden behind a heavy overcast band (305) */
     /* A high sun burns white; a low one takes the horizon's own colour (GWARM/GWSB) and
        then reddens further, because it is seen through more air. That second term is not
        decoration — GWARM is gated on the low sky being ORANGE (R-B>70), and by the time
@@ -9548,6 +9579,7 @@ function syncSky(now){
      moment anything calls it out of order (it duly did — 261's own camera painted a night sky
      behind a daylit noon city). One sin() per 400ms is not a cost worth a hidden ordering rule. */
   const dl=daylight(sunWarp(dayT));
+  overcastSky(dl.skyTop,dl.skyBot,overcast());   /* 305: the front leadens the CSS backdrop too — the SAME transform render uses */
   const c=v=>'rgb('+(v[0]|0)+','+(v[1]|0)+','+(v[2]|0)+')';
   document.documentElement.style.setProperty('--sky-top',c(dl.skyTop));
   document.documentElement.style.setProperty('--sky-bot',c(dl.skyBot));
@@ -10293,7 +10325,7 @@ window.__setYear=n=>{year=n;}; /* pin the calendar (seasons) for tests; moon pha
 /* the weather front, for probes. Season and front are on DIFFERENT scales — season is
    year%1, the front is a ~20yr cycle — so __setYear can pin one without fixing the other
    (year+10 = same season, opposite weather). Iter 236. */
-window.__front=()=>({front:rainFront(),wet:clouds.map(cl=>cloudWet(cl))});
+window.__front=()=>({front:rainFront(),wet:clouds.map(cl=>cloudWet(cl)),overcast:overcast()});
 /* the moon's phase for the current dayT: {phase 0..1 (0=new,.5=full), illum lit fraction, waxing}.
    Pin it with __setTime(day) — an integer step of dayT advances one lunation-eighth at fixed time-of-day. */
 window.__moon=()=>{const l=moonPhase();return{phase:l,illum:(1-Math.cos(l*6.2832))/2,waxing:l<0.5};};

@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -32,9 +32,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Nature **301** · Urban **302** · Water **303** ·
-  Transport (examined **304**, no cell shipped) · Sky **298** · Civic **299** · People **300**. ➡ **NEXT: Sky (298,
-  oldest)** — grep its `tick()`/atmosphere seam + the frozen-census/comment tells, not the cue list.
+- **ROTATION.** Last: Civic **299** · People **300** · Nature **301** · Urban **302** · Water **303** ·
+  Transport (examined **304**, no cell shipped) · Sky **305**. ➡ **NEXT: Civic (299, oldest)** — grep its
+  `tick()`/CA/TABLE seam + the frozen-census/comment tells, not the cue list (stale kind = New CA rule 36/107, cue list
+  empty; 292/285 found Civic's recent defects in the enumerate-the-category / type-hierarchy seam).
+  ✅ **305 SHIPPED Sky × Deepen — the front now greys the SKY ITSELF** (deaf backdrop; `overcast()`=rainFront's 4th
+  reader, gated above the patchy band ⇒ dry sky BYTE-IDENTICAL, one `overcastSky` shared by `syncSky`+`render`;
+  `probe-overcast.mjs`). **Sky Deepen 19-deep but additive NOT spent (291 lightning).**
   ⚠ **304 EXAMINED TRANSPORT AND FOUND IT GENUINELY DRY** (step-back lap): all FOUR seams grepped CLEAN this lap —
   rules (`stepVehicle`/`syncFleet`/`stepGond`/`stepMono` — every mover an hour/tooltip/honest job, 297 holds),
   FLAGS (`bridge`/`riv` — writer/draw/tooltip/veto all agree, 281-clean), the label ladder (`describeTile`), AND the
@@ -386,73 +390,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 297 entries before Iteration 295 live in
+> **Archive:** the 298 entries before Iteration 296 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 295 — downtown's vacant lots were sheep-country pasture (2026-07-15) [Urban fabric × New element]
-
-**Vector.** Urban fabric (rotation: Urban at 288 was the oldest). The header nudged the
-`tick()`/flags/TABLES seam first (225's law, 25/25), so I grepped it — and it came back
-**clean**: every per-cell flag (`solar`/`groof`/`corner`/`loft`/`hstr`) has its WRITER,
-DRAW, TOOLTIP and VETO/count agreeing (all gate `... && DEV.has(c.t)`, so the burn-ghost
-where fire clears `c.loft` but not `c.solar`/`c.groof` is neutralised, not a defect); the
-tables (`BEDT` with its deliberate IND exclusion, `CIVHRS`'s 12 kinds, `valueSrc`, `VKIND`)
-all name their whole category. 288's flag-lifecycle grep already took the last real defect
-there. So the RULES seam is genuinely saturated for Urban — and rather than force the sparse
-New CA rule cell in a saturated domain (285–289's discouraged move), I took the **stale New
-element cell** (32, 62 — both ancient) with a real, verifiable, guaranteed-flat addition.
-
-**The gap.** An EMPTY block ringed by the city — `dev>=3` developed neighbours, `>=2` of
-them commercial/tall — drew as **rural pasture** (the default EMPTY succession: grass, a
-tree, wildflower specks, 209). A real downtown fills that gap-tooth vacant lot with parked
-cars, not sheep. That mismatch (a green meadow wedged between towers) is a genuine
-legibility wrongness the artifact carried its whole life.
-
-**Change.** A **surface car park** on those lots. `carPark(x,y,c)` — ONE predicate, TWO
-readers (the draw's base fill + branch, and the tooltip), so paint and name can never drift
-(112). Draw: the base hex paved in **`paving` [190,184,170]** (the city's own hardstanding,
-which is *lighter* than the pasture it replaces — kelp's darkening law met **by
-construction**), white bay-lines slanted along the iso ground, and 2–4 hashCell-placed
-parked cars (body in the city palette + a dark cabin), each on a house-style contact shadow.
-- **Draw-only, hashCell-gated (`hashCell(x,y,seedNum^0x4C17)<0.5`), no `rng()`, no terrain,
-  no new tile type** ⇒ pop and the seeded stream stay flat. It rides no upgrade because the
-  instant the lot develops it is no longer EMPTY. `let CARPARK=1` is a probe suppressor (253).
-- Tooltip: a `'Parking lot'` case in `describeTile`, off the SAME `carPark()` the draw gates
-  on (the corner-shop/loft idiom, 281/267).
-
-**Census.** Draw-only → **PASS, 0 page errors**, core byte-flat (`pop`/`roads`/`developed`
-+0, empty tile histogram, solar/green roofs flat). Vacuous by construction; the gate is the
-probe + the eyes.
-
-**Probe** (`probes/probe-carpark.mjs`, predicate-suppression in ONE page, build-agnostic).
-**HOST:** 13 · 18 · 3 lots at seeds 7/42/1234 (and 15/16 at seeds 99/2024) — a handful per
-city, not a flood. **FLOOR:** two `CARPARK=0` renders are **byte-identical (0 px) on every
-seed**, so the ink is real. **INK:** ~740/1007/62 px, **~56 px/lot** on the dense seeds
-(well above the visible floor — a ped shadow is ~4.4 px, a busker ~76 px total).
-
-**Occlusion (206/258, measured, not a defect).** The `com>=2` siting predicate *requires*
-commercial/tall neighbours — which is exactly what occludes a ground-level lot. Measured
-across 5 seeds: **open-front lots are rare everywhere (0–7/seed) and ZERO on seed 1234**, so
-an open-front *gate* would starve the feature and kill seed 1234 outright (206's dilemma: a
-constraint that admits almost none). Relaxing `com>=2`→`dev>=3` changes counts negligibly
-(seed 1234 stays 3). ⇒ the honest outcome is 206's: **do not gate on visibility**; a vacant
-downtown lot IS hemmed in by towers, and a partial glimpse of pavement/cars between buildings
-is realistic, not broken.
-
-**Visual.** Seed 7: agent **located** the paved lots + cars among downtown, whole frame
-PASS. Seed 42: the downtown *clip* first drew a "cannot-locate" (agent confused farm crop-rows
-and market stalls at that zoom — a framing miss, not a defect: the probe measures 18 lots /
-1007 px there); an **aimed close-up** (argmax of measured ink, 226) then read a clean car park
-sitting flush on its hex — the aim-don't-redesign-on-a-locate-FAIL discipline. Seed 1234
-(sparse, 3 lots, all tower-hemmed): the grey lot reads present-but-partially-occluded, scene
-coherent, **no z-order tear, no floating, no blowout**. All three PASS; whole frames balanced.
-
-**Verdict: SHIPPED** — downtown's gap-tooth vacant lots now read as surface car parks
-(paved, striped, a few parked cars) instead of sheep-country pasture; lighter than the grass
-it replaces, so it darkens nothing, and it names itself on hover.
 
 ## Iteration 296 — the harbour had a pier, a ferry, moored boats and a lighthouse, but no channel to bring them in (2026-07-15) [Water & coast × New element]
 
@@ -859,3 +801,59 @@ candidate was a false-positive risk not worth forcing). The city is confirmed co
 seasons on 2 seeds, and 40 laps of growth cost essentially nothing in draw work. The overdue guardrail is
 reset; NEXT domain is Sky (298, oldest). Recording the dry seam + cue (bi) is the value: it stops the next
 lap re-grepping Transport, and hands a future lap a measured decision to make.
+
+## Iteration 305 — the front greyed the clouds and the ground and lit the sky, but never touched the sky ITSELF (2026-07-15) [Sky & atmosphere × Deepen/interconnect]
+
+**Vector.** Sky (rotation target, 298 oldest). The header's law is grep the seam, not the cue list — so I
+grepped the atmosphere seam (`syncSky`/`daylight`/the weather front) rather than reach for another 262 cliff
+(the header warns that recursion is 9-deep and a 10th is "one more shallow feature"). The seam handed back a
+209-shaped gap: **the weather front (236) is the artifact's richest sky system** — it greys the cloud bellies
+(`cloudWet`), wets the ground (`rainingAt`), raises umbrellas, feeds the meadow-bloom CA and, since 291, lights
+the lightning — **and the SKY BACKDROP behind all of it was deaf to it.** `syncSky` and render's sky both derive
+purely from `daylight(sunWarp(dayT))` (time-of-day + season); a heavy shower band with greyed clouds, rain,
+umbrellas and lightning sat under the same clear blue/gold sky as a fair day. The biggest surface in the scene
+wore no weather (209: a large surface wearing a field that carries no signal). 291's own title even said it:
+*"the storm that greyed the clouds and wet the ground but never once lit the sky."* It lit it; it never leadened
+it.
+
+**Change.** `overcast()` = `clamp((rainFront()-OVC0)/OVCRAMP,0,1)*OVCMAX` — the front's OWN strength, the sky's
+**fourth reader of rainFront** after the clouds, the ground and the CA (no new signal; one-predicate law). Gated
+ABOVE the scattered-shower band (`OVC0=0.58`) so a dry spell or a light patchy front is `overcast()===0`. When a
+real band is overhead, `overcastSky(skyTop,skyBot,oc)` pulls both stops toward a shared leaden grey (the mean of
+their two luminances, dimmed by `OVCDIM=0.84`): the top→bottom gradient FLATTENS (an overcast sky is uniform,
+not a bright zenith over a warm horizon) and the sky desaturates. ONE transform, called in BOTH `syncSky` (the
+CSS backdrop, 200) and `render()` (right after `daylight`, BEFORE GWARM/GWSB/GWST read `skyBot`) — so the
+backdrop and the canvas sky/sea/cloud colours can never disagree, and a storm mutes the sea's golden sheen
+(GWARM) too. The same `OVCNOW` dims the sun disc (`sunF *= 1-OVCNOW`): the sun hides behind the band.
+Constants: `OVC0=0.58`, `OVCRAMP=0.34`, `OVCMAX=0.82` (a floor of gradient always survives — the sky never goes
+dead-flat, cf SHAMT), `OVCDIM=0.84`.
+
+**Census.** Draw-only — no rng()/Math.random, no terrain, unreachable from `tick()` ⇒ **core BYTE-IDENTICAL**
+(`pop`/`roads`/`developed` +0, empty tile histogram), 0 page errors. VERDICT: PASS (vacuous here; the gate is
+the probe + eyes).
+
+**Probe** (`probes/probe-overcast.mjs`). Measures the shipped transform through the artifact's OWN functions
+(no pixels, no noise floor, build-agnostic): the HEAD-equivalent sky is `daylight()` with the overcast step NOT
+applied, computed in the SAME page, so the diff IS the feature at an exact floor of 0. Three claims, all PASS on
+2 seeds × {noon, golden}: **(1) WET** (a real band, `overcast()`=0.82): chroma drops **90–149** across the two
+stops, the top→bottom gradient flattens **~48→9** (leaden/flat), and on seed-7 golden the sea's golden gate
+**GWARM 0.44→0** (the storm eats the sheen). **(2) DRY / patchy** (`overcast()`===0): the shipped sky is
+**BYTE-IDENTICAL** to the HEAD-equivalent — an exact structural fixed point, so a fair or lightly-showered sky is
+unchanged. **(3) wiring**: the CSS `--sky-bot` the backdrop actually paints equals the shipped `skyBot` (`wire:true`).
+
+**Perf.** Scalar-only: `overcast()` is one `rainFront()` (a couple of `sin`) per frame, `overcastSky` mutates 6
+numbers twice a frame, the sun dim is one multiply. NO new draw primitives — it recolours existing draws (the
+sky is CSS), and the sun dim can only REDUCE ink. Path objects unchanged; negligible.
+
+**Visual** (`probes/shot-overcast.mjs`, page.screenshot per 200; storm-golden / clear-golden control /
+storm-noon, named by file, each self-reporting year/overcast/front). Both seeds **PASS**. Both blind agents,
+by the SKY ALONE, correctly named the storm frame vs the clear frame and matched the filenames (the
+discrimination check — they looked): the overcast reads as *"a believable flat, grey, desaturated front… the sun
+convincingly dimmed/hidden,"* the clear-golden control as *"a coherent, normal golden-hour dusk sky,"* and the
+storm-noon as *"a proper leaden overcast noon with the sun a faint smear behind the front."* No z-order tears,
+floating tiles or blown-out colour; each whole frame reads as one balanced, coherent coastal city (the seed-7
+agent noting the rain shafts sit correctly as weather over the sea).
+
+**Verdict: DEEPENED** — the weather front now reaches the one surface it never touched. A heavy band hauls a
+leaden overcast across the sky and mutes the golden sheen and the sun behind it; a dry or patchy sky is
+byte-identical to HEAD. The sky is the front's fourth reader, and the storm is finally a storm all the way up.

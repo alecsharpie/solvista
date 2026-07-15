@@ -22077,3 +22077,65 @@ read as domed toadstools instead of flat specks, and the countryside solar reads
 instead of park-bench blue. Both were measured before a line was written; (bg)'s uncorroborated aside was
 confirmed by the panel-vs-countryside chroma read, not taken on faith.
 
+## Iteration 295 — downtown's vacant lots were sheep-country pasture (2026-07-15) [Urban fabric × New element]
+
+**Vector.** Urban fabric (rotation: Urban at 288 was the oldest). The header nudged the
+`tick()`/flags/TABLES seam first (225's law, 25/25), so I grepped it — and it came back
+**clean**: every per-cell flag (`solar`/`groof`/`corner`/`loft`/`hstr`) has its WRITER,
+DRAW, TOOLTIP and VETO/count agreeing (all gate `... && DEV.has(c.t)`, so the burn-ghost
+where fire clears `c.loft` but not `c.solar`/`c.groof` is neutralised, not a defect); the
+tables (`BEDT` with its deliberate IND exclusion, `CIVHRS`'s 12 kinds, `valueSrc`, `VKIND`)
+all name their whole category. 288's flag-lifecycle grep already took the last real defect
+there. So the RULES seam is genuinely saturated for Urban — and rather than force the sparse
+New CA rule cell in a saturated domain (285–289's discouraged move), I took the **stale New
+element cell** (32, 62 — both ancient) with a real, verifiable, guaranteed-flat addition.
+
+**The gap.** An EMPTY block ringed by the city — `dev>=3` developed neighbours, `>=2` of
+them commercial/tall — drew as **rural pasture** (the default EMPTY succession: grass, a
+tree, wildflower specks, 209). A real downtown fills that gap-tooth vacant lot with parked
+cars, not sheep. That mismatch (a green meadow wedged between towers) is a genuine
+legibility wrongness the artifact carried its whole life.
+
+**Change.** A **surface car park** on those lots. `carPark(x,y,c)` — ONE predicate, TWO
+readers (the draw's base fill + branch, and the tooltip), so paint and name can never drift
+(112). Draw: the base hex paved in **`paving` [190,184,170]** (the city's own hardstanding,
+which is *lighter* than the pasture it replaces — kelp's darkening law met **by
+construction**), white bay-lines slanted along the iso ground, and 2–4 hashCell-placed
+parked cars (body in the city palette + a dark cabin), each on a house-style contact shadow.
+- **Draw-only, hashCell-gated (`hashCell(x,y,seedNum^0x4C17)<0.5`), no `rng()`, no terrain,
+  no new tile type** ⇒ pop and the seeded stream stay flat. It rides no upgrade because the
+  instant the lot develops it is no longer EMPTY. `let CARPARK=1` is a probe suppressor (253).
+- Tooltip: a `'Parking lot'` case in `describeTile`, off the SAME `carPark()` the draw gates
+  on (the corner-shop/loft idiom, 281/267).
+
+**Census.** Draw-only → **PASS, 0 page errors**, core byte-flat (`pop`/`roads`/`developed`
++0, empty tile histogram, solar/green roofs flat). Vacuous by construction; the gate is the
+probe + the eyes.
+
+**Probe** (`probes/probe-carpark.mjs`, predicate-suppression in ONE page, build-agnostic).
+**HOST:** 13 · 18 · 3 lots at seeds 7/42/1234 (and 15/16 at seeds 99/2024) — a handful per
+city, not a flood. **FLOOR:** two `CARPARK=0` renders are **byte-identical (0 px) on every
+seed**, so the ink is real. **INK:** ~740/1007/62 px, **~56 px/lot** on the dense seeds
+(well above the visible floor — a ped shadow is ~4.4 px, a busker ~76 px total).
+
+**Occlusion (206/258, measured, not a defect).** The `com>=2` siting predicate *requires*
+commercial/tall neighbours — which is exactly what occludes a ground-level lot. Measured
+across 5 seeds: **open-front lots are rare everywhere (0–7/seed) and ZERO on seed 1234**, so
+an open-front *gate* would starve the feature and kill seed 1234 outright (206's dilemma: a
+constraint that admits almost none). Relaxing `com>=2`→`dev>=3` changes counts negligibly
+(seed 1234 stays 3). ⇒ the honest outcome is 206's: **do not gate on visibility**; a vacant
+downtown lot IS hemmed in by towers, and a partial glimpse of pavement/cars between buildings
+is realistic, not broken.
+
+**Visual.** Seed 7: agent **located** the paved lots + cars among downtown, whole frame
+PASS. Seed 42: the downtown *clip* first drew a "cannot-locate" (agent confused farm crop-rows
+and market stalls at that zoom — a framing miss, not a defect: the probe measures 18 lots /
+1007 px there); an **aimed close-up** (argmax of measured ink, 226) then read a clean car park
+sitting flush on its hex — the aim-don't-redesign-on-a-locate-FAIL discipline. Seed 1234
+(sparse, 3 lots, all tower-hemmed): the grey lot reads present-but-partially-occluded, scene
+coherent, **no z-order tear, no floating, no blowout**. All three PASS; whole frames balanced.
+
+**Verdict: SHIPPED** — downtown's gap-tooth vacant lots now read as surface car parks
+(paved, striped, a few parked cars) instead of sheep-country pasture; lighter than the grass
+it replaces, so it darkens nothing, and it names itself on hover.
+
