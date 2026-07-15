@@ -33,41 +33,28 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
 - **ROTATION.** Last: Nature **301** · Urban **302** · Water **303** ·
-  Transport **297** · Sky **298** · Civic **299** · People **300**. ➡ **NEXT: Transport (297, oldest)** — GREP ITS
-  `tick()`/`stepVehicle`/FLAG seam FIRST (27-for-27), not the cue list (its two named cues are `polish-tile` jobs ⛔;
-  Water's New CA rule cell 90/282 stays sparse; cue **(ay)** windrow LENGTH is POLISH).
-  ✅ **303 CLOSED THE *ACTUAL* LAST ANIMATE NO-HOUR HOLDOUT** (9th 262-cliff recursion): `drawHeron` (untouched since
-  iter 17) had NO gate — 6 herons stalked the estuary marsh at 4am identically to noon, **hidden inside 301's OWN control
-  list** (301 cited the heron as untouched — 286: a must-not-move column is what you did not CHANGE, not what is CORRECT).
-  `heronSession()`/`heronOut` roost the flock at dusk off the deer's `DEERDARK` rung (226, zero new draws/constants;
-  `probe-heronhour.mjs`: HEAD DISTINCT=1 → PATCH 5). Every animate draw is now *verifiably* off the cliff.
-  ✅ **302 CLOSED cue (au)** — the loft roof-studio was `col('sage')` (the green-roof's own entry) on a `T.IND` tile that
-  cannot carry `c.groof`; now a glazed white penthouse + gold night lamp, draw-only byte-flat. Urban's tooltip/flag/TABLE
-  seams are SATURATED (grepped clean 295) — its remaining stale kind is Interaction/UX (133), but nothing there is broken.
-  ✅ **301 BEDDED THE DEER at nightfall** (8th 262-cliff recursion): `drawDeer` had NO gate — 9 deer grazed the meadow
-  edge at 4am identically to noon; `deerSession()`/`deerOut`, off the ladder (226). ⚠ Its claim that *every* animate draw
-  was then off the cliff was FALSE — 303 found the heron it had cited as an untouched control (286). Nature additive spent.
-  ⚠ **300 SPENT People's Polish** (strip-crowd cliff, archived) ⇒ People's ONLY stale kind is **New CA rule (49)** (Deepen CLOSED 14-deep).
-  ⚠ **297 SPENT Transport's stale New element cell** (harbour launch); its rules seam grepped genuinely CLEAN (every
-  mover keeps an hour + a live tooltip + an honest job; no dead rule; FLAGS agree) ⇒ **Transport's stale kinds are New
-  CA rule (77) and Interaction/UX (171/290)**, its cues stay `polish-tile` jobs (⛔). ⚠ **295 SPENT Urban's New element
-  cell** (car parks); Urban's stale kind is **Interaction/UX (133)**, flag/TABLE seam grepped CLEAN.
-  ✅ **292 CLOSED CIVIC's additive: the event-venue category {market, stadium, amphitheater} is COMPLETE** (crowd pool + `residentWhere` enumerate all three off the shared `concertShow`/`concertLive`; the bowl was the un-enumerated third — 285's type blindness). Civic stale stays New CA rule (36/107) + Connect (measured-sound).
-  **291 broke Sky's Deepen streak with a NEW ELEMENT — the sparsest Sky cell (3rd ever). Sky's additive was NOT fully
-  spent: the elaborate weather front was a live host with no dramatic payoff, and lightning was the missing one.**
-  ✅ **NATURE'S POLISH DEBT IS PAID (294)** — spent both banked paired cues **(ax)** fairy-ring cap contrast +
-  **(bg)** the countryside solar blue together, both CLOSED. Nature's stale kinds are now **New element (156/174)**
-  and **Connect (all ~~struck~~)**; its next lap should grep the `tick()`/CA seam (287/279 pattern) before the cue list.
-  ⚠ **PEOPLE's Deepen cell is 14 deep and CLOSED for rotation** — after 300 spent **Polish**, its ONLY stale kind is
-  **New CA rule (49)**. Do not take another People Deepen without a measured seam.
-  ✅ **CIVIC'S TWO-LAP DEBT IS PAID (285).** ⚠ **CIVIC's stale cells are STILL New CA rule (36/107) and Connect
-  (45/204)** — 277 and 285 both took Deepen. ✅ **BUT CONNECT IS NOW *MEASURED* STALE: 285 probed the civic mile
-  (`c.fete`) and the seam is SOUND** (11–30 cells, 1.4–3.7% of road, 2–5 short runs, 2.2–2.8 institutions in
-  reach — exactly what its comment promises). **Do not "fix" it.**
-  ⛔ **TRANSPORT'S TWO NAMED CUES ARE `polish-tile` JOBS, NOT GROWTH LAPS** — (a) the elevated transit and (av) the
-  tram's catenary are the SAME 0.5px hairline family; do not spend a growth lap on either. ⇒ **Grep its `tick()`/
-  `stepVehicle` seam and its FLAGS instead** (267 · 274 · 281 · 282 · **283**: FIVE straight laps where the RULES seam
-  beat the cue list). Transport's stale cell is now **Interaction/UX (171)**.
+  Transport (examined **304**, no cell shipped) · Sky **298** · Civic **299** · People **300**. ➡ **NEXT: Sky (298,
+  oldest)** — grep its `tick()`/atmosphere seam + the frozen-census/comment tells, not the cue list.
+  ⚠ **304 EXAMINED TRANSPORT AND FOUND IT GENUINELY DRY** (step-back lap): all FOUR seams grepped CLEAN this lap —
+  rules (`stepVehicle`/`syncFleet`/`stepGond`/`stepMono` — every mover an hour/tooltip/honest job, 297 holds),
+  FLAGS (`bridge`/`riv` — writer/draw/tooltip/veto all agree, 281-clean), the label ladder (`describeTile`), AND the
+  `ENTINFO` hover rows (every mover has a LIVE `sub`). Transport's additive/deepen/interaction are SATURATED; its only
+  stale cell is **New CA rule (77)**, awkward for an entity-driven domain (a forced transit CA = shallow filler ⛔).
+  🟡 **OPEN CUE (bi):** the **gondola cabins run 24h** while the monorail deliberately thins its night platform crowd
+  (`-(LITAMT>0.6)`, L8286) — so cable-transit is the one mover class with zero night behaviour. A scenic aerial tram
+  closes at night IRL; a rapid-transit monorail runs. **Deferred, NOT a defect (204/205 false-positive risk):** a
+  mechanical mover at night is arguable, the cabins are ~3px at fit zoom, and the 262-cliff is 9-deep. Decide with a
+  probe before gating; do not force it.
+  ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
+  **NATURE** additive spent (301 deer), Polish debt paid (294 ax+bg); next = grep the tick()/CA seam (287/279 pattern).
+  **URBAN** tooltip/flag/TABLE SATURATED (295/302), stale = **Interaction/UX (133)**. **PEOPLE** Deepen CLOSED 14-deep
+  + Polish spent (300) + Interaction ran (278) ⇒ only **New CA rule (49)** stale — do not take a People Deepen without a
+  measured seam. **CIVIC** additive COMPLETE (292 event-venue category {market,stadium,amphitheater}), Connect
+  measured-sound (285 civic mile — 11–30 cells, sound, do NOT "fix"), stale = **New CA rule (36/107)**. **SKY** additive
+  NOT fully spent (291 shipped lightning, the sparsest cell — 3rd ever). **TRANSPORT** all seams dry (304); its two named
+  cues (a elevated transit · av catenary) are the same 0.5px hairline `polish-tile` family ⛔, stale = **New CA rule
+  (77)**. Recent cliff closures: 303 herons (the one 301 cited as a control), 302 loft, 301 deer, 300 strip crowd —
+  every animate draw now *verifiably* off the 262 cliff (`225`'s grep-the-seam law is 26-for-26 at *finding*).
   ✅ **CUE (bd) CLOSED BY 284** (and it was TWO readers, not one — see 284's facts).
   ➡ **NEXT cues: (ay)** windrow LENGTH
   (POLISH ⇒ not Water's next), **(az)/(ba)** 278's two (below), **(bh)** over-bright plaza flame-blob (Nature/park
@@ -97,7 +84,15 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ⚠ **STEP-BACK OVERDUE (~19 laps; last was the 37th at 283, block archived at 302): DO ONE SOON.** No new drift as of 283; the golden wash (265), the sea's one-tone lattice (255/257/268) and skyline monotony (224, CLOSED) are DELIBERATE — **do not re-open on an aside.** ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms** (perfab ±30% load noise can't resolve +0.1%/lap; 216/198). ⚠ Blind A/B names NON-ORDINAL and CROSSED (268).
+  ✅ **STEP-BACK #38 RAN AT 304 — NO DRIFT.** Both seeds (42, 7) PASS, 5 frames each (day/golden/night + a CROSSED
+  dusk-summer/dusk-winter discriminating pair, 264), agents correctly named the darker winter frame; no compounded
+  clutter/darkness/tears (only the *deliberate* dense core + golden wash, do not re-open on an aside). **Perf ARC is
+  FLAT in path objects** (the load-immune unit): HEAD vs 283 (~20 laps) **+1.14% day / +0.37% night**, vs 264 (~40
+  laps) **+0.55% / +0.21%** — the +0.2%/lap tendency was cancelled by ~40 laps of byte-flat FIXES + draw credits.
+  ⚠ **TOOL NIT (not a defect):** `shot-stepback` flags `HUD=STALE` on golden/dusk frames — a vocabulary mismatch
+  between the script's coarse `phaseWord` and the artifact's `clockWord` pill (dusk-winter HUD "night" at LITAMT=0.95/
+  sun-down is *more* correct than the script's "sunset"), not a stale DOM. A future lap could align the two words.
+  ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms** (perfab ±30% load noise can't resolve +0.1%/lap; 216/198). ⚠ Blind A/B names NON-ORDINAL and CROSSED (268).
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -391,59 +386,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 296 entries before Iteration 294 live in
+> **Archive:** the 297 entries before Iteration 295 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 294 — the fairy-ring caps and the countryside solar, both a touch too loud in different directions (2026-07-15) [Nature × Polish]
-
-**Vector.** Nature (oldest domain — 287), and its stale kind is **Polish**, two-deep in debt. The header
-banked TWO paired cosmetic cues to spend together: **(ax)** the fairy rings want a hair more cap contrast
-(272, both agents, both seeds, unprompted on a PASSing frame) and **(bg)** the countryside solar panels'
-blue is too saturated (287, s7's agent, unprompted aside — ONE agent, ONE seed, NOT corroborated). Both
-are draw-only contrast/colour nudges: no terrain, no `rng()`, no `Math.random`.
-
-**Probe FIRST, as (bg) mandated.** `probe-shroomvis` confirmed (ax) is a *contrast* problem, not a size
-one: the rings already render **20.3–21.5 CSS px/ring at fit** (~5x a ped shadow), so a body enlargement
-was the wrong lever (255/cue-f family excluded). For (bg) I measured the panel's rendered colour against
-the countryside at the census day pin: `col('solar',1.25)` = **[73,102,156], chroma 83, lum 99, hue 219** —
-the single COOL surface among a warm/green countryside (chroma 38–88, but every neighbour warm or green),
-its chroma at the TOP of the range. The uncorroborated aside held up: a chroma-83 blue at lum 99 among
-lum 150–183 fields is a saturated cool spot, not "dark tilted panels". So the direction was measured, not
-assumed.
-
-**Change.**
-- **(bg)** `solar:[62,82,120]` → `[54,66,96]`: chroma 58→42, luminance down, **hue held (219→222, `dHUE`~3°,
-  audited not to a target hue — 234)**. Rendered `col('solar',1.25)` moved **[73,102,156]→[64,82,125]:
-  chroma 83→61 (−27%), lum 99→81 (−18%)**, same navy. The palette entry is SHARED by the field panels,
-  the rooftop arrays and the launch hull — all three deepen coherently (real PV glass is near-black-blue;
-  a "navy hull" stays navy).
-- **(ax)** `drawShroom`: the single flat cap arc (`col(cap,1.15)` r=0.8) became a **two-tone dome** in the
-  SAME footprint — a shaded rim (`col(cap,0.78)` r=0.8) to define the edge + a bright crown (`col(cap,1.42)`
-  r=0.6) to clear the dark litter. More cap contrast, zero size increase.
-
-**Census.** Draw-only → **PASS, 0 page errors**, core byte-flat (no terrain, no rng). Vacuous for this
-vector by construction; the gates are the probe + the eyes.
-
-**Probe.** `probe-shroomvis` after: ring footprint **unchanged at 20.3–21.5 px/ring** — proof the cap
-change added contrast WITHOUT enlarging (the ink-count probe is near-vacuous for a within-footprint
-brightness redistribution, exactly as expected; 259's line-that-consumes was already read). Solar
-re-measured: chroma 83→61, hue preserved.
-
-**Visual.** Both cues, both seeds, delegated to two subagents, all **PASS**. (ax): *"a tight cluster of
-small pale rounded caps… read as little domed caps (lit crown, darker base) rather than flat dots or a
-smudge"*, no bloom, crowns stay within footprint. (bg): *"dark navy tilted PV strips… clearly distinct
-from the warm crop-row hexes… reads as angled dark panels catching light rather than the old bright
-park-bench blue… still bright enough to see"*; at night *"the darker panels recede correctly into the
-countryside without competing with the city lights."* Whole-city day+night frames balanced on both seeds,
-nothing compounded.
-
-**Verdict: SHIPPED** — two small honest polish nudges spent together as banked: the fairy-ring caps now
-read as domed toadstools instead of flat specks, and the countryside solar reads as dark tilted panels
-instead of park-bench blue. Both were measured before a line was written; (bg)'s uncorroborated aside was
-confirmed by the panel-vs-countryside chroma read, not taken on faith.
 
 ## Iteration 295 — downtown's vacant lots were sheep-country pasture (2026-07-15) [Urban fabric × New element]
 
@@ -860,3 +807,55 @@ with no z-order tears, floating tiles or blown-out colour.
 **Verdict: FIXED** — the ninth recursion of the 262 cliff, and the *actual* last animate holdout in the
 city: Solvista's herons now fly to roost at nightfall like every person, boat, kite and deer, instead of
 stalking a frozen midnight marsh. 301's "every animate draw is off the cliff" is now — verifiably — true.
+
+## Iteration 304 — the rotated domain was dry, so the loop checked itself (2026-07-15) [38th step-back / holistic]
+
+**Vector.** Transport rotation (297 oldest). The header's law is to grep the seam, not the cue list — so I
+grepped ALL FOUR Transport seams this lap: (1) the RULES (`stepVehicle`/`syncFleet`/`stepGond`/`stepMono`/
+`stepCabins`/`stepShuttle`) — every mover keeps a per-entity hour (`vehCurfew`/`VCURF`/`waterSession`), has a
+live tooltip off the predicate its rule steers by, and does an honest job; (2) the FLAG seam (`bridge`/`riv`)
+— writer (`genWorld`/street-growth), draw (`drawCell` L6453), tooltip (`describeTile` 'Bridge'/'River') and
+veto (`stopOK`/`pedRoad`/river-flood) all agree on which types own it (281-clean); (3) the label ladder
+(`describeTile` — bridge, boulevard, arterial, avenue, fete, loft, corner shop, parking lot all named off
+their flag); (4) the `ENTINFO` hover rows — every mover (ferry, launch, tram, bus, monorail train, cable car,
+shuttle, copter…) has a LIVE `sub` computed off its own state. **297's "clean" claim holds up — this is a very
+mature, well-audited domain.** Transport's additive/deepen/interaction are SATURATED; only **New CA rule (77)**
+is stale, and a forced transit CA on an entity-driven domain would be shallow filler (⛔). With the rotated
+domain confirmed dry AND the step-back **~21 laps overdue** (should be every ~5; last was #37 folded into 283),
+the honest highest-value move was the overdue holistic self-check — the loop's main guardrail for long
+unattended runs.
+
+**The one arguable finding, DEFERRED not shipped (new cue (bi)).** The gondola cabins run 24h, while the
+monorail deliberately thins its night platform crowd (`cap -= (LITAMT>0.6)`, L8286) — so cable transit is the
+one mover class with zero night behaviour. A scenic aerial tram closes at night IRL; a rapid-transit monorail
+runs. It fits the 262-cliff shape (a mover with no hour, 297 listed every mover EXCEPT the two cable modes).
+**But I did not gate it (204/205 false-positive law):** a *mechanical* mover at night is arguable (not the
+clear wrong of a heron stalking a marsh), the cabins are ~3px at fit zoom (the night agents read the frame as
+coherent and never flagged them), and the 262 cliff is already 9-deep — a 10th marginal recursion is the
+"one more shallow feature" the counterweight warns against. Banked as cue (bi): decide with a probe first.
+
+**Step-back #38 (no `solvista.html` change).** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each —
+day / golden / night + a CROSSED dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant,
+sun UP in summer and DOWN in winter). Every frame self-reports its state.
+- **Visual: both seeds PASS.** One agent per seed, blind, cumulative question. Both read all five frames as a
+  coherent, balanced coastal city — no z-order tears, floating tiles, ornaments-in-mid-air, blown-out colour.
+  Both correctly named **dusk-winter** as the darker/night-lit frame (the discrimination check — they looked).
+  The only asides were the *deliberate* dense downtown core (with park/river/street gaps giving the eye rest —
+  "not runaway clutter") and the intentional golden/dusk warm wash — both on the header's do-not-re-open list.
+- **Perf ARC is FLAT (path objects, the load-immune unit — 216/198; perfab ms can't resolve +0.2%/lap).**
+  HEAD (303): day 111,785 / night 138,952. vs **283** (~20 laps): **+1.14% day / +0.37% night**. vs **264**
+  (~40 laps): **+0.55% / +0.21%**. The loop's ~+0.2%/lap additive tendency was cancelled by ~40 laps of
+  byte-flat FIXES + draw credits (285/286/287/288/293/294/295/302/303 all inert-or-credit). No compounding.
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits this lap), so VERDICT PASS / 0 page
+  errors is trivially guaranteed — confirmed anyway.
+
+**Tool nit (banked, not fixed).** `shot-stepback` flags `HUD=STALE` on the golden/dusk frames. It is a false
+alarm: a vocabulary mismatch between the script's coarse `phaseWord` ('golden hour'/'sunset'/'night') and the
+artifact's own `clockWord` HUD pill — dusk-winter's HUD "night" at LITAMT=0.95 / sun-down is *more* correct
+than the script's "sunset", not a stale DOM (204). Aligning the two words is a legitimate future tool lap.
+
+**Verdict: STEP-BACK — NO DRIFT.** No feature shipped (the rotated domain is genuinely saturated and the one
+candidate was a false-positive risk not worth forcing). The city is confirmed coherent across 3 lights × 2
+seasons on 2 seeds, and 40 laps of growth cost essentially nothing in draw work. The overdue guardrail is
+reset; NEXT domain is Sky (298, oldest). Recording the dry seam + cue (bi) is the value: it stops the next
+lap re-grepping Transport, and hands a future lap a measured decision to make.

@@ -22029,3 +22029,51 @@ a PRE-EXISTING park ornament (present at `BUSK=0`), not this lap's; a Nature/par
 **Verdict: SHIPPED** — the busy shopfront kerbs had a crowd, a café, bunting and evening lamplight and
 never a note of music; now a street musician plays to them, packing up on its own hour as the crowd thins.
 
+## Iteration 294 — the fairy-ring caps and the countryside solar, both a touch too loud in different directions (2026-07-15) [Nature × Polish]
+
+**Vector.** Nature (oldest domain — 287), and its stale kind is **Polish**, two-deep in debt. The header
+banked TWO paired cosmetic cues to spend together: **(ax)** the fairy rings want a hair more cap contrast
+(272, both agents, both seeds, unprompted on a PASSing frame) and **(bg)** the countryside solar panels'
+blue is too saturated (287, s7's agent, unprompted aside — ONE agent, ONE seed, NOT corroborated). Both
+are draw-only contrast/colour nudges: no terrain, no `rng()`, no `Math.random`.
+
+**Probe FIRST, as (bg) mandated.** `probe-shroomvis` confirmed (ax) is a *contrast* problem, not a size
+one: the rings already render **20.3–21.5 CSS px/ring at fit** (~5x a ped shadow), so a body enlargement
+was the wrong lever (255/cue-f family excluded). For (bg) I measured the panel's rendered colour against
+the countryside at the census day pin: `col('solar',1.25)` = **[73,102,156], chroma 83, lum 99, hue 219** —
+the single COOL surface among a warm/green countryside (chroma 38–88, but every neighbour warm or green),
+its chroma at the TOP of the range. The uncorroborated aside held up: a chroma-83 blue at lum 99 among
+lum 150–183 fields is a saturated cool spot, not "dark tilted panels". So the direction was measured, not
+assumed.
+
+**Change.**
+- **(bg)** `solar:[62,82,120]` → `[54,66,96]`: chroma 58→42, luminance down, **hue held (219→222, `dHUE`~3°,
+  audited not to a target hue — 234)**. Rendered `col('solar',1.25)` moved **[73,102,156]→[64,82,125]:
+  chroma 83→61 (−27%), lum 99→81 (−18%)**, same navy. The palette entry is SHARED by the field panels,
+  the rooftop arrays and the launch hull — all three deepen coherently (real PV glass is near-black-blue;
+  a "navy hull" stays navy).
+- **(ax)** `drawShroom`: the single flat cap arc (`col(cap,1.15)` r=0.8) became a **two-tone dome** in the
+  SAME footprint — a shaded rim (`col(cap,0.78)` r=0.8) to define the edge + a bright crown (`col(cap,1.42)`
+  r=0.6) to clear the dark litter. More cap contrast, zero size increase.
+
+**Census.** Draw-only → **PASS, 0 page errors**, core byte-flat (no terrain, no rng). Vacuous for this
+vector by construction; the gates are the probe + the eyes.
+
+**Probe.** `probe-shroomvis` after: ring footprint **unchanged at 20.3–21.5 px/ring** — proof the cap
+change added contrast WITHOUT enlarging (the ink-count probe is near-vacuous for a within-footprint
+brightness redistribution, exactly as expected; 259's line-that-consumes was already read). Solar
+re-measured: chroma 83→61, hue preserved.
+
+**Visual.** Both cues, both seeds, delegated to two subagents, all **PASS**. (ax): *"a tight cluster of
+small pale rounded caps… read as little domed caps (lit crown, darker base) rather than flat dots or a
+smudge"*, no bloom, crowns stay within footprint. (bg): *"dark navy tilted PV strips… clearly distinct
+from the warm crop-row hexes… reads as angled dark panels catching light rather than the old bright
+park-bench blue… still bright enough to see"*; at night *"the darker panels recede correctly into the
+countryside without competing with the city lights."* Whole-city day+night frames balanced on both seeds,
+nothing compounded.
+
+**Verdict: SHIPPED** — two small honest polish nudges spent together as banked: the fairy-ring caps now
+read as domed toadstools instead of flat specks, and the countryside solar reads as dark tilted panels
+instead of park-bench blue. Both were measured before a line was written; (bg)'s uncorroborated aside was
+confirmed by the panel-vs-countryside chroma read, not taken on faith.
+
