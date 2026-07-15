@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -32,8 +32,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Transport **290** · Sky **291** · Civic **292** · People **286** · Nature **287** ·
-  Urban **288** · Water **289**. ➡ **NEXT: People (286, oldest)** — Deepen CLOSED (14 deep); stale cells **Polish (226)** / **New CA rule (49)**; grep `stepPed`/`syncFleet`/`drawPed` + the arrays.
+- **ROTATION.** Last: Transport **290** · Sky **291** · Civic **292** · People **293** · Nature **287** ·
+  Urban **288** · Water **289**. ➡ **NEXT: Nature (287, oldest)** — its next lap is **Polish** (the stale kind, 2-deep in debt), with the TWO paired cues banked below: **(ax)** fairy-ring contrast + **(bg)** the solar blue, together. 293 took People × **New element** (the busker) — seam-honest, distinct street life; People's stale cells remain **Polish (226)** / **New CA rule (49)**.
   ✅ **292 CLOSED CIVIC's additive: the event-venue category {market, stadium, amphitheater} is COMPLETE** (crowd pool + `residentWhere` enumerate all three off the shared `concertShow`/`concertLive`; the bowl was the un-enumerated third — 285's type blindness). Civic stale stays New CA rule (36/107) + Connect (measured-sound).
   **291 broke Sky's Deepen streak with a NEW ELEMENT — the sparsest Sky cell (3rd ever). Sky's additive was NOT fully
   spent: the elaborate weather front was a live host with no dramatic payoff, and lightning was the missing one.**
@@ -391,83 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 285 entries before Iteration 283 live in
+> **Archive:** the 286 entries before Iteration 284 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 283 — every built-up street in the city was a "grand avenue", and the grandest avenue had no trees (2026-07-15) [Transport × New CA rule/FIX + holistic step-back, 37th]
-
-**Vector.** Transport × New CA rule (its stalest cell, 77). Followed the header's own steer —
-*grep Transport's `tick()` seam and its FLAGS, never its cue list* — to `c.treed`, the boulevard canopy.
-
-**The defect (measured, no threshold invented).** The canopy pass (L2539) calls itself *"a contagion along
-the busy street network... spreads block to block"*, and iter **171** built it a tooltip that names the tile a
-**Boulevard** and prints `Length: N blocks`. Both were false, and the arithmetic says why: the spark was
-`p=0.002/tick` on **`c.busy`**, and over the ~470 ticks since 2000 that converts `1-(1-0.002)^467 ≈ 61%` of
-every busy street **with no neighbour at all**. Measured over 6 seeds at 2035:
-- **93.9% of every busy street in the city was tree-lined** (one seed read 100.3% — `c.busy` is recomputed
-  each tick while `c.treed` is permanent). A "Boulevard" was the **DEFAULT STATE of a developed road**:
-  **333.5/city against 28.8 Avenues.**
-- The contagion beat its own null (same count, scattered at random) by **1.34x** — i.e. **the spontaneous term
-  did the work and the neighbour term was decorative.** It was not a contagion.
-- **Only 15.3% of the canopy stood on a trunk route at all**, and only 39.6% of the trunk was treed. The rule's
-  host (`c.busy`) is **anti-correlated with grandeur** — arterials run out to the rim where they are not
-  "busy", so they never qualified. On seed 42 the city's **grandest trunk (flow 319, 5x `ARTFLOW`) carried
-  ZERO trees**; the camera printed `run=0 blocks` on it.
-
-**Change.** The substrate becomes the **trunk** (`c.flow>=ARTFLOW`, the drainage network published since iter
-77), and the ignition becomes **structural**. Two halves, and fixing either alone ships nothing:
-- **The SPARK is a set, not a lottery.** `blvdSpark(c)` = the grandest built-up trunk cells
-  (`c.busy && c.flow >= ARTFLOW*BLVDGRAND`, `BLVDGRAND=2`) — 3–28 per city, **nonempty on every seed**.
-  A rare Poisson coin left **seed 99 with ONE tree** (233); `BLVDGRAND=3` starves that same seed (extent 9).
-- **The RATE is HEAD's own `0.002`, unchanged** — per 218, only the **PREDICATE** can steer a saturated roll,
-  so the rate now sets only *when* a planting takes, never *whether*.
-
-**Census.** PASS. **Core BYTE-IDENTICAL**: `pop` `roads` `developed` `towers` `towerHt` `arterials` `avenues`
-all **+0**; **tile histogram EMPTY**. Only `boulevardTrees` **1156 → 215**. (`solarRoofs −2` then **−3** on a
-*re-run of the same file* ⇒ 226's tick-count wobble, not mine. The pass draws **zero `rng()`** and writes only
-`c.treed`, which nothing in `tick()` reads but itself ⇒ **wholly inert**.)
-
-**Probe** (`probes/probe-blvdnet.mjs`, `probe-trunkfront.mjs`, `probe-trunkgrand.mjs` — pure world data, no
-render, no clock, no noise floor). HEAD → patch, 6 seeds:
-- fill of the busy network **93.9% → 21.3%** · canopy **on the trunk 15.3% → 80.5%**
-- mean run **4.61 → 21.04 blocks**; longest allee **19.0 → 34.2**; vs its own null **1.34x → 18.3x**
-- **singletons 0.0% on every seed** — every boulevard cell is part of a run
-- **worst seed does not starve**: 31 cells forming ONE 31-block allee (233)
-- the label ladder is **restored**: `Boulevard 333.5 → 76.0 | Arterial 75.5 → 69.2 | Avenue 28.8 → 294.0`
-
-**171's own probe convicts HEAD, and it had been FAILing on HEAD unnoticed.** `probes/probe-boulevard.mjs`
-(171's tooltip gate) **FAILed on pristine HEAD** — every failing cell, on both builds, is a `c.fete` **festival
-street**, which `describeTile`'s title chain deliberately preempts; the probe skipped `bridge` and not `fete`.
-Repaired in the tool, not documented as a trap (243), and it now **PASSes on both builds**. Its numbers are the
-finding: **its "busy-plain control" — the Avenue — had 33 members on HEAD seed 7 against a target of 327.**
-*The probe built to prove "the boulevards name themselves" shipped with a nearly-empty control, and nobody read
-the ratio.* It is now 314. ⚠ It also had **no `SRC=`**, so `SRC=head node probe-boulevard.mjs` silently measured
-the **worktree** and handed back the patch's numbers under HEAD's name — fixed.
-
-**Perf.** A **credit**, mechanised: path objects **day 112,923 → 110,627 (−2.0%)**, **night 140,654 → 138,404
-(−1.6%)**. 241's law in reverse — count the objects when a lap SUBTRACTS.
-
-**Visual — the gate is STRUCTURALLY INCAPABLE of grading this vector, and that is the lap's law.** Two blind
-agents (crossed map, meaningless tokens) FAILed, both having **measured the frames themselves**: the builds
-differ by **0.24–0.68% of pixels**, green share is **unchanged** (24.03% vs 24.13% — *no denuding*, which was
-the real risk), and **neither could trace a tree-lined avenue in EITHER build.** They were right, and the
-artifact is innocent: at fit zoom a tree is ~3px, so **HEAD's canopy is equally invisible** (226 — measure the
-incumbent). I looked myself and confirmed it. And an ink probe **refutes the occlusion reading**: in the
-close-up crop **24 of 24** in-view allee hexes render, unoccluded, 360k ink units. ⚠ **My close-up ALSO framed
-the CBD** — 269's law, which the header had warned of verbatim (*`c.flow` peaks at the core ⇒ the avenue
-selects for its own burial*).
-
-**Step-back (37th), 2 seeds x 3 lights x 2 calendars.** s42 **PASS**, s7 FAIL on two already-banked deliberate
-decisions (golden-hour warm wash — 265; skyline monotony — the CLOSED 224 ladder). **Both agents named winter
-by the LIGHT ALONE**, one reciting the mechanism unprompted ⇒ **261's season is alive.** Perf **ARC** vs 177:
-day **+8.2%**, night **+0.8%** — *below* 278's +9.2%/+0.6%, so **the arc is still stopped and went DOWN this
-lap.** 🆕 One genuinely new cue below.
-
-**Verdict: FIXED.** (A rule that had saturated its own host, a contagion that was not one, and a label ladder
-its own probe's control had already disproved.)
 
 ## Iteration 284 — the sun moved and two readers never got the message (2026-07-15) [Sky & atmosphere × Deepen/FIX — cue (bd) CLOSED]
 
@@ -1057,3 +985,65 @@ now genuinely spent, and the event-venue category {market, stadium, amphitheater
 
 **Verdict: DEEPENED** (and FIXED — the amphitheater was the third event venue, and the only one with no
 resident drawn to it and no word for its concert crowd; the trilogy 240/250/285 built is now complete).
+
+## Iteration 293 — the busy shopfront kerbs had a crowd, a café, bunting and lamplight, but nobody ever played to them (2026-07-15) [People & activity × New element]
+
+**Vector.** People & activity (rotation: People at 286 was the oldest domain). Its Deepen cell is
+CLOSED (14 deep) and the header forbids another People Deepen "without a measured seam"; its stale
+kinds are Polish (226) and New CA rule (49). I grepped the seam (`stepPed`/`syncFleet`/`drawPed` + the
+arrays) — the People entity system is extraordinarily mature (every person, dog, kite, surfer, kayaker
+and boat now keeps its own staggered hour, curfews/kids/water-crowd all closed 262/271/286), so rather
+than force the stale New CA rule cell (a cell-CA for *people* is awkward), I took the genuinely-sparse
+**New element** kind. The lively shopfront kerb (`livelyKerb`, buzz≥2, ~110 hexes — verified at scale)
+already carries a milling festival crowd (178, on `c.fete`), spill-out café patrons (park), festival
+bunting and evening street-lamps — but no **busker**. A street musician is distinct, recognizable
+street life that was simply missing.
+
+**Change.** A lone performer on a lively kerb, gated `buskerAt(x,y)` = `livelyKerb && hashCell<BUSKP(0.12)
+&& nightAmt()<buskOut(x,y)` (~1 in 8 lively kerbs → ~15/22 per city). Draw: a standing figure (coral/
+teal/sage/lav body + head), a gold guitar ellipse held across the body with a `trunk` neck stroke, and
+an open case (dark velvet interior + two coins) at the feet; house-style contact shadow, a gentle sway.
+- **KEEPS ITS OWN STAGGERED HOUR (avoids the 262/286 cliff from the start).** `buskOut(x,y)=BUSK0(0.55)+
+  BUSKJ(0.42)*hashCell` is a PER-HEX threshold, so the buskers pack up one at a time, never all in one
+  frame. The band is TAKEN FROM THE LADDER (226): `nightAmt()` PEAKS at ~0.98 (dawn's light then ends the
+  night), so the band tops out at 0.97 — every busker is in before the small hours run out (unlike CURF
+  1.85, which `nightAmt` never reaches, so the latest strollers stay out till dawn by design). It sits
+  `KITE=KID(.35) < JOG=SURF=KAYAK(.62) ≈ BUSK(.55..97) < CURF(1.85)`.
+- **STANDS AT THE KERB, HUGGING A SHOPFRONT — not adrift in the traffic lane.** `livelyKerb` guarantees
+  ≥2 ATTRACT neighbours (`buzz`), so the draw offsets 0.42 of the way toward the nearest ATTRACT cell
+  (the same sidewalk-side idiom the festival bunting uses). This was iter 293's ONE fix: the first cut
+  offset by bare parity and a seed-42 busker landed on a road hex with no visible frontage, reading as
+  mid-road (a correct, checkable agent FAIL). Anchoring to the frontage fixed it on both seeds.
+- `buskerAt()` is ONE predicate, TWO readers (the draw + the `__buskers()` hook), so count and pixels
+  cannot drift (112). `let BUSK=1` is a probe suppressor (253).
+
+**Census.** Draw-only, no rng/Math.random, no terrain → **BYTE-IDENTICAL core** (`pop`/`roads`/`developed`
++0; empty tile histogram; solar/green roofs +0), 0 page errors. The census is vacuous for a draw-only
+vector; the gate is the probe + the eyes.
+
+**Probe** (`probes/probe-busker.mjs`, isolation by the `BUSK` suppressor in ONE page, floor exactly 0,
+build-agnostic). **(A) VISIBILITY** @ noon: busker ink **76px/2375 (s42) · 104px/3332 (s7)**, floor **0**.
+**(B) STAGGER** (the whole point — the anti-262 gate, `__buskers()` swept render-free across the day):
+all out by day (15/22), thinning ONE AT A TIME through the late evening (**distinct nonzero counts = 10/11
+across the day; a global cliff would be 1**), deep-night min **0** (all packed up before dawn), out again
+by day. The whole day is byte-identical (nightAmt=0 in daylight) — a free dead-regime control (199).
+
+**Perf.** ~8 path objects per busker × ~15–22 = ~120–180 objects, only while out (day + staggered
+evening); negligible (<0.15%). Draws no rng()/Math.random.
+
+**Visual.** Both seeds **PASS**. Seed 7 passed the first pass; seed 42 FAILed the first pass on one
+busker reading as mid-road (→ the ATTRACT-anchor fix, above). After the fix, seed 42 PASSed; seed 7's
+re-read FAILed on a "blown-out yellow flame-blob floating mid-plaza" — but a `BUSK=0` suppression re-shoot
+showed that blob is PRESENT with the busker suppressed, i.e. a **pre-existing park/plaza ornament the agent
+misattributed** to the feature (269: agent right the blob exists, wrong that it is mine). A tie-breaking
+diff-locate read (busker-crop vs nobusk-crop, the diff IS the busker per 161) then resolved seed 7's
+busker cleanly: *"an orange-shirted figure on the pale sidewalk in front of the shop, a tan guitar bar
+across its body, a small open case at its feet… at the kerb, not stranded, floating or in a lane."*
+3 of 4 reads passed with the guitar+case legible; the one FAIL's headline cause was refuted by
+measurement, not overruled by vibe.
+
+**Cue banked: (bh)** an over-bright yellow flame-shaped blob sits mid-plaza near a fountain on seed 7 —
+a PRE-EXISTING park ornament (present at `BUSK=0`), not this lap's; a Nature/park Polish candidate.
+
+**Verdict: SHIPPED** — the busy shopfront kerbs had a crowd, a café, bunting and evening lamplight and
+never a note of music; now a street musician plays to them, packing up on its own hour as the crowd thins.

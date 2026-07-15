@@ -21277,3 +21277,75 @@ CONSTANT (267's law, paid before a line was written). `probes/probe-kelphost.mjs
 (the two-ledger sweep) · `probe-kelppool` (how dark could the coast go) · `probe-kelphost`
 (the refutation) · `shot-kelp` (the camera).
 
+## Iteration 283 — every built-up street in the city was a "grand avenue", and the grandest avenue had no trees (2026-07-15) [Transport × New CA rule/FIX + holistic step-back, 37th]
+
+**Vector.** Transport × New CA rule (its stalest cell, 77). Followed the header's own steer —
+*grep Transport's `tick()` seam and its FLAGS, never its cue list* — to `c.treed`, the boulevard canopy.
+
+**The defect (measured, no threshold invented).** The canopy pass (L2539) calls itself *"a contagion along
+the busy street network... spreads block to block"*, and iter **171** built it a tooltip that names the tile a
+**Boulevard** and prints `Length: N blocks`. Both were false, and the arithmetic says why: the spark was
+`p=0.002/tick` on **`c.busy`**, and over the ~470 ticks since 2000 that converts `1-(1-0.002)^467 ≈ 61%` of
+every busy street **with no neighbour at all**. Measured over 6 seeds at 2035:
+- **93.9% of every busy street in the city was tree-lined** (one seed read 100.3% — `c.busy` is recomputed
+  each tick while `c.treed` is permanent). A "Boulevard" was the **DEFAULT STATE of a developed road**:
+  **333.5/city against 28.8 Avenues.**
+- The contagion beat its own null (same count, scattered at random) by **1.34x** — i.e. **the spontaneous term
+  did the work and the neighbour term was decorative.** It was not a contagion.
+- **Only 15.3% of the canopy stood on a trunk route at all**, and only 39.6% of the trunk was treed. The rule's
+  host (`c.busy`) is **anti-correlated with grandeur** — arterials run out to the rim where they are not
+  "busy", so they never qualified. On seed 42 the city's **grandest trunk (flow 319, 5x `ARTFLOW`) carried
+  ZERO trees**; the camera printed `run=0 blocks` on it.
+
+**Change.** The substrate becomes the **trunk** (`c.flow>=ARTFLOW`, the drainage network published since iter
+77), and the ignition becomes **structural**. Two halves, and fixing either alone ships nothing:
+- **The SPARK is a set, not a lottery.** `blvdSpark(c)` = the grandest built-up trunk cells
+  (`c.busy && c.flow >= ARTFLOW*BLVDGRAND`, `BLVDGRAND=2`) — 3–28 per city, **nonempty on every seed**.
+  A rare Poisson coin left **seed 99 with ONE tree** (233); `BLVDGRAND=3` starves that same seed (extent 9).
+- **The RATE is HEAD's own `0.002`, unchanged** — per 218, only the **PREDICATE** can steer a saturated roll,
+  so the rate now sets only *when* a planting takes, never *whether*.
+
+**Census.** PASS. **Core BYTE-IDENTICAL**: `pop` `roads` `developed` `towers` `towerHt` `arterials` `avenues`
+all **+0**; **tile histogram EMPTY**. Only `boulevardTrees` **1156 → 215**. (`solarRoofs −2` then **−3** on a
+*re-run of the same file* ⇒ 226's tick-count wobble, not mine. The pass draws **zero `rng()`** and writes only
+`c.treed`, which nothing in `tick()` reads but itself ⇒ **wholly inert**.)
+
+**Probe** (`probes/probe-blvdnet.mjs`, `probe-trunkfront.mjs`, `probe-trunkgrand.mjs` — pure world data, no
+render, no clock, no noise floor). HEAD → patch, 6 seeds:
+- fill of the busy network **93.9% → 21.3%** · canopy **on the trunk 15.3% → 80.5%**
+- mean run **4.61 → 21.04 blocks**; longest allee **19.0 → 34.2**; vs its own null **1.34x → 18.3x**
+- **singletons 0.0% on every seed** — every boulevard cell is part of a run
+- **worst seed does not starve**: 31 cells forming ONE 31-block allee (233)
+- the label ladder is **restored**: `Boulevard 333.5 → 76.0 | Arterial 75.5 → 69.2 | Avenue 28.8 → 294.0`
+
+**171's own probe convicts HEAD, and it had been FAILing on HEAD unnoticed.** `probes/probe-boulevard.mjs`
+(171's tooltip gate) **FAILed on pristine HEAD** — every failing cell, on both builds, is a `c.fete` **festival
+street**, which `describeTile`'s title chain deliberately preempts; the probe skipped `bridge` and not `fete`.
+Repaired in the tool, not documented as a trap (243), and it now **PASSes on both builds**. Its numbers are the
+finding: **its "busy-plain control" — the Avenue — had 33 members on HEAD seed 7 against a target of 327.**
+*The probe built to prove "the boulevards name themselves" shipped with a nearly-empty control, and nobody read
+the ratio.* It is now 314. ⚠ It also had **no `SRC=`**, so `SRC=head node probe-boulevard.mjs` silently measured
+the **worktree** and handed back the patch's numbers under HEAD's name — fixed.
+
+**Perf.** A **credit**, mechanised: path objects **day 112,923 → 110,627 (−2.0%)**, **night 140,654 → 138,404
+(−1.6%)**. 241's law in reverse — count the objects when a lap SUBTRACTS.
+
+**Visual — the gate is STRUCTURALLY INCAPABLE of grading this vector, and that is the lap's law.** Two blind
+agents (crossed map, meaningless tokens) FAILed, both having **measured the frames themselves**: the builds
+differ by **0.24–0.68% of pixels**, green share is **unchanged** (24.03% vs 24.13% — *no denuding*, which was
+the real risk), and **neither could trace a tree-lined avenue in EITHER build.** They were right, and the
+artifact is innocent: at fit zoom a tree is ~3px, so **HEAD's canopy is equally invisible** (226 — measure the
+incumbent). I looked myself and confirmed it. And an ink probe **refutes the occlusion reading**: in the
+close-up crop **24 of 24** in-view allee hexes render, unoccluded, 360k ink units. ⚠ **My close-up ALSO framed
+the CBD** — 269's law, which the header had warned of verbatim (*`c.flow` peaks at the core ⇒ the avenue
+selects for its own burial*).
+
+**Step-back (37th), 2 seeds x 3 lights x 2 calendars.** s42 **PASS**, s7 FAIL on two already-banked deliberate
+decisions (golden-hour warm wash — 265; skyline monotony — the CLOSED 224 ladder). **Both agents named winter
+by the LIGHT ALONE**, one reciting the mechanism unprompted ⇒ **261's season is alive.** Perf **ARC** vs 177:
+day **+8.2%**, night **+0.8%** — *below* 278's +9.2%/+0.6%, so **the arc is still stopped and went DOWN this
+lap.** 🆕 One genuinely new cue below.
+
+**Verdict: FIXED.** (A rule that had saturated its own host, a contagion that was not one, and a label ladder
+its own probe's control had already disproved.)
+

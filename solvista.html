@@ -4030,6 +4030,27 @@ const waterOut=e=>e.ph/7;
    control (199), and the reason this costs no path objects by day. */
 const KITE0=0.06, KITEJ=0.30;
 const kiteOut=k=>KITE0+KITEJ*waterOut(k);
+/* ...AND THE STREET MUSICIAN PLAYS THE EVENING AND PACKS UP ON ITS OWN HOUR TOO (iter 293).
+   A busker works the busy shopfront kerb -- daylight shopping hours and on into the dusk,
+   when the strand and the shop windows light up and the street is at its liveliest -- then
+   packs the guitar away as the crowd finally thins. The hour is per HEX (buskOut, hashCell-
+   staggered) so the buskers go in ONE AT A TIME, never all in a single frame: the very cliff
+   210/262/286 were written to end, avoided here from the start (a busker is a per-cell draw,
+   not an entity, so its stagger comes from the ground it stands on rather than a .ph it carries).
+   THE BAND IS TAKEN FROM THE LADDER, NOT INVENTED (226): a busker plays LATER than the runners
+   go in (their evening crowd is its audience). nightAmt() PEAKS at ~0.98 and the dawn light then
+   ends the night, so the band TOPS OUT just under that (0.97) -- unlike the adults' CURF of 1.85
+   (which nightAmt never reaches, so the latest strollers are out till dawn by design), EVERY
+   busker packs up before the small hours run out. It sits
+       KITE = KID (~0.35)  <  JOG = SURF = KAYAK (0.62) ≈ BUSK (0.55..0.97)  <  CURF (1.85, till dawn).
+   buskerAt() is ONE predicate, TWO readers (the draw + the __buskers hook) so the pixels and the
+   count can never drift apart (112). It draws no rng()/Math.random and touches no terrain, so
+   pop and the seeded stream stay flat; nightAmt() is 0 through all of daylight, so every busker
+   is out by day and THE WHOLE DAY IS BYTE-IDENTICAL -- a free dead-regime control (199). */
+const BUSK0=0.55, BUSKJ=0.42, BUSKP=0.12; /* BUSKP: only ~1 in 8 lively kerbs draws a musician */
+const buskOut=(x,y)=>BUSK0+BUSKJ*hashCell(x,y,seedNum^0x8C4A);
+let BUSK=1; /* probe suppressor (253) */
+function buskerAt(x,y){return BUSK&&livelyKerb(x,y)&&hashCell(x,y,seedNum^0x8C48)<BUSKP&&nightAmt()<buskOut(x,y);}
 /* ---- the traffic keeps hours too (iter 230) -------------------------------
    The city's PEOPLE learned to go to bed -- the windows at 199 (BEDT), the crowd and its
    dogs and runners at 210 (curfewAt) -- and its TRAFFIC never did: at 3am the streets still
@@ -6409,6 +6430,40 @@ function drawCell(x,y){
           ctx.fillStyle='rgba(255,198,108,'+(0.22*LITAMT)+')';
           ctx.beginPath();ctx.arc(cx,cy-2,4.5,0,7);ctx.fill();
         }
+      }
+      if(buskerAt(x,y)){
+        /* a street musician works the busy shopfront kerb -- a lone performer with a guitar
+           and an open case, distinct from the milling festival crowd (a single figure, not a
+           mass). Plays into the evening on its OWN staggered hour (buskOut). Placed on the near
+           kerb (cy+, toward the viewer) so the figure stands on the sidewalk, not in the lane;
+           offset off dead-centre by parity. Draw-only, hashCell-sited -- no tile, entity, rng()
+           or terrain, so pop and the seeded stream stay flat. */
+        /* stand at the KERB, hugging a shopfront -- not adrift in the traffic lane. A lively
+           kerb has >=2 ATTRACT neighbours by construction (buzz>=KERBBUZZ), so there is always
+           a frontage to pitch against; offset 0.42 of the way to it lands the busker on the
+           shared road/shop edge, reading as the pavement outside the shops (the same
+           sidewalk-side idiom the festival bunting uses). Falls back to the near kerb. */
+        let sdx=0,sdy=0;
+        for(const[dx2,dy2]of nbrDirs(y)){const n=cellAt(x+dx2,y+dy2);
+          if(n&&ATTRACT.has(n.t)){const[nx2,ny2]=ctr(x+dx2,y+dy2);sdx=nx2-cx;sdy=ny2-cy;break;}}
+        const bx=cx+(sdx?sdx*0.42:(((x+y)&1)?3.0:-3.0)), fy=cy+(sdy?sdy*0.42:2.4);
+        const sw=Math.sin(time*2.1+x*1.3+y)*0.5;     /* sways gently with the tune */
+        shadS(bx,fy,0.11,0.16);
+        const pmx=bx+sw;
+        ctx.fillStyle=col(['coral','teal','sage','lav'][(hashCell(x,y,seedNum^0x8C49)*4)|0],1.0);
+        ctx.fillRect(pmx-0.9,fy-3.5,1.8,3.2);        /* body, standing (taller than a seated patron) */
+        ctx.fillStyle=col('ink',1.4);
+        ctx.beginPath();ctx.arc(pmx,fy-4.3,1,0,7);ctx.fill();  /* head */
+        ctx.fillStyle=col('gold',0.9);               /* the guitar, held across the body */
+        ctx.beginPath();ctx.ellipse(pmx-1.2,fy-1.5,1.1,0.75,-0.5,0,7);ctx.fill();
+        ctx.strokeStyle=col('trunk',1.1);ctx.lineWidth=0.8;
+        ctx.beginPath();ctx.moveTo(pmx-1.6,fy-1.9);ctx.lineTo(pmx+1.4,fy-3.3);ctx.stroke(); /* neck */
+        ctx.fillStyle=col('trunk',0.75);             /* the open case at its feet, in front */
+        ctx.fillRect(bx-1.7,fy+0.5,3.4,1.5);
+        ctx.fillStyle=col('ink',0.7);                /* the dark velvet interior */
+        ctx.fillRect(bx-1.3,fy+0.8,2.6,0.9);
+        ctx.fillStyle='rgba(255,216,124,0.92)';      /* a few coins catching the light */
+        ctx.beginPath();ctx.arc(bx-0.4,fy+1.25,0.35,0,7);ctx.arc(bx+0.6,fy+1.3,0.3,0,7);ctx.fill();
       }
       if(c.fete){ /* festival bunting strung down the civic mile between institutions */
         let rdx=0,rdy=0;
@@ -9916,6 +9971,10 @@ function frame(now){
 window.__warp=n=>{const target=year+n;while(year<target){year+=0.45/6;tick();}
   for(const c of cells)if(DEV.has(c.t))c.h=c.th; recount();syncStats();};
 window.__setTime=t=>{dayT=t;};
+/* how many street musicians are out RIGHT NOW (iter 293) -- the SAME buskerAt() the draw reads,
+   so the count and the pixels cannot drift apart. Sweep dayT across the evening and the count
+   declines one at a time (a staggered hour, not a cliff) -- the surfer/kite gate, on a per-cell draw. */
+window.__buskers=()=>{let n=0;for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(buskerAt(x,y))n++;return n;};
 window.__setYear=n=>{year=n;}; /* pin the calendar (seasons) for tests; moon phase is on dayT now (iter 135) */
 /* the weather front, for probes. Season and front are on DIFFERENT scales — season is
    year%1, the front is a ~20yr cycle — so __setYear can pin one without fixing the other
