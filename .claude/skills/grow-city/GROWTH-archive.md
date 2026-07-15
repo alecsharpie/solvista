@@ -21893,3 +21893,76 @@ iterations and never lit the sky; it does now, and only a real shower does. Sky'
 neon crowd stood all night, all-at-once, while the busker in front kept an hour; now thins per-hex on `stripOut`
 (`probes/probe-stripcrowd.mjs`: HEAD DISTINCT=1 → PATCH 7). **Every People/entity draw is off the cliff — do not
 re-open.** People's ONLY stale kind is now **New CA rule (49)** (Deepen CLOSED 14-deep).
+
+## Iteration 292 — the third house nobody was drawn to, and the resident who stood in it with nothing to say (2026-07-15) [Civic & culture × Deepen/FIX]
+
+**Vector.** Civic & culture (rotation: Civic at 285 was the oldest domain). Its cue list was empty and
+its stale cells (New CA rule 36/107, Connect 45/204) are either forced-into-a-saturated-domain or
+measured-sound (285: don't touch the civic mile). So I grepped the seam (225) — and the seam handed
+back the same defect shape the last several laps found: **285's type-hierarchy blindness, on the
+event-venue category.**
+
+**The find.** The city has exactly **three event venues**, and each got its cadence in a separate lap:
+the STADIUM its match fixtures (240, `matchClock`), the MARKET its trading days (285, `marketAmt`), the
+AMPHITHEATER its concert seasons (250, `concertSeason`). But the two places residents are *drawn to* — the
+crowd-draw pool in `syncFleet` (L3370: `if(t===T.MARKET||t===T.STADIUM){openCells.push 3x}` *"markets &
+matches draw a crowd"*) and `residentWhere` — both key on **top-level TILE TYPES**. The amphitheater is a
+`T.CIVIC` with a `kind`, so — exactly like `CIVHRS` before it (285) — **neither line could NAME it.**
+Result, measured (`probes/probe-concertcrowd.mjs`, 3 seeds, HEAD vs patch):
+- **No resident ever lived by the bowl.** No civic tile is in the residency pool at all, so a resident
+  standing on the amphitheater during a full-house summer-night concert was told **"Out for a stroll."**
+  on HEAD — at every state, every seed. The one bowl that fills a house every August night drew nobody.
+- 280's law exactly (and 285's, and 286's, and 289's): *a crowd list is a changelog of who was fixed, not
+  a taxonomy of who should read it.* The category {market, stadium, amphitheater} was two-thirds enumerated.
+
+**Change.** ONE predicate, three readers.
+- `concertShow()` = `civOpen('amphitheater')*concertSeason()` — lifted out of the bowl's own inline
+  `so*concertSeason()` (L7586), so the draw, the crowd and the tooltip read the SAME number the beam
+  lights by and a house can never fill for a struck stage (123/285). `concertLive()` =
+  `LITAMT>0.3 && concertShow()>0.02`, mirroring the draw's own showtime gate exactly.
+- The crowd pool enumerates the whole category: `t===T.MARKET||t===T.STADIUM||(t===T.CIVIC&&c.kind==='amphitheater')`.
+- `residentWhere` gets the third event-venue case, symmetric with the stadium's:
+  `concertLive() ? 'In the crowd at the concert.' : concertSeason()>0 ? 'Down at the amphitheater.' :
+  'By the quiet amphitheater.'`
+
+**Probe** (`probes/probe-concertcrowd.mjs`, build-HONEST — it asks the page whether `concertLive` exists,
+so ONE file grades both builds). PATCH names the concert crowd at **live** (`concertLive=true`, dusk in
+season), **day-in-season** (*"Down at the amphitheater."*) and **winter** (*"By the quiet amphitheater."*);
+HEAD reads **"Out for a stroll."** in all four states on all three seeds — the defect stated (236).
+**STADIUM control (250):** its match strings are IDENTICAL HEAD↔patch (untouched). **Residency:** peds now
+anchor ON the amphitheater **0–1/130**, exactly the order the stadium reads (**0–2/130**); HEAD **0 on
+every seed** (civic was never in the pool).
+
+**Census.** PASS, **byte-identical core** (`pop`/`roads`/`developed` **+0**; tile histogram empty; every
+metric flat, solar/green roofs **+0** too — fully inert). Peds draw the same NUMBER of `rng()` values from a
+longer `homeCells` pool (the explicit invariant at L3386), so the seeded stream — and every downstream CA —
+is untouched; `residentWhere`/`concertShow`/`concertLive` are unreachable from `tick()`.
+
+**Perf.** Trivial: `concertShow()` adds one `civOpen` call per amphitheater draw (1 per city); the crowd
+pool loop grabs the cell it already indexes. Draw work unchanged (the bowl's `show` is the same number).
+
+**Visual.** Both seeds **PASS** (blind whole-city, dusk). The only visual delta is ~1 extra tiny ped near
+the bowl; both agents confirmed a *"coherent, balanced dusk coastal city … no z-order tears, floating tiles,
+blown-out color, or stray/clustered artifacts anywhere,"* nothing compounded into clutter or darkness.
+
+**Note on rotation.** This is a Deepen/FIX, not the stale New CA rule cell — the seam handed a real defect
+(the third un-enumerated event venue) and a real defect in the right domain beats a forced new CA in a
+saturated one (285–289 all did this). Civic's New CA rule and Connect cells stay stale; Civic's additive is
+now genuinely spent, and the event-venue category {market, stadium, amphitheater} is **CLOSED**.
+
+**Verdict: DEEPENED** (and FIXED — the amphitheater was the third event venue, and the only one with no
+resident drawn to it and no word for its concert crowd; the trilogy 240/250/285 built is now complete).
+
+
+### (header-rotated at 302) 37th step-back, iter 283
+  ✅ **283 = 37th STEP-BACK: s42 PASS, s7 FAIL on two ALREADY-BANKED deliberate decisions ONLY** (the golden wash, 265;
+  skyline monotony, the CLOSED 224 ladder) ⇒ **no new compounding drift; 261'S SEASON IS ALIVE** (both agents named
+  winter by the LIGHT ALONE, one reciting the mechanism unprompted). **Perf ARC in PATH OBJECTS vs 177 (106 laps):
+  day 102,267 → 110,627 = +8.2%; night 137,258 → 138,404 = +0.8%** — *below* 278's +9.2%/+0.6% ⇒ **the arc is stopped
+  and went DOWN this lap** (283 subtracted). ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT MILLISECONDS** — `perfab` was
+  unusable at 278 (the *same* file read **44.61ms** then **55.33ms**, a 24% swing on identical code). A ±30% load noise
+  floor **cannot resolve a +0.1%/lap drift over any window**; path objects can, exactly, and are load-immune (216/198).
+  ➡ **NEXT ~288.** ⚠ **BLIND A/B NAMES: NON-ORDINAL, AND CROSS THEM** (268). ⚠ **Both agents AGAIN called golden hour a
+  near-monochrome peach/terracotta wash and the sea's dusk banding a faint lattice — BOTH ARE ALREADY-BANKED DELIBERATE
+  DECISIONS, NOT NEW DRIFT** (265 chose the warm complement on purpose; 255/257/268 left the one-tone lattice as
+  STRUCTURAL). Seed 7 also raised skyline monotony = the **CLOSED** skyline ladder (224). **Do not re-open any of the three on an aside.**

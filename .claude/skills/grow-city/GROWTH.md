@@ -19,7 +19,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
+| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
@@ -32,10 +32,14 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Nature **301** · Urban **295** · Water **296** ·
-  Transport **297** · Sky **298** · Civic **299** · People **300**. ➡ **NEXT: Urban (295, oldest)** — its stale kind is
-  **Interaction/UX (133)**; flag/TABLE seam grepped CLEAN at 295. Standing cue **(au)** loft roof-studio reads as green
-  roof (274's half, Urban × Polish).
+- **ROTATION.** Last: Nature **301** · Urban **302** · Water **296** ·
+  Transport **297** · Sky **298** · Civic **299** · People **300**. ➡ **NEXT: Water (296, oldest)** — GREP ITS
+  `tick()`/`shoreAt`/CA seam FIRST (the 26-for-26 winning pattern), not the cue list. Its New CA rule cell (90/282) is
+  sparse; standing cue **(ay)** windrow LENGTH is a POLISH job (⇒ not the default). ✅ **302 CLOSED cue (au)** — the
+  loft roof-studio was `col('sage')`, the green-roof's own palette entry (green-dominant day+night, pixel-matched the
+  planter box), on a `T.IND` tile that cannot carry `c.groof`; now a glazed white penthouse + gold night lamp,
+  draw-only byte-flat. Urban's tooltip/flag/TABLE seams are SATURATED (grepped clean 295; every flag named off the
+  draw's own predicate) — its remaining stale kind is Interaction/UX (133), but nothing there is broken.
   ✅ **301 CLOSED THE LAST ANIMATE NO-HOUR HOLDOUT** (8th recursion of the 262 cliff): `drawDeer` had **NO gate at all**
   — 9 mule deer grazed the meadow edge at 4am in midwinter identically to noon, on every seed, for the artifact's whole
   life. Now `deerSession()`/`deerOut` bed the herd in the trees at nightfall, one head at a time, off the ladder (226,
@@ -65,10 +69,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   `stepVehicle` seam and its FLAGS instead** (267 · 274 · 281 · 282 · **283**: FIVE straight laps where the RULES seam
   beat the cue list). Transport's stale cell is now **Interaction/UX (171)**.
   ✅ **CUE (bd) CLOSED BY 284** (and it was TWO readers, not one — see 284's facts).
-  ➡ **NEXT cues: (au)** loft roof-studio reads as green roof (Urban × Polish, 274's half), **(ay)** windrow LENGTH
+  ➡ **NEXT cues: (ay)** windrow LENGTH
   (POLISH ⇒ not Water's next), **(az)/(ba)** 278's two (below), **(bh)** over-bright plaza flame-blob (Nature/park
-  Polish, 293). ✅ **(ax)+(bg) CLOSED by 294; (bf) market packed-away square CLOSED by 299** (permanent stone cross +
-  folded trestles + crates + chalk bays; draw-only, census byte-flat).
+  Polish, 293). ✅ **(au) CLOSED by 302** (loft roof-studio glazed, not green); **(ax)+(bg) CLOSED by 294; (bf) market
+  packed-away square CLOSED by 299** (permanent stone cross + folded trestles + crates + chalk bays; draw-only, census
+  byte-flat).
   ✅ **PEOPLE: Interaction/UX ran at 278, Polish at 300 — its ONLY stale kind is New CA rule (49); Deepen CLOSED.**
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
   neon evening crowd stood all night, all-at-once, while the busker in front of it kept an hour; found by grepping
@@ -92,17 +97,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ✅ **283 = 37th STEP-BACK: s42 PASS, s7 FAIL on two ALREADY-BANKED deliberate decisions ONLY** (the golden wash, 265;
-  skyline monotony, the CLOSED 224 ladder) ⇒ **no new compounding drift; 261'S SEASON IS ALIVE** (both agents named
-  winter by the LIGHT ALONE, one reciting the mechanism unprompted). **Perf ARC in PATH OBJECTS vs 177 (106 laps):
-  day 102,267 → 110,627 = +8.2%; night 137,258 → 138,404 = +0.8%** — *below* 278's +9.2%/+0.6% ⇒ **the arc is stopped
-  and went DOWN this lap** (283 subtracted). ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT MILLISECONDS** — `perfab` was
-  unusable at 278 (the *same* file read **44.61ms** then **55.33ms**, a 24% swing on identical code). A ±30% load noise
-  floor **cannot resolve a +0.1%/lap drift over any window**; path objects can, exactly, and are load-immune (216/198).
-  ➡ **NEXT ~288.** ⚠ **BLIND A/B NAMES: NON-ORDINAL, AND CROSS THEM** (268). ⚠ **Both agents AGAIN called golden hour a
-  near-monochrome peach/terracotta wash and the sea's dusk banding a faint lattice — BOTH ARE ALREADY-BANKED DELIBERATE
-  DECISIONS, NOT NEW DRIFT** (265 chose the warm complement on purpose; 255/257/268 left the one-tone lattice as
-  STRUCTURAL). Seed 7 also raised skyline monotony = the **CLOSED** skyline ladder (224). **Do not re-open any of the three on an aside.**
+  ⚠ **STEP-BACK OVERDUE (~19 laps; last was the 37th at 283, block archived at 302): DO ONE SOON.** No new drift as of 283; the golden wash (265), the sea's one-tone lattice (255/257/268) and skyline monotony (224, CLOSED) are DELIBERATE — **do not re-open on an aside.** ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms** (perfab ±30% load noise can't resolve +0.1%/lap; 216/198). ⚠ Blind A/B names NON-ORDINAL and CROSSED (268).
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -396,70 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 294 entries before Iteration 292 live in
+> **Archive:** the 295 entries before Iteration 293 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 292 — the third house nobody was drawn to, and the resident who stood in it with nothing to say (2026-07-15) [Civic & culture × Deepen/FIX]
-
-**Vector.** Civic & culture (rotation: Civic at 285 was the oldest domain). Its cue list was empty and
-its stale cells (New CA rule 36/107, Connect 45/204) are either forced-into-a-saturated-domain or
-measured-sound (285: don't touch the civic mile). So I grepped the seam (225) — and the seam handed
-back the same defect shape the last several laps found: **285's type-hierarchy blindness, on the
-event-venue category.**
-
-**The find.** The city has exactly **three event venues**, and each got its cadence in a separate lap:
-the STADIUM its match fixtures (240, `matchClock`), the MARKET its trading days (285, `marketAmt`), the
-AMPHITHEATER its concert seasons (250, `concertSeason`). But the two places residents are *drawn to* — the
-crowd-draw pool in `syncFleet` (L3370: `if(t===T.MARKET||t===T.STADIUM){openCells.push 3x}` *"markets &
-matches draw a crowd"*) and `residentWhere` — both key on **top-level TILE TYPES**. The amphitheater is a
-`T.CIVIC` with a `kind`, so — exactly like `CIVHRS` before it (285) — **neither line could NAME it.**
-Result, measured (`probes/probe-concertcrowd.mjs`, 3 seeds, HEAD vs patch):
-- **No resident ever lived by the bowl.** No civic tile is in the residency pool at all, so a resident
-  standing on the amphitheater during a full-house summer-night concert was told **"Out for a stroll."**
-  on HEAD — at every state, every seed. The one bowl that fills a house every August night drew nobody.
-- 280's law exactly (and 285's, and 286's, and 289's): *a crowd list is a changelog of who was fixed, not
-  a taxonomy of who should read it.* The category {market, stadium, amphitheater} was two-thirds enumerated.
-
-**Change.** ONE predicate, three readers.
-- `concertShow()` = `civOpen('amphitheater')*concertSeason()` — lifted out of the bowl's own inline
-  `so*concertSeason()` (L7586), so the draw, the crowd and the tooltip read the SAME number the beam
-  lights by and a house can never fill for a struck stage (123/285). `concertLive()` =
-  `LITAMT>0.3 && concertShow()>0.02`, mirroring the draw's own showtime gate exactly.
-- The crowd pool enumerates the whole category: `t===T.MARKET||t===T.STADIUM||(t===T.CIVIC&&c.kind==='amphitheater')`.
-- `residentWhere` gets the third event-venue case, symmetric with the stadium's:
-  `concertLive() ? 'In the crowd at the concert.' : concertSeason()>0 ? 'Down at the amphitheater.' :
-  'By the quiet amphitheater.'`
-
-**Probe** (`probes/probe-concertcrowd.mjs`, build-HONEST — it asks the page whether `concertLive` exists,
-so ONE file grades both builds). PATCH names the concert crowd at **live** (`concertLive=true`, dusk in
-season), **day-in-season** (*"Down at the amphitheater."*) and **winter** (*"By the quiet amphitheater."*);
-HEAD reads **"Out for a stroll."** in all four states on all three seeds — the defect stated (236).
-**STADIUM control (250):** its match strings are IDENTICAL HEAD↔patch (untouched). **Residency:** peds now
-anchor ON the amphitheater **0–1/130**, exactly the order the stadium reads (**0–2/130**); HEAD **0 on
-every seed** (civic was never in the pool).
-
-**Census.** PASS, **byte-identical core** (`pop`/`roads`/`developed` **+0**; tile histogram empty; every
-metric flat, solar/green roofs **+0** too — fully inert). Peds draw the same NUMBER of `rng()` values from a
-longer `homeCells` pool (the explicit invariant at L3386), so the seeded stream — and every downstream CA —
-is untouched; `residentWhere`/`concertShow`/`concertLive` are unreachable from `tick()`.
-
-**Perf.** Trivial: `concertShow()` adds one `civOpen` call per amphitheater draw (1 per city); the crowd
-pool loop grabs the cell it already indexes. Draw work unchanged (the bowl's `show` is the same number).
-
-**Visual.** Both seeds **PASS** (blind whole-city, dusk). The only visual delta is ~1 extra tiny ped near
-the bowl; both agents confirmed a *"coherent, balanced dusk coastal city … no z-order tears, floating tiles,
-blown-out color, or stray/clustered artifacts anywhere,"* nothing compounded into clutter or darkness.
-
-**Note on rotation.** This is a Deepen/FIX, not the stale New CA rule cell — the seam handed a real defect
-(the third un-enumerated event venue) and a real defect in the right domain beats a forced new CA in a
-saturated one (285–289 all did this). Civic's New CA rule and Connect cells stay stale; Civic's additive is
-now genuinely spent, and the event-venue category {market, stadium, amphitheater} is **CLOSED**.
-
-**Verdict: DEEPENED** (and FIXED — the amphitheater was the third event venue, and the only one with no
-resident drawn to it and no word for its concert crowd; the trilogy 240/250/285 built is now complete).
 
 ## Iteration 293 — the busy shopfront kerbs had a crowd, a café, bunting and lamplight, but nobody ever played to them (2026-07-15) [People & activity × New element]
 
@@ -892,3 +828,49 @@ colour.
 **Verdict: FIXED** — the eighth recursion of the 262 cliff, and the last animate holdout in the city: Solvista's deer
 now keep an hour like every person, boat and kite, bedding down in the trees at nightfall instead of grazing a frozen
 midnight meadow. Every animate draw in the diorama is now off the global-`nightAmt`/`LITAMT` cliff.
+
+## Iteration 302 — the loft's rooftop studio was a garden it could not have (2026-07-15) [Urban fabric × Polish]
+
+**Vector.** Urban fabric (rotation: Urban at 295 was the oldest domain; last iter was Nature 301). Its
+tooltip/flag/TABLE seams are genuinely saturated (grepped clean at 295; land value, rooftop solar/green
+roofs, corner shops, lofts, parking lots, boulevards, arterials, festival streets, bus stops all named off
+the SAME predicate their draw gates on). Rather than force the stale Interaction/UX cell (133) with nothing
+to fix, I took the standing banked Urban cue **(au)** — a real, concrete draw defect in the right domain
+(285–301's rule: a real defect beats a forced kind in a saturated one).
+
+**Change.** The converted-warehouse loft (`c.loft`, iter 267) draws a small rooftop studio — the *"studios
+above"* its tooltip has always promised. It was one line: `prism(...,col('sage',1),col('sage',0.6),
+col('sage',0.85))` — the **EXACT palette entry** the green-roof garden (`c.groof`) uses for its planter box
+and shrubs. So the studio was green-dominant vegetation-coloured and read as a **roof garden** — a garden
+the loft's `T.IND` tile *cannot even carry* (`c.groof` is set on MID/COM/TOWER only). Repainted it as a
+glazed white penthouse studio: a pale box (`col('white')`/`col('whiteDk')`), a broad north-light window
+band (`colLit('glass',0.82,lit)` — plain glass-grey by day, warming with the scene's `lit` after dark), and
+a warm gold studio lamp (`col('gold',1.5)` under `LITAMT>0.4`) — the last light burning in a live-work
+block, and unmistakably not a garden.
+
+**Census.** Draw-only, no rng/Math.random, no terrain → **BYTE-IDENTICAL** (`pop`/`roads`/`developed` +0,
+empty tile histogram, `greenRoofs`/`solarRoofs` +0), 0 page errors. Vacuous for a draw-only vector; the
+gate is the probe + the eyes.
+
+**Probe** (`probes/probe-loftstudio.mjs`). **(A) COLOUR PROOF** — deterministic, no render, no clock, no
+noise floor: the studio colours evaluated through the artifact's own `col()`/`colLit()` (so through the
+illuminant, 275), at day and night. HEAD's `col('sage')` studio is **GREEN** (G the max channel) and
+pixel-matches the green-roof box — `rgb(124,168,117)` vs `rgb(131,178,124)` at day, both green — which IS
+the cue's mechanism, stated. The patch's three layers — walls `rgb(237,245,245)`, glazing `rgb(135,176,190)`,
+lamp `rgb(255,241,91)` — are **not green on any layer, day OR night**. `HEAD matched the green roof: true`;
+`PATCH no longer green: true`. **(B) HOST CENSUS** — lofts exist at 2035 on all 6 seeds (1–4/city), with
+screen coords for the camera.
+
+**Perf.** ~3 extra path objects per loft (a prism → prism+band+conditional band) × ≤4 lofts/city; the gold
+lamp draws only while `LITAMT>0.4`. Negligible (<0.05%); draws no rng()/Math.random.
+
+**Visual.** Both seeds **PASS** (blind whole-city + 5.5x day/night close-ups, camera aimed at the
+best-exposed loft by measured ink). Seed 42: *"a small pale/white glazed box, not green vegetation… at night
+that same box glows with a warm gold/yellow lit window — clearly a lit penthouse studio, not a dark planted
+garden… sits squarely on the roof, no floating gap, no z-order tear."* Seed 7: *"a pale WHITE glazed box, a
+small penthouse studio sitting flush on the roof cap. No green vegetation reads there… the rooftop box
+carries a warm lit window."* Both whole-city frames coherent — no floating tiles, tears, blown-out colour,
+or clutter anywhere.
+
+**Verdict: SHIPPED** (closes cue **(au)**) — the loft's roof-studio no longer masquerades as a green roof
+it structurally cannot have; it now reads as the glazed live-work studio the tooltip has always named.

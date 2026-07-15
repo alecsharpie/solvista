@@ -7550,7 +7550,21 @@ function drawBuilding(c,x,y,gx,gy){
          one by one on the loft's own bedtime (windarkAt above). (iter 274) */
       for(let z=3;z<h-3;z+=6)winBandR(gx,gy,0.36,0.31,z,z+3,x,y,0x1DE7,0.9,lit);
       bandR(gx,gy,0.368,0.318,h-3,h-0.5,col('coral',1)); /* arts-district sign */
-      prism(gx,gy,0.2,0.16,h,h+1.8,col('sage',1),col('sage',0.6),col('sage',0.85));
+      /* a GLAZED artist's studio on the roof — the 'studios above' the tooltip has
+         always promised. It was a sage prism, the exact palette entry the green roof
+         garden uses (col('sage')), so it read as planted greenery — a roof garden the
+         loft's IND tile cannot even carry (c.groof is MID/COM/TOWER only). Now it is a
+         pale penthouse box with a broad north-light window that catches a warm studio
+         lamp after dark: the last light burning in a live-work block, and unmistakably
+         not a garden. Draw-only; colLit is plain glass-grey by day, so pop/stream stay
+         flat. Closes cue (au). (iter 302) */
+      prism(gx,gy,0.2,0.16,h,h+2,col('white',1),col('whiteDk',0.58),col('whiteDk',0.82));
+      bandR(gx,gy,0.204,0.164,h+0.5,h+1.6,colLit('glass',0.82,lit));    /* studio glazing */
+      if(LITAMT>0.4){                                                   /* studio lamp after dark */
+        ctx.globalAlpha=(LITAMT-0.4)*0.85;
+        bandR(gx,gy,0.208,0.168,h+0.6,h+1.5,col('gold',1.5));
+        ctx.globalAlpha=1;
+      }
     } else { /* sawtooth warehouse */
       prism(gx,gy,0.38,0.33,0,h,col('brick',1),col('brickDk',0.62),col('brickDk',0.85));
       bandR(gx,gy,0.38,0.33,h*0.4,h*0.7,colLit('glass',0.7,lit*0.5));
