@@ -22229,3 +22229,53 @@ blown-out color, or compounded clutter (she is tiny at fit zoom, as a sparse wat
 running out to her side and putting back to the harbour, named and lit on her own hours. ~6 path objects, one per
 city — free by construction.
 
+## Iteration 298 — the moon traverses the night (2026-07-15) [Sky & atmosphere × Deepen]
+
+**ADOPTED, NOT AUTHORED.** Found the `grow-city` worktree dirty at startup: a complete, uncommitted iteration 298
+that reached its gates but was killed before step 5 (no ledger entry, no commit; census-baseline/history modified,
+its two probes written at the root). Per the skill's "gates decide, not the ledger" path I re-ran the gates myself,
+confirmed the diff reads as one coherent change, and adopted it. Entry written from the diff + my own re-verification.
+
+**The gap.** The sun arcs overhead all day (iter 200's screen-space sun), but the MOON hung motionless in one corner:
+both readers — the disc/halo/craters draw and the moonglade sea-shimmer — hard-coded ONE screen point
+(`iw*0.80, ih*0.15`), so its position was a CONSTANT for the artifact's whole life (DISTINCT MOON POSITIONS = 1, the
+defect stated — 236). A sky where one luminary moved and the other was pinned.
+
+**Change (draw-only, no `rng()`, no terrain).** A new `moonPos()`: the disc rises low out of the open RIGHT corner at
+dusk, drifts right→left (the sun's own east-to-west sense), stands highest near solar midnight, sinks back left toward
+dawn. `mnP` runs 0(dusk)→1(dawn) off `dayT` (the pre-dawn tail past midnight unwrapped onto [1,1.14]); altitude is
+`sin(π·mnP)`. x is CLAMPED well right of the `.placard` (which owns the top-left corner, 200) so the moon never sets
+behind the DOM card. **ONE predicate, both readers on it** (153's rule, at last true of the POSITION not just the
+phase): the two hard-coded `iw*0.80,ih*0.15` sites — the disc and the moonglade's world-projection — now both call
+`moonPos()`. Nothing else changed; the moon's phase/`MOONF` gating (dim earthshine disc + lit lune) is untouched.
+
+**Census.** Draw-only → **PASS, 0 page errors**, every metric byte-flat (no terrain, no `rng()`). Vacuous by
+construction; the gates are the probe + the eyes.
+
+**Probe** (`probes/probe-moonarc.mjs`, adopted + repathed into `probes/`). **A** (build-agnostic, HEAD fallback →
+DISTINCT=1): the moon anchor is **10/10 DISTINCT** across the night on both seeds, x arcs **855→1239** (right→left),
+min-x 855 clears the placard edge (340), and altitude rises to a peak at **dayT 0.94** (solar midnight). **B**
+(isolation, patch only): floor(same point twice) **0px**; move the anchor and disc+glade shift **4195/4261px**; drag
+the moon off-screen and the glade ink **collapses 2017/2069px** — proving BOTH readers honour `moonPos()`, not a
+literal. **PASS on both seeds.**
+
+**Visual.** Two agents (one per seed) BOTH returned FAIL — and on measurement **neither names a defect the change
+introduced** (the loop's law: a FAIL is a cue to MEASURE, and when agents disagree a number is the verdict):
+- Seed 42 "no moonglade": seed 42 is a **near-NEW moon all night** (MOONF 0.014–0.047), which correctly casts almost
+  no glade. Seed 7 (**near-FULL**, MOONF 0.74–0.96) shows the glade present and tracking at dusk/midnight — so the
+  glade works; probe B already proved it tracks `moonPos`. Absent-on-a-new-moon is correct depiction.
+- Seed 7 "no pre-dawn moon": the pre-dawn disc renders **552px of ink, all within 60px of its position** (vs 2205px
+  at midnight), correctly z-ordered and NOT occluded (occlusion measured: moon-on vs moon-off). It is present — just a
+  smaller/dimmer gibbous disc that the arc has moved over the busy downtown (vs HEAD's fixed corner over empty water),
+  so the agent missed it. Seed 42's agent DID find its (fainter) pre-dawn moon. Both agents confirmed the arc reads
+  correctly and beautifully dusk→midnight, no z-order tears / doubled moons / blown-out colour, whole frame coherent.
+
+**Watch (banked cue).** The arc's LEFTWARD/pre-dawn end carries the moon over the city core, where a bright moon reads
+as a smaller target than it did over open water — correct z-order, but less prominent. A future polish could keep the
+moon a touch higher through the left half of the arc (over the skyline, not among it). Not a defect; the moon is drawn
+and present throughout.
+
+**Verdict: SHIPPED (adopted)** — the moon now climbs an arc across the night instead of hanging pinned in a corner,
+and the moonglade pool slides along the water beneath it. Draw-only, path count flat, free by construction. The two
+visual FAILs were investigated and refuted/explained by measurement, not overridden on vibe.
+

@@ -17,7 +17,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
@@ -32,14 +32,19 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Nature **301** · Urban **302** · Water **303** · Transport (examined **304**) · Sky **305** ·
-  People **306** · Civic **307** (FIELD pickup-game schedule — the 4th venue in the {stadium,market,amphitheater}
-  category, the last with no clock; 285's enumerate-the-category law). ➡ **NEXT: Nature (301, oldest)** — grep its
-  `tick()`/CA seam + the frozen-census/comment tells, not the cue list (Nature additive spent 301, Polish debt paid
-  294; the 287/279 pattern = grep the tick()/CA seam. A ZERO/flat census row is louder than any cue).
-  ✅ **305 SHIPPED Sky × Deepen — the front now greys the SKY ITSELF** (deaf backdrop; `overcast()`=rainFront's 4th
-  reader, gated above the patchy band ⇒ dry sky BYTE-IDENTICAL, one `overcastSky` shared by `syncSky`+`render`;
-  `probe-overcast.mjs`). **Sky Deepen 19-deep but additive NOT spent (291 lightning).**
+- **ROTATION.** Last: Water **303** · Transport (examined **304**) · Sky **305** · People **306** · Civic **307** ·
+  Nature **308** (fire ignition now rides the dry season — see below). ➡ **NEXT: Urban (302, oldest)** — grep its
+  `tick()`/CA seam + the flag-lifecycle/TABLE/comment tells, not the cue list (Urban tooltip/flag/TABLE SATURATED per
+  302's note; stale kind = **Interaction/UX (133)**. The 287/279 pattern = grep the tick()/CA seam; a ZERO/flat census
+  row is louder than any cue).
+  ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
+  spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
+  curve); **0.10x wet trough → 1.90x dry peak**, CENTRED on mean 0.5 ⇒ year-mean **exactly 1**, annual burn total HELD.
+  ⚠ **Timber spark left alone** (URBAN fire ≠ dry season). ⚠ **INVISIBLE at 2035** (`year<2030`; 134) ⇒ gate is
+  `probes/probe-fireseason.mjs` (TEMPORAL): HEAD dry/wet **1.00** flat, patch real `tick()` dry≥wet ∞/∞/7. Zero `rng()`
+  (only burnt terrain perturbs, HEAD's cost); census core held (pop +2.9%, dev +0.3%).
+  ✅ **305 SHIPPED Sky × Deepen — the front greys the SKY ITSELF** (`overcast()`=rainFront's 4th reader, gated above the
+  patchy band ⇒ dry sky BYTE-IDENTICAL, `overcastSky` shared by `syncSky`+`render`; `probe-overcast.mjs`). **Sky additive NOT spent (291 lightning).**
   ⚠ **304 EXAMINED TRANSPORT AND FOUND IT GENUINELY DRY** (step-back lap): all FOUR seams grepped CLEAN this lap —
   rules (`stepVehicle`/`syncFleet`/`stepGond`/`stepMono` — every mover an hour/tooltip/honest job, 297 holds),
   FLAGS (`bridge`/`riv` — writer/draw/tooltip/veto all agree, 281-clean), the label ladder (`describeTile`), AND the
@@ -89,15 +94,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ✅ **STEP-BACK #38 RAN AT 304 — NO DRIFT.** Both seeds (42, 7) PASS, 5 frames each (day/golden/night + a CROSSED
-  dusk-summer/dusk-winter discriminating pair, 264), agents correctly named the darker winter frame; no compounded
-  clutter/darkness/tears (only the *deliberate* dense core + golden wash, do not re-open on an aside). **Perf ARC is
-  FLAT in path objects** (the load-immune unit): HEAD vs 283 (~20 laps) **+1.14% day / +0.37% night**, vs 264 (~40
-  laps) **+0.55% / +0.21%** — the +0.2%/lap tendency was cancelled by ~40 laps of byte-flat FIXES + draw credits.
-  ⚠ **TOOL NIT (not a defect):** `shot-stepback` flags `HUD=STALE` on golden/dusk frames — a vocabulary mismatch
-  between the script's coarse `phaseWord` and the artifact's `clockWord` pill (dusk-winter HUD "night" at LITAMT=0.95/
-  sun-down is *more* correct than the script's "sunset"), not a stale DOM. A future lap could align the two words.
-  ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms** (perfab ±30% load noise can't resolve +0.1%/lap; 216/198). ⚠ Blind A/B names NON-ORDINAL and CROSSED (268).
+  ✅ **STEP-BACK #38 RAN AT 304 — NO DRIFT** (both seeds PASS, day/golden/night + CROSSED dusk-summer/winter pair;
+  perf ARC FLAT in path objects: vs 264 ~40 laps back +0.55%d/+0.21%n — +0.2%/lap cancelled by byte-flat FIXES).
+  ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms** (216/198). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **TOOL NIT:**
+  `shot-stepback` `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM. **Step-back due ~309.**
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -391,61 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 300 entries before Iteration 298 live in
+> **Archive:** the 301 entries before Iteration 299 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 298 — the moon traverses the night (2026-07-15) [Sky & atmosphere × Deepen]
-
-**ADOPTED, NOT AUTHORED.** Found the `grow-city` worktree dirty at startup: a complete, uncommitted iteration 298
-that reached its gates but was killed before step 5 (no ledger entry, no commit; census-baseline/history modified,
-its two probes written at the root). Per the skill's "gates decide, not the ledger" path I re-ran the gates myself,
-confirmed the diff reads as one coherent change, and adopted it. Entry written from the diff + my own re-verification.
-
-**The gap.** The sun arcs overhead all day (iter 200's screen-space sun), but the MOON hung motionless in one corner:
-both readers — the disc/halo/craters draw and the moonglade sea-shimmer — hard-coded ONE screen point
-(`iw*0.80, ih*0.15`), so its position was a CONSTANT for the artifact's whole life (DISTINCT MOON POSITIONS = 1, the
-defect stated — 236). A sky where one luminary moved and the other was pinned.
-
-**Change (draw-only, no `rng()`, no terrain).** A new `moonPos()`: the disc rises low out of the open RIGHT corner at
-dusk, drifts right→left (the sun's own east-to-west sense), stands highest near solar midnight, sinks back left toward
-dawn. `mnP` runs 0(dusk)→1(dawn) off `dayT` (the pre-dawn tail past midnight unwrapped onto [1,1.14]); altitude is
-`sin(π·mnP)`. x is CLAMPED well right of the `.placard` (which owns the top-left corner, 200) so the moon never sets
-behind the DOM card. **ONE predicate, both readers on it** (153's rule, at last true of the POSITION not just the
-phase): the two hard-coded `iw*0.80,ih*0.15` sites — the disc and the moonglade's world-projection — now both call
-`moonPos()`. Nothing else changed; the moon's phase/`MOONF` gating (dim earthshine disc + lit lune) is untouched.
-
-**Census.** Draw-only → **PASS, 0 page errors**, every metric byte-flat (no terrain, no `rng()`). Vacuous by
-construction; the gates are the probe + the eyes.
-
-**Probe** (`probes/probe-moonarc.mjs`, adopted + repathed into `probes/`). **A** (build-agnostic, HEAD fallback →
-DISTINCT=1): the moon anchor is **10/10 DISTINCT** across the night on both seeds, x arcs **855→1239** (right→left),
-min-x 855 clears the placard edge (340), and altitude rises to a peak at **dayT 0.94** (solar midnight). **B**
-(isolation, patch only): floor(same point twice) **0px**; move the anchor and disc+glade shift **4195/4261px**; drag
-the moon off-screen and the glade ink **collapses 2017/2069px** — proving BOTH readers honour `moonPos()`, not a
-literal. **PASS on both seeds.**
-
-**Visual.** Two agents (one per seed) BOTH returned FAIL — and on measurement **neither names a defect the change
-introduced** (the loop's law: a FAIL is a cue to MEASURE, and when agents disagree a number is the verdict):
-- Seed 42 "no moonglade": seed 42 is a **near-NEW moon all night** (MOONF 0.014–0.047), which correctly casts almost
-  no glade. Seed 7 (**near-FULL**, MOONF 0.74–0.96) shows the glade present and tracking at dusk/midnight — so the
-  glade works; probe B already proved it tracks `moonPos`. Absent-on-a-new-moon is correct depiction.
-- Seed 7 "no pre-dawn moon": the pre-dawn disc renders **552px of ink, all within 60px of its position** (vs 2205px
-  at midnight), correctly z-ordered and NOT occluded (occlusion measured: moon-on vs moon-off). It is present — just a
-  smaller/dimmer gibbous disc that the arc has moved over the busy downtown (vs HEAD's fixed corner over empty water),
-  so the agent missed it. Seed 42's agent DID find its (fainter) pre-dawn moon. Both agents confirmed the arc reads
-  correctly and beautifully dusk→midnight, no z-order tears / doubled moons / blown-out colour, whole frame coherent.
-
-**Watch (banked cue).** The arc's LEFTWARD/pre-dawn end carries the moon over the city core, where a bright moon reads
-as a smaller target than it did over open water — correct z-order, but less prominent. A future polish could keep the
-moon a touch higher through the left half of the arc (over the skyline, not among it). Not a defect; the moon is drawn
-and present throughout.
-
-**Verdict: SHIPPED (adopted)** — the moon now climbs an arc across the night instead of hanging pinned in a corner,
-and the moonglade pool slides along the water beneath it. Draw-only, path count flat, free by construction. The two
-visual FAILs were investigated and refuted/explained by measurement, not overridden on vibe.
 
 ## Iteration 299 — a market cross for the empty square (2026-07-15) [Civic & culture × Polish]
 
@@ -857,3 +807,52 @@ aiming (226/258's spirit); banked in the shot script.
 pickup game now fills it on some afternoons and it is an empty chalked ground the rest of the time, off a per-hex
 per-day clock, instead of two frozen players who stood there every daylit hour forever. Draw-only, path count roughly
 neutral (more players during a game, none otherwise); free by construction.
+
+## Iteration 308 — the "dry-season lightning" fired just as readily in the wet winter (2026-07-15) [Nature × Deepen]
+
+**Vector.** Nature rotation (oldest domain). Nature's additive is spent (301) and its Polish debt is paid (294), so per
+the header I grepped the `tick()`/CA seam and the frozen-census/comment tells rather than the cue list. Nature is
+extraordinarily mature — every CA runs (kelp 282, wildfire 279, bloom 263, solar 287), every belt keeps a calendar
+(farm 108, orchard 57, vineyard, the woodland spring/autumn ephemerals), FOREST is a live logging↔regrowth equilibrium
+(225 flat but dynamic, not a dead rule). But one comment lies. The forest fire spark's own comment reads
+*"dry-season lightning takes a patch of forest"* — and its rate was a **flat constant** `FIRESPK`, with no season term
+anywhere. A forest hex was exactly as likely to catch in the wet-winter thaw (s≈0.12) as at the golden dry peak
+(s≈0.62), which is backwards for a wildfire. 199's tell, hosted on a CA spark: a comment asserting a *seasonality* the
+value cannot have. Confirmed on HEAD before designing (`probe-fireseason`): ignition dry/wet ratio **≈1.0** on 3 seeds
+(0.83–1.67), the expected rate a **flat 3.00/season** — season-blind by construction.
+
+**Change.** The spark now rides the season the rest of the coast already reads. `fireSeason() =
+1 + FIREDRY*(0.5 - seasonCool())` — `seasonCool()` is the artifact's dryness curve (0 at the dry peak, 1 at the wet
+trough), already read by the grass, the deciduous canopy and the day length; the fire is its **7th reader** (one
+predicate, N readers). The FOREST spark's threshold becomes `hashCell(...) < FIRESPK*fireSeason()`. The lever is
+**CENTRED on seasonCool's own mean (0.5)** (245/98): `seasonCool()` is a pure cosine (`0.5-0.5cos(2π(s-0.62))`) with
+year-mean exactly 0.5, so `fireSeason()` averages **exactly 1** over the year and the annual ignition total is HELD —
+the dry season burns more only because the wet season burns exactly that much less. `FIREDRY=1.8` ⇒ **1.9× at the dry
+peak, 0.1× at the wet trough** (never negative), so a wildfire is a summer thing. Reads no `rng()`/`Math.random`, so
+the spark itself stays inert to the seeded stream — only the terrain a fire BURNS perturbs it, which is HEAD's own,
+unavoidable cost (279). **The timber-block spark is left untouched:** it is an URBAN fire (old buildings smouldering
+until the 1991 firehouse), and its comment is about the engine era, not the dry season.
+
+**Census.** Fire writes terrain, so the ignition-timing change cascades chaotically through the `rng()` stream (the
+invariant expects this). Core HELD and net-positive: `pop` +2.9%, `developed` +0.3%, `roads` +0.4%; tile histogram a
+mild reshuffle (FOREST −10, BURNT 4→2, TOWER +27, RES +56 — all within noise). **VERDICT: PASS, 0 page errors.** The
+centred lever is why nothing collapsed.
+
+**Probe** (`probes/probe-fireseason.mjs` — TEMPORAL/134, build-agnostic via `SRC=`, no pixels/no noise floor). Part A
+reads the EXPECTED ignition rate from the artifact's own `hashCell·FIRESPK·fireSeason` over its own frozen forest set;
+Part B drives the artifact's own `tick()` (never a re-implementation) at the dry peak vs the wet trough. Pinned ~2015
+(post-2000 ⇒ no logging, stable forest host; pre-2030 ⇒ spark live; timber spark off ⇒ all ignitions are the forest
+spark). **HEAD:** `fireSeason` 1.00 flat (build-agnostic fallback), Part A rate a flat 3.00/season (dry/wet **1.00**),
+Part B real dry/wet a noisy ~1 (0.40–1.33 — season-blind). **Patch:** `fireSeason` **0.10 (wet) → 1.90 (dry)**,
+year-mean **0.991≈1** (held, exactly 1 analytically), Part B real ignitions dry≥wet on all 3 seeds (**∞ / ∞ / 7.00**).
+The defect is stated with no threshold (236): HEAD's constant curve IS the bug.
+
+**Visual.** Fire is invisible at 2035 (`year<2030`) and a still cannot show a cadence (134), so the visual pass is the
+holistic regression check that the mildly-cascaded 2035 city still reads. Whole-city shots at seeds 42 and 7, blind
+subagents, both **PASS**: coherent balanced coastal city, land/sea/roads/forest all correct on the hex grid, no z-order
+tears, no floating/sunk tiles, no blown-out colour.
+
+**Verdict: DEEPENED** — the forest fire is now the 7th reader of the coast's dry-season curve: wildfires concentrate in
+the golden summer and all but vanish in the wet winter, where before they fired year-round. The annual burn total is
+held by construction, and the comment that promised "dry-season lightning" for the artifact's whole life is finally
+telling the truth.

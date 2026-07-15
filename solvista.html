@@ -1763,6 +1763,21 @@ const bloomHost=c=>c.t===T.MEADOW||c.t===T.SHOREPARK;
    second year literal — the SPREAD clause already stops jumping at 1992, so the
    ignition steps down on the same date, off the same idea. */
 const FIRESPK=1.1e-4, TIMBSPK=1.6e-4, FIREHOUSE=0.22;
+/* WHEN THE HILLS BURN — the forest spark is "dry-season lightning" (its own comment
+   in tick()), yet its rate was a flat constant: a hex was as likely to catch in the
+   wet winter thaw as at the golden dry peak, which is exactly backwards. So the spark
+   now rides the SAME dry curve the grass, the canopy and the day length already read
+   — the SEVENTH reader of seasonCool() (one predicate, N readers, 285). seasonCool()
+   is 0 at the dry peak (s=0.62) and 1 at the wet trough (s=0.12), so 1-seasonCool() is
+   the dryness and (0.5-seasonCool()) is it centred on seasonCool's own mean of 0.5,
+   which FIREDRY scales. The lever
+   is CENTRED (245/98): fireSeason() averages EXACTLY 1 over the year, so the annual
+   ignition total is HELD — the dry season burns more only because the wet season
+   burns exactly that much less. FIREDRY=1.8 => 1.9x at the dry peak, 0.1x at the wet
+   trough (never negative), so a wildfire is a summer thing, not a January one. Reads
+   no rng()/Math.random, so the spark stays inert to the seeded stream. */
+const FIREDRY=1.8;
+function fireSeason(){return 1+FIREDRY*(0.5-seasonCool());}
 /* THE AUTUMN FLUSH — one predicate, three readers (the tick() pass, the draw's
    fade, the tooltip). Iter 272: every ring in the city used to surface and vanish
    on the SAME TICK. The gate asked one GLOBAL question ("is it autumn?") and rolled
@@ -2697,7 +2712,9 @@ function tick(){
     const c=cells[i]; if(c.fire!==0)continue;
     const x=i%G, y=(i/G)|0;
     if(year<2030&&c.t===T.FOREST){
-      if(hashCell(x,y,(seedNum^0xF12E^TICKN)>>>0)<FIRESPK)c.fire=4;
+      /* dry-season lightning: the spark peaks at the golden dry peak and all but dies
+         out in the wet winter, riding fireSeason() (centred, so the annual mean holds) */
+      if(hashCell(x,y,(seedNum^0xF12E^TICKN)>>>0)<FIRESPK*fireSeason())c.fire=4;
     }
     /* the timber block smolders only until the city has an engine to answer it — the
        placard's own claim, and the SPREAD clause below already ends at 1992, so the
