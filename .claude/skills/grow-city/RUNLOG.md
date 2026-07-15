@@ -226,4 +226,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 293  People & activity × New element SHIPPED             28m50s   $14.61 f79d1e2
 ✔ Iter 294  Nature × Polish            SHIPPED             12m26s   $6.98  3ec4526
 ✔ Iter 295  Urban fabric × New element SHIPPED             24m51s   $10.94 ef54ce5
+✔ Iter 296  Water & coast × New element SHIPPED             16m53s   $9.29  c8c1881
 ```
