@@ -330,7 +330,12 @@ const BASE={
                         from the SEA (lum 122 vs 155) as well as from the SAND it springs
                         from (221) — pale granite reads against grass, but dissolves into beach */
   pool:[120,206,214],
-  solar:[62,82,120],
+  solar:[54,66,96], /* dark tilted-panel navy: DESATURATED and DEEPER than a saturated
+                       blue (iter 294) — real PV glass is near-black-blue, and against the
+                       warm/green countryside (the only cool surface out there) a chroma-83
+                       panel read "like park benches". Same hue (~219), chroma 58->42,
+                       so it stays navy but sits back. Shared by the field, the rooftop
+                       arrays and the launch hull — all deepen alike. */
   deck:[196,164,118], deckDk:[164,132,92],
   brick:[168,92,64], brickDk:[134,70,50],
   lav:[178,148,198],
@@ -6616,8 +6621,9 @@ function drawShroom(x,y,c,gx,gy){ /* an autumn fairy ring on the leaf litter */
     const an=m*1.047+hashCell(x,y,m+400)*0.5;
     const mx3=cx+Math.cos(an)*4.2, my3=cy+Math.sin(an)*2.4+1;
     ctx.fillStyle=col('white',1.05);ctx.fillRect(mx3-0.4,my3-1,0.8,1);      /* stem */
-    ctx.fillStyle=col(hashCell(x,y,m+500)<0.5?'coral':'cream',1.15);        /* cap */
-    ctx.beginPath();ctx.arc(mx3,my3-1.2,0.8,0,7);ctx.fill();
+    const cap=hashCell(x,y,m+500)<0.5?'coral':'cream';                      /* two-tone cap (iter 294): a */
+    ctx.fillStyle=col(cap,0.78);ctx.beginPath();ctx.arc(mx3,my3-1.15,0.8,0,7);ctx.fill();   /* shaded rim to define the edge, */
+    ctx.fillStyle=col(cap,1.42);ctx.beginPath();ctx.arc(mx3,my3-1.35,0.6,0,7);ctx.fill();   /* and a bright crown to clear the litter */
   }
   ctx.globalAlpha=1;
 }

@@ -17,7 +17,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~ | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
@@ -33,13 +33,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
 - **ROTATION.** Last: Transport **290** · Sky **291** · Civic **292** · People **293** · Nature **287** ·
-  Urban **288** · Water **289**. ➡ **NEXT: Nature (287, oldest)** — its next lap is **Polish** (the stale kind, 2-deep in debt), with the TWO paired cues banked below: **(ax)** fairy-ring contrast + **(bg)** the solar blue, together. 293 took People × **New element** (the busker) — seam-honest, distinct street life; People's stale cells remain **Polish (226)** / **New CA rule (49)**.
+  Urban **288** · Water **289** · Nature **294**. ➡ **NEXT: Urban (288, oldest).** ⚠ **Urban's Polish is well-fed (18 laps) — do NOT default to the banked (au) Polish cue.** Its STALE kinds are **New element (32, 62 — both ancient)** and **Interaction/UX (133 — ancient)**; and 225's law is 25/25 — **grep its `tick()`/flags/TABLES seam first** (New CA rule is only 7/23/151/281). 294 took Nature × **Polish**, spending the two banked paired cues (ax)+(bg) together — both measured before a line was written.
   ✅ **292 CLOSED CIVIC's additive: the event-venue category {market, stadium, amphitheater} is COMPLETE** (crowd pool + `residentWhere` enumerate all three off the shared `concertShow`/`concertLive`; the bowl was the un-enumerated third — 285's type blindness). Civic stale stays New CA rule (36/107) + Connect (measured-sound).
   **291 broke Sky's Deepen streak with a NEW ELEMENT — the sparsest Sky cell (3rd ever). Sky's additive was NOT fully
   spent: the elaborate weather front was a live host with no dramatic payoff, and lightning was the missing one.**
-  ⚠ **NATURE'S
-  POLISH CELL IS TWO-DEEP IN DEBT AND IS ITS STALE KIND** (287 took CA again — the seam beat the cue list). **Its next
-  Nature lap is Polish, with TWO paired cues banked: (ax)** fairy-ring contrast + 🆕 **(bg)** the solar blue. **Together.**
+  ✅ **NATURE'S POLISH DEBT IS PAID (294)** — spent both banked paired cues **(ax)** fairy-ring cap contrast +
+  **(bg)** the countryside solar blue together, both CLOSED. Nature's stale kinds are now **New element (156/174)**
+  and **Connect (all ~~struck~~)**; its next lap should grep the `tick()`/CA seam (287/279 pattern) before the cue list.
   ⚠ **PEOPLE's Deepen cell is now 14 deep and is CLOSED for rotation purposes** — its stale cells are
   **Polish (226)** and **New CA rule (49)**. Do not take another People Deepen without a measured seam.
   ✅ **CIVIC'S TWO-LAP DEBT IS PAID (285).** ⚠ **CIVIC's stale cells are STILL New CA rule (36/107) and Connect
@@ -51,8 +51,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   `stepVehicle` seam and its FLAGS instead** (267 · 274 · 281 · 282 · **283**: FIVE straight laps where the RULES seam
   beat the cue list). Transport's stale cell is now **Interaction/UX (171)**.
   ✅ **CUE (bd) CLOSED BY 284** (and it was TWO readers, not one — see 284's facts).
-  ➡ **NEXT cues: (au)** loft roof-studio reads as green roof (Urban × Polish, 274's half), **(ax)** fairy-ring contrast
-  (Nature's), **(ay)** windrow LENGTH (POLISH ⇒ not Water's next), **(az)/(ba)** 278's two (below).
+  ➡ **NEXT cues: (au)** loft roof-studio reads as green roof (Urban × Polish, 274's half), **(ay)** windrow LENGTH
+  (POLISH ⇒ not Water's next), **(az)/(ba)** 278's two (below), **(bf)** market packed-away square reads bald (Civic ×
+  Polish), **(bh)** over-bright plaza flame-blob (Nature/park Polish, 293). ✅ **(ax)+(bg) CLOSED by 294.**
   ✅ **PEOPLE's four-Deepen run is BROKEN (278 took Interaction/UX, its stalest cell at 191).** Its **Polish** (226) is
   now the stale one. **Interaction/UX is no longer the stale COLUMN** — it ran at 278 after 49 laps dormant.
   🔑 **225'S GREP-THE-SEAM LAW IS 25 FOR 25 AT *FINDING*** (**288: the FLAG-LIFECYCLE grep — `c.solar`/`c.groof`, the two rooftop-tech CAs the HUD counts and the tooltip names, were written on RES/MID/COM and DRAWN nowhere on a TOWER, so downtown's tallest roofs could never carry them — 285's type-hierarchy blindness, found by grepping the WRITER against the DRAW branch.**) (**287: `SOLARF` — fully drawn, promised on the placard,
@@ -367,15 +368,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **row-length distribution** (`L = min(want, run−0.5)` is truncated by open sea upwind ⇒ coastal rows are stubs).
   **Measure the histogram first** (`probes/probe-windrow.mjs`). ⚠ **NOT brightness or width — do not reach for alpha.**
   ⚠ **A *POLISH* cue, and Water's next lap must not be Polish** — bank it, take the seam. · **(aw-HUD) UNVERIFIED — a 269 agent read the controls card as clipping *"TRANSIT REA…"* at 1400x900.** ⚠ **229'S LAW: `probe-hud` swept 6 widths and found 0 clipped labels ⇒ SUSPECT THE HARNESS** ((ar)'s shape a 4th time). Reproduce in a real browser before spending a lap.
-  **(ax) THE FAIRY RINGS ARE ON THE SMALL SIDE** (272 — **both** agents, independently, both seeds, unprompted, on a
-  PASSing frame: *"legible, not speckle… but a hair more cap contrast would help"*). Measured **15.8–20.8 CSS px/ring at
-  fit** = ~4x a ped's shadow (4.4, shipped) ⇒ **NOT the hairline family, NOT cue (f)** — a *contrast* nudge, not a body.
-  Gate: `probes/probe-shroomvis.mjs`. **Nature × Polish.**
-  **(bg) THE SOLAR PANELS' BLUE IS TOO SATURATED FOR THE COUNTRYSIDE** (287, s7's agent, unprompted, on a PASSing frame:
-  *"reads a little like park benches rather than dark tilted panels — a darker, less chroma-heavy navy would sit
-  better"*). ⚠ **ONE agent, ONE seed — an ASIDE (212), NOT corroborated: measure the panel's chroma against the
-  countryside's first** (`col('solar',1.25)`; audit by **`dHUE`**, never a target hue — 234). **Nature × Polish; PAIRS
-  with (ax).**
+  ✅ **(ax) FAIRY-RING CAP CONTRAST — CLOSED by 294.** Two-tone dome (shaded rim + bright crown, same footprint) in
+  `drawShroom`; footprint held at 20–21 CSS px, both agents PASS on both seeds.
+  ✅ **(bg) COUNTRYSIDE SOLAR BLUE — CLOSED by 294.** The uncorroborated aside was measured before touching it:
+  `col('solar',1.25)` was chroma 83 / lum 99, the only cool surface among a warm/green countryside ⇒ real.
+  `solar[62,82,120]→[54,66,96]` (chroma 58→42, hue held 219→222); shared coherently by field/rooftop/hull.
   **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED).** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` churn is ruled OUT.
   **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** ⚠ The fire CA is a
   **GHOST** (cannot ignite at 2035) ⇒ almost certainly **LOGGING/clearcut, not BURNT** — **identify the tile first**. Nature × Polish.
@@ -391,100 +388,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 286 entries before Iteration 284 live in
+> **Archive:** the 287 entries before Iteration 285 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 284 — the sun moved and two readers never got the message (2026-07-15) [Sky & atmosphere × Deepen/FIX — cue (bd) CLOSED]
-
-**Vector.** Sky & atmosphere × Deepen/FIX. The ledger's **#1 cue (bd)**, taken ahead of Civic's turn on **law 119** (a
-banked, measured finding outranks kind-rotation). Iter 261 gave the season a **day length** — `sunWarp` warps the light
-curve's TIME AXIS, so the sun's state became a pure function of **`SUNT`**, not `dayT`. Its own comment boasted *"ONE
-PREDICATE, FOUR READERS."* **264's law says: when a lap introduces a remap, grep EVERY reader of the remapped quantity
-and ask which axis it is on.** Nobody had. The lap is that grep.
-
-**The audit (the whole point — the cue named ONE reader and there were TWO).**
-`grep -n dayT` returns 30 readers. Each one asks a question, and the question decides the axis: *does it ask about the
-**SUN** (its rising, its setting, the light it casts) — or about the **WALL CLOCK** (the hour, the moon, a timetable)?*
-- **Correct on `dayT`, and MUST NOT MOVE:** the moon (`moonPhase`), the town-hall clock (`clockWord`), the school run,
-  the stadium fixture. These are timetables. They stayed.
-- **WRONG — a threshold on the light curve applied to the wall clock:**
-  1. **`phaseWord(dayT)`** — the HUD's phase pill. **Its band edges ARE the curve's own keyframes** (`0.05 = SUNUP`,
-     `0.80 ≈ SUNDN 0.78`), which is the tell: a function whose constants are another function's keyframes is reading
-     that function's clock, or it is broken.
-  2. **`fogDepth`'s dawn term** (`1−|dayT−0.10|/0.09`) — radiation fog **burns off when the sun comes up**, so "dawn"
-     is a fact about the light curve, not the wall clock.
-- **AUDITED AND PROVABLY INERT — deliberately left alone:** `drawBuilding`'s golden-hour sun-facing face
-  (`gs = dayT<0.5`). Its `GWARM>0.02` gate is **zero across the entire 0.415–0.5 window**, and `|SUNT−dayT| ≤ DAYLEN =
-  0.10` cannot flip its sign at either golden hour. It is ugly and it is a no-op. **Banked, not changed.**
-
-**⛔ AND ONE HYPOTHESIS THE PROBE KILLED BEFORE I WROTE IT — the sea's sun glitter.** `glit =
-(1-LITAMT)*max(0,1−|dayT−0.47|/0.30)` looks like the same bug, and the comment above it (*"thinning to nothing **by
-dusk**"*) is a textbook 199 tell about a dusk that 261 made a moving target. **It is not a defect.** `LITAMT` is derived
-from `SUNT`, so the `(1-LITAMT)` factor **already carries the season**: measured, `AFTERSET = 0` in both seasons (the sea
-never glitters on a set sun) and the shimmer's own cutoff already moves **0.440 → 0.550**. I was one probe away from
-shipping a fix for a defect that did not exist, on the largest surface in the city. **Do not re-key it.**
-
-**Change.** Two one-line re-keys, and both **warp their own clock** rather than reading the cached `SUNT`:
-`elPhase.textContent = phaseWord(sunWarp(dayT))` and `const dawn = clamp(1−|sunWarp(dayT)−0.10|/0.09,0,1)`.
-**This is load-bearing, not stylistic:** `syncStats()` runs **BEFORE `render()`** in `frame()` (the tick loop calls it at
-L9645; `render()` is L9648) and again on `genWorld`/`newCity` **outside `render()` entirely** — where `SUNT` is stale or
-still **0**. Reading the cache would have been correct-by-call-order, which 261's own law forbids (*delete the
-dependency, do not document it*). Both fns run **once a frame**, so the extra `sin()` is free. No constant was invented:
-`0.10` is unchanged and now means what it always said — *the fog peaks just after `SUNUP`, whenever that is.*
-
-**Probe** (`probes/probe-suntclock.mjs`, + `probes/shot-suntclock.mjs`). Pure clock/DOM/object data — **no pixels, so no
-noise floor at all.** Build-agnostic (hooks the artifact's own fns; `SRC=` grades any build).
-
-| | HEAD | patched |
-| --- | --- | --- |
-| **HUD contradicts the sun** (winter) | **21.5% of the day** | **2.0%** |
-| **HUD contradicts the sun** (summer) | 8.5% | 1.0% |
-| **dawn-fog peak @dayT** (winter / summer) | **0.100 / 0.100** — `DISTINCT = 1` | **0.200 / 0.035** |
-| *(true sunrise, for reference)* | *0.150 / 0.000* | *0.150 / 0.000* |
-| fog peak STRENGTH | 0.850 | 0.827 / 0.817 |
-| sea shimmer (must-not-move) | 29 / 0.440 / 0 / 56 | **identical** |
-| **FIXED POINT digest** (3 seeds) | `18e6904c 508e9a43 18636e22` | **identical** |
-
-The fog now peaks **~0.05 after sunrise in every season, at unchanged strength** — it arrives on the right clock, it is
-not made louder. HEAD's `DISTINCT = 1` **is** the defect, stated, with no threshold invented (236).
-
-**The exact fixed point (253/261).** At the equinox `seasonCool() = 0.5` ⇒ `dayLen() = 0` ⇒ `sunWarp(t) === t` through
-its own guard ⇒ the patch runs **HEAD's byte-identical code**. Every column — HUD word, fog, shimmer, moon, hall clock —
-comes back digest-identical on all 3 seeds. ⚠ **Stub the PREDICATE, never the year** (`year = 2035.87` is not
-representable in float64): `window.seasonCool = () => 0.5` makes `dayLen()` zero *by arithmetic*.
-
-**Census.** PASS. `pop`/`roads`/`developed` **+0, byte-identical**; tile histogram **empty**. `solarRoofs −2` is 226's
-documented ±2 wobble and is **structurally impossible to be mine** — `fogDepth()` is called only from `render()` and
-`phaseWord()` only from `syncStats()`, so **neither is reachable from `tick()`** and the diff cannot touch the sim.
-**Perf:** path objects **110,549 → 110,458 day (−91)**, **138,380 → 138,379 night (−1)** — inside drawbudget's own ±100
-floor (274). Two `sin()`s a frame, zero geometry: **free**.
-
-**Visual.** A **crossed discriminating pair** (264), because a single "is there fog" frame proves nothing: at ONE
-wall-clock instant the builds must disagree in **OPPOSITE directions by season** — winter `dayT 0.20` (HEAD clear, patch
-foggy: the sun is only just up) and summer `dayT 0.10` (HEAD foggy, patch clear: the sun rose an hour ago). Both blind
-agents, on a **crossed** HEAD/patch map, with meaningless non-ordinal tokens (238/239/268), **independently named HEAD as
-the season-blind build from the pixels alone** — one calling its phase *"season-blind"*, the other *"off by one"* — and
-both read HEAD's dusk pill aloud: **"SUNSET"** over a full-moon night sky, against the patch's **"NIGHT"**. Both emitted
-the literal string `VISUAL: FAIL`, and **both FAILs name the incumbent file** (283's law: *a FAIL can be TRUE and still
-not be YOURS*). No z-order tears, no floating tiles, no blown colour; all six frames read as a coherent coastal city.
-One agent recovered the mechanism unprompted: *"the fog always lands on whichever build labels that frame DAWN"* — which
-is the one-predicate/N-readers property, seen in pixels.
-
-**⚠ THE RIG CONVICTED ITSELF TWICE, AND BOTH ARE REUSABLE.** (a) `delete window.seasonCool` **FAILS SILENTLY** — a
-top-level `function` declaration is a **non-configurable** global property, so in sloppy mode the stub **survives
-forever**, and the first equinox block poisoned every later seed, which then printed its "winter" and its "summer" **at
-the equinox** — i.e. the CONTROL, labelled as the treatment. *The tell was unmissable and it is 250's: two seasons with
-an **identical day length**, on a curve 261 proved is alive.* **Keep the original and restore by assignment.**
-(b) `fogDepth`'s seeded `spell` term **SATURATES `FOGAMT` at 1.0**, so the first camera run read `0.628` vs `1.000` —
-both "foggy", cross invisible — and the fog instrument could not express its own signal (259). **Pin `time` so
-`sin(time*0.028 + (seedNum%97)*0.7) = −1`** ⇒ `spell = −1.25` ⇒ the dawn term IS the whole fog. ⚠ `ph` reaches **67.2**,
-far past the target, so wind forward by whole periods or `time` comes out **negative**.
-
-**Verdict: SHIPPED.** (cue (bd) CLOSED — and it was **two** readers, not the one the cue named. A cue is a POINTER, NOT
-A SPEC.)
 
 ## Iteration 285 — the last public place in Solvista that never packed up (2026-07-15) [Civic & culture × Deepen/FIX]
 
@@ -1047,3 +955,51 @@ a PRE-EXISTING park ornament (present at `BUSK=0`), not this lap's; a Nature/par
 
 **Verdict: SHIPPED** — the busy shopfront kerbs had a crowd, a café, bunting and evening lamplight and
 never a note of music; now a street musician plays to them, packing up on its own hour as the crowd thins.
+
+## Iteration 294 — the fairy-ring caps and the countryside solar, both a touch too loud in different directions (2026-07-15) [Nature × Polish]
+
+**Vector.** Nature (oldest domain — 287), and its stale kind is **Polish**, two-deep in debt. The header
+banked TWO paired cosmetic cues to spend together: **(ax)** the fairy rings want a hair more cap contrast
+(272, both agents, both seeds, unprompted on a PASSing frame) and **(bg)** the countryside solar panels'
+blue is too saturated (287, s7's agent, unprompted aside — ONE agent, ONE seed, NOT corroborated). Both
+are draw-only contrast/colour nudges: no terrain, no `rng()`, no `Math.random`.
+
+**Probe FIRST, as (bg) mandated.** `probe-shroomvis` confirmed (ax) is a *contrast* problem, not a size
+one: the rings already render **20.3–21.5 CSS px/ring at fit** (~5x a ped shadow), so a body enlargement
+was the wrong lever (255/cue-f family excluded). For (bg) I measured the panel's rendered colour against
+the countryside at the census day pin: `col('solar',1.25)` = **[73,102,156], chroma 83, lum 99, hue 219** —
+the single COOL surface among a warm/green countryside (chroma 38–88, but every neighbour warm or green),
+its chroma at the TOP of the range. The uncorroborated aside held up: a chroma-83 blue at lum 99 among
+lum 150–183 fields is a saturated cool spot, not "dark tilted panels". So the direction was measured, not
+assumed.
+
+**Change.**
+- **(bg)** `solar:[62,82,120]` → `[54,66,96]`: chroma 58→42, luminance down, **hue held (219→222, `dHUE`~3°,
+  audited not to a target hue — 234)**. Rendered `col('solar',1.25)` moved **[73,102,156]→[64,82,125]:
+  chroma 83→61 (−27%), lum 99→81 (−18%)**, same navy. The palette entry is SHARED by the field panels,
+  the rooftop arrays and the launch hull — all three deepen coherently (real PV glass is near-black-blue;
+  a "navy hull" stays navy).
+- **(ax)** `drawShroom`: the single flat cap arc (`col(cap,1.15)` r=0.8) became a **two-tone dome** in the
+  SAME footprint — a shaded rim (`col(cap,0.78)` r=0.8) to define the edge + a bright crown (`col(cap,1.42)`
+  r=0.6) to clear the dark litter. More cap contrast, zero size increase.
+
+**Census.** Draw-only → **PASS, 0 page errors**, core byte-flat (no terrain, no rng). Vacuous for this
+vector by construction; the gates are the probe + the eyes.
+
+**Probe.** `probe-shroomvis` after: ring footprint **unchanged at 20.3–21.5 px/ring** — proof the cap
+change added contrast WITHOUT enlarging (the ink-count probe is near-vacuous for a within-footprint
+brightness redistribution, exactly as expected; 259's line-that-consumes was already read). Solar
+re-measured: chroma 83→61, hue preserved.
+
+**Visual.** Both cues, both seeds, delegated to two subagents, all **PASS**. (ax): *"a tight cluster of
+small pale rounded caps… read as little domed caps (lit crown, darker base) rather than flat dots or a
+smudge"*, no bloom, crowns stay within footprint. (bg): *"dark navy tilted PV strips… clearly distinct
+from the warm crop-row hexes… reads as angled dark panels catching light rather than the old bright
+park-bench blue… still bright enough to see"*; at night *"the darker panels recede correctly into the
+countryside without competing with the city lights."* Whole-city day+night frames balanced on both seeds,
+nothing compounded.
+
+**Verdict: SHIPPED** — two small honest polish nudges spent together as banked: the fairy-ring caps now
+read as domed toadstools instead of flat specks, and the countryside solar reads as dark tilted panels
+instead of park-bench blue. Both were measured before a line was written; (bg)'s uncorroborated aside was
+confirmed by the panel-vs-countryside chroma read, not taken on faith.

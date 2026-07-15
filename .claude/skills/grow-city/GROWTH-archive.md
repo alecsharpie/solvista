@@ -21349,3 +21349,92 @@ lap.** 🆕 One genuinely new cue below.
 **Verdict: FIXED.** (A rule that had saturated its own host, a contagion that was not one, and a label ladder
 its own probe's control had already disproved.)
 
+## Iteration 284 — the sun moved and two readers never got the message (2026-07-15) [Sky & atmosphere × Deepen/FIX — cue (bd) CLOSED]
+
+**Vector.** Sky & atmosphere × Deepen/FIX. The ledger's **#1 cue (bd)**, taken ahead of Civic's turn on **law 119** (a
+banked, measured finding outranks kind-rotation). Iter 261 gave the season a **day length** — `sunWarp` warps the light
+curve's TIME AXIS, so the sun's state became a pure function of **`SUNT`**, not `dayT`. Its own comment boasted *"ONE
+PREDICATE, FOUR READERS."* **264's law says: when a lap introduces a remap, grep EVERY reader of the remapped quantity
+and ask which axis it is on.** Nobody had. The lap is that grep.
+
+**The audit (the whole point — the cue named ONE reader and there were TWO).**
+`grep -n dayT` returns 30 readers. Each one asks a question, and the question decides the axis: *does it ask about the
+**SUN** (its rising, its setting, the light it casts) — or about the **WALL CLOCK** (the hour, the moon, a timetable)?*
+- **Correct on `dayT`, and MUST NOT MOVE:** the moon (`moonPhase`), the town-hall clock (`clockWord`), the school run,
+  the stadium fixture. These are timetables. They stayed.
+- **WRONG — a threshold on the light curve applied to the wall clock:**
+  1. **`phaseWord(dayT)`** — the HUD's phase pill. **Its band edges ARE the curve's own keyframes** (`0.05 = SUNUP`,
+     `0.80 ≈ SUNDN 0.78`), which is the tell: a function whose constants are another function's keyframes is reading
+     that function's clock, or it is broken.
+  2. **`fogDepth`'s dawn term** (`1−|dayT−0.10|/0.09`) — radiation fog **burns off when the sun comes up**, so "dawn"
+     is a fact about the light curve, not the wall clock.
+- **AUDITED AND PROVABLY INERT — deliberately left alone:** `drawBuilding`'s golden-hour sun-facing face
+  (`gs = dayT<0.5`). Its `GWARM>0.02` gate is **zero across the entire 0.415–0.5 window**, and `|SUNT−dayT| ≤ DAYLEN =
+  0.10` cannot flip its sign at either golden hour. It is ugly and it is a no-op. **Banked, not changed.**
+
+**⛔ AND ONE HYPOTHESIS THE PROBE KILLED BEFORE I WROTE IT — the sea's sun glitter.** `glit =
+(1-LITAMT)*max(0,1−|dayT−0.47|/0.30)` looks like the same bug, and the comment above it (*"thinning to nothing **by
+dusk**"*) is a textbook 199 tell about a dusk that 261 made a moving target. **It is not a defect.** `LITAMT` is derived
+from `SUNT`, so the `(1-LITAMT)` factor **already carries the season**: measured, `AFTERSET = 0` in both seasons (the sea
+never glitters on a set sun) and the shimmer's own cutoff already moves **0.440 → 0.550**. I was one probe away from
+shipping a fix for a defect that did not exist, on the largest surface in the city. **Do not re-key it.**
+
+**Change.** Two one-line re-keys, and both **warp their own clock** rather than reading the cached `SUNT`:
+`elPhase.textContent = phaseWord(sunWarp(dayT))` and `const dawn = clamp(1−|sunWarp(dayT)−0.10|/0.09,0,1)`.
+**This is load-bearing, not stylistic:** `syncStats()` runs **BEFORE `render()`** in `frame()` (the tick loop calls it at
+L9645; `render()` is L9648) and again on `genWorld`/`newCity` **outside `render()` entirely** — where `SUNT` is stale or
+still **0**. Reading the cache would have been correct-by-call-order, which 261's own law forbids (*delete the
+dependency, do not document it*). Both fns run **once a frame**, so the extra `sin()` is free. No constant was invented:
+`0.10` is unchanged and now means what it always said — *the fog peaks just after `SUNUP`, whenever that is.*
+
+**Probe** (`probes/probe-suntclock.mjs`, + `probes/shot-suntclock.mjs`). Pure clock/DOM/object data — **no pixels, so no
+noise floor at all.** Build-agnostic (hooks the artifact's own fns; `SRC=` grades any build).
+
+| | HEAD | patched |
+| --- | --- | --- |
+| **HUD contradicts the sun** (winter) | **21.5% of the day** | **2.0%** |
+| **HUD contradicts the sun** (summer) | 8.5% | 1.0% |
+| **dawn-fog peak @dayT** (winter / summer) | **0.100 / 0.100** — `DISTINCT = 1` | **0.200 / 0.035** |
+| *(true sunrise, for reference)* | *0.150 / 0.000* | *0.150 / 0.000* |
+| fog peak STRENGTH | 0.850 | 0.827 / 0.817 |
+| sea shimmer (must-not-move) | 29 / 0.440 / 0 / 56 | **identical** |
+| **FIXED POINT digest** (3 seeds) | `18e6904c 508e9a43 18636e22` | **identical** |
+
+The fog now peaks **~0.05 after sunrise in every season, at unchanged strength** — it arrives on the right clock, it is
+not made louder. HEAD's `DISTINCT = 1` **is** the defect, stated, with no threshold invented (236).
+
+**The exact fixed point (253/261).** At the equinox `seasonCool() = 0.5` ⇒ `dayLen() = 0` ⇒ `sunWarp(t) === t` through
+its own guard ⇒ the patch runs **HEAD's byte-identical code**. Every column — HUD word, fog, shimmer, moon, hall clock —
+comes back digest-identical on all 3 seeds. ⚠ **Stub the PREDICATE, never the year** (`year = 2035.87` is not
+representable in float64): `window.seasonCool = () => 0.5` makes `dayLen()` zero *by arithmetic*.
+
+**Census.** PASS. `pop`/`roads`/`developed` **+0, byte-identical**; tile histogram **empty**. `solarRoofs −2` is 226's
+documented ±2 wobble and is **structurally impossible to be mine** — `fogDepth()` is called only from `render()` and
+`phaseWord()` only from `syncStats()`, so **neither is reachable from `tick()`** and the diff cannot touch the sim.
+**Perf:** path objects **110,549 → 110,458 day (−91)**, **138,380 → 138,379 night (−1)** — inside drawbudget's own ±100
+floor (274). Two `sin()`s a frame, zero geometry: **free**.
+
+**Visual.** A **crossed discriminating pair** (264), because a single "is there fog" frame proves nothing: at ONE
+wall-clock instant the builds must disagree in **OPPOSITE directions by season** — winter `dayT 0.20` (HEAD clear, patch
+foggy: the sun is only just up) and summer `dayT 0.10` (HEAD foggy, patch clear: the sun rose an hour ago). Both blind
+agents, on a **crossed** HEAD/patch map, with meaningless non-ordinal tokens (238/239/268), **independently named HEAD as
+the season-blind build from the pixels alone** — one calling its phase *"season-blind"*, the other *"off by one"* — and
+both read HEAD's dusk pill aloud: **"SUNSET"** over a full-moon night sky, against the patch's **"NIGHT"**. Both emitted
+the literal string `VISUAL: FAIL`, and **both FAILs name the incumbent file** (283's law: *a FAIL can be TRUE and still
+not be YOURS*). No z-order tears, no floating tiles, no blown colour; all six frames read as a coherent coastal city.
+One agent recovered the mechanism unprompted: *"the fog always lands on whichever build labels that frame DAWN"* — which
+is the one-predicate/N-readers property, seen in pixels.
+
+**⚠ THE RIG CONVICTED ITSELF TWICE, AND BOTH ARE REUSABLE.** (a) `delete window.seasonCool` **FAILS SILENTLY** — a
+top-level `function` declaration is a **non-configurable** global property, so in sloppy mode the stub **survives
+forever**, and the first equinox block poisoned every later seed, which then printed its "winter" and its "summer" **at
+the equinox** — i.e. the CONTROL, labelled as the treatment. *The tell was unmissable and it is 250's: two seasons with
+an **identical day length**, on a curve 261 proved is alive.* **Keep the original and restore by assignment.**
+(b) `fogDepth`'s seeded `spell` term **SATURATES `FOGAMT` at 1.0**, so the first camera run read `0.628` vs `1.000` —
+both "foggy", cross invisible — and the fog instrument could not express its own signal (259). **Pin `time` so
+`sin(time*0.028 + (seedNum%97)*0.7) = −1`** ⇒ `spell = −1.25` ⇒ the dawn term IS the whole fog. ⚠ `ph` reaches **67.2**,
+far past the target, so wind forward by whole periods or `time` comes out **negative**.
+
+**Verdict: SHIPPED.** (cue (bd) CLOSED — and it was **two** readers, not the one the cue named. A cue is a POINTER, NOT
+A SPEC.)
+
