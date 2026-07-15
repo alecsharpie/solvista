@@ -21966,3 +21966,66 @@ resident drawn to it and no word for its concert crowd; the trilogy 240/250/285 
   near-monochrome peach/terracotta wash and the sea's dusk banding a faint lattice — BOTH ARE ALREADY-BANKED DELIBERATE
   DECISIONS, NOT NEW DRIFT** (265 chose the warm complement on purpose; 255/257/268 left the one-tone lattice as
   STRUCTURAL). Seed 7 also raised skyline monotony = the **CLOSED** skyline ladder (224). **Do not re-open any of the three on an aside.**
+
+## Iteration 293 — the busy shopfront kerbs had a crowd, a café, bunting and lamplight, but nobody ever played to them (2026-07-15) [People & activity × New element]
+
+**Vector.** People & activity (rotation: People at 286 was the oldest domain). Its Deepen cell is
+CLOSED (14 deep) and the header forbids another People Deepen "without a measured seam"; its stale
+kinds are Polish (226) and New CA rule (49). I grepped the seam (`stepPed`/`syncFleet`/`drawPed` + the
+arrays) — the People entity system is extraordinarily mature (every person, dog, kite, surfer, kayaker
+and boat now keeps its own staggered hour, curfews/kids/water-crowd all closed 262/271/286), so rather
+than force the stale New CA rule cell (a cell-CA for *people* is awkward), I took the genuinely-sparse
+**New element** kind. The lively shopfront kerb (`livelyKerb`, buzz≥2, ~110 hexes — verified at scale)
+already carries a milling festival crowd (178, on `c.fete`), spill-out café patrons (park), festival
+bunting and evening street-lamps — but no **busker**. A street musician is distinct, recognizable
+street life that was simply missing.
+
+**Change.** A lone performer on a lively kerb, gated `buskerAt(x,y)` = `livelyKerb && hashCell<BUSKP(0.12)
+&& nightAmt()<buskOut(x,y)` (~1 in 8 lively kerbs → ~15/22 per city). Draw: a standing figure (coral/
+teal/sage/lav body + head), a gold guitar ellipse held across the body with a `trunk` neck stroke, and
+an open case (dark velvet interior + two coins) at the feet; house-style contact shadow, a gentle sway.
+- **KEEPS ITS OWN STAGGERED HOUR (avoids the 262/286 cliff from the start).** `buskOut(x,y)=BUSK0(0.55)+
+  BUSKJ(0.42)*hashCell` is a PER-HEX threshold, so the buskers pack up one at a time, never all in one
+  frame. The band is TAKEN FROM THE LADDER (226): `nightAmt()` PEAKS at ~0.98 (dawn's light then ends the
+  night), so the band tops out at 0.97 — every busker is in before the small hours run out (unlike CURF
+  1.85, which `nightAmt` never reaches, so the latest strollers stay out till dawn by design). It sits
+  `KITE=KID(.35) < JOG=SURF=KAYAK(.62) ≈ BUSK(.55..97) < CURF(1.85)`.
+- **STANDS AT THE KERB, HUGGING A SHOPFRONT — not adrift in the traffic lane.** `livelyKerb` guarantees
+  ≥2 ATTRACT neighbours (`buzz`), so the draw offsets 0.42 of the way toward the nearest ATTRACT cell
+  (the same sidewalk-side idiom the festival bunting uses). This was iter 293's ONE fix: the first cut
+  offset by bare parity and a seed-42 busker landed on a road hex with no visible frontage, reading as
+  mid-road (a correct, checkable agent FAIL). Anchoring to the frontage fixed it on both seeds.
+- `buskerAt()` is ONE predicate, TWO readers (the draw + the `__buskers()` hook), so count and pixels
+  cannot drift (112). `let BUSK=1` is a probe suppressor (253).
+
+**Census.** Draw-only, no rng/Math.random, no terrain → **BYTE-IDENTICAL core** (`pop`/`roads`/`developed`
++0; empty tile histogram; solar/green roofs +0), 0 page errors. The census is vacuous for a draw-only
+vector; the gate is the probe + the eyes.
+
+**Probe** (`probes/probe-busker.mjs`, isolation by the `BUSK` suppressor in ONE page, floor exactly 0,
+build-agnostic). **(A) VISIBILITY** @ noon: busker ink **76px/2375 (s42) · 104px/3332 (s7)**, floor **0**.
+**(B) STAGGER** (the whole point — the anti-262 gate, `__buskers()` swept render-free across the day):
+all out by day (15/22), thinning ONE AT A TIME through the late evening (**distinct nonzero counts = 10/11
+across the day; a global cliff would be 1**), deep-night min **0** (all packed up before dawn), out again
+by day. The whole day is byte-identical (nightAmt=0 in daylight) — a free dead-regime control (199).
+
+**Perf.** ~8 path objects per busker × ~15–22 = ~120–180 objects, only while out (day + staggered
+evening); negligible (<0.15%). Draws no rng()/Math.random.
+
+**Visual.** Both seeds **PASS**. Seed 7 passed the first pass; seed 42 FAILed the first pass on one
+busker reading as mid-road (→ the ATTRACT-anchor fix, above). After the fix, seed 42 PASSed; seed 7's
+re-read FAILed on a "blown-out yellow flame-blob floating mid-plaza" — but a `BUSK=0` suppression re-shoot
+showed that blob is PRESENT with the busker suppressed, i.e. a **pre-existing park/plaza ornament the agent
+misattributed** to the feature (269: agent right the blob exists, wrong that it is mine). A tie-breaking
+diff-locate read (busker-crop vs nobusk-crop, the diff IS the busker per 161) then resolved seed 7's
+busker cleanly: *"an orange-shirted figure on the pale sidewalk in front of the shop, a tan guitar bar
+across its body, a small open case at its feet… at the kerb, not stranded, floating or in a lane."*
+3 of 4 reads passed with the guitar+case legible; the one FAIL's headline cause was refuted by
+measurement, not overruled by vibe.
+
+**Cue banked: (bh)** an over-bright yellow flame-shaped blob sits mid-plaza near a fountain on seed 7 —
+a PRE-EXISTING park ornament (present at `BUSK=0`), not this lap's; a Nature/park Polish candidate.
+
+**Verdict: SHIPPED** — the busy shopfront kerbs had a crowd, a café, bunting and evening lamplight and
+never a note of music; now a street musician plays to them, packing up on its own hour as the crowd thins.
+

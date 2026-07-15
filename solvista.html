@@ -4135,6 +4135,24 @@ const stripOut=(x,y)=>STRIP0+STRIPJ*hashCell(x,y,seedNum^0x5B27);
 const DEERDARK=0.6;
 const deerOut=d=>d.ph/7;
 function deerSession(){return clamp(1-nightAmt()/DEERDARK,0,1);}
+/* ...AND THE ESTUARY HERONS ROOST AT NIGHTFALL TOO (iter 303). drawHeron opened on
+   `const[cx,cy]=px(...)` -- NO GATE AT ALL, the exact cliff drawDeer had at 301: white and grey
+   herons stalking the marsh shallows at 4am in midwinter, identically to noon, on every seed for
+   the artifact's whole life. And 301 declared the DEER "the LAST animate holdout" and "EVERY
+   animate draw in the diorama is now off the global-nightAmt/LITAMT cliff" -- while citing the
+   HERON BY NAME as a control it had left untouched (204/262). It never asked whether the heron
+   NEEDED the fix (286: the must-not-move column is a list of what you did not CHANGE, not of what
+   is CORRECT); it did -- the 9th recursion of the 262 cliff, hiding in the deer lap's own control
+   list. Great herons roost in the trees at dusk, so the marsh empties one bird at a time as the
+   dark comes down. Off the SAME nightAmt() clock the deer keep (DEERDARK), each with its OWN
+   threshold DERIVED from h.ph (already Math.random()*7, iter 17), so no bird draws a value of its
+   own -- the shared Math.random stream is byte-identical and every other entity provably untouched
+   -- and the flock melts into cover one at a time instead of blinking out together. nightAmt() is
+   0 through all of daylight, so the WHOLE DAY is byte-identical -- a free dead-regime control
+   (199), and no path objects by day. (A heron is not there to be hovered once it has flown to
+   roost, so the gate is before stamp(), as drawDeer/drawSurfer/drawKayak do.) */
+const heronOut=h=>h.ph/7;
+function heronSession(){return clamp(1-nightAmt()/DEERDARK,0,1);}
 /* ---- the traffic keeps hours too (iter 230) -------------------------------
    The city's PEOPLE learned to go to bed -- the windows at 199 (BEDT), the crowd and its
    dogs and runners at 210 (curfewAt) -- and its TRAFFIC never did: at 3am the streets still
@@ -8706,6 +8724,10 @@ function drawKayak(k){
   ctx.beginPath();ctx.moveTo(cx-2.6*k.a,cy-2.6+bob);ctx.lineTo(cx+2.6*k.a,cy-0.4+bob);ctx.stroke();
 }
 function drawHeron(h){
+  if(heronSession()<heronOut(h))return; /* this bird has flown to roost for the night -- the same
+    nightAmt() session the deer keep (301), each heron with its own threshold so the estuary empties
+    one at a time. Before stamp(), as drawDeer/drawSurfer/drawKayak do: a roosted heron is not out
+    there to be hovered either. */
   const[cx,cy]=px(h.x+0.5+h.ox,h.y+0.5+h.oy);
   stamp(h,cx,cy);
   const bob=Math.sin(waveT*0.8+h.ph)*0.35;
