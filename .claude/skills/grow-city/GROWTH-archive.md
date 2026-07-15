@@ -21757,3 +21757,51 @@ tension with it: no height, no silhouette, no massing changed.)
 **Verdict: SHIPPED** (and FIXED — for the artifact's whole life the two rooftop-tech CAs the HUD counts
 could not reach a single tower, the densest and most-visible roofscape in the city).
 
+## Iteration 289 — the day-sailers the whole bay had learned to leave, except these six (2026-07-15) [Water & coast × Deepen/FIX]
+
+**Vector.** Water & coast (oldest domain — 282), and the rotation was explicit twice over: cue (ay) is
+Water's but is a POLISH cue, and its own banked note says *"Water's next lap must not be Polish — bank it,
+take the seam."* So I grepped the Water seam, not the cue list (225's law). The banked MARSH lead
+(*"frozen 18/18/18, unaudited, its pass beside the kelp's"*) resolved to **no defect**: MARSH is
+correctly-placed terrain whose *draw* already answers the TIDE (pools brim/drain, body dries to mud, spring
+sheet) and the season — polished long ago. Auditing it out was the right first move; it just isn't a lap.
+
+**The real tell — 271/280, and the comment names it.** 286 gave the water CROWD an hour
+(`waterSession()/waterOut()`: surfers, kayaks, kites) and wrote into its own comment *"the same sun and the
+same calendar take the last board and the last BOAT off the water together."* **"Boat" there meant the
+KAYAK.** The actual sailing `boats[]` array — six recreational day-sailers (terra hull, white triangular
+sail) scattered across the open bay by `genWorld` — has **no gate at all** in `drawBoat`, so at 3am in
+midwinter six boats tack about an empty, black bay, on every seed, for the artifact's whole life. This is
+280 exactly: *a comment enumerates who was FIXED, not who should READ* — and 286's own SKILL law
+(*"grep the OTHER MEMBERS OF EVERY SET YOUR HOST BELONGS TO"*) points straight at the un-enumerated sibling.
+
+**The fix.** One gate at the top of `drawBoat`, before `stamp()` (as `drawSurfer`/`drawKayak` do — a boat
+that has come in is not out there to be hovered): `if(!b.moored && waterSession()<waterOut(b))return;`. The
+**moored** boats stay tied off the pier. `b.ph` is already `rng()*7`, so `waterOut(b)=b.ph/7` is exactly
+uniform on [0,1) and **draws no value** — the water crowd thins one craft at a time, ONE predicate now with
+**SIX readers**. The tooltip becomes the fifth: a live function of the entity — moored → *"Moored off the
+pier head"*; sailing in at dusk → *"Making for the harbour before dark"*; deep winter → *"A brisk winter
+sail on an empty bay"*; else *"Out for a day on the bay"* (was a static *"Out for a day"* — a label-tell
+over a boat that comes in).
+
+**Census.** Core **byte-identical** (`pop`/`developed`/`roads` **+0**; tile histogram empty; every metric
+flat). Draw+tooltip only, no `rng()`, no terrain, `waterOut` draws no value — inert by construction.
+
+**Probe** (`probes/probe-boatsession.mjs`, build-HONEST, not predicate-replicating — `waterSession` exists
+on both builds since 286, so it measures the ACTUAL rendered draw by suppressing `drawBoat`'s movers in one
+page and diffing). Moving-boat ink, 3 seeds: **HEAD** deepNight `139/135/150px` ≈ noon `142/140/153px` ≈
+winterNoon `142/143/154px` — a **constant, the defect stated** (236: the boats sail the black bay all year).
+**PATCH** deepNight **0px**, dusk still full `137/151px` (they come in gradually), winterNoon drops to
+`52/13/0px`. **Positive control (248):** the KAYAK is gated on both builds (286), so `kayakDark 0px` on both
+proves the session clock fires and the rig can see a departure. **Must-not-move (250):** `mooredDark
+63/58/73px` held identically on both builds. **259 check:** forced-out boats render **22–25 px/boat** at
+deep night (a white sail on black water), so removing them is a change a viewer can see — the hours half is real.
+
+**Visual.** Both seeds **PASS**, blind day frames: *"several small white-triangular-sail sailboats clearly
+out on the open water … each sits correctly ON the water, no floating, no on-land placement"* · *"no z-order
+tears, floating tiles, or blown-out color anywhere"* · the whole city *"balanced and beautiful … calm ocean
+dotted with tiny sails, nothing compounded into clutter or darkness."*
+
+**Verdict: SHIPPED** (and FIXED — 286's category enumeration missed its own named sibling; the recreational
+water craft now answer ONE season, and the last board, kayak, kite and sail come off the water together).
+

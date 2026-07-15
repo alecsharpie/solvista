@@ -6155,6 +6155,15 @@ function drawCell(x,y){
       const spots=[[-0.22,0.10],[0.16,-0.18],[0.18,0.24]];
       /* the square keeps a market DAY and market HOURS (iter 285) */
       const ma=marketAmt(x,y);
+      /* the market cross: the square's permanent stone marker, standing whether the
+         stalls are up or down — so a CLOSED square still reads as a MARKET, not bald
+         paving (iter 299, cue (bf)). Set in the front-left corner, clear of the pitches. */
+      {const[kx,ky]=px(gx-0.23,gy+0.23);
+       ctx.fillStyle=col('stone',1.02);ctx.fillRect(kx-2.4,ky-1.5,4.8,1.9);    /* stepped plinth */
+       ctx.fillStyle=col('stoneDk',0.9);ctx.fillRect(kx-1.6,ky-3.0,3.2,1.6);
+       ctx.fillStyle=col('stone',1.06);ctx.fillRect(kx-0.7,ky-8.4,1.4,5.6);    /* shaft */
+       ctx.fillStyle=col('stone',1.12);ctx.fillRect(kx-1.7,ky-9.7,3.4,1.5);    /* head */
+       ctx.fillStyle=col('stoneDk',0.85);ctx.fillRect(kx-0.5,ky-10.8,1.0,1.2);}/* finial */
       for(let si=0;si<3;si++){ /* striped stalls -- they go up, and they come down */
         const up=clamp(ma*3-si,0,1);        /* one pitch at a time, so setting up READS as setting up */
         if(up<=0)continue;
@@ -6163,12 +6172,24 @@ function drawCell(x,y){
         prism(gx+ox,gy+oy,0.10,0.08,0,4.6*up,col(sc,1.05),col(dc,0.65),col(dc,0.85));
         prism(gx+ox,gy+oy,0.14,0.12,4.6*up,6.2*up,col(si===2?'white':dc,1.08),col(dc,0.6),col(dc,0.82));
       }
-      if(ma<=0){ /* packed away: bare pitches, and the trestles stacked to one side */
-        const[cx,cy]=px(gx,gy);
-        ctx.fillStyle=col('sandDk',0.9);
-        for(const[ox,oy]of spots){const[sx,sy]=px(gx+ox,gy+oy);ctx.fillRect(sx-2.2,sy-0.7,4.4,1.5);}
-        ctx.fillStyle=col('deck',0.95);ctx.fillRect(cx+4.2,cy-3.4,3.6,1.3);
-        ctx.fillStyle=col('deckDk',0.9);ctx.fillRect(cx+4.2,cy-2.1,3.6,1.2);
+      if(ma<=0){ /* packed away: chalked pitch bays, folded trestles, a crate pile (iter 299) */
+        /* the bays stay marked on the paving, so the empty square still reads as pitches */
+        ctx.fillStyle=col('sandDk',0.85);
+        for(const[ox,oy]of spots){const[sx,sy]=px(gx+ox,gy+oy);
+          ctx.fillRect(sx-2.6,sy-0.7,5.2,0.7);ctx.fillRect(sx-2.6,sy+0.6,5.2,0.7); /* bay top & bottom edge */
+          ctx.fillRect(sx-2.6,sy-0.7,0.8,2.0);ctx.fillRect(sx+1.8,sy-0.7,0.8,2.0);} /* bay end posts */
+        /* folded trestle tables stacked to one side, A-frame legs leaning */
+        const[tx,ty]=px(gx+0.28,gy-0.10);
+        for(let k=0;k<4;k++){ctx.fillStyle=col(k&1?'deckDk':'deck',0.98-k*0.05);
+          ctx.fillRect(tx-2.7,ty-1.2-k*1.2,5.4,1.1);}
+        ctx.fillStyle=col('deckDk',0.8);ctx.fillRect(tx-2.4,ty-7.6,1.1,2.6);
+        ctx.fillStyle=col('deckDk',0.8);ctx.fillRect(tx+1.3,ty-7.6,1.1,2.6);
+        /* a little pile of empty crates */
+        const[qx,qy]=px(gx-0.28,gy-0.02);
+        ctx.fillStyle=col('deck',1.02);ctx.fillRect(qx-1.7,qy-1.6,3.0,2.4);
+        ctx.fillStyle=col('deckDk',0.88);ctx.fillRect(qx-1.7,qy-1.6,3.0,0.7); /* crate lid */
+        ctx.fillStyle=col('deck',0.94);ctx.fillRect(qx+1.4,qy-1.1,2.3,1.9);
+        ctx.fillStyle=col('deckDk',0.85);ctx.fillRect(qx+1.4,qy-1.1,2.3,0.6);
       }
       if(ma>0&&LITAMT>0.25){ /* string lights -- over a market that is actually trading */
         ctx.fillStyle='rgba(255,214,140,'+(0.9*LITAMT*ma)+')';
