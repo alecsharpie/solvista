@@ -223,4 +223,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 290  —                          DEEPENED            20m20s   $11.32 d5bcd95
 ✔ Iter 291  Sky & atmosphere × New element SHIPPED             21m47s   $10.67 7b80dae
 ✔ Iter 292  Civic & culture × Deepen/FIX DEEPENED            23m39s   $13.80 30e2425
+✔ Iter 293  People & activity × New element SHIPPED             28m50s   $14.61 f79d1e2
 ```
