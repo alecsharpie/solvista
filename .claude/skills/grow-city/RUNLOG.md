@@ -238,4 +238,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 305  Sky & atmosphere × Deepen/interconnect DEEPENED            19m15s   $11.66 bbbab2b
 ✔ Iter 306  People × Deepen/FIX        FIXED               15m43s   $8.82  763b26c
 ✔ Iter 307  Civic & culture × Deepen/FIX FIXED               21m10s   $11.69 bfb2588
+✔ Iter 308  Nature × Deepen            DEEPENED            45m20s   $21.68 12af280
 ```
