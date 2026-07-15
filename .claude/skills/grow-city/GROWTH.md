@@ -20,7 +20,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
+| **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
@@ -32,11 +32,14 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Transport **290** · Sky **291** · Civic **292** · People **293** · Nature **294** ·
-  Urban **295** · Water **296**. ➡ **NEXT: Transport (290, oldest)** — grep its `tick()`/`stepVehicle` seam + FLAGS
-  (per the ⛔ Transport directive below), not the two named hairline `polish-tile` cues. ⚠ **296 broke Water's
-  Deepen/Polish streak with a NEW ELEMENT (first since 169) — channel buoys, draw-only/`Math.random`, census
-  byte-identical; Water's stale kinds are now Connect (22) and Interaction/UX (176).** ⚠ **295 SPENT Urban's stale New element cell** (surface car parks on downtown gap-tooth lots — draw-only on EMPTY). Urban's stale kind is now **Interaction/UX (133, ancient)**; its flag/TABLE seam was grepped CLEAN this lap (solar/groof/corner/loft/hstr all agree WRITER/DRAW/TOOLTIP/VETO; BEDT/CIVHRS/valueSrc/VKIND all cover their category). Do NOT default to the banked (au) Polish cue (Polish is 18 laps deep).
+- **ROTATION.** Last: Sky **291** · Civic **292** · People **293** · Nature **294** ·
+  Urban **295** · Water **296** · Transport **297**. ➡ **NEXT: Sky (291, oldest)** — grep its `tick()`/`syncSky`/
+  season seam (287/279 pattern) before its cue list. ⚠ **297 SPENT Transport's stale New element cell** (a harbour
+  launch working the anchored ship — draw-only/`Math.random`, census byte-identical). The rules seam was grepped
+  genuinely CLEAN this lap: every mover keeps an hour (`vehCurfew`/`VCURF`/`waterSession`), a live tooltip off its
+  own predicate, and an honest job; no dead rule; FLAGS (`bridge`/`riv`) agree. **Transport's stale kinds are now
+  New CA rule (77) and Interaction/UX (171/290).** Its two named cues stay `polish-tile` jobs (⛔ below). ⚠ **295 SPENT
+  Urban's New element cell** (car parks); Urban's stale kind is **Interaction/UX (133)**, flag/TABLE seam grepped CLEAN.
   ✅ **292 CLOSED CIVIC's additive: the event-venue category {market, stadium, amphitheater} is COMPLETE** (crowd pool + `residentWhere` enumerate all three off the shared `concertShow`/`concertLive`; the bowl was the un-enumerated third — 285's type blindness). Civic stale stays New CA rule (36/107) + Connect (measured-sound).
   **291 broke Sky's Deepen streak with a NEW ELEMENT — the sparsest Sky cell (3rd ever). Sky's additive was NOT fully
   spent: the elaborate weather front was a live host with no dramatic payoff, and lightning was the missing one.**
@@ -129,20 +132,17 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ⚠ **`drawBuilding`'s FIRST LINE is `const ML=c.t===T.MID?…`, ABOVE the RES branch** ⇒ a source-matching build detector
   must split on **`else if(c.t===T.MID)`**, or it reports HEAD as patched (it did: an exact TRANSPOSE).
   **280–277 (re-compressed at 283; FULL TEXT in `GROWTH-archive.md`, "rotated out at 283" — IMPERATIVES ONLY):**
-  **280:** **`windForce()` · `windDrift()` · `kiteGust()` — the sky's gust, as THREE predicates.** ⚠ **`windDrift()` IS
-  THE CLOUDS' OWN EXPRESSION** (`0.55+0.9*WINDA`); balloons share it — **do not fork a second.** ⚠ **EVERY LEVER IN
-  `drawKite` IS A MULTIPLE OF `kiteGust()`, WHICH IS 1.0 AT FULL GALE = HEAD'S LITERALS** ⇒ an EXACT fixed point, and
-  `window.kiteGust=()=>1` renders HEAD **in-page** (253). **Do not "simplify" that centring away.** ✅ **`__setWind(v)` /
-  `__wind()` — THE HOOK `WINDA` NEVER HAD** (a FROZEN page holds a pin by construction). ⚠ **No `?wind=`.** ⚠ **A KITE IS
-  NOT SINGLE-FREQUENCY** — `drawKite` runs **FOUR** ⇒ a "null step" of one period is **NOT null**. ⚠ **`px()` RETURNS
-  *WORLD* COORDS** (device = `(px*scale+off)*dpr`; scoring ink at `px()*dpr` returns a clean, plausible **ZERO** — 273).
+  **280:** **`windForce()`/`windDrift()`/`kiteGust()` — the sky's gust as THREE predicates**; `windDrift()`=`0.55+0.9*WINDA`
+  (the clouds'/balloons' own, do not fork). **Every `drawKite` lever is a MULTIPLE of `kiteGust()`=1.0 at full gale=HEAD's
+  literals** (exact fixed point; `window.kiteGust=()=>1` renders HEAD in-page, do not "simplify"). ✅ **`__setWind(v)`/`__wind()`
+  — the hook `WINDA` never had** (no `?wind=`). ⚠ **A KITE runs FOUR frequencies** (a one-period "null step" is NOT null).
+  ⚠ **`px()` returns *WORLD* coords** (scoring ink at `px()*dpr` returns a plausible **ZERO** — 273).
   **279 (compressed 287 — full text in the archive):** 🔴 **THE WILDFIRE CA NOW RUNS.** `FIRESPK`/`TIMBSPK` **WALK `HEXI`**
-  on a TICKN-salted hash ⇒ **zero `rng()`; do NOT "tidy" back onto `rc()`.** ⚠ **IT WRITES TERRAIN ⇒ expect the cascade.**
-  ⚠ **NOTHING BURNS AT 2035** (`year<2030`/`<2006`) ⇒ **a `?warp=61` frame can NEVER show one**; `shot-firespark.mjs`
-  drives `tick()` to a live episode. ⚠ **`tick()` DOES NOT ADVANCE `year` — `__warp` does** (`+0.45/6` BEFORE the tick).
-  ⚠ **`drawFire`/BONFIRE TAKE A RAW LITERAL, NOT `col()`** (280's emitter law). ⇒ **CUE (bb) → `POLISH.md` (g2)**; 🆕 **CUE
-  (bc) — THE FIRE'S GLOW IS EATEN BY LATER ROWS** (266): **a mark that must light its neighbours trails back over cells
-  ALREADY PAINTED.**
+  on a TICKN-salted hash (zero `rng()`, do NOT tidy onto `rc()`); **it WRITES TERRAIN ⇒ expect the cascade.** ⚠ **NOTHING
+  BURNS AT 2035** (`year<2030`) ⇒ a `?warp=61` frame can NEVER show one; `shot-firespark.mjs` drives `tick()` to a live
+  episode (`tick()` does NOT advance `year` — `__warp` does). ⚠ **`drawFire`/BONFIRE TAKE A RAW LITERAL, NOT `col()`** (280).
+  ⇒ **CUE (bb) → `POLISH.md` (g2)**; 🆕 **CUE (bc) — THE FIRE'S GLOW IS EATEN BY LATER ROWS** (266: a mark that must light
+  its neighbours trails back over cells ALREADY PAINTED).
   **278:** **`hoverAt(mx,my)` — ONE hover, TWO callers** (the `mousemove` listener, and `frame()` via `hoverRefresh()` on
   a **120ms** throttle). ⚠ **THE CURSOR IS REMEMBERED IN *SCREEN* PX** (`hoverMX/hoverMY`). ⚠ **THE DOM IS WRITTEN ONLY
   WHEN THE SENTENCE CHANGES** (`hoverHTML`). ⚠ **`__hover` MUST DROP `hoverMX`.** ⚠ **NO CURSOR ⇒ `hoverRefresh()` IS ONE
@@ -391,134 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 289 entries before Iteration 287 live in
+> **Archive:** the 290 entries before Iteration 288 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 287 — the placard promised panels, and the rule that would have built them was hunting a handful of fields with nine darts a year (2026-07-15) [Nature × New CA rule/FIX]
-
-**Vector.** Nature (oldest domain — 279). The banked cue was **(ax)** (fairy-ring contrast, Nature ×
-Polish), but 225's grep-the-seam law says look at the seam first, and **282's law says the cheapest
-seam-grep there is is a FROZEN CENSUS COLUMN**. One glance at the tile histogram:
-
-```
-SOLARF   0  0  0 |  0  0  0 |  0  0  0      <- every seed, every era, the artifact's whole life
-```
-
-`T.SOLARF` has a `tick()` rule, a **complete draw case** (three tilted panel rows, a sun glint on the
-glass, an inverter hut, a red beacon at night), a `TILELABEL` (*"Solar field"*), a `TILEDESC`, and a
-`valueSrc` entry. It has **never once rendered a pixel.** And the placard has promised it the whole
-time — *"Warehouses become lofts **and far fields go solar** once the rent says so."*
-
-⚠ **267 QUOTED THAT EXACT SENTENCE IN ITS OWN PROBE HEADER, FIXED THE CLAUSE BEFORE THE "AND", AND LEFT
-THE CLAUSE AFTER IT.** 107/108 had already banked SOLARF as *"the last genuinely open dead-rule
-question"* — and then nobody went back for **180 iterations**. (286's law, arriving through a *sentence*:
-the clause you cite as CONTEXT is a TO-DO ITEM, not a thing you have checked.)
-
-**The diagnosis, and it inverted the suspect I opened with.**
-- *Not the pool.* 107's law says a rule can be dead because a sibling's precondition is strictly weaker
-  on the same host — and the VINEYARD (1990+) and ORCHARD (1985+) sit **4 and 12 lines below**, take the
-  same `T.FARM`, on a **strictly weaker** dev clause (no DEV within **1**, vs solar's within **2**),
-  start 22 and 27 years earlier, and **WALK every cell while solar runs a lottery.** Textbook. **It is
-  not what killed it:** the far-farm pool is alive at 2012 on every seed (**3–51 cells**).
-- *The SPACE* (263). The rule was `rc()` × `ks(6)` = **9 picks/tick over ~3,400 live cells**, then
-  `rng()<0.02`. Priced in its own constants, over the **entire 2012→2035 window** it expects
-  **0.00–0.34 conversions** — **0.34 even on the seed carrying 51 far fields.** Not unlucky.
-  **Arithmetically incapable.** A tiny host cannot be found by a uniform sample of a large space, and
-  **the rate is irrelevant until the space is right** (218-rate: **0.0%** against a live pool).
-
-**And fixing the space alone ships a BAD ARTIFACT, which is the half that decided the design.** Walk the
-host with a per-parcel hash gate and the rule fires — and lays down **SPECKLE**: biggest connected run
-**1 hex on 4 seeds in 6**, mean run 1.0. **A dusting of lone panels is not a solar farm**, and that is
-iter 32's *"barely-visible feature"* arriving through a different mechanism. **A solar farm is an ARRAY,
-so the rule needs a NEIGHBOUR** (263), a **guaranteed spark** (233 — a per-cell spark hash starves seed
-42, which owns only three far fields), and a **BOUND** (282 — an unbounded spread fills its pool; seed
-99's is 51 hexes).
-
-**Change.** One walked pass, in the idiom of the two rules beside it on the same host. Each tick it
-scores every far field, **prefers one on the fence line of the existing array**, and converts **one**, on
-a **TICKN-salted `hashCell` ⇒ ZERO `rng()` draws**, until the array reaches `SOLARMAX`. One grower breaks
-ground; the panels creep field by field.
-- `SOLARMAX=8` is **the knee of the sweep**: 12 does not build a *bigger* array (mean run 5.3 → 5.5), it
-  starts a **second** one, and costs more farmland.
-- `SOLARP=0.08` **only sets how fast it builds out** — 0.04 and 0.08 reach the *same* size by 2035
-  (218: the roll cannot steer a rule whose placement is a predicate). **It is not a tuned constant.**
-- ⚠ **The size is what the countryside allows, not what the cap says**: seed 42 has three far fields and
-  builds **three**. The bounding variable keeps the last word (282).
-
-**Probe** (`probes/probe-solarfield.mjs` — pure world data, no render, no clock, no noise floor).
-VINEYARD/ORCHARD are **free positive controls** (248: correct sibling conversion rules on the same host
-in the same `tick()`); FARM is the **must-not-move** column (250).
-
-| | HEAD | shipped |
-| --- | --- | --- |
-| SOLARF, 6 seeds × 3 eras | **0 / 18 cells — `DISTINCT = 1`, forever** | 3–8 per city, **every seed** |
-| biggest connected run | — | **2–8, mean 5.3** (hash-walk alone: **1**) |
-| worst seed | 0 | **3** |
-| FARM (the host) | 44.7 | 39.3 |
-
-⚠ **AND THE HONEST SWEEP IS THE ONLY ONE THAT WORKS — 231, arriving inside my own rig.** My first sweep
-graded candidates on the **2035** plate and reported **0 on three seeds in six at every gate**. It was a
-**leak**: the rule *runs from 2012*, and by 2035 development has eaten the far-farm pool (**s99 51 → 21,
-s7 12 → 0**), so it was grading the variants on land the rule **never got to see**. Driven from 2012, the
-same candidates work. **SOLARF is not in `RAISEABLE`, so a field placed in 2012 SURVIVES** while the farms
-around it are built over — which is *why* the honest sweep yields arrays the 2035-plate sweep could not
-see at all.
-
-**Census.** VERDICT **PASS**. **`SOLARF 0 → 19`** (all of it at 2035 ⇒ ~6.3/city, matching the sweep);
-`FARM 409 → 393` (the designed host cost). Core: `developed +4`, `roads −2`, **`pop −2.3%`**.
-
-🔑 **AND THE POP MOVE IS 100% THE STREAM AND 0% THE PANELS — PROVEN, NOT ARGUED.** The diff deletes the
-`rc()` lottery's **~7,200 `rng()` draws** over a run, so a reshuffle is guaranteed (231: ±15%/seed,
-centred on zero — 3 of 10 seeds *gain* towers; mean −3.1 ± 3.3 SE). But there was also a **plausible
-directional** mechanism I refused to argue away: `valueSrc(SOLARF)=0.3` vs `valueSrc(FARM)=0.56`, so the
-panels could be depressing land value. **107's no-op control settles it in one command:** ship the
-identical patch with `SOLARMAX=0` — same deleted draws, **zero panels placed** — and it reproduces the
-full patch **BYTE-FOR-BYTE on all 10 seeds**, every TOWER, towerHt, pop and developed figure identical.
-
-⇒ **THE SOLAR FIELDS COST THE CITY NOTHING: not one tower, not one resident, not one developed cell.**
-And the mechanism is *exact*, not statistical: the only `rng()`-drawing rule that reads `T.FARM` (*"farm
-clusters swell at their own edges"*) is gated **`year<1998`** and has been dead for **14 years** by the
-time solar opens; and a **far** field — no DEV within 2 — is **by construction** land the development
-pass never rolls for. ✅ **THIS RETROACTIVELY ACQUITS THE FEATURE OF ITER 32'S −4% POP CHARGE** — the trade
-that got the solar farm reverted 255 iterations ago and kept it shelved as *"not obviously desirable"*
-ever since. **32's version spread solar across land the city wanted; this one takes only fields the city
-provably cannot reach.**
-
-**Visibility, against an incumbent bar I did not invent** (226): isolated by suppressing the panels in ONE
-page (230; floor exactly 0, occlusion free), the array renders **779 px/hex on seed 42 — identical to the
-VINEYARD's 779 px/hex**, the sibling far-field conversion the artifact already ships and nobody has ever
-called invisible. (Seed 7: 530 vs 700.)
-
-**Visual.** Both seeds **PASS**, and **both blind agents named the shipped frame on a CROSSED map**
-(s42 `kappa`, s7 `sigma`). Both, unprompted: the panels read as *"a deliberate array, 2–3 parallel banks
-plus the inverter hut — not specks"*, sit correctly on the hex faces with no float/z-tear, and — the frame
-that mattered — the un-zoomed plate shows the countryside **not darkened and not blotchy**, day or night.
-At night the panels go correctly dark and unlit, with no orphan glow.
-
-⚠ **BUT ROUND 1 FAILED ON BOTH SEEDS, AND THE AGENTS WERE RIGHT AND MY CAMERA WAS WRONG** (269's shape).
-Both refused to grade: *"I cannot tell them apart — I am not going to invent a difference."* **`md5`
-agreed: the blind pair was BYTE-IDENTICAL** (239). Cause, and it is a **new rung on 204** — see the law
-promoted to SKILL.md: I restored the suppressed cells **inside** the `page.evaluate`, and `frame()` calls
-`render()` on **every RAF regardless of `playing`**, so the frame loop repainted the canvas from the
-restored world before `p.screenshot()` landed. The sting: **the SAME suppression measured 779 px/hex
-correctly**, because a `getImageData` diff happens *inside* one evaluate. **The rig is sound for a canvas
-readback and silently dead for a DOM screenshot — the two differ by exactly one RAF.** The camera now
-self-reports `panels-ON-PLATE` (202), so the tool catches this instead of an agent.
-
-**Perf.** Path objects **day 110,171 → 110,104 (−0.06%)** · **night 137,992 → 137,484 (−0.37%)** — free,
-and a small **credit** (222 in reverse: the world is the draw list, and six solar hexes cost less than the
-six farm hexes they replaced).
-
-⇒ 🆕 **CUE (bg) — THE PANEL BLUE IS TOO SATURATED FOR THE COUNTRYSIDE** (seed 7's agent, unprompted, on a
-PASSing frame: *"brighter and more saturated than anything else in the countryside… reads a little like
-park benches rather than dark tilted panels — a darker, less chroma-heavy navy would sit better"*).
-Cosmetic; the bones are there. **Nature × Polish**, and it pairs with **(ax)**.
-
-**Verdict: SHIPPED** (and FIXED — a fully-drawn tile, promised on the placard and banked as an open
-question at iteration 107, had never once existed).
 
 ## Iteration 288 — the tech the skyline could never wear (2026-07-15) [Urban fabric × Deepen/FIX]
 
@@ -968,3 +845,54 @@ approach without adding clutter or darkness."*
 
 **Verdict: SHIPPED** — the harbour now has a marked channel; the red-can/green-cone marks lead the fairway in to the
 pier head and flash after dark.
+
+## Iteration 297 — the ship rode at anchor waiting on a berth, and no one came out to work her (2026-07-15) [Transport × New element]
+
+**Vector.** Transport rotation (oldest, 290). The rules seam is genuinely deep — I grepped `tick()`, `stepVehicle`,
+`syncFleet`, every mover's step + tooltip + `ENTINFO` row, and the transport FLAGS (`bridge`/`riv`): every craft
+keeps an hour (`vehCurfew`/`VCURF`/`waterSession`), has a live tooltip off the predicate its rule steers by, and
+does an honest job (the tram rides the avenue, the ferry calls the pier, the copter hops the helipads, the shuttle
+runs the grid). No dead rule, no unhonoured label — and the frozen-census-column law (282/287) found nothing:
+Transport is entity-driven, not tile-driven. So the seam that has beaten the cue list for five laps is, for once,
+clean. **Transport's stalest ADDITIVE cell is New element (untouched since iter 164)**, and the harbour — which just
+gained a pier+ferry (249), moored boats, a lighthouse, channel buoys (296) and an anchored container ship "at anchor
+in the roadstead, **waiting on a berth**" — had the one working craft a real roadstead never lacks: **a harbour
+launch** to work the ship at anchor. Nothing tended her; the roadstead had no life of its own.
+
+**Change (New element — `launches`).** A small harbour launch runs the short leg between the harbour waterline and
+the anchored ship's side, ping-ponging out-and-back with a dwell at each end (the copter's idiom: smoothstep along
+the leg, `dir` flips at `t>=1.3`). Endpoints derived LIVE from the ship it works — `launchPts()` returns
+`[[shoreAtF(f.y)+1.3, f.y], [seaXFr(f.y,f.fr)-1.2, f.y+0.6]]` (off the waterline · alongside the hull) — so `launchPos`,
+the `bucketAdd`, the draw and the tooltip all read ONE predicate and the launch cannot drift from the ship it tends.
+`drawLaunch`: a low workboat hull, a white wheelhouse with a coral livery band, a mast, a wake thrown only while
+making way (dies at the dwell), and a warm wheelhouse + white masthead at night (raw literals — a light SOURCE, in
+the harbour boats' marine vocabulary, cf. the ferry/buoys). `stamp()` + an `ENTINFO` row whose `sub` reads the leg
+she is on NOW (105): *Running out / Standing by the ship / Putting back / Made fast*. She exists only while a ship
+rides at anchor (`launchAnchor` = `freighters.find(f=>f.anchored)`). **Math.random only, never `rng()`** — the
+service cannot perturb the seeded simulation.
+
+**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw + Math.random,
+no terrain). `launches 0 → 9` (1/city × 9-cell matrix), `transportModes +9` (a new mode in every cell). `solarRoofs
++2` is the RAF tick-count wobble (226), core untouched.
+
+**Probe** (`probes/probe-launch.mjs`, pure world data off the artifact's OWN `launchPts`/`launchPos`, 6 seeds ×
+2 eras, no render). Three gates, each falsifiable: (1) **EXIST 1↔1** — one launch per anchored ship, every seed:
+PASS. (2) **PATH ALL WATER** — sampling her whole ping-pong (both legs, dwell included), **100.0%** of positions land
+on WATER/KELP/MARSH (the artifact's own `WETSET`; a launch floats over a kelp bed just as over open water) with **0**
+on the ship's own hex: PASS. (3) **GEOMETRY threads shore→ship** — shore end **+1.30** seaward of the waterline, ship
+end **+1.20** inshore of the hull, on every seed: PASS. Controls (250): the anchored freighter's own cell is WATER
+(the water test is meaningful, the ship genuinely offshore) on 6/6; the discriminator (one column inshore of the
+shore end is non-wet) fires on 3/6, confirming she sits right at the water's edge. *The kelp beds are the reason the
+first, too-strict `T.WATER`-only test read 56–93% on two seeds — the launch was over a kelp bed, which is water; the
+year-dependence (100% at 2035, 56% at 1990 on seed 99) was the now-live kelp CA (282) retreating between the eras.*
+
+**Visual.** Both seeds **PASS** (`probes/shot-launch.mjs` — freezes in-page, aims at the anchored ship, poses the
+launch mid-leg (moving, wake up) and alongside (night, lights lit), day + night + un-zoomed whole-city). The launch
+reads as a small reddish workboat with a white wheelhouse, out on the water between shore and the navy container
+ship, running out to her; the night frame shows her masthead light beside the ship's deck lights, buoys flashing
+along the shore. Whole-city on both seeds: balanced, coherent coastal city — no z-order tears, floating tiles,
+blown-out color, or compounded clutter (she is tiny at fit zoom, as a sparse water craft should be).
+
+**Verdict: SHIPPED** — the roadstead has its working craft; the ship "waiting on a berth" is now tended, a launch
+running out to her side and putting back to the harbour, named and lit on her own hours. ~6 path objects, one per
+city — free by construction.

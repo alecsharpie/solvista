@@ -826,7 +826,7 @@ function colWin(f,litMix,a,k){
 /* ---------------- world ---------------- */
 let rng, seedNum, cells, year, dayT, monos, monoPlan, gonds, gondPlan, stats, pier, hut, harborY;
 let YC=[], turbines=[], turbSet=new Map(), moleSet=new Map();
-let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], buoys=[], ferries=[], freighters=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
+let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], buoys=[], ferries=[], freighters=[], launches=[], birds=[], shuttles=[], dogs=[], kites=[], surfers=[], dolphins=[], whales=[], herons=[], kayaks=[], joggers=[], deer=[], clouds=[], balloons=[], copters=[], heliPads=[];
 /* debug flood (?flood=joggers:30,whales:8): overrides entity spawn counts so
    sparse features can be screenshot-verified without a source edit to revert */
 let FLOOD={};
@@ -894,7 +894,7 @@ function genWorld(seed){
   seedNum=seed; rng=mulberry32(seed);
   sAmp=1.2+rng()*1.6; sFreq=0.22+rng()*0.24; sPh=rng()*7;
   year=1974; dayT=0.30; devBudgetUsed=0; TICKN=0;   /* the bloom's clock is part of the world */
-  vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];buoys=[];ferries=[];freighters=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
+  vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];buoys=[];ferries=[];freighters=[];launches=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
   /* the coast highway hugs the shore in long hex-diagonal runs
      (a straight vertical column would wiggle across hex rows) */
   const coastX=new Int16Array(G);
@@ -1269,6 +1269,14 @@ function genWorld(seed){
       ph: Math.random()*7, st:(Math.random()*64)|0,
       c: Array.from({length:6},()=>CBOX[(Math.random()*CBOX.length)|0])});
   }
+  /* the ship at anchor is worked from shore: a small harbour launch runs out to her
+     and puts back — the one working craft the roadstead lacked, giving the container
+     ship "waiting on a berth" a tender and the harbour its life. Math.random only, so
+     the service never perturbs the seeded simulation; it exists only while a ship rides
+     at anchor (launchAnchor), and runs the short leg between the harbour waterline and
+     her side, all in open water: seaward of the shore, inshore of the hull. */
+  if(freighters.some(f=>f.anchored))
+    launches.push({t:Math.random(),sp:0.12+Math.random()*0.05,ph:Math.random()*7,dir:Math.random()<0.5?1:-1});
   /* dolphin pods roll through the open sea. Math.random so they never perturb the
      seeded simulation; they swim well seaward of the surf. */
   for(let i=0;i<fl('dolphins',4);i++)dolphins.push({y:SEAY0+2+Math.random()*(SEAH-4),fr:0.3+Math.random()*0.6,
@@ -8510,6 +8518,39 @@ function drawFreighter(f){
   }
   ctx.restore();
 }
+/* the harbour launch's two ends, derived live from the ship it works: A off the harbour
+   waterline, B alongside her side. Same predicate the draw, the bucket and the tooltip
+   share, so the launch and the ship it tends cannot drift apart. */
+function launchAnchor(){return freighters.find(f=>f.anchored);}
+function launchPts(){const f=launchAnchor(); if(!f)return null;
+  const sx=seaXFr(f.y,f.fr);                              /* the ship's own world column */
+  return [[shoreAtF(f.y)+1.3,f.y],[sx-1.2,f.y+0.6]];}     /* A: off the waterline · B: alongside */
+function launchPos(L){const P=launchPts(); if(!P)return null;
+  const p=Math.min(1,L.t), e=p*p*(3-2*p), u=L.dir>0?e:1-e;/* smoothstep out, dwell, put about */
+  return [P[0][0]+(P[1][0]-P[0][0])*u, P[0][1]+(P[1][1]-P[0][1])*u];}
+function drawLaunch(L){
+  const P=launchPts(); if(!P)return;
+  const pos=launchPos(L); if(!pos)return;
+  const[cx,cy]=pxc(pos[0],pos[1]);
+  stamp(L,cx,cy);
+  const moving=L.t<1.0;                                   /* stopped alongside during the dwell */
+  const dir=(L.dir*(P[1][0]-P[0][0]))>=0?1:-1;            /* which way she is making */
+  const bob=Math.sin(waveT*1.6+L.ph)*0.5;
+  if(moving){ctx.fillStyle=col('foam',0.85);             /* a short wake astern, thrown by way */
+    ctx.beginPath();ctx.ellipse(cx-dir*3,cy+1.9+bob,4.2,1.1,0,0,7);ctx.fill();}
+  ctx.fillStyle=col('terraDk',1);                        /* low workboat hull */
+  ctx.beginPath();ctx.moveTo(cx-3.4,cy+bob);ctx.lineTo(cx+3.4,cy+bob);
+  ctx.lineTo(cx+2.4,cy+1.8+bob);ctx.lineTo(cx-2.4,cy+1.8+bob);ctx.closePath();ctx.fill();
+  ctx.fillStyle=col('white',1.05);ctx.fillRect(cx-1.3,cy-2.3+bob,2.6,2.3);   /* wheelhouse */
+  ctx.fillStyle=col('coral',0.9);ctx.fillRect(cx-1.3,cy-2.3+bob,2.6,0.7);    /* a livery band */
+  ctx.strokeStyle=col('ink',1.05);ctx.lineWidth=0.6;     /* mast forward */
+  ctx.beginPath();ctx.moveTo(cx+2.6*dir,cy-0.1+bob);ctx.lineTo(cx+2.6*dir,cy-3.6+bob);ctx.stroke();
+  if(LITAMT>0.35){ /* the night watch: a warm wheelhouse and a white masthead (raw literals —
+     a light SOURCE, in the harbour boats' marine vocabulary, cf. the ferry and the buoys) */
+    ctx.fillStyle='rgba(255,224,150,'+(0.85*LITAMT)+')';ctx.fillRect(cx-0.9,cy-1.7+bob,1.8,0.9);
+    ctx.fillStyle='rgba(255,255,240,'+(0.95*LITAMT)+')';
+    ctx.beginPath();ctx.arc(cx+2.6*dir,cy-3.6+bob,0.6,0,7);ctx.fill();}
+}
 function drawKayak(k){
   if(waterSession()<waterOut(k))return; /* this boat has taken out — the same session the
     lineup keeps (the sun times the calendar), and each hull keeps its own threshold, so the
@@ -8858,6 +8899,7 @@ function render(){
   for(const b of buoys)bucketAdd(b.x|0,b.y|0,()=>drawBuoy(b));
   for(const f of ferries)bucketAdd(seaXFr(f.y,f.fr)|0,f.y|0,()=>drawFerry(f));
   for(const f of freighters)bucketAdd(seaXFr(f.y,f.fr)|0,f.y|0,()=>drawFreighter(f));
+  for(const L of launches){const p=launchPos(L); if(p)bucketAdd(p[0]|0,p[1]|0,()=>drawLaunch(L));}
   for(const d of dolphins)bucketAdd(seaXFr(d.y,d.fr)|0,d.y|0,()=>drawDolphin(d));
   for(const w of whales)bucketAdd(seaXFr(w.y,w.fr)|0,w.y|0,()=>drawWhale(w));
   for(const h of herons)bucketAdd(h.x,h.y,()=>drawHeron(h));
@@ -9833,6 +9875,12 @@ const ENTINFO=[
      :ferryApp(f)>0.25?'Coming alongside the pier head.'
      :'Working the shoreline — the pier is her only call.',10],
   [()=>freighters,'Container ship','Serving the harbor works — at anchor in the roadstead, or steaming the deep lane.',14],
+  /* the tender that works the ship at anchor. `sub` reads the leg she is on NOW (105),
+     off the same dir/dwell the draw steers by, so the card cannot claim a run she is
+     not making. */
+  [()=>launches,'Harbour launch',L=>L.t>=1.0
+     ?(L.dir>0?'Standing by the ship at anchor.':'Made fast at the harbour steps.')
+     :(L.dir>0?'Running out to the ship at anchor.':'Putting back to the harbour.'),8],
   [()=>boats,'Sailboat',b=>b.moored?'Moored off the pier head.'
      :nightAmt()>0?'Making for the harbour before dark.'
      :beachPhase()<0.5?'A brisk winter sail on an empty bay.':'Out for a day on the bay.',8],
@@ -10031,6 +10079,7 @@ function advanceEntities(dt,s){
     else if(d>=FERRYAPP)f.call=0;
   }
   for(const f of freighters){if(f.anchored)continue; f.y+=f.sp*dt*s; if(f.y<SEAY0+2||f.y>SEAY1-2)f.sp*=-1;}
+  for(const L of launches){L.t+=L.sp*dt*s; if(L.t>=1.3){L.dir*=-1;L.t=0;}} /* dwell at each end, then put about */
   for(const j of joggers){j.y+=j.sp*dt*s; if(j.y<SEAY0+2||j.y>SEAY1-2)j.sp*=-1;}
   for(const d of dolphins){d.y+=d.sp*dt*s; if(d.y<SEAY0+1||d.y>SEAY1-1)d.sp*=-1;}
   for(const w of whales){w.y+=w.sp*dt*s; if(w.y<SEAY0+2||w.y>SEAY1-2)w.sp*=-1;}
@@ -10199,7 +10248,7 @@ window.__census=()=>{
   const stations=monoStationCount();
   let cafes=0;
   for(let y=0;y<G;y++)for(let x=0;x<G;x++)if(cells[idx(x,y)].t===T.PARK&&countAround(x,y,1,n=>n.t===T.COM||n.t===T.MARKET||n.t===T.CIVIC)>0)cafes++;
-  const transport={cars:vehicles.length,bikes:bikes.length,trams:trams.length,trucks:trucks.length,boats:boats.length,buoys:buoys.length,
+  const transport={cars:vehicles.length,bikes:bikes.length,trams:trams.length,trucks:trucks.length,boats:boats.length,buoys:buoys.length,launches:launches.length,
     ferries:ferries.length,freighters:freighters.length,shuttles:shuttles.length,
     monoLines:monos.length,monorail:monos.reduce((a,m)=>a+(m.closed?m.trains.length:0),0),
     gondLines:gonds.length,gondola:gonds.reduce((a,g)=>a+(g.path&&g.path.length>1?g.cabins.length:0),0),copters:copters.length};

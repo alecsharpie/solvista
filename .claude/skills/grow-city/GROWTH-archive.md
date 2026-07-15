@@ -21577,3 +21577,126 @@ at night is the correct depiction, not a bug. Logged so the next lap does not re
 
 **Verdict: DEEPENED** (and FIXED — the kayakers had no clock at all, and the kites had the wrong kind).
 
+## Iteration 287 — the placard promised panels, and the rule that would have built them was hunting a handful of fields with nine darts a year (2026-07-15) [Nature × New CA rule/FIX]
+
+**Vector.** Nature (oldest domain — 279). The banked cue was **(ax)** (fairy-ring contrast, Nature ×
+Polish), but 225's grep-the-seam law says look at the seam first, and **282's law says the cheapest
+seam-grep there is is a FROZEN CENSUS COLUMN**. One glance at the tile histogram:
+
+```
+SOLARF   0  0  0 |  0  0  0 |  0  0  0      <- every seed, every era, the artifact's whole life
+```
+
+`T.SOLARF` has a `tick()` rule, a **complete draw case** (three tilted panel rows, a sun glint on the
+glass, an inverter hut, a red beacon at night), a `TILELABEL` (*"Solar field"*), a `TILEDESC`, and a
+`valueSrc` entry. It has **never once rendered a pixel.** And the placard has promised it the whole
+time — *"Warehouses become lofts **and far fields go solar** once the rent says so."*
+
+⚠ **267 QUOTED THAT EXACT SENTENCE IN ITS OWN PROBE HEADER, FIXED THE CLAUSE BEFORE THE "AND", AND LEFT
+THE CLAUSE AFTER IT.** 107/108 had already banked SOLARF as *"the last genuinely open dead-rule
+question"* — and then nobody went back for **180 iterations**. (286's law, arriving through a *sentence*:
+the clause you cite as CONTEXT is a TO-DO ITEM, not a thing you have checked.)
+
+**The diagnosis, and it inverted the suspect I opened with.**
+- *Not the pool.* 107's law says a rule can be dead because a sibling's precondition is strictly weaker
+  on the same host — and the VINEYARD (1990+) and ORCHARD (1985+) sit **4 and 12 lines below**, take the
+  same `T.FARM`, on a **strictly weaker** dev clause (no DEV within **1**, vs solar's within **2**),
+  start 22 and 27 years earlier, and **WALK every cell while solar runs a lottery.** Textbook. **It is
+  not what killed it:** the far-farm pool is alive at 2012 on every seed (**3–51 cells**).
+- *The SPACE* (263). The rule was `rc()` × `ks(6)` = **9 picks/tick over ~3,400 live cells**, then
+  `rng()<0.02`. Priced in its own constants, over the **entire 2012→2035 window** it expects
+  **0.00–0.34 conversions** — **0.34 even on the seed carrying 51 far fields.** Not unlucky.
+  **Arithmetically incapable.** A tiny host cannot be found by a uniform sample of a large space, and
+  **the rate is irrelevant until the space is right** (218-rate: **0.0%** against a live pool).
+
+**And fixing the space alone ships a BAD ARTIFACT, which is the half that decided the design.** Walk the
+host with a per-parcel hash gate and the rule fires — and lays down **SPECKLE**: biggest connected run
+**1 hex on 4 seeds in 6**, mean run 1.0. **A dusting of lone panels is not a solar farm**, and that is
+iter 32's *"barely-visible feature"* arriving through a different mechanism. **A solar farm is an ARRAY,
+so the rule needs a NEIGHBOUR** (263), a **guaranteed spark** (233 — a per-cell spark hash starves seed
+42, which owns only three far fields), and a **BOUND** (282 — an unbounded spread fills its pool; seed
+99's is 51 hexes).
+
+**Change.** One walked pass, in the idiom of the two rules beside it on the same host. Each tick it
+scores every far field, **prefers one on the fence line of the existing array**, and converts **one**, on
+a **TICKN-salted `hashCell` ⇒ ZERO `rng()` draws**, until the array reaches `SOLARMAX`. One grower breaks
+ground; the panels creep field by field.
+- `SOLARMAX=8` is **the knee of the sweep**: 12 does not build a *bigger* array (mean run 5.3 → 5.5), it
+  starts a **second** one, and costs more farmland.
+- `SOLARP=0.08` **only sets how fast it builds out** — 0.04 and 0.08 reach the *same* size by 2035
+  (218: the roll cannot steer a rule whose placement is a predicate). **It is not a tuned constant.**
+- ⚠ **The size is what the countryside allows, not what the cap says**: seed 42 has three far fields and
+  builds **three**. The bounding variable keeps the last word (282).
+
+**Probe** (`probes/probe-solarfield.mjs` — pure world data, no render, no clock, no noise floor).
+VINEYARD/ORCHARD are **free positive controls** (248: correct sibling conversion rules on the same host
+in the same `tick()`); FARM is the **must-not-move** column (250).
+
+| | HEAD | shipped |
+| --- | --- | --- |
+| SOLARF, 6 seeds × 3 eras | **0 / 18 cells — `DISTINCT = 1`, forever** | 3–8 per city, **every seed** |
+| biggest connected run | — | **2–8, mean 5.3** (hash-walk alone: **1**) |
+| worst seed | 0 | **3** |
+| FARM (the host) | 44.7 | 39.3 |
+
+⚠ **AND THE HONEST SWEEP IS THE ONLY ONE THAT WORKS — 231, arriving inside my own rig.** My first sweep
+graded candidates on the **2035** plate and reported **0 on three seeds in six at every gate**. It was a
+**leak**: the rule *runs from 2012*, and by 2035 development has eaten the far-farm pool (**s99 51 → 21,
+s7 12 → 0**), so it was grading the variants on land the rule **never got to see**. Driven from 2012, the
+same candidates work. **SOLARF is not in `RAISEABLE`, so a field placed in 2012 SURVIVES** while the farms
+around it are built over — which is *why* the honest sweep yields arrays the 2035-plate sweep could not
+see at all.
+
+**Census.** VERDICT **PASS**. **`SOLARF 0 → 19`** (all of it at 2035 ⇒ ~6.3/city, matching the sweep);
+`FARM 409 → 393` (the designed host cost). Core: `developed +4`, `roads −2`, **`pop −2.3%`**.
+
+🔑 **AND THE POP MOVE IS 100% THE STREAM AND 0% THE PANELS — PROVEN, NOT ARGUED.** The diff deletes the
+`rc()` lottery's **~7,200 `rng()` draws** over a run, so a reshuffle is guaranteed (231: ±15%/seed,
+centred on zero — 3 of 10 seeds *gain* towers; mean −3.1 ± 3.3 SE). But there was also a **plausible
+directional** mechanism I refused to argue away: `valueSrc(SOLARF)=0.3` vs `valueSrc(FARM)=0.56`, so the
+panels could be depressing land value. **107's no-op control settles it in one command:** ship the
+identical patch with `SOLARMAX=0` — same deleted draws, **zero panels placed** — and it reproduces the
+full patch **BYTE-FOR-BYTE on all 10 seeds**, every TOWER, towerHt, pop and developed figure identical.
+
+⇒ **THE SOLAR FIELDS COST THE CITY NOTHING: not one tower, not one resident, not one developed cell.**
+And the mechanism is *exact*, not statistical: the only `rng()`-drawing rule that reads `T.FARM` (*"farm
+clusters swell at their own edges"*) is gated **`year<1998`** and has been dead for **14 years** by the
+time solar opens; and a **far** field — no DEV within 2 — is **by construction** land the development
+pass never rolls for. ✅ **THIS RETROACTIVELY ACQUITS THE FEATURE OF ITER 32'S −4% POP CHARGE** — the trade
+that got the solar farm reverted 255 iterations ago and kept it shelved as *"not obviously desirable"*
+ever since. **32's version spread solar across land the city wanted; this one takes only fields the city
+provably cannot reach.**
+
+**Visibility, against an incumbent bar I did not invent** (226): isolated by suppressing the panels in ONE
+page (230; floor exactly 0, occlusion free), the array renders **779 px/hex on seed 42 — identical to the
+VINEYARD's 779 px/hex**, the sibling far-field conversion the artifact already ships and nobody has ever
+called invisible. (Seed 7: 530 vs 700.)
+
+**Visual.** Both seeds **PASS**, and **both blind agents named the shipped frame on a CROSSED map**
+(s42 `kappa`, s7 `sigma`). Both, unprompted: the panels read as *"a deliberate array, 2–3 parallel banks
+plus the inverter hut — not specks"*, sit correctly on the hex faces with no float/z-tear, and — the frame
+that mattered — the un-zoomed plate shows the countryside **not darkened and not blotchy**, day or night.
+At night the panels go correctly dark and unlit, with no orphan glow.
+
+⚠ **BUT ROUND 1 FAILED ON BOTH SEEDS, AND THE AGENTS WERE RIGHT AND MY CAMERA WAS WRONG** (269's shape).
+Both refused to grade: *"I cannot tell them apart — I am not going to invent a difference."* **`md5`
+agreed: the blind pair was BYTE-IDENTICAL** (239). Cause, and it is a **new rung on 204** — see the law
+promoted to SKILL.md: I restored the suppressed cells **inside** the `page.evaluate`, and `frame()` calls
+`render()` on **every RAF regardless of `playing`**, so the frame loop repainted the canvas from the
+restored world before `p.screenshot()` landed. The sting: **the SAME suppression measured 779 px/hex
+correctly**, because a `getImageData` diff happens *inside* one evaluate. **The rig is sound for a canvas
+readback and silently dead for a DOM screenshot — the two differ by exactly one RAF.** The camera now
+self-reports `panels-ON-PLATE` (202), so the tool catches this instead of an agent.
+
+**Perf.** Path objects **day 110,171 → 110,104 (−0.06%)** · **night 137,992 → 137,484 (−0.37%)** — free,
+and a small **credit** (222 in reverse: the world is the draw list, and six solar hexes cost less than the
+six farm hexes they replaced).
+
+⇒ 🆕 **CUE (bg) — THE PANEL BLUE IS TOO SATURATED FOR THE COUNTRYSIDE** (seed 7's agent, unprompted, on a
+PASSing frame: *"brighter and more saturated than anything else in the countryside… reads a little like
+park benches rather than dark tilted panels — a darker, less chroma-heavy navy would sit better"*).
+Cosmetic; the bones are there. **Nature × Polish**, and it pairs with **(ax)**.
+
+**Verdict: SHIPPED** (and FIXED — a fully-drawn tile, promised on the placard and banked as an open
+question at iteration 107, had never once existed).
+
