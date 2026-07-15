@@ -4770,6 +4770,7 @@ let TIDEPH=0; /* phase offset: lets ?tide= pin the cycle without stopping it (se
    Two incommensurate periods, so no two fronts are alike — some barely wet the plate. */
 const FRONTP=0.31;              /* ~20 yr-units per cycle = ~2 min at speed 1, the tide's cadence */
 const WETRAMP=0.16;             /* a shower FADES in over ~6s. A veil that pops is a strobe (134) */
+const LIGHTN0=0.6;             /* lightning wants a shower with WEIGHT — same bar the rainbow demands (cloudWet>0.5) */
 /* The base sits BELOW the midpoint on purpose: it holds the MEAN number of showers at
    HEAD's (~2 of 7), so this lap buys the ARC and not a wetter city — the clamp at the
    dry end is what makes a dry spell a dry spell (98's hold-the-mean, which also keeps
@@ -8503,6 +8504,7 @@ const STARS=[];for(let i=0;i<70;i++)STARS.push([Math.random(),Math.random()*0.55
    under the moon (iter 79's rule). */
 let FOGAMT=0;                    /* 0..1, how foggy this frame is; 0 = free */
 const FOGZ=9;                    /* the layer floats this far off the ground */
+let LIGHTN=1;                    /* lightning suppressor (1 normally): a probe sets 0 to isolate the flash at a frozen instant, floor 0 (253) */
 function fogDepth(){
   /* two weather clocks: the dawn layer that burns off by mid-morning, and the
      seeded spell that makes some cities foggy for a stretch of days. Both are
@@ -9018,6 +9020,36 @@ function render(){
           ctx.lineTo(foot+u*64*cl.s,cy);
           ctx.stroke();
         }
+        ctx.restore();
+      }
+    }
+    /* SHEET LIGHTNING (iter 291). A shower with weight behind it (w>LIGHTN0 — the same
+       bar the rainbow uses to demand real drops) flickers from within: the belly lights
+       for a beat, then dark. Deterministic in `time` (no rng), so genWorld+__warp stays
+       reproducible and a probe can pin the flash; keyed to THIS cloud's own position, so
+       the storm's cells fire out of step — a global-monotone gate (LITAMT) would strobe
+       the whole sky as one (262). A RADIAL GRADIENT to alpha 0, never a flat arc (195),
+       drawn UNDER the belly puffs so the cloud glows from inside and the light spills
+       round its edges and down the rain shaft already laid above. Brightest against a
+       dark sky, washed out at noon (LITAMT) — a storm at dusk is where the drama is.
+       LIGHTN is the probe suppressor. */
+    if(w>LIGHTN0){
+      const pulse=Math.pow(Math.max(0,Math.sin(time*1.15+cl.y*4.3+cl.x*1.1)),30);
+      const fla=pulse*LIGHTN*(w-LIGHTN0)/(1-LIGHTN0)*(0.30+0.62*LITAMT);
+      if(fla>0.012){
+        /* an ELLIPSE matched to this cloud's own crown (rx 24, belly reaches ~30), so the
+           glow is confined to the cloud body — a bigger disc spills into empty sky and
+           reads as a floating orb (agents, iter 291). Centred on the belly, where the
+           strike sits, so the puffs drawn immediately below light up over it. */
+        const rx=28*cl.s, ry=11*cl.s;
+        ctx.save();
+        ctx.translate(cx,py2+3*cl.s);ctx.scale(1,ry/rx);
+        const lg=ctx.createRadialGradient(0,0,0,0,0,rx);
+        lg.addColorStop(0,'rgba(242,246,255,'+Math.min(0.9,fla)+')');
+        lg.addColorStop(0.5,'rgba(214,228,255,'+Math.min(0.5,fla*0.5)+')');
+        lg.addColorStop(1,'rgba(205,224,255,0)');
+        ctx.fillStyle=lg;
+        ctx.beginPath();ctx.arc(0,0,rx,0,7);ctx.fill();
         ctx.restore();
       }
     }

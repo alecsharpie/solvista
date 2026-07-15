@@ -21104,3 +21104,97 @@ the sea's wind-driven chop in the windy frame — the same `WINDA`, confirming t
 
 **Verdict: SHIPPED.**
 
+## Iteration 281 — the city kept opening corner shops and then quietly bricking them up (2026-07-15) [Urban fabric × New CA rule/FIX]
+
+**Vector.** Urban fabric × New CA rule (its coldest cell — last at **151**, 130 laps ago), taken on
+the header's own standing steer: *"Urban's LOOK is done; its RULES were not audited. Grep `tick()`,
+not `drawBuilding`."* Grepped the `tick()` seam; the corner-shop pass (iter 151) was carrying a
+**199-tell in its own comment**.
+
+**The defect.** `c.corner` is a store on a house's ground floor. Its comment promises two things —
+*"the pass RE-VALIDATES … so the 'no shop within 2' claim holds at every tick"* and *"one store per
+gap falls out for free"* — and both are made by a pass whose **first line is
+`if(c.t!==T.RES)continue;`**. Its **DRAW** sits inside `drawBuilding`'s `if(c.t===T.RES)` branch and
+its **TOOLTIP** gates on `T.RES`; but its **VETO** (`countAround(x,y,2,n=>n.corner)`) and its
+**re-validation** never check the type. So the moment a corner house upgraded to a `MID`, the flag
+became a **GHOST** — drawn by nothing, named by nothing, never absorbed — **and still vetoing every
+replacement store within 2 hexes, forever.**
+
+And the rule **selected for its own destruction** (231, arriving on a *type change* instead of an
+occlusion): a corner shop requires `countAround(x,y,1,DEV)>=3` — *a built-up block* — which is
+**verbatim the RES→MID upgrade's own precondition** (`dev>=3`). It opened its stores on exactly the
+houses most likely to be redeveloped.
+
+**Probed before designing** (`probes/probe-corner.mjs` — pure world data, no render, no clock, no
+noise floor, build-agnostic). HEAD, 2035, 6 seeds: **9 live corner shops against 98 ghosts.**
+
+| per city | 1995 | 2010 | 2035 |
+| --- | --- | --- | --- |
+| shops the city **SHOWS** you | 3.5 | 3.2 | **1.5** ⬇ |
+| **GHOSTS** | 1.3 | 5.7 | **16.3** ⬆ |
+| never absorbed (the broken promise) | 0.2 | 1.5 | 4.8 |
+
+⇒ **92% of every corner shop the city ever opened was INVISIBLE, and the count FELL as the city grew.**
+A mature Solvista showed you **one**. 89 of the 98 ghosts were `MID`; the rest were PARK/PLAZA/QUAD,
+where the house was genuinely demolished.
+
+**Change — one line, and the category was already in the file.** This is **206's law, whose SECOND
+HALF nobody had written down**: 206 fixed the GARDEN's *inputs* (count `HOMES`={RES,MID} as
+neighbours, not houses) and the corner shop, in the same `tick()`, had the identical defect in its
+**OUTPUT**. `c.corner` is a property of a **HOME**, not of a **HOUSE**:
+`if(!HOMES.has(c.t)){if(c.corner)c.corner=false;continue;}` — so the store **rides the building up**
+(retail at street level, flats above) and a **demolished** home loses its store with its house, which
+is what finally kills the ghost veto. Three readers now share the one predicate (pass · draw ·
+tooltip), per 112.
+The **idiom was already shipped**: `c.hstr` is *"a DRAW property, not a zoning veto"*, cashed by
+`drawBuilding`'s TOWER shop podium — and **`midLook`'s `form===1` was already called *"shop plinth,
+flats set back above it"***. The walk-up had been drawing the empty plinth for a shop it was never
+given. The MID shopfront is sized to the walk-up's **own published body** (`ab`/`dy`/`gx+jx`, the
+base segment, width factor always 1.00), never the RES body's hard-coded `0.30/0.26` — the same
+discipline the skybridge and helideck owe `towerLook`. First sill lifted to 5.2 where `c.corner`, so
+the flats start **above** the fascia (≤1 band displaced, on ~5 buildings a city).
+**Pool priced BEFORE building** (206's second ledger): only **5.0 MID/city** clear the retail-gap
+test against **413 MID/city** ⇒ re-keying **cannot flood**.
+
+**Census.** **PASS — every metric +0, tile histogram EMPTY**, including the tick-sensitive
+`solarRoofs` (226's ±2 wobble did not even fire). No terrain written, no `rng()` drawn, and `POPW` is
+keyed on tile type so the flag weighs nothing. `MARKET/COM/RES/MID` byte-identical to HEAD in the probe.
+
+**Probe (same file grades both builds, no source swap).**
+
+| per city @2035 | HEAD | PATCH |
+| --- | --- | --- |
+| corner shops **SHOWN** | **1.5** (3.5→3.2→1.5, *decaying*) | **14.0** (5.2→8.0→14.0, *growing*) |
+| ghosts | **16.3** | **0** |
+| never absorbed | 4.8 | **0** |
+| flags stranded on a demolished lot | 9 (total) | **0** |
+
+**Perf.** Path objects **day 112,255 → 112,880 (+0.56%)**, **night 140,119 → 140,666 (+0.39%)** — and
+it has a *mechanism* (216): ~37 new shopfronts across the 3 seeds at ~17 objects each. HEAD was only
+cheap because **92% of its corner shops were invisible ghosts**; this is the cost of finally drawing
+the feature the rule has been placing since iter 151. A good trade at 1 → 14 shops (cf. 194's tree
+shadows at ~3%).
+
+**Visual.** **PASS on both seeds, map CROSSED, reported per-FILE.** Both agents independently located
+the shop **on the walk-up**, flat on its street-facing facet — *"no float, no sink, no wrong-facet
+landing"* — and both confirmed the window bands stop **above** the fascia. Seed 7's agent **measured
+the sill lift itself** (*"kappa's lowest window band sat ~4px lower, i.e. sigma raised the flats'
+bands to clear the sign"*), which is exactly the `ph→5.2` gate. Whole-city, both lights: *"no clutter,
+no green rash"*; seed 42's diff of the two city frames was **~2.3k px of 1.26M**.
+⚠ **The gate was answer-KEYED, not blind** — the caption must state the shop count (258: an absent
+subject and a correctly-negative one render the same frame), and the count *is* the build. So this was
+a **LOCATE** (108), with the caption as the answer key and the agents reporting per file (239); the
+*existence* claim rests on the probe, which has no noise floor.
+
+⚠ **THE INSTRUMENT CONVICTED ITSELF, VIA A TRANSPOSE.** The probe's build-detector asked *"does
+`drawBuilding`'s MID branch mention `c.corner`?"* by splitting the source on `c.t===T.MID` — but
+`drawBuilding`'s **first line** is `const ML=c.t===T.MID?midLook(...):null`, **above the RES branch**,
+so the tail contained the RES shopfront and it reported **HEAD as patched**. It came back **98 shown /
+9 ghosts — the exact TRANSPOSE of the truth measured ten minutes earlier**, which is the only reason
+it was caught. ⇒ **Match the BRANCH (`else if(c.t===T.MID)`), never the first occurrence of its TEST**,
+and carry a number you already know. (Law promoted to SKILL.md.)
+
+**Verdict: FIXED.** (Also 268's law on my own probe: its first cut hard-coded HEAD's definition of
+"live" and duly filed the *feature* under the *defect*, calling a patched MID's shop a ghost. **Read
+what your instrument COMPARES — even when you wrote it twenty minutes ago.**)
+

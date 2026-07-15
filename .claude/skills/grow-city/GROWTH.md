@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62 | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43 | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -32,8 +32,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Water **289** · Transport **290** · Sky **284** · Civic **285** · People **286** · Nature **287** ·
-  Urban **288**. ➡ **NEXT: Sky (284, oldest)** — grep `syncSky`/`applySeason`/`daylight` + the TABLES/COMMENTS, not the cue list. (Transport's entity rules are confirmed-saturated — 290 carded the last un-carded entity, the air shuttle.) ⚠ **NATURE'S
+- **ROTATION.** Last: Transport **290** · Sky **291** · Civic **285** · People **286** · Nature **287** ·
+  Urban **288** · Water **289**. ➡ **NEXT: Civic (285, oldest)** — stale cells **New CA rule (36/107)** and **Connect
+  (45/204, but 285 proved it MEASURED-SOUND — do not "fix" the civic mile)**; grep `tick()`'s civics pass + the TABLES.
+  **291 broke Sky's Deepen streak with a NEW ELEMENT — the sparsest Sky cell (3rd ever). Sky's additive was NOT fully
+  spent: the elaborate weather front was a live host with no dramatic payoff, and lightning was the missing one.**
+  ⚠ **NATURE'S
   POLISH CELL IS TWO-DEEP IN DEBT AND IS ITS STALE KIND** (287 took CA again — the seam beat the cue list). **Its next
   Nature lap is Polish, with TWO paired cues banked: (ax)** fairy-ring contrast + 🆕 **(bg)** the solar blue. **Together.**
   ⚠ **PEOPLE's Deepen cell is now 14 deep and is CLOSED for rotation purposes** — its stale cells are
@@ -47,7 +51,6 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   `stepVehicle` seam and its FLAGS instead** (267 · 274 · 281 · 282 · **283**: FIVE straight laps where the RULES seam
   beat the cue list). Transport's stale cell is now **Interaction/UX (171)**.
   ✅ **CUE (bd) CLOSED BY 284** (and it was TWO readers, not one — see 284's facts).
-  ✅ **(aw) CLOSED 286** (kayakers); ✅ **its day-sailer sibling CLOSED 289** (the boats[] 286's comment named, never gated).
   ➡ **NEXT cues: (au)** loft roof-studio reads as green roof (Urban × Polish, 274's half), **(ax)** fairy-ring contrast
   (Nature's), **(ay)** windrow LENGTH (POLISH ⇒ not Water's next), **(az)/(ba)** 278's two (below).
   ✅ **PEOPLE's four-Deepen run is BROKEN (278 took Interaction/UX, its stalest cell at 191).** Its **Polish** (226) is
@@ -66,10 +69,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   state (placed once in `genWorld`, never ticked)"* — FALSE about the mechanism and TRUE about the observable, which is
   exactly why nobody looked) (281 a flag whose WRITER skipped a type its VETO still counted · 280 a comment enumerating
   its own category · 278 a comment conceding the defect while justifying a workaround · 277 the census's scalars vs the placard · 267 a rule that had NEVER RUN · 268 a seabed built from the wrong noise · 269 a tram at 1.04x on its named avenue · 271 nine surfers who never went home · 272 an autumn CA that blinked the whole wood as ONE · 274 a new feature that never told the TYPE-KEYED TABLES it existed · 276 the BUS, which could not see the stop network it exists to serve) — **AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue list — or a passing probe — records where you have LOOKED, not what is THERE; and a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.** ⚠ **Grep `tick()`, the TABLES (`BEDT`/`CIVHRS`/`TILEDESC`/`valueSrc`/`VKIND`) AND THE COMMENTS — never the cue list.**
-  🔑 **282/287: A FROZEN CENSUS COLUMN IS A SEAM, AND IT IS THE FIRST THING TO READ.** ⚠ **A tile whose count never moves
-  across the eras is either terrain or a DEAD RULE — check which; and a ZERO row is LOUDER than a flat one** (287:
-  `SOLARF` read a flat 0 in all 9 cells, in every census the loop ever ran, for 180 laps). ✅ **MARSH AUDITED (289):
-  terrain, NOT a dead rule** — its DRAW answers TIDE + season; frozen 18/18/18 as it forms once at the river mouth. **SOLARF + MARSH CLOSED.**
+  🔑 **282/287: A FROZEN CENSUS COLUMN IS A SEAM — READ IT FIRST.** A tile flat across the eras is terrain or a DEAD RULE (check which); **a ZERO row is LOUDER than a flat one** (287 `SOLARF`, flat 0 in all 9 cells for 180 laps). ✅ **SOLARF + MARSH CLOSED** (289: MARSH is terrain — draw answers tide+season; detail in the 282 block).
   🔑 **281: AND NOW GREP THE *FLAG LIFECYCLE*, THE FOURTH SEAM** (law in SKILL.md). ⚠ **For every per-cell flag
   (`corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv`), grep the passes that UPGRADE its host: does the flag RIDE the
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
@@ -391,105 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 283 entries before Iteration 281 live in
+> **Archive:** the 284 entries before Iteration 282 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 281 — the city kept opening corner shops and then quietly bricking them up (2026-07-15) [Urban fabric × New CA rule/FIX]
-
-**Vector.** Urban fabric × New CA rule (its coldest cell — last at **151**, 130 laps ago), taken on
-the header's own standing steer: *"Urban's LOOK is done; its RULES were not audited. Grep `tick()`,
-not `drawBuilding`."* Grepped the `tick()` seam; the corner-shop pass (iter 151) was carrying a
-**199-tell in its own comment**.
-
-**The defect.** `c.corner` is a store on a house's ground floor. Its comment promises two things —
-*"the pass RE-VALIDATES … so the 'no shop within 2' claim holds at every tick"* and *"one store per
-gap falls out for free"* — and both are made by a pass whose **first line is
-`if(c.t!==T.RES)continue;`**. Its **DRAW** sits inside `drawBuilding`'s `if(c.t===T.RES)` branch and
-its **TOOLTIP** gates on `T.RES`; but its **VETO** (`countAround(x,y,2,n=>n.corner)`) and its
-**re-validation** never check the type. So the moment a corner house upgraded to a `MID`, the flag
-became a **GHOST** — drawn by nothing, named by nothing, never absorbed — **and still vetoing every
-replacement store within 2 hexes, forever.**
-
-And the rule **selected for its own destruction** (231, arriving on a *type change* instead of an
-occlusion): a corner shop requires `countAround(x,y,1,DEV)>=3` — *a built-up block* — which is
-**verbatim the RES→MID upgrade's own precondition** (`dev>=3`). It opened its stores on exactly the
-houses most likely to be redeveloped.
-
-**Probed before designing** (`probes/probe-corner.mjs` — pure world data, no render, no clock, no
-noise floor, build-agnostic). HEAD, 2035, 6 seeds: **9 live corner shops against 98 ghosts.**
-
-| per city | 1995 | 2010 | 2035 |
-| --- | --- | --- | --- |
-| shops the city **SHOWS** you | 3.5 | 3.2 | **1.5** ⬇ |
-| **GHOSTS** | 1.3 | 5.7 | **16.3** ⬆ |
-| never absorbed (the broken promise) | 0.2 | 1.5 | 4.8 |
-
-⇒ **92% of every corner shop the city ever opened was INVISIBLE, and the count FELL as the city grew.**
-A mature Solvista showed you **one**. 89 of the 98 ghosts were `MID`; the rest were PARK/PLAZA/QUAD,
-where the house was genuinely demolished.
-
-**Change — one line, and the category was already in the file.** This is **206's law, whose SECOND
-HALF nobody had written down**: 206 fixed the GARDEN's *inputs* (count `HOMES`={RES,MID} as
-neighbours, not houses) and the corner shop, in the same `tick()`, had the identical defect in its
-**OUTPUT**. `c.corner` is a property of a **HOME**, not of a **HOUSE**:
-`if(!HOMES.has(c.t)){if(c.corner)c.corner=false;continue;}` — so the store **rides the building up**
-(retail at street level, flats above) and a **demolished** home loses its store with its house, which
-is what finally kills the ghost veto. Three readers now share the one predicate (pass · draw ·
-tooltip), per 112.
-The **idiom was already shipped**: `c.hstr` is *"a DRAW property, not a zoning veto"*, cashed by
-`drawBuilding`'s TOWER shop podium — and **`midLook`'s `form===1` was already called *"shop plinth,
-flats set back above it"***. The walk-up had been drawing the empty plinth for a shop it was never
-given. The MID shopfront is sized to the walk-up's **own published body** (`ab`/`dy`/`gx+jx`, the
-base segment, width factor always 1.00), never the RES body's hard-coded `0.30/0.26` — the same
-discipline the skybridge and helideck owe `towerLook`. First sill lifted to 5.2 where `c.corner`, so
-the flats start **above** the fascia (≤1 band displaced, on ~5 buildings a city).
-**Pool priced BEFORE building** (206's second ledger): only **5.0 MID/city** clear the retail-gap
-test against **413 MID/city** ⇒ re-keying **cannot flood**.
-
-**Census.** **PASS — every metric +0, tile histogram EMPTY**, including the tick-sensitive
-`solarRoofs` (226's ±2 wobble did not even fire). No terrain written, no `rng()` drawn, and `POPW` is
-keyed on tile type so the flag weighs nothing. `MARKET/COM/RES/MID` byte-identical to HEAD in the probe.
-
-**Probe (same file grades both builds, no source swap).**
-
-| per city @2035 | HEAD | PATCH |
-| --- | --- | --- |
-| corner shops **SHOWN** | **1.5** (3.5→3.2→1.5, *decaying*) | **14.0** (5.2→8.0→14.0, *growing*) |
-| ghosts | **16.3** | **0** |
-| never absorbed | 4.8 | **0** |
-| flags stranded on a demolished lot | 9 (total) | **0** |
-
-**Perf.** Path objects **day 112,255 → 112,880 (+0.56%)**, **night 140,119 → 140,666 (+0.39%)** — and
-it has a *mechanism* (216): ~37 new shopfronts across the 3 seeds at ~17 objects each. HEAD was only
-cheap because **92% of its corner shops were invisible ghosts**; this is the cost of finally drawing
-the feature the rule has been placing since iter 151. A good trade at 1 → 14 shops (cf. 194's tree
-shadows at ~3%).
-
-**Visual.** **PASS on both seeds, map CROSSED, reported per-FILE.** Both agents independently located
-the shop **on the walk-up**, flat on its street-facing facet — *"no float, no sink, no wrong-facet
-landing"* — and both confirmed the window bands stop **above** the fascia. Seed 7's agent **measured
-the sill lift itself** (*"kappa's lowest window band sat ~4px lower, i.e. sigma raised the flats'
-bands to clear the sign"*), which is exactly the `ph→5.2` gate. Whole-city, both lights: *"no clutter,
-no green rash"*; seed 42's diff of the two city frames was **~2.3k px of 1.26M**.
-⚠ **The gate was answer-KEYED, not blind** — the caption must state the shop count (258: an absent
-subject and a correctly-negative one render the same frame), and the count *is* the build. So this was
-a **LOCATE** (108), with the caption as the answer key and the agents reporting per file (239); the
-*existence* claim rests on the probe, which has no noise floor.
-
-⚠ **THE INSTRUMENT CONVICTED ITSELF, VIA A TRANSPOSE.** The probe's build-detector asked *"does
-`drawBuilding`'s MID branch mention `c.corner`?"* by splitting the source on `c.t===T.MID` — but
-`drawBuilding`'s **first line** is `const ML=c.t===T.MID?midLook(...):null`, **above the RES branch**,
-so the tail contained the RES shopfront and it reported **HEAD as patched**. It came back **98 shown /
-9 ghosts — the exact TRANSPOSE of the truth measured ten minutes earlier**, which is the only reason
-it was caught. ⇒ **Match the BRANCH (`else if(c.t===T.MID)`), never the first occurrence of its TEST**,
-and carry a number you already know. (Law promoted to SKILL.md.)
-
-**Verdict: FIXED.** (Also 268's law on my own probe: its first cut hard-coded HEAD's definition of
-"live" and duly filed the *feature* under the *defect*, calling a patched MID's shop a ghost. **Read
-what your instrument COMPARES — even when you wrote it twenty minutes ago.**)
 
 ## Iteration 282 — the bed was a ribbon welded to the sand, and its own tooltip explained why nobody should look (2026-07-15) [Water & coast × New CA rule/FIX]
 
@@ -1134,3 +1040,40 @@ sky, nothing torn, clipped, or stranded over open countryside."*
 
 **Verdict: DEEPENED** (and the Interaction/UX gap closed) — the city's autonomous shuttles now run over the
 grid they serve, and can finally be named. One transport entity remained un-carded since 2012; it is carded now.
+
+## Iteration 291 — the storm that greyed the clouds and wet the ground but never once lit the sky (2026-07-15) [Sky & atmosphere × New element]
+
+**Vector.** Sky (rotation target, 284 oldest), and the KIND deliberately varied off the domain's over-worked
+Deepen cell to its SPARSEST — **New element** (only 27 and 43 before this, the 3rd ever). The header warned Sky
+was post-saturation; the seam said otherwise. The weather front (236) is one of the artifact's most elaborate
+systems — a two-clock front that greys cloud bellies, wets the ground on a trailing tail, hangs a rainbow, and
+falls as a dashed veil — and a heavy shower had **no dramatic payoff whatever**: the sky never lit. Lightning
+was the one missing sky element, and it interconnects with a host already built.
+
+**Change.** `drawCloud`'s loop, before the belly puffs: a cloud clearing the rainbow's own bar (`cloudWet(cl) >
+LIGHTN0=0.6`) flickers from within — a bluish-white RADIAL GRADIENT to alpha 0 (195: never a flat arc), an
+ELLIPSE matched to the cloud's own crown (rx 28·s, ry 11·s) centred on the belly, drawn UNDER the puffs so the
+cloud lights up over it. The flash is `pow(sin(time·1.15 + cl.y·4.3 + cl.x·1.1), 30)` — deterministic in `time`
+(no rng → genWorld+__warp reproducible, a probe can pin it), keyed to THIS cloud's own position so the storm's
+cells fire out of step (262: a global-monotone gate like LITAMT would strobe the whole sky as one). Scaled by
+`(0.30 + 0.62·LITAMT)` — washed out at noon, dramatic at dusk, the way a real flash is. `LIGHTN` is a probe
+suppressor (253). Two constants: `LIGHTN0=0.6`, `let LIGHTN=1`.
+
+**Census.** Draw-only, no rng, no terrain → **BYTE-IDENTICAL core**, empty tile histogram (expected: the census
+is vacuous for a draw-only vector — the gate here is the probe + the eyes). VERDICT: PASS.
+
+**Probe** (`probes/probe-lightning.mjs`, isolation by the `LIGHTN` suppressor in ONE page, floor exactly 0,
+build-agnostic). Frozen dusk, wettest front swept from clouds' own `cloudWet`. **(1)** a WET front (a cloud
+clears the bar) at the flash phase → **902 / 627 px of ink** (s42 / s7), the cloud lights up. **(2)** the control
+that is the whole point — a DRY front (no cloud clears the bar) → **0 px / 0 ink at any time**, on both seeds:
+the flash CANNOT fire on a fair sky. That is the gate, and it holds exactly.
+
+**Visual.** Both seeds **PASS** (blind whole-city + close-up, dusk). First cut FAILed on both seeds with one
+checkable geometric cause — the glow (R 44·s) was LARGER than the cloud (~30·s), spilling into empty sky and
+reading as *"a floating orb"* / *"a glow resting on the beach"*; confining it to a crown-matched ellipse fixed
+both. Re-shot: s7 clean — *"the middle cloud clearly lights up from within, contained inside the puff body …
+never clipping to pure white … no z-order tears"*; s42 PASS with a minor aside (that hero cloud happens to sit
+low over the coast). The city stays *"a balanced, coherent dusk coastal city."*
+
+**Verdict: SHIPPED** — a heavy shower now flashes. The front greyed the clouds and wet the ground for 55
+iterations and never lit the sky; it does now, and only a real shower does. Sky's additive cell was not spent.
