@@ -7813,7 +7813,14 @@ function drawBuilding(c,x,y,gx,gy){
         classroom band beside it goes dark, and this is the one light left burning */
         ctx.fillStyle='rgba(255,214,140,'+(0.8*LITAMT)+')';
         ctx.fillRect(fx3-6,fy3-hb*0.5-1,2.2,2.6);}}
-      if(dayT>0.15&&dayT<0.30){ /* the school run: drop-off crowd at the gate */
+      /* the school run happens TWICE (iter 306): the morning drop-off, and
+         home-time in the afternoon. It only ever drew the morning window, so the
+         gate stood empty every afternoon while the classrooms emptied behind it —
+         a half-schedule, one window where a real school day has two. dayT is the
+         slow wall clock (~110s), so both windows hold (134); the pickup sits in
+         afternoon daylight (LITAMT ~0..0.35, matching the morning's dawn light),
+         short of dusk, so the crowd is lit the same way the drop-off is. */
+      if((dayT>0.15&&dayT<0.30)||(dayT>0.51&&dayT<0.61)){ /* drop-off + pickup crowd at the gate */
         const[gx3,gy3]=px(gx+fxS*0.24,gy+0.3);
         const KC=['coral','gold','teal'],AC2=['terra','sage','lav'];
         for(let j=0;j<5;j++){

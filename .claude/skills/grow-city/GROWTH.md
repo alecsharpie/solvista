@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -33,7 +33,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
 - **ROTATION.** Last: Civic **299** · People **300** · Nature **301** · Urban **302** · Water **303** ·
-  Transport (examined **304**, no cell shipped) · Sky **305**. ➡ **NEXT: Civic (299, oldest)** — grep its
+  Transport (examined **304**, no cell shipped) · Sky **305** · People **306** (recovered killed iter: school-run
+  half-schedule FIX, off-rotation). ➡ **NEXT: Civic (299, oldest)** — grep its
   `tick()`/CA/TABLE seam + the frozen-census/comment tells, not the cue list (stale kind = New CA rule 36/107, cue list
   empty; 292/285 found Civic's recent defects in the enumerate-the-category / type-hierarchy seam).
   ✅ **305 SHIPPED Sky × Deepen — the front now greys the SKY ITSELF** (deaf backdrop; `overcast()`=rainFront's 4th
@@ -390,50 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 298 entries before Iteration 296 live in
+> **Archive:** the 299 entries before Iteration 297 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 296 — the harbour had a pier, a ferry, moored boats and a lighthouse, but no channel to bring them in (2026-07-15) [Water & coast × New element]
-
-**Vector.** Water & coast (oldest domain — 289), and this time a **New element** to break the domain's long
-Deepen/Polish/CA streak (289 boats-hour · 282 kelp · 275/268/266 polish · 257 deepen — the additive cell hadn't
-run since **169**). Grepped the Water seam first (225): the frozen census columns are all accounted for
-(SHOREPARK/MARSH/LIGHTHOUSE/ROCK are terrain with live draws; KELP now ticks; the `riv`/`bridge` flags are terrain,
-not upgraded), so no dead-rule defect this lap — but a real **absence**: the bay is dotted with a pier, a ferry,
-freighters, six day-sailers, three moored boats, kayaks, surfers and a one-per-city lighthouse, and **grep-confirmed
-zero navigation marks**. A working harbour marks its approach; Solvista's did not.
-
-**The element.** Channel buoys leading the fairway in to the pier head — **red flat-topped "can" marks to port,
-green pointed "cone" marks to starboard** (real IALA shapes: a can is a cylinder with a square topmark, a cone a
-triangle with a triangular topmark), anchored on the swell (bob off `waveT`) and **flashing red/green to seaward
-after dark** (a slow `sin(time…)` flash, drawn as a raw-literal radial glow per 279's emitter law — a light SOURCE,
-not a surface). Spawned in `genWorld` seaward of `pier.x1` (published world data — no argmax needed, 201/249), three
-marks a side at `pier.x1+2.5+k*1.7`, flanking the lane at `pier.y±1.7`. **`Math.random`, so the aids never perturb
-the seeded stream** (the guaranteed-clean-ship rule), and **each only spawns where `cellAt` is on-plate open WATER**
-(`!riv`, `x<=ROWMAX-1`), so a pier hard against the rim simply carries a shorter channel — 6/6 on both test seeds.
-
-**Discipline.** New entity array `buoys` (declared, reset in `genWorld`, drawn via `bucketAdd` for z-order); `stamp()`
-+ an `ENTINFO` row (a live function of the mark: *"Red port-hand mark on the harbour approach."* / *"Green
-starboard-hand…"*) so it names on hover and rings free; census hook `transport.buoys` in sync.
-
-**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw-only, no terrain,
-no `rng()`). `buoys 0 → 45` across the 9-cell matrix (~5/city), `transportModes +9` (a new mode in every cell).
-`solarRoofs −2 / greenRoofs −1` is the harness's tick-count wobble (226 — a draw-only change slows the frame a hair,
-so fewer `tick()`s land in census's 500ms window; core is untouched).
-
-**Visual.** Both seeds **PASS** on aimed pier close-ups (`probes/shot-buoy.mjs` — freezes in-page, aims the camera at
-`ctr(pier.x1+2.5, pier.y)`, day + night + an un-zoomed whole-city frame). Blind reads, both seeds: *"an upper line of
-RED flat-topped cans with square topmarks and a lower line of GREEN pointed cones with triangular topmarks, each ON
-the water with a small wash ring, none on land or in the sky"*; the night frame shows *"a bright red glow on a can
-and a green glow on a cone, others dark — consistent with intermittent flashing"*; *"no z-order tears… buoys layer
-cleanly over water and behind the pier deck"*; whole city *"balanced and coherent… tiny buoys dotting the harbour
-approach without adding clutter or darkness."*
-
-**Verdict: SHIPPED** — the harbour now has a marked channel; the red-can/green-cone marks lead the fairway in to the
-pier head and flash after dark.
 
 ## Iteration 297 — the ship rode at anchor waiting on a berth, and no one came out to work her (2026-07-15) [Transport × New element]
 
@@ -857,3 +819,44 @@ agent noting the rain shafts sit correctly as weather over the sea).
 **Verdict: DEEPENED** — the weather front now reaches the one surface it never touched. A heavy band hauls a
 leaden overcast across the sky and mutes the golden sheen and the sun behind it; a dry or patchy sky is
 byte-identical to HEAD. The sky is the front's fourth reader, and the storm is finally a storm all the way up.
+
+## Iteration 306 — the school run only ever happened in the morning (2026-07-15) [People & activity × Deepen/FIX]
+
+**Recovered work.** The worktree was found dirty at startup: `solvista.html` carried one coherent, uncommitted
+change plus an ad-hoc `probe-schoolrun.mjs`, killed after step 4 but before step 5 (no ledger entry, no commit —
+the last thing an iteration does). Per the dirty-tree rule, the GATES decide, not the ledger: I re-ran the census
+(PASS), ran the probe on both builds, and shot the visual gate myself. All three pass, and the diff is a single
+coherent draw-only change that ADDS behaviour (not a subtract-only corrupted control file, 197). Described from the
+diff; I verified rather than authored it.
+
+**Vector.** People × Deepen/FIX. The school is the one civic institution that draws a time-of-day crowd — a cluster
+of kids and grown-ups at its gate — and it was gated on ONE wall-clock window: `if(dayT>0.15&&dayT<0.30)`, the
+morning drop-off. A real school day has TWO peaks (drop-off + home-time pickup), so the gate stood empty every
+afternoon while the classrooms emptied behind it — a half-schedule. 199's tell on a DRAW GATE: the predicate says
+*"the school run"* but its value can only ever be the morning of it.
+
+**Change.** One line: the gate now fires in either window —
+`if((dayT>0.15&&dayT<0.30)||(dayT>0.51&&dayT<0.61))`. The pickup sits in early-afternoon daylight (measured `LITAMT`
+0.11 at dayT 0.56 — the darkness signal is low, i.e. full day, matching the morning drop-off's 0.06), short of dusk,
+so the crowd is lit exactly as the morning one is. `dayT` is the slow ~110s wall clock, so both windows hold (134).
+Draws no `rng()`, no `Math.random`, no terrain — the guaranteed-clean-ship class.
+
+**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw-only). The
+`solarRoofs +2 / greenRoofs +1` is the harness's tick-count wobble (226), not this edit.
+
+**Probe** (`probes/probe-schoolrun.mjs` — TEMPORAL/134, reads NO PIXELS, build-agnostic via `SRC=`). Counts the
+figure bodies the frame issues near each school's own gate centre (`w=1.4`, `h∈{1.8,2.9}`, within 16px of the gate,
+excluding the fete crowd that shares the signature). HEAD reads **1 busy window** (morning 54/48/40, afternoon **0**)
+across seeds 7/42/1234 — `DISTINCT BUSY WINDOWS = 1`, the defect stated with no threshold (236). The patch reads
+**2** (afternoon 54/48/40, *identical* morning counts). Controls: midday/night/dusk **empty on both builds** (199's
+dead-regime), morning **busy** (the positive control, 248) and **byte-identical across builds** (the change is purely
+the afternoon window, 250).
+
+**Visual.** Both seeds **PASS** (aimed afternoon school close-ups + morning control + un-zoomed whole-city, blind
+subagent reads). *"A row of ~5 little upright figures standing on the pavement directly at the schoolhouse's gate…
+sit correctly on the ground, not floating and not sunk into wall/roof… the afternoon crowd is present and comparable
+to the morning one."* No z-order tears, floating tiles or blown-out colour; the whole afternoon plate reads as a
+balanced, coherent coastal city on both seeds.
+
+**Verdict: FIXED** — the school run now happens twice, morning and afternoon, where a real one does; the gate is no
+longer empty every home-time. The half-schedule (199's tell on a draw gate) is closed.

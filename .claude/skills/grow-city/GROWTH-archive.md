@@ -22139,3 +22139,42 @@ coherent, **no z-order tear, no floating, no blowout**. All three PASS; whole fr
 (paved, striped, a few parked cars) instead of sheep-country pasture; lighter than the grass
 it replaces, so it darkens nothing, and it names itself on hover.
 
+## Iteration 296 — the harbour had a pier, a ferry, moored boats and a lighthouse, but no channel to bring them in (2026-07-15) [Water & coast × New element]
+
+**Vector.** Water & coast (oldest domain — 289), and this time a **New element** to break the domain's long
+Deepen/Polish/CA streak (289 boats-hour · 282 kelp · 275/268/266 polish · 257 deepen — the additive cell hadn't
+run since **169**). Grepped the Water seam first (225): the frozen census columns are all accounted for
+(SHOREPARK/MARSH/LIGHTHOUSE/ROCK are terrain with live draws; KELP now ticks; the `riv`/`bridge` flags are terrain,
+not upgraded), so no dead-rule defect this lap — but a real **absence**: the bay is dotted with a pier, a ferry,
+freighters, six day-sailers, three moored boats, kayaks, surfers and a one-per-city lighthouse, and **grep-confirmed
+zero navigation marks**. A working harbour marks its approach; Solvista's did not.
+
+**The element.** Channel buoys leading the fairway in to the pier head — **red flat-topped "can" marks to port,
+green pointed "cone" marks to starboard** (real IALA shapes: a can is a cylinder with a square topmark, a cone a
+triangle with a triangular topmark), anchored on the swell (bob off `waveT`) and **flashing red/green to seaward
+after dark** (a slow `sin(time…)` flash, drawn as a raw-literal radial glow per 279's emitter law — a light SOURCE,
+not a surface). Spawned in `genWorld` seaward of `pier.x1` (published world data — no argmax needed, 201/249), three
+marks a side at `pier.x1+2.5+k*1.7`, flanking the lane at `pier.y±1.7`. **`Math.random`, so the aids never perturb
+the seeded stream** (the guaranteed-clean-ship rule), and **each only spawns where `cellAt` is on-plate open WATER**
+(`!riv`, `x<=ROWMAX-1`), so a pier hard against the rim simply carries a shorter channel — 6/6 on both test seeds.
+
+**Discipline.** New entity array `buoys` (declared, reset in `genWorld`, drawn via `bucketAdd` for z-order); `stamp()`
++ an `ENTINFO` row (a live function of the mark: *"Red port-hand mark on the harbour approach."* / *"Green
+starboard-hand…"*) so it names on hover and rings free; census hook `transport.buoys` in sync.
+
+**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw-only, no terrain,
+no `rng()`). `buoys 0 → 45` across the 9-cell matrix (~5/city), `transportModes +9` (a new mode in every cell).
+`solarRoofs −2 / greenRoofs −1` is the harness's tick-count wobble (226 — a draw-only change slows the frame a hair,
+so fewer `tick()`s land in census's 500ms window; core is untouched).
+
+**Visual.** Both seeds **PASS** on aimed pier close-ups (`probes/shot-buoy.mjs` — freezes in-page, aims the camera at
+`ctr(pier.x1+2.5, pier.y)`, day + night + an un-zoomed whole-city frame). Blind reads, both seeds: *"an upper line of
+RED flat-topped cans with square topmarks and a lower line of GREEN pointed cones with triangular topmarks, each ON
+the water with a small wash ring, none on land or in the sky"*; the night frame shows *"a bright red glow on a can
+and a green glow on a cone, others dark — consistent with intermittent flashing"*; *"no z-order tears… buoys layer
+cleanly over water and behind the pier deck"*; whole city *"balanced and coherent… tiny buoys dotting the harbour
+approach without adding clutter or darkness."*
+
+**Verdict: SHIPPED** — the harbour now has a marked channel; the red-can/green-cone marks lead the fairway in to the
+pier head and flash after dark.
+
