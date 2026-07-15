@@ -21700,3 +21700,60 @@ Cosmetic; the bones are there. **Nature × Polish**, and it pairs with **(ax)**.
 **Verdict: SHIPPED** (and FIXED — a fully-drawn tile, promised on the placard and banked as an open
 question at iteration 107, had never once existed).
 
+## Iteration 288 — the tech the skyline could never wear (2026-07-15) [Urban fabric × Deepen/FIX]
+
+**Vector.** Urban fabric (oldest domain — 281). The rotation instruction was explicit: *grep `tick()`
+and the FLAGS, never `drawBuilding`* (four straight Urban laps — 267/274/281 — were RULE/FLAG defects,
+not look defects). 281's flag-lifecycle law names the un-audited per-cell flags by hand. Grepped every
+one (`solar`/`groof`/`hstr`/`corner`/`bridge`/`riv`/`treed`/`fete`) against the passes that WRITE it and
+the branches that DRAW it.
+
+**The tell, and it is 285's exactly.** `c.solar` is written on RES/MID/COM (L2571); `c.groof` on MID/COM
+(L2581). Every READER gates on `DEV.has(c.t)`, and `DEV` **contains `T.TOWER`**: the HUD count
+(`stats.solar`), the tooltip (*"Rooftop solar"*), the census (`solarRoofs`), and the CA's own adoption
+seed (`adopt = n.solar && DEV.has(n.t)`). But the **TOWER draw branch drew neither**, and **COM→TOWER is
+a saturating upgrade** (1996+, so it fires 14 years before solar even starts). So the city's tallest,
+most-visible roofs — the ones a viewer scans a skyline FOR — were **structurally incapable of ever
+carrying the rooftop tech the whole rest of the machine counts, names and seeds contagion from.** 285's
+law: a type-keyed rule confers a property on the DEVELOPED-ROOF category, and its tallest member lived at
+a level of the type hierarchy the writer's list never reached. The tower-crown comment even reasons about
+*"a roof garden [that] would pave it"* — for a garden the branch could not draw.
+
+**Two hypotheses refuted first, both cheaply (probe before you design).**
+- *The GHOST (281).* If the flag rode the COM→TOWER upgrade and then drew nothing, downtown would be full
+  of ghost panels the HUD claimed but nobody could see (as 281's corner shop was 92% ghosts). It is
+  **not**: `probe-roofghost` reads only **1.0% solar / 1.2% green** orphaned (25 of 2512 panels, 6 seeds).
+  Cause: the upgrade **saturates by 1996**, so a COM has almost always finished becoming a tower before it
+  ever gets a chance to adopt in 2010. The ghost is real but negligible.
+- *The dead contagion (283's shape).* The rule's comment promises *"a roof is far likelier to convert the
+  more of its neighbors already have"* — 283's exact language, and 283 found the boulevard's contagion was
+  a scatter (1.34x its own null, spark did 94%). Here it is **real**: `probe-roofspread` measures solar
+  clustering at **2.22x** its own scattered null and green roofs at **4.63x** (biggest connected run
+  18–24 solar hexes vs ~11 scattered). These are genuine arrays. **The rules are sound; only their REACH
+  was short.**
+
+**The fix.** Add `T.TOWER` to both writers' eligibility lists, and draw the tech in the tower branch: a
+flat roof-deck prism (dark-blue `solar` array / sage `groof` garden) at height `h`, drawn before the crown
+so whatever penthouse/parapet/spire follows rises through its centre; mast and helipad still ride above it.
+Two things land at once — towers now ADOPT via contagion from their COM neighbours, and any flag carried
+over from a tower's COM days (the former ghosts) finally RENDERS.
+
+**Census.** Core **byte-identical** (`pop`/`developed`/`roads` **+0** — the flag draws nothing `rng()`-gated,
+the hashCell is time-salted, no terrain moves). Growth signal exactly as intended: **`solarRoofs` +258**
+(1332→1590), **`greenRoofs` +125** (348→473) — tower roofs now counted honestly. Tile histogram empty
+(flag-only, inert).
+
+**Probe.** `probe-roofghost` on the patch: tower ghosts **→ 0** (residual 0.3% is CIVIC/IND, a pre-existing
+tiny edge deliberately not touched — scope discipline); solar shown 2512→**3081**, and **102 live roofs now
+correctly seed contagion from a VISIBLE tower** instead of an invisible one.
+
+**Visual.** Both seeds **PASS**, blind agents: *"numerous dark-blue solar arrays and a scattering of
+sage-green roof patches… many towers, not just a few"* · *"rest flat and level on the deck tops… coexist
+cleanly with masts, helipads, domes and penthouses… no floating, no z-order tearing"* · the whole frame
+still *"balanced and beautiful… no blown-out color, no clutter, no darkened region."* (This is a variety
+gain on the tower tops, which is what 228 wanted — aligned with the CLOSED tower-look ladder, not in
+tension with it: no height, no silhouette, no massing changed.)
+
+**Verdict: SHIPPED** (and FIXED — for the artifact's whole life the two rooftop-tech CAs the HUD counts
+could not reach a single tower, the densest and most-visible roofscape in the city).
+

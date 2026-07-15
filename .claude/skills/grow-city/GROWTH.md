@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~ | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286** | 78, **111** | | 84, **137**, **163**, **226** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -391,68 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 290 entries before Iteration 288 live in
+> **Archive:** the 291 entries before Iteration 289 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 288 — the tech the skyline could never wear (2026-07-15) [Urban fabric × Deepen/FIX]
-
-**Vector.** Urban fabric (oldest domain — 281). The rotation instruction was explicit: *grep `tick()`
-and the FLAGS, never `drawBuilding`* (four straight Urban laps — 267/274/281 — were RULE/FLAG defects,
-not look defects). 281's flag-lifecycle law names the un-audited per-cell flags by hand. Grepped every
-one (`solar`/`groof`/`hstr`/`corner`/`bridge`/`riv`/`treed`/`fete`) against the passes that WRITE it and
-the branches that DRAW it.
-
-**The tell, and it is 285's exactly.** `c.solar` is written on RES/MID/COM (L2571); `c.groof` on MID/COM
-(L2581). Every READER gates on `DEV.has(c.t)`, and `DEV` **contains `T.TOWER`**: the HUD count
-(`stats.solar`), the tooltip (*"Rooftop solar"*), the census (`solarRoofs`), and the CA's own adoption
-seed (`adopt = n.solar && DEV.has(n.t)`). But the **TOWER draw branch drew neither**, and **COM→TOWER is
-a saturating upgrade** (1996+, so it fires 14 years before solar even starts). So the city's tallest,
-most-visible roofs — the ones a viewer scans a skyline FOR — were **structurally incapable of ever
-carrying the rooftop tech the whole rest of the machine counts, names and seeds contagion from.** 285's
-law: a type-keyed rule confers a property on the DEVELOPED-ROOF category, and its tallest member lived at
-a level of the type hierarchy the writer's list never reached. The tower-crown comment even reasons about
-*"a roof garden [that] would pave it"* — for a garden the branch could not draw.
-
-**Two hypotheses refuted first, both cheaply (probe before you design).**
-- *The GHOST (281).* If the flag rode the COM→TOWER upgrade and then drew nothing, downtown would be full
-  of ghost panels the HUD claimed but nobody could see (as 281's corner shop was 92% ghosts). It is
-  **not**: `probe-roofghost` reads only **1.0% solar / 1.2% green** orphaned (25 of 2512 panels, 6 seeds).
-  Cause: the upgrade **saturates by 1996**, so a COM has almost always finished becoming a tower before it
-  ever gets a chance to adopt in 2010. The ghost is real but negligible.
-- *The dead contagion (283's shape).* The rule's comment promises *"a roof is far likelier to convert the
-  more of its neighbors already have"* — 283's exact language, and 283 found the boulevard's contagion was
-  a scatter (1.34x its own null, spark did 94%). Here it is **real**: `probe-roofspread` measures solar
-  clustering at **2.22x** its own scattered null and green roofs at **4.63x** (biggest connected run
-  18–24 solar hexes vs ~11 scattered). These are genuine arrays. **The rules are sound; only their REACH
-  was short.**
-
-**The fix.** Add `T.TOWER` to both writers' eligibility lists, and draw the tech in the tower branch: a
-flat roof-deck prism (dark-blue `solar` array / sage `groof` garden) at height `h`, drawn before the crown
-so whatever penthouse/parapet/spire follows rises through its centre; mast and helipad still ride above it.
-Two things land at once — towers now ADOPT via contagion from their COM neighbours, and any flag carried
-over from a tower's COM days (the former ghosts) finally RENDERS.
-
-**Census.** Core **byte-identical** (`pop`/`developed`/`roads` **+0** — the flag draws nothing `rng()`-gated,
-the hashCell is time-salted, no terrain moves). Growth signal exactly as intended: **`solarRoofs` +258**
-(1332→1590), **`greenRoofs` +125** (348→473) — tower roofs now counted honestly. Tile histogram empty
-(flag-only, inert).
-
-**Probe.** `probe-roofghost` on the patch: tower ghosts **→ 0** (residual 0.3% is CIVIC/IND, a pre-existing
-tiny edge deliberately not touched — scope discipline); solar shown 2512→**3081**, and **102 live roofs now
-correctly seed contagion from a VISIBLE tower** instead of an invisible one.
-
-**Visual.** Both seeds **PASS**, blind agents: *"numerous dark-blue solar arrays and a scattering of
-sage-green roof patches… many towers, not just a few"* · *"rest flat and level on the deck tops… coexist
-cleanly with masts, helipads, domes and penthouses… no floating, no z-order tearing"* · the whole frame
-still *"balanced and beautiful… no blown-out color, no clutter, no darkened region."* (This is a variety
-gain on the tower tops, which is what 228 wanted — aligned with the CLOSED tower-look ladder, not in
-tension with it: no height, no silhouette, no massing changed.)
-
-**Verdict: SHIPPED** (and FIXED — for the artifact's whole life the two rooftop-tech CAs the HUD counts
-could not reach a single tower, the densest and most-visible roofscape in the city).
 
 ## Iteration 289 — the day-sailers the whole bay had learned to leave, except these six (2026-07-15) [Water & coast × Deepen/FIX]
 
@@ -896,3 +839,53 @@ blown-out color, or compounded clutter (she is tiny at fit zoom, as a sparse wat
 **Verdict: SHIPPED** — the roadstead has its working craft; the ship "waiting on a berth" is now tended, a launch
 running out to her side and putting back to the harbour, named and lit on her own hours. ~6 path objects, one per
 city — free by construction.
+
+## Iteration 298 — the moon traverses the night (2026-07-15) [Sky & atmosphere × Deepen]
+
+**ADOPTED, NOT AUTHORED.** Found the `grow-city` worktree dirty at startup: a complete, uncommitted iteration 298
+that reached its gates but was killed before step 5 (no ledger entry, no commit; census-baseline/history modified,
+its two probes written at the root). Per the skill's "gates decide, not the ledger" path I re-ran the gates myself,
+confirmed the diff reads as one coherent change, and adopted it. Entry written from the diff + my own re-verification.
+
+**The gap.** The sun arcs overhead all day (iter 200's screen-space sun), but the MOON hung motionless in one corner:
+both readers — the disc/halo/craters draw and the moonglade sea-shimmer — hard-coded ONE screen point
+(`iw*0.80, ih*0.15`), so its position was a CONSTANT for the artifact's whole life (DISTINCT MOON POSITIONS = 1, the
+defect stated — 236). A sky where one luminary moved and the other was pinned.
+
+**Change (draw-only, no `rng()`, no terrain).** A new `moonPos()`: the disc rises low out of the open RIGHT corner at
+dusk, drifts right→left (the sun's own east-to-west sense), stands highest near solar midnight, sinks back left toward
+dawn. `mnP` runs 0(dusk)→1(dawn) off `dayT` (the pre-dawn tail past midnight unwrapped onto [1,1.14]); altitude is
+`sin(π·mnP)`. x is CLAMPED well right of the `.placard` (which owns the top-left corner, 200) so the moon never sets
+behind the DOM card. **ONE predicate, both readers on it** (153's rule, at last true of the POSITION not just the
+phase): the two hard-coded `iw*0.80,ih*0.15` sites — the disc and the moonglade's world-projection — now both call
+`moonPos()`. Nothing else changed; the moon's phase/`MOONF` gating (dim earthshine disc + lit lune) is untouched.
+
+**Census.** Draw-only → **PASS, 0 page errors**, every metric byte-flat (no terrain, no `rng()`). Vacuous by
+construction; the gates are the probe + the eyes.
+
+**Probe** (`probes/probe-moonarc.mjs`, adopted + repathed into `probes/`). **A** (build-agnostic, HEAD fallback →
+DISTINCT=1): the moon anchor is **10/10 DISTINCT** across the night on both seeds, x arcs **855→1239** (right→left),
+min-x 855 clears the placard edge (340), and altitude rises to a peak at **dayT 0.94** (solar midnight). **B**
+(isolation, patch only): floor(same point twice) **0px**; move the anchor and disc+glade shift **4195/4261px**; drag
+the moon off-screen and the glade ink **collapses 2017/2069px** — proving BOTH readers honour `moonPos()`, not a
+literal. **PASS on both seeds.**
+
+**Visual.** Two agents (one per seed) BOTH returned FAIL — and on measurement **neither names a defect the change
+introduced** (the loop's law: a FAIL is a cue to MEASURE, and when agents disagree a number is the verdict):
+- Seed 42 "no moonglade": seed 42 is a **near-NEW moon all night** (MOONF 0.014–0.047), which correctly casts almost
+  no glade. Seed 7 (**near-FULL**, MOONF 0.74–0.96) shows the glade present and tracking at dusk/midnight — so the
+  glade works; probe B already proved it tracks `moonPos`. Absent-on-a-new-moon is correct depiction.
+- Seed 7 "no pre-dawn moon": the pre-dawn disc renders **552px of ink, all within 60px of its position** (vs 2205px
+  at midnight), correctly z-ordered and NOT occluded (occlusion measured: moon-on vs moon-off). It is present — just a
+  smaller/dimmer gibbous disc that the arc has moved over the busy downtown (vs HEAD's fixed corner over empty water),
+  so the agent missed it. Seed 42's agent DID find its (fainter) pre-dawn moon. Both agents confirmed the arc reads
+  correctly and beautifully dusk→midnight, no z-order tears / doubled moons / blown-out colour, whole frame coherent.
+
+**Watch (banked cue).** The arc's LEFTWARD/pre-dawn end carries the moon over the city core, where a bright moon reads
+as a smaller target than it did over open water — correct z-order, but less prominent. A future polish could keep the
+moon a touch higher through the left half of the arc (over the skyline, not among it). Not a defect; the moon is drawn
+and present throughout.
+
+**Verdict: SHIPPED (adopted)** — the moon now climbs an arc across the night instead of hanging pinned in a corner,
+and the moonglade pool slides along the water beneath it. Draw-only, path count flat, free by construction. The two
+visual FAILs were investigated and refuted/explained by measurement, not overridden on vibe.
