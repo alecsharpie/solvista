@@ -22318,3 +22318,40 @@ CLOSED pin (a day the square holds no market → bald in daylight) and the OPEN 
 chalked pitches, whether the stalls are up or down. Draw-only, path count flat (a handful of fills on a few market
 tiles), free by construction. Cue (bf) CLOSED.
 
+## Iteration 300 — the busker packed up as the crowd finally thinned, but the crowd it played to never did (2026-07-15) [People & activity × Polish/FIX]
+
+**Vector.** People rotation (293 oldest), Deepen CLOSED (14 deep) ⇒ **Polish** (its stale cell, last 226). Not the
+cue list — grep the seam. Grepping every People/entity draw for a gate on a **global-monotone** signal (the recurring
+cliff: 199 windows · 210 residents · 230 traffic · 262 child · 286 kite/kayak) surfaced the last holdout:
+`drawBuilding`'s COM branch, *"evening crowd out on the strip, under the neon"*, gated `if(LITAMT>0.35&&v>0.6)`. So
+every lit shopfront strip (COM, `c.v>0.6`) filled with the **same crowd at the same instant** at dusk and stood there,
+identical, **all night** — while the **busker on that very kerb** (`buskerAt`, `buskOut`) went in on its own per-hex
+hour. The busker's own comment names the defect: it *"packs the guitar away as the crowd finally thins"* over a crowd
+whose *"evening crowd is its audience"* — **the audience outlasted the performer, for the artifact's whole life.**
+
+**Change.** Add `&& nightAmt()<stripOut(x,y)` to the crowd gate, and a per-hex closing hour beside `buskOut`:
+`const STRIP0=0.45, STRIPJ=0.52; const stripOut=(x,y)=>STRIP0+STRIPJ*hashCell(x,y,seedNum^0x5B27)`. The band is
+**taken from the ladder** (226), sitting just under BUSK so the busker is on average the last to leave its own audience
+(`KID~0.35 < JOG=SURF=KAYAK 0.62 ≈ STRIP 0.45..0.97 ≲ BUSK 0.55..0.97 < CURF 1.85`). hashCell-staggered (per-cell draw
+⇒ the stagger is the ground, not a carried phase), no `rng()`/`Math.random`/terrain. The crowd thins one strip at a
+time through the small hours — quiet strips empty first, the liveliest stay till nearly dawn — and (like the residents,
+`pedHidden`) the strip fills again as the sky comes up.
+
+**Census.** Draw-only, no rng, no terrain ⇒ **core BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram
+empty). VERDICT: PASS. The census is vacuous here (the gate is the probe + eyes).
+
+**Probe** (`probes/probe-stripcrowd.mjs`, TEMPORAL, no pixels, build-agnostic via `stripOut` detection). Counts the
+strip cells the draw's own gate admits, swept across the lit night, 2 seeds at 2035. **HEAD: crowd CONSTANT at 99/73
+across the whole lit night — `DISTINCT COUNTS = 1`** (the cliff, the defect stated, 236). **PATCH: evening peak 99→2
+(seed 42, 2% of peak) / 73→0 (seed 7); `DISTINCT = 7`; refills at dawn** (na 0.03 ⇒ full, matching the residents).
+Controls all hold: **HOST** (COM strip cells) 99/73 identical HEAD↔patch; **DAY crowd** 0 in both (dead-regime, 199);
+**BUSKER** (untouched, `__buskers`) varies in BOTH builds (15→0 / 22→1) — the sweep is live (248). The **evening peak
+equals HEAD exactly** ⇒ the change adds nothing at the dusk fixed point (245).
+
+**Visual** (`probes/shot-stripcrowd.mjs`, discriminating pair, evening vs small-hours, whole-city, frozen). Both seeds
+**PASS**, both blind agents correctly named the *evening* frame as the busier one (crowd 99/73 vs 16/13) and found no
+z-order tears / floating tiles / blown-out colour; each frame reads as a coherent night city.
+
+**Verdict: FIXED** — the seventh recursion of the 262 cliff, on the last People holdout: the neon strip crowd now keeps
+an hour like everyone else in the city, and the busker no longer plays to a frozen audience.
+

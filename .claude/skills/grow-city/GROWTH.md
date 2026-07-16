@@ -32,11 +32,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Transport (examined **304**) · Sky **305** · People **306** · Civic **307** · Nature **308**
-  (fire rides the dry season) · Urban **309** (the walk-up water tank now rides `c.age` — see below). ➡ **NEXT: Water
-  (303, oldest)** — grep its draw/`tick()` seam + the comment/199 tells, not the cue list. Water's named cue **(ay)**
-  windrow LENGTH is POLISH (⛔ not Water's next); **STEP-BACK IS DUE AT 310** (5 vectors since #38 at 304 — do the
-  holistic self-check before the next vector).
+- **ROTATION.** Last: Sky **305** · People **306** · Civic **307** · Nature **308** (fire rides the dry season) ·
+  Urban **309** (walk-up water tank rides `c.age`) · **310 = step-back #39 (no drift).** ➡ **NEXT: Water (303,
+  oldest)** — grep its draw/`tick()` seam + the comment/199 tells, not the cue list. Water's named cue **(ay)**
+  windrow LENGTH is POLISH (⛔ not Water's next); **next step-back ~315.**
   ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
   spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
   curve); **0.10x wet trough → 1.90x dry peak**, CENTRED on mean 0.5 ⇒ year-mean **exactly 1**, annual burn total HELD.
@@ -45,12 +44,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   (only burnt terrain perturbs, HEAD's cost); census core held (pop +2.9%, dev +0.3%).
   ✅ **305 SHIPPED Sky × Deepen — the front greys the SKY ITSELF** (`overcast()`=rainFront's 4th reader, gated above the
   patchy band ⇒ dry sky BYTE-IDENTICAL, `overcastSky` shared by `syncSky`+`render`; `probe-overcast.mjs`). **Sky additive NOT spent (291 lightning).**
-  ⚠ **304 EXAMINED TRANSPORT AND FOUND IT GENUINELY DRY** (step-back lap): all FOUR seams grepped CLEAN this lap —
-  rules (`stepVehicle`/`syncFleet`/`stepGond`/`stepMono` — every mover an hour/tooltip/honest job, 297 holds),
-  FLAGS (`bridge`/`riv` — writer/draw/tooltip/veto all agree, 281-clean), the label ladder (`describeTile`), AND the
-  `ENTINFO` hover rows (every mover has a LIVE `sub`). Transport's additive/deepen/interaction are SATURATED; its only
-  stale cell is **New CA rule (77)**, awkward for an entity-driven domain (a forced transit CA = shallow filler ⛔).
-  🟡 **OPEN CUE (bi):** the **gondola cabins run 24h** while the monorail deliberately thins its night platform crowd
+  ⚠ **304 EXAMINED TRANSPORT — GENUINELY DRY** (all FOUR seams grepped clean: rules/flags/label-ladder/`ENTINFO`;
+  detail folded into the SPENT/CLOSED block below). 🟡 **OPEN CUE (bi):** the **gondola cabins run 24h** while the monorail deliberately thins its night platform crowd
   (`-(LITAMT>0.6)`, L8286) — so cable-transit is the one mover class with zero night behaviour. A scenic aerial tram
   closes at night IRL; a rapid-transit monorail runs. **Deferred, NOT a defect (204/205 false-positive risk):** a
   mechanical mover at night is arguable, the cabins are ~3px at fit zoom, and the 262-cliff is 9-deep. Decide with a
@@ -65,12 +60,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   cues (a elevated transit · av catenary) are the same 0.5px hairline `polish-tile` family ⛔, stale = **New CA rule
   (77)**. Recent cliff closures: 303 herons (the one 301 cited as a control), 302 loft, 301 deer, 300 strip crowd —
   every animate draw now *verifiably* off the 262 cliff (`225`'s grep-the-seam law is 26-for-26 at *finding*).
-  ✅ **CUE (bd) CLOSED BY 284** (and it was TWO readers, not one — see 284's facts).
-  ➡ **NEXT cues: (ay)** windrow LENGTH
-  (POLISH ⇒ not Water's next), **(az)/(ba)** 278's two (below), **(bh)** over-bright plaza flame-blob (Nature/park
-  Polish, 293). ✅ **(au) CLOSED by 302** (loft roof-studio glazed, not green); **(ax)+(bg) CLOSED by 294; (bf) market
-  packed-away square CLOSED by 299** (permanent stone cross + folded trestles + crates + chalk bays; draw-only, census
-  byte-flat).
+  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next) · **(az)/(ba)** 278's two (below) · **(bh)**
+  over-bright plaza flame-blob (Nature/park Polish, 293). ✅ **CLOSED (detail in each entry):** (bd) by 284 (two
+  readers) · (au) by 302 · (ax)+(bg) by 294 · (bf) market packed-away square by 299.
   ✅ **PEOPLE: Interaction/UX ran at 278, Polish at 300 — its ONLY stale kind is New CA rule (49); Deepen CLOSED.**
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
   neon evening crowd stood all night, all-at-once, while the busker in front of it kept an hour; found by grepping
@@ -94,10 +86,16 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ✅ **STEP-BACK #38 RAN AT 304 — NO DRIFT** (both seeds PASS, day/golden/night + CROSSED dusk-summer/winter pair;
-  perf ARC FLAT in path objects: vs 264 ~40 laps back +0.55%d/+0.21%n — +0.2%/lap cancelled by byte-flat FIXES).
-  ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms** (216/198). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **TOOL NIT:**
-  `shot-stepback` `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM. **Step-back due ~309.**
+  ✅ **STEP-BACK #39 RAN AT 310 — NO DRIFT** (both seeds coherent, day/golden/night + CROSSED dusk-summer/winter
+  pair; both named winter by light ⇒ day-length season alive; `probe-goldenhue` PASS, greens keep identity 8°/10°
+  vs HEAD's 23°/24° ⇒ **golden monochrome cue stays CLOSED, 265 holds**; perf ARC FLAT: path objects vs 270 ~40
+  laps +0.95%d/+0.74%n = ~+0.02%/lap, cancelled by byte-flat FIXES). ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms**
+  (216/198 — perfab read −2%/lap, load noise). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **A "muddy golden"
+  agent FAIL was REFUTED by probe, not banked (212+265): golden pin (argmax GWARM, t=0.775) sits 0.009 from
+  dusk-summer ⇒ same near-sunset instant, dim by low sun — by design.** ⚠ **TOOL NITS in `shot-stepback` (banked,
+  not fixed):** per-frame `GWARM=0` self-report is a stale caption read (contradicts its own pins + `probe-goldenhue`;
+  pixels ARE warm) — nearly steered this lap into a false "golden unwarmed"; and `HUD=STALE` on golden/dusk =
+  `phaseWord`-vs-`clockWord` mismatch, not a stale DOM. Both are legit future tool laps (fix the tool, not a caveat).
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -393,48 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 302 entries before Iteration 300 live in
+> **Archive:** the 303 entries before Iteration 301 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 300 — the busker packed up as the crowd finally thinned, but the crowd it played to never did (2026-07-15) [People & activity × Polish/FIX]
-
-**Vector.** People rotation (293 oldest), Deepen CLOSED (14 deep) ⇒ **Polish** (its stale cell, last 226). Not the
-cue list — grep the seam. Grepping every People/entity draw for a gate on a **global-monotone** signal (the recurring
-cliff: 199 windows · 210 residents · 230 traffic · 262 child · 286 kite/kayak) surfaced the last holdout:
-`drawBuilding`'s COM branch, *"evening crowd out on the strip, under the neon"*, gated `if(LITAMT>0.35&&v>0.6)`. So
-every lit shopfront strip (COM, `c.v>0.6`) filled with the **same crowd at the same instant** at dusk and stood there,
-identical, **all night** — while the **busker on that very kerb** (`buskerAt`, `buskOut`) went in on its own per-hex
-hour. The busker's own comment names the defect: it *"packs the guitar away as the crowd finally thins"* over a crowd
-whose *"evening crowd is its audience"* — **the audience outlasted the performer, for the artifact's whole life.**
-
-**Change.** Add `&& nightAmt()<stripOut(x,y)` to the crowd gate, and a per-hex closing hour beside `buskOut`:
-`const STRIP0=0.45, STRIPJ=0.52; const stripOut=(x,y)=>STRIP0+STRIPJ*hashCell(x,y,seedNum^0x5B27)`. The band is
-**taken from the ladder** (226), sitting just under BUSK so the busker is on average the last to leave its own audience
-(`KID~0.35 < JOG=SURF=KAYAK 0.62 ≈ STRIP 0.45..0.97 ≲ BUSK 0.55..0.97 < CURF 1.85`). hashCell-staggered (per-cell draw
-⇒ the stagger is the ground, not a carried phase), no `rng()`/`Math.random`/terrain. The crowd thins one strip at a
-time through the small hours — quiet strips empty first, the liveliest stay till nearly dawn — and (like the residents,
-`pedHidden`) the strip fills again as the sky comes up.
-
-**Census.** Draw-only, no rng, no terrain ⇒ **core BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram
-empty). VERDICT: PASS. The census is vacuous here (the gate is the probe + eyes).
-
-**Probe** (`probes/probe-stripcrowd.mjs`, TEMPORAL, no pixels, build-agnostic via `stripOut` detection). Counts the
-strip cells the draw's own gate admits, swept across the lit night, 2 seeds at 2035. **HEAD: crowd CONSTANT at 99/73
-across the whole lit night — `DISTINCT COUNTS = 1`** (the cliff, the defect stated, 236). **PATCH: evening peak 99→2
-(seed 42, 2% of peak) / 73→0 (seed 7); `DISTINCT = 7`; refills at dawn** (na 0.03 ⇒ full, matching the residents).
-Controls all hold: **HOST** (COM strip cells) 99/73 identical HEAD↔patch; **DAY crowd** 0 in both (dead-regime, 199);
-**BUSKER** (untouched, `__buskers`) varies in BOTH builds (15→0 / 22→1) — the sweep is live (248). The **evening peak
-equals HEAD exactly** ⇒ the change adds nothing at the dusk fixed point (245).
-
-**Visual** (`probes/shot-stripcrowd.mjs`, discriminating pair, evening vs small-hours, whole-city, frozen). Both seeds
-**PASS**, both blind agents correctly named the *evening* frame as the busier one (crowd 99/73 vs 16/13) and found no
-z-order tears / floating tiles / blown-out colour; each frame reads as a coherent night city.
-
-**Verdict: FIXED** — the seventh recursion of the 262 cliff, on the last People holdout: the neon strip crowd now keeps
-an hour like everyone else in the city, and the busker no longer plays to a frozen audience.
 
 ## Iteration 301 — the herd grazed the meadow edge at 4am in midwinter, the same nine head as noon (2026-07-15) [Nature × Deepen/FIX]
 
@@ -868,3 +829,47 @@ no blown-out colour, density peaks naturally in the core and eases outward — s
 tanks are absent from the young boomtown, accrue as districts stand, and settle onto the old core. `c.age` — dated,
 tracked, tooltip-published and pixel-invisible for the artifact's whole life — finally reads onto a developed
 building, exactly the shape/ornament 254 banked. Free by construction (draw-only, path count a touch lower).
+
+## Iteration 310 — forty laps of growth, and the frame got faster (2026-07-17) [39th step-back / holistic]
+
+**Vector.** The rotation's next domain is Water (303, oldest), but the header's own law said the **step-back was
+due at 310** (5 vectors since #38 at 304 — the loop's main guardrail for long unattended runs, and it outranks
+one more feature). So this lap is the holistic self-check; **Water resumes next.** No `solvista.html` change.
+
+**Step-back #39.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
+dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant, sun UP in summer and DOWN in winter).
+Every frame self-reports its state.
+- **Visual: city is healthy — no cumulative drift.** One agent per seed, blind, cumulative question. Both read
+  all five frames as a coherent, balanced coastal city — no z-order tears, floating tiles, ornaments-in-mid-air,
+  blown-out colour. Both correctly named **dusk-winter** as the darker/night-lit frame (the discrimination check
+  — they looked, and the day-length season is alive). Both flagged the dense downtown tower core as *edging*
+  toward repetitive but "not yet clutter" — the deliberate core the header's do-not-re-open list already covers.
+- **The one FAIL was refuted by a probe, not shipped as a cue.** The seed-42 agent FAILed on "golden hour is a
+  muddy dim-brown wash, nearly identical to dusk-summer, not luminous warm low-sun light" — and the seed-7 agent
+  independently called golden "warm but muddy." Weighing a shared aside above a verdict (212), I probed rather
+  than believed. `probe-goldenhue` (golden pin DERIVED in-page as argmax GWARM, 265) settles it **objectively:
+  golden keeps the greens' identity** — PARK **8°** / FOREST **10°** off their daylight selves, against HEAD's
+  historical **23°/24°** rotated onto ROAD/BEACH. The monochrome-terracotta cue stays **CLOSED** (265 holds).
+  The "golden ≈ dusk-summer" reading is *by design*: the golden pin (argmax GWARM, t=0.775) sits **0.009** from
+  dusk-summer (t=0.766) — adjacent near-sunset instants — and golden is dim because the sun is low
+  (LITAMT=0.34), which is correct golden-hour behaviour, greens intact. **Not drift; not a defect.**
+- **Night ordering invariant PASS** (`probe-goldenhue`): `*TOWER 130 *MID 124 *COM 118 | BEACH 98` — the dimmest
+  lit surface clears the brightest unlit by 19 (222/251, on the p90 envelope). Neighbour separations hold.
+- **Perf: no drift.** LAP vs #38 (304): day **+2.3%** / night **−0.1%** (ms, within a 6-lap noise floor). ARC vs
+  270 (~40 laps back), in **path objects** (the load-immune unit — 216/198): day 112,117 vs 111,065 = **+0.95%**,
+  night 139,660 vs 138,640 = **+0.74%** — ~**+0.02%/lap**, an order under the +0.2%/lap additive tendency; the
+  byte-flat FIX/credit laps (283/285/286/287/288/…) cancelled it. (perfab ms read **−2.1%d/−1.7%n** — load
+  favoured "now"; path objects are the verdict.) No compounding.
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors — confirmed.
+
+**Tool nit (banked, not fixed).** `shot-stepback`'s per-frame self-report prints **`GWARM=0` on every frame,
+including golden** — which contradicts its own pins line (`GWARM peaks 0.779`) AND `probe-goldenhue` (which finds
+a clear warm shift at the same pin). It is a stale/mis-timed **caption read**, not a render bug: the golden PNG's
+pixels ARE warm (agents + probe agree), so the `GWARM=0` label lies while the frame is correct — exactly the
+false-defect trap a self-report exists to *prevent*. It nearly steered this lap into "golden is unwarmed."
+Reading GWARM correctly in the frame's readState (it is set inside `render()`; the read must be downstream and
+not reset) is a legitimate future tool lap — same shape as the still-standing `HUD=STALE` phaseWord/clockWord nit.
+
+**Verdict: STEP-BACK — NO DRIFT.** No feature shipped. The city is confirmed coherent across 3 lights × 2 seasons
+on 2 seeds; the day-length season reads by light alone; 40 laps of growth cost ~1% of draw work; golden hue
+keeps the greens (265 holds). The guardrail is reset (next step-back ~315); **NEXT vector is Water (303, oldest).**
