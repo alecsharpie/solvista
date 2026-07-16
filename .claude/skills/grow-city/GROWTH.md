@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -32,11 +32,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Nature **308** · Urban **309** · **310 = step-back #39** · Water **311** · Transport ~~**312**~~
-  (headlamps-in-a-daytime-storm — RENDERS 700+px/3 seeds but INVISIBLE; ⛔ 259, low-contrast warm lamp on a bright
-  greyed noon road; revert).
-  ➡ **NEXT: People (New CA rule 49 the only stale kind — needs a MEASURED seam, no Deepen without one) or Sky
-  (additive not spent, 291).** ⛔ **DO NOT re-try daytime vehicle lamps** — road-contrast is a `polish-tile`
+- **ROTATION.** Last: **310 = step-back #39** · Water **311** · Transport ~~**312**~~ (daytime-storm headlamps —
+  RENDERS 700+px but INVISIBLE, ⛔ 259; revert) · Sky **313** (balloons now a fair-weather craft — DRAW-fade on
+  `rainFront()`; closed a "fair days" 199-tell on the balloon comment; `probe-balloonweather`).
+  ➡ **NEXT: People (New CA rule 49 the only stale kind — needs a MEASURED seam, no Deepen without one) or Civic
+  (New CA rule 36/107 stale).** ⛔ **DO NOT re-try daytime vehicle lamps** — road-contrast is a `polish-tile`
   question, not a Deepen. **Step-back ~315.**
   ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
   spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
@@ -391,59 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 305 entries before Iteration 303 live in
+> **Archive:** the 306 entries before Iteration 304 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 303 — the herons stalked a frozen midnight marsh; now they fly to roost at dusk (2026-07-15) [Water & coast × Deepen/FIX]
-
-**Vector.** Water & coast rotation (296 oldest). The header's instruction is to grep the CA/entity seam,
-not the cue list — and grepping every animate water draw for a global-monotone gate (the recurring cliff:
-199 windows · 210 residents · 230 traffic · 262 child · 286 kite/kayak · 300 strip crowd · 301 deer) turned
-up a holdout **301 itself had walked past while declaring it fixed**: `drawHeron` (untouched since iter 17,
-*"No frame step"*) opens on `const[cx,cy]=px(...)` with **NO GATE AT ALL**. Six white and grey great herons
-stalking the estuary marsh at 4am in midwinter, identically to noon, on every marsh seed for the artifact's
-whole life. And 301 declared the deer *"the LAST animate holdout"* and *"EVERY animate draw in the diorama
-is now off the global-`nightAmt`/`LITAMT` cliff"* — **while citing the heron BY NAME as a control it had
-left untouched** (204/262). It never asked whether the heron *needed* the fix (286: the must-not-move column
-is a list of what you did not CHANGE, not of what is CORRECT). It did — the **9th recursion of the 262
-cliff, hiding inside the deer lap's own control list**.
-
-**Change.** `heronSession()=clamp(1−nightAmt()/DEERDARK,0,1)` and `heronOut=h=>h.ph/7`, and one line at the
-top of `drawHeron`: `if(heronSession()<heronOut(h))return;` (before `stamp()`, as drawDeer/drawSurfer/
-drawKayak do — a roosted heron is not out there to be hovered). Great herons roost in the trees at dusk, so
-the marsh empties one bird at a time as the dark comes down. **OFF THE SAME CLOCK THE DEER KEEP** (`DEERDARK`
-— no new constant, 226): the heron sits at the deer's rung of the ladder. **DERIVED, NOT DRAWN (262):**
-`h.ph` is already `Math.random()*7` (iter 17), so `heronOut` reads it here and no bird draws a value of its
-own — the shared `Math.random` stream stays byte-identical, every other entity provably untouched. A
-`nightAmt()` gate is 0 all day, so the whole DAY is byte-identical (a free dead-regime control, 199).
-
-**Census.** Draw-only, no rng/Math.random, no terrain ⇒ **core BYTE-IDENTICAL** (`pop`/`developed`/`roads`
-+0, empty tile histogram; `herons` spawn count 54 unchanged — only the DRAW gates). `greenRoofs` −1 is the
-226/278 RAF-tick wobble (reproduces on a same-file re-run; a hair-slower draw lands one fewer late-CA tick),
-not semantic. VERDICT: PASS (vacuous here; the gate is the probe + eyes).
-
-**Probe** (`probes/probe-heronhour.mjs`, TEMPORAL, no pixels for the headline, build-agnostic via
-`heronSession` detection). Counts the herons the draw's own gate admits, swept across the lit night, 2 marsh
-seeds at 2035.62. **HEAD: 6 head CONSTANT across the whole lit night — `DISTINCT COUNTS = 1`** (the cliff,
-the defect stated, 236). **PATCH: thins one at a time 6→5→4→3→0 through the evening/deep night, `DISTINCT=5`,
-refills at dawn (day control 6).** Controls all hold: **HOST** (herons spawned) 6 identical HEAD↔patch;
-**DAY** 6 in both (dead-regime, 199); **positive control SURFERS** (`waterOut`, untouched) reads
-`DISTINCT = 5–6` and **byte-identical between HEAD and patch** (9→…→0) — the sweep is live and the surfers
-provably unperturbed (248/271). **259 CHECK**: herons render **53–61 px at deep night** (forced out, diffed
-against herons-emptied) ⇒ roosting them is a *visible* change, not a no-op.
-
-**Visual** (`probes/shot-heronhour.mjs`, discriminating pair — DAY (herons out) vs DEEP-NIGHT (roosted) —
-aimed at the densest heron cluster by its own `ctr`, zoomed 5.2×, plus a whole-city frame). Both seeds
-**PASS**. Both blind agents found several white/grey wading birds standing in the marsh shallows in the day
-crop and **none** in the same marsh at deep night; both read the whole city as a coherent, balanced coast
-with no z-order tears, floating tiles or blown-out colour.
-
-**Verdict: FIXED** — the ninth recursion of the 262 cliff, and the *actual* last animate holdout in the
-city: Solvista's herons now fly to roost at nightfall like every person, boat, kite and deer, instead of
-stalking a frozen midnight marsh. 301's "every animate draw is off the cliff" is now — verifiably — true.
 
 ## Iteration 304 — the rotated domain was dry, so the loop checked itself (2026-07-15) [38th step-back / holistic]
 
@@ -873,3 +825,53 @@ reverted diff and were removed with it. **Do not re-try "vehicles light up in th
 the daytime road-contrast problem is a rendering/redesign question (a darker wet road, or a fundamentally
 brighter mark), i.e. a `polish-tile` job, not a Deepen — the same "barely-visible transport detail is a bad
 trade" the header already banks for cue (bi).
+
+## Iteration 313 — the hot-air balloons rode serenely through the thunderstorm (2026-07-17) [Sky & atmosphere × Deepen/interconnect]
+
+**Vector.** Sky rotation (oldest-shipped domain, 305). Sky's Deepen is mature but its comments were not all
+audited, so I grepped the sky seam for a 199-tell rather than the cue list. The balloon spawn's two comments
+read *"hot-air balloons drift over on **fair days**"* and *"**fair-weather** balloon festival"* — and the spawn
+gates on **`year>=1998` ALONE, with no weather term anywhere.** So the whole fleet floated placidly through
+overcast, showers and — since 291 — **lightning**. A hot-air balloon is the quintessential fair-weather craft
+(grounded by rain and gusts); this is 199's tell hosted on a draw's HOST comment: the words assert a
+fair-weather behaviour the value cannot have. Confirmed on HEAD before designing (`probe-balloonweather`):
+balloon ink is **byte-flat across the front's driest and wettest year** (wet/dry ratio **≈1.00** on 3 seeds).
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The balloons never despawn — `advanceEntities`
+**wraps** them (`b.x>G+8 → -8`), so a spawn gate could never empty the sky (the fleet fills on the first fair
+tick past 1998 and then loops through every future storm). So the gate lives at **DRAW**, faded on the shared
+weather signal:
+- **`balloonFair() = 1 - clamp((rainFront()-BALLOON0)/BALLOONRAMP, 0, 1)`** with `BALLOON0=0.50, BALLOONRAMP=0.20`
+  — full below 0.50 (before the sky even leadens at `OVC0=0.58`), grounded by ~0.70 (a clear shower). The Nth
+  reader of the one `rainFront()` every cloud/bow/CA already shares (one-predicate law). It FADES, not pops, or a
+  passing shower would blink the sky (134); `rainFront` is the slow ~20yr cycle, so no strobe.
+- The balloon draw loop wraps each envelope+basket in `ctx.globalAlpha=ballFair` (reset to 1 after), and skips the
+  loop entirely when `ballFair<=0.01`. Spawn UNCHANGED ⇒ the seeded stream is untouched.
+
+**Census.** Draw-only, unreachable from `tick()`'s terrain ⇒ core **BYTE-IDENTICAL** (`pop`/`developed`/`roads`
+**+0**, tile histogram empty). `greenRoofs -1` = the 226/278 RAF-tick wobble, not this edit. VERDICT: PASS
+(vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-balloonweather.mjs`, 3 seeds). Isolates the balloon LAYER by rendering the frozen frame
+WITH balloons and WITHOUT (clear the array) and diffing — the changed pixels ARE the balloons, sky cancelled,
+floor exactly 0. Measured at the driest and wettest year of each seed's front. Build-agnostic via **253's
+suppress-the-predicate** trick (`window.balloonFair = () => 1` renders HEAD's weather-blind behaviour in-page —
+no source swap, no cross-build floor). ⚠ `__warp` parks every balloon off the left edge (never drifts them), so
+the probe spreads them across the plate first — position is independent of the fade.
+- **PATCH: balloon ink dry 830–905 px → wet 0 px** (wet/dry **0.000** on every seed) — the fleet grounds in the rain.
+- **HEAD (control): dry ≈ wet** (ratio **0.999–1.004**) — flies through the storm regardless. The defect, stated.
+
+**Visual** (`probes/shot-balloonweather.mjs`, seeds 42 & 7; a discriminating pair per 258, since the success case
+is an ABSENCE). Three frames each: **fair** (dry year — balloons out), **storm** (wettest year, same hour — leaden
+sky, NO balloons), **storm-head** (the storm with `balloonFair→1` forced — balloons drifting through it, the
+defect). Both blind subagents **PASS**: *"balloons present and reading correctly as hot-air balloons"* in fair;
+*"leaden grey/overcast … all the balloons are ABSENT"* in storm; *"the balloons are PRESENT again … the old buggy
+behavior"* in storm-head. No z-order tears, floating tiles or blown-out colour anywhere; both whole frames read as
+balanced, coherent coastal cities (one noting the storm's rain shafts + rainbow render cleanly around the now-empty
+sky).
+
+**Verdict: DEEPENED** (a FIX). The balloons now read the weather the rest of the sky already does — they fill a
+clear day and fade out as the front gathers, instead of sailing through thunderstorms. It is the inverse of 312's
+reverted daytime lamp: that RENDERED but could not be seen (259); this one is a clear, legible, correctness change
+(830 px of balloon, present vs cleanly absent) and free by construction (draw-only, census byte-identical). Closes
+the "fair days" 199-tell on the balloon comment.

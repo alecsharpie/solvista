@@ -4996,6 +4996,9 @@ function cloudWet(cl){ return clamp((rainFront()-cl.wf)/WETRAMP,0,1); }
 const OVC0=0.58, OVCRAMP=0.34;   /* dry/patchy below 0.58 (byte-identical); full leaden by ~0.92 */
 const OVCMAX=0.82;               /* a floor of gradient always survives — the sky never goes DEAD flat (cf SHAMT) */
 function overcast(){ return clamp((rainFront()-OVC0)/OVCRAMP,0,1)*OVCMAX; }
+const BALLOON0=0.50, BALLOONRAMP=0.20; /* a balloon is the fair-weather craft: full below 0.50 (before the sky even
+   leadens at OVC0=0.58), grounded by ~0.70, a clear shower. Reads the SAME rainFront every cloud/bow/CA already does. */
+function balloonFair(){ return 1-clamp((rainFront()-BALLOON0)/BALLOONRAMP,0,1); }
 /* Pull a [skyTop, skyBot] pair toward a shared leaden grey, in place: both stops converge on
    the MEAN of their own two luminances (so the top-to-bottom gradient FLATTENS — an overcast
    sky is uniform, not a bright zenith over a warm horizon), dimmed a touch, and desaturated
@@ -9546,8 +9549,13 @@ function render(){
     ctx.beginPath();ctx.ellipse(cx-14*cl.s,py2+5,14*cl.s,6*cl.s,0,0,7);ctx.fill();
     ctx.beginPath();ctx.ellipse(cx+15*cl.s,py2+4,15*cl.s,6.5*cl.s,0,0,7);ctx.fill();
   }
-  /* hot-air balloons drift over on fair days */
-  if(LITAMT<0.5)for(const b of balloons){
+  /* hot-air balloons drift over on fair days — grounded by rain, so the fleet fades
+     out as the front gathers and comes back on a clear day. It FADES rather than
+     pops, or a passing shower would blink the sky (134); the balloons keep looping
+     underneath (they never despawn), so this is a draw gate and perturbs nothing. */
+  const ballFair=balloonFair();
+  if(LITAMT<0.5&&ballFair>0.01)for(const b of balloons){
+    ctx.globalAlpha=ballFair;
     const[cx,cy]=pxc(b.x,b.y);
     const s=b.sc||1;
     const by=cy-165-cy*0.45+Math.sin(time*0.6+b.ph)*4;
@@ -9563,6 +9571,7 @@ function render(){
     ctx.lineTo(cx+1.1*s,by+12*s);ctx.lineTo(cx-1.1*s,by+12*s);ctx.closePath();ctx.fill();
     ctx.fillStyle=col('deck',1);ctx.fillRect(cx-1.6*s,by+12*s,3.2*s,2.6*s);
   }
+  ctx.globalAlpha=1;
   /* the city helicopter hops between rooftop helipads */
   for(const h of copters){
     if(!heliPads.length)break;

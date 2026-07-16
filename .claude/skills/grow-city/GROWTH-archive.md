@@ -22445,3 +22445,51 @@ or clutter anywhere.
 **Verdict: SHIPPED** (closes cue **(au)**) — the loft's roof-studio no longer masquerades as a green roof
 it structurally cannot have; it now reads as the glazed live-work studio the tooltip has always named.
 
+## Iteration 303 — the herons stalked a frozen midnight marsh; now they fly to roost at dusk (2026-07-15) [Water & coast × Deepen/FIX]
+
+**Vector.** Water & coast rotation (296 oldest). The header's instruction is to grep the CA/entity seam,
+not the cue list — and grepping every animate water draw for a global-monotone gate (the recurring cliff:
+199 windows · 210 residents · 230 traffic · 262 child · 286 kite/kayak · 300 strip crowd · 301 deer) turned
+up a holdout **301 itself had walked past while declaring it fixed**: `drawHeron` (untouched since iter 17,
+*"No frame step"*) opens on `const[cx,cy]=px(...)` with **NO GATE AT ALL**. Six white and grey great herons
+stalking the estuary marsh at 4am in midwinter, identically to noon, on every marsh seed for the artifact's
+whole life. And 301 declared the deer *"the LAST animate holdout"* and *"EVERY animate draw in the diorama
+is now off the global-`nightAmt`/`LITAMT` cliff"* — **while citing the heron BY NAME as a control it had
+left untouched** (204/262). It never asked whether the heron *needed* the fix (286: the must-not-move column
+is a list of what you did not CHANGE, not of what is CORRECT). It did — the **9th recursion of the 262
+cliff, hiding inside the deer lap's own control list**.
+
+**Change.** `heronSession()=clamp(1−nightAmt()/DEERDARK,0,1)` and `heronOut=h=>h.ph/7`, and one line at the
+top of `drawHeron`: `if(heronSession()<heronOut(h))return;` (before `stamp()`, as drawDeer/drawSurfer/
+drawKayak do — a roosted heron is not out there to be hovered). Great herons roost in the trees at dusk, so
+the marsh empties one bird at a time as the dark comes down. **OFF THE SAME CLOCK THE DEER KEEP** (`DEERDARK`
+— no new constant, 226): the heron sits at the deer's rung of the ladder. **DERIVED, NOT DRAWN (262):**
+`h.ph` is already `Math.random()*7` (iter 17), so `heronOut` reads it here and no bird draws a value of its
+own — the shared `Math.random` stream stays byte-identical, every other entity provably untouched. A
+`nightAmt()` gate is 0 all day, so the whole DAY is byte-identical (a free dead-regime control, 199).
+
+**Census.** Draw-only, no rng/Math.random, no terrain ⇒ **core BYTE-IDENTICAL** (`pop`/`developed`/`roads`
++0, empty tile histogram; `herons` spawn count 54 unchanged — only the DRAW gates). `greenRoofs` −1 is the
+226/278 RAF-tick wobble (reproduces on a same-file re-run; a hair-slower draw lands one fewer late-CA tick),
+not semantic. VERDICT: PASS (vacuous here; the gate is the probe + eyes).
+
+**Probe** (`probes/probe-heronhour.mjs`, TEMPORAL, no pixels for the headline, build-agnostic via
+`heronSession` detection). Counts the herons the draw's own gate admits, swept across the lit night, 2 marsh
+seeds at 2035.62. **HEAD: 6 head CONSTANT across the whole lit night — `DISTINCT COUNTS = 1`** (the cliff,
+the defect stated, 236). **PATCH: thins one at a time 6→5→4→3→0 through the evening/deep night, `DISTINCT=5`,
+refills at dawn (day control 6).** Controls all hold: **HOST** (herons spawned) 6 identical HEAD↔patch;
+**DAY** 6 in both (dead-regime, 199); **positive control SURFERS** (`waterOut`, untouched) reads
+`DISTINCT = 5–6` and **byte-identical between HEAD and patch** (9→…→0) — the sweep is live and the surfers
+provably unperturbed (248/271). **259 CHECK**: herons render **53–61 px at deep night** (forced out, diffed
+against herons-emptied) ⇒ roosting them is a *visible* change, not a no-op.
+
+**Visual** (`probes/shot-heronhour.mjs`, discriminating pair — DAY (herons out) vs DEEP-NIGHT (roosted) —
+aimed at the densest heron cluster by its own `ctr`, zoomed 5.2×, plus a whole-city frame). Both seeds
+**PASS**. Both blind agents found several white/grey wading birds standing in the marsh shallows in the day
+crop and **none** in the same marsh at deep night; both read the whole city as a coherent, balanced coast
+with no z-order tears, floating tiles or blown-out colour.
+
+**Verdict: FIXED** — the ninth recursion of the 262 cliff, and the *actual* last animate holdout in the
+city: Solvista's herons now fly to roost at nightfall like every person, boat, kite and deer, instead of
+stalking a frozen midnight marsh. 301's "every animate draw is off the cliff" is now — verifiably — true.
+
