@@ -22788,3 +22788,47 @@ tanks are absent from the young boomtown, accrue as districts stand, and settle 
 tracked, tooltip-published and pixel-invisible for the artifact's whole life — finally reads onto a developed
 building, exactly the shape/ornament 254 banked. Free by construction (draw-only, path count a touch lower).
 
+## Iteration 310 — forty laps of growth, and the frame got faster (2026-07-17) [39th step-back / holistic]
+
+**Vector.** The rotation's next domain is Water (303, oldest), but the header's own law said the **step-back was
+due at 310** (5 vectors since #38 at 304 — the loop's main guardrail for long unattended runs, and it outranks
+one more feature). So this lap is the holistic self-check; **Water resumes next.** No `solvista.html` change.
+
+**Step-back #39.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
+dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant, sun UP in summer and DOWN in winter).
+Every frame self-reports its state.
+- **Visual: city is healthy — no cumulative drift.** One agent per seed, blind, cumulative question. Both read
+  all five frames as a coherent, balanced coastal city — no z-order tears, floating tiles, ornaments-in-mid-air,
+  blown-out colour. Both correctly named **dusk-winter** as the darker/night-lit frame (the discrimination check
+  — they looked, and the day-length season is alive). Both flagged the dense downtown tower core as *edging*
+  toward repetitive but "not yet clutter" — the deliberate core the header's do-not-re-open list already covers.
+- **The one FAIL was refuted by a probe, not shipped as a cue.** The seed-42 agent FAILed on "golden hour is a
+  muddy dim-brown wash, nearly identical to dusk-summer, not luminous warm low-sun light" — and the seed-7 agent
+  independently called golden "warm but muddy." Weighing a shared aside above a verdict (212), I probed rather
+  than believed. `probe-goldenhue` (golden pin DERIVED in-page as argmax GWARM, 265) settles it **objectively:
+  golden keeps the greens' identity** — PARK **8°** / FOREST **10°** off their daylight selves, against HEAD's
+  historical **23°/24°** rotated onto ROAD/BEACH. The monochrome-terracotta cue stays **CLOSED** (265 holds).
+  The "golden ≈ dusk-summer" reading is *by design*: the golden pin (argmax GWARM, t=0.775) sits **0.009** from
+  dusk-summer (t=0.766) — adjacent near-sunset instants — and golden is dim because the sun is low
+  (LITAMT=0.34), which is correct golden-hour behaviour, greens intact. **Not drift; not a defect.**
+- **Night ordering invariant PASS** (`probe-goldenhue`): `*TOWER 130 *MID 124 *COM 118 | BEACH 98` — the dimmest
+  lit surface clears the brightest unlit by 19 (222/251, on the p90 envelope). Neighbour separations hold.
+- **Perf: no drift.** LAP vs #38 (304): day **+2.3%** / night **−0.1%** (ms, within a 6-lap noise floor). ARC vs
+  270 (~40 laps back), in **path objects** (the load-immune unit — 216/198): day 112,117 vs 111,065 = **+0.95%**,
+  night 139,660 vs 138,640 = **+0.74%** — ~**+0.02%/lap**, an order under the +0.2%/lap additive tendency; the
+  byte-flat FIX/credit laps (283/285/286/287/288/…) cancelled it. (perfab ms read **−2.1%d/−1.7%n** — load
+  favoured "now"; path objects are the verdict.) No compounding.
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors — confirmed.
+
+**Tool nit (banked, not fixed).** `shot-stepback`'s per-frame self-report prints **`GWARM=0` on every frame,
+including golden** — which contradicts its own pins line (`GWARM peaks 0.779`) AND `probe-goldenhue` (which finds
+a clear warm shift at the same pin). It is a stale/mis-timed **caption read**, not a render bug: the golden PNG's
+pixels ARE warm (agents + probe agree), so the `GWARM=0` label lies while the frame is correct — exactly the
+false-defect trap a self-report exists to *prevent*. It nearly steered this lap into "golden is unwarmed."
+Reading GWARM correctly in the frame's readState (it is set inside `render()`; the read must be downstream and
+not reset) is a legitimate future tool lap — same shape as the still-standing `HUD=STALE` phaseWord/clockWord nit.
+
+**Verdict: STEP-BACK — NO DRIFT.** No feature shipped. The city is confirmed coherent across 3 lights × 2 seasons
+on 2 seeds; the day-length season reads by light alone; 40 laps of growth cost ~1% of draw work; golden hue
+keeps the greens (265 holds). The guardrail is reset (next step-back ~315); **NEXT vector is Water (303, oldest).**
+
