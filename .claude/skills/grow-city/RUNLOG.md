@@ -243,4 +243,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 310  —                          SHIPPED             29m17s   $8.86  c729c09
 ✔ Iter 311  Water & coast × Deepen/interconnect DEEPENED            16m03s   $10.80 dbd4c3e
 ↩ Iter 312  Transport × Deepen         EXPLORED → REVERTED 23m09s   $11.08 3fcb2c6
+✔ Iter 313  Sky & atmosphere × Deepen/interconnect DEEPENED            20m22s   $10.34 c8fac89
 ```
