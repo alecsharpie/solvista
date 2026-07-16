@@ -246,4 +246,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 313  Sky & atmosphere × Deepen/interconnect DEEPENED            20m22s   $10.34 c8fac89
 ✔ Iter 314  People & activity × Deepen/FIX DEEPENED            19m22s   $9.36  e735e33
 ✔ Iter 315  Civic or People × New CA rule SHIPPED             12m41s   $6.55  f767d72
+✔ Iter 316  People × New CA rule       DEEPENED            26m29s   $11.01 cc4fd88
 ```
