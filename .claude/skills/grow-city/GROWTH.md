@@ -19,7 +19,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
+| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
@@ -32,7 +32,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Sky **313** (balloons a fair-weather craft) · People **314** (block-party CA DE-SYNCHRONISED —
+- **ROTATION.** Last: Urban **316** (DISTRICTS made real — `c.dist` was per-cell noise a weak vote never coarsened;
+  shopfronts/awnings/market/tooltip now read a fixed Voronoi `distOf(x,y)`, coherence 55→98%, wholly inert. 199-tell,
+  shape of 283/285. ⛔ **The districts vote in `tick()` is now a STREAM-PRESERVING VESTIGE — do NOT delete** (its
+  `rng()<0.5` count entangled with the old field). `probe-districts.mjs`.) · Sky **313** (balloons a fair-weather craft) · People **314** (block-party CA DE-SYNCHRONISED —
   the 272/263 excitable-medium fix on the sibling 271 never enumerated: a shared CONSTANT refractory ⇒ the whole city's
   parties ignited & rested as ONE, a metronomic square wave, ~1 party at 2035; `probe-blockparty`). ✅ **EXCITABLE-MEDIA
   CATEGORY NOW COMPLETE** (bloom 263 · shroom 272 · party 314 — every shared-timer CA in `tick()` now jitters off a
@@ -391,52 +394,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 308 entries before Iteration 306 live in
+> **Archive:** the 309 entries before Iteration 307 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 306 — the school run only ever happened in the morning (2026-07-15) [People & activity × Deepen/FIX]
-
-**Recovered work.** The worktree was found dirty at startup: `solvista.html` carried one coherent, uncommitted
-change plus an ad-hoc `probe-schoolrun.mjs`, killed after step 4 but before step 5 (no ledger entry, no commit —
-the last thing an iteration does). Per the dirty-tree rule, the GATES decide, not the ledger: I re-ran the census
-(PASS), ran the probe on both builds, and shot the visual gate myself. All three pass, and the diff is a single
-coherent draw-only change that ADDS behaviour (not a subtract-only corrupted control file, 197). Described from the
-diff; I verified rather than authored it.
-
-**Vector.** People × Deepen/FIX. The school is the one civic institution that draws a time-of-day crowd — a cluster
-of kids and grown-ups at its gate — and it was gated on ONE wall-clock window: `if(dayT>0.15&&dayT<0.30)`, the
-morning drop-off. A real school day has TWO peaks (drop-off + home-time pickup), so the gate stood empty every
-afternoon while the classrooms emptied behind it — a half-schedule. 199's tell on a DRAW GATE: the predicate says
-*"the school run"* but its value can only ever be the morning of it.
-
-**Change.** One line: the gate now fires in either window —
-`if((dayT>0.15&&dayT<0.30)||(dayT>0.51&&dayT<0.61))`. The pickup sits in early-afternoon daylight (measured `LITAMT`
-0.11 at dayT 0.56 — the darkness signal is low, i.e. full day, matching the morning drop-off's 0.06), short of dusk,
-so the crowd is lit exactly as the morning one is. `dayT` is the slow ~110s wall clock, so both windows hold (134).
-Draws no `rng()`, no `Math.random`, no terrain — the guaranteed-clean-ship class.
-
-**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw-only). The
-`solarRoofs +2 / greenRoofs +1` is the harness's tick-count wobble (226), not this edit.
-
-**Probe** (`probes/probe-schoolrun.mjs` — TEMPORAL/134, reads NO PIXELS, build-agnostic via `SRC=`). Counts the
-figure bodies the frame issues near each school's own gate centre (`w=1.4`, `h∈{1.8,2.9}`, within 16px of the gate,
-excluding the fete crowd that shares the signature). HEAD reads **1 busy window** (morning 54/48/40, afternoon **0**)
-across seeds 7/42/1234 — `DISTINCT BUSY WINDOWS = 1`, the defect stated with no threshold (236). The patch reads
-**2** (afternoon 54/48/40, *identical* morning counts). Controls: midday/night/dusk **empty on both builds** (199's
-dead-regime), morning **busy** (the positive control, 248) and **byte-identical across builds** (the change is purely
-the afternoon window, 250).
-
-**Visual.** Both seeds **PASS** (aimed afternoon school close-ups + morning control + un-zoomed whole-city, blind
-subagent reads). *"A row of ~5 little upright figures standing on the pavement directly at the schoolhouse's gate…
-sit correctly on the ground, not floating and not sunk into wall/roof… the afternoon crowd is present and comparable
-to the morning one."* No z-order tears, floating tiles or blown-out colour; the whole afternoon plate reads as a
-balanced, coherent coastal city on both seeds.
-
-**Verdict: FIXED** — the school run now happens twice, morning and afternoon, where a real one does; the gate is no
-longer empty every home-time. The half-schedule (199's tell on a draw gate) is closed.
 
 ## Iteration 307 — the local pitch had two players who never left, and no game ever kicked off (2026-07-15) [Civic & culture × Deepen/FIX]
 
@@ -851,3 +813,46 @@ Every frame self-reports its state.
 on 2 seeds; the day-length season reads by light alone; forty laps of growth cost ~0.6% of draw work; golden hue
 keeps the greens (265 holds). The guardrail is reset (next step-back ~320); **NEXT vector is Civic or People ×
 New CA rule** (the two stale additive cells).
+
+## Iteration 316 — the four district colors finally drew a map (2026-07-17) [Urban fabric × Deepen/FIX]
+
+**Vector.** The header's `NEXT` is Civic/People × New CA rule, but the loop's own law outranks rotation: grep the
+seam, not the cue list — a found, measured defect beats a shallow additive feature into a saturated city. Grepping
+the majority-vote **districts CA** (`c.dist`, DISTCOL gold/teal/coral/sage) turned up a 199-tell: the comment says
+"blocks slowly vote themselves a shared identity" and COM shopfronts, awnings, market spots and the tooltip all wear
+their **district** color — but `c.dist` is seeded as **per-cell white noise** (`hashCell(x*3+1,y*7+2,seed^13)`), and
+a weak vote (ks(50) picks/tick, strict ≥3 majority, ~12 touches/cell over 60 yrs) **cannot coarsen noise into
+quarters**. Measured at 2035 (`probes/probe-districts.mjs`): coherence (a dev cell's dist == its dev-neighbour
+plurality) only **55–61%** — a hair above the 25% chance floor for 4 colors — biggest same-color run ~1% of the
+fabric, COM colors split evenly [46,57,50,38]. **The "District" the shopfronts wore and the tooltip named did not
+exist; every street was a random 4-color speckle** — the same shape as 283 (the dead boulevard) and 285 (the market
+that kept no day).
+
+**Change (draw-only — no rng(), no terrain, no state).** Districts become a **fixed Voronoi geography** read at draw
+time: a new pure `distOf(x,y)` (four centers on a per-seed jittered 2×2 grid over the developed land, one of each
+color, nearest wins in `ctr()` screen space so quarters read round; memoised per seed off a **private PRNG**, zero
+shared `rng()`). The four readers (MARKET spots · COM sign · COM walk-up sign · tooltip) now read `distOf(x,y)`
+instead of `c.dist`. **The seed and the vote pass in `tick()` are left byte-identical** — the vote is retained ONLY
+to keep the seeded stream aligned, because its `rng()<0.5` is short-circuit-gated on `best!==c.dist`, so its draw
+count is entangled with the old field (a coherent seed drew *fewer* rolls → a chaotic cascade: first cut, seeding
+`c.dist` coherently, cratered **pop −5.9% COLLAPSE** while `developed`/`roads` stayed flat — the 231 tell — so it was
+reverted and the look was decoupled from the stream instead).
+
+**Census.** Only draw-time reads changed ⇒ `pop`/`developed`/`roads` **+0, byte-identical**, tile histogram empty.
+VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-districts.mjs`, pure world data, 3 seeds × 2035, build-agnostic via `SRC=`/`distOf` fallback):
+- **HEAD: coherence 55–61%, shopfront ECHO (a COM has a same-color COM within r3) 66–76%** — near-random speckle.
+- **PATCH: coherence 96–98%, ECHO ~98%** — adjacent shopfronts now share their quarter's color. Control (HEAD via
+  `SRC=`) moves exactly the wrong-way expected, confirming the metric.
+
+**Visual** (`shots/after_*`, seeds 42 & 7, downtown clip + whole city, 2035). Both blind subagents **PASS**, and both
+— independently, on two seeds — **located distinct same-color quarters** (a teal pocket, a coral cluster, a gold
+band, sage near the parks), which is the locate-not-judge check: they saw the geography. No z-order tears, floating
+tiles or blown-out color; both whole-city frames read as balanced coherent coastal cities.
+
+**Verdict: DEEPENED** (a FIX). The city's four districts, advertised on every shopfront and in the tooltip since long
+before the ledger, finally cohere into readable gold/teal/coral/sage quarters (coherence 55%→98%) instead of a
+random 4-color speckle — wholly inert (census byte-identical), the look decoupled from the seeded stream so the vote
+CA's `rng()` footprint is preserved. Same shape as 283/285: a label ladder that named a distinction the pixels never
+drew.

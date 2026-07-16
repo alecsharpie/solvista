@@ -22601,3 +22601,44 @@ agent noting the rain shafts sit correctly as weather over the sea).
 leaden overcast across the sky and mutes the golden sheen and the sun behind it; a dry or patchy sky is
 byte-identical to HEAD. The sky is the front's fourth reader, and the storm is finally a storm all the way up.
 
+## Iteration 306 — the school run only ever happened in the morning (2026-07-15) [People & activity × Deepen/FIX]
+
+**Recovered work.** The worktree was found dirty at startup: `solvista.html` carried one coherent, uncommitted
+change plus an ad-hoc `probe-schoolrun.mjs`, killed after step 4 but before step 5 (no ledger entry, no commit —
+the last thing an iteration does). Per the dirty-tree rule, the GATES decide, not the ledger: I re-ran the census
+(PASS), ran the probe on both builds, and shot the visual gate myself. All three pass, and the diff is a single
+coherent draw-only change that ADDS behaviour (not a subtract-only corrupted control file, 197). Described from the
+diff; I verified rather than authored it.
+
+**Vector.** People × Deepen/FIX. The school is the one civic institution that draws a time-of-day crowd — a cluster
+of kids and grown-ups at its gate — and it was gated on ONE wall-clock window: `if(dayT>0.15&&dayT<0.30)`, the
+morning drop-off. A real school day has TWO peaks (drop-off + home-time pickup), so the gate stood empty every
+afternoon while the classrooms emptied behind it — a half-schedule. 199's tell on a DRAW GATE: the predicate says
+*"the school run"* but its value can only ever be the morning of it.
+
+**Change.** One line: the gate now fires in either window —
+`if((dayT>0.15&&dayT<0.30)||(dayT>0.51&&dayT<0.61))`. The pickup sits in early-afternoon daylight (measured `LITAMT`
+0.11 at dayT 0.56 — the darkness signal is low, i.e. full day, matching the morning drop-off's 0.06), short of dusk,
+so the crowd is lit exactly as the morning one is. `dayT` is the slow ~110s wall clock, so both windows hold (134).
+Draws no `rng()`, no `Math.random`, no terrain — the guaranteed-clean-ship class.
+
+**Census.** Core **byte-identical** — `pop`/`roads`/`developed` **+0**, tile histogram empty (draw-only). The
+`solarRoofs +2 / greenRoofs +1` is the harness's tick-count wobble (226), not this edit.
+
+**Probe** (`probes/probe-schoolrun.mjs` — TEMPORAL/134, reads NO PIXELS, build-agnostic via `SRC=`). Counts the
+figure bodies the frame issues near each school's own gate centre (`w=1.4`, `h∈{1.8,2.9}`, within 16px of the gate,
+excluding the fete crowd that shares the signature). HEAD reads **1 busy window** (morning 54/48/40, afternoon **0**)
+across seeds 7/42/1234 — `DISTINCT BUSY WINDOWS = 1`, the defect stated with no threshold (236). The patch reads
+**2** (afternoon 54/48/40, *identical* morning counts). Controls: midday/night/dusk **empty on both builds** (199's
+dead-regime), morning **busy** (the positive control, 248) and **byte-identical across builds** (the change is purely
+the afternoon window, 250).
+
+**Visual.** Both seeds **PASS** (aimed afternoon school close-ups + morning control + un-zoomed whole-city, blind
+subagent reads). *"A row of ~5 little upright figures standing on the pavement directly at the schoolhouse's gate…
+sit correctly on the ground, not floating and not sunk into wall/roof… the afternoon crowd is present and comparable
+to the morning one."* No z-order tears, floating tiles or blown-out colour; the whole afternoon plate reads as a
+balanced, coherent coastal city on both seeds.
+
+**Verdict: FIXED** — the school run now happens twice, morning and afternoon, where a real one does; the gate is no
+longer empty every home-time. The half-schedule (199's tell on a draw gate) is closed.
+
