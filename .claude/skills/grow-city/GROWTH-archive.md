@@ -22642,3 +22642,51 @@ balanced, coherent coastal city on both seeds.
 **Verdict: FIXED** — the school run now happens twice, morning and afternoon, where a real one does; the gate is no
 longer empty every home-time. The half-schedule (199's tell on a draw gate) is closed.
 
+## Iteration 307 — the local pitch had two players who never left, and no game ever kicked off (2026-07-15) [Civic & culture × Deepen/FIX]
+
+**Vector.** Civic rotation (oldest domain). Civic's additive is complete (292) and its recent defects were found in
+the **enumerate-the-category / type-hierarchy** seam (240 stadium fixture, 285 market day), so grep the venue
+category rather than the cue list. The event-venue category is {STADIUM, MARKET, amphitheater} — each keeps a
+schedule — but there is a **fourth** venue that never got one: **`T.FIELD`, the neighbourhood sports pitch**. Its
+draw was `if(LITAMT<0.4){ two players }` — a GLOBAL MONOTONE gate (262/286 cliff), so the SAME two players stood on
+EVERY pitch in the city at every daylit hour of every day, forever, and a game was never on or off. `probe-pitchgame`:
+HEAD reads **DISTINCT daytime states/field = 1, game-days 10/10, DESYNC maxCorr = 1.00** (every pitch identical) — the
+defect stated (236). It is the last member of the category iter 285's law told us to enumerate.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).**
+- **`pitchGame(x,y)`** — a lighter calendar than the stadium fixture, in `fixtureAt`/`matchClock`'s idiom and beside
+  it: a pickup game runs on ~half of afternoons (`PITCHP=0.5`, kickoff `0.52`, `PITCHDUR=0.22`, ending `0.74 < SUNDN`
+  so it is always daylit — no floodlights on a chalked local ground). **Salted per HEX and per DAY**
+  (`hashCell(x*7+day, y, seed^SALT)`), so two pitches rarely fill on the same afternoon and the crowd never blinks on
+  as one (263). Most days the pitch is an empty ring.
+- **The FIELD draw** now, when `pitchGame>0 && LITAMT<0.5`, scatters `round(8*g)` small players in the two team
+  colours (`coral`/`teal`) across the pitch (within `±0.45·HW / ±0.4·VR`, stable per-player via `hashCell` + a time
+  wobble), each with the stadium speck's contact shadow (`shadS(…,0.05,0.13)`), plus a chased white ball. On off-days
+  it draws nothing — the empty chalked ground, which is correct and realistic.
+- **Tooltip** `pitchWord(x,y)` (a `['Now', …]` data row beside the stadium's `Fixture`) and **`residentWhere`**
+  (`'In a game on the pitch.'` vs `'Cutting across the field.'`) both read the SAME `pitchGame` the draw does
+  (123, forwards).
+
+**Census.** Draw-only → **PASS, 0 page errors**, core **byte-identical** (`pop`/`roads`/`developed` +0, tile
+histogram empty). `greenRoofs −1` is the 226 tick-wobble (a draw/tooltip-only change cannot move it semantically —
+278). Vacuous by construction; the gate is the probe + the eyes.
+
+**Probe** (`probes/probe-pitchgame.mjs`, TEMPORAL, build-agnostic, no pixels/no noise floor). Patch vs HEAD, 3 seeds:
+- **DISTINCT daytime states/field 1.0 → 3.0** (the game turns on, ramps, and off — HEAD's was a constant);
+- **game-days/10 10.0 → 4.0–5.8** (matches `PITCHP=0.5` — the pitch is mostly empty, as a real one is);
+- **DESYNC maxCorr 1.00 → 0.45–0.82** (< 1 on every seed — pitches fill on different afternoons, off the 262 cliff).
+
+**Visual.** `probes/shot-pitchgame.mjs` (freezes in-page, pins dayT to a game-day and an empty-day afternoon on the
+**least-occluded** field — 206/231, scored by front-row height — clips tightly on its post-`clampPan` screen
+position, 285). Seed 42 (agent): the pitch shows a scatter of coral/teal players + a ball sitting correctly ON the
+chalked hex; the empty frame is the same pitch with the players gone (clean control); whole-city coherent. Seed 7
+(direct read): same — game frame shows players on the ball-diamond pitch, empty frame is the bare chalked ground;
+city reads balanced. No z-order tears, floating tiles or blown-out colour. ⚠ *Camera note:* the first seed-7 aim
+picked a field buried in the downtown core (206) and framed towers — fixed by scoring fields on open frontage before
+aiming (226/258's spirit); banked in the shot script.
+
+**Verdict: FIXED** — the neighbourhood pitch is the last venue in the category to get a schedule (240/285/292): a
+pickup game now fills it on some afternoons and it is an empty chalked ground the rest of the time, off a per-hex
+per-day clock, instead of two frozen players who stood there every daylit hour forever. Draw-only, path count roughly
+neutral (more players during a game, none otherwise); free by construction.
+

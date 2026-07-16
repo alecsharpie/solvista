@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -32,7 +32,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Urban **316** (DISTRICTS made real — `c.dist` was per-cell noise a weak vote never coarsened;
+- **ROTATION.** Last: People **317** (SEASONAL LEISURE completed — 247 gave the BEACH a `beachPhase()` calendar; the
+  park café patrons / lawn picnic / shorepark blanket were the un-enumerated siblings, drawing identically in Aug &
+  Jan, `DISTINCT=1`/6 seeds. All three now read `beachPhase()` — one predicate, N readers (271/285), draw-only,
+  byte-identical at the dry peak (245); pitch game LEFT ALONE, sport is year-round. `probe-parkseason`.) ✅ **SEASONAL-
+  LEISURE CATEGORY COMPLETE** (beach 247 → park 317), twin of the excitable-media completion (263/272/314); cue (bh)
+  closed as a non-defect. · Urban **316** (DISTRICTS made real — `c.dist` was per-cell noise a weak vote never coarsened;
   shopfronts/awnings/market/tooltip now read a fixed Voronoi `distOf(x,y)`, coherence 55→98%, wholly inert. 199-tell,
   shape of 283/285. ⛔ **The districts vote in `tick()` is now a STREAM-PRESERVING VESTIGE — do NOT delete** (its
   `rng()<0.5` count entangled with the old field). `probe-districts.mjs`.) · Sky **313** (balloons a fair-weather craft) · People **314** (block-party CA DE-SYNCHRONISED —
@@ -40,19 +45,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   parties ignited & rested as ONE, a metronomic square wave, ~1 party at 2035; `probe-blockparty`). ✅ **EXCITABLE-MEDIA
   CATEGORY NOW COMPLETE** (bloom 263 · shroom 272 · party 314 — every shared-timer CA in `tick()` now jitters off a
   per-cell uniform). People's stale ADDITIVE kind stays New CA rule (49). ➡ **NEXT: Civic (New CA rule 36/107) or People
-  (New CA rule 49); step-back #40 ran clean at 315 — ~320 DUE next.** ⛔ **DO NOT re-try daytime vehicle lamps** — `polish-tile`, not a Deepen (312/bi).
-  ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
-  spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
-  curve); **0.10x wet trough → 1.90x dry peak**, CENTRED on mean 0.5 ⇒ year-mean **exactly 1**, annual burn total HELD.
-  ⚠ **Timber spark left alone** (URBAN fire ≠ dry season). ⚠ **INVISIBLE at 2035** (`year<2030`; 134) ⇒ gate is
-  `probes/probe-fireseason.mjs` (TEMPORAL): HEAD dry/wet **1.00** flat, patch real `tick()` dry≥wet ∞/∞/7. Zero `rng()`
-  (only burnt terrain perturbs, HEAD's cost); census core held (pop +2.9%, dev +0.3%).
-  ✅ **305 SHIPPED Sky × Deepen — the front greys the SKY ITSELF** (`overcast()`=rainFront's 4th reader, gated above the
-  patchy band ⇒ dry sky BYTE-IDENTICAL, `overcastSky` shared by `syncSky`+`render`; `probe-overcast.mjs`). **Sky additive NOT spent (291 lightning).**
-  ⚠ **TRANSPORT EXAMINED (304) AND REVERTED-ONCE (312) — TREAT AS SATURATED** (all 4 seams grepped clean; 312's
-  daytime-lamp interconnect renders but is invisible, ⛔ above). 🟡 **DEFERRED CUE (bi):** gondola cabins run 24h vs
-  the monorail's night-thinned crowd (`-(LITAMT>0.6)`, L8286) — **NOT a defect (204/205):** a mechanical mover at
-  night is arguable, cabins ~3px, 262-cliff 9-deep; ⛔ do not force. (This + 312 are the same barely-visible bad trade.)
+  (New CA rule 49); step-back #40 ran clean at 315 — ~320 DUE next.**
+  ✅ **308 (Nature Deepen: fire spark rides `fireSeason()`, 7th `seasonCool()` reader, dry-season only; timber left
+  alone), 305 (Sky Deepen: front greys the sky, `overcast()`), 291 (Sky lightning) — full entries in ledger.** ⚠
+  **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; daytime-lamp (bi) & gondola-cabin cues = same barely-visible
+  bad trade ⇒ ⛔ do NOT force, `polish-tile`). Sky additive NOT spent (291, sparsest cell).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
   **NATURE** additive spent (301 deer), Polish debt paid (294 ax+bg); next = grep the tick()/CA seam (287/279 pattern).
   **URBAN** tooltip/flag/TABLE SATURATED (295/302), stale = **Interaction/UX (133)**. **PEOPLE** Deepen CLOSED 14-deep
@@ -63,8 +60,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   cues (a elevated transit · av catenary) are the same 0.5px hairline `polish-tile` family ⛔, stale = **New CA rule
   (77)**. Recent cliff closures: 303 herons (the one 301 cited as a control), 302 loft, 301 deer, 300 strip crowd —
   every animate draw now *verifiably* off the 262 cliff (`225`'s grep-the-seam law is 26-for-26 at *finding*).
-  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next) · **(az)/(ba)** 278's two (below) · **(bh)**
-  over-bright plaza flame-blob (Nature/park Polish, 293). ✅ **CLOSED (detail in each entry):** (bd) by 284 (two
+  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next) · **(az)/(ba)** 278's two (below).
+  ✅ **CLOSED (detail in each entry):** (bh) by 317 (a NON-DEFECT: a fine gold statue, not a blob) · (bd) by 284 (two
   readers) · (au) by 302 · (ax)+(bg) by 294 · (bf) market packed-away square by 299.
   ✅ **PEOPLE: Interaction/UX ran at 278, Polish at 300 — its ONLY stale kind is New CA rule (49); Deepen CLOSED.**
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
@@ -394,59 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 309 entries before Iteration 307 live in
+> **Archive:** the 310 entries before Iteration 308 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 307 — the local pitch had two players who never left, and no game ever kicked off (2026-07-15) [Civic & culture × Deepen/FIX]
-
-**Vector.** Civic rotation (oldest domain). Civic's additive is complete (292) and its recent defects were found in
-the **enumerate-the-category / type-hierarchy** seam (240 stadium fixture, 285 market day), so grep the venue
-category rather than the cue list. The event-venue category is {STADIUM, MARKET, amphitheater} — each keeps a
-schedule — but there is a **fourth** venue that never got one: **`T.FIELD`, the neighbourhood sports pitch**. Its
-draw was `if(LITAMT<0.4){ two players }` — a GLOBAL MONOTONE gate (262/286 cliff), so the SAME two players stood on
-EVERY pitch in the city at every daylit hour of every day, forever, and a game was never on or off. `probe-pitchgame`:
-HEAD reads **DISTINCT daytime states/field = 1, game-days 10/10, DESYNC maxCorr = 1.00** (every pitch identical) — the
-defect stated (236). It is the last member of the category iter 285's law told us to enumerate.
-
-**Change (draw-only — no `rng()`, no `Math.random`, no terrain).**
-- **`pitchGame(x,y)`** — a lighter calendar than the stadium fixture, in `fixtureAt`/`matchClock`'s idiom and beside
-  it: a pickup game runs on ~half of afternoons (`PITCHP=0.5`, kickoff `0.52`, `PITCHDUR=0.22`, ending `0.74 < SUNDN`
-  so it is always daylit — no floodlights on a chalked local ground). **Salted per HEX and per DAY**
-  (`hashCell(x*7+day, y, seed^SALT)`), so two pitches rarely fill on the same afternoon and the crowd never blinks on
-  as one (263). Most days the pitch is an empty ring.
-- **The FIELD draw** now, when `pitchGame>0 && LITAMT<0.5`, scatters `round(8*g)` small players in the two team
-  colours (`coral`/`teal`) across the pitch (within `±0.45·HW / ±0.4·VR`, stable per-player via `hashCell` + a time
-  wobble), each with the stadium speck's contact shadow (`shadS(…,0.05,0.13)`), plus a chased white ball. On off-days
-  it draws nothing — the empty chalked ground, which is correct and realistic.
-- **Tooltip** `pitchWord(x,y)` (a `['Now', …]` data row beside the stadium's `Fixture`) and **`residentWhere`**
-  (`'In a game on the pitch.'` vs `'Cutting across the field.'`) both read the SAME `pitchGame` the draw does
-  (123, forwards).
-
-**Census.** Draw-only → **PASS, 0 page errors**, core **byte-identical** (`pop`/`roads`/`developed` +0, tile
-histogram empty). `greenRoofs −1` is the 226 tick-wobble (a draw/tooltip-only change cannot move it semantically —
-278). Vacuous by construction; the gate is the probe + the eyes.
-
-**Probe** (`probes/probe-pitchgame.mjs`, TEMPORAL, build-agnostic, no pixels/no noise floor). Patch vs HEAD, 3 seeds:
-- **DISTINCT daytime states/field 1.0 → 3.0** (the game turns on, ramps, and off — HEAD's was a constant);
-- **game-days/10 10.0 → 4.0–5.8** (matches `PITCHP=0.5` — the pitch is mostly empty, as a real one is);
-- **DESYNC maxCorr 1.00 → 0.45–0.82** (< 1 on every seed — pitches fill on different afternoons, off the 262 cliff).
-
-**Visual.** `probes/shot-pitchgame.mjs` (freezes in-page, pins dayT to a game-day and an empty-day afternoon on the
-**least-occluded** field — 206/231, scored by front-row height — clips tightly on its post-`clampPan` screen
-position, 285). Seed 42 (agent): the pitch shows a scatter of coral/teal players + a ball sitting correctly ON the
-chalked hex; the empty frame is the same pitch with the players gone (clean control); whole-city coherent. Seed 7
-(direct read): same — game frame shows players on the ball-diamond pitch, empty frame is the bare chalked ground;
-city reads balanced. No z-order tears, floating tiles or blown-out colour. ⚠ *Camera note:* the first seed-7 aim
-picked a field buried in the downtown core (206) and framed towers — fixed by scoring fields on open frontage before
-aiming (226/258's spirit); banked in the shot script.
-
-**Verdict: FIXED** — the neighbourhood pitch is the last venue in the category to get a schedule (240/285/292): a
-pickup game now fills it on some afternoons and it is an empty chalked ground the rest of the time, off a per-hex
-per-day clock, instead of two frozen players who stood there every daylit hour forever. Draw-only, path count roughly
-neutral (more players during a game, none otherwise); free by construction.
 
 ## Iteration 308 — the "dry-season lightning" fired just as readily in the wet winter (2026-07-15) [Nature × Deepen]
 
@@ -856,3 +805,59 @@ before the ledger, finally cohere into readable gold/teal/coral/sage quarters (c
 random 4-color speckle — wholly inert (census byte-identical), the look decoupled from the seeded stream so the vote
 CA's `rng()` footprint is preserved. Same shape as 283/285: a label ladder that named a distinction the pixels never
 drew.
+
+## Iteration 317 — the beach packed away for winter; the park picnicked through it (2026-07-17) [People & activity × Deepen]
+
+**Vector.** The rotation steers to Civic/People × New CA rule, but the loop's law outranks it: grep the seam, not the
+cue list. The census columns are clean (287 fixed the last dead row), the CA passes / tables / flags / hours / seasons
+are all heavily audited, and the one banked visual cue (bh, an "over-bright plaza flame-blob") reproduced on seed 7 at
+2035 golden/day as a **fine small gold statue, not a blown-out blob** — a non-defect (205's label-tell false-positive;
+269: an agent right the thing exists, wrong that it is a fault), so (bh) is **CLOSED**. What the grep *did* turn up is
+a 271 category hole: **247 gave the BEACH a season** (`beachPhase()` — the furniture and the water crowd pack away over
+winter and fill for the dry peak), and its **park-lawn siblings were never enumerated**. The park café patrons, the
+park lawn picnic, and the shorepark picnic blanket gated only on `LITAMT` (day/night) and drew **identically in August
+and January** — a picnic on the grass through a cold wet winter, every year, forever. Confirmed on HEAD before
+designing (`probe-parkseason`, temporal): picnic + patron counts **flat across all four seasons, DISTINCT = 1 on 6
+seeds in 6** — the defect stated (236). This is the seasonal-leisure twin of the excitable-media completion (263 bloom
+· 272 shroom · 314 party): a property established for one member of a category, applied to the siblings but one.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The three park draws become readers of the beach's
+OWN season predicate `beachPhase()` (one predicate, N readers — 271/285), so the park empties for winter exactly as
+the sand does:
+- **Park café patrons** — the seated-diner cutoff `hashCell > 0.5` → `hashCell > 0.5*beachPhase()`; the parasol stays
+  year-round, its diners thin over winter.
+- **Park lawn picnic** — the whole rug (blanket + basket + two seated figures) gated on a stable per-lawn
+  `hashCell(x,y,seed^0x50C2) < beachPhase()`.
+- **Shorepark picnic blanket** — same gate inside the SAME v-band (not moving the band, so the else-if chain is intact
+  and a winter cell draws bare shore-grass rather than handing its range to the next arm — 247's own trap).
+`beachPhase()===1` exactly at the dry peak, so all three are **byte-identical to HEAD there** (245's fixed point). The
+pitch game (FIELD) is deliberately left alone — a pickup match is played year-round, not a summer-only activity.
+
+**Census.** Draw-only, gated on a global season read, unreachable from `tick()` ⇒ `pop`/`developed`/`roads` **+0,
+byte-identical**, tile histogram empty, every metric flat (no RAF wobble this run). VERDICT: PASS (vacuous by design —
+the gate is the probe + eyes).
+
+**Probe** (`probes/probe-parkseason.mjs`, temporal/seasonal, 3 seeds × 4 seasons, build-agnostic via `SRC=`; counts
+the draws the frame ISSUES by geometric signature — 285). Fixed day hour (0.52, midday game-on), sweep the calendar:
+- **HEAD: picnics + patrons FLAT, DISTINCT = 1 on every seed** (seed 7 always 16+9 blankets / 173 patrons; 42 always
+  24+12 / 228; 1234 always 31+10 / 172) — the park did not know the season.
+- **PATCH: they answer `beachPhase()`** — seed 7 wet-trough `2+0`/9 → dry-peak `16+9`/173, seed 42 `1+1`/31 →
+  `24+12`/228, seed 1234 `2+1`/16 → `31+10`/172; spring and autumn sit symmetrically between (bp 0.55).
+- **Controls FLAT on both builds** (250): café **parasols** DISTINCT=1 (159/239/188) and pitch **players** DISTINCT=1
+  (8/40/24) — the furniture and the year-round sport do not move.
+- **FIXED POINT (245):** the patch's dry-peak counts **exactly equal HEAD's** at every season (25/173, 36/228,
+  41/172) — byte-identical at `beachPhase()===1`, proven HEAD-vs-patch rather than via an in-page stub (284: a
+  `function` stub survives and poisons later seeds — the first cut of the probe walked into exactly that).
+
+**Visual** (`probes/shot-parkseason.mjs`, seeds 42 & 7 — a summer↔winter close-up pair of the same park at midday
+(LITAMT 0.00 in both, so only the season differs), plus a whole-city frame; map CROSSED by seed, non-ordinal tokens —
+238/268). Both blind subagents **PASS** and — the locate-not-judge check (108) — **both correctly named the summer
+frame by the picnic/café life alone, on the crossed map** (seed 7: summer=bravo ✓; seed 42: summer=alpha ✓), each
+noting the café parasol/furniture is present in both (the control). No z-order tears, floating tiles or blown-out
+colour anywhere; both whole-city frames read as balanced, coherent, beautiful coastal cities.
+
+**Verdict: DEEPENED.** The park's outdoor leisure now keeps the calendar the beach has kept since 247: café terraces
+and picnic rugs fill for the golden dry peak and pack away over the wet winter (bare lawns in January, the parasol
+standing empty), at zero draw/stream cost and byte-identical at the dry peak. Completes the seasonal-leisure category
+(beach 247 → park 317), the twin of the excitable-media completion (bloom 263 · shroom 272 · party 314). Cue (bh)
+closed as a non-defect. `beachPhase()` gains three readers.
