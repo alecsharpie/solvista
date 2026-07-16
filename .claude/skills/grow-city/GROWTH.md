@@ -20,7 +20,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
-| **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
+| **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
@@ -32,10 +32,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Civic **307** · Nature **308** · Urban **309** · **310 = step-back #39** · Water **311**
-  (WINDA rides the season — winter seas rough, summer glassy; centred ⇒ year-mean held + equinox fixed point).
-  ➡ **NEXT: Transport (297, oldest real lap)** — 304 grepped its 4 seams DRY (only New CA rule **77** stale, a
-  forced transit CA ⛔ shallow); judge saturation. Cue **(bi)** cable-cabin hours = measured, NOT a defect. **Step-back ~315.**
+- **ROTATION.** Last: Nature **308** · Urban **309** · **310 = step-back #39** · Water **311** · Transport ~~**312**~~
+  (headlamps-in-a-daytime-storm — RENDERS 700+px/3 seeds but INVISIBLE; ⛔ 259, low-contrast warm lamp on a bright
+  greyed noon road; revert).
+  ➡ **NEXT: People (New CA rule 49 the only stale kind — needs a MEASURED seam, no Deepen without one) or Sky
+  (additive not spent, 291).** ⛔ **DO NOT re-try daytime vehicle lamps** — road-contrast is a `polish-tile`
+  question, not a Deepen. **Step-back ~315.**
   ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
   spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
   curve); **0.10x wet trough → 1.90x dry peak**, CENTRED on mean 0.5 ⇒ year-mean **exactly 1**, annual burn total HELD.
@@ -44,12 +46,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   (only burnt terrain perturbs, HEAD's cost); census core held (pop +2.9%, dev +0.3%).
   ✅ **305 SHIPPED Sky × Deepen — the front greys the SKY ITSELF** (`overcast()`=rainFront's 4th reader, gated above the
   patchy band ⇒ dry sky BYTE-IDENTICAL, `overcastSky` shared by `syncSky`+`render`; `probe-overcast.mjs`). **Sky additive NOT spent (291 lightning).**
-  ⚠ **304 EXAMINED TRANSPORT — GENUINELY DRY** (all FOUR seams grepped clean: rules/flags/label-ladder/`ENTINFO`;
-  detail folded into the SPENT/CLOSED block below). 🟡 **OPEN CUE (bi):** the **gondola cabins run 24h** while the monorail deliberately thins its night platform crowd
-  (`-(LITAMT>0.6)`, L8286) — so cable-transit is the one mover class with zero night behaviour. A scenic aerial tram
-  closes at night IRL; a rapid-transit monorail runs. **Deferred, NOT a defect (204/205 false-positive risk):** a
-  mechanical mover at night is arguable, the cabins are ~3px at fit zoom, and the 262-cliff is 9-deep. Decide with a
-  probe before gating; do not force it.
+  ⚠ **TRANSPORT EXAMINED (304) AND REVERTED-ONCE (312) — TREAT AS SATURATED** (all 4 seams grepped clean; 312's
+  daytime-lamp interconnect renders but is invisible, ⛔ above). 🟡 **DEFERRED CUE (bi):** gondola cabins run 24h vs
+  the monorail's night-thinned crowd (`-(LITAMT>0.6)`, L8286) — **NOT a defect (204/205):** a mechanical mover at
+  night is arguable, cabins ~3px, 262-cliff 9-deep; ⛔ do not force. (This + 312 are the same barely-visible bad trade.)
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
   **NATURE** additive spent (301 deer), Polish debt paid (294 ax+bg); next = grep the tick()/CA seam (287/279 pattern).
   **URBAN** tooltip/flag/TABLE SATURATED (295/302), stale = **Interaction/UX (133)**. **PEOPLE** Deepen CLOSED 14-deep
@@ -391,57 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 304 entries before Iteration 302 live in
+> **Archive:** the 305 entries before Iteration 303 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 302 — the loft's rooftop studio was a garden it could not have (2026-07-15) [Urban fabric × Polish]
-
-**Vector.** Urban fabric (rotation: Urban at 295 was the oldest domain; last iter was Nature 301). Its
-tooltip/flag/TABLE seams are genuinely saturated (grepped clean at 295; land value, rooftop solar/green
-roofs, corner shops, lofts, parking lots, boulevards, arterials, festival streets, bus stops all named off
-the SAME predicate their draw gates on). Rather than force the stale Interaction/UX cell (133) with nothing
-to fix, I took the standing banked Urban cue **(au)** — a real, concrete draw defect in the right domain
-(285–301's rule: a real defect beats a forced kind in a saturated one).
-
-**Change.** The converted-warehouse loft (`c.loft`, iter 267) draws a small rooftop studio — the *"studios
-above"* its tooltip has always promised. It was one line: `prism(...,col('sage',1),col('sage',0.6),
-col('sage',0.85))` — the **EXACT palette entry** the green-roof garden (`c.groof`) uses for its planter box
-and shrubs. So the studio was green-dominant vegetation-coloured and read as a **roof garden** — a garden
-the loft's `T.IND` tile *cannot even carry* (`c.groof` is set on MID/COM/TOWER only). Repainted it as a
-glazed white penthouse studio: a pale box (`col('white')`/`col('whiteDk')`), a broad north-light window
-band (`colLit('glass',0.82,lit)` — plain glass-grey by day, warming with the scene's `lit` after dark), and
-a warm gold studio lamp (`col('gold',1.5)` under `LITAMT>0.4`) — the last light burning in a live-work
-block, and unmistakably not a garden.
-
-**Census.** Draw-only, no rng/Math.random, no terrain → **BYTE-IDENTICAL** (`pop`/`roads`/`developed` +0,
-empty tile histogram, `greenRoofs`/`solarRoofs` +0), 0 page errors. Vacuous for a draw-only vector; the
-gate is the probe + the eyes.
-
-**Probe** (`probes/probe-loftstudio.mjs`). **(A) COLOUR PROOF** — deterministic, no render, no clock, no
-noise floor: the studio colours evaluated through the artifact's own `col()`/`colLit()` (so through the
-illuminant, 275), at day and night. HEAD's `col('sage')` studio is **GREEN** (G the max channel) and
-pixel-matches the green-roof box — `rgb(124,168,117)` vs `rgb(131,178,124)` at day, both green — which IS
-the cue's mechanism, stated. The patch's three layers — walls `rgb(237,245,245)`, glazing `rgb(135,176,190)`,
-lamp `rgb(255,241,91)` — are **not green on any layer, day OR night**. `HEAD matched the green roof: true`;
-`PATCH no longer green: true`. **(B) HOST CENSUS** — lofts exist at 2035 on all 6 seeds (1–4/city), with
-screen coords for the camera.
-
-**Perf.** ~3 extra path objects per loft (a prism → prism+band+conditional band) × ≤4 lofts/city; the gold
-lamp draws only while `LITAMT>0.4`. Negligible (<0.05%); draws no rng()/Math.random.
-
-**Visual.** Both seeds **PASS** (blind whole-city + 5.5x day/night close-ups, camera aimed at the
-best-exposed loft by measured ink). Seed 42: *"a small pale/white glazed box, not green vegetation… at night
-that same box glows with a warm gold/yellow lit window — clearly a lit penthouse studio, not a dark planted
-garden… sits squarely on the roof, no floating gap, no z-order tear."* Seed 7: *"a pale WHITE glazed box, a
-small penthouse studio sitting flush on the roof cap. No green vegetation reads there… the rooftop box
-carries a warm lit window."* Both whole-city frames coherent — no floating tiles, tears, blown-out colour,
-or clutter anywhere.
-
-**Verdict: SHIPPED** (closes cue **(au)**) — the loft's roof-studio no longer masquerades as a green roof
-it structurally cannot have; it now reads as the glazed live-work studio the tooltip has always named.
 
 ## Iteration 303 — the herons stalked a frozen midnight marsh; now they fly to roost at dusk (2026-07-15) [Water & coast × Deepen/FIX]
 
@@ -879,3 +833,43 @@ blowout, and both whole-city frames balanced and coherent.
 **Verdict: DEEPENED** — the coast's sea now answers the calendar as it already answers the tide, the light and
 the instantaneous wind: winter seas run rough and the summer sea goes glassy, at zero new draw work, on the
 one scene-wide signal that had never read a clock.
+
+## Iteration 312 — the headlamps came on in the noon storm, and nobody could see them (2026-07-17) [Transport × Deepen/interconnect — EXPLORED → REVERTED]
+
+**Vector.** Transport × Deepen (weather interconnect). Rotation's next slot (297, oldest real lap); 304 grepped
+its four seams dry, so the only live thread was an interconnect, not an add. HEAD lights a vehicle ONLY for
+DARKNESS (`LITAMT>0.35`) — headlamp beam, headlamp arcs, red tail-lamps and the bike bar-lamp, all on the
+day/night curve. But 305 already greys the whole sky when a rain front rolls overhead (`overcast()`), and the
+traffic drove on through a leaden noon with no lights: the biggest weather event in the scene, and the roads
+deaf to it. Real cars run headlamps in a heavy downpour.
+
+**Change (reverted).** One line in `drawVehicle`: `const litD = Math.max(LITAMT, overcast())`, used in place of
+`LITAMT` in the lamp gate and the four lamp alphas (+ the bike lamp) — the front's FIFTH reader
+(sky/ground/bow/CA already read it). A dry or patchy front is `overcast()===0 ⇒ litD===LITAMT`, so fair
+weather is BYTE-IDENTICAL to HEAD (no rng/terrain); overcast caps at 0.82 so a storm noon is a touch dimmer
+than midnight — right.
+
+**Census.** Draw-only, unreachable from `tick()` ⇒ core BYTE-IDENTICAL (pop/developed/roads +0). `greenRoofs -1`
+= the 226/278 RAF-tick wobble. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (cross-build HEAD-vs-patch at a frozen DAYTIME frame — the ONLY code diff is litD, so the diff IS the
+lamps; both builds freeze the same city identically, every vehicle cancels). LITAMT=0.00 at both fronts (HEAD
+lamps off). **DRY: lamp px 16/1/23, all ≤ the HEAD-vs-HEAD reload floor 28/0/68 ⇒ byte-identical.** **STORM
+(overcast 0.82/0.66/0.82): lamp px 711/674/790, ink 11460/10240/13188 ⇒ the lamps clearly render.** The
+feature WORKS; the census and probe both pass.
+
+**Visual — FAIL, and it is the verdict.** Two blind agents (seeds 42, 7), plus my own look at a downtown road
+zoomed 4.2x: the storm-close is **indistinguishable** from dry-close. The lamps render and CANNOT BE SEEN.
+Root cause is structural (259: renders ≠ seen), not a tuning miss — a warm lamp at ~0.74 alpha is
+low-CONTRAST against a still-bright greyed daytime road; the very thing that makes a night lamp read (a
+near-black road) is absent at noon. Cranking the alpha cannot buy contrast, and making lamps GLOW at noon
+would fight the diorama's flat-realist look AND the physics (daytime lamps genuinely are subtle IRL). The
+whole-city storm frame reads as a coherent leaden midday and the dry as a clear one — the OVERCAST is fine;
+only the lamps fail.
+
+**Verdict: EXPLORED → REVERTED.** A well-motivated interconnect that RENDERS (probe) yet earns nothing a
+viewer sees (259). `solvista.html` restored byte-identical to HEAD; the cross-build probe/shot are tied to the
+reverted diff and were removed with it. **Do not re-try "vehicles light up in the rain" as a growth lap** —
+the daytime road-contrast problem is a rendering/redesign question (a darker wet road, or a fundamentally
+brighter mark), i.e. a `polish-tile` job, not a Deepen — the same "barely-visible transport detail is a bad
+trade" the header already banks for cue (bi).

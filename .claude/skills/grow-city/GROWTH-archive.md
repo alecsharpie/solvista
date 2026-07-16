@@ -22399,3 +22399,49 @@ colour.
 now keep an hour like every person, boat and kite, bedding down in the trees at nightfall instead of grazing a frozen
 midnight meadow. Every animate draw in the diorama is now off the global-`nightAmt`/`LITAMT` cliff.
 
+## Iteration 302 — the loft's rooftop studio was a garden it could not have (2026-07-15) [Urban fabric × Polish]
+
+**Vector.** Urban fabric (rotation: Urban at 295 was the oldest domain; last iter was Nature 301). Its
+tooltip/flag/TABLE seams are genuinely saturated (grepped clean at 295; land value, rooftop solar/green
+roofs, corner shops, lofts, parking lots, boulevards, arterials, festival streets, bus stops all named off
+the SAME predicate their draw gates on). Rather than force the stale Interaction/UX cell (133) with nothing
+to fix, I took the standing banked Urban cue **(au)** — a real, concrete draw defect in the right domain
+(285–301's rule: a real defect beats a forced kind in a saturated one).
+
+**Change.** The converted-warehouse loft (`c.loft`, iter 267) draws a small rooftop studio — the *"studios
+above"* its tooltip has always promised. It was one line: `prism(...,col('sage',1),col('sage',0.6),
+col('sage',0.85))` — the **EXACT palette entry** the green-roof garden (`c.groof`) uses for its planter box
+and shrubs. So the studio was green-dominant vegetation-coloured and read as a **roof garden** — a garden
+the loft's `T.IND` tile *cannot even carry* (`c.groof` is set on MID/COM/TOWER only). Repainted it as a
+glazed white penthouse studio: a pale box (`col('white')`/`col('whiteDk')`), a broad north-light window
+band (`colLit('glass',0.82,lit)` — plain glass-grey by day, warming with the scene's `lit` after dark), and
+a warm gold studio lamp (`col('gold',1.5)` under `LITAMT>0.4`) — the last light burning in a live-work
+block, and unmistakably not a garden.
+
+**Census.** Draw-only, no rng/Math.random, no terrain → **BYTE-IDENTICAL** (`pop`/`roads`/`developed` +0,
+empty tile histogram, `greenRoofs`/`solarRoofs` +0), 0 page errors. Vacuous for a draw-only vector; the
+gate is the probe + the eyes.
+
+**Probe** (`probes/probe-loftstudio.mjs`). **(A) COLOUR PROOF** — deterministic, no render, no clock, no
+noise floor: the studio colours evaluated through the artifact's own `col()`/`colLit()` (so through the
+illuminant, 275), at day and night. HEAD's `col('sage')` studio is **GREEN** (G the max channel) and
+pixel-matches the green-roof box — `rgb(124,168,117)` vs `rgb(131,178,124)` at day, both green — which IS
+the cue's mechanism, stated. The patch's three layers — walls `rgb(237,245,245)`, glazing `rgb(135,176,190)`,
+lamp `rgb(255,241,91)` — are **not green on any layer, day OR night**. `HEAD matched the green roof: true`;
+`PATCH no longer green: true`. **(B) HOST CENSUS** — lofts exist at 2035 on all 6 seeds (1–4/city), with
+screen coords for the camera.
+
+**Perf.** ~3 extra path objects per loft (a prism → prism+band+conditional band) × ≤4 lofts/city; the gold
+lamp draws only while `LITAMT>0.4`. Negligible (<0.05%); draws no rng()/Math.random.
+
+**Visual.** Both seeds **PASS** (blind whole-city + 5.5x day/night close-ups, camera aimed at the
+best-exposed loft by measured ink). Seed 42: *"a small pale/white glazed box, not green vegetation… at night
+that same box glows with a warm gold/yellow lit window — clearly a lit penthouse studio, not a dark planted
+garden… sits squarely on the roof, no floating gap, no z-order tear."* Seed 7: *"a pale WHITE glazed box, a
+small penthouse studio sitting flush on the roof cap. No green vegetation reads there… the rooftop box
+carries a warm lit window."* Both whole-city frames coherent — no floating tiles, tears, blown-out colour,
+or clutter anywhere.
+
+**Verdict: SHIPPED** (closes cue **(au)**) — the loft's roof-studio no longer masquerades as a green roof
+it structurally cannot have; it now reads as the glazed live-work studio the tooltip has always named.
+
