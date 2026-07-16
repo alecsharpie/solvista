@@ -7240,10 +7240,19 @@ function drawBuilding(c,x,y,gx,gy){
     }
     if(v>0.8)palm(gx-0.34,gy+0.3,0.75);
     { /* washing line to the neighbor one door west — out on dry days, in by
-         dark, and never during the block party. Flaps with the WINDA gusts. */
+         dark, and never during the block party. Flaps with the WINDA gusts.
+         "Dry days" was a claim the draw never kept (199/113): the line hung out
+         through a downpour and through midwinter alike, while the street crowd two
+         functions up had just learnt to read rainingAt (5051) and the beach and the
+         water crowd keep a calendar. The washing was that rain-aware category's
+         un-enumerated sibling (271/286). So it now comes in when it rains
+         (rainingAt<0.05) and thins with the season on beachPhase — SCALED so the
+         dry peak (beachPhase()===1) reproduces HEAD's 0.22 byte-for-byte, and only
+         the wet winter loses lines. Draw-only, read at draw time: no rng(), no
+         terrain, so pop and the seeded stream stay flat. */
       const n=cellAt(x-1,y);
       if(n&&n.t===T.RES&&h>5&&n.h>5&&LITAMT<0.45&&!(c.party>0)&&!(n.party>0)
-         &&hashCell(x,y,seedNum^0x7A1D)<0.22){
+         &&hashCell(x,y,seedNum^0x7A1D)<0.22*beachPhase()&&rainingAt(x,y)<0.05){
         const[ax2,ay2]=px(gx,gy),[bx2]=ctr(x-1,y);
         const zl=Math.min(h,n.h)*0.5+1.5;
         const x1=ax2+(bx2-ax2)*0.30,x2=ax2+(bx2-ax2)*0.70,yl=ay2-zl,my=yl+1.6;

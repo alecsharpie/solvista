@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -32,20 +32,18 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: People **317** (SEASONAL LEISURE completed — 247 gave the BEACH a `beachPhase()` calendar; the
-  park café patrons / lawn picnic / shorepark blanket were the un-enumerated siblings, drawing identically in Aug &
-  Jan, `DISTINCT=1`/6 seeds. All three now read `beachPhase()` — one predicate, N readers (271/285), draw-only,
-  byte-identical at the dry peak (245); pitch game LEFT ALONE, sport is year-round. `probe-parkseason`.) ✅ **SEASONAL-
-  LEISURE CATEGORY COMPLETE** (beach 247 → park 317), twin of the excitable-media completion (263/272/314); cue (bh)
-  closed as a non-defect. · Urban **316** (DISTRICTS made real — `c.dist` was per-cell noise a weak vote never coarsened;
-  shopfronts/awnings/market/tooltip now read a fixed Voronoi `distOf(x,y)`, coherence 55→98%, wholly inert. 199-tell,
-  shape of 283/285. ⛔ **The districts vote in `tick()` is now a STREAM-PRESERVING VESTIGE — do NOT delete** (its
-  `rng()<0.5` count entangled with the old field). `probe-districts.mjs`.) · Sky **313** (balloons a fair-weather craft) · People **314** (block-party CA DE-SYNCHRONISED —
-  the 272/263 excitable-medium fix on the sibling 271 never enumerated: a shared CONSTANT refractory ⇒ the whole city's
-  parties ignited & rested as ONE, a metronomic square wave, ~1 party at 2035; `probe-blockparty`). ✅ **EXCITABLE-MEDIA
-  CATEGORY NOW COMPLETE** (bloom 263 · shroom 272 · party 314 — every shared-timer CA in `tick()` now jitters off a
-  per-cell uniform). People's stale ADDITIVE kind stays New CA rule (49). ➡ **NEXT: Civic (New CA rule 36/107) or People
-  (New CA rule 49); step-back #40 ran clean at 315 — ~320 DUE next.**
+- **ROTATION.** Last: People **318** (the WASHING LINE answers RAIN + SEASON — its own comment claimed *"dry days"* but
+  it had NO wet gate: flapped through a downpour and through midwinter, 6 seeds forever. The rain-aware category's
+  (`rainingAt`, 5051) un-enumerated sibling two fns up, 271/286/199-tell. Now `rainingAt(x,y)<0.05 &&
+  hashCell<0.22*beachPhase()` — byte-identical at the dry peak (245), draw-only, census flat. `probe-washline`, 3 pins:
+  fixed-point A ==, rain B 10→2/5→1/5→0, winter C ≈0.10·HEAD.) · People **317** (SEASONAL LEISURE COMPLETE — beach 247 →
+  park café/picnic read `beachPhase()`, cue (bh) closed non-defect; `probe-parkseason`). · Urban **316** (DISTRICTS made
+  real — Voronoi `distOf(x,y)`, coherence 55→98%, wholly inert; ⛔ **the districts vote in `tick()` is a STREAM-PRESERVING
+  VESTIGE — do NOT delete**). · Sky **313** (balloons fair-weather) · People **314** (block-party CA de-synchronised) ✅
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314 — every shared-timer CA now jitters off a
+  per-cell uniform). People's stale ADDITIVE kind stays New CA rule (49); Deepen is now DEEP (14+) but 318 took a
+  *measured* seam (225), the only license the header grants. ➡ **NEXT: Civic (New CA rule 36/107) or People (New CA rule
+  49); step-back #40 ran clean at 315 — ~320 DUE next (take it at 319/320).**
   ✅ **308 (Nature Deepen: fire spark rides `fireSeason()`, 7th `seasonCool()` reader, dry-season only; timber left
   alone), 305 (Sky Deepen: front greys the sky, `overcast()`), 291 (Sky lightning) — full entries in ledger.** ⚠
   **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; daytime-lamp (bi) & gondola-cabin cues = same barely-visible
@@ -391,60 +389,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 310 entries before Iteration 308 live in
+> **Archive:** the 311 entries before Iteration 309 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 308 — the "dry-season lightning" fired just as readily in the wet winter (2026-07-15) [Nature × Deepen]
-
-**Vector.** Nature rotation (oldest domain). Nature's additive is spent (301) and its Polish debt is paid (294), so per
-the header I grepped the `tick()`/CA seam and the frozen-census/comment tells rather than the cue list. Nature is
-extraordinarily mature — every CA runs (kelp 282, wildfire 279, bloom 263, solar 287), every belt keeps a calendar
-(farm 108, orchard 57, vineyard, the woodland spring/autumn ephemerals), FOREST is a live logging↔regrowth equilibrium
-(225 flat but dynamic, not a dead rule). But one comment lies. The forest fire spark's own comment reads
-*"dry-season lightning takes a patch of forest"* — and its rate was a **flat constant** `FIRESPK`, with no season term
-anywhere. A forest hex was exactly as likely to catch in the wet-winter thaw (s≈0.12) as at the golden dry peak
-(s≈0.62), which is backwards for a wildfire. 199's tell, hosted on a CA spark: a comment asserting a *seasonality* the
-value cannot have. Confirmed on HEAD before designing (`probe-fireseason`): ignition dry/wet ratio **≈1.0** on 3 seeds
-(0.83–1.67), the expected rate a **flat 3.00/season** — season-blind by construction.
-
-**Change.** The spark now rides the season the rest of the coast already reads. `fireSeason() =
-1 + FIREDRY*(0.5 - seasonCool())` — `seasonCool()` is the artifact's dryness curve (0 at the dry peak, 1 at the wet
-trough), already read by the grass, the deciduous canopy and the day length; the fire is its **7th reader** (one
-predicate, N readers). The FOREST spark's threshold becomes `hashCell(...) < FIRESPK*fireSeason()`. The lever is
-**CENTRED on seasonCool's own mean (0.5)** (245/98): `seasonCool()` is a pure cosine (`0.5-0.5cos(2π(s-0.62))`) with
-year-mean exactly 0.5, so `fireSeason()` averages **exactly 1** over the year and the annual ignition total is HELD —
-the dry season burns more only because the wet season burns exactly that much less. `FIREDRY=1.8` ⇒ **1.9× at the dry
-peak, 0.1× at the wet trough** (never negative), so a wildfire is a summer thing. Reads no `rng()`/`Math.random`, so
-the spark itself stays inert to the seeded stream — only the terrain a fire BURNS perturbs it, which is HEAD's own,
-unavoidable cost (279). **The timber-block spark is left untouched:** it is an URBAN fire (old buildings smouldering
-until the 1991 firehouse), and its comment is about the engine era, not the dry season.
-
-**Census.** Fire writes terrain, so the ignition-timing change cascades chaotically through the `rng()` stream (the
-invariant expects this). Core HELD and net-positive: `pop` +2.9%, `developed` +0.3%, `roads` +0.4%; tile histogram a
-mild reshuffle (FOREST −10, BURNT 4→2, TOWER +27, RES +56 — all within noise). **VERDICT: PASS, 0 page errors.** The
-centred lever is why nothing collapsed.
-
-**Probe** (`probes/probe-fireseason.mjs` — TEMPORAL/134, build-agnostic via `SRC=`, no pixels/no noise floor). Part A
-reads the EXPECTED ignition rate from the artifact's own `hashCell·FIRESPK·fireSeason` over its own frozen forest set;
-Part B drives the artifact's own `tick()` (never a re-implementation) at the dry peak vs the wet trough. Pinned ~2015
-(post-2000 ⇒ no logging, stable forest host; pre-2030 ⇒ spark live; timber spark off ⇒ all ignitions are the forest
-spark). **HEAD:** `fireSeason` 1.00 flat (build-agnostic fallback), Part A rate a flat 3.00/season (dry/wet **1.00**),
-Part B real dry/wet a noisy ~1 (0.40–1.33 — season-blind). **Patch:** `fireSeason` **0.10 (wet) → 1.90 (dry)**,
-year-mean **0.991≈1** (held, exactly 1 analytically), Part B real ignitions dry≥wet on all 3 seeds (**∞ / ∞ / 7.00**).
-The defect is stated with no threshold (236): HEAD's constant curve IS the bug.
-
-**Visual.** Fire is invisible at 2035 (`year<2030`) and a still cannot show a cadence (134), so the visual pass is the
-holistic regression check that the mildly-cascaded 2035 city still reads. Whole-city shots at seeds 42 and 7, blind
-subagents, both **PASS**: coherent balanced coastal city, land/sea/roads/forest all correct on the hex grid, no z-order
-tears, no floating/sunk tiles, no blown-out colour.
-
-**Verdict: DEEPENED** — the forest fire is now the 7th reader of the coast's dry-season curve: wildfires concentrate in
-the golden summer and all but vanish in the wet winter, where before they fired year-round. The annual burn total is
-held by construction, and the comment that promised "dry-season lightning" for the artifact's whole life is finally
-telling the truth.
 
 ## Iteration 309 — the walk-up water tank was a mark of an old building, on a building of any age (2026-07-15) [Urban fabric × Deepen]
 
@@ -861,3 +810,51 @@ and picnic rugs fill for the golden dry peak and pack away over the wet winter (
 standing empty), at zero draw/stream cost and byte-identical at the dry peak. Completes the seasonal-leisure category
 (beach 247 → park 317), the twin of the excitable-media completion (bloom 263 · shroom 272 · party 314). Cue (bh)
 closed as a non-defect. `beachPhase()` gains three readers.
+
+## Iteration 318 — the washing hung out in the rain, and through midwinter (2026-07-17) [People & activity × Deepen/interconnect]
+
+**Vector.** Rotation steered to Civic/People × New CA rule, but the loop's law outranks it: grep the seam, not the cue
+list — and the New-CA idea I brought (washing lines in the older quarters) turned out to **already exist**, unlogged,
+in `drawBuilding`'s RES case (iter 34's law: grep before you design). The grep then handed back the real seam. The
+washing line's OWN comment claims *"out on dry days, in by dark"*, and it kept the `dark` half (`LITAMT<0.45`) and the
+`party` half (`!(c.party>0)`) — but there was **no `dry` gate at all**: it flapped through a downpour and hung out
+through a freezing January, on 6 seeds, forever. That is the 199/113 tell (a comment asserting a behaviour the draw
+ignores), and it is a **271/286 category hole**: the very comment on `rainingAt` (5051) records that the STREET CROWD
+was just taught to read the shower and *"the beach furniture packs away for the winter"* — the washing was that
+rain-and-season-aware category's **un-enumerated sibling**, two functions up, quietly deaf to both.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** One gate, two clauses added:
+`hashCell<0.22` → `hashCell<0.22*beachPhase() && rainingAt(x,y)<0.05`.
+- **Rain** — `rainingAt(x,y)<0.05` reads the SAME shower footprint the street crowd, the wet ground, the veil and the
+  meadow-bloom CA read (the one-definition law): the washing comes in as a cloud passes over, exactly as the umbrellas
+  go up. Closes the *"dry days"* tell.
+- **Season** — `0.22*beachPhase()` thins the population toward the wet trough. **Scaled so `beachPhase()===1` at the
+  dry peak reproduces HEAD's `0.22` byte-for-byte** (245's fixed point) — only the winter loses lines, and the summer
+  city is untouched.
+The flap already read `WINDA` (`0.35+0.65*WINDA`), so with rain + season the line now answers the whole weather system.
+
+**Census.** Draw-only, gated on `rainingAt`/`beachPhase` (global reads), unreachable from `tick()` ⇒ `pop`/`developed`/
+`roads` **+0, byte-identical**, tile histogram empty. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-washline.mjs`, build-agnostic: it counts the gate population from the artifact's OWN
+`beachPhase`/`rainingAt`/`hashCell` over the real cells — the gate has no other side effect, so its truth-count IS the
+washing drawn — and computes both HEAD's gate `<0.22` and the patch's gate itself, depending on nothing the patch line
+touched). 3 seeds, at 2035, daytime (`LITAMT≈0.01`):
+- **A — dry-PEAK / clear sky: PATCH == HEAD on every seed** (10/10, 5/5, 5/5). The fixed point holds byte-for-byte (245).
+- **B — dry-PEAK / rain over the plate: PATCH ≪ HEAD** (10→2, 5→1, 5→0), `wetHits` 35/27/30 confirming the rig wets the
+  homes (a saturation test: a plate-covering forced cloud, `wf≪0`; a centroid cloud missed the RES fringe — by 2035 the
+  core is MID/TOWER, so the washing homes survive on the low-rise edge). Washing comes IN.
+- **C — wet-trough / clear sky: PATCH ≈ 0.10·HEAD** (10→1, 5→1, 5→0), the `BEACHMIN=0.10` thinning (ratio noisy on
+  populations of 5–10, but clearly toward the trough).
+- **ELIGIBLE** (west-RES-neighbour, both built, not party) is the shared must-not-move denominator (250), identical for
+  both gates so the difference isolates rain+season.
+
+**Visual.** Dry-summer whole-city (seed 42) + residential close-up (seed 7); the change only REMOVES draws under
+rain/winter and is byte-identical on a dry-summer day, so regression risk is nil. Both agents PASS; seed 7 sees the
+washing (*"tiny strings of colored dots between low-rise houses"*) — the common case is intact.
+
+**Verdict: DEEPENED.** The washing line now keeps the weather and the calendar the rest of the city keeps: it comes in
+as the shower arrives (closing its own *"dry days"* comment tell) and thins over the wet winter, at zero draw/stream
+cost and byte-identical at the dry peak. Enrolls the washing as the rain-aware category's missed sibling (271/286) —
+the domestic twin of the street crowd (rain) and the seasonal-leisure completion (247/317). `rainingAt`/`beachPhase`
+each gain a reader.

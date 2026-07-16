@@ -22690,3 +22690,52 @@ pickup game now fills it on some afternoons and it is an empty chalked ground th
 per-day clock, instead of two frozen players who stood there every daylit hour forever. Draw-only, path count roughly
 neutral (more players during a game, none otherwise); free by construction.
 
+## Iteration 308 — the "dry-season lightning" fired just as readily in the wet winter (2026-07-15) [Nature × Deepen]
+
+**Vector.** Nature rotation (oldest domain). Nature's additive is spent (301) and its Polish debt is paid (294), so per
+the header I grepped the `tick()`/CA seam and the frozen-census/comment tells rather than the cue list. Nature is
+extraordinarily mature — every CA runs (kelp 282, wildfire 279, bloom 263, solar 287), every belt keeps a calendar
+(farm 108, orchard 57, vineyard, the woodland spring/autumn ephemerals), FOREST is a live logging↔regrowth equilibrium
+(225 flat but dynamic, not a dead rule). But one comment lies. The forest fire spark's own comment reads
+*"dry-season lightning takes a patch of forest"* — and its rate was a **flat constant** `FIRESPK`, with no season term
+anywhere. A forest hex was exactly as likely to catch in the wet-winter thaw (s≈0.12) as at the golden dry peak
+(s≈0.62), which is backwards for a wildfire. 199's tell, hosted on a CA spark: a comment asserting a *seasonality* the
+value cannot have. Confirmed on HEAD before designing (`probe-fireseason`): ignition dry/wet ratio **≈1.0** on 3 seeds
+(0.83–1.67), the expected rate a **flat 3.00/season** — season-blind by construction.
+
+**Change.** The spark now rides the season the rest of the coast already reads. `fireSeason() =
+1 + FIREDRY*(0.5 - seasonCool())` — `seasonCool()` is the artifact's dryness curve (0 at the dry peak, 1 at the wet
+trough), already read by the grass, the deciduous canopy and the day length; the fire is its **7th reader** (one
+predicate, N readers). The FOREST spark's threshold becomes `hashCell(...) < FIRESPK*fireSeason()`. The lever is
+**CENTRED on seasonCool's own mean (0.5)** (245/98): `seasonCool()` is a pure cosine (`0.5-0.5cos(2π(s-0.62))`) with
+year-mean exactly 0.5, so `fireSeason()` averages **exactly 1** over the year and the annual ignition total is HELD —
+the dry season burns more only because the wet season burns exactly that much less. `FIREDRY=1.8` ⇒ **1.9× at the dry
+peak, 0.1× at the wet trough** (never negative), so a wildfire is a summer thing. Reads no `rng()`/`Math.random`, so
+the spark itself stays inert to the seeded stream — only the terrain a fire BURNS perturbs it, which is HEAD's own,
+unavoidable cost (279). **The timber-block spark is left untouched:** it is an URBAN fire (old buildings smouldering
+until the 1991 firehouse), and its comment is about the engine era, not the dry season.
+
+**Census.** Fire writes terrain, so the ignition-timing change cascades chaotically through the `rng()` stream (the
+invariant expects this). Core HELD and net-positive: `pop` +2.9%, `developed` +0.3%, `roads` +0.4%; tile histogram a
+mild reshuffle (FOREST −10, BURNT 4→2, TOWER +27, RES +56 — all within noise). **VERDICT: PASS, 0 page errors.** The
+centred lever is why nothing collapsed.
+
+**Probe** (`probes/probe-fireseason.mjs` — TEMPORAL/134, build-agnostic via `SRC=`, no pixels/no noise floor). Part A
+reads the EXPECTED ignition rate from the artifact's own `hashCell·FIRESPK·fireSeason` over its own frozen forest set;
+Part B drives the artifact's own `tick()` (never a re-implementation) at the dry peak vs the wet trough. Pinned ~2015
+(post-2000 ⇒ no logging, stable forest host; pre-2030 ⇒ spark live; timber spark off ⇒ all ignitions are the forest
+spark). **HEAD:** `fireSeason` 1.00 flat (build-agnostic fallback), Part A rate a flat 3.00/season (dry/wet **1.00**),
+Part B real dry/wet a noisy ~1 (0.40–1.33 — season-blind). **Patch:** `fireSeason` **0.10 (wet) → 1.90 (dry)**,
+year-mean **0.991≈1** (held, exactly 1 analytically), Part B real ignitions dry≥wet on all 3 seeds (**∞ / ∞ / 7.00**).
+The defect is stated with no threshold (236): HEAD's constant curve IS the bug.
+
+**Visual.** Fire is invisible at 2035 (`year<2030`) and a still cannot show a cadence (134), so the visual pass is the
+holistic regression check that the mildly-cascaded 2035 city still reads. Whole-city shots at seeds 42 and 7, blind
+subagents, both **PASS**: coherent balanced coastal city, land/sea/roads/forest all correct on the hex grid, no z-order
+tears, no floating/sunk tiles, no blown-out colour.
+
+**Verdict: DEEPENED** — the forest fire is now the 7th reader of the coast's dry-season curve: wildfires concentrate in
+the golden summer and all but vanish in the wet winter, where before they fired year-round. The annual burn total is
+held by construction, and the comment that promised "dry-season lightning" for the artifact's whole life is finally
+telling the truth.
+
