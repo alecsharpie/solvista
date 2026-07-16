@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
@@ -32,10 +32,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Sky **305** · People **306** · Civic **307** · Nature **308** (fire rides the dry season) ·
-  Urban **309** (walk-up water tank rides `c.age`) · **310 = step-back #39 (no drift).** ➡ **NEXT: Water (303,
-  oldest)** — grep its draw/`tick()` seam + the comment/199 tells, not the cue list. Water's named cue **(ay)**
-  windrow LENGTH is POLISH (⛔ not Water's next); **next step-back ~315.**
+- **ROTATION.** Last: Civic **307** · Nature **308** · Urban **309** · **310 = step-back #39** · Water **311**
+  (WINDA rides the season — winter seas rough, summer glassy; centred ⇒ year-mean held + equinox fixed point).
+  ➡ **NEXT: Transport (297, oldest real lap)** — 304 grepped its 4 seams DRY (only New CA rule **77** stale, a
+  forced transit CA ⛔ shallow); judge saturation. Cue **(bi)** cable-cabin hours = measured, NOT a defect. **Step-back ~315.**
   ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
   spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
   curve); **0.10x wet trough → 1.90x dry peak**, CENTRED on mean 0.5 ⇒ year-mean **exactly 1**, annual burn total HELD.
@@ -391,55 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 303 entries before Iteration 301 live in
+> **Archive:** the 304 entries before Iteration 302 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 301 — the herd grazed the meadow edge at 4am in midwinter, the same nine head as noon (2026-07-15) [Nature × Deepen/FIX]
-
-**Vector.** Nature rotation (294 oldest). Its additive is spent and its Polish debt paid (294) ⇒ **grep the CA/entity
-seam**, not the cue list (the header's own instruction). Grepping every animate draw for a global-monotone gate — the
-recurring cliff (199 windows · 210 residents · 230 traffic · 262 child · 286 kite/kayak · 300 strip crowd) — turned up
-the one holdout the enumerate-the-CATEGORY grep (271/286) had walked past, because it is not a person, a boat or a
-kite: **`drawDeer` opened on `const[cx,cy]=px(...)` with NO GATE AT ALL.** Nine mule deer, spawned once per city,
-grazing the meadow-and-woods edge, drawn at full detail at 4am in midwinter identically to noon in midsummer, on every
-seed for the artifact's whole life — the **last animate thing in Solvista that kept no hour** (every person keeps
-`curfewAt`/`kidOut`, every boat/surfer/kayak/kite `waterOut`/`kiteOut`, the busker and its crowd `buskOut`/`stripOut`,
-and the beach a season, 247).
-
-**Change.** `deerSession()=clamp(1−nightAmt()/DEERDARK,0,1)` (`DEERDARK=0.6`) and `deerOut=d=>d.ph/7`, and one line at
-the top of `drawDeer`: `if(deerSession()<deerOut(d))return;` (before `stamp()`, as drawSurfer/drawKayak/drawPed do — a
-bedded deer is not out there to be hovered). The herd melts into the cover one head at a time as the dark comes down,
-last bedded about where the joggers are all in, and refills at dawn (like the residents, `pedHidden`). **THE HOUR IS
-TAKEN FROM THE LADDER (226)**: `KITE=KID(~0.35) < DEER ≲ JOG=SURF=KAYAK(0.62) ≈ STRIP≈BUSK(0.55..0.97) < CURF(1.85)`.
-**DERIVED, NOT DRAWN (262):** `d.ph` is already `Math.random()*7`, so `deerOut` reads it here and no deer draws a value
-of its own — the shared `Math.random` stream stays byte-identical, every other entity provably untouched. A `nightAmt()`
-gate cannot express a midday siesta (it is 0 all day), and mule deer graze the cool evening anyway — so night-bedding
-only, and the whole DAY is byte-identical (a free dead-regime control, 199).
-
-**Census.** Draw-only, no rng, no terrain ⇒ **core BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram
-empty; `deer` spawn count 54 unchanged — only the DRAW gates). VERDICT: PASS (vacuous here; the gate is the probe + eyes).
-
-**Probe** (`probes/probe-deerhour.mjs`, TEMPORAL, no pixels for the headline, build-agnostic via `deerSession` detection).
-Counts the deer the draw's own gate admits, swept across the lit night, 2 seeds at 2035.62. **HEAD: 6 head CONSTANT
-across the whole lit night — `DISTINCT COUNTS = 1`** (the cliff, the defect stated, 236). **PATCH: thins one at a time
-6→5→3→1→0 through the evening and deep night, `DISTINCT = 5`, refills at dawn (day control 6).** Controls all hold:
-**HOST** (deer spawned) 6 identical HEAD↔patch; **DAY** 6 in both (dead-regime, 199); **positive control SURFERS**
-(`waterOut`, untouched) reads `DISTINCT = 6` and **byte-identical between HEAD and patch** (9→8→5→3→2→0) — so the sweep
-is live and the surfers are provably unperturbed (248/271). **259 CHECK**: deer render **28/30 px at deep night** (all
-forced out, diffed against deer-emptied) ⇒ bedding them is a *visible* change, not a no-op.
-
-**Visual** (`probes/shot-deerhour.mjs`, discriminating pair — DAY (deer out) vs DEEP-NIGHT (bedded) — aimed at the
-densest deer cluster by its own `ctr`, zoomed 4.8×, plus a whole-city frame). Both seeds **PASS**, both blind agents
-found deer grazing the meadow/woods edge in the day crop (1 clear on s42, 4–5 on s7) and **none** in the same crop at
-deep night; both read the whole city as a coherent, balanced coast with no z-order tears, floating tiles or blown-out
-colour.
-
-**Verdict: FIXED** — the eighth recursion of the 262 cliff, and the last animate holdout in the city: Solvista's deer
-now keep an hour like every person, boat and kite, bedding down in the trees at nightfall instead of grazing a frozen
-midnight meadow. Every animate draw in the diorama is now off the global-`nightAmt`/`LITAMT` cliff.
 
 ## Iteration 302 — the loft's rooftop studio was a garden it could not have (2026-07-15) [Urban fabric × Polish]
 
@@ -873,3 +829,53 @@ not reset) is a legitimate future tool lap — same shape as the still-standing 
 **Verdict: STEP-BACK — NO DRIFT.** No feature shipped. The city is confirmed coherent across 3 lights × 2 seasons
 on 2 seeds; the day-length season reads by light alone; 40 laps of growth cost ~1% of draw work; golden hue
 keeps the greens (265 holds). The guardrail is reset (next step-back ~315); **NEXT vector is Water (303, oldest).**
+
+## Iteration 311 — the sea broke as hard in August as in a January storm (2026-07-17) [Water & coast × Deepen/interconnect]
+
+**Vector.** Water rotation (303 oldest). The header's law is to grep the seam, not the cue list — and
+grepping `WINDA`, the ONE gust signal the whole coast reads (the whitecaps and windrows through
+`seaState()`, the breaking surf, plus the trees/palms/flags/clouds/kites), against the calendar turned up a
+holdout: `WINDA` is a **pure function of `time`** (`advanceEntities`, L10321) with **no seasonal term at
+all**, so the sea broke exactly as hard in settled August as in a January storm. Winter is the stormy season
+on this coast, and nothing said so. This is 261's law arriving on the WIND (the season is a clock; a
+scene-wide signal was deaf to it), found by the "grep a global for a clock every relative already reads"
+move — the sea already answers the tide (113/196/257), the light (181/257) and, since 245/275, the
+instantaneous wind; the one clock it never read was the calendar.
+
+**Change.** One centred multiply on the gust: `WINDA = clamp((HEAD gust)*windSeason(), 0, 1)`, with
+`windSeason() = 1 + WINDSEAS*(2*seasonCool()-1)` (`WINDSEAS=0.35`). This is `dayLen()`'s own idiom
+(`2*seasonCool()-1`: +1 at the wet trough, -1 at the dry peak, **MEAN 0**), so the year-mean wind is HEAD's
+and the equinox is a byte-identical fixed point. Winter runs `1.35x`, summer `0.65x`; the summer sea drops
+to a glassy `seaState≈SEACALM` while the winter gust saturates at full gale. **NOTHING NEW IS DRAWN** — the
+whitecap/windrow/surf machinery, all centred on `seaState()==0.5`, just answers one more clock. The whole
+scene gusts seasonally together (247's "the whole scene gusts together" comment, now with a calendar): winter
+trees sway harder, winter clouds drift faster, but the sea is the visible payoff and the reason it is a Water
+lap.
+
+**Census.** Draw-only, no `rng()`/`Math.random()`/terrain, `WINDA` unreachable from `tick()` ⇒ **core
+BYTE-IDENTICAL** (pop/developed/roads +0, empty tile histogram). `greenRoofs +1` is the 226/278 RAF-tick
+wobble (a hair-slower draw lands one fewer late-CA tick; reproduces on a same-file re-run), not semantic.
+VERDICT: PASS (vacuous — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-windseason.mjs`, render-free, no noise floor, build-agnostic via a `windSeason`
+stub). Sweeps `WINDA`/`seaState()` over a full gust cycle at four calendar points, HEAD (`windSeason=()=>1`)
+vs patch, 2 seeds. **HEAD: `seaState` CONSTANT across all four seasons — `DISTINCT = 1`** (the cliff, the
+defect stated, 236). **PATCH: `DISTINCT = 3`, WINTER/SUMMER seaState 1.49–1.51x** (winter rougher). **YEAR-MEAN
+held** (245): patch 0.504/0.491 vs HEAD 0.499/0.485, **delta +0.005 (~1%)** — a small, honest asymmetry from
+the winter WINDA clamp at 1.0 (summer floors at windForce 0, winter saturates), well within held-mean
+tolerance for a draw-only redistribution. **EQUINOX FIXED POINT** (253): the `windSeason=()=>1` HEAD column
+equals the patch's two equinox rows exactly; a year-pinned equinox reads `6e-10` (the expected float residual
+of pinning a season by a non-representable `year%1`, 261 — the *proof* is the stubbed column, not the pin).
+**CONTROL** TIDE (no seasonal term): identical across all seasons, `DISTINCT = 1`.
+
+**Visual** (`probes/shot-windseason.mjs`, a DISCRIMINATING PAIR — winter vs summer at ONE gust instant, same
+tide, same light — aimed by measured sea ink, MASKED to the sea per shot-seastate's law, gust phase pinned at
+the base cycle's peak; token→season map CROSSED between seeds, non-ordinal tokens). Both seeds **PASS**. Both
+blind agents, on crossed maps, **named the winter (rough) frame by the sea alone** — seed 42 kappa, seed 7
+sigma — reporting more/brighter whitecap flecks and foam streaks on the winter open water and a glassier,
+greener summer sea, sitting correctly on the hex water with no z-order tears, floating sprites, mis-colour or
+blowout, and both whole-city frames balanced and coherent.
+
+**Verdict: DEEPENED** — the coast's sea now answers the calendar as it already answers the tide, the light and
+the instantaneous wind: winter seas run rough and the summer sea goes glassy, at zero new draw work, on the
+one scene-wide signal that had never read a clock.

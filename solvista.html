@@ -4936,6 +4936,20 @@ function windDrift(){ return 0.55+0.9*WINDA; }
 const KITECALM=0.45;            /* how far a kite sinks back when the air goes still */
 function kiteGust(){ return KITECALM+(1-KITECALM)*windForce(); }
 
+/* THE WIND KEEPS A CALENDAR (iter 311). WINDA is the one gust cycle the whole coast
+   reads -- the whitecaps and windrows through seaState(), the breaking surf, and the
+   trees, palms, flags, clouds and kites -- and it was a pure function of `time`, so
+   the sea broke exactly as hard in settled August as in a January storm. Winter is the
+   stormy season on this coast, and nothing said so. This scales the whole gust by the
+   calendar, CENTRED on the season's mean (the `2*seasonCool()-1` idiom dayLen() already
+   uses: +1 at the wet trough, -1 at the dry peak, MEAN 0), so the YEAR-MEAN wind is
+   HEAD's exactly and the equinox (seasonCool()==0.5) is a byte-identical fixed point.
+   Winter seas run rough and the summer sea goes glassy; nothing new is drawn -- the
+   whitecap/windrow/surf machinery, all centred on seaState()==0.5, just answers one
+   more clock. */
+const WINDSEAS=0.35;            /* gust swing about the mean over the year: winter 1.35x, summer 0.65x */
+function windSeason(){ return 1+WINDSEAS*(2*seasonCool()-1); }
+
 let TIDE=0.5; /* sea level 0..1 on a slow seeded cycle: 1=high water, 0=low */
 let TIDEV=1;  /* sign of dTIDE/dt: >0 flooding, <0 ebbing (the tooltip reads it) */
 let TIDEPH=0; /* phase offset: lets ?tide= pin the cycle without stopping it (see __setTide) */
@@ -10318,7 +10332,7 @@ function advanceEntities(dt,s){
   time+=dt*s; waveT+=dt*(REDUCED?0.3:1)*s;
   /* the breeze: slow seeded gust cycle with genuine lulls; trees, palms and
      clouds all read from this one signal so the whole scene gusts together */
-  WINDA=0.25+0.75*Math.max(0,Math.sin(time*0.13+(seedNum%89)*0.5))*(0.72+0.28*Math.sin(time*0.57));
+  WINDA=clamp((0.25+0.75*Math.max(0,Math.sin(time*0.13+(seedNum%89)*0.5))*(0.72+0.28*Math.sin(time*0.57)))*windSeason(),0,1);
   /* ~2min ebb and flood. One phase, two readings: height and its direction. */
   const tph=waveT*0.045+(seedNum%31)*0.4+TIDEPH;
   TIDE=0.5+0.5*Math.sin(tph); TIDEV=Math.cos(tph);

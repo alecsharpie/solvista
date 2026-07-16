@@ -22355,3 +22355,47 @@ z-order tears / floating tiles / blown-out colour; each frame reads as a coheren
 **Verdict: FIXED** — the seventh recursion of the 262 cliff, on the last People holdout: the neon strip crowd now keeps
 an hour like everyone else in the city, and the busker no longer plays to a frozen audience.
 
+## Iteration 301 — the herd grazed the meadow edge at 4am in midwinter, the same nine head as noon (2026-07-15) [Nature × Deepen/FIX]
+
+**Vector.** Nature rotation (294 oldest). Its additive is spent and its Polish debt paid (294) ⇒ **grep the CA/entity
+seam**, not the cue list (the header's own instruction). Grepping every animate draw for a global-monotone gate — the
+recurring cliff (199 windows · 210 residents · 230 traffic · 262 child · 286 kite/kayak · 300 strip crowd) — turned up
+the one holdout the enumerate-the-CATEGORY grep (271/286) had walked past, because it is not a person, a boat or a
+kite: **`drawDeer` opened on `const[cx,cy]=px(...)` with NO GATE AT ALL.** Nine mule deer, spawned once per city,
+grazing the meadow-and-woods edge, drawn at full detail at 4am in midwinter identically to noon in midsummer, on every
+seed for the artifact's whole life — the **last animate thing in Solvista that kept no hour** (every person keeps
+`curfewAt`/`kidOut`, every boat/surfer/kayak/kite `waterOut`/`kiteOut`, the busker and its crowd `buskOut`/`stripOut`,
+and the beach a season, 247).
+
+**Change.** `deerSession()=clamp(1−nightAmt()/DEERDARK,0,1)` (`DEERDARK=0.6`) and `deerOut=d=>d.ph/7`, and one line at
+the top of `drawDeer`: `if(deerSession()<deerOut(d))return;` (before `stamp()`, as drawSurfer/drawKayak/drawPed do — a
+bedded deer is not out there to be hovered). The herd melts into the cover one head at a time as the dark comes down,
+last bedded about where the joggers are all in, and refills at dawn (like the residents, `pedHidden`). **THE HOUR IS
+TAKEN FROM THE LADDER (226)**: `KITE=KID(~0.35) < DEER ≲ JOG=SURF=KAYAK(0.62) ≈ STRIP≈BUSK(0.55..0.97) < CURF(1.85)`.
+**DERIVED, NOT DRAWN (262):** `d.ph` is already `Math.random()*7`, so `deerOut` reads it here and no deer draws a value
+of its own — the shared `Math.random` stream stays byte-identical, every other entity provably untouched. A `nightAmt()`
+gate cannot express a midday siesta (it is 0 all day), and mule deer graze the cool evening anyway — so night-bedding
+only, and the whole DAY is byte-identical (a free dead-regime control, 199).
+
+**Census.** Draw-only, no rng, no terrain ⇒ **core BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram
+empty; `deer` spawn count 54 unchanged — only the DRAW gates). VERDICT: PASS (vacuous here; the gate is the probe + eyes).
+
+**Probe** (`probes/probe-deerhour.mjs`, TEMPORAL, no pixels for the headline, build-agnostic via `deerSession` detection).
+Counts the deer the draw's own gate admits, swept across the lit night, 2 seeds at 2035.62. **HEAD: 6 head CONSTANT
+across the whole lit night — `DISTINCT COUNTS = 1`** (the cliff, the defect stated, 236). **PATCH: thins one at a time
+6→5→3→1→0 through the evening and deep night, `DISTINCT = 5`, refills at dawn (day control 6).** Controls all hold:
+**HOST** (deer spawned) 6 identical HEAD↔patch; **DAY** 6 in both (dead-regime, 199); **positive control SURFERS**
+(`waterOut`, untouched) reads `DISTINCT = 6` and **byte-identical between HEAD and patch** (9→8→5→3→2→0) — so the sweep
+is live and the surfers are provably unperturbed (248/271). **259 CHECK**: deer render **28/30 px at deep night** (all
+forced out, diffed against deer-emptied) ⇒ bedding them is a *visible* change, not a no-op.
+
+**Visual** (`probes/shot-deerhour.mjs`, discriminating pair — DAY (deer out) vs DEEP-NIGHT (bedded) — aimed at the
+densest deer cluster by its own `ctr`, zoomed 4.8×, plus a whole-city frame). Both seeds **PASS**, both blind agents
+found deer grazing the meadow/woods edge in the day crop (1 clear on s42, 4–5 on s7) and **none** in the same crop at
+deep night; both read the whole city as a coherent, balanced coast with no z-order tears, floating tiles or blown-out
+colour.
+
+**Verdict: FIXED** — the eighth recursion of the 262 cliff, and the last animate holdout in the city: Solvista's deer
+now keep an hour like every person, boat and kite, bedding down in the trees at nightfall instead of grazing a frozen
+midnight meadow. Every animate draw in the diorama is now off the global-`nightAmt`/`LITAMT` cliff.
+
