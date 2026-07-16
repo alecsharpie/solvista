@@ -37,7 +37,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   parties ignited & rested as ONE, a metronomic square wave, ~1 party at 2035; `probe-blockparty`). ✅ **EXCITABLE-MEDIA
   CATEGORY NOW COMPLETE** (bloom 263 · shroom 272 · party 314 — every shared-timer CA in `tick()` now jitters off a
   per-cell uniform). People's stale ADDITIVE kind stays New CA rule (49). ➡ **NEXT: Civic (New CA rule 36/107) or People
-  (New CA rule 49); STEP-BACK ~315 DUE (5 since 310).** ⛔ **DO NOT re-try daytime vehicle lamps** — `polish-tile`, not a Deepen (312/bi).
+  (New CA rule 49); step-back #40 ran clean at 315 — ~320 DUE next.** ⛔ **DO NOT re-try daytime vehicle lamps** — `polish-tile`, not a Deepen (312/bi).
   ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
   spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
   curve); **0.10x wet trough → 1.90x dry peak**, CENTRED on mean 0.5 ⇒ year-mean **exactly 1**, annual burn total HELD.
@@ -86,16 +86,16 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ✅ **STEP-BACK #39 RAN AT 310 — NO DRIFT** (both seeds coherent, day/golden/night + CROSSED dusk-summer/winter
-  pair; both named winter by light ⇒ day-length season alive; `probe-goldenhue` PASS, greens keep identity 8°/10°
-  vs HEAD's 23°/24° ⇒ **golden monochrome cue stays CLOSED, 265 holds**; perf ARC FLAT: path objects vs 270 ~40
-  laps +0.95%d/+0.74%n = ~+0.02%/lap, cancelled by byte-flat FIXES). ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms**
-  (216/198 — perfab read −2%/lap, load noise). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **A "muddy golden"
-  agent FAIL was REFUTED by probe, not banked (212+265): golden pin (argmax GWARM, t=0.775) sits 0.009 from
-  dusk-summer ⇒ same near-sunset instant, dim by low sun — by design.** ⚠ **TOOL NITS in `shot-stepback` (banked,
-  not fixed):** per-frame `GWARM=0` self-report is a stale caption read (contradicts its own pins + `probe-goldenhue`;
-  pixels ARE warm) — nearly steered this lap into a false "golden unwarmed"; and `HUD=STALE` on golden/dusk =
-  `phaseWord`-vs-`clockWord` mismatch, not a stale DOM. Both are legit future tool laps (fix the tool, not a caveat).
+  ✅ **STEP-BACK #40 RAN AT 315 — NO DRIFT, and NO false FAIL this time** (both seeds coherent, day/golden/night +
+  CROSSED dusk-summer/winter pair; both named winter by light ⇒ day-length season alive; only aside was the KNOWN
+  faint day-sea hex quilt, "subtle, does not break the read" — 255/257/268, capped, not new). `probe-goldenhue`
+  PASS, greens keep identity 8°/10° vs HEAD's 23°/24° ⇒ **golden monochrome cue stays CLOSED, 265 holds**; night
+  ordering `*TOWER 130 *MID 124 *COM 118 | BEACH 98` clears by 19 (222/251). Perf ARC FLAT (path objects, load-
+  immune — 216/198): LAP vs 310 +0.27%d/−0.03%n; ARC vs 275 ~40 laps +0.59%d/+0.62%n = ~**+0.015%/lap**, cancelled
+  by byte-flat FIXES. ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms** (perfab is load noise). ⚠ Blind A/B NON-ORDINAL +
+  CROSSED (268). ⚠ **TOOL NITS in `shot-stepback` (STILL banked, not fixed — legit future tool laps):** per-frame
+  `GWARM=0` self-report is a stale caption read (pixels ARE warm; agents + `probe-goldenhue` agree) — do NOT read it
+  as "golden unwarmed"; and `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM.
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -391,67 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 307 entries before Iteration 305 live in
+> **Archive:** the 308 entries before Iteration 306 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 305 — the front greyed the clouds and the ground and lit the sky, but never touched the sky ITSELF (2026-07-15) [Sky & atmosphere × Deepen/interconnect]
-
-**Vector.** Sky (rotation target, 298 oldest). The header's law is grep the seam, not the cue list — so I
-grepped the atmosphere seam (`syncSky`/`daylight`/the weather front) rather than reach for another 262 cliff
-(the header warns that recursion is 9-deep and a 10th is "one more shallow feature"). The seam handed back a
-209-shaped gap: **the weather front (236) is the artifact's richest sky system** — it greys the cloud bellies
-(`cloudWet`), wets the ground (`rainingAt`), raises umbrellas, feeds the meadow-bloom CA and, since 291, lights
-the lightning — **and the SKY BACKDROP behind all of it was deaf to it.** `syncSky` and render's sky both derive
-purely from `daylight(sunWarp(dayT))` (time-of-day + season); a heavy shower band with greyed clouds, rain,
-umbrellas and lightning sat under the same clear blue/gold sky as a fair day. The biggest surface in the scene
-wore no weather (209: a large surface wearing a field that carries no signal). 291's own title even said it:
-*"the storm that greyed the clouds and wet the ground but never once lit the sky."* It lit it; it never leadened
-it.
-
-**Change.** `overcast()` = `clamp((rainFront()-OVC0)/OVCRAMP,0,1)*OVCMAX` — the front's OWN strength, the sky's
-**fourth reader of rainFront** after the clouds, the ground and the CA (no new signal; one-predicate law). Gated
-ABOVE the scattered-shower band (`OVC0=0.58`) so a dry spell or a light patchy front is `overcast()===0`. When a
-real band is overhead, `overcastSky(skyTop,skyBot,oc)` pulls both stops toward a shared leaden grey (the mean of
-their two luminances, dimmed by `OVCDIM=0.84`): the top→bottom gradient FLATTENS (an overcast sky is uniform,
-not a bright zenith over a warm horizon) and the sky desaturates. ONE transform, called in BOTH `syncSky` (the
-CSS backdrop, 200) and `render()` (right after `daylight`, BEFORE GWARM/GWSB/GWST read `skyBot`) — so the
-backdrop and the canvas sky/sea/cloud colours can never disagree, and a storm mutes the sea's golden sheen
-(GWARM) too. The same `OVCNOW` dims the sun disc (`sunF *= 1-OVCNOW`): the sun hides behind the band.
-Constants: `OVC0=0.58`, `OVCRAMP=0.34`, `OVCMAX=0.82` (a floor of gradient always survives — the sky never goes
-dead-flat, cf SHAMT), `OVCDIM=0.84`.
-
-**Census.** Draw-only — no rng()/Math.random, no terrain, unreachable from `tick()` ⇒ **core BYTE-IDENTICAL**
-(`pop`/`roads`/`developed` +0, empty tile histogram), 0 page errors. VERDICT: PASS (vacuous here; the gate is
-the probe + eyes).
-
-**Probe** (`probes/probe-overcast.mjs`). Measures the shipped transform through the artifact's OWN functions
-(no pixels, no noise floor, build-agnostic): the HEAD-equivalent sky is `daylight()` with the overcast step NOT
-applied, computed in the SAME page, so the diff IS the feature at an exact floor of 0. Three claims, all PASS on
-2 seeds × {noon, golden}: **(1) WET** (a real band, `overcast()`=0.82): chroma drops **90–149** across the two
-stops, the top→bottom gradient flattens **~48→9** (leaden/flat), and on seed-7 golden the sea's golden gate
-**GWARM 0.44→0** (the storm eats the sheen). **(2) DRY / patchy** (`overcast()`===0): the shipped sky is
-**BYTE-IDENTICAL** to the HEAD-equivalent — an exact structural fixed point, so a fair or lightly-showered sky is
-unchanged. **(3) wiring**: the CSS `--sky-bot` the backdrop actually paints equals the shipped `skyBot` (`wire:true`).
-
-**Perf.** Scalar-only: `overcast()` is one `rainFront()` (a couple of `sin`) per frame, `overcastSky` mutates 6
-numbers twice a frame, the sun dim is one multiply. NO new draw primitives — it recolours existing draws (the
-sky is CSS), and the sun dim can only REDUCE ink. Path objects unchanged; negligible.
-
-**Visual** (`probes/shot-overcast.mjs`, page.screenshot per 200; storm-golden / clear-golden control /
-storm-noon, named by file, each self-reporting year/overcast/front). Both seeds **PASS**. Both blind agents,
-by the SKY ALONE, correctly named the storm frame vs the clear frame and matched the filenames (the
-discrimination check — they looked): the overcast reads as *"a believable flat, grey, desaturated front… the sun
-convincingly dimmed/hidden,"* the clear-golden control as *"a coherent, normal golden-hour dusk sky,"* and the
-storm-noon as *"a proper leaden overcast noon with the sun a faint smear behind the front."* No z-order tears,
-floating tiles or blown-out colour; each whole frame reads as one balanced, coherent coastal city (the seed-7
-agent noting the rain shafts sit correctly as weather over the sea).
-
-**Verdict: DEEPENED** — the weather front now reaches the one surface it never touched. A heavy band hauls a
-leaden overcast across the sky and mutes the golden sheen and the sun behind it; a dry or patchy sky is
-byte-identical to HEAD. The sky is the front's fourth reader, and the storm is finally a storm all the way up.
 
 ## Iteration 306 — the school run only ever happened in the morning (2026-07-15) [People & activity × Deepen/FIX]
 
@@ -872,3 +816,38 @@ time at maturity), the neighbourhoods keep a steady scatter of parties (zero-par
 at the same total party-density (mean held) and zero draw/stream cost. Completes the "enumerate the excitable-media
 category" audit (271): bloom (263), fairy rings (272), block parties (314) — every shared-constant-timer CA in `tick()`
 now jitters a timer off a per-cell uniform, so none blinks as one.
+
+## Iteration 315 — five clean lights, two seasons, forty laps flat (2026-07-17) [40th step-back / holistic]
+
+**Vector.** The rotation's `NEXT` is Civic or People × New CA rule, but the header's own law flagged the
+**step-back due at ~315** (5 vectors since #39 at 310 — the loop's main guardrail for long unattended runs, and
+it outranks one more feature). So this lap is the holistic self-check; the feature vector resumes next. No
+`solvista.html` change.
+
+**Step-back #40.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
+dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant, sun UP in summer and DOWN in winter).
+Every frame self-reports its state.
+- **Visual: city is healthy — no cumulative drift, and NO false FAIL this time.** One agent per seed, blind,
+  cumulative question. Both read all five frames as a coherent, balanced, beautiful coastal city — no z-order
+  tears, floating tiles, ornaments-in-mid-air, blown-out colour, no mojibake in any HUD text. No kelp/coast
+  darkness, no towers-as-wallpaper wall, no glow-blob compounding. Both correctly named **dusk-winter** as the
+  darker/night-lit frame (the discrimination check — they looked, and the day-length season is alive). The only
+  aside was the **faint hex quilting on the day/golden sea** — both flagged it "subtle, does not break the read":
+  the KNOWN STRUCTURAL one-tone terrace (255/257/268), capped and not a new defect. Both returned VISUAL: PASS.
+- **Golden hue PASS** (`probe-goldenhue`, golden pin DERIVED in-page as argmax GWARM t=0.775, 265): golden keeps
+  the greens' identity — PARK **8°** / FOREST **10°** off their daylight selves, against HEAD's historical
+  **23°/24°** rotated onto ROAD/BEACH. The monochrome-terracotta cue stays **CLOSED** (265 holds).
+- **Night ordering invariant PASS** (`probe-goldenhue`, p90 envelope): `*TOWER 130 *MID 124 *COM 118 | BEACH 98
+  ROAD 98` — the dimmest lit surface clears the brightest unlit by **19** (222/251). Neighbour separations hold.
+- **Perf: no drift, priced in PATH OBJECTS (the load-immune unit — 216/198).** LAP vs #39 (310): day 112,114 vs
+  111,816 = **+0.27%**, night 139,567 vs 139,603 = **−0.03%** — free (313/314 draw-only & byte-flat, 312 reverted).
+  ARC vs 275 (~40 laps back): day 112,114 vs 111,457 = **+0.59%**, night 139,567 vs 138,706 = **+0.62%** —
+  ~**+0.015%/lap**, an order under the +0.2%/lap additive tendency; the byte-flat FIX/credit laps cancel it. No
+  compounding. (Per 202, ⚠ `shot-stepback`'s `GWARM=0` per-frame caption is still the stale-read tool nit banked
+  at 310 — the golden pixels ARE warm, agents + `probe-goldenhue` agree; the label lies, the frame is correct.)
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors — confirmed.
+
+**Verdict: STEP-BACK — NO DRIFT.** No feature shipped. The city is confirmed coherent across 3 lights × 2 seasons
+on 2 seeds; the day-length season reads by light alone; forty laps of growth cost ~0.6% of draw work; golden hue
+keeps the greens (265 holds). The guardrail is reset (next step-back ~320); **NEXT vector is Civic or People ×
+New CA rule** (the two stale additive cells).

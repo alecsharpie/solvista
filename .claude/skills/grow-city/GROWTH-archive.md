@@ -22545,3 +22545,59 @@ seasons on 2 seeds, and 40 laps of growth cost essentially nothing in draw work.
 reset; NEXT domain is Sky (298, oldest). Recording the dry seam + cue (bi) is the value: it stops the next
 lap re-grepping Transport, and hands a future lap a measured decision to make.
 
+## Iteration 305 — the front greyed the clouds and the ground and lit the sky, but never touched the sky ITSELF (2026-07-15) [Sky & atmosphere × Deepen/interconnect]
+
+**Vector.** Sky (rotation target, 298 oldest). The header's law is grep the seam, not the cue list — so I
+grepped the atmosphere seam (`syncSky`/`daylight`/the weather front) rather than reach for another 262 cliff
+(the header warns that recursion is 9-deep and a 10th is "one more shallow feature"). The seam handed back a
+209-shaped gap: **the weather front (236) is the artifact's richest sky system** — it greys the cloud bellies
+(`cloudWet`), wets the ground (`rainingAt`), raises umbrellas, feeds the meadow-bloom CA and, since 291, lights
+the lightning — **and the SKY BACKDROP behind all of it was deaf to it.** `syncSky` and render's sky both derive
+purely from `daylight(sunWarp(dayT))` (time-of-day + season); a heavy shower band with greyed clouds, rain,
+umbrellas and lightning sat under the same clear blue/gold sky as a fair day. The biggest surface in the scene
+wore no weather (209: a large surface wearing a field that carries no signal). 291's own title even said it:
+*"the storm that greyed the clouds and wet the ground but never once lit the sky."* It lit it; it never leadened
+it.
+
+**Change.** `overcast()` = `clamp((rainFront()-OVC0)/OVCRAMP,0,1)*OVCMAX` — the front's OWN strength, the sky's
+**fourth reader of rainFront** after the clouds, the ground and the CA (no new signal; one-predicate law). Gated
+ABOVE the scattered-shower band (`OVC0=0.58`) so a dry spell or a light patchy front is `overcast()===0`. When a
+real band is overhead, `overcastSky(skyTop,skyBot,oc)` pulls both stops toward a shared leaden grey (the mean of
+their two luminances, dimmed by `OVCDIM=0.84`): the top→bottom gradient FLATTENS (an overcast sky is uniform,
+not a bright zenith over a warm horizon) and the sky desaturates. ONE transform, called in BOTH `syncSky` (the
+CSS backdrop, 200) and `render()` (right after `daylight`, BEFORE GWARM/GWSB/GWST read `skyBot`) — so the
+backdrop and the canvas sky/sea/cloud colours can never disagree, and a storm mutes the sea's golden sheen
+(GWARM) too. The same `OVCNOW` dims the sun disc (`sunF *= 1-OVCNOW`): the sun hides behind the band.
+Constants: `OVC0=0.58`, `OVCRAMP=0.34`, `OVCMAX=0.82` (a floor of gradient always survives — the sky never goes
+dead-flat, cf SHAMT), `OVCDIM=0.84`.
+
+**Census.** Draw-only — no rng()/Math.random, no terrain, unreachable from `tick()` ⇒ **core BYTE-IDENTICAL**
+(`pop`/`roads`/`developed` +0, empty tile histogram), 0 page errors. VERDICT: PASS (vacuous here; the gate is
+the probe + eyes).
+
+**Probe** (`probes/probe-overcast.mjs`). Measures the shipped transform through the artifact's OWN functions
+(no pixels, no noise floor, build-agnostic): the HEAD-equivalent sky is `daylight()` with the overcast step NOT
+applied, computed in the SAME page, so the diff IS the feature at an exact floor of 0. Three claims, all PASS on
+2 seeds × {noon, golden}: **(1) WET** (a real band, `overcast()`=0.82): chroma drops **90–149** across the two
+stops, the top→bottom gradient flattens **~48→9** (leaden/flat), and on seed-7 golden the sea's golden gate
+**GWARM 0.44→0** (the storm eats the sheen). **(2) DRY / patchy** (`overcast()`===0): the shipped sky is
+**BYTE-IDENTICAL** to the HEAD-equivalent — an exact structural fixed point, so a fair or lightly-showered sky is
+unchanged. **(3) wiring**: the CSS `--sky-bot` the backdrop actually paints equals the shipped `skyBot` (`wire:true`).
+
+**Perf.** Scalar-only: `overcast()` is one `rainFront()` (a couple of `sin`) per frame, `overcastSky` mutates 6
+numbers twice a frame, the sun dim is one multiply. NO new draw primitives — it recolours existing draws (the
+sky is CSS), and the sun dim can only REDUCE ink. Path objects unchanged; negligible.
+
+**Visual** (`probes/shot-overcast.mjs`, page.screenshot per 200; storm-golden / clear-golden control /
+storm-noon, named by file, each self-reporting year/overcast/front). Both seeds **PASS**. Both blind agents,
+by the SKY ALONE, correctly named the storm frame vs the clear frame and matched the filenames (the
+discrimination check — they looked): the overcast reads as *"a believable flat, grey, desaturated front… the sun
+convincingly dimmed/hidden,"* the clear-golden control as *"a coherent, normal golden-hour dusk sky,"* and the
+storm-noon as *"a proper leaden overcast noon with the sun a faint smear behind the front."* No z-order tears,
+floating tiles or blown-out colour; each whole frame reads as one balanced, coherent coastal city (the seed-7
+agent noting the rain shafts sit correctly as weather over the sea).
+
+**Verdict: DEEPENED** — the weather front now reaches the one surface it never touched. A heavy band hauls a
+leaden overcast across the sky and mutes the golden sheen and the sun behind it; a dry or patchy sky is
+byte-identical to HEAD. The sky is the front's fourth reader, and the storm is finally a storm all the way up.
+
