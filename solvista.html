@@ -4449,6 +4449,8 @@ function bandR(gx,gy,ax,ay,z0,z1,fill){
    it replaces, and lands at +4.6% night / +0.0% day.
    Night-only: below the cut this is byte-for-byte the band it always was. */
 const WINDK=0.42, WINDARK=0.16;   /* unlit-glass shade; BASELINE share of panes with nobody home */
+const TANKAGE=160;   /* ~12 yr (age*0.075): a walk-up's timber water tank is a mark of an OLD building,
+                        so the tank rides c.age (254's live-but-unread host: the old town IS downtown) */
 /* How far the night has run: 0 at dusk, 1 in the small hours. LITAMT cannot answer
    this — the light curve PINS it at 1.0 from dayT 0.86 all the way to midnight — so
    for the artifact's whole life "nobody home" (below) was a CONSTANT: the same panes
@@ -7349,8 +7351,14 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.fillStyle=col('sage',1);
       const[cx,cy]=px(gx+jx,gy);
       ctx.fillRect(cx-4*rs,cy-rz-1.8,8*rs,2);
-    } else if(!c.solar&&!c.groof&&hashCell(x,y,seedNum^0x7A7E)<0.3){
-      /* the older walk-ups keep a timber water tank on the roof */
+    } else if(!c.solar&&!c.groof&&c.age>TANKAGE&&hashCell(x,y,seedNum^0x7A7E)<0.3){
+      /* the older walk-ups keep a timber water tank on the roof — and now they ACTUALLY
+         are the older ones: the hash still picks WHICH walk-ups are tank-bearing, but the
+         tank only appears once the building has genuinely stood ~12 yr (c.age > TANKAGE).
+         A freshly-converted RES->MID shows a bare roof until it ages in, so tanks accrue
+         over decades and concentrate in the old core (corr(age,distCBD) ~ -0.35 at 2035).
+         This is the first pixel on a developed building to read c.age (254). age only rises
+         for a stable MID, so the tank appears once and never flickers off. */
       const[cx,cy]=px(gx+jx,gy);
       const tx=cx+3.1*rs,ty=cy-rz;
       ctx.strokeStyle=col('ink',0.75);ctx.lineWidth=0.6;               /* legs */

@@ -22279,3 +22279,42 @@ and present throughout.
 and the moonglade pool slides along the water beneath it. Draw-only, path count flat, free by construction. The two
 visual FAILs were investigated and refuted/explained by measurement, not overridden on vibe.
 
+## Iteration 299 — a market cross for the empty square (2026-07-15) [Civic & culture × Polish]
+
+**Vector.** Civic rotation (oldest domain: last real Civic lap was 292; 298 spent Sky, so Civic is least-recently
+touched). Civic's additive is CLOSED (292: the event-venue category {market, stadium, amphitheater} is complete) and
+its Connect is measured-sound (285's civic mile), so the honest kind is **Polish** — stale for Civic since 231. The
+banked cue **(bf)**: the market's packed-away square reads BALD. 285 gave the market a trading day and a closed state,
+but the closed state was only three faint pitch scars (`sandDk`) and a two-rect trestle stub on cream paving — a big
+pale hexagon with almost nothing on it. A closed *market* square should still read as a market.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** In the `T.MARKET` draw case:
+- **A permanent stone market cross** — the square's civic marker, the single strongest "this is a market square"
+  signal — set in the front-left corner (`gx-0.23,gy+0.23`), clear of the three pitches: stepped plinth → shaft →
+  cross-head → finial (`stone`/`stoneDk`). Drawn every state, so a *closed* square carries it; when trading it tucks
+  behind the stalls (drawn after) and the trading frame is byte-unchanged.
+- **Enriched packed-away state** (`ma<=0`): chalked pitch **bays** (top/bottom edge + end posts, so the empty pitches
+  read as marked bays, not smudges), a **folded-trestle stack** (four planks + two leaning A-frame legs, `deck`/
+  `deckDk`), and a small **crate pile** (two boxes with darker lids). All in the existing wood/stone vocabulary.
+
+**Census.** Draw-only → **PASS, 0 page errors**, core **byte-identical** (`pop`/`roads`/`developed` +0, tile
+histogram empty). Vacuous by construction; the gate is the eyes.
+
+**Visual.** `shot-marketday.mjs` (285's market camera) + a centered close-up (zoom 7.5, aimed at `ctr(market)`) at the
+CLOSED pin (a day the square holds no market → bald in daylight) and the OPEN pin, patch vs pristine HEAD, both seeds.
+- **Seed 42 market @42,6 (ink-exposed):** the closed-square before/after is decisive — HEAD is a bald pale hexagon
+  with three faint scars; the patch reads instantly as a closed market square (stone cross unmistakable, folded
+  trestles, crates, chalk bays). No z-order tear, no floating, no blown colour.
+- **Trading state:** stalls up and dominant, the cross a subtle background element behind them — no clutter, clean
+  (patch's open frame is essentially HEAD's; the cross is occluded by the stalls, which is why the discriminating
+  pair's OPEN frames came back byte-identical while only the SHUT frame moved).
+- **Whole-city (un-zoomed):** balanced, coherent coastal city; the market detail is correctly invisible at fit zoom
+  (a sub-hex ornament), nothing compounded.
+- ⚠ *Instrument note:* `shot-marketday`'s tight clip (`x:510,w:380`) can leave the market's stall centre at/over the
+  clip edge, so its OPEN/LIT frames may not contain the stalls (its SHUT frame here still carried the change). A
+  centred pan (`ctr(x,y)` → viewport centre, generous clip) is the reliable close-up; noted for a future camera fix.
+
+**Verdict: SHIPPED** — the closed market square now reads as a market: a stone cross standing over folded trestles and
+chalked pitches, whether the stalls are up or down. Draw-only, path count flat (a handful of fills on a few market
+tiles), free by construction. Cue (bf) CLOSED.
+

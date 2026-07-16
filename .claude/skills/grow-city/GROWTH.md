@@ -19,7 +19,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
+| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
@@ -32,11 +32,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Water **303** · Transport (examined **304**) · Sky **305** · People **306** · Civic **307** ·
-  Nature **308** (fire ignition now rides the dry season — see below). ➡ **NEXT: Urban (302, oldest)** — grep its
-  `tick()`/CA seam + the flag-lifecycle/TABLE/comment tells, not the cue list (Urban tooltip/flag/TABLE SATURATED per
-  302's note; stale kind = **Interaction/UX (133)**. The 287/279 pattern = grep the tick()/CA seam; a ZERO/flat census
-  row is louder than any cue).
+- **ROTATION.** Last: Transport (examined **304**) · Sky **305** · People **306** · Civic **307** · Nature **308**
+  (fire rides the dry season) · Urban **309** (the walk-up water tank now rides `c.age` — see below). ➡ **NEXT: Water
+  (303, oldest)** — grep its draw/`tick()` seam + the comment/199 tells, not the cue list. Water's named cue **(ay)**
+  windrow LENGTH is POLISH (⛔ not Water's next); **STEP-BACK IS DUE AT 310** (5 vectors since #38 at 304 — do the
+  holistic self-check before the next vector).
   ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
   spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
   curve); **0.10x wet trough → 1.90x dry peak**, CENTRED on mean 0.5 ⇒ year-mean **exactly 1**, annual burn total HELD.
@@ -107,9 +107,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   luminance **SD 22.3**, which a blind agent on *pristine HEAD* called a honeycomb over *"90–100% of the open water."*
   ⚠ **Read the `peds` cap first** (111) before designing anything road-borne.
   ⛔ **254: THE BUILDING COLOUR CHANNEL IS SPENT — DO NOT RE-TRY *ANY* "THE BUILDINGS SHOULD SHOW X REGIONALLY" IN
-  COLOUR** (age, value, density, flow — anything). **Body archived at 271; law in SKILL.md.** ✅ **THE HOST IS STILL LIVE
-  AND UNREAD** (`c.age`: *the old town IS downtown*) — **but only a SHAPE, an ORNAMENT, a COUNT can show it. Never a
-  hue.** (`probes/probe-buildingage.mjs`.)
+  COLOUR** (age, value, density, flow — anything). **Body archived at 271; law in SKILL.md.** ✅ **THE HOST IS NOW PARTLY
+  READ (309): the MID walk-up water tank rides `c.age`** (`TANKAGE=160`≈12yr) — the first pixel on a developed building
+  to read age; tanks accrue as districts stand and settle onto the old core (`probe-tankage`). **Still only a
+  SHAPE/ORNAMENT/COUNT may show age — NEVER a hue** (254). RES/COM/TOWER carry no age ornament yet; `probe-buildingage`
+  remains the host proof.
   ✅ **(aq′) + 262 CLOSED — bodies archived at 277; laws in SKILL.md.** ⚠ **Retire `probe-seasonarea` as a seasonal score;
   the season is ~0 at MID-DAY BY CONSTRUCTION (264) ⇒ shoot it at the EVENING MARGIN.** ⚠ **Never add another
   global-light gate to anything that keeps hours (262).**
@@ -391,50 +393,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 301 entries before Iteration 299 live in
+> **Archive:** the 302 entries before Iteration 300 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 299 — a market cross for the empty square (2026-07-15) [Civic & culture × Polish]
-
-**Vector.** Civic rotation (oldest domain: last real Civic lap was 292; 298 spent Sky, so Civic is least-recently
-touched). Civic's additive is CLOSED (292: the event-venue category {market, stadium, amphitheater} is complete) and
-its Connect is measured-sound (285's civic mile), so the honest kind is **Polish** — stale for Civic since 231. The
-banked cue **(bf)**: the market's packed-away square reads BALD. 285 gave the market a trading day and a closed state,
-but the closed state was only three faint pitch scars (`sandDk`) and a two-rect trestle stub on cream paving — a big
-pale hexagon with almost nothing on it. A closed *market* square should still read as a market.
-
-**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** In the `T.MARKET` draw case:
-- **A permanent stone market cross** — the square's civic marker, the single strongest "this is a market square"
-  signal — set in the front-left corner (`gx-0.23,gy+0.23`), clear of the three pitches: stepped plinth → shaft →
-  cross-head → finial (`stone`/`stoneDk`). Drawn every state, so a *closed* square carries it; when trading it tucks
-  behind the stalls (drawn after) and the trading frame is byte-unchanged.
-- **Enriched packed-away state** (`ma<=0`): chalked pitch **bays** (top/bottom edge + end posts, so the empty pitches
-  read as marked bays, not smudges), a **folded-trestle stack** (four planks + two leaning A-frame legs, `deck`/
-  `deckDk`), and a small **crate pile** (two boxes with darker lids). All in the existing wood/stone vocabulary.
-
-**Census.** Draw-only → **PASS, 0 page errors**, core **byte-identical** (`pop`/`roads`/`developed` +0, tile
-histogram empty). Vacuous by construction; the gate is the eyes.
-
-**Visual.** `shot-marketday.mjs` (285's market camera) + a centered close-up (zoom 7.5, aimed at `ctr(market)`) at the
-CLOSED pin (a day the square holds no market → bald in daylight) and the OPEN pin, patch vs pristine HEAD, both seeds.
-- **Seed 42 market @42,6 (ink-exposed):** the closed-square before/after is decisive — HEAD is a bald pale hexagon
-  with three faint scars; the patch reads instantly as a closed market square (stone cross unmistakable, folded
-  trestles, crates, chalk bays). No z-order tear, no floating, no blown colour.
-- **Trading state:** stalls up and dominant, the cross a subtle background element behind them — no clutter, clean
-  (patch's open frame is essentially HEAD's; the cross is occluded by the stalls, which is why the discriminating
-  pair's OPEN frames came back byte-identical while only the SHUT frame moved).
-- **Whole-city (un-zoomed):** balanced, coherent coastal city; the market detail is correctly invisible at fit zoom
-  (a sub-hex ornament), nothing compounded.
-- ⚠ *Instrument note:* `shot-marketday`'s tight clip (`x:510,w:380`) can leave the market's stall centre at/over the
-  clip edge, so its OPEN/LIT frames may not contain the stalls (its SHUT frame here still carried the change). A
-  centred pan (`ctr(x,y)` → viewport centre, generous clip) is the reliable close-up; noted for a future camera fix.
-
-**Verdict: SHIPPED** — the closed market square now reads as a market: a stone cross standing over folded trestles and
-chalked pitches, whether the stalls are up or down. Draw-only, path count flat (a handful of fills on a few market
-tiles), free by construction. Cue (bf) CLOSED.
 
 ## Iteration 300 — the busker packed up as the crowd finally thinned, but the crowd it played to never did (2026-07-15) [People & activity × Polish/FIX]
 
@@ -856,3 +819,52 @@ tears, no floating/sunk tiles, no blown-out colour.
 the golden summer and all but vanish in the wet winter, where before they fired year-round. The annual burn total is
 held by construction, and the comment that promised "dry-season lightning" for the artifact's whole life is finally
 telling the truth.
+
+## Iteration 309 — the walk-up water tank was a mark of an old building, on a building of any age (2026-07-15) [Urban fabric × Deepen]
+
+**Vector.** Urban rotation (oldest domain, 302). Urban's tooltip/flag/TABLE seams are audited saturated (295/302/281),
+so per the header I grepped the draw for the 199/comment tell rather than the cue list. The MID walk-up draw carries a
+lovely little ornament — a timber water tank on the roof — under the comment *"the older walk-ups keep a timber water
+tank on the roof."* Its gate is `!c.solar&&!c.groof&&hashCell(x,y,seed^0x7A7E)<0.3`: a **static per-cell hash, with no
+age term anywhere.** So the tank stood on a 3-year-old walk-up exactly as readily as a 40-year-old one — 199's tell, a
+comment asserting an age-dependence the value cannot have. And this matters more than one comment: `c.age` is 254's
+**live-but-unread host** — ticked at 36 sites, dating the current structure, published in the tooltip (*"Built ~1998"*)
+— and **no pixel on a developed building had ever read it.** 254 reverted an age→patina *hue* and banked the finding:
+*the building colour channel is spent, but a SHAPE / ORNAMENT / COUNT can still show that the old town is downtown.*
+The tank is exactly that ornament, already drawn, just gated on the wrong thing.
+
+**Confirmed on HEAD before designing** (`probe-tankage`, build-agnostic via `typeof TANKAGE`): corr(tank, age) **≈ 0**
+on every seed/era (−0.28…+0.18 noise on a static hash), and the tanked walk-ups' mean hexDist ≈ the whole low-MID
+mean (no gradient). Meanwhile the host itself is strong: **corr(age, distCBD) ≈ −0.35 at 2035** across seeds — older
+walk-ups genuinely cluster toward the core (downtown builds early, then its towers just grow taller without an age
+reset, while the rim churns EMPTY→RES→MID and keeps resetting). The old town *is* downtown, and nothing showed it.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The tank gate gains **`c.age > TANKAGE`**
+(`TANKAGE=160` ≈ 12 yr at `age*0.075`). The hash still picks *which* walk-ups are tank-bearing (deterministic, spread
+out); the age term decides *when* the tank appears. A freshly-converted RES→MID shows a bare roof until it has stood
+~12 yr, so tanks accrue over decades and settle onto the genuinely old buildings — which lean central. `c.age` rises
+monotonically for a stable MID (no MID→higher upgrade resets it), so the tank appears once and never flickers off.
+The comment is now true. **First pixel on a developed building to read `c.age`.**
+
+**Census.** Draw-only → **PASS, 0 page errors**, core **byte-identical** (`pop`/`roads`/`developed` +0, tile
+histogram empty). Vacuous by construction; the gate is the probe + the eyes.
+
+**Probe** (`probes/probe-tankage.mjs`, pure world data, build-agnostic, no pixels/no noise floor; 6 seeds × 3 eras):
+- **HEAD** — corr(tank, age) ≈ **0** (age-blind); tanks present on 5–8 fresh walk-ups even in the **1995 boomtown**
+  (buildings ~3–8 yr old); tanked mean-dist ≈ low-MID mean-dist (no gradient).
+- **PATCH** — **0 tanks in 1995** (correct: no walk-up has stood 12 yr yet), accruing to 8–15/city by 2035; at
+  mid-development (2015, where the walk-up stock spans young↔old) corr(tank, age) jumps to **+0.26…+0.47**, and the
+  tanked mean-dist falls **below** the low-MID mean on 5/6 seeds (tanks pull toward the core). By 2035 nearly every
+  walk-up is >12 yr so the gate stops discriminating and corr washes back to ~0 — correct: a mature city's walk-ups
+  are all old, so all the tank-type ones carry a tank. The behavioural win is the **accrual over time**, which HEAD
+  could never show (a 1995 tank on a 3-year-old building was the defect stated).
+
+**Visual.** The tank *draw code* is untouched (only its gate), and the probe confirms 8–15 tanks still render at 2035,
+so the visual pass is the holistic regression/coherence check. Whole-city shots, seeds 42 & 7, blind subagents, both
+**PASS**: balanced coherent coastal city, all tiles seated on the hex grid, no z-order tears / floating / sunk tiles,
+no blown-out colour, density peaks naturally in the core and eases outward — still beautiful as a whole.
+
+**Verdict: DEEPENED** — the rooftop water tank now rides building age, so it is genuinely a mark of an old walk-up:
+tanks are absent from the young boomtown, accrue as districts stand, and settle onto the old core. `c.age` — dated,
+tracked, tooltip-published and pixel-invisible for the artifact's whole life — finally reads onto a developed
+building, exactly the shape/ornament 254 banked. Free by construction (draw-only, path count a touch lower).
