@@ -251,4 +251,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 318  People × New CA rule       DEEPENED            21m14s   $9.77  cf124e0
 ✔ Iter 319  People × New CA rule       SHIPPED             26m47s   $12.17 1a67508
 ✔ Iter 320  —                          SHIPPED             13m15s   $6.20  64cb246
+✔ Iter 321  People × New CA rule       SHIPPED             39m32s   $18.84 22daeca
 ```
