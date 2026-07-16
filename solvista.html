@@ -440,6 +440,22 @@ const KEYS=[
    BYTE-IDENTICAL — an exact proof that a seasonal light adds no draw work. */
 function seasonCool(){const s=((year%1)+1)%1;
   return 0.5-0.5*Math.cos(6.2831853*(s-0.62));}
+/* SNOW — the coast's deep-winter cold snap, and the emptiest cell in the grid: Sky's
+   first CA rule. seasonCool() is 1 at the wet trough (~mid-Jan) and 0 at the golden dry
+   peak, so winterMask() is nonzero ONLY in the coldest weeks. The snow FIELD (c.snow) is
+   a reaction-diffusion CA over the inland land: a per-tick seasonal source relaxes each
+   hex toward a per-type target (thick on the parks/hills/woods, thin on the trafficked
+   streets) while a diffusion term drifts it to level and thins it at every boundary with
+   the sea, the void and the buildings — so it reads as coherent white uplands with the
+   streets slushed through them, not a flat wash. It settles fast enough to survive the
+   warp's coarse timestep (SNOWLERP), and melts clean before the golden peak. The coast
+   itself (BEACH/DUNE/SHOREPARK, palms and all) is left bare, sea-warmed. Wholly draw-only:
+   c.snow is a pure field of season+neighbours (no rng(), no hashCell, no terrain) reset with
+   the world, so it perturbs nothing the census measures. */
+const SNOW0=0.85, SNOWLERP=0.5, SNOWDIFF=0.10;      /* onset speed / drift */
+const SNOWSHOW=0.05, SNOWFULL=0.5, SNOWA=0.6;       /* draw: fringe ramp, then flat alpha */
+function winterMask(){ return clamp((seasonCool()-SNOW0)/(1-SNOW0),0,1); }
+const SNOWLAND=new Set([T.EMPTY,T.MEADOW,T.FOREST,T.REDWOOD,T.PARK,T.ROAD,T.ROCK,T.FARM,T.VINEYARD,T.ORCHARD,T.GARDEN,T.FIELD]);
 function daylight(t){
   t=((t%1)+1)%1;
   let i=0; while(KEYS[i+1][0]<t)i++;
@@ -913,7 +929,7 @@ function blob(cx,cy,r,fn){
 function genWorld(seed){
   seedNum=seed; rng=mulberry32(seed);
   sAmp=1.2+rng()*1.6; sFreq=0.22+rng()*0.24; sPh=rng()*7;
-  year=1974; dayT=0.30; devBudgetUsed=0; TICKN=0;   /* the bloom's clock is part of the world */
+  year=1974; dayT=0.30; devBudgetUsed=0; TICKN=0; snowGlobal=0;   /* the bloom's clock is part of the world */
   vehicles=[];bikes=[];trams=[];trucks=[];peds=[];boats=[];buoys=[];ferries=[];freighters=[];launches=[];birds=[];shuttles=[];dogs=[];kites=[];surfers=[];dolphins=[];whales=[];herons=[];kayaks=[];joggers=[];deer=[];clouds=[];balloons=[];copters=[];heliPads=[];
   /* the coast highway hugs the shore in long hex-diagonal runs
      (a straight vertical column would wiggle across hex rows) */
@@ -944,7 +960,7 @@ function genWorld(seed){
     else if(x>coastX[y])t=T.SHOREPARK;
     cells[idx(x,y)]={t,h:0,th:0,v:hashCell(x,y,seed),age:0,corr:false,lit:hashCell(y,x,seed),
                      val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,shroom:0,stop:0,loft:false,sand:0,
-                     bridge:false,riv:false,busy:false,flow:0,solar:false,groof:false,treed:false,kind:''};
+                     bridge:false,riv:false,busy:false,flow:0,solar:false,groof:false,treed:false,snow:0,kind:''};
   }
   /* meadows, woods and boulders: the land the town was cut from */
   const nMead=ks(3)+(rng()*3|0);
@@ -1796,6 +1812,7 @@ const SHRM0=0.72, SHRMW=0.18, SHRMEND=0.99, SHRMP=0.06;
 const shroomDue=(c,s2)=>s2>SHRM0+c.v*SHRMW&&s2<SHRMEND;
 const shroomLife=(x,y)=>2+(hashCell(x,y,seedNum^0x5A17)<0.5?0:1);  /* 2-3 ticks, mean 2.5 */
 let TICKN=0;   /* tick counter: salts the bloom's hashCell so the CA draws NO rng() */
+let snowGlobal=0;   /* is any snow lying? — lets the snow pass skip itself for the ~9/10 of the year that is snowless (part of the world; reset with genWorld) */
 function canopyK(x,y){return countAround(x,y,1,isWood)}
 function deepWoods(x,y){return countAround(x,y,2,isWood)>=9
   &&countAround(x,y,2,n=>n.t===T.ROAD||DEV.has(n.t))===0}
@@ -3071,6 +3088,28 @@ function tick(){
     let b=ATTRACT.has(c.t)?2:0;
     nbrs6(x,y,(nx,ny)=>{const n=cellAt(nx,ny); if(n&&ATTRACT.has(n.t))b++});
     c.buzz=b;
+  }
+  /* SNOW — reaction-diffusion over the inland land (Sky's first CA rule, iter 321).
+     A seasonal source relaxes each snow-land hex toward a per-type target (deep on the
+     parks/hills/woods, shallow on the streets); a diffusion term drifts it to level and
+     thins it at every boundary with the sea, the void and the buildings. Nonzero only in
+     the coldest weeks (winterMask), and the whole pass is skipped for the ~3/4 of the year
+     that is snowless. Pure field of season + neighbours — no rng(), no hashCell, no terrain
+     — so it perturbs NOTHING the census measures (byte-identical core). */
+  const wm=winterMask();
+  if(wm>0||snowGlobal){
+    let any=0;
+    for(const i of HEXI){
+      const c=cells[i];
+      if(!SNOWLAND.has(c.t)){ if(c.snow)c.snow=0; continue; }
+      const x=i%G,y=(i/G)|0;
+      const tgt=wm*(c.t===T.ROAD?0.5:(c.t===T.FOREST||c.t===T.REDWOOD)?0.9:1);
+      let sum=0,n=0; nbrs6(x,y,(nx,ny)=>{const m=cellAt(nx,ny); if(m&&SNOWLAND.has(m.t)){sum+=m.snow;n++;}});
+      let s=c.snow+SNOWLERP*(tgt-c.snow)+(n?SNOWDIFF*(sum/n-c.snow):0);
+      c.snow=s<0?0:s>1?1:s;
+      if(c.snow>0.004)any=1;
+    }
+    snowGlobal=any;
   }
   recount();
   syncFleet();
@@ -6934,6 +6973,15 @@ function drawCell(x,y){
       if(c.party>0&&c.t===T.RES)drawParty(x,y,c,gx,gy);
       if(c.fire>0)drawFire(x,y,c,gx,gy);
     }
+  }
+  /* the winter dusting — laid on the ground LAST (over the road markings and low
+     ornaments, under the tree crowns above and every moving thing), so it reads as snow
+     ON the land. Alpha ramps over a thin fringe then holds flat (near-uniform ⇒ it cannot
+     terrace onto the lattice — 257), and runs through colA's illuminant so night snow goes
+     dim and blue rather than glowing white. */
+  if(c.snow>SNOWSHOW&&SNOWLAND.has(c.t)){
+    const a=SNOWA*Math.min(1,(c.snow-SNOWSHOW)/(SNOWFULL-SNOWSHOW));
+    hexTile(gx,gy,1.02,colA('white',1,a));
   }
 }
 

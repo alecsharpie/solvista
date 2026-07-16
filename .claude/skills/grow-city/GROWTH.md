@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -32,23 +32,24 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Civic **319** (CUP-NIGHT FIREWORKS — a Civic × CONNECT (stale cell 45/204): the evening-match
-  calendar (`matchClock`/`fixtureAt`, 240) tied to the decade-festival firework grammar (over the pier since 1980).
-  `matchCelebrate()` fires a 6-shell finale over each `T.STADIUM` in a 6.5s window after the final whistle of a **cup
-  night** (`hashCell(day,2,seed^SALT)<0.34`, off the same day index the fixture is), gated `LITAMT>0.6` so only
-  EVENING fixtures are seen. Draw-only (no rng/Math.random/terrain) ⇒ census byte-identical; exact FIXED POINT on any
-  non-cup night. `probe-matchfire`: floor 0, ink 267/415/285, 3 controls 0px, schedule 51% fix / 32% cup / 6.5s no-
-  strobe; 2 blind visual PASS.) · People **318** (WASHING LINE answers rain+season, 271/286-tell; `probe-washline`) ·
-  People **317** (SEASONAL LEISURE COMPLETE — park café/picnic read `beachPhase()`, cue (bh) closed non-defect) ·
-  Urban **316** (DISTRICTS made real — Voronoi `distOf(x,y)`, 55→98%; ⛔ **the districts vote in `tick()` is a
-  STREAM-PRESERVING VESTIGE — do NOT delete**) · People **314** (block-party CA de-synchronised) ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314 — every shared-timer CA now jitters off a
-  per-cell uniform). ➡ **STEP-BACK #41 RAN CLEAN AT 320 — NO DRIFT (next ~325).** ➡ **NEXT: the two stale ADDITIVE
-  cells: Civic/People × New CA rule (36/107 · 49) — or grep a measured seam (225).**
-  ✅ **308 (Nature Deepen: fire spark rides `fireSeason()`, 7th `seasonCool()` reader, dry-season only; timber left
-  alone), 305 (Sky Deepen: front greys the sky, `overcast()`), 291 (Sky lightning) — full entries in ledger.** ⚠
-  **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; daytime-lamp (bi) & gondola-cabin cues = same barely-visible
-  bad trade ⇒ ⛔ do NOT force, `polish-tile`). Sky additive NOT spent (291, sparsest cell).
+- **ROTATION.** Last: Sky **321** (SNOW — SKY'S FIRST CA RULE IN 321 LAPS, the emptiest cell in the grid: a
+  reaction-diffusion `c.snow` field. `winterMask()` (8th `seasonCool()` reader, coldest ~3 wks) drives a per-tick
+  source relaxing the inland land toward per-type targets (PARK 1.0 > woods 0.9 > ROAD 0.5) + a diffusion term that
+  levels it and thins it at every sea/void/building boundary; coast & roofs bare; melts by summer. Draw = one
+  flat-alpha `hexTile` at end of `drawCell`, clamped flat above `SNOWFULL=0.5` so it cannot terrace (257). **Zero
+  rng/hashCell/terrain ⇒ census byte-identical**; +~1257 path obj (~+1.1%) DEEP-WINTER ONLY, 0 otherwise. `probe-snow`
+  winter 0.66 vs summer 0.002, PARK>ROAD, LEAK 0; 2 blind visual PASS.) · Civic **319**
+  (CUP-NIGHT FIREWORKS: `matchCelebrate()` 6-shell finale over each stadium
+  after a cup-night whistle, `LITAMT>0.6`; draw-only, exact fixed point; `probe-matchfire`) · People **318**
+  (WASHING LINE answers rain+season) · People **317** (SEASONAL LEISURE COMPLETE) · Urban **316** (DISTRICTS made
+  real — Voronoi `distOf`, 55→98%; ⛔ **the vote in `tick()` is a STREAM-PRESERVING VESTIGE — do NOT delete**) ✅
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **STEP-BACK #41 CLEAN AT 320 —
+  next ~325.** ➡ **NEXT: the two stale ADDITIVE cells: Civic/People × New CA rule (36/107 · 49) — or grep a
+  measured seam (225). SKY × New CA now SEEDED (321); its template (season source + neighbour diffusion, inert
+  draw-flag) is reusable for any weather/ground field.**
+  ✅ **308 fire-spark rides `fireSeason()`, 305 front greys the sky, 291 Sky lightning — full entries in ledger.** ⚠
+  **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; (bi) daytime-lamp & (av) catenary cues = barely-visible bad
+  trade ⇒ ⛔ do NOT force, `polish-tile`). Sky NEW ELEMENT additive still sparse (291, 3rd ever).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
   **NATURE** additive spent (301 deer), Polish debt paid (294 ax+bg); next = grep the tick()/CA seam (287/279 pattern).
   **URBAN** tooltip/flag/TABLE SATURATED (295/302), stale = **Interaction/UX (133)**. **PEOPLE** Deepen CLOSED 14-deep
@@ -390,61 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 313 entries before Iteration 311 live in
+> **Archive:** the 314 entries before Iteration 312 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 311 — the sea broke as hard in August as in a January storm (2026-07-17) [Water & coast × Deepen/interconnect]
-
-**Vector.** Water rotation (303 oldest). The header's law is to grep the seam, not the cue list — and
-grepping `WINDA`, the ONE gust signal the whole coast reads (the whitecaps and windrows through
-`seaState()`, the breaking surf, plus the trees/palms/flags/clouds/kites), against the calendar turned up a
-holdout: `WINDA` is a **pure function of `time`** (`advanceEntities`, L10321) with **no seasonal term at
-all**, so the sea broke exactly as hard in settled August as in a January storm. Winter is the stormy season
-on this coast, and nothing said so. This is 261's law arriving on the WIND (the season is a clock; a
-scene-wide signal was deaf to it), found by the "grep a global for a clock every relative already reads"
-move — the sea already answers the tide (113/196/257), the light (181/257) and, since 245/275, the
-instantaneous wind; the one clock it never read was the calendar.
-
-**Change.** One centred multiply on the gust: `WINDA = clamp((HEAD gust)*windSeason(), 0, 1)`, with
-`windSeason() = 1 + WINDSEAS*(2*seasonCool()-1)` (`WINDSEAS=0.35`). This is `dayLen()`'s own idiom
-(`2*seasonCool()-1`: +1 at the wet trough, -1 at the dry peak, **MEAN 0**), so the year-mean wind is HEAD's
-and the equinox is a byte-identical fixed point. Winter runs `1.35x`, summer `0.65x`; the summer sea drops
-to a glassy `seaState≈SEACALM` while the winter gust saturates at full gale. **NOTHING NEW IS DRAWN** — the
-whitecap/windrow/surf machinery, all centred on `seaState()==0.5`, just answers one more clock. The whole
-scene gusts seasonally together (247's "the whole scene gusts together" comment, now with a calendar): winter
-trees sway harder, winter clouds drift faster, but the sea is the visible payoff and the reason it is a Water
-lap.
-
-**Census.** Draw-only, no `rng()`/`Math.random()`/terrain, `WINDA` unreachable from `tick()` ⇒ **core
-BYTE-IDENTICAL** (pop/developed/roads +0, empty tile histogram). `greenRoofs +1` is the 226/278 RAF-tick
-wobble (a hair-slower draw lands one fewer late-CA tick; reproduces on a same-file re-run), not semantic.
-VERDICT: PASS (vacuous — the gate is the probe + eyes).
-
-**Probe** (`probes/probe-windseason.mjs`, render-free, no noise floor, build-agnostic via a `windSeason`
-stub). Sweeps `WINDA`/`seaState()` over a full gust cycle at four calendar points, HEAD (`windSeason=()=>1`)
-vs patch, 2 seeds. **HEAD: `seaState` CONSTANT across all four seasons — `DISTINCT = 1`** (the cliff, the
-defect stated, 236). **PATCH: `DISTINCT = 3`, WINTER/SUMMER seaState 1.49–1.51x** (winter rougher). **YEAR-MEAN
-held** (245): patch 0.504/0.491 vs HEAD 0.499/0.485, **delta +0.005 (~1%)** — a small, honest asymmetry from
-the winter WINDA clamp at 1.0 (summer floors at windForce 0, winter saturates), well within held-mean
-tolerance for a draw-only redistribution. **EQUINOX FIXED POINT** (253): the `windSeason=()=>1` HEAD column
-equals the patch's two equinox rows exactly; a year-pinned equinox reads `6e-10` (the expected float residual
-of pinning a season by a non-representable `year%1`, 261 — the *proof* is the stubbed column, not the pin).
-**CONTROL** TIDE (no seasonal term): identical across all seasons, `DISTINCT = 1`.
-
-**Visual** (`probes/shot-windseason.mjs`, a DISCRIMINATING PAIR — winter vs summer at ONE gust instant, same
-tide, same light — aimed by measured sea ink, MASKED to the sea per shot-seastate's law, gust phase pinned at
-the base cycle's peak; token→season map CROSSED between seeds, non-ordinal tokens). Both seeds **PASS**. Both
-blind agents, on crossed maps, **named the winter (rough) frame by the sea alone** — seed 42 kappa, seed 7
-sigma — reporting more/brighter whitecap flecks and foam streaks on the winter open water and a glassier,
-greener summer sea, sitting correctly on the hex water with no z-order tears, floating sprites, mis-colour or
-blowout, and both whole-city frames balanced and coherent.
-
-**Verdict: DEEPENED** — the coast's sea now answers the calendar as it already answers the tide, the light and
-the instantaneous wind: winter seas run rough and the summer sea goes glassy, at zero new draw work, on the
-one scene-wide signal that had never read a clock.
 
 ## Iteration 312 — the headlamps came on in the noon storm, and nobody could see them (2026-07-17) [Transport × Deepen/interconnect — EXPLORED → REVERTED]
 
@@ -857,3 +808,61 @@ shot fresh, and built the crossed blind pair (`pair-alpha/beta`) from THIS run's
 on 2 seeds; the day-length season reads by light alone on a crossed map; forty-five laps of growth cost ~0.6% of
 draw work; golden hue keeps the greens (265 holds); the night lit-city ordering clears by 19. The guardrail is
 reset (next step-back ~325); **NEXT vector is Civic or People × New CA rule** (the two stale additive cells).
+
+## Iteration 321 — it snowed on the hills, and the streets went white for a week (2026-07-17) [Sky & atmosphere × New CA rule]
+
+**Vector.** The header's `NEXT` is Civic/People × New CA rule, and grepping the seams turned up nothing (26-for-26
+is at *finding*, and the recent laps have closed the last cliffs/tables/flags — corner/loft/solar/groof done,
+hstr/bridge/riv/hedge all lifecycle-clean, every CIVICDESC promise has a fulfilling comment). So this lap takes
+the counterweight's *one bigger swing* into **the single emptiest cell in the whole grid: Sky × New CA rule —
+never done once in 320 iterations.** Sky has clouds, fog, overcast, lightning, day-length seasons — every one a
+FIELD or an ENTITY; it has never had a genuine `tick()` CA. **Snow.**
+
+**Change (a reaction-diffusion CA + a contained draw — wholly census-inert).** A new field `c.snow`:
+- **The CA** (`tick()`, before `recount()`): `winterMask()` (the 8th reader of `seasonCool()`, nonzero only where
+  `seasonCool()>SNOW0=0.85`, i.e. the coldest ~3 weeks) drives a per-tick source; each snow-land hex **relaxes
+  toward a per-type target** (`SNOWLERP=0.5`: PARK/hill 1.0, woods 0.9, ROAD 0.5) plus a **diffusion term**
+  (`SNOWDIFF=0.10`, drifts to level and thins at every boundary with the sea/void/buildings). Fast enough to settle
+  inside the warp's coarse 0.075 yr/tick step; melts clean before the golden peak. `SNOWLAND` = the inland open
+  ground only (EMPTY/MEADOW/FOREST/REDWOOD/PARK/ROAD/ROCK/FARM/VINEYARD/ORCHARD/GARDEN/FIELD) — **the coast
+  (BEACH/DUNE/SHOREPARK, palms and all) is left bare, sea-warmed**, and buildings shed it. The whole pass
+  **self-skips** (`snowGlobal`) for the ~3/4 of the year that is snowless.
+- **The draw** (one site, end of `drawCell`): a white `hexTile` overlay laid LAST (over road markings & low
+  ornaments, **under** the tree crowns above and every moving thing — z-correct). Alpha ramps over a thin fringe
+  then **holds flat above SNOWFULL=0.5** (near-uniform ⇒ *cannot terrace onto the lattice*, 257), through `colA`'s
+  illuminant so night snow goes dim/blue, not glowing.
+- **Zero rng(), zero hashCell, no terrain** — a pure field of season + neighbours, reset with `genWorld`
+  (`snow:0` in cell-init, `snowGlobal=0`). So it perturbs NOTHING the census measures.
+
+**Census.** Core **byte-identical** — pop/roads/developed **+0**. `solarRoofs +2/+3`, `towerHt −1/+0` is the 226
+tick-timing wobble (the winter snow pass costs a hair of per-tick compute ⇒ a different tick count lands); **proven
+harness, not semantics, by re-running the SAME file** (solarRoofs read +2 then +3, towerHt −1 then +0, core flat
+both times). VERDICT PASS / 0 page errors.
+
+**Probe** (`probes/probe-snow.mjs`, pure world data — drives `tick()`, reads `cells[].snow`, no pixels, no noise
+floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.snow` is undefined→0):
+- **WINTER mean 0.66, cover 100%** vs **SUMMER 0.002** (melts before the dry peak) — the seasonal gate is real;
+  HEAD's snow is a constant 0 (236's free baseline).
+- **PARK 0.96 vs ROAD 0.51** — deeper on the parks/woods than the streets ⇒ a genuine spatial diffusion field,
+  **not a flat wash**.
+- **LEAK (coast + every building) = 0 on all 6 seeds** — the must-not-move column (250): snow lies only where it
+  should. `quilt p95 step 0.42` is entirely at PARK↔ROAD *type* boundaries (a plowed street beside a white park);
+  WITHIN a region the diffusion smooths it, and the draw clamps alpha flat above 0.5 so those field steps don't
+  even reach the pixels.
+
+**Perf** (222, direct count — the drawbudget A/B was interrupted by a timeout, so the honest number is the direct
+one): the pass calls no `rng()`, so the city is provably identical ⇒ the only draw delta is the snow overlay:
+**+~1257 path objects (~+1.1% of the day budget) in DEEP-WINTER frames only, exactly 0 every other season**
+(summer byte-flat, tick pass self-skips). The step-back pins day/golden at the dry peak (s=0.62) → snowless → the
+arc measurement is unaffected; only the dusk-winter discriminating frame carries the cost.
+
+**Visual** (`probes/shot-snow.mjs`, clock frozen in-page + a few `tick()`s AT the pinned year to settle the field —
+`?year=` alone drifts, 139/202; winter-day / summer-day control / winter-dusk, 2 seeds). Both blind subagents
+**PASS** and both **located** it: white dusting on the inland parks/hills/streets, **coast and rooftops bare**,
+the summer control **discriminably snowless** ("easy to tell apart"), **no hex-grid quilt** ("a coherent blanket…
+soft even lightening"), night snow correctly **dim/blue not glowing**, no z-order tears / floating snow / blown-out
+white, whole frame still a balanced beautiful coastal city.
+
+**Verdict: SHIPPED.** Sky's first CA rule in 321 iterations — a reaction-diffusion snow field that whitens the
+inland uplands and streets through the coldest weeks and melts off by summer, leaving the sea-warmed coast bare.
+Wholly census-inert; +1.1% draw only in deep winter, zero otherwise. `probes/probe-snow.mjs` + `probes/shot-snow.mjs`.

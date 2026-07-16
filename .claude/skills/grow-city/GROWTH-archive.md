@@ -22832,3 +22832,53 @@ not reset) is a legitimate future tool lap — same shape as the still-standing 
 on 2 seeds; the day-length season reads by light alone; 40 laps of growth cost ~1% of draw work; golden hue
 keeps the greens (265 holds). The guardrail is reset (next step-back ~315); **NEXT vector is Water (303, oldest).**
 
+## Iteration 311 — the sea broke as hard in August as in a January storm (2026-07-17) [Water & coast × Deepen/interconnect]
+
+**Vector.** Water rotation (303 oldest). The header's law is to grep the seam, not the cue list — and
+grepping `WINDA`, the ONE gust signal the whole coast reads (the whitecaps and windrows through
+`seaState()`, the breaking surf, plus the trees/palms/flags/clouds/kites), against the calendar turned up a
+holdout: `WINDA` is a **pure function of `time`** (`advanceEntities`, L10321) with **no seasonal term at
+all**, so the sea broke exactly as hard in settled August as in a January storm. Winter is the stormy season
+on this coast, and nothing said so. This is 261's law arriving on the WIND (the season is a clock; a
+scene-wide signal was deaf to it), found by the "grep a global for a clock every relative already reads"
+move — the sea already answers the tide (113/196/257), the light (181/257) and, since 245/275, the
+instantaneous wind; the one clock it never read was the calendar.
+
+**Change.** One centred multiply on the gust: `WINDA = clamp((HEAD gust)*windSeason(), 0, 1)`, with
+`windSeason() = 1 + WINDSEAS*(2*seasonCool()-1)` (`WINDSEAS=0.35`). This is `dayLen()`'s own idiom
+(`2*seasonCool()-1`: +1 at the wet trough, -1 at the dry peak, **MEAN 0**), so the year-mean wind is HEAD's
+and the equinox is a byte-identical fixed point. Winter runs `1.35x`, summer `0.65x`; the summer sea drops
+to a glassy `seaState≈SEACALM` while the winter gust saturates at full gale. **NOTHING NEW IS DRAWN** — the
+whitecap/windrow/surf machinery, all centred on `seaState()==0.5`, just answers one more clock. The whole
+scene gusts seasonally together (247's "the whole scene gusts together" comment, now with a calendar): winter
+trees sway harder, winter clouds drift faster, but the sea is the visible payoff and the reason it is a Water
+lap.
+
+**Census.** Draw-only, no `rng()`/`Math.random()`/terrain, `WINDA` unreachable from `tick()` ⇒ **core
+BYTE-IDENTICAL** (pop/developed/roads +0, empty tile histogram). `greenRoofs +1` is the 226/278 RAF-tick
+wobble (a hair-slower draw lands one fewer late-CA tick; reproduces on a same-file re-run), not semantic.
+VERDICT: PASS (vacuous — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-windseason.mjs`, render-free, no noise floor, build-agnostic via a `windSeason`
+stub). Sweeps `WINDA`/`seaState()` over a full gust cycle at four calendar points, HEAD (`windSeason=()=>1`)
+vs patch, 2 seeds. **HEAD: `seaState` CONSTANT across all four seasons — `DISTINCT = 1`** (the cliff, the
+defect stated, 236). **PATCH: `DISTINCT = 3`, WINTER/SUMMER seaState 1.49–1.51x** (winter rougher). **YEAR-MEAN
+held** (245): patch 0.504/0.491 vs HEAD 0.499/0.485, **delta +0.005 (~1%)** — a small, honest asymmetry from
+the winter WINDA clamp at 1.0 (summer floors at windForce 0, winter saturates), well within held-mean
+tolerance for a draw-only redistribution. **EQUINOX FIXED POINT** (253): the `windSeason=()=>1` HEAD column
+equals the patch's two equinox rows exactly; a year-pinned equinox reads `6e-10` (the expected float residual
+of pinning a season by a non-representable `year%1`, 261 — the *proof* is the stubbed column, not the pin).
+**CONTROL** TIDE (no seasonal term): identical across all seasons, `DISTINCT = 1`.
+
+**Visual** (`probes/shot-windseason.mjs`, a DISCRIMINATING PAIR — winter vs summer at ONE gust instant, same
+tide, same light — aimed by measured sea ink, MASKED to the sea per shot-seastate's law, gust phase pinned at
+the base cycle's peak; token→season map CROSSED between seeds, non-ordinal tokens). Both seeds **PASS**. Both
+blind agents, on crossed maps, **named the winter (rough) frame by the sea alone** — seed 42 kappa, seed 7
+sigma — reporting more/brighter whitecap flecks and foam streaks on the winter open water and a glassier,
+greener summer sea, sitting correctly on the hex water with no z-order tears, floating sprites, mis-colour or
+blowout, and both whole-city frames balanced and coherent.
+
+**Verdict: DEEPENED** — the coast's sea now answers the calendar as it already answers the tide, the light and
+the instantaneous wind: winter seas run rough and the summer sea goes glassy, at zero new draw work, on the
+one scene-wide signal that had never read a clock.
+
