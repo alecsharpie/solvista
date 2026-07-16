@@ -21,7 +21,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
@@ -32,18 +32,19 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: People **318** (the WASHING LINE answers RAIN + SEASON — its own comment claimed *"dry days"* but
-  it had NO wet gate: flapped through a downpour and through midwinter, 6 seeds forever. The rain-aware category's
-  (`rainingAt`, 5051) un-enumerated sibling two fns up, 271/286/199-tell. Now `rainingAt(x,y)<0.05 &&
-  hashCell<0.22*beachPhase()` — byte-identical at the dry peak (245), draw-only, census flat. `probe-washline`, 3 pins:
-  fixed-point A ==, rain B 10→2/5→1/5→0, winter C ≈0.10·HEAD.) · People **317** (SEASONAL LEISURE COMPLETE — beach 247 →
-  park café/picnic read `beachPhase()`, cue (bh) closed non-defect; `probe-parkseason`). · Urban **316** (DISTRICTS made
-  real — Voronoi `distOf(x,y)`, coherence 55→98%, wholly inert; ⛔ **the districts vote in `tick()` is a STREAM-PRESERVING
-  VESTIGE — do NOT delete**). · Sky **313** (balloons fair-weather) · People **314** (block-party CA de-synchronised) ✅
+- **ROTATION.** Last: Civic **319** (CUP-NIGHT FIREWORKS — a Civic × CONNECT (stale cell 45/204): the evening-match
+  calendar (`matchClock`/`fixtureAt`, 240) tied to the decade-festival firework grammar (over the pier since 1980).
+  `matchCelebrate()` fires a 6-shell finale over each `T.STADIUM` in a 6.5s window after the final whistle of a **cup
+  night** (`hashCell(day,2,seed^SALT)<0.34`, off the same day index the fixture is), gated `LITAMT>0.6` so only
+  EVENING fixtures are seen. Draw-only (no rng/Math.random/terrain) ⇒ census byte-identical; exact FIXED POINT on any
+  non-cup night. `probe-matchfire`: floor 0, ink 267/415/285, 3 controls 0px, schedule 51% fix / 32% cup / 6.5s no-
+  strobe; 2 blind visual PASS.) · People **318** (WASHING LINE answers rain+season, 271/286-tell; `probe-washline`) ·
+  People **317** (SEASONAL LEISURE COMPLETE — park café/picnic read `beachPhase()`, cue (bh) closed non-defect) ·
+  Urban **316** (DISTRICTS made real — Voronoi `distOf(x,y)`, 55→98%; ⛔ **the districts vote in `tick()` is a
+  STREAM-PRESERVING VESTIGE — do NOT delete**) · People **314** (block-party CA de-synchronised) ✅
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314 — every shared-timer CA now jitters off a
-  per-cell uniform). People's stale ADDITIVE kind stays New CA rule (49); Deepen is now DEEP (14+) but 318 took a
-  *measured* seam (225), the only license the header grants. ➡ **NEXT: Civic (New CA rule 36/107) or People (New CA rule
-  49); step-back #40 ran clean at 315 — ~320 DUE next (take it at 319/320).**
+  per-cell uniform). ➡ **NEXT: STEP-BACK #41 IS DUE (step-back #40 clean at 315, 4 vectors since → take it at 320).**
+  Then the two stale ADDITIVE cells: Civic/People × New CA rule (36/107 · 49) — or grep a measured seam (225).
   ✅ **308 (Nature Deepen: fire spark rides `fireSeason()`, 7th `seasonCool()` reader, dry-season only; timber left
   alone), 305 (Sky Deepen: front greys the sky, `overcast()`), 291 (Sky lightning) — full entries in ledger.** ⚠
   **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; daytime-lamp (bi) & gondola-cabin cues = same barely-visible
@@ -389,60 +390,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 311 entries before Iteration 309 live in
+> **Archive:** the 312 entries before Iteration 310 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 309 — the walk-up water tank was a mark of an old building, on a building of any age (2026-07-15) [Urban fabric × Deepen]
-
-**Vector.** Urban rotation (oldest domain, 302). Urban's tooltip/flag/TABLE seams are audited saturated (295/302/281),
-so per the header I grepped the draw for the 199/comment tell rather than the cue list. The MID walk-up draw carries a
-lovely little ornament — a timber water tank on the roof — under the comment *"the older walk-ups keep a timber water
-tank on the roof."* Its gate is `!c.solar&&!c.groof&&hashCell(x,y,seed^0x7A7E)<0.3`: a **static per-cell hash, with no
-age term anywhere.** So the tank stood on a 3-year-old walk-up exactly as readily as a 40-year-old one — 199's tell, a
-comment asserting an age-dependence the value cannot have. And this matters more than one comment: `c.age` is 254's
-**live-but-unread host** — ticked at 36 sites, dating the current structure, published in the tooltip (*"Built ~1998"*)
-— and **no pixel on a developed building had ever read it.** 254 reverted an age→patina *hue* and banked the finding:
-*the building colour channel is spent, but a SHAPE / ORNAMENT / COUNT can still show that the old town is downtown.*
-The tank is exactly that ornament, already drawn, just gated on the wrong thing.
-
-**Confirmed on HEAD before designing** (`probe-tankage`, build-agnostic via `typeof TANKAGE`): corr(tank, age) **≈ 0**
-on every seed/era (−0.28…+0.18 noise on a static hash), and the tanked walk-ups' mean hexDist ≈ the whole low-MID
-mean (no gradient). Meanwhile the host itself is strong: **corr(age, distCBD) ≈ −0.35 at 2035** across seeds — older
-walk-ups genuinely cluster toward the core (downtown builds early, then its towers just grow taller without an age
-reset, while the rim churns EMPTY→RES→MID and keeps resetting). The old town *is* downtown, and nothing showed it.
-
-**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The tank gate gains **`c.age > TANKAGE`**
-(`TANKAGE=160` ≈ 12 yr at `age*0.075`). The hash still picks *which* walk-ups are tank-bearing (deterministic, spread
-out); the age term decides *when* the tank appears. A freshly-converted RES→MID shows a bare roof until it has stood
-~12 yr, so tanks accrue over decades and settle onto the genuinely old buildings — which lean central. `c.age` rises
-monotonically for a stable MID (no MID→higher upgrade resets it), so the tank appears once and never flickers off.
-The comment is now true. **First pixel on a developed building to read `c.age`.**
-
-**Census.** Draw-only → **PASS, 0 page errors**, core **byte-identical** (`pop`/`roads`/`developed` +0, tile
-histogram empty). Vacuous by construction; the gate is the probe + the eyes.
-
-**Probe** (`probes/probe-tankage.mjs`, pure world data, build-agnostic, no pixels/no noise floor; 6 seeds × 3 eras):
-- **HEAD** — corr(tank, age) ≈ **0** (age-blind); tanks present on 5–8 fresh walk-ups even in the **1995 boomtown**
-  (buildings ~3–8 yr old); tanked mean-dist ≈ low-MID mean-dist (no gradient).
-- **PATCH** — **0 tanks in 1995** (correct: no walk-up has stood 12 yr yet), accruing to 8–15/city by 2035; at
-  mid-development (2015, where the walk-up stock spans young↔old) corr(tank, age) jumps to **+0.26…+0.47**, and the
-  tanked mean-dist falls **below** the low-MID mean on 5/6 seeds (tanks pull toward the core). By 2035 nearly every
-  walk-up is >12 yr so the gate stops discriminating and corr washes back to ~0 — correct: a mature city's walk-ups
-  are all old, so all the tank-type ones carry a tank. The behavioural win is the **accrual over time**, which HEAD
-  could never show (a 1995 tank on a 3-year-old building was the defect stated).
-
-**Visual.** The tank *draw code* is untouched (only its gate), and the probe confirms 8–15 tanks still render at 2035,
-so the visual pass is the holistic regression/coherence check. Whole-city shots, seeds 42 & 7, blind subagents, both
-**PASS**: balanced coherent coastal city, all tiles seated on the hex grid, no z-order tears / floating / sunk tiles,
-no blown-out colour, density peaks naturally in the core and eases outward — still beautiful as a whole.
-
-**Verdict: DEEPENED** — the rooftop water tank now rides building age, so it is genuinely a mark of an old walk-up:
-tanks are absent from the young boomtown, accrue as districts stand, and settle onto the old core. `c.age` — dated,
-tracked, tooltip-published and pixel-invisible for the artifact's whole life — finally reads onto a developed
-building, exactly the shape/ornament 254 banked. Free by construction (draw-only, path count a touch lower).
 
 ## Iteration 310 — forty laps of growth, and the frame got faster (2026-07-17) [39th step-back / holistic]
 
@@ -858,3 +810,54 @@ as the shower arrives (closing its own *"dry days"* comment tell) and thins over
 cost and byte-identical at the dry peak. Enrolls the washing as the rain-aware category's missed sibling (271/286) —
 the domestic twin of the street crowd (rain) and the seasonal-leisure completion (247/317). `rainingAt`/`beachPhase`
 each gain a reader.
+
+## Iteration 319 — the ground let off fireworks after the big evening match (2026-07-17) [Civic & culture × Connect]
+
+**Vector.** Rotation's `NEXT` was Civic/People × New CA rule, and People had shipped 3 of the last 5 laps — so
+**Civic** was the balance pick (most recency-neglected; last Civic was 307). I grepped the Civic/People draws for a
+defect (residentWhere, pitchGame, plaza, QUAD, CIVHRS, the amphitheater/stadium — all healthy and hours-aware) and
+found none: the city is exhaustively deepened. What it lacked was a *connection*. The city has fired **fireworks over
+the pier every decade festival** since 1980 (a render pass, ~L9363), and it runs a full **evening-match calendar**
+(`matchClock`/`fixtureAt`, 240 — floodlights, an arriving crowd, gates) — but its most frequent public spectacle,
+the floodlit night match, was never marked in the sky. **Civic × Connect** (the stale cell, 45/204): tie the two
+existing systems together. Not every match: a **cup night**, so it stays rare and special.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** (1) `matchCelebrate()` beside `matchGate`: for a
+cup night — `hashCell(day,2,seedNum^SALT) < CELEBP=0.34`, hashed off the SAME `Math.floor(dayT)` day index the
+fixture itself is (240) — returns a 0..1 intensity in the short window (`CELEBWIN=0.06` day-cycles ≈ 6.5s) after the
+final whistle, else 0. (2) A render block after the decade fireworks: while `matchCelebrate()>0 && LITAMT>0.6`, a
+six-shell finale bursts over each `T.STADIUM` (reusing the decade firework grammar — a climbing ember, then a white
+flash core + radiating sparks in the tile's own `col()` palette), fading out on `cel`. The `LITAMT>0.6` gate keeps
+it to EVENING fixtures: an afternoon whistle (0.48) falls in daylight and draws nothing, which is correct — you do
+not light fireworks at 3pm. The stadium scan runs only while a celebration is live (gated first by the cheap clock),
+a few seconds every few evenings.
+
+**Census.** `matchCelebrate` reads `dayT`/`hashCell`/`fixtureAt`; the draw reads `cells`/`time` — no `rng()`, no
+`Math.random`, no terrain writes ⇒ core **BYTE-IDENTICAL** (`pop`/`developed`/`roads` **+0**, tile histogram empty,
+0 page errors). VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-matchfire.mjs`, build-agnostic; NO PIXELS in A, floor-0 isolation in B).
+- **A (temporal, 134/236):** fixtures on **51%** of days (design MATCHP=0.5); cup nights **31–33% of fixtures**
+  (design CELEBP=0.34); the display window is `cel>0` for **5.9% of the day = 6.5s** after the whistle, peak 0.94 —
+  >1s, so it **cannot strobe**. HEAD has no `matchCelebrate` → a constant 0, the absence stating itself (236).
+- **B (INK, 253 suppress-the-PREDICATE, one page):** floor (same frame twice) **0 px**; the fireworks isolate at
+  **267 / 415 / 285 px** at a big evening whistle. Forcing `matchCelebrate=()=>0` **IS HEAD's behaviour**, so that
+  suppressed frame is the exact **FIXED POINT** — the patch reduces to HEAD on any non-cup night. Three controls all
+  **0 px**: an ordinary fixture night, a no-fixture night, and a **big AFTERNOON night** (whistle in daylight,
+  LITAMT 0 — the gate shows nothing).
+- **C (viewer's units, 205/236):** nights fireworks actually SEEN in 60 = 8 / 3 / 8 (big-night evening fixtures,
+  whistle after dark) — matching A's mark string exactly.
+
+**Visual** (`probes/shot-matchfire.mjs`, seeds 42 & 7 — a blind-ish A/B on the SAME stadium hex: `fireworks` cup
+night vs `no-fire` control, plus the mandatory whole-city night frame; every frame self-reports `matchCelebrate` and
+LITAMT). Both subagents **PASS**: the burst reads clearly in the zoomed frame (a ring of coloured sparks + white
+flash core in the sky above the stadium), is visible-but-tasteful in the whole-city frame, the `no-fire` control is
+clean (no sparks anywhere), and no z-order tears / floating tiles / blown-out colour in any frame — all three read as
+a balanced, coherent night city. (An early 4-shell version measured 76–181 px and was too faint for a celebration
+nobody could see, 259 — bumped to 6 shells + a flash core, re-verified at 267–415 px.)
+
+**Verdict: SHIPPED.** The stadium's evening cup nights end in a fireworks display over the ground — connecting the
+match calendar (240) to the decade-festival firework grammar (over the pier since 1980), the first thing to mark the
+city's most frequent public spectacle. Rare (≈1 in 3 fixtures, evening only), deterministic off the day index (fixed
+per city), an exact fixed point on any ordinary night, zero draw/stream cost off the celebration. Civic × Connect
+(45/204 → 319), the stale cell.

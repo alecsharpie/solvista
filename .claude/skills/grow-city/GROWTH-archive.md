@@ -22739,3 +22739,52 @@ the golden summer and all but vanish in the wet winter, where before they fired 
 held by construction, and the comment that promised "dry-season lightning" for the artifact's whole life is finally
 telling the truth.
 
+## Iteration 309 — the walk-up water tank was a mark of an old building, on a building of any age (2026-07-15) [Urban fabric × Deepen]
+
+**Vector.** Urban rotation (oldest domain, 302). Urban's tooltip/flag/TABLE seams are audited saturated (295/302/281),
+so per the header I grepped the draw for the 199/comment tell rather than the cue list. The MID walk-up draw carries a
+lovely little ornament — a timber water tank on the roof — under the comment *"the older walk-ups keep a timber water
+tank on the roof."* Its gate is `!c.solar&&!c.groof&&hashCell(x,y,seed^0x7A7E)<0.3`: a **static per-cell hash, with no
+age term anywhere.** So the tank stood on a 3-year-old walk-up exactly as readily as a 40-year-old one — 199's tell, a
+comment asserting an age-dependence the value cannot have. And this matters more than one comment: `c.age` is 254's
+**live-but-unread host** — ticked at 36 sites, dating the current structure, published in the tooltip (*"Built ~1998"*)
+— and **no pixel on a developed building had ever read it.** 254 reverted an age→patina *hue* and banked the finding:
+*the building colour channel is spent, but a SHAPE / ORNAMENT / COUNT can still show that the old town is downtown.*
+The tank is exactly that ornament, already drawn, just gated on the wrong thing.
+
+**Confirmed on HEAD before designing** (`probe-tankage`, build-agnostic via `typeof TANKAGE`): corr(tank, age) **≈ 0**
+on every seed/era (−0.28…+0.18 noise on a static hash), and the tanked walk-ups' mean hexDist ≈ the whole low-MID
+mean (no gradient). Meanwhile the host itself is strong: **corr(age, distCBD) ≈ −0.35 at 2035** across seeds — older
+walk-ups genuinely cluster toward the core (downtown builds early, then its towers just grow taller without an age
+reset, while the rim churns EMPTY→RES→MID and keeps resetting). The old town *is* downtown, and nothing showed it.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The tank gate gains **`c.age > TANKAGE`**
+(`TANKAGE=160` ≈ 12 yr at `age*0.075`). The hash still picks *which* walk-ups are tank-bearing (deterministic, spread
+out); the age term decides *when* the tank appears. A freshly-converted RES→MID shows a bare roof until it has stood
+~12 yr, so tanks accrue over decades and settle onto the genuinely old buildings — which lean central. `c.age` rises
+monotonically for a stable MID (no MID→higher upgrade resets it), so the tank appears once and never flickers off.
+The comment is now true. **First pixel on a developed building to read `c.age`.**
+
+**Census.** Draw-only → **PASS, 0 page errors**, core **byte-identical** (`pop`/`roads`/`developed` +0, tile
+histogram empty). Vacuous by construction; the gate is the probe + the eyes.
+
+**Probe** (`probes/probe-tankage.mjs`, pure world data, build-agnostic, no pixels/no noise floor; 6 seeds × 3 eras):
+- **HEAD** — corr(tank, age) ≈ **0** (age-blind); tanks present on 5–8 fresh walk-ups even in the **1995 boomtown**
+  (buildings ~3–8 yr old); tanked mean-dist ≈ low-MID mean-dist (no gradient).
+- **PATCH** — **0 tanks in 1995** (correct: no walk-up has stood 12 yr yet), accruing to 8–15/city by 2035; at
+  mid-development (2015, where the walk-up stock spans young↔old) corr(tank, age) jumps to **+0.26…+0.47**, and the
+  tanked mean-dist falls **below** the low-MID mean on 5/6 seeds (tanks pull toward the core). By 2035 nearly every
+  walk-up is >12 yr so the gate stops discriminating and corr washes back to ~0 — correct: a mature city's walk-ups
+  are all old, so all the tank-type ones carry a tank. The behavioural win is the **accrual over time**, which HEAD
+  could never show (a 1995 tank on a 3-year-old building was the defect stated).
+
+**Visual.** The tank *draw code* is untouched (only its gate), and the probe confirms 8–15 tanks still render at 2035,
+so the visual pass is the holistic regression/coherence check. Whole-city shots, seeds 42 & 7, blind subagents, both
+**PASS**: balanced coherent coastal city, all tiles seated on the hex grid, no z-order tears / floating / sunk tiles,
+no blown-out colour, density peaks naturally in the core and eases outward — still beautiful as a whole.
+
+**Verdict: DEEPENED** — the rooftop water tank now rides building age, so it is genuinely a mark of an old walk-up:
+tanks are absent from the young boomtown, accrue as districts stand, and settle onto the old core. `c.age` — dated,
+tracked, tooltip-published and pixel-invisible for the artifact's whole life — finally reads onto a developed
+building, exactly the shape/ornament 254 banked. Free by construction (draw-only, path count a touch lower).
+

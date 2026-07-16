@@ -4605,6 +4605,28 @@ function matchGate(){
   if(t<=MATCHDUR)return 0.12;                        /* stewards, and the late */
   return clamp(1-(t-MATCHDUR)/MATCHGATE,0,1);
 }
+/* a big evening fixture ends in a fireworks display over the ground (iter 319).
+   The city has fired fireworks over the pier every decade festival since 1980
+   (see the render pass below), but its most frequent public spectacle -- the
+   floodlit evening match, whose crowd, gates and lights matchClock() already
+   runs -- was never marked. Not EVERY match: a cup night, hashed off the same
+   Math.floor(dayT) day index the fixture itself is (240), so it is fixed per
+   city, rare, and reproducible. Fires only in the short window after the final
+   whistle. It reads for an afternoon whistle too, but that falls in daylight,
+   where the LITAMT>0.6 gate on the draw shows nothing -- so only the EVENING
+   fixtures are ever seen, which is correct (you do not light fireworks at 3pm).
+   Draw-only: hashCell + dayT, no rng(), no Math.random, no terrain -- the seeded
+   stream and every census metric are byte-identical. Returns 0..1, fading over
+   the window. */
+const CELEBP=0.34,        /* share of fixtures that are a big night */
+      CELEBWIN=0.06;      /* the display, in day-cycles after the final whistle */
+function matchCelebrate(){
+  const day=Math.floor(dayT), ko=fixtureAt(day);
+  if(ko<0)return 0;                                    /* no fixture today */
+  if(hashCell(day,2,seedNum^0x2C1B)>=CELEBP)return 0;  /* an ordinary night */
+  const c=(dayT-day)-ko-MATCHDUR;                      /* day-cycles since the final whistle */
+  return (c>=0&&c<=CELEBWIN)?clamp(1-c/CELEBWIN,0,1):0;
+}
 /* ...and the tooltip reads the SAME clock the draw does, so it can never call a
    match the renderer has not lit (123: run the tell FORWARDS). It names the
    floodlights only when they are actually burning — an afternoon kickoff is
@@ -9380,6 +9402,39 @@ function render(){
       }
     }
   }
+  /* ...and a big evening match ends the same way, over the ground (iter 319).
+     matchCelebrate() (above) is nonzero only in the short window after the final
+     whistle of a cup night, and the LITAMT>0.6 gate keeps the display to the
+     EVENING fixtures, whose whistle falls after dusk. One salvo bursts over each
+     stadium, the whole display fading out on `cel`. The stadium scan runs only
+     while the celebration is live (a few seconds every few evenings), gated first
+     by the cheap matchCelebrate() clock test. Draw-only, deterministic. */
+  {const cel=matchCelebrate();
+  if(cel>0&&LITAMT>0.6){
+    for(let i=0;i<G*G;i++){ if(cells[i].t!==T.STADIUM)continue;
+      const sx=i%G, sy=(i/G)|0; const[bx0,by0]=ctr(sx,sy);
+      for(let s2=0;s2<6;s2++){                          /* a finale: six shells, staggered */
+        const ft=((time*0.55+s2*0.19+sx*0.13)%1.15); if(ft>1)continue;
+        const bX=bx0+((s2*53)%64)-32, bY=by0-66-((s2*37)%40);
+        const hue=['coral','gold','teal','lav','sage'][s2%5];
+        if(ft<0.24){ /* the shell climbs, a bright ember trailing up */
+          const q=ft/0.24;
+          ctx.fillStyle='rgba(255,236,190,'+(cel*(0.5+0.5*q))+')';
+          ctx.fillRect(bX-1,lerp(by0-8,bY,q)-1.4,2,3.4);
+        } else { /* burst */
+          const q=(ft-0.24)/0.76, R2=6+q*30;
+          /* a white flash core at the instant of the burst, fading fast */
+          if(q<0.35){ctx.fillStyle='rgba(255,250,235,'+(cel*(0.85-q*2))+')';
+            ctx.beginPath();ctx.arc(bX,bY+q*9,3.4*(1-q),0,7);ctx.fill();}
+          ctx.globalAlpha=cel*(1-q*0.9);              /* sparks linger a touch longer */
+          ctx.fillStyle=col(hue,1.6);
+          for(let k=0;k<18;k++){const a=k*0.349+s2*1.1;
+            ctx.fillRect(bX+Math.cos(a)*R2-1.1,bY+Math.sin(a)*R2*0.82+q*11-1.1,2.2,2.2);}
+          ctx.globalAlpha=1;
+        }
+      }
+    }
+  }}
   /* birds */
   if(!REDUCED){
     ctx.strokeStyle='rgba(60,55,50,'+(0.5-0.35*LITAMT)+')';ctx.lineWidth=1.1;
