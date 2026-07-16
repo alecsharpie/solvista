@@ -2975,11 +2975,19 @@ function tick(){
   /* block parties: an excitable-media wave through the neighborhoods — a home
      ignites a street party, it spreads to the adjacent homes for a spell, then
      the block rests (refractory). Ignition hash is keyed on the year so parties
-     roam the city; no rng(), no terrain change — decoration state only. */
+     roam the city; no rng(), no terrain change — decoration state only.
+     The rest is JITTERED per-cell (272/263): with a CONSTANT refractory the whole
+     city ignited and went eligible again as ONE, so parties came in tight synchronous
+     bursts (4-5 ticks on, 16 off) and a mature city showed ONE party at a time or none
+     — the fairy-ring/wildflower defect, on the sibling nobody enumerated (271). The
+     refractory now runs 12..20 from the cell's own c.v (mean 16 = HEAD's constant, so
+     the cadence mean is held, 98), staggering re-eligibility so the neighborhoods
+     always keep a steady scatter of parties instead of blinking all at once. c.v is
+     a uniform the cell ALREADY carries ⇒ ZERO new random draws (262). */
   for(let y=0;y<G;y++)for(let x=0;x<G;x++){
     const c=cells[idx(x,y)];
     if(c.t!==T.RES){c.party=0;continue;}
-    if(c.party>0){c.party--; if(c.party===0)c.party=-16;}  /* wind down → rest */
+    if(c.party>0){c.party--; if(c.party===0)c.party=-(12+(c.v*9|0));}  /* wind down → rest (jittered) */
     else if(c.party<0)c.party++;
     else if(hashCell(x,y+(year|0)*53,seedNum^0xFE57)<0.012
           ||(countAround(x,y,1,n=>n.t===T.RES&&n.party>1)>0
@@ -8474,6 +8482,14 @@ function drawVehicle(v){
   const alongX=Math.abs(ddx)>=Math.abs(ddy);
   const ax=alongX?long:0.10;
   const ay=alongX?0.10:long*0.8;
+  /* the hover pick box (iter 314): a car body is an oriented prism, not a disc, so the
+     old r=6 circle named nothing over ~25% of its own drawn pixels (worst on the long
+     bodies -- bus/truck/tram run to 11px half-length). Store the DRAWN footprint at
+     stamp time -- horizontal half = ax*CW, vertical span = the base depth plus the body
+     height (topZ) -- and pickEntity tests an axis-aligned ellipse against it, so the whole
+     body is hoverable and nothing beyond it is claimed (the tile control holds). */
+  const topZ=v.kind==='truck'?9.0:(v.kind==='bus'?7.7:(v.taxi?7.9:6.6));
+  v._phw=ax*CW+1.5; v._phh=ay*2*VR+topZ/2+1.5; v._pcy=topZ/2;
   shadS(cx,cy,0.16,0.2);
   const bc=v.taxi?'cab':v.c;   /* a cab wears lemon-yellow whatever colour it drew */
   prismS(cx,cy,ax,ay,0.5,4.4,col(bc,1.05),col(bc,0.62),col(bc,0.85));
@@ -10264,10 +10280,14 @@ const VKIND={fireeng:['Fire engine',v=>SERVDUTY.fireeng[v.duty]||'Out on patrol.
 let hoverEnt=null,hoverR=0,hoverTile=null;
 function pickEntity(wx,wy){
   let best=null,bd=1e9;
-  const consider=(e,name,sub,r)=>{
+  const consider=(e,name,sub,r,box)=>{
     if(e._sf===undefined||FRAMEN-e._sf>2)return;
-    const dx=wx-e._sx, dy=wy-(e._sy-3), d=dx*dx+dy*dy;
-    if(d<r*r&&d<bd){bd=d;best=[name,typeof sub==='function'?sub(e):sub,e,r];}
+    /* box=[hw,hh,cy] gives an oriented body ellipse (a vehicle's drawn footprint, iter 314);
+       otherwise the round r-disc every small entity has always used. bd stays the world
+       distance either way, so the nearest centre still wins across entity kinds. */
+    const dx=wx-e._sx, dy=wy-(e._sy-(box?box[2]:3)), d=dx*dx+dy*dy;
+    const hit=box?(Math.abs(dx)<box[0]&&Math.abs(dy)<box[1]):(d<r*r);
+    if(hit&&d<bd){bd=d;best=[name,typeof sub==='function'?sub(e):sub,e,r];}
   };
   for(const[g,name,sub,r]of ENTINFO)for(const e of g())consider(e,name,sub,r);
   /* The cab reads the same clock its rule does (vehCurfew): it is the one car that keeps no
@@ -10280,7 +10300,8 @@ function pickEntity(wx,wy){
   const CAB=['Taxi',v=>!cabFree(v)?'Hired — a fare aboard, crossing town.'
                      :nightAmt()>0.5?'The night shift — still for hire once the traffic has gone home.'
                                     :'For hire — flag it down.'];
-  for(const v of vehicles){const k=v.taxi?CAB:(VKIND[v.kind]||['Car',"Somebody's errand."]);consider(v,k[0],k[1],6);}
+  for(const v of vehicles){const k=v.taxi?CAB:(VKIND[v.kind]||['Car',"Somebody's errand."]);
+    consider(v,k[0],k[1],6,v._phw?[v._phw,v._phh,v._pcy]:null);}  /* bikes keep the round disc (no _phw) */
   return best;
 }
 const tipEl=$('tip');

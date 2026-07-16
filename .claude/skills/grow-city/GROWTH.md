@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -32,12 +32,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **310 = step-back #39** · Water **311** · Transport ~~**312**~~ (daytime-storm headlamps —
-  RENDERS 700+px but INVISIBLE, ⛔ 259; revert) · Sky **313** (balloons now a fair-weather craft — DRAW-fade on
-  `rainFront()`; closed a "fair days" 199-tell on the balloon comment; `probe-balloonweather`).
-  ➡ **NEXT: People (New CA rule 49 the only stale kind — needs a MEASURED seam, no Deepen without one) or Civic
-  (New CA rule 36/107 stale).** ⛔ **DO NOT re-try daytime vehicle lamps** — road-contrast is a `polish-tile`
-  question, not a Deepen. **Step-back ~315.**
+- **ROTATION.** Last: Sky **313** (balloons a fair-weather craft) · People **314** (block-party CA DE-SYNCHRONISED —
+  the 272/263 excitable-medium fix on the sibling 271 never enumerated: a shared CONSTANT refractory ⇒ the whole city's
+  parties ignited & rested as ONE, a metronomic square wave, ~1 party at 2035; `probe-blockparty`). ✅ **EXCITABLE-MEDIA
+  CATEGORY NOW COMPLETE** (bloom 263 · shroom 272 · party 314 — every shared-timer CA in `tick()` now jitters off a
+  per-cell uniform). People's stale ADDITIVE kind stays New CA rule (49). ➡ **NEXT: Civic (New CA rule 36/107) or People
+  (New CA rule 49); STEP-BACK ~315 DUE (5 since 310).** ⛔ **DO NOT re-try daytime vehicle lamps** — `polish-tile`, not a Deepen (312/bi).
   ✅ **308 DEEPENED Nature — the "dry-season lightning" (199-tell in its own comment) now IS dry-season.** Forest fire
   spark rides `fireSeason()=1+1.8*(0.5-seasonCool())` — the **7th reader of seasonCool()** (grass/canopy/dayLen's dryness
   curve); **0.10x wet trough → 1.90x dry peak**, CENTRED on mean 0.5 ⇒ year-mean **exactly 1**, annual burn total HELD.
@@ -391,63 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 306 entries before Iteration 304 live in
+> **Archive:** the 307 entries before Iteration 305 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 304 — the rotated domain was dry, so the loop checked itself (2026-07-15) [38th step-back / holistic]
-
-**Vector.** Transport rotation (297 oldest). The header's law is to grep the seam, not the cue list — so I
-grepped ALL FOUR Transport seams this lap: (1) the RULES (`stepVehicle`/`syncFleet`/`stepGond`/`stepMono`/
-`stepCabins`/`stepShuttle`) — every mover keeps a per-entity hour (`vehCurfew`/`VCURF`/`waterSession`), has a
-live tooltip off the predicate its rule steers by, and does an honest job; (2) the FLAG seam (`bridge`/`riv`)
-— writer (`genWorld`/street-growth), draw (`drawCell` L6453), tooltip (`describeTile` 'Bridge'/'River') and
-veto (`stopOK`/`pedRoad`/river-flood) all agree on which types own it (281-clean); (3) the label ladder
-(`describeTile` — bridge, boulevard, arterial, avenue, fete, loft, corner shop, parking lot all named off
-their flag); (4) the `ENTINFO` hover rows — every mover (ferry, launch, tram, bus, monorail train, cable car,
-shuttle, copter…) has a LIVE `sub` computed off its own state. **297's "clean" claim holds up — this is a very
-mature, well-audited domain.** Transport's additive/deepen/interaction are SATURATED; only **New CA rule (77)**
-is stale, and a forced transit CA on an entity-driven domain would be shallow filler (⛔). With the rotated
-domain confirmed dry AND the step-back **~21 laps overdue** (should be every ~5; last was #37 folded into 283),
-the honest highest-value move was the overdue holistic self-check — the loop's main guardrail for long
-unattended runs.
-
-**The one arguable finding, DEFERRED not shipped (new cue (bi)).** The gondola cabins run 24h, while the
-monorail deliberately thins its night platform crowd (`cap -= (LITAMT>0.6)`, L8286) — so cable transit is the
-one mover class with zero night behaviour. A scenic aerial tram closes at night IRL; a rapid-transit monorail
-runs. It fits the 262-cliff shape (a mover with no hour, 297 listed every mover EXCEPT the two cable modes).
-**But I did not gate it (204/205 false-positive law):** a *mechanical* mover at night is arguable (not the
-clear wrong of a heron stalking a marsh), the cabins are ~3px at fit zoom (the night agents read the frame as
-coherent and never flagged them), and the 262 cliff is already 9-deep — a 10th marginal recursion is the
-"one more shallow feature" the counterweight warns against. Banked as cue (bi): decide with a probe first.
-
-**Step-back #38 (no `solvista.html` change).** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each —
-day / golden / night + a CROSSED dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant,
-sun UP in summer and DOWN in winter). Every frame self-reports its state.
-- **Visual: both seeds PASS.** One agent per seed, blind, cumulative question. Both read all five frames as a
-  coherent, balanced coastal city — no z-order tears, floating tiles, ornaments-in-mid-air, blown-out colour.
-  Both correctly named **dusk-winter** as the darker/night-lit frame (the discrimination check — they looked).
-  The only asides were the *deliberate* dense downtown core (with park/river/street gaps giving the eye rest —
-  "not runaway clutter") and the intentional golden/dusk warm wash — both on the header's do-not-re-open list.
-- **Perf ARC is FLAT (path objects, the load-immune unit — 216/198; perfab ms can't resolve +0.2%/lap).**
-  HEAD (303): day 111,785 / night 138,952. vs **283** (~20 laps): **+1.14% day / +0.37% night**. vs **264**
-  (~40 laps): **+0.55% / +0.21%**. The loop's ~+0.2%/lap additive tendency was cancelled by ~40 laps of
-  byte-flat FIXES + draw credits (285/286/287/288/293/294/295/302/303 all inert-or-credit). No compounding.
-- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits this lap), so VERDICT PASS / 0 page
-  errors is trivially guaranteed — confirmed anyway.
-
-**Tool nit (banked, not fixed).** `shot-stepback` flags `HUD=STALE` on the golden/dusk frames. It is a false
-alarm: a vocabulary mismatch between the script's coarse `phaseWord` ('golden hour'/'sunset'/'night') and the
-artifact's own `clockWord` HUD pill — dusk-winter's HUD "night" at LITAMT=0.95 / sun-down is *more* correct
-than the script's "sunset", not a stale DOM (204). Aligning the two words is a legitimate future tool lap.
-
-**Verdict: STEP-BACK — NO DRIFT.** No feature shipped (the rotated domain is genuinely saturated and the one
-candidate was a false-positive risk not worth forcing). The city is confirmed coherent across 3 lights × 2
-seasons on 2 seeds, and 40 laps of growth cost essentially nothing in draw work. The overdue guardrail is
-reset; NEXT domain is Sky (298, oldest). Recording the dry seam + cue (bi) is the value: it stops the next
-lap re-grepping Transport, and hands a future lap a measured decision to make.
 
 ## Iteration 305 — the front greyed the clouds and the ground and lit the sky, but never touched the sky ITSELF (2026-07-15) [Sky & atmosphere × Deepen/interconnect]
 
@@ -875,3 +823,52 @@ clear day and fade out as the front gathers, instead of sailing through thunders
 reverted daytime lamp: that RENDERED but could not be seen (259); this one is a clear, legible, correctness change
 (830 px of balloon, present vs cleanly absent) and free by construction (draw-only, census byte-identical). Closes
 the "fair days" 199-tell on the balloon comment.
+
+## Iteration 314 — every block party in the city started and ended on the same beat (2026-07-17) [People & activity × Deepen/FIX]
+
+**Vector.** People rotation (306 oldest-shipped). The header steers People's stale kind to New CA rule (49) but
+forbids a People Deepen "without a MEASURED seam" — so I grepped the People/CA seam rather than the cue list. The
+block-party excitable medium (`tick()`, `c.party`: a home ignites a street party, it spreads to neighbours for a
+spell, then rests) shared a **CONSTANT refractory (`-16`) and constant duration (`5`)** — so, exactly like the fairy
+rings before 272 and the wildflowers before 263, the whole city ignited and became eligible again in lockstep. This
+is the 271 defect (a property established for a category, applied to every sibling but one): its excitable-media
+siblings BOTH jitter a timer off a per-cell uniform (bloom's refractory `-(9+c.v*10|0)`, 263; shroom's duration
+`shroomLife`, 272), and the block party — a People CA in the same `tick()` — was the holdout with **both** timers
+constant, so it synchronised hardest. Confirmed on HEAD before designing (`probe-blockparty`, temporal, 134): the
+active-count series is a **metronomic square wave** — `9###21...............89###21...` — 4–5 ticks on, 16 off, in
+perfect lockstep (period 21), refractory `DISTINCT = 1` on 6 seeds in 6 (236: the defect stated).
+
+**Change (decoration-state only — no `rng()`, no `Math.random`, no terrain).** One line: the wind-down reset
+`c.party=-16` → `c.party=-(12+(c.v*9|0))`, so the rest runs **12..20 ticks** from the cell's own `c.v` (the uniform
+`hashCell(x,y,seed)` it already carries — ZERO new random draws, 262). `12+(c.v*9|0)` has mean **16 = HEAD's
+constant**, so the cadence mean is held (98). Staggering re-eligibility de-synchronises the waves; nothing else
+changed (spread, ignition, spawn, draw all untouched).
+
+**Census.** `c.party` is decoration state, read only by draws (`drawParty`, the terrace party-wall gate) and a
+tooltip; `c.v` is pre-existing; no `rng()`/terrain ⇒ core **BYTE-IDENTICAL** (`pop`/`developed`/`roads` **+0**, tile
+histogram empty). `greenRoofs -1` = the documented 226/278 RAF-tick wobble (a hair-slower draw lands one fewer late
+tick; reproduces on a same-file re-run), not this edit. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-blockparty.mjs`, temporal, 3 seeds × 2 eras, build-agnostic via HEAD-file load; NO PIXELS ⇒
+no noise floor). Drives the artifact's own `tick()` and reads `cells[].party`.
+- **HEAD: refractory `[16..16] DISTINCT=1`**, a perfect square wave, **zero-party ticks a steady 76%** at every era —
+  the whole city blinks as one, and at 2035 shows **1 party at a time or none** (max 1).
+- **PATCH: refractory `[12..20]`** (mean 16 held), the series scatters (`3444422566541.....3344411...`), and at the
+  dense 2005 residential era **zero-party ticks fall 76% → 28/38/57%** (the city now nearly always shows a few
+  parties). **Mean-active HELD** (2.43→2.47, 0.97→0.93, 1.23→1.23) — same amount of partying, spread evenly instead
+  of pulsing (98). At 2035 the RES stock is thin (many blocks upgraded to MID/TOWER) so it stays sparse on both
+  builds — correct: a dense downtown has fewer single-family street parties, the fix cannot and should not invent them.
+
+**Visual** (`probes/shot-blockparty.mjs`, seeds 42 & 7 — warp to the 2006 residential era, step to a tick with a good
+cluster, whole-city + a 6× close-up aimed at the densest party; a still cannot show a *cadence* so this only confirms
+the draw + coherence, 134). Both blind subagents **PASS**: the close-up shows a street party — trestle table, upright
+figures, a string of small warm lantern/bunting squares — sitting correctly on the residential hex ground; no z-order
+tears, floating tiles or blown-out colour anywhere; both whole-city frames read as balanced, coherent coastal cities
+(parties are small warm speckles scattered through the residential greens at full-city zoom).
+
+**Verdict: DEEPENED** (a FIX). The block-party excitable medium now de-synchronises like its two siblings: instead of
+the entire city igniting and resting as one metronome (parties present a steady 24% of ticks, absent 76%, ~1 at a
+time at maturity), the neighbourhoods keep a steady scatter of parties (zero-party ticks 76%→28–57% at the dense era),
+at the same total party-density (mean held) and zero draw/stream cost. Completes the "enumerate the excitable-media
+category" audit (271): bloom (263), fairy rings (272), block parties (314) — every shared-constant-timer CA in `tick()`
+now jitters a timer off a per-cell uniform, so none blinks as one.

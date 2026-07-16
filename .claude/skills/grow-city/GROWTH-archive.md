@@ -22493,3 +22493,55 @@ with no z-order tears, floating tiles or blown-out colour.
 city: Solvista's herons now fly to roost at nightfall like every person, boat, kite and deer, instead of
 stalking a frozen midnight marsh. 301's "every animate draw is off the cliff" is now — verifiably — true.
 
+## Iteration 304 — the rotated domain was dry, so the loop checked itself (2026-07-15) [38th step-back / holistic]
+
+**Vector.** Transport rotation (297 oldest). The header's law is to grep the seam, not the cue list — so I
+grepped ALL FOUR Transport seams this lap: (1) the RULES (`stepVehicle`/`syncFleet`/`stepGond`/`stepMono`/
+`stepCabins`/`stepShuttle`) — every mover keeps a per-entity hour (`vehCurfew`/`VCURF`/`waterSession`), has a
+live tooltip off the predicate its rule steers by, and does an honest job; (2) the FLAG seam (`bridge`/`riv`)
+— writer (`genWorld`/street-growth), draw (`drawCell` L6453), tooltip (`describeTile` 'Bridge'/'River') and
+veto (`stopOK`/`pedRoad`/river-flood) all agree on which types own it (281-clean); (3) the label ladder
+(`describeTile` — bridge, boulevard, arterial, avenue, fete, loft, corner shop, parking lot all named off
+their flag); (4) the `ENTINFO` hover rows — every mover (ferry, launch, tram, bus, monorail train, cable car,
+shuttle, copter…) has a LIVE `sub` computed off its own state. **297's "clean" claim holds up — this is a very
+mature, well-audited domain.** Transport's additive/deepen/interaction are SATURATED; only **New CA rule (77)**
+is stale, and a forced transit CA on an entity-driven domain would be shallow filler (⛔). With the rotated
+domain confirmed dry AND the step-back **~21 laps overdue** (should be every ~5; last was #37 folded into 283),
+the honest highest-value move was the overdue holistic self-check — the loop's main guardrail for long
+unattended runs.
+
+**The one arguable finding, DEFERRED not shipped (new cue (bi)).** The gondola cabins run 24h, while the
+monorail deliberately thins its night platform crowd (`cap -= (LITAMT>0.6)`, L8286) — so cable transit is the
+one mover class with zero night behaviour. A scenic aerial tram closes at night IRL; a rapid-transit monorail
+runs. It fits the 262-cliff shape (a mover with no hour, 297 listed every mover EXCEPT the two cable modes).
+**But I did not gate it (204/205 false-positive law):** a *mechanical* mover at night is arguable (not the
+clear wrong of a heron stalking a marsh), the cabins are ~3px at fit zoom (the night agents read the frame as
+coherent and never flagged them), and the 262 cliff is already 9-deep — a 10th marginal recursion is the
+"one more shallow feature" the counterweight warns against. Banked as cue (bi): decide with a probe first.
+
+**Step-back #38 (no `solvista.html` change).** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each —
+day / golden / night + a CROSSED dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant,
+sun UP in summer and DOWN in winter). Every frame self-reports its state.
+- **Visual: both seeds PASS.** One agent per seed, blind, cumulative question. Both read all five frames as a
+  coherent, balanced coastal city — no z-order tears, floating tiles, ornaments-in-mid-air, blown-out colour.
+  Both correctly named **dusk-winter** as the darker/night-lit frame (the discrimination check — they looked).
+  The only asides were the *deliberate* dense downtown core (with park/river/street gaps giving the eye rest —
+  "not runaway clutter") and the intentional golden/dusk warm wash — both on the header's do-not-re-open list.
+- **Perf ARC is FLAT (path objects, the load-immune unit — 216/198; perfab ms can't resolve +0.2%/lap).**
+  HEAD (303): day 111,785 / night 138,952. vs **283** (~20 laps): **+1.14% day / +0.37% night**. vs **264**
+  (~40 laps): **+0.55% / +0.21%**. The loop's ~+0.2%/lap additive tendency was cancelled by ~40 laps of
+  byte-flat FIXES + draw credits (285/286/287/288/293/294/295/302/303 all inert-or-credit). No compounding.
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits this lap), so VERDICT PASS / 0 page
+  errors is trivially guaranteed — confirmed anyway.
+
+**Tool nit (banked, not fixed).** `shot-stepback` flags `HUD=STALE` on the golden/dusk frames. It is a false
+alarm: a vocabulary mismatch between the script's coarse `phaseWord` ('golden hour'/'sunset'/'night') and the
+artifact's own `clockWord` HUD pill — dusk-winter's HUD "night" at LITAMT=0.95 / sun-down is *more* correct
+than the script's "sunset", not a stale DOM (204). Aligning the two words is a legitimate future tool lap.
+
+**Verdict: STEP-BACK — NO DRIFT.** No feature shipped (the rotated domain is genuinely saturated and the one
+candidate was a false-positive risk not worth forcing). The city is confirmed coherent across 3 lights × 2
+seasons on 2 seeds, and 40 laps of growth cost essentially nothing in draw work. The overdue guardrail is
+reset; NEXT domain is Sky (298, oldest). Recording the dry seam + cue (bi) is the value: it stops the next
+lap re-grepping Transport, and hands a future lap a measured decision to make.
+
