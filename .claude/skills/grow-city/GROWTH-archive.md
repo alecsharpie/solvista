@@ -24166,3 +24166,52 @@ byte-identical. People × Deepen. `probes/probe-parkrain.mjs`, `probes/shot-park
   arc (law in SKILL.md). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **TOOL NITS in `shot-stepback` (banked, not fixed):**
   per-frame `GWARM=0` self-report is a stale caption (pixels ARE warm; agents + `probe-goldenhue` agree) — do NOT read
   as "golden unwarmed"; `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM.
+
+## Iteration 338 — the capitol's standards fly with the wind (2026-07-17) [Civic & culture × Deepen/interconnect]
+
+**Vector.** The parliament — "the seat of the region, and the tallest civic roof in Solvista" — flies twin gold
+standards from its dome front. Every OTHER flag in the city rides the shared gust (the hall's and school's `windFlag`
+scale their flutter by `WINDA`; the harbour + beach flags; the kites read `kiteGust`; smoke leans on `smokeLean`; the
+sails belly on `windForce` — 280/333/334), and 280 wrote the law that they must all "gust together". But the capitol's
+two most prominent flags flapped on `Math.sin(time*2+y)` — a clock term with **no wind in it** — so they snapped stiffly
+straight out in a **dead calm** while the hall flag on the next roof hung limp. They are the un-enumerated member of the
+wind's reader category (280: the reader list is a changelog, not a spec — grep the MECHANISM `windForce`, not the header's
+"wind DONE ⛔"). Found by grepping every flag/pennant draw for `windForce`/`WINDA` and finding the one inline draw
+(`drawCivic`'s parliament branch, ~L8388) that a `windFlag`-caller grep misses. Rotated off People (336/337 both rain)
+into Civic; a different KIND (wind, not rain) and domain.
+
+**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** `wf2=windForce()`; each standard's downwind
+reach `st=(4.2+wv2)*(0.34+0.66*wf2)` streams farther/flatter in a gale and shrinks in the lull, plus a droop
+`dp=2.4*(1-wf2)` that hangs it in toward the pole when the air goes still, in the SAME +x every gusting thing drifts.
+At `windForce()==1` (full gale) `st=4.2+wv2, dp=0` ⇒ **HEAD's exact `4.2+wv2` byte-for-byte** — an exact fixed point
+(245/280, the kite convention: 1.0 at full gale = HEAD). Same two `fill()`s, same primitives ⇒ zero new path objects.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors.
+VERDICT PASS.
+
+**Probe** (`probes/probe-capitolflag.mjs`, build-agnostic — hooks the artifact's own path ops and reads back the
+pennant triangle the frame ISSUES (base verts share the pole x, tip offset `+st`), so reach = `tipX-baseX` is
+deterministic with **NO NOISE FLOOR AT ALL**; `windForce` is a top-level function ⇒ `window.windForce=()=>1` renders
+HEAD's draw IN-PAGE (253), so ONE file grades HEAD and the patch, no source swap, no cross-build floor). 4 seeds
+(42/7/1234/99), 1 parliament each, mean of the 2 standards' reach at day pin, frozen clock:
+- **RESPONSE:** CALM (`WINDA=0.25`, `windForce=0`) reach is **0.34x** the GALE (`WINDA=1.0`) reach on all 4 seeds
+  (3.23→1.10 · 3.89→1.32 · 4.39→1.49 · 5.13→1.74) — the standard clearly answers the wind.
+- **FIXED POINT:** GALE reach == HEAD reach **exactly** on every seed (windForce==1 reproduces HEAD's `4.2+wv2`).
+- **CONTROL / must-not-move (250):** HEAD (windForce stubbed to 1) reads the **identical** reach at `WINDA=0.25` and
+  `WINDA=1.0` — HEAD ignores the wind, so nothing but the patched lever moved. CAPITOLFLAG: PASS.
+
+**Visual** (`probes/shot-capitolflag.mjs` — same frozen world, ONE parliament, shot at `__setWind(0.25)` (calm) and
+`__setWind(1.0)` (gale) as a blind A/B zoomed 7× and centred on the capitol via `zoom`/`offX` (269), plus an un-zoomed
+whole-city gale frame; `page.screenshot` DOM-composited (200); tokens meaningless + non-ordinal, calm/gale map
+**CROSSED between seeds** (238/239/268); md5 confirmed all 4 zoomed frames differ). **Both blind subagents, on both
+seeds, on the crossed map, correctly named the GALE from the streaming standards alone** (s42 gale=`cobalt` ✓ · s7
+gale=`myrtle` ✓): pennants stream out flat/far to the right in the gale, hang short/drooped against their poles in the
+calm, attached to the poles on the building (not floating/detached), no z-order tears or blown colour anywhere, and
+both whole-city frames read as a balanced, coherent coastal city.
+
+**Perf.** Zero new path objects (draw-only, same 2 fills). Step-back (~340) prices the arc.
+
+**Verdict: SHIPPED.** The capitol's twin standards now fly with the same gust as every other flag, kite, plume and
+sail — the whole sky, the seat of the region included, gusts together (280). Exact fixed point at full gale, census
+byte-identical. Civic × Deepen. `probes/probe-capitolflag.mjs`, `probes/shot-capitolflag.mjs`.
+

@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323**, **333**, ~~**342**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334**, **348** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~, ~~**343**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~, **341** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338**, **339** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
@@ -32,22 +32,22 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **347 — THE STRIKE LIGHTS THE GROUND IT HITS / SHIPPED (DEEPENED)** (Sky × Deepen; 328's bolt
-  grounded at `[foot,cy]` but the terrain there stayed dark — the strike illuminated *nothing it hit*. A soft radial
-  pool of bluish-white light, SQUASHED to the ground plane (291, reads as cast light not a floating orb), rides the SAME
-  `bolt` intensity, drawn UNDER the strokes so the core stays crisp; raw literal (279), gradient→α0 (195), inside the
-  on-plate guard (248). Isolated by a new `GFLASH` suppressor (253, floor 0): `probe-groundflash` reads peak amp 78/80,
-  17–20% of the incumbent bolt's ink (226), ZERO in dry weather; BOTH blind agents on a CROSSED map named the pool
-  variant and PASSED. Draw-only, gated behind a rare strike ⇒ census byte-flat, ~0 path objects except mid-strike.
-  ✅ **This refutes 344/346's "high-contrast interconnect space EXHAUSTED": the strike's HALF-BUILT ground-illumination
-  was a real, shippable, high-contrast Deepen the surveys' reflection-family enumeration missed — a light SOURCE, not a
-  reflection.** Banked `probes/probe-groundflash.mjs` + `shot-groundflash.mjs`.) Prev: **346 — frozen-column finder now
-  a PROBE / NO SHIP** (banked `probe-frozencol.mjs`; KELP 28→33→31 re-proves 282; byte-identical.) Prev: **STEP-BACK
-  #46 @345** (NO DRIFT —
-  census byte-flat; both seeds PASS blind, 5 pins, seasonal pair resolves, night coherent; perf +0.017/0.021%/lap vs 285
-  (60 laps), FLAT vs 339. ⚠ Watch STILL soft: inland tower core dense but NOT wallpaper — do NOT add raw downtown
-  density.) Prev: **344 — RETURNS FLATTENED / NO SHIP** (fresh full seam-hunt; only gaps DEEP-INVISIBLE-AT-ZOOM
-  `polish-tile` overlays ⇒ saturation-bound, mode = STEP-BACKS + `polish-tile`.)
+- **ROTATION.** Last: **348 — A FIRE LIGHTS THE GROUND IT SITS ON / SHIPPED (DEEPENED)** (Water & coast × Deepen; the
+  beach bonfire's 8px self-glow lit only the flame — the dark night sand around it stayed dark, 328/347's exact
+  half-built shape in a NEW domain. A warm firelight pool cast ON the sand, SQUASHED to the ground plane (291, cast
+  light not an orb), drawn UNDER the flame; raw emissive literal (279/257, a fire is a SOURCE not a reflector),
+  gradient→α0 (195), flickers on `time`, grows on `LITAMT`, tight-in-cell so a nearer row occludes it with the fire.
+  DUAL suppressors `FIREPOOL`/`FIREGLOW` (253): `probe-firepool` reads POOL 476/299px, 62/67% of the incumbent
+  flame-halo (226), ZERO by day (199); BOTH blind agents on a CROSSED map named the pool variant and PASSED. Draw-only
+  ⇒ census byte-flat, ~0 path objects. ✅ **Second confirmation of 347: a shipped emitter that casts onto itself and
+  STOPS is a live high-contrast Deepen the surveys miss; grep emitters for lands/emits/casts-and-stops.** Banked `probes/probe-firepool.mjs` + `shot-firepool.mjs`.)
+  Prev: **347 — THE STRIKE LIGHTS THE GROUND IT HITS / SHIPPED (DEEPENED)** (Sky × Deepen; 328's grounded bolt lit
+  nothing it hit → a bluish-white pool SQUASHED to the ground (291) on the same `bolt`, `GFLASH` suppressor (253),
+  `probe-groundflash` 17–20% of the bolt's ink, ZERO dry, CROSSED-map blind PASS; the first proof a half-built emitter
+  is a live high-contrast Deepen the surveys miss. Full text in the 347 entry.) Prev: **346 — frozen-column
+  finder banked as `probe-frozencol.mjs` / NO SHIP** (KELP 28→33→31 re-proves 282; byte-identical.) Prev: **STEP-BACK
+  #46 @345** (NO DRIFT; perf +0.017–0.021%/lap vs 285 over 60 laps, FLAT vs 339. ⚠ Watch: inland tower core dense but
+  NOT wallpaper — do NOT add raw downtown density.) Prev: **344 — saturation-bound; mode STEP-BACKS + `polish-tile` / NO SHIP.**
   Prev: ~~**Urban 343**~~ (SNOW ON ROOFS — `SNOWLAND` type-set blind to buildings (274), REAL gap; a `colA`-white cap on
   pale roofs in dim warm-haze winter = NO figure/ground, both agents INVERTED. ⛔ INVISIBLE-AT-ZOOM, `polish-tile` only.) Prev:
   ~~**Nature 342**~~ (CAT'S-PAWS — grass deaf to `windForce`; a low-α ellipse scatter HAZES not MARKS (203/215),
@@ -391,59 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 340 entries before Iteration 338 live in
+> **Archive:** the 341 entries before Iteration 339 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 338 — the capitol's standards fly with the wind (2026-07-17) [Civic & culture × Deepen/interconnect]
-
-**Vector.** The parliament — "the seat of the region, and the tallest civic roof in Solvista" — flies twin gold
-standards from its dome front. Every OTHER flag in the city rides the shared gust (the hall's and school's `windFlag`
-scale their flutter by `WINDA`; the harbour + beach flags; the kites read `kiteGust`; smoke leans on `smokeLean`; the
-sails belly on `windForce` — 280/333/334), and 280 wrote the law that they must all "gust together". But the capitol's
-two most prominent flags flapped on `Math.sin(time*2+y)` — a clock term with **no wind in it** — so they snapped stiffly
-straight out in a **dead calm** while the hall flag on the next roof hung limp. They are the un-enumerated member of the
-wind's reader category (280: the reader list is a changelog, not a spec — grep the MECHANISM `windForce`, not the header's
-"wind DONE ⛔"). Found by grepping every flag/pennant draw for `windForce`/`WINDA` and finding the one inline draw
-(`drawCivic`'s parliament branch, ~L8388) that a `windFlag`-caller grep misses. Rotated off People (336/337 both rain)
-into Civic; a different KIND (wind, not rain) and domain.
-
-**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** `wf2=windForce()`; each standard's downwind
-reach `st=(4.2+wv2)*(0.34+0.66*wf2)` streams farther/flatter in a gale and shrinks in the lull, plus a droop
-`dp=2.4*(1-wf2)` that hangs it in toward the pole when the air goes still, in the SAME +x every gusting thing drifts.
-At `windForce()==1` (full gale) `st=4.2+wv2, dp=0` ⇒ **HEAD's exact `4.2+wv2` byte-for-byte** — an exact fixed point
-(245/280, the kite convention: 1.0 at full gale = HEAD). Same two `fill()`s, same primitives ⇒ zero new path objects.
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors.
-VERDICT PASS.
-
-**Probe** (`probes/probe-capitolflag.mjs`, build-agnostic — hooks the artifact's own path ops and reads back the
-pennant triangle the frame ISSUES (base verts share the pole x, tip offset `+st`), so reach = `tipX-baseX` is
-deterministic with **NO NOISE FLOOR AT ALL**; `windForce` is a top-level function ⇒ `window.windForce=()=>1` renders
-HEAD's draw IN-PAGE (253), so ONE file grades HEAD and the patch, no source swap, no cross-build floor). 4 seeds
-(42/7/1234/99), 1 parliament each, mean of the 2 standards' reach at day pin, frozen clock:
-- **RESPONSE:** CALM (`WINDA=0.25`, `windForce=0`) reach is **0.34x** the GALE (`WINDA=1.0`) reach on all 4 seeds
-  (3.23→1.10 · 3.89→1.32 · 4.39→1.49 · 5.13→1.74) — the standard clearly answers the wind.
-- **FIXED POINT:** GALE reach == HEAD reach **exactly** on every seed (windForce==1 reproduces HEAD's `4.2+wv2`).
-- **CONTROL / must-not-move (250):** HEAD (windForce stubbed to 1) reads the **identical** reach at `WINDA=0.25` and
-  `WINDA=1.0` — HEAD ignores the wind, so nothing but the patched lever moved. CAPITOLFLAG: PASS.
-
-**Visual** (`probes/shot-capitolflag.mjs` — same frozen world, ONE parliament, shot at `__setWind(0.25)` (calm) and
-`__setWind(1.0)` (gale) as a blind A/B zoomed 7× and centred on the capitol via `zoom`/`offX` (269), plus an un-zoomed
-whole-city gale frame; `page.screenshot` DOM-composited (200); tokens meaningless + non-ordinal, calm/gale map
-**CROSSED between seeds** (238/239/268); md5 confirmed all 4 zoomed frames differ). **Both blind subagents, on both
-seeds, on the crossed map, correctly named the GALE from the streaming standards alone** (s42 gale=`cobalt` ✓ · s7
-gale=`myrtle` ✓): pennants stream out flat/far to the right in the gale, hang short/drooped against their poles in the
-calm, attached to the poles on the building (not floating/detached), no z-order tears or blown colour anywhere, and
-both whole-city frames read as a balanced, coherent coastal city.
-
-**Perf.** Zero new path objects (draw-only, same 2 fills). Step-back (~340) prices the arc.
-
-**Verdict: SHIPPED.** The capitol's twin standards now fly with the same gust as every other flag, kite, plume and
-sail — the whole sky, the seat of the region included, gusts together (280). Exact fixed point at full gale, census
-byte-identical. Civic × Deepen. `probes/probe-capitolflag.mjs`, `probes/shot-capitolflag.mjs`.
 
 ## Iteration 339 — the festival strand stirs in the wind too (2026-07-17) [Civic & culture × Deepen/interconnect]
 
@@ -900,3 +852,46 @@ standing reflection), which the reflection-family enumeration structurally could
 the header's NEXT VECTOR: grep shipped features for a draw that *lands / emits / casts and then stops*. No new SKILL.md
 law (every law used — 279/195/291/248/253/226/238 — is already promoted). Banked `probes/probe-groundflash.mjs` +
 `probes/shot-groundflash.mjs`.
+
+## Iteration 348 — a fire lights the ground it sits on (2026-07-18) [Water & coast × Deepen/interconnect → SHIPPED]
+
+**Vector.** 347 completed the lightning strike's half-built logic (a bolt that grounds but lights nothing it hits) and
+banked the reusable finding as the header's NEXT VECTOR: *grep shipped features for a draw that lands / emits / casts
+and then stops.* Ran that grep across the emitters (`createRadialGradient`, `glow`, fire). The **beach bonfire**
+(~L6096) is the exact same half-built shape 328's bolt was: it draws an 8px self-glow *at the flame* (`arc(cx,cy-2,8)`)
+but the dark night sand around it stays dark — a fire that illuminates nothing it stands on. Completing it rotates the
+domain (Sky→Water/coast), is nightly-visible (far more than 347's rare storm), and is inherently HIGH-CONTRAST (warm
+firelight on dark night sand: the 329/341/347 warm-on-dark class that ships, figure-ground priced first per 266).
+
+**Change (draw-only, ~14 lines).** Before the flame/halo, a warm firelight **pool cast ON the sand**: a radial gradient
+SQUASHED to the ground plane (`translate(cx,cy+0.5); scale(1,0.4)`, r=12) so it reads as light lying on the sand rather
+than a floating orb (291/347); drawn FIRST so the crisp flame and logs sit over their own glow; a raw emissive literal,
+never `col()` — a fire is a light SOURCE, not a reflector (279/257); a gradient to alpha 0, never a flat arc (195);
+flickers on `time` (broad slow, distinct from the flame's), grows with the night on `LITAMT`, deterministic (no rng).
+Kept tight within the cell, so a nearer row occludes it together with the fire (drawFire's own z-order rule, ~L7260).
+Added `FIREPOOL` (the new pool) and `FIREGLOW` (the incumbent flame-halo) suppressors so a probe can isolate each in
+one page, floor 0 (253/347's dual isolation).
+
+**Census + error gate.** VERDICT PASS, 0 page errors. Draw-only, no terrain, no `rng()` ⇒ core byte-flat, histogram
+empty. Perf: the pool draws only inside the existing bonfire gate (`v∈(0.42,0.47)` beach cells at `LITAMT>0.5`), a
+handful of cells at night ⇒ ~0 path objects at the fair-weather perf pins — free.
+
+**Probe (`probes/probe-firepool.mjs`).** DUAL isolation in one page (floor 0, build-agnostic): `FIREPOOL=1 vs 0` → the
+POOL alone (the new ink); `FIREGLOW=1 vs 0` → the flame's own halo (the INCUMBENT bar, 226 — no threshold invented).
+Result: **POOL 476px (s42) / 299px (s7), peak 31/33, 62% / 67% of the incumbent halo's ink** — a substantial,
+grounded warm pool at the fires' feet; and **0px / 0 ink by DAY** (LITAMT=0.02, the bonfire gate false ⇒ the free
+dead-regime control, 199) on both seeds.
+
+**Visual (`probes/shot-firepool.mjs`).** Blind A/B in ONE build — `FIREPOOL=1` vs `FIREPOOL=0` (=HEAD) — so no build
+swap, no cross-build floor. Meaningless non-ordinal tokens, pool/no-pool map CROSSED between seeds (238/239/268;
+md5-distinct pairs confirmed). BOTH blind agents, one per seed, **correctly named the pool variant on the crossed map**
+(s42 orin=ON→"orin"; s7 vael=ON→"vael") and returned **VISUAL: PASS**: the pool is "a horizontally-elongated amber
+ellipse on the sand… flat and squashed, hugging the ground plane at the fire's base, not a floating orb", warm amber
+(R>G>B), not blown out (max R ~212, 0 near-white px); the whole-city frames differ ONLY along the coastline where
+bonfires sit — no z-order tears, floating tiles, blown-out colour or clutter anywhere; both still read as a coherent
+night coastal city. A genuine blind identification, not a positional guess.
+
+**Verdict: SHIPPED (DEEPENED).** Completes the bonfire the way 347 completed the strike — the fire now lights the sand
+it stands on. Second confirmation of 347's reusable finding: a shipped emitter that casts onto itself and stops is a
+live, high-contrast Deepen the saturation surveys miss. No new SKILL.md law (every law used — 279/257/195/291/248/253/
+226/199/238/239/268 — is already promoted). Banked `probes/probe-firepool.mjs` + `probes/shot-firepool.mjs`.

@@ -6095,11 +6095,32 @@ function drawCell(x,y){
          the illuminant's reach, and a radial gradient falling to alpha 0 at the rim. */
       if(!esp&&v>0.42&&v<0.47&&LITAMT>0.5){ /* beach bonfire */
         const[cx,cy]=px(gx,gy);
+        /* A FIRE LIGHTS THE GROUND IT SITS ON (iter 348, completing the same half-built shape
+           347 found in the lightning strike): the bonfire's self-glow above lit only the flame,
+           so the dark night sand around it stayed dark — a light SOURCE that illuminated nothing
+           it stood on. This is that firelight, cast ON the beach: a soft warm pool SQUASHED to the
+           ground plane (scale 1,0.4) so it reads as light lying on the sand, not a floating orb
+           (291/347); drawn FIRST, so the crisp flame and logs sit over their own glow; a raw
+           emissive literal, never col() — a fire is not a reflector (279/257); a radial gradient
+           to alpha 0, never a flat arc (195); it flickers on `time` with the flame, grows with the
+           night on LITAMT, and is deterministic (no rng). Kept tight within the cell, so a nearer
+           row occludes it together with the fire — drawFire's own z-order rule (~L7260). */
+        if(window.FIREPOOL!==0){
+          const fp=0.20+0.11*Math.sin(time*8.5+x*1.7);   /* broad slow flicker, distinct from the flame's */
+          ctx.save();ctx.translate(cx,cy+0.5);ctx.scale(1,0.4);
+          const pg=ctx.createRadialGradient(0,0,0,0,0,12);
+          pg.addColorStop(0,'rgba(255,168,80,'+(fp*LITAMT).toFixed(3)+')');
+          pg.addColorStop(1,'rgba(240,120,40,0)');
+          ctx.fillStyle=pg;ctx.beginPath();ctx.arc(0,0,12,0,7);ctx.fill();
+          ctx.restore();
+        }
+        if(window.FIREGLOW!==0){                          /* the flame's own halo (the incumbent bar, 226) */
         const bg=ctx.createRadialGradient(cx,cy-2,0,cx,cy-2,8);
         bg.addColorStop(0,'rgba(255,178,86,'+(0.30*LITAMT).toFixed(3)+')');
         bg.addColorStop(1,'rgba(240,120,40,0)');
         ctx.fillStyle=bg;
         ctx.beginPath();ctx.arc(cx,cy-2,8,0,7);ctx.fill();
+        }
         ctx.fillStyle='rgb(255,196,64)';                  /* EMISSIVE — no col(), no TINT */
         const bfl=Math.sin(time*11+x)*1.2;
         ctx.beginPath();ctx.moveTo(cx-2,cy);
