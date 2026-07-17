@@ -24434,3 +24434,65 @@ gate (two blind agents, both inverted) is the only instrument that could see thi
 nothing for a subtle draw. ⛔ **Do not re-try grass-wind as an α-scatter overlay; if ever, it is a tapered-streak
 `polish-tile` job.** Nature × Deepen. (No files added — the finding lives here, the loop's memory.)
 
+## Iteration 343 — snow on the roofs, and why it drowns in the haze (2026-07-17) [Urban fabric × Deepen → EXPLORED → REVERTED]
+
+**Vector.** Step-back #45 (@340) pointed ~343 at a measured seam (225) or a Deepen in a rested domain (avoid
+Nature/Transport/Sky/Water; Urban needs a MEASURED seam). I ran the seam-finders: the frozen census tile histogram
+(every flat/zero row is audited terrain/landmark — SHOREPARK 294/294/294, MARSH 45/45/45, no dead-rule zero), the
+CIVHRS/CIVICDESC/TILEDESC tables (fully deepened — every civic kind keeps hours, every tile has a label+desc), and
+`residentWhere` (pier/market/park/garden/plaza/beach/stadium/amphitheater/field/road all covered). The one genuinely-
+open, MEASURED seam: **`SNOWLAND` is a TYPE SET that excludes every building type** (`EMPTY,MEADOW,FOREST,REDWOOD,
+PARK,ROAD,ROCK,FARM,VINEYARD,ORCHARD,GARDEN,FIELD`), and the CA at ~L3193 forces `c.snow=0` on all non-members — so
+the ONE surface a real snowfall settles on first, the flat cold roof, stayed bare in every winter of the artifact's
+life (274: a type-keyed set is blind to members it never lists — here, ALL the buildings). The Urban analog of 341
+(roads answering rain) — a surface deaf to a signal. Chosen over grass-wind (342) because a roof cap is HIGH-CONTRAST
+and discrete, not a haze — or so I reasoned.
+
+**Change (built, then reverted — draw-only, no `rng()`/terrain, unreachable from `tick()`).** `roofSnow(x,y)` reads
+the EXISTING `c.snow` field over the building's own SNOWLAND ground neighbours (mean), returns 0 when no snow is lying
+(`snowGlobal` gate); `snowCap(gx,gy,ax,ay,z,s)` draws the roof's own top-face hexagon (the first fill of prismS) at
+roof height `z`, in the SAME alpha ramp + `colA` illuminant as the ground dusting (7154). One `const rsn=roofSnow(x,y)`
+at the top of `drawBuilding` + one `snowCap(...)` after the RES/MID/COM roof prisms (TOWER skipped — crown-geometry
+zoo, and towers' developed neighbours give ~0 snow anyway). Reads the field, writes nothing; `snowGlobal===0`
+(~9/10 of the year) ⇒ every roofSnow returns 0, no cap drawn ⇒ a snowless frame is HEAD's exact bytes (exact fixed
+point, 245/253). Respects "the coast stays clear" (321) by construction: a house ringed by bare sand catches nothing.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors,
+VERDICT PASS (only the known ±1 `solarRoofs`/`greenRoofs`/`towerHt` tick-timing wobble, 226, not mine).
+
+**Probe** (`probe-roofsnow.mjs`, build-agnostic — drives `tick()` to lay snow, reads the artifact's OWN `roofSnow`
+over every building + hooks `snowCap` to confirm the draw fires; NO NOISE FLOOR AT ALL). 6 seeds: **WINTER 92–96%
+of roofs capped · SUMMER 0 · HEAD (roofSnow undefined) 0 · draws win 772–927 / sum 0.** RESPONSE / FIXED-POINT /
+BUILD-AGNOSTIC all PASS. ⚠ **But 92–96% is a near-BLANKET, not the gradient I designed:** the season probe showed the
+snow field saturates to **cover=100%** the instant `winterMask()>0` (SNOWLERP=0.5 relaxes fast), and max daylight
+during ANY snow moment is only **~0.28–0.38** (winter's day is SHORT, 261 — the coldest weeks are also the darkest).
+So there is no bright, partial-snow shoulder to shoot: a snowy frame is ALWAYS dim and ALWAYS fully blanketed.
+
+**Visual — THE GATE THAT KILLED IT** (`shot-roofsnow.mjs`, same-world blind A/B: caps ON vs `snowCap` no-op'd in ONE
+page — 253/230, so the ONLY difference is the roof caps, an exact same-world A/B; tokens meaningless + CROSSED between
+seeds, 238/239/268; brightest-winter-hour daylight). **BOTH blind subagents, on BOTH seeds, INVERTED the call** —
+each named the BARE/HEAD frame as the snowy-roofed one, describing the CAPPED frame as "saturated terracotta" (it is
+objectively BRIGHTER — mean luma 142.3 vs 140.7 / 140.4 vs 138.9, so the caps DO add white; the labelling was verified
+correct). Both PASSED z-order + holistic on the closeup ("caps sit ON the roof tops, fixtures on top, no tears,
+coherent winter town"). I looked myself (239/342): the whole-city winter frame reads as a **warm dusty HAZE over the
+town, not a snow scene** (the ground snow at LITAMT~0.38 warm sunset is a uniform pale desaturating wash — iter 321's
+own shipped look), and the roof caps are ABSORBED into that haze; the closeup reads as a normal warm sunset town, with
+the pale caps INDISTINGUISHABLE from the artifact's already-pale roof palette (RES `cream`/`sage`/`coral`, COM
+`whiteDk`, MID cream). Snow-white-on-already-pale-roofs, surrounded by snow-white ground, in dim warm winter light,
+has no figure/ground — so it cannot read as *snow on the roofs*, only as a fractionally-paler city.
+
+**Why it can't be rescued here (and why it's `polish-tile`, not a growth lap).** A brighter/whiter cap through a RAW
+literal (not `colA`) would glow inconsistently over the dim-blue GROUND snow (195's coin / 214) and still not solve the
+snow-on-snow low contrast. A legible form needs a distinct SHAPE — a crisp white roof-ridge line with a cast shadow, a
+snow-load silhouette — which is a focused roof redesign, i.e. `polish-tile`, not a growth increment (342/270's rung: a
+defect FOUND is not a defect cleanly BUILDABLE here). The fundamental wall: **winter snow reads as a warm HAZE, and a
+cap on a pale roof adds no distinct read** — the header's own DEEP-BUT-INVISIBLE-AT-ZOOM warning, twice running.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (helpers + `rsn` var + 3 caps removed);
+probe + shot removed (they reference the reverted `roofSnow`/`snowCap`). The roof-snow gap is REAL and correctly
+identified (274: SNOWLAND is blind to every building type), the mechanism fires with an exact fixed point + coherent
+z-order (census + probe + closeup PASS), and it is **invisible-at-zoom as a low-contrast cap in a warm-haze winter** —
+both blind agents INVERTED, the only instrument that could see this. ⛔ **Do not re-try roof-snow as a `colA`-white
+cap; a legible form is a shaped-ridge `polish-tile` job. Winter is DIM + WARM-HAZE + already-pale-roofs = no snow
+figure/ground.** Urban × Deepen. (No files added — the finding lives here, the loop's memory.)
+

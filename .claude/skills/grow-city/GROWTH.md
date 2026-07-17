@@ -32,18 +32,17 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **352 — THE WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / EXPLORED → REVERTED** (Sky × Deepen; the
-  lightning system is fully LOCAL — 291 cloud / 328 bolt / 347 ground pool — so I built the un-built piece: a per-frame
-  `FLASHAMT` (max flash across the storm's out-of-step cells) drives one whole-viewport bluish-white wash at flash peaks.
-  Census flat, `probe-sheetlift` clean (100% scene cover, mean d 24.7, exact 0 fixed point between beats + in dry). But
-  the VISUAL killed it: 2 blind agents INVERTED the map — both preferred the *un-flashed* frame as "colors pop," called
-  the flash frame "muted"; measurement (239) confirmed the flash IS +19 lum but a **flat alpha wash only DESATURATES** →
-  I looked: a grey-lavender HAZE veiling the plate, not a flash. **THIS IS 260 ON A FLASH: a whole-frame luminance lift
-  is the one "event" the eye cannot read as an event — colour constancy divides out a global cast as ATMOSPHERE. A
-  "whole-scene event" built as a FLAT OVERLAY is dead on arrival, and a passing luminance/coverage probe proves NOTHING
-  — only the blind agents/eyes judge a desaturating wash (266); the low-contrast whole-frame trap 342/343 hit, one rung
-  up.** A believable whole-scene flash needs a SKY→ground gradient, a `polish-tile` redesign. Byte-identical. Full text
-  in the 352 entry.) Prev: **351 — HALF-BUILT/KEEPS-NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card
+- **ROTATION.** Last: **353 — THE TYPE-KEYED TABLE SEAM IS SOUND / survey NO SHIP** (audited all 32 `T.*` types against
+  TILELABEL/TILEDESC/POPW/BEDT; every missing member is a deliberate omission with a correct alt path — ROAD/CIVIC
+  handled bespoke in `describeTile`, loft bedtime per-cell via `bedOf` — NO 285/288-class type-hierarchy blindness. The
+  growth wall now confirmed from FOUR angles: 344 declared · 350 visual/perf · 351 behavioral · 353 structural/table.
+  Byte-identical.) Prev: **352 — THE WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / EXPLORED → REVERTED** (Sky × Deepen; the
+  lightning system is fully LOCAL (291/328/347); a per-frame `FLASHAMT` whole-viewport bluish-white wash reverted —
+  **260 ON A FLASH: a whole-frame luminance lift is the one "event" the eye cannot read as an event** (colour constancy
+  divides a global cast out as ATMOSPHERE/haze; a flat overlay only DESATURATES). ⛔ **A "whole-scene event" as a FLAT
+  OVERLAY is dead on arrival, and a passing luminance/coverage probe proves NOTHING — only blind eyes judge a
+  desaturating wash (266/342/343); a believable one needs a SKY→ground GRADIENT = `polish-tile`.** Full text in the 352
+  entry.) Prev: **351 — HALF-BUILT/KEEPS-NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card
   live, every flag rides its upgrade; 344's wall from BEHAVIORAL side. 🆕 loose `birds` fade α0.15 not roost — `polish-tile`
   only.) Prev: **350 — STEP-BACK #47 / NO DRIFT** (3 lights × 2 seasons × 2
   seeds blind-PASS; core byte-flat; perf +0.020%/lap day vs 285 over ~64 laps. ⚠ Watch: inland tower core dense but NOT
@@ -391,73 +390,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 345 entries before Iteration 343 live in
+> **Archive:** the 346 entries before Iteration 344 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 343 — snow on the roofs, and why it drowns in the haze (2026-07-17) [Urban fabric × Deepen → EXPLORED → REVERTED]
-
-**Vector.** Step-back #45 (@340) pointed ~343 at a measured seam (225) or a Deepen in a rested domain (avoid
-Nature/Transport/Sky/Water; Urban needs a MEASURED seam). I ran the seam-finders: the frozen census tile histogram
-(every flat/zero row is audited terrain/landmark — SHOREPARK 294/294/294, MARSH 45/45/45, no dead-rule zero), the
-CIVHRS/CIVICDESC/TILEDESC tables (fully deepened — every civic kind keeps hours, every tile has a label+desc), and
-`residentWhere` (pier/market/park/garden/plaza/beach/stadium/amphitheater/field/road all covered). The one genuinely-
-open, MEASURED seam: **`SNOWLAND` is a TYPE SET that excludes every building type** (`EMPTY,MEADOW,FOREST,REDWOOD,
-PARK,ROAD,ROCK,FARM,VINEYARD,ORCHARD,GARDEN,FIELD`), and the CA at ~L3193 forces `c.snow=0` on all non-members — so
-the ONE surface a real snowfall settles on first, the flat cold roof, stayed bare in every winter of the artifact's
-life (274: a type-keyed set is blind to members it never lists — here, ALL the buildings). The Urban analog of 341
-(roads answering rain) — a surface deaf to a signal. Chosen over grass-wind (342) because a roof cap is HIGH-CONTRAST
-and discrete, not a haze — or so I reasoned.
-
-**Change (built, then reverted — draw-only, no `rng()`/terrain, unreachable from `tick()`).** `roofSnow(x,y)` reads
-the EXISTING `c.snow` field over the building's own SNOWLAND ground neighbours (mean), returns 0 when no snow is lying
-(`snowGlobal` gate); `snowCap(gx,gy,ax,ay,z,s)` draws the roof's own top-face hexagon (the first fill of prismS) at
-roof height `z`, in the SAME alpha ramp + `colA` illuminant as the ground dusting (7154). One `const rsn=roofSnow(x,y)`
-at the top of `drawBuilding` + one `snowCap(...)` after the RES/MID/COM roof prisms (TOWER skipped — crown-geometry
-zoo, and towers' developed neighbours give ~0 snow anyway). Reads the field, writes nothing; `snowGlobal===0`
-(~9/10 of the year) ⇒ every roofSnow returns 0, no cap drawn ⇒ a snowless frame is HEAD's exact bytes (exact fixed
-point, 245/253). Respects "the coast stays clear" (321) by construction: a house ringed by bare sand catches nothing.
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors,
-VERDICT PASS (only the known ±1 `solarRoofs`/`greenRoofs`/`towerHt` tick-timing wobble, 226, not mine).
-
-**Probe** (`probe-roofsnow.mjs`, build-agnostic — drives `tick()` to lay snow, reads the artifact's OWN `roofSnow`
-over every building + hooks `snowCap` to confirm the draw fires; NO NOISE FLOOR AT ALL). 6 seeds: **WINTER 92–96%
-of roofs capped · SUMMER 0 · HEAD (roofSnow undefined) 0 · draws win 772–927 / sum 0.** RESPONSE / FIXED-POINT /
-BUILD-AGNOSTIC all PASS. ⚠ **But 92–96% is a near-BLANKET, not the gradient I designed:** the season probe showed the
-snow field saturates to **cover=100%** the instant `winterMask()>0` (SNOWLERP=0.5 relaxes fast), and max daylight
-during ANY snow moment is only **~0.28–0.38** (winter's day is SHORT, 261 — the coldest weeks are also the darkest).
-So there is no bright, partial-snow shoulder to shoot: a snowy frame is ALWAYS dim and ALWAYS fully blanketed.
-
-**Visual — THE GATE THAT KILLED IT** (`shot-roofsnow.mjs`, same-world blind A/B: caps ON vs `snowCap` no-op'd in ONE
-page — 253/230, so the ONLY difference is the roof caps, an exact same-world A/B; tokens meaningless + CROSSED between
-seeds, 238/239/268; brightest-winter-hour daylight). **BOTH blind subagents, on BOTH seeds, INVERTED the call** —
-each named the BARE/HEAD frame as the snowy-roofed one, describing the CAPPED frame as "saturated terracotta" (it is
-objectively BRIGHTER — mean luma 142.3 vs 140.7 / 140.4 vs 138.9, so the caps DO add white; the labelling was verified
-correct). Both PASSED z-order + holistic on the closeup ("caps sit ON the roof tops, fixtures on top, no tears,
-coherent winter town"). I looked myself (239/342): the whole-city winter frame reads as a **warm dusty HAZE over the
-town, not a snow scene** (the ground snow at LITAMT~0.38 warm sunset is a uniform pale desaturating wash — iter 321's
-own shipped look), and the roof caps are ABSORBED into that haze; the closeup reads as a normal warm sunset town, with
-the pale caps INDISTINGUISHABLE from the artifact's already-pale roof palette (RES `cream`/`sage`/`coral`, COM
-`whiteDk`, MID cream). Snow-white-on-already-pale-roofs, surrounded by snow-white ground, in dim warm winter light,
-has no figure/ground — so it cannot read as *snow on the roofs*, only as a fractionally-paler city.
-
-**Why it can't be rescued here (and why it's `polish-tile`, not a growth lap).** A brighter/whiter cap through a RAW
-literal (not `colA`) would glow inconsistently over the dim-blue GROUND snow (195's coin / 214) and still not solve the
-snow-on-snow low contrast. A legible form needs a distinct SHAPE — a crisp white roof-ridge line with a cast shadow, a
-snow-load silhouette — which is a focused roof redesign, i.e. `polish-tile`, not a growth increment (342/270's rung: a
-defect FOUND is not a defect cleanly BUILDABLE here). The fundamental wall: **winter snow reads as a warm HAZE, and a
-cap on a pale roof adds no distinct read** — the header's own DEEP-BUT-INVISIBLE-AT-ZOOM warning, twice running.
-
-**Verdict: EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (helpers + `rsn` var + 3 caps removed);
-probe + shot removed (they reference the reverted `roofSnow`/`snowCap`). The roof-snow gap is REAL and correctly
-identified (274: SNOWLAND is blind to every building type), the mechanism fires with an exact fixed point + coherent
-z-order (census + probe + closeup PASS), and it is **invisible-at-zoom as a low-contrast cap in a warm-haze winter** —
-both blind agents INVERTED, the only instrument that could see this. ⛔ **Do not re-try roof-snow as a `colA`-white
-cap; a legible form is a shaped-ridge `polish-tile` job. Winter is DIM + WARM-HAZE + already-pale-roofs = no snow
-figure/ground.** Urban × Deepen. (No files added — the finding lives here, the loop's memory.)
 
 ## Iteration 344 — returns flattened: the growth phase has hit its wall (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
 
@@ -856,3 +793,38 @@ as a FLAT OVERLAY is dead on arrival, and a passing luminance/coverage probe pro
 agents/eyes can judge a desaturating wash (266).** A believable whole-scene flash would have to be brightest at the
 SKY/source and fall off toward the ground (a directional gradient, not a flat veil), which is a `polish-tile`-scale
 redesign, not a growth lap. The lightning system stays local, and it is complete as it stands.
+
+## Iteration 353 — the type-keyed TABLE seam is sound (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** Three of the last four laps (344 declared the growth wall · 350 #47 confirmed it from the visual/perf side ·
+351 surveyed every *behavioral* seam dry · 352 reverted the last high-contrast interconnect). Re-running 351's behavioral
+survey would be redundant, so this lap tested a **different** seam class that neither 351 nor 352 covered and that the
+loop's biggest recent finds came from: the **type-keyed TABLES** (285's law — a table keyed on `c.kind`/`c.t` is
+structurally blind to a member that lives at a different level of the type hierarchy; 288's TOWER-can't-wear-tech is the
+same shape). No source touched; `solvista.html` byte-identical to HEAD (630b04b).
+
+**Survey — every table checked came back SOUND** (audited all 32 `T.*` tile types against each table's key set):
+- **TILELABEL** covers 31/32 — only `VOID` missing, correct (the void is not a tile you hover).
+- **TILEDESC** covers 29/32 — missing `ROAD`, `CIVIC`, `VOID`, and all three are **handled bespoke in `describeTile`**,
+  not by the table: `T.CIVIC` → `CIVICLABEL`/`CIVICDESC[c.kind]` (per-kind, the correct level); `T.ROAD` → a rich branch
+  naming fete/bridge/boulevard/arterial/busy/quiet off its own flags; `VOID` unreachable. No gap.
+- **POPW** covers only the 7 pop-bearing types (RES/MID/COM/TOWER/CIVIC/IND/MARKET) — intentional; a park has no
+  residents, and a loft's pop is keyed per-cell not per-row (274).
+- **BEDT** covers only the 4 windowed building types — intentional, and the loft's night curfew was already moved to the
+  per-cell `bedOf(c)` (274), so `T.IND` correctly stays OUT of the table (a `BEDT[T.IND]` row would bed the working
+  shed's night-shift clerestory, 173).
+
+Every missing member is a deliberate omission with a correct alternative path — none is the 285/288-class silent
+type-hierarchy blindness. This is a fourth independent confirmation of the growth wall (344 declared · 350 visual/perf ·
+351 behavioral · **353 structural/table**).
+
+**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
+`roads` byte-unmoved (195508 / 6056 / 5727), only `solarRoofs +1` / `greenRoofs +1` / `towerHt +1` (226 tick-timing).
+Entity populations full and healthy (peds 762, cars 360, surfers 81, kayaks 81, buoys 45, plane 9, copters 6, etc.).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The type-keyed TABLE seam
+is **SOUND** — the growth wall now stands confirmed from the behavioral (351), interconnect (352) *and* structural (353)
+angles. Honest mode stays **`polish-tile`** (the shaped-gradient deaf-surface redesigns: birds-roost close-up, 342/343's
+snow-ridge/cat's-paws, 352's flash-as-sky→ground-gradient) or **STEP-BACK #48** (~355). A genuine growth lap still needs
+a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL, and none has survived a probe since
+341. Nothing to fix.
