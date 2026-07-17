@@ -5248,6 +5248,7 @@ const pedUmbrella=p=>((p.ph*0.6180339887)%1)<UMBSHARE;
    MECHANISM rainingAt, not the comment's noun list, 280). ONE predicate, N readers (112),
    distinct from RAINUMB (0.25, the umbrella-UP threshold): this is the come-inside gate. */
 const dryAt=(x,y)=>rainingAt(x,y)<RAINDRY;
+const WETGLEAM=0.42;              /* ...and above this the wet tarmac MIRRORS the lamp into a long warm smear (night streets) */
 
 /* How far the sea's damp band reaches up the sand, in px — widest after the ebb.
    ONE definition, because two readers depend on it: the margin that STROKES the wet
@@ -6915,6 +6916,14 @@ function drawCell(x,y){
         else{tree(gx+0.36,gy,0.5,1.02);tree(gx-0.36,gy,0.5,1.02);}
       }
       if(LITAMT>0.25){ /* street lamps at night */
+        /* a shower wets the tarmac, and a wet street MIRRORS its lamps into long warm
+           smears drawn down toward the viewer — the reason a rainy city night reads so
+           luminous (the land analog of 329's waterfront reflection). Read at draw time
+           from rainingAt: no rng()/terrain/Math.random, and at rainingAt===0 (the dry
+           majority) nothing extra is drawn, so a dry frame is byte-identical to HEAD —
+           an exact fixed point (245/253). A reflection is a LONG mark (a vertical smear),
+           so it survives the downscale to fit zoom where a flat wash would not (266). */
+        const wetg=rainingAt(x,y);   /* how hard it is raining on THIS lamp, 0..1 */
         if(art){ /* the arterial spine reads as a lit CORRIDOR: warm light pools
                     along the trunk centre-line toward each arterial neighbor, so
                     c.flow's network joins hex-to-hex into one continuous lit ribbon
@@ -6934,9 +6943,21 @@ function drawCell(x,y){
           ctx.lineCap='butt';
           ctx.fillStyle='rgba(255,226,152,'+(0.34*LITAMT)+')'; /* the lamp head, warm and small so the ribbon reads over the beads */
           ctx.beginPath();ctx.arc(cx,cy-2,2.4,0,7);ctx.fill();
+          if(wetg>0){ /* the wet spine gleams: the lamp reflected down the tarmac */
+            ctx.save();ctx.translate(cx,cy+1.5);ctx.scale(0.55,2.6);
+            const g=ctx.createRadialGradient(0,0,0,0,0,5),a=WETGLEAM*LITAMT*wetg;
+            g.addColorStop(0,'rgba(255,214,150,'+a+')');g.addColorStop(1,'rgba(255,214,150,0)');
+            ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,5,0,7);ctx.fill();ctx.restore();
+          }
         }else if(((x*7+y*5)%(c.busy?2:4))===0){ /* ordinary streets keep a dimmer ambient glow, so the spine out-shines them */
           ctx.fillStyle='rgba(255,198,108,'+(0.22*LITAMT)+')';
           ctx.beginPath();ctx.arc(cx,cy-2,4.5,0,7);ctx.fill();
+          if(wetg>0){ /* the wet street gleams too, dimmer than the spine */
+            ctx.save();ctx.translate(cx,cy+1.5);ctx.scale(0.5,2.4);
+            const g=ctx.createRadialGradient(0,0,0,0,0,5),a=WETGLEAM*LITAMT*wetg*0.7;
+            g.addColorStop(0,'rgba(255,206,138,'+a+')');g.addColorStop(1,'rgba(255,206,138,0)');
+            ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,5,0,7);ctx.fill();ctx.restore();
+          }
         }
       }
       if(buskerAt(x,y)){

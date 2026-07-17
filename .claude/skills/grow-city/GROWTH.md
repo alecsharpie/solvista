@@ -20,7 +20,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323**, **333** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
-| **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
+| **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~, **341** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338**, **339** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318**, **336**, **337** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
@@ -32,10 +32,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **STEP-BACK #45 @340** (NO DRIFT; 336–339 byte-flat; 2 seeds × 5 frames blind PASS, seasonal pair
-  resolved blind; perf arc vs 285 **+0.022%/lap** / 54 laps, flat vs 335 — no perf-fix lap. ⚠ **GWARM=0 at the pinned
-  dry-peak years is CORRECT** — `overcast` greys skyBot BEFORE GWARM reads it; clear-sky GWARM peaks 0.6–0.78, NOT dead —
-  do NOT re-chase. Watch: inland tower core over-busy, no raw downtown density.) Prev (all Deepen, byte-flat, laws in
+- **ROTATION.** Last: **Transport 341** (WET STREETS MIRROR THEIR LAMPS — the rain mechanism's LAST un-enumerated
+  reader is the ROAD; `rainingAt`>0 gleams a warm smear down the night lamp pools, dry≡HEAD fixed point, the land
+  analog of 329's waterfront reflection; draw-only, byte-flat). Prev: **STEP-BACK #45 @340** (NO DRIFT; 336–339
+  byte-flat; blind PASS 2 seeds; perf +0.022%/lap vs 285. Watch: inland tower core over-busy, no raw downtown
+  density; GWARM=0 at pinned dry-peak years is CORRECT — overcast greys skyBot first, do NOT re-chase.) Prev (all Deepen, byte-flat, laws in
   SKILL.md): Civic
   **338/339** (festival cloth — capitol standards + festival BUNTING lift/stream on `windForce`, dead-calm≡HEAD fixed
   point, 280) · People **336/337** (RAIN-AWARE OUTDOOR CROWDS come in on `dryAt` (112); outdoor-daytime-crowd category
@@ -52,13 +53,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #45 landed @340
-  (NO DRIFT, city healthy, perf negligible); ~341 = a measured seam (225) or Deepen/Polish/Interaction in a rotated
-  domain, ~345 = STEP-BACK #46.** Additive space FULLY SPENT (331). ⇒
-  **next = a measured seam (225) or Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **remaining gaps
-  are DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
-  ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
-  lamps present & night-gated; (bi)/(av) cues = barely-visible bad trade ⇒ ⛔ do NOT force, `polish-tile`).
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 341 SHIPPED (Transport —
+  wet-street lamp reflection, rain×road interconnect); ~342 = a measured seam (225) or Deepen/Polish/Interaction in a
+  rotated domain (avoid Sky/Water; Transport/People/Civic just ran), ~345 = STEP-BACK #46.** Additive space SPENT (331).
+  ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
+  ⚠ **TRANSPORT ENTITY/ADDITIVE SEAMS SATURATED** (304/312/329; hairline cues (bi)/(av) = bad trade ⇒ ⛔ `polish-tile`)
+  — but **341 found a CROSS-DOMAIN interconnect the saturation note missed: the rain MECHANISM had no ROAD reader** (280).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
   **NATURE** additive spent (301 deer), Polish paid (294); next = grep the tick()/CA seam (287/279). **URBAN**
   tooltip/flag/TABLE SATURATED (295/302), Interaction/UX ran (133/**327**) ⇒ take no Urban vector without a measured
@@ -391,63 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 333 entries before Iteration 331 live in
+> **Archive:** the 334 entries before Iteration 332 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 331 — a jet crosses the high sky, drawing a contrail (2026-07-17) [Sky & atmosphere × New element]
-
-**Vector.** Sky × New element — the header's named sparsest additive cell (Sky's only prior New elements are 27, 43,
-291, so this is the **4th ever**), and the last genuinely-additive slot before additive space is fully spent. I first
-grepped the measured seams (comments for `never|no state|placed once|static`, the flag lifecycle for `hstr`/`bridge`/
-`riv`, the tables) — all well-tended (`hstr` already rides the tower podium per 249/281; 281/288 closed the flag
-defects; the marsh/kelp comments are audited). No fresh seam surfaced quickly, so I took the additive slot. The upper
-sky is a genuinely empty band (200): a high jet with a contrail fills it, on-theme for a coastal city, and clean
-(Math.random drift-in, draw-only, guaranteed-flat census).
-
-**Change (draw-only — Math.random spawn, no `rng()`, no terrain).** A single `plane` object (like `flock`), spawned in
-`genWorld` and advanced/looped in `advanceEntities`. A jet at altitude does not parallax with the ground, so it is a
-**SCREEN-SPACE** craft (`p`=progress across the viewport, `y`=screen fraction in the high band, `dir`, `sp`, `sl`=a
-gentle slope) — drawn in the sky slab **beside the sun/moon/shooting-star, BEFORE the city**, so the skyline occludes
-it exactly as it occludes the sun (a tower rising in front of the far jet is depth, not a tear). The contrail is a
-26-segment line fading behind a tiny dark swept speck with a blinking beacon. It is lit by the **sun**: bright white by
-day, warm-pink at golden hour (`GWARM`, a 6th reader of it), and **GONE at night** (`day = 1−LITAMT`, no sun to light
-it); it **fades out in rain** (`balloonFair`), so it never streaks a stormy sky. Census hook gets `plane:plane?1:0`.
-Not stamped/hoverable — a screen-space drift-in like the sun, moon, star and flock (the whale precedent, 286).
-
-**Census.** Draw-only, Math.random spawn ⇒ tile histogram empty, pop/roads/developed **byte-identical (+0)**, 0 page
-errors. VERDICT PASS. Vacuous by design; the claim rests on the probe + screenshots.
-
-**Probe** (`probes/probe-jet.mjs`, build-agnostic; isolation by clearing the decision, 230 — place a deterministic
-plane, render, then `plane=null`, re-render IN ONE PAGE, diff = the whole jet, floor **exactly 0**). Three conditions,
-two must-be-0 controls (`balloonFair` stubbed BY ASSIGNMENT, 284):
-- **DAY fair** → 453 / 551 / 503 px (seeds 42/7/1234), meanY **0.14** (high in the sky, above the skyline).
-- **NIGHT fair** → **0 px** on every seed (the `1−LITAMT` day factor kills it — a dead regime).
-- **DAY rain** → **0 px** on every seed (`balloonFair=0` fades it — fair-weather only). **JET: PASS.**
-
-**Visual** (`probes/shot-jet.mjs`, whole-city day + a close-up **aimed by measured ink** (226/272) + golden + night;
-`page.screenshot`, 200). Two blind subagents, seeds 42 & 7, both **PASS**: the contrail reads as a thin white streak
-with a tiny aircraft speck at its leading end, in open sky above the skyline; warmer/creamier at golden; **absent at
-night** (moon + stars only); no z-order tears / floating tiles / blown-out colour; the whole frame reads as a coherent
-coastal city.
-
-**Two camera bugs found and fixed along the way (200/204/226) — the artifact was innocent both times.** (1) The first
-build drew the trail in **world space** along constant world-y; the iso projection swept it steeply DOWN over the
-rooftops (ink bbox landed on the city) — a jet does not parallax, so it had to be screen-space. (2) The shot's first
-`time=100` sat exactly on the pre-existing **shooting star** (`met=(time·0.13)%1 = 0`, which draws at night/golden as a
-white diagonal), and a **rainy** loaded moment correctly HID the jet — so two agent rounds FAILed the *camera* (mis-
-attributing the meteor and seeing a blank rainy sky) while the artifact was fine. Fixed by forcing `rainFront=()=>0`,
-pinning `time` off the meteor, and aiming the close-up by measured ink rather than `pxc` (which is pre-transform and
-pointed the crop at empty sky).
-
-**Perf.** A handful of thin strokes for one on-screen jet, only in fair daylight; negligible. Step-back (~335) prices
-the arc in path objects.
-
-**Verdict: SHIPPED.** A high jet now crosses the empty upper sky drawing a sunlit contrail — white by day, warm at
-golden, gone at night, absent in rain — filling the one sky band that was bare. Draw-only, census byte-identical, the
-4th and last sparse additive cell. Sky × New element (27/43/291 → 331). `probes/probe-jet.mjs`, `probes/shot-jet.mjs`.
 
 ## Iteration 332 — the hearths no one could see (2026-07-17) [Urban fabric × Deepen/interconnect — EXPLORED → REVERTED]
 
@@ -903,3 +851,63 @@ regression); night ordering / golden-greens / sea-quilt facts hold (unre-measure
 surfaces). Permanent draw arc negligible (+0.02%/lap). Guardrail reset — next vector ~341 is a measured seam (225) or a
 Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water; additive space spent, 331; price visibility, 266, before
 building). Nothing to fix.
+
+## Iteration 341 — the wet streets mirror their lamps (2026-07-17) [Transport × Deepen/interconnect]
+
+**Vector.** Step-back #45 (@340) pointed here: a measured seam (225) or a Deepen in a rotated domain,
+avoid Sky/Water (and People/Civic just ran, 336–339). I ran the header's seam-finders — the frozen census
+tile histogram (every flat/zero row is audited terrain/landmark), the type-keyed tables, the per-cell flag
+lifecycles (`corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv` — all ride or are consumed correctly, 288
+being the last), the season/crop calendars (farms/orchards/vineyards fully deepened), and the animate mono-gate
+cliffs (300 was the last). All closed — the artifact is deeply saturated. The one genuinely-open seam: **the
+rain MECHANISM (rainingAt) had no reader on the ROADS.** The arterial spine + ordinary streets draw warm lamp
+pools at night (`drawCell` ROAD, `LITAMT>0.25`, ~L6918) but gleamed **identically wet or dry** — the wet-street
+reflection (why a rainy city night reads luminous; the land analog of 329's waterfront-reflects-the-skyline) was
+missing. Found by grepping the MECHANISM `rainingAt` (280 — not the header's "rain readers enumerated" noun list,
+which 336/337 already walked into): its readers were all crowds/umbrellas/washing — never a road surface.
+
+**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** In the night-lamp block, `const
+wetg=rainingAt(x,y)`; when `wetg>0` each lamp head draws one extra warm radial-gradient smear, vertically
+stretched toward the viewer (`translate(cx,cy+1.5); scale(0.55,2.6)`), alpha `WETGLEAM*LITAMT*wetg` — the arterial
+gleam at `WETGLEAM=0.42`, the ordinary street at ×0.7. A reflection is a LONG mark, so it survives the downscale
+to fit zoom where a flat wash would not (266). At `rainingAt===0` (the dry majority of hexes/time) the `if(wetg>0)`
+block is skipped, so a dry frame draws HEAD's exact bytes — an **exact fixed point** (245/253): DRY ≡ HEAD, no HEAD
+file needed. Same lamps otherwise ⇒ zero new path objects when dry.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors.
+VERDICT PASS (only the usual ±1 tick-timing wobble on `solarRoofs` — 226, not mine).
+
+**Probe** (`probes/probe-wetgleam.mjs`, build-agnostic — hooks the artifact's own `createRadialGradient`/`fill`
+and counts, by colour signature, the OBJECTS the frame ISSUES; no pixel diff, NO NOISE FLOOR AT ALL). Night pin
+(dayT 0.92, LITAMT 1.00), 3 seeds, gleam counted as the warm-gradient fills, lamp head as the solid `255,226,152`/
+`255,198,108` fills:
+- **gleam DRY 0 → WET 354/398/382** — the fixed point (0 dry = block skipped = HEAD path) and it fires (one smear
+  per lit lamp when wet), all 3 seeds.
+- **lamp-head control (250 + positive) IDENTICAL dry vs wet (354/398/382) and > 0** — the heads don't read rain, so
+  the stub moved ONLY the gleam, and their nonzero count proves the frame is a real lit night city (a dead frame
+  would give gleam 0 too). WETGLEAM: PASS.
+- ⚠ RIG NOTE: `ctx.fillStyle` reads back Chromium-canonicalised (spaced) — the head match had to strip whitespace
+  (273); the gleam gradients are tagged at `addColorStop` time (on my own un-canonicalised string) so they were fine.
+
+**Visual** (`probes/shot-wetgleam.mjs` — same frozen night city, shot DRY (`rainingAt→0`, ≡HEAD) and WET
+(`rainingAt→1`, streets gleam) as a blind A/B zoomed 5× and **aimed by measured ink** (226/272: the only thing
+differing DRY↔WET is the gleam, so the argmax of the DRY-vs-WET diff IS where it renders, HUD boxes zeroed — 200),
+plus whole-city DRY + WET(flood) frames for the holistic read; tokens meaningless + non-ordinal, map **CROSSED
+between seeds** (238/239/268); md5 confirmed the pairs differ). **Both blind subagents, on both seeds, on the
+crossed map, correctly named the WET frame from the reflections alone** (s42 wet=`teasel` ✓ · s7 wet=`sorrel` ✓ —
+a discriminating pair, 264, resolved blind on both): the wet frame's lamps stretch into warm vertical smears
+running down the tarmac; the dry frame has only compact round halos. Both confirmed the smears sit **on the
+roads** (not floating/on water/on roofs), **no blown-out warm blobs**, and both whole-city frames read as a
+**balanced, coherent lit coastal city** — coastline/pier/moon/street grid intact, no z-order tears or floating
+tiles; the WET flood frame stays coherent with the street network gleaming warmly. (One aside: "fairly subtle at
+this zoom" — correct; it is a reflection, and it reads at the moderate zoom a coast is looked at, 159/266.)
+
+**Perf.** Zero new path objects when dry (fixed point); WET adds one gradient smear per lit lamp (only where it is
+actually raining, sparse in play). The night lamp block gains one `rainingAt(x,y)` call per lit road cell — but
+the busker draw just below already calls it per road cell, so this roughly doubles an existing per-cell call, not
+a path-object cost. Step-back (~345) prices the arc.
+
+**Verdict: SHIPPED.** The night streets now mirror their lamps down the wet tarmac when a shower crosses — the
+last un-enumerated reader of the rain mechanism, and the land analog of the waterfront reflection (329). Rain (Sky)
+× night lamps × the road network, an interconnect across three domains. Exact fixed point when dry (DRY ≡ HEAD),
+census byte-identical. Transport × Deepen. `probes/probe-wetgleam.mjs`, `probes/shot-wetgleam.mjs`.

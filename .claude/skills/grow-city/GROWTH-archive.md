@@ -23800,3 +23800,55 @@ Guardrail reset (next ~335). NEXT vector: Sky × New element (291 lightning was 
 measured seam (grep `tick()` / the TABLES / the comments — the cue list records where you've LOOKED, not what is
 THERE).
 
+## Iteration 331 — a jet crosses the high sky, drawing a contrail (2026-07-17) [Sky & atmosphere × New element]
+
+**Vector.** Sky × New element — the header's named sparsest additive cell (Sky's only prior New elements are 27, 43,
+291, so this is the **4th ever**), and the last genuinely-additive slot before additive space is fully spent. I first
+grepped the measured seams (comments for `never|no state|placed once|static`, the flag lifecycle for `hstr`/`bridge`/
+`riv`, the tables) — all well-tended (`hstr` already rides the tower podium per 249/281; 281/288 closed the flag
+defects; the marsh/kelp comments are audited). No fresh seam surfaced quickly, so I took the additive slot. The upper
+sky is a genuinely empty band (200): a high jet with a contrail fills it, on-theme for a coastal city, and clean
+(Math.random drift-in, draw-only, guaranteed-flat census).
+
+**Change (draw-only — Math.random spawn, no `rng()`, no terrain).** A single `plane` object (like `flock`), spawned in
+`genWorld` and advanced/looped in `advanceEntities`. A jet at altitude does not parallax with the ground, so it is a
+**SCREEN-SPACE** craft (`p`=progress across the viewport, `y`=screen fraction in the high band, `dir`, `sp`, `sl`=a
+gentle slope) — drawn in the sky slab **beside the sun/moon/shooting-star, BEFORE the city**, so the skyline occludes
+it exactly as it occludes the sun (a tower rising in front of the far jet is depth, not a tear). The contrail is a
+26-segment line fading behind a tiny dark swept speck with a blinking beacon. It is lit by the **sun**: bright white by
+day, warm-pink at golden hour (`GWARM`, a 6th reader of it), and **GONE at night** (`day = 1−LITAMT`, no sun to light
+it); it **fades out in rain** (`balloonFair`), so it never streaks a stormy sky. Census hook gets `plane:plane?1:0`.
+Not stamped/hoverable — a screen-space drift-in like the sun, moon, star and flock (the whale precedent, 286).
+
+**Census.** Draw-only, Math.random spawn ⇒ tile histogram empty, pop/roads/developed **byte-identical (+0)**, 0 page
+errors. VERDICT PASS. Vacuous by design; the claim rests on the probe + screenshots.
+
+**Probe** (`probes/probe-jet.mjs`, build-agnostic; isolation by clearing the decision, 230 — place a deterministic
+plane, render, then `plane=null`, re-render IN ONE PAGE, diff = the whole jet, floor **exactly 0**). Three conditions,
+two must-be-0 controls (`balloonFair` stubbed BY ASSIGNMENT, 284):
+- **DAY fair** → 453 / 551 / 503 px (seeds 42/7/1234), meanY **0.14** (high in the sky, above the skyline).
+- **NIGHT fair** → **0 px** on every seed (the `1−LITAMT` day factor kills it — a dead regime).
+- **DAY rain** → **0 px** on every seed (`balloonFair=0` fades it — fair-weather only). **JET: PASS.**
+
+**Visual** (`probes/shot-jet.mjs`, whole-city day + a close-up **aimed by measured ink** (226/272) + golden + night;
+`page.screenshot`, 200). Two blind subagents, seeds 42 & 7, both **PASS**: the contrail reads as a thin white streak
+with a tiny aircraft speck at its leading end, in open sky above the skyline; warmer/creamier at golden; **absent at
+night** (moon + stars only); no z-order tears / floating tiles / blown-out colour; the whole frame reads as a coherent
+coastal city.
+
+**Two camera bugs found and fixed along the way (200/204/226) — the artifact was innocent both times.** (1) The first
+build drew the trail in **world space** along constant world-y; the iso projection swept it steeply DOWN over the
+rooftops (ink bbox landed on the city) — a jet does not parallax, so it had to be screen-space. (2) The shot's first
+`time=100` sat exactly on the pre-existing **shooting star** (`met=(time·0.13)%1 = 0`, which draws at night/golden as a
+white diagonal), and a **rainy** loaded moment correctly HID the jet — so two agent rounds FAILed the *camera* (mis-
+attributing the meteor and seeing a blank rainy sky) while the artifact was fine. Fixed by forcing `rainFront=()=>0`,
+pinning `time` off the meteor, and aiming the close-up by measured ink rather than `pxc` (which is pre-transform and
+pointed the crop at empty sky).
+
+**Perf.** A handful of thin strokes for one on-screen jet, only in fair daylight; negligible. Step-back (~335) prices
+the arc in path objects.
+
+**Verdict: SHIPPED.** A high jet now crosses the empty upper sky drawing a sunlit contrail — white by day, warm at
+golden, gone at night, absent in rain — filling the one sky band that was bare. Draw-only, census byte-identical, the
+4th and last sparse additive cell. Sky × New element (27/43/291 → 331). `probes/probe-jet.mjs`, `probes/shot-jet.mjs`.
+
