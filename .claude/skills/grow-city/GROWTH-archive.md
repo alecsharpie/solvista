@@ -22972,3 +22972,52 @@ reverted daytime lamp: that RENDERED but could not be seen (259); this one is a 
 (830 px of balloon, present vs cleanly absent) and free by construction (draw-only, census byte-identical). Closes
 the "fair days" 199-tell on the balloon comment.
 
+## Iteration 314 — every block party in the city started and ended on the same beat (2026-07-17) [People & activity × Deepen/FIX]
+
+**Vector.** People rotation (306 oldest-shipped). The header steers People's stale kind to New CA rule (49) but
+forbids a People Deepen "without a MEASURED seam" — so I grepped the People/CA seam rather than the cue list. The
+block-party excitable medium (`tick()`, `c.party`: a home ignites a street party, it spreads to neighbours for a
+spell, then rests) shared a **CONSTANT refractory (`-16`) and constant duration (`5`)** — so, exactly like the fairy
+rings before 272 and the wildflowers before 263, the whole city ignited and became eligible again in lockstep. This
+is the 271 defect (a property established for a category, applied to every sibling but one): its excitable-media
+siblings BOTH jitter a timer off a per-cell uniform (bloom's refractory `-(9+c.v*10|0)`, 263; shroom's duration
+`shroomLife`, 272), and the block party — a People CA in the same `tick()` — was the holdout with **both** timers
+constant, so it synchronised hardest. Confirmed on HEAD before designing (`probe-blockparty`, temporal, 134): the
+active-count series is a **metronomic square wave** — `9###21...............89###21...` — 4–5 ticks on, 16 off, in
+perfect lockstep (period 21), refractory `DISTINCT = 1` on 6 seeds in 6 (236: the defect stated).
+
+**Change (decoration-state only — no `rng()`, no `Math.random`, no terrain).** One line: the wind-down reset
+`c.party=-16` → `c.party=-(12+(c.v*9|0))`, so the rest runs **12..20 ticks** from the cell's own `c.v` (the uniform
+`hashCell(x,y,seed)` it already carries — ZERO new random draws, 262). `12+(c.v*9|0)` has mean **16 = HEAD's
+constant**, so the cadence mean is held (98). Staggering re-eligibility de-synchronises the waves; nothing else
+changed (spread, ignition, spawn, draw all untouched).
+
+**Census.** `c.party` is decoration state, read only by draws (`drawParty`, the terrace party-wall gate) and a
+tooltip; `c.v` is pre-existing; no `rng()`/terrain ⇒ core **BYTE-IDENTICAL** (`pop`/`developed`/`roads` **+0**, tile
+histogram empty). `greenRoofs -1` = the documented 226/278 RAF-tick wobble (a hair-slower draw lands one fewer late
+tick; reproduces on a same-file re-run), not this edit. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-blockparty.mjs`, temporal, 3 seeds × 2 eras, build-agnostic via HEAD-file load; NO PIXELS ⇒
+no noise floor). Drives the artifact's own `tick()` and reads `cells[].party`.
+- **HEAD: refractory `[16..16] DISTINCT=1`**, a perfect square wave, **zero-party ticks a steady 76%** at every era —
+  the whole city blinks as one, and at 2035 shows **1 party at a time or none** (max 1).
+- **PATCH: refractory `[12..20]`** (mean 16 held), the series scatters (`3444422566541.....3344411...`), and at the
+  dense 2005 residential era **zero-party ticks fall 76% → 28/38/57%** (the city now nearly always shows a few
+  parties). **Mean-active HELD** (2.43→2.47, 0.97→0.93, 1.23→1.23) — same amount of partying, spread evenly instead
+  of pulsing (98). At 2035 the RES stock is thin (many blocks upgraded to MID/TOWER) so it stays sparse on both
+  builds — correct: a dense downtown has fewer single-family street parties, the fix cannot and should not invent them.
+
+**Visual** (`probes/shot-blockparty.mjs`, seeds 42 & 7 — warp to the 2006 residential era, step to a tick with a good
+cluster, whole-city + a 6× close-up aimed at the densest party; a still cannot show a *cadence* so this only confirms
+the draw + coherence, 134). Both blind subagents **PASS**: the close-up shows a street party — trestle table, upright
+figures, a string of small warm lantern/bunting squares — sitting correctly on the residential hex ground; no z-order
+tears, floating tiles or blown-out colour anywhere; both whole-city frames read as balanced, coherent coastal cities
+(parties are small warm speckles scattered through the residential greens at full-city zoom).
+
+**Verdict: DEEPENED** (a FIX). The block-party excitable medium now de-synchronises like its two siblings: instead of
+the entire city igniting and resting as one metronome (parties present a steady 24% of ticks, absent 76%, ~1 at a
+time at maturity), the neighbourhoods keep a steady scatter of parties (zero-party ticks 76%→28–57% at the dense era),
+at the same total party-density (mean held) and zero draw/stream cost. Completes the "enumerate the excitable-media
+category" audit (271): bloom (263), fairy rings (272), block parties (314) — every shared-constant-timer CA in `tick()`
+now jitters a timer off a per-cell uniform, so none blinks as one.
+

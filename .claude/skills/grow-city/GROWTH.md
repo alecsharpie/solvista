@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49 | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -32,29 +32,30 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Nature **323** (WILDFLOWERS ANSWER SPRING — grassland bloom-wave `bloomAt` had NO season gate
-  ⇒ flowers every season, incl. ON the 321 snow, while the FOREST ephemerals above kept the calendar. `bloomSeason()`
-  raised trapezoid, spring plateau s∈[0.25,0.43], 0 by dry peak & winter; CA `c.bloom` UNTOUCHED ⇒ census byte-
-  identical, `bs=1` at plateau = HEAD's bytes (perf credit rest of year); 1 predicate 3 readers, tooltip→"Dormant".
-  `probe-bloomseason` PATCH spring-only DISTINCT 2 vs HEAD DISTINCT 1, raw-CA + forest-ephemeral controls held; 2
-  blind PASS, both named spring by the flowers, crossed map.) · Water **322** (WHALES MIGRATE — `whaleSeason()` gate off `w.ph/7`, zero draws, dolphins resident, byte-identical; 2 blind PASS.) · Sky **321**
-  (SNOW — Sky's 1st CA in 321 laps: reaction-diffusion `c.snow`, census byte-identical, +1.1% draw deep-winter only.) · Civic **319**
-  (CUP-NIGHT FIREWORKS: `matchCelebrate()` 6-shell finale over each stadium
-  after a cup-night whistle, `LITAMT>0.6`; draw-only, exact fixed point; `probe-matchfire`) · People **318**
-  (WASHING LINE answers rain+season) · People **317** (SEASONAL LEISURE COMPLETE) · Urban **316** (DISTRICTS made
-  real — Voronoi `distOf`, 55→98%; ⛔ **the vote in `tick()` is a STREAM-PRESERVING VESTIGE — do NOT delete**) ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **STEP-BACK #41 CLEAN AT 320 —
-  next ~325.** ➡ **NEXT: the two stale ADDITIVE cells: Civic/People × New CA rule (36/107 · 49) — or grep a
-  measured seam (225). SKY × New CA now SEEDED (321); its template (season source + neighbour diffusion, inert
-  draw-flag) is reusable for any weather/ground field.**
+- **ROTATION.** Last: People **324** (DESIRE PATHS — People's FIRST non-excitable CA, filling the stale People × New
+  CA cell. `c.wear` diffusion/accumulation on {PARK,SHOREPARK,GARDEN} relaxes toward `min(1,c.buzz/3)` + neighbour
+  diffusion ⇒ busy shopfront/plaza edge wears to bare earth, quiet interior stays green; draw = 3 sub-hex `soil`
+  ellipses, can't terrace. Zero rng()/terrain ⇒ census byte-identical. Probe: HEAD 0 worn, LIVELY 0.65 vs QUIET 0.09,
+  LEAK 0; 2 blind PASS.) · Nature **323** (WILDFLOWERS ANSWER SPRING — grassland
+  `bloomAt` had no season gate ⇒ flowers all year incl. ON the 321 snow; `bloomSeason()` gates the DRAW, CA `c.bloom`
+  untouched ⇒ census byte-identical, perf credit; probe spring-only DISTINCT 2 vs HEAD 1, 2 blind PASS.) · Water **322**
+  (WHALES MIGRATE — `whaleSeason()` gate off `w.ph/7`, zero draws, dolphins resident, byte-identical; 2 blind PASS.) · Sky **321**
+  (SNOW — Sky's 1st CA in 321 laps: reaction-diffusion `c.snow`, census byte-identical, +1.1% draw deep-winter only.) ·
+  Civic **319** (CUP-NIGHT FIREWORKS — `matchCelebrate()` 6-shell finale over each stadium, draw-only fixed point) ·
+  People **318** (WASHING LINE answers rain+season) · People **317** (SEASONAL LEISURE COMPLETE) · Urban **316**
+  (DISTRICTS — Voronoi `distOf`, 55→98%; ⛔ **the `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete**) ✅
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **STEP-BACK #42 DUE NEXT (~325; this
+  lap is 324).** ➡ **NEXT: STEP-BACK #42. Then the last stale ADDITIVE cell is Civic × New CA rule (36/107) —
+  People × New CA ran at 324 (desire paths) — or grep a measured seam (225). SKY × New CA SEEDED (321); its template
+  (season source + neighbour diffusion, inert draw-flag) is reusable for any weather/ground field.**
   ✅ **308 fire-spark rides `fireSeason()`, 305 front greys the sky, 291 Sky lightning — full entries in ledger.** ⚠
   **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; (bi) daytime-lamp & (av) catenary cues = barely-visible bad
   trade ⇒ ⛔ do NOT force, `polish-tile`). Sky NEW ELEMENT additive still sparse (291, 3rd ever).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
   **NATURE** additive spent (301 deer), Polish debt paid (294 ax+bg); next = grep the tick()/CA seam (287/279 pattern).
   **URBAN** tooltip/flag/TABLE SATURATED (295/302), stale = **Interaction/UX (133)**. **PEOPLE** Deepen CLOSED 14-deep
-  + Polish spent (300) + Interaction ran (278) ⇒ only **New CA rule (49)** stale — do not take a People Deepen without a
-  measured seam. **CIVIC** additive COMPLETE (292 event-venue category {market,stadium,amphitheater}), Connect
+  + Polish spent (300) + Interaction ran (278) + **New CA rule ran (324 desire paths)** ⇒ People FULLY ROTATED across
+  kinds; take no People vector without a measured seam. **CIVIC** additive COMPLETE (292 event-venue category {market,stadium,amphitheater}), Connect
   measured-sound (285 civic mile — 11–30 cells, sound, do NOT "fix"), stale = **New CA rule (36/107)**. **SKY** additive
   NOT fully spent (291 shipped lightning, the sparsest cell — 3rd ever). **TRANSPORT** all seams dry (304); its two named
   cues (a elevated transit · av catenary) are the same 0.5px hairline `polish-tile` family ⛔, stale = **New CA rule
@@ -63,7 +64,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next) · **(az)/(ba)** 278's two (below).
   ✅ **CLOSED (detail in each entry):** (bh) by 317 (a NON-DEFECT: a fine gold statue, not a blob) · (bd) by 284 (two
   readers) · (au) by 302 · (ax)+(bg) by 294 · (bf) market packed-away square by 299.
-  ✅ **PEOPLE: Interaction/UX ran at 278, Polish at 300 — its ONLY stale kind is New CA rule (49); Deepen CLOSED.**
+  ✅ **PEOPLE: FULLY ROTATED — Interaction/UX (278), Polish (300), New CA rule (324 desire paths), Deepen CLOSED.**
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
   neon evening crowd stood all night, all-at-once, while the busker in front of it kept an hour; found by grepping
   every entity/People draw for a gate on a global-monotone signal, the tell 262/286 warn of.**) (**288: the FLAG-LIFECYCLE grep — `c.solar`/`c.groof`, the two rooftop-tech CAs the HUD counts and the tooltip names, were written on RES/MID/COM and DRAWN nowhere on a TOWER, so downtown's tallest roofs could never carry them — 285's type-hierarchy blindness, found by grepping the WRITER against the DRAW branch.**) (**287: `SOLARF` — fully drawn, promised on the placard,
@@ -391,60 +392,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 316 entries before Iteration 314 live in
+> **Archive:** the 317 entries before Iteration 315 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 314 — every block party in the city started and ended on the same beat (2026-07-17) [People & activity × Deepen/FIX]
-
-**Vector.** People rotation (306 oldest-shipped). The header steers People's stale kind to New CA rule (49) but
-forbids a People Deepen "without a MEASURED seam" — so I grepped the People/CA seam rather than the cue list. The
-block-party excitable medium (`tick()`, `c.party`: a home ignites a street party, it spreads to neighbours for a
-spell, then rests) shared a **CONSTANT refractory (`-16`) and constant duration (`5`)** — so, exactly like the fairy
-rings before 272 and the wildflowers before 263, the whole city ignited and became eligible again in lockstep. This
-is the 271 defect (a property established for a category, applied to every sibling but one): its excitable-media
-siblings BOTH jitter a timer off a per-cell uniform (bloom's refractory `-(9+c.v*10|0)`, 263; shroom's duration
-`shroomLife`, 272), and the block party — a People CA in the same `tick()` — was the holdout with **both** timers
-constant, so it synchronised hardest. Confirmed on HEAD before designing (`probe-blockparty`, temporal, 134): the
-active-count series is a **metronomic square wave** — `9###21...............89###21...` — 4–5 ticks on, 16 off, in
-perfect lockstep (period 21), refractory `DISTINCT = 1` on 6 seeds in 6 (236: the defect stated).
-
-**Change (decoration-state only — no `rng()`, no `Math.random`, no terrain).** One line: the wind-down reset
-`c.party=-16` → `c.party=-(12+(c.v*9|0))`, so the rest runs **12..20 ticks** from the cell's own `c.v` (the uniform
-`hashCell(x,y,seed)` it already carries — ZERO new random draws, 262). `12+(c.v*9|0)` has mean **16 = HEAD's
-constant**, so the cadence mean is held (98). Staggering re-eligibility de-synchronises the waves; nothing else
-changed (spread, ignition, spawn, draw all untouched).
-
-**Census.** `c.party` is decoration state, read only by draws (`drawParty`, the terrace party-wall gate) and a
-tooltip; `c.v` is pre-existing; no `rng()`/terrain ⇒ core **BYTE-IDENTICAL** (`pop`/`developed`/`roads` **+0**, tile
-histogram empty). `greenRoofs -1` = the documented 226/278 RAF-tick wobble (a hair-slower draw lands one fewer late
-tick; reproduces on a same-file re-run), not this edit. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
-
-**Probe** (`probes/probe-blockparty.mjs`, temporal, 3 seeds × 2 eras, build-agnostic via HEAD-file load; NO PIXELS ⇒
-no noise floor). Drives the artifact's own `tick()` and reads `cells[].party`.
-- **HEAD: refractory `[16..16] DISTINCT=1`**, a perfect square wave, **zero-party ticks a steady 76%** at every era —
-  the whole city blinks as one, and at 2035 shows **1 party at a time or none** (max 1).
-- **PATCH: refractory `[12..20]`** (mean 16 held), the series scatters (`3444422566541.....3344411...`), and at the
-  dense 2005 residential era **zero-party ticks fall 76% → 28/38/57%** (the city now nearly always shows a few
-  parties). **Mean-active HELD** (2.43→2.47, 0.97→0.93, 1.23→1.23) — same amount of partying, spread evenly instead
-  of pulsing (98). At 2035 the RES stock is thin (many blocks upgraded to MID/TOWER) so it stays sparse on both
-  builds — correct: a dense downtown has fewer single-family street parties, the fix cannot and should not invent them.
-
-**Visual** (`probes/shot-blockparty.mjs`, seeds 42 & 7 — warp to the 2006 residential era, step to a tick with a good
-cluster, whole-city + a 6× close-up aimed at the densest party; a still cannot show a *cadence* so this only confirms
-the draw + coherence, 134). Both blind subagents **PASS**: the close-up shows a street party — trestle table, upright
-figures, a string of small warm lantern/bunting squares — sitting correctly on the residential hex ground; no z-order
-tears, floating tiles or blown-out colour anywhere; both whole-city frames read as balanced, coherent coastal cities
-(parties are small warm speckles scattered through the residential greens at full-city zoom).
-
-**Verdict: DEEPENED** (a FIX). The block-party excitable medium now de-synchronises like its two siblings: instead of
-the entire city igniting and resting as one metronome (parties present a steady 24% of ticks, absent 76%, ~1 at a
-time at maturity), the neighbourhoods keep a steady scatter of parties (zero-party ticks 76%→28–57% at the dense era),
-at the same total party-density (mean held) and zero draw/stream cost. Completes the "enumerate the excitable-media
-category" audit (271): bloom (263), fairy rings (272), block parties (314) — every shared-constant-timer CA in `tick()`
-now jitters a timer off a per-cell uniform, so none blinks as one.
 
 ## Iteration 315 — five clean lights, two seasons, forty laps flat (2026-07-17) [40th step-back / holistic]
 
@@ -875,3 +827,60 @@ and through the spring, gone to bare dry grass by the golden summer and standing
 the meadow tells the season the way the forest floor already did. Wholly census-inert (draw-only, zero random draws),
 a perf credit, in the neglected Nature domain. Nature × Deepen/interconnect (→ 323). `probes/probe-bloomseason.mjs` +
 `probes/shot-bloomseason.mjs`.
+
+## Iteration 324 — the busy park corners wore down to bare earth (2026-07-17) [People & activity × New CA rule]
+
+**Vector.** Rotation's `NEXT` was **Civic or People × New CA rule** — the two stale ADDITIVE cells, by far the most
+recency-neglected (Civic last CA 107, People last CA **49**). People was the balance pick (single most-neglected
+cell in the grid) and its ONLY stale kind. But iter 49 (block parties) was **excitable media**, a category the header
+marks **COMPLETE** (bloom 263 · shroom 272 · party 314) — so a People CA had to be a *different* mechanism. The natural
+fit, and one the engine had never run: a **diffusion/accumulation field**. Desire paths — the busiest public green
+wears to bare earth where people gather, the quiet interior stays lush. It reads the `c.buzz` ATTRACT field (iter 104)
+the city already derives, so the worn ground lands exactly where a crowd belongs (the shopfront/plaza/civic edge) and
+never in the empty middle of a lawn.
+
+**Change (a diffusion CA + a contained ground draw — wholly census-inert).** New field `c.wear` on `WEARLAND =
+{PARK, SHOREPARK, GARDEN}`:
+- **The CA** (`tick()`, right after the `c.buzz` pass that feeds it, before the snow pass): each WEARLAND hex relaxes
+  its wear toward a target `min(1, c.buzz/WEARBUZZ=3)` (a lively kerb, `buzz>=KERBBUZZ=2`, wears; a quiet interior,
+  `buzz 0`, does not) plus a **diffusion term** (`WEARDIFF=0.09`, joins the worn ground of busy neighbours into paths
+  rather than isolated patches). Slow onset (`WEARLERP=0.04`) ⇒ a well-used commons wears in over the decades and
+  greens back when the buzz falls. Non-WEARLAND hexes are zeroed.
+- **The draw** (`drawWear`, called first in each of the 3 cases, right after the ground `hexTile` so the trees,
+  benches and crowd stand ON it): a scatter of 3 `soil` ellipses placed by `hashCell` within the hex, radius+alpha
+  ramping with `c.wear` above `WEARSHOW=0.12` (peak alpha `WEARA=0.5`). **Sub-hex marks, not a hexTile fill ⇒ it
+  cannot terrace onto the lattice (257)**; through `colA`'s illuminant so night earth goes dim, not glowing.
+- **Zero rng(), zero terrain** — a pure field of `c.buzz` + neighbours (the `hashCell` is in the DRAW only, for mark
+  placement — deterministic, perturbs no stream). Reset with the world (`wear:0` in the cell literal). Tooltip: a
+  worn public-green hex now reads `Footfall — Well-worn desire paths` / `Trodden to bare earth`.
+
+**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` **+0**, tile histogram empty. `greenRoofs +1 /
+towerHt −1` is the 226 tick-timing wobble (the per-tick wear loop costs a hair of compute ⇒ a different tick count
+lands in the census's 500ms window); it reproduced identically on a re-run of the SAME file, and the mechanism is
+airtight — the pass reads a deterministic field and writes only `c.wear`, which nothing the census measures reads.
+VERDICT PASS / 0 page errors.
+
+**Perf.** +3 `hashCell`-placed ellipses on the worn WEARLAND hexes only (~30–130/city), day and night; every other
+hex byte-flat. Under the +0.2%/lap arc; the step-back pins its day/golden frames at the dry peak, snow-free — this
+adds nothing there.
+
+**Probe** (`probes/probe-wear.mjs`, pure world data — drives `tick()`, reads `cells[].wear`, no pixels, no noise
+floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.wear` is undefined→0):
+- **HEADLINE (236):** HEAD reads **0 worn hexes on all 6 seeds** — the constant baseline nobody designed. PATCH:
+  93–132 worn hexes/city.
+- **SPATIAL (the whole claim):** **LIVELY (buzz≥2) mean wear 0.65 vs QUIET (buzz<2) 0.09** — the wear concentrates
+  at the busy edge, the quiet interior stays near-green ⇒ desire paths, not a wash.
+- **BOUNDED (250):** ~32–44% of green shows *any* wear, most of it faint (near threshold, from diffusion); only the
+  lively third wears strongly. **LEAK (non-green hexes holding wear) = 0 on every seed** — the pass contains itself.
+
+**Visual** (`shoot.mjs`, seeds 42 & 7 @2035 day, whole-city + downtown clip). Both blind subagents **PASS** and both
+**located** it: tan/beige bare-earth mottling worn into the park/garden hexes that border the shops, plazas and civic
+core, sitting flat on the hex grid; quiet park interiors + shoreline greenbelt stay lush green (selective, not a
+blanket browning); the wear tan is soft and low-contrast (matches the beach/path sand), no z-order tears / floating
+tiles / blown-out colour; both whole-city frames read as a balanced, coherent coastal city — "lived-in texture
+without dirtying the scene."
+
+**Verdict: SHIPPED.** People's first non-excitable CA in 324 iterations — a diffusion/accumulation desire-path field
+that wears the busiest public-green corners to bare earth (reading the existing `c.buzz` activity field) while the
+quiet interior stays green, so the parks show where the city actually walks. Wholly census-inert (zero random draws,
+no terrain), the two-stale-additive-cell pick landed. People × New CA rule (49 → 324). `probes/probe-wear.mjs`.
