@@ -1,5 +1,5 @@
 {
- "when": "2026-07-17T05:45:39.787Z",
+ "when": "2026-07-17T06:25:54.304Z",
  "pageerrors": 0,
  "cells": {
   "7@1985": {
@@ -101,7 +101,8 @@
     "whales": 2,
     "joggers": 2,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   },
   "7@2005": {
@@ -208,7 +209,8 @@
     "whales": 2,
     "joggers": 4,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   },
   "7@2035": {
@@ -319,7 +321,8 @@
     "whales": 2,
     "joggers": 7,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   },
   "42@1985": {
@@ -421,7 +424,8 @@
     "whales": 2,
     "joggers": 2,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   },
   "42@2005": {
@@ -528,7 +532,8 @@
     "whales": 2,
     "joggers": 4,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   },
   "42@2035": {
@@ -548,7 +553,7 @@
    "roads": 833,
    "bridges": 20,
    "developed": 1062,
-   "solarRoofs": 563,
+   "solarRoofs": 561,
    "greenRoofs": 133,
    "towerHt": 10599,
    "tallTowers": 74,
@@ -639,7 +644,8 @@
     "whales": 2,
     "joggers": 6,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   },
   "1234@1985": {
@@ -741,7 +747,8 @@
     "whales": 2,
     "joggers": 2,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   },
   "1234@2005": {
@@ -848,7 +855,8 @@
     "whales": 2,
     "joggers": 3,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   },
   "1234@2035": {
@@ -959,7 +967,8 @@
     "whales": 2,
     "joggers": 5,
     "deer": 6,
-    "flock": 7
+    "flock": 7,
+    "plane": 1
    }
   }
  }

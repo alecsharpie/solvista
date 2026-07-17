@@ -19,7 +19,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
+| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
@@ -32,18 +32,17 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Sky **331** (HIGH JET + CONTRAIL — Sky × New element, **4th ever**; a SCREEN-SPACE jet (drawn
-  in the sky slab with sun/moon/star, before the city, so the skyline occludes it) drifts drawing a sunlit contrail —
-  white by day, warm-pink at golden (GWARM, 6th reader), GONE at night (day=1−LITAMT), faded in rain (balloonFair).
-  Math.random drift-in ⇒ census BYTE-IDENTICAL; probe DAY 453–551px high (meanY 0.14) / NIGHT+RAIN **0**; `probe-jet`.
-  ⚠ FIRST built world-space along constant world-y — iso sweep dragged the trail DOWN OVER the city; a jet does not
-  parallax ⇒ SCREEN space. ⚠ Camera lied twice: a rainy loaded moment correctly HID it (force `rainFront=()=>0`), and
-  `time=100` fired the pre-existing SHOOTING STAR (met=0) agents mis-read as the contrail — pin `time` off met<0.06;
-  aim by MEASURED INK, not pxc [pre-transform], 226/272.) Prev: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat. 2 seeds × 5 frames all PASS; perf
-  PATH OBJECTS snow-cleared, arc vs 285 ≈**+0.027%/lap** over 44 laps — well under +0.2%; no perf-fix lap.) Prev: Water **329**
-  (WATERFRONT REFLECTION ANSWERS THE SKYLINE — the night city-lights smear now gates on `shoreGlow(y)` (developed
-  frontage within 10 cells inshore, reads `c.th`) so lit downtown coast shimmers and dune/park headlands stay dark;
-  draw-only, census + day byte-identical; `probe-shorereflect`/`probe-shoreglow`.) Prev: Sky **328** (THE STRIKE —
+- **ROTATION.** Last: ~~Urban **332**~~ (EXPLORED → REVERTED — cozy CHIMNEY WOODSMOKE answering cold+wind; census
+  byte-identical, probe PROVED it renders+leans (winter 224–272 puffs, summer **0**, gale lean 2.5–4.7px calm 0), but
+  ⛔ **INVISIBLE at city zoom** on 2 blind agents ×2 seeds + own look, even darkened/enlarged: a SHORT RES host in dense
+  fabric has **no clean sky backdrop**, and amplitude enough to read = a smoggy/darkened city (200/205/266; "ink
+  renders" ≠ "viewer sees it"). ⛔ **DO NOT RE-TRY chimney smoke.** 🆕 **CUE (bj) — SMOKE is the un-enumerated WINDA
+  member (280): the EXISTING wildfire plume + ember scars rise DEAD-STRAIGHT while the trees lean; the probe-proven
+  `smokeLean` one-liner fixes it — bank for a lap ALREADY working the fire (279), not standalone.) Prev: Sky **331** (HIGH JET + CONTRAIL — Sky × New element, **4th ever**; SCREEN-SPACE
+  jet in the sky slab, contrail white/day → golden → GONE night → faded in rain; Math.random drift-in, census
+  byte-identical; `probe-jet`. ⚠ a jet does NOT parallax ⇒ screen space.) Prev: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat; 2 seeds × 5 frames PASS; perf arc vs 285 ≈**+0.027%/lap** over 44 laps, snow-cleared — no perf-fix lap.) Prev: Water **329**
+  (WATERFRONT REFLECTION ANSWERS THE SKYLINE — night city-lights smear gates on `shoreGlow(y)` (developed frontage ≤10
+  cells inshore, reads `c.th`) so lit downtown coast shimmers, dune/park headlands stay dark; draw-only.) Prev: Sky **328** (THE STRIKE —
   forked bolt grounds down the rain shaft on 291's flash peak, `bolt>0.22` inside `if(pa>0)`, 248) · Urban **327**
   (FACADE TILE PICK — `pickTile`=frontmost built prism, cue (ba) CLOSED, 133→327) · Civic **326** (CIVIC SQUARE
   MATURATION — `c.civ` accumulation+diffusion, corr(civ,age)=1.0). Prev (all shipped, census byte-identical, laws in SKILL.md): **STEP-BACK
@@ -53,9 +52,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #43 DONE
-  @330 — NO DRIFT; guardrail reset, NEXT ~335.** 331 FILLED the last sparse additive cell (Sky × New element, 4th
-  ever) ⇒ **ADDITIVE SPACE NOW FULLY SPENT — next = a measured seam (225) or Deepen/Polish/Interaction, in a rotated
-  domain (avoid Sky/Water, freshest).**
+  @330 — guardrail reset, NEXT ~335.** Additive space FULLY SPENT (331). ⇒ **next = a measured seam (225) or
+  Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **332: seams well-tended, remaining gaps are
+  DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
   lamps present & night-gated; (bi)/(av) cues = barely-visible bad trade ⇒ ⛔ do NOT force, `polish-tile`).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
@@ -392,56 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 324 entries before Iteration 322 live in
+> **Archive:** the 325 entries before Iteration 323 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 322 — the whales came in for the winter and left the summer bay empty (2026-07-17) [Water & coast × Deepen/interconnect]
-
-**Vector.** Rotation: the last 8 laps ran Sky×2, People×3, Transport, Urban, Civic — **Water & coast and Nature had
-not had a lap in 8+**, and the last KIND was New CA rule (321), so vary it away from that. I grepped the Nature/Water
-seams for a defect and found them exhaustively alive (lighthouse beam sweeps, MARSH answers tide+season (289),
-orchard/vineyard carry full blossom/fruit/veraison, KELP now a CA (282)) — but the **gray whales are a MIGRANT drawn
-as a resident**. Two are Math.random-spawned in `genWorld` and `drawWhale` had **no season gate at all**, so they
-cruised the bay all year while the tooltip called them "Gray whale — a slow cruise up the bay." A gray whale runs the
-California coast south through winter and north through spring, then feeds far to the north from June and is gone.
-**Water × Deepen/interconnect** — make the whales answer the calendar the rest of the city already keeps (the
-286/271/249 "entity answers an existing signal" pattern), while the resident dolphins rightly stay year-round.
-
-**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** New `whaleSeason()` (near `autumnFall`): a raised-
-trapezoid window on `s=year%1`, `1` across Dec–mid-May (centred on mid-winter `WHALEPK=0.16`, `WHALEWIN=0.28`,
-`WHALERAMP=0.08`) ramping to `0` through the golden summer and autumn. `drawWhale`'s first line now
-`if(whaleSeason()<=w.ph/7)return;` — a **per-whale threshold off the phase the whale ALREADY carries** (`w.ph/7`, a
-uniform on [0,1)), so the last of them fade out one at a time at the season's edge rather than popping together, and
-it draws **zero new random values** (286). A hidden whale returns before `stamp()`, so it is **not hoverable** either
-(consistent with the surfer/kayak session). Tooltip updated to name the migration (ENTINFO sync).
-
-**Census.** No `rng()`, no `Math.random` change, no terrain, whales array length unchanged (still 2) ⇒ core
-**BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram empty), `life.whales` still 18 across the matrix.
-VERDICT PASS / 0 page errors (vacuous by design — the gate is the probe + eyes).
-
-**Probe** (`probes/probe-whalemigration.mjs`, build-agnostic via `SRC=`, flooded whales:40/dolphins:40):
-- **A (temporal, no pixels):** eligible whales by season via the SHIPPED predicate — **winter/spring 40 → l.spring
-  13–25 → summer/autumn 0 → e.winter 25–32**, `DISTINCT=4`. **HEAD reads 40 every season, `DISTINCT=1`** — the
-  defect stated (236). **DOLPHINS flat 40 in every season (must-not-move control, 250) — held.**
-- **B (real draw path, 205):** whales STAMPED across 24 surface-arc phases, per season — matches A
-  (winter/spring 40, summer/autumn **0**), dolphins **40 every season** through the same path.
-
-**Visual** (`probes/shot-whalemigration.mjs`, frozen in-page, whales flooded, aimed by measured whale ink; winter=
-present / summer=absent at the IDENTICAL crop + a whole-city frame; frames named by FILE, token map CROSSED between
-seeds per 238/258/268; each self-reports year/whaleSeason/whales-drawn). Both blind subagents **PASS** and both
-**named the winter frame by the whales alone on the crossed map**: whales visible (dark backs + foam wakes + spouts)
-in winter, the SAME open water **empty** in summer, only the whales differing; seed 42's agent correctly rejected a
-fixed shoreline mark as a non-whale; both whole-city frames balanced and coherent, no z-order tears / floating tiles
-/ blown-out colour.
-
-**Verdict: SHIPPED.** The gray whales now migrate — present in the bay through the cool half of the year, gone to the
-northern feeding grounds through the golden summer and autumn, so the offing tells the season while the resident
-dolphins roll through year-round. Wholly census-inert (zero new random draws, whales array untouched), the 286
-pattern in the neglected Water domain. Water × Deepen/interconnect (→ 322). `probes/probe-whalemigration.mjs` +
-`probes/shot-whalemigration.mjs`.
 
 ## Iteration 323 — the meadows flowered in spring and stood as bare grass under the snow (2026-07-17) [Nature × Deepen/interconnect]
 
@@ -890,3 +844,50 @@ the arc in path objects.
 **Verdict: SHIPPED.** A high jet now crosses the empty upper sky drawing a sunlit contrail — white by day, warm at
 golden, gone at night, absent in rain — filling the one sky band that was bare. Draw-only, census byte-identical, the
 4th and last sparse additive cell. Sky × New element (27/43/291 → 331). `probes/probe-jet.mjs`, `probes/shot-jet.mjs`.
+
+## Iteration 332 — the hearths no one could see (2026-07-17) [Urban fabric × Deepen/interconnect — EXPLORED → REVERTED]
+
+**Vector.** Additive space is spent (331), so a Deepen off a measured seam. I grepped the documented seams first:
+the comment tell (`no state|never|placed once|static`) is clean (paid at 282); the frozen census column is all audited
+terrain (SHOREPARK/ROCK/MARSH/LIGHTHOUSE/VOID) or slow one-per-city (REDWOOD/ORCHARD/IND) — no fresh dead rule; the
+flag lifecycle and the type-keyed tables (`CIVHRS` covers all 12 civic kinds, `BEDT` handles the loft) are complete;
+People already answers weather (the ped umbrella, `rainingAt`, 8878) and season (the water crowd), and the deciduous
+canopy is deliberately a **live oak that stays leafy** ("winter means cool light and deep dull greens, never snow",
+L349 — so "bare winter trees" is off-model, not a gap). The one genuine gap I found: **grepping the WINDA-reader
+category (280 — the wind's reader list is a changelog, not a spec) turned up SMOKE as the un-enumerated member.** The
+BURNT ember scars (6606) and the wildfire plume (7254) both wobble on a symmetric `Math.sin(time*2…)` that reads the
+CLOCK and not the WIND, so smoke rose dead-straight while the trees, flags, kites, clouds and balloons beside it all
+lean. And the brick chimney (7436) was a static prism venting nothing — a home whose hearth answered no weather at all.
+
+**Change (explored — draw-only, no `rng()`, no terrain).** A shared `smokeLean(rise)=rise*1.1*windForce()*sin(time*0.22
++seedNum*0.7)` — one slowly-shifting city-wide gust direction, leaning FARTHER the higher a puff has risen, and
+returning 0 at dead calm (`windForce()==0`) so a becalmed plume is HEAD's straight column byte-for-byte (245's fixed
+point). New cozy **chimney woodsmoke** on RES, gated on cold season (`hearth=clamp((seasonCool()-0.5)/0.45,0,1)`, so it
+pairs with the snow at the trough, 321) with a per-home hash deciding which hearths are lit — more of them as it deepens
+(262: a shared cause is fine, stagger who answers). The existing ember + wildfire smoke retrofitted to the same helper.
+
+**Census.** Byte-identical (+0 on `pop`/`roads`/`developed`, empty tile histogram, 0 page errors). Draw-only, as expected.
+
+**Probe** (`probe-chimneysmoke`, deleted with the revert). Hooked `ctx.arc` and picked the smoke out by its unique raw
+fillStyle triple (deterministic, no pixel diff, no noise floor). It **PROVED the mechanism is correct**: WINTER draws
+224–272 puffs; **SUMMER draws 0** (a dead regime, 199 — the hearth is only lit in the cold); at winter, a GALE leans the
+puffs `mean|dx| 2.5–4.7px` while CALM is `0` (the exact fixed point); and higher puffs (bucketed by radius, which
+encodes rise) lean **3–7px vs 1.4–2.5px** for low ones — the plume streams as it climbs. Clean on all 3 seeds.
+
+**Visual — FAIL, and it is the whole result.** Two blind agents × 2 seeds, then again after I darkened the smoke
+(rgb 126,122,115 @ α0.52 base) and grew it to a 4-puff taller column and re-aimed the close-up by measured ink — and
+then my own look at the close-up and the whole city. **The smoke is invisible at the scale a user views the diorama.**
+Cause (200/205/266, and 215's "ink renders ≠ a mark reads"): the host is a **SHORT RES house**, scattered through dense
+fabric among taller neighbours and greenery, so the ~15px plume rises into a busy midground with **no clean sky
+backdrop** and is lost. The close-up's measured-ink aim even landed in a tower cluster (chimneys sit at the RES/downtown
+fringe). The only way to make it read would be a plume big/dark enough that **20% of the city's houses smoking reads as
+a smoggy, cluttered, darkened city** — exactly the cumulative drift the step-back (330: "no clutter/darkness") works to
+prevent. That is the header's "barely-visible bad trade ⇒ ⛔ do not force" and 266's price-visibility-first, arriving
+after the build instead of before.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` restored byte-identical to HEAD; probe/shot/shots removed. The
+exploration bought two things worth the lap: (1) it confirmed the documented seams are genuinely well-tended and the
+city is deeply saturated — every large surface answers its signals; (2) it found a real WINDA-category gap (280) whose
+common instance (hearth smoke) is a bad trade, and banked **cue (bj)**: the *existing* wildfire plume + ember scars —
+prominent when a 2018–30 fire actually burns — do ignore the wind, and the `smokeLean` one-liner (probe-proven) fixes it
+cheaply for a future lap that is already working the fire and can verify it in-context. ⛔ Do not re-try chimney smoke.

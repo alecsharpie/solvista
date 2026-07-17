@@ -23352,3 +23352,48 @@ white, whole frame still a balanced beautiful coastal city.
 inland uplands and streets through the coldest weeks and melts off by summer, leaving the sea-warmed coast bare.
 Wholly census-inert; +1.1% draw only in deep winter, zero otherwise. `probes/probe-snow.mjs` + `probes/shot-snow.mjs`.
 
+## Iteration 322 — the whales came in for the winter and left the summer bay empty (2026-07-17) [Water & coast × Deepen/interconnect]
+
+**Vector.** Rotation: the last 8 laps ran Sky×2, People×3, Transport, Urban, Civic — **Water & coast and Nature had
+not had a lap in 8+**, and the last KIND was New CA rule (321), so vary it away from that. I grepped the Nature/Water
+seams for a defect and found them exhaustively alive (lighthouse beam sweeps, MARSH answers tide+season (289),
+orchard/vineyard carry full blossom/fruit/veraison, KELP now a CA (282)) — but the **gray whales are a MIGRANT drawn
+as a resident**. Two are Math.random-spawned in `genWorld` and `drawWhale` had **no season gate at all**, so they
+cruised the bay all year while the tooltip called them "Gray whale — a slow cruise up the bay." A gray whale runs the
+California coast south through winter and north through spring, then feeds far to the north from June and is gone.
+**Water × Deepen/interconnect** — make the whales answer the calendar the rest of the city already keeps (the
+286/271/249 "entity answers an existing signal" pattern), while the resident dolphins rightly stay year-round.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** New `whaleSeason()` (near `autumnFall`): a raised-
+trapezoid window on `s=year%1`, `1` across Dec–mid-May (centred on mid-winter `WHALEPK=0.16`, `WHALEWIN=0.28`,
+`WHALERAMP=0.08`) ramping to `0` through the golden summer and autumn. `drawWhale`'s first line now
+`if(whaleSeason()<=w.ph/7)return;` — a **per-whale threshold off the phase the whale ALREADY carries** (`w.ph/7`, a
+uniform on [0,1)), so the last of them fade out one at a time at the season's edge rather than popping together, and
+it draws **zero new random values** (286). A hidden whale returns before `stamp()`, so it is **not hoverable** either
+(consistent with the surfer/kayak session). Tooltip updated to name the migration (ENTINFO sync).
+
+**Census.** No `rng()`, no `Math.random` change, no terrain, whales array length unchanged (still 2) ⇒ core
+**BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram empty), `life.whales` still 18 across the matrix.
+VERDICT PASS / 0 page errors (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-whalemigration.mjs`, build-agnostic via `SRC=`, flooded whales:40/dolphins:40):
+- **A (temporal, no pixels):** eligible whales by season via the SHIPPED predicate — **winter/spring 40 → l.spring
+  13–25 → summer/autumn 0 → e.winter 25–32**, `DISTINCT=4`. **HEAD reads 40 every season, `DISTINCT=1`** — the
+  defect stated (236). **DOLPHINS flat 40 in every season (must-not-move control, 250) — held.**
+- **B (real draw path, 205):** whales STAMPED across 24 surface-arc phases, per season — matches A
+  (winter/spring 40, summer/autumn **0**), dolphins **40 every season** through the same path.
+
+**Visual** (`probes/shot-whalemigration.mjs`, frozen in-page, whales flooded, aimed by measured whale ink; winter=
+present / summer=absent at the IDENTICAL crop + a whole-city frame; frames named by FILE, token map CROSSED between
+seeds per 238/258/268; each self-reports year/whaleSeason/whales-drawn). Both blind subagents **PASS** and both
+**named the winter frame by the whales alone on the crossed map**: whales visible (dark backs + foam wakes + spouts)
+in winter, the SAME open water **empty** in summer, only the whales differing; seed 42's agent correctly rejected a
+fixed shoreline mark as a non-whale; both whole-city frames balanced and coherent, no z-order tears / floating tiles
+/ blown-out colour.
+
+**Verdict: SHIPPED.** The gray whales now migrate — present in the bay through the cool half of the year, gone to the
+northern feeding grounds through the golden summer and autumn, so the offing tells the season while the resident
+dolphins roll through year-round. Wholly census-inert (zero new random draws, whales array untouched), the 286
+pattern in the neglected Water domain. Water × Deepen/interconnect (→ 322). `probes/probe-whalemigration.mjs` +
+`probes/shot-whalemigration.mjs`.
+
