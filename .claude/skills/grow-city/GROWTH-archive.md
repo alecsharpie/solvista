@@ -24769,3 +24769,52 @@ the water-reflection CATEGORY (271/280): every night light on the harbour water 
 (every law used — 279/257/195/266/329/248/253/226/199/238/239/268 — is already promoted). Banked
 `probes/probe-buoyreflect.mjs` + `probes/shot-buoyreflect.mjs`.
 
+## Iteration 350 — sixty-four laps on, still no drift (2026-07-18) [47th step-back / holistic]
+
+**Vector.** The header pointed here explicitly ("~350 = STEP-BACK #47, DO IT NEXT"). Since #46 @345, four laps have
+landed: 346 (frozen-column survey, no-ship) and the three half-built-emitter completions 347/348/349 (grounded strike /
+bonfire / buoy light-pools, all draw-only Deepen). A step-back is the guardrail that lets the loop run unattended — the
+census catches *metric* collapse but is blind to *cumulative visual* drift and to *permanent perf* drift, so both are
+measured here, not vibed. No source touched — `solvista.html` byte-identical to HEAD (5e06907, iter 349); this is a
+survey, not a build.
+
+**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
+`roads` byte-unmoved (195508 / 6056 / 5727), only the usual chaotic ±1 wobble (`solarRoofs +1`, `greenRoofs -1`,
+`towerHt -1` — 226 tick-timing, not a lap). Entity counts full and healthy (peds 762, cars 360, surfers 81, kayaks 81,
+buoys 45, boats 81, etc.).
+
+**Perf (permanent arc, PATH OBJECTS — load-immune, 198/216; `probe-drawbudget.mjs`, mean of 3 seeds, day / night):**
+- iter 285 (b523698): 110335 / 138169 · iter 345 (dfec964, #46): 111672 / 140004 · **HEAD 349 (5e06907): 111732 / 139810.**
+- **Long arc vs 285 (~64 laps): day +1.27% (+0.020%/lap), night +1.19% (+0.019%/lap)** — well under +0.2%/lap, and
+  bang on #46's +0.017–0.021%/lap.
+- **Recent arc vs 345 (4 laps, 3 shipped): day +0.05%, night −0.14%** — flat. 347/348/349's light-pools are all
+  condition-gated (dry/flash/fire) and gradient-only, so they add ~nothing at the probe's pins. **No perf-fix lap needed.**
+
+**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page).** One blind
+subagent per seed, cumulative question. Both seeds independently **PASS**:
+- **City coherent & balanced** across all frames — dense inland towers → mid-rise ring → farm/park/river belt →
+  beach/pier/wheel/turbines/sea, reading as one California coastal city; no wallpaper band, no muddy district, nothing
+  blown-out. Both agents called the tower field varied (roof-color + height variation), not a carpet.
+- **No z-order tears, floating tiles, or detached glows** — piers/wheel/turbines/buoys/boats on their hexes;
+  night window-lights, street/junction/pier lamps and buoy lights all track an actual source (no orphaned glow).
+- **Night coast coherent lit-city-and-water** — warm window grids, amber lamps, red/green buoys, moon + reflection on
+  deep water; beach/coast strip stays dark (seed 7's small orange campfire dots on sand are 348's bonfire light-pools,
+  correct) — not a flat void, and no unlit surface glowing (kelp/coast-darkening class stays closed, 282).
+- **Seasonal discriminating pair resolves blind on BOTH seeds** (264): dusk-summer sun UP (warm, brighter, teal sea),
+  dusk-winter — SAME instant — sun DOWN (dim, crescent moon + stars, lamp-lit). Unmistakably two seasons.
+- **Watch item (STILL soft, unchanged from #45/#46):** inland tower core is dense — do NOT add raw downtown density
+  (217/224/228 crown-not-picket family). Not worsening: both agents called it varied this lap too.
+
+**Instrument nits (banked, not chased — per #45/#46).** Frames self-report `GWARM=0` and `HUD=STALE` at golden/dusk —
+the known fixed-pin caption artifacts (`shot-stepback` derives the golden pin on a clear page but shoots the warped
+overcast world; `phaseWord`-vs-`clockWord` mismatch). Pixels ARE warm and both agents PASS; do NOT re-chase (340
+measured this out fully).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built in the city).** `solvista.html` byte-identical. STEP-BACK #47:
+**NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length season alive; night ordering
+/ golden-greens / sea-quilt facts hold (unre-measured — no lap since #44 touched their surfaces). Permanent draw arc
+negligible (+0.02%/lap, flat recent window). Guardrail reset — the additive + high-contrast-interconnect space stays
+SPENT (346), so honest mode from here is **`polish-tile`** (342/343's shaped-ridge / tapered-streak deaf-surface
+redesigns) **or STEP-BACK #48** (~355). A new growth lap still needs a NEW mechanism/domain-signal, **visibility priced
+FIRST** (266/342/343). Nothing to fix.
+
