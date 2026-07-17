@@ -32,15 +32,16 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **356 — BEHAVIORAL & SPECULAR CANDIDATE CLASSES ALSO SHIPPED / survey NO SHIP** (extended 355's
-  generative survey to the two profiles it left open: a behavioral cross-domain interconnect (gulls work the boat wake
-  / roost at dark, L9124 — nature×transport) and a specular reflector (the moonglade, L9685/298/153 — water×sky); both
-  already ship. Generative confirmation now complete across ALL THREE fresh-candidate profiles — emitter (355) ·
-  reflector · behavior — every one lands on an existing draw. **SEVENTH & EIGHTH** wall angles; additive/interconnect
-  vein is a stable fixpoint. ⚠ **Source BYTE-FROZEN since iter 349** (HEAD≡349≡350≡356 md5 `b9dbdb8e`): 350–356 shipped
-  nothing, so **STEP-BACK #48 would re-measure the EXACT bytes #47 already vetted — do NOT fire it until source
-  drifts.** Growth wall confirmed from EIGHT angles: 344 declared · 350 visual/perf · 351 behavioral · 353 table · 354
-  comment-tell · 355 generative-emitter · 356 generative-reflector+behavior.) Prev: **355 — FRESH HIGH-CONTRAST-LOCAL
+- **ROTATION.** Last: **357 - SNOW-CAPPED EVERGREEN CROWNS: correct+pretty CLOSE-UP, ~0.05% of frame at FIT / BUILT then REVERTED**
+  (Nature x Deepen; the FIRST built candidate in 8 laps). A DIRECT grep of the signal-readers (not another generative
+  survey) found a real miss the 7 surveys did not: the tree CROWNS explicitly ignore `c.snow` (L7170 lays the dusting
+  *under* them), so winter only ever touched their shadows. Built a white apex-wedge on conifer/redwood tiers (draw-only,
+  byte-flat; `probe-snowcap` floor-0: ~34 CSS px/wood-hex CLOSE-UP). Both blind agents PASSED the close-up (on-spire,
+  z-order, summer bare) but BOTH called it **negligible at whole-city FIT: ON/OFF delta ~0.05% of a 1.26M-px frame** -
+  the 342/343/352 invisible-at-fit winter-ornament trap, now with a number. Reverted to `b9dbdb8e`. **WINTER PER-OBJECT
+  CAPS (snow on trees/roofs/any small crown) cannot clear figure/ground at FIT - ceiling ~0.05%; polish-tile only, do NOT
+  re-try.** 225 grep-the-seam still FINDS (a real miss 7 surveys made) - *a FOUND seam is not a SHIPPABLE one: PRICE VISIBILITY AT FIT first.*
+  Prev: **356 - behavioral+specular candidate classes also pre-existing** (gulls-on-wake L9124, moonglade L9685; full entry in ledger.) Prev: **355 — FRESH HIGH-CONTRAST-LOCAL
   CANDIDATE ALREADY SHIPPED / survey** (generative survey of the *emitter* profile: car headlights · taxi lamp · copter
   beacon all pre-existing; additive night-reader axis saturated BY CONSTRUCTION; the sixth wall confirmation; full
   entry in ledger.) Prev: **354 — COMMENT-TELL SEAM CLEAN / survey** (every `/* */` "never/always/once/static" comment a
@@ -390,57 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 349 entries before Iteration 347 live in
+> **Archive:** the 350 entries before Iteration 348 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 347 — the strike lights the ground it hits (2026-07-18) [Sky & atmosphere × Deepen/interconnect → SHIPPED]
-
-**Vector.** 344/345/346 declared the growth phase saturation-bound and named the honest mode as step-backs +
-`polish-tile`. But #46 (@345) was two laps ago (too soon for #47), and re-running a fourth consecutive survey adds
-nothing. The one live path the header leaves open is *a genuinely NEW mechanism or domain-signal, visibility priced
-first* — and 341 had just shown the saturation note can be wrong (the rain mechanism had an un-wired ROAD reader). So
-this lap grepped, first-hand, for a **HIGH-CONTRAST interconnect the reflection-family survey missed**, and found one
-in the sky's most dramatic event: **328's lightning bolt grounds at `[foot,cy]` but the terrain it hits stays dark.**
-A strike that lands and illuminates nothing is a half-built feature — completing it is a coherent Deepen, not a new
-deaf-surface overlay, and it is inherently HIGH-CONTRAST (bright bluish-white on dark storm-dusk ground: the 329/341
-class that ships).
-
-**Change (draw-only, ~17 lines).** Inside the strike's `if(bolt>0.22)` block (~L9929), before the bolt strokes, a soft
-radial **pool of light on the ground** at the bolt's landing point `[foot,cy]`, SQUASHED to the ground plane
-(`scale(1,0.42)`) so it reads as illumination lying ON the terrain rather than a floating orb (291). Rides the SAME
-`bolt` intensity (`gi=min(0.5,bolt*0.6)`), drawn UNDER the strokes so the crisp bolt core sits over its own glow; a
-light SOURCE, so a raw literal never `col()` (279); a gradient to alpha 0, never a flat arc (195); deterministic in
-`time`+cloud (no rng); inside the on-plate guard, so it can never light the void (248). Added a `GFLASH` suppressor
-(next to `LIGHTN`) so a probe can isolate JUST the pool from the bolt in one page, floor 0 (253).
-
-**Census + error gate.** VERDICT PASS, 0 page errors. Draw-only, no terrain, no `rng()` ⇒ core byte-flat (the
-histogram is the pre-existing city; the diff is 17 lines of `ctx`). Perf: the pool draws only when `bolt>0.22`
-(a rare wet-storm-at-dusk flash peak), so it contributes ~0 path objects at the perf gate's fair-weather pins — free.
-
-**Probe (`probes/probe-groundflash.mjs`).** Pins the same on-plate wet-storm flash peak `probe-strike` uses; DUAL
-isolation in one page (floor 0): `GFLASH=1 vs 0` → the POOL alone (the new ink), `LIGHTN=1 vs 0` → the whole flash+bolt
-(the INCUMBENT bar, 226 — no threshold invented). Result: **POOL peak amplitude 80 (s42) / 78 (s7) — bright**, located
-tightly at the strike foot on the terrain (centre y~607/513, box below BAND 340), **17% / 20% of the incumbent bolt's
-ink**, and **ZERO in dry weather** on both seeds (a strike-only effect correctly absent in fair weather, sharing the
-strike's storm bar).
-
-**Visual (`probes/shot-groundflash.mjs`).** Blind A/B in ONE build — pool ON (`GFLASH=1`) vs pool OFF (`GFLASH=0` =
-exactly what HEAD draws) — so no build swap, no cross-build floor. Meaningless tokens, map CROSSED between seeds
-(238/239/268; md5-distinct pairs confirmed). BOTH blind agents, one per seed, **correctly named the pool variant on the
-crossed map** (s42 kappa=ON→"kappa"; s7 sigma=ON→"sigma") and returned **VISUAL: PASS**: the pool "hugs the terrain
-hexes around the bolt's foot, spreading outward as cast light, soft and bluish-white, no floating orb or z-order tear,
-not blown out"; both frames still read as a coherent stormy-dusk coastal city. A genuine blind identification, not a
-positional guess.
-
-**Verdict: SHIPPED (DEEPENED).** Completes 328's strike — the bolt now lights what it hits. **This refutes 344/346's
-"high-contrast interconnect space is EXHAUSTED": the miss was a HALF-BUILT feature's own logic (a light SOURCE, not a
-standing reflection), which the reflection-family enumeration structurally could not see.** The reusable finding is in
-the header's NEXT VECTOR: grep shipped features for a draw that *lands / emits / casts and then stops*. No new SKILL.md
-law (every law used — 279/195/291/248/253/226/238 — is already promoted). Banked `probes/probe-groundflash.mjs` +
-`probes/shot-groundflash.mjs`.
 
 ## Iteration 348 — a fire lights the ground it sits on (2026-07-18) [Water & coast × Deepen/interconnect → SHIPPED]
 
@@ -813,3 +768,42 @@ generative confirmation is now complete across *all three* fresh-candidate profi
 and every one lands on an existing draw. The additive/interconnect grow-city vein is a stable fixpoint. **Honest mode
 is `polish-tile`** (open cue (ay) windrow LENGTH; birds fade α0.15 not roost) **or await a user-directed vector.**
 Nothing to fix; nothing to ship.
+
+## Iteration 357 — snow-capped evergreen crowns: correct, pretty in close-up, ~0.05% of the frame at fit (2026-07-18) [Nature x Deepen -> EXPLORED -> REVERTED]
+
+**Vector.** 350-356 declared the additive/interconnect wall from eight angles, but every one was a generative/profile
+survey - and 225's grep-the-seam law (26/26 at FINDING) is explicitly a DIFFERENT instrument from a generative survey.
+So I ran a direct grep of the signal-readers instead of an 8th cold survey, and it found a genuine one the surveys
+missed: the evergreen tree crowns explicitly IGNORE `c.snow`. The ground-snow draw's own comment (L7170) says the
+dusting is laid "under the tree crowns above" - i.e. the crowns are painted over the snow and never read it, so the
+ONLY evergreens winter ever touched were their contact shadows. A snow-laden conifer/redwood spire is the strongest
+winter figure/ground there is (white on dark evergreen) and physically correct (evergreens hold snow, deciduous are
+bare) - a legitimate Nature x Deepen distinct from 342's ROOF snow (roofs present edge-on/thin).
+
+**Change (built, then reverted).** `tree()`'s conifer + the REDWOOD draw got a white wedge sharing each tier's apex,
+reaching further down the spire as `c.snow` deepens, through `colA` (night snow dims blue like the ground), on the
+ground-snow ramp/melt schedule (`SNOWSHOW`/`SNOWFULL`); deciduous crowns take none. Fed by a module-scope `curSnow`
+set once per cell in `drawCell` (no 15-call-site param) + a `SNOWCAPON` suppressor (cf. `GFLASH`).
+
+**Census.** Draw-only, zero `rng()`, reads only the existing `c.snow` field => core byte-flat (`developed`/`pop`/
+`roads` +0; the +1 solar/tower wobbles are 226 tick-count noise). PASS.
+
+**Probe (`probe-snowcap`, floor 0 by SNOWCAPON on/off in one page, deep winter year%1=0.12, snow ticked up).** The cap
+RENDERS strongly in close-up: ~2700 CSS px / seed across 79 wood-hexes ~= 34 CSS px per wood-hex, meanDlum ~16, maxD
+~187 (seed 42; seed 7 similar) - an order of magnitude above 226's unseen queue shadow (~2 px/figure). NOT the
+sub-pixel-hairline family.
+
+**Visual (2 blind agents, crossed A/B, + summer control).** Both PASSED and both, independently, confirmed the
+close-up is CORRECT: snow sits ON the spires, clean z-order, no floating blobs, and summer is correctly BARE. But
+both ALSO, independently, called it negligible at whole-city FIT zoom ("adds nothing perceptible at city zoom" / "you
+must diff or zoom to see any change"). Measured: the ON/OFF whole-city delta is only ~500-700 bright px in a 1.26M-px
+frame ~= 0.05% of the frame.
+
+**Verdict: EXPLORED -> REVERTED.** A real, clean, seasonally-correct feature that reads beautifully up close and is
+~0.05% of the frame at the zoom the diorama is actually judged - the exact 342/343/352 invisible-at-fit-zoom winter-
+ornament pattern, confirmed here with a number and by both blind agents (the only "seen" instrument, 266). The
+scatter of ~34px caps on ~79 tiny crowns does not cohere into a whole-city read the way the accepted ground-snow AREA
+wash does. This is `polish-tile` (per-tile beauty), not grow-city (whole-city growth). Source restored to `b9dbdb8e`.
+**Finding for the loop: the grep-the-seam law still FINDS (crowns unread, a genuine miss of 7 surveys) - but a found
+seam is not a shippable one; the winter-ornament class is a firm NO for grow-city because it cannot clear figure/
+ground at fit. Do NOT re-try snow on trees/roofs/any per-object winter cap here - the ceiling is ~0.05% of the frame.**

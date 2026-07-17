@@ -24629,3 +24629,49 @@ Honest mode from here is unchanged — **STEP-BACKS** (next ~350 = #47) **+ `pol
 tapered-streak deaf-surface redesigns). A new growth lap still needs a NEW mechanism or domain-signal, visibility
 priced FIRST (266/342/343).
 
+## Iteration 347 — the strike lights the ground it hits (2026-07-18) [Sky & atmosphere × Deepen/interconnect → SHIPPED]
+
+**Vector.** 344/345/346 declared the growth phase saturation-bound and named the honest mode as step-backs +
+`polish-tile`. But #46 (@345) was two laps ago (too soon for #47), and re-running a fourth consecutive survey adds
+nothing. The one live path the header leaves open is *a genuinely NEW mechanism or domain-signal, visibility priced
+first* — and 341 had just shown the saturation note can be wrong (the rain mechanism had an un-wired ROAD reader). So
+this lap grepped, first-hand, for a **HIGH-CONTRAST interconnect the reflection-family survey missed**, and found one
+in the sky's most dramatic event: **328's lightning bolt grounds at `[foot,cy]` but the terrain it hits stays dark.**
+A strike that lands and illuminates nothing is a half-built feature — completing it is a coherent Deepen, not a new
+deaf-surface overlay, and it is inherently HIGH-CONTRAST (bright bluish-white on dark storm-dusk ground: the 329/341
+class that ships).
+
+**Change (draw-only, ~17 lines).** Inside the strike's `if(bolt>0.22)` block (~L9929), before the bolt strokes, a soft
+radial **pool of light on the ground** at the bolt's landing point `[foot,cy]`, SQUASHED to the ground plane
+(`scale(1,0.42)`) so it reads as illumination lying ON the terrain rather than a floating orb (291). Rides the SAME
+`bolt` intensity (`gi=min(0.5,bolt*0.6)`), drawn UNDER the strokes so the crisp bolt core sits over its own glow; a
+light SOURCE, so a raw literal never `col()` (279); a gradient to alpha 0, never a flat arc (195); deterministic in
+`time`+cloud (no rng); inside the on-plate guard, so it can never light the void (248). Added a `GFLASH` suppressor
+(next to `LIGHTN`) so a probe can isolate JUST the pool from the bolt in one page, floor 0 (253).
+
+**Census + error gate.** VERDICT PASS, 0 page errors. Draw-only, no terrain, no `rng()` ⇒ core byte-flat (the
+histogram is the pre-existing city; the diff is 17 lines of `ctx`). Perf: the pool draws only when `bolt>0.22`
+(a rare wet-storm-at-dusk flash peak), so it contributes ~0 path objects at the perf gate's fair-weather pins — free.
+
+**Probe (`probes/probe-groundflash.mjs`).** Pins the same on-plate wet-storm flash peak `probe-strike` uses; DUAL
+isolation in one page (floor 0): `GFLASH=1 vs 0` → the POOL alone (the new ink), `LIGHTN=1 vs 0` → the whole flash+bolt
+(the INCUMBENT bar, 226 — no threshold invented). Result: **POOL peak amplitude 80 (s42) / 78 (s7) — bright**, located
+tightly at the strike foot on the terrain (centre y~607/513, box below BAND 340), **17% / 20% of the incumbent bolt's
+ink**, and **ZERO in dry weather** on both seeds (a strike-only effect correctly absent in fair weather, sharing the
+strike's storm bar).
+
+**Visual (`probes/shot-groundflash.mjs`).** Blind A/B in ONE build — pool ON (`GFLASH=1`) vs pool OFF (`GFLASH=0` =
+exactly what HEAD draws) — so no build swap, no cross-build floor. Meaningless tokens, map CROSSED between seeds
+(238/239/268; md5-distinct pairs confirmed). BOTH blind agents, one per seed, **correctly named the pool variant on the
+crossed map** (s42 kappa=ON→"kappa"; s7 sigma=ON→"sigma") and returned **VISUAL: PASS**: the pool "hugs the terrain
+hexes around the bolt's foot, spreading outward as cast light, soft and bluish-white, no floating orb or z-order tear,
+not blown out"; both frames still read as a coherent stormy-dusk coastal city. A genuine blind identification, not a
+positional guess.
+
+**Verdict: SHIPPED (DEEPENED).** Completes 328's strike — the bolt now lights what it hits. **This refutes 344/346's
+"high-contrast interconnect space is EXHAUSTED": the miss was a HALF-BUILT feature's own logic (a light SOURCE, not a
+standing reflection), which the reflection-family enumeration structurally could not see.** The reusable finding is in
+the header's NEXT VECTOR: grep shipped features for a draw that *lands / emits / casts and then stops*. No new SKILL.md
+law (every law used — 279/195/291/248/253/226/238 — is already promoted). Banked `probes/probe-groundflash.mjs` +
+`probes/shot-groundflash.mjs`.
+
