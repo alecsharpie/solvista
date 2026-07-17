@@ -32,31 +32,31 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **357 - SNOW-CAPPED EVERGREEN CROWNS: correct+pretty CLOSE-UP, ~0.05% of frame at FIT / BUILT then REVERTED**
-  (Nature x Deepen; the FIRST built candidate in 8 laps). A DIRECT grep of the signal-readers (not another generative
-  survey) found a real miss the 7 surveys did not: the tree CROWNS explicitly ignore `c.snow` (L7170 lays the dusting
-  *under* them), so winter only ever touched their shadows. Built a white apex-wedge on conifer/redwood tiers (draw-only,
-  byte-flat; `probe-snowcap` floor-0: ~34 CSS px/wood-hex CLOSE-UP). Both blind agents PASSED the close-up (on-spire,
-  z-order, summer bare) but BOTH called it **negligible at whole-city FIT: ON/OFF delta ~0.05% of a 1.26M-px frame** -
-  the 342/343/352 invisible-at-fit winter-ornament trap, now with a number. Reverted to `b9dbdb8e`. **WINTER PER-OBJECT
-  CAPS (snow on trees/roofs/any small crown) cannot clear figure/ground at FIT - ceiling ~0.05%; polish-tile only, do NOT
-  re-try.** 225 grep-the-seam still FINDS (a real miss 7 surveys made) - *a FOUND seam is not a SHIPPABLE one: PRICE VISIBILITY AT FIT first.*
-  Prev: **356 - behavioral+specular candidate classes also pre-existing** (gulls-on-wake L9124, moonglade L9685; full entry in ledger.) Prev: **355 — FRESH HIGH-CONTRAST-LOCAL
-  CANDIDATE ALREADY SHIPPED / survey** (generative survey of the *emitter* profile: car headlights · taxi lamp · copter
-  beacon all pre-existing; additive night-reader axis saturated BY CONSTRUCTION; the sixth wall confirmation; full
-  entry in ledger.) Prev: **354 — COMMENT-TELL SEAM CLEAN / survey** (every `/* */` "never/always/once/static" comment a
-  HEALTHY correctness proof — no absence-asserting-a-LIVE-rule (282), no changelog-as-taxonomy (280)). Prev: **353 — TYPE-KEYED TABLE SEAM SOUND / survey** (all 32 `T.*` vs the type-keyed TABLES; missing members deliberate; no 285/288 blindness).
-  Prev: **352 — WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / REVERTED** (Sky × Deepen; ⛔ **a whole-scene event as a FLAT
-  OVERLAY is dead — 260 on a flash: colour constancy divides a global luminance lift out as haze; only blind eyes judge
-  a desaturating wash; a believable one needs a SKY→ground GRADIENT = `polish-tile`**). Prev: **351 — HALF-BUILT/KEEPS-
-  NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card live, every flag rides its upgrade; 344's wall
-  from BEHAVIORAL side. 🆕 loose `birds` fade α0.15 not roost — `polish-tile` only.) Prev: **350 — STEP-BACK #47 / NO
-  DRIFT** (3 lights × 2 seasons × 2 seeds blind-PASS; core byte-flat; perf +0.020%/lap day vs 285 over ~64 laps. ⚠
-  Watch: inland tower core dense but NOT wallpaper — do NOT add raw downtown density.) Prev: **349 — CHANNEL MARKS
-  MIRROR THEIR FLASH / SHIPPED** (Water × Deepen; ✅ **CLOSES the water-reflection CATEGORY (271/280)**; banked
-  `probe-buoyreflect.mjs`.) Prev: **348/347 — FIRE & STRIKE LIGHT THEIR OWN GROUND / SHIPPED** (emitter-vein #2 & #1;
-  `FIREPOOL`/`GFLASH`; 346 banked `probe-frozencol.mjs`.) Prev: ~~**Urban 343 / Nature 342**~~ (SNOW ON ROOFS · CAT'S-PAWS
-  — both LOW-CONTRAST/haze redesigns, agents INVERTED, ⛔ INVISIBLE-AT-ZOOM `polish-tile` only — the trap 352 hit whole-frame.) Prev: **Transport 341** (WET STREETS MIRROR THEIR LAMPS — rain's LAST un-enumerated reader is the ROAD; `rainingAt`>0 warm smear down night lamp pools, dry≡HEAD, land analog of 329; draw-only). Prev
+- **ROTATION.** Last: **358 - THE LAST FIT-VISIBLE LARGE-SURFACE SEAMS ARE ENUMERATED OR DEAD-BY-CONSTRUCTION / grep-only
+  NO SHIP** (Nature/Sky x Deepen). Aimed 357's grep-the-seam instrument only at LARGE / fit-visible surfaces (357's one
+  open axis): **(1) WINDA readers fully enumerated** (trees·palms·flags·clouds·sea(whitecaps/windrows/surf)·smoke·sails·
+  festival cloth·balloons·kite·rain-lean — no surface deaf to wind); **(2) atmospheric perspective ABSENT but
+  dead-by-construction** (whole-plate depth-desaturation is low-contrast/whole-frame on a near-top-down projection = the
+  342/343/352 HAZE dead zone). **⛔ No un-read large-surface signal has a high-contrast-LOCAL fix.** Full entry in ledger.
+  Prev: **357 - SNOW-CAPPED EVERGREEN CROWNS built then REVERTED** (Nature x Deepen; the FIRST built candidate in 8
+  laps). Direct grep found a real miss (tree crowns ignore `c.snow`, L7170); the white apex-wedge RENDERS in close-up
+  (~34 CSS px/wood-hex) but is **~0.05% of a 1.26M-px frame at FIT** — both blind agents called it negligible. ⛔ **WINTER
+  PER-OBJECT CAPS cannot clear figure/ground at FIT; polish-tile only, do NOT re-try.** *225 grep-the-seam still FINDS —
+  but a FOUND seam is not a SHIPPABLE one: PRICE VISIBILITY AT FIT first.* Full entry in ledger.
+  Prev: **356/355 — generative surveys, all fresh candidates PRE-EXISTING** (emitter: headlights·taxi lamp·copter
+  beacon; behavioral: gulls-on-wake L9124; specular: moonglade L9685 — the additive night-reader/reflector/behavior
+  axes are saturated by construction; full entries in ledger). Prev: **354 — COMMENT-TELL SEAM CLEAN / survey** (every
+  `/* */` comment a HEALTHY correctness proof — no 282/280 tell). Prev: **353 — TYPE-KEYED TABLE SEAM SOUND / survey** (all 32 `T.*` vs the tables; missing members deliberate; no 285/288 blindness).
+  Prev: **352 — WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / REVERTED** (Sky × Deepen; ⛔ a whole-scene event as a FLAT
+  OVERLAY is dead — 260 on a flash; law in SKILL.md, full entry in ledger). Prev: **351 — HALF-BUILT/KEEPS-NO-HOUR VEIN
+  DRY / survey NO SHIP** (every mover dwells, card live, flag rides its upgrade. 🆕 loose `birds` fade α0.15 not roost —
+  `polish-tile` only.) Prev: **350 — STEP-BACK #47 / NO DRIFT** (3 lights × 2 seasons × 2 seeds blind-PASS; core
+  byte-flat; perf +0.020%/lap day vs 285 over ~64 laps. ⚠ Watch: inland tower core dense but NOT wallpaper — do NOT add
+  raw downtown density.) Prev: **349 — CHANNEL MARKS MIRROR THEIR FLASH / SHIPPED** (✅ CLOSES water-reflection CATEGORY
+  271/280). Prev: **348/347 — FIRE & STRIKE LIGHT THEIR OWN GROUND / SHIPPED** (emitter-vein #2 & #1; `FIREPOOL`/
+  `GFLASH`; 346 banked `probe-frozencol.mjs`.) Prev: ~~**Urban 343 / Nature 342**~~ (SNOW ON ROOFS · CAT'S-PAWS — both
+  LOW-CONTRAST/haze, ⛔ INVISIBLE-AT-ZOOM `polish-tile` only). Prev: **Transport 341** (WET STREETS MIRROR THEIR LAMPS —
+  rain's LAST un-enumerated reader is the ROAD; land analog of 329; draw-only). Prev
   (Deepen/shipped, byte-flat, laws in SKILL.md,
   full text in ledger/archive): Civic **338/339** (festival cloth on `windForce`) · People **336/337** (RAIN-AWARE
   CROWDS on `dryAt`; category CLOSED, hold-out BEACH ⛔) · Water **334** (SAIL BELLIES; WINDA-over-water DONE ⛔) ·
@@ -67,12 +67,16 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   paths · wildflowers · whales · SNOW `c.snow` ⚠ warp=61 freezes it ON · civic) · People **318/317** · Urban **316**
   (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: the growth vein is DRY
-  from FIVE angles and SOURCE IS BYTE-FROZEN since 349 — so STEP-BACK #48 must WAIT until an actual ship drifts the
-  bytes (re-shooting #47's identical frames buys nothing). Honest mode is `polish-tile`** (342/343's shaped-ridge /
+  from NINE angles and SOURCE IS BYTE-FROZEN since 349 — so STEP-BACK #48 must WAIT until an actual ship drifts the
+  bytes (re-shooting #47's identical frames buys nothing). 358 CLOSED the last fit-visible large-surface question:
+  WINDA readers are fully enumerated and atmospheric perspective is absent-but-dead-by-construction (a whole-frame
+  HAZE). Honest mode is `polish-tile`** (342/343's shaped-ridge /
   tapered-streak deaf-surface redesigns; open cue (ay) windrow LENGTH) **or genuinely NEW: a mechanism/domain-signal-
   reader that is HIGH-CONTRAST and figure/ground LOCAL** (the emitter vein is CLOSED 3-for-3 347/348/349; the
-  arrive+idle / spawn-completion vein is DRY 351; the whole-scene-flash interconnect REVERTED as haze 352 — do NOT
-  re-try any "whole-scene X" as a flat overlay) — PRICE VISIBILITY / figure-ground FIRST (266/342/343/352).** Additive space SPENT (331).
+  arrive+idle / spawn-completion vein is DRY 351; whole-scene-flash REVERTED as haze 352; winter per-object cap a firm
+  NO 357; WINDA + atmospheric-perspective closed 358 — do NOT re-try any "whole-scene X" flat overlay, winter cap, or
+  subtle whole-plate wash) — PRICE VISIBILITY / figure-ground FIRST (266/342/343/352).** Additive space SPENT (331).
+  **⇒ RECOMMEND PAUSING the loop until source drifts (a `polish-tile` ship) or a user vector / Scale swing arrives.**
   ⇒ ⚠ **A passing census+probe means NOTHING for a subtle overlay — only the blind agents do. A HIGH-CONTRAST LOCAL
   interconnect ships (341); a LOW-CONTRAST or WHOLE-FRAME one (snow/pale/haze/352's flash) HAZES. Figure/ground FIRST (266/342/343/352).**
   ⚠ **TRANSPORT ENTITY/ADDITIVE SEAMS SATURATED** (304/312/329; hairline cues = ⛔ `polish-tile`; but 341 found a CROSS-DOMAIN seam the note missed — the rain had no ROAD reader, 280).
@@ -391,54 +395,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 350 entries before Iteration 348 live in
+> **Archive:** the 351 entries before Iteration 349 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 348 — a fire lights the ground it sits on (2026-07-18) [Water & coast × Deepen/interconnect → SHIPPED]
-
-**Vector.** 347 completed the lightning strike's half-built logic (a bolt that grounds but lights nothing it hits) and
-banked the reusable finding as the header's NEXT VECTOR: *grep shipped features for a draw that lands / emits / casts
-and then stops.* Ran that grep across the emitters (`createRadialGradient`, `glow`, fire). The **beach bonfire**
-(~L6096) is the exact same half-built shape 328's bolt was: it draws an 8px self-glow *at the flame* (`arc(cx,cy-2,8)`)
-but the dark night sand around it stays dark — a fire that illuminates nothing it stands on. Completing it rotates the
-domain (Sky→Water/coast), is nightly-visible (far more than 347's rare storm), and is inherently HIGH-CONTRAST (warm
-firelight on dark night sand: the 329/341/347 warm-on-dark class that ships, figure-ground priced first per 266).
-
-**Change (draw-only, ~14 lines).** Before the flame/halo, a warm firelight **pool cast ON the sand**: a radial gradient
-SQUASHED to the ground plane (`translate(cx,cy+0.5); scale(1,0.4)`, r=12) so it reads as light lying on the sand rather
-than a floating orb (291/347); drawn FIRST so the crisp flame and logs sit over their own glow; a raw emissive literal,
-never `col()` — a fire is a light SOURCE, not a reflector (279/257); a gradient to alpha 0, never a flat arc (195);
-flickers on `time` (broad slow, distinct from the flame's), grows with the night on `LITAMT`, deterministic (no rng).
-Kept tight within the cell, so a nearer row occludes it together with the fire (drawFire's own z-order rule, ~L7260).
-Added `FIREPOOL` (the new pool) and `FIREGLOW` (the incumbent flame-halo) suppressors so a probe can isolate each in
-one page, floor 0 (253/347's dual isolation).
-
-**Census + error gate.** VERDICT PASS, 0 page errors. Draw-only, no terrain, no `rng()` ⇒ core byte-flat, histogram
-empty. Perf: the pool draws only inside the existing bonfire gate (`v∈(0.42,0.47)` beach cells at `LITAMT>0.5`), a
-handful of cells at night ⇒ ~0 path objects at the fair-weather perf pins — free.
-
-**Probe (`probes/probe-firepool.mjs`).** DUAL isolation in one page (floor 0, build-agnostic): `FIREPOOL=1 vs 0` → the
-POOL alone (the new ink); `FIREGLOW=1 vs 0` → the flame's own halo (the INCUMBENT bar, 226 — no threshold invented).
-Result: **POOL 476px (s42) / 299px (s7), peak 31/33, 62% / 67% of the incumbent halo's ink** — a substantial,
-grounded warm pool at the fires' feet; and **0px / 0 ink by DAY** (LITAMT=0.02, the bonfire gate false ⇒ the free
-dead-regime control, 199) on both seeds.
-
-**Visual (`probes/shot-firepool.mjs`).** Blind A/B in ONE build — `FIREPOOL=1` vs `FIREPOOL=0` (=HEAD) — so no build
-swap, no cross-build floor. Meaningless non-ordinal tokens, pool/no-pool map CROSSED between seeds (238/239/268;
-md5-distinct pairs confirmed). BOTH blind agents, one per seed, **correctly named the pool variant on the crossed map**
-(s42 orin=ON→"orin"; s7 vael=ON→"vael") and returned **VISUAL: PASS**: the pool is "a horizontally-elongated amber
-ellipse on the sand… flat and squashed, hugging the ground plane at the fire's base, not a floating orb", warm amber
-(R>G>B), not blown out (max R ~212, 0 near-white px); the whole-city frames differ ONLY along the coastline where
-bonfires sit — no z-order tears, floating tiles, blown-out colour or clutter anywhere; both still read as a coherent
-night coastal city. A genuine blind identification, not a positional guess.
-
-**Verdict: SHIPPED (DEEPENED).** Completes the bonfire the way 347 completed the strike — the fire now lights the sand
-it stands on. Second confirmation of 347's reusable finding: a shipped emitter that casts onto itself and stops is a
-live, high-contrast Deepen the saturation surveys miss. No new SKILL.md law (every law used — 279/257/195/291/248/253/
-226/199/238/239/268 — is already promoted). Banked `probes/probe-firepool.mjs` + `probes/shot-firepool.mjs`.
 
 ## Iteration 349 — the channel marks mirror their flash (2026-07-18) [Water & coast × Deepen/interconnect → SHIPPED]
 
@@ -807,3 +768,40 @@ wash does. This is `polish-tile` (per-tile beauty), not grow-city (whole-city gr
 **Finding for the loop: the grep-the-seam law still FINDS (crowns unread, a genuine miss of 7 surveys) - but a found
 seam is not a shippable one; the winter-ornament class is a firm NO for grow-city because it cannot clear figure/
 ground at fit. Do NOT re-try snow on trees/roofs/any per-object winter cap here - the ceiling is ~0.05% of the frame.**
+
+## Iteration 358 — the two remaining fit-visible seams are enumerated or dead-by-construction (2026-07-18) [Nature/Sky × Deepen (grep) → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** 357 revived the one non-redundant passive instrument (225's grep-the-seam, a *direct* grep of the
+signal-readers, distinct from a generative survey), and it still FOUND a real miss — but a winter per-object cap that
+cannot clear figure/ground at fit (~0.05% of frame). So this lap ran the same instrument once more, but aimed
+*specifically at the axis 357 named as the only one left open*: a seam whose fix would touch a **large / fit-visible
+surface** and be **high-contrast local**, not another tiny per-object ornament. Two candidates, both settled by grep
+alone. No source touched; `md5(solvista.html) = b9dbdb8e…`, byte-identical to the iter-349 freeze.
+
+**Seam 1 — WINDA readers (enumerated, no gap).** `grep WINDA` returns a fully-enumerated reader set: the tree canopy
+(L5025), palm crown (L5086), flags (L7545), clouds/drift (`windDrift`), the whole sea machinery centred on
+`seaState()` — whitecaps, windrows, breaking surf (L5275/5277) — smoke lean (333), sail bellies (334), festival cloth
+(338/339), balloons, the kite (`kiteGust`), and the rain shaft's lean (L9815). The gust cycle's own comments (L5261,
+L10980) name its readers and 280 already closed the last two (balloon, kite). **No large surface is deaf to the wind.**
+
+**Seam 2 — atmospheric perspective (absent, but dead by construction).** `grep -E "haze|atmospher|distance|desatur"`
+confirms there is **no depth-desaturation**: far (top, small-`y`) rows are not shifted toward the sky/haze colour or
+lowered in contrast relative to near rows. That is a genuine absence — the one large-surface, whole-plate signal read
+the city does not implement. But it is **structurally in the 342/343/352 dead zone**: atmospheric perspective is by
+definition *low-contrast and whole-frame*, and this projection is near-top-down with weak screen depth (~30 shallow
+rows), so the effect would be subtle → read as HAZE → blind agents would call it negligible at fit (352's exact law:
+"a whole-scene effect as a flat/near-flat wash is dead; a believable one needs a real SKY→ground GRADIENT = polish-
+tile"). A found seam, not a shippable one — 357's finding, re-confirmed on the last fit-visible candidate.
+
+**Census.** Not re-run: source is provably identical to the bytes 354 censused VERDICT PASS / 0 errors / core
+byte-flat. Re-running the 9-cell matrix on identical bytes buys nothing (354's law). No histogram move.
+
+**Verdict: EXPLORED → REVERTED (grep-only, nothing built).** The grow-city additive/interconnect vein is now a
+**nine-times-measured fixpoint**, and 358 closes the *fit-visible* question the last three laps kept circling: the two
+remaining candidates on large surfaces are (1) already fully read (WINDA) or (2) real-but-dead-by-construction
+(atmospheric perspective, a haze). **Finding for the loop: there is no un-read large-surface signal left whose fix is
+high-contrast-local — every large surface is either saturated or can only carry a subtle whole-frame wash, which is
+polish-tile, not grow-city.** Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343 deaf-surface
+shaped redesigns) **or a user-directed vector / a Scale swing** (the one structural lever left, deferred per 350's
+"do NOT add raw downtown density" watch). Recommend pausing the autonomous loop until source drifts or a user vector
+arrives. Source restored/unchanged at `b9dbdb8e`.

@@ -24675,3 +24675,46 @@ the header's NEXT VECTOR: grep shipped features for a draw that *lands / emits /
 law (every law used — 279/195/291/248/253/226/238 — is already promoted). Banked `probes/probe-groundflash.mjs` +
 `probes/shot-groundflash.mjs`.
 
+## Iteration 348 — a fire lights the ground it sits on (2026-07-18) [Water & coast × Deepen/interconnect → SHIPPED]
+
+**Vector.** 347 completed the lightning strike's half-built logic (a bolt that grounds but lights nothing it hits) and
+banked the reusable finding as the header's NEXT VECTOR: *grep shipped features for a draw that lands / emits / casts
+and then stops.* Ran that grep across the emitters (`createRadialGradient`, `glow`, fire). The **beach bonfire**
+(~L6096) is the exact same half-built shape 328's bolt was: it draws an 8px self-glow *at the flame* (`arc(cx,cy-2,8)`)
+but the dark night sand around it stays dark — a fire that illuminates nothing it stands on. Completing it rotates the
+domain (Sky→Water/coast), is nightly-visible (far more than 347's rare storm), and is inherently HIGH-CONTRAST (warm
+firelight on dark night sand: the 329/341/347 warm-on-dark class that ships, figure-ground priced first per 266).
+
+**Change (draw-only, ~14 lines).** Before the flame/halo, a warm firelight **pool cast ON the sand**: a radial gradient
+SQUASHED to the ground plane (`translate(cx,cy+0.5); scale(1,0.4)`, r=12) so it reads as light lying on the sand rather
+than a floating orb (291/347); drawn FIRST so the crisp flame and logs sit over their own glow; a raw emissive literal,
+never `col()` — a fire is a light SOURCE, not a reflector (279/257); a gradient to alpha 0, never a flat arc (195);
+flickers on `time` (broad slow, distinct from the flame's), grows with the night on `LITAMT`, deterministic (no rng).
+Kept tight within the cell, so a nearer row occludes it together with the fire (drawFire's own z-order rule, ~L7260).
+Added `FIREPOOL` (the new pool) and `FIREGLOW` (the incumbent flame-halo) suppressors so a probe can isolate each in
+one page, floor 0 (253/347's dual isolation).
+
+**Census + error gate.** VERDICT PASS, 0 page errors. Draw-only, no terrain, no `rng()` ⇒ core byte-flat, histogram
+empty. Perf: the pool draws only inside the existing bonfire gate (`v∈(0.42,0.47)` beach cells at `LITAMT>0.5`), a
+handful of cells at night ⇒ ~0 path objects at the fair-weather perf pins — free.
+
+**Probe (`probes/probe-firepool.mjs`).** DUAL isolation in one page (floor 0, build-agnostic): `FIREPOOL=1 vs 0` → the
+POOL alone (the new ink); `FIREGLOW=1 vs 0` → the flame's own halo (the INCUMBENT bar, 226 — no threshold invented).
+Result: **POOL 476px (s42) / 299px (s7), peak 31/33, 62% / 67% of the incumbent halo's ink** — a substantial,
+grounded warm pool at the fires' feet; and **0px / 0 ink by DAY** (LITAMT=0.02, the bonfire gate false ⇒ the free
+dead-regime control, 199) on both seeds.
+
+**Visual (`probes/shot-firepool.mjs`).** Blind A/B in ONE build — `FIREPOOL=1` vs `FIREPOOL=0` (=HEAD) — so no build
+swap, no cross-build floor. Meaningless non-ordinal tokens, pool/no-pool map CROSSED between seeds (238/239/268;
+md5-distinct pairs confirmed). BOTH blind agents, one per seed, **correctly named the pool variant on the crossed map**
+(s42 orin=ON→"orin"; s7 vael=ON→"vael") and returned **VISUAL: PASS**: the pool is "a horizontally-elongated amber
+ellipse on the sand… flat and squashed, hugging the ground plane at the fire's base, not a floating orb", warm amber
+(R>G>B), not blown out (max R ~212, 0 near-white px); the whole-city frames differ ONLY along the coastline where
+bonfires sit — no z-order tears, floating tiles, blown-out colour or clutter anywhere; both still read as a coherent
+night coastal city. A genuine blind identification, not a positional guess.
+
+**Verdict: SHIPPED (DEEPENED).** Completes the bonfire the way 347 completed the strike — the fire now lights the sand
+it stands on. Second confirmation of 347's reusable finding: a shipped emitter that casts onto itself and stops is a
+live, high-contrast Deepen the saturation surveys miss. No new SKILL.md law (every law used — 279/257/195/291/248/253/
+226/199/238/239/268 — is already promoted). Banked `probes/probe-firepool.mjs` + `probes/shot-firepool.mjs`.
+
