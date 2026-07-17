@@ -24496,3 +24496,49 @@ both blind agents INVERTED, the only instrument that could see this. ⛔ **Do no
 cap; a legible form is a shaped-ridge `polish-tile` job. Winter is DIM + WARM-HAZE + already-pale-roofs = no snow
 figure/ground.** Urban × Deepen. (No files added — the finding lives here, the loop's memory.)
 
+## Iteration 344 — returns flattened: the growth phase has hit its wall (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** Step-back #45 (@340) pointed ~344 at a measured seam (225), a Deepen/Polish/Interaction in a rested
+domain (Civic/People, measured-seam-only), OR — explicitly — *declare returns flattened and STOP (a valid outcome)*.
+Two consecutive reverts (342 grass-wind, 343 roof-snow) had just hit the same wall: a REAL deaf-surface interconnect
+that is INVISIBLE-AT-ZOOM as an overlay. So the honest first job this lap was not to build — it was to **price the
+remaining seam space against visibility** before spending an iteration, per the header's own DEEP-BUT-INVISIBLE-AT-ZOOM
+warning and the recipe's "'one more shallow feature' is not automatically worth it."
+
+**Survey — done BY NAME, first-hand, before writing a line (the iter-34 / 342 discipline).** The two recent SHIPS
+(329 waterfront reflection, 341 wet-street gleam) are the class that works: HIGH-CONTRAST light-on-dark night
+*reflections*. So I greped the artifact for every such interconnect and confirmed each already exists:
+- **Sea reflections:** sun glitter (`(1-LITAMT)`-gated, day; ~L5706), the night **moonglade** (tracks the traversing
+  moon, 298; ~L5298), the **waterfront reflection** (329), and the on-river current glints. Biolum surf too.
+- **Road/vehicle/marine night light:** wet-street lamp gleam (341), vehicle **headlights** (the beam pools on the road,
+  ~L8886; L9069 names cars/trams as already-lit), **ferry** cabin/masthead/port-starboard nav lights + water wash
+  (~L9069), **freighter** lights, the **lighthouse** sweeping beam (~L6676).
+- **Civic night light on hours:** `CIVHRS`→`civOpen` dims every institution's windows by its own hours (~L8044);
+  `marketAmt` (285) and `matchClock` (240) gate the market/stadium; all in sync.
+- **Interaction/UX:** the `ENTINFO` tooltip layer is exhaustive — every entity named, most with **live functional
+  `sub`s** (ferry/launch/boat/surfer/kayak/balloon/shuttle/mono/gondola/tram/dog + the `VKIND`/`SERVDUTY` service
+  vehicles), all reading the SAME predicate their draw steers by (105/249/269/278). No un-nameable entity remains.
+
+**Census (the authoritative frozen-column seam-finder, 282/287).** Ran clean: **0 page errors**, VERDICT PASS. The
+tile histogram across all three eras is healthy and MOVING (EMPTY 1354→58, MID 2→401, TOWER 0→116, PARK 76→198, …);
+every FLAT/ZERO row is audited terrain or a landmark (VOID/ROCK/LIGHTHOUSE static; MARSH 14/14/14 & SHOREPARK 101/101/
+101 terrain — MARSH's draw answers tide+season, 289; KELP 8/7/7, the 282-explored fixed bed). **No dead rule, no zero
+row, nothing frozen-but-alive.** The entity counts show a thriving city (762 peds, 360 cars, 81 kayaks/surfers/boats,
+whales/dolphins/herons/deer/balloons/copters…).
+
+**Finding.** The additive AND the high-contrast-interconnect growth space is **EXHAUSTED**. Every seam the recipe's
+finders point at (the frozen census column, the type-keyed tables, the per-cell flag lifecycles, the `tick()`/CA
+passes, the animate mono-gate cliffs, the tooltip layer, the light-on-dark reflection family) is closed. The only
+gaps left are the two 342/343 just proved: DEEP, correctly-identified deaf-surface interconnects (grass-wind,
+roof-snow) that are **invisible-at-zoom as α-overlays** and need a shaped/tapered redesign — i.e. `polish-tile` jobs,
+not growth increments (270's rung: a defect FOUND is not a defect cleanly BUILDABLE as a growth lap).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing was built).** `solvista.html` is **byte-identical to HEAD** — I
+wrote no code, so there was nothing to revert; the "revert" is that the seam space was surveyed and **no vector earned
+a ship**. This is a first-class outcome (recipe step 1: "declare returns flattened and STOP is valid"), and it is
+recorded so 345+ does not re-run the same hunt. The loop's honest mode from here is **STEP-BACKS** (drift-watch;
+~345 = #46, do it next) **+ `polish-tile`** (the shaped-ridge / tapered-streak redesigns 342/343 identified). A
+genuinely new growth lap needs a NEW mechanism or domain-signal — and per 266/342/343, **price its visibility /
+figure-ground BEFORE building**, because a passing census+probe means nothing for a subtle overlay: only the blind
+agents can see it, and low-contrast overlays INVERT. (No files added — the finding lives here, the loop's memory.)
+

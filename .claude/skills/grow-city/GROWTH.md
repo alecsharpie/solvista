@@ -32,17 +32,18 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **353 — THE TYPE-KEYED TABLE SEAM IS SOUND / survey NO SHIP** (audited all 32 `T.*` types against
-  TILELABEL/TILEDESC/POPW/BEDT; every missing member is a deliberate omission with a correct alt path — ROAD/CIVIC
-  handled bespoke in `describeTile`, loft bedtime per-cell via `bedOf` — NO 285/288-class type-hierarchy blindness. The
-  growth wall now confirmed from FOUR angles: 344 declared · 350 visual/perf · 351 behavioral · 353 structural/table.
-  Byte-identical.) Prev: **352 — THE WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / EXPLORED → REVERTED** (Sky × Deepen; the
-  lightning system is fully LOCAL (291/328/347); a per-frame `FLASHAMT` whole-viewport bluish-white wash reverted —
-  **260 ON A FLASH: a whole-frame luminance lift is the one "event" the eye cannot read as an event** (colour constancy
-  divides a global cast out as ATMOSPHERE/haze; a flat overlay only DESATURATES). ⛔ **A "whole-scene event" as a FLAT
-  OVERLAY is dead on arrival, and a passing luminance/coverage probe proves NOTHING — only blind eyes judge a
-  desaturating wash (266/342/343); a believable one needs a SKY→ground GRADIENT = `polish-tile`.** Full text in the 352
-  entry.) Prev: **351 — HALF-BUILT/KEEPS-NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card
+- **ROTATION.** Last: **354 — THE COMMENT-TELL SEAM IS CLEAN / survey NO SHIP** (grepped the 199/278/280/282
+  comment-tell family across all `/* */`: every "never/always/once/static" comment is a HEALTHY justification of
+  correct behavior — "so it can never call a wrong hour", "a palm does not migrate" — NOT a defect-tell; no
+  absence-asserting-a-LIVE-rule, no changelog-as-taxonomy. ⚠ **Source BYTE-FROZEN since iter 349** (HEAD≡349≡350 md5
+  `b9dbdb8e`): 350/351/352/353/354 shipped nothing, so **STEP-BACK #48 would re-measure the EXACT bytes #47 already
+  vetted — do NOT fire it until source actually drifts.** Growth wall confirmed from FIVE angles: 344 declared · 350
+  visual/perf · 351 behavioral · 353 table · 354 comment-tell.) Prev: **353 — TYPE-KEYED TABLE SEAM SOUND / survey**
+  (all 32 `T.*` vs TILELABEL/TILEDESC/POPW/BEDT; missing members deliberate w/ correct alt path; NO 285/288
+  blindness). Prev: **352 — WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / REVERTED** (Sky × Deepen; ⛔ **a whole-scene
+  event as a FLAT OVERLAY is dead — 260 on a flash: colour constancy divides a global luminance lift out as haze; a
+  passing coverage/luminance probe proves NOTHING, only blind eyes judge a desaturating wash; a believable one needs a
+  SKY→ground GRADIENT = `polish-tile`**). Prev: **351 — HALF-BUILT/KEEPS-NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card
   live, every flag rides its upgrade; 344's wall from BEHAVIORAL side. 🆕 loose `birds` fade α0.15 not roost — `polish-tile`
   only.) Prev: **350 — STEP-BACK #47 / NO DRIFT** (3 lights × 2 seasons × 2
   seeds blind-PASS; core byte-flat; perf +0.020%/lap day vs 285 over ~64 laps. ⚠ Watch: inland tower core dense but NOT
@@ -64,14 +65,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   prism) · Civic **326** (CIVIC SQUARE `c.civ`) · **STEP-BACKS #42–#44 @325/330/335** (NO DRIFT) · **324–319** (desire
   paths · wildflowers · whales · SNOW `c.snow` ⚠ warp=61 freezes it ON · civic) · People **318/317** · Urban **316**
   (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #48 @~355.
-  The half-built-emitter vein (a draw that lands/emits/casts and STOPS) is CLOSED 3-for-3 (347/348/349) — do NOT ship a
-  4th light-pool; AND 351 tested the OTHER half-built vein (a mover that arrives+idles / a spawn that never completes)
-  and found it DRY; AND 352 tested the last un-built high-contrast interconnect (a WHOLE-SCENE lightning flash) and it
-  REVERTED — a flat full-frame wash reads as HAZE, not an event (260/342/343; do NOT re-try any "whole-scene X" as a flat
-  overlay). So honest mode is now `polish-tile` (342/343's shaped-ridge/tapered-streak deaf-surface redesigns) or
-  STEP-BACK-only; a NEW growth lap needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST **and figure/ground
-  LOCAL** (a flat whole-frame lift is dead — 352) — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: the growth vein is DRY
+  from FIVE angles and SOURCE IS BYTE-FROZEN since 349 — so STEP-BACK #48 must WAIT until an actual ship drifts the
+  bytes (re-shooting #47's identical frames buys nothing). Honest mode is `polish-tile`** (342/343's shaped-ridge /
+  tapered-streak deaf-surface redesigns; open cue (ay) windrow LENGTH) **or genuinely NEW: a mechanism/domain-signal-
+  reader that is HIGH-CONTRAST and figure/ground LOCAL** (the emitter vein is CLOSED 3-for-3 347/348/349; the
+  arrive+idle / spawn-completion vein is DRY 351; the whole-scene-flash interconnect REVERTED as haze 352 — do NOT
+  re-try any "whole-scene X" as a flat overlay) — PRICE VISIBILITY / figure-ground FIRST (266/342/343/352).** Additive space SPENT (331).
   ⇒ ⚠ **A passing census+probe means NOTHING for a subtle overlay — only the blind agents do. A HIGH-CONTRAST LOCAL
   interconnect ships (341); a LOW-CONTRAST or WHOLE-FRAME one (snow/pale/haze/352's flash) HAZES. Figure/ground FIRST (266/342/343/352).**
   ⚠ **TRANSPORT ENTITY/ADDITIVE SEAMS SATURATED** (304/312/329; hairline cues = ⛔ `polish-tile`; but 341 found a CROSS-DOMAIN seam the note missed — the rain had no ROAD reader, 280).
@@ -390,57 +390,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 346 entries before Iteration 344 live in
+> **Archive:** the 347 entries before Iteration 345 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 344 — returns flattened: the growth phase has hit its wall (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
-
-**Vector.** Step-back #45 (@340) pointed ~344 at a measured seam (225), a Deepen/Polish/Interaction in a rested
-domain (Civic/People, measured-seam-only), OR — explicitly — *declare returns flattened and STOP (a valid outcome)*.
-Two consecutive reverts (342 grass-wind, 343 roof-snow) had just hit the same wall: a REAL deaf-surface interconnect
-that is INVISIBLE-AT-ZOOM as an overlay. So the honest first job this lap was not to build — it was to **price the
-remaining seam space against visibility** before spending an iteration, per the header's own DEEP-BUT-INVISIBLE-AT-ZOOM
-warning and the recipe's "'one more shallow feature' is not automatically worth it."
-
-**Survey — done BY NAME, first-hand, before writing a line (the iter-34 / 342 discipline).** The two recent SHIPS
-(329 waterfront reflection, 341 wet-street gleam) are the class that works: HIGH-CONTRAST light-on-dark night
-*reflections*. So I greped the artifact for every such interconnect and confirmed each already exists:
-- **Sea reflections:** sun glitter (`(1-LITAMT)`-gated, day; ~L5706), the night **moonglade** (tracks the traversing
-  moon, 298; ~L5298), the **waterfront reflection** (329), and the on-river current glints. Biolum surf too.
-- **Road/vehicle/marine night light:** wet-street lamp gleam (341), vehicle **headlights** (the beam pools on the road,
-  ~L8886; L9069 names cars/trams as already-lit), **ferry** cabin/masthead/port-starboard nav lights + water wash
-  (~L9069), **freighter** lights, the **lighthouse** sweeping beam (~L6676).
-- **Civic night light on hours:** `CIVHRS`→`civOpen` dims every institution's windows by its own hours (~L8044);
-  `marketAmt` (285) and `matchClock` (240) gate the market/stadium; all in sync.
-- **Interaction/UX:** the `ENTINFO` tooltip layer is exhaustive — every entity named, most with **live functional
-  `sub`s** (ferry/launch/boat/surfer/kayak/balloon/shuttle/mono/gondola/tram/dog + the `VKIND`/`SERVDUTY` service
-  vehicles), all reading the SAME predicate their draw steers by (105/249/269/278). No un-nameable entity remains.
-
-**Census (the authoritative frozen-column seam-finder, 282/287).** Ran clean: **0 page errors**, VERDICT PASS. The
-tile histogram across all three eras is healthy and MOVING (EMPTY 1354→58, MID 2→401, TOWER 0→116, PARK 76→198, …);
-every FLAT/ZERO row is audited terrain or a landmark (VOID/ROCK/LIGHTHOUSE static; MARSH 14/14/14 & SHOREPARK 101/101/
-101 terrain — MARSH's draw answers tide+season, 289; KELP 8/7/7, the 282-explored fixed bed). **No dead rule, no zero
-row, nothing frozen-but-alive.** The entity counts show a thriving city (762 peds, 360 cars, 81 kayaks/surfers/boats,
-whales/dolphins/herons/deer/balloons/copters…).
-
-**Finding.** The additive AND the high-contrast-interconnect growth space is **EXHAUSTED**. Every seam the recipe's
-finders point at (the frozen census column, the type-keyed tables, the per-cell flag lifecycles, the `tick()`/CA
-passes, the animate mono-gate cliffs, the tooltip layer, the light-on-dark reflection family) is closed. The only
-gaps left are the two 342/343 just proved: DEEP, correctly-identified deaf-surface interconnects (grass-wind,
-roof-snow) that are **invisible-at-zoom as α-overlays** and need a shaped/tapered redesign — i.e. `polish-tile` jobs,
-not growth increments (270's rung: a defect FOUND is not a defect cleanly BUILDABLE as a growth lap).
-
-**Verdict: EXPLORED → REVERTED (a SURVEY — nothing was built).** `solvista.html` is **byte-identical to HEAD** — I
-wrote no code, so there was nothing to revert; the "revert" is that the seam space was surveyed and **no vector earned
-a ship**. This is a first-class outcome (recipe step 1: "declare returns flattened and STOP is valid"), and it is
-recorded so 345+ does not re-run the same hunt. The loop's honest mode from here is **STEP-BACKS** (drift-watch;
-~345 = #46, do it next) **+ `polish-tile`** (the shaped-ridge / tapered-streak redesigns 342/343 identified). A
-genuinely new growth lap needs a NEW mechanism or domain-signal — and per 266/342/343, **price its visibility /
-figure-ground BEFORE building**, because a passing census+probe means nothing for a subtle overlay: only the blind
-agents can see it, and low-contrast overlays INVERT. (No files added — the finding lives here, the loop's memory.)
 
 ## Iteration 345 — forty-nine laps on, still no drift (2026-07-18) [46th step-back / holistic]
 
@@ -828,3 +782,51 @@ angles. Honest mode stays **`polish-tile`** (the shaped-gradient deaf-surface re
 snow-ridge/cat's-paws, 352's flash-as-sky→ground-gradient) or **STEP-BACK #48** (~355). A genuine growth lap still needs
 a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL, and none has survived a probe since
 341. Nothing to fix.
+
+## Iteration 354 — the comment-tell seam is clean, and the source has been byte-frozen for five laps (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** Five of the last five laps found nothing to ship: 344 declared the growth wall, 350 (#47) confirmed it
+visual/perf, 351 surveyed the behavioral seams (movers/cards/flags/frozen-columns) dry, 352 built and reverted the
+last high-contrast whole-scene interconnect (the lightning flash → haze), 353 audited the type-keyed TABLES sound.
+Re-running any of those would be redundant, so this lap tested a **different** seam class none of them covered and
+that the loop's biggest historic finds came from: the **comment-tell family** — 199 (a name/comment asserting a
+behavior its value can't have) · 282 (a comment asserting an *absence* the code contradicts) · 278 (a "computed
+live" whose only caller is an event) · 280 (a comment enumerating its category as a changelog, so a sibling is
+missing). No source touched; `solvista.html` byte-identical to HEAD (630b04b / 5e06907).
+
+**Survey — the comment-tell seam came back CLEAN.** Grepped every `/* */` comment carrying `never|always|once|static|
+constant|frozen|fixed|no .*state|does not|carries no`. Every hit is a **healthy justification of correct behavior**,
+not a defect-tell — the *inverse* of the 282 shape (an assertion of an absence that turns out true because the rule
+is dead):
+- **"X is right *because* it never Y":** `Math.random so [dolphins] never perturb the [stream]` (L1352) · `outside the
+  plate: never drawn, never grows` (L992) · `the band can never spill past the waterline` (L6025) · `three salt RANGES,
+  spaced so 0x..+j can never collide` (L6733) · `never atop track already down` (L3271). All are correctness proofs.
+- **Tooltip-reads-the-SAME-predicate-the-draw-does** (the FIXED 113/199 shape, not the tell): `so it can never call a
+  wrong hour` (L4670/4758) · `the MARKET… never got one (iter 285)` now DOES (L4802/4846) · `so the two can never [drift]`
+  (L2094). These are the label-tell already *closed*.
+- **Deliberate un-readers, correctly commented:** `a palm does not feel the drought` / `the palm's band is UNSEASONED
+  — a palm does not migrate` (L5091/6177) — the 247 palm-vs-umbrella fix, working as designed.
+- **The one genuine open item is already banked and out of scope:** `the foam gets a SHAPE, because it could never get
+  a SIZE` (L5277) = open cue **(ay)** windrow LENGTH — a `polish-tile` job, not a growth lap.
+No absence-asserting-a-LIVE-rule (282), no changelog-as-taxonomy with a missing sibling (280), no frozen "computed
+live" (278). This confirms 344's growth wall from a **fifth** independent angle.
+
+**⚠ The load-bearing new fact: SOURCE IS BYTE-FROZEN SINCE ITER 349.** `md5(solvista.html)` = `b9dbdb8e8ad377d8df940e2d804a572b`
+for HEAD **≡ iter 349 (5e06907) ≡ iter 350 (#47, d6b7805)** — 350/351/352/353/354 shipped no bytes. Consequences:
+- Path objects unchanged by construction (measured `probe-drawbudget` night total ~139,837 = iter 349's 139,810). The
+  permanent perf arc is *identical* to what #47 measured; there is nothing new on the perf axis to price.
+- **A STEP-BACK #48 now would re-shoot #47's byte-identical frames and re-spawn blind agents to re-confirm a
+  byte-identical PASS** — the redundant-lap / grade-your-own-instrument trap. **A step-back's whole job is to catch
+  DRIFT since the last one, and there has been ZERO source drift.** So #48 is deferred until an actual ship moves the
+  bytes; re-running it on frozen source buys nothing. (The header's "#48 @~355" is superseded by this.)
+
+**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
+`roads` byte-flat (195508 / 6056 / 5727); entity populations full and healthy (peds 762, cars 360, surfers 81,
+kayaks 81, buoys 45, plane 9, copters 6, etc.). No histogram move (no source change).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The comment-tell seam is
+**CLEAN** — the growth vein is now dry from FIVE angles (declared 344 · visual/perf 350 · behavioral 351 · table 353 ·
+comment-tell 354). Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343-class deaf-surface
+redesigns) **or wait for source to drift before the next step-back**. A genuine growth lap still needs a NEW
+mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL — none has survived a probe since 341.
+Nothing to fix.
