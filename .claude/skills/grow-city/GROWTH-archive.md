@@ -24379,3 +24379,58 @@ last un-enumerated reader of the rain mechanism, and the land analog of the wate
 × night lamps × the road network, an interconnect across three domains. Exact fixed point when dry (DRY ≡ HEAD),
 census byte-identical. Transport × Deepen. `probes/probe-wetgleam.mjs`, `probes/shot-wetgleam.mjs`.
 
+## Iteration 342 — cat's-paws on the grass, and why they can't be seen (2026-07-17) [Nature × Deepen → EXPLORED → REVERTED]
+
+**Vector.** Step-back #45 (@340) pointed ~342 at a measured seam (225) or a Deepen in a rotated domain (avoid
+Sky/Water; Transport/People/Civic just ran ⇒ Nature/Urban rested). I ran the seam-finders first: the frozen census
+tile histogram (SHOREPARK 294/294/294 and the other flat rows are audited terrain/landmarks; no dead-rule zero row —
+287's `SOLARF` is now 0/0/19), the "carries no CA state" grep (only the *fixed* kelp, 282), and the tooltip table
+(every tile has a LABEL+DESC; ROAD/CIVIC's missing DESC is their custom branch, not a gap). Two natural Nature/rain
+Deepens were **already built** and I refuted them by reading before writing a line (the iter-34 discipline): autumn
+foliage (`applySeason` ambers the deciduous canopy + `autumnFall` litter) and wet-ground darkening (the under-cloud
+damp-patch blob, ~L9781, is the rainFront comment's "wet the ground"). The one genuinely-open seam, found by the 280
+grep (the MECHANISM `windForce`, not a reader noun-list): **the open GRASS is the last large surface deaf to the wind
+every other thing rides** — trees sway, palms/flags flap, kites fly, sails belly, smoke leans, the sea streaks into
+windrows, the bunting streams (280) — while the meadow/shorepark/park grass sat as a flat fill in any weather.
+
+**Change (built, then reverted — draw-only, no `rng()`/terrain, unreachable from `tick()`).** `grassGust(x,y,gx,gy)`
+called from MEADOW/SHOREPARK/PARK/FIELD after each body fill: a **cat's-paw** — the sea's windrow on land (266). A pale
+`colA('meadow',1.42,a)` ellipse, sub-hex in WIDTH (never an edge, cannot terrace — 255) and ~1.5–2 hexes LONG along the
+wind, tilted off the E-W axis (or a field of streaks traces the grid), its tail trailing UPWIND over grass already
+painted (draw order is depth order), gated per-hex by `hashCell` with share ∝ `windForce()`, α pulsing on a slow clock
+(gusts gather and pass; too slow to strobe, 134). Day-biased (`LITAMT>0.72` → nothing, hands off to the night like the
+windrow). At `windForce()==0` (dead calm, `WINDA≤0.25`) it draws NOTHING ⇒ a still frame is byte-identical to HEAD (245).
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors, VERDICT
+PASS (only the known `solarRoofs −2` tick-timing wobble, 226, not mine).
+
+**Probe** (`probe-catspaw.mjs`, build-agnostic — hooks `ctx.ellipse` and counts the cat's-paw by its UNIQUE GEOMETRIC
+signature `ellipse(0,0, len, 1.4, …)` (285: `radiusY===1.4`, a value no other ellipse forges); NO NOISE FLOOR AT ALL;
+`window.grassGust=()=>{}` renders HEAD in-page, 253). 4 seeds, frozen clock: **GALE 57–66/city fires (LITAMT 0.01 =
+genuinely day, 202) · CALM 0 (dead calm ≡ HEAD, exact fixed point, 245) · NIGHT 0 (day-biased, LITAMT 1.00) · HEAD
+(suppressed) 0 (the ry=1.4 signature is grassGust-only — control 250 holds).** RESPONSE/DAY-BIAS/CONTROL all PASS.
+
+**Visual — THE GATE THAT KILLED IT** (`shot-catspaw.mjs`, blind CALM/GALE A/B aimed by the cat's-paw's OWN ink (226/272),
+tokens meaningless + CROSSED between seeds (238/239/268), md5-confirmed the pairs differ). **BOTH blind subagents, on
+BOTH seeds, INVERTED the call** — each named the CALM (provably 0 cat's-paws) frame as the windy one, at moderate
+confidence, describing "faint pale streaks" that were the meadow's own tree-shadow/texture. I looked myself (239: a
+visual inversion is a cue to check the instrument, then look): the gale frame's meadow does differ — but the low-α
+(~0.10) ellipse scatter **HAZES rather than MARKS** (203/215): it reads as a diffuse pale WASH over the grass that even
+mildly FADES its lush green, NOT as discrete wind streaks — so the richer *un-washed* calm frame looked "more textured"
+and both agents mapped that to "streaks."
+
+**Why it can't be rescued (and why it's `polish-tile`, not a growth lap).** To read as a streak rather than a haze it
+needs (a) higher contrast AND (b) a proper tapered/discrete shape (the sea windrow's cubic + `wrowHalf`, not a flat
+ellipse). But a pale mark on GREEN grass bright enough to be a discrete streak reads as a **scratch/artifact** (159's
+neon-tube, 214's per-edge, 215's smudge) — foam-white on teal works precisely because it is high-contrast and windrows
+are a familiar sea texture; grass-wind has no foam and is subtle in reality. This is the header's own
+**DEEP-BUT-INVISIBLE-AT-ZOOM** warning made manifest, and 270's rung: a defect FOUND is not a defect cleanly BUILDABLE
+here — a legible tapered-streak form is a focused shape redesign, not a growth increment.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (grassGust removed); probe + shot removed
+(they reference the reverted `grassGust`). The grass-wind gap is REAL and correctly identified (280), the mechanism
+fires with an exact fixed point (census + probe PASS), and it is **invisible-at-zoom as an overlay wash** — the visual
+gate (two blind agents, both inverted) is the only instrument that could see this, and a passing census+probe meant
+nothing for a subtle draw. ⛔ **Do not re-try grass-wind as an α-scatter overlay; if ever, it is a tapered-streak
+`polish-tile` job.** Nature × Deepen. (No files added — the finding lives here, the loop's memory.)
+

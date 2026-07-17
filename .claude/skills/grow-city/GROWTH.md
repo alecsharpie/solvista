@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~, ~~**343**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~, **341** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338**, **339** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328**, **347** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328**, **347**, ~~**352**~~ | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318**, **336**, **337** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -32,26 +32,27 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **351 — THE HALF-BUILT-COMPLETION / KEEPS-NO-HOUR VEIN IS DRY / NO SHIP (survey)** (the header's
-  last named growth option, tested directly by grepping its seam classes; ALL sound: movers arrive+idle (ferry/launch/
-  copter/mono/cable/bus all dwell), ENTINFO/VKIND/SERVDUTY cards all live, per-cell flags (wear/hstr/civ/treed/bridge/
-  riv) all ride upgrades, plane/flock complete, `probe-frozencol` clean (no new dead rule/zero row). Confirms 344's wall
-  from the BEHAVIORAL side, as 350 did from visual/perf. Byte-identical. 🆕 one polish-only note: loose `birds` fade to
-  α0.15 at night rather than roost like the pelican flock — invisible at fit zoom ⇒ `polish-tile`/Sky close-up only, NOT
-  a growth lap. Full text in the 351 entry.) Prev: **350 — STEP-BACK #47 / NO DRIFT** (whole-city 3 lights × 2 seasons ×
-  2 seeds both blind-PASS; census core byte-flat; perf +0.020%/lap day vs 285 over ~64 laps, FLAT vs #46. ⚠ Watch:
-  inland tower core dense but NOT wallpaper — do NOT add raw downtown density.) Prev:
-  **349 — THE CHANNEL MARKS MIRROR THEIR FLASH / SHIPPED (DEEPENED)** (Water × Deepen; buoy red/green flash now reflects
-  on the water — 3rd confirmation of 347, ✅ **CLOSES the water-reflection CATEGORY (271/280)**; full text in the 349
-  entry, laws in SKILL.md. Banked `probes/probe-buoyreflect.mjs`.) Prev: **348 — A FIRE LIGHTS THE GROUND IT SITS ON /
-  SHIPPED (DEEPENED)** (Water × Deepen; bonfire self-glow → warm firelight pool on sand, `FIREPOOL`/`FIREGLOW`, 2nd
-  confirmation. Full text in the 348 entry.) Prev: **347 — THE STRIKE LIGHTS THE GROUND IT HITS / SHIPPED** (Sky ×
-  Deepen; 328's grounded bolt → bluish-white ground pool, `GFLASH`, 1st proof a half-built emitter is a live Deepen.
-  Full text in the 347 entry; 346 banked `probe-frozencol.mjs`.)
-  Prev: ~~**Urban 343**~~ (SNOW ON ROOFS — `SNOWLAND` type-set blind to buildings (274), REAL gap; a `colA`-white cap on
-  pale roofs in dim warm-haze winter = NO figure/ground, both agents INVERTED. ⛔ INVISIBLE-AT-ZOOM, `polish-tile` only.) Prev:
-  ~~**Nature 342**~~ (CAT'S-PAWS — grass deaf to `windForce`; a low-α ellipse scatter HAZES not MARKS (203/215),
-  BOTH agents INVERTED; ⛔ INVISIBLE-AT-ZOOM, tapered-streak `polish-tile` only.) Prev: **Transport 341** (WET STREETS
+- **ROTATION.** Last: **352 — THE WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / EXPLORED → REVERTED** (Sky × Deepen; the
+  lightning system is fully LOCAL — 291 cloud / 328 bolt / 347 ground pool — so I built the un-built piece: a per-frame
+  `FLASHAMT` (max flash across the storm's out-of-step cells) drives one whole-viewport bluish-white wash at flash peaks.
+  Census flat, `probe-sheetlift` clean (100% scene cover, mean d 24.7, exact 0 fixed point between beats + in dry). But
+  the VISUAL killed it: 2 blind agents INVERTED the map — both preferred the *un-flashed* frame as "colors pop," called
+  the flash frame "muted"; measurement (239) confirmed the flash IS +19 lum but a **flat alpha wash only DESATURATES** →
+  I looked: a grey-lavender HAZE veiling the plate, not a flash. **THIS IS 260 ON A FLASH: a whole-frame luminance lift
+  is the one "event" the eye cannot read as an event — colour constancy divides out a global cast as ATMOSPHERE. A
+  "whole-scene event" built as a FLAT OVERLAY is dead on arrival, and a passing luminance/coverage probe proves NOTHING
+  — only the blind agents/eyes judge a desaturating wash (266); the low-contrast whole-frame trap 342/343 hit, one rung
+  up.** A believable whole-scene flash needs a SKY→ground gradient, a `polish-tile` redesign. Byte-identical. Full text
+  in the 352 entry.) Prev: **351 — HALF-BUILT/KEEPS-NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card
+  live, every flag rides its upgrade; 344's wall from BEHAVIORAL side. 🆕 loose `birds` fade α0.15 not roost — `polish-tile`
+  only.) Prev: **350 — STEP-BACK #47 / NO DRIFT** (3 lights × 2 seasons × 2
+  seeds blind-PASS; core byte-flat; perf +0.020%/lap day vs 285 over ~64 laps. ⚠ Watch: inland tower core dense but NOT
+  wallpaper — do NOT add raw downtown density.) Prev: **349 — CHANNEL MARKS MIRROR THEIR FLASH / SHIPPED** (Water ×
+  Deepen; ✅ **CLOSES the water-reflection CATEGORY (271/280)**; banked `probes/probe-buoyreflect.mjs`.) Prev: **348/347
+  — FIRE & STRIKE LIGHT THEIR OWN GROUND / SHIPPED** (the emitter-vein confirmations #2 & #1; `FIREPOOL`/`GFLASH`; full
+  text in entries; 346 banked `probe-frozencol.mjs`.) Prev: ~~**Urban 343 / Nature 342**~~ (SNOW ON ROOFS · CAT'S-PAWS —
+  both LOW-CONTRAST/haze redesigns, both agents INVERTED, ⛔ INVISIBLE-AT-ZOOM `polish-tile` only — the trap 352 hit at
+  whole-frame scale.) Prev: **Transport 341** (WET STREETS
   MIRROR THEIR LAMPS — rain's LAST un-enumerated reader is the ROAD; `rainingAt`>0 warm smear down night lamp pools,
   dry≡HEAD, land analog of 329; draw-only). Prev: **STEP-BACK #45 @340** (NO DRIFT; perf +0.022%/lap vs 285; GWARM=0 at
   pinned dry-peak = CORRECT, overcast greys skyBot, do NOT re-chase — watch now carried by #46/346). Prev
@@ -67,37 +68,35 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #48 @~355.
   The half-built-emitter vein (a draw that lands/emits/casts and STOPS) is CLOSED 3-for-3 (347/348/349) — do NOT ship a
   4th light-pool; AND 351 tested the OTHER half-built vein (a mover that arrives+idles / a spawn that never completes)
-  and found it DRY — every mover already dwells, every card is live, every flag rides its upgrade, no dead rule hides in
-  a frozen column. So honest mode is now `polish-tile` (342/343's shaped-ridge/tapered-streak deaf-surface redesigns) or
-  STEP-BACK-only; a NEW growth lap needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST — PRICE VISIBILITY /
-  figure-ground FIRST (266/342/343).** Additive space SPENT (331).
-  ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM — PRICE VISIBILITY (266/342/343) BEFORE building; a passing
-  census+probe means NOTHING for a subtle overlay, only the blind agents do. A HIGH-CONTRAST interconnect (341's warm-
-  on-dark reflection) ships; a LOW-CONTRAST one (snow-on-snow, pale-on-pale, haze) INVERTS. Check figure/ground FIRST.**
-  ⚠ **TRANSPORT ENTITY/ADDITIVE SEAMS SATURATED** (304/312/329; hairline cues (bi)/(av) = bad trade ⇒ ⛔ `polish-tile`)
-  — but **341 found a CROSS-DOMAIN interconnect the saturation note missed: the rain MECHANISM had no ROAD reader** (280).
+  and found it DRY; AND 352 tested the last un-built high-contrast interconnect (a WHOLE-SCENE lightning flash) and it
+  REVERTED — a flat full-frame wash reads as HAZE, not an event (260/342/343; do NOT re-try any "whole-scene X" as a flat
+  overlay). So honest mode is now `polish-tile` (342/343's shaped-ridge/tapered-streak deaf-surface redesigns) or
+  STEP-BACK-only; a NEW growth lap needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST **and figure/ground
+  LOCAL** (a flat whole-frame lift is dead — 352) — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
+  ⇒ ⚠ **A passing census+probe means NOTHING for a subtle overlay — only the blind agents do. A HIGH-CONTRAST LOCAL
+  interconnect ships (341); a LOW-CONTRAST or WHOLE-FRAME one (snow/pale/haze/352's flash) HAZES. Figure/ground FIRST (266/342/343/352).**
+  ⚠ **TRANSPORT ENTITY/ADDITIVE SEAMS SATURATED** (304/312/329; hairline cues = ⛔ `polish-tile`; but 341 found a CROSS-DOMAIN seam the note missed — the rain had no ROAD reader, 280).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
   **NATURE** additive spent (301 deer), Polish paid (294); next = grep the tick()/CA seam (287/279). **URBAN**
   tooltip/flag/TABLE SATURATED (295/302), Interaction/UX ran (133/**327**) ⇒ take no Urban vector without a measured
   seam. **PEOPLE** FULLY ROTATED across kinds (Deepen 14-deep · Polish 300 · Interaction 278 · New CA 324) ⇒ measured
   seam only. **CIVIC** additive COMPLETE (292), Connect measured-sound (285 civic mile — do NOT "fix"), stale = **New
-  CA rule (36/107)** — but that just RAN (326), so next Civic = seam/Deepen. **SKY** additive NOT fully spent (291
-  lightning, sparsest cell — 3rd ever). **TRANSPORT** all seams dry (304); its two named cues are the 0.5px hairline
+  CA rule (36/107)** — but that just RAN (326), so next Civic = seam/Deepen. **SKY** additive now SPENT (352 reverted the
+  last lightning interconnect, whole-scene flash = haze; system COMPLETE as local). **TRANSPORT** all seams dry (304); its two named cues are the 0.5px hairline
   `polish-tile` family ⛔, stale = **New CA rule (77)**. Every animate draw now *verifiably* off the 262 cliff (300 the last).
-  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next). ✅ **CLOSED (detail archived at 333 / in each
-  entry; laws in SKILL.md):** (ba) 327 · (az) 314 · (bh) 317 · (bd) 284 · (au) 302 · (ax)+(bg) 294 · (bf) 299 · **(bj) 333**.
-  🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
-  neon evening crowd stood all night, all-at-once, while the busker in front of it kept an hour; found by grepping
-  every entity/People draw for a gate on a global-monotone signal, the tell 262/286 warn of.**) (**288: the FLAG-LIFECYCLE grep — `c.solar`/`c.groof`, the two rooftop-tech CAs the HUD counts and the tooltip names, were written on RES/MID/COM and DRAWN nowhere on a TOWER, so downtown's tallest roofs could never carry them — 285's type-hierarchy blindness, found by grepping the WRITER against the DRAW branch.**) (**287: `SOLARF` — fully drawn, promised on the placard,
-  banked as an open question at iter 107 — had NEVER ONCE EXISTED; the FROZEN CENSUS COLUMN found it in ten seconds,
-  while Nature's banked cue was a fairy-ring contrast nudge.**) (**285: the MARKET kept no hours and no day, because
-  `CIVHRS` keys on `c.kind` and a MARKET is a TILE TYPE — the hours ladder could not NAME it. 240 gave the STADIUM
-  a fixture and wrote 271's enumerate-the-CATEGORY law down while doing it; the market is its sibling on the SAME
-  LINE of `syncFleet` and was never enumerated.**)
-  (283 a spontaneous contagion that had converted 94% of its host ⇒ "Boulevard" was the DEFAULT developed street
-  (333/city vs 29 Avenues) and 171's label ladder named a distinction that did not exist · 282 a `tick()` pass that
-  fires on TICK 1 then converts NOTHING for 812 ticks, its own tooltip writing the silence down as design · 281 a flag whose WRITER skipped a type its VETO still counted · 280 a comment enumerating
-  its own category · 278 a comment conceding the defect while justifying a workaround · 277 the census's scalars vs the placard · 267 a rule that had NEVER RUN · 268 a seabed built from the wrong noise · 269 a tram at 1.04x on its named avenue · 271 nine surfers who never went home · 272 an autumn CA that blinked the whole wood as ONE · 274 a new feature that never told the TYPE-KEYED TABLES it existed · 276 the BUS, which could not see the stop network it exists to serve) — **AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue list — or a passing probe — records where you have LOOKED, not what is THERE; and a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.** ⚠ **Grep `tick()`, the TABLES (`BEDT`/`CIVHRS`/`TILEDESC`/`valueSrc`/`VKIND`) AND THE COMMENTS — never the cue list.**
+  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH). ✅ **CLOSED (laws in SKILL.md):** (ba) 327 · (az) 314 · (bh) 317 · (bd) 284 · (au) 302 · (ax)+(bg) 294 · (bf) 299 · **(bj) 333**.
+  🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (terse; full text in each numbered entry, laws in SKILL.md):
+  300 the last global-`LITAMT` cliff (neon crowd stood all night) · 288 a FLAG the type-keyed TABLE couldn't reach on a
+  TOWER · 287 `SOLARF` fully drawn yet NEVER ONCE existed (frozen census column caught it) · 285 the MARKET kept no hours
+  (`CIVHRS` keys `c.kind`; a MARKET is a TILE TYPE) · 283 a contagion that ate 94% of its host ("Boulevard" the default
+  street) · 282 a `tick()` pass firing on tick 1 then dead 812 ticks · 281 a flag whose WRITER skipped a type its VETO
+  counted · 280 a comment enumerating its own category · 278 a comment conceding the defect while justifying a workaround
+  · 277 census scalars vs placard · 267 a rule that NEVER RAN · 268 a seabed from the wrong noise · 269 a tram at 1.04x
+  on its named avenue · 271 nine surfers who never went home · 272 an autumn CA that blinked the wood as ONE · 274 a
+  feature that never told the TYPE-KEYED TABLES it existed · 276 the BUS blind to its own stop network — **AND 270 IS THE
+  FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue list — or a passing probe —
+  records where you have LOOKED, not what is THERE; a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE
+  IT.** ⚠ **Grep `tick()`, the TABLES (`BEDT`/`CIVHRS`/`TILEDESC`/`valueSrc`/`VKIND`) AND THE COMMENTS — never the cue list.**
   🔑 **282/287: A FROZEN CENSUS COLUMN IS A SEAM — READ IT FIRST.** A tile flat across the eras is terrain or a DEAD RULE (check which); **a ZERO row is LOUDER than a flat one** (287 `SOLARF`, flat 0 in all 9 cells for 180 laps). ✅ **SOLARF + MARSH CLOSED** (289: MARSH is terrain — draw answers tide+season; detail in the 282 block).
   🔑 **281: AND NOW GREP THE *FLAG LIFECYCLE*, THE FOURTH SEAM** (law in SKILL.md). ⚠ **For every per-cell flag
   (`corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv`), grep the passes that UPGRADE its host: does the flag RIDE the
@@ -392,66 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 344 entries before Iteration 342 live in
+> **Archive:** the 345 entries before Iteration 343 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 342 — cat's-paws on the grass, and why they can't be seen (2026-07-17) [Nature × Deepen → EXPLORED → REVERTED]
-
-**Vector.** Step-back #45 (@340) pointed ~342 at a measured seam (225) or a Deepen in a rotated domain (avoid
-Sky/Water; Transport/People/Civic just ran ⇒ Nature/Urban rested). I ran the seam-finders first: the frozen census
-tile histogram (SHOREPARK 294/294/294 and the other flat rows are audited terrain/landmarks; no dead-rule zero row —
-287's `SOLARF` is now 0/0/19), the "carries no CA state" grep (only the *fixed* kelp, 282), and the tooltip table
-(every tile has a LABEL+DESC; ROAD/CIVIC's missing DESC is their custom branch, not a gap). Two natural Nature/rain
-Deepens were **already built** and I refuted them by reading before writing a line (the iter-34 discipline): autumn
-foliage (`applySeason` ambers the deciduous canopy + `autumnFall` litter) and wet-ground darkening (the under-cloud
-damp-patch blob, ~L9781, is the rainFront comment's "wet the ground"). The one genuinely-open seam, found by the 280
-grep (the MECHANISM `windForce`, not a reader noun-list): **the open GRASS is the last large surface deaf to the wind
-every other thing rides** — trees sway, palms/flags flap, kites fly, sails belly, smoke leans, the sea streaks into
-windrows, the bunting streams (280) — while the meadow/shorepark/park grass sat as a flat fill in any weather.
-
-**Change (built, then reverted — draw-only, no `rng()`/terrain, unreachable from `tick()`).** `grassGust(x,y,gx,gy)`
-called from MEADOW/SHOREPARK/PARK/FIELD after each body fill: a **cat's-paw** — the sea's windrow on land (266). A pale
-`colA('meadow',1.42,a)` ellipse, sub-hex in WIDTH (never an edge, cannot terrace — 255) and ~1.5–2 hexes LONG along the
-wind, tilted off the E-W axis (or a field of streaks traces the grid), its tail trailing UPWIND over grass already
-painted (draw order is depth order), gated per-hex by `hashCell` with share ∝ `windForce()`, α pulsing on a slow clock
-(gusts gather and pass; too slow to strobe, 134). Day-biased (`LITAMT>0.72` → nothing, hands off to the night like the
-windrow). At `windForce()==0` (dead calm, `WINDA≤0.25`) it draws NOTHING ⇒ a still frame is byte-identical to HEAD (245).
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors, VERDICT
-PASS (only the known `solarRoofs −2` tick-timing wobble, 226, not mine).
-
-**Probe** (`probe-catspaw.mjs`, build-agnostic — hooks `ctx.ellipse` and counts the cat's-paw by its UNIQUE GEOMETRIC
-signature `ellipse(0,0, len, 1.4, …)` (285: `radiusY===1.4`, a value no other ellipse forges); NO NOISE FLOOR AT ALL;
-`window.grassGust=()=>{}` renders HEAD in-page, 253). 4 seeds, frozen clock: **GALE 57–66/city fires (LITAMT 0.01 =
-genuinely day, 202) · CALM 0 (dead calm ≡ HEAD, exact fixed point, 245) · NIGHT 0 (day-biased, LITAMT 1.00) · HEAD
-(suppressed) 0 (the ry=1.4 signature is grassGust-only — control 250 holds).** RESPONSE/DAY-BIAS/CONTROL all PASS.
-
-**Visual — THE GATE THAT KILLED IT** (`shot-catspaw.mjs`, blind CALM/GALE A/B aimed by the cat's-paw's OWN ink (226/272),
-tokens meaningless + CROSSED between seeds (238/239/268), md5-confirmed the pairs differ). **BOTH blind subagents, on
-BOTH seeds, INVERTED the call** — each named the CALM (provably 0 cat's-paws) frame as the windy one, at moderate
-confidence, describing "faint pale streaks" that were the meadow's own tree-shadow/texture. I looked myself (239: a
-visual inversion is a cue to check the instrument, then look): the gale frame's meadow does differ — but the low-α
-(~0.10) ellipse scatter **HAZES rather than MARKS** (203/215): it reads as a diffuse pale WASH over the grass that even
-mildly FADES its lush green, NOT as discrete wind streaks — so the richer *un-washed* calm frame looked "more textured"
-and both agents mapped that to "streaks."
-
-**Why it can't be rescued (and why it's `polish-tile`, not a growth lap).** To read as a streak rather than a haze it
-needs (a) higher contrast AND (b) a proper tapered/discrete shape (the sea windrow's cubic + `wrowHalf`, not a flat
-ellipse). But a pale mark on GREEN grass bright enough to be a discrete streak reads as a **scratch/artifact** (159's
-neon-tube, 214's per-edge, 215's smudge) — foam-white on teal works precisely because it is high-contrast and windrows
-are a familiar sea texture; grass-wind has no foam and is subtle in reality. This is the header's own
-**DEEP-BUT-INVISIBLE-AT-ZOOM** warning made manifest, and 270's rung: a defect FOUND is not a defect cleanly BUILDABLE
-here — a legible tapered-streak form is a focused shape redesign, not a growth increment.
-
-**Verdict: EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (grassGust removed); probe + shot removed
-(they reference the reverted `grassGust`). The grass-wind gap is REAL and correctly identified (280), the mechanism
-fires with an exact fixed point (census + probe PASS), and it is **invisible-at-zoom as an overlay wash** — the visual
-gate (two blind agents, both inverted) is the only instrument that could see this, and a passing census+probe meant
-nothing for a subtle draw. ⛔ **Do not re-try grass-wind as an α-scatter overlay; if ever, it is a tapered-streak
-`polish-tile` job.** Nature × Deepen. (No files added — the finding lives here, the loop's memory.)
 
 ## Iteration 343 — snow on the roofs, and why it drowns in the haze (2026-07-17) [Urban fabric × Deepen → EXPLORED → REVERTED]
 
@@ -871,3 +815,44 @@ keeps-no-hour growth vein is **DRY**: every mover already dwells, every card is 
 dead rule hides in a frozen column. This confirms 344's growth wall from the **behavioral** side, as 350 (#47) confirmed
 it from the **visual/perf** side. Honest mode stays **`polish-tile`** or **STEP-BACK #48** (~355); a genuine growth lap
 now needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST, visibility priced FIRST. Nothing to fix.
+
+## Iteration 352 — the whole-scene lightning flash reads as HAZE, not a flash (2026-07-18) [Sky × Deepen → EXPLORED → REVERTED]
+
+**Vector.** #47 @350 / #351 both said honest mode is `polish-tile` or step-back UNLESS a lap finds a NEW
+high-contrast domain-signal-reader (visibility priced first). Grepped the seams and confirmed the obvious interconnects
+are ALL shipped (shopfront glow on pavement L7744 · wet-street lamp mirror 341 · waterfront/buoy/fire/strike reflections
+329/349/348/347 · moonglade L9685 · sun glitter L5706). One genuinely un-built high-contrast thing survived: the
+lightning system is **entirely local** — 291 lights the cloud from within, 328 drops the bolt, 347 pools light where it
+grounds, but the darkened city AROUND a dusk storm stays exactly as dark as before, when a real flash floods the whole
+landscape. Built it: a per-frame `FLASHAMT` (max flash across the storm's out-of-step cells, accumulated in the cloud
+loop) drives one screen-space bluish-white wash over the whole viewport at the end of `render()`, alpha
+`min(0.15, FLASHAMT*0.19)`. `SHEETLIFT` suppressor; reads the existing flash pulse, draw-only.
+
+**Census.** PASS, every metric flat (draw-only, no rng/terrain/Math.random). `solarRoofs` wobble only.
+
+**Probe (`probe-sheetlift`, temporal, LIGHTN=1 in both halves so only the wash moves, ONE page).** Clean PASS on
+paper: at the strongest wet-dusk flash peak (FLASHAMT 0.837, both seeds) the lift covers **100% of the opaque scene**
+at **mean d 24.7/255 (~10%), peak 36**; and it is **exactly 0px** both in dry weather AND between the flash beats
+(FLASHAMT≈0 → byte-identical, the fixed point). ⚠ First cut read mean d **120 / peak 255** — the `getImageData` diff
+was dominated by the transparent VOID (RGB jumps 0→236 where the wash paints it, a lift the viewer never sees behind
+the CSS gradient — 200); masking to opaque scene pixels (base α==255) gave the honest 24.7.
+
+**Visual — the gate that killed it.** 2 blind agents (crossed on/off map, 2 seeds) both PASSed the effect as
+"coherent, not blown out" but **both INVERTED the filenames** — each named the *darker un-flashed* frame as the "lift"
+and called the *actual flash* frame "muted / more uniformly muted," the un-flashed one "colors pop, more saturated."
+Pixel measurement (239: believe the number over the read) confirmed MY map, not theirs (flash frame +19 whole-frame
+mean lum). But the inversion IS the finding: **a treatment that makes blind agents prefer the control has reduced
+contrast.** Looked myself: the flash-ON frame veils the whole city in a **grey-lavender HAZE** — a scrim/fog over the
+plate, not a bright flash. The bolt is dramatic; the whole-scene wash only *detracts*.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (630b04b); probe + camera deleted (they read
+a `SHEETLIFT` global that no longer exists). **The finding is 260, arriving on a FLASH: a whole-frame luminance lift is
+the one "event" the eye cannot read as an event.** A flat full-viewport alpha wash can only DESATURATE toward its own
+colour — it cannot make a scene "pop" — and a global illuminant shift is exactly what colour constancy divides out,
+read as ATMOSPHERE/haze, never as a discrete event. No alpha rescues it (higher → more washout, lower → invisible);
+additive blend only trades haze for blow-out (the other warned failure). This is the low-contrast whole-frame trap
+342/343 were reverted for, one rung up. ⇒ **A "whole-scene event" (a flash, a dawn break, floodlight-the-city) built
+as a FLAT OVERLAY is dead on arrival, and a passing luminance/coverage probe proves NOTHING about it — only the blind
+agents/eyes can judge a desaturating wash (266).** A believable whole-scene flash would have to be brightest at the
+SKY/source and fall off toward the ground (a directional gradient, not a flat veil), which is a `polish-tile`-scale
+redesign, not a growth lap. The lightning system stays local, and it is complete as it stands.
