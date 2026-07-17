@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318**, **336** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318**, **336**, **337** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -37,8 +37,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   SHOWER — the un-enumerated rain siblings of the washing line (271/286: grep the MECHANISM `rainingAt`, 280).
   `dryAt(x,y)=rainingAt<0.05` on all three + washing repointed (ONE predicate, N readers, 112); dry≡HEAD ⇒ exact fixed
   point (245/253). Draw-only, census byte-identical; probe delta café/busker/strip 173/17/234 come IN, kid control held;
-  both blind agents ×2 seeds CROSSED named the busy (dry) frame (264). ✅ **RAIN + WINDA CATEGORIES ENUMERATED** — last
-  rain sibling = the BEACH crowd (Water, calendar-only BY DESIGN ⛔).) Prev: Water **334** (SAIL BELLIES `4.5*windForce()`;
+  both blind agents ×2 seeds CROSSED named the busy (dry) frame (264). ⚠ **336 CLAIMED "rain siblings enumerated" & WAS
+  WRONG — 337 found the park picnic + ballgame in 336's OWN block (271/286); ✅ NOW ENUMERATED, sole hold-out = BEACH crowd (Water, calendar ⛔).**) Prev: Water **334** (SAIL BELLIES `4.5*windForce()`;
   WINDA-over-water DONE ⛔) · Nature **333** (FIRE SMOKE LEANS `rise*windForce()`; (bj) CLOSED, (bc) fire-glow z-order future).
   Prev: ~~Urban **332**~~ (EXPLORED → REVERTED — CHIMNEY WOODSMOKE: probe-proven but ⛔ INVISIBLE at city
   zoom, 266. ⛔ DO NOT RE-TRY.) Prev: Sky **331** (HIGH JET + CONTRAIL — screen-space jet, contrail white/day→golden→gone
@@ -53,8 +53,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 336 landed (People
-  rain-enum, a measured seam); NEXT ~340 = STEP-BACK #45 or another measured seam.** Additive space FULLY SPENT (331). ⇒
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 337 landed
+  (People — park picnic + ballgame, the daytime rain siblings 336 MISSED in its own block); NEXT ~340 = STEP-BACK #45.** Additive space FULLY SPENT (331). ⇒
   **next = a measured seam (225) or Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **remaining gaps
   are DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
@@ -391,69 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 329 entries before Iteration 327 live in
+> **Archive:** the 330 entries before Iteration 328 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 327 — hover a tower's wall and it names the tower, not the road behind it (2026-07-17) [Urban fabric × Interaction/UX]
-
-**Vector.** The additive grid is fully rotated (326), so the guidance was a measured seam or Deepen/Polish, varying
-the kind away from New CA (324/326). Domain balance pointed at Urban or Transport (neither touched in 6 laps); Urban's
-stalest kind is **Interaction/UX (iter 133)** — and a live, measured open cue sat there: **(ba)**, banked at 278.
-(Cue **(az)** — vehicles under-reaching their own bodies — was already CLOSED by iter 314's oriented pick box; the
-drawVehicle `_phw/_phh/_pcy` footprint and `pickEntity`'s box test are the fix. So (ba) was the one still open.)
-The tile hover (`hoverAt`) converts the cursor to world (wx,wy) and takes the **nearest ground-plane hex CENTRE** —
-but a building rises UP the screen from its ground hex, so a cursor on a tower's wall sits far above that centre and
-the nearest ground centre is a hex several rows BEHIND. So hovering a tall facade named the tile drawn behind it
-(usually a road). This is 224's law (screen-y is DEPTH, not height) / 204's (a still frame hides where a thing is)
-arriving on the **pick** instead of the camera. Urban × Interaction/UX (133 → 327).
-
-**Change (interaction-only — no `rng()`, no terrain, no `tick()`, no draw).** New `pickTile(wx,wy)` (before
-`hoverAt`), and `hoverAt`'s tile branch now calls it. Draw order is depth order, so the tile a viewer actually sees
-at a point is the **FRONTMOST built column whose drawn body covers the cursor**: scan the bounded set of hexes whose
-`c.h`-prism body (base centre `ctr(x,y)`, half-width `0.34*CW`, rising `c.h` px — the geometry `drawBuilding` itself
-draws, `BODYT={RES,MID,COM,TOWER,IND}`) contains (wx,wy), and take the largest row (drawn last = in front), nearest-x
-on a tie. If no building stands in the way, fall back to the **original** ground-plane nearest-centre pick — so open
-ground, roads, water and parks are **byte-identical to HEAD**. The row scan is bounded by `HMAX=200` px (taller than
-any tower body) ⇒ ~15 rows × 3 cols per hover, read-only, and hover runs ~8/s, never in `render()` — zero draw/perf
-cost. The tile focus ring (`ctr(hoverTile)`) now lands on the building's own footprint for free.
-
-**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` and every histogram cell **+0** (no `rng()`, no
-terrain, no `tick()`; the pick is read-only). VERDICT PASS / 0 page errors.
-
-**Perf.** No draw change; `pickTile` runs only on hover (~8/s), never per frame. The permanent draw arc is untouched.
-
-**Probe** (`probes/probe-facadepick.mjs`, build-agnostic via `SRC=`; settles heights `c.h=c.th` per 272; frozen
-world at 2035). For each visible building it samples points on the FRONT WALL and asks the pick to name the building
-itself, excluding occluded points (frontmost-containing-column ≠ this hex) so a buried wall point is skipped not
-scored:
-- **HEADLINE / the price (236):** the % of a building's own visible facade that names it. **HEAD (ground pick):
-  TOWER 3.7–5.6% · COM 46–48% · MID 24% · RES 62% · IND 42–48% · ALL 33–36%** — i.e. ~66% of all built facade
-  points, and **~95% of a TOWER's wall**, named the hex behind. **PATCH: 100.0% on every type, every seed.**
-- **CONTROL (250, must-not-move):** open-ground hex centres (ROAD/PARK/EMPTY/…) — **ground pick and shipped pick
-  agree 100.0%, both name the hex itself**, on HEAD and PATCH. The fallback is byte-identical off buildings.
-
-**End-to-end (`probes/shot-facadepick.mjs`, uses NONE of the pick's geometry model):** drives the REAL
-`page.mouse.move` onto a screen point on a downtown tower's wall (lifted up the facade in SCREEN px from the drawn
-base), fires the artifact's own mousemove listener, and reads the live `hoverTile` + card text. **HEAD:** seed 42
-cursor-on-tower-(28,29) → `hoverTile 28,23` (six rows back) → card **"Avenue"**; seed 7 tower-(31,42) →
-`hoverTile 31,35` (seven rows back) → **"Boulevard"**. **PATCH:** the SAME points → `hoverTile 28,29` / `31,42` →
-card **"Tower"**. Independent of the probe's model — it drives the actual pick.
-
-**Visual** (the same shots, HEAD vs PATCH, A/B tokens meaningless + **CROSSED between seeds** per 238/239/268). Both
-blind subagents **PASS** and both **located the fix on the crossed map**: on the patch the tooltip reads "Tower" (a
-downtown high-rise, ~54 floors, helipad, rooftop solar) with the ring at the tower's base; on HEAD it reads
-"Avenue"/"Boulevard" with the ring floating high on a road behind/above the cursor. No z-order tears, floating tiles,
-misplaced tooltips or blown colour in either frame; both read as a coherent dense downtown (the scene draw is
-untouched — only which tile the ring/card targets changed).
-
-**Verdict: SHIPPED.** Cue (ba) closed. Hovering a tall building's facade now names and rings the building the cursor
-is on, not the road drawn on the ground behind it — an occlusion-correct tile pick (frontmost built column covering
-the cursor, ground-plane fallback where nothing stands in the way), lifting a tower's facade from ~4% self-naming to
-100% while open ground is byte-identical. Interaction-only, wholly census-inert, zero perf cost, in Urban fabric's
-stalest kind. Urban × Interaction/UX (133 → 327). `probes/probe-facadepick.mjs`, `probes/shot-facadepick.mjs`.
 
 ## Iteration 328 — the storm dropped a bolt to the ground, not just a flash in the cloud (2026-07-17) [Sky & atmosphere × Deepen/interconnect]
 
@@ -889,3 +831,56 @@ comes in from a passing shower on the same `dryAt` predicate the washing line re
 (exact fixed point). The rain-aware category's last visible siblings are enumerated (271/286/280); the remaining rain
 sibling is the beach crowd, which is Water and calendar-only by design (⛔ do not force). Draw-only, census
 byte-identical. People × Deepen. `probes/probe-cafehours.mjs`, `probes/shot-cafehours.mjs`.
+
+## Iteration 337 — the picnic and the pickup game come in from the rain too (2026-07-17) [People & activity × Deepen/interconnect]
+
+**Vector.** 336 brought the shopfront/kerb crowd in from a shower and wrote into the header that "the rain-aware
+category's LAST VISIBLE siblings are enumerated." It was not — and the missed siblings were the two clearest outdoor
+DAYTIME crowds, sitting in the SAME draw code 336 had just edited: the park **picnickers** (`drawCell` PARK v<0.44 —
+a blanket + a seated family on the lawn), **twenty lines below** the café patrons 336 DID give `dryAt`; and the pickup
+**ballgame** on a sports pitch (`drawCell` FIELD, gated on `pitchGame(x,y)>0`). Both keep an HOUR (`LITAMT<0.5`, day)
+and a season (the picnic packs away for winter), but ignored the SHOWER — a family picnicking and kids playing ball
+through a downpour, while the café terrace beside them had just been brought in. This is 262/286's cliff exactly
+(fix one member of a category, leave the sibling in the same function) and a *visible incoherence now sitting next to
+336's own frame*. Found by grepping the outdoor-daytime-crowd draws (`LITAMT<0.5` gates) for the rain predicate they
+lack — not the header's noun list (280), whose "last sibling = the beach crowd" claim was the tell.
+
+**Change (draw-only — no `rng()`, no terrain).** `&& dryAt(x,y)` added to the picnic gate; and folded **into**
+`pitchGame(x,y)` (`if(!dryAt(x,y))return 0;` at the top) so the ONE predicate answers for the draw AND the tooltip
+(`pitchWord`, 112/123) — the tooltip can no longer claim "a pickup game is on" over an empty rained-off pitch. No new
+constant (the existing `dryAt` = `rainingAt<RAINDRY`, 0.05). At `rainingAt<0.05` (dry — the overwhelming majority of
+hexes/time) `dryAt` is true and both gates collapse to HEAD byte-for-byte: an exact fixed point (245/253), so DRY ≡ HEAD.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT
+PASS. Only the usual ±1 tick-timing wobble on `solarRoofs`/`greenRoofs`/`towerHt` (226 — matched HEAD's own baseline run
+before the edit; not mine, no `rng()`/terrain).
+
+**Probe** (`probes/probe-parkrain.mjs`, build-agnostic — grades the SHIPPED draw in ONE build, ONE world, ONE frame:
+stubs `window.rainingAt` (a function declaration ⇒ on window) to 0 (DRY ≡ HEAD) and to 1 (WET everywhere) and counts
+the body `fillRect`s the frame ISSUES by their (w,h) signature — picnic blanket 5.2×2.6, pitch player 1.6×2.4, kid
+control 1.2×1.8. No pixel diff, NO NOISE FLOOR.). Afternoon pin (dayT=0.60: `LITAMT<0.5` and inside the kickoff window),
+2035.62 dry peak. All 3 seeds:
+- **picnic 16/24/31 · pitch 8/40/24 come IN** when wet — and the WET count is **exactly 0** for both (no rain-independent
+  collision on these signatures), so the whole crowd cleared.
+- **kid control IDENTICAL dry vs wet** — the must-not-move column held (250); the rain stub moved only the two draws.
+- **DRY == HEAD by construction. PARKRAIN: PASS.**
+
+**Visual** (`probes/shot-parkrain.mjs` — same frozen afternoon dry-peak city, shot DRY (`rainingAt→0`, ≡HEAD, crowds
+out) and WET (`rainingAt→1`, emptied) as a blind A/B zoomed 5× and **aimed by measured ink** (226/272: the only thing
+differing between DRY and WET is the picnic/ballgame crowds, so the argmax of the DRY-vs-WET diff IS where they render,
+HUD boxes zeroed first — 200), plus a whole-city DRY frame; tokens meaningless + non-ordinal, map **CROSSED between
+seeds** (238/239/268); md5 confirmed the pairs differ). **Both blind subagents, on both seeds, on the crossed map,
+correctly named the busy (DRY) frame from the lawn/pitch crowd alone** (s42 dry=`wren` ✓ · s7 dry=`lark` ✓): picnic
+blankets + ballgame player-specks on the green lawns/chalk pitches in DRY, those exact spots BARE in WET (only the
+umbrella-carrying peds remain — a different, correctly-still-present category). Both confirmed the crowds sit ON the
+lawns/pitches (not floating/on road/water), and the whole-city frame reads as a **balanced, coherent coastal city** —
+no z-order tears, floating tiles, or blown-out colour.
+
+**Perf.** Zero new path objects (draw-only; the picnic gains one `dryAt()` term, `pitchGame` one early-out). Step-back
+(~340) prices the arc.
+
+**Verdict: SHIPPED.** The park's daytime crowds — a lawn picnic and a pickup ballgame — now come in from a passing
+shower on the same `dryAt` predicate as the café crowd, and stand out unchanged when dry (exact fixed point). 336's
+"last visible rain sibling is the beach crowd" was wrong; with these two the outdoor-daytime-crowd category is closed
+for real (the beach crowd remains the sole hold-out, Water and calendar-only by design ⛔). Draw-only, census
+byte-identical. People × Deepen. `probes/probe-parkrain.mjs`, `probes/shot-parkrain.mjs`.

@@ -4782,6 +4782,10 @@ const PITCHP=0.5,        /* share of days a given pitch has a game */
       PITCHIN=0.05;      /* players drift in / break up over this */
 /* 0..1: how full the game on this pitch is right now (0 = empty ground). */
 function pitchGame(x,y){
+  if(!dryAt(x,y))return 0;   /* the game is called off in a shower, and this ONE predicate answers
+    for the draw AND the tooltip (pitchWord, 123) — a pickup game is the FIELD's outdoor daytime crowd,
+    the sibling of the picnic and the café patrons 336 brought in from the rain (271/286). dryAt is
+    (rainingAt<0.05), true across the dry majority, so a dry pitch is byte-identical to HEAD (245). */
   const day=Math.floor(dayT);
   if(hashCell(x*7+day,y,seedNum^0x3F5B)>=PITCHP)return 0;   /* no game on this pitch today */
   const t=(dayT-day)-PITCHKO;
@@ -6759,12 +6763,13 @@ function drawCell(x,y){
       } else if(v<0.44){ /* an open sunny lawn: one shade tree, a picnic on the grass */
         tree(gx-0.28,gy-0.22,0.82,1);
         const[cx,cy]=px(gx,gy);
-        if(LITAMT<0.5&&hashCell(x,y,seedNum^0x50C2)<beachPhase()){ /* picnickers by day (the lawn empties
+        if(LITAMT<0.5&&dryAt(x,y)&&hashCell(x,y,seedNum^0x50C2)<beachPhase()){ /* picnickers by day (the lawn empties
           after dark) and only in the warm season: a picnic on the grass in a cold wet January is nobody's
           idea, so the whole rug packs away for winter as the beach furniture does (247/271, one predicate).
-          The gate is a per-lawn hashCell, stable per cell, so a given lawn keeps or loses its picnic as the
-          season swings rather than flickering; at the dry peak beachPhase()===1 => hashCell<1 always, so the
-          draw is byte-identical to HEAD there (245). */
+          ...and it packs away in a passing SHOWER too, on the SAME dryAt the café patrons twenty lines up
+          already read (271/286): a picnic sat out in the rain was the sibling 336 left in this very block
+          when it brought the café crowd in. dryAt (rainingAt<0.05) is true across the dry majority, so the
+          draw is byte-identical to HEAD there (245); at the dry peak beachPhase()===1 => hashCell<1 always. */
           const bx=cx+1.6, by=cy+2.2;
           const bc=hashCell(x,y,seedNum^0x50C1)<0.5?'coral':'lav';
           ctx.fillStyle=col(bc,1.06);ctx.fillRect(bx-2.6,by-1.3,5.2,2.6);           /* the blanket */

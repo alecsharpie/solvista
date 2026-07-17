@@ -23609,3 +23609,61 @@ concrete when a forecourt is freshly laid, an established dressed square once it
 core shows its age. Wholly census-inert (zero random draws, no terrain). The additive grid is now fully rotated across
 every domain × kind. `probes/probe-civmature.mjs`, `probes/shot-civmature.mjs`.
 
+## Iteration 327 — hover a tower's wall and it names the tower, not the road behind it (2026-07-17) [Urban fabric × Interaction/UX]
+
+**Vector.** The additive grid is fully rotated (326), so the guidance was a measured seam or Deepen/Polish, varying
+the kind away from New CA (324/326). Domain balance pointed at Urban or Transport (neither touched in 6 laps); Urban's
+stalest kind is **Interaction/UX (iter 133)** — and a live, measured open cue sat there: **(ba)**, banked at 278.
+(Cue **(az)** — vehicles under-reaching their own bodies — was already CLOSED by iter 314's oriented pick box; the
+drawVehicle `_phw/_phh/_pcy` footprint and `pickEntity`'s box test are the fix. So (ba) was the one still open.)
+The tile hover (`hoverAt`) converts the cursor to world (wx,wy) and takes the **nearest ground-plane hex CENTRE** —
+but a building rises UP the screen from its ground hex, so a cursor on a tower's wall sits far above that centre and
+the nearest ground centre is a hex several rows BEHIND. So hovering a tall facade named the tile drawn behind it
+(usually a road). This is 224's law (screen-y is DEPTH, not height) / 204's (a still frame hides where a thing is)
+arriving on the **pick** instead of the camera. Urban × Interaction/UX (133 → 327).
+
+**Change (interaction-only — no `rng()`, no terrain, no `tick()`, no draw).** New `pickTile(wx,wy)` (before
+`hoverAt`), and `hoverAt`'s tile branch now calls it. Draw order is depth order, so the tile a viewer actually sees
+at a point is the **FRONTMOST built column whose drawn body covers the cursor**: scan the bounded set of hexes whose
+`c.h`-prism body (base centre `ctr(x,y)`, half-width `0.34*CW`, rising `c.h` px — the geometry `drawBuilding` itself
+draws, `BODYT={RES,MID,COM,TOWER,IND}`) contains (wx,wy), and take the largest row (drawn last = in front), nearest-x
+on a tie. If no building stands in the way, fall back to the **original** ground-plane nearest-centre pick — so open
+ground, roads, water and parks are **byte-identical to HEAD**. The row scan is bounded by `HMAX=200` px (taller than
+any tower body) ⇒ ~15 rows × 3 cols per hover, read-only, and hover runs ~8/s, never in `render()` — zero draw/perf
+cost. The tile focus ring (`ctr(hoverTile)`) now lands on the building's own footprint for free.
+
+**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` and every histogram cell **+0** (no `rng()`, no
+terrain, no `tick()`; the pick is read-only). VERDICT PASS / 0 page errors.
+
+**Perf.** No draw change; `pickTile` runs only on hover (~8/s), never per frame. The permanent draw arc is untouched.
+
+**Probe** (`probes/probe-facadepick.mjs`, build-agnostic via `SRC=`; settles heights `c.h=c.th` per 272; frozen
+world at 2035). For each visible building it samples points on the FRONT WALL and asks the pick to name the building
+itself, excluding occluded points (frontmost-containing-column ≠ this hex) so a buried wall point is skipped not
+scored:
+- **HEADLINE / the price (236):** the % of a building's own visible facade that names it. **HEAD (ground pick):
+  TOWER 3.7–5.6% · COM 46–48% · MID 24% · RES 62% · IND 42–48% · ALL 33–36%** — i.e. ~66% of all built facade
+  points, and **~95% of a TOWER's wall**, named the hex behind. **PATCH: 100.0% on every type, every seed.**
+- **CONTROL (250, must-not-move):** open-ground hex centres (ROAD/PARK/EMPTY/…) — **ground pick and shipped pick
+  agree 100.0%, both name the hex itself**, on HEAD and PATCH. The fallback is byte-identical off buildings.
+
+**End-to-end (`probes/shot-facadepick.mjs`, uses NONE of the pick's geometry model):** drives the REAL
+`page.mouse.move` onto a screen point on a downtown tower's wall (lifted up the facade in SCREEN px from the drawn
+base), fires the artifact's own mousemove listener, and reads the live `hoverTile` + card text. **HEAD:** seed 42
+cursor-on-tower-(28,29) → `hoverTile 28,23` (six rows back) → card **"Avenue"**; seed 7 tower-(31,42) →
+`hoverTile 31,35` (seven rows back) → **"Boulevard"**. **PATCH:** the SAME points → `hoverTile 28,29` / `31,42` →
+card **"Tower"**. Independent of the probe's model — it drives the actual pick.
+
+**Visual** (the same shots, HEAD vs PATCH, A/B tokens meaningless + **CROSSED between seeds** per 238/239/268). Both
+blind subagents **PASS** and both **located the fix on the crossed map**: on the patch the tooltip reads "Tower" (a
+downtown high-rise, ~54 floors, helipad, rooftop solar) with the ring at the tower's base; on HEAD it reads
+"Avenue"/"Boulevard" with the ring floating high on a road behind/above the cursor. No z-order tears, floating tiles,
+misplaced tooltips or blown colour in either frame; both read as a coherent dense downtown (the scene draw is
+untouched — only which tile the ring/card targets changed).
+
+**Verdict: SHIPPED.** Cue (ba) closed. Hovering a tall building's facade now names and rings the building the cursor
+is on, not the road drawn on the ground behind it — an occlusion-correct tile pick (frontmost built column covering
+the cursor, ground-plane fallback where nothing stands in the way), lifting a tower's facade from ~4% self-naming to
+100% while open ground is byte-identical. Interaction-only, wholly census-inert, zero perf cost, in Urban fabric's
+stalest kind. Urban × Interaction/UX (133 → 327). `probes/probe-facadepick.mjs`, `probes/shot-facadepick.mjs`.
+
