@@ -22882,3 +22882,43 @@ blowout, and both whole-city frames balanced and coherent.
 the instantaneous wind: winter seas run rough and the summer sea goes glassy, at zero new draw work, on the
 one scene-wide signal that had never read a clock.
 
+## Iteration 312 — the headlamps came on in the noon storm, and nobody could see them (2026-07-17) [Transport × Deepen/interconnect — EXPLORED → REVERTED]
+
+**Vector.** Transport × Deepen (weather interconnect). Rotation's next slot (297, oldest real lap); 304 grepped
+its four seams dry, so the only live thread was an interconnect, not an add. HEAD lights a vehicle ONLY for
+DARKNESS (`LITAMT>0.35`) — headlamp beam, headlamp arcs, red tail-lamps and the bike bar-lamp, all on the
+day/night curve. But 305 already greys the whole sky when a rain front rolls overhead (`overcast()`), and the
+traffic drove on through a leaden noon with no lights: the biggest weather event in the scene, and the roads
+deaf to it. Real cars run headlamps in a heavy downpour.
+
+**Change (reverted).** One line in `drawVehicle`: `const litD = Math.max(LITAMT, overcast())`, used in place of
+`LITAMT` in the lamp gate and the four lamp alphas (+ the bike lamp) — the front's FIFTH reader
+(sky/ground/bow/CA already read it). A dry or patchy front is `overcast()===0 ⇒ litD===LITAMT`, so fair
+weather is BYTE-IDENTICAL to HEAD (no rng/terrain); overcast caps at 0.82 so a storm noon is a touch dimmer
+than midnight — right.
+
+**Census.** Draw-only, unreachable from `tick()` ⇒ core BYTE-IDENTICAL (pop/developed/roads +0). `greenRoofs -1`
+= the 226/278 RAF-tick wobble. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (cross-build HEAD-vs-patch at a frozen DAYTIME frame — the ONLY code diff is litD, so the diff IS the
+lamps; both builds freeze the same city identically, every vehicle cancels). LITAMT=0.00 at both fronts (HEAD
+lamps off). **DRY: lamp px 16/1/23, all ≤ the HEAD-vs-HEAD reload floor 28/0/68 ⇒ byte-identical.** **STORM
+(overcast 0.82/0.66/0.82): lamp px 711/674/790, ink 11460/10240/13188 ⇒ the lamps clearly render.** The
+feature WORKS; the census and probe both pass.
+
+**Visual — FAIL, and it is the verdict.** Two blind agents (seeds 42, 7), plus my own look at a downtown road
+zoomed 4.2x: the storm-close is **indistinguishable** from dry-close. The lamps render and CANNOT BE SEEN.
+Root cause is structural (259: renders ≠ seen), not a tuning miss — a warm lamp at ~0.74 alpha is
+low-CONTRAST against a still-bright greyed daytime road; the very thing that makes a night lamp read (a
+near-black road) is absent at noon. Cranking the alpha cannot buy contrast, and making lamps GLOW at noon
+would fight the diorama's flat-realist look AND the physics (daytime lamps genuinely are subtle IRL). The
+whole-city storm frame reads as a coherent leaden midday and the dry as a clear one — the OVERCAST is fine;
+only the lamps fail.
+
+**Verdict: EXPLORED → REVERTED.** A well-motivated interconnect that RENDERS (probe) yet earns nothing a
+viewer sees (259). `solvista.html` restored byte-identical to HEAD; the cross-build probe/shot are tied to the
+reverted diff and were removed with it. **Do not re-try "vehicles light up in the rain" as a growth lap** —
+the daytime road-contrast problem is a rendering/redesign question (a darker wet road, or a fundamentally
+brighter mark), i.e. a `polish-tile` job, not a Deepen — the same "barely-visible transport detail is a bad
+trade" the header already banks for cue (bi).
+

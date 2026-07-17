@@ -1885,6 +1885,18 @@ function springBloom(){const s=((year%1)+1)%1; return clamp(1-Math.abs(s-0.28)/0
    the leaves start dropping and lingers into early winter. Shared predicate, so
    the floor and the tooltip read one calendar (112) and can't outlast the canopy. */
 function autumnFall(){const s=((year%1)+1)%1; return clamp(1-Math.abs(s-0.87)/0.14,0,1);}
+/* the gray whales are on migration, not resident — so unlike the dolphins, who roll
+   through the bay year-round, the whales answer the calendar. They run the coast south
+   through winter (~s=0, Jan) and north again through spring (~s=0.28), then feed far to
+   the north from June and are gone. whaleSeason() is 1 across that migration window and
+   ramps to 0 into the golden summer, so the bay tells the season: whales in the cool
+   half of the year, an empty deep-water offing in the warm half. (Centred on mid-winter;
+   the plateau covers Dec–mid-May.) The draw gates each whale on a per-whale threshold off
+   the phase it ALREADY carries (w.ph/7, a uniform on [0,1)), so the last of them fade out
+   one at a time at the season's edge rather than popping together — and it draws NO new
+   random value, so the seeded stream and every other entity are byte-identical (286). */
+const WHALEPK=0.16, WHALEWIN=0.28, WHALERAMP=0.08;
+function whaleSeason(){const s=((year%1)+1)%1, d=Math.abs(s-WHALEPK); return clamp((WHALEWIN-Math.min(d,1-d))/WHALERAMP,0,1);}
 /* the contiguous patch a hex belongs to, flood-filled over hex neighbours under a
    shared predicate — one definition, so the woods' stand and the kelp bed count
    contiguity the same way and cannot drift apart (112's one-predicate law). */
@@ -9023,6 +9035,7 @@ function drawDeer(d){
   ctx.beginPath();ctx.arc(cx-f*2.0*s,cy-3.0*s,0.42*s,0,7);ctx.fill();
 }
 function drawWhale(w){
+  if(whaleSeason()<=w.ph/7)return;            /* on migration only — gone to the northern feeding grounds from June (never stamped ⇒ not hoverable, 286) */
   const[cx,cy]=pxc(seaXFr(w.y,w.fr),w.y);
   const arc=Math.sin(waveT*0.7+w.ph);        /* slow surface/dive cycle */
   if(arc<0.2)return;                          /* mostly submerged */
@@ -10332,7 +10345,7 @@ function residentWhere(p){
   return 'Out for a stroll.';
 }
 const ENTINFO=[
-  [()=>whales,'Gray whale','Surfacing on a slow cruise up the bay.',12],
+  [()=>whales,'Gray whale','Passing through on the migration — surfacing on a slow cruise up the bay.',12],
   [()=>dolphins,'Dolphin','Rolling through the swell.',8],
   /* the string that started iter 249: it promised "every stop" over a boat that stopped
      nowhere. It now reads the SAME predicate the rule steers by (ferryPier/ferryApp/dwell),

@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
@@ -32,13 +32,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Sky **321** (SNOW — SKY'S FIRST CA RULE IN 321 LAPS, the emptiest cell in the grid: a
-  reaction-diffusion `c.snow` field. `winterMask()` (8th `seasonCool()` reader, coldest ~3 wks) drives a per-tick
-  source relaxing the inland land toward per-type targets (PARK 1.0 > woods 0.9 > ROAD 0.5) + a diffusion term that
-  levels it and thins it at every sea/void/building boundary; coast & roofs bare; melts by summer. Draw = one
-  flat-alpha `hexTile` at end of `drawCell`, clamped flat above `SNOWFULL=0.5` so it cannot terrace (257). **Zero
-  rng/hashCell/terrain ⇒ census byte-identical**; +~1257 path obj (~+1.1%) DEEP-WINTER ONLY, 0 otherwise. `probe-snow`
-  winter 0.66 vs summer 0.002, PARK>ROAD, LEAK 0; 2 blind visual PASS.) · Civic **319**
+- **ROTATION.** Last: Water **322** (WHALE MIGRATION — gray whales now answer the calendar (286 pattern), neglected
+  Water domain: `drawWhale` had NO season gate ⇒ a MIGRANT drawn as a resident all year. `whaleSeason()` (raised
+  trapezoid on `year%1`, ~1 Dec–mid-May, 0 golden summer/autumn); gate `<=w.ph/7` off the whale's OWN phase ⇒ zero new
+  random draws, staggered fade, hidden ⇒ not stamped ⇒ not hoverable. Dolphins stay resident. Census BYTE-IDENTICAL
+  (whales array untouched). `probe-whalemigration` PATCH win/spr 40→sum/aut 0 (DISTINCT 4) vs HEAD 40 always (DISTINCT
+  1), dolphins flat control; 2 blind visual PASS, both named winter by the whales on a crossed map.) · Sky **321**
+  (SNOW — Sky's 1st CA in 321 laps: reaction-diffusion `c.snow`, census byte-identical, +1.1% draw deep-winter only.) · Civic **319**
   (CUP-NIGHT FIREWORKS: `matchCelebrate()` 6-shell finale over each stadium
   after a cup-night whistle, `LITAMT>0.6`; draw-only, exact fixed point; `probe-matchfire`) · People **318**
   (WASHING LINE answers rain+season) · People **317** (SEASONAL LEISURE COMPLETE) · Urban **316** (DISTRICTS made
@@ -391,51 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 314 entries before Iteration 312 live in
+> **Archive:** the 315 entries before Iteration 313 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 312 — the headlamps came on in the noon storm, and nobody could see them (2026-07-17) [Transport × Deepen/interconnect — EXPLORED → REVERTED]
-
-**Vector.** Transport × Deepen (weather interconnect). Rotation's next slot (297, oldest real lap); 304 grepped
-its four seams dry, so the only live thread was an interconnect, not an add. HEAD lights a vehicle ONLY for
-DARKNESS (`LITAMT>0.35`) — headlamp beam, headlamp arcs, red tail-lamps and the bike bar-lamp, all on the
-day/night curve. But 305 already greys the whole sky when a rain front rolls overhead (`overcast()`), and the
-traffic drove on through a leaden noon with no lights: the biggest weather event in the scene, and the roads
-deaf to it. Real cars run headlamps in a heavy downpour.
-
-**Change (reverted).** One line in `drawVehicle`: `const litD = Math.max(LITAMT, overcast())`, used in place of
-`LITAMT` in the lamp gate and the four lamp alphas (+ the bike lamp) — the front's FIFTH reader
-(sky/ground/bow/CA already read it). A dry or patchy front is `overcast()===0 ⇒ litD===LITAMT`, so fair
-weather is BYTE-IDENTICAL to HEAD (no rng/terrain); overcast caps at 0.82 so a storm noon is a touch dimmer
-than midnight — right.
-
-**Census.** Draw-only, unreachable from `tick()` ⇒ core BYTE-IDENTICAL (pop/developed/roads +0). `greenRoofs -1`
-= the 226/278 RAF-tick wobble. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
-
-**Probe** (cross-build HEAD-vs-patch at a frozen DAYTIME frame — the ONLY code diff is litD, so the diff IS the
-lamps; both builds freeze the same city identically, every vehicle cancels). LITAMT=0.00 at both fronts (HEAD
-lamps off). **DRY: lamp px 16/1/23, all ≤ the HEAD-vs-HEAD reload floor 28/0/68 ⇒ byte-identical.** **STORM
-(overcast 0.82/0.66/0.82): lamp px 711/674/790, ink 11460/10240/13188 ⇒ the lamps clearly render.** The
-feature WORKS; the census and probe both pass.
-
-**Visual — FAIL, and it is the verdict.** Two blind agents (seeds 42, 7), plus my own look at a downtown road
-zoomed 4.2x: the storm-close is **indistinguishable** from dry-close. The lamps render and CANNOT BE SEEN.
-Root cause is structural (259: renders ≠ seen), not a tuning miss — a warm lamp at ~0.74 alpha is
-low-CONTRAST against a still-bright greyed daytime road; the very thing that makes a night lamp read (a
-near-black road) is absent at noon. Cranking the alpha cannot buy contrast, and making lamps GLOW at noon
-would fight the diorama's flat-realist look AND the physics (daytime lamps genuinely are subtle IRL). The
-whole-city storm frame reads as a coherent leaden midday and the dry as a clear one — the OVERCAST is fine;
-only the lamps fail.
-
-**Verdict: EXPLORED → REVERTED.** A well-motivated interconnect that RENDERS (probe) yet earns nothing a
-viewer sees (259). `solvista.html` restored byte-identical to HEAD; the cross-build probe/shot are tied to the
-reverted diff and were removed with it. **Do not re-try "vehicles light up in the rain" as a growth lap** —
-the daytime road-contrast problem is a rendering/redesign question (a darker wet road, or a fundamentally
-brighter mark), i.e. a `polish-tile` job, not a Deepen — the same "barely-visible transport detail is a bad
-trade" the header already banks for cue (bi).
 
 ## Iteration 313 — the hot-air balloons rode serenely through the thunderstorm (2026-07-17) [Sky & atmosphere × Deepen/interconnect]
 
@@ -866,3 +826,48 @@ white, whole frame still a balanced beautiful coastal city.
 **Verdict: SHIPPED.** Sky's first CA rule in 321 iterations — a reaction-diffusion snow field that whitens the
 inland uplands and streets through the coldest weeks and melts off by summer, leaving the sea-warmed coast bare.
 Wholly census-inert; +1.1% draw only in deep winter, zero otherwise. `probes/probe-snow.mjs` + `probes/shot-snow.mjs`.
+
+## Iteration 322 — the whales came in for the winter and left the summer bay empty (2026-07-17) [Water & coast × Deepen/interconnect]
+
+**Vector.** Rotation: the last 8 laps ran Sky×2, People×3, Transport, Urban, Civic — **Water & coast and Nature had
+not had a lap in 8+**, and the last KIND was New CA rule (321), so vary it away from that. I grepped the Nature/Water
+seams for a defect and found them exhaustively alive (lighthouse beam sweeps, MARSH answers tide+season (289),
+orchard/vineyard carry full blossom/fruit/veraison, KELP now a CA (282)) — but the **gray whales are a MIGRANT drawn
+as a resident**. Two are Math.random-spawned in `genWorld` and `drawWhale` had **no season gate at all**, so they
+cruised the bay all year while the tooltip called them "Gray whale — a slow cruise up the bay." A gray whale runs the
+California coast south through winter and north through spring, then feeds far to the north from June and is gone.
+**Water × Deepen/interconnect** — make the whales answer the calendar the rest of the city already keeps (the
+286/271/249 "entity answers an existing signal" pattern), while the resident dolphins rightly stay year-round.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** New `whaleSeason()` (near `autumnFall`): a raised-
+trapezoid window on `s=year%1`, `1` across Dec–mid-May (centred on mid-winter `WHALEPK=0.16`, `WHALEWIN=0.28`,
+`WHALERAMP=0.08`) ramping to `0` through the golden summer and autumn. `drawWhale`'s first line now
+`if(whaleSeason()<=w.ph/7)return;` — a **per-whale threshold off the phase the whale ALREADY carries** (`w.ph/7`, a
+uniform on [0,1)), so the last of them fade out one at a time at the season's edge rather than popping together, and
+it draws **zero new random values** (286). A hidden whale returns before `stamp()`, so it is **not hoverable** either
+(consistent with the surfer/kayak session). Tooltip updated to name the migration (ENTINFO sync).
+
+**Census.** No `rng()`, no `Math.random` change, no terrain, whales array length unchanged (still 2) ⇒ core
+**BYTE-IDENTICAL** (`pop`/`developed`/`roads` +0, tile histogram empty), `life.whales` still 18 across the matrix.
+VERDICT PASS / 0 page errors (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-whalemigration.mjs`, build-agnostic via `SRC=`, flooded whales:40/dolphins:40):
+- **A (temporal, no pixels):** eligible whales by season via the SHIPPED predicate — **winter/spring 40 → l.spring
+  13–25 → summer/autumn 0 → e.winter 25–32**, `DISTINCT=4`. **HEAD reads 40 every season, `DISTINCT=1`** — the
+  defect stated (236). **DOLPHINS flat 40 in every season (must-not-move control, 250) — held.**
+- **B (real draw path, 205):** whales STAMPED across 24 surface-arc phases, per season — matches A
+  (winter/spring 40, summer/autumn **0**), dolphins **40 every season** through the same path.
+
+**Visual** (`probes/shot-whalemigration.mjs`, frozen in-page, whales flooded, aimed by measured whale ink; winter=
+present / summer=absent at the IDENTICAL crop + a whole-city frame; frames named by FILE, token map CROSSED between
+seeds per 238/258/268; each self-reports year/whaleSeason/whales-drawn). Both blind subagents **PASS** and both
+**named the winter frame by the whales alone on the crossed map**: whales visible (dark backs + foam wakes + spouts)
+in winter, the SAME open water **empty** in summer, only the whales differing; seed 42's agent correctly rejected a
+fixed shoreline mark as a non-whale; both whole-city frames balanced and coherent, no z-order tears / floating tiles
+/ blown-out colour.
+
+**Verdict: SHIPPED.** The gray whales now migrate — present in the bay through the cool half of the year, gone to the
+northern feeding grounds through the golden summer and autumn, so the offing tells the season while the resident
+dolphins roll through year-round. Wholly census-inert (zero new random draws, whales array untouched), the 286
+pattern in the neglected Water domain. Water × Deepen/interconnect (→ 322). `probes/probe-whalemigration.mjs` +
+`probes/shot-whalemigration.mjs`.
