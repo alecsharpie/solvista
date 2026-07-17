@@ -24718,3 +24718,54 @@ it stands on. Second confirmation of 347's reusable finding: a shipped emitter t
 live, high-contrast Deepen the saturation surveys miss. No new SKILL.md law (every law used — 279/257/195/291/248/253/
 226/199/238/239/268 — is already promoted). Banked `probes/probe-firepool.mjs` + `probes/shot-firepool.mjs`.
 
+## Iteration 349 — the channel marks mirror their flash (2026-07-18) [Water & coast × Deepen/interconnect → SHIPPED]
+
+**Vector.** 347/348 shipped the reusable finding — *grep shipped features for a draw that lands/emits/casts and then
+stops* — and banked it as the header's NEXT VECTOR. Ran that grep across the water light sources. The **channel buoy**
+(`drawBuoy`, ~L9045) flashes a red/green lamp to seaward at night (`LITAMT>0.28 && sin(time*1.4+ph*2)>0.25`, a 5px
+radial glow at the topmark) — but the dark harbour water directly below it stayed dark. It is the LAST un-enumerated
+water light source with no reflection (271/280 enumerate-the-category): the ferry & launch nav-lights cast "a soft wash
+on the black water below" (179), the moon reflects, and 329 reflects the whole lit waterfront — only the channel marks
+flashed over a dead-flat sea. Rotates the *kind* off 347/348's warm diffuse ground-pool → a COLOURED SPECULAR water
+reflection (the 179/329 family). Visibility priced first (266): coloured-on-near-black is the high-contrast class that
+ships (329/341/347/348).
+
+**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`; ~14 lines).** Inside the existing flash gate,
+before the lamp glow: a coloured reflection cast ON the water below the mark. A radial gradient (r=4.6) SQUASHED and
+STRETCHED toward the viewer (`translate(cx,y0+6.8); scale(0.52,1.8)`) → a LONG vertical smear that survives the
+downscale to fit zoom (266/341), not a flat wash that would terrace/vanish. RAW literal red/green — reflected light is
+not albedo, never through `col()`/TINT (257/329, the same reason the lit windows take a raw literal). Gradient to alpha
+0, never a flat arc (195). Peak α `0.58*LITAMT*sh` where `sh=0.74+0.26*sin(waveT*1.3+ph)` breathes with the swell (329),
+floored high so it never blinks out. Drawn on the water below the body, so it flashes ON with the light and vanishes
+with it — the reflection IS the flash's mirror. DUAL suppressors `FLASHREFL` (the new reflection) / `FLASHGLOW` (the
+incumbent lamp flash) so a probe isolates each in one page, floor 0 (253/347/348's dual isolation).
+
+**Census + error gate.** VERDICT PASS, 0 page errors. Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads`
+**byte-identical (+0)** (only the known `greenRoofs/towerHt −1` tick-timing wobble, 226, not mine). Buoys **45** across
+the 9-cell matrix (5/city) — the host exists at scale. Perf: the reflection draws only inside the existing flash gate
+(a handful of buoys, intermittently, at night) ⇒ ~0 path objects at the fair-weather perf pins — free.
+
+**Probe (`probes/probe-buoyreflect.mjs`).** DUAL isolation in one page (floor 0, build-agnostic): `FLASHREFL=1 vs 0` →
+the REFLECTION alone (the new ink); `FLASHGLOW=1 vs 0` → the lamp's own flash (the INCUMBENT bar, 226 — no threshold
+invented). Result at the night flash peak: **REFL 49–51px, peak 50–62, 17% of the incumbent flash's ink** (the same
+band as 347's shipped ground-flash, 17–20%), located tightly below each flashing buoy on the water (centre y~482/501,
+box below the lamp); and **0px / 0 ink by DAY** (LITAMT 0.02, the flash gate false ⇒ the free dead-regime control, 199)
+on both seeds. ⚠ FIRST CUT WAS TOO FAINT (3%, 17px, peak 23) — the header's exact 266 warning that a subtle overlay
+won't read; strengthened α 0.38→0.58, size, and a shimmer floor before the visual gate. BUOYREFLECT: PASS.
+
+**Visual (`probes/shot-buoyreflect.mjs`).** Blind A/B in ONE build — reflection ON (`FLASHREFL=1`) vs OFF (`=0` = exactly
+HEAD) — no build swap, no cross-build floor. Aimed by argmax of the reflection's OWN ink at the brightest flashing buoy
+(226/272). Meaningless non-ordinal tokens, on/off map CROSSED between seeds (238/239/268; md5-distinct pairs confirmed).
+BOTH blind agents, one per seed, **correctly named the reflection variant on the crossed map** (s42 orin=ON→"orin";
+s7 vael=ON→"vael") and returned **VISUAL: PASS**: below each red/green buoy a "soft red/green vertical smear streaking
+DOWN onto the dark water… tapering as it descends… sits ON the water directly below the mark, attached at the
+waterline, not detached"; lamp cores saturated but not blown to near-white; no z-order tears, floating tiles or
+detached glows; both whole-city frames read as a balanced, coherent night coastal city. A genuine blind identification,
+not a positional guess.
+
+**Verdict: SHIPPED (DEEPENED).** Completes the channel buoy the way 347 completed the strike and 348 the bonfire — the
+mark now mirrors its own flash on the water it floats on. Third confirmation of 347's reusable finding, and it closes
+the water-reflection CATEGORY (271/280): every night light on the harbour water now reflects. No new SKILL.md law
+(every law used — 279/257/195/266/329/248/253/226/199/238/239/268 — is already promoted). Banked
+`probes/probe-buoyreflect.mjs` + `probes/shot-buoyreflect.mjs`.
+
