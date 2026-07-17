@@ -32,31 +32,30 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **355 — FRESH HIGH-CONTRAST-LOCAL CANDIDATE IS ALREADY SHIPPED / survey NO SHIP** (GENERATIVE
-  complement to the passive surveys: *invented* the best fresh candidates for the header's one open growth shape — a
-  NEW high-contrast figure/ground-LOCAL night-signal reader — and found all three pre-existing (car headlights · taxi
-  roof lamp · copter beacon; refs in ledger); every mover already reads `LITAMT` with a bright local cue ⇒ additive
-  night-reader axis saturated BY CONSTRUCTION; a **sixth**, stronger-than-a-grep wall confirmation. ⚠ **Source
-  BYTE-FROZEN since iter 349** (HEAD≡349≡350 md5 `b9dbdb8e`): 350–355 shipped nothing, so **STEP-BACK #48 would
-  re-measure the EXACT bytes #47 already vetted — do NOT fire it until source drifts.** Growth wall confirmed from SIX
-  angles: 344 declared · 350 visual/perf · 351 behavioral · 353 table · 354 comment-tell · 355 generative.) Prev:
-  **354 — COMMENT-TELL SEAM CLEAN / survey** (every `/* */` "never/always/once/static" comment is a HEALTHY correctness
-  proof — no absence-asserting-a-LIVE-rule (282), no changelog-as-taxonomy (280); detail in ledger.) Prev: **353 — TYPE-KEYED TABLE SEAM SOUND / survey** (all 32 `T.*` vs the type-keyed TABLES; missing members deliberate; no 285/288 blindness).
-  Prev: **352 — WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / REVERTED** (Sky × Deepen; ⛔ **a whole-scene
-  event as a FLAT OVERLAY is dead — 260 on a flash: colour constancy divides a global luminance lift out as haze; a
-  passing coverage/luminance probe proves NOTHING, only blind eyes judge a desaturating wash; a believable one needs a
-  SKY→ground GRADIENT = `polish-tile`**). Prev: **351 — HALF-BUILT/KEEPS-NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card
-  live, every flag rides its upgrade; 344's wall from BEHAVIORAL side. 🆕 loose `birds` fade α0.15 not roost — `polish-tile`
-  only.) Prev: **350 — STEP-BACK #47 / NO DRIFT** (3 lights × 2 seasons × 2
-  seeds blind-PASS; core byte-flat; perf +0.020%/lap day vs 285 over ~64 laps. ⚠ Watch: inland tower core dense but NOT
-  wallpaper — do NOT add raw downtown density.) Prev: **349 — CHANNEL MARKS MIRROR THEIR FLASH / SHIPPED** (Water ×
-  Deepen; ✅ **CLOSES the water-reflection CATEGORY (271/280)**; banked `probes/probe-buoyreflect.mjs`.) Prev: **348/347
-  — FIRE & STRIKE LIGHT THEIR OWN GROUND / SHIPPED** (the emitter-vein confirmations #2 & #1; `FIREPOOL`/`GFLASH`; full
-  text in entries; 346 banked `probe-frozencol.mjs`.) Prev: ~~**Urban 343 / Nature 342**~~ (SNOW ON ROOFS · CAT'S-PAWS —
-  both LOW-CONTRAST/haze redesigns, both agents INVERTED, ⛔ INVISIBLE-AT-ZOOM `polish-tile` only — the trap 352 hit at
-  whole-frame scale.) Prev: **Transport 341** (WET STREETS
-  MIRROR THEIR LAMPS — rain's LAST un-enumerated reader is the ROAD; `rainingAt`>0 warm smear down night lamp pools,
-  dry≡HEAD, land analog of 329; draw-only). Prev
+- **ROTATION.** Last: **356 — BEHAVIORAL & SPECULAR CANDIDATE CLASSES ALSO SHIPPED / survey NO SHIP** (extended 355's
+  generative survey to the two profiles it left open: a behavioral cross-domain interconnect (gulls work the boat wake
+  / roost at dark, L9124 — nature×transport) and a specular reflector (the moonglade, L9685/298/153 — water×sky); both
+  already ship. Generative confirmation now complete across ALL THREE fresh-candidate profiles — emitter (355) ·
+  reflector · behavior — every one lands on an existing draw. **SEVENTH & EIGHTH** wall angles; additive/interconnect
+  vein is a stable fixpoint. ⚠ **Source BYTE-FROZEN since iter 349** (HEAD≡349≡350≡356 md5 `b9dbdb8e`): 350–356 shipped
+  nothing, so **STEP-BACK #48 would re-measure the EXACT bytes #47 already vetted — do NOT fire it until source
+  drifts.** Growth wall confirmed from EIGHT angles: 344 declared · 350 visual/perf · 351 behavioral · 353 table · 354
+  comment-tell · 355 generative-emitter · 356 generative-reflector+behavior.) Prev: **355 — FRESH HIGH-CONTRAST-LOCAL
+  CANDIDATE ALREADY SHIPPED / survey** (generative survey of the *emitter* profile: car headlights · taxi lamp · copter
+  beacon all pre-existing; additive night-reader axis saturated BY CONSTRUCTION; the sixth wall confirmation; full
+  entry in ledger.) Prev: **354 — COMMENT-TELL SEAM CLEAN / survey** (every `/* */` "never/always/once/static" comment a
+  HEALTHY correctness proof — no absence-asserting-a-LIVE-rule (282), no changelog-as-taxonomy (280)). Prev: **353 — TYPE-KEYED TABLE SEAM SOUND / survey** (all 32 `T.*` vs the type-keyed TABLES; missing members deliberate; no 285/288 blindness).
+  Prev: **352 — WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / REVERTED** (Sky × Deepen; ⛔ **a whole-scene event as a FLAT
+  OVERLAY is dead — 260 on a flash: colour constancy divides a global luminance lift out as haze; only blind eyes judge
+  a desaturating wash; a believable one needs a SKY→ground GRADIENT = `polish-tile`**). Prev: **351 — HALF-BUILT/KEEPS-
+  NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card live, every flag rides its upgrade; 344's wall
+  from BEHAVIORAL side. 🆕 loose `birds` fade α0.15 not roost — `polish-tile` only.) Prev: **350 — STEP-BACK #47 / NO
+  DRIFT** (3 lights × 2 seasons × 2 seeds blind-PASS; core byte-flat; perf +0.020%/lap day vs 285 over ~64 laps. ⚠
+  Watch: inland tower core dense but NOT wallpaper — do NOT add raw downtown density.) Prev: **349 — CHANNEL MARKS
+  MIRROR THEIR FLASH / SHIPPED** (Water × Deepen; ✅ **CLOSES the water-reflection CATEGORY (271/280)**; banked
+  `probe-buoyreflect.mjs`.) Prev: **348/347 — FIRE & STRIKE LIGHT THEIR OWN GROUND / SHIPPED** (emitter-vein #2 & #1;
+  `FIREPOOL`/`GFLASH`; 346 banked `probe-frozencol.mjs`.) Prev: ~~**Urban 343 / Nature 342**~~ (SNOW ON ROOFS · CAT'S-PAWS
+  — both LOW-CONTRAST/haze redesigns, agents INVERTED, ⛔ INVISIBLE-AT-ZOOM `polish-tile` only — the trap 352 hit whole-frame.) Prev: **Transport 341** (WET STREETS MIRROR THEIR LAMPS — rain's LAST un-enumerated reader is the ROAD; `rainingAt`>0 warm smear down night lamp pools, dry≡HEAD, land analog of 329; draw-only). Prev
   (Deepen/shipped, byte-flat, laws in SKILL.md,
   full text in ledger/archive): Civic **338/339** (festival cloth on `windForce`) · People **336/337** (RAIN-AWARE
   CROWDS on `dryAt`; category CLOSED, hold-out BEACH ⛔) · Water **334** (SAIL BELLIES; WINDA-over-water DONE ⛔) ·
@@ -391,50 +390,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 348 entries before Iteration 346 live in
+> **Archive:** the 349 entries before Iteration 347 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 346 — the frozen-column seam-finder, made a standing tool (2026-07-18) [survey]
-
-**Vector.** Cross-cutting / Interaction-with-the-harness. #46 (@345) just cleared the drift-watch, so #47 is too soon,
-and 342/343/344 already established the growth phase has hit its wall. Rather than re-run 344's survey verbatim, I
-worked the header's OWN #1 seam law from a fresh angle and left a durable artifact behind. No source touched —
-`solvista.html` **byte-identical to HEAD** (a survey, not a build).
-
-**What I actually did — three of the recipe's finders, run BY NAME, one of them now a probe:**
-1. **Frozen census column (282/287's "READ IT FIRST").** The recipe calls this the #1 seam-finder, but there was no
-   *tool* for it — `census.mjs` only prints types that CHANGED vs a baseline, and only SUMMED, so a dead-flat-in-every-
-   era row is invisible to it. I wrote **`probes/probe-frozencol.mjs`** (pure world data via `__census().tiles`,
-   per-era × summed-over-seeds, flags FLAT and ZERO rows) and banked it. Result on seeds 7/42/1234: every FLAT row is
-   audited terrain — SHOREPARK 294/294/294 (coastal band), ROCK 80/80/80, MARSH 45/45/45 (289: terrain, draw answers
-   tide+season), LIGHTHOUSE 3/3/3, VOID (off-plate). **No dead rule, no ZERO row.** KELP reads **28→33→31 — it MOVES**,
-   which is 282's fix visible in the census (HEAD before 282 was a stamped-once flat bed). Everything that should grow
-   grows (MID 10→1234, TOWER 0→329, PARK 230→569, SOLARF 0→19, MARKET 0→16, DUNE 62→110).
-2. **Tooltip-table sync (invariant).** Diffed the `T` enum (32 members) against `TILELABEL`/`TILEDESC` and the civic
-   kinds against `CIVICLABEL`/`CIVICDESC`: **complete**, every drawn tile/civic named and described (ROAD/CIVIC handled
-   specially in `describeTile`). No un-named type.
-3. **Per-cell flag lifecycle (281's "fourth seam").** Grepped every flag's writer/veto/draw/tooltip:
-   `hstr`/`loft`/`corner`/`bridge`/`riv`/`treed`/`fete`/`civ`/`wear`/`snow`/`solar`/`groof`. All correct — each has an
-   intentional, commented ride/die rule (e.g. `hstr` deliberately rides COM→TOWER as a retail podium under the tower,
-   line ~7958; `loft` cleared on fire→BURNT; `corner` cleared when `!HOMES.has(c.t)`). **No writer skips a type its
-   veto still counts.**
-
-**Census + error gate.** VERDICT PASS, 0 page errors; core `pop`/`developed`/`roads` byte-unmoved (baseline == current,
-+0/+1 chaotic wobble only). `probe-frozencol` self-verifies (its KELP column re-proves 282 lives).
-
-**Finding.** Confirms 344/345 from a *different* instrument (255's "a cue re-confirmed is only corroborated if a
-DIFFERENT instrument did it"): the additive and high-contrast-interconnect space is EXHAUSTED and every seam the
-finders point at is closed. The one durable output is the banked probe — the header's #1 method is now one command for
-every future lap, instead of the ad-hoc build 342/344 each re-derived.
-
-**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built in the city).** `solvista.html` byte-identical; the "revert"
-is that no vector earned a ship. Durable artifact: `probes/probe-frozencol.mjs` (harness tooling, not a city change).
-Honest mode from here is unchanged — **STEP-BACKS** (next ~350 = #47) **+ `polish-tile`** (342/343's shaped-ridge /
-tapered-streak deaf-surface redesigns). A new growth lap still needs a NEW mechanism or domain-signal, visibility
-priced FIRST (266/342/343).
 
 ## Iteration 347 — the strike lights the ground it hits (2026-07-18) [Sky & atmosphere × Deepen/interconnect → SHIPPED]
 
@@ -823,3 +783,33 @@ skill*. A genuine grow-city lap still needs a NEW mechanism that is neither addi
 whole-scene overlay (haze — 352), nor in a closed category (emitter/reflection/wind-over-water); none has survived a
 probe since 341. **Recommendation: switch to `polish-tile`, or wait for source to drift before step-back #48.**
 Nothing to fix.
+
+## Iteration 356 — the behavioral and specular candidate classes are already shipped too (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** 350–355 confirmed the additive wall six ways, and 355 ran the *generative* complement — but only over
+**light-emitter** candidates (headlights, taxi lamp, copter beacon), the one profile the header names. This lap ran
+the generative survey over the two candidate classes 355 did **not** touch, on purpose, to check the wall is not just
+saturated in one profile: a **behavioral cross-domain interconnect** (nature × transport) and a **specular reflector**
+(water × sky). No source touched; `md5(solvista.html) = b9dbdb8e…`, byte-identical to the iter-349 freeze.
+
+**Survey — two fresh classes, both pre-existing.**
+- **Behavioral: gulls work the boat wake / roost at dark.** The obvious un-done-looking behavior — birds clustering on
+  a moving vessel — is at `drawBoat` L9124 (`if(LITAMT<0.55)`: three gulls orbit the wake behind the hull, wingbeat on
+  `time`, and vanish at night). Nature×transport behavioral interconnect, LOCAL and high-contrast (white gulls on dark
+  water). *Done.* (Herons roost too, L9227; shorebirds gather the damp margin by day, L6059.)
+- **Specular: the moonglade.** A bright glitter path on the night sea reading the moon's live position + phase — the
+  night twin of the day sun-glitter (L5706). Already shipped and traversing (iter 298 disc traverse, iter 153 one-
+  predicate reader; L9685 `moonglade: the sea twinkles in a POOL THAT TRACKS THE moon`). Water×sky specular reflector,
+  LOCAL. *Done.* (Reflection was already a CLOSED category per the header — 257/329/349 — this just re-confirms it from
+  the *lunar* instance.)
+
+**Census + error gate.** Tree clean; `md5 = b9dbdb8e8ad377d8df940e2d804a572b`, provably the same bytes 354 censused
+VERDICT PASS / 0 errors / core byte-flat. Re-running the 9-cell matrix on identical bytes buys nothing (354's law).
+No histogram move (no source change). Step-back #48 stays **deferred** — it would re-shoot #47's exact frames.
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** The wall now holds from a **seventh** angle (behavioral)
+and an **eighth** (specular/lunar), which are the two classes 355's light-only generative survey left open — so the
+generative confirmation is now complete across *all three* fresh-candidate profiles (emitter · reflector · behavior),
+and every one lands on an existing draw. The additive/interconnect grow-city vein is a stable fixpoint. **Honest mode
+is `polish-tile`** (open cue (ay) windrow LENGTH; birds fade α0.15 not roost) **or await a user-directed vector.**
+Nothing to fix; nothing to ship.

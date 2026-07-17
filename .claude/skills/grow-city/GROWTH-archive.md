@@ -24589,3 +24589,43 @@ the finding lives here, the loop's memory.)
 
 <!-- rotated from header ROTATION chain at iter 355 (superseded by STEP-BACK #47 @350) -->
 - Prev: **STEP-BACK #45 @340** (NO DRIFT; perf +0.022%/lap vs 285; GWARM=0 at pinned dry-peak = CORRECT, overcast greys skyBot, do NOT re-chase — watch now carried by #46/346).
+
+## Iteration 346 — the frozen-column seam-finder, made a standing tool (2026-07-18) [survey]
+
+**Vector.** Cross-cutting / Interaction-with-the-harness. #46 (@345) just cleared the drift-watch, so #47 is too soon,
+and 342/343/344 already established the growth phase has hit its wall. Rather than re-run 344's survey verbatim, I
+worked the header's OWN #1 seam law from a fresh angle and left a durable artifact behind. No source touched —
+`solvista.html` **byte-identical to HEAD** (a survey, not a build).
+
+**What I actually did — three of the recipe's finders, run BY NAME, one of them now a probe:**
+1. **Frozen census column (282/287's "READ IT FIRST").** The recipe calls this the #1 seam-finder, but there was no
+   *tool* for it — `census.mjs` only prints types that CHANGED vs a baseline, and only SUMMED, so a dead-flat-in-every-
+   era row is invisible to it. I wrote **`probes/probe-frozencol.mjs`** (pure world data via `__census().tiles`,
+   per-era × summed-over-seeds, flags FLAT and ZERO rows) and banked it. Result on seeds 7/42/1234: every FLAT row is
+   audited terrain — SHOREPARK 294/294/294 (coastal band), ROCK 80/80/80, MARSH 45/45/45 (289: terrain, draw answers
+   tide+season), LIGHTHOUSE 3/3/3, VOID (off-plate). **No dead rule, no ZERO row.** KELP reads **28→33→31 — it MOVES**,
+   which is 282's fix visible in the census (HEAD before 282 was a stamped-once flat bed). Everything that should grow
+   grows (MID 10→1234, TOWER 0→329, PARK 230→569, SOLARF 0→19, MARKET 0→16, DUNE 62→110).
+2. **Tooltip-table sync (invariant).** Diffed the `T` enum (32 members) against `TILELABEL`/`TILEDESC` and the civic
+   kinds against `CIVICLABEL`/`CIVICDESC`: **complete**, every drawn tile/civic named and described (ROAD/CIVIC handled
+   specially in `describeTile`). No un-named type.
+3. **Per-cell flag lifecycle (281's "fourth seam").** Grepped every flag's writer/veto/draw/tooltip:
+   `hstr`/`loft`/`corner`/`bridge`/`riv`/`treed`/`fete`/`civ`/`wear`/`snow`/`solar`/`groof`. All correct — each has an
+   intentional, commented ride/die rule (e.g. `hstr` deliberately rides COM→TOWER as a retail podium under the tower,
+   line ~7958; `loft` cleared on fire→BURNT; `corner` cleared when `!HOMES.has(c.t)`). **No writer skips a type its
+   veto still counts.**
+
+**Census + error gate.** VERDICT PASS, 0 page errors; core `pop`/`developed`/`roads` byte-unmoved (baseline == current,
++0/+1 chaotic wobble only). `probe-frozencol` self-verifies (its KELP column re-proves 282 lives).
+
+**Finding.** Confirms 344/345 from a *different* instrument (255's "a cue re-confirmed is only corroborated if a
+DIFFERENT instrument did it"): the additive and high-contrast-interconnect space is EXHAUSTED and every seam the
+finders point at is closed. The one durable output is the banked probe — the header's #1 method is now one command for
+every future lap, instead of the ad-hoc build 342/344 each re-derived.
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built in the city).** `solvista.html` byte-identical; the "revert"
+is that no vector earned a ship. Durable artifact: `probes/probe-frozencol.mjs` (harness tooling, not a city change).
+Honest mode from here is unchanged — **STEP-BACKS** (next ~350 = #47) **+ `polish-tile`** (342/343's shaped-ridge /
+tapered-streak deaf-surface redesigns). A new growth lap still needs a NEW mechanism or domain-signal, visibility
+priced FIRST (266/342/343).
+
