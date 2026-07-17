@@ -53,8 +53,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #43 DONE
-  @330 — guardrail reset, NEXT ~335.** Additive space FULLY SPENT (331). ⇒ **next = a measured seam (225) or
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #44 DONE
+  @335 — NO DRIFT, guardrail reset, NEXT ~340.** Additive space FULLY SPENT (331). ⇒ **next = a measured seam (225) or
   Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **332: seams well-tended, remaining gaps are
   DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
@@ -87,10 +87,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ✅ **STANDING STEP-BACK FACTS (last 3 clean: #41/#42/#43 @320/325/330 — NO DRIFT):** golden keeps the greens'
+  ✅ **STANDING STEP-BACK FACTS (last 3 clean: #42/#43/#44 @325/330/335 — NO DRIFT):** golden keeps the greens'
   identity ~8°/10° vs HEAD's 23°/24° (`probe-goldenhue` PASS ⇒ monochrome cue CLOSED, 265 holds); night ordering
   `*TOWER *MID *COM > BEACH` clears by ~19 (222/251); the faint day-sea hex quilt is CAPPED-not-new (255/257/268);
-  perm draw arc ~**+0.015%/lap** (byte-flat FIXES cancel the additive tendency). ⚠ **PRICE THE ARC IN PATH OBJECTS,
+  perm draw arc ~**+0.026%/lap** vs 285 over 49 laps (recent 4-lap window FLAT: +0.14%d/−0.05%n; byte-flat FIXES cancel the additive tendency). ⚠ **PRICE THE ARC IN PATH OBJECTS,
   NOT ms** (perfab is load noise), **and CLEAR `c.snow`** (any season-persistent CA field) first — `__warp(61)` freezes
   the world snowy and `__setYear` won't melt it, so every warp probe over-attributes 321's seasonal draw to the perm
   arc (law in SKILL.md). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **TOOL NITS in `shot-stepback` (banked, not fixed):**
@@ -391,49 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 327 entries before Iteration 325 live in
+> **Archive:** the 328 entries before Iteration 326 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 325 — the snow is a season the warp cannot melt (2026-07-17) [42nd step-back / holistic]
-
-**Vector.** Header flagged the step-back due at ~325 (#41 clean at 320; 4 vectors since — 321 snow, 322 whales,
-323 wildflowers, 324 desire paths — all draw-only / census byte-identical). The step-back outranks one more
-feature. No `solvista.html` change.
-
-**Step-back #42.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
-dusk-summer/dusk-winter discriminating pair (264, verified in the self-reports: `dusk-summer sun=UP (sets 0.831)`
-/ `dusk-winter sun=DOWN (sets 0.701)`).
-- **Visual: city healthy — no cumulative drift, no false FAIL.** One agent per seed, blind, cumulative question.
-  Both read all five as a coherent, balanced coastal city at every light — dense tower core reading as skyline
-  not wallpaper, parks/farms/river/coast legible day and night, no crushed blacks or blown coast, **no z-order
-  tears, no floating tiles, no blown/muddy color, no mojibake**. Both named the WINTER dusk by light alone ⇒
-  day-length season alive (261/264). Only aside (both seeds): **snow reads faintly at the dusk-winter pin** — at
-  year 2035.02 `winterMask≈0.37` (partial melt) and dusk is dark, so the uplands read dark-green rather than
-  white. Not a FAIL, not a regression (321 validated snow at full winter); a lighting subtlety of the partial-
-  melt-at-night frame. Seed 7 dusk-summer's warm low-sun wash flattens inland tiles toward muddy tan — within
-  style, the known golden-warmth read (257), not new.
-- **Perf: PERMANENT ARC FLAT, and a real instrument finding.** Priced in PATH OBJECTS (load-immune, 216/198).
-  The naive warp-priced arc looked ALARMING — vs #41 (320) day **+5.7%**, night **+4.7%**, and the whole 40-lap
-  arc vs 285 (+6.8% day) collapsed into these 4 laps while 285→320 was flat (+1.1%/35 laps). **Bisected to iter
-  321 (snow): 320→321 +6305 day objects, 321→325 +94 (flat).** But snow *draws nothing 3/4 of the year* — the CA
-  melts `c.snow` to 0 and the draw self-skips (`if(c.snow>SNOWSHOW…)`). The jump is an **instrument artifact**:
-  `__warp(61)` lands the world at year 2035.0 (`winterMask=0.09>0`), leaving snow on the ground, and `__setYear`
-  does **not re-tick**, so *every warp-based probe/census permanently samples a snowy world* — a summer pin still
-  paid it. Clearing `c.snow` before counting: current day **111,602** vs 320's **111,604** (−2, byte-flat), night
-  139,821 vs 139,511 (+0.22%); vs 285 (~40 laps): +1229 day = **+0.03%/lap.** ⇒ the permanent arc is FLAT; the
-  snow layer is a bounded **seasonal** ~+5.7%d/+4.7%n paid only the coldest ~3 weeks/year (one extra `hexTile` per
-  snowy upland hex, ~1260 hexes), the trade accepted at 321.
-- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors.
-
-**Verdict: STEP-BACK — NO DRIFT.** City coherent across 3 lights × 2 seasons on 2 seeds; day-length season reads
-by light alone on a crossed map; the permanent (snow-excluded) draw arc is byte-flat over 40 laps. The one finding
-is methodological and promoted to SKILL.md: **a warp-based perf/census instrument freezes the world mid-winter
-with snow the `__setYear` pin cannot melt, so it over-attributes a seasonal draw to the permanent arc — clear
-`c.snow` (any season-persistent CA field) before pricing the arc.** Guardrail reset (next ~330); NEXT vector is
-Civic × New CA rule (36/107) or a measured seam.
 
 ## Iteration 326 — the civic squares weathered in over the decades (2026-07-17) [Civic & culture × New CA rule]
 
@@ -886,3 +848,43 @@ coherent coastal city.
 as HEAD's flat taut triangle at a dead calm — the last un-enumerated WINDA member over the water is
 enumerated (280). Draw-only, census byte-identical, exact fixed point. Water & coast × Deepen.
 `probes/probe-sailwind.mjs`, `probes/shot-sailwind.mjs`.
+
+## Iteration 335 — forty-six laps on, the water still reads as water (2026-07-17) [44th step-back / holistic]
+
+**Vector.** The header pointed here explicitly: "STEP-BACK #43 DONE @330 — NEXT ~335." Five laps have landed since #43
+(331 jet+contrail, ~~332 chimney smoke REVERTED~~, 333 fire-smoke lean, 334 sail belly), the last three a cross-cutting
+WINDA-enumeration run. A step-back is the guardrail that lets the loop run unattended: the census catches *metric*
+collapse but is blind to *cumulative visual* drift and to *permanent perf* drift, so both are measured here, not vibed.
+
+**Census + error gate.** Clean HEAD (5967acb, through 334), tree clean. `census.mjs` VERDICT PASS, 0 page errors; core
+`pop`/`developed`/`roads` unmoved, only the usual ±1 chaotic wobble on `solarRoofs`/`greenRoofs`/`towerHt`.
+
+**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page, pins DERIVED from
+the light curve — 264).** One blind subagent per seed, asked the *cumulative* question (has anything compounded into
+clutter/darkness), not "is a feature present." Both seeds independently PASS:
+- **City coherent & balanced** across all frames — dense towers inland → mid ring → farms/parks → beach/pier coastline,
+  reads as one California coastal city; **no wallpaper band, no over-busy district, no compounded clutter or darkness,
+  no blown-out colour.**
+- **No z-order tears, floating tiles, or detached glows** anywhere — pier, Ferris wheel, offshore windmills, buoys all
+  sit correctly on the water; tower stacking clean in the lit night frames.
+- **Day-length season reads on BOTH seeds** (261): summer-dusk is warm golden with the sun still up over a teal sea;
+  winter-dusk, the SAME wall-clock instant, is night-dark with the crescent moon risen and windows lit — sun provably
+  SET in winter, UP in summer (a discriminating pair, 264, resolved blind on both seeds).
+- **Night coast is coherent lit-city-and-water** — deep blue sea, pier/wheel glow, red/green channel buoys, shore
+  lamps, the built mass glowing warm — not a flat void (the kelp/coast-darkening class stays closed, 282).
+
+**Perf (permanent arc, priced in PATH OBJECTS — load-immune, 198/216 — with `c.snow` cleared per 325's law, so `__warp(61)`'s
+seasonal snow is not misattributed to the perm arc).** `probe-drawbudget.mjs` mean of 3 seeds, day / night path objects:
+- iter 285 (b523698): 110256 / 138143 · iter 330 (9e944af): 111517 / 139941 · **HEAD 334: 111670 / 139870.**
+- **Long arc vs 285 (49 laps): day +1.28% (+0.026%/lap), night +1.25% (+0.026%/lap)** — well under the +0.2%/lap the arc
+  used to run at (162→202 cost 8.6% over 40 laps), and consistent with the standing fact that the run's byte-flat FIXES
+  cancel its additive tendency.
+- **Recent arc vs 330 (4 laps): day +0.14% (+0.034%/lap), night −0.05%** — flat; the last five laps were draw-only WINDA
+  deepens (one extra `windForce()` term each, zero new path objects), so nothing to fix. **No perf-fix lap.**
+
+**Verdict: STEP-BACK — NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length season
+alive; night ordering / golden-greens / sea-quilt facts hold (standing facts, unre-measured this lap because no lap
+since #43 touched their surfaces); permanent draw arc negligible (+0.026%/lap, snow-excluded) with the recent window
+flat. Guardrail reset — next vector ~340 is a measured seam (225) or a Deepen/Polish/Interaction in a rotated domain
+(avoid Sky/Water; additive space is spent, 331, and remaining gaps are deep-but-invisible-at-zoom — price visibility,
+266, before building). Nothing to fix.

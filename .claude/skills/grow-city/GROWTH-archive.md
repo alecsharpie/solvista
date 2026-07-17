@@ -23515,3 +23515,41 @@ that wears the busiest public-green corners to bare earth (reading the existing 
 quiet interior stays green, so the parks show where the city actually walks. Wholly census-inert (zero random draws,
 no terrain), the two-stale-additive-cell pick landed. People × New CA rule (49 → 324). `probes/probe-wear.mjs`.
 
+## Iteration 325 — the snow is a season the warp cannot melt (2026-07-17) [42nd step-back / holistic]
+
+**Vector.** Header flagged the step-back due at ~325 (#41 clean at 320; 4 vectors since — 321 snow, 322 whales,
+323 wildflowers, 324 desire paths — all draw-only / census byte-identical). The step-back outranks one more
+feature. No `solvista.html` change.
+
+**Step-back #42.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
+dusk-summer/dusk-winter discriminating pair (264, verified in the self-reports: `dusk-summer sun=UP (sets 0.831)`
+/ `dusk-winter sun=DOWN (sets 0.701)`).
+- **Visual: city healthy — no cumulative drift, no false FAIL.** One agent per seed, blind, cumulative question.
+  Both read all five as a coherent, balanced coastal city at every light — dense tower core reading as skyline
+  not wallpaper, parks/farms/river/coast legible day and night, no crushed blacks or blown coast, **no z-order
+  tears, no floating tiles, no blown/muddy color, no mojibake**. Both named the WINTER dusk by light alone ⇒
+  day-length season alive (261/264). Only aside (both seeds): **snow reads faintly at the dusk-winter pin** — at
+  year 2035.02 `winterMask≈0.37` (partial melt) and dusk is dark, so the uplands read dark-green rather than
+  white. Not a FAIL, not a regression (321 validated snow at full winter); a lighting subtlety of the partial-
+  melt-at-night frame. Seed 7 dusk-summer's warm low-sun wash flattens inland tiles toward muddy tan — within
+  style, the known golden-warmth read (257), not new.
+- **Perf: PERMANENT ARC FLAT, and a real instrument finding.** Priced in PATH OBJECTS (load-immune, 216/198).
+  The naive warp-priced arc looked ALARMING — vs #41 (320) day **+5.7%**, night **+4.7%**, and the whole 40-lap
+  arc vs 285 (+6.8% day) collapsed into these 4 laps while 285→320 was flat (+1.1%/35 laps). **Bisected to iter
+  321 (snow): 320→321 +6305 day objects, 321→325 +94 (flat).** But snow *draws nothing 3/4 of the year* — the CA
+  melts `c.snow` to 0 and the draw self-skips (`if(c.snow>SNOWSHOW…)`). The jump is an **instrument artifact**:
+  `__warp(61)` lands the world at year 2035.0 (`winterMask=0.09>0`), leaving snow on the ground, and `__setYear`
+  does **not re-tick**, so *every warp-based probe/census permanently samples a snowy world* — a summer pin still
+  paid it. Clearing `c.snow` before counting: current day **111,602** vs 320's **111,604** (−2, byte-flat), night
+  139,821 vs 139,511 (+0.22%); vs 285 (~40 laps): +1229 day = **+0.03%/lap.** ⇒ the permanent arc is FLAT; the
+  snow layer is a bounded **seasonal** ~+5.7%d/+4.7%n paid only the coldest ~3 weeks/year (one extra `hexTile` per
+  snowy upland hex, ~1260 hexes), the trade accepted at 321.
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors.
+
+**Verdict: STEP-BACK — NO DRIFT.** City coherent across 3 lights × 2 seasons on 2 seeds; day-length season reads
+by light alone on a crossed map; the permanent (snow-excluded) draw arc is byte-flat over 40 laps. The one finding
+is methodological and promoted to SKILL.md: **a warp-based perf/census instrument freezes the world mid-winter
+with snow the `__setYear` pin cannot melt, so it over-attributes a seasonal draw to the permanent arc — clear
+`c.snow` (any season-persistent CA field) before pricing the arc.** Guardrail reset (next ~330); NEXT vector is
+Civic × New CA rule (36/107) or a measured seam.
+
