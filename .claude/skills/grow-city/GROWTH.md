@@ -32,16 +32,17 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Water **329** (WATERFRONT REFLECTION ANSWERS THE SKYLINE — Water × Deepen; the night sea's
-  "city-lights smear" fell UNIFORMLY along the whole coast, a source-less glow over dark parks too. `shoreGlow(y)` sums
-  developed frontage within 10 cells inshore (taller-brighter/nearer-stronger; reads `c.th`, never `c.h` — 277) and the
-  smear now gates on it. Draw-only, census + day byte-identical (LITAMT = free dead regime). `probe-shorereflect`:
-  corr(glow,ink)=0.61–0.77, bins monotonic ~10× spread, DAY 0 rects, dark-row leak 0; `probe-shoreglow` (SPACE first,
-  218/246): ~65% shore rows lit, ~35% dune/park go dark. 2 blind PASS — varies, coast coherent.) Prev: Sky
+- **ROTATION.** Last: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat. 2 seeds × 5 frames: night
+  lit, golden greens GREEN (265), coast water+beach (282), day-length season named by light alone (261/264); no
+  z-order/float/blowout. Perf PATH OBJECTS snow-cleared: 325→329 byte-flat, arc vs 285 ≈**+0.027%/lap** / 44 laps
+  — well under +0.2%; no perf-fix lap.) Prev: Water **329**
+  (WATERFRONT REFLECTION ANSWERS THE SKYLINE — the night city-lights smear now gates on `shoreGlow(y)` (developed
+  frontage within 10 cells inshore, reads `c.th`) so lit downtown coast shimmers and dune/park headlands stay dark;
+  draw-only, census + day byte-identical; `probe-shorereflect`/`probe-shoreglow`.) Prev: Sky
   **328** (THE STRIKE — Sky × Deepen; grounds a forked bolt down the rain shaft on 291's flash peak, gated `bolt>0.22`
-  INSIDE `if(pa>0)` so never strikes the void (248); draw-only, byte-identical.) Prev: Urban **327** (FACADE TILE PICK
-  — cue (ba) CLOSED; `pickTile` = frontmost built `c.h`-prism column
-  covering the cursor, ground-plane fallback off buildings; census-inert, Interaction/UX 133→327.) Prev: Civic **326**
+  INSIDE `if(pa>0)` so never strikes the void (248); draw-only, byte-identical.) Prev: Urban **327** (FACADE TILE
+  PICK — `pickTile` = frontmost built prism covering the cursor, ground-plane fallback; cue (ba) CLOSED,
+  census-inert, 133→327.) Prev: Civic **326**
   (CIVIC SQUARE MATURATION — Civic × New CA 36/107, LAST stale additive cell; `c.civ` accumulation+diffusion, corr(civ,
   age)=1.0. ⚠ plazas YOUNG ⇒ maxCiv≈0.91.) Prev (all shipped, census byte-identical, laws in SKILL.md): **STEP-BACK
   #42 @325** (NO DRIFT; day-length season alive; perm arc BYTE-FLAT vs 320 once snow cleared — clear `c.snow` before
@@ -52,8 +53,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: ADDITIVE space is
   FULLY ROTATED (Civic × New CA filled 326; field-CA templates cover diffusion/reaction-diffusion/accumulation). Only
   genuinely sparse additive cell = Sky × New element (291, 3rd ever). Otherwise a measured seam (225, 27-for-27) or
-  Deepen/Polish/Interaction. **NEXT ~330 = STEP-BACK #43 DUE** (326–329 all draw-only/byte-flat since #42 @325 — do
-  the holistic before the next feature).**
+  Deepen/Polish/Interaction. **STEP-BACK #43 DONE @330 — NO DRIFT; guardrail reset, NEXT ~335.** NEXT feature =
+  Sky × New element (291, 3rd ever) or a measured seam.**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
   lamps present & night-gated; (bi)/(av) cues = barely-visible bad trade ⇒ ⛔ do NOT force, `polish-tile`).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
@@ -65,8 +66,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   lightning, sparsest cell — 3rd ever). **TRANSPORT** all seams dry (304); its two named cues are the 0.5px hairline
   `polish-tile` family ⛔, stale = **New CA rule (77)**. Every animate draw now *verifiably* off the 262 cliff (300 the last).
   ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next). ✅ **(ba) CLOSED @327** (facade tile pick —
-  occlusion-correct `pickTile`; law in SKILL.md — a pick by ground-plane centre names the tile behind a tall
-  facade, 224 on the cursor) · ✅ **(az) CLOSED @314** (vehicle oriented pick box).
+  occlusion-correct `pickTile`; law in SKILL.md) · ✅ **(az) CLOSED @314** (vehicle oriented pick box).
   ✅ **CLOSED (detail in each entry):** (bh) 317 (NON-DEFECT: a fine gold statue) · (bd) 284 · (au) 302 · (ax)+(bg)
   294 · (bf) market packed-away square 299.
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
@@ -87,7 +87,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ✅ **STANDING STEP-BACK FACTS (last 3 clean: #40/#41/#42 @315/320/325 — NO DRIFT):** golden keeps the greens'
+  ✅ **STANDING STEP-BACK FACTS (last 3 clean: #41/#42/#43 @320/325/330 — NO DRIFT):** golden keeps the greens'
   identity ~8°/10° vs HEAD's 23°/24° (`probe-goldenhue` PASS ⇒ monochrome cue CLOSED, 265 holds); night ordering
   `*TOWER *MID *COM > BEACH` clears by ~19 (222/251); the faint day-sea hex quilt is CAPPED-not-new (255/257/268);
   perm draw arc ~**+0.015%/lap** (byte-flat FIXES cancel the additive tendency). ⚠ **PRICE THE ARC IN PATH OBJECTS,
@@ -391,51 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 322 entries before Iteration 320 live in
+> **Archive:** the 323 entries before Iteration 321 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 320 — five clean lights, two seasons, forty-five laps flat (2026-07-17) [41st step-back / holistic]
-
-**Vector.** The header flagged the step-back due at ~320 (#40 clean at 315, 4 vectors since: 316 districts,
-317 park season, 318 washing, 319 fireworks — all draw-only). The step-back is the loop's main guardrail for
-long unattended runs, and it outranks one more feature; the vector resumes next (Civic/People × New CA rule).
-No `solvista.html` change.
-
-**Step-back #41.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
-dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant, sun UP in summer and DOWN in winter,
-verified in the self-reports: `dusk-summer sun=UP (sets 0.831)` / `dusk-winter sun=DOWN (sets 0.701)`). ⚠ The
-`shots/` scratch held STALE `frame-alpha/beta` PNGs from an OLDER session (mtime 15:18 vs this run's 07:54) that
-`shot-stepback.mjs` does not itself write — the first agent round discriminated on those; I wiped `shots/sb*`, re-
-shot fresh, and built the crossed blind pair (`pair-alpha/beta`) from THIS run's frames before re-running the gate
-(197/239: md5/mtime the instrument before you trust its output).
-- **Visual: city is healthy — no cumulative drift, no false FAIL.** One agent per seed, blind, cumulative
-  question, on the FRESH frames. Both read all five as a coherent, balanced, beautiful coastal city at every
-  light — dense tower core reading as skyline not wallpaper, parks/farms/river breaking up the grey, warm sand
-  coast (pier, ferris wheel, offshore wind, boats) legible day and night, no crushed blacks or blown-out coast,
-  no z-order tears, floating tiles, or mid-air ornaments, no mojibake in any HUD text. Both correctly named the
-  WINTER frame by light alone on the CROSSED map (seed 42 pair-alpha=winter ✓; seed 7 pair-beta=winter ✓ — each
-  citing sun-already-set / moon-out / windows-lit vs summer's sun-still-up warm wash) ⇒ the day-length season is
-  alive (261/264). No new asides.
-- **Golden hue PASS** (`probe-goldenhue`, golden pin DERIVED in-page as argmax GWARM, 265): golden keeps the
-  greens' identity — PARK **8°** / FOREST **10°** off their daylight selves, against HEAD's historical **23°/24°**
-  rotated onto ROAD/BEACH. BEACH↔ROAD 92→86 at golden (well above the ~15 collapse floor). Monochrome-terracotta
-  cue stays **CLOSED** (265 holds). Night hue guard PASS (BEACH 8°, RES 10°, PARK 1°, FOREST 3° off daylight).
-- **Night ordering invariant PASS** (p90 envelope, 222/251): `*TOWER 130 *MID 124 *COM 118 | PARK 99 BEACH 98
-  ROAD 98` — the dimmest LIT surface clears the brightest UNLIT by **19**. Neighbour separations hold.
-- **Perf: no drift, priced in PATH OBJECTS (load-immune — 216/198).** HEAD 320: day 111,283, night 139,620.
-  LAP vs #40 (315: day 112,114 / night 139,567): **−0.74% day / +0.04% night** — flat-to-down (316–319 all draw-
-  only / byte-flat fixed points). ARC vs iter 275 (~45 laps back: day 111,640 / night 138,815): **−0.32% day /
-  +0.58% night** ≈ **+0.013%/lap**, an order under the +0.2%/lap additive tendency, cancelled by the byte-flat
-  FIX/credit laps. No compounding.
-- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors.
-
-**Verdict: STEP-BACK — NO DRIFT.** No feature shipped. The city is confirmed coherent across 3 lights × 2 seasons
-on 2 seeds; the day-length season reads by light alone on a crossed map; forty-five laps of growth cost ~0.6% of
-draw work; golden hue keeps the greens (265 holds); the night lit-city ordering clears by 19. The guardrail is
-reset (next step-back ~325); **NEXT vector is Civic or People × New CA rule** (the two stale additive cells).
 
 ## Iteration 321 — it snowed on the hills, and the streets went white for a week (2026-07-17) [Sky & atmosphere × New CA rule]
 
@@ -898,3 +858,40 @@ shimmers with a brighter, longer reflection while a park/dune headland leaves th
 source-less glow uniformly along the whole coast. Draw-only, census byte-identical, day byte-identical, an interconnect
 of the Urban lights into the Water. Water & coast × Deepen (17/25/…/311/322 → 329). `probes/probe-shoreglow.mjs`,
 `probes/probe-shorereflect.mjs`.
+
+## Iteration 330 — forty-five laps on, the water still reads as water (2026-07-17) [43rd step-back / holistic]
+
+**Vector.** Header flagged the step-back due at ~330 (#42 clean at 325; 4 vectors since — 326 civic-square
+weathering, 327 facade tile pick, 328 grounded lightning bolt, 329 waterfront reflection — all draw-only /
+census byte-identical). The step-back outranks one more feature. No `solvista.html` change.
+
+**Step-back #43.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
+dusk-summer / dusk-winter discriminating pair (264, verified in the self-reports: `dusk-summer sun=UP (sets 0.831)`
+/ `dusk-winter sun=DOWN (sets 0.701)`).
+- **Visual: city healthy — no cumulative drift, no false FAIL.** One agent per seed, blind, cumulative question.
+  Both read all five as a coherent, balanced coastal city at every light — ocean→beach→parks→downtown→outer rings
+  layering correctly, dense tower core reading as a skyline (not wallpaper), the river/lagoon bands legible.
+  **All three compounding checks passed on BOTH seeds, unprompted:** night is a legibly LIT city (warm window
+  grids, amber street/rail chains, lit pier + buoys — not a mauve/black void); golden hour keeps the parks and
+  street-trees GREEN (the orange confined to sky/sand/roof highlights, not a monochrome terracotta wash — 265
+  holds); the coastline reads teal water + tan beach with a hex-scalloped surf edge (no dark kelp/quilt band —
+  282 holds). Both named the WINTER dusk by light alone (sun down, city already blazing) ⇒ day-length season
+  alive (261/264). No z-order tears, no floating tiles, no blown/muddy color; towers/piers/turbines all seat
+  correctly on their hexes.
+- **Perf: PERMANENT ARC FLAT.** Priced in PATH OBJECTS (load-immune, 216/198), snow cleared per 325's law
+  (the probe now does it in-page). Mean of 3 seeds: current (329) day **111,655** / night **139,773**.
+  - vs #42 (325): day 111,684 / night 139,816 ⇒ **−29 day (−0.03%), −43 night (−0.03%)** over the 4 draw-only
+    laps — byte-flat, a tiny credit (327/328/329 all wired new draws to `if(pa>0)`/light gates that add nothing
+    at the priced pins).
+  - vs iter 285 (~44 laps back): day 110,342 / night 138,106 ⇒ **+1,313 day (+1.19%), +1,667 night (+1.21%)**,
+    i.e. **≈+0.027%/lap** — well under the historical +0.2%/lap the arc used to run at (162→202 cost 8.6%/40
+    laps), consistent with the standing fact that byte-flat FIXES cancel the additive tendency. No perf-fix lap.
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits); the drawbudget probe loaded current HEAD
+  across 3 seeds × 2 lights with 0 page errors.
+
+**Verdict: STEP-BACK — NO DRIFT.** City coherent across 3 lights × 2 seasons on 2 seeds; day-length season reads
+by light alone on a crossed map; night lit, golden greens green, coast reads water+beach; the permanent
+(snow-excluded) draw arc is byte-flat over the 4-lap window and ≈+0.027%/lap over ~44 laps. Nothing to fix.
+Guardrail reset (next ~335). NEXT vector: Sky × New element (291 lightning was the sparsest additive cell) or a
+measured seam (grep `tick()` / the TABLES / the comments — the cue list records where you've LOOKED, not what is
+THERE).

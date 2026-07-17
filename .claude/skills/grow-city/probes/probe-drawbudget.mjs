@@ -51,6 +51,11 @@ const census = async (page, seed, dayT) => page.evaluate(({ seed, dayT }) => {
   playing = false;
   genWorld(seed);
   __warp(61);
+  /* 325's law: __warp(61) lands the world at ~2035.0 with snow on the ground, and
+     __setYear does not re-tick, so a warp-based path-object count over-attributes the
+     bounded SEASONAL snow draw to the PERMANENT arc. Clear any season-persistent CA
+     field before counting the arc. */
+  try { for (const c of cells) if (c.snow) c.snow = 0; } catch (e) {}
   if (typeof STARS !== 'undefined') STARS.length = 0;
   try { flock = null; } catch (e) {}
   waveT = 0; time = 0;
