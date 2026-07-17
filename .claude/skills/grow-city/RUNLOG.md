@@ -257,4 +257,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 324  People & activity × New CA rule SHIPPED             20m04s   $13.43 d22f663
 ✔ Iter 325  —                          SHIPPED             29m14s   $9.98  63d749e
 ✔ Iter 326  Civic × New CA rule        SHIPPED             23m34s   $11.75 0582bc7
+✔ Iter 327  Urban fabric × Interaction/UX SHIPPED             24m22s   $15.71 02844f0
 ```
