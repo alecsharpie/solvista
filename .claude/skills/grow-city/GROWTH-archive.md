@@ -24102,3 +24102,67 @@ comes in from a passing shower on the same `dryAt` predicate the washing line re
 sibling is the beach crowd, which is Water and calendar-only by design (⛔ do not force). Draw-only, census
 byte-identical. People × Deepen. `probes/probe-cafehours.mjs`, `probes/shot-cafehours.mjs`.
 
+## Iteration 337 — the picnic and the pickup game come in from the rain too (2026-07-17) [People & activity × Deepen/interconnect]
+
+**Vector.** 336 brought the shopfront/kerb crowd in from a shower and wrote into the header that "the rain-aware
+category's LAST VISIBLE siblings are enumerated." It was not — and the missed siblings were the two clearest outdoor
+DAYTIME crowds, sitting in the SAME draw code 336 had just edited: the park **picnickers** (`drawCell` PARK v<0.44 —
+a blanket + a seated family on the lawn), **twenty lines below** the café patrons 336 DID give `dryAt`; and the pickup
+**ballgame** on a sports pitch (`drawCell` FIELD, gated on `pitchGame(x,y)>0`). Both keep an HOUR (`LITAMT<0.5`, day)
+and a season (the picnic packs away for winter), but ignored the SHOWER — a family picnicking and kids playing ball
+through a downpour, while the café terrace beside them had just been brought in. This is 262/286's cliff exactly
+(fix one member of a category, leave the sibling in the same function) and a *visible incoherence now sitting next to
+336's own frame*. Found by grepping the outdoor-daytime-crowd draws (`LITAMT<0.5` gates) for the rain predicate they
+lack — not the header's noun list (280), whose "last sibling = the beach crowd" claim was the tell.
+
+**Change (draw-only — no `rng()`, no terrain).** `&& dryAt(x,y)` added to the picnic gate; and folded **into**
+`pitchGame(x,y)` (`if(!dryAt(x,y))return 0;` at the top) so the ONE predicate answers for the draw AND the tooltip
+(`pitchWord`, 112/123) — the tooltip can no longer claim "a pickup game is on" over an empty rained-off pitch. No new
+constant (the existing `dryAt` = `rainingAt<RAINDRY`, 0.05). At `rainingAt<0.05` (dry — the overwhelming majority of
+hexes/time) `dryAt` is true and both gates collapse to HEAD byte-for-byte: an exact fixed point (245/253), so DRY ≡ HEAD.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT
+PASS. Only the usual ±1 tick-timing wobble on `solarRoofs`/`greenRoofs`/`towerHt` (226 — matched HEAD's own baseline run
+before the edit; not mine, no `rng()`/terrain).
+
+**Probe** (`probes/probe-parkrain.mjs`, build-agnostic — grades the SHIPPED draw in ONE build, ONE world, ONE frame:
+stubs `window.rainingAt` (a function declaration ⇒ on window) to 0 (DRY ≡ HEAD) and to 1 (WET everywhere) and counts
+the body `fillRect`s the frame ISSUES by their (w,h) signature — picnic blanket 5.2×2.6, pitch player 1.6×2.4, kid
+control 1.2×1.8. No pixel diff, NO NOISE FLOOR.). Afternoon pin (dayT=0.60: `LITAMT<0.5` and inside the kickoff window),
+2035.62 dry peak. All 3 seeds:
+- **picnic 16/24/31 · pitch 8/40/24 come IN** when wet — and the WET count is **exactly 0** for both (no rain-independent
+  collision on these signatures), so the whole crowd cleared.
+- **kid control IDENTICAL dry vs wet** — the must-not-move column held (250); the rain stub moved only the two draws.
+- **DRY == HEAD by construction. PARKRAIN: PASS.**
+
+**Visual** (`probes/shot-parkrain.mjs` — same frozen afternoon dry-peak city, shot DRY (`rainingAt→0`, ≡HEAD, crowds
+out) and WET (`rainingAt→1`, emptied) as a blind A/B zoomed 5× and **aimed by measured ink** (226/272: the only thing
+differing between DRY and WET is the picnic/ballgame crowds, so the argmax of the DRY-vs-WET diff IS where they render,
+HUD boxes zeroed first — 200), plus a whole-city DRY frame; tokens meaningless + non-ordinal, map **CROSSED between
+seeds** (238/239/268); md5 confirmed the pairs differ). **Both blind subagents, on both seeds, on the crossed map,
+correctly named the busy (DRY) frame from the lawn/pitch crowd alone** (s42 dry=`wren` ✓ · s7 dry=`lark` ✓): picnic
+blankets + ballgame player-specks on the green lawns/chalk pitches in DRY, those exact spots BARE in WET (only the
+umbrella-carrying peds remain — a different, correctly-still-present category). Both confirmed the crowds sit ON the
+lawns/pitches (not floating/on road/water), and the whole-city frame reads as a **balanced, coherent coastal city** —
+no z-order tears, floating tiles, or blown-out colour.
+
+**Perf.** Zero new path objects (draw-only; the picnic gains one `dryAt()` term, `pitchGame` one early-out). Step-back
+(~340) prices the arc.
+
+**Verdict: SHIPPED.** The park's daytime crowds — a lawn picnic and a pickup ballgame — now come in from a passing
+shower on the same `dryAt` predicate as the café crowd, and stand out unchanged when dry (exact fixed point). 336's
+"last visible rain sibling is the beach crowd" was wrong; with these two the outdoor-daytime-crowd category is closed
+for real (the beach crowd remains the sole hold-out, Water and calendar-only by design ⛔). Draw-only, census
+byte-identical. People × Deepen. `probes/probe-parkrain.mjs`, `probes/shot-parkrain.mjs`.
+
+
+<!-- moved from header at iter 347 (superseded by STEP-BACK #46 @345 entry + SKILL.md 222/251/265; step-back facts are re-measured each step-back) -->
+  ✅ **STANDING STEP-BACK FACTS (last 3 clean: #42/#43/#44 @325/330/335 — NO DRIFT):** golden keeps the greens'
+  identity ~8°/10° vs HEAD's 23°/24° (`probe-goldenhue` PASS ⇒ monochrome cue CLOSED, 265 holds); night ordering
+  `*TOWER *MID *COM > BEACH` clears by ~19 (222/251); the faint day-sea hex quilt is CAPPED-not-new (255/257/268);
+  perm draw arc ~**+0.026%/lap** vs 285 over 49 laps (recent 4-lap window FLAT: +0.14%d/−0.05%n; byte-flat FIXES cancel the additive tendency). ⚠ **PRICE THE ARC IN PATH OBJECTS,
+  NOT ms** (perfab is load noise), **and CLEAR `c.snow`** (any season-persistent CA field) first — `__warp(61)` freezes
+  the world snowy and `__setYear` won't melt it, so every warp probe over-attributes 321's seasonal draw to the perm
+  arc (law in SKILL.md). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **TOOL NITS in `shot-stepback` (banked, not fixed):**
+  per-frame `GWARM=0` self-report is a stale caption (pixels ARE warm; agents + `probe-goldenhue` agree) — do NOT read
+  as "golden unwarmed"; `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM.

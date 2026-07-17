@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~, ~~**343**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~, **341** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338**, **339** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328**, **347** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318**, **336**, **337** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -32,10 +32,18 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **346 — SATURATION RE-CONFIRMED, frozen-column finder now a PROBE / NO SHIP** (worked 282/287's #1
-  seam law + tooltip-sync + 281's flag-lifecycle BY NAME; no dead rule / no ZERO row / no un-named type / no flag-veto
-  gap; banked **`probes/probe-frozencol.mjs`** — the header's #1 method is now one command, KELP 28→33→31 re-proves 282;
-  solvista.html BYTE-IDENTICAL. 255: a DIFFERENT instrument corroborating 344.) Prev: **STEP-BACK #46 @345** (NO DRIFT —
+- **ROTATION.** Last: **347 — THE STRIKE LIGHTS THE GROUND IT HITS / SHIPPED (DEEPENED)** (Sky × Deepen; 328's bolt
+  grounded at `[foot,cy]` but the terrain there stayed dark — the strike illuminated *nothing it hit*. A soft radial
+  pool of bluish-white light, SQUASHED to the ground plane (291, reads as cast light not a floating orb), rides the SAME
+  `bolt` intensity, drawn UNDER the strokes so the core stays crisp; raw literal (279), gradient→α0 (195), inside the
+  on-plate guard (248). Isolated by a new `GFLASH` suppressor (253, floor 0): `probe-groundflash` reads peak amp 78/80,
+  17–20% of the incumbent bolt's ink (226), ZERO in dry weather; BOTH blind agents on a CROSSED map named the pool
+  variant and PASSED. Draw-only, gated behind a rare strike ⇒ census byte-flat, ~0 path objects except mid-strike.
+  ✅ **This refutes 344/346's "high-contrast interconnect space EXHAUSTED": the strike's HALF-BUILT ground-illumination
+  was a real, shippable, high-contrast Deepen the surveys' reflection-family enumeration missed — a light SOURCE, not a
+  reflection.** Banked `probes/probe-groundflash.mjs` + `shot-groundflash.mjs`.) Prev: **346 — frozen-column finder now
+  a PROBE / NO SHIP** (banked `probe-frozencol.mjs`; KELP 28→33→31 re-proves 282; byte-identical.) Prev: **STEP-BACK
+  #46 @345** (NO DRIFT —
   census byte-flat; both seeds PASS blind, 5 pins, seasonal pair resolves, night coherent; perf +0.017/0.021%/lap vs 285
   (60 laps), FLAT vs 339. ⚠ Watch STILL soft: inland tower core dense but NOT wallpaper — do NOT add raw downtown
   density.) Prev: **344 — RETURNS FLATTENED / NO SHIP** (fresh full seam-hunt; only gaps DEEP-INVISIBLE-AT-ZOOM
@@ -56,11 +64,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   prism) · Civic **326** (CIVIC SQUARE `c.civ`) · **STEP-BACKS #42–#44 @325/330/335** (NO DRIFT) · **324–319** (desire
   paths · wildflowers · whales · SNOW `c.snow` ⚠ warp=61 freezes it ON · civic) · People **318/317** · Urban **316**
   (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 342/343/344/346 are the
-  growth phase HITTING ITS WALL (every buildable interconnect ships or is `polish-tile`); #46 @345 = NO DRIFT. ~350 =
-  STEP-BACK #47; between now and then the honest mode is `polish-tile` (342/343's shaped-ridge / tapered-streak
-  redesigns), NOT more growth laps. A genuinely NEW growth vector needs a NEW mechanism or domain-signal, not another
-  deaf-surface overlay — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: growth is saturation-bound
+  (342/343/344/346), but 347 SHIPPED — a HALF-BUILT feature is a live high-contrast seam the surveys miss: 328 grounded a
+  bolt and never lit what it hit. ~350 = STEP-BACK #47. Between now: `polish-tile` (342/343's shaped-ridge/tapered-streak),
+  OR grep for a shipped feature whose OWN LOGIC is half-finished (a draw that lands/emits/casts and stops — like 328's
+  bolt), NOT another deaf-surface overlay. A NEW growth vector needs a NEW mechanism, an un-wired signal reader, OR a
+  half-built effect completed — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
   ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM — PRICE VISIBILITY (266/342/343) BEFORE building; a passing
   census+probe means NOTHING for a subtle overlay, only the blind agents do. A HIGH-CONTRAST interconnect (341's warm-
   on-dark reflection) ships; a LOW-CONTRAST one (snow-on-snow, pale-on-pale, haze) INVERTS. Check figure/ground FIRST.**
@@ -94,15 +103,6 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ✅ **STANDING STEP-BACK FACTS (last 3 clean: #42/#43/#44 @325/330/335 — NO DRIFT):** golden keeps the greens'
-  identity ~8°/10° vs HEAD's 23°/24° (`probe-goldenhue` PASS ⇒ monochrome cue CLOSED, 265 holds); night ordering
-  `*TOWER *MID *COM > BEACH` clears by ~19 (222/251); the faint day-sea hex quilt is CAPPED-not-new (255/257/268);
-  perm draw arc ~**+0.026%/lap** vs 285 over 49 laps (recent 4-lap window FLAT: +0.14%d/−0.05%n; byte-flat FIXES cancel the additive tendency). ⚠ **PRICE THE ARC IN PATH OBJECTS,
-  NOT ms** (perfab is load noise), **and CLEAR `c.snow`** (any season-persistent CA field) first — `__warp(61)` freezes
-  the world snowy and `__setYear` won't melt it, so every warp probe over-attributes 321's seasonal draw to the perm
-  arc (law in SKILL.md). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **TOOL NITS in `shot-stepback` (banked, not fixed):**
-  per-frame `GWARM=0` self-report is a stale caption (pixels ARE warm; agents + `probe-goldenhue` agree) — do NOT read
-  as "golden unwarmed"; `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM.
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -391,64 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 339 entries before Iteration 337 live in
+> **Archive:** the 340 entries before Iteration 338 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 337 — the picnic and the pickup game come in from the rain too (2026-07-17) [People & activity × Deepen/interconnect]
-
-**Vector.** 336 brought the shopfront/kerb crowd in from a shower and wrote into the header that "the rain-aware
-category's LAST VISIBLE siblings are enumerated." It was not — and the missed siblings were the two clearest outdoor
-DAYTIME crowds, sitting in the SAME draw code 336 had just edited: the park **picnickers** (`drawCell` PARK v<0.44 —
-a blanket + a seated family on the lawn), **twenty lines below** the café patrons 336 DID give `dryAt`; and the pickup
-**ballgame** on a sports pitch (`drawCell` FIELD, gated on `pitchGame(x,y)>0`). Both keep an HOUR (`LITAMT<0.5`, day)
-and a season (the picnic packs away for winter), but ignored the SHOWER — a family picnicking and kids playing ball
-through a downpour, while the café terrace beside them had just been brought in. This is 262/286's cliff exactly
-(fix one member of a category, leave the sibling in the same function) and a *visible incoherence now sitting next to
-336's own frame*. Found by grepping the outdoor-daytime-crowd draws (`LITAMT<0.5` gates) for the rain predicate they
-lack — not the header's noun list (280), whose "last sibling = the beach crowd" claim was the tell.
-
-**Change (draw-only — no `rng()`, no terrain).** `&& dryAt(x,y)` added to the picnic gate; and folded **into**
-`pitchGame(x,y)` (`if(!dryAt(x,y))return 0;` at the top) so the ONE predicate answers for the draw AND the tooltip
-(`pitchWord`, 112/123) — the tooltip can no longer claim "a pickup game is on" over an empty rained-off pitch. No new
-constant (the existing `dryAt` = `rainingAt<RAINDRY`, 0.05). At `rainingAt<0.05` (dry — the overwhelming majority of
-hexes/time) `dryAt` is true and both gates collapse to HEAD byte-for-byte: an exact fixed point (245/253), so DRY ≡ HEAD.
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT
-PASS. Only the usual ±1 tick-timing wobble on `solarRoofs`/`greenRoofs`/`towerHt` (226 — matched HEAD's own baseline run
-before the edit; not mine, no `rng()`/terrain).
-
-**Probe** (`probes/probe-parkrain.mjs`, build-agnostic — grades the SHIPPED draw in ONE build, ONE world, ONE frame:
-stubs `window.rainingAt` (a function declaration ⇒ on window) to 0 (DRY ≡ HEAD) and to 1 (WET everywhere) and counts
-the body `fillRect`s the frame ISSUES by their (w,h) signature — picnic blanket 5.2×2.6, pitch player 1.6×2.4, kid
-control 1.2×1.8. No pixel diff, NO NOISE FLOOR.). Afternoon pin (dayT=0.60: `LITAMT<0.5` and inside the kickoff window),
-2035.62 dry peak. All 3 seeds:
-- **picnic 16/24/31 · pitch 8/40/24 come IN** when wet — and the WET count is **exactly 0** for both (no rain-independent
-  collision on these signatures), so the whole crowd cleared.
-- **kid control IDENTICAL dry vs wet** — the must-not-move column held (250); the rain stub moved only the two draws.
-- **DRY == HEAD by construction. PARKRAIN: PASS.**
-
-**Visual** (`probes/shot-parkrain.mjs` — same frozen afternoon dry-peak city, shot DRY (`rainingAt→0`, ≡HEAD, crowds
-out) and WET (`rainingAt→1`, emptied) as a blind A/B zoomed 5× and **aimed by measured ink** (226/272: the only thing
-differing between DRY and WET is the picnic/ballgame crowds, so the argmax of the DRY-vs-WET diff IS where they render,
-HUD boxes zeroed first — 200), plus a whole-city DRY frame; tokens meaningless + non-ordinal, map **CROSSED between
-seeds** (238/239/268); md5 confirmed the pairs differ). **Both blind subagents, on both seeds, on the crossed map,
-correctly named the busy (DRY) frame from the lawn/pitch crowd alone** (s42 dry=`wren` ✓ · s7 dry=`lark` ✓): picnic
-blankets + ballgame player-specks on the green lawns/chalk pitches in DRY, those exact spots BARE in WET (only the
-umbrella-carrying peds remain — a different, correctly-still-present category). Both confirmed the crowds sit ON the
-lawns/pitches (not floating/on road/water), and the whole-city frame reads as a **balanced, coherent coastal city** —
-no z-order tears, floating tiles, or blown-out colour.
-
-**Perf.** Zero new path objects (draw-only; the picnic gains one `dryAt()` term, `pitchGame` one early-out). Step-back
-(~340) prices the arc.
-
-**Verdict: SHIPPED.** The park's daytime crowds — a lawn picnic and a pickup ballgame — now come in from a passing
-shower on the same `dryAt` predicate as the café crowd, and stand out unchanged when dry (exact fixed point). 336's
-"last visible rain sibling is the beach crowd" was wrong; with these two the outdoor-daytime-crowd category is closed
-for real (the beach crowd remains the sole hold-out, Water and calendar-only by design ⛔). Draw-only, census
-byte-identical. People × Deepen. `probes/probe-parkrain.mjs`, `probes/shot-parkrain.mjs`.
 
 ## Iteration 338 — the capitol's standards fly with the wind (2026-07-17) [Civic & culture × Deepen/interconnect]
 
@@ -907,3 +854,49 @@ is that no vector earned a ship. Durable artifact: `probes/probe-frozencol.mjs` 
 Honest mode from here is unchanged — **STEP-BACKS** (next ~350 = #47) **+ `polish-tile`** (342/343's shaped-ridge /
 tapered-streak deaf-surface redesigns). A new growth lap still needs a NEW mechanism or domain-signal, visibility
 priced FIRST (266/342/343).
+
+## Iteration 347 — the strike lights the ground it hits (2026-07-18) [Sky & atmosphere × Deepen/interconnect → SHIPPED]
+
+**Vector.** 344/345/346 declared the growth phase saturation-bound and named the honest mode as step-backs +
+`polish-tile`. But #46 (@345) was two laps ago (too soon for #47), and re-running a fourth consecutive survey adds
+nothing. The one live path the header leaves open is *a genuinely NEW mechanism or domain-signal, visibility priced
+first* — and 341 had just shown the saturation note can be wrong (the rain mechanism had an un-wired ROAD reader). So
+this lap grepped, first-hand, for a **HIGH-CONTRAST interconnect the reflection-family survey missed**, and found one
+in the sky's most dramatic event: **328's lightning bolt grounds at `[foot,cy]` but the terrain it hits stays dark.**
+A strike that lands and illuminates nothing is a half-built feature — completing it is a coherent Deepen, not a new
+deaf-surface overlay, and it is inherently HIGH-CONTRAST (bright bluish-white on dark storm-dusk ground: the 329/341
+class that ships).
+
+**Change (draw-only, ~17 lines).** Inside the strike's `if(bolt>0.22)` block (~L9929), before the bolt strokes, a soft
+radial **pool of light on the ground** at the bolt's landing point `[foot,cy]`, SQUASHED to the ground plane
+(`scale(1,0.42)`) so it reads as illumination lying ON the terrain rather than a floating orb (291). Rides the SAME
+`bolt` intensity (`gi=min(0.5,bolt*0.6)`), drawn UNDER the strokes so the crisp bolt core sits over its own glow; a
+light SOURCE, so a raw literal never `col()` (279); a gradient to alpha 0, never a flat arc (195); deterministic in
+`time`+cloud (no rng); inside the on-plate guard, so it can never light the void (248). Added a `GFLASH` suppressor
+(next to `LIGHTN`) so a probe can isolate JUST the pool from the bolt in one page, floor 0 (253).
+
+**Census + error gate.** VERDICT PASS, 0 page errors. Draw-only, no terrain, no `rng()` ⇒ core byte-flat (the
+histogram is the pre-existing city; the diff is 17 lines of `ctx`). Perf: the pool draws only when `bolt>0.22`
+(a rare wet-storm-at-dusk flash peak), so it contributes ~0 path objects at the perf gate's fair-weather pins — free.
+
+**Probe (`probes/probe-groundflash.mjs`).** Pins the same on-plate wet-storm flash peak `probe-strike` uses; DUAL
+isolation in one page (floor 0): `GFLASH=1 vs 0` → the POOL alone (the new ink), `LIGHTN=1 vs 0` → the whole flash+bolt
+(the INCUMBENT bar, 226 — no threshold invented). Result: **POOL peak amplitude 80 (s42) / 78 (s7) — bright**, located
+tightly at the strike foot on the terrain (centre y~607/513, box below BAND 340), **17% / 20% of the incumbent bolt's
+ink**, and **ZERO in dry weather** on both seeds (a strike-only effect correctly absent in fair weather, sharing the
+strike's storm bar).
+
+**Visual (`probes/shot-groundflash.mjs`).** Blind A/B in ONE build — pool ON (`GFLASH=1`) vs pool OFF (`GFLASH=0` =
+exactly what HEAD draws) — so no build swap, no cross-build floor. Meaningless tokens, map CROSSED between seeds
+(238/239/268; md5-distinct pairs confirmed). BOTH blind agents, one per seed, **correctly named the pool variant on the
+crossed map** (s42 kappa=ON→"kappa"; s7 sigma=ON→"sigma") and returned **VISUAL: PASS**: the pool "hugs the terrain
+hexes around the bolt's foot, spreading outward as cast light, soft and bluish-white, no floating orb or z-order tear,
+not blown out"; both frames still read as a coherent stormy-dusk coastal city. A genuine blind identification, not a
+positional guess.
+
+**Verdict: SHIPPED (DEEPENED).** Completes 328's strike — the bolt now lights what it hits. **This refutes 344/346's
+"high-contrast interconnect space is EXHAUSTED": the miss was a HALF-BUILT feature's own logic (a light SOURCE, not a
+standing reflection), which the reflection-family enumeration structurally could not see.** The reusable finding is in
+the header's NEXT VECTOR: grep shipped features for a draw that *lands / emits / casts and then stops*. No new SKILL.md
+law (every law used — 279/195/291/248/253/226/238 — is already promoted). Banked `probes/probe-groundflash.mjs` +
+`probes/shot-groundflash.mjs`.

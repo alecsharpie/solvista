@@ -9327,6 +9327,7 @@ const STARS=[];for(let i=0;i<70;i++)STARS.push([Math.random(),Math.random()*0.55
 let FOGAMT=0;                    /* 0..1, how foggy this frame is; 0 = free */
 const FOGZ=9;                    /* the layer floats this far off the ground */
 let LIGHTN=1;                    /* lightning suppressor (1 normally): a probe sets 0 to isolate the flash at a frozen instant, floor 0 (253) */
+let GFLASH=1;                    /* ground-strike-pool suppressor (1 normally): a probe sets 0 to isolate JUST the ground pool from the bolt, floor 0 (347) */
 function fogDepth(){
   /* two weather clocks: the dawn layer that burns off by mid-morning, and the
      seeded spell that makes some cities foggy for a stretch of days. Both are
@@ -9927,6 +9928,22 @@ function render(){
           const bp=Math.pow(Math.max(0,Math.sin(time*1.15+cl.y*4.3+cl.x*1.1)),30);
           const bolt=bp*LIGHTN*(w-LIGHTN0)/(1-LIGHTN0)*(0.30+0.62*LITAMT);
           if(bolt>0.22){
+            /* THE STRIKE LIGHTS THE GROUND IT HITS (iter 347). 328's bolt grounds at
+               [foot,cy] but the terrain there stays dark — a strike that lands and
+               illuminates nothing. A soft pool of light floods the landing point: a
+               radial gradient SQUASHED to the ground plane (scale y), so it reads as
+               light lying ON the terrain, not a floating orb (291). A light SOURCE, so a
+               raw literal, never col() (279); a gradient to alpha 0, never a flat arc
+               (195). Rides the SAME `bolt` intensity and is drawn UNDER the bolt strokes,
+               so the crisp core sits over its own glow. Deterministic in `time`+cloud (no
+               rng); inside the on-plate guard, so it can never light the void (248). */
+            const pr=54*cl.s, gi=Math.min(0.5,bolt*0.6)*GFLASH;
+            ctx.save();ctx.translate(foot,cy);ctx.scale(1,0.42);
+            const pg=ctx.createRadialGradient(0,0,0,0,0,pr);
+            pg.addColorStop(0,'rgba(228,238,255,'+gi+')');
+            pg.addColorStop(0.45,'rgba(200,218,255,'+gi*0.42+')');
+            pg.addColorStop(1,'rgba(192,212,255,0)');
+            ctx.fillStyle=pg;ctx.beginPath();ctx.arc(0,0,pr,0,7);ctx.fill();ctx.restore();
             const sk=Math.round((time*1.15+cl.y*4.3+cl.x*1.1)/6.283);  /* one seed per flash */
             const jag=k=>Math.sin(k*7.31+cl.y*3.1+cl.x*0.7+sk*11.7)*17*cl.s;
             const seg=7, pts=[[cx,top]];
