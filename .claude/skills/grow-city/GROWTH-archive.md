@@ -23852,3 +23852,50 @@ the arc in path objects.
 golden, gone at night, absent in rain — filling the one sky band that was bare. Draw-only, census byte-identical, the
 4th and last sparse additive cell. Sky × New element (27/43/291 → 331). `probes/probe-jet.mjs`, `probes/shot-jet.mjs`.
 
+## Iteration 332 — the hearths no one could see (2026-07-17) [Urban fabric × Deepen/interconnect — EXPLORED → REVERTED]
+
+**Vector.** Additive space is spent (331), so a Deepen off a measured seam. I grepped the documented seams first:
+the comment tell (`no state|never|placed once|static`) is clean (paid at 282); the frozen census column is all audited
+terrain (SHOREPARK/ROCK/MARSH/LIGHTHOUSE/VOID) or slow one-per-city (REDWOOD/ORCHARD/IND) — no fresh dead rule; the
+flag lifecycle and the type-keyed tables (`CIVHRS` covers all 12 civic kinds, `BEDT` handles the loft) are complete;
+People already answers weather (the ped umbrella, `rainingAt`, 8878) and season (the water crowd), and the deciduous
+canopy is deliberately a **live oak that stays leafy** ("winter means cool light and deep dull greens, never snow",
+L349 — so "bare winter trees" is off-model, not a gap). The one genuine gap I found: **grepping the WINDA-reader
+category (280 — the wind's reader list is a changelog, not a spec) turned up SMOKE as the un-enumerated member.** The
+BURNT ember scars (6606) and the wildfire plume (7254) both wobble on a symmetric `Math.sin(time*2…)` that reads the
+CLOCK and not the WIND, so smoke rose dead-straight while the trees, flags, kites, clouds and balloons beside it all
+lean. And the brick chimney (7436) was a static prism venting nothing — a home whose hearth answered no weather at all.
+
+**Change (explored — draw-only, no `rng()`, no terrain).** A shared `smokeLean(rise)=rise*1.1*windForce()*sin(time*0.22
++seedNum*0.7)` — one slowly-shifting city-wide gust direction, leaning FARTHER the higher a puff has risen, and
+returning 0 at dead calm (`windForce()==0`) so a becalmed plume is HEAD's straight column byte-for-byte (245's fixed
+point). New cozy **chimney woodsmoke** on RES, gated on cold season (`hearth=clamp((seasonCool()-0.5)/0.45,0,1)`, so it
+pairs with the snow at the trough, 321) with a per-home hash deciding which hearths are lit — more of them as it deepens
+(262: a shared cause is fine, stagger who answers). The existing ember + wildfire smoke retrofitted to the same helper.
+
+**Census.** Byte-identical (+0 on `pop`/`roads`/`developed`, empty tile histogram, 0 page errors). Draw-only, as expected.
+
+**Probe** (`probe-chimneysmoke`, deleted with the revert). Hooked `ctx.arc` and picked the smoke out by its unique raw
+fillStyle triple (deterministic, no pixel diff, no noise floor). It **PROVED the mechanism is correct**: WINTER draws
+224–272 puffs; **SUMMER draws 0** (a dead regime, 199 — the hearth is only lit in the cold); at winter, a GALE leans the
+puffs `mean|dx| 2.5–4.7px` while CALM is `0` (the exact fixed point); and higher puffs (bucketed by radius, which
+encodes rise) lean **3–7px vs 1.4–2.5px** for low ones — the plume streams as it climbs. Clean on all 3 seeds.
+
+**Visual — FAIL, and it is the whole result.** Two blind agents × 2 seeds, then again after I darkened the smoke
+(rgb 126,122,115 @ α0.52 base) and grew it to a 4-puff taller column and re-aimed the close-up by measured ink — and
+then my own look at the close-up and the whole city. **The smoke is invisible at the scale a user views the diorama.**
+Cause (200/205/266, and 215's "ink renders ≠ a mark reads"): the host is a **SHORT RES house**, scattered through dense
+fabric among taller neighbours and greenery, so the ~15px plume rises into a busy midground with **no clean sky
+backdrop** and is lost. The close-up's measured-ink aim even landed in a tower cluster (chimneys sit at the RES/downtown
+fringe). The only way to make it read would be a plume big/dark enough that **20% of the city's houses smoking reads as
+a smoggy, cluttered, darkened city** — exactly the cumulative drift the step-back (330: "no clutter/darkness") works to
+prevent. That is the header's "barely-visible bad trade ⇒ ⛔ do not force" and 266's price-visibility-first, arriving
+after the build instead of before.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` restored byte-identical to HEAD; probe/shot/shots removed. The
+exploration bought two things worth the lap: (1) it confirmed the documented seams are genuinely well-tended and the
+city is deeply saturated — every large surface answers its signals; (2) it found a real WINDA-category gap (280) whose
+common instance (hearth smoke) is a bad trade, and banked **cue (bj)**: the *existing* wildfire plume + ember scars —
+prominent when a 2018–30 fire actually burns — do ignore the wind, and the `smokeLean` one-liner (probe-proven) fixes it
+cheaply for a future lap that is already working the fire and can verify it in-context. ⛔ Do not re-try chimney smoke.
+
