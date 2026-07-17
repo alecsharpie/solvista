@@ -23021,3 +23021,38 @@ at the same total party-density (mean held) and zero draw/stream cost. Completes
 category" audit (271): bloom (263), fairy rings (272), block parties (314) — every shared-constant-timer CA in `tick()`
 now jitters a timer off a per-cell uniform, so none blinks as one.
 
+## Iteration 315 — five clean lights, two seasons, forty laps flat (2026-07-17) [40th step-back / holistic]
+
+**Vector.** The rotation's `NEXT` is Civic or People × New CA rule, but the header's own law flagged the
+**step-back due at ~315** (5 vectors since #39 at 310 — the loop's main guardrail for long unattended runs, and
+it outranks one more feature). So this lap is the holistic self-check; the feature vector resumes next. No
+`solvista.html` change.
+
+**Step-back #40.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
+dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant, sun UP in summer and DOWN in winter).
+Every frame self-reports its state.
+- **Visual: city is healthy — no cumulative drift, and NO false FAIL this time.** One agent per seed, blind,
+  cumulative question. Both read all five frames as a coherent, balanced, beautiful coastal city — no z-order
+  tears, floating tiles, ornaments-in-mid-air, blown-out colour, no mojibake in any HUD text. No kelp/coast
+  darkness, no towers-as-wallpaper wall, no glow-blob compounding. Both correctly named **dusk-winter** as the
+  darker/night-lit frame (the discrimination check — they looked, and the day-length season is alive). The only
+  aside was the **faint hex quilting on the day/golden sea** — both flagged it "subtle, does not break the read":
+  the KNOWN STRUCTURAL one-tone terrace (255/257/268), capped and not a new defect. Both returned VISUAL: PASS.
+- **Golden hue PASS** (`probe-goldenhue`, golden pin DERIVED in-page as argmax GWARM t=0.775, 265): golden keeps
+  the greens' identity — PARK **8°** / FOREST **10°** off their daylight selves, against HEAD's historical
+  **23°/24°** rotated onto ROAD/BEACH. The monochrome-terracotta cue stays **CLOSED** (265 holds).
+- **Night ordering invariant PASS** (`probe-goldenhue`, p90 envelope): `*TOWER 130 *MID 124 *COM 118 | BEACH 98
+  ROAD 98` — the dimmest lit surface clears the brightest unlit by **19** (222/251). Neighbour separations hold.
+- **Perf: no drift, priced in PATH OBJECTS (the load-immune unit — 216/198).** LAP vs #39 (310): day 112,114 vs
+  111,816 = **+0.27%**, night 139,567 vs 139,603 = **−0.03%** — free (313/314 draw-only & byte-flat, 312 reverted).
+  ARC vs 275 (~40 laps back): day 112,114 vs 111,457 = **+0.59%**, night 139,567 vs 138,706 = **+0.62%** —
+  ~**+0.015%/lap**, an order under the +0.2%/lap additive tendency; the byte-flat FIX/credit laps cancel it. No
+  compounding. (Per 202, ⚠ `shot-stepback`'s `GWARM=0` per-frame caption is still the stale-read tool nit banked
+  at 310 — the golden pixels ARE warm, agents + `probe-goldenhue` agree; the label lies, the frame is correct.)
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors — confirmed.
+
+**Verdict: STEP-BACK — NO DRIFT.** No feature shipped. The city is confirmed coherent across 3 lights × 2 seasons
+on 2 seeds; the day-length season reads by light alone; forty laps of growth cost ~0.6% of draw work; golden hue
+keeps the greens (265 holds). The guardrail is reset (next step-back ~320); **NEXT vector is Civic or People ×
+New CA rule** (the two stale additive cells).
+

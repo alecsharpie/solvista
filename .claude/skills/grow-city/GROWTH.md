@@ -32,7 +32,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: People **324** (DESIRE PATHS — People's FIRST non-excitable CA, filling the stale People × New
+- **ROTATION.** Last: **STEP-BACK #42 @ 325** (NO DRIFT; 2 seeds × 3 lights × 2 seasons all coherent, day-length
+  season alive; perm draw arc BYTE-FLAT vs 320 once snow cleared — the naive warp arc's +5.7%d is 321's snow, a
+  SEASONAL cost the warp cannot melt, law in SKILL.md). Prev: People **324** (DESIRE PATHS — People's FIRST non-excitable CA, filling the stale People × New
   CA cell. `c.wear` diffusion/accumulation on {PARK,SHOREPARK,GARDEN} relaxes toward `min(1,c.buzz/3)` + neighbour
   diffusion ⇒ busy shopfront/plaza edge wears to bare earth, quiet interior stays green; draw = 3 sub-hex `soil`
   ellipses, can't terrace. Zero rng()/terrain ⇒ census byte-identical. Probe: HEAD 0 worn, LIVELY 0.65 vs QUIET 0.09,
@@ -40,14 +42,15 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   `bloomAt` had no season gate ⇒ flowers all year incl. ON the 321 snow; `bloomSeason()` gates the DRAW, CA `c.bloom`
   untouched ⇒ census byte-identical, perf credit; probe spring-only DISTINCT 2 vs HEAD 1, 2 blind PASS.) · Water **322**
   (WHALES MIGRATE — `whaleSeason()` gate off `w.ph/7`, zero draws, dolphins resident, byte-identical; 2 blind PASS.) · Sky **321**
-  (SNOW — Sky's 1st CA in 321 laps: reaction-diffusion `c.snow`, census byte-identical, +1.1% draw deep-winter only.) ·
+  (SNOW — Sky's 1st CA in 321 laps: reaction-diffusion `c.snow`, census byte-identical; +5.7%d/+4.7%n draw the
+  coldest ~3 weeks ONLY, self-skips + melts the rest of the year — ⚠ but warp=61 freezes it ON, see 325.) ·
   Civic **319** (CUP-NIGHT FIREWORKS — `matchCelebrate()` 6-shell finale over each stadium, draw-only fixed point) ·
   People **318** (WASHING LINE answers rain+season) · People **317** (SEASONAL LEISURE COMPLETE) · Urban **316**
   (DISTRICTS — Voronoi `distOf`, 55→98%; ⛔ **the `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete**) ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **STEP-BACK #42 DUE NEXT (~325; this
-  lap is 324).** ➡ **NEXT: STEP-BACK #42. Then the last stale ADDITIVE cell is Civic × New CA rule (36/107) —
-  People × New CA ran at 324 (desire paths) — or grep a measured seam (225). SKY × New CA SEEDED (321); its template
-  (season source + neighbour diffusion, inert draw-flag) is reusable for any weather/ground field.**
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **STEP-BACK #42 RAN @ 325 — NO
+  DRIFT (next ~330).** ➡ **NEXT VECTOR: the last stale ADDITIVE cell is Civic × New CA rule (36/107) — People × New
+  CA ran at 324 (desire paths) — or grep a measured seam (225). SKY × New CA SEEDED (321); its template (season
+  source + neighbour diffusion, inert draw-flag) is reusable for any weather/ground field.**
   ✅ **308 fire-spark rides `fireSeason()`, 305 front greys the sky, 291 Sky lightning — full entries in ledger.** ⚠
   **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; (bi) daytime-lamp & (av) catenary cues = barely-visible bad
   trade ⇒ ⛔ do NOT force, `polish-tile`). Sky NEW ELEMENT additive still sparse (291, 3rd ever).
@@ -62,9 +65,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   (77)**. Recent cliff closures: 303 herons (the one 301 cited as a control), 302 loft, 301 deer, 300 strip crowd —
   every animate draw now *verifiably* off the 262 cliff (`225`'s grep-the-seam law is 26-for-26 at *finding*).
   ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next) · **(az)/(ba)** 278's two (below).
-  ✅ **CLOSED (detail in each entry):** (bh) by 317 (a NON-DEFECT: a fine gold statue, not a blob) · (bd) by 284 (two
-  readers) · (au) by 302 · (ax)+(bg) by 294 · (bf) market packed-away square by 299.
-  ✅ **PEOPLE: FULLY ROTATED — Interaction/UX (278), Polish (300), New CA rule (324 desire paths), Deepen CLOSED.**
+  ✅ **CLOSED (detail in each entry):** (bh) 317 (NON-DEFECT: a fine gold statue) · (bd) 284 · (au) 302 · (ax)+(bg)
+  294 · (bf) market packed-away square 299.
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
   neon evening crowd stood all night, all-at-once, while the busker in front of it kept an hour; found by grepping
   every entity/People draw for a gate on a global-monotone signal, the tell 262/286 warn of.**) (**288: the FLAG-LIFECYCLE grep — `c.solar`/`c.groof`, the two rooftop-tech CAs the HUD counts and the tooltip names, were written on RES/MID/COM and DRAWN nowhere on a TOWER, so downtown's tallest roofs could never carry them — 285's type-hierarchy blindness, found by grepping the WRITER against the DRAW branch.**) (**287: `SOLARF` — fully drawn, promised on the placard,
@@ -73,13 +75,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   `CIVHRS` keys on `c.kind` and a MARKET is a TILE TYPE — the hours ladder could not NAME it. 240 gave the STADIUM
   a fixture and wrote 271's enumerate-the-CATEGORY law down while doing it; the market is its sibling on the SAME
   LINE of `syncFleet` and was never enumerated.**)
-  (**283: a contagion whose SPONTANEOUS term had quietly
-  converted 94% of its own host, so a "Boulevard" was the DEFAULT STATE of a developed street — 333/city against 29
-  Avenues — and the label ladder iter 171 built on top of it had been naming a distinction that did not exist**)
-  (282 a `tick()` pass that fires on TICK 1 and then converts
-  NOTHING for 812 more ticks, whose own tooltip had written the silence down as a design fact — *"kelp carries no CA
-  state (placed once in `genWorld`, never ticked)"* — FALSE about the mechanism and TRUE about the observable, which is
-  exactly why nobody looked) (281 a flag whose WRITER skipped a type its VETO still counted · 280 a comment enumerating
+  (283 a spontaneous contagion that had converted 94% of its host ⇒ "Boulevard" was the DEFAULT developed street
+  (333/city vs 29 Avenues) and 171's label ladder named a distinction that did not exist · 282 a `tick()` pass that
+  fires on TICK 1 then converts NOTHING for 812 ticks, its own tooltip writing the silence down as design · 281 a flag whose WRITER skipped a type its VETO still counted · 280 a comment enumerating
   its own category · 278 a comment conceding the defect while justifying a workaround · 277 the census's scalars vs the placard · 267 a rule that had NEVER RUN · 268 a seabed built from the wrong noise · 269 a tram at 1.04x on its named avenue · 271 nine surfers who never went home · 272 an autumn CA that blinked the whole wood as ONE · 274 a new feature that never told the TYPE-KEYED TABLES it existed · 276 the BUS, which could not see the stop network it exists to serve) — **AND 270 IS THE FIRST DEFECT IT COULD NOT *FIX*** (structurally unbuildable on one hex). ⇒ **An empty cue list — or a passing probe — records where you have LOOKED, not what is THERE; and a found defect is not a fixable one: PRICE THE FIX BEFORE YOU PROMISE IT.** ⚠ **Grep `tick()`, the TABLES (`BEDT`/`CIVHRS`/`TILEDESC`/`valueSrc`/`VKIND`) AND THE COMMENTS — never the cue list.**
   🔑 **282/287: A FROZEN CENSUS COLUMN IS A SEAM — READ IT FIRST.** A tile flat across the eras is terrain or a DEAD RULE (check which); **a ZERO row is LOUDER than a flat one** (287 `SOLARF`, flat 0 in all 9 cells for 180 laps). ✅ **SOLARF + MARSH CLOSED** (289: MARSH is terrain — draw answers tide+season; detail in the 282 block).
   🔑 **281: AND NOW GREP THE *FLAG LIFECYCLE*, THE FOURTH SEAM** (law in SKILL.md). ⚠ **For every per-cell flag
@@ -87,13 +85,14 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
   than no flag.*
-  ✅ **STEP-BACK #40 RAN AT 315 — NO DRIFT, and NO false FAIL this time** (both seeds coherent, day/golden/night +
-  CROSSED dusk-summer/winter pair; both named winter by light ⇒ day-length season alive; only aside was the KNOWN
-  faint day-sea hex quilt, "subtle, does not break the read" — 255/257/268, capped, not new). `probe-goldenhue`
-  PASS, greens keep identity 8°/10° vs HEAD's 23°/24° ⇒ **golden monochrome cue stays CLOSED, 265 holds**; night
-  ordering `*TOWER 130 *MID 124 *COM 118 | BEACH 98` clears by 19 (222/251). Perf ARC FLAT (path objects, load-
-  immune — 216/198): LAP vs 310 +0.27%d/−0.03%n; ARC vs 275 ~40 laps +0.59%d/+0.62%n = ~**+0.015%/lap**, cancelled
-  by byte-flat FIXES. ⚠ **PRICE THE ARC IN PATH OBJECTS, NOT ms** (perfab is load noise). ⚠ Blind A/B NON-ORDINAL +
+  ✅ **STANDING STEP-BACK FACTS (last 3 clean: #40/#41/#42 @315/320/325 — NO DRIFT):** golden keeps the greens'
+  identity ~8°/10° vs HEAD's 23°/24° (`probe-goldenhue` PASS ⇒ monochrome cue CLOSED, 265 holds); night ordering
+  `*TOWER *MID *COM > BEACH` clears by ~19 (222/251); the faint day-sea hex quilt is CAPPED-not-new (255/257/268);
+  perm draw arc ~**+0.015%/lap** (byte-flat FIXES cancel the additive tendency). ⚠ **PRICE THE ARC IN PATH OBJECTS,
+  NOT ms** (perfab is load noise). ⚠ **AND CLEAR `c.snow`
+  (any season-persistent CA field) BEFORE PRICING THE PERM ARC (325):** `__warp(61)`≈2035.0 freezes the world
+  mid-winter with snow ON, and `__setYear` does NOT re-tick to melt it, so EVERY warp probe permanently samples the
+  snowy world — 321's seasonal +5.7%d reads as a permanent arc jump until you zero `c.snow`. ⚠ Blind A/B NON-ORDINAL +
   CROSSED (268). ⚠ **TOOL NITS in `shot-stepback` (STILL banked, not fixed — legit future tool laps):** per-frame
   `GWARM=0` self-report is a stale caption read (pixels ARE warm; agents + `probe-goldenhue` agree) — do NOT read it
   as "golden unwarmed"; and `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM.
@@ -392,46 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 317 entries before Iteration 315 live in
+> **Archive:** the 318 entries before Iteration 316 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 315 — five clean lights, two seasons, forty laps flat (2026-07-17) [40th step-back / holistic]
-
-**Vector.** The rotation's `NEXT` is Civic or People × New CA rule, but the header's own law flagged the
-**step-back due at ~315** (5 vectors since #39 at 310 — the loop's main guardrail for long unattended runs, and
-it outranks one more feature). So this lap is the holistic self-check; the feature vector resumes next. No
-`solvista.html` change.
-
-**Step-back #40.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
-dusk-summer/dusk-winter discriminating pair (264: one wall-clock instant, sun UP in summer and DOWN in winter).
-Every frame self-reports its state.
-- **Visual: city is healthy — no cumulative drift, and NO false FAIL this time.** One agent per seed, blind,
-  cumulative question. Both read all five frames as a coherent, balanced, beautiful coastal city — no z-order
-  tears, floating tiles, ornaments-in-mid-air, blown-out colour, no mojibake in any HUD text. No kelp/coast
-  darkness, no towers-as-wallpaper wall, no glow-blob compounding. Both correctly named **dusk-winter** as the
-  darker/night-lit frame (the discrimination check — they looked, and the day-length season is alive). The only
-  aside was the **faint hex quilting on the day/golden sea** — both flagged it "subtle, does not break the read":
-  the KNOWN STRUCTURAL one-tone terrace (255/257/268), capped and not a new defect. Both returned VISUAL: PASS.
-- **Golden hue PASS** (`probe-goldenhue`, golden pin DERIVED in-page as argmax GWARM t=0.775, 265): golden keeps
-  the greens' identity — PARK **8°** / FOREST **10°** off their daylight selves, against HEAD's historical
-  **23°/24°** rotated onto ROAD/BEACH. The monochrome-terracotta cue stays **CLOSED** (265 holds).
-- **Night ordering invariant PASS** (`probe-goldenhue`, p90 envelope): `*TOWER 130 *MID 124 *COM 118 | BEACH 98
-  ROAD 98` — the dimmest lit surface clears the brightest unlit by **19** (222/251). Neighbour separations hold.
-- **Perf: no drift, priced in PATH OBJECTS (the load-immune unit — 216/198).** LAP vs #39 (310): day 112,114 vs
-  111,816 = **+0.27%**, night 139,567 vs 139,603 = **−0.03%** — free (313/314 draw-only & byte-flat, 312 reverted).
-  ARC vs 275 (~40 laps back): day 112,114 vs 111,457 = **+0.59%**, night 139,567 vs 138,706 = **+0.62%** —
-  ~**+0.015%/lap**, an order under the +0.2%/lap additive tendency; the byte-flat FIX/credit laps cancel it. No
-  compounding. (Per 202, ⚠ `shot-stepback`'s `GWARM=0` per-frame caption is still the stale-read tool nit banked
-  at 310 — the golden pixels ARE warm, agents + `probe-goldenhue` agree; the label lies, the frame is correct.)
-- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors — confirmed.
-
-**Verdict: STEP-BACK — NO DRIFT.** No feature shipped. The city is confirmed coherent across 3 lights × 2 seasons
-on 2 seeds; the day-length season reads by light alone; forty laps of growth cost ~0.6% of draw work; golden hue
-keeps the greens (265 holds). The guardrail is reset (next step-back ~320); **NEXT vector is Civic or People ×
-New CA rule** (the two stale additive cells).
 
 ## Iteration 316 — the four district colors finally drew a map (2026-07-17) [Urban fabric × Deepen/FIX]
 
@@ -884,3 +848,41 @@ without dirtying the scene."
 that wears the busiest public-green corners to bare earth (reading the existing `c.buzz` activity field) while the
 quiet interior stays green, so the parks show where the city actually walks. Wholly census-inert (zero random draws,
 no terrain), the two-stale-additive-cell pick landed. People × New CA rule (49 → 324). `probes/probe-wear.mjs`.
+
+## Iteration 325 — the snow is a season the warp cannot melt (2026-07-17) [42nd step-back / holistic]
+
+**Vector.** Header flagged the step-back due at ~325 (#41 clean at 320; 4 vectors since — 321 snow, 322 whales,
+323 wildflowers, 324 desire paths — all draw-only / census byte-identical). The step-back outranks one more
+feature. No `solvista.html` change.
+
+**Step-back #42.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
+dusk-summer/dusk-winter discriminating pair (264, verified in the self-reports: `dusk-summer sun=UP (sets 0.831)`
+/ `dusk-winter sun=DOWN (sets 0.701)`).
+- **Visual: city healthy — no cumulative drift, no false FAIL.** One agent per seed, blind, cumulative question.
+  Both read all five as a coherent, balanced coastal city at every light — dense tower core reading as skyline
+  not wallpaper, parks/farms/river/coast legible day and night, no crushed blacks or blown coast, **no z-order
+  tears, no floating tiles, no blown/muddy color, no mojibake**. Both named the WINTER dusk by light alone ⇒
+  day-length season alive (261/264). Only aside (both seeds): **snow reads faintly at the dusk-winter pin** — at
+  year 2035.02 `winterMask≈0.37` (partial melt) and dusk is dark, so the uplands read dark-green rather than
+  white. Not a FAIL, not a regression (321 validated snow at full winter); a lighting subtlety of the partial-
+  melt-at-night frame. Seed 7 dusk-summer's warm low-sun wash flattens inland tiles toward muddy tan — within
+  style, the known golden-warmth read (257), not new.
+- **Perf: PERMANENT ARC FLAT, and a real instrument finding.** Priced in PATH OBJECTS (load-immune, 216/198).
+  The naive warp-priced arc looked ALARMING — vs #41 (320) day **+5.7%**, night **+4.7%**, and the whole 40-lap
+  arc vs 285 (+6.8% day) collapsed into these 4 laps while 285→320 was flat (+1.1%/35 laps). **Bisected to iter
+  321 (snow): 320→321 +6305 day objects, 321→325 +94 (flat).** But snow *draws nothing 3/4 of the year* — the CA
+  melts `c.snow` to 0 and the draw self-skips (`if(c.snow>SNOWSHOW…)`). The jump is an **instrument artifact**:
+  `__warp(61)` lands the world at year 2035.0 (`winterMask=0.09>0`), leaving snow on the ground, and `__setYear`
+  does **not re-tick**, so *every warp-based probe/census permanently samples a snowy world* — a summer pin still
+  paid it. Clearing `c.snow` before counting: current day **111,602** vs 320's **111,604** (−2, byte-flat), night
+  139,821 vs 139,511 (+0.22%); vs 285 (~40 laps): +1229 day = **+0.03%/lap.** ⇒ the permanent arc is FLAT; the
+  snow layer is a bounded **seasonal** ~+5.7%d/+4.7%n paid only the coldest ~3 weeks/year (one extra `hexTile` per
+  snowy upland hex, ~1260 hexes), the trade accepted at 321.
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits), VERDICT PASS / 0 page errors.
+
+**Verdict: STEP-BACK — NO DRIFT.** City coherent across 3 lights × 2 seasons on 2 seeds; day-length season reads
+by light alone on a crossed map; the permanent (snow-excluded) draw arc is byte-flat over 40 laps. The one finding
+is methodological and promoted to SKILL.md: **a warp-based perf/census instrument freezes the world mid-winter
+with snow the `__setYear` pin cannot melt, so it over-attributes a seasonal draw to the permanent arc — clear
+`c.snow` (any season-persistent CA field) before pricing the arc.** Guardrail reset (next ~330); NEXT vector is
+Civic × New CA rule (36/107) or a measured seam.
