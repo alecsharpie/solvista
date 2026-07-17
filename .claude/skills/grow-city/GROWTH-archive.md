@@ -23397,3 +23397,63 @@ dolphins roll through year-round. Wholly census-inert (zero new random draws, wh
 pattern in the neglected Water domain. Water × Deepen/interconnect (→ 322). `probes/probe-whalemigration.mjs` +
 `probes/shot-whalemigration.mjs`.
 
+## Iteration 323 — the meadows flowered in spring and stood as bare grass under the snow (2026-07-17) [Nature × Deepen/interconnect]
+
+**Vector.** Rotation: Nature had not had a lap in 14+ (last 308) — by far the most-neglected domain — while the last
+kind was Deepen (322). I grepped the Nature CA/succession seams (old-growth, riparian, hedgerows, fairy rings, deer,
+bloom wave) and found the grassland wildflowers a **seasonal phenomenon with no season gate**: `bloomAt` (the
+excitable-media bloom wave drawn on every MEADOW & SHOREPARK hex) drew its flowers and butterflies whenever
+`c.bloom>0` — **all year round**, while the FOREST-floor ephemerals right above it (`springBloom`) already keep the
+calendar. A wildflower meadow is a spring→early-summer thing that scorches to bare gold by the dry peak and stands as
+dry grass through the summer, the autumn and the deep-winter snow — and with the snow field shipped at 321, HEAD drew
+its flowers **on top of the snow**. Nature × Deepen/interconnect, the 271/286/322 "make the seasonal thing answer the
+calendar" pattern.
+
+**Change (DRAW-ONLY — no `rng()`, no `Math.random`, no terrain).** New `bloomSeason()` (the grassland twin of
+`springBloom`, beside it): a raised trapezoid on `s=year%1`, `1` across spring→early-summer (`BLOOMPK=0.34`,
+`BLOOMWIN=0.22`, `BLOOMRAMP=0.13` ⇒ full s∈[0.25,0.43], 0 by s=0.12 and s=0.56), so flowers are gone by the golden
+dry peak and never open under the snow. The **CA (`c.bloom`) is untouched** — the wave still ripples every tick,
+byte-identical. `bloomAt` early-returns when `bloomSeason()<=0` (butterflies auto-gated) and scales its flower alpha
+by it (`(0.4+0.6*bl)*bs`) — so **at the spring plateau `bs=1` it draws HEAD's exact bytes**, and everywhere else it
+draws fewer/dimmer or none. The static SHOREPARK wildflower specks and the bloom tooltip both take the same gate
+(one predicate, three readers): the tooltip now says `Dormant (out of season)` instead of asserting a bloom the
+pixels don't show.
+
+**Census.** Core **BYTE-IDENTICAL** — pop/roads/developed **+0**, tile histogram empty (draw-only, zero random
+draws, no terrain). VERDICT PASS / 0 page errors (vacuous by design — the gate is the probe + eyes).
+
+**Perf.** A **credit**: byte-identical at the spring plateau, strictly FEWER flower path objects the other ~3/4 of
+the year (out-of-season flowers no longer drawn). No frame is more expensive than HEAD.
+
+**Probe** (`probes/probe-bloomseason.mjs`, build-agnostic via `SRC=`; the draw-only change leaves `c.bloom` identical
+between builds, so a frozen-world year sweep isolates the season gate perfectly):
+- **A (temporal, no pixels):** wildflower hexes the SHIPPED draw makes visible, per season. **PATCH: winter 0 |
+  spring 29/51/53 | summer 0 | autumn 0** (`DISTINCT 2`, off-season flowers `false` on all seeds). **HEAD: the SAME
+  count in EVERY season (`DISTINCT 1`, off-season `true`)** — the defect stated (236). MUST-NOT-MOVE control (250):
+  the raw CA `bloom>0` count is **byte-identical HEAD vs PATCH** (29/51/53) — the medium is untouched. FREE POSITIVE
+  control (248): `springBloom` (the FOREST ephemeral) reads seasonal on BOTH builds (winter 0.06 / spring 0.65 / else
+  0) — the year pin is live, and the forest already kept the calendar; only the grassland didn't.
+- **B (the snow overlap):** deep winter, snow field settled — **HEAD draws flowers on 7/1/4 snowy MEADOW hexes**
+  ("flowers on snow"); **PATCH draws 0** there.
+
+**Visual** (`probes/shot-bloomseason.mjs`, spring & winter as SEPARATE world builds ticked into their own season so
+snow melts for spring / lies for winter; aimed by world data at the densest bloom cluster; frames named by FILE,
+tokens meaningless & CROSSED between seeds per 238/258/268; each self-reports year/bloomSeason/flowering-hosts).
+Both blind subagents **PASS** and both **named the spring frame by the wildflowers on the crossed map**: gold/lavender/
+coral specks on the meadow & seaside-park grass in spring, the SAME ground **bare with a soft white snow dusting and
+NO stray flower specks** in winter; no z-order tears / floating tiles / blown-out white; both whole-city winter frames
+balanced and coherent (soft snow inland, coast & rooftops bare). (The inland-`T.PARK` formal flowerbeds present in
+both are the park tile's own year-round planting — not a `bloomHost`, correctly unchanged.)
+
+**Verdict: SHIPPED.** The grassland/park wildflowers now keep the spring calendar — flowering after the winter rains
+and through the spring, gone to bare dry grass by the golden summer and standing bare under the deep-winter snow, so
+the meadow tells the season the way the forest floor already did. Wholly census-inert (draw-only, zero random draws),
+a perf credit, in the neglected Nature domain. Nature × Deepen/interconnect (→ 323). `probes/probe-bloomseason.mjs` +
+`probes/shot-bloomseason.mjs`.
+
+
+<!-- closed-cue detail rotated out of the header at iter 333 -->
+- (ba) CLOSED @327 — facade tile pick, occlusion-correct `pickTile` (law in SKILL.md).
+- (az) CLOSED @314 — vehicle oriented pick box.
+- (bh) 317 — NON-DEFECT: a fine gold statue.
+- (bd) 284 · (au) 302 · (ax)+(bg) 294 · (bf) market packed-away square 299.

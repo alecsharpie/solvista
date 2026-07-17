@@ -17,7 +17,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323**, **333** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
@@ -32,13 +32,15 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: ~~Urban **332**~~ (EXPLORED → REVERTED — cozy CHIMNEY WOODSMOKE answering cold+wind; census
-  byte-identical, probe PROVED it renders+leans (winter 224–272 puffs, summer **0**, gale lean 2.5–4.7px calm 0), but
-  ⛔ **INVISIBLE at city zoom** on 2 blind agents ×2 seeds + own look, even darkened/enlarged: a SHORT RES host in dense
-  fabric has **no clean sky backdrop**, and amplitude enough to read = a smoggy/darkened city (200/205/266; "ink
-  renders" ≠ "viewer sees it"). ⛔ **DO NOT RE-TRY chimney smoke.** 🆕 **CUE (bj) — SMOKE is the un-enumerated WINDA
-  member (280): the EXISTING wildfire plume + ember scars rise DEAD-STRAIGHT while the trees lean; the probe-proven
-  `smokeLean` one-liner fixes it — bank for a lap ALREADY working the fire (279), not standalone.) Prev: Sky **331** (HIGH JET + CONTRAIL — Sky × New element, **4th ever**; SCREEN-SPACE
+- **ROTATION.** Last: Nature **333** (FIRE SMOKE LEANS DOWNWIND — Deepen, closing cue (bj): the wildfire plume + ember
+  scars rose DEAD-STRAIGHT while everything else rode WINDA. `smokeLean(rise)=rise*windForce()` leans each puff +x by its
+  own RISE (a plume bends over as it climbs), in the same +x the clouds drift; calm=0=HEAD byte-for-byte (245's fixed
+  point). Draw-only, census byte-identical; probe `dx==rise` exactly + fixed point 0px; visual — both blind agents ×2
+  seeds on a CROSSED map named the gale by the lean alone (264 discriminating pair). ✅ **CUE (bj) CLOSED; the WINDA
+  reader category is fully enumerated (280).** ⛔ Cue (bc) — fire glow eaten by later rows — is a separate 266 z-order
+  job for a future fire lap.) Prev: ~~Urban **332**~~ (EXPLORED → REVERTED — CHIMNEY WOODSMOKE: probe-proven but ⛔
+  **INVISIBLE at city zoom** — a SHORT RES host has no clean sky backdrop; "ink renders" ≠ "viewer sees it", 266.
+  ⛔ **DO NOT RE-TRY chimney smoke.**) Prev: Sky **331** (HIGH JET + CONTRAIL — Sky × New element, **4th ever**; SCREEN-SPACE
   jet in the sky slab, contrail white/day → golden → GONE night → faded in rain; Math.random drift-in, census
   byte-identical; `probe-jet`. ⚠ a jet does NOT parallax ⇒ screen space.) Prev: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat; 2 seeds × 5 frames PASS; perf arc vs 285 ≈**+0.027%/lap** over 44 laps, snow-cleared — no perf-fix lap.) Prev: Water **329**
   (WATERFRONT REFLECTION ANSWERS THE SKYLINE — night city-lights smear gates on `shoreGlow(y)` (developed frontage ≤10
@@ -65,10 +67,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   CA rule (36/107)** — but that just RAN (326), so next Civic = seam/Deepen. **SKY** additive NOT fully spent (291
   lightning, sparsest cell — 3rd ever). **TRANSPORT** all seams dry (304); its two named cues are the 0.5px hairline
   `polish-tile` family ⛔, stale = **New CA rule (77)**. Every animate draw now *verifiably* off the 262 cliff (300 the last).
-  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next). ✅ **(ba) CLOSED @327** (facade tile pick —
-  occlusion-correct `pickTile`; law in SKILL.md) · ✅ **(az) CLOSED @314** (vehicle oriented pick box).
-  ✅ **CLOSED (detail in each entry):** (bh) 317 (NON-DEFECT: a fine gold statue) · (bd) 284 · (au) 302 · (ax)+(bg)
-  294 · (bf) market packed-away square 299.
+  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next). ✅ **CLOSED (detail archived at 333 / in each
+  entry; laws in SKILL.md):** (ba) 327 · (az) 314 · (bh) 317 · (bd) 284 · (au) 302 · (ax)+(bg) 294 · (bf) 299 · **(bj) 333**.
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
   neon evening crowd stood all night, all-at-once, while the busker in front of it kept an hour; found by grepping
   every entity/People draw for a gate on a global-monotone signal, the tell 262/286 warn of.**) (**288: the FLAG-LIFECYCLE grep — `c.solar`/`c.groof`, the two rooftop-tech CAs the HUD counts and the tooltip names, were written on RES/MID/COM and DRAWN nowhere on a TOWER, so downtown's tallest roofs could never carry them — 285's type-hierarchy blindness, found by grepping the WRITER against the DRAW branch.**) (**287: `SOLARF` — fully drawn, promised on the placard,
@@ -391,65 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 325 entries before Iteration 323 live in
+> **Archive:** the 326 entries before Iteration 324 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 323 — the meadows flowered in spring and stood as bare grass under the snow (2026-07-17) [Nature × Deepen/interconnect]
-
-**Vector.** Rotation: Nature had not had a lap in 14+ (last 308) — by far the most-neglected domain — while the last
-kind was Deepen (322). I grepped the Nature CA/succession seams (old-growth, riparian, hedgerows, fairy rings, deer,
-bloom wave) and found the grassland wildflowers a **seasonal phenomenon with no season gate**: `bloomAt` (the
-excitable-media bloom wave drawn on every MEADOW & SHOREPARK hex) drew its flowers and butterflies whenever
-`c.bloom>0` — **all year round**, while the FOREST-floor ephemerals right above it (`springBloom`) already keep the
-calendar. A wildflower meadow is a spring→early-summer thing that scorches to bare gold by the dry peak and stands as
-dry grass through the summer, the autumn and the deep-winter snow — and with the snow field shipped at 321, HEAD drew
-its flowers **on top of the snow**. Nature × Deepen/interconnect, the 271/286/322 "make the seasonal thing answer the
-calendar" pattern.
-
-**Change (DRAW-ONLY — no `rng()`, no `Math.random`, no terrain).** New `bloomSeason()` (the grassland twin of
-`springBloom`, beside it): a raised trapezoid on `s=year%1`, `1` across spring→early-summer (`BLOOMPK=0.34`,
-`BLOOMWIN=0.22`, `BLOOMRAMP=0.13` ⇒ full s∈[0.25,0.43], 0 by s=0.12 and s=0.56), so flowers are gone by the golden
-dry peak and never open under the snow. The **CA (`c.bloom`) is untouched** — the wave still ripples every tick,
-byte-identical. `bloomAt` early-returns when `bloomSeason()<=0` (butterflies auto-gated) and scales its flower alpha
-by it (`(0.4+0.6*bl)*bs`) — so **at the spring plateau `bs=1` it draws HEAD's exact bytes**, and everywhere else it
-draws fewer/dimmer or none. The static SHOREPARK wildflower specks and the bloom tooltip both take the same gate
-(one predicate, three readers): the tooltip now says `Dormant (out of season)` instead of asserting a bloom the
-pixels don't show.
-
-**Census.** Core **BYTE-IDENTICAL** — pop/roads/developed **+0**, tile histogram empty (draw-only, zero random
-draws, no terrain). VERDICT PASS / 0 page errors (vacuous by design — the gate is the probe + eyes).
-
-**Perf.** A **credit**: byte-identical at the spring plateau, strictly FEWER flower path objects the other ~3/4 of
-the year (out-of-season flowers no longer drawn). No frame is more expensive than HEAD.
-
-**Probe** (`probes/probe-bloomseason.mjs`, build-agnostic via `SRC=`; the draw-only change leaves `c.bloom` identical
-between builds, so a frozen-world year sweep isolates the season gate perfectly):
-- **A (temporal, no pixels):** wildflower hexes the SHIPPED draw makes visible, per season. **PATCH: winter 0 |
-  spring 29/51/53 | summer 0 | autumn 0** (`DISTINCT 2`, off-season flowers `false` on all seeds). **HEAD: the SAME
-  count in EVERY season (`DISTINCT 1`, off-season `true`)** — the defect stated (236). MUST-NOT-MOVE control (250):
-  the raw CA `bloom>0` count is **byte-identical HEAD vs PATCH** (29/51/53) — the medium is untouched. FREE POSITIVE
-  control (248): `springBloom` (the FOREST ephemeral) reads seasonal on BOTH builds (winter 0.06 / spring 0.65 / else
-  0) — the year pin is live, and the forest already kept the calendar; only the grassland didn't.
-- **B (the snow overlap):** deep winter, snow field settled — **HEAD draws flowers on 7/1/4 snowy MEADOW hexes**
-  ("flowers on snow"); **PATCH draws 0** there.
-
-**Visual** (`probes/shot-bloomseason.mjs`, spring & winter as SEPARATE world builds ticked into their own season so
-snow melts for spring / lies for winter; aimed by world data at the densest bloom cluster; frames named by FILE,
-tokens meaningless & CROSSED between seeds per 238/258/268; each self-reports year/bloomSeason/flowering-hosts).
-Both blind subagents **PASS** and both **named the spring frame by the wildflowers on the crossed map**: gold/lavender/
-coral specks on the meadow & seaside-park grass in spring, the SAME ground **bare with a soft white snow dusting and
-NO stray flower specks** in winter; no z-order tears / floating tiles / blown-out white; both whole-city winter frames
-balanced and coherent (soft snow inland, coast & rooftops bare). (The inland-`T.PARK` formal flowerbeds present in
-both are the park tile's own year-round planting — not a `bloomHost`, correctly unchanged.)
-
-**Verdict: SHIPPED.** The grassland/park wildflowers now keep the spring calendar — flowering after the winter rains
-and through the spring, gone to bare dry grass by the golden summer and standing bare under the deep-winter snow, so
-the meadow tells the season the way the forest floor already did. Wholly census-inert (draw-only, zero random draws),
-a perf credit, in the neglected Nature domain. Nature × Deepen/interconnect (→ 323). `probes/probe-bloomseason.mjs` +
-`probes/shot-bloomseason.mjs`.
 
 ## Iteration 324 — the busy park corners wore down to bare earth (2026-07-17) [People & activity × New CA rule]
 
@@ -891,3 +837,52 @@ city is deeply saturated — every large surface answers its signals; (2) it fou
 common instance (hearth smoke) is a bad trade, and banked **cue (bj)**: the *existing* wildfire plume + ember scars —
 prominent when a 2018–30 fire actually burns — do ignore the wind, and the `smokeLean` one-liner (probe-proven) fixes it
 cheaply for a future lap that is already working the fire and can verify it in-context. ⛔ Do not re-try chimney smoke.
+
+## Iteration 333 — the fire's smoke finally leans with the wind (2026-07-17) [Nature × Deepen/interconnect]
+
+**Vector.** Cue (bj), banked by 332 for "a lap already working the fire." Additive space is spent (331) and the header
+points to a measured seam or a Deepen in a rotated domain avoiding Sky/Water. Nature (last touched 323; the wildfire CA
+is Nature's, 279) fits, and the seam is already found and probe-proven: **smoke is the un-enumerated member of the
+wind's reader category** (280 — grep the MECHANISM `windForce`, not the reader-list comment, for who does not read it).
+Every gusting thing over the coast rides WINDA — the trees sway, the flags flap, the clouds/balloons/kites drift +x —
+but the fire smoke rose **dead straight**, wobbling on a bare clock term. Unlike 332's reverted chimney smoke (invisible:
+a short RES host with no clean sky backdrop, 266), the wildfire plume is a **prominent** feature when a 2018–30 fire
+burns, so visibility is not the risk here.
+
+**Change (draw-only — no `rng()`, no terrain).** A shared helper `smokeLean(rise)=rise*windForce()` and its `+smokeLean(sm)`
+added to the puff-x of the two smoke draws (grep-confirmed the only two): the **wildfire plume** (`drawFire`, 4 puffs)
+and the **ember scars** of a fresh burn (the smoking BURNT tile, 2 puffs). A plume bends over as it climbs, so the lean
+is the puff's own **rise** times the gust strength, in the same **+x** the clouds drift (so the whole sky leans
+together). At `windForce()==0` (a dead calm) the lean is 0 and the plume is HEAD's straight column byte-for-byte (an
+exact fixed point, 245). The bonfire is a flame tongue with no smoke puffs — out of scope. Cue (bc)'s fire-glow-eaten-by-
+later-rows is a separate 266 z-order job, left for a future fire lap.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`roads`/`developed` **byte-identical (+0)**, 0 page errors. VERDICT
+PASS. Vacuous by design; the claim rests on the probe + screenshots.
+
+**Probe** (`probes/probe-smokelean.mjs`, build-agnostic — grades the SHIPPED draw in one build, no source swap, no
+cross-build floor: hooks `ctx.arc`, picks the smoke puffs by fillStyle signature (273: match the spaced canonical form;
+the glow arc is a CanvasGradient and drops out), places a fire + a fresh ember, renders the SAME frozen frame at GALE and
+CALM so the base wobble cancels and `dx = x_gale − x_calm` IS `smokeLean`). All 3 seeds:
+- **GALE leans every puff downwind** (`dx>0`): YES.
+- **`dx` grows with rise, exactly** — plume `dx` = 6.00 / 8.40 / 10.80 for `rise` 6.00 / 8.40 / 10.80; ember 6.00 / 1.00.
+  A plume bends over as it climbs.
+- **FIXED POINT (245):** CALM (windForce 0) == `smokeLean` stubbed to 0, **EXACT 0 px** — the calm plume is HEAD's
+  straight column, the must-not-move control (250). **SMOKELEAN: PASS.**
+
+**Visual** (`probes/shot-smokelean.mjs` — drives `tick()` to a live spreading episode, freezes, aims by measured ink
+(226/230/234), shoots the SAME frozen fire at GALE and CALM as a blind A/B, tokens meaningless + non-ordinal, map
+**CROSSED between seeds** (238/239/268); `page.screenshot`, 200; day pin off the light curve, 264). Both seeds found a
+2-hex forest fire (~1980). **Two blind subagents, on both seeds, on the crossed map, correctly identified the gale frame
+from the smoke lean alone** (s42 gale=`vera` ✓ · s7 gale=`nolan` ✓ — a discriminating pair, 264, resolved on both seeds,
+worth more than any "looks good"): the plume "streams to the right, the highest blob shifted farthest downwind," reads as
+a coherent wind-blown streak "rooted right at the flame," no tear / floating / detach; the whole-city frame clean — no
+z-order tears, no floating tiles, no blown-out colour, a balanced coherent coastal city.
+
+**Perf.** Zero new path objects (same puffs, one extra `windForce()` term per puff on the ≤6 puffs of a rare fire).
+Step-back (~335) prices the arc.
+
+**Verdict: SHIPPED.** The wildfire plume and its ember scars now stream downwind, leaning farther the higher each puff
+rises, in the same +x the clouds drift — and stand as HEAD's straight column at a dead calm. Cue (bj) CLOSED; the
+un-enumerated WINDA member is enumerated (280). Draw-only, census byte-identical, exact fixed point. Nature × Deepen
+(279 → 333). `probes/probe-smokelean.mjs`, `probes/shot-smokelean.mjs`.

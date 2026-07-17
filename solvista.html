@@ -5121,6 +5121,18 @@ function windDrift(){ return 0.55+0.9*WINDA; }
 const KITECALM=0.45;            /* how far a kite sinks back when the air goes still */
 function kiteGust(){ return KITECALM+(1-KITECALM)*windForce(); }
 
+/* SMOKE LEANS DOWNWIND (iter 333). Every gusting thing over the coast already rides WINDA
+   -- the trees sway, the flags flap, the clouds and balloons and kites drift east -- but the
+   fire smoke did not: the wildfire plume (drawFire) and the ember scars of a fresh burn (the
+   smoking BURNT tile) rose DEAD STRAIGHT, wobbling on a clock term with no wind in it. Smoke
+   is the un-enumerated member of the wind's reader category (280: the reader list is a
+   changelog, not a spec, so grep the MECHANISM -- windForce -- and find who does not read it).
+   A plume bends over as it climbs and streams downwind, the higher the FARTHER, so the lean is
+   the puff's own RISE times the gust strength, in the SAME +x the clouds and balloons drift,
+   so the whole sky leans together. At windForce()==0 (a dead calm) the lean is 0 and the plume
+   is HEAD's straight column byte-for-byte (an exact fixed point, 245). */
+function smokeLean(rise){ return rise*windForce(); }
+
 /* THE WIND KEEPS A CALENDAR (iter 311). WINDA is the one gust cycle the whole coast
    reads -- the whitecaps and windrows through seaState(), the breaking surf, and the
    trees, palms, flags, clouds and kites -- and it was a pure function of `time`, so
@@ -6603,7 +6615,7 @@ function drawCell(x,y){
       if(c.age<3){ /* still smoking */
         ctx.fillStyle='rgba(140,134,124,0.45)';
         for(let j=0;j<2;j++){const sm=(time*6+j*3)%8;
-          ctx.beginPath();ctx.arc(cx+Math.sin(time*2+j*3)*2,cy-3-sm,1.6+sm*0.3,0,7);ctx.fill();}
+          ctx.beginPath();ctx.arc(cx+Math.sin(time*2+j*3)*2+smokeLean(sm),cy-3-sm,1.6+sm*0.3,0,7);ctx.fill();}
       }
       break;}
     case T.SHOREPARK:{
@@ -7250,7 +7262,7 @@ function drawFire(x,y,c,gx,gy){
      read as the same thing at a glance (they did: an agent could not tell them apart) */
   ctx.fillStyle='rgba(74,68,62,0.55)';
   for(let j=0;j<4;j++){const sm=(time*9+j*2.4)%13;
-    ctx.beginPath();ctx.arc(cx+Math.sin(time*2+j*2)*3.2,fy-10-sm,2.4+sm*0.42,0,7);ctx.fill();}
+    ctx.beginPath();ctx.arc(cx+Math.sin(time*2+j*2)*3.2+smokeLean(sm),fy-10-sm,2.4+sm*0.42,0,7);ctx.fill();}
 }
 
 /* A tower's massing and its palette, from two independent seed-salted draws.
