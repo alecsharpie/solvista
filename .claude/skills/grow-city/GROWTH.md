@@ -32,18 +32,22 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **350 — STEP-BACK #47 / NO DRIFT** (whole-city 3 lights × 2 seasons × 2 seeds both blind-PASS;
-  census core byte-flat; perf +0.020%/lap day, +0.019%/lap night vs 285 over ~64 laps, FLAT vs #46. ⚠ Watch UNCHANGED:
-  inland tower core dense but NOT wallpaper — do NOT add raw downtown density. Full text in the 350 entry.) Prev:
+- **ROTATION.** Last: **351 — THE HALF-BUILT-COMPLETION / KEEPS-NO-HOUR VEIN IS DRY / NO SHIP (survey)** (the header's
+  last named growth option, tested directly by grepping its seam classes; ALL sound: movers arrive+idle (ferry/launch/
+  copter/mono/cable/bus all dwell), ENTINFO/VKIND/SERVDUTY cards all live, per-cell flags (wear/hstr/civ/treed/bridge/
+  riv) all ride upgrades, plane/flock complete, `probe-frozencol` clean (no new dead rule/zero row). Confirms 344's wall
+  from the BEHAVIORAL side, as 350 did from visual/perf. Byte-identical. 🆕 one polish-only note: loose `birds` fade to
+  α0.15 at night rather than roost like the pelican flock — invisible at fit zoom ⇒ `polish-tile`/Sky close-up only, NOT
+  a growth lap. Full text in the 351 entry.) Prev: **350 — STEP-BACK #47 / NO DRIFT** (whole-city 3 lights × 2 seasons ×
+  2 seeds both blind-PASS; census core byte-flat; perf +0.020%/lap day vs 285 over ~64 laps, FLAT vs #46. ⚠ Watch:
+  inland tower core dense but NOT wallpaper — do NOT add raw downtown density.) Prev:
   **349 — THE CHANNEL MARKS MIRROR THEIR FLASH / SHIPPED (DEEPENED)** (Water × Deepen; buoy red/green flash now reflects
   on the water — 3rd confirmation of 347, ✅ **CLOSES the water-reflection CATEGORY (271/280)**; full text in the 349
   entry, laws in SKILL.md. Banked `probes/probe-buoyreflect.mjs`.) Prev: **348 — A FIRE LIGHTS THE GROUND IT SITS ON /
   SHIPPED (DEEPENED)** (Water × Deepen; bonfire self-glow → warm firelight pool on sand, `FIREPOOL`/`FIREGLOW`, 2nd
   confirmation. Full text in the 348 entry.) Prev: **347 — THE STRIKE LIGHTS THE GROUND IT HITS / SHIPPED** (Sky ×
   Deepen; 328's grounded bolt → bluish-white ground pool, `GFLASH`, 1st proof a half-built emitter is a live Deepen.
-  Full text in the 347 entry.) Prev: **346 — frozen-column finder banked as `probe-frozencol.mjs` / NO SHIP** (KELP
-  28→33→31 re-proves 282; byte-identical.) Prev: **STEP-BACK #46 @345** (NO DRIFT; perf +0.017–0.021%/lap vs 285 over
-  60 laps.) Prev: **344 — saturation-bound; mode STEP-BACKS + `polish-tile` / NO SHIP.**
+  Full text in the 347 entry; 346 banked `probe-frozencol.mjs`.)
   Prev: ~~**Urban 343**~~ (SNOW ON ROOFS — `SNOWLAND` type-set blind to buildings (274), REAL gap; a `colA`-white cap on
   pale roofs in dim warm-haze winter = NO figure/ground, both agents INVERTED. ⛔ INVISIBLE-AT-ZOOM, `polish-tile` only.) Prev:
   ~~**Nature 342**~~ (CAT'S-PAWS — grass deaf to `windForce`; a low-α ellipse scatter HAZES not MARKS (203/215),
@@ -60,12 +64,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   prism) · Civic **326** (CIVIC SQUARE `c.civ`) · **STEP-BACKS #42–#44 @325/330/335** (NO DRIFT) · **324–319** (desire
   paths · wildflowers · whales · SNOW `c.snow` ⚠ warp=61 freezes it ON · civic) · People **318/317** · Urban **316**
   (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #47 @350
-  landed NO DRIFT (guardrail reset) — so ~355 = STEP-BACK #48. The half-built-emitter vein (grep a draw that
-  lands/emits/casts and STOPS) is now 3-for-3 (347/348/349) and CLOSED — do NOT ship a 4th light-pool. Honest mode =
-  `polish-tile` (342/343's shaped-ridge/tapered-streak deaf-surface redesigns), or a NEW growth lap that finds a
-  DIFFERENT kind of half-built completion (a mover that arrives+idles, a spawn that never completes) or a NEW
-  mechanism/domain-signal-reader — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #48 @~355.
+  The half-built-emitter vein (a draw that lands/emits/casts and STOPS) is CLOSED 3-for-3 (347/348/349) — do NOT ship a
+  4th light-pool; AND 351 tested the OTHER half-built vein (a mover that arrives+idles / a spawn that never completes)
+  and found it DRY — every mover already dwells, every card is live, every flag rides its upgrade, no dead rule hides in
+  a frozen column. So honest mode is now `polish-tile` (342/343's shaped-ridge/tapered-streak deaf-surface redesigns) or
+  STEP-BACK-only; a NEW growth lap needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST — PRICE VISIBILITY /
+  figure-ground FIRST (266/342/343).** Additive space SPENT (331).
   ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM — PRICE VISIBILITY (266/342/343) BEFORE building; a passing
   census+probe means NOTHING for a subtle overlay, only the blind agents do. A HIGH-CONTRAST interconnect (341's warm-
   on-dark reflection) ships; a LOW-CONTRAST one (snow-on-snow, pale-on-pale, haze) INVERTS. Check figure/ground FIRST.**
@@ -387,71 +392,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 343 entries before Iteration 341 live in
+> **Archive:** the 344 entries before Iteration 342 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 341 — the wet streets mirror their lamps (2026-07-17) [Transport × Deepen/interconnect]
-
-**Vector.** Step-back #45 (@340) pointed here: a measured seam (225) or a Deepen in a rotated domain,
-avoid Sky/Water (and People/Civic just ran, 336–339). I ran the header's seam-finders — the frozen census
-tile histogram (every flat/zero row is audited terrain/landmark), the type-keyed tables, the per-cell flag
-lifecycles (`corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv` — all ride or are consumed correctly, 288
-being the last), the season/crop calendars (farms/orchards/vineyards fully deepened), and the animate mono-gate
-cliffs (300 was the last). All closed — the artifact is deeply saturated. The one genuinely-open seam: **the
-rain MECHANISM (rainingAt) had no reader on the ROADS.** The arterial spine + ordinary streets draw warm lamp
-pools at night (`drawCell` ROAD, `LITAMT>0.25`, ~L6918) but gleamed **identically wet or dry** — the wet-street
-reflection (why a rainy city night reads luminous; the land analog of 329's waterfront-reflects-the-skyline) was
-missing. Found by grepping the MECHANISM `rainingAt` (280 — not the header's "rain readers enumerated" noun list,
-which 336/337 already walked into): its readers were all crowds/umbrellas/washing — never a road surface.
-
-**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** In the night-lamp block, `const
-wetg=rainingAt(x,y)`; when `wetg>0` each lamp head draws one extra warm radial-gradient smear, vertically
-stretched toward the viewer (`translate(cx,cy+1.5); scale(0.55,2.6)`), alpha `WETGLEAM*LITAMT*wetg` — the arterial
-gleam at `WETGLEAM=0.42`, the ordinary street at ×0.7. A reflection is a LONG mark, so it survives the downscale
-to fit zoom where a flat wash would not (266). At `rainingAt===0` (the dry majority of hexes/time) the `if(wetg>0)`
-block is skipped, so a dry frame draws HEAD's exact bytes — an **exact fixed point** (245/253): DRY ≡ HEAD, no HEAD
-file needed. Same lamps otherwise ⇒ zero new path objects when dry.
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors.
-VERDICT PASS (only the usual ±1 tick-timing wobble on `solarRoofs` — 226, not mine).
-
-**Probe** (`probes/probe-wetgleam.mjs`, build-agnostic — hooks the artifact's own `createRadialGradient`/`fill`
-and counts, by colour signature, the OBJECTS the frame ISSUES; no pixel diff, NO NOISE FLOOR AT ALL). Night pin
-(dayT 0.92, LITAMT 1.00), 3 seeds, gleam counted as the warm-gradient fills, lamp head as the solid `255,226,152`/
-`255,198,108` fills:
-- **gleam DRY 0 → WET 354/398/382** — the fixed point (0 dry = block skipped = HEAD path) and it fires (one smear
-  per lit lamp when wet), all 3 seeds.
-- **lamp-head control (250 + positive) IDENTICAL dry vs wet (354/398/382) and > 0** — the heads don't read rain, so
-  the stub moved ONLY the gleam, and their nonzero count proves the frame is a real lit night city (a dead frame
-  would give gleam 0 too). WETGLEAM: PASS.
-- ⚠ RIG NOTE: `ctx.fillStyle` reads back Chromium-canonicalised (spaced) — the head match had to strip whitespace
-  (273); the gleam gradients are tagged at `addColorStop` time (on my own un-canonicalised string) so they were fine.
-
-**Visual** (`probes/shot-wetgleam.mjs` — same frozen night city, shot DRY (`rainingAt→0`, ≡HEAD) and WET
-(`rainingAt→1`, streets gleam) as a blind A/B zoomed 5× and **aimed by measured ink** (226/272: the only thing
-differing DRY↔WET is the gleam, so the argmax of the DRY-vs-WET diff IS where it renders, HUD boxes zeroed — 200),
-plus whole-city DRY + WET(flood) frames for the holistic read; tokens meaningless + non-ordinal, map **CROSSED
-between seeds** (238/239/268); md5 confirmed the pairs differ). **Both blind subagents, on both seeds, on the
-crossed map, correctly named the WET frame from the reflections alone** (s42 wet=`teasel` ✓ · s7 wet=`sorrel` ✓ —
-a discriminating pair, 264, resolved blind on both): the wet frame's lamps stretch into warm vertical smears
-running down the tarmac; the dry frame has only compact round halos. Both confirmed the smears sit **on the
-roads** (not floating/on water/on roofs), **no blown-out warm blobs**, and both whole-city frames read as a
-**balanced, coherent lit coastal city** — coastline/pier/moon/street grid intact, no z-order tears or floating
-tiles; the WET flood frame stays coherent with the street network gleaming warmly. (One aside: "fairly subtle at
-this zoom" — correct; it is a reflection, and it reads at the moderate zoom a coast is looked at, 159/266.)
-
-**Perf.** Zero new path objects when dry (fixed point); WET adds one gradient smear per lit lamp (only where it is
-actually raining, sparse in play). The night lamp block gains one `rainingAt(x,y)` call per lit road cell — but
-the busker draw just below already calls it per road cell, so this roughly doubles an existing per-cell call, not
-a path-object cost. Step-back (~345) prices the arc.
-
-**Verdict: SHIPPED.** The night streets now mirror their lamps down the wet tarmac when a shower crosses — the
-last un-enumerated reader of the rain mechanism, and the land analog of the waterfront reflection (329). Rain (Sky)
-× night lamps × the road network, an interconnect across three domains. Exact fixed point when dry (DRY ≡ HEAD),
-census byte-identical. Transport × Deepen. `probes/probe-wetgleam.mjs`, `probes/shot-wetgleam.mjs`.
 
 ## Iteration 342 — cat's-paws on the grass, and why they can't be seen (2026-07-17) [Nature × Deepen → EXPLORED → REVERTED]
 
@@ -887,3 +832,42 @@ negligible (+0.02%/lap, flat recent window). Guardrail reset — the additive + 
 SPENT (346), so honest mode from here is **`polish-tile`** (342/343's shaped-ridge / tapered-streak deaf-surface
 redesigns) **or STEP-BACK #48** (~355). A new growth lap still needs a NEW mechanism/domain-signal, **visibility priced
 FIRST** (266/342/343). Nothing to fix.
+
+## Iteration 351 — the half-built-completion / keeps-no-hour vein is dry (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** After #47 @350 the header named one remaining *growth* option (everything else being SPENT/CLOSED): "a NEW
+growth lap that finds a DIFFERENT kind of half-built completion — a mover that arrives+idles, a spawn that never
+completes — or a NEW mechanism/domain-signal-reader." This lap tested that option **directly**, by grepping the seam
+classes the vein lives in, before building anything (the additive/interconnect/emitter space is already spent, so a
+forced feature here is exactly the "one more shallow feature" the skill warns against — 344's wall). No source touched;
+`solvista.html` byte-identical to HEAD (5e06907 / 630b04b).
+
+**Survey — every seam class checked came back SOUND:**
+- **Movers arrive+idle (the "a mover that arrives+idles" seam):** ferry `dwell` at the pier head · launch `dwell` at
+  each end (`t>=1.3` puts about) · **copter** dwells on the pad (`t>=1.4` picks a new pad; draw clamps `p=min(1,t)` so it
+  *sits* at pad B, and `sin(π·p)=0` at `p=1` so it *lands* — a true arrive-and-idle) · monorail `dw` at platforms ·
+  cable car `dw` at terminals · bus `wait` at shelters. All complete.
+- **Label-tells (ENTINFO / VKIND / SERVDUTY):** all cards are live functions of the entity, read off the same predicate
+  the draw steers by (ferry/launch/boat/surfer/kayak/buoy/balloon/shuttle/mono/cable/tram/bus/police/ambo/fireeng). No
+  frozen-string tell (113/199 class) remains.
+- **Per-cell flags ride their upgrade (281/288 class):** `wear` (WEARLAND, footfall CA) · `hstr` (rides the tower up as
+  a retail podium, drawn last over the base) · `civ` (plaza maturity) · `treed` (boulevard) · `bridge` · `riv` — writer,
+  draw, tooltip and veto all agree on which types own each; `corner`/`solar`/`groof` already fixed (281/288).
+- **Spawn-completion / sparse fliers:** `plane` is complete (contrail that spreads with age, warm-pink `GWARM` tint at
+  dusk, blinking beacon, `day>0.02`-gated so it's gone at night); pelican `flock` melts into cover at night via
+  `nightAmt`. 🆕 **One residual inconsistency:** the 8 loose `birds` fade to α0.15 at night (`0.5-0.35*LITAMT`) rather
+  than roost — the flock's un-fixed sibling. But at α0.15 (dark-grey stroke on a dark night sky) they are **near-invisible
+  at fit zoom**, so this is a `polish-tile`/Sky close-up item, NOT a growth lap (visibility priced first — 266/342/343).
+- **Frozen census columns (`probe-frozencol`, 287's #1 seam tool):** only known terrain is FLAT (SHOREPARK/ROCK/MARSH
+  [audited 289]/LIGHTHOUSE/VOID); SOLARF 0→0→19, MARKET 0→5→16, VINEYARD/STADIUM/GARDEN/QUAD all grow, KELP 28/33/31
+  alive (282). **No new dead rule or zero row.**
+
+**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
+`roads` byte-unmoved (195508 / 6056 / 5727), only `solarRoofs +2` (226 tick-timing). Entity populations full and healthy
+(peds 762, cars 360, surfers 81, kayaks 81, buoys 45, plane 9, copters 6, etc.).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The half-built-completion /
+keeps-no-hour growth vein is **DRY**: every mover already dwells, every card is live, every flag rides its upgrade, no
+dead rule hides in a frozen column. This confirms 344's growth wall from the **behavioral** side, as 350 (#47) confirmed
+it from the **visual/perf** side. Honest mode stays **`polish-tile`** or **STEP-BACK #48** (~355); a genuine growth lap
+now needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST, visibility priced FIRST. Nothing to fix.

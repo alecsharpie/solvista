@@ -24319,3 +24319,63 @@ surfaces). Permanent draw arc negligible (+0.02%/lap). Guardrail reset — next 
 Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water; additive space spent, 331; price visibility, 266, before
 building). Nothing to fix.
 
+## Iteration 341 — the wet streets mirror their lamps (2026-07-17) [Transport × Deepen/interconnect]
+
+**Vector.** Step-back #45 (@340) pointed here: a measured seam (225) or a Deepen in a rotated domain,
+avoid Sky/Water (and People/Civic just ran, 336–339). I ran the header's seam-finders — the frozen census
+tile histogram (every flat/zero row is audited terrain/landmark), the type-keyed tables, the per-cell flag
+lifecycles (`corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv` — all ride or are consumed correctly, 288
+being the last), the season/crop calendars (farms/orchards/vineyards fully deepened), and the animate mono-gate
+cliffs (300 was the last). All closed — the artifact is deeply saturated. The one genuinely-open seam: **the
+rain MECHANISM (rainingAt) had no reader on the ROADS.** The arterial spine + ordinary streets draw warm lamp
+pools at night (`drawCell` ROAD, `LITAMT>0.25`, ~L6918) but gleamed **identically wet or dry** — the wet-street
+reflection (why a rainy city night reads luminous; the land analog of 329's waterfront-reflects-the-skyline) was
+missing. Found by grepping the MECHANISM `rainingAt` (280 — not the header's "rain readers enumerated" noun list,
+which 336/337 already walked into): its readers were all crowds/umbrellas/washing — never a road surface.
+
+**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** In the night-lamp block, `const
+wetg=rainingAt(x,y)`; when `wetg>0` each lamp head draws one extra warm radial-gradient smear, vertically
+stretched toward the viewer (`translate(cx,cy+1.5); scale(0.55,2.6)`), alpha `WETGLEAM*LITAMT*wetg` — the arterial
+gleam at `WETGLEAM=0.42`, the ordinary street at ×0.7. A reflection is a LONG mark, so it survives the downscale
+to fit zoom where a flat wash would not (266). At `rainingAt===0` (the dry majority of hexes/time) the `if(wetg>0)`
+block is skipped, so a dry frame draws HEAD's exact bytes — an **exact fixed point** (245/253): DRY ≡ HEAD, no HEAD
+file needed. Same lamps otherwise ⇒ zero new path objects when dry.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors.
+VERDICT PASS (only the usual ±1 tick-timing wobble on `solarRoofs` — 226, not mine).
+
+**Probe** (`probes/probe-wetgleam.mjs`, build-agnostic — hooks the artifact's own `createRadialGradient`/`fill`
+and counts, by colour signature, the OBJECTS the frame ISSUES; no pixel diff, NO NOISE FLOOR AT ALL). Night pin
+(dayT 0.92, LITAMT 1.00), 3 seeds, gleam counted as the warm-gradient fills, lamp head as the solid `255,226,152`/
+`255,198,108` fills:
+- **gleam DRY 0 → WET 354/398/382** — the fixed point (0 dry = block skipped = HEAD path) and it fires (one smear
+  per lit lamp when wet), all 3 seeds.
+- **lamp-head control (250 + positive) IDENTICAL dry vs wet (354/398/382) and > 0** — the heads don't read rain, so
+  the stub moved ONLY the gleam, and their nonzero count proves the frame is a real lit night city (a dead frame
+  would give gleam 0 too). WETGLEAM: PASS.
+- ⚠ RIG NOTE: `ctx.fillStyle` reads back Chromium-canonicalised (spaced) — the head match had to strip whitespace
+  (273); the gleam gradients are tagged at `addColorStop` time (on my own un-canonicalised string) so they were fine.
+
+**Visual** (`probes/shot-wetgleam.mjs` — same frozen night city, shot DRY (`rainingAt→0`, ≡HEAD) and WET
+(`rainingAt→1`, streets gleam) as a blind A/B zoomed 5× and **aimed by measured ink** (226/272: the only thing
+differing DRY↔WET is the gleam, so the argmax of the DRY-vs-WET diff IS where it renders, HUD boxes zeroed — 200),
+plus whole-city DRY + WET(flood) frames for the holistic read; tokens meaningless + non-ordinal, map **CROSSED
+between seeds** (238/239/268); md5 confirmed the pairs differ). **Both blind subagents, on both seeds, on the
+crossed map, correctly named the WET frame from the reflections alone** (s42 wet=`teasel` ✓ · s7 wet=`sorrel` ✓ —
+a discriminating pair, 264, resolved blind on both): the wet frame's lamps stretch into warm vertical smears
+running down the tarmac; the dry frame has only compact round halos. Both confirmed the smears sit **on the
+roads** (not floating/on water/on roofs), **no blown-out warm blobs**, and both whole-city frames read as a
+**balanced, coherent lit coastal city** — coastline/pier/moon/street grid intact, no z-order tears or floating
+tiles; the WET flood frame stays coherent with the street network gleaming warmly. (One aside: "fairly subtle at
+this zoom" — correct; it is a reflection, and it reads at the moderate zoom a coast is looked at, 159/266.)
+
+**Perf.** Zero new path objects when dry (fixed point); WET adds one gradient smear per lit lamp (only where it is
+actually raining, sparse in play). The night lamp block gains one `rainingAt(x,y)` call per lit road cell — but
+the busker draw just below already calls it per road cell, so this roughly doubles an existing per-cell call, not
+a path-object cost. Step-back (~345) prices the arc.
+
+**Verdict: SHIPPED.** The night streets now mirror their lamps down the wet tarmac when a shower crosses — the
+last un-enumerated reader of the rain mechanism, and the land analog of the waterfront reflection (329). Rain (Sky)
+× night lamps × the road network, an interconnect across three domains. Exact fixed point when dry (DRY ≡ HEAD),
+census byte-identical. Transport × Deepen. `probes/probe-wetgleam.mjs`, `probes/shot-wetgleam.mjs`.
+
