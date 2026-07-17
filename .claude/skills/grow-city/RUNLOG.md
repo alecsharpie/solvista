@@ -268,4 +268,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 335  —                          SHIPPED             14m33s   $5.74  5b2c762
 ✔ Iter 336  People & activity × Deepen/interconnect SHIPPED             30m06s   $14.67 d4c5480
 ✔ Iter 337  People & activity × Deepen/interconnect SHIPPED             20m16s   $12.38 ecad752
+✔ Iter 338  Civic & culture × Deepen/interconnect SHIPPED             30m59s   $14.38 d6f2ba0
 ```
