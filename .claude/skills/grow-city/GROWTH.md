@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323**, **333**, ~~**342**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334**, **348** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334**, **348**, **349** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~, ~~**343**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~, **341** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338**, **339** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
@@ -32,19 +32,18 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **348 — A FIRE LIGHTS THE GROUND IT SITS ON / SHIPPED (DEEPENED)** (Water & coast × Deepen; the
-  beach bonfire's 8px self-glow lit only the flame — the dark night sand around it stayed dark, 328/347's exact
-  half-built shape in a NEW domain. A warm firelight pool cast ON the sand, SQUASHED to the ground plane (291, cast
-  light not an orb), drawn UNDER the flame; raw emissive literal (279/257, a fire is a SOURCE not a reflector),
-  gradient→α0 (195), flickers on `time`, grows on `LITAMT`, tight-in-cell so a nearer row occludes it with the fire.
-  DUAL suppressors `FIREPOOL`/`FIREGLOW` (253): `probe-firepool` reads POOL 476/299px, 62/67% of the incumbent
-  flame-halo (226), ZERO by day (199); BOTH blind agents on a CROSSED map named the pool variant and PASSED. Draw-only
-  ⇒ census byte-flat, ~0 path objects. ✅ **Second confirmation of 347: a shipped emitter that casts onto itself and
-  STOPS is a live high-contrast Deepen the surveys miss; grep emitters for lands/emits/casts-and-stops.** Banked `probes/probe-firepool.mjs` + `shot-firepool.mjs`.)
-  Prev: **347 — THE STRIKE LIGHTS THE GROUND IT HITS / SHIPPED (DEEPENED)** (Sky × Deepen; 328's grounded bolt lit
-  nothing it hit → a bluish-white pool SQUASHED to the ground (291) on the same `bolt`, `GFLASH` suppressor (253),
-  `probe-groundflash` 17–20% of the bolt's ink, ZERO dry, CROSSED-map blind PASS; the first proof a half-built emitter
-  is a live high-contrast Deepen the surveys miss. Full text in the 347 entry.) Prev: **346 — frozen-column
+- **ROTATION.** Last: **349 — THE CHANNEL MARKS MIRROR THEIR FLASH / SHIPPED (DEEPENED)** (Water × Deepen; the red/green
+  buoy flash lit only its own 5px lamp — the LAST water light source with no reflection while ferry/launch/moon/waterfront
+  all reflect (179/329). 347/348's half-built shape but a NEW KIND: a COLOURED SPECULAR water reflection, not a warm
+  diffuse ground-pool. Raw red/green smear (reflected light≠albedo, never `col()` — 257/329) STRETCHED to the viewer
+  (266/341), gradient→α0 (195), breathing on `waveT`, inside the flash gate. DUAL suppressors `FLASHREFL`/`FLASHGLOW`
+  (253): REFL 17% of the lamp-flash (=347's band), ZERO by day, CROSSED-map blind PASS (⚠ first cut 3%/17px = INVISIBLE,
+  266's warning). ✅ **3rd confirmation of 347; CLOSES the water-reflection CATEGORY (271/280).** Banked `probes/probe-buoyreflect.mjs`.)
+  Prev: **348 — A FIRE LIGHTS THE GROUND IT SITS ON / SHIPPED (DEEPENED)** (Water × Deepen; bonfire self-glow lit only
+  the flame → a warm firelight pool cast ON the sand, `FIREPOOL`/`FIREGLOW`, 62/67% of the halo, blind PASS; 2nd
+  confirmation. Full text in the 348 entry.) Prev: **347 — THE STRIKE LIGHTS THE GROUND IT HITS / SHIPPED** (Sky ×
+  Deepen; 328's grounded bolt lit nothing → a bluish-white ground pool, `GFLASH`, 17–20% of the bolt, blind PASS; 1st
+  proof a half-built emitter is a live Deepen. Full text in the 347 entry.) Prev: **346 — frozen-column
   finder banked as `probe-frozencol.mjs` / NO SHIP** (KELP 28→33→31 re-proves 282; byte-identical.) Prev: **STEP-BACK
   #46 @345** (NO DRIFT; perf +0.017–0.021%/lap vs 285 over 60 laps, FLAT vs 339. ⚠ Watch: inland tower core dense but
   NOT wallpaper — do NOT add raw downtown density.) Prev: **344 — saturation-bound; mode STEP-BACKS + `polish-tile` / NO SHIP.**
@@ -64,12 +63,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   prism) · Civic **326** (CIVIC SQUARE `c.civ`) · **STEP-BACKS #42–#44 @325/330/335** (NO DRIFT) · **324–319** (desire
   paths · wildflowers · whales · SNOW `c.snow` ⚠ warp=61 freezes it ON · civic) · People **318/317** · Urban **316**
   (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: growth is saturation-bound
-  (342/343/344/346), but 347 SHIPPED — a HALF-BUILT feature is a live high-contrast seam the surveys miss: 328 grounded a
-  bolt and never lit what it hit. ~350 = STEP-BACK #47. Between now: `polish-tile` (342/343's shaped-ridge/tapered-streak),
-  OR grep for a shipped feature whose OWN LOGIC is half-finished (a draw that lands/emits/casts and stops — like 328's
-  bolt), NOT another deaf-surface overlay. A NEW growth vector needs a NEW mechanism, an un-wired signal reader, OR a
-  half-built effect completed — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 349 SHIPPED (3rd
+  half-built-emitter completion after 347/348) and CLOSED the water-reflection category — so ~350 = STEP-BACK #47, DO IT
+  NEXT (last was #46 @345, 5 laps back). The half-built-emitter vein (grep a draw that lands/emits/casts and STOPS) is
+  now 3-for-3 but WATCH for repetition — the last three were all emitter-light completions; the 4th should be a
+  DIFFERENT kind (a mover that arrives+idles, a spawn that never completes) or a `polish-tile` redesign (342/343's
+  shaped-ridge/tapered-streak), NOT a fourth light-pool. Any NEW vector needs a NEW mechanism/signal-reader/half-built
+  completion — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
   ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM — PRICE VISIBILITY (266/342/343) BEFORE building; a passing
   census+probe means NOTHING for a subtle overlay, only the blind agents do. A HIGH-CONTRAST interconnect (341's warm-
   on-dark reflection) ships; a LOW-CONTRAST one (snow-on-snow, pale-on-pale, haze) INVERTS. Check figure/ground FIRST.**
@@ -391,63 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 341 entries before Iteration 339 live in
+> **Archive:** the 342 entries before Iteration 340 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 339 — the festival strand stirs in the wind too (2026-07-17) [Civic & culture × Deepen/interconnect]
-
-**Vector.** 338 wired the capitol's standards to the shared gust and wrote "WIND-READER CATEGORY CLOSED" into the
-header. It was not — and the missed member was the most emphatically *festive* draw in the city: the **bunting**,
-strung along the civic-mile festival strand (`c.fete`, ~L6974) and around the **civic square** (a park cell beside a
-CIVIC, ~L6348). Every other cloth thing over this coast gusts together (280: the flags flap, kites fly, sails belly,
-smoke leans on `windForce`) — but the one element strung up *expressly to be festive* hung as **frozen dead-straight
-pennants on a fixed catenary**, on 6 seeds in 6, in any wind, for the artifact's whole life. Found by grepping every
-flag/pennant/cloth draw against the MECHANISM `windForce` (280 — not the header's "wind DONE ⛔" noun-list, which is
-the tell 336/337 already walked into: a "category closed" claim is a changelog, not a spec). Rotated off People
-(336/337) and the fresh capitol lap (338); a coherence fix on a distinct host (a whole-strand catenary, not a pole
-flag) in a domain the same lap just touched but on the *opposite* seam.
-
-**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** Both strands take `wf=windForce()`. The
-string sag lifts in a gust (`2.6*(1-0.5*wf)` / `2.4*(1-0.5*wf)` — a deep limp catenary in a calm, taut in a gale) and
-each pennant tip streams downwind and lifts (`tip=(qx+3.5*wf, qy+2.2*(1-0.6*wf))`, +x = the way every gusting thing
-drifts east). **Fixed point at DEAD CALM, not gale** — HEAD draws the bunting in its *limp/rest* state (pennants
-straight down), so `windForce()==0` (i.e. `WINDA<=0.25`) reproduces HEAD byte-for-byte (245); the opposite end of
-280's kite convention, because HEAD's frozen draw is the calm state here, not the gale one. Same two `fill()`s per
-pennant ⇒ zero new path objects.
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT PASS.
-
-**Probe** (`probes/probe-bunting.mjs`, build-agnostic — hooks the artifact's own path ops and reads back each pennant
-TRIANGLE the frame ISSUES (top edge two verts 2px apart at one y; the 3rd is the tip), so tip STREAM (`tipX-mid`) and
-DROP are deterministic with **NO NOISE FLOOR AT ALL**; `windForce` is a top-level function ⇒ `window.windForce=()=>0`
-renders HEAD's draw IN-PAGE (253), ONE file grades HEAD and the patch, no source swap). 4 seeds (42/7/1234/99),
-120–230 bunting pennants each, day pin, frozen clock:
-- **RESPONSE:** GALE stream **3.50px** vs CALM **0.00px**; GALE drop **0.88** vs CALM **2.20** — the pennants clearly
-  stream downwind and lift in a gale, on all 4 seeds.
-- **FIXED POINT:** CALM (`WINDA=0.25`, `windForce=0`) == HEAD **exactly** (stream 0.00, drop 2.20).
-- **CONTROL / must-not-move (250):** HEAD (`windForce=>0`) reads the identical stream/drop at `WINDA=0.25` and `1.0` —
-  HEAD ignores the wind, so nothing but the patched lever moved. BUNTING: PASS.
-
-**Visual** (`probes/shot-bunting.mjs` — same frozen world shot at `__setWind(0.25)` (calm) and `__setWind(1.0)` (gale)
-as a blind A/B zoomed 9× and **aimed by the bunting's OWN ink** (a whole-scene calm-vs-gale diff is contaminated by
-every other wind reader — trees, sea, kites, clouds — so it hooks the pennants and centres on the densest 50–55-pennant
-strand cluster, 226/272), plus an un-zoomed whole-city gale frame; `page.screenshot` DOM-composited (200); tokens
-meaningless + non-ordinal, calm/gale map **CROSSED between seeds** (238/239/268); md5 confirmed all 4 zoomed frames
-differ). **Both blind subagents, on both seeds, on the crossed map, correctly named the GALE from the streaming bunting
-alone** (s42 gale=`harebell` ✓ · s7 gale=`harebell` ✓): pennants stream/lift to the right along a taut string in the
-gale, hang straight down on a deeper-sagging string in the calm ("subtle but consistent across all four bunting
-locations"). Both confirmed the pennants sit attached ON the string (not floating), no z-order tears or blown colour,
-and both whole-city frames read as balanced, coherent coastal cities.
-
-**Perf.** Zero new path objects (draw-only, same 2 fills per pennant, each gains one `windForce()` term). Step-back
-(~340) prices the arc.
-
-**Verdict: SHIPPED.** The festival bunting — the civic mile's strand and the square's — now lifts and streams with the
-same gust as every flag, kite, plume and sail; the whole festive city gusts together (280). Exact fixed point at dead
-calm (HEAD = limp bunting), census byte-identical. Civic × Deepen. `probes/probe-bunting.mjs`, `probes/shot-bunting.mjs`.
 
 ## Iteration 340 — forty-seven laps on, the water still reads as water (2026-07-17) [45th step-back / holistic]
 
@@ -895,3 +843,54 @@ night coastal city. A genuine blind identification, not a positional guess.
 it stands on. Second confirmation of 347's reusable finding: a shipped emitter that casts onto itself and stops is a
 live, high-contrast Deepen the saturation surveys miss. No new SKILL.md law (every law used — 279/257/195/291/248/253/
 226/199/238/239/268 — is already promoted). Banked `probes/probe-firepool.mjs` + `probes/shot-firepool.mjs`.
+
+## Iteration 349 — the channel marks mirror their flash (2026-07-18) [Water & coast × Deepen/interconnect → SHIPPED]
+
+**Vector.** 347/348 shipped the reusable finding — *grep shipped features for a draw that lands/emits/casts and then
+stops* — and banked it as the header's NEXT VECTOR. Ran that grep across the water light sources. The **channel buoy**
+(`drawBuoy`, ~L9045) flashes a red/green lamp to seaward at night (`LITAMT>0.28 && sin(time*1.4+ph*2)>0.25`, a 5px
+radial glow at the topmark) — but the dark harbour water directly below it stayed dark. It is the LAST un-enumerated
+water light source with no reflection (271/280 enumerate-the-category): the ferry & launch nav-lights cast "a soft wash
+on the black water below" (179), the moon reflects, and 329 reflects the whole lit waterfront — only the channel marks
+flashed over a dead-flat sea. Rotates the *kind* off 347/348's warm diffuse ground-pool → a COLOURED SPECULAR water
+reflection (the 179/329 family). Visibility priced first (266): coloured-on-near-black is the high-contrast class that
+ships (329/341/347/348).
+
+**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`; ~14 lines).** Inside the existing flash gate,
+before the lamp glow: a coloured reflection cast ON the water below the mark. A radial gradient (r=4.6) SQUASHED and
+STRETCHED toward the viewer (`translate(cx,y0+6.8); scale(0.52,1.8)`) → a LONG vertical smear that survives the
+downscale to fit zoom (266/341), not a flat wash that would terrace/vanish. RAW literal red/green — reflected light is
+not albedo, never through `col()`/TINT (257/329, the same reason the lit windows take a raw literal). Gradient to alpha
+0, never a flat arc (195). Peak α `0.58*LITAMT*sh` where `sh=0.74+0.26*sin(waveT*1.3+ph)` breathes with the swell (329),
+floored high so it never blinks out. Drawn on the water below the body, so it flashes ON with the light and vanishes
+with it — the reflection IS the flash's mirror. DUAL suppressors `FLASHREFL` (the new reflection) / `FLASHGLOW` (the
+incumbent lamp flash) so a probe isolates each in one page, floor 0 (253/347/348's dual isolation).
+
+**Census + error gate.** VERDICT PASS, 0 page errors. Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads`
+**byte-identical (+0)** (only the known `greenRoofs/towerHt −1` tick-timing wobble, 226, not mine). Buoys **45** across
+the 9-cell matrix (5/city) — the host exists at scale. Perf: the reflection draws only inside the existing flash gate
+(a handful of buoys, intermittently, at night) ⇒ ~0 path objects at the fair-weather perf pins — free.
+
+**Probe (`probes/probe-buoyreflect.mjs`).** DUAL isolation in one page (floor 0, build-agnostic): `FLASHREFL=1 vs 0` →
+the REFLECTION alone (the new ink); `FLASHGLOW=1 vs 0` → the lamp's own flash (the INCUMBENT bar, 226 — no threshold
+invented). Result at the night flash peak: **REFL 49–51px, peak 50–62, 17% of the incumbent flash's ink** (the same
+band as 347's shipped ground-flash, 17–20%), located tightly below each flashing buoy on the water (centre y~482/501,
+box below the lamp); and **0px / 0 ink by DAY** (LITAMT 0.02, the flash gate false ⇒ the free dead-regime control, 199)
+on both seeds. ⚠ FIRST CUT WAS TOO FAINT (3%, 17px, peak 23) — the header's exact 266 warning that a subtle overlay
+won't read; strengthened α 0.38→0.58, size, and a shimmer floor before the visual gate. BUOYREFLECT: PASS.
+
+**Visual (`probes/shot-buoyreflect.mjs`).** Blind A/B in ONE build — reflection ON (`FLASHREFL=1`) vs OFF (`=0` = exactly
+HEAD) — no build swap, no cross-build floor. Aimed by argmax of the reflection's OWN ink at the brightest flashing buoy
+(226/272). Meaningless non-ordinal tokens, on/off map CROSSED between seeds (238/239/268; md5-distinct pairs confirmed).
+BOTH blind agents, one per seed, **correctly named the reflection variant on the crossed map** (s42 orin=ON→"orin";
+s7 vael=ON→"vael") and returned **VISUAL: PASS**: below each red/green buoy a "soft red/green vertical smear streaking
+DOWN onto the dark water… tapering as it descends… sits ON the water directly below the mark, attached at the
+waterline, not detached"; lamp cores saturated but not blown to near-white; no z-order tears, floating tiles or
+detached glows; both whole-city frames read as a balanced, coherent night coastal city. A genuine blind identification,
+not a positional guess.
+
+**Verdict: SHIPPED (DEEPENED).** Completes the channel buoy the way 347 completed the strike and 348 the bonfire — the
+mark now mirrors its own flash on the water it floats on. Third confirmation of 347's reusable finding, and it closes
+the water-reflection CATEGORY (271/280): every night light on the harbour water now reflects. No new SKILL.md law
+(every law used — 279/257/195/266/329/248/253/226/199/238/239/268 — is already promoted). Banked
+`probes/probe-buoyreflect.mjs` + `probes/shot-buoyreflect.mjs`.

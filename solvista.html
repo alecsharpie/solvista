@@ -9044,9 +9044,26 @@ function drawBuoy(b){
   ctx.beginPath();ctx.moveTo(cx,y0-2.6);ctx.lineTo(cx,y0-6);ctx.stroke();
   if(LITAMT>0.28&&Math.sin(time*1.4+b.ph*2)>0.25){      /* a slow flash to seaward (raw literal — a light SOURCE, not a surface) */
     const rgb=b.can?'255,74,74':'74,220,120';
-    const g=ctx.createRadialGradient(cx,y0-6.6,0,cx,y0-6.6,5);
-    g.addColorStop(0,'rgba('+rgb+','+(0.95*LITAMT)+')');g.addColorStop(1,'rgba('+rgb+',0)');
-    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,y0-6.6,5,0,7);ctx.fill();
+    if(window.FLASHREFL!==0){ /* ...and the flash mirrors on the black harbour water below. The buoy was the
+         LAST un-enumerated water light source with no reflection (271/280): the ferry's & launch's nav lights
+         cast a wash, the moon and the whole lit waterfront reflect (179/329) — only the channel marks flashed
+         over a dead-flat sea. A coloured reflection reflects RAW, never through TINT (reflected light is not
+         albedo — 257/329); a LONG vertical smear toward the viewer so it survives the downscale to fit zoom
+         (266/341), breathing with the swell (329); a gradient to alpha 0, never a flat arc (195); drawn on the
+         water below the mark, so it flashes ON with the light and vanishes with it. */
+      const sh=0.74+0.26*Math.sin(waveT*1.3+b.ph);
+      ctx.save();ctx.translate(cx,y0+6.8);ctx.scale(0.52,1.8);
+      const rg=ctx.createRadialGradient(0,0,0,0,0,4.6);
+      rg.addColorStop(0,'rgba('+rgb+','+(0.58*LITAMT*sh).toFixed(3)+')');
+      rg.addColorStop(1,'rgba('+rgb+',0)');
+      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(0,0,4.6,0,7);ctx.fill();
+      ctx.restore();
+    }
+    if(window.FLASHGLOW!==0){ /* the lamp's own flash (the incumbent bar, 226) */
+      const g=ctx.createRadialGradient(cx,y0-6.6,0,cx,y0-6.6,5);
+      g.addColorStop(0,'rgba('+rgb+','+(0.95*LITAMT)+')');g.addColorStop(1,'rgba('+rgb+',0)');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,y0-6.6,5,0,7);ctx.fill();
+    }
   }
 }
 function drawSurfer(s){

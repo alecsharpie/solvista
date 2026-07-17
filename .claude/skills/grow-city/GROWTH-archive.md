@@ -24215,3 +24215,55 @@ both whole-city frames read as a balanced, coherent coastal city.
 sail — the whole sky, the seat of the region included, gusts together (280). Exact fixed point at full gale, census
 byte-identical. Civic × Deepen. `probes/probe-capitolflag.mjs`, `probes/shot-capitolflag.mjs`.
 
+## Iteration 339 — the festival strand stirs in the wind too (2026-07-17) [Civic & culture × Deepen/interconnect]
+
+**Vector.** 338 wired the capitol's standards to the shared gust and wrote "WIND-READER CATEGORY CLOSED" into the
+header. It was not — and the missed member was the most emphatically *festive* draw in the city: the **bunting**,
+strung along the civic-mile festival strand (`c.fete`, ~L6974) and around the **civic square** (a park cell beside a
+CIVIC, ~L6348). Every other cloth thing over this coast gusts together (280: the flags flap, kites fly, sails belly,
+smoke leans on `windForce`) — but the one element strung up *expressly to be festive* hung as **frozen dead-straight
+pennants on a fixed catenary**, on 6 seeds in 6, in any wind, for the artifact's whole life. Found by grepping every
+flag/pennant/cloth draw against the MECHANISM `windForce` (280 — not the header's "wind DONE ⛔" noun-list, which is
+the tell 336/337 already walked into: a "category closed" claim is a changelog, not a spec). Rotated off People
+(336/337) and the fresh capitol lap (338); a coherence fix on a distinct host (a whole-strand catenary, not a pole
+flag) in a domain the same lap just touched but on the *opposite* seam.
+
+**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** Both strands take `wf=windForce()`. The
+string sag lifts in a gust (`2.6*(1-0.5*wf)` / `2.4*(1-0.5*wf)` — a deep limp catenary in a calm, taut in a gale) and
+each pennant tip streams downwind and lifts (`tip=(qx+3.5*wf, qy+2.2*(1-0.6*wf))`, +x = the way every gusting thing
+drifts east). **Fixed point at DEAD CALM, not gale** — HEAD draws the bunting in its *limp/rest* state (pennants
+straight down), so `windForce()==0` (i.e. `WINDA<=0.25`) reproduces HEAD byte-for-byte (245); the opposite end of
+280's kite convention, because HEAD's frozen draw is the calm state here, not the gale one. Same two `fill()`s per
+pennant ⇒ zero new path objects.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT PASS.
+
+**Probe** (`probes/probe-bunting.mjs`, build-agnostic — hooks the artifact's own path ops and reads back each pennant
+TRIANGLE the frame ISSUES (top edge two verts 2px apart at one y; the 3rd is the tip), so tip STREAM (`tipX-mid`) and
+DROP are deterministic with **NO NOISE FLOOR AT ALL**; `windForce` is a top-level function ⇒ `window.windForce=()=>0`
+renders HEAD's draw IN-PAGE (253), ONE file grades HEAD and the patch, no source swap). 4 seeds (42/7/1234/99),
+120–230 bunting pennants each, day pin, frozen clock:
+- **RESPONSE:** GALE stream **3.50px** vs CALM **0.00px**; GALE drop **0.88** vs CALM **2.20** — the pennants clearly
+  stream downwind and lift in a gale, on all 4 seeds.
+- **FIXED POINT:** CALM (`WINDA=0.25`, `windForce=0`) == HEAD **exactly** (stream 0.00, drop 2.20).
+- **CONTROL / must-not-move (250):** HEAD (`windForce=>0`) reads the identical stream/drop at `WINDA=0.25` and `1.0` —
+  HEAD ignores the wind, so nothing but the patched lever moved. BUNTING: PASS.
+
+**Visual** (`probes/shot-bunting.mjs` — same frozen world shot at `__setWind(0.25)` (calm) and `__setWind(1.0)` (gale)
+as a blind A/B zoomed 9× and **aimed by the bunting's OWN ink** (a whole-scene calm-vs-gale diff is contaminated by
+every other wind reader — trees, sea, kites, clouds — so it hooks the pennants and centres on the densest 50–55-pennant
+strand cluster, 226/272), plus an un-zoomed whole-city gale frame; `page.screenshot` DOM-composited (200); tokens
+meaningless + non-ordinal, calm/gale map **CROSSED between seeds** (238/239/268); md5 confirmed all 4 zoomed frames
+differ). **Both blind subagents, on both seeds, on the crossed map, correctly named the GALE from the streaming bunting
+alone** (s42 gale=`harebell` ✓ · s7 gale=`harebell` ✓): pennants stream/lift to the right along a taut string in the
+gale, hang straight down on a deeper-sagging string in the calm ("subtle but consistent across all four bunting
+locations"). Both confirmed the pennants sit attached ON the string (not floating), no z-order tears or blown colour,
+and both whole-city frames read as balanced, coherent coastal cities.
+
+**Perf.** Zero new path objects (draw-only, same 2 fills per pennant, each gains one `windForce()` term). Step-back
+(~340) prices the arc.
+
+**Verdict: SHIPPED.** The festival bunting — the civic mile's strand and the square's — now lifts and streams with the
+same gust as every flag, kite, plume and sail; the whole festive city gusts together (280). Exact fixed point at dead
+calm (HEAD = limp bunting), census byte-identical. Civic × Deepen. `probes/probe-bunting.mjs`, `probes/shot-bunting.mjs`.
+
