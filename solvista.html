@@ -4247,7 +4247,7 @@ const kiteOut=k=>KITE0+KITEJ*waterOut(k);
 const BUSK0=0.55, BUSKJ=0.42, BUSKP=0.12; /* BUSKP: only ~1 in 8 lively kerbs draws a musician */
 const buskOut=(x,y)=>BUSK0+BUSKJ*hashCell(x,y,seedNum^0x8C4A);
 let BUSK=1; /* probe suppressor (253) */
-function buskerAt(x,y){return BUSK&&livelyKerb(x,y)&&hashCell(x,y,seedNum^0x8C48)<BUSKP&&nightAmt()<buskOut(x,y);}
+function buskerAt(x,y){return BUSK&&livelyKerb(x,y)&&hashCell(x,y,seedNum^0x8C48)<BUSKP&&nightAmt()<buskOut(x,y)&&dryAt(x,y);}
 /* ...AND ITS AUDIENCE KEEPS THE SAME KIND OF HOUR (iter 300). The busker just above
    "packs the guitar away as the crowd finally thins" -- but the evening crowd it plays
    to (drawBuilding's COM branch, "evening crowd out on the strip, under the neon") was
@@ -5231,11 +5231,19 @@ function rainingAt(x,y){
   return w;
 }
 const RAINUMB=0.25,               /* the shower is heavy enough here to put an umbrella up */
-      UMBSHARE=0.78;              /* ...and this share of the crowd carries one; the rest get caught out */
+      UMBSHARE=0.78,              /* ...and this share of the crowd carries one; the rest get caught out */
+      RAINDRY=0.05;              /* ...and below THIS it is dry enough to stay out — the come-inside cutoff */
 /* Does THIS resident have an umbrella up? Derived from the gait phase (an index uniform)
    via a golden-ratio hash, so it costs no random draw and the DRAW (drawPed) and the
    TOOLTIP (residentDoing) share ONE predicate and can never drift (105/123/199). */
 const pedUmbrella=p=>((p.ph*0.6180339887)%1)<UMBSHARE;
+/* Is this hex dry enough to be OUT? The shopfront/kerb crowd — the café terrace diners, the
+   busker and its evening strip audience — come IN at the first drops (RAINDRY), the same low
+   cutoff the washing line already reads. Each keeps an HOUR (LITAMT/buskOut/stripOut) but until
+   now ignored the SHOWER: the rain-aware category's un-enumerated siblings (271/286 — grep the
+   MECHANISM rainingAt, not the comment's noun list, 280). ONE predicate, N readers (112),
+   distinct from RAINUMB (0.25, the umbrella-UP threshold): this is the come-inside gate. */
+const dryAt=(x,y)=>rainingAt(x,y)<RAINDRY;
 
 /* How far the sea's damp band reaches up the sand, in px — widest after the ebb.
    ONE definition, because two readers depend on it: the margin that STROKES the wet
@@ -6714,7 +6722,7 @@ function drawCell(x,y){
           ctx.strokeStyle=col('trunk',1);ctx.lineWidth=0.6;ctx.beginPath();ctx.moveTo(tx,ty-0.5);ctx.lineTo(tx,ty-3.1);ctx.stroke();
           ctx.fillStyle=col('whiteDk',0.95);ctx.beginPath();ctx.ellipse(tx,ty,1.1,0.65,0,0,7);ctx.fill();
           ctx.fillStyle=col(uc[si],1.05);ctx.beginPath();ctx.ellipse(tx,ty-3.3,2.0,1.1,0,0,7);ctx.fill();
-          if(LITAMT<0.5){ /* patrons take the tables by day (empty after dark), and only through the warm
+          if(LITAMT<0.5&&dryAt(x,y)){ /* patrons take the tables by day (empty after dark, and in from a shower — dryAt, 112), and only through the warm
                              season: the terrace fills for the dry peak and thins over the wet winter, exactly
                              as the beach furniture and the picnic lawn do. beachPhase() is the beach's OWN
                              season predicate (247) — one predicate, N readers (271/285) — so the parasol stays
@@ -7468,7 +7476,7 @@ function drawBuilding(c,x,y,gx,gy){
          terrain, so pop and the seeded stream stay flat. */
       const n=cellAt(x-1,y);
       if(n&&n.t===T.RES&&h>5&&n.h>5&&LITAMT<0.45&&!(c.party>0)&&!(n.party>0)
-         &&hashCell(x,y,seedNum^0x7A1D)<0.22*beachPhase()&&rainingAt(x,y)<0.05){
+         &&hashCell(x,y,seedNum^0x7A1D)<0.22*beachPhase()&&dryAt(x,y)){
         const[ax2,ay2]=px(gx,gy),[bx2]=ctr(x-1,y);
         const zl=Math.min(h,n.h)*0.5+1.5;
         const x1=ax2+(bx2-ax2)*0.30,x2=ax2+(bx2-ax2)*0.70,yl=ay2-zl,my=yl+1.6;
@@ -7730,9 +7738,10 @@ function drawBuilding(c,x,y,gx,gy){
       ctx.strokeStyle=col('ink',0.6);ctx.lineWidth=0.9;
       ctx.beginPath();ctx.moveTo(rcx+1.4,rcy-h-3.4);ctx.lineTo(rcx+1.4,rcy-h-6.1);ctx.stroke(); /* vent stack */
     }
-    if(LITAMT>0.35&&v>0.6&&nightAmt()<stripOut(x,y)){ /* evening crowd out on the strip, under the neon --
+    if(LITAMT>0.35&&v>0.6&&nightAmt()<stripOut(x,y)&&dryAt(x,y)){ /* evening crowd out on the strip, under the neon --
       it thins one strip at a time now, on a per-hex hour (stripOut, ~L4098), instead of standing
-      all night on the global LITAMT cliff; the busker in front of it already went in this way */
+      all night on the global LITAMT cliff; the busker in front of it already went in this way, and
+      the whole strip now comes in from a passing shower too (dryAt, 112 — one predicate, N readers) */
       const[cx,cy]=px(gx,gy);
       ctx.globalAlpha=Math.min(1,(LITAMT-0.35)*3);
       const n=2+(hashCell(x,y,seedNum^0x216E)*2.6|0);

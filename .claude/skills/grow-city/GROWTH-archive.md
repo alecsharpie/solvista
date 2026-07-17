@@ -23553,3 +23553,59 @@ with snow the `__setYear` pin cannot melt, so it over-attributes a seasonal draw
 `c.snow` (any season-persistent CA field) before pricing the arc.** Guardrail reset (next ~330); NEXT vector is
 Civic × New CA rule (36/107) or a measured seam.
 
+## Iteration 326 — the civic squares weathered in over the decades (2026-07-17) [Civic & culture × New CA rule]
+
+**Vector.** Rotation's `NEXT` was the LAST stale additive cell: **Civic × New CA rule** — empty since iter 107 (219
+laps), the single most recency-neglected coordinate in the grid. Excitable-media is COMPLETE (bloom/shroom/party), so
+a civic CA had to be a *different* mechanism. The engine's field-CA templates were diffusion (324 wear) and
+reaction-diffusion (321 snow); the third native form — **accumulation/succession** — had never been run for civic.
+The seam was sitting in plain sight: **the paved civic squares are drawn identically at every age.** A plaza laid in
+1996 and a forecourt opened in 2034 wear the same pale raw concrete, the same fountain, the same bunting — nothing
+civic *matures*. (The QUAD/PLAZA draws are rich — forecourts, statues, mown quads — but frozen the instant they're
+placed.)
+
+**Change (an accumulation CA field + an age-gated draw — wholly census-inert).** New field `c.civ` on PLAZA:
+- **The CA** (`tick()`, right after the 324 WEAR pass): each PLAZA relaxes `c.civ += CIVRATE=0.004` toward 1 (a raw
+  new forecourt reads as fresh concrete; a decades-old square as established, dressed stone), plus a **diffusion term**
+  (`CIVDIFF=0.02` toward its plaza neighbours' mean) so the clustered civic quarter ages as one and a lone new
+  forecourt among old halls catches up a little. A destroyed/rebuilt square is zeroed here, so a fresh plaza always
+  starts raw. Reads only type + neighbours' `c.civ`, writes only `c.civ`.
+- **The draw** (PLAZA case): (a) the base paving weathers — `col('cream',0.97-0.07*c.civ)`, so an established square is
+  a touch warmer worn stone (only ever DARKENS from HEAD's 0.97, so it can never out-brighten the lit fabric, 222);
+  (b) past `CIVSHOW=0.30`, a pair of formal potted **bay-tree topiaries** (pale stone tub + clipped dark-green sphere
+  + lit crown, all solid ellipse *bodies* per 215, ramping in size with maturity) establish flanking the rosette.
+  Additive — the fountain/statue/bunting are untouched. Tooltip: a plaza now reads `newly-laid` / `maturing` /
+  `long-established` off the SAME `c.civ` the draw gates on.
+- **Zero rng(), zero hashCell, zero terrain** — a pure accumulation of type + neighbours, reset with the world
+  (`civ:0` in the cell literal). Nothing the census measures reads `c.civ`.
+
+**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` and every histogram cell **+0**, empty tile histogram.
+VERDICT PASS / 0 page errors. (Re-run on the final `CIVRATE=0.004` file: still +0, since the census reads no `c.civ`.)
+
+**Perf.** Two extra solid ellipses per *dressed* plaza only (~3–5 plazas/city, and only those past `CIVSHOW`), day and
+night; every other hex byte-flat. Far under the +0.015%/lap perm arc. The base-tone weathering is a colour-only change
+(no new path object).
+
+**Probe** (`probes/probe-civmature.mjs`, pure world data — drives `tick()`, reads `cells[].civ`+`.age`, no pixels, no
+noise floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.civ` is undefined→0):
+- **HEADLINE (236):** HEAD reads **0 civ on every plaza, every seed** — a raw square and a fifty-year one drawn
+  identically. The defect stated, no threshold invented.
+- **CLAIM (the whole point):** **corr(civ, age) = 1.00** on every seed with age spread (0.00 on the two seeds whose
+  plazas are all one age — honest, not a failure); OLD (age≥180 ticks) mean civ **0.90** (dressed) vs NEW (<90) **0.05**
+  (raw). maxCiv **0.91** — established, not saturated, because plazas are young.
+- **CONTAINED (250, LEAK):** every non-plaza hex reads civ 0 on all 6 seeds — the pass contains itself.
+
+**Visual** (`probes/shot-civmature.mjs` — aimed A/B; zero-rng ⇒ HEAD and PATCH build the identical city, so the same
+plaza hex is a genuinely blind pair; A/B tokens meaningless + **map CROSSED between seeds**, 268/239). Both blind
+subagents **PASS** and both **located the treatment** — seed 42 (kappa=PATCH) and seed 7 (sigma=PATCH), each named the
+matured build by its pixels: weathered warmer paving + the flanking pair of potted topiaries, sitting correctly on the
+plaza tile (no floating, no spill onto neighbours, no z-order tears, no blown colour). Both whole-city frames read as a
+balanced, coherent, beautiful coastal city — dense tower core, legible parks/river/coast, nothing compounded into
+clutter or darkness.
+
+**Verdict: SHIPPED.** Civic's first non-excitable CA and the last stale additive cell filled (Civic × New CA rule,
+107 → 326): an accumulation/succession field that weathers the paved public squares in over the decades — raw new
+concrete when a forecourt is freshly laid, an established dressed square once it has stood for years — so the civic
+core shows its age. Wholly census-inert (zero random draws, no terrain). The additive grid is now fully rotated across
+every domain × kind. `probes/probe-civmature.mjs`, `probes/shot-civmature.mjs`.
+

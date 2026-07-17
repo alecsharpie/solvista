@@ -23,7 +23,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
-| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
+| **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318**, **336** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
   steers: when adding an entity array, `stamp()` it in its draw + add an `ENTINFO` row (same discipline as the census
@@ -32,15 +32,15 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Water **334** (THE SAIL FILLS WITH THE WIND — Deepen; the pleasure boats were enumerated into
-  `waterSession` for their HOURS (286) but the SAIL — the definitional wind-reader — was a flat static triangle.
-  `belly=4.5*windForce()` bows the leech leeward in the same +x the clouds/smoke lean, a quadratic whose control sits on
-  the chord so calm=0=HEAD byte-for-byte (245's fixed point). Draw-only, census byte-identical; probe belly 0.000→4.500
-  exact + fixed point 0px; visual — both blind agents ×2 seeds on a CROSSED map named the gale by the sail belly alone
-  (264). ✅ **WINDA READER CATEGORY NOW ENUMERATED OVER THE WATER TOO** — fountains (~1.4px) + whale spout (sparse) are
-  the remaining bad-trade members, ⛔ do not force.) Prev: Nature **333** (FIRE SMOKE LEANS DOWNWIND —
-  `smokeLean(rise)=rise*windForce()`, cue (bj) CLOSED; ⛔ cue (bc) fire-glow-eaten-by-later-rows is a future 266 z-order
-  fire lap.) Prev: ~~Urban **332**~~ (EXPLORED → REVERTED — CHIMNEY WOODSMOKE: probe-proven but ⛔ INVISIBLE at city
+- **ROTATION.** Last: People **336** (THE SHOPFRONT CROWD COMES IN FROM THE RAIN — Deepen; café terrace diners
+  (`LITAMT<0.5`), the busker (`buskOut`) and its evening strip audience (`stripOut`) each kept an HOUR but ignored the
+  SHOWER — the un-enumerated rain siblings of the washing line (271/286: grep the MECHANISM `rainingAt`, 280).
+  `dryAt(x,y)=rainingAt<0.05` on all three + washing repointed (ONE predicate, N readers, 112); dry≡HEAD ⇒ exact fixed
+  point (245/253). Draw-only, census byte-identical; probe delta café/busker/strip 173/17/234 come IN, kid control held;
+  both blind agents ×2 seeds CROSSED named the busy (dry) frame (264). ✅ **RAIN + WINDA CATEGORIES ENUMERATED** — last
+  rain sibling = the BEACH crowd (Water, calendar-only BY DESIGN ⛔).) Prev: Water **334** (SAIL BELLIES `4.5*windForce()`;
+  WINDA-over-water DONE ⛔) · Nature **333** (FIRE SMOKE LEANS `rise*windForce()`; (bj) CLOSED, (bc) fire-glow z-order future).
+  Prev: ~~Urban **332**~~ (EXPLORED → REVERTED — CHIMNEY WOODSMOKE: probe-proven but ⛔ INVISIBLE at city
   zoom, 266. ⛔ DO NOT RE-TRY.) Prev: Sky **331** (HIGH JET + CONTRAIL — screen-space jet, contrail white/day→golden→gone
   night→faded rain; ⚠ a jet does NOT parallax.) Prev: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat; 2 seeds × 5 frames PASS; perf arc vs 285 ≈**+0.027%/lap** over 44 laps, snow-cleared — no perf-fix lap.) Prev: Water **329**
   (WATERFRONT REFLECTION ANSWERS THE SKYLINE — night city-lights smear gates on `shoreGlow(y)` (developed frontage ≤10
@@ -53,10 +53,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #44 DONE
-  @335 — NO DRIFT, guardrail reset, NEXT ~340.** Additive space FULLY SPENT (331). ⇒ **next = a measured seam (225) or
-  Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **332: seams well-tended, remaining gaps are
-  DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 336 landed (People
+  rain-enum, a measured seam); NEXT ~340 = STEP-BACK #45 or another measured seam.** Additive space FULLY SPENT (331). ⇒
+  **next = a measured seam (225) or Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **remaining gaps
+  are DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
   lamps present & night-gated; (bi)/(av) cues = barely-visible bad trade ⇒ ⛔ do NOT force, `polish-tile`).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
@@ -391,67 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 328 entries before Iteration 326 live in
+> **Archive:** the 329 entries before Iteration 327 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 326 — the civic squares weathered in over the decades (2026-07-17) [Civic & culture × New CA rule]
-
-**Vector.** Rotation's `NEXT` was the LAST stale additive cell: **Civic × New CA rule** — empty since iter 107 (219
-laps), the single most recency-neglected coordinate in the grid. Excitable-media is COMPLETE (bloom/shroom/party), so
-a civic CA had to be a *different* mechanism. The engine's field-CA templates were diffusion (324 wear) and
-reaction-diffusion (321 snow); the third native form — **accumulation/succession** — had never been run for civic.
-The seam was sitting in plain sight: **the paved civic squares are drawn identically at every age.** A plaza laid in
-1996 and a forecourt opened in 2034 wear the same pale raw concrete, the same fountain, the same bunting — nothing
-civic *matures*. (The QUAD/PLAZA draws are rich — forecourts, statues, mown quads — but frozen the instant they're
-placed.)
-
-**Change (an accumulation CA field + an age-gated draw — wholly census-inert).** New field `c.civ` on PLAZA:
-- **The CA** (`tick()`, right after the 324 WEAR pass): each PLAZA relaxes `c.civ += CIVRATE=0.004` toward 1 (a raw
-  new forecourt reads as fresh concrete; a decades-old square as established, dressed stone), plus a **diffusion term**
-  (`CIVDIFF=0.02` toward its plaza neighbours' mean) so the clustered civic quarter ages as one and a lone new
-  forecourt among old halls catches up a little. A destroyed/rebuilt square is zeroed here, so a fresh plaza always
-  starts raw. Reads only type + neighbours' `c.civ`, writes only `c.civ`.
-- **The draw** (PLAZA case): (a) the base paving weathers — `col('cream',0.97-0.07*c.civ)`, so an established square is
-  a touch warmer worn stone (only ever DARKENS from HEAD's 0.97, so it can never out-brighten the lit fabric, 222);
-  (b) past `CIVSHOW=0.30`, a pair of formal potted **bay-tree topiaries** (pale stone tub + clipped dark-green sphere
-  + lit crown, all solid ellipse *bodies* per 215, ramping in size with maturity) establish flanking the rosette.
-  Additive — the fountain/statue/bunting are untouched. Tooltip: a plaza now reads `newly-laid` / `maturing` /
-  `long-established` off the SAME `c.civ` the draw gates on.
-- **Zero rng(), zero hashCell, zero terrain** — a pure accumulation of type + neighbours, reset with the world
-  (`civ:0` in the cell literal). Nothing the census measures reads `c.civ`.
-
-**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` and every histogram cell **+0**, empty tile histogram.
-VERDICT PASS / 0 page errors. (Re-run on the final `CIVRATE=0.004` file: still +0, since the census reads no `c.civ`.)
-
-**Perf.** Two extra solid ellipses per *dressed* plaza only (~3–5 plazas/city, and only those past `CIVSHOW`), day and
-night; every other hex byte-flat. Far under the +0.015%/lap perm arc. The base-tone weathering is a colour-only change
-(no new path object).
-
-**Probe** (`probes/probe-civmature.mjs`, pure world data — drives `tick()`, reads `cells[].civ`+`.age`, no pixels, no
-noise floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.civ` is undefined→0):
-- **HEADLINE (236):** HEAD reads **0 civ on every plaza, every seed** — a raw square and a fifty-year one drawn
-  identically. The defect stated, no threshold invented.
-- **CLAIM (the whole point):** **corr(civ, age) = 1.00** on every seed with age spread (0.00 on the two seeds whose
-  plazas are all one age — honest, not a failure); OLD (age≥180 ticks) mean civ **0.90** (dressed) vs NEW (<90) **0.05**
-  (raw). maxCiv **0.91** — established, not saturated, because plazas are young.
-- **CONTAINED (250, LEAK):** every non-plaza hex reads civ 0 on all 6 seeds — the pass contains itself.
-
-**Visual** (`probes/shot-civmature.mjs` — aimed A/B; zero-rng ⇒ HEAD and PATCH build the identical city, so the same
-plaza hex is a genuinely blind pair; A/B tokens meaningless + **map CROSSED between seeds**, 268/239). Both blind
-subagents **PASS** and both **located the treatment** — seed 42 (kappa=PATCH) and seed 7 (sigma=PATCH), each named the
-matured build by its pixels: weathered warmer paving + the flanking pair of potted topiaries, sitting correctly on the
-plaza tile (no floating, no spill onto neighbours, no z-order tears, no blown colour). Both whole-city frames read as a
-balanced, coherent, beautiful coastal city — dense tower core, legible parks/river/coast, nothing compounded into
-clutter or darkness.
-
-**Verdict: SHIPPED.** Civic's first non-excitable CA and the last stale additive cell filled (Civic × New CA rule,
-107 → 326): an accumulation/succession field that weathers the paved public squares in over the decades — raw new
-concrete when a forecourt is freshly laid, an established dressed square once it has stood for years — so the civic
-core shows its age. Wholly census-inert (zero random draws, no terrain). The additive grid is now fully rotated across
-every domain × kind. `probes/probe-civmature.mjs`, `probes/shot-civmature.mjs`.
 
 ## Iteration 327 — hover a tower's wall and it names the tower, not the road behind it (2026-07-17) [Urban fabric × Interaction/UX]
 
@@ -888,3 +832,60 @@ since #43 touched their surfaces); permanent draw arc negligible (+0.026%/lap, s
 flat. Guardrail reset — next vector ~340 is a measured seam (225) or a Deepen/Polish/Interaction in a rotated domain
 (avoid Sky/Water; additive space is spent, 331, and remaining gaps are deep-but-invisible-at-zoom — price visibility,
 266, before building). Nothing to fix.
+
+## Iteration 336 — the shopfront crowd comes in from the rain (2026-07-17) [People & activity × Deepen/interconnect]
+
+**Vector.** Step-back #44 just landed (335); the header points to a **measured seam (225)** or a Deepen in a rotated
+domain (avoid Sky/Water). I ran the header's own #1 seam-finders and confirmed the loud signals are tended: the WINDA
+readers (enumerated 333/334), the rain readers (ped umbrellas + beach umbrellas + washing line), TIDE, the night-hours
+that thin cars/bikes/trams/peds/kids/joggers, the type-keyed tables (274/281/285/288), and the **frozen census tile
+histogram** (every flat/zero row is terrain or a landmark — LIGHTHOUSE/MARSH/ROCK/SHOREPARK/VOID; SOLARF fixed at 287;
+SHOREPARK hosts live CAs so its flat count is correct). But grepping the rain MECHANISM (`rainingAt`, not the comment's
+noun list — 280) turned up three un-enumerated siblings of the exact category a recent lap enumerated the washing line
+into (its comment cites 271/286): the **park café/kiosk patrons** (`drawCell` PARK, `LITAMT<0.5`), the **busker**
+(`buskerAt`, `nightAmt()<buskOut`), and the busker's **evening strip audience** (`drawBuilding` COM, `nightAmt()<
+stripOut`). All three keep an HOUR and ignored the SHOWER — an outdoor terrace/pavement crowd that sits through a
+downpour. This is 262/271's cliff exactly (fix one member of a category, leave its siblings — here the sibling *is* in
+the file, one and two functions from a fix that just shipped) and it is VISIBLE: the strip crowd is one of the broadest
+night populations, so it clears the visibility bar (266) that the remaining bad-trade candidates (fountains ~1.4px,
+whale spout, chimney smoke 332) do not.
+
+**Change (draw-only — no `rng()`, no terrain).** A shared predicate `dryAt(x,y)=rainingAt(x,y)<RAINDRY` (`RAINDRY=0.05`,
+the same low come-inside cutoff the washing line already read — distinct from `RAINUMB=0.25`, the umbrella-UP threshold),
+`&& dryAt(x,y)` added to the café-patron gate, `buskerAt`, and the strip-crowd gate, and the **washing line repointed**
+to it (ONE predicate, N readers — 112, so they cannot drift). At `rainingAt<0.05` (dry — the overwhelming majority of
+hexes/time) `dryAt` is true and every gate collapses to HEAD's condition **byte-for-byte**: an exact fixed point
+(245/253), so DRY ≡ HEAD and no HEAD file is needed to prove it.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT
+PASS. Only the usual ±1 tick-timing wobble on `solarRoofs`/`greenRoofs`/`towerHt` (226 — not mine; no `rng()`/terrain).
+
+**Probe** (`probes/probe-cafehours.mjs`, build-agnostic — grades the SHIPPED draw in ONE build, ONE world, ONE frame:
+stubs `window.rainingAt` (a function declaration ⇒ on window) to 0 (DRY ≡ HEAD) and to 1 (WET, raining everywhere) and
+counts the body `fillRect`s the frame ISSUES by their (w,h) signature — no pixel diff, NO NOISE FLOOR AT ALL). The
+strip's 1.6×2.6 body shares its signature with a rain-independent draw (visible: DAY-frame strip = the collision floor,
+where `LITAMT>0.35` forbids the strip crowd), so per 285 the **DELTA** dry→wet is the measurement. All 3 seeds:
+- **café 173/228/172 · busker 17/15/24 · strip 234/273/248 come IN** when wet (delta > 0), and the strip's WET residual
+  returns exactly to its rain-independent floor (the strip crowd itself hit 0).
+- **kid control (drawPed 1.2×1.8) IDENTICAL dry vs wet** — the must-not-move column held (250), so the rain stub moved
+  only the three intended draws.
+- **DRY == HEAD by construction** (dryAt≡true collapses each gate — the exact fixed point). **CAFEHOURS: PASS.**
+
+**Visual** (`probes/shot-cafehours.mjs` — same frozen dusk city (2035, dry-peak, dayT=0.82 so the strips are neon-lit
+and out), shot DRY (`rainingAt→0`, ≡HEAD, busy) and WET (`rainingAt→1`, emptied) as a blind A/B zoomed 4× on the CBD
+strips; `page.screenshot` (200); tokens meaningless + non-ordinal, map **CROSSED between seeds** (238/239/268); md5
+confirmed the pairs differ). **Both blind subagents, on both seeds, on the crossed map, correctly named the busy (DRY)
+frame from the crowd density alone** (s42 dry=`orla` ✓ · s7 dry=`pike` ✓ — a discriminating pair, 264, resolved blind
+on both): the dry frame has more standing/seated figures on the striped awning strips and café terraces; the wet frame
+has those spots bare (the crowd gone indoors). Both confirmed **no z-order tears, floating tiles or blown-out colour**
+anywhere, and the whole-city dusk frame reads as a **balanced, coherent coastal city** — glowing CBD, parks/rivers,
+legible beach/pier/wind-farm coastline, crescent moon.
+
+**Perf.** Zero new path objects (draw-only; three gates gain one `dryAt()` term each, the washing line's byte-identical
+repoint). Step-back (~340) prices the arc.
+
+**Verdict: SHIPPED.** The outdoor shopfront/kerb crowd — café diners, the busker, its evening strip audience — now
+comes in from a passing shower on the same `dryAt` predicate the washing line reads, and stands out unchanged when dry
+(exact fixed point). The rain-aware category's last visible siblings are enumerated (271/286/280); the remaining rain
+sibling is the beach crowd, which is Water and calendar-only by design (⛔ do not force). Draw-only, census
+byte-identical. People × Deepen. `probes/probe-cafehours.mjs`, `probes/shot-cafehours.mjs`.
