@@ -23713,3 +23713,53 @@ peaks, only for a wet storm at dusk, only where the shower is on the plate. Draw
 tooltip surface (an ornament like the sheet flash / rain shaft, not an entity). Sky × Deepen (35 → … → 328).
 `probes/probe-strike.mjs`, `probes/shot-strike.mjs`.
 
+## Iteration 329 — the lit waterfront finally shone on the water it fronts (2026-07-17) [Water & coast × Deepen/interconnect]
+
+**Vector.** Rotation: Transport was the most recency-neglected domain (~16 laps since 312), so I grepped its seams
+first — and it is genuinely saturated (ENTINFO tooltips all live-computed off the predicate the draw steers by;
+headlights/taillights/beacons/bike-lamps all present and night-gated; avenues, catenary, hours all done). No seam.
+So I took the header's fallback (`Deepen/interconnect`) on the next-neglected domain with room. The night sea already
+carries a **"city's lights smear"** (`drawCell` T.WATER, ~L5780) — warm streaks on the near-shore water — but it fell
+**uniformly along the whole coast** (`hashCell(x,y,77)<0.28`, flat alpha `0.11*LITAMT`, `x` within 3 of the shore),
+so a stretch fronting a **dark park or dune** reflected exactly as much warm light as one fronting a lit downtown. A
+reflection with no source. **Water × Deepen (Urban lights ↔ Water):** make it answer the skyline it fronts.
+
+**Change (draw-only — no `rng()`, no `Math.random()`, no terrain).** (1) `shoreGlow(y)` beside `shoreAtF`: sums the
+developed frontage within `GLOWREACH=10` cells inshore of the coast, weighted **taller-brighter** (`0.35+0.65·min(1,
+c.th/120)` — more lit glass) and **nearer-stronger** (`1-(k-1)/10`). Reads `DEV` membership and the **stable target
+height `c.th`** (never the animated `c.h` — 277); draws nothing. (2) The smear now gates on `g=min(1,shoreGlow(y))`:
+skip if `g≤0.03`, else reach `x<shx+2+round(g·2)`, chance `hashCell<0.15+0.35·g`, alpha `(0.05+0.16·g)·LITAMT`,
+length `4+g·6+…`. A mid-glow shore (~0.29, the coast median) ≈ HEAD; a bright downtown waterfront reflects brighter,
+denser and reaches further; a dark park/dune coast goes dark.
+
+**Census.** Core **byte-identical** — pop/developed/roads **+0**, tile histogram empty, 0 page errors. `greenRoofs +1
+/ towerHt +1` is the 226 tick-timing wobble (the extra per-frame walk costs a hair of compute ⇒ a different tick count
+lands in the census's 500ms window; harness, not semantics). VERDICT: PASS.
+
+**Probe first — the SPACE, then the interconnect (218/246).** `probes/probe-shoreglow.mjs` (pure world data, 6 seeds):
+before designing, confirmed the signal **varies** rather than being ~0 everywhere (which would just delete the smear) —
+**~65% of shore rows carry a real source** (glow 0.18 med → 0.6–0.7 p90 → ~1.0 max), **~35% front park/dune** and
+correctly go dark. Then `probes/probe-shorereflect.mjs` (isolates the smear by its unique `rgba(255,200,120)` `fillRect`
+signature — GWSB shares the colour but is golden-hour `hexTile`/strokes, off at night — and attributes each rect to its
+shore row's glow via a wrapped `shoreGlow`; no pixel diff, no noise floor):
+- **corr(glow, ink) = 0.70 / 0.61 / 0.77** (seeds 7/42/1234). HEAD's is ~0 by construction (flat alpha, uniform hash).
+- **Mean ink by glow bin `[0-.2 .2-.4 .4-.6 .6-.8 .8-1]`** rises monotonically: `[0.6, 2.1, 4.4, 2.7, 8.1]` /
+  `[0.6, 2, 2.9, 4, 6.5]` / `[1.1, 1.6, 2.6, 5.3, 6.6]` — the brightest waterfront reflects ~8–13× the dimmest lit row.
+- **DAY control = 0 rects** on every seed (the `LITAMT>0.4` gate is off ⇒ daylight byte-identical, a free dead regime, 199).
+- **Dark-row leak = 0** on every seed (no reflection is emitted in front of a `g≤0.03` park/dune coast — the fix's point).
+
+**Visual** (`shot-*.mjs` night whole-city + `coast` clip, seeds 42 & 7; one subagent per seed, blind, cumulative
+question). Both **PASS**: the near-shore warm reflection **varies** (present where the lit waterfront meets the sea,
+dark where the coast fronts dune/undeveloped land), sits correctly at the waterline reaching a short way seaward (not
+floating on land/air), no z-order tears / floating tiles / blown-out colour anywhere, and the whole night frame reads
+as a balanced coastal city with a **coherent coastline** (not patchy, broken, or compounded too dark). Both noted the
+warmth is subtle — consistent with the probe (faint near-shore alpha) and the artifact's established smear idiom; the
+"present in front of lit blocks" half is proven quantitatively by the probe where a given seed's framing shows little
+lit shore meeting the sea directly.
+
+**Verdict: DEEPENED.** The night waterfront reflection now answers the skyline it fronts — a lit downtown coast
+shimmers with a brighter, longer reflection while a park/dune headland leaves the water dark — instead of smearing a
+source-less glow uniformly along the whole coast. Draw-only, census byte-identical, day byte-identical, an interconnect
+of the Urban lights into the Water. Water & coast × Deepen (17/25/…/311/322 → 329). `probes/probe-shoreglow.mjs`,
+`probes/probe-shorereflect.mjs`.
+

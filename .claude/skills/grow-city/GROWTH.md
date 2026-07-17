@@ -21,7 +21,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338**, **339** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318**, **336**, **337** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
@@ -32,13 +32,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: People **336** (THE SHOPFRONT CROWD COMES IN FROM THE RAIN — Deepen; café terrace diners
-  (`LITAMT<0.5`), the busker (`buskOut`) and its evening strip audience (`stripOut`) each kept an HOUR but ignored the
-  SHOWER — the un-enumerated rain siblings of the washing line (271/286: grep the MECHANISM `rainingAt`, 280).
-  `dryAt(x,y)=rainingAt<0.05` on all three + washing repointed (ONE predicate, N readers, 112); dry≡HEAD ⇒ exact fixed
-  point (245/253). Draw-only, census byte-identical; probe delta café/busker/strip 173/17/234 come IN, kid control held;
-  both blind agents ×2 seeds CROSSED named the busy (dry) frame (264). ⚠ **336 CLAIMED "rain siblings enumerated" & WAS
-  WRONG — 337 found the park picnic + ballgame in 336's OWN block (271/286); ✅ NOW ENUMERATED, sole hold-out = BEACH crowd (Water, calendar ⛔).**) Prev: Water **334** (SAIL BELLIES `4.5*windForce()`;
+- **ROTATION.** Last: Civic **339** (THE FESTIVAL BUNTING STIRS IN THE WIND — Deepen; civic-mile (`c.fete`) +
+  civic-square bunting lift the string taut + stream the pennants downwind on `windForce` — the festive-cloth reader
+  338 missed (280). Dead-calm≡HEAD limp catenary = exact fixed point (245/280's OPPOSITE end: HEAD's frozen draw IS the
+  calm state, so `windForce()==0` is the fixed point). Draw-only byte-flat; probe stream 0→3.5px, drop 2.2→0.88, control
+  held; blind agents ×2 CROSSED named the gale.) Prev: People **336/337** (RAIN-AWARE OUTDOOR CROWDS — Deepen; café/busker/strip (336) + park picnic/ballgame (337)
+  come in from the shower on `dryAt=rainingAt<0.05` (112); dry≡HEAD exact fixed point (245/253); outdoor-daytime-crowd
+  category CLOSED, sole hold-out = BEACH crowd (Water, calendar ⛔).) Prev: Water **334** (SAIL BELLIES `4.5*windForce()`;
   WINDA-over-water DONE ⛔) · Nature **333** (FIRE SMOKE LEANS `rise*windForce()`; (bj) CLOSED, (bc) fire-glow z-order future).
   Prev: ~~Urban **332**~~ (EXPLORED → REVERTED — CHIMNEY WOODSMOKE: probe-proven but ⛔ INVISIBLE at city
   zoom, 266. ⛔ DO NOT RE-TRY.) Prev: Sky **331** (HIGH JET + CONTRAIL — screen-space jet, contrail white/day→golden→gone
@@ -53,8 +53,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 338 landed (Civic — the
-  capitol's twin standards, the last flag that flapped on a clock term not `windForce`, 280 ⛔ WIND-READER CATEGORY CLOSED); ~339 free, ~340 = STEP-BACK #45.** Additive space FULLY SPENT (331). ⇒
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 339 landed (Civic —
+  festival BUNTING stirs with the gust, missed by 338's "WIND CLOSED" — wrong at 333→334→338→339, a changelog not a
+  spec; ~340 = STEP-BACK #45).** Additive space FULLY SPENT (331). ⇒
   **next = a measured seam (225) or Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **remaining gaps
   are DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
@@ -391,61 +392,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 331 entries before Iteration 329 live in
+> **Archive:** the 332 entries before Iteration 330 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 329 — the lit waterfront finally shone on the water it fronts (2026-07-17) [Water & coast × Deepen/interconnect]
-
-**Vector.** Rotation: Transport was the most recency-neglected domain (~16 laps since 312), so I grepped its seams
-first — and it is genuinely saturated (ENTINFO tooltips all live-computed off the predicate the draw steers by;
-headlights/taillights/beacons/bike-lamps all present and night-gated; avenues, catenary, hours all done). No seam.
-So I took the header's fallback (`Deepen/interconnect`) on the next-neglected domain with room. The night sea already
-carries a **"city's lights smear"** (`drawCell` T.WATER, ~L5780) — warm streaks on the near-shore water — but it fell
-**uniformly along the whole coast** (`hashCell(x,y,77)<0.28`, flat alpha `0.11*LITAMT`, `x` within 3 of the shore),
-so a stretch fronting a **dark park or dune** reflected exactly as much warm light as one fronting a lit downtown. A
-reflection with no source. **Water × Deepen (Urban lights ↔ Water):** make it answer the skyline it fronts.
-
-**Change (draw-only — no `rng()`, no `Math.random()`, no terrain).** (1) `shoreGlow(y)` beside `shoreAtF`: sums the
-developed frontage within `GLOWREACH=10` cells inshore of the coast, weighted **taller-brighter** (`0.35+0.65·min(1,
-c.th/120)` — more lit glass) and **nearer-stronger** (`1-(k-1)/10`). Reads `DEV` membership and the **stable target
-height `c.th`** (never the animated `c.h` — 277); draws nothing. (2) The smear now gates on `g=min(1,shoreGlow(y))`:
-skip if `g≤0.03`, else reach `x<shx+2+round(g·2)`, chance `hashCell<0.15+0.35·g`, alpha `(0.05+0.16·g)·LITAMT`,
-length `4+g·6+…`. A mid-glow shore (~0.29, the coast median) ≈ HEAD; a bright downtown waterfront reflects brighter,
-denser and reaches further; a dark park/dune coast goes dark.
-
-**Census.** Core **byte-identical** — pop/developed/roads **+0**, tile histogram empty, 0 page errors. `greenRoofs +1
-/ towerHt +1` is the 226 tick-timing wobble (the extra per-frame walk costs a hair of compute ⇒ a different tick count
-lands in the census's 500ms window; harness, not semantics). VERDICT: PASS.
-
-**Probe first — the SPACE, then the interconnect (218/246).** `probes/probe-shoreglow.mjs` (pure world data, 6 seeds):
-before designing, confirmed the signal **varies** rather than being ~0 everywhere (which would just delete the smear) —
-**~65% of shore rows carry a real source** (glow 0.18 med → 0.6–0.7 p90 → ~1.0 max), **~35% front park/dune** and
-correctly go dark. Then `probes/probe-shorereflect.mjs` (isolates the smear by its unique `rgba(255,200,120)` `fillRect`
-signature — GWSB shares the colour but is golden-hour `hexTile`/strokes, off at night — and attributes each rect to its
-shore row's glow via a wrapped `shoreGlow`; no pixel diff, no noise floor):
-- **corr(glow, ink) = 0.70 / 0.61 / 0.77** (seeds 7/42/1234). HEAD's is ~0 by construction (flat alpha, uniform hash).
-- **Mean ink by glow bin `[0-.2 .2-.4 .4-.6 .6-.8 .8-1]`** rises monotonically: `[0.6, 2.1, 4.4, 2.7, 8.1]` /
-  `[0.6, 2, 2.9, 4, 6.5]` / `[1.1, 1.6, 2.6, 5.3, 6.6]` — the brightest waterfront reflects ~8–13× the dimmest lit row.
-- **DAY control = 0 rects** on every seed (the `LITAMT>0.4` gate is off ⇒ daylight byte-identical, a free dead regime, 199).
-- **Dark-row leak = 0** on every seed (no reflection is emitted in front of a `g≤0.03` park/dune coast — the fix's point).
-
-**Visual** (`shot-*.mjs` night whole-city + `coast` clip, seeds 42 & 7; one subagent per seed, blind, cumulative
-question). Both **PASS**: the near-shore warm reflection **varies** (present where the lit waterfront meets the sea,
-dark where the coast fronts dune/undeveloped land), sits correctly at the waterline reaching a short way seaward (not
-floating on land/air), no z-order tears / floating tiles / blown-out colour anywhere, and the whole night frame reads
-as a balanced coastal city with a **coherent coastline** (not patchy, broken, or compounded too dark). Both noted the
-warmth is subtle — consistent with the probe (faint near-shore alpha) and the artifact's established smear idiom; the
-"present in front of lit blocks" half is proven quantitatively by the probe where a given seed's framing shows little
-lit shore meeting the sea directly.
-
-**Verdict: DEEPENED.** The night waterfront reflection now answers the skyline it fronts — a lit downtown coast
-shimmers with a brighter, longer reflection while a park/dune headland leaves the water dark — instead of smearing a
-source-less glow uniformly along the whole coast. Draw-only, census byte-identical, day byte-identical, an interconnect
-of the Urban lights into the Water. Water & coast × Deepen (17/25/…/311/322 → 329). `probes/probe-shoreglow.mjs`,
-`probes/probe-shorereflect.mjs`.
 
 ## Iteration 330 — forty-five laps on, the water still reads as water (2026-07-17) [43rd step-back / holistic]
 
@@ -886,3 +837,55 @@ both whole-city frames read as a balanced, coherent coastal city.
 **Verdict: SHIPPED.** The capitol's twin standards now fly with the same gust as every other flag, kite, plume and
 sail — the whole sky, the seat of the region included, gusts together (280). Exact fixed point at full gale, census
 byte-identical. Civic × Deepen. `probes/probe-capitolflag.mjs`, `probes/shot-capitolflag.mjs`.
+
+## Iteration 339 — the festival strand stirs in the wind too (2026-07-17) [Civic & culture × Deepen/interconnect]
+
+**Vector.** 338 wired the capitol's standards to the shared gust and wrote "WIND-READER CATEGORY CLOSED" into the
+header. It was not — and the missed member was the most emphatically *festive* draw in the city: the **bunting**,
+strung along the civic-mile festival strand (`c.fete`, ~L6974) and around the **civic square** (a park cell beside a
+CIVIC, ~L6348). Every other cloth thing over this coast gusts together (280: the flags flap, kites fly, sails belly,
+smoke leans on `windForce`) — but the one element strung up *expressly to be festive* hung as **frozen dead-straight
+pennants on a fixed catenary**, on 6 seeds in 6, in any wind, for the artifact's whole life. Found by grepping every
+flag/pennant/cloth draw against the MECHANISM `windForce` (280 — not the header's "wind DONE ⛔" noun-list, which is
+the tell 336/337 already walked into: a "category closed" claim is a changelog, not a spec). Rotated off People
+(336/337) and the fresh capitol lap (338); a coherence fix on a distinct host (a whole-strand catenary, not a pole
+flag) in a domain the same lap just touched but on the *opposite* seam.
+
+**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** Both strands take `wf=windForce()`. The
+string sag lifts in a gust (`2.6*(1-0.5*wf)` / `2.4*(1-0.5*wf)` — a deep limp catenary in a calm, taut in a gale) and
+each pennant tip streams downwind and lifts (`tip=(qx+3.5*wf, qy+2.2*(1-0.6*wf))`, +x = the way every gusting thing
+drifts east). **Fixed point at DEAD CALM, not gale** — HEAD draws the bunting in its *limp/rest* state (pennants
+straight down), so `windForce()==0` (i.e. `WINDA<=0.25`) reproduces HEAD byte-for-byte (245); the opposite end of
+280's kite convention, because HEAD's frozen draw is the calm state here, not the gale one. Same two `fill()`s per
+pennant ⇒ zero new path objects.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT PASS.
+
+**Probe** (`probes/probe-bunting.mjs`, build-agnostic — hooks the artifact's own path ops and reads back each pennant
+TRIANGLE the frame ISSUES (top edge two verts 2px apart at one y; the 3rd is the tip), so tip STREAM (`tipX-mid`) and
+DROP are deterministic with **NO NOISE FLOOR AT ALL**; `windForce` is a top-level function ⇒ `window.windForce=()=>0`
+renders HEAD's draw IN-PAGE (253), ONE file grades HEAD and the patch, no source swap). 4 seeds (42/7/1234/99),
+120–230 bunting pennants each, day pin, frozen clock:
+- **RESPONSE:** GALE stream **3.50px** vs CALM **0.00px**; GALE drop **0.88** vs CALM **2.20** — the pennants clearly
+  stream downwind and lift in a gale, on all 4 seeds.
+- **FIXED POINT:** CALM (`WINDA=0.25`, `windForce=0`) == HEAD **exactly** (stream 0.00, drop 2.20).
+- **CONTROL / must-not-move (250):** HEAD (`windForce=>0`) reads the identical stream/drop at `WINDA=0.25` and `1.0` —
+  HEAD ignores the wind, so nothing but the patched lever moved. BUNTING: PASS.
+
+**Visual** (`probes/shot-bunting.mjs` — same frozen world shot at `__setWind(0.25)` (calm) and `__setWind(1.0)` (gale)
+as a blind A/B zoomed 9× and **aimed by the bunting's OWN ink** (a whole-scene calm-vs-gale diff is contaminated by
+every other wind reader — trees, sea, kites, clouds — so it hooks the pennants and centres on the densest 50–55-pennant
+strand cluster, 226/272), plus an un-zoomed whole-city gale frame; `page.screenshot` DOM-composited (200); tokens
+meaningless + non-ordinal, calm/gale map **CROSSED between seeds** (238/239/268); md5 confirmed all 4 zoomed frames
+differ). **Both blind subagents, on both seeds, on the crossed map, correctly named the GALE from the streaming bunting
+alone** (s42 gale=`harebell` ✓ · s7 gale=`harebell` ✓): pennants stream/lift to the right along a taut string in the
+gale, hang straight down on a deeper-sagging string in the calm ("subtle but consistent across all four bunting
+locations"). Both confirmed the pennants sit attached ON the string (not floating), no z-order tears or blown colour,
+and both whole-city frames read as balanced, coherent coastal cities.
+
+**Perf.** Zero new path objects (draw-only, same 2 fills per pennant, each gains one `windForce()` term). Step-back
+(~340) prices the arc.
+
+**Verdict: SHIPPED.** The festival bunting — the civic mile's strand and the square's — now lifts and streams with the
+same gust as every flag, kite, plume and sail; the whole festive city gusts together (280). Exact fixed point at dead
+calm (HEAD = limp bunting), census byte-identical. Civic × Deepen. `probes/probe-bunting.mjs`, `probes/shot-bunting.mjs`.

@@ -6355,7 +6355,9 @@ function drawCell(x,y){
           const px0=cx+(ax-cx)*0.1, py0=cy+(ay-cy)*0.1;   /* flag pole on the square */
           ctx.strokeStyle=col('ink',0.9);ctx.lineWidth=0.6;
           ctx.beginPath();ctx.moveTo(px0,py0);ctx.lineTo(px0,py0-8);ctx.stroke();
-          const mx=(px0+ex)/2, my=(py0-8+ey)/2+2.4; /* the string sags */
+          const wf=windForce(); /* the square's bunting rides the same gust as the mile's (above): limp
+             deep catenary in a dead calm (== HEAD, exact fixed point), taut and streaming in a breeze. */
+          const mx=(px0+ex)/2, my=(py0-8+ey)/2+2.4*(1-0.5*wf); /* the string sags, lifting in a gust */
           ctx.beginPath();ctx.moveTo(px0,py0-8);ctx.quadraticCurveTo(mx,my+2,ex,ey);ctx.stroke();
           const PB=['coral','gold','teal','lav','sage'];
           for(let j=1;j<=5;j++){
@@ -6363,7 +6365,7 @@ function drawCell(x,y){
             const qx=(1-t2)*(1-t2)*px0+2*(1-t2)*t2*mx+t2*t2*ex;
             const qy=(1-t2)*(1-t2)*(py0-8)+2*(1-t2)*t2*(my+2)+t2*t2*ey;
             ctx.fillStyle=col(PB[j%5],1.1);
-            ctx.beginPath();ctx.moveTo(qx-1,qy);ctx.lineTo(qx+1,qy);ctx.lineTo(qx,qy+2.2);ctx.closePath();ctx.fill();
+            ctx.beginPath();ctx.moveTo(qx-1,qy);ctx.lineTo(qx+1,qy);ctx.lineTo(qx+3.5*wf,qy+2.2*(1-0.6*wf));ctx.closePath();ctx.fill();
           }
         }
       }}
@@ -6982,7 +6984,13 @@ function drawCell(x,y){
           ctx.strokeStyle=col('ink',0.85);ctx.lineWidth=0.6;
           ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x1,y1-9);
           ctx.moveTo(x2,y2);ctx.lineTo(x2,y2-9);ctx.stroke();
-          const mx=(x1+x2)/2,my=(y1+y2)/2-9+2.6; /* the string sags mid-street */
+          const wf=windForce(); /* THE STRAND STIRS WITH THE GUST (280): the flags flap, the kites
+             fly, the sails belly and the smoke leans on windForce() -- but the festival strand, the one
+             element strung up expressly to be festive, hung frozen. A dead calm keeps HEAD's deep limp
+             catenary with the pennants hanging straight down (windForce()==0 == HEAD, an exact fixed
+             point); a gust lifts the string taut and streams the pennant tips downwind (+x), the way
+             every gusting thing over this coast drifts east. */
+          const mx=(x1+x2)/2,my=(y1+y2)/2-9+2.6*(1-0.5*wf); /* the string sags mid-street, lifting in a gust */
           ctx.beginPath();ctx.moveTo(x1,y1-9);ctx.quadraticCurveTo(mx,my+2,x2,y2-9);ctx.stroke();
           const PB=['coral','gold','teal','lav','sage'];
           for(let j=1;j<=5;j++){
@@ -6990,7 +6998,7 @@ function drawCell(x,y){
             const qx=(1-t2)*(1-t2)*x1+2*(1-t2)*t2*mx+t2*t2*x2;
             const qy=(1-t2)*(1-t2)*(y1-9)+2*(1-t2)*t2*(my+2)+t2*t2*(y2-9);
             ctx.fillStyle=col(PB[(x*5+y*3+j)%5],1.1);
-            ctx.beginPath();ctx.moveTo(qx-1,qy);ctx.lineTo(qx+1,qy);ctx.lineTo(qx,qy+2.2);ctx.closePath();ctx.fill();
+            ctx.beginPath();ctx.moveTo(qx-1,qy);ctx.lineTo(qx+1,qy);ctx.lineTo(qx+3.5*wf,qy+2.2*(1-0.6*wf));ctx.closePath();ctx.fill();
           }
           if(LITAMT>0.25){ /* the strand lights up for the evening */
             ctx.fillStyle='rgba(255,214,130,'+(0.55*LITAMT)+')';
