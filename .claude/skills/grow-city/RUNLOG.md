@@ -273,4 +273,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 340  —                          SHIPPED             21m26s   $8.61  750fff2
 ✔ Iter 341  Transport × Deepen/interconnect SHIPPED             26m45s   $12.34 76bf1dc
 ↩ Iter 342  Nature × Deepen            EXPLORED → REVERTED 34m39s   $15.47 cfd9263
+↩ Iter 343  Urban × Deepen             EXPLORED → REVERTED 30m33s   $14.81 5b90720
 ```
