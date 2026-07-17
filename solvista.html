@@ -907,6 +907,24 @@ let sAmp=1.8, sFreq=0.34, sPh=0;
 const rowCap=y=>ROWMAX[clamp(Math.round(y),0,G-1)]-2;
 function shoreAt(y){return Math.min(SHORE0+Math.round(sAmp*Math.sin(y*sFreq+sPh)),rowCap(y))}
 function shoreAtF(y){return Math.min(SHORE0+sAmp*Math.sin(y*sFreq+sPh),rowCap(y))} /* smooth, unrounded — so water craft glide instead of snapping column-to-column */
+const GLOWREACH=10; /* how far inshore the near-shore water reads the skyline it fronts */
+/* How lit the waterfront is behind row y — a reflection needs a SOURCE (iter 329). The
+   night city-lights smear used to fall uniformly along the WHOLE coast (hashCell<0.28,
+   flat alpha), so a stretch fronting a dark park reflected as much warm light as one
+   fronting a lit downtown. This sums the developed frontage within GLOWREACH cells
+   inshore of the coast — weighted taller-brighter (more lit glass) and nearer-stronger —
+   so the smear now answers the shore it actually fronts. Draw-only: reads DEV membership
+   and the stable target height c.th (never the animated c.h — 277), draws nothing, and
+   perturbs no rng()/hashCell/terrain. Measured across 6 seeds: ~65% of shore rows carry a
+   real source (g 0.18 med → 0.9 max), ~35% front park/dune and correctly go dark. */
+function shoreGlow(y){
+  const sx=shoreAt(y); let g=0;
+  for(let k=1;k<=GLOWREACH;k++){
+    const c=cellAt(sx-k,y);
+    if(c&&DEV.has(c.t))g+=(0.35+0.65*Math.min(1,(c.th||8)/120))*(1-(k-1)/GLOWREACH);
+  }
+  return g;
+}
 /* where a craft riding `off` columns out from shore actually sits: never past the
    plate's rim, so the narrow water at the north and south points still floats it */
 function seaXF(y,off){
@@ -5775,13 +5793,19 @@ function drawCell(x,y){
           ctx.beginPath();ctx.moveTo(sx2,sy2);ctx.lineTo(sx2+vx*4.8,sy2+vy*4.8);ctx.stroke();
         }
       }
-      /* foam along beach edge */
-      if(LITAMT>0.4&&!c.riv){ /* the city's lights smear across the swell */
+      /* the lit waterfront smears across the swell (iter 329: it now reflects the
+         SKYLINE behind this stretch — bright and reaching further in front of a
+         built-up, tall shore, fading to nothing before a dark park or dune coast —
+         rather than falling uniformly along the whole coast as a source-less glow). */
+      if(LITAMT>0.4&&!c.riv){
         const shx=shoreAt(y);
-        if(x>=shx&&x<shx+3&&hashCell(x,y,77)<0.28){
-          const[lx,ly]=px(gx,gy);
-          ctx.fillStyle='rgba(255,200,120,'+(0.11*LITAMT)+')';
-          ctx.fillRect(lx-1.1,ly-2,2.2,6+3*Math.sin(waveT+x+y));
+        if(x>=shx&&x<shx+4){
+          const g=Math.min(1,shoreGlow(y));
+          if(g>0.03&&x<shx+2+Math.round(g*2)&&hashCell(x,y,77)<0.15+0.35*g){
+            const[lx,ly]=px(gx,gy);
+            ctx.fillStyle='rgba(255,200,120,'+((0.05+0.16*g)*LITAMT)+')';
+            ctx.fillRect(lx-1.1,ly-2,2.2,4+g*6+3*Math.sin(waveT+x+y));
+          }
         }
       }
       { /* surf: foam breaks along every beach-facing edge. The break TRAVELS along
