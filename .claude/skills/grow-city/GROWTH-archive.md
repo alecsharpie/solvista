@@ -24045,3 +24045,60 @@ flat. Guardrail reset — next vector ~340 is a measured seam (225) or a Deepen/
 (avoid Sky/Water; additive space is spent, 331, and remaining gaps are deep-but-invisible-at-zoom — price visibility,
 266, before building). Nothing to fix.
 
+## Iteration 336 — the shopfront crowd comes in from the rain (2026-07-17) [People & activity × Deepen/interconnect]
+
+**Vector.** Step-back #44 just landed (335); the header points to a **measured seam (225)** or a Deepen in a rotated
+domain (avoid Sky/Water). I ran the header's own #1 seam-finders and confirmed the loud signals are tended: the WINDA
+readers (enumerated 333/334), the rain readers (ped umbrellas + beach umbrellas + washing line), TIDE, the night-hours
+that thin cars/bikes/trams/peds/kids/joggers, the type-keyed tables (274/281/285/288), and the **frozen census tile
+histogram** (every flat/zero row is terrain or a landmark — LIGHTHOUSE/MARSH/ROCK/SHOREPARK/VOID; SOLARF fixed at 287;
+SHOREPARK hosts live CAs so its flat count is correct). But grepping the rain MECHANISM (`rainingAt`, not the comment's
+noun list — 280) turned up three un-enumerated siblings of the exact category a recent lap enumerated the washing line
+into (its comment cites 271/286): the **park café/kiosk patrons** (`drawCell` PARK, `LITAMT<0.5`), the **busker**
+(`buskerAt`, `nightAmt()<buskOut`), and the busker's **evening strip audience** (`drawBuilding` COM, `nightAmt()<
+stripOut`). All three keep an HOUR and ignored the SHOWER — an outdoor terrace/pavement crowd that sits through a
+downpour. This is 262/271's cliff exactly (fix one member of a category, leave its siblings — here the sibling *is* in
+the file, one and two functions from a fix that just shipped) and it is VISIBLE: the strip crowd is one of the broadest
+night populations, so it clears the visibility bar (266) that the remaining bad-trade candidates (fountains ~1.4px,
+whale spout, chimney smoke 332) do not.
+
+**Change (draw-only — no `rng()`, no terrain).** A shared predicate `dryAt(x,y)=rainingAt(x,y)<RAINDRY` (`RAINDRY=0.05`,
+the same low come-inside cutoff the washing line already read — distinct from `RAINUMB=0.25`, the umbrella-UP threshold),
+`&& dryAt(x,y)` added to the café-patron gate, `buskerAt`, and the strip-crowd gate, and the **washing line repointed**
+to it (ONE predicate, N readers — 112, so they cannot drift). At `rainingAt<0.05` (dry — the overwhelming majority of
+hexes/time) `dryAt` is true and every gate collapses to HEAD's condition **byte-for-byte**: an exact fixed point
+(245/253), so DRY ≡ HEAD and no HEAD file is needed to prove it.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT
+PASS. Only the usual ±1 tick-timing wobble on `solarRoofs`/`greenRoofs`/`towerHt` (226 — not mine; no `rng()`/terrain).
+
+**Probe** (`probes/probe-cafehours.mjs`, build-agnostic — grades the SHIPPED draw in ONE build, ONE world, ONE frame:
+stubs `window.rainingAt` (a function declaration ⇒ on window) to 0 (DRY ≡ HEAD) and to 1 (WET, raining everywhere) and
+counts the body `fillRect`s the frame ISSUES by their (w,h) signature — no pixel diff, NO NOISE FLOOR AT ALL). The
+strip's 1.6×2.6 body shares its signature with a rain-independent draw (visible: DAY-frame strip = the collision floor,
+where `LITAMT>0.35` forbids the strip crowd), so per 285 the **DELTA** dry→wet is the measurement. All 3 seeds:
+- **café 173/228/172 · busker 17/15/24 · strip 234/273/248 come IN** when wet (delta > 0), and the strip's WET residual
+  returns exactly to its rain-independent floor (the strip crowd itself hit 0).
+- **kid control (drawPed 1.2×1.8) IDENTICAL dry vs wet** — the must-not-move column held (250), so the rain stub moved
+  only the three intended draws.
+- **DRY == HEAD by construction** (dryAt≡true collapses each gate — the exact fixed point). **CAFEHOURS: PASS.**
+
+**Visual** (`probes/shot-cafehours.mjs` — same frozen dusk city (2035, dry-peak, dayT=0.82 so the strips are neon-lit
+and out), shot DRY (`rainingAt→0`, ≡HEAD, busy) and WET (`rainingAt→1`, emptied) as a blind A/B zoomed 4× on the CBD
+strips; `page.screenshot` (200); tokens meaningless + non-ordinal, map **CROSSED between seeds** (238/239/268); md5
+confirmed the pairs differ). **Both blind subagents, on both seeds, on the crossed map, correctly named the busy (DRY)
+frame from the crowd density alone** (s42 dry=`orla` ✓ · s7 dry=`pike` ✓ — a discriminating pair, 264, resolved blind
+on both): the dry frame has more standing/seated figures on the striped awning strips and café terraces; the wet frame
+has those spots bare (the crowd gone indoors). Both confirmed **no z-order tears, floating tiles or blown-out colour**
+anywhere, and the whole-city dusk frame reads as a **balanced, coherent coastal city** — glowing CBD, parks/rivers,
+legible beach/pier/wind-farm coastline, crescent moon.
+
+**Perf.** Zero new path objects (draw-only; three gates gain one `dryAt()` term each, the washing line's byte-identical
+repoint). Step-back (~340) prices the arc.
+
+**Verdict: SHIPPED.** The outdoor shopfront/kerb crowd — café diners, the busker, its evening strip audience — now
+comes in from a passing shower on the same `dryAt` predicate the washing line reads, and stands out unchanged when dry
+(exact fixed point). The rain-aware category's last visible siblings are enumerated (271/286/280); the remaining rain
+sibling is the beach crowd, which is Water and calendar-only by design (⛔ do not force). Draw-only, census
+byte-identical. People × Deepen. `probes/probe-cafehours.mjs`, `probes/shot-cafehours.mjs`.
+

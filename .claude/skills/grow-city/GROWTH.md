@@ -32,34 +32,34 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **STEP-BACK #46 @345** (NO DRIFT — census core byte-flat; both seeds PASS blind on the cumulative
-  read, 5 pins each, seasonal discriminating pair resolves, night coherent; perf arc +0.017%/lap day / +0.021%/lap
-  night vs 285 (60 laps), FLAT vs 339. ⚠ Watch STILL soft: inland tower core dense but NOT wallpaper (both agents) — do
-  NOT add raw downtown density.) Prev: **344 — RETURNS FLATTENED / NO SHIP** (fresh full seam-hunt: additive AND high-
-  contrast-interconnect space EXHAUSTED, checked BY NAME; only open gaps are DEEP-INVISIBLE-AT-ZOOM `polish-tile`
-  overlays; solvista.html BYTE-IDENTICAL, a SURVEY not a build ⇒ saturation-bound, mode = STEP-BACKS + `polish-tile`.)
+- **ROTATION.** Last: **346 — SATURATION RE-CONFIRMED, frozen-column finder now a PROBE / NO SHIP** (worked 282/287's #1
+  seam law + tooltip-sync + 281's flag-lifecycle BY NAME; no dead rule / no ZERO row / no un-named type / no flag-veto
+  gap; banked **`probes/probe-frozencol.mjs`** — the header's #1 method is now one command, KELP 28→33→31 re-proves 282;
+  solvista.html BYTE-IDENTICAL. 255: a DIFFERENT instrument corroborating 344.) Prev: **STEP-BACK #46 @345** (NO DRIFT —
+  census byte-flat; both seeds PASS blind, 5 pins, seasonal pair resolves, night coherent; perf +0.017/0.021%/lap vs 285
+  (60 laps), FLAT vs 339. ⚠ Watch STILL soft: inland tower core dense but NOT wallpaper — do NOT add raw downtown
+  density.) Prev: **344 — RETURNS FLATTENED / NO SHIP** (fresh full seam-hunt; only gaps DEEP-INVISIBLE-AT-ZOOM
+  `polish-tile` overlays ⇒ saturation-bound, mode = STEP-BACKS + `polish-tile`.)
   Prev: ~~**Urban 343**~~ (SNOW ON ROOFS — `SNOWLAND` type-set blind to buildings (274), REAL gap; a `colA`-white cap on
   pale roofs in dim warm-haze winter = NO figure/ground, both agents INVERTED. ⛔ INVISIBLE-AT-ZOOM, `polish-tile` only.) Prev:
   ~~**Nature 342**~~ (CAT'S-PAWS — grass deaf to `windForce`; a low-α ellipse scatter HAZES not MARKS (203/215),
   BOTH agents INVERTED; ⛔ INVISIBLE-AT-ZOOM, tapered-streak `polish-tile` only.) Prev: **Transport 341** (WET STREETS
   MIRROR THEIR LAMPS — rain's LAST un-enumerated reader is the ROAD; `rainingAt`>0 warm smear down night lamp pools,
-  dry≡HEAD, land analog of 329; draw-only). Prev: **STEP-BACK #45 @340** (NO DRIFT; perf +0.022%/lap vs 285. ⚠ Watch:
-  inland tower core over-busy, no raw downtown density; GWARM=0 at pinned dry-peak = CORRECT (overcast greys skyBot),
-  do NOT re-chase.) Prev (Deepen/shipped, byte-flat, laws in SKILL.md,
+  dry≡HEAD, land analog of 329; draw-only). Prev: **STEP-BACK #45 @340** (NO DRIFT; perf +0.022%/lap vs 285; GWARM=0 at
+  pinned dry-peak = CORRECT, overcast greys skyBot, do NOT re-chase — watch now carried by #46/346). Prev
+  (Deepen/shipped, byte-flat, laws in SKILL.md,
   full text in ledger/archive): Civic **338/339** (festival cloth on `windForce`) · People **336/337** (RAIN-AWARE
   CROWDS on `dryAt`; category CLOSED, hold-out BEACH ⛔) · Water **334** (SAIL BELLIES; WINDA-over-water DONE ⛔) ·
   Nature **333** (FIRE SMOKE LEANS; (bj) CLOSED, 🆕 (bc) fire-glow z-order future) · ~~Urban **332**~~ (CHIMNEY WOODSMOKE
   ⛔ INVISIBLE, DO NOT RE-TRY) · Sky **331** (HIGH JET; a jet does NOT parallax) · Water **329** (WATERFRONT REFLECTION
   on `shoreGlow`) · Sky **328** (THE STRIKE, forked bolt on 291 flash) · Urban **327** (FACADE TILE PICK, frontmost
-  prism) · Civic **326** (CIVIC SQUARE `c.civ`) · **STEP-BACKS #42–#44 @325/330/335** (NO DRIFT) · People **324**
-  (DESIRE PATHS `c.wear`) · Nature **323** (WILDFLOWERS) · Water **322** (WHALES) · Sky **321** (SNOW — Sky's 1st CA
-  `c.snow`, ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** · Urban **316** (⛔ DISTRICTS' `tick()` vote
-  is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 344 declared RETURNS
-  FLATTENED / NO SHIP — a fresh seam-hunt re-confirmed saturation; 342/343/344 together are the growth phase hitting
-  its wall (every buildable interconnect ships or is `polish-tile`). #46 landed @345 (NO DRIFT); ~346 = a `polish-tile` redesign or STEP-BACK #47. The loop's
-  honest mode is now STEP-BACKS (drift-watch) + `polish-tile` (the shaped-ridge / tapered-streak redesigns 342/343
-  need), NOT more growth laps. A genuinely NEW growth vector needs a NEW mechanism or domain-signal, not another
+  prism) · Civic **326** (CIVIC SQUARE `c.civ`) · **STEP-BACKS #42–#44 @325/330/335** (NO DRIFT) · **324–319** (desire
+  paths · wildflowers · whales · SNOW `c.snow` ⚠ warp=61 freezes it ON · civic) · People **318/317** · Urban **316**
+  (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 342/343/344/346 are the
+  growth phase HITTING ITS WALL (every buildable interconnect ships or is `polish-tile`); #46 @345 = NO DRIFT. ~350 =
+  STEP-BACK #47; between now and then the honest mode is `polish-tile` (342/343's shaped-ridge / tapered-streak
+  redesigns), NOT more growth laps. A genuinely NEW growth vector needs a NEW mechanism or domain-signal, not another
   deaf-surface overlay — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
   ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM — PRICE VISIBILITY (266/342/343) BEFORE building; a passing
   census+probe means NOTHING for a subtle overlay, only the blind agents do. A HIGH-CONTRAST interconnect (341's warm-
@@ -391,68 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 338 entries before Iteration 336 live in
+> **Archive:** the 339 entries before Iteration 337 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 336 — the shopfront crowd comes in from the rain (2026-07-17) [People & activity × Deepen/interconnect]
-
-**Vector.** Step-back #44 just landed (335); the header points to a **measured seam (225)** or a Deepen in a rotated
-domain (avoid Sky/Water). I ran the header's own #1 seam-finders and confirmed the loud signals are tended: the WINDA
-readers (enumerated 333/334), the rain readers (ped umbrellas + beach umbrellas + washing line), TIDE, the night-hours
-that thin cars/bikes/trams/peds/kids/joggers, the type-keyed tables (274/281/285/288), and the **frozen census tile
-histogram** (every flat/zero row is terrain or a landmark — LIGHTHOUSE/MARSH/ROCK/SHOREPARK/VOID; SOLARF fixed at 287;
-SHOREPARK hosts live CAs so its flat count is correct). But grepping the rain MECHANISM (`rainingAt`, not the comment's
-noun list — 280) turned up three un-enumerated siblings of the exact category a recent lap enumerated the washing line
-into (its comment cites 271/286): the **park café/kiosk patrons** (`drawCell` PARK, `LITAMT<0.5`), the **busker**
-(`buskerAt`, `nightAmt()<buskOut`), and the busker's **evening strip audience** (`drawBuilding` COM, `nightAmt()<
-stripOut`). All three keep an HOUR and ignored the SHOWER — an outdoor terrace/pavement crowd that sits through a
-downpour. This is 262/271's cliff exactly (fix one member of a category, leave its siblings — here the sibling *is* in
-the file, one and two functions from a fix that just shipped) and it is VISIBLE: the strip crowd is one of the broadest
-night populations, so it clears the visibility bar (266) that the remaining bad-trade candidates (fountains ~1.4px,
-whale spout, chimney smoke 332) do not.
-
-**Change (draw-only — no `rng()`, no terrain).** A shared predicate `dryAt(x,y)=rainingAt(x,y)<RAINDRY` (`RAINDRY=0.05`,
-the same low come-inside cutoff the washing line already read — distinct from `RAINUMB=0.25`, the umbrella-UP threshold),
-`&& dryAt(x,y)` added to the café-patron gate, `buskerAt`, and the strip-crowd gate, and the **washing line repointed**
-to it (ONE predicate, N readers — 112, so they cannot drift). At `rainingAt<0.05` (dry — the overwhelming majority of
-hexes/time) `dryAt` is true and every gate collapses to HEAD's condition **byte-for-byte**: an exact fixed point
-(245/253), so DRY ≡ HEAD and no HEAD file is needed to prove it.
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors. VERDICT
-PASS. Only the usual ±1 tick-timing wobble on `solarRoofs`/`greenRoofs`/`towerHt` (226 — not mine; no `rng()`/terrain).
-
-**Probe** (`probes/probe-cafehours.mjs`, build-agnostic — grades the SHIPPED draw in ONE build, ONE world, ONE frame:
-stubs `window.rainingAt` (a function declaration ⇒ on window) to 0 (DRY ≡ HEAD) and to 1 (WET, raining everywhere) and
-counts the body `fillRect`s the frame ISSUES by their (w,h) signature — no pixel diff, NO NOISE FLOOR AT ALL). The
-strip's 1.6×2.6 body shares its signature with a rain-independent draw (visible: DAY-frame strip = the collision floor,
-where `LITAMT>0.35` forbids the strip crowd), so per 285 the **DELTA** dry→wet is the measurement. All 3 seeds:
-- **café 173/228/172 · busker 17/15/24 · strip 234/273/248 come IN** when wet (delta > 0), and the strip's WET residual
-  returns exactly to its rain-independent floor (the strip crowd itself hit 0).
-- **kid control (drawPed 1.2×1.8) IDENTICAL dry vs wet** — the must-not-move column held (250), so the rain stub moved
-  only the three intended draws.
-- **DRY == HEAD by construction** (dryAt≡true collapses each gate — the exact fixed point). **CAFEHOURS: PASS.**
-
-**Visual** (`probes/shot-cafehours.mjs` — same frozen dusk city (2035, dry-peak, dayT=0.82 so the strips are neon-lit
-and out), shot DRY (`rainingAt→0`, ≡HEAD, busy) and WET (`rainingAt→1`, emptied) as a blind A/B zoomed 4× on the CBD
-strips; `page.screenshot` (200); tokens meaningless + non-ordinal, map **CROSSED between seeds** (238/239/268); md5
-confirmed the pairs differ). **Both blind subagents, on both seeds, on the crossed map, correctly named the busy (DRY)
-frame from the crowd density alone** (s42 dry=`orla` ✓ · s7 dry=`pike` ✓ — a discriminating pair, 264, resolved blind
-on both): the dry frame has more standing/seated figures on the striped awning strips and café terraces; the wet frame
-has those spots bare (the crowd gone indoors). Both confirmed **no z-order tears, floating tiles or blown-out colour**
-anywhere, and the whole-city dusk frame reads as a **balanced, coherent coastal city** — glowing CBD, parks/rivers,
-legible beach/pier/wind-farm coastline, crescent moon.
-
-**Perf.** Zero new path objects (draw-only; three gates gain one `dryAt()` term each, the washing line's byte-identical
-repoint). Step-back (~340) prices the arc.
-
-**Verdict: SHIPPED.** The outdoor shopfront/kerb crowd — café diners, the busker, its evening strip audience — now
-comes in from a passing shower on the same `dryAt` predicate the washing line reads, and stands out unchanged when dry
-(exact fixed point). The rain-aware category's last visible siblings are enumerated (271/286/280); the remaining rain
-sibling is the beach crowd, which is Water and calendar-only by design (⛔ do not force). Draw-only, census
-byte-identical. People × Deepen. `probes/probe-cafehours.mjs`, `probes/shot-cafehours.mjs`.
 
 ## Iteration 337 — the picnic and the pickup game come in from the rain too (2026-07-17) [People & activity × Deepen/interconnect]
 
@@ -925,3 +868,42 @@ season alive; night ordering / golden-greens / sea-quilt facts hold (unre-measur
 surfaces). Permanent draw arc negligible (+0.02%/lap, flat recent window). Guardrail reset — next ~346 is a
 `polish-tile` redesign (342/343's shaped-ridge / tapered-streak) or STEP-BACK #47. Nothing to fix. (No files added —
 the finding lives here, the loop's memory.)
+
+## Iteration 346 — the frozen-column seam-finder, made a standing tool (2026-07-18) [survey]
+
+**Vector.** Cross-cutting / Interaction-with-the-harness. #46 (@345) just cleared the drift-watch, so #47 is too soon,
+and 342/343/344 already established the growth phase has hit its wall. Rather than re-run 344's survey verbatim, I
+worked the header's OWN #1 seam law from a fresh angle and left a durable artifact behind. No source touched —
+`solvista.html` **byte-identical to HEAD** (a survey, not a build).
+
+**What I actually did — three of the recipe's finders, run BY NAME, one of them now a probe:**
+1. **Frozen census column (282/287's "READ IT FIRST").** The recipe calls this the #1 seam-finder, but there was no
+   *tool* for it — `census.mjs` only prints types that CHANGED vs a baseline, and only SUMMED, so a dead-flat-in-every-
+   era row is invisible to it. I wrote **`probes/probe-frozencol.mjs`** (pure world data via `__census().tiles`,
+   per-era × summed-over-seeds, flags FLAT and ZERO rows) and banked it. Result on seeds 7/42/1234: every FLAT row is
+   audited terrain — SHOREPARK 294/294/294 (coastal band), ROCK 80/80/80, MARSH 45/45/45 (289: terrain, draw answers
+   tide+season), LIGHTHOUSE 3/3/3, VOID (off-plate). **No dead rule, no ZERO row.** KELP reads **28→33→31 — it MOVES**,
+   which is 282's fix visible in the census (HEAD before 282 was a stamped-once flat bed). Everything that should grow
+   grows (MID 10→1234, TOWER 0→329, PARK 230→569, SOLARF 0→19, MARKET 0→16, DUNE 62→110).
+2. **Tooltip-table sync (invariant).** Diffed the `T` enum (32 members) against `TILELABEL`/`TILEDESC` and the civic
+   kinds against `CIVICLABEL`/`CIVICDESC`: **complete**, every drawn tile/civic named and described (ROAD/CIVIC handled
+   specially in `describeTile`). No un-named type.
+3. **Per-cell flag lifecycle (281's "fourth seam").** Grepped every flag's writer/veto/draw/tooltip:
+   `hstr`/`loft`/`corner`/`bridge`/`riv`/`treed`/`fete`/`civ`/`wear`/`snow`/`solar`/`groof`. All correct — each has an
+   intentional, commented ride/die rule (e.g. `hstr` deliberately rides COM→TOWER as a retail podium under the tower,
+   line ~7958; `loft` cleared on fire→BURNT; `corner` cleared when `!HOMES.has(c.t)`). **No writer skips a type its
+   veto still counts.**
+
+**Census + error gate.** VERDICT PASS, 0 page errors; core `pop`/`developed`/`roads` byte-unmoved (baseline == current,
++0/+1 chaotic wobble only). `probe-frozencol` self-verifies (its KELP column re-proves 282 lives).
+
+**Finding.** Confirms 344/345 from a *different* instrument (255's "a cue re-confirmed is only corroborated if a
+DIFFERENT instrument did it"): the additive and high-contrast-interconnect space is EXHAUSTED and every seam the
+finders point at is closed. The one durable output is the banked probe — the header's #1 method is now one command for
+every future lap, instead of the ad-hoc build 342/344 each re-derived.
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built in the city).** `solvista.html` byte-identical; the "revert"
+is that no vector earned a ship. Durable artifact: `probes/probe-frozencol.mjs` (harness tooling, not a city change).
+Honest mode from here is unchanged — **STEP-BACKS** (next ~350 = #47) **+ `polish-tile`** (342/343's shaped-ridge /
+tapered-streak deaf-surface redesigns). A new growth lap still needs a NEW mechanism or domain-signal, visibility
+priced FIRST (266/342/343).
