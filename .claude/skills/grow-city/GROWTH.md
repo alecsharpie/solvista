@@ -32,15 +32,17 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **354 — THE COMMENT-TELL SEAM IS CLEAN / survey NO SHIP** (grepped the 199/278/280/282
-  comment-tell family across all `/* */`: every "never/always/once/static" comment is a HEALTHY justification of
-  correct behavior — "so it can never call a wrong hour", "a palm does not migrate" — NOT a defect-tell; no
-  absence-asserting-a-LIVE-rule, no changelog-as-taxonomy. ⚠ **Source BYTE-FROZEN since iter 349** (HEAD≡349≡350 md5
-  `b9dbdb8e`): 350/351/352/353/354 shipped nothing, so **STEP-BACK #48 would re-measure the EXACT bytes #47 already
-  vetted — do NOT fire it until source actually drifts.** Growth wall confirmed from FIVE angles: 344 declared · 350
-  visual/perf · 351 behavioral · 353 table · 354 comment-tell.) Prev: **353 — TYPE-KEYED TABLE SEAM SOUND / survey**
-  (all 32 `T.*` vs TILELABEL/TILEDESC/POPW/BEDT; missing members deliberate w/ correct alt path; NO 285/288
-  blindness). Prev: **352 — WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / REVERTED** (Sky × Deepen; ⛔ **a whole-scene
+- **ROTATION.** Last: **355 — FRESH HIGH-CONTRAST-LOCAL CANDIDATE IS ALREADY SHIPPED / survey NO SHIP** (GENERATIVE
+  complement to the passive surveys: *invented* the best fresh candidates for the header's one open growth shape — a
+  NEW high-contrast figure/ground-LOCAL night-signal reader — and found all three pre-existing (car headlights · taxi
+  roof lamp · copter beacon; refs in ledger); every mover already reads `LITAMT` with a bright local cue ⇒ additive
+  night-reader axis saturated BY CONSTRUCTION; a **sixth**, stronger-than-a-grep wall confirmation. ⚠ **Source
+  BYTE-FROZEN since iter 349** (HEAD≡349≡350 md5 `b9dbdb8e`): 350–355 shipped nothing, so **STEP-BACK #48 would
+  re-measure the EXACT bytes #47 already vetted — do NOT fire it until source drifts.** Growth wall confirmed from SIX
+  angles: 344 declared · 350 visual/perf · 351 behavioral · 353 table · 354 comment-tell · 355 generative.) Prev:
+  **354 — COMMENT-TELL SEAM CLEAN / survey** (every `/* */` "never/always/once/static" comment is a HEALTHY correctness
+  proof — no absence-asserting-a-LIVE-rule (282), no changelog-as-taxonomy (280); detail in ledger.) Prev: **353 — TYPE-KEYED TABLE SEAM SOUND / survey** (all 32 `T.*` vs the type-keyed TABLES; missing members deliberate; no 285/288 blindness).
+  Prev: **352 — WHOLE-SCENE LIGHTNING FLASH READS AS HAZE / REVERTED** (Sky × Deepen; ⛔ **a whole-scene
   event as a FLAT OVERLAY is dead — 260 on a flash: colour constancy divides a global luminance lift out as haze; a
   passing coverage/luminance probe proves NOTHING, only blind eyes judge a desaturating wash; a believable one needs a
   SKY→ground GRADIENT = `polish-tile`**). Prev: **351 — HALF-BUILT/KEEPS-NO-HOUR VEIN DRY / survey NO SHIP** (every mover dwells, every card
@@ -54,8 +56,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   both LOW-CONTRAST/haze redesigns, both agents INVERTED, ⛔ INVISIBLE-AT-ZOOM `polish-tile` only — the trap 352 hit at
   whole-frame scale.) Prev: **Transport 341** (WET STREETS
   MIRROR THEIR LAMPS — rain's LAST un-enumerated reader is the ROAD; `rainingAt`>0 warm smear down night lamp pools,
-  dry≡HEAD, land analog of 329; draw-only). Prev: **STEP-BACK #45 @340** (NO DRIFT; perf +0.022%/lap vs 285; GWARM=0 at
-  pinned dry-peak = CORRECT, overcast greys skyBot, do NOT re-chase — watch now carried by #46/346). Prev
+  dry≡HEAD, land analog of 329; draw-only). Prev
   (Deepen/shipped, byte-flat, laws in SKILL.md,
   full text in ledger/archive): Civic **338/339** (festival cloth on `windForce`) · People **336/337** (RAIN-AWARE
   CROWDS on `dryAt`; category CLOSED, hold-out BEACH ⛔) · Water **334** (SAIL BELLIES; WINDA-over-water DONE ⛔) ·
@@ -390,55 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 347 entries before Iteration 345 live in
+> **Archive:** the 348 entries before Iteration 346 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 345 — forty-nine laps on, still no drift (2026-07-18) [46th step-back / holistic]
-
-**Vector.** The header pointed here explicitly ("~345 = STEP-BACK #46, do it next"). Since #45 @340, one lap has
-landed (341 wet-street gleam, draw-only); 342/343/344 all reverted/no-ship (saturation survey). A step-back is the
-guardrail that lets the loop run unattended: the census catches *metric* collapse but is blind to *cumulative visual*
-drift and to *permanent perf* drift, so both are measured here, not vibed. No source touched — `solvista.html`
-byte-identical (a survey, not a build).
-
-**Census + error gate.** Clean HEAD (29efb9c, through 341 + the stats commit), tree clean. `census.mjs` VERDICT PASS,
-0 page errors; core `pop`/`developed`/`roads` byte-unmoved, only the usual chaotic ±1 wobble (`greenRoofs -1`,
-`towerHt -1` — 226 tick-timing, not a lap). Entity counts full and healthy (peds 762, cars 360, surfers 81, etc.).
-
-**Perf (permanent arc, PATH OBJECTS — load-immune, 198/216; `probe-drawbudget.mjs`, snow cleared per 325, mean of 3
-seeds, day / night):**
-- iter 285 (b523698): 110395 / 138088 · iter 339 (8c34523): 111762 / 139698 · **HEAD 341 (29efb9c): 111504 / 139806.**
-- **Long arc vs 285 (~60 laps): day +1.00% (+0.017%/lap), night +1.24% (+0.021%/lap)** — well under +0.2%/lap.
-- **Recent arc vs 339 (1 shipped lap, 341): day −0.23%, night +0.08%** — flat. 341's gleam is dry-gated (0 path
-  objects when dry), so it adds nothing at the probe's pins. **No perf-fix lap needed.**
-
-**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page).** One blind
-subagent per seed, cumulative question. Both seeds independently **PASS**:
-- **City coherent & balanced** across all frames — dense inland towers → mid-rise ring → farm/park/river belt →
-  beach/pier/wheel/turbines/sea — reads as one California coastal city; no wallpaper band, no muddy district, nothing
-  blown-out. Seed 42 explicitly: tower field "dense but retains roof-color and height variation, not a repeating carpet."
-- **No z-order tears, floating tiles, or detached glows** — piers/wheel/turbines on their hexes, rail/pylons/bridges
-  connect end-to-end, night buoy lights have plausible sources.
-- **Night coast coherent lit-city-and-water** — warm window grids, street/rail lamps, red/green buoys, moon + reflection
-  on deep-blue water, lit pier — not a flat void (kelp/coast-darkening class stays closed, 282).
-- **Seasonal discriminating pair resolves blind on BOTH seeds** (264): dusk-summer sun UP (warm, lit, teal sea),
-  dusk-winter — SAME instant — sun DOWN (dark, crescent moon + stars, lamp-lit, dimmer sea). Unmistakably two seasons.
-- **Watch item (STILL soft, unchanged from #45):** inland tower core is dense — do NOT add raw downtown density (217/
-  224/228 crown-not-picket family). Not worsening: this lap both agents called it varied, not wallpaper.
-
-**Instrument nits (banked, not chased — per #45).** Frames self-report `GWARM=0` and `HUD=STALE` at golden/dusk; these
-are the known fixed-pin caption artifacts (`shot-stepback` derives the golden pin on a clear page but shoots the warped
-overcast world; `phaseWord`-vs-`clockWord` mismatch). Pixels ARE warm and agents PASS — do NOT re-chase (340 measured
-this out fully; GWARM machinery is alive, 0.6–0.78 clear-sky, muted by overcast at the pinned years).
-
-**Verdict: STEP-BACK #46 — NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length
-season alive; night ordering / golden-greens / sea-quilt facts hold (unre-measured — no lap since #44 touched their
-surfaces). Permanent draw arc negligible (+0.02%/lap, flat recent window). Guardrail reset — next ~346 is a
-`polish-tile` redesign (342/343's shaped-ridge / tapered-streak) or STEP-BACK #47. Nothing to fix. (No files added —
-the finding lives here, the loop's memory.)
 
 ## Iteration 346 — the frozen-column seam-finder, made a standing tool (2026-07-18) [survey]
 
@@ -829,4 +786,40 @@ kayaks 81, buoys 45, plane 9, copters 6, etc.). No histogram move (no source cha
 comment-tell 354). Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343-class deaf-surface
 redesigns) **or wait for source to drift before the next step-back**. A genuine growth lap still needs a NEW
 mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL — none has survived a probe since 341.
+Nothing to fix.
+
+## Iteration 355 — the fresh high-contrast-local candidate is already shipped (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** The last five laps confirmed the growth wall by *passive* seam-greps (351 behavioral · 353 tables · 354
+comment-tells). Re-running those is redundant (354's law). So this lap ran the **generative complement**: instead of
+grepping for a defect, I *generated* the strongest fresh candidates for the one thing the header still leaves open — a
+**NEW high-contrast, figure/ground-LOCAL mechanism/domain-signal-reader** (the 341/280 cross-domain-signal shape, the
+last thing that shipped) — and probed whether each already exists. This is the 34-beach-towels discipline run first,
+on purpose: "confirm your idea doesn't already exist" *before* designing. No source touched; `solvista.html`
+byte-identical to HEAD (md5 `b9dbdb8e`, = the iter-349 freeze).
+
+**Survey — three fresh candidates, three pre-existing.** Each is exactly the profile the header demands (bright local
+cue on dark ground, per-entity, reading an existing signal `LITAMT`), and the artifact already ships all three:
+- **Vehicle headlights** — cars/buses/trucks read night (`LITAMT>0.35`, L8904): a beam pool on the road ahead of the
+  nose, two warm headlamp points, two red taillight points. Bikes carry a bar lamp (L8817). *Done.*
+- **Taxi for-hire roof lamp** — amber when vacant, dark with a fare, `LITAMT>0.3 && cabFree(v)` (L8902). *Done.*
+- **Aircraft night nav lights** — the copter's tail beacon *blinks* at night (`LITAMT>0.25 && sin(time*5+ph)>0.2`,
+  L10098). *Done.*
+Every mover in the city already reads night with a bright local cue (add: ferry/bridge lights 179/193, lighthouse
+beam, emergency beacons, street lamps, fire/strike/buoy emitters 347/348/349). The "high-contrast local night-reader"
+axis is **saturated by construction** — a freshly-invented candidate lands on an existing draw, which is the strongest
+confirmation the additive space is spent (stronger than a passive grep, because it is adversarial: I *tried* to find a
+gap and could not).
+
+**Census + error gate.** Tree clean; `md5(solvista.html) = b9dbdb8e8ad377d8df940e2d804a572b`, byte-identical to the
+iter-349 freeze that 354 censused **VERDICT PASS, 0 errors, core `pop`/`developed`/`roads` byte-flat**. Re-running the
+9-cell matrix on provably-identical bytes buys nothing (it would re-confirm 354's own reading — the grade-your-own-
+instrument trap). No histogram move (no source change).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** The growth vein is dry from a **sixth** angle, and this
+one is generative rather than passive: the best fresh high-contrast-local candidates are already implemented. Honest
+mode remains **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343-class deaf-surface redesigns) — a *different
+skill*. A genuine grow-city lap still needs a NEW mechanism that is neither additive-night-reader (saturated here),
+whole-scene overlay (haze — 352), nor in a closed category (emitter/reflection/wind-over-water); none has survived a
+probe since 341. **Recommendation: switch to `polish-tile`, or wait for source to drift before step-back #48.**
 Nothing to fix.

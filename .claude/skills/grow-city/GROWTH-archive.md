@@ -24542,3 +24542,50 @@ genuinely new growth lap needs a NEW mechanism or domain-signal — and per 266/
 figure-ground BEFORE building**, because a passing census+probe means nothing for a subtle overlay: only the blind
 agents can see it, and low-contrast overlays INVERT. (No files added — the finding lives here, the loop's memory.)
 
+## Iteration 345 — forty-nine laps on, still no drift (2026-07-18) [46th step-back / holistic]
+
+**Vector.** The header pointed here explicitly ("~345 = STEP-BACK #46, do it next"). Since #45 @340, one lap has
+landed (341 wet-street gleam, draw-only); 342/343/344 all reverted/no-ship (saturation survey). A step-back is the
+guardrail that lets the loop run unattended: the census catches *metric* collapse but is blind to *cumulative visual*
+drift and to *permanent perf* drift, so both are measured here, not vibed. No source touched — `solvista.html`
+byte-identical (a survey, not a build).
+
+**Census + error gate.** Clean HEAD (29efb9c, through 341 + the stats commit), tree clean. `census.mjs` VERDICT PASS,
+0 page errors; core `pop`/`developed`/`roads` byte-unmoved, only the usual chaotic ±1 wobble (`greenRoofs -1`,
+`towerHt -1` — 226 tick-timing, not a lap). Entity counts full and healthy (peds 762, cars 360, surfers 81, etc.).
+
+**Perf (permanent arc, PATH OBJECTS — load-immune, 198/216; `probe-drawbudget.mjs`, snow cleared per 325, mean of 3
+seeds, day / night):**
+- iter 285 (b523698): 110395 / 138088 · iter 339 (8c34523): 111762 / 139698 · **HEAD 341 (29efb9c): 111504 / 139806.**
+- **Long arc vs 285 (~60 laps): day +1.00% (+0.017%/lap), night +1.24% (+0.021%/lap)** — well under +0.2%/lap.
+- **Recent arc vs 339 (1 shipped lap, 341): day −0.23%, night +0.08%** — flat. 341's gleam is dry-gated (0 path
+  objects when dry), so it adds nothing at the probe's pins. **No perf-fix lap needed.**
+
+**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page).** One blind
+subagent per seed, cumulative question. Both seeds independently **PASS**:
+- **City coherent & balanced** across all frames — dense inland towers → mid-rise ring → farm/park/river belt →
+  beach/pier/wheel/turbines/sea — reads as one California coastal city; no wallpaper band, no muddy district, nothing
+  blown-out. Seed 42 explicitly: tower field "dense but retains roof-color and height variation, not a repeating carpet."
+- **No z-order tears, floating tiles, or detached glows** — piers/wheel/turbines on their hexes, rail/pylons/bridges
+  connect end-to-end, night buoy lights have plausible sources.
+- **Night coast coherent lit-city-and-water** — warm window grids, street/rail lamps, red/green buoys, moon + reflection
+  on deep-blue water, lit pier — not a flat void (kelp/coast-darkening class stays closed, 282).
+- **Seasonal discriminating pair resolves blind on BOTH seeds** (264): dusk-summer sun UP (warm, lit, teal sea),
+  dusk-winter — SAME instant — sun DOWN (dark, crescent moon + stars, lamp-lit, dimmer sea). Unmistakably two seasons.
+- **Watch item (STILL soft, unchanged from #45):** inland tower core is dense — do NOT add raw downtown density (217/
+  224/228 crown-not-picket family). Not worsening: this lap both agents called it varied, not wallpaper.
+
+**Instrument nits (banked, not chased — per #45).** Frames self-report `GWARM=0` and `HUD=STALE` at golden/dusk; these
+are the known fixed-pin caption artifacts (`shot-stepback` derives the golden pin on a clear page but shoots the warped
+overcast world; `phaseWord`-vs-`clockWord` mismatch). Pixels ARE warm and agents PASS — do NOT re-chase (340 measured
+this out fully; GWARM machinery is alive, 0.6–0.78 clear-sky, muted by overcast at the pinned years).
+
+**Verdict: STEP-BACK #46 — NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length
+season alive; night ordering / golden-greens / sea-quilt facts hold (unre-measured — no lap since #44 touched their
+surfaces). Permanent draw arc negligible (+0.02%/lap, flat recent window). Guardrail reset — next ~346 is a
+`polish-tile` redesign (342/343's shaped-ridge / tapered-streak) or STEP-BACK #47. Nothing to fix. (No files added —
+the finding lives here, the loop's memory.)
+
+
+<!-- rotated from header ROTATION chain at iter 355 (superseded by STEP-BACK #47 @350) -->
+- Prev: **STEP-BACK #45 @340** (NO DRIFT; perf +0.022%/lap vs 285; GWARM=0 at pinned dry-peak = CORRECT, overcast greys skyBot, do NOT re-chase — watch now carried by #46/346).
