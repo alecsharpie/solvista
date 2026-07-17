@@ -8936,7 +8936,16 @@ function drawBoat(b){
   ctx.fillStyle=col('terra',0.9);
   ctx.beginPath();ctx.moveTo(cx-5,cy+bob);ctx.lineTo(cx+5,cy+bob);ctx.lineTo(cx+3,cy+2.4+bob);ctx.lineTo(cx-3,cy+2.4+bob);ctx.closePath();ctx.fill();
   ctx.fillStyle=col('white',1.05);
-  ctx.beginPath();ctx.moveTo(cx,cy-1+bob);ctx.lineTo(cx,cy-10+bob);ctx.lineTo(cx+4.5,cy-2.5+bob);ctx.closePath();ctx.fill();
+  /* THE SAIL FILLS WITH THE WIND (iter 334). The pleasure sailboats were just enumerated
+     into waterSession for their HOURS (286); their SAIL -- the definitional wind-reader --
+     is the member that comment did not name (280: grep the MECHANISM windForce, not the
+     reader-list). The leech bows leeward (+x, the same way the clouds, smoke and kites lean)
+     by the boat's own windForce(): a quadratic whose control sits on the chord at a dead calm,
+     so belly==0 is HEAD's straight taut triangle byte-for-byte (245's fixed point) and the
+     canvas bellies fuller as the wind picks up. The luff (A->B) stays flat on the mast. */
+  const belly=4.5*windForce();
+  ctx.beginPath();ctx.moveTo(cx,cy-1+bob);ctx.lineTo(cx,cy-10+bob);
+  ctx.quadraticCurveTo(cx+2.25+belly,cy-6.25+bob,cx+4.5,cy-2.5+bob);ctx.closePath();ctx.fill();
 }
 function drawBuoy(b){
   const[cx,cy]=pxc(b.x,b.y);

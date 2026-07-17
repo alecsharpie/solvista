@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323**, **333** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
@@ -32,17 +32,17 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Nature **333** (FIRE SMOKE LEANS DOWNWIND — Deepen, closing cue (bj): the wildfire plume + ember
-  scars rose DEAD-STRAIGHT while everything else rode WINDA. `smokeLean(rise)=rise*windForce()` leans each puff +x by its
-  own RISE (a plume bends over as it climbs), in the same +x the clouds drift; calm=0=HEAD byte-for-byte (245's fixed
-  point). Draw-only, census byte-identical; probe `dx==rise` exactly + fixed point 0px; visual — both blind agents ×2
-  seeds on a CROSSED map named the gale by the lean alone (264 discriminating pair). ✅ **CUE (bj) CLOSED; the WINDA
-  reader category is fully enumerated (280).** ⛔ Cue (bc) — fire glow eaten by later rows — is a separate 266 z-order
-  job for a future fire lap.) Prev: ~~Urban **332**~~ (EXPLORED → REVERTED — CHIMNEY WOODSMOKE: probe-proven but ⛔
-  **INVISIBLE at city zoom** — a SHORT RES host has no clean sky backdrop; "ink renders" ≠ "viewer sees it", 266.
-  ⛔ **DO NOT RE-TRY chimney smoke.**) Prev: Sky **331** (HIGH JET + CONTRAIL — Sky × New element, **4th ever**; SCREEN-SPACE
-  jet in the sky slab, contrail white/day → golden → GONE night → faded in rain; Math.random drift-in, census
-  byte-identical; `probe-jet`. ⚠ a jet does NOT parallax ⇒ screen space.) Prev: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat; 2 seeds × 5 frames PASS; perf arc vs 285 ≈**+0.027%/lap** over 44 laps, snow-cleared — no perf-fix lap.) Prev: Water **329**
+- **ROTATION.** Last: Water **334** (THE SAIL FILLS WITH THE WIND — Deepen; the pleasure boats were enumerated into
+  `waterSession` for their HOURS (286) but the SAIL — the definitional wind-reader — was a flat static triangle.
+  `belly=4.5*windForce()` bows the leech leeward in the same +x the clouds/smoke lean, a quadratic whose control sits on
+  the chord so calm=0=HEAD byte-for-byte (245's fixed point). Draw-only, census byte-identical; probe belly 0.000→4.500
+  exact + fixed point 0px; visual — both blind agents ×2 seeds on a CROSSED map named the gale by the sail belly alone
+  (264). ✅ **WINDA READER CATEGORY NOW ENUMERATED OVER THE WATER TOO** — fountains (~1.4px) + whale spout (sparse) are
+  the remaining bad-trade members, ⛔ do not force.) Prev: Nature **333** (FIRE SMOKE LEANS DOWNWIND —
+  `smokeLean(rise)=rise*windForce()`, cue (bj) CLOSED; ⛔ cue (bc) fire-glow-eaten-by-later-rows is a future 266 z-order
+  fire lap.) Prev: ~~Urban **332**~~ (EXPLORED → REVERTED — CHIMNEY WOODSMOKE: probe-proven but ⛔ INVISIBLE at city
+  zoom, 266. ⛔ DO NOT RE-TRY.) Prev: Sky **331** (HIGH JET + CONTRAIL — screen-space jet, contrail white/day→golden→gone
+  night→faded rain; ⚠ a jet does NOT parallax.) Prev: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat; 2 seeds × 5 frames PASS; perf arc vs 285 ≈**+0.027%/lap** over 44 laps, snow-cleared — no perf-fix lap.) Prev: Water **329**
   (WATERFRONT REFLECTION ANSWERS THE SKYLINE — night city-lights smear gates on `shoreGlow(y)` (developed frontage ≤10
   cells inshore, reads `c.th`) so lit downtown coast shimmers, dune/park headlands stay dark; draw-only.) Prev: Sky **328** (THE STRIKE —
   forked bolt grounds down the rain shaft on 291's flash peak, `bolt>0.22` inside `if(pa>0)`, 248) · Urban **327**
@@ -391,68 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 326 entries before Iteration 324 live in
+> **Archive:** the 327 entries before Iteration 325 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 324 — the busy park corners wore down to bare earth (2026-07-17) [People & activity × New CA rule]
-
-**Vector.** Rotation's `NEXT` was **Civic or People × New CA rule** — the two stale ADDITIVE cells, by far the most
-recency-neglected (Civic last CA 107, People last CA **49**). People was the balance pick (single most-neglected
-cell in the grid) and its ONLY stale kind. But iter 49 (block parties) was **excitable media**, a category the header
-marks **COMPLETE** (bloom 263 · shroom 272 · party 314) — so a People CA had to be a *different* mechanism. The natural
-fit, and one the engine had never run: a **diffusion/accumulation field**. Desire paths — the busiest public green
-wears to bare earth where people gather, the quiet interior stays lush. It reads the `c.buzz` ATTRACT field (iter 104)
-the city already derives, so the worn ground lands exactly where a crowd belongs (the shopfront/plaza/civic edge) and
-never in the empty middle of a lawn.
-
-**Change (a diffusion CA + a contained ground draw — wholly census-inert).** New field `c.wear` on `WEARLAND =
-{PARK, SHOREPARK, GARDEN}`:
-- **The CA** (`tick()`, right after the `c.buzz` pass that feeds it, before the snow pass): each WEARLAND hex relaxes
-  its wear toward a target `min(1, c.buzz/WEARBUZZ=3)` (a lively kerb, `buzz>=KERBBUZZ=2`, wears; a quiet interior,
-  `buzz 0`, does not) plus a **diffusion term** (`WEARDIFF=0.09`, joins the worn ground of busy neighbours into paths
-  rather than isolated patches). Slow onset (`WEARLERP=0.04`) ⇒ a well-used commons wears in over the decades and
-  greens back when the buzz falls. Non-WEARLAND hexes are zeroed.
-- **The draw** (`drawWear`, called first in each of the 3 cases, right after the ground `hexTile` so the trees,
-  benches and crowd stand ON it): a scatter of 3 `soil` ellipses placed by `hashCell` within the hex, radius+alpha
-  ramping with `c.wear` above `WEARSHOW=0.12` (peak alpha `WEARA=0.5`). **Sub-hex marks, not a hexTile fill ⇒ it
-  cannot terrace onto the lattice (257)**; through `colA`'s illuminant so night earth goes dim, not glowing.
-- **Zero rng(), zero terrain** — a pure field of `c.buzz` + neighbours (the `hashCell` is in the DRAW only, for mark
-  placement — deterministic, perturbs no stream). Reset with the world (`wear:0` in the cell literal). Tooltip: a
-  worn public-green hex now reads `Footfall — Well-worn desire paths` / `Trodden to bare earth`.
-
-**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` **+0**, tile histogram empty. `greenRoofs +1 /
-towerHt −1` is the 226 tick-timing wobble (the per-tick wear loop costs a hair of compute ⇒ a different tick count
-lands in the census's 500ms window); it reproduced identically on a re-run of the SAME file, and the mechanism is
-airtight — the pass reads a deterministic field and writes only `c.wear`, which nothing the census measures reads.
-VERDICT PASS / 0 page errors.
-
-**Perf.** +3 `hashCell`-placed ellipses on the worn WEARLAND hexes only (~30–130/city), day and night; every other
-hex byte-flat. Under the +0.2%/lap arc; the step-back pins its day/golden frames at the dry peak, snow-free — this
-adds nothing there.
-
-**Probe** (`probes/probe-wear.mjs`, pure world data — drives `tick()`, reads `cells[].wear`, no pixels, no noise
-floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.wear` is undefined→0):
-- **HEADLINE (236):** HEAD reads **0 worn hexes on all 6 seeds** — the constant baseline nobody designed. PATCH:
-  93–132 worn hexes/city.
-- **SPATIAL (the whole claim):** **LIVELY (buzz≥2) mean wear 0.65 vs QUIET (buzz<2) 0.09** — the wear concentrates
-  at the busy edge, the quiet interior stays near-green ⇒ desire paths, not a wash.
-- **BOUNDED (250):** ~32–44% of green shows *any* wear, most of it faint (near threshold, from diffusion); only the
-  lively third wears strongly. **LEAK (non-green hexes holding wear) = 0 on every seed** — the pass contains itself.
-
-**Visual** (`shoot.mjs`, seeds 42 & 7 @2035 day, whole-city + downtown clip). Both blind subagents **PASS** and both
-**located** it: tan/beige bare-earth mottling worn into the park/garden hexes that border the shops, plazas and civic
-core, sitting flat on the hex grid; quiet park interiors + shoreline greenbelt stay lush green (selective, not a
-blanket browning); the wear tan is soft and low-contrast (matches the beach/path sand), no z-order tears / floating
-tiles / blown-out colour; both whole-city frames read as a balanced, coherent coastal city — "lived-in texture
-without dirtying the scene."
-
-**Verdict: SHIPPED.** People's first non-excitable CA in 324 iterations — a diffusion/accumulation desire-path field
-that wears the busiest public-green corners to bare earth (reading the existing `c.buzz` activity field) while the
-quiet interior stays green, so the parks show where the city actually walks. Wholly census-inert (zero random draws,
-no terrain), the two-stale-additive-cell pick landed. People × New CA rule (49 → 324). `probes/probe-wear.mjs`.
 
 ## Iteration 325 — the snow is a season the warp cannot melt (2026-07-17) [42nd step-back / holistic]
 
@@ -886,3 +829,60 @@ Step-back (~335) prices the arc.
 rises, in the same +x the clouds drift — and stand as HEAD's straight column at a dead calm. Cue (bj) CLOSED; the
 un-enumerated WINDA member is enumerated (280). Draw-only, census byte-identical, exact fixed point. Nature × Deepen
 (279 → 333). `probes/probe-smokelean.mjs`, `probes/shot-smokelean.mjs`.
+
+## Iteration 334 — the sail fills with the wind (2026-07-17) [Water & coast × Deepen/interconnect]
+
+**Vector.** Additive space is spent (331), the last banked cue closed (333). The header points
+to a **measured seam (225)** or a Deepen in a rotated domain (avoid Sky/Water). I grepped the
+WINDA-reader MECHANISM (`windForce`) — the technique that paid off for smoke at 333 (280: the
+reader-list comment is a changelog, not a spec) — for who over the coast does NOT lean. Three
+un-enumerated members turned up: the park/plaza **fountain jets** (Civic/Nature, better rotation
+but ~1.4px droplets — the same invisibility that got 332's chimney smoke reverted, 266), the
+**whale spout** (Water, sparse, tiny), and the **boat SAIL**. Only the sail is a *visible,
+spatial* wind-reader: a prominent white triangle over open water. So this is a genuine measured
+seam and the best-visibility option — which takes priority over the soft "avoid Water" preference
+(that preference guards the Deepen-in-a-rotated-domain branch; a measured seam may land anywhere,
+and this one continues the cross-cutting WINDA-enumeration theme 333 advanced). The boats were
+*just* enumerated into `waterSession` for their HOURS (286); the SAIL — the definitional
+wind-reader — is the member that comment did not name (280).
+
+**Change (draw-only — no `rng()`, no terrain).** `drawBoat`'s sail was a flat static triangle
+(masthead→clew leech straight at +x). The leech now bows **leeward** (+x, the same direction the
+clouds/smoke/kites lean) by `belly = 4.5*windForce()`, drawn as a quadratic whose control sits on
+the chord midpoint (`cx+2.25`) at a dead calm. A quadratic with its control on the chord IS the
+straight segment, so at `windForce()==0` (calm) `belly==0` reproduces HEAD's straight taut triangle
+**byte-for-byte** (245's fixed point), and the canvas bellies fuller as the wind rises. The luff
+(mast edge) stays flat on the mast. One extra `windForce()` term, no new path object.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`roads`/`developed` **byte-identical (+0)**,
+0 page errors. VERDICT PASS. Vacuous by design; the claim rests on the probe + screenshots.
+
+**Probe** (`probes/probe-sailwind.mjs`, build-agnostic — grades the SHIPPED draw in one build, no
+source swap, no cross-build floor, 230). Hooks `ctx.quadraticCurveTo` and reads the belly straight
+off the geometry (`belly = control.x − clew.x + 2.25`) — a per-render number with **no pixel diff
+and no noise floor at all**. The sail's signature is unique: control on the chord at calm, control
+moving +x while the clew end stays put at gale. All 3 seeds, 3 sails each on screen:
+- **CALM (windForce 0): belly == 0.000 exactly** — HEAD's straight leech, the must-not-move fixed
+  point (250).
+- **GALE (windForce 1): belly == 4.500 exactly** — the leech bows a full sail leeward, `gale >
+  calm`. **SAILWIND: PASS.**
+
+**Visual** (`probes/shot-sailwind.mjs` — aims by measured ink of the boats, 226; empties the `boats`
+array to isolate them since the draw is a lexical closure that `window` reassignment cannot suppress;
+pins day/summer/clear; shoots the SAME frozen boat at GALE and CALM as a blind A/B, tokens meaningless
++ non-ordinal, map **CROSSED between seeds**, 238/239/268; `page.screenshot`, 200). Aim landed on a
+moored pier-side boat (clean backdrop) on both seeds; md5 confirmed the pairs differ (239). **Two blind
+subagents, on both seeds, on the crossed map, correctly identified the gale frame from the sail belly
+alone** (s42 gale=`delta` ✓ · s7 gale=`kappa` ✓ — a discriminating pair, 264, resolved on both seeds):
+the leech "bows out into a rounder, wider triangle" in the gale, "flat straight-edged triangle" in the
+calm, rooted at the mast, no detach/float; seed 7's agent corroborated via the whitecaps (seaState also
+reads wind). Whole-city frames clean — no z-order tears, floating tiles or blown-out colour, a balanced
+coherent coastal city.
+
+**Perf.** Zero new path objects (one extra `windForce()` term per sail; the quadratic replaces two
+`lineTo`s). Step-back (~335) prices the arc.
+
+**Verdict: SHIPPED.** The pleasure sailboats' sails now belly leeward as the wind fills them and stand
+as HEAD's flat taut triangle at a dead calm — the last un-enumerated WINDA member over the water is
+enumerated (280). Draw-only, census byte-identical, exact fixed point. Water & coast × Deepen.
+`probes/probe-sailwind.mjs`, `probes/shot-sailwind.mjs`.

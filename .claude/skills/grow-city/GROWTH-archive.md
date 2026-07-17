@@ -23457,3 +23457,61 @@ a perf credit, in the neglected Nature domain. Nature × Deepen/interconnect (�
 - (az) CLOSED @314 — vehicle oriented pick box.
 - (bh) 317 — NON-DEFECT: a fine gold statue.
 - (bd) 284 · (au) 302 · (ax)+(bg) 294 · (bf) market packed-away square 299.
+
+## Iteration 324 — the busy park corners wore down to bare earth (2026-07-17) [People & activity × New CA rule]
+
+**Vector.** Rotation's `NEXT` was **Civic or People × New CA rule** — the two stale ADDITIVE cells, by far the most
+recency-neglected (Civic last CA 107, People last CA **49**). People was the balance pick (single most-neglected
+cell in the grid) and its ONLY stale kind. But iter 49 (block parties) was **excitable media**, a category the header
+marks **COMPLETE** (bloom 263 · shroom 272 · party 314) — so a People CA had to be a *different* mechanism. The natural
+fit, and one the engine had never run: a **diffusion/accumulation field**. Desire paths — the busiest public green
+wears to bare earth where people gather, the quiet interior stays lush. It reads the `c.buzz` ATTRACT field (iter 104)
+the city already derives, so the worn ground lands exactly where a crowd belongs (the shopfront/plaza/civic edge) and
+never in the empty middle of a lawn.
+
+**Change (a diffusion CA + a contained ground draw — wholly census-inert).** New field `c.wear` on `WEARLAND =
+{PARK, SHOREPARK, GARDEN}`:
+- **The CA** (`tick()`, right after the `c.buzz` pass that feeds it, before the snow pass): each WEARLAND hex relaxes
+  its wear toward a target `min(1, c.buzz/WEARBUZZ=3)` (a lively kerb, `buzz>=KERBBUZZ=2`, wears; a quiet interior,
+  `buzz 0`, does not) plus a **diffusion term** (`WEARDIFF=0.09`, joins the worn ground of busy neighbours into paths
+  rather than isolated patches). Slow onset (`WEARLERP=0.04`) ⇒ a well-used commons wears in over the decades and
+  greens back when the buzz falls. Non-WEARLAND hexes are zeroed.
+- **The draw** (`drawWear`, called first in each of the 3 cases, right after the ground `hexTile` so the trees,
+  benches and crowd stand ON it): a scatter of 3 `soil` ellipses placed by `hashCell` within the hex, radius+alpha
+  ramping with `c.wear` above `WEARSHOW=0.12` (peak alpha `WEARA=0.5`). **Sub-hex marks, not a hexTile fill ⇒ it
+  cannot terrace onto the lattice (257)**; through `colA`'s illuminant so night earth goes dim, not glowing.
+- **Zero rng(), zero terrain** — a pure field of `c.buzz` + neighbours (the `hashCell` is in the DRAW only, for mark
+  placement — deterministic, perturbs no stream). Reset with the world (`wear:0` in the cell literal). Tooltip: a
+  worn public-green hex now reads `Footfall — Well-worn desire paths` / `Trodden to bare earth`.
+
+**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` **+0**, tile histogram empty. `greenRoofs +1 /
+towerHt −1` is the 226 tick-timing wobble (the per-tick wear loop costs a hair of compute ⇒ a different tick count
+lands in the census's 500ms window); it reproduced identically on a re-run of the SAME file, and the mechanism is
+airtight — the pass reads a deterministic field and writes only `c.wear`, which nothing the census measures reads.
+VERDICT PASS / 0 page errors.
+
+**Perf.** +3 `hashCell`-placed ellipses on the worn WEARLAND hexes only (~30–130/city), day and night; every other
+hex byte-flat. Under the +0.2%/lap arc; the step-back pins its day/golden frames at the dry peak, snow-free — this
+adds nothing there.
+
+**Probe** (`probes/probe-wear.mjs`, pure world data — drives `tick()`, reads `cells[].wear`, no pixels, no noise
+floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.wear` is undefined→0):
+- **HEADLINE (236):** HEAD reads **0 worn hexes on all 6 seeds** — the constant baseline nobody designed. PATCH:
+  93–132 worn hexes/city.
+- **SPATIAL (the whole claim):** **LIVELY (buzz≥2) mean wear 0.65 vs QUIET (buzz<2) 0.09** — the wear concentrates
+  at the busy edge, the quiet interior stays near-green ⇒ desire paths, not a wash.
+- **BOUNDED (250):** ~32–44% of green shows *any* wear, most of it faint (near threshold, from diffusion); only the
+  lively third wears strongly. **LEAK (non-green hexes holding wear) = 0 on every seed** — the pass contains itself.
+
+**Visual** (`shoot.mjs`, seeds 42 & 7 @2035 day, whole-city + downtown clip). Both blind subagents **PASS** and both
+**located** it: tan/beige bare-earth mottling worn into the park/garden hexes that border the shops, plazas and civic
+core, sitting flat on the hex grid; quiet park interiors + shoreline greenbelt stay lush green (selective, not a
+blanket browning); the wear tan is soft and low-contrast (matches the beach/path sand), no z-order tears / floating
+tiles / blown-out colour; both whole-city frames read as a balanced, coherent coastal city — "lived-in texture
+without dirtying the scene."
+
+**Verdict: SHIPPED.** People's first non-excitable CA in 324 iterations — a diffusion/accumulation desire-path field
+that wears the busiest public-green corners to bare earth (reading the existing `c.buzz` activity field) while the
+quiet interior stays green, so the parks show where the city actually walks. Wholly census-inert (zero random draws,
+no terrain), the two-stale-additive-cell pick landed. People × New CA rule (49 → 324). `probes/probe-wear.mjs`.
+
