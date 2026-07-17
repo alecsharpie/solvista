@@ -24267,3 +24267,55 @@ and both whole-city frames read as balanced, coherent coastal cities.
 same gust as every flag, kite, plume and sail; the whole festive city gusts together (280). Exact fixed point at dead
 calm (HEAD = limp bunting), census byte-identical. Civic × Deepen. `probes/probe-bunting.mjs`, `probes/shot-bunting.mjs`.
 
+## Iteration 340 — forty-seven laps on, the water still reads as water (2026-07-17) [45th step-back / holistic]
+
+**Vector.** The header pointed here explicitly ("~340 = STEP-BACK #45"). Five laps have landed since #44 @335
+(336/337 rain-aware crowds, 338/339 festival-cloth wind), all draw-only Deepens. A step-back is the guardrail that lets
+the loop run unattended: the census catches *metric* collapse but is blind to *cumulative visual* drift and to
+*permanent perf* drift, so both are measured here, not vibed.
+
+**Census + error gate.** Clean HEAD (8c34523, through 339), tree clean. `census.mjs` VERDICT PASS, 0 page errors; core
+`pop`/`developed`/`roads` byte-unmoved, only the usual chaotic ±wobble (`solarRoofs +2`).
+
+**⚠ GWARM=0 SELF-REPORT — CHASED, RESOLVED AS CORRECT (not drift).** `shot-stepback`'s frames self-reported
+`GWARM=0` at the `golden` and `dusk` pins on BOTH seeds, which is the 264/265 tell (a golden frame shot at GWARM≈0 is
+shooting the control). Measured it out: GWARM (`clamp((skyBot.R−skyBot.B−70)/70,0,1)`) needs skyBot R−B>70, and the raw
+`KEYS` sunset skyBot (`#e89a6b`=[232,154,107], R−B=125) gives **GWARM 0.786** — the machinery is alive. It reads 0 at the
+pinned years because **`overcast()` greys skyBot BEFORE GWARM reads it** (L9348, "a storm mutes the golden sheen"), and
+the pinned dry peak **2035.62 lands on a rain front** (`overcast=0.576`, `rainFront=0.819`; every warp-year 2035–2036 was
+overcast ≥0.35). In the clearest nearby year (2034, overcast=0) GWARM peaks **0.6**. So GWARM is CORRECT, not dead.
+⚠ **Instrument caveat for the next step-back (do NOT re-chase this):** `shot-stepback` DERIVES the golden pin on a fresh
+page with NO `genWorld`/weather (clear sky, GWARM peaks ~0.78) but SHOOTS the frame in the WARPED overcast world — so its
+`golden`/`dusk` frames are muted overcast dusks and their `GWARM=0` is honest about the *frame*. Longstanding fixed-pin
+property (same across #42–#44). A future tool tweak could derive the golden pin in the same warped world, or pin golden
+to a clear year; not fixed this lap (step-back does not chain a tool rewrite).
+
+**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page).** One blind
+subagent per seed, cumulative question. Both seeds independently **PASS**:
+- **City coherent & balanced** across all frames — dense inland towers → mid-rise ring → farm/park belt → beach/pier/sea
+  — reads as one California coastal city; no wallpaper band, no over-busy district gone muddy, nothing blown-out.
+- **No z-order tears, floating tiles, or detached glows** — pier steps out cleanly, Ferris wheel grounded on the pier,
+  offshore windmills on their water hexes, towers stack clean, rail/power/bridges connect end-to-end.
+- **Seasonal discriminating pair resolves blind on BOTH seeds** (264): dusk-summer sun UP (light overcast, lit scene),
+  dusk-winter — SAME instant — sun DOWN (dark navy, crescent moon + stars, lit windows). Sun provably set in winter, up
+  in summer.
+- **Night coast coherent lit-city-and-water** — warm window grids, street/rail lamps, red/green buoys, moon on deep-blue
+  water, lit pier — not a flat void (kelp/coast-darkening class stays closed, 282).
+- **Watch item (soft, seed-7 aside, not a FAIL):** the inland tower core is *approaching* over-busy — do NOT add raw
+  tower density downtown (echoes the standing "no wallpaper / crown-not-picket" family, 217/224/228).
+
+**Perf (permanent arc, PATH OBJECTS — load-immune, 198/216 — snow cleared per 325).** `probe-drawbudget.mjs` mean of 3
+seeds, day / night:
+- iter 285 (b523698): 110327 / 138117 · iter 335 (5b2c762): 111698 / 139754 · **HEAD 339: 111551 / 139902.**
+- **Long arc vs 285 (54 laps): day +1.11% (+0.021%/lap), night +1.29% (+0.024%/lap)** — well under +0.2%/lap, consistent
+  with byte-flat FIXES cancelling the additive tendency.
+- **Recent arc vs 335 (4 laps): day −0.13%, night +0.11%** — flat; 336–339 were draw-only rain/wind deepens (one extra
+  predicate term each, zero new path objects). **No perf-fix lap.**
+
+**Verdict: STEP-BACK — NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length season
+alive; golden-hour warmth machinery verified alive (0.6–0.78 clear-sky, muted by overcast at the pinned years, not a
+regression); night ordering / golden-greens / sea-quilt facts hold (unre-measured — no lap since #44 touched their
+surfaces). Permanent draw arc negligible (+0.02%/lap). Guardrail reset — next vector ~341 is a measured seam (225) or a
+Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water; additive space spent, 331; price visibility, 266, before
+building). Nothing to fix.
+
