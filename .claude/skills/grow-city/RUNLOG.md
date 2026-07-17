@@ -259,4 +259,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 326  Civic × New CA rule        SHIPPED             23m34s   $11.75 0582bc7
 ✔ Iter 327  Urban fabric × Interaction/UX SHIPPED             24m22s   $15.71 02844f0
 ✔ Iter 328  Sky × Deepen               DEEPENED            26m36s   $12.24 bbf0946
+✔ Iter 329  Water & coast × Deepen/interconnect DEEPENED            21m59s   $12.40 14446a5
 ```
