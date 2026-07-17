@@ -23948,3 +23948,60 @@ rises, in the same +x the clouds drift — and stand as HEAD's straight column a
 un-enumerated WINDA member is enumerated (280). Draw-only, census byte-identical, exact fixed point. Nature × Deepen
 (279 → 333). `probes/probe-smokelean.mjs`, `probes/shot-smokelean.mjs`.
 
+## Iteration 334 — the sail fills with the wind (2026-07-17) [Water & coast × Deepen/interconnect]
+
+**Vector.** Additive space is spent (331), the last banked cue closed (333). The header points
+to a **measured seam (225)** or a Deepen in a rotated domain (avoid Sky/Water). I grepped the
+WINDA-reader MECHANISM (`windForce`) — the technique that paid off for smoke at 333 (280: the
+reader-list comment is a changelog, not a spec) — for who over the coast does NOT lean. Three
+un-enumerated members turned up: the park/plaza **fountain jets** (Civic/Nature, better rotation
+but ~1.4px droplets — the same invisibility that got 332's chimney smoke reverted, 266), the
+**whale spout** (Water, sparse, tiny), and the **boat SAIL**. Only the sail is a *visible,
+spatial* wind-reader: a prominent white triangle over open water. So this is a genuine measured
+seam and the best-visibility option — which takes priority over the soft "avoid Water" preference
+(that preference guards the Deepen-in-a-rotated-domain branch; a measured seam may land anywhere,
+and this one continues the cross-cutting WINDA-enumeration theme 333 advanced). The boats were
+*just* enumerated into `waterSession` for their HOURS (286); the SAIL — the definitional
+wind-reader — is the member that comment did not name (280).
+
+**Change (draw-only — no `rng()`, no terrain).** `drawBoat`'s sail was a flat static triangle
+(masthead→clew leech straight at +x). The leech now bows **leeward** (+x, the same direction the
+clouds/smoke/kites lean) by `belly = 4.5*windForce()`, drawn as a quadratic whose control sits on
+the chord midpoint (`cx+2.25`) at a dead calm. A quadratic with its control on the chord IS the
+straight segment, so at `windForce()==0` (calm) `belly==0` reproduces HEAD's straight taut triangle
+**byte-for-byte** (245's fixed point), and the canvas bellies fuller as the wind rises. The luff
+(mast edge) stays flat on the mast. One extra `windForce()` term, no new path object.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`roads`/`developed` **byte-identical (+0)**,
+0 page errors. VERDICT PASS. Vacuous by design; the claim rests on the probe + screenshots.
+
+**Probe** (`probes/probe-sailwind.mjs`, build-agnostic — grades the SHIPPED draw in one build, no
+source swap, no cross-build floor, 230). Hooks `ctx.quadraticCurveTo` and reads the belly straight
+off the geometry (`belly = control.x − clew.x + 2.25`) — a per-render number with **no pixel diff
+and no noise floor at all**. The sail's signature is unique: control on the chord at calm, control
+moving +x while the clew end stays put at gale. All 3 seeds, 3 sails each on screen:
+- **CALM (windForce 0): belly == 0.000 exactly** — HEAD's straight leech, the must-not-move fixed
+  point (250).
+- **GALE (windForce 1): belly == 4.500 exactly** — the leech bows a full sail leeward, `gale >
+  calm`. **SAILWIND: PASS.**
+
+**Visual** (`probes/shot-sailwind.mjs` — aims by measured ink of the boats, 226; empties the `boats`
+array to isolate them since the draw is a lexical closure that `window` reassignment cannot suppress;
+pins day/summer/clear; shoots the SAME frozen boat at GALE and CALM as a blind A/B, tokens meaningless
++ non-ordinal, map **CROSSED between seeds**, 238/239/268; `page.screenshot`, 200). Aim landed on a
+moored pier-side boat (clean backdrop) on both seeds; md5 confirmed the pairs differ (239). **Two blind
+subagents, on both seeds, on the crossed map, correctly identified the gale frame from the sail belly
+alone** (s42 gale=`delta` ✓ · s7 gale=`kappa` ✓ — a discriminating pair, 264, resolved on both seeds):
+the leech "bows out into a rounder, wider triangle" in the gale, "flat straight-edged triangle" in the
+calm, rooted at the mast, no detach/float; seed 7's agent corroborated via the whitecaps (seaState also
+reads wind). Whole-city frames clean — no z-order tears, floating tiles or blown-out colour, a balanced
+coherent coastal city.
+
+**Perf.** Zero new path objects (one extra `windForce()` term per sail; the quadratic replaces two
+`lineTo`s). Step-back (~335) prices the arc.
+
+**Verdict: SHIPPED.** The pleasure sailboats' sails now belly leeward as the wind fills them and stand
+as HEAD's flat taut triangle at a dead calm — the last un-enumerated WINDA member over the water is
+enumerated (280). Draw-only, census byte-identical, exact fixed point. Water & coast × Deepen.
+`probes/probe-sailwind.mjs`, `probes/shot-sailwind.mjs`.
+

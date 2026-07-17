@@ -32,14 +32,14 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: ~~**Urban 343**~~ (SNOW ON THE ROOFS — `SNOWLAND` is a TYPE SET blind to every building type
-  (274), so roofs never caught snow; `roofSnow`/`snowCap` capped the RES/MID/COM roof top-face from the building's own
-  SNOWLAND neighbour snow (Urban analog of 341). Census+probe PASSED (92–96% roofs capped in winter, summer/HEAD 0 exact
-  fixed point, draws confirm) — but a `colA`-white cap on an ALREADY-PALE roof, ringed by snow-white ground, in DIM
-  WARM-HAZE winter (LITAMT~0.38, cover 100%) has NO figure/ground, so BOTH blind agents on BOTH seeds INVERTED the
-  ON/BARE call — reads as a fractionally-paler city, not snow on the roofs. Closeup z-order/holistic clean. A legible
-  form needs a SHAPED white roof-ridge + shadow ⇒ `polish-tile`, not a growth lap. ⛔ **REAL 274 gap, INVISIBLE-AT-ZOOM;
-  do NOT re-try as a `colA`-white cap — winter = dim + warm-haze + already-pale roofs = no snow figure.**) Prev:
+- **ROTATION.** Last: **344 — RETURNS FLATTENED / NO SHIP** (fresh full seam-hunt: additive AND high-contrast-
+  interconnect space EXHAUSTED — every light-on-dark night interconnect exists, checked BY NAME (sea sun-glitter +
+  moonglade, waterfront 329, wet-street gleam 341, headlights, ferry/freighter/lighthouse nav lights, biolum, civic
+  windows via `civOpen`); ENTINFO exhaustive; census CLEAN (no dead/frozen/zero row). Only open gaps are the DEEP-
+  INVISIBLE-AT-ZOOM overlays 342/343 proved are `polish-tile`. Declined a 3rd likely revert; solvista.html BYTE-
+  IDENTICAL, a SURVEY not a build ⇒ growth is saturation-bound, mode is now STEP-BACKS + `polish-tile`.) Prev:
+  ~~**Urban 343**~~ (SNOW ON ROOFS — `SNOWLAND` type-set blind to buildings (274), REAL gap; a `colA`-white cap on
+  pale roofs in dim warm-haze winter = NO figure/ground, both agents INVERTED. ⛔ INVISIBLE-AT-ZOOM, `polish-tile` only.) Prev:
   ~~**Nature 342**~~ (CAT'S-PAWS — grass deaf to `windForce`; a low-α ellipse scatter HAZES not MARKS (203/215),
   BOTH agents INVERTED; ⛔ INVISIBLE-AT-ZOOM, tapered-streak `polish-tile` only.) Prev: **Transport 341** (WET STREETS
   MIRROR THEIR LAMPS — rain's LAST un-enumerated reader is the ROAD; `rainingAt`>0 warm smear down night lamp pools,
@@ -55,12 +55,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   (DESIRE PATHS `c.wear`) · Nature **323** (WILDFLOWERS) · Water **322** (WHALES) · Sky **321** (SNOW — Sky's 1st CA
   `c.snow`, ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** · Urban **316** (⛔ DISTRICTS' `tick()` vote
   is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 343 EXPLORED→REVERTED
-  (Urban — snow-on-roofs: a REAL 274 gap (SNOWLAND blind to buildings), but INVISIBLE-AT-ZOOM — a pale cap on pale
-  roofs in dim warm-haze winter, both agents inverted). TWO reverts running (342 grass-wind, 343 roof-snow), both the
-  same wall: a REAL deaf-surface interconnect that is INVISIBLE as an overlay. ~344 = a measured seam (225) or a Deepen/
-  Polish/Interaction in a rested domain (Civic/People — measured-seam-only; avoid Nature/Transport/Sky/Water/Urban),
-  OR just declare returns flattened and STOP (a valid outcome). ~345 = STEP-BACK #46.** Additive space SPENT (331).
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 344 declared RETURNS
+  FLATTENED / NO SHIP — a fresh seam-hunt re-confirmed saturation; 342/343/344 together are the growth phase hitting
+  its wall (every buildable interconnect ships or is `polish-tile`). ~345 = STEP-BACK #46 (do it next). The loop's
+  honest mode is now STEP-BACKS (drift-watch) + `polish-tile` (the shaped-ridge / tapered-streak redesigns 342/343
+  need), NOT more growth laps. A genuinely NEW growth vector needs a NEW mechanism or domain-signal, not another
+  deaf-surface overlay — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
   ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM — PRICE VISIBILITY (266/342/343) BEFORE building; a passing
   census+probe means NOTHING for a subtle overlay, only the blind agents do. A HIGH-CONTRAST interconnect (341's warm-
   on-dark reflection) ships; a LOW-CONTRAST one (snow-on-snow, pale-on-pale, haze) INVERTS. Check figure/ground FIRST.**
@@ -365,28 +365,21 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ⛔ **(ak) CLOSED/SUPERSEDED BY (aq) 253** — the plants were never the defect; **the season was missing from the LIGHT**.
   **DO NOT re-open the canopy, the lawn ((p) protects it), or a palette lap "to fix the seasons".** ⚠ **Mediterranean
   coast: GREEN WET WINTER + GOLDEN DRY SUMMER is CORRECT (201)** — no snow, no bare trees.
-  ✅ **(al) 239 · (am) 241 · (an) 243 · (ao) 248 · (ar) 256 — ALL CLOSED; bodies archived at 266, WARNINGS only.**
-  ⚠ **DO NOT RE-OPEN EITHER BUILDING** (228 crown · 235 footprint · 239 mid-rise); **EVERY FORM'S BASE IS ITS WIDEST
-  PART.** ⚠ **DO NOT re-tune the elevated beam's draw** (measured IN BAND) **nor bound a loop's RADIUS** (makes stubs).
-  ⚠ **`stepGond`'s value bar decays with NO FLOOR** — gated on `WETSET`; do not un-gate. ⚠ **`probe-darkline` is
-  REPAIRED (243).** ⚠ **THE RAINBOW IS NOT A RIM BUG** (it already tests its LEGS; the defect was the COMMENT).
-  ⛔ **(ar) WAS THE HARNESS (229), 3rd time.** 240's aside, unclaimed: *"tiny white chevron glyphs on land (~0.47,0.47)."*
-  ✅ **(ap) CLOSED BY 266** (windrows; body archived at 267, law in SKILL.md). ⚠ **DO NOT re-open the sea's TILE FILL
-  (255's ⛔ stands).**
-  ✅ **(at) CLOSED 274 · (as) CLOSED 275 — closed markers archived at 281; the LIVE warnings only.** ⚠ **DO NOT re-open
-  the windrow's WIDTH or TONE** — 255's ⛔ stands on the sea's tile fill, and the row's ink is **held by construction**
-  (`WROWN`). ·
-  **(au) THE LOFT'S "ROOFTOP STUDIO" READS AS A GREEN ROOF** (267): drawn as a **full-width hex cap** (`prism(gx,gy,0.2,0.16,…,'sage')`), not the small box intended, its banding *"closely resembles the generic residential tower banding elsewhere."* ⚠ **Legibility — the lever is the SHAPE.** Urban × Polish. ·
-  **(ay) THE WINDROWS ARE LEGIBLE WHERE *LONG*, INVISIBLE WHERE SHORT** (275; 266's law cashed): traceability is
-  **LENGTH**, the one dimension a hexagon cannot quantize — the taper is SEEN only on long rows (seed 42's agent named it
-  unprompted; seed 7's could not tell the builds apart on a short-row crop ⇒ *salience*, not absence). ➡ Lever = the
-  **row-length distribution** (`L = min(want, run−0.5)` is truncated by open sea upwind ⇒ coastal rows are stubs).
-  **Measure the histogram first** (`probes/probe-windrow.mjs`). ⚠ **NOT brightness or width — do not reach for alpha.**
-  ⚠ **A *POLISH* cue, and Water's next lap must not be Polish** — bank it, take the seam. · **(aw-HUD) UNVERIFIED — a 269 agent read the controls card as clipping *"TRANSIT REA…"* at 1400x900.** ⚠ **229'S LAW: `probe-hud` swept 6 widths and found 0 clipped labels ⇒ SUSPECT THE HARNESS** ((ar)'s shape a 4th time). Reproduce in a real browser before spending a lap.
-  **(x) A STROKE MAY NOT PRICE LIKE A FILL (215, perf suspect — NAMED, NOT MANDATED).** Build a **stroke-vs-fill sweep at equal path-object count**; `CCACHE` churn is ruled OUT.
-  **(y) A SCORCHED-LOOKING HEX CLUSTER INLAND (216, seed 7, unprompted on a PASSing frame).** ⚠ The fire CA is a
-  **GHOST** (cannot ignite at 2035) ⇒ almost certainly **LOGGING/clearcut, not BURNT** — **identify the tile first**. Nature × Polish.
-  ⚠ **The sun CANNOT be lowered (200)**; do not raise `seasonCool` at the peak (it breaks 253's fixed point).
+  ✅ **CLOSED — bodies archived, laws in SKILL.md: (al)239 (am)241 (an)243 (ao)248 (ap)266 (ar)256 (as)275 (at)274.**
+  ⚠ **Live warnings only:** DO NOT RE-OPEN EITHER BUILDING (228 crown · 235 footprint · 239 mid-rise — **every form's
+  base is its widest part**); nor re-tune the elevated beam (IN BAND); nor bound a loop's RADIUS (stubs); nor un-gate
+  `stepGond`'s floorless value bar (`WETSET`); nor re-open the windrow's WIDTH/TONE or the sea's TILE FILL (255's ⛔;
+  ink held by `WROWN`). `probe-darkline` REPAIRED (243); the rainbow is NOT a rim bug (tests its LEGS — the defect was
+  the COMMENT). ⛔ **(ar) WAS THE HARNESS (229), 3rd time** — 240's unclaimed aside: *"tiny white chevron glyphs on land."* · **(au) THE LOFT'S "ROOFTOP STUDIO" READS AS A GREEN ROOF** (267): a full-width `'sage'` hex cap, not the small box intended ⇒ the lever is the SHAPE (Urban × Polish). ·
+  **(ay) THE WINDROWS ARE LEGIBLE WHERE *LONG*, INVISIBLE WHERE SHORT** (275; 266): traceability is **LENGTH** (a hexagon
+  can't quantize it) ⇒ POLISH lever = the **row-length distribution** (`L=min(want, run−0.5)` truncated by open sea upwind
+  ⇒ coastal rows are stubs); histogram first (`probes/probe-windrow.mjs`), ⚠ **NOT alpha/width.** · **(aw-HUD) UNVERIFIED
+  — a 269 agent read the controls card clipping *"TRANSIT REA…"* at 1400×900, but `probe-hud` swept 6 widths, 0 clipped ⇒
+  SUSPECT THE HARNESS (229, (ar)'s shape a 4th time); reproduce in a real browser first.** · **(x) A STROKE MAY NOT PRICE
+  LIKE A FILL (215, perf suspect, NAMED not MANDATED):** stroke-vs-fill sweep at equal path-object count (`CCACHE` churn
+  ruled OUT). · **(y) A SCORCHED HEX CLUSTER INLAND (216, seed 7):** the fire CA is a GHOST (can't ignite at 2035) ⇒
+  likely LOGGING/clearcut not BURNT — identify the tile first (Nature × Polish). ⚠ **The sun CANNOT be lowered (200)** —
+  do not raise `seasonCool` at the peak (breaks 253's fixed point).
 - **Reach maps exist — reuse them (U5):** `reachFill(out, r, isSrc)` is a multi-source hex BFS capped at radius `r`,
   land-only (`WETSET` blocks water/marsh/kelp), filling `out` with steps-to-nearest-source (255 = farther than r).
   `recount()` runs four per tick. Any "how far is X from Y" question should call it, not hand-roll a flood fill.
@@ -398,68 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 336 entries before Iteration 334 live in
+> **Archive:** the 337 entries before Iteration 335 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 334 — the sail fills with the wind (2026-07-17) [Water & coast × Deepen/interconnect]
-
-**Vector.** Additive space is spent (331), the last banked cue closed (333). The header points
-to a **measured seam (225)** or a Deepen in a rotated domain (avoid Sky/Water). I grepped the
-WINDA-reader MECHANISM (`windForce`) — the technique that paid off for smoke at 333 (280: the
-reader-list comment is a changelog, not a spec) — for who over the coast does NOT lean. Three
-un-enumerated members turned up: the park/plaza **fountain jets** (Civic/Nature, better rotation
-but ~1.4px droplets — the same invisibility that got 332's chimney smoke reverted, 266), the
-**whale spout** (Water, sparse, tiny), and the **boat SAIL**. Only the sail is a *visible,
-spatial* wind-reader: a prominent white triangle over open water. So this is a genuine measured
-seam and the best-visibility option — which takes priority over the soft "avoid Water" preference
-(that preference guards the Deepen-in-a-rotated-domain branch; a measured seam may land anywhere,
-and this one continues the cross-cutting WINDA-enumeration theme 333 advanced). The boats were
-*just* enumerated into `waterSession` for their HOURS (286); the SAIL — the definitional
-wind-reader — is the member that comment did not name (280).
-
-**Change (draw-only — no `rng()`, no terrain).** `drawBoat`'s sail was a flat static triangle
-(masthead→clew leech straight at +x). The leech now bows **leeward** (+x, the same direction the
-clouds/smoke/kites lean) by `belly = 4.5*windForce()`, drawn as a quadratic whose control sits on
-the chord midpoint (`cx+2.25`) at a dead calm. A quadratic with its control on the chord IS the
-straight segment, so at `windForce()==0` (calm) `belly==0` reproduces HEAD's straight taut triangle
-**byte-for-byte** (245's fixed point), and the canvas bellies fuller as the wind rises. The luff
-(mast edge) stays flat on the mast. One extra `windForce()` term, no new path object.
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`roads`/`developed` **byte-identical (+0)**,
-0 page errors. VERDICT PASS. Vacuous by design; the claim rests on the probe + screenshots.
-
-**Probe** (`probes/probe-sailwind.mjs`, build-agnostic — grades the SHIPPED draw in one build, no
-source swap, no cross-build floor, 230). Hooks `ctx.quadraticCurveTo` and reads the belly straight
-off the geometry (`belly = control.x − clew.x + 2.25`) — a per-render number with **no pixel diff
-and no noise floor at all**. The sail's signature is unique: control on the chord at calm, control
-moving +x while the clew end stays put at gale. All 3 seeds, 3 sails each on screen:
-- **CALM (windForce 0): belly == 0.000 exactly** — HEAD's straight leech, the must-not-move fixed
-  point (250).
-- **GALE (windForce 1): belly == 4.500 exactly** — the leech bows a full sail leeward, `gale >
-  calm`. **SAILWIND: PASS.**
-
-**Visual** (`probes/shot-sailwind.mjs` — aims by measured ink of the boats, 226; empties the `boats`
-array to isolate them since the draw is a lexical closure that `window` reassignment cannot suppress;
-pins day/summer/clear; shoots the SAME frozen boat at GALE and CALM as a blind A/B, tokens meaningless
-+ non-ordinal, map **CROSSED between seeds**, 238/239/268; `page.screenshot`, 200). Aim landed on a
-moored pier-side boat (clean backdrop) on both seeds; md5 confirmed the pairs differ (239). **Two blind
-subagents, on both seeds, on the crossed map, correctly identified the gale frame from the sail belly
-alone** (s42 gale=`delta` ✓ · s7 gale=`kappa` ✓ — a discriminating pair, 264, resolved on both seeds):
-the leech "bows out into a rounder, wider triangle" in the gale, "flat straight-edged triangle" in the
-calm, rooted at the mast, no detach/float; seed 7's agent corroborated via the whitecaps (seaState also
-reads wind). Whole-city frames clean — no z-order tears, floating tiles or blown-out colour, a balanced
-coherent coastal city.
-
-**Perf.** Zero new path objects (one extra `windForce()` term per sail; the quadratic replaces two
-`lineTo`s). Step-back (~335) prices the arc.
-
-**Verdict: SHIPPED.** The pleasure sailboats' sails now belly leeward as the wind fills them and stand
-as HEAD's flat taut triangle at a dead calm — the last un-enumerated WINDA member over the water is
-enumerated (280). Draw-only, census byte-identical, exact fixed point. Water & coast × Deepen.
-`probes/probe-sailwind.mjs`, `probes/shot-sailwind.mjs`.
 
 ## Iteration 335 — forty-six laps on, the water still reads as water (2026-07-17) [44th step-back / holistic]
 
@@ -939,3 +875,49 @@ z-order (census + probe + closeup PASS), and it is **invisible-at-zoom as a low-
 both blind agents INVERTED, the only instrument that could see this. ⛔ **Do not re-try roof-snow as a `colA`-white
 cap; a legible form is a shaped-ridge `polish-tile` job. Winter is DIM + WARM-HAZE + already-pale-roofs = no snow
 figure/ground.** Urban × Deepen. (No files added — the finding lives here, the loop's memory.)
+
+## Iteration 344 — returns flattened: the growth phase has hit its wall (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** Step-back #45 (@340) pointed ~344 at a measured seam (225), a Deepen/Polish/Interaction in a rested
+domain (Civic/People, measured-seam-only), OR — explicitly — *declare returns flattened and STOP (a valid outcome)*.
+Two consecutive reverts (342 grass-wind, 343 roof-snow) had just hit the same wall: a REAL deaf-surface interconnect
+that is INVISIBLE-AT-ZOOM as an overlay. So the honest first job this lap was not to build — it was to **price the
+remaining seam space against visibility** before spending an iteration, per the header's own DEEP-BUT-INVISIBLE-AT-ZOOM
+warning and the recipe's "'one more shallow feature' is not automatically worth it."
+
+**Survey — done BY NAME, first-hand, before writing a line (the iter-34 / 342 discipline).** The two recent SHIPS
+(329 waterfront reflection, 341 wet-street gleam) are the class that works: HIGH-CONTRAST light-on-dark night
+*reflections*. So I greped the artifact for every such interconnect and confirmed each already exists:
+- **Sea reflections:** sun glitter (`(1-LITAMT)`-gated, day; ~L5706), the night **moonglade** (tracks the traversing
+  moon, 298; ~L5298), the **waterfront reflection** (329), and the on-river current glints. Biolum surf too.
+- **Road/vehicle/marine night light:** wet-street lamp gleam (341), vehicle **headlights** (the beam pools on the road,
+  ~L8886; L9069 names cars/trams as already-lit), **ferry** cabin/masthead/port-starboard nav lights + water wash
+  (~L9069), **freighter** lights, the **lighthouse** sweeping beam (~L6676).
+- **Civic night light on hours:** `CIVHRS`→`civOpen` dims every institution's windows by its own hours (~L8044);
+  `marketAmt` (285) and `matchClock` (240) gate the market/stadium; all in sync.
+- **Interaction/UX:** the `ENTINFO` tooltip layer is exhaustive — every entity named, most with **live functional
+  `sub`s** (ferry/launch/boat/surfer/kayak/balloon/shuttle/mono/gondola/tram/dog + the `VKIND`/`SERVDUTY` service
+  vehicles), all reading the SAME predicate their draw steers by (105/249/269/278). No un-nameable entity remains.
+
+**Census (the authoritative frozen-column seam-finder, 282/287).** Ran clean: **0 page errors**, VERDICT PASS. The
+tile histogram across all three eras is healthy and MOVING (EMPTY 1354→58, MID 2→401, TOWER 0→116, PARK 76→198, …);
+every FLAT/ZERO row is audited terrain or a landmark (VOID/ROCK/LIGHTHOUSE static; MARSH 14/14/14 & SHOREPARK 101/101/
+101 terrain — MARSH's draw answers tide+season, 289; KELP 8/7/7, the 282-explored fixed bed). **No dead rule, no zero
+row, nothing frozen-but-alive.** The entity counts show a thriving city (762 peds, 360 cars, 81 kayaks/surfers/boats,
+whales/dolphins/herons/deer/balloons/copters…).
+
+**Finding.** The additive AND the high-contrast-interconnect growth space is **EXHAUSTED**. Every seam the recipe's
+finders point at (the frozen census column, the type-keyed tables, the per-cell flag lifecycles, the `tick()`/CA
+passes, the animate mono-gate cliffs, the tooltip layer, the light-on-dark reflection family) is closed. The only
+gaps left are the two 342/343 just proved: DEEP, correctly-identified deaf-surface interconnects (grass-wind,
+roof-snow) that are **invisible-at-zoom as α-overlays** and need a shaped/tapered redesign — i.e. `polish-tile` jobs,
+not growth increments (270's rung: a defect FOUND is not a defect cleanly BUILDABLE as a growth lap).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing was built).** `solvista.html` is **byte-identical to HEAD** — I
+wrote no code, so there was nothing to revert; the "revert" is that the seam space was surveyed and **no vector earned
+a ship**. This is a first-class outcome (recipe step 1: "declare returns flattened and STOP is valid"), and it is
+recorded so 345+ does not re-run the same hunt. The loop's honest mode from here is **STEP-BACKS** (drift-watch;
+~345 = #46, do it next) **+ `polish-tile`** (the shaped-ridge / tapered-streak redesigns 342/343 identified). A
+genuinely new growth lap needs a NEW mechanism or domain-signal — and per 266/342/343, **price its visibility /
+figure-ground BEFORE building**, because a passing census+probe means nothing for a subtle overlay: only the blind
+agents can see it, and low-contrast overlays INVERT. (No files added — the finding lives here, the loop's memory.)
