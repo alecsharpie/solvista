@@ -23899,3 +23899,52 @@ common instance (hearth smoke) is a bad trade, and banked **cue (bj)**: the *exi
 prominent when a 2018–30 fire actually burns — do ignore the wind, and the `smokeLean` one-liner (probe-proven) fixes it
 cheaply for a future lap that is already working the fire and can verify it in-context. ⛔ Do not re-try chimney smoke.
 
+## Iteration 333 — the fire's smoke finally leans with the wind (2026-07-17) [Nature × Deepen/interconnect]
+
+**Vector.** Cue (bj), banked by 332 for "a lap already working the fire." Additive space is spent (331) and the header
+points to a measured seam or a Deepen in a rotated domain avoiding Sky/Water. Nature (last touched 323; the wildfire CA
+is Nature's, 279) fits, and the seam is already found and probe-proven: **smoke is the un-enumerated member of the
+wind's reader category** (280 — grep the MECHANISM `windForce`, not the reader-list comment, for who does not read it).
+Every gusting thing over the coast rides WINDA — the trees sway, the flags flap, the clouds/balloons/kites drift +x —
+but the fire smoke rose **dead straight**, wobbling on a bare clock term. Unlike 332's reverted chimney smoke (invisible:
+a short RES host with no clean sky backdrop, 266), the wildfire plume is a **prominent** feature when a 2018–30 fire
+burns, so visibility is not the risk here.
+
+**Change (draw-only — no `rng()`, no terrain).** A shared helper `smokeLean(rise)=rise*windForce()` and its `+smokeLean(sm)`
+added to the puff-x of the two smoke draws (grep-confirmed the only two): the **wildfire plume** (`drawFire`, 4 puffs)
+and the **ember scars** of a fresh burn (the smoking BURNT tile, 2 puffs). A plume bends over as it climbs, so the lean
+is the puff's own **rise** times the gust strength, in the same **+x** the clouds drift (so the whole sky leans
+together). At `windForce()==0` (a dead calm) the lean is 0 and the plume is HEAD's straight column byte-for-byte (an
+exact fixed point, 245). The bonfire is a flame tongue with no smoke puffs — out of scope. Cue (bc)'s fire-glow-eaten-by-
+later-rows is a separate 266 z-order job, left for a future fire lap.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`roads`/`developed` **byte-identical (+0)**, 0 page errors. VERDICT
+PASS. Vacuous by design; the claim rests on the probe + screenshots.
+
+**Probe** (`probes/probe-smokelean.mjs`, build-agnostic — grades the SHIPPED draw in one build, no source swap, no
+cross-build floor: hooks `ctx.arc`, picks the smoke puffs by fillStyle signature (273: match the spaced canonical form;
+the glow arc is a CanvasGradient and drops out), places a fire + a fresh ember, renders the SAME frozen frame at GALE and
+CALM so the base wobble cancels and `dx = x_gale − x_calm` IS `smokeLean`). All 3 seeds:
+- **GALE leans every puff downwind** (`dx>0`): YES.
+- **`dx` grows with rise, exactly** — plume `dx` = 6.00 / 8.40 / 10.80 for `rise` 6.00 / 8.40 / 10.80; ember 6.00 / 1.00.
+  A plume bends over as it climbs.
+- **FIXED POINT (245):** CALM (windForce 0) == `smokeLean` stubbed to 0, **EXACT 0 px** — the calm plume is HEAD's
+  straight column, the must-not-move control (250). **SMOKELEAN: PASS.**
+
+**Visual** (`probes/shot-smokelean.mjs` — drives `tick()` to a live spreading episode, freezes, aims by measured ink
+(226/230/234), shoots the SAME frozen fire at GALE and CALM as a blind A/B, tokens meaningless + non-ordinal, map
+**CROSSED between seeds** (238/239/268); `page.screenshot`, 200; day pin off the light curve, 264). Both seeds found a
+2-hex forest fire (~1980). **Two blind subagents, on both seeds, on the crossed map, correctly identified the gale frame
+from the smoke lean alone** (s42 gale=`vera` ✓ · s7 gale=`nolan` ✓ — a discriminating pair, 264, resolved on both seeds,
+worth more than any "looks good"): the plume "streams to the right, the highest blob shifted farthest downwind," reads as
+a coherent wind-blown streak "rooted right at the flame," no tear / floating / detach; the whole-city frame clean — no
+z-order tears, no floating tiles, no blown-out colour, a balanced coherent coastal city.
+
+**Perf.** Zero new path objects (same puffs, one extra `windForce()` term per puff on the ≤6 puffs of a rare fire).
+Step-back (~335) prices the arc.
+
+**Verdict: SHIPPED.** The wildfire plume and its ember scars now stream downwind, leaning farther the higher each puff
+rises, in the same +x the clouds drift — and stand as HEAD's straight column at a dead calm. Cue (bj) CLOSED; the
+un-enumerated WINDA member is enumerated (280). Draw-only, census byte-identical, exact fixed point. Nature × Deepen
+(279 → 333). `probes/probe-smokelean.mjs`, `probes/shot-smokelean.mjs`.
+

@@ -19,7 +19,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323**, **333**, ~~**342**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
+| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~, ~~**343**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~, **341** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338**, **339** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
@@ -32,41 +32,38 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: ~~**Nature 342**~~ (CAT'S-PAWS — the LAST large surface deaf to `windForce` is the open GRASS
-  (280 grep: trees/palms/flags/kites/sails/smoke/sea/bunting all gust); `grassGust` combed it with pale streaks, the
-  sea windrow on land (266). Census+probe PASSED (fires 57–66/city, dead-calm≡HEAD exact fixed point, day-biased, ry=1.4
-  signature control clean) — but a low-α ellipse scatter HAZES not MARKS (203/215): at readable α it reads as a diffuse
-  pale WASH that FADES the meadow's lush green, so BOTH blind agents on BOTH seeds INVERTED the calm/gale call. A legible
-  form needs bright, tapered, discrete streaks → reads as scratches on grass (159/214/215) ⇒ `polish-tile`, not a growth
-  lap. ⛔ **The grass-wind gap is REAL but INVISIBLE-AT-ZOOM — do NOT re-try as an overlay wash.**) Prev: **Transport 341**
-  (WET STREETS MIRROR THEIR LAMPS — the rain mechanism's LAST un-enumerated
-  reader is the ROAD; `rainingAt`>0 gleams a warm smear down the night lamp pools, dry≡HEAD fixed point, the land
-  analog of 329's waterfront reflection; draw-only, byte-flat). Prev: **STEP-BACK #45 @340** (NO DRIFT; 336–339
-  byte-flat; blind PASS 2 seeds; perf +0.022%/lap vs 285. Watch: inland tower core over-busy, no raw downtown
-  density; GWARM=0 at pinned dry-peak years is CORRECT — overcast greys skyBot first, do NOT re-chase.) Prev (all Deepen, byte-flat, laws in
-  SKILL.md): Civic
-  **338/339** (festival cloth — capitol standards + festival BUNTING lift/stream on `windForce`, dead-calm≡HEAD fixed
-  point, 280) · People **336/337** (RAIN-AWARE OUTDOOR CROWDS come in on `dryAt` (112); outdoor-daytime-crowd category
-  CLOSED, sole hold-out BEACH ⛔) · Water **334** (SAIL BELLIES; WINDA-over-water DONE ⛔) · Nature **333** (FIRE SMOKE
-  LEANS; (bj) CLOSED, (bc) fire-glow z-order future) · ~~Urban **332**~~ (CHIMNEY WOODSMOKE — ⛔ INVISIBLE at city zoom,
-  266; ⛔ DO NOT RE-TRY) · Sky **331** (HIGH JET + CONTRAIL; ⚠ a jet does NOT parallax) · **STEP-BACKS #42–#44
-  @325/330/335** (all NO DRIFT). Prev: Water **329**
-  (WATERFRONT REFLECTION ANSWERS THE SKYLINE — night city-lights smear gates on `shoreGlow(y)` (developed frontage ≤10
-  cells inshore, reads `c.th`) so lit downtown coast shimmers, dune/park headlands stay dark; draw-only.) Prev: Sky **328** (THE STRIKE —
-  forked bolt grounds down the rain shaft on 291's flash peak, `bolt>0.22` inside `if(pa>0)`, 248) · Urban **327**
-  (FACADE TILE PICK — `pickTile`=frontmost built prism, cue (ba) CLOSED, 133→327) · Civic **326** (CIVIC SQUARE
-  MATURATION — `c.civ` accumulation+diffusion, corr(civ,age)=1.0). Prev (all shipped, census byte-identical, laws in
-  SKILL.md): People **324** (DESIRE PATHS, `c.wear` diffusion off `c.buzz`) · Nature **323** (WILDFLOWERS
-  ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
-  diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
-  Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 342 EXPLORED→REVERTED
-  (Nature — grass cat's-paws INVISIBLE-AT-ZOOM, the header's own warning made manifest: a REAL 280 wind gap on a real
-  large surface, but no legible overlay form for a growth lap); ~343 = a measured seam (225) or Deepen/Polish/Interaction
-  in a rotated domain (avoid Nature/Transport/Sky/Water; Urban/Civic/People rested — but Urban needs a MEASURED seam),
-  ~345 = STEP-BACK #46.** Additive space SPENT (331).
-  ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building; 342
-  is the receipt: a passing census+probe means NOTHING for a subtle draw, only the blind agents do (both INVERTED).**
+- **ROTATION.** Last: ~~**Urban 343**~~ (SNOW ON THE ROOFS — `SNOWLAND` is a TYPE SET blind to every building type
+  (274), so roofs never caught snow; `roofSnow`/`snowCap` capped the RES/MID/COM roof top-face from the building's own
+  SNOWLAND neighbour snow (Urban analog of 341). Census+probe PASSED (92–96% roofs capped in winter, summer/HEAD 0 exact
+  fixed point, draws confirm) — but a `colA`-white cap on an ALREADY-PALE roof, ringed by snow-white ground, in DIM
+  WARM-HAZE winter (LITAMT~0.38, cover 100%) has NO figure/ground, so BOTH blind agents on BOTH seeds INVERTED the
+  ON/BARE call — reads as a fractionally-paler city, not snow on the roofs. Closeup z-order/holistic clean. A legible
+  form needs a SHAPED white roof-ridge + shadow ⇒ `polish-tile`, not a growth lap. ⛔ **REAL 274 gap, INVISIBLE-AT-ZOOM;
+  do NOT re-try as a `colA`-white cap — winter = dim + warm-haze + already-pale roofs = no snow figure.**) Prev:
+  ~~**Nature 342**~~ (CAT'S-PAWS — grass deaf to `windForce`; a low-α ellipse scatter HAZES not MARKS (203/215),
+  BOTH agents INVERTED; ⛔ INVISIBLE-AT-ZOOM, tapered-streak `polish-tile` only.) Prev: **Transport 341** (WET STREETS
+  MIRROR THEIR LAMPS — rain's LAST un-enumerated reader is the ROAD; `rainingAt`>0 warm smear down night lamp pools,
+  dry≡HEAD, land analog of 329; draw-only). Prev: **STEP-BACK #45 @340** (NO DRIFT; perf +0.022%/lap vs 285. ⚠ Watch:
+  inland tower core over-busy, no raw downtown density; GWARM=0 at pinned dry-peak = CORRECT (overcast greys skyBot),
+  do NOT re-chase.) Prev (Deepen/shipped, byte-flat, laws in SKILL.md,
+  full text in ledger/archive): Civic **338/339** (festival cloth on `windForce`) · People **336/337** (RAIN-AWARE
+  CROWDS on `dryAt`; category CLOSED, hold-out BEACH ⛔) · Water **334** (SAIL BELLIES; WINDA-over-water DONE ⛔) ·
+  Nature **333** (FIRE SMOKE LEANS; (bj) CLOSED, 🆕 (bc) fire-glow z-order future) · ~~Urban **332**~~ (CHIMNEY WOODSMOKE
+  ⛔ INVISIBLE, DO NOT RE-TRY) · Sky **331** (HIGH JET; a jet does NOT parallax) · Water **329** (WATERFRONT REFLECTION
+  on `shoreGlow`) · Sky **328** (THE STRIKE, forked bolt on 291 flash) · Urban **327** (FACADE TILE PICK, frontmost
+  prism) · Civic **326** (CIVIC SQUARE `c.civ`) · **STEP-BACKS #42–#44 @325/330/335** (NO DRIFT) · People **324**
+  (DESIRE PATHS `c.wear`) · Nature **323** (WILDFLOWERS) · Water **322** (WHALES) · Sky **321** (SNOW — Sky's 1st CA
+  `c.snow`, ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** · Urban **316** (⛔ DISTRICTS' `tick()` vote
+  is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 343 EXPLORED→REVERTED
+  (Urban — snow-on-roofs: a REAL 274 gap (SNOWLAND blind to buildings), but INVISIBLE-AT-ZOOM — a pale cap on pale
+  roofs in dim warm-haze winter, both agents inverted). TWO reverts running (342 grass-wind, 343 roof-snow), both the
+  same wall: a REAL deaf-surface interconnect that is INVISIBLE as an overlay. ~344 = a measured seam (225) or a Deepen/
+  Polish/Interaction in a rested domain (Civic/People — measured-seam-only; avoid Nature/Transport/Sky/Water/Urban),
+  OR just declare returns flattened and STOP (a valid outcome). ~345 = STEP-BACK #46.** Additive space SPENT (331).
+  ⇒ ⚠ **remaining gaps are DEEP-BUT-INVISIBLE-AT-ZOOM — PRICE VISIBILITY (266/342/343) BEFORE building; a passing
+  census+probe means NOTHING for a subtle overlay, only the blind agents do. A HIGH-CONTRAST interconnect (341's warm-
+  on-dark reflection) ships; a LOW-CONTRAST one (snow-on-snow, pale-on-pale, haze) INVERTS. Check figure/ground FIRST.**
   ⚠ **TRANSPORT ENTITY/ADDITIVE SEAMS SATURATED** (304/312/329; hairline cues (bi)/(av) = bad trade ⇒ ⛔ `polish-tile`)
   — but **341 found a CROSS-DOMAIN interconnect the saturation note missed: the rain MECHANISM had no ROAD reader** (280).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
@@ -401,60 +398,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 335 entries before Iteration 333 live in
+> **Archive:** the 336 entries before Iteration 334 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 333 — the fire's smoke finally leans with the wind (2026-07-17) [Nature × Deepen/interconnect]
-
-**Vector.** Cue (bj), banked by 332 for "a lap already working the fire." Additive space is spent (331) and the header
-points to a measured seam or a Deepen in a rotated domain avoiding Sky/Water. Nature (last touched 323; the wildfire CA
-is Nature's, 279) fits, and the seam is already found and probe-proven: **smoke is the un-enumerated member of the
-wind's reader category** (280 — grep the MECHANISM `windForce`, not the reader-list comment, for who does not read it).
-Every gusting thing over the coast rides WINDA — the trees sway, the flags flap, the clouds/balloons/kites drift +x —
-but the fire smoke rose **dead straight**, wobbling on a bare clock term. Unlike 332's reverted chimney smoke (invisible:
-a short RES host with no clean sky backdrop, 266), the wildfire plume is a **prominent** feature when a 2018–30 fire
-burns, so visibility is not the risk here.
-
-**Change (draw-only — no `rng()`, no terrain).** A shared helper `smokeLean(rise)=rise*windForce()` and its `+smokeLean(sm)`
-added to the puff-x of the two smoke draws (grep-confirmed the only two): the **wildfire plume** (`drawFire`, 4 puffs)
-and the **ember scars** of a fresh burn (the smoking BURNT tile, 2 puffs). A plume bends over as it climbs, so the lean
-is the puff's own **rise** times the gust strength, in the same **+x** the clouds drift (so the whole sky leans
-together). At `windForce()==0` (a dead calm) the lean is 0 and the plume is HEAD's straight column byte-for-byte (an
-exact fixed point, 245). The bonfire is a flame tongue with no smoke puffs — out of scope. Cue (bc)'s fire-glow-eaten-by-
-later-rows is a separate 266 z-order job, left for a future fire lap.
-
-**Census.** Draw-only ⇒ tile histogram empty, `pop`/`roads`/`developed` **byte-identical (+0)**, 0 page errors. VERDICT
-PASS. Vacuous by design; the claim rests on the probe + screenshots.
-
-**Probe** (`probes/probe-smokelean.mjs`, build-agnostic — grades the SHIPPED draw in one build, no source swap, no
-cross-build floor: hooks `ctx.arc`, picks the smoke puffs by fillStyle signature (273: match the spaced canonical form;
-the glow arc is a CanvasGradient and drops out), places a fire + a fresh ember, renders the SAME frozen frame at GALE and
-CALM so the base wobble cancels and `dx = x_gale − x_calm` IS `smokeLean`). All 3 seeds:
-- **GALE leans every puff downwind** (`dx>0`): YES.
-- **`dx` grows with rise, exactly** — plume `dx` = 6.00 / 8.40 / 10.80 for `rise` 6.00 / 8.40 / 10.80; ember 6.00 / 1.00.
-  A plume bends over as it climbs.
-- **FIXED POINT (245):** CALM (windForce 0) == `smokeLean` stubbed to 0, **EXACT 0 px** — the calm plume is HEAD's
-  straight column, the must-not-move control (250). **SMOKELEAN: PASS.**
-
-**Visual** (`probes/shot-smokelean.mjs` — drives `tick()` to a live spreading episode, freezes, aims by measured ink
-(226/230/234), shoots the SAME frozen fire at GALE and CALM as a blind A/B, tokens meaningless + non-ordinal, map
-**CROSSED between seeds** (238/239/268); `page.screenshot`, 200; day pin off the light curve, 264). Both seeds found a
-2-hex forest fire (~1980). **Two blind subagents, on both seeds, on the crossed map, correctly identified the gale frame
-from the smoke lean alone** (s42 gale=`vera` ✓ · s7 gale=`nolan` ✓ — a discriminating pair, 264, resolved on both seeds,
-worth more than any "looks good"): the plume "streams to the right, the highest blob shifted farthest downwind," reads as
-a coherent wind-blown streak "rooted right at the flame," no tear / floating / detach; the whole-city frame clean — no
-z-order tears, no floating tiles, no blown-out colour, a balanced coherent coastal city.
-
-**Perf.** Zero new path objects (same puffs, one extra `windForce()` term per puff on the ≤6 puffs of a rare fire).
-Step-back (~335) prices the arc.
-
-**Verdict: SHIPPED.** The wildfire plume and its ember scars now stream downwind, leaning farther the higher each puff
-rises, in the same +x the clouds drift — and stand as HEAD's straight column at a dead calm. Cue (bj) CLOSED; the
-un-enumerated WINDA member is enumerated (280). Draw-only, census byte-identical, exact fixed point. Nature × Deepen
-(279 → 333). `probes/probe-smokelean.mjs`, `probes/shot-smokelean.mjs`.
 
 ## Iteration 334 — the sail fills with the wind (2026-07-17) [Water & coast × Deepen/interconnect]
 
@@ -929,3 +877,65 @@ fires with an exact fixed point (census + probe PASS), and it is **invisible-at-
 gate (two blind agents, both inverted) is the only instrument that could see this, and a passing census+probe meant
 nothing for a subtle draw. ⛔ **Do not re-try grass-wind as an α-scatter overlay; if ever, it is a tapered-streak
 `polish-tile` job.** Nature × Deepen. (No files added — the finding lives here, the loop's memory.)
+
+## Iteration 343 — snow on the roofs, and why it drowns in the haze (2026-07-17) [Urban fabric × Deepen → EXPLORED → REVERTED]
+
+**Vector.** Step-back #45 (@340) pointed ~343 at a measured seam (225) or a Deepen in a rested domain (avoid
+Nature/Transport/Sky/Water; Urban needs a MEASURED seam). I ran the seam-finders: the frozen census tile histogram
+(every flat/zero row is audited terrain/landmark — SHOREPARK 294/294/294, MARSH 45/45/45, no dead-rule zero), the
+CIVHRS/CIVICDESC/TILEDESC tables (fully deepened — every civic kind keeps hours, every tile has a label+desc), and
+`residentWhere` (pier/market/park/garden/plaza/beach/stadium/amphitheater/field/road all covered). The one genuinely-
+open, MEASURED seam: **`SNOWLAND` is a TYPE SET that excludes every building type** (`EMPTY,MEADOW,FOREST,REDWOOD,
+PARK,ROAD,ROCK,FARM,VINEYARD,ORCHARD,GARDEN,FIELD`), and the CA at ~L3193 forces `c.snow=0` on all non-members — so
+the ONE surface a real snowfall settles on first, the flat cold roof, stayed bare in every winter of the artifact's
+life (274: a type-keyed set is blind to members it never lists — here, ALL the buildings). The Urban analog of 341
+(roads answering rain) — a surface deaf to a signal. Chosen over grass-wind (342) because a roof cap is HIGH-CONTRAST
+and discrete, not a haze — or so I reasoned.
+
+**Change (built, then reverted — draw-only, no `rng()`/terrain, unreachable from `tick()`).** `roofSnow(x,y)` reads
+the EXISTING `c.snow` field over the building's own SNOWLAND ground neighbours (mean), returns 0 when no snow is lying
+(`snowGlobal` gate); `snowCap(gx,gy,ax,ay,z,s)` draws the roof's own top-face hexagon (the first fill of prismS) at
+roof height `z`, in the SAME alpha ramp + `colA` illuminant as the ground dusting (7154). One `const rsn=roofSnow(x,y)`
+at the top of `drawBuilding` + one `snowCap(...)` after the RES/MID/COM roof prisms (TOWER skipped — crown-geometry
+zoo, and towers' developed neighbours give ~0 snow anyway). Reads the field, writes nothing; `snowGlobal===0`
+(~9/10 of the year) ⇒ every roofSnow returns 0, no cap drawn ⇒ a snowless frame is HEAD's exact bytes (exact fixed
+point, 245/253). Respects "the coast stays clear" (321) by construction: a house ringed by bare sand catches nothing.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors,
+VERDICT PASS (only the known ±1 `solarRoofs`/`greenRoofs`/`towerHt` tick-timing wobble, 226, not mine).
+
+**Probe** (`probe-roofsnow.mjs`, build-agnostic — drives `tick()` to lay snow, reads the artifact's OWN `roofSnow`
+over every building + hooks `snowCap` to confirm the draw fires; NO NOISE FLOOR AT ALL). 6 seeds: **WINTER 92–96%
+of roofs capped · SUMMER 0 · HEAD (roofSnow undefined) 0 · draws win 772–927 / sum 0.** RESPONSE / FIXED-POINT /
+BUILD-AGNOSTIC all PASS. ⚠ **But 92–96% is a near-BLANKET, not the gradient I designed:** the season probe showed the
+snow field saturates to **cover=100%** the instant `winterMask()>0` (SNOWLERP=0.5 relaxes fast), and max daylight
+during ANY snow moment is only **~0.28–0.38** (winter's day is SHORT, 261 — the coldest weeks are also the darkest).
+So there is no bright, partial-snow shoulder to shoot: a snowy frame is ALWAYS dim and ALWAYS fully blanketed.
+
+**Visual — THE GATE THAT KILLED IT** (`shot-roofsnow.mjs`, same-world blind A/B: caps ON vs `snowCap` no-op'd in ONE
+page — 253/230, so the ONLY difference is the roof caps, an exact same-world A/B; tokens meaningless + CROSSED between
+seeds, 238/239/268; brightest-winter-hour daylight). **BOTH blind subagents, on BOTH seeds, INVERTED the call** —
+each named the BARE/HEAD frame as the snowy-roofed one, describing the CAPPED frame as "saturated terracotta" (it is
+objectively BRIGHTER — mean luma 142.3 vs 140.7 / 140.4 vs 138.9, so the caps DO add white; the labelling was verified
+correct). Both PASSED z-order + holistic on the closeup ("caps sit ON the roof tops, fixtures on top, no tears,
+coherent winter town"). I looked myself (239/342): the whole-city winter frame reads as a **warm dusty HAZE over the
+town, not a snow scene** (the ground snow at LITAMT~0.38 warm sunset is a uniform pale desaturating wash — iter 321's
+own shipped look), and the roof caps are ABSORBED into that haze; the closeup reads as a normal warm sunset town, with
+the pale caps INDISTINGUISHABLE from the artifact's already-pale roof palette (RES `cream`/`sage`/`coral`, COM
+`whiteDk`, MID cream). Snow-white-on-already-pale-roofs, surrounded by snow-white ground, in dim warm winter light,
+has no figure/ground — so it cannot read as *snow on the roofs*, only as a fractionally-paler city.
+
+**Why it can't be rescued here (and why it's `polish-tile`, not a growth lap).** A brighter/whiter cap through a RAW
+literal (not `colA`) would glow inconsistently over the dim-blue GROUND snow (195's coin / 214) and still not solve the
+snow-on-snow low contrast. A legible form needs a distinct SHAPE — a crisp white roof-ridge line with a cast shadow, a
+snow-load silhouette — which is a focused roof redesign, i.e. `polish-tile`, not a growth increment (342/270's rung: a
+defect FOUND is not a defect cleanly BUILDABLE here). The fundamental wall: **winter snow reads as a warm HAZE, and a
+cap on a pale roof adds no distinct read** — the header's own DEEP-BUT-INVISIBLE-AT-ZOOM warning, twice running.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (helpers + `rsn` var + 3 caps removed);
+probe + shot removed (they reference the reverted `roofSnow`/`snowCap`). The roof-snow gap is REAL and correctly
+identified (274: SNOWLAND is blind to every building type), the mechanism fires with an exact fixed point + coherent
+z-order (census + probe + closeup PASS), and it is **invisible-at-zoom as a low-contrast cap in a warm-haze winter** —
+both blind agents INVERTED, the only instrument that could see this. ⛔ **Do not re-try roof-snow as a `colA`-white
+cap; a legible form is a shaped-ridge `polish-tile` job. Winter is DIM + WARM-HAZE + already-pale-roofs = no snow
+figure/ground.** Urban × Deepen. (No files added — the finding lives here, the loop's memory.)
