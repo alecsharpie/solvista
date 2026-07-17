@@ -24005,3 +24005,43 @@ as HEAD's flat taut triangle at a dead calm — the last un-enumerated WINDA mem
 enumerated (280). Draw-only, census byte-identical, exact fixed point. Water & coast × Deepen.
 `probes/probe-sailwind.mjs`, `probes/shot-sailwind.mjs`.
 
+## Iteration 335 — forty-six laps on, the water still reads as water (2026-07-17) [44th step-back / holistic]
+
+**Vector.** The header pointed here explicitly: "STEP-BACK #43 DONE @330 — NEXT ~335." Five laps have landed since #43
+(331 jet+contrail, ~~332 chimney smoke REVERTED~~, 333 fire-smoke lean, 334 sail belly), the last three a cross-cutting
+WINDA-enumeration run. A step-back is the guardrail that lets the loop run unattended: the census catches *metric*
+collapse but is blind to *cumulative visual* drift and to *permanent perf* drift, so both are measured here, not vibed.
+
+**Census + error gate.** Clean HEAD (5967acb, through 334), tree clean. `census.mjs` VERDICT PASS, 0 page errors; core
+`pop`/`developed`/`roads` unmoved, only the usual ±1 chaotic wobble on `solarRoofs`/`greenRoofs`/`towerHt`.
+
+**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page, pins DERIVED from
+the light curve — 264).** One blind subagent per seed, asked the *cumulative* question (has anything compounded into
+clutter/darkness), not "is a feature present." Both seeds independently PASS:
+- **City coherent & balanced** across all frames — dense towers inland → mid ring → farms/parks → beach/pier coastline,
+  reads as one California coastal city; **no wallpaper band, no over-busy district, no compounded clutter or darkness,
+  no blown-out colour.**
+- **No z-order tears, floating tiles, or detached glows** anywhere — pier, Ferris wheel, offshore windmills, buoys all
+  sit correctly on the water; tower stacking clean in the lit night frames.
+- **Day-length season reads on BOTH seeds** (261): summer-dusk is warm golden with the sun still up over a teal sea;
+  winter-dusk, the SAME wall-clock instant, is night-dark with the crescent moon risen and windows lit — sun provably
+  SET in winter, UP in summer (a discriminating pair, 264, resolved blind on both seeds).
+- **Night coast is coherent lit-city-and-water** — deep blue sea, pier/wheel glow, red/green channel buoys, shore
+  lamps, the built mass glowing warm — not a flat void (the kelp/coast-darkening class stays closed, 282).
+
+**Perf (permanent arc, priced in PATH OBJECTS — load-immune, 198/216 — with `c.snow` cleared per 325's law, so `__warp(61)`'s
+seasonal snow is not misattributed to the perm arc).** `probe-drawbudget.mjs` mean of 3 seeds, day / night path objects:
+- iter 285 (b523698): 110256 / 138143 · iter 330 (9e944af): 111517 / 139941 · **HEAD 334: 111670 / 139870.**
+- **Long arc vs 285 (49 laps): day +1.28% (+0.026%/lap), night +1.25% (+0.026%/lap)** — well under the +0.2%/lap the arc
+  used to run at (162→202 cost 8.6% over 40 laps), and consistent with the standing fact that the run's byte-flat FIXES
+  cancel its additive tendency.
+- **Recent arc vs 330 (4 laps): day +0.14% (+0.034%/lap), night −0.05%** — flat; the last five laps were draw-only WINDA
+  deepens (one extra `windForce()` term each, zero new path objects), so nothing to fix. **No perf-fix lap.**
+
+**Verdict: STEP-BACK — NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length season
+alive; night ordering / golden-greens / sea-quilt facts hold (standing facts, unre-measured this lap because no lap
+since #43 touched their surfaces); permanent draw arc negligible (+0.026%/lap, snow-excluded) with the recent window
+flat. Guardrail reset — next vector ~340 is a measured seam (225) or a Deepen/Polish/Interaction in a rotated domain
+(avoid Sky/Water; additive space is spent, 331, and remaining gaps are deep-but-invisible-at-zoom — price visibility,
+266, before building). Nothing to fix.
+

@@ -32,13 +32,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **344 — RETURNS FLATTENED / NO SHIP** (fresh full seam-hunt: additive AND high-contrast-
-  interconnect space EXHAUSTED — every light-on-dark night interconnect exists, checked BY NAME (sea sun-glitter +
-  moonglade, waterfront 329, wet-street gleam 341, headlights, ferry/freighter/lighthouse nav lights, biolum, civic
-  windows via `civOpen`); ENTINFO exhaustive; census CLEAN (no dead/frozen/zero row). Only open gaps are the DEEP-
-  INVISIBLE-AT-ZOOM overlays 342/343 proved are `polish-tile`. Declined a 3rd likely revert; solvista.html BYTE-
-  IDENTICAL, a SURVEY not a build ⇒ growth is saturation-bound, mode is now STEP-BACKS + `polish-tile`.) Prev:
-  ~~**Urban 343**~~ (SNOW ON ROOFS — `SNOWLAND` type-set blind to buildings (274), REAL gap; a `colA`-white cap on
+- **ROTATION.** Last: **STEP-BACK #46 @345** (NO DRIFT — census core byte-flat; both seeds PASS blind on the cumulative
+  read, 5 pins each, seasonal discriminating pair resolves, night coherent; perf arc +0.017%/lap day / +0.021%/lap
+  night vs 285 (60 laps), FLAT vs 339. ⚠ Watch STILL soft: inland tower core dense but NOT wallpaper (both agents) — do
+  NOT add raw downtown density.) Prev: **344 — RETURNS FLATTENED / NO SHIP** (fresh full seam-hunt: additive AND high-
+  contrast-interconnect space EXHAUSTED, checked BY NAME; only open gaps are DEEP-INVISIBLE-AT-ZOOM `polish-tile`
+  overlays; solvista.html BYTE-IDENTICAL, a SURVEY not a build ⇒ saturation-bound, mode = STEP-BACKS + `polish-tile`.)
+  Prev: ~~**Urban 343**~~ (SNOW ON ROOFS — `SNOWLAND` type-set blind to buildings (274), REAL gap; a `colA`-white cap on
   pale roofs in dim warm-haze winter = NO figure/ground, both agents INVERTED. ⛔ INVISIBLE-AT-ZOOM, `polish-tile` only.) Prev:
   ~~**Nature 342**~~ (CAT'S-PAWS — grass deaf to `windForce`; a low-α ellipse scatter HAZES not MARKS (203/215),
   BOTH agents INVERTED; ⛔ INVISIBLE-AT-ZOOM, tapered-streak `polish-tile` only.) Prev: **Transport 341** (WET STREETS
@@ -57,7 +57,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 344 declared RETURNS
   FLATTENED / NO SHIP — a fresh seam-hunt re-confirmed saturation; 342/343/344 together are the growth phase hitting
-  its wall (every buildable interconnect ships or is `polish-tile`). ~345 = STEP-BACK #46 (do it next). The loop's
+  its wall (every buildable interconnect ships or is `polish-tile`). #46 landed @345 (NO DRIFT); ~346 = a `polish-tile` redesign or STEP-BACK #47. The loop's
   honest mode is now STEP-BACKS (drift-watch) + `polish-tile` (the shaped-ridge / tapered-streak redesigns 342/343
   need), NOT more growth laps. A genuinely NEW growth vector needs a NEW mechanism or domain-signal, not another
   deaf-surface overlay — PRICE VISIBILITY / figure-ground FIRST (266/342/343).** Additive space SPENT (331).
@@ -391,51 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 337 entries before Iteration 335 live in
+> **Archive:** the 338 entries before Iteration 336 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 335 — forty-six laps on, the water still reads as water (2026-07-17) [44th step-back / holistic]
-
-**Vector.** The header pointed here explicitly: "STEP-BACK #43 DONE @330 — NEXT ~335." Five laps have landed since #43
-(331 jet+contrail, ~~332 chimney smoke REVERTED~~, 333 fire-smoke lean, 334 sail belly), the last three a cross-cutting
-WINDA-enumeration run. A step-back is the guardrail that lets the loop run unattended: the census catches *metric*
-collapse but is blind to *cumulative visual* drift and to *permanent perf* drift, so both are measured here, not vibed.
-
-**Census + error gate.** Clean HEAD (5967acb, through 334), tree clean. `census.mjs` VERDICT PASS, 0 page errors; core
-`pop`/`developed`/`roads` unmoved, only the usual ±1 chaotic wobble on `solarRoofs`/`greenRoofs`/`towerHt`.
-
-**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page, pins DERIVED from
-the light curve — 264).** One blind subagent per seed, asked the *cumulative* question (has anything compounded into
-clutter/darkness), not "is a feature present." Both seeds independently PASS:
-- **City coherent & balanced** across all frames — dense towers inland → mid ring → farms/parks → beach/pier coastline,
-  reads as one California coastal city; **no wallpaper band, no over-busy district, no compounded clutter or darkness,
-  no blown-out colour.**
-- **No z-order tears, floating tiles, or detached glows** anywhere — pier, Ferris wheel, offshore windmills, buoys all
-  sit correctly on the water; tower stacking clean in the lit night frames.
-- **Day-length season reads on BOTH seeds** (261): summer-dusk is warm golden with the sun still up over a teal sea;
-  winter-dusk, the SAME wall-clock instant, is night-dark with the crescent moon risen and windows lit — sun provably
-  SET in winter, UP in summer (a discriminating pair, 264, resolved blind on both seeds).
-- **Night coast is coherent lit-city-and-water** — deep blue sea, pier/wheel glow, red/green channel buoys, shore
-  lamps, the built mass glowing warm — not a flat void (the kelp/coast-darkening class stays closed, 282).
-
-**Perf (permanent arc, priced in PATH OBJECTS — load-immune, 198/216 — with `c.snow` cleared per 325's law, so `__warp(61)`'s
-seasonal snow is not misattributed to the perm arc).** `probe-drawbudget.mjs` mean of 3 seeds, day / night path objects:
-- iter 285 (b523698): 110256 / 138143 · iter 330 (9e944af): 111517 / 139941 · **HEAD 334: 111670 / 139870.**
-- **Long arc vs 285 (49 laps): day +1.28% (+0.026%/lap), night +1.25% (+0.026%/lap)** — well under the +0.2%/lap the arc
-  used to run at (162→202 cost 8.6% over 40 laps), and consistent with the standing fact that the run's byte-flat FIXES
-  cancel its additive tendency.
-- **Recent arc vs 330 (4 laps): day +0.14% (+0.034%/lap), night −0.05%** — flat; the last five laps were draw-only WINDA
-  deepens (one extra `windForce()` term each, zero new path objects), so nothing to fix. **No perf-fix lap.**
-
-**Verdict: STEP-BACK — NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length season
-alive; night ordering / golden-greens / sea-quilt facts hold (standing facts, unre-measured this lap because no lap
-since #43 touched their surfaces); permanent draw arc negligible (+0.026%/lap, snow-excluded) with the recent window
-flat. Guardrail reset — next vector ~340 is a measured seam (225) or a Deepen/Polish/Interaction in a rotated domain
-(avoid Sky/Water; additive space is spent, 331, and remaining gaps are deep-but-invisible-at-zoom — price visibility,
-266, before building). Nothing to fix.
 
 ## Iteration 336 — the shopfront crowd comes in from the rain (2026-07-17) [People & activity × Deepen/interconnect]
 
@@ -921,3 +881,47 @@ recorded so 345+ does not re-run the same hunt. The loop's honest mode from here
 genuinely new growth lap needs a NEW mechanism or domain-signal — and per 266/342/343, **price its visibility /
 figure-ground BEFORE building**, because a passing census+probe means nothing for a subtle overlay: only the blind
 agents can see it, and low-contrast overlays INVERT. (No files added — the finding lives here, the loop's memory.)
+
+## Iteration 345 — forty-nine laps on, still no drift (2026-07-18) [46th step-back / holistic]
+
+**Vector.** The header pointed here explicitly ("~345 = STEP-BACK #46, do it next"). Since #45 @340, one lap has
+landed (341 wet-street gleam, draw-only); 342/343/344 all reverted/no-ship (saturation survey). A step-back is the
+guardrail that lets the loop run unattended: the census catches *metric* collapse but is blind to *cumulative visual*
+drift and to *permanent perf* drift, so both are measured here, not vibed. No source touched — `solvista.html`
+byte-identical (a survey, not a build).
+
+**Census + error gate.** Clean HEAD (29efb9c, through 341 + the stats commit), tree clean. `census.mjs` VERDICT PASS,
+0 page errors; core `pop`/`developed`/`roads` byte-unmoved, only the usual chaotic ±1 wobble (`greenRoofs -1`,
+`towerHt -1` — 226 tick-timing, not a lap). Entity counts full and healthy (peds 762, cars 360, surfers 81, etc.).
+
+**Perf (permanent arc, PATH OBJECTS — load-immune, 198/216; `probe-drawbudget.mjs`, snow cleared per 325, mean of 3
+seeds, day / night):**
+- iter 285 (b523698): 110395 / 138088 · iter 339 (8c34523): 111762 / 139698 · **HEAD 341 (29efb9c): 111504 / 139806.**
+- **Long arc vs 285 (~60 laps): day +1.00% (+0.017%/lap), night +1.24% (+0.021%/lap)** — well under +0.2%/lap.
+- **Recent arc vs 339 (1 shipped lap, 341): day −0.23%, night +0.08%** — flat. 341's gleam is dry-gated (0 path
+  objects when dry), so it adds nothing at the probe's pins. **No perf-fix lap needed.**
+
+**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page).** One blind
+subagent per seed, cumulative question. Both seeds independently **PASS**:
+- **City coherent & balanced** across all frames — dense inland towers → mid-rise ring → farm/park/river belt →
+  beach/pier/wheel/turbines/sea — reads as one California coastal city; no wallpaper band, no muddy district, nothing
+  blown-out. Seed 42 explicitly: tower field "dense but retains roof-color and height variation, not a repeating carpet."
+- **No z-order tears, floating tiles, or detached glows** — piers/wheel/turbines on their hexes, rail/pylons/bridges
+  connect end-to-end, night buoy lights have plausible sources.
+- **Night coast coherent lit-city-and-water** — warm window grids, street/rail lamps, red/green buoys, moon + reflection
+  on deep-blue water, lit pier — not a flat void (kelp/coast-darkening class stays closed, 282).
+- **Seasonal discriminating pair resolves blind on BOTH seeds** (264): dusk-summer sun UP (warm, lit, teal sea),
+  dusk-winter — SAME instant — sun DOWN (dark, crescent moon + stars, lamp-lit, dimmer sea). Unmistakably two seasons.
+- **Watch item (STILL soft, unchanged from #45):** inland tower core is dense — do NOT add raw downtown density (217/
+  224/228 crown-not-picket family). Not worsening: this lap both agents called it varied, not wallpaper.
+
+**Instrument nits (banked, not chased — per #45).** Frames self-report `GWARM=0` and `HUD=STALE` at golden/dusk; these
+are the known fixed-pin caption artifacts (`shot-stepback` derives the golden pin on a clear page but shoots the warped
+overcast world; `phaseWord`-vs-`clockWord` mismatch). Pixels ARE warm and agents PASS — do NOT re-chase (340 measured
+this out fully; GWARM machinery is alive, 0.6–0.78 clear-sky, muted by overcast at the pinned years).
+
+**Verdict: STEP-BACK #46 — NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length
+season alive; night ordering / golden-greens / sea-quilt facts hold (unre-measured — no lap since #44 touched their
+surfaces). Permanent draw arc negligible (+0.02%/lap, flat recent window). Guardrail reset — next ~346 is a
+`polish-tile` redesign (342/343's shaped-ridge / tapered-streak) or STEP-BACK #47. Nothing to fix. (No files added —
+the finding lives here, the loop's memory.)
