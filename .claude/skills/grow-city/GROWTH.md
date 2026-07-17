@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43, **291** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -32,29 +32,30 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat. 2 seeds × 5 frames: night
-  lit, golden greens GREEN (265), coast water+beach (282), day-length season named by light alone (261/264); no
-  z-order/float/blowout. Perf PATH OBJECTS snow-cleared: 325→329 byte-flat, arc vs 285 ≈**+0.027%/lap** / 44 laps
-  — well under +0.2%; no perf-fix lap.) Prev: Water **329**
+- **ROTATION.** Last: Sky **331** (HIGH JET + CONTRAIL — Sky × New element, **4th ever**; a SCREEN-SPACE jet (drawn
+  in the sky slab with sun/moon/star, before the city, so the skyline occludes it) drifts drawing a sunlit contrail —
+  white by day, warm-pink at golden (GWARM, 6th reader), GONE at night (day=1−LITAMT), faded in rain (balloonFair).
+  Math.random drift-in ⇒ census BYTE-IDENTICAL; probe DAY 453–551px high (meanY 0.14) / NIGHT+RAIN **0**; `probe-jet`.
+  ⚠ FIRST built world-space along constant world-y — iso sweep dragged the trail DOWN OVER the city; a jet does not
+  parallax ⇒ SCREEN space. ⚠ Camera lied twice: a rainy loaded moment correctly HID it (force `rainFront=()=>0`), and
+  `time=100` fired the pre-existing SHOOTING STAR (met=0) agents mis-read as the contrail — pin `time` off met<0.06;
+  aim by MEASURED INK, not pxc [pre-transform], 226/272.) Prev: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat. 2 seeds × 5 frames all PASS; perf
+  PATH OBJECTS snow-cleared, arc vs 285 ≈**+0.027%/lap** over 44 laps — well under +0.2%; no perf-fix lap.) Prev: Water **329**
   (WATERFRONT REFLECTION ANSWERS THE SKYLINE — the night city-lights smear now gates on `shoreGlow(y)` (developed
   frontage within 10 cells inshore, reads `c.th`) so lit downtown coast shimmers and dune/park headlands stay dark;
-  draw-only, census + day byte-identical; `probe-shorereflect`/`probe-shoreglow`.) Prev: Sky
-  **328** (THE STRIKE — Sky × Deepen; grounds a forked bolt down the rain shaft on 291's flash peak, gated `bolt>0.22`
-  INSIDE `if(pa>0)` so never strikes the void (248); draw-only, byte-identical.) Prev: Urban **327** (FACADE TILE
-  PICK — `pickTile` = frontmost built prism covering the cursor, ground-plane fallback; cue (ba) CLOSED,
-  census-inert, 133→327.) Prev: Civic **326**
-  (CIVIC SQUARE MATURATION — Civic × New CA 36/107, LAST stale additive cell; `c.civ` accumulation+diffusion, corr(civ,
-  age)=1.0. ⚠ plazas YOUNG ⇒ maxCiv≈0.91.) Prev (all shipped, census byte-identical, laws in SKILL.md): **STEP-BACK
+  draw-only, census + day byte-identical; `probe-shorereflect`/`probe-shoreglow`.) Prev: Sky **328** (THE STRIKE —
+  forked bolt grounds down the rain shaft on 291's flash peak, `bolt>0.22` inside `if(pa>0)`, 248) · Urban **327**
+  (FACADE TILE PICK — `pickTile`=frontmost built prism, cue (ba) CLOSED, 133→327) · Civic **326** (CIVIC SQUARE
+  MATURATION — `c.civ` accumulation+diffusion, corr(civ,age)=1.0). Prev (all shipped, census byte-identical, laws in SKILL.md): **STEP-BACK
   #42 @325** (NO DRIFT; day-length season alive; perm arc BYTE-FLAT vs 320 once snow cleared — clear `c.snow` before
   pricing the arc) · People **324** (DESIRE PATHS, `c.wear` diffusion off `c.buzz`) · Nature **323** (WILDFLOWERS
   ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: ADDITIVE space is
-  FULLY ROTATED (Civic × New CA filled 326; field-CA templates cover diffusion/reaction-diffusion/accumulation). Only
-  genuinely sparse additive cell = Sky × New element (291, 3rd ever). Otherwise a measured seam (225, 27-for-27) or
-  Deepen/Polish/Interaction. **STEP-BACK #43 DONE @330 — NO DRIFT; guardrail reset, NEXT ~335.** NEXT feature =
-  Sky × New element (291, 3rd ever) or a measured seam.**
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #43 DONE
+  @330 — NO DRIFT; guardrail reset, NEXT ~335.** 331 FILLED the last sparse additive cell (Sky × New element, 4th
+  ever) ⇒ **ADDITIVE SPACE NOW FULLY SPENT — next = a measured seam (225) or Deepen/Polish/Interaction, in a rotated
+  domain (avoid Sky/Water, freshest).**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
   lamps present & night-gated; (bi)/(av) cues = barely-visible bad trade ⇒ ⛔ do NOT force, `polish-tile`).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
@@ -391,69 +392,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 323 entries before Iteration 321 live in
+> **Archive:** the 324 entries before Iteration 322 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 321 — it snowed on the hills, and the streets went white for a week (2026-07-17) [Sky & atmosphere × New CA rule]
-
-**Vector.** The header's `NEXT` is Civic/People × New CA rule, and grepping the seams turned up nothing (26-for-26
-is at *finding*, and the recent laps have closed the last cliffs/tables/flags — corner/loft/solar/groof done,
-hstr/bridge/riv/hedge all lifecycle-clean, every CIVICDESC promise has a fulfilling comment). So this lap takes
-the counterweight's *one bigger swing* into **the single emptiest cell in the whole grid: Sky × New CA rule —
-never done once in 320 iterations.** Sky has clouds, fog, overcast, lightning, day-length seasons — every one a
-FIELD or an ENTITY; it has never had a genuine `tick()` CA. **Snow.**
-
-**Change (a reaction-diffusion CA + a contained draw — wholly census-inert).** A new field `c.snow`:
-- **The CA** (`tick()`, before `recount()`): `winterMask()` (the 8th reader of `seasonCool()`, nonzero only where
-  `seasonCool()>SNOW0=0.85`, i.e. the coldest ~3 weeks) drives a per-tick source; each snow-land hex **relaxes
-  toward a per-type target** (`SNOWLERP=0.5`: PARK/hill 1.0, woods 0.9, ROAD 0.5) plus a **diffusion term**
-  (`SNOWDIFF=0.10`, drifts to level and thins at every boundary with the sea/void/buildings). Fast enough to settle
-  inside the warp's coarse 0.075 yr/tick step; melts clean before the golden peak. `SNOWLAND` = the inland open
-  ground only (EMPTY/MEADOW/FOREST/REDWOOD/PARK/ROAD/ROCK/FARM/VINEYARD/ORCHARD/GARDEN/FIELD) — **the coast
-  (BEACH/DUNE/SHOREPARK, palms and all) is left bare, sea-warmed**, and buildings shed it. The whole pass
-  **self-skips** (`snowGlobal`) for the ~3/4 of the year that is snowless.
-- **The draw** (one site, end of `drawCell`): a white `hexTile` overlay laid LAST (over road markings & low
-  ornaments, **under** the tree crowns above and every moving thing — z-correct). Alpha ramps over a thin fringe
-  then **holds flat above SNOWFULL=0.5** (near-uniform ⇒ *cannot terrace onto the lattice*, 257), through `colA`'s
-  illuminant so night snow goes dim/blue, not glowing.
-- **Zero rng(), zero hashCell, no terrain** — a pure field of season + neighbours, reset with `genWorld`
-  (`snow:0` in cell-init, `snowGlobal=0`). So it perturbs NOTHING the census measures.
-
-**Census.** Core **byte-identical** — pop/roads/developed **+0**. `solarRoofs +2/+3`, `towerHt −1/+0` is the 226
-tick-timing wobble (the winter snow pass costs a hair of per-tick compute ⇒ a different tick count lands); **proven
-harness, not semantics, by re-running the SAME file** (solarRoofs read +2 then +3, towerHt −1 then +0, core flat
-both times). VERDICT PASS / 0 page errors.
-
-**Probe** (`probes/probe-snow.mjs`, pure world data — drives `tick()`, reads `cells[].snow`, no pixels, no noise
-floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.snow` is undefined→0):
-- **WINTER mean 0.66, cover 100%** vs **SUMMER 0.002** (melts before the dry peak) — the seasonal gate is real;
-  HEAD's snow is a constant 0 (236's free baseline).
-- **PARK 0.96 vs ROAD 0.51** — deeper on the parks/woods than the streets ⇒ a genuine spatial diffusion field,
-  **not a flat wash**.
-- **LEAK (coast + every building) = 0 on all 6 seeds** — the must-not-move column (250): snow lies only where it
-  should. `quilt p95 step 0.42` is entirely at PARK↔ROAD *type* boundaries (a plowed street beside a white park);
-  WITHIN a region the diffusion smooths it, and the draw clamps alpha flat above 0.5 so those field steps don't
-  even reach the pixels.
-
-**Perf** (222, direct count — the drawbudget A/B was interrupted by a timeout, so the honest number is the direct
-one): the pass calls no `rng()`, so the city is provably identical ⇒ the only draw delta is the snow overlay:
-**+~1257 path objects (~+1.1% of the day budget) in DEEP-WINTER frames only, exactly 0 every other season**
-(summer byte-flat, tick pass self-skips). The step-back pins day/golden at the dry peak (s=0.62) → snowless → the
-arc measurement is unaffected; only the dusk-winter discriminating frame carries the cost.
-
-**Visual** (`probes/shot-snow.mjs`, clock frozen in-page + a few `tick()`s AT the pinned year to settle the field —
-`?year=` alone drifts, 139/202; winter-day / summer-day control / winter-dusk, 2 seeds). Both blind subagents
-**PASS** and both **located** it: white dusting on the inland parks/hills/streets, **coast and rooftops bare**,
-the summer control **discriminably snowless** ("easy to tell apart"), **no hex-grid quilt** ("a coherent blanket…
-soft even lightening"), night snow correctly **dim/blue not glowing**, no z-order tears / floating snow / blown-out
-white, whole frame still a balanced beautiful coastal city.
-
-**Verdict: SHIPPED.** Sky's first CA rule in 321 iterations — a reaction-diffusion snow field that whitens the
-inland uplands and streets through the coldest weeks and melts off by summer, leaving the sea-warmed coast bare.
-Wholly census-inert; +1.1% draw only in deep winter, zero otherwise. `probes/probe-snow.mjs` + `probes/shot-snow.mjs`.
 
 ## Iteration 322 — the whales came in for the winter and left the summer bay empty (2026-07-17) [Water & coast × Deepen/interconnect]
 
@@ -895,3 +838,55 @@ by light alone on a crossed map; night lit, golden greens green, coast reads wat
 Guardrail reset (next ~335). NEXT vector: Sky × New element (291 lightning was the sparsest additive cell) or a
 measured seam (grep `tick()` / the TABLES / the comments — the cue list records where you've LOOKED, not what is
 THERE).
+
+## Iteration 331 — a jet crosses the high sky, drawing a contrail (2026-07-17) [Sky & atmosphere × New element]
+
+**Vector.** Sky × New element — the header's named sparsest additive cell (Sky's only prior New elements are 27, 43,
+291, so this is the **4th ever**), and the last genuinely-additive slot before additive space is fully spent. I first
+grepped the measured seams (comments for `never|no state|placed once|static`, the flag lifecycle for `hstr`/`bridge`/
+`riv`, the tables) — all well-tended (`hstr` already rides the tower podium per 249/281; 281/288 closed the flag
+defects; the marsh/kelp comments are audited). No fresh seam surfaced quickly, so I took the additive slot. The upper
+sky is a genuinely empty band (200): a high jet with a contrail fills it, on-theme for a coastal city, and clean
+(Math.random drift-in, draw-only, guaranteed-flat census).
+
+**Change (draw-only — Math.random spawn, no `rng()`, no terrain).** A single `plane` object (like `flock`), spawned in
+`genWorld` and advanced/looped in `advanceEntities`. A jet at altitude does not parallax with the ground, so it is a
+**SCREEN-SPACE** craft (`p`=progress across the viewport, `y`=screen fraction in the high band, `dir`, `sp`, `sl`=a
+gentle slope) — drawn in the sky slab **beside the sun/moon/shooting-star, BEFORE the city**, so the skyline occludes
+it exactly as it occludes the sun (a tower rising in front of the far jet is depth, not a tear). The contrail is a
+26-segment line fading behind a tiny dark swept speck with a blinking beacon. It is lit by the **sun**: bright white by
+day, warm-pink at golden hour (`GWARM`, a 6th reader of it), and **GONE at night** (`day = 1−LITAMT`, no sun to light
+it); it **fades out in rain** (`balloonFair`), so it never streaks a stormy sky. Census hook gets `plane:plane?1:0`.
+Not stamped/hoverable — a screen-space drift-in like the sun, moon, star and flock (the whale precedent, 286).
+
+**Census.** Draw-only, Math.random spawn ⇒ tile histogram empty, pop/roads/developed **byte-identical (+0)**, 0 page
+errors. VERDICT PASS. Vacuous by design; the claim rests on the probe + screenshots.
+
+**Probe** (`probes/probe-jet.mjs`, build-agnostic; isolation by clearing the decision, 230 — place a deterministic
+plane, render, then `plane=null`, re-render IN ONE PAGE, diff = the whole jet, floor **exactly 0**). Three conditions,
+two must-be-0 controls (`balloonFair` stubbed BY ASSIGNMENT, 284):
+- **DAY fair** → 453 / 551 / 503 px (seeds 42/7/1234), meanY **0.14** (high in the sky, above the skyline).
+- **NIGHT fair** → **0 px** on every seed (the `1−LITAMT` day factor kills it — a dead regime).
+- **DAY rain** → **0 px** on every seed (`balloonFair=0` fades it — fair-weather only). **JET: PASS.**
+
+**Visual** (`probes/shot-jet.mjs`, whole-city day + a close-up **aimed by measured ink** (226/272) + golden + night;
+`page.screenshot`, 200). Two blind subagents, seeds 42 & 7, both **PASS**: the contrail reads as a thin white streak
+with a tiny aircraft speck at its leading end, in open sky above the skyline; warmer/creamier at golden; **absent at
+night** (moon + stars only); no z-order tears / floating tiles / blown-out colour; the whole frame reads as a coherent
+coastal city.
+
+**Two camera bugs found and fixed along the way (200/204/226) — the artifact was innocent both times.** (1) The first
+build drew the trail in **world space** along constant world-y; the iso projection swept it steeply DOWN over the
+rooftops (ink bbox landed on the city) — a jet does not parallax, so it had to be screen-space. (2) The shot's first
+`time=100` sat exactly on the pre-existing **shooting star** (`met=(time·0.13)%1 = 0`, which draws at night/golden as a
+white diagonal), and a **rainy** loaded moment correctly HID the jet — so two agent rounds FAILed the *camera* (mis-
+attributing the meteor and seeing a blank rainy sky) while the artifact was fine. Fixed by forcing `rainFront=()=>0`,
+pinning `time` off the meteor, and aiming the close-up by measured ink rather than `pxc` (which is pre-transform and
+pointed the crop at empty sky).
+
+**Perf.** A handful of thin strokes for one on-screen jet, only in fair daylight; negligible. Step-back (~335) prices
+the arc in path objects.
+
+**Verdict: SHIPPED.** A high jet now crosses the empty upper sky drawing a sunlit contrail — white by day, warm at
+golden, gone at night, absent in rain — filling the one sky band that was bare. Draw-only, census byte-identical, the
+4th and last sparse additive cell. Sky × New element (27/43/291 → 331). `probes/probe-jet.mjs`, `probes/shot-jet.mjs`.

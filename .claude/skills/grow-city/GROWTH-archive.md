@@ -23294,3 +23294,61 @@ on 2 seeds; the day-length season reads by light alone on a crossed map; forty-f
 draw work; golden hue keeps the greens (265 holds); the night lit-city ordering clears by 19. The guardrail is
 reset (next step-back ~325); **NEXT vector is Civic or People × New CA rule** (the two stale additive cells).
 
+## Iteration 321 — it snowed on the hills, and the streets went white for a week (2026-07-17) [Sky & atmosphere × New CA rule]
+
+**Vector.** The header's `NEXT` is Civic/People × New CA rule, and grepping the seams turned up nothing (26-for-26
+is at *finding*, and the recent laps have closed the last cliffs/tables/flags — corner/loft/solar/groof done,
+hstr/bridge/riv/hedge all lifecycle-clean, every CIVICDESC promise has a fulfilling comment). So this lap takes
+the counterweight's *one bigger swing* into **the single emptiest cell in the whole grid: Sky × New CA rule —
+never done once in 320 iterations.** Sky has clouds, fog, overcast, lightning, day-length seasons — every one a
+FIELD or an ENTITY; it has never had a genuine `tick()` CA. **Snow.**
+
+**Change (a reaction-diffusion CA + a contained draw — wholly census-inert).** A new field `c.snow`:
+- **The CA** (`tick()`, before `recount()`): `winterMask()` (the 8th reader of `seasonCool()`, nonzero only where
+  `seasonCool()>SNOW0=0.85`, i.e. the coldest ~3 weeks) drives a per-tick source; each snow-land hex **relaxes
+  toward a per-type target** (`SNOWLERP=0.5`: PARK/hill 1.0, woods 0.9, ROAD 0.5) plus a **diffusion term**
+  (`SNOWDIFF=0.10`, drifts to level and thins at every boundary with the sea/void/buildings). Fast enough to settle
+  inside the warp's coarse 0.075 yr/tick step; melts clean before the golden peak. `SNOWLAND` = the inland open
+  ground only (EMPTY/MEADOW/FOREST/REDWOOD/PARK/ROAD/ROCK/FARM/VINEYARD/ORCHARD/GARDEN/FIELD) — **the coast
+  (BEACH/DUNE/SHOREPARK, palms and all) is left bare, sea-warmed**, and buildings shed it. The whole pass
+  **self-skips** (`snowGlobal`) for the ~3/4 of the year that is snowless.
+- **The draw** (one site, end of `drawCell`): a white `hexTile` overlay laid LAST (over road markings & low
+  ornaments, **under** the tree crowns above and every moving thing — z-correct). Alpha ramps over a thin fringe
+  then **holds flat above SNOWFULL=0.5** (near-uniform ⇒ *cannot terrace onto the lattice*, 257), through `colA`'s
+  illuminant so night snow goes dim/blue, not glowing.
+- **Zero rng(), zero hashCell, no terrain** — a pure field of season + neighbours, reset with `genWorld`
+  (`snow:0` in cell-init, `snowGlobal=0`). So it perturbs NOTHING the census measures.
+
+**Census.** Core **byte-identical** — pop/roads/developed **+0**. `solarRoofs +2/+3`, `towerHt −1/+0` is the 226
+tick-timing wobble (the winter snow pass costs a hair of per-tick compute ⇒ a different tick count lands); **proven
+harness, not semantics, by re-running the SAME file** (solarRoofs read +2 then +3, towerHt −1 then +0, core flat
+both times). VERDICT PASS / 0 page errors.
+
+**Probe** (`probes/probe-snow.mjs`, pure world data — drives `tick()`, reads `cells[].snow`, no pixels, no noise
+floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.snow` is undefined→0):
+- **WINTER mean 0.66, cover 100%** vs **SUMMER 0.002** (melts before the dry peak) — the seasonal gate is real;
+  HEAD's snow is a constant 0 (236's free baseline).
+- **PARK 0.96 vs ROAD 0.51** — deeper on the parks/woods than the streets ⇒ a genuine spatial diffusion field,
+  **not a flat wash**.
+- **LEAK (coast + every building) = 0 on all 6 seeds** — the must-not-move column (250): snow lies only where it
+  should. `quilt p95 step 0.42` is entirely at PARK↔ROAD *type* boundaries (a plowed street beside a white park);
+  WITHIN a region the diffusion smooths it, and the draw clamps alpha flat above 0.5 so those field steps don't
+  even reach the pixels.
+
+**Perf** (222, direct count — the drawbudget A/B was interrupted by a timeout, so the honest number is the direct
+one): the pass calls no `rng()`, so the city is provably identical ⇒ the only draw delta is the snow overlay:
+**+~1257 path objects (~+1.1% of the day budget) in DEEP-WINTER frames only, exactly 0 every other season**
+(summer byte-flat, tick pass self-skips). The step-back pins day/golden at the dry peak (s=0.62) → snowless → the
+arc measurement is unaffected; only the dusk-winter discriminating frame carries the cost.
+
+**Visual** (`probes/shot-snow.mjs`, clock frozen in-page + a few `tick()`s AT the pinned year to settle the field —
+`?year=` alone drifts, 139/202; winter-day / summer-day control / winter-dusk, 2 seeds). Both blind subagents
+**PASS** and both **located** it: white dusting on the inland parks/hills/streets, **coast and rooftops bare**,
+the summer control **discriminably snowless** ("easy to tell apart"), **no hex-grid quilt** ("a coherent blanket…
+soft even lightening"), night snow correctly **dim/blue not glowing**, no z-order tears / floating snow / blown-out
+white, whole frame still a balanced beautiful coastal city.
+
+**Verdict: SHIPPED.** Sky's first CA rule in 321 iterations — a reaction-diffusion snow field that whitens the
+inland uplands and streets through the coldest weeks and melts off by summer, leaving the sea-warmed coast bare.
+Wholly census-inert; +1.1% draw only in deep winter, zero otherwise. `probes/probe-snow.mjs` + `probes/shot-snow.mjs`.
+

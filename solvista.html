@@ -885,7 +885,7 @@ let vehicles=[], bikes=[], trams=[], trucks=[], peds=[], boats=[], buoys=[], fer
    sparse features can be screenshot-verified without a source edit to revert */
 let FLOOD={};
 const fl=(name,n)=>FLOOD[name]!==undefined?FLOOD[name]:n;
-let devBudgetUsed=0, firesNow=false, flock=null;
+let devBudgetUsed=0, firesNow=false, flock=null, plane=null;
 
 function idx(x,y){return y*G+x}
 function inB(x,y){return x>=0&&y>=0&&x<G&&y<G&&HEXOK[y*G+x]===1}
@@ -1359,6 +1359,12 @@ function genWorld(seed){
   for(let i=0;i<8;i++){const[bx2,by2]=rc();birds.push({x:bx2,y:by2,a:rng()*7,sp:0.9+rng()*0.6,h:70+rng()*40});}
   /* a pelican flock glides over in V-formation (Math.random, no perturbation) */
   {const d=Math.random()<0.5?1:-1; flock={x:d>0?-8:G+8,y:CTRY-16+Math.random()*32,h:92+Math.random()*22,dir:d,sp:0.55+Math.random()*0.2,n:7};}
+  /* a high jet crosses the upper sky, drawing a contrail (Math.random, no perturbation).
+     A jet at altitude does not parallax with the ground, so it is a SCREEN-SPACE craft
+     like the sun, moon and shooting star (drawn in the sky backdrop): `p` is its progress
+     across the viewport (0..1), `y` a screen fraction in the empty high-sky band above the
+     skyline, `sl` a gentle screen slope so the streak is not dead level. */
+  {const d=Math.random()<0.5?1:-1; plane={p:d>0?-0.15:1.15,y:0.05+Math.random()*0.13,dir:d,sp:0.020+Math.random()*0.012,sl:(Math.random()-0.5)*0.5};}
   /* `wf` is how much of a front it takes before this cloud lets go — NOT a rain
      flag. It replaces a `rain:rng()<0.3` boolean rolled once here and then true
      forever (iter 236); one rng() draw either way, so the stream is untouched. */
@@ -9429,6 +9435,39 @@ function render(){
     dg.addColorStop(1,'rgba('+rgb+',0)');
     ctx.fillStyle=dg;ctx.beginPath();ctx.arc(sunX,sunY,SUNR,0,7);ctx.fill();
   }
+
+  /* a high jet and its contrail (iter 331). A jet at altitude does not parallax with the
+     ground, so it is a SCREEN-SPACE craft like the sun and moon it is drawn beside — into
+     the sky slab BEFORE the city, so the skyline occludes it (a tower rising in front of
+     the far jet is depth, not a tear — the same treatment the sun gets). Its trail is lit
+     by the SUN: bright white by day, warm-pink at golden hour (GWARM, a sixth reader), and
+     GONE at night (day = 1-LITAMT) — no sun to light it. It fades out as the weather turns
+     (balloonFair), so it never streaks a stormy sky. */
+  if(plane){
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const day=clamp((1-LITAMT)*1.25,0,1)*balloonFair();
+    if(day>0.02){
+      const gw=GWARM;                                           /* 0 at noon/night, ~0.72 golden */
+      const cg=Math.round(253-24*gw), cb=Math.round(250-72*gw); /* white -> warm-pink at dusk */
+      const sx=plane.p*innerWidth, sy=plane.y*innerHeight;      /* the aircraft, at the nose */
+      const N=26, step=15;                                      /* trail: N segments, step px apart */
+      ctx.lineCap='round';
+      for(let k=0;k<N;k++){
+        const tx0=sx-plane.dir*k*step, tx1=sx-plane.dir*(k+1)*step;
+        const ty0=sy+k*step*plane.sl,  ty1=sy+(k+1)*step*plane.sl;   /* the gentle slope */
+        const f=1-k/N;                                          /* dense at the nose, fading behind */
+        ctx.strokeStyle='rgba(255,'+cg+','+cb+','+((0.34+0.42*f)*f*day)+')';
+        ctx.lineWidth=1.6+2.6*(1-f);                            /* the trail spreads as it ages */
+        ctx.beginPath();ctx.moveTo(tx0,ty0);ctx.lineTo(tx1,ty1);ctx.stroke();
+      }
+      ctx.fillStyle='rgba(44,48,56,'+(0.8*day)+')';            /* a tiny swept speck */
+      ctx.beginPath();ctx.moveTo(sx+plane.dir*4,sy);
+      ctx.lineTo(sx-plane.dir*3,sy-2.2);ctx.lineTo(sx-plane.dir*3,sy+2.2);ctx.closePath();ctx.fill();
+      const strobe=Math.pow(Math.max(0,Math.sin(time*3+plane.p*20)),24);  /* the beacon blinks */
+      if(strobe>0.1){ctx.fillStyle='rgba(255,250,235,'+(strobe*0.9*day)+')';
+        ctx.beginPath();ctx.arc(sx+plane.dir*4,sy,1.6,0,7);ctx.fill();}
+    }
+  }
   ctx.setTransform(dpr*scale,0,0,dpr*scale,dpr*offX,dpr*offY);
 
   /* entity buckets */
@@ -10758,6 +10797,8 @@ function advanceEntities(dt,s){
     if(b.x<-2||b.y<-2||b.x>G+2||b.y>G+2){b.x=clamp(b.x,-2,G+2);b.y=clamp(b.y,-2,G+2);b.a+=Math.PI;}}
   if(flock){flock.x+=flock.dir*flock.sp*dt*s;
     if((flock.dir>0&&flock.x>G+12)||(flock.dir<0&&flock.x<-12)){flock.x=flock.dir>0?-12:G+12;flock.y=CTRY-16+Math.random()*32;}}
+  if(plane){plane.p+=plane.dir*plane.sp*dt*s;
+    if((plane.dir>0&&plane.p>1.2)||(plane.dir<0&&plane.p<-0.2)){plane.dir=Math.random()<0.5?1:-1;plane.p=plane.dir>0?-0.15:1.15;plane.y=0.05+Math.random()*0.13;plane.sp=0.020+Math.random()*0.012;plane.sl=(Math.random()-0.5)*0.5;}}
   for(const sh of shuttles)stepShuttle(sh,dt*s);
   for(const m of monos)if(m.closed)stepTrains(m,dt*s);
   for(const g of gonds)stepCabins(g,dt*s);
@@ -10933,7 +10974,7 @@ window.__census=()=>{
     civicKinds:Object.keys(civic).length,                   /* service variety */
     transportModes:Object.values(transport).filter(n=>n>0).length,
     tiles, civic, transport,
-    life:{peds:peds.length,dogs:dogs.length,birds:birds.length,balloons:balloons.length,surfers:surfers.length,dolphins:dolphins.length,herons:herons.length,kayaks:kayaks.length,whales:whales.length,joggers:joggers.length,deer:deer.length,flock:flock?flock.n:0},
+    life:{peds:peds.length,dogs:dogs.length,birds:birds.length,balloons:balloons.length,surfers:surfers.length,dolphins:dolphins.length,herons:herons.length,kayaks:kayaks.length,whales:whales.length,joggers:joggers.length,deer:deer.length,flock:flock?flock.n:0,plane:plane?1:0},
   };
 };
 
