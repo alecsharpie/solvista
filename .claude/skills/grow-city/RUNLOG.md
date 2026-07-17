@@ -281,4 +281,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 348  Water × Deepen             SHIPPED             16m16s   $10.41 80a4fef
 ✔ Iter 349  Water × Deepen             SHIPPED             19m22s   $11.41 5e06907
 ↩ Iter 350  —                          EXPLORED → REVERTED 11m57s   $6.03  d6b7805
+↩ Iter 351  —                          EXPLORED → REVERTED 14m00s   $7.29  4e0419a
 ```
