@@ -9775,6 +9775,38 @@ function render(){
           ctx.stroke();
         }
         ctx.restore();
+        /* THE STRIKE (iter 328). 291 lit the cloud from within but nothing ever came
+           down. On the beat the flash peaks (same bar, same LITAMT wash, so the bolt
+           belongs to the same instant), a forked bolt drops the length of the rain shaft
+           — belly to foot — and grounds. A light SOURCE, so a raw white core under a
+           blue-white glow (279), never col(). Jagged deterministically in `time`+cloud
+           so there is no rng and each cell's strike differs; the jag is frozen per flash
+           (round()) so the bolt does not wriggle. INSIDE the on-plate guard, so a strike
+           can never land on the void (248). Rarer than the sheet flicker: gated well up
+           the flash curve, so only a wet storm at dusk throws a visible bolt. */
+        if(w>LIGHTN0){
+          const bp=Math.pow(Math.max(0,Math.sin(time*1.15+cl.y*4.3+cl.x*1.1)),30);
+          const bolt=bp*LIGHTN*(w-LIGHTN0)/(1-LIGHTN0)*(0.30+0.62*LITAMT);
+          if(bolt>0.22){
+            const sk=Math.round((time*1.15+cl.y*4.3+cl.x*1.1)/6.283);  /* one seed per flash */
+            const jag=k=>Math.sin(k*7.31+cl.y*3.1+cl.x*0.7+sk*11.7)*17*cl.s;
+            const seg=7, pts=[[cx,top]];
+            /* the jag stays wide all the way down (only lightly tapered) or the bolt reads
+               as a smooth light-shaft, not a strike (iter 328 visual); the ground point is
+               still exactly [foot,cy], so only the joints wander. */
+            for(let j=1;j<seg;j++){const t=j/seg;pts.push([cx+(foot-cx)*t+jag(j)*(0.5+0.5*(1-t)),top+(cy-top)*t]);}
+            pts.push([foot,cy]);
+            /* two short forks off interior joints, so it branches like a real strike */
+            const fork=(j,dx)=>[pts[j][0]+dx*cl.s+jag(j+11),pts[j][1]+(cy-pts[j][1])*0.42];
+            const f1=fork(2,18), f2=fork(4,-15);
+            const draw=()=>{ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let j=1;j<pts.length;j++)ctx.lineTo(pts[j][0],pts[j][1]);
+              ctx.moveTo(pts[2][0],pts[2][1]);ctx.lineTo(f1[0],f1[1]);ctx.moveTo(pts[4][0],pts[4][1]);ctx.lineTo(f2[0],f2[1]);ctx.stroke();};
+            ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+            ctx.strokeStyle='rgba(190,214,255,'+Math.min(0.55,bolt*0.6)+')';ctx.lineWidth=4.6*cl.s;draw();
+            ctx.strokeStyle='rgba(255,255,255,'+Math.min(0.95,bolt)+')';ctx.lineWidth=1.5*cl.s;draw();
+            ctx.restore();
+          }
+        }
       }
     }
     /* SHEET LIGHTNING (iter 291). A shower with weight behind it (w>LIGHTN0 — the same

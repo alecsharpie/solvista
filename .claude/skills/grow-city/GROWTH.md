@@ -22,7 +22,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
-| **Sky & atmosphere** | 27, 43, **291** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
+| **Sky & atmosphere** | 27, 43, **291** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
 - **Interaction/UX** (inventory + the `<meta charset>` repeal archived at 270; both are INVARIANTS in SKILL.md). What
@@ -32,30 +32,32 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Urban **327** (FACADE TILE PICK — cue (ba) CLOSED; Urban's stalest kind, Interaction/UX 133→327.
-  `hoverAt` picked the nearest ground-plane hex CENTRE, so hovering a tall wall named the hex drawn BEHIND it (224's
-  screen-y-is-DEPTH, on the pick): a TOWER's facade self-named **3.7–5.6%**, all built facade **~34%**. New `pickTile`
-  = the FRONTMOST built column (`BODYT`, `c.h`-prism geometry) covering the cursor, ground-plane fallback off buildings
-  ⇒ facade **100%**, open-ground control byte-identical. Interaction-only, census byte-identical, zero perf; real-mouse
-  E2E: HEAD named a road 6–7 rows back, PATCH names "Tower". 2 blind PASS + located crossed.) Prev: Civic **326**
-  (CIVIC SQUARE MATURATION — Civic × New CA 36/107, LAST stale additive cell; `c.civ` accumulation+diffusion weathers
-  plazas over decades, census byte-identical, corr(civ,age)=1.0, 2 blind PASS. ⚠ plazas YOUNG ⇒ maxCiv≈0.91, raw-vs-
-  established gradient not 1996-vs-2035.) Prev (all shipped, census byte-identical, laws in SKILL.md): **STEP-BACK #42
+- **ROTATION.** Last: Sky **328** (THE STRIKE — Sky × Deepen; 291's sheet flash lit the cloud from WITHIN and nothing
+  ever came down. 328 grounds a forked bolt down the rain shaft on the flash peak — same storm bar/`LITAMT` curve as
+  291, gated higher (`bolt>0.22`), INSIDE `if(pa>0)` so it never strikes the void (248). Draw-only, census
+  byte-identical, no rng; `probe-strike` isolates via 291's `LIGHTN` suppressor — WET 1656/4173px grounded column, DRY
+  control 0px both seeds (fair weather cannot strike). 2 blind PASS. ⚠ A JAG TAPERED TO 0 AT THE GROUND (`*(1-t)`)
+  READS AS A SMOOTH LIGHT-SHAFT — keep it spread the whole way down. ⚠ The max-fla hero can be OFFSHORE, its bolt
+  suppressed — aim by measured ink, pick the probe hero among ON-PLATE clouds.) Prev: Urban **327** (FACADE TILE PICK — cue (ba) CLOSED, law in SKILL.md; `pickTile` = the frontmost
+  built `c.h`-prism column covering the cursor (ground-plane fallback off buildings), so a tower's facade self-names
+  ~4%→100% and open ground stays byte-identical; census-inert, Interaction/UX 133→327.) Prev: Civic **326** (CIVIC
+  SQUARE MATURATION — Civic × New CA 36/107, LAST stale additive cell; `c.civ` accumulation+diffusion weathers plazas
+  over decades, census byte-identical, corr(civ,age)=1.0. ⚠ plazas YOUNG ⇒ maxCiv≈0.91.) Prev (all shipped, census
+  byte-identical, laws in SKILL.md): **STEP-BACK #42
   @325** (NO DRIFT; day-length season alive; perm arc BYTE-FLAT vs 320 once snow cleared — clear `c.snow` before
   pricing the arc) · People **324** (DESIRE PATHS, People's 1st non-excitable CA — `c.wear` diffusion off `c.buzz`
-  wears busy green to bare earth) · Nature **323** (WILDFLOWERS ANSWER SPRING — `bloomSeason()` gates the DRAW, CA
-  untouched) · Water **322** (WHALES MIGRATE — `whaleSeason()` off `w.ph/7`) · Sky **321** (SNOW — Sky's 1st CA,
-  reaction-diffusion `c.snow`, +5.7%d/+4.7%n the coldest ~3 wks ONLY, self-skips/melts — ⚠ warp=61 freezes it ON) ·
+  wears busy green to bare earth) · Nature **323** (WILDFLOWERS ANSWER SPRING — `bloomSeason()` gates the DRAW) ·
+  Water **322** (WHALES MIGRATE — `whaleSeason()` off `w.ph/7`) · Sky **321** (SNOW — Sky's 1st CA, reaction-diffusion
+  `c.snow`, coldest ~3 wks ONLY, self-melts — ⚠ warp=61 freezes it ON) ·
   Civic **319** (CUP-NIGHT FIREWORKS — `matchCelebrate()` 6-shell finale over each stadium, draw-only fixed point) ·
   People **318** (WASHING LINE answers rain+season) · People **317** (SEASONAL LEISURE COMPLETE) · Urban **316**
   (DISTRICTS — Voronoi `distOf`, 55→98%; ⛔ **the `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete**) ✅
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: ADDITIVE space is
-  FULLY ROTATED (Civic × New CA filled at 326; field-CA templates cover diffusion/reaction-diffusion/accumulation).
-  Remaining additive is stale-by-recency only: Sky × New element (291, "3rd ever", the one genuinely sparse cell).
-  Otherwise steer to a measured seam (225, now 27-for-27) or Deepen/Polish/Interaction. STEP-BACK #42 clean @325;
-  NEXT step-back ~330.**
+  FULLY ROTATED (Civic × New CA filled 326; field-CA templates cover diffusion/reaction-diffusion/accumulation). Only
+  genuinely sparse additive cell = Sky × New element (291, 3rd ever). Otherwise a measured seam (225, 27-for-27) or
+  Deepen/Polish/Interaction. STEP-BACK #42 clean @325; NEXT ~330 (328 was a Deepen).**
   ⚠ **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; (bi) daytime-lamp & (av) catenary cues = barely-visible
-  bad trade ⇒ ⛔ do NOT force, `polish-tile`). Sky NEW ELEMENT additive still sparse (291, 3rd ever).
+  bad trade ⇒ ⛔ do NOT force, `polish-tile`).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
   **NATURE** additive spent (301 deer), Polish paid (294); next = grep the tick()/CA seam (287/279). **URBAN**
   tooltip/flag/TABLE SATURATED (295/302), Interaction/UX ran (133/**327**) ⇒ take no Urban vector without a measured
@@ -391,59 +393,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 320 entries before Iteration 318 live in
+> **Archive:** the 321 entries before Iteration 319 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 318 — the washing hung out in the rain, and through midwinter (2026-07-17) [People & activity × Deepen/interconnect]
-
-**Vector.** Rotation steered to Civic/People × New CA rule, but the loop's law outranks it: grep the seam, not the cue
-list — and the New-CA idea I brought (washing lines in the older quarters) turned out to **already exist**, unlogged,
-in `drawBuilding`'s RES case (iter 34's law: grep before you design). The grep then handed back the real seam. The
-washing line's OWN comment claims *"out on dry days, in by dark"*, and it kept the `dark` half (`LITAMT<0.45`) and the
-`party` half (`!(c.party>0)`) — but there was **no `dry` gate at all**: it flapped through a downpour and hung out
-through a freezing January, on 6 seeds, forever. That is the 199/113 tell (a comment asserting a behaviour the draw
-ignores), and it is a **271/286 category hole**: the very comment on `rainingAt` (5051) records that the STREET CROWD
-was just taught to read the shower and *"the beach furniture packs away for the winter"* — the washing was that
-rain-and-season-aware category's **un-enumerated sibling**, two functions up, quietly deaf to both.
-
-**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** One gate, two clauses added:
-`hashCell<0.22` → `hashCell<0.22*beachPhase() && rainingAt(x,y)<0.05`.
-- **Rain** — `rainingAt(x,y)<0.05` reads the SAME shower footprint the street crowd, the wet ground, the veil and the
-  meadow-bloom CA read (the one-definition law): the washing comes in as a cloud passes over, exactly as the umbrellas
-  go up. Closes the *"dry days"* tell.
-- **Season** — `0.22*beachPhase()` thins the population toward the wet trough. **Scaled so `beachPhase()===1` at the
-  dry peak reproduces HEAD's `0.22` byte-for-byte** (245's fixed point) — only the winter loses lines, and the summer
-  city is untouched.
-The flap already read `WINDA` (`0.35+0.65*WINDA`), so with rain + season the line now answers the whole weather system.
-
-**Census.** Draw-only, gated on `rainingAt`/`beachPhase` (global reads), unreachable from `tick()` ⇒ `pop`/`developed`/
-`roads` **+0, byte-identical**, tile histogram empty. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
-
-**Probe** (`probes/probe-washline.mjs`, build-agnostic: it counts the gate population from the artifact's OWN
-`beachPhase`/`rainingAt`/`hashCell` over the real cells — the gate has no other side effect, so its truth-count IS the
-washing drawn — and computes both HEAD's gate `<0.22` and the patch's gate itself, depending on nothing the patch line
-touched). 3 seeds, at 2035, daytime (`LITAMT≈0.01`):
-- **A — dry-PEAK / clear sky: PATCH == HEAD on every seed** (10/10, 5/5, 5/5). The fixed point holds byte-for-byte (245).
-- **B — dry-PEAK / rain over the plate: PATCH ≪ HEAD** (10→2, 5→1, 5→0), `wetHits` 35/27/30 confirming the rig wets the
-  homes (a saturation test: a plate-covering forced cloud, `wf≪0`; a centroid cloud missed the RES fringe — by 2035 the
-  core is MID/TOWER, so the washing homes survive on the low-rise edge). Washing comes IN.
-- **C — wet-trough / clear sky: PATCH ≈ 0.10·HEAD** (10→1, 5→1, 5→0), the `BEACHMIN=0.10` thinning (ratio noisy on
-  populations of 5–10, but clearly toward the trough).
-- **ELIGIBLE** (west-RES-neighbour, both built, not party) is the shared must-not-move denominator (250), identical for
-  both gates so the difference isolates rain+season.
-
-**Visual.** Dry-summer whole-city (seed 42) + residential close-up (seed 7); the change only REMOVES draws under
-rain/winter and is byte-identical on a dry-summer day, so regression risk is nil. Both agents PASS; seed 7 sees the
-washing (*"tiny strings of colored dots between low-rise houses"*) — the common case is intact.
-
-**Verdict: DEEPENED.** The washing line now keeps the weather and the calendar the rest of the city keeps: it comes in
-as the shower arrives (closing its own *"dry days"* comment tell) and thins over the wet winter, at zero draw/stream
-cost and byte-identical at the dry peak. Enrolls the washing as the rain-aware category's missed sibling (271/286) —
-the domestic twin of the street crowd (rain) and the seasonal-leisure completion (247/317). `rainingAt`/`beachPhase`
-each gain a reader.
 
 ## Iteration 319 — the ground let off fireworks after the big evening match (2026-07-17) [Civic & culture × Connect]
 
@@ -901,3 +855,49 @@ is on, not the road drawn on the ground behind it — an occlusion-correct tile 
 the cursor, ground-plane fallback where nothing stands in the way), lifting a tower's facade from ~4% self-naming to
 100% while open ground is byte-identical. Interaction-only, wholly census-inert, zero perf cost, in Urban fabric's
 stalest kind. Urban × Interaction/UX (133 → 327). `probes/probe-facadepick.mjs`, `probes/shot-facadepick.mjs`.
+
+## Iteration 328 — the storm dropped a bolt to the ground, not just a flash in the cloud (2026-07-17) [Sky & atmosphere × Deepen/interconnect]
+
+**Vector.** Sky × Deepen. Grepped the weather seam FIRST (`lightning|thunder|bolt|flash|storm`) — a sheet flash
+already existed (iter 291), so this is not a new element. 291's `if(w>LIGHTN0)` glow lights the cloud *from within*
+(a radial gradient at the belly) but **nothing ever comes down**: over the artifact's whole life a heavy shower
+flickered internally and never threw a strike. Deepen the storm with a forked bolt that grounds on the beat the flash
+peaks. Sky was the stalest non-saturated domain (last real lap 321).
+
+**Change.** In the cloud loop, INSIDE the on-plate rain guard `if(pa>0)` (so a bolt can never strike the void — 248),
+a new `if(w>LIGHTN0)` block: same storm bar and same `pulse`/`(0.30+0.62*LITAMT)` flash curve as 291, gated higher
+(`bolt>0.22`) so only a wet storm at dusk throws a *visible* strike (rarer than the sheet flicker). A 7-segment jagged
+polyline from the cloud belly `(cx,top)` down the rain shaft to the exact ground point `(foot,cy)`, plus two short
+forks off interior joints. A light SOURCE, so a **raw white core under a blue-white glow** (279), never `col()`; jagged
+deterministically in `time`+cloud position (no rng), frozen per flash by `round()` so it does not wriggle. First cut
+tapered the jag to 0 at the ground and read as a smooth light-shaft (seed-7 agent FAIL); the jag now stays wide the
+whole way down (17px, lightly tapered) and reads as a strike.
+
+**Census.** Draw-only, no terrain, no `rng()` ⇒ tile histogram empty, every core metric **+0**, VERDICT PASS. The
+census is vacuous here by design (a momentary draw-only ornament); the claim rests on the probe + screenshots.
+
+**Probe** (`probes/probe-strike.mjs`, build-agnostic; isolation by the 291 `LIGHTN` suppressor, 253). At a frozen
+dusk, scans the decades for a WET, on-plate cloud (`cloudWet>LIGHTN0 && inB`) and tests each at its *own* flash peak
+(the single wettest instant can be a storm offshore, whose bolt correctly does not draw), taking the moment with the
+most grounded bolt ink. Bolt ink = LIGHTN-diff pixels in the tall band below every belly+glow (y≥340), so the sheet
+glow is excluded spatially.
+- **WET:** seed 42 → **1656px / span 269px**, seed 7 → **4173px / span 296px** — a real descending column reaching
+  the ground.
+- **DRY control (250, must-be-0):** the driest front, swept for any flash → **0px on both seeds**. Fair weather
+  cannot strike (the bolt shares the flash's storm bar) — the load-bearing control. **STRIKE: PASS.**
+
+**Visual** (`probes/shot-strike.mjs`, aims the close-up by the bolt's measured ink centroid, 226 — the max-fla hero
+can be off-plate; whole-city dusk frame + close-up, `page.screenshot`, zoom not scale per 269). Two blind subagents,
+seeds 42 & 7: **both PASS.** Seed 42 — clear jagged bolt with a visible fork, bright white core + faint blue-white
+glow, grounding on the built plate, no z-order tears/floating/blowout, city coherent. Seed 7 — an offshore storm
+throws bolts that ground on the sea (on-plate), kinked and reading as lightning; forks less crisp where several
+columns overlap at that zoom, but PASS. (First cut FAILed seed 7 as smooth shafts — the `(1-t)` jag taper was the
+cause, now fixed.)
+
+**Perf.** A momentary draw: two stroke passes per firing on-plate storm cloud, only within the sub-second flash peak,
+and only for wet dusk storms — most frames draw zero bolts. Amortized cost ~0; the step-back (~330) prices the arc.
+
+**Verdict: DEEPENED.** 291's storm flashed from inside the cloud; it now grounds a forked bolt on the beat the flash
+peaks, only for a wet storm at dusk, only where the shower is on the plate. Draw-only, wholly census-inert, no new
+tooltip surface (an ornament like the sheet flash / rain shaft, not an entity). Sky × Deepen (35 → … → 328).
+`probes/probe-strike.mjs`, `probes/shot-strike.mjs`.

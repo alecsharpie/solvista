@@ -23155,3 +23155,51 @@ standing empty), at zero draw/stream cost and byte-identical at the dry peak. Co
 (beach 247 → park 317), the twin of the excitable-media completion (bloom 263 · shroom 272 · party 314). Cue (bh)
 closed as a non-defect. `beachPhase()` gains three readers.
 
+## Iteration 318 — the washing hung out in the rain, and through midwinter (2026-07-17) [People & activity × Deepen/interconnect]
+
+**Vector.** Rotation steered to Civic/People × New CA rule, but the loop's law outranks it: grep the seam, not the cue
+list — and the New-CA idea I brought (washing lines in the older quarters) turned out to **already exist**, unlogged,
+in `drawBuilding`'s RES case (iter 34's law: grep before you design). The grep then handed back the real seam. The
+washing line's OWN comment claims *"out on dry days, in by dark"*, and it kept the `dark` half (`LITAMT<0.45`) and the
+`party` half (`!(c.party>0)`) — but there was **no `dry` gate at all**: it flapped through a downpour and hung out
+through a freezing January, on 6 seeds, forever. That is the 199/113 tell (a comment asserting a behaviour the draw
+ignores), and it is a **271/286 category hole**: the very comment on `rainingAt` (5051) records that the STREET CROWD
+was just taught to read the shower and *"the beach furniture packs away for the winter"* — the washing was that
+rain-and-season-aware category's **un-enumerated sibling**, two functions up, quietly deaf to both.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** One gate, two clauses added:
+`hashCell<0.22` → `hashCell<0.22*beachPhase() && rainingAt(x,y)<0.05`.
+- **Rain** — `rainingAt(x,y)<0.05` reads the SAME shower footprint the street crowd, the wet ground, the veil and the
+  meadow-bloom CA read (the one-definition law): the washing comes in as a cloud passes over, exactly as the umbrellas
+  go up. Closes the *"dry days"* tell.
+- **Season** — `0.22*beachPhase()` thins the population toward the wet trough. **Scaled so `beachPhase()===1` at the
+  dry peak reproduces HEAD's `0.22` byte-for-byte** (245's fixed point) — only the winter loses lines, and the summer
+  city is untouched.
+The flap already read `WINDA` (`0.35+0.65*WINDA`), so with rain + season the line now answers the whole weather system.
+
+**Census.** Draw-only, gated on `rainingAt`/`beachPhase` (global reads), unreachable from `tick()` ⇒ `pop`/`developed`/
+`roads` **+0, byte-identical**, tile histogram empty. VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-washline.mjs`, build-agnostic: it counts the gate population from the artifact's OWN
+`beachPhase`/`rainingAt`/`hashCell` over the real cells — the gate has no other side effect, so its truth-count IS the
+washing drawn — and computes both HEAD's gate `<0.22` and the patch's gate itself, depending on nothing the patch line
+touched). 3 seeds, at 2035, daytime (`LITAMT≈0.01`):
+- **A — dry-PEAK / clear sky: PATCH == HEAD on every seed** (10/10, 5/5, 5/5). The fixed point holds byte-for-byte (245).
+- **B — dry-PEAK / rain over the plate: PATCH ≪ HEAD** (10→2, 5→1, 5→0), `wetHits` 35/27/30 confirming the rig wets the
+  homes (a saturation test: a plate-covering forced cloud, `wf≪0`; a centroid cloud missed the RES fringe — by 2035 the
+  core is MID/TOWER, so the washing homes survive on the low-rise edge). Washing comes IN.
+- **C — wet-trough / clear sky: PATCH ≈ 0.10·HEAD** (10→1, 5→1, 5→0), the `BEACHMIN=0.10` thinning (ratio noisy on
+  populations of 5–10, but clearly toward the trough).
+- **ELIGIBLE** (west-RES-neighbour, both built, not party) is the shared must-not-move denominator (250), identical for
+  both gates so the difference isolates rain+season.
+
+**Visual.** Dry-summer whole-city (seed 42) + residential close-up (seed 7); the change only REMOVES draws under
+rain/winter and is byte-identical on a dry-summer day, so regression risk is nil. Both agents PASS; seed 7 sees the
+washing (*"tiny strings of colored dots between low-rise houses"*) — the common case is intact.
+
+**Verdict: DEEPENED.** The washing line now keeps the weather and the calendar the rest of the city keeps: it comes in
+as the shower arrives (closing its own *"dry days"* comment tell) and thins over the wet winter, at zero draw/stream
+cost and byte-identical at the dry peak. Enrolls the washing as the rain-aware category's missed sibling (271/286) —
+the domestic twin of the street crowd (rain) and the seasonal-leisure completion (247/317). `rainingAt`/`beachPhase`
+each gain a reader.
+
