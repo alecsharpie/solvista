@@ -21,7 +21,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291**, **331** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313**, **328** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318**, **336**, **337** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
@@ -53,8 +53,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 337 landed
-  (People — park picnic + ballgame, the daytime rain siblings 336 MISSED in its own block); NEXT ~340 = STEP-BACK #45.** Additive space FULLY SPENT (331). ⇒
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 338 landed (Civic — the
+  capitol's twin standards, the last flag that flapped on a clock term not `windForce`, 280 ⛔ WIND-READER CATEGORY CLOSED); ~339 free, ~340 = STEP-BACK #45.** Additive space FULLY SPENT (331). ⇒
   **next = a measured seam (225) or Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **remaining gaps
   are DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
@@ -391,57 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 330 entries before Iteration 328 live in
+> **Archive:** the 331 entries before Iteration 329 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 328 — the storm dropped a bolt to the ground, not just a flash in the cloud (2026-07-17) [Sky & atmosphere × Deepen/interconnect]
-
-**Vector.** Sky × Deepen. Grepped the weather seam FIRST (`lightning|thunder|bolt|flash|storm`) — a sheet flash
-already existed (iter 291), so this is not a new element. 291's `if(w>LIGHTN0)` glow lights the cloud *from within*
-(a radial gradient at the belly) but **nothing ever comes down**: over the artifact's whole life a heavy shower
-flickered internally and never threw a strike. Deepen the storm with a forked bolt that grounds on the beat the flash
-peaks. Sky was the stalest non-saturated domain (last real lap 321).
-
-**Change.** In the cloud loop, INSIDE the on-plate rain guard `if(pa>0)` (so a bolt can never strike the void — 248),
-a new `if(w>LIGHTN0)` block: same storm bar and same `pulse`/`(0.30+0.62*LITAMT)` flash curve as 291, gated higher
-(`bolt>0.22`) so only a wet storm at dusk throws a *visible* strike (rarer than the sheet flicker). A 7-segment jagged
-polyline from the cloud belly `(cx,top)` down the rain shaft to the exact ground point `(foot,cy)`, plus two short
-forks off interior joints. A light SOURCE, so a **raw white core under a blue-white glow** (279), never `col()`; jagged
-deterministically in `time`+cloud position (no rng), frozen per flash by `round()` so it does not wriggle. First cut
-tapered the jag to 0 at the ground and read as a smooth light-shaft (seed-7 agent FAIL); the jag now stays wide the
-whole way down (17px, lightly tapered) and reads as a strike.
-
-**Census.** Draw-only, no terrain, no `rng()` ⇒ tile histogram empty, every core metric **+0**, VERDICT PASS. The
-census is vacuous here by design (a momentary draw-only ornament); the claim rests on the probe + screenshots.
-
-**Probe** (`probes/probe-strike.mjs`, build-agnostic; isolation by the 291 `LIGHTN` suppressor, 253). At a frozen
-dusk, scans the decades for a WET, on-plate cloud (`cloudWet>LIGHTN0 && inB`) and tests each at its *own* flash peak
-(the single wettest instant can be a storm offshore, whose bolt correctly does not draw), taking the moment with the
-most grounded bolt ink. Bolt ink = LIGHTN-diff pixels in the tall band below every belly+glow (y≥340), so the sheet
-glow is excluded spatially.
-- **WET:** seed 42 → **1656px / span 269px**, seed 7 → **4173px / span 296px** — a real descending column reaching
-  the ground.
-- **DRY control (250, must-be-0):** the driest front, swept for any flash → **0px on both seeds**. Fair weather
-  cannot strike (the bolt shares the flash's storm bar) — the load-bearing control. **STRIKE: PASS.**
-
-**Visual** (`probes/shot-strike.mjs`, aims the close-up by the bolt's measured ink centroid, 226 — the max-fla hero
-can be off-plate; whole-city dusk frame + close-up, `page.screenshot`, zoom not scale per 269). Two blind subagents,
-seeds 42 & 7: **both PASS.** Seed 42 — clear jagged bolt with a visible fork, bright white core + faint blue-white
-glow, grounding on the built plate, no z-order tears/floating/blowout, city coherent. Seed 7 — an offshore storm
-throws bolts that ground on the sea (on-plate), kinked and reading as lightning; forks less crisp where several
-columns overlap at that zoom, but PASS. (First cut FAILed seed 7 as smooth shafts — the `(1-t)` jag taper was the
-cause, now fixed.)
-
-**Perf.** A momentary draw: two stroke passes per firing on-plate storm cloud, only within the sub-second flash peak,
-and only for wet dusk storms — most frames draw zero bolts. Amortized cost ~0; the step-back (~330) prices the arc.
-
-**Verdict: DEEPENED.** 291's storm flashed from inside the cloud; it now grounds a forked bolt on the beat the flash
-peaks, only for a wet storm at dusk, only where the shower is on the plate. Draw-only, wholly census-inert, no new
-tooltip surface (an ornament like the sheet flash / rain shaft, not an entity). Sky × Deepen (35 → … → 328).
-`probes/probe-strike.mjs`, `probes/shot-strike.mjs`.
 
 ## Iteration 329 — the lit waterfront finally shone on the water it fronts (2026-07-17) [Water & coast × Deepen/interconnect]
 
@@ -884,3 +838,51 @@ shower on the same `dryAt` predicate as the café crowd, and stand out unchanged
 "last visible rain sibling is the beach crowd" was wrong; with these two the outdoor-daytime-crowd category is closed
 for real (the beach crowd remains the sole hold-out, Water and calendar-only by design ⛔). Draw-only, census
 byte-identical. People × Deepen. `probes/probe-parkrain.mjs`, `probes/shot-parkrain.mjs`.
+
+## Iteration 338 — the capitol's standards fly with the wind (2026-07-17) [Civic & culture × Deepen/interconnect]
+
+**Vector.** The parliament — "the seat of the region, and the tallest civic roof in Solvista" — flies twin gold
+standards from its dome front. Every OTHER flag in the city rides the shared gust (the hall's and school's `windFlag`
+scale their flutter by `WINDA`; the harbour + beach flags; the kites read `kiteGust`; smoke leans on `smokeLean`; the
+sails belly on `windForce` — 280/333/334), and 280 wrote the law that they must all "gust together". But the capitol's
+two most prominent flags flapped on `Math.sin(time*2+y)` — a clock term with **no wind in it** — so they snapped stiffly
+straight out in a **dead calm** while the hall flag on the next roof hung limp. They are the un-enumerated member of the
+wind's reader category (280: the reader list is a changelog, not a spec — grep the MECHANISM `windForce`, not the header's
+"wind DONE ⛔"). Found by grepping every flag/pennant draw for `windForce`/`WINDA` and finding the one inline draw
+(`drawCivic`'s parliament branch, ~L8388) that a `windFlag`-caller grep misses. Rotated off People (336/337 both rain)
+into Civic; a different KIND (wind, not rain) and domain.
+
+**Change (draw-only — no `rng()`, no terrain, unreachable from `tick()`).** `wf2=windForce()`; each standard's downwind
+reach `st=(4.2+wv2)*(0.34+0.66*wf2)` streams farther/flatter in a gale and shrinks in the lull, plus a droop
+`dp=2.4*(1-wf2)` that hangs it in toward the pole when the air goes still, in the SAME +x every gusting thing drifts.
+At `windForce()==1` (full gale) `st=4.2+wv2, dp=0` ⇒ **HEAD's exact `4.2+wv2` byte-for-byte** — an exact fixed point
+(245/280, the kite convention: 1.0 at full gale = HEAD). Same two `fill()`s, same primitives ⇒ zero new path objects.
+
+**Census.** Draw-only ⇒ tile histogram empty, `pop`/`developed`/`roads` **byte-identical (+0)**, 0 page errors.
+VERDICT PASS.
+
+**Probe** (`probes/probe-capitolflag.mjs`, build-agnostic — hooks the artifact's own path ops and reads back the
+pennant triangle the frame ISSUES (base verts share the pole x, tip offset `+st`), so reach = `tipX-baseX` is
+deterministic with **NO NOISE FLOOR AT ALL**; `windForce` is a top-level function ⇒ `window.windForce=()=>1` renders
+HEAD's draw IN-PAGE (253), so ONE file grades HEAD and the patch, no source swap, no cross-build floor). 4 seeds
+(42/7/1234/99), 1 parliament each, mean of the 2 standards' reach at day pin, frozen clock:
+- **RESPONSE:** CALM (`WINDA=0.25`, `windForce=0`) reach is **0.34x** the GALE (`WINDA=1.0`) reach on all 4 seeds
+  (3.23→1.10 · 3.89→1.32 · 4.39→1.49 · 5.13→1.74) — the standard clearly answers the wind.
+- **FIXED POINT:** GALE reach == HEAD reach **exactly** on every seed (windForce==1 reproduces HEAD's `4.2+wv2`).
+- **CONTROL / must-not-move (250):** HEAD (windForce stubbed to 1) reads the **identical** reach at `WINDA=0.25` and
+  `WINDA=1.0` — HEAD ignores the wind, so nothing but the patched lever moved. CAPITOLFLAG: PASS.
+
+**Visual** (`probes/shot-capitolflag.mjs` — same frozen world, ONE parliament, shot at `__setWind(0.25)` (calm) and
+`__setWind(1.0)` (gale) as a blind A/B zoomed 7× and centred on the capitol via `zoom`/`offX` (269), plus an un-zoomed
+whole-city gale frame; `page.screenshot` DOM-composited (200); tokens meaningless + non-ordinal, calm/gale map
+**CROSSED between seeds** (238/239/268); md5 confirmed all 4 zoomed frames differ). **Both blind subagents, on both
+seeds, on the crossed map, correctly named the GALE from the streaming standards alone** (s42 gale=`cobalt` ✓ · s7
+gale=`myrtle` ✓): pennants stream out flat/far to the right in the gale, hang short/drooped against their poles in the
+calm, attached to the poles on the building (not floating/detached), no z-order tears or blown colour anywhere, and
+both whole-city frames read as a balanced, coherent coastal city.
+
+**Perf.** Zero new path objects (draw-only, same 2 fills). Step-back (~340) prices the arc.
+
+**Verdict: SHIPPED.** The capitol's twin standards now fly with the same gust as every other flag, kite, plume and
+sail — the whole sky, the seat of the region included, gusts together (280). Exact fixed point at full gale, census
+byte-identical. Civic × Deepen. `probes/probe-capitolflag.mjs`, `probes/shot-capitolflag.mjs`.

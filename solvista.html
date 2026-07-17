@@ -8388,10 +8388,22 @@ function drawBuilding(c,x,y,gx,gy){
       {const[e1x,e1y]=px(gx+0.32,gy+0.28), e2x=cx-(e1x-cx); /* twin gold standards */
       ctx.strokeStyle=col('whiteDk',1);ctx.lineWidth=1;
       ctx.beginPath();ctx.moveTo(e1x,e1y);ctx.lineTo(e1x,e1y-12);ctx.moveTo(e2x,e1y);ctx.lineTo(e2x,e1y-12);ctx.stroke();
-      const wv2=Math.sin(time*2+y);
+      /* the twin standards FLY WITH THE WIND (280). Every other flag in the city rides
+         the shared gust -- the hall's and the school's windFlag, the harbour and beach
+         flags, the kites -- but the capitol's two most prominent flags flapped on a clock
+         term with no wind in it (Math.sin(time*2+y)), snapping stiffly out in a dead calm
+         while the hall flag on the next roof hung limp. They are the un-enumerated member
+         of the wind's reader category (280: the reader list is a changelog, not a spec, so
+         grep the MECHANISM -- windForce -- and find who does not read it). Each standard now
+         streams downwind in the +x every gusting thing drifts, farther and flatter in a
+         gale, drooping in toward the pole in the lull. windForce()==1 (full gale) reproduces
+         HEAD's 4.2+wv2 byte-for-byte -- an exact fixed point (245), so the whole sky, the
+         capitol flags included, gusts together. */
+      const wv2=Math.sin(time*2+y), wf2=windForce();
+      const st=(4.2+wv2)*(0.34+0.66*wf2), dp=2.4*(1-wf2);
       ctx.fillStyle=col('gold',1.25);
-      ctx.beginPath();ctx.moveTo(e1x,e1y-12);ctx.lineTo(e1x+4.2+wv2,e1y-10.9);ctx.lineTo(e1x,e1y-9.8);ctx.closePath();ctx.fill();
-      ctx.beginPath();ctx.moveTo(e2x,e1y-12);ctx.lineTo(e2x+4.2+wv2,e1y-10.9);ctx.lineTo(e2x,e1y-9.8);ctx.closePath();ctx.fill();}
+      ctx.beginPath();ctx.moveTo(e1x,e1y-12);ctx.lineTo(e1x+st,e1y-10.9+dp);ctx.lineTo(e1x,e1y-9.8);ctx.closePath();ctx.fill();
+      ctx.beginPath();ctx.moveTo(e2x,e1y-12);ctx.lineTo(e2x+st,e1y-10.9+dp);ctx.lineTo(e2x,e1y-9.8);ctx.closePath();ctx.fill();}
     } else {
       /* unnamed civic kinds: white hall, gold trim, modest dome */
       prism(gx,gy,0.38,0.34,0,h,col('white',1),col('white',0.62),col('white',0.85));

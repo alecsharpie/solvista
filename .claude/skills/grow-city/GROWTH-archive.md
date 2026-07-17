@@ -23667,3 +23667,49 @@ the cursor, ground-plane fallback where nothing stands in the way), lifting a to
 100% while open ground is byte-identical. Interaction-only, wholly census-inert, zero perf cost, in Urban fabric's
 stalest kind. Urban × Interaction/UX (133 → 327). `probes/probe-facadepick.mjs`, `probes/shot-facadepick.mjs`.
 
+## Iteration 328 — the storm dropped a bolt to the ground, not just a flash in the cloud (2026-07-17) [Sky & atmosphere × Deepen/interconnect]
+
+**Vector.** Sky × Deepen. Grepped the weather seam FIRST (`lightning|thunder|bolt|flash|storm`) — a sheet flash
+already existed (iter 291), so this is not a new element. 291's `if(w>LIGHTN0)` glow lights the cloud *from within*
+(a radial gradient at the belly) but **nothing ever comes down**: over the artifact's whole life a heavy shower
+flickered internally and never threw a strike. Deepen the storm with a forked bolt that grounds on the beat the flash
+peaks. Sky was the stalest non-saturated domain (last real lap 321).
+
+**Change.** In the cloud loop, INSIDE the on-plate rain guard `if(pa>0)` (so a bolt can never strike the void — 248),
+a new `if(w>LIGHTN0)` block: same storm bar and same `pulse`/`(0.30+0.62*LITAMT)` flash curve as 291, gated higher
+(`bolt>0.22`) so only a wet storm at dusk throws a *visible* strike (rarer than the sheet flicker). A 7-segment jagged
+polyline from the cloud belly `(cx,top)` down the rain shaft to the exact ground point `(foot,cy)`, plus two short
+forks off interior joints. A light SOURCE, so a **raw white core under a blue-white glow** (279), never `col()`; jagged
+deterministically in `time`+cloud position (no rng), frozen per flash by `round()` so it does not wriggle. First cut
+tapered the jag to 0 at the ground and read as a smooth light-shaft (seed-7 agent FAIL); the jag now stays wide the
+whole way down (17px, lightly tapered) and reads as a strike.
+
+**Census.** Draw-only, no terrain, no `rng()` ⇒ tile histogram empty, every core metric **+0**, VERDICT PASS. The
+census is vacuous here by design (a momentary draw-only ornament); the claim rests on the probe + screenshots.
+
+**Probe** (`probes/probe-strike.mjs`, build-agnostic; isolation by the 291 `LIGHTN` suppressor, 253). At a frozen
+dusk, scans the decades for a WET, on-plate cloud (`cloudWet>LIGHTN0 && inB`) and tests each at its *own* flash peak
+(the single wettest instant can be a storm offshore, whose bolt correctly does not draw), taking the moment with the
+most grounded bolt ink. Bolt ink = LIGHTN-diff pixels in the tall band below every belly+glow (y≥340), so the sheet
+glow is excluded spatially.
+- **WET:** seed 42 → **1656px / span 269px**, seed 7 → **4173px / span 296px** — a real descending column reaching
+  the ground.
+- **DRY control (250, must-be-0):** the driest front, swept for any flash → **0px on both seeds**. Fair weather
+  cannot strike (the bolt shares the flash's storm bar) — the load-bearing control. **STRIKE: PASS.**
+
+**Visual** (`probes/shot-strike.mjs`, aims the close-up by the bolt's measured ink centroid, 226 — the max-fla hero
+can be off-plate; whole-city dusk frame + close-up, `page.screenshot`, zoom not scale per 269). Two blind subagents,
+seeds 42 & 7: **both PASS.** Seed 42 — clear jagged bolt with a visible fork, bright white core + faint blue-white
+glow, grounding on the built plate, no z-order tears/floating/blowout, city coherent. Seed 7 — an offshore storm
+throws bolts that ground on the sea (on-plate), kinked and reading as lightning; forks less crisp where several
+columns overlap at that zoom, but PASS. (First cut FAILed seed 7 as smooth shafts — the `(1-t)` jag taper was the
+cause, now fixed.)
+
+**Perf.** A momentary draw: two stroke passes per firing on-plate storm cloud, only within the sub-second flash peak,
+and only for wet dusk storms — most frames draw zero bolts. Amortized cost ~0; the step-back (~330) prices the arc.
+
+**Verdict: DEEPENED.** 291's storm flashed from inside the cloud; it now grounds a forked bolt on the beat the flash
+peaks, only for a wet storm at dusk, only where the shower is on the plate. Draw-only, wholly census-inert, no new
+tooltip surface (an ornament like the sheet flash / rain shaft, not an entity). Sky × Deepen (35 → … → 328).
+`probes/probe-strike.mjs`, `probes/shot-strike.mjs`.
+
