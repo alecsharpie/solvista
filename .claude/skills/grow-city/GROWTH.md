@@ -17,7 +17,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
+| **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
@@ -32,12 +32,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Water **322** (WHALE MIGRATION — gray whales now answer the calendar (286 pattern), neglected
-  Water domain: `drawWhale` had NO season gate ⇒ a MIGRANT drawn as a resident all year. `whaleSeason()` (raised
-  trapezoid on `year%1`, ~1 Dec–mid-May, 0 golden summer/autumn); gate `<=w.ph/7` off the whale's OWN phase ⇒ zero new
-  random draws, staggered fade, hidden ⇒ not stamped ⇒ not hoverable. Dolphins stay resident. Census BYTE-IDENTICAL
-  (whales array untouched). `probe-whalemigration` PATCH win/spr 40→sum/aut 0 (DISTINCT 4) vs HEAD 40 always (DISTINCT
-  1), dolphins flat control; 2 blind visual PASS, both named winter by the whales on a crossed map.) · Sky **321**
+- **ROTATION.** Last: Nature **323** (WILDFLOWERS ANSWER SPRING — grassland bloom-wave `bloomAt` had NO season gate
+  ⇒ flowers every season, incl. ON the 321 snow, while the FOREST ephemerals above kept the calendar. `bloomSeason()`
+  raised trapezoid, spring plateau s∈[0.25,0.43], 0 by dry peak & winter; CA `c.bloom` UNTOUCHED ⇒ census byte-
+  identical, `bs=1` at plateau = HEAD's bytes (perf credit rest of year); 1 predicate 3 readers, tooltip→"Dormant".
+  `probe-bloomseason` PATCH spring-only DISTINCT 2 vs HEAD DISTINCT 1, raw-CA + forest-ephemeral controls held; 2
+  blind PASS, both named spring by the flowers, crossed map.) · Water **322** (WHALES MIGRATE — `whaleSeason()` gate off `w.ph/7`, zero draws, dolphins resident, byte-identical; 2 blind PASS.) · Sky **321**
   (SNOW — Sky's 1st CA in 321 laps: reaction-diffusion `c.snow`, census byte-identical, +1.1% draw deep-winter only.) · Civic **319**
   (CUP-NIGHT FIREWORKS: `matchCelebrate()` 6-shell finale over each stadium
   after a cup-night whistle, `LITAMT>0.6`; draw-only, exact fixed point; `probe-matchfire`) · People **318**
@@ -391,61 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 315 entries before Iteration 313 live in
+> **Archive:** the 316 entries before Iteration 314 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 313 — the hot-air balloons rode serenely through the thunderstorm (2026-07-17) [Sky & atmosphere × Deepen/interconnect]
-
-**Vector.** Sky rotation (oldest-shipped domain, 305). Sky's Deepen is mature but its comments were not all
-audited, so I grepped the sky seam for a 199-tell rather than the cue list. The balloon spawn's two comments
-read *"hot-air balloons drift over on **fair days**"* and *"**fair-weather** balloon festival"* — and the spawn
-gates on **`year>=1998` ALONE, with no weather term anywhere.** So the whole fleet floated placidly through
-overcast, showers and — since 291 — **lightning**. A hot-air balloon is the quintessential fair-weather craft
-(grounded by rain and gusts); this is 199's tell hosted on a draw's HOST comment: the words assert a
-fair-weather behaviour the value cannot have. Confirmed on HEAD before designing (`probe-balloonweather`):
-balloon ink is **byte-flat across the front's driest and wettest year** (wet/dry ratio **≈1.00** on 3 seeds).
-
-**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The balloons never despawn — `advanceEntities`
-**wraps** them (`b.x>G+8 → -8`), so a spawn gate could never empty the sky (the fleet fills on the first fair
-tick past 1998 and then loops through every future storm). So the gate lives at **DRAW**, faded on the shared
-weather signal:
-- **`balloonFair() = 1 - clamp((rainFront()-BALLOON0)/BALLOONRAMP, 0, 1)`** with `BALLOON0=0.50, BALLOONRAMP=0.20`
-  — full below 0.50 (before the sky even leadens at `OVC0=0.58`), grounded by ~0.70 (a clear shower). The Nth
-  reader of the one `rainFront()` every cloud/bow/CA already shares (one-predicate law). It FADES, not pops, or a
-  passing shower would blink the sky (134); `rainFront` is the slow ~20yr cycle, so no strobe.
-- The balloon draw loop wraps each envelope+basket in `ctx.globalAlpha=ballFair` (reset to 1 after), and skips the
-  loop entirely when `ballFair<=0.01`. Spawn UNCHANGED ⇒ the seeded stream is untouched.
-
-**Census.** Draw-only, unreachable from `tick()`'s terrain ⇒ core **BYTE-IDENTICAL** (`pop`/`developed`/`roads`
-**+0**, tile histogram empty). `greenRoofs -1` = the 226/278 RAF-tick wobble, not this edit. VERDICT: PASS
-(vacuous by design — the gate is the probe + eyes).
-
-**Probe** (`probes/probe-balloonweather.mjs`, 3 seeds). Isolates the balloon LAYER by rendering the frozen frame
-WITH balloons and WITHOUT (clear the array) and diffing — the changed pixels ARE the balloons, sky cancelled,
-floor exactly 0. Measured at the driest and wettest year of each seed's front. Build-agnostic via **253's
-suppress-the-predicate** trick (`window.balloonFair = () => 1` renders HEAD's weather-blind behaviour in-page —
-no source swap, no cross-build floor). ⚠ `__warp` parks every balloon off the left edge (never drifts them), so
-the probe spreads them across the plate first — position is independent of the fade.
-- **PATCH: balloon ink dry 830–905 px → wet 0 px** (wet/dry **0.000** on every seed) — the fleet grounds in the rain.
-- **HEAD (control): dry ≈ wet** (ratio **0.999–1.004**) — flies through the storm regardless. The defect, stated.
-
-**Visual** (`probes/shot-balloonweather.mjs`, seeds 42 & 7; a discriminating pair per 258, since the success case
-is an ABSENCE). Three frames each: **fair** (dry year — balloons out), **storm** (wettest year, same hour — leaden
-sky, NO balloons), **storm-head** (the storm with `balloonFair→1` forced — balloons drifting through it, the
-defect). Both blind subagents **PASS**: *"balloons present and reading correctly as hot-air balloons"* in fair;
-*"leaden grey/overcast … all the balloons are ABSENT"* in storm; *"the balloons are PRESENT again … the old buggy
-behavior"* in storm-head. No z-order tears, floating tiles or blown-out colour anywhere; both whole frames read as
-balanced, coherent coastal cities (one noting the storm's rain shafts + rainbow render cleanly around the now-empty
-sky).
-
-**Verdict: DEEPENED** (a FIX). The balloons now read the weather the rest of the sky already does — they fill a
-clear day and fade out as the front gathers, instead of sailing through thunderstorms. It is the inverse of 312's
-reverted daytime lamp: that RENDERED but could not be seen (259); this one is a clear, legible, correctness change
-(830 px of balloon, present vs cleanly absent) and free by construction (draw-only, census byte-identical). Closes
-the "fair days" 199-tell on the balloon comment.
 
 ## Iteration 314 — every block party in the city started and ended on the same beat (2026-07-17) [People & activity × Deepen/FIX]
 
@@ -871,3 +821,57 @@ northern feeding grounds through the golden summer and autumn, so the offing tel
 dolphins roll through year-round. Wholly census-inert (zero new random draws, whales array untouched), the 286
 pattern in the neglected Water domain. Water × Deepen/interconnect (→ 322). `probes/probe-whalemigration.mjs` +
 `probes/shot-whalemigration.mjs`.
+
+## Iteration 323 — the meadows flowered in spring and stood as bare grass under the snow (2026-07-17) [Nature × Deepen/interconnect]
+
+**Vector.** Rotation: Nature had not had a lap in 14+ (last 308) — by far the most-neglected domain — while the last
+kind was Deepen (322). I grepped the Nature CA/succession seams (old-growth, riparian, hedgerows, fairy rings, deer,
+bloom wave) and found the grassland wildflowers a **seasonal phenomenon with no season gate**: `bloomAt` (the
+excitable-media bloom wave drawn on every MEADOW & SHOREPARK hex) drew its flowers and butterflies whenever
+`c.bloom>0` — **all year round**, while the FOREST-floor ephemerals right above it (`springBloom`) already keep the
+calendar. A wildflower meadow is a spring→early-summer thing that scorches to bare gold by the dry peak and stands as
+dry grass through the summer, the autumn and the deep-winter snow — and with the snow field shipped at 321, HEAD drew
+its flowers **on top of the snow**. Nature × Deepen/interconnect, the 271/286/322 "make the seasonal thing answer the
+calendar" pattern.
+
+**Change (DRAW-ONLY — no `rng()`, no `Math.random`, no terrain).** New `bloomSeason()` (the grassland twin of
+`springBloom`, beside it): a raised trapezoid on `s=year%1`, `1` across spring→early-summer (`BLOOMPK=0.34`,
+`BLOOMWIN=0.22`, `BLOOMRAMP=0.13` ⇒ full s∈[0.25,0.43], 0 by s=0.12 and s=0.56), so flowers are gone by the golden
+dry peak and never open under the snow. The **CA (`c.bloom`) is untouched** — the wave still ripples every tick,
+byte-identical. `bloomAt` early-returns when `bloomSeason()<=0` (butterflies auto-gated) and scales its flower alpha
+by it (`(0.4+0.6*bl)*bs`) — so **at the spring plateau `bs=1` it draws HEAD's exact bytes**, and everywhere else it
+draws fewer/dimmer or none. The static SHOREPARK wildflower specks and the bloom tooltip both take the same gate
+(one predicate, three readers): the tooltip now says `Dormant (out of season)` instead of asserting a bloom the
+pixels don't show.
+
+**Census.** Core **BYTE-IDENTICAL** — pop/roads/developed **+0**, tile histogram empty (draw-only, zero random
+draws, no terrain). VERDICT PASS / 0 page errors (vacuous by design — the gate is the probe + eyes).
+
+**Perf.** A **credit**: byte-identical at the spring plateau, strictly FEWER flower path objects the other ~3/4 of
+the year (out-of-season flowers no longer drawn). No frame is more expensive than HEAD.
+
+**Probe** (`probes/probe-bloomseason.mjs`, build-agnostic via `SRC=`; the draw-only change leaves `c.bloom` identical
+between builds, so a frozen-world year sweep isolates the season gate perfectly):
+- **A (temporal, no pixels):** wildflower hexes the SHIPPED draw makes visible, per season. **PATCH: winter 0 |
+  spring 29/51/53 | summer 0 | autumn 0** (`DISTINCT 2`, off-season flowers `false` on all seeds). **HEAD: the SAME
+  count in EVERY season (`DISTINCT 1`, off-season `true`)** — the defect stated (236). MUST-NOT-MOVE control (250):
+  the raw CA `bloom>0` count is **byte-identical HEAD vs PATCH** (29/51/53) — the medium is untouched. FREE POSITIVE
+  control (248): `springBloom` (the FOREST ephemeral) reads seasonal on BOTH builds (winter 0.06 / spring 0.65 / else
+  0) — the year pin is live, and the forest already kept the calendar; only the grassland didn't.
+- **B (the snow overlap):** deep winter, snow field settled — **HEAD draws flowers on 7/1/4 snowy MEADOW hexes**
+  ("flowers on snow"); **PATCH draws 0** there.
+
+**Visual** (`probes/shot-bloomseason.mjs`, spring & winter as SEPARATE world builds ticked into their own season so
+snow melts for spring / lies for winter; aimed by world data at the densest bloom cluster; frames named by FILE,
+tokens meaningless & CROSSED between seeds per 238/258/268; each self-reports year/bloomSeason/flowering-hosts).
+Both blind subagents **PASS** and both **named the spring frame by the wildflowers on the crossed map**: gold/lavender/
+coral specks on the meadow & seaside-park grass in spring, the SAME ground **bare with a soft white snow dusting and
+NO stray flower specks** in winter; no z-order tears / floating tiles / blown-out white; both whole-city winter frames
+balanced and coherent (soft snow inland, coast & rooftops bare). (The inland-`T.PARK` formal flowerbeds present in
+both are the park tile's own year-round planting — not a `bloomHost`, correctly unchanged.)
+
+**Verdict: SHIPPED.** The grassland/park wildflowers now keep the spring calendar — flowering after the winter rains
+and through the spring, gone to bare dry grass by the golden summer and standing bare under the deep-winter snow, so
+the meadow tells the season the way the forest floor already did. Wholly census-inert (draw-only, zero random draws),
+a perf credit, in the neglected Nature domain. Nature × Deepen/interconnect (→ 323). `probes/probe-bloomseason.mjs` +
+`probes/shot-bloomseason.mjs`.

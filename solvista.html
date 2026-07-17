@@ -1879,6 +1879,17 @@ function concertLive(){return LITAMT>0.3&&concertShow()>0.02;}
    spring the palette greens the canopy on). Shared so the draw and the tooltip
    read ONE predicate (112). Peaks ~1 at spring, fades to 0 by early summer. */
 function springBloom(){const s=((year%1)+1)%1; return clamp(1-Math.abs(s-0.28)/0.17,0,1);}
+/* the GRASSLAND wildflowers keep the calendar too — the meadow twin of the forest
+   ephemeral above. The excitable-media CA (c.bloom) is a MEDIUM that runs year-round,
+   but a wildflower meadow only FLOWERS after the winter rains and through the spring,
+   then scorches to bare gold by the golden dry peak and stands as dry grass through
+   the summer, the autumn and the deep-winter snow. So the CA is untouched (the wave
+   still ripples every tick, byte-identical) and only the DRAW answers the season:
+   bloomAt fades its flowers in with spring and out by early summer. Same raised-
+   trapezoid idiom as whaleSeason; centred on spring→early-summer (s~0.34), gone by
+   the dry peak (s~0.62) and through deep winter, so the flowers never open on snow. */
+const BLOOMPK=0.34, BLOOMWIN=0.22, BLOOMRAMP=0.13;
+function bloomSeason(){const s=((year%1)+1)%1, d=Math.abs(s-BLOOMPK); return clamp((BLOOMWIN-Math.min(d,1-d))/BLOOMRAMP,0,1);}
 /* the other half of the woodland year: as the canopy ambers (applySeason, s~0.87)
    the broadleaves let go and a leaf litter builds on the forest floor. Centred on
    the SAME autumn peak the crown turns on, a touch wider so the litter appears as
@@ -5495,8 +5506,10 @@ const SEAMGREEN=new Set([T.SHOREPARK,T.PARK,T.MEADOW]);
 function bloomAt(c,x,y,gx,gy,v){
   const bl=c.bloom>0?c.bloom/7:0;
   if(bl<=0)return;
+  const bs=bloomSeason();          /* the flowers keep the spring calendar; the CA runs all year */
+  if(bs<=0)return;                 /* out of season: dry grass, no flowers (and none under the snow) */
   const[cx,cy]=px(gx,gy);
-  ctx.globalAlpha=0.4+0.6*bl;
+  ctx.globalAlpha=(0.4+0.6*bl)*bs;
   ctx.fillStyle=col(v<0.5?'gold':'lav',1.2);
   ctx.fillRect(cx-4,cy-1,1.7,1.7);ctx.fillRect(cx+3,cy+1,1.7,1.7);ctx.fillRect(cx-1,cy+2.5,1.7,1.7);
   ctx.fillStyle=col(v<0.5?'lav':'coral',1.15);
@@ -6526,7 +6539,10 @@ function drawCell(x,y){
       } else if(v>0.9){ /* bench facing the surf */
         ctx.fillStyle=col('deck',1.05);ctx.fillRect(cx+3,cy-1.6,1.2,3.4);
         ctx.fillStyle=col('deckDk',1);ctx.fillRect(cx+4.4,cy-1.2,0.8,2.6);
-      } else if(v>0.42&&v<0.5){ /* wildflower specks */
+      } else if(v>0.42&&v<0.5&&bloomSeason()>0){ /* wildflower specks — the seaside grass keeps the
+        same spring calendar as the meadow bloom-wave above; bare shore-grass out of season (247's
+        trap avoided: this is the terminal arm of the v-band chain, so the gate draws nothing rather
+        than handing its range on). */
         ctx.fillStyle=col('gold',1.15);ctx.fillRect(cx-3,cy+1.5,1.3,1.3);
         ctx.fillStyle=col('coral',1.1);ctx.fillRect(cx+1,cy+3,1.3,1.3);
       }}
@@ -10223,8 +10239,12 @@ function describeTile(c,x,y){
     data.push(['Bed',n+(n===1?' hex':' hexes')]);
     data.push(['Depth',d<SHELF0?'Shoals':d<=SHELF1?'Coastal shelf':'Open water']);}
   /* the coastal park keeps the same calendar the meadow does — one predicate,
-     four readers (the spread, the rain front that seeds it, the draw, this row) */
+     four readers (the spread, the rain front that seeds it, the draw, this row).
+     And the DRAW now keeps a season on top of the wave (bloomSeason): out of the
+     spring flowering window the medium may be mid-cycle but no flower opens, so
+     the tooltip must say so too, or it asserts a bloom the pixels don't show. */
   if(bloomHost(c))data.push(['Wildflowers',
+    bloomSeason()<=0?'Dormant (out of season)':
     c.bloom>0?'In bloom':c.bloom<0?'Gone over':'Not in flower']);
   /* the grove tells the same calendar the draw paints (shared orchardPhase) */
   if(c.t===T.ORCHARD){const ph=orchardPhase();

@@ -22922,3 +22922,53 @@ the daytime road-contrast problem is a rendering/redesign question (a darker wet
 brighter mark), i.e. a `polish-tile` job, not a Deepen — the same "barely-visible transport detail is a bad
 trade" the header already banks for cue (bi).
 
+## Iteration 313 — the hot-air balloons rode serenely through the thunderstorm (2026-07-17) [Sky & atmosphere × Deepen/interconnect]
+
+**Vector.** Sky rotation (oldest-shipped domain, 305). Sky's Deepen is mature but its comments were not all
+audited, so I grepped the sky seam for a 199-tell rather than the cue list. The balloon spawn's two comments
+read *"hot-air balloons drift over on **fair days**"* and *"**fair-weather** balloon festival"* — and the spawn
+gates on **`year>=1998` ALONE, with no weather term anywhere.** So the whole fleet floated placidly through
+overcast, showers and — since 291 — **lightning**. A hot-air balloon is the quintessential fair-weather craft
+(grounded by rain and gusts); this is 199's tell hosted on a draw's HOST comment: the words assert a
+fair-weather behaviour the value cannot have. Confirmed on HEAD before designing (`probe-balloonweather`):
+balloon ink is **byte-flat across the front's driest and wettest year** (wet/dry ratio **≈1.00** on 3 seeds).
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The balloons never despawn — `advanceEntities`
+**wraps** them (`b.x>G+8 → -8`), so a spawn gate could never empty the sky (the fleet fills on the first fair
+tick past 1998 and then loops through every future storm). So the gate lives at **DRAW**, faded on the shared
+weather signal:
+- **`balloonFair() = 1 - clamp((rainFront()-BALLOON0)/BALLOONRAMP, 0, 1)`** with `BALLOON0=0.50, BALLOONRAMP=0.20`
+  — full below 0.50 (before the sky even leadens at `OVC0=0.58`), grounded by ~0.70 (a clear shower). The Nth
+  reader of the one `rainFront()` every cloud/bow/CA already shares (one-predicate law). It FADES, not pops, or a
+  passing shower would blink the sky (134); `rainFront` is the slow ~20yr cycle, so no strobe.
+- The balloon draw loop wraps each envelope+basket in `ctx.globalAlpha=ballFair` (reset to 1 after), and skips the
+  loop entirely when `ballFair<=0.01`. Spawn UNCHANGED ⇒ the seeded stream is untouched.
+
+**Census.** Draw-only, unreachable from `tick()`'s terrain ⇒ core **BYTE-IDENTICAL** (`pop`/`developed`/`roads`
+**+0**, tile histogram empty). `greenRoofs -1` = the 226/278 RAF-tick wobble, not this edit. VERDICT: PASS
+(vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-balloonweather.mjs`, 3 seeds). Isolates the balloon LAYER by rendering the frozen frame
+WITH balloons and WITHOUT (clear the array) and diffing — the changed pixels ARE the balloons, sky cancelled,
+floor exactly 0. Measured at the driest and wettest year of each seed's front. Build-agnostic via **253's
+suppress-the-predicate** trick (`window.balloonFair = () => 1` renders HEAD's weather-blind behaviour in-page —
+no source swap, no cross-build floor). ⚠ `__warp` parks every balloon off the left edge (never drifts them), so
+the probe spreads them across the plate first — position is independent of the fade.
+- **PATCH: balloon ink dry 830–905 px → wet 0 px** (wet/dry **0.000** on every seed) — the fleet grounds in the rain.
+- **HEAD (control): dry ≈ wet** (ratio **0.999–1.004**) — flies through the storm regardless. The defect, stated.
+
+**Visual** (`probes/shot-balloonweather.mjs`, seeds 42 & 7; a discriminating pair per 258, since the success case
+is an ABSENCE). Three frames each: **fair** (dry year — balloons out), **storm** (wettest year, same hour — leaden
+sky, NO balloons), **storm-head** (the storm with `balloonFair→1` forced — balloons drifting through it, the
+defect). Both blind subagents **PASS**: *"balloons present and reading correctly as hot-air balloons"* in fair;
+*"leaden grey/overcast … all the balloons are ABSENT"* in storm; *"the balloons are PRESENT again … the old buggy
+behavior"* in storm-head. No z-order tears, floating tiles or blown-out colour anywhere; both whole frames read as
+balanced, coherent coastal cities (one noting the storm's rain shafts + rainbow render cleanly around the now-empty
+sky).
+
+**Verdict: DEEPENED** (a FIX). The balloons now read the weather the rest of the sky already does — they fill a
+clear day and fade out as the front gathers, instead of sailing through thunderstorms. It is the inverse of 312's
+reverted daytime lamp: that RENDERED but could not be seen (259); this one is a clear, legible, correctness change
+(830 px of balloon, present vs cleanly absent) and free by construction (draw-only, census byte-identical). Closes
+the "fair days" 199-tell on the balloon comment.
+
