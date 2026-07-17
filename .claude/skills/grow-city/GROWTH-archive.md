@@ -23763,3 +23763,40 @@ source-less glow uniformly along the whole coast. Draw-only, census byte-identic
 of the Urban lights into the Water. Water & coast × Deepen (17/25/…/311/322 → 329). `probes/probe-shoreglow.mjs`,
 `probes/probe-shorereflect.mjs`.
 
+## Iteration 330 — forty-five laps on, the water still reads as water (2026-07-17) [43rd step-back / holistic]
+
+**Vector.** Header flagged the step-back due at ~330 (#42 clean at 325; 4 vectors since — 326 civic-square
+weathering, 327 facade tile pick, 328 grounded lightning bolt, 329 waterfront reflection — all draw-only /
+census byte-identical). The step-back outranks one more feature. No `solvista.html` change.
+
+**Step-back #43.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
+dusk-summer / dusk-winter discriminating pair (264, verified in the self-reports: `dusk-summer sun=UP (sets 0.831)`
+/ `dusk-winter sun=DOWN (sets 0.701)`).
+- **Visual: city healthy — no cumulative drift, no false FAIL.** One agent per seed, blind, cumulative question.
+  Both read all five as a coherent, balanced coastal city at every light — ocean→beach→parks→downtown→outer rings
+  layering correctly, dense tower core reading as a skyline (not wallpaper), the river/lagoon bands legible.
+  **All three compounding checks passed on BOTH seeds, unprompted:** night is a legibly LIT city (warm window
+  grids, amber street/rail chains, lit pier + buoys — not a mauve/black void); golden hour keeps the parks and
+  street-trees GREEN (the orange confined to sky/sand/roof highlights, not a monochrome terracotta wash — 265
+  holds); the coastline reads teal water + tan beach with a hex-scalloped surf edge (no dark kelp/quilt band —
+  282 holds). Both named the WINTER dusk by light alone (sun down, city already blazing) ⇒ day-length season
+  alive (261/264). No z-order tears, no floating tiles, no blown/muddy color; towers/piers/turbines all seat
+  correctly on their hexes.
+- **Perf: PERMANENT ARC FLAT.** Priced in PATH OBJECTS (load-immune, 216/198), snow cleared per 325's law
+  (the probe now does it in-page). Mean of 3 seeds: current (329) day **111,655** / night **139,773**.
+  - vs #42 (325): day 111,684 / night 139,816 ⇒ **−29 day (−0.03%), −43 night (−0.03%)** over the 4 draw-only
+    laps — byte-flat, a tiny credit (327/328/329 all wired new draws to `if(pa>0)`/light gates that add nothing
+    at the priced pins).
+  - vs iter 285 (~44 laps back): day 110,342 / night 138,106 ⇒ **+1,313 day (+1.19%), +1,667 night (+1.21%)**,
+    i.e. **≈+0.027%/lap** — well under the historical +0.2%/lap the arc used to run at (162→202 cost 8.6%/40
+    laps), consistent with the standing fact that byte-flat FIXES cancel the additive tendency. No perf-fix lap.
+- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits); the drawbudget probe loaded current HEAD
+  across 3 seeds × 2 lights with 0 page errors.
+
+**Verdict: STEP-BACK — NO DRIFT.** City coherent across 3 lights × 2 seasons on 2 seeds; day-length season reads
+by light alone on a crossed map; night lit, golden greens green, coast reads water+beach; the permanent
+(snow-excluded) draw arc is byte-flat over the 4-lap window and ≈+0.027%/lap over ~44 laps. Nothing to fix.
+Guardrail reset (next ~335). NEXT vector: Sky × New element (291 lightning was the sparsest additive cell) or a
+measured seam (grep `tick()` / the TABLES / the comments — the cue list records where you've LOOKED, not what is
+THERE).
+

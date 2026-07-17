@@ -32,30 +32,29 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Civic **339** (THE FESTIVAL BUNTING STIRS IN THE WIND — Deepen; civic-mile (`c.fete`) +
-  civic-square bunting lift the string taut + stream the pennants downwind on `windForce` — the festive-cloth reader
-  338 missed (280). Dead-calm≡HEAD limp catenary = exact fixed point (245/280's OPPOSITE end: HEAD's frozen draw IS the
-  calm state, so `windForce()==0` is the fixed point). Draw-only byte-flat; probe stream 0→3.5px, drop 2.2→0.88, control
-  held; blind agents ×2 CROSSED named the gale.) Prev: People **336/337** (RAIN-AWARE OUTDOOR CROWDS — Deepen; café/busker/strip (336) + park picnic/ballgame (337)
-  come in from the shower on `dryAt=rainingAt<0.05` (112); dry≡HEAD exact fixed point (245/253); outdoor-daytime-crowd
-  category CLOSED, sole hold-out = BEACH crowd (Water, calendar ⛔).) Prev: Water **334** (SAIL BELLIES `4.5*windForce()`;
-  WINDA-over-water DONE ⛔) · Nature **333** (FIRE SMOKE LEANS `rise*windForce()`; (bj) CLOSED, (bc) fire-glow z-order future).
-  Prev: ~~Urban **332**~~ (EXPLORED → REVERTED — CHIMNEY WOODSMOKE: probe-proven but ⛔ INVISIBLE at city
-  zoom, 266. ⛔ DO NOT RE-TRY.) Prev: Sky **331** (HIGH JET + CONTRAIL — screen-space jet, contrail white/day→golden→gone
-  night→faded rain; ⚠ a jet does NOT parallax.) Prev: **STEP-BACK #43 @330** (NO DRIFT; 326–329 draw-only/byte-flat; 2 seeds × 5 frames PASS; perf arc vs 285 ≈**+0.027%/lap** over 44 laps, snow-cleared — no perf-fix lap.) Prev: Water **329**
+- **ROTATION.** Last: **STEP-BACK #45 @340** (NO DRIFT; 336–339 byte-flat; 2 seeds × 5 frames blind PASS, seasonal pair
+  resolved blind; perf arc vs 285 **+0.022%/lap** / 54 laps, flat vs 335 — no perf-fix lap. ⚠ **GWARM=0 at the pinned
+  dry-peak years is CORRECT** — `overcast` greys skyBot BEFORE GWARM reads it; clear-sky GWARM peaks 0.6–0.78, NOT dead —
+  do NOT re-chase. Watch: inland tower core over-busy, no raw downtown density.) Prev (all Deepen, byte-flat, laws in
+  SKILL.md): Civic
+  **338/339** (festival cloth — capitol standards + festival BUNTING lift/stream on `windForce`, dead-calm≡HEAD fixed
+  point, 280) · People **336/337** (RAIN-AWARE OUTDOOR CROWDS come in on `dryAt` (112); outdoor-daytime-crowd category
+  CLOSED, sole hold-out BEACH ⛔) · Water **334** (SAIL BELLIES; WINDA-over-water DONE ⛔) · Nature **333** (FIRE SMOKE
+  LEANS; (bj) CLOSED, (bc) fire-glow z-order future) · ~~Urban **332**~~ (CHIMNEY WOODSMOKE — ⛔ INVISIBLE at city zoom,
+  266; ⛔ DO NOT RE-TRY) · Sky **331** (HIGH JET + CONTRAIL; ⚠ a jet does NOT parallax) · **STEP-BACKS #42–#44
+  @325/330/335** (all NO DRIFT). Prev: Water **329**
   (WATERFRONT REFLECTION ANSWERS THE SKYLINE — night city-lights smear gates on `shoreGlow(y)` (developed frontage ≤10
   cells inshore, reads `c.th`) so lit downtown coast shimmers, dune/park headlands stay dark; draw-only.) Prev: Sky **328** (THE STRIKE —
   forked bolt grounds down the rain shaft on 291's flash peak, `bolt>0.22` inside `if(pa>0)`, 248) · Urban **327**
   (FACADE TILE PICK — `pickTile`=frontmost built prism, cue (ba) CLOSED, 133→327) · Civic **326** (CIVIC SQUARE
-  MATURATION — `c.civ` accumulation+diffusion, corr(civ,age)=1.0). Prev (all shipped, census byte-identical, laws in SKILL.md): **STEP-BACK
-  #42 @325** (NO DRIFT; day-length season alive; perm arc BYTE-FLAT vs 320 once snow cleared — clear `c.snow` before
-  pricing the arc) · People **324** (DESIRE PATHS, `c.wear` diffusion off `c.buzz`) · Nature **323** (WILDFLOWERS
+  MATURATION — `c.civ` accumulation+diffusion, corr(civ,age)=1.0). Prev (all shipped, census byte-identical, laws in
+  SKILL.md): People **324** (DESIRE PATHS, `c.wear` diffusion off `c.buzz`) · Nature **323** (WILDFLOWERS
   ANSWER SPRING) · Water **322** (WHALES MIGRATE, `whaleSeason()`) · Sky **321** (SNOW — Sky's 1st CA, reaction-
   diffusion `c.snow`, coldest ~3 wks, self-melts — ⚠ warp=61 freezes it ON) · Civic **319** · People **318/317** ·
   Urban **316** (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: 339 landed (Civic —
-  festival BUNTING stirs with the gust, missed by 338's "WIND CLOSED" — wrong at 333→334→338→339, a changelog not a
-  spec; ~340 = STEP-BACK #45).** Additive space FULLY SPENT (331). ⇒
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: STEP-BACK #45 landed @340
+  (NO DRIFT, city healthy, perf negligible); ~341 = a measured seam (225) or Deepen/Polish/Interaction in a rotated
+  domain, ~345 = STEP-BACK #46.** Additive space FULLY SPENT (331). ⇒
   **next = a measured seam (225) or Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water).** ⚠ **remaining gaps
   are DEEP-BUT-INVISIBLE-AT-ZOOM (short/sparse hosts) — PRICE VISIBILITY (266) BEFORE building.**
   ⚠ **TRANSPORT SATURATED** (304/312/**329**: seams re-grepped clean — ENTINFO all live-computed, head/tail/beacon
@@ -392,48 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 332 entries before Iteration 330 live in
+> **Archive:** the 333 entries before Iteration 331 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 330 — forty-five laps on, the water still reads as water (2026-07-17) [43rd step-back / holistic]
-
-**Vector.** Header flagged the step-back due at ~330 (#42 clean at 325; 4 vectors since — 326 civic-square
-weathering, 327 facade tile pick, 328 grounded lightning bolt, 329 waterfront reflection — all draw-only /
-census byte-identical). The step-back outranks one more feature. No `solvista.html` change.
-
-**Step-back #43.** `probes/shot-stepback.mjs`, 2 seeds (42, 7), 5 frames each — day / golden / night + a CROSSED
-dusk-summer / dusk-winter discriminating pair (264, verified in the self-reports: `dusk-summer sun=UP (sets 0.831)`
-/ `dusk-winter sun=DOWN (sets 0.701)`).
-- **Visual: city healthy — no cumulative drift, no false FAIL.** One agent per seed, blind, cumulative question.
-  Both read all five as a coherent, balanced coastal city at every light — ocean→beach→parks→downtown→outer rings
-  layering correctly, dense tower core reading as a skyline (not wallpaper), the river/lagoon bands legible.
-  **All three compounding checks passed on BOTH seeds, unprompted:** night is a legibly LIT city (warm window
-  grids, amber street/rail chains, lit pier + buoys — not a mauve/black void); golden hour keeps the parks and
-  street-trees GREEN (the orange confined to sky/sand/roof highlights, not a monochrome terracotta wash — 265
-  holds); the coastline reads teal water + tan beach with a hex-scalloped surf edge (no dark kelp/quilt band —
-  282 holds). Both named the WINTER dusk by light alone (sun down, city already blazing) ⇒ day-length season
-  alive (261/264). No z-order tears, no floating tiles, no blown/muddy color; towers/piers/turbines all seat
-  correctly on their hexes.
-- **Perf: PERMANENT ARC FLAT.** Priced in PATH OBJECTS (load-immune, 216/198), snow cleared per 325's law
-  (the probe now does it in-page). Mean of 3 seeds: current (329) day **111,655** / night **139,773**.
-  - vs #42 (325): day 111,684 / night 139,816 ⇒ **−29 day (−0.03%), −43 night (−0.03%)** over the 4 draw-only
-    laps — byte-flat, a tiny credit (327/328/329 all wired new draws to `if(pa>0)`/light gates that add nothing
-    at the priced pins).
-  - vs iter 285 (~44 laps back): day 110,342 / night 138,106 ⇒ **+1,313 day (+1.19%), +1,667 night (+1.21%)**,
-    i.e. **≈+0.027%/lap** — well under the historical +0.2%/lap the arc used to run at (162→202 cost 8.6%/40
-    laps), consistent with the standing fact that byte-flat FIXES cancel the additive tendency. No perf-fix lap.
-- **Census gate:** `solvista.html` byte-identical to HEAD (zero edits); the drawbudget probe loaded current HEAD
-  across 3 seeds × 2 lights with 0 page errors.
-
-**Verdict: STEP-BACK — NO DRIFT.** City coherent across 3 lights × 2 seasons on 2 seeds; day-length season reads
-by light alone on a crossed map; night lit, golden greens green, coast reads water+beach; the permanent
-(snow-excluded) draw arc is byte-flat over the 4-lap window and ≈+0.027%/lap over ~44 laps. Nothing to fix.
-Guardrail reset (next ~335). NEXT vector: Sky × New element (291 lightning was the sparsest additive cell) or a
-measured seam (grep `tick()` / the TABLES / the comments — the cue list records where you've LOOKED, not what is
-THERE).
 
 ## Iteration 331 — a jet crosses the high sky, drawing a contrail (2026-07-17) [Sky & atmosphere × New element]
 
@@ -889,3 +851,55 @@ and both whole-city frames read as balanced, coherent coastal cities.
 **Verdict: SHIPPED.** The festival bunting — the civic mile's strand and the square's — now lifts and streams with the
 same gust as every flag, kite, plume and sail; the whole festive city gusts together (280). Exact fixed point at dead
 calm (HEAD = limp bunting), census byte-identical. Civic × Deepen. `probes/probe-bunting.mjs`, `probes/shot-bunting.mjs`.
+
+## Iteration 340 — forty-seven laps on, the water still reads as water (2026-07-17) [45th step-back / holistic]
+
+**Vector.** The header pointed here explicitly ("~340 = STEP-BACK #45"). Five laps have landed since #44 @335
+(336/337 rain-aware crowds, 338/339 festival-cloth wind), all draw-only Deepens. A step-back is the guardrail that lets
+the loop run unattended: the census catches *metric* collapse but is blind to *cumulative visual* drift and to
+*permanent perf* drift, so both are measured here, not vibed.
+
+**Census + error gate.** Clean HEAD (8c34523, through 339), tree clean. `census.mjs` VERDICT PASS, 0 page errors; core
+`pop`/`developed`/`roads` byte-unmoved, only the usual chaotic ±wobble (`solarRoofs +2`).
+
+**⚠ GWARM=0 SELF-REPORT — CHASED, RESOLVED AS CORRECT (not drift).** `shot-stepback`'s frames self-reported
+`GWARM=0` at the `golden` and `dusk` pins on BOTH seeds, which is the 264/265 tell (a golden frame shot at GWARM≈0 is
+shooting the control). Measured it out: GWARM (`clamp((skyBot.R−skyBot.B−70)/70,0,1)`) needs skyBot R−B>70, and the raw
+`KEYS` sunset skyBot (`#e89a6b`=[232,154,107], R−B=125) gives **GWARM 0.786** — the machinery is alive. It reads 0 at the
+pinned years because **`overcast()` greys skyBot BEFORE GWARM reads it** (L9348, "a storm mutes the golden sheen"), and
+the pinned dry peak **2035.62 lands on a rain front** (`overcast=0.576`, `rainFront=0.819`; every warp-year 2035–2036 was
+overcast ≥0.35). In the clearest nearby year (2034, overcast=0) GWARM peaks **0.6**. So GWARM is CORRECT, not dead.
+⚠ **Instrument caveat for the next step-back (do NOT re-chase this):** `shot-stepback` DERIVES the golden pin on a fresh
+page with NO `genWorld`/weather (clear sky, GWARM peaks ~0.78) but SHOOTS the frame in the WARPED overcast world — so its
+`golden`/`dusk` frames are muted overcast dusks and their `GWARM=0` is honest about the *frame*. Longstanding fixed-pin
+property (same across #42–#44). A future tool tweak could derive the golden pin in the same warped world, or pin golden
+to a clear year; not fixed this lap (step-back does not chain a tool rewrite).
+
+**Visual (whole-frame, 3 lights × 2 calendars × 2 seeds, `shot-stepback.mjs`, clock frozen in-page).** One blind
+subagent per seed, cumulative question. Both seeds independently **PASS**:
+- **City coherent & balanced** across all frames — dense inland towers → mid-rise ring → farm/park belt → beach/pier/sea
+  — reads as one California coastal city; no wallpaper band, no over-busy district gone muddy, nothing blown-out.
+- **No z-order tears, floating tiles, or detached glows** — pier steps out cleanly, Ferris wheel grounded on the pier,
+  offshore windmills on their water hexes, towers stack clean, rail/power/bridges connect end-to-end.
+- **Seasonal discriminating pair resolves blind on BOTH seeds** (264): dusk-summer sun UP (light overcast, lit scene),
+  dusk-winter — SAME instant — sun DOWN (dark navy, crescent moon + stars, lit windows). Sun provably set in winter, up
+  in summer.
+- **Night coast coherent lit-city-and-water** — warm window grids, street/rail lamps, red/green buoys, moon on deep-blue
+  water, lit pier — not a flat void (kelp/coast-darkening class stays closed, 282).
+- **Watch item (soft, seed-7 aside, not a FAIL):** the inland tower core is *approaching* over-busy — do NOT add raw
+  tower density downtown (echoes the standing "no wallpaper / crown-not-picket" family, 217/224/228).
+
+**Perf (permanent arc, PATH OBJECTS — load-immune, 198/216 — snow cleared per 325).** `probe-drawbudget.mjs` mean of 3
+seeds, day / night:
+- iter 285 (b523698): 110327 / 138117 · iter 335 (5b2c762): 111698 / 139754 · **HEAD 339: 111551 / 139902.**
+- **Long arc vs 285 (54 laps): day +1.11% (+0.021%/lap), night +1.29% (+0.024%/lap)** — well under +0.2%/lap, consistent
+  with byte-flat FIXES cancelling the additive tendency.
+- **Recent arc vs 335 (4 laps): day −0.13%, night +0.11%** — flat; 336–339 were draw-only rain/wind deepens (one extra
+  predicate term each, zero new path objects). **No perf-fix lap.**
+
+**Verdict: STEP-BACK — NO DRIFT.** City healthy and beautiful across 3 lights × 2 seasons on 2 seeds; day-length season
+alive; golden-hour warmth machinery verified alive (0.6–0.78 clear-sky, muted by overcast at the pinned years, not a
+regression); night ordering / golden-greens / sea-quilt facts hold (unre-measured — no lap since #44 touched their
+surfaces). Permanent draw arc negligible (+0.02%/lap). Guardrail reset — next vector ~341 is a measured seam (225) or a
+Deepen/Polish/Interaction in a rotated domain (avoid Sky/Water; additive space spent, 331; price visibility, 266, before
+building). Nothing to fix.
