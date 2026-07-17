@@ -278,4 +278,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 345  —                          SHIPPED             12m33s   $4.96  dfec964
 ↩ Iter 346  —                          EXPLORED → REVERTED 12m34s   $8.05  8499d10
 ✔ Iter 347  Sky × Deepen               SHIPPED             20m17s   $10.96 b578cb0
+✔ Iter 348  Water × Deepen             SHIPPED             16m16s   $10.41 80a4fef
 ```
