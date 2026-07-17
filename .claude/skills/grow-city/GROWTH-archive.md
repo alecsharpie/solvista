@@ -23056,3 +23056,46 @@ on 2 seeds; the day-length season reads by light alone; forty laps of growth cos
 keeps the greens (265 holds). The guardrail is reset (next step-back ~320); **NEXT vector is Civic or People ×
 New CA rule** (the two stale additive cells).
 
+## Iteration 316 — the four district colors finally drew a map (2026-07-17) [Urban fabric × Deepen/FIX]
+
+**Vector.** The header's `NEXT` is Civic/People × New CA rule, but the loop's own law outranks rotation: grep the
+seam, not the cue list — a found, measured defect beats a shallow additive feature into a saturated city. Grepping
+the majority-vote **districts CA** (`c.dist`, DISTCOL gold/teal/coral/sage) turned up a 199-tell: the comment says
+"blocks slowly vote themselves a shared identity" and COM shopfronts, awnings, market spots and the tooltip all wear
+their **district** color — but `c.dist` is seeded as **per-cell white noise** (`hashCell(x*3+1,y*7+2,seed^13)`), and
+a weak vote (ks(50) picks/tick, strict ≥3 majority, ~12 touches/cell over 60 yrs) **cannot coarsen noise into
+quarters**. Measured at 2035 (`probes/probe-districts.mjs`): coherence (a dev cell's dist == its dev-neighbour
+plurality) only **55–61%** — a hair above the 25% chance floor for 4 colors — biggest same-color run ~1% of the
+fabric, COM colors split evenly [46,57,50,38]. **The "District" the shopfronts wore and the tooltip named did not
+exist; every street was a random 4-color speckle** — the same shape as 283 (the dead boulevard) and 285 (the market
+that kept no day).
+
+**Change (draw-only — no rng(), no terrain, no state).** Districts become a **fixed Voronoi geography** read at draw
+time: a new pure `distOf(x,y)` (four centers on a per-seed jittered 2×2 grid over the developed land, one of each
+color, nearest wins in `ctr()` screen space so quarters read round; memoised per seed off a **private PRNG**, zero
+shared `rng()`). The four readers (MARKET spots · COM sign · COM walk-up sign · tooltip) now read `distOf(x,y)`
+instead of `c.dist`. **The seed and the vote pass in `tick()` are left byte-identical** — the vote is retained ONLY
+to keep the seeded stream aligned, because its `rng()<0.5` is short-circuit-gated on `best!==c.dist`, so its draw
+count is entangled with the old field (a coherent seed drew *fewer* rolls → a chaotic cascade: first cut, seeding
+`c.dist` coherently, cratered **pop −5.9% COLLAPSE** while `developed`/`roads` stayed flat — the 231 tell — so it was
+reverted and the look was decoupled from the stream instead).
+
+**Census.** Only draw-time reads changed ⇒ `pop`/`developed`/`roads` **+0, byte-identical**, tile histogram empty.
+VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
+
+**Probe** (`probes/probe-districts.mjs`, pure world data, 3 seeds × 2035, build-agnostic via `SRC=`/`distOf` fallback):
+- **HEAD: coherence 55–61%, shopfront ECHO (a COM has a same-color COM within r3) 66–76%** — near-random speckle.
+- **PATCH: coherence 96–98%, ECHO ~98%** — adjacent shopfronts now share their quarter's color. Control (HEAD via
+  `SRC=`) moves exactly the wrong-way expected, confirming the metric.
+
+**Visual** (`shots/after_*`, seeds 42 & 7, downtown clip + whole city, 2035). Both blind subagents **PASS**, and both
+— independently, on two seeds — **located distinct same-color quarters** (a teal pocket, a coral cluster, a gold
+band, sage near the parks), which is the locate-not-judge check: they saw the geography. No z-order tears, floating
+tiles or blown-out color; both whole-city frames read as balanced coherent coastal cities.
+
+**Verdict: DEEPENED** (a FIX). The city's four districts, advertised on every shopfront and in the tooltip since long
+before the ledger, finally cohere into readable gold/teal/coral/sage quarters (coherence 55%→98%) instead of a
+random 4-color speckle — wholly inert (census byte-identical), the look decoupled from the seeded stream so the vote
+CA's `rng()` footprint is preserved. Same shape as 283/285: a label ladder that named a distinction the pixels never
+drew.
+

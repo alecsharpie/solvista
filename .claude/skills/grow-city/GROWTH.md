@@ -21,7 +21,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
-| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
+| **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
 | **People & activity** | 41, 56, **127**, **170**, **186**, **293** | 49, **324** | 34, 64, 93, **104**, **119**, **145**, **178**, **201**, **210**, **240**, **247**, **262**, **271**, **286**, **306**, **314**, **317**, **318** | 78, **111** | | 84, **137**, **163**, **226**, **300** | 71, **154**, **191**, **278** |
 
@@ -32,9 +32,14 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **STEP-BACK #42 @ 325** (NO DRIFT; 2 seeds × 3 lights × 2 seasons all coherent, day-length
-  season alive; perm draw arc BYTE-FLAT vs 320 once snow cleared — the naive warp arc's +5.7%d is 321's snow, a
-  SEASONAL cost the warp cannot melt, law in SKILL.md). Prev: People **324** (DESIRE PATHS — People's FIRST non-excitable CA, filling the stale People × New
+- **ROTATION.** Last: Civic **326** (CIVIC SQUARE MATURATION — fills the LAST stale additive cell, Civic × New CA
+  rule (36/107, 219 laps). A paved plaza was drawn identically at 1996 and 2035; new field `c.civ` accumulates a hair
+  each tick toward 1 + light diffusion so the civic quarter ages as one. Draw: paving weathers to worn stone + a pair
+  of potted bay-tree topiaries establish past `CIVSHOW`. Zero rng()/terrain ⇒ census BYTE-IDENTICAL. Probe corr(civ,age)
+  =1.0, old 0.90 vs new 0.05, HEAD flat 0, LEAK 0; 2 blind agents PASS + located on a crossed map. ⚠ plazas are YOUNG
+  (mostly 2020+ forecourts) so maxCiv≈0.91 by 2035, never fully saturates — the gradient is raw-vs-established, not
+  1996-vs-2035.) Prev: **STEP-BACK #42 @ 325** (NO DRIFT; day-length season alive; perm draw arc BYTE-FLAT vs 320 once
+  snow cleared — clear `c.snow` before pricing the arc, law in SKILL.md). Prev: People **324** (DESIRE PATHS — People's FIRST non-excitable CA, filling the stale People × New
   CA cell. `c.wear` diffusion/accumulation on {PARK,SHOREPARK,GARDEN} relaxes toward `min(1,c.buzz/3)` + neighbour
   diffusion ⇒ busy shopfront/plaza edge wears to bare earth, quiet interior stays green; draw = 3 sub-hex `soil`
   ellipses, can't terrace. Zero rng()/terrain ⇒ census byte-identical. Probe: HEAD 0 worn, LIVELY 0.65 vs QUIET 0.09,
@@ -48,9 +53,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   People **318** (WASHING LINE answers rain+season) · People **317** (SEASONAL LEISURE COMPLETE) · Urban **316**
   (DISTRICTS — Voronoi `distOf`, 55→98%; ⛔ **the `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete**) ✅
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **STEP-BACK #42 RAN @ 325 — NO
-  DRIFT (next ~330).** ➡ **NEXT VECTOR: the last stale ADDITIVE cell is Civic × New CA rule (36/107) — People × New
-  CA ran at 324 (desire paths) — or grep a measured seam (225). SKY × New CA SEEDED (321); its template (season
-  source + neighbour diffusion, inert draw-flag) is reusable for any weather/ground field.**
+  DRIFT (next ~330).** ➡ **NEXT VECTOR: ADDITIVE space is now FULLY ROTATED across every domain × {New element, New CA
+  rule} — Civic × New CA filled at 326. Remaining additive is stale-by-recency only: Civic × New element (100, 226
+  laps — but header marks Civic additive COMPLETE at 292) and Sky × New element (291, "3rd ever", the one genuinely
+  sparse cell). Otherwise steer to a measured seam (225, 27-for-27 at finding) or Deepen/Polish; STEP-BACK due ~330.
+  Field-CA templates now cover diffusion (324 wear), reaction-diffusion (321 snow), and accumulation (326 civ).**
   ✅ **308 fire-spark rides `fireSeason()`, 305 front greys the sky, 291 Sky lightning — full entries in ledger.** ⚠
   **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; (bi) daytime-lamp & (av) catenary cues = barely-visible bad
   trade ⇒ ⛔ do NOT force, `polish-tile`). Sky NEW ELEMENT additive still sparse (291, 3rd ever).
@@ -391,54 +398,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 318 entries before Iteration 316 live in
+> **Archive:** the 319 entries before Iteration 317 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 316 — the four district colors finally drew a map (2026-07-17) [Urban fabric × Deepen/FIX]
-
-**Vector.** The header's `NEXT` is Civic/People × New CA rule, but the loop's own law outranks rotation: grep the
-seam, not the cue list — a found, measured defect beats a shallow additive feature into a saturated city. Grepping
-the majority-vote **districts CA** (`c.dist`, DISTCOL gold/teal/coral/sage) turned up a 199-tell: the comment says
-"blocks slowly vote themselves a shared identity" and COM shopfronts, awnings, market spots and the tooltip all wear
-their **district** color — but `c.dist` is seeded as **per-cell white noise** (`hashCell(x*3+1,y*7+2,seed^13)`), and
-a weak vote (ks(50) picks/tick, strict ≥3 majority, ~12 touches/cell over 60 yrs) **cannot coarsen noise into
-quarters**. Measured at 2035 (`probes/probe-districts.mjs`): coherence (a dev cell's dist == its dev-neighbour
-plurality) only **55–61%** — a hair above the 25% chance floor for 4 colors — biggest same-color run ~1% of the
-fabric, COM colors split evenly [46,57,50,38]. **The "District" the shopfronts wore and the tooltip named did not
-exist; every street was a random 4-color speckle** — the same shape as 283 (the dead boulevard) and 285 (the market
-that kept no day).
-
-**Change (draw-only — no rng(), no terrain, no state).** Districts become a **fixed Voronoi geography** read at draw
-time: a new pure `distOf(x,y)` (four centers on a per-seed jittered 2×2 grid over the developed land, one of each
-color, nearest wins in `ctr()` screen space so quarters read round; memoised per seed off a **private PRNG**, zero
-shared `rng()`). The four readers (MARKET spots · COM sign · COM walk-up sign · tooltip) now read `distOf(x,y)`
-instead of `c.dist`. **The seed and the vote pass in `tick()` are left byte-identical** — the vote is retained ONLY
-to keep the seeded stream aligned, because its `rng()<0.5` is short-circuit-gated on `best!==c.dist`, so its draw
-count is entangled with the old field (a coherent seed drew *fewer* rolls → a chaotic cascade: first cut, seeding
-`c.dist` coherently, cratered **pop −5.9% COLLAPSE** while `developed`/`roads` stayed flat — the 231 tell — so it was
-reverted and the look was decoupled from the stream instead).
-
-**Census.** Only draw-time reads changed ⇒ `pop`/`developed`/`roads` **+0, byte-identical**, tile histogram empty.
-VERDICT: PASS (vacuous by design — the gate is the probe + eyes).
-
-**Probe** (`probes/probe-districts.mjs`, pure world data, 3 seeds × 2035, build-agnostic via `SRC=`/`distOf` fallback):
-- **HEAD: coherence 55–61%, shopfront ECHO (a COM has a same-color COM within r3) 66–76%** — near-random speckle.
-- **PATCH: coherence 96–98%, ECHO ~98%** — adjacent shopfronts now share their quarter's color. Control (HEAD via
-  `SRC=`) moves exactly the wrong-way expected, confirming the metric.
-
-**Visual** (`shots/after_*`, seeds 42 & 7, downtown clip + whole city, 2035). Both blind subagents **PASS**, and both
-— independently, on two seeds — **located distinct same-color quarters** (a teal pocket, a coral cluster, a gold
-band, sage near the parks), which is the locate-not-judge check: they saw the geography. No z-order tears, floating
-tiles or blown-out color; both whole-city frames read as balanced coherent coastal cities.
-
-**Verdict: DEEPENED** (a FIX). The city's four districts, advertised on every shopfront and in the tooltip since long
-before the ledger, finally cohere into readable gold/teal/coral/sage quarters (coherence 55%→98%) instead of a
-random 4-color speckle — wholly inert (census byte-identical), the look decoupled from the seeded stream so the vote
-CA's `rng()` footprint is preserved. Same shape as 283/285: a label ladder that named a distinction the pixels never
-drew.
 
 ## Iteration 317 — the beach packed away for winter; the park picnicked through it (2026-07-17) [People & activity × Deepen]
 
@@ -886,3 +850,59 @@ is methodological and promoted to SKILL.md: **a warp-based perf/census instrumen
 with snow the `__setYear` pin cannot melt, so it over-attributes a seasonal draw to the permanent arc — clear
 `c.snow` (any season-persistent CA field) before pricing the arc.** Guardrail reset (next ~330); NEXT vector is
 Civic × New CA rule (36/107) or a measured seam.
+
+## Iteration 326 — the civic squares weathered in over the decades (2026-07-17) [Civic & culture × New CA rule]
+
+**Vector.** Rotation's `NEXT` was the LAST stale additive cell: **Civic × New CA rule** — empty since iter 107 (219
+laps), the single most recency-neglected coordinate in the grid. Excitable-media is COMPLETE (bloom/shroom/party), so
+a civic CA had to be a *different* mechanism. The engine's field-CA templates were diffusion (324 wear) and
+reaction-diffusion (321 snow); the third native form — **accumulation/succession** — had never been run for civic.
+The seam was sitting in plain sight: **the paved civic squares are drawn identically at every age.** A plaza laid in
+1996 and a forecourt opened in 2034 wear the same pale raw concrete, the same fountain, the same bunting — nothing
+civic *matures*. (The QUAD/PLAZA draws are rich — forecourts, statues, mown quads — but frozen the instant they're
+placed.)
+
+**Change (an accumulation CA field + an age-gated draw — wholly census-inert).** New field `c.civ` on PLAZA:
+- **The CA** (`tick()`, right after the 324 WEAR pass): each PLAZA relaxes `c.civ += CIVRATE=0.004` toward 1 (a raw
+  new forecourt reads as fresh concrete; a decades-old square as established, dressed stone), plus a **diffusion term**
+  (`CIVDIFF=0.02` toward its plaza neighbours' mean) so the clustered civic quarter ages as one and a lone new
+  forecourt among old halls catches up a little. A destroyed/rebuilt square is zeroed here, so a fresh plaza always
+  starts raw. Reads only type + neighbours' `c.civ`, writes only `c.civ`.
+- **The draw** (PLAZA case): (a) the base paving weathers — `col('cream',0.97-0.07*c.civ)`, so an established square is
+  a touch warmer worn stone (only ever DARKENS from HEAD's 0.97, so it can never out-brighten the lit fabric, 222);
+  (b) past `CIVSHOW=0.30`, a pair of formal potted **bay-tree topiaries** (pale stone tub + clipped dark-green sphere
+  + lit crown, all solid ellipse *bodies* per 215, ramping in size with maturity) establish flanking the rosette.
+  Additive — the fountain/statue/bunting are untouched. Tooltip: a plaza now reads `newly-laid` / `maturing` /
+  `long-established` off the SAME `c.civ` the draw gates on.
+- **Zero rng(), zero hashCell, zero terrain** — a pure accumulation of type + neighbours, reset with the world
+  (`civ:0` in the cell literal). Nothing the census measures reads `c.civ`.
+
+**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` and every histogram cell **+0**, empty tile histogram.
+VERDICT PASS / 0 page errors. (Re-run on the final `CIVRATE=0.004` file: still +0, since the census reads no `c.civ`.)
+
+**Perf.** Two extra solid ellipses per *dressed* plaza only (~3–5 plazas/city, and only those past `CIVSHOW`), day and
+night; every other hex byte-flat. Far under the +0.015%/lap perm arc. The base-tone weathering is a colour-only change
+(no new path object).
+
+**Probe** (`probes/probe-civmature.mjs`, pure world data — drives `tick()`, reads `cells[].civ`+`.age`, no pixels, no
+noise floor, BUILD-AGNOSTIC via `SRC=` since HEAD's `c.civ` is undefined→0):
+- **HEADLINE (236):** HEAD reads **0 civ on every plaza, every seed** — a raw square and a fifty-year one drawn
+  identically. The defect stated, no threshold invented.
+- **CLAIM (the whole point):** **corr(civ, age) = 1.00** on every seed with age spread (0.00 on the two seeds whose
+  plazas are all one age — honest, not a failure); OLD (age≥180 ticks) mean civ **0.90** (dressed) vs NEW (<90) **0.05**
+  (raw). maxCiv **0.91** — established, not saturated, because plazas are young.
+- **CONTAINED (250, LEAK):** every non-plaza hex reads civ 0 on all 6 seeds — the pass contains itself.
+
+**Visual** (`probes/shot-civmature.mjs` — aimed A/B; zero-rng ⇒ HEAD and PATCH build the identical city, so the same
+plaza hex is a genuinely blind pair; A/B tokens meaningless + **map CROSSED between seeds**, 268/239). Both blind
+subagents **PASS** and both **located the treatment** — seed 42 (kappa=PATCH) and seed 7 (sigma=PATCH), each named the
+matured build by its pixels: weathered warmer paving + the flanking pair of potted topiaries, sitting correctly on the
+plaza tile (no floating, no spill onto neighbours, no z-order tears, no blown colour). Both whole-city frames read as a
+balanced, coherent, beautiful coastal city — dense tower core, legible parks/river/coast, nothing compounded into
+clutter or darkness.
+
+**Verdict: SHIPPED.** Civic's first non-excitable CA and the last stale additive cell filled (Civic × New CA rule,
+107 → 326): an accumulation/succession field that weathers the paved public squares in over the decades — raw new
+concrete when a forecourt is freshly laid, an established dressed square once it has stood for years — so the civic
+core shows its age. Wholly census-inert (zero random draws, no terrain). The additive grid is now fully rotated across
+every domain × kind. `probes/probe-civmature.mjs`, `probes/shot-civmature.mjs`.

@@ -466,6 +466,14 @@ const SNOWLAND=new Set([T.EMPTY,T.MEADOW,T.FOREST,T.REDWOOD,T.PARK,T.ROAD,T.ROCK
 const WEARBUZZ=3, WEARLERP=0.04, WEARDIFF=0.09;     /* target scale / onset speed / drift */
 const WEARSHOW=0.12, WEARA=0.5;                      /* draw: threshold, then earth alpha */
 const WEARLAND=new Set([T.PARK,T.SHOREPARK,T.GARDEN]);
+/* CIV — civic-square maturation, Civic's first CA field since the excitable-media era (iter 326).
+   A paved plaza weathers in over the decades: c.civ accumulates a hair each tick toward 1 (a raw
+   new forecourt reads as fresh concrete; a fifty-year civic square reads as an established, dressed
+   place), plus a light diffusion so the clustered civic quarter matures together and a lone new
+   forecourt among old halls establishes a touch faster. Pure accumulation of type+neighbours
+   (no rng(), no hashCell, no terrain), reset with the world ⇒ perturbs nothing the census measures. */
+const CIVRATE=0.004, CIVDIFF=0.02;                   /* onset per tick / quarter drift (plazas are young — mostly 2020+ forecourts — so the rate fills the ~240-tick lifespan to a dressed ~0.95 while a fresh forecourt stays raw) */
+const CIVSHOW=0.30;                                   /* draw: maturity past which the planters appear */
 function daylight(t){
   t=((t%1)+1)%1;
   let i=0; while(KEYS[i+1][0]<t)i++;
@@ -970,7 +978,7 @@ function genWorld(seed){
     else if(x>coastX[y])t=T.SHOREPARK;
     cells[idx(x,y)]={t,h:0,th:0,v:hashCell(x,y,seed),age:0,corr:false,lit:hashCell(y,x,seed),
                      val:0.5,dist:(hashCell(x*3+1,y*7+2,seed^13)*4)|0,fire:0,bloom:0,party:0,shroom:0,stop:0,loft:false,sand:0,
-                     bridge:false,riv:false,busy:false,flow:0,solar:false,groof:false,treed:false,snow:0,wear:0,kind:''};
+                     bridge:false,riv:false,busy:false,flow:0,solar:false,groof:false,treed:false,snow:0,wear:0,civ:0,kind:''};
   }
   /* meadows, woods and boulders: the land the town was cut from */
   const nMead=ks(3)+(rng()*3|0);
@@ -3132,6 +3140,19 @@ function tick(){
     let sum=0,n=0; nbrs6(x,y,(nx,ny)=>{const m=cellAt(nx,ny); if(m&&WEARLAND.has(m.t)){sum+=m.wear;n++;}});
     let w=c.wear+WEARLERP*(tgt-c.wear)+(n?WEARDIFF*(sum/n-c.wear):0);
     c.wear=w<0?0:w>1?1:w;
+  }
+  /* CIV — civic-square maturation (iter 326). A paved plaza accumulates a hair of maturity every
+     tick toward 1, plus a diffusion term toward its plaza neighbours' mean, so the civic quarter
+     ages as one and a raw forecourt among old halls catches up a little. Reads only type + the
+     neighbours' c.civ, writes only c.civ (which nothing the census measures reads) ⇒ census-inert.
+     A destroyed/rebuilt square is zeroed here, so a fresh plaza always starts at raw concrete. */
+  for(const i of HEXI){
+    const c=cells[i];
+    if(c.t!==T.PLAZA){ if(c.civ)c.civ=0; continue; }
+    const x=i%G,y=(i/G)|0;
+    let sum=0,n=0; nbrs6(x,y,(nx,ny)=>{const m=cellAt(nx,ny); if(m&&m.t===T.PLAZA){sum+=m.civ;n++;}});
+    let v2=c.civ+CIVRATE+(n?CIVDIFF*(sum/n-c.civ):0);
+    c.civ=v2>1?1:v2;
   }
   /* SNOW — reaction-diffusion over the inland land (Sky's first CA rule, iter 321).
      A seasonal source relaxes each snow-land hex toward a per-type target (deep on the
@@ -6233,11 +6254,26 @@ function drawCell(x,y){
       tree(gx-0.20,gy-0.14,0.62,1);   /* a specimen tree, one per quad */
       break;}
     case T.PLAZA:{
-      hexTile(gx,gy,1.02,col('cream',0.97));
+      /* the paving weathers in with the square's maturity (iter 326): raw new concrete
+         when the forecourt is freshly laid, a warmer worn stone once it is long established.
+         Only ever darkens from HEAD's 0.97, so it can never out-brighten the lit fabric (222). */
+      hexTile(gx,gy,1.02,col('cream',0.97-0.07*c.civ));
       {const[cx,cy]=px(gx,gy);
       ctx.strokeStyle=col('creamDk',0.94);ctx.lineWidth=1.1; /* paving rosette */
       ctx.beginPath();ctx.ellipse(cx,cy,8.6,4.4,0,0,7);ctx.stroke();
       ctx.beginPath();ctx.ellipse(cx,cy,5.2,2.6,0,0,7);ctx.stroke();
+      if(c.civ>CIVSHOW){ /* an established square is framed by formal potted bay trees */
+        const m=(c.civ-CIVSHOW)/(1-CIVSHOW), tr=1.3+m*1.5;
+        for(const ox of[-7,7]){
+          const tx=cx+ox, ty=cy+1.4;
+          ctx.fillStyle=col('creamDk',0.9);                 /* the stone tub */
+          ctx.beginPath();ctx.ellipse(tx,ty+tr*0.65,tr*0.92,tr*0.5,0,0,7);ctx.fill();
+          ctx.fillStyle=col('canopy',0.82);                 /* clipped bay topiary */
+          ctx.beginPath();ctx.ellipse(tx,ty-tr*0.2,tr,tr*1.08,0,0,7);ctx.fill();
+          ctx.fillStyle=col('canopy',1.02);                 /* a lit crown */
+          ctx.beginPath();ctx.ellipse(tx-tr*0.3,ty-tr*0.6,tr*0.42,tr*0.42,0,0,7);ctx.fill();
+        }
+      }
       if(v>0.6){ /* a statue on a plinth */
         prism(gx,gy,0.09,0.075,0,3.6,col('whiteDk',1),col('whiteDk',0.6),col('whiteDk',0.85));
         ctx.strokeStyle=col('gold',1.25);ctx.lineWidth=2.0;
@@ -10180,6 +10216,8 @@ function describeTile(c,x,y){
      entry [flag] renders as a single spanning row for boolean features */
   const est=Math.max(1974,Math.round(year-c.age*0.075));
   if(c.t===T.CIVIC||c.t===T.STADIUM)data.push(['Est.',est]);
+  /* a plaza's maturity, read off the SAME c.civ its paving and planters are drawn from (iter 326) */
+  if(c.t===T.PLAZA)data.push([c.civ>0.7?'A long-established square':c.civ>CIVSHOW?'A maturing square':'A newly-laid square']);
   /* live, and off the SAME matchClock() the floodlights and the crowd are drawn from,
      so the card can never call a fixture the renderer has not lit (iter 240) */
   if(c.t===T.STADIUM)data.push(['Fixture',matchWord()]);
