@@ -23099,3 +23099,59 @@ random 4-color speckle — wholly inert (census byte-identical), the look decoup
 CA's `rng()` footprint is preserved. Same shape as 283/285: a label ladder that named a distinction the pixels never
 drew.
 
+## Iteration 317 — the beach packed away for winter; the park picnicked through it (2026-07-17) [People & activity × Deepen]
+
+**Vector.** The rotation steers to Civic/People × New CA rule, but the loop's law outranks it: grep the seam, not the
+cue list. The census columns are clean (287 fixed the last dead row), the CA passes / tables / flags / hours / seasons
+are all heavily audited, and the one banked visual cue (bh, an "over-bright plaza flame-blob") reproduced on seed 7 at
+2035 golden/day as a **fine small gold statue, not a blown-out blob** — a non-defect (205's label-tell false-positive;
+269: an agent right the thing exists, wrong that it is a fault), so (bh) is **CLOSED**. What the grep *did* turn up is
+a 271 category hole: **247 gave the BEACH a season** (`beachPhase()` — the furniture and the water crowd pack away over
+winter and fill for the dry peak), and its **park-lawn siblings were never enumerated**. The park café patrons, the
+park lawn picnic, and the shorepark picnic blanket gated only on `LITAMT` (day/night) and drew **identically in August
+and January** — a picnic on the grass through a cold wet winter, every year, forever. Confirmed on HEAD before
+designing (`probe-parkseason`, temporal): picnic + patron counts **flat across all four seasons, DISTINCT = 1 on 6
+seeds in 6** — the defect stated (236). This is the seasonal-leisure twin of the excitable-media completion (263 bloom
+· 272 shroom · 314 party): a property established for one member of a category, applied to the siblings but one.
+
+**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The three park draws become readers of the beach's
+OWN season predicate `beachPhase()` (one predicate, N readers — 271/285), so the park empties for winter exactly as
+the sand does:
+- **Park café patrons** — the seated-diner cutoff `hashCell > 0.5` → `hashCell > 0.5*beachPhase()`; the parasol stays
+  year-round, its diners thin over winter.
+- **Park lawn picnic** — the whole rug (blanket + basket + two seated figures) gated on a stable per-lawn
+  `hashCell(x,y,seed^0x50C2) < beachPhase()`.
+- **Shorepark picnic blanket** — same gate inside the SAME v-band (not moving the band, so the else-if chain is intact
+  and a winter cell draws bare shore-grass rather than handing its range to the next arm — 247's own trap).
+`beachPhase()===1` exactly at the dry peak, so all three are **byte-identical to HEAD there** (245's fixed point). The
+pitch game (FIELD) is deliberately left alone — a pickup match is played year-round, not a summer-only activity.
+
+**Census.** Draw-only, gated on a global season read, unreachable from `tick()` ⇒ `pop`/`developed`/`roads` **+0,
+byte-identical**, tile histogram empty, every metric flat (no RAF wobble this run). VERDICT: PASS (vacuous by design —
+the gate is the probe + eyes).
+
+**Probe** (`probes/probe-parkseason.mjs`, temporal/seasonal, 3 seeds × 4 seasons, build-agnostic via `SRC=`; counts
+the draws the frame ISSUES by geometric signature — 285). Fixed day hour (0.52, midday game-on), sweep the calendar:
+- **HEAD: picnics + patrons FLAT, DISTINCT = 1 on every seed** (seed 7 always 16+9 blankets / 173 patrons; 42 always
+  24+12 / 228; 1234 always 31+10 / 172) — the park did not know the season.
+- **PATCH: they answer `beachPhase()`** — seed 7 wet-trough `2+0`/9 → dry-peak `16+9`/173, seed 42 `1+1`/31 →
+  `24+12`/228, seed 1234 `2+1`/16 → `31+10`/172; spring and autumn sit symmetrically between (bp 0.55).
+- **Controls FLAT on both builds** (250): café **parasols** DISTINCT=1 (159/239/188) and pitch **players** DISTINCT=1
+  (8/40/24) — the furniture and the year-round sport do not move.
+- **FIXED POINT (245):** the patch's dry-peak counts **exactly equal HEAD's** at every season (25/173, 36/228,
+  41/172) — byte-identical at `beachPhase()===1`, proven HEAD-vs-patch rather than via an in-page stub (284: a
+  `function` stub survives and poisons later seeds — the first cut of the probe walked into exactly that).
+
+**Visual** (`probes/shot-parkseason.mjs`, seeds 42 & 7 — a summer↔winter close-up pair of the same park at midday
+(LITAMT 0.00 in both, so only the season differs), plus a whole-city frame; map CROSSED by seed, non-ordinal tokens —
+238/268). Both blind subagents **PASS** and — the locate-not-judge check (108) — **both correctly named the summer
+frame by the picnic/café life alone, on the crossed map** (seed 7: summer=bravo ✓; seed 42: summer=alpha ✓), each
+noting the café parasol/furniture is present in both (the control). No z-order tears, floating tiles or blown-out
+colour anywhere; both whole-city frames read as balanced, coherent, beautiful coastal cities.
+
+**Verdict: DEEPENED.** The park's outdoor leisure now keeps the calendar the beach has kept since 247: café terraces
+and picnic rugs fill for the golden dry peak and pack away over the wet winter (bare lawns in January, the parasol
+standing empty), at zero draw/stream cost and byte-identical at the dry peak. Completes the seasonal-leisure category
+(beach 247 → park 317), the twin of the excitable-media completion (bloom 263 · shroom 272 · party 314). Cue (bh)
+closed as a non-defect. `beachPhase()` gains three readers.
+

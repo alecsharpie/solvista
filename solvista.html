@@ -10582,6 +10582,43 @@ const tipEl=$('tip');
    called BOTH from the listener and from the frame loop, off this remembered cursor, so the
    card names what is under the pointer NOW. */
 let hoverMX=null,hoverMY=null,hoverHTML='';
+/* the tile under the cursor. A building rises UP the screen from its ground hex,
+   so the old pick -- nearest ground-plane hex CENTRE -- named the hex drawn BEHIND
+   a tall facade: a tower's whole wall reported the road two rows back (measured:
+   only ~4% of a tower's facade named the tower; ~66% of all built facade points
+   mis-hovered. cue (ba), iter 278). Draw order is depth order, so the tile a viewer
+   actually sees at a point is the FRONTMOST built column whose drawn body covers it
+   -- pick that; fall back to the ground-plane nearest-centre only where no building
+   stands in the way (open ground, roads, water, parks), which is byte-identical to
+   HEAD there (the control holds at 100%). The body geometry matches drawBuilding's
+   own c.h prism (base centre ctr(x,y), half-width ~0.34*CW, rising c.h px), so the
+   pick tracks the animated wall exactly as it is drawn. */
+const BODYT=new Set([T.RES,T.MID,T.COM,T.TOWER,T.IND]); /* the c.h-prism bodies */
+function pickTile(wx,wy){
+  const HMAX=200;   /* px: taller than any tower body, bounds the upward row scan */
+  const X=0.34*CW, V=0.30*2*VR;
+  let fx=-1,fy=-1,bdx=1e9;
+  const yTop=Math.floor(wy/ROWY-0.5)-1, yBot=Math.ceil((wy+HMAX)/ROWY-0.5)+1;
+  for(let yy=yTop;yy<=yBot;yy++){
+    const xc=Math.round(wx/CW-0.5-(yy&1)*0.5);
+    for(let xx=xc-1;xx<=xc+1;xx++){
+      if(!inB(xx,yy))continue;
+      const c=cells[idx(xx,yy)]; if(!BODYT.has(c.t)||c.h<1)continue;
+      const cx=(xx+0.5+(yy&1)*0.5)*CW, cy=(yy+0.5)*ROWY, dx=Math.abs(wx-cx);
+      if(dx<=X && wy>=cy-V-c.h && wy<=cy+V && (yy>fy||(yy===fy&&dx<bdx))){fx=xx;fy=yy;bdx=dx;}
+    }
+  }
+  if(fx>=0)return[fx,fy];
+  /* no building in the way: the original nearest ground-hex-centre pick */
+  const y0=Math.round(wy/ROWY-0.5), x0=Math.round(wx/CW-1);
+  let x=-1,y=-1,bd=1e9;
+  for(let yy=y0-1;yy<=y0+1;yy++)for(let xx=x0;xx<=x0+2;xx++){
+    if(!inB(xx,yy))continue;
+    const dx2=wx-(xx+0.5+(yy&1)*0.5)*CW, dy2=(wy-(yy+0.5)*ROWY)*1.73;
+    const d=dx2*dx2+dy2*dy2; if(d<bd){bd=d;x=xx;y=yy;}
+  }
+  return x<0?null:[x,y];
+}
 function hoverAt(mx,my){
   if(panning&&dragMoved>4){tipEl.style.display='none';hoverEnt=null;hoverTile=null;return;}
   const wx=(mx-offX)/scale, wy=(my-offY)/scale;
@@ -10590,17 +10627,11 @@ function hoverAt(mx,my){
   let html;
   if(pe){html='<p class="tt">'+pe[0]+'</p><p class="td">'+pe[1]+'</p>';hoverTile=null;}
   else{
-    const y0=Math.round(wy/ROWY-0.5), x0=Math.round(wx/CW-1);
-    let x=-1,y=-1,bd=1e9;
-    for(let yy=y0-1;yy<=y0+1;yy++)for(let xx=x0;xx<=x0+2;xx++){
-      if(!inB(xx,yy))continue;
-      const dx2=wx-(xx+0.5+(yy&1)*0.5)*CW, dy2=(wy-(yy+0.5)*ROWY)*1.73;
-      const d=dx2*dx2+dy2*dy2; if(d<bd){bd=d;x=xx;y=yy;}
-    }
-    const c=cellAt(x,y);
+    const p=pickTile(wx,wy);
+    const c=p?cellAt(p[0],p[1]):null;
     if(!c){tipEl.style.display='none';hoverTile=null;return;}
-    hoverTile={x,y};
-    html=describeTile(c,x,y);
+    hoverTile={x:p[0],y:p[1]};
+    html=describeTile(c,p[0],p[1]);
   }
   /* only touch the DOM when the sentence actually changed: a resident crossing a park is
      re-picked 8x a second and says the same thing every time, and rewriting the card's

@@ -3045,6 +3045,21 @@ vector, whatever it is.
   patch** and matched the world data exactly. **Name a quantity the projection keeps** (drawn wall length, ink,
   colour, count, left-right position — `sx` survives fine), or **aim the camera** (201) so the comparison is
   local and depth is held constant.
+  **⇒ AND THE SAME PROJECTION FACT BREAKS THE POINTING DEVICE, NOT ONLY THE AGENT: A PICK/HOVER/CLICK THAT
+  RESOLVES A 2.5D SCENE BY THE NEAREST GROUND-PLANE HEX CENTRE NAMES THE TILE DRAWN *BEHIND* A TALL FACADE
+  (iter 327).** 224 is a law about a *question you ask an agent*; 327 is the identical fact about *where the
+  cursor is*. A building rises UP the screen from its ground hex, so a cursor on a tower's wall sits far above
+  that hex's centre, and the nearest ground centre is a hex several rows BACK — a road. Measured on `hoverAt`:
+  a TOWER's own visible facade named the tower **3.7–5.6%** of the time (all built facade **~34%**); the rest
+  named the hex behind, on 3 seeds, for the artifact's whole life. ⇒ **Draw order is depth order, so the tile a
+  viewer sees at a point is the FRONTMOST built column whose drawn body covers the cursor** — scan the bounded
+  set of built hexes whose `c.h`-prism body (base centre `ctr(x,y)`, published half-width, rising `c.h` px)
+  contains the point and take the largest row; fall back to the nearest-ground-centre pick only where nothing
+  built stands in the way (open ground is then **byte-identical**, the free must-not-move control). The tell:
+  **your pick converts the cursor to world coords and compares against a hex *centre* or *ground plane*, and the
+  scene has HEIGHT.** (This is the entity pick's own history — 314 gave a vehicle an oriented body box for the
+  same reason; a tile needed the same, one scope out. Validate it END-TO-END with the real `page.mouse.move` and
+  read the live `hoverTile`, never only the pick's own geometry model, or the probe grades its own homework.)
 - **WHEN YOU FIX A QUANTITY, GREP FOR EVERY RULE THAT *WRITES* IT (iter 224 — 217's sibling).** 217 says: when a
   rule decides both *whether* and *how much*, a fix to one clause is mistaken for a fix to the phenomenon. Its
   sibling is the same defect one scope wider: **one field, written by TWO RULES IN DIFFERENT BRANCHES**, where a

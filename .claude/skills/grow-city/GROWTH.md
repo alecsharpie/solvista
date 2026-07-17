@@ -19,7 +19,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323** | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
 | **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275** | **97**, **141**, **176** |
-| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133** |
+| **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316** | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~ | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
 | **Sky & atmosphere** | 27, 43, **291** | **321** | 19, 35, 50, 57, 95, **135**, **153**, **161**, **181**, **190**, **208**, **225**, **236**, **253**, **261**, **280**, **284**, **298**, **305**, **313** | | | 61, 81, 89, **115**, **200**, **242**, **248**, **265**, ~~**273**~~ | ~~**134**~~, **144** |
@@ -32,46 +32,41 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: Civic **326** (CIVIC SQUARE MATURATION — fills the LAST stale additive cell, Civic × New CA
-  rule (36/107, 219 laps). A paved plaza was drawn identically at 1996 and 2035; new field `c.civ` accumulates a hair
-  each tick toward 1 + light diffusion so the civic quarter ages as one. Draw: paving weathers to worn stone + a pair
-  of potted bay-tree topiaries establish past `CIVSHOW`. Zero rng()/terrain ⇒ census BYTE-IDENTICAL. Probe corr(civ,age)
-  =1.0, old 0.90 vs new 0.05, HEAD flat 0, LEAK 0; 2 blind agents PASS + located on a crossed map. ⚠ plazas are YOUNG
-  (mostly 2020+ forecourts) so maxCiv≈0.91 by 2035, never fully saturates — the gradient is raw-vs-established, not
-  1996-vs-2035.) Prev: **STEP-BACK #42 @ 325** (NO DRIFT; day-length season alive; perm draw arc BYTE-FLAT vs 320 once
-  snow cleared — clear `c.snow` before pricing the arc, law in SKILL.md). Prev: People **324** (DESIRE PATHS — People's FIRST non-excitable CA, filling the stale People × New
-  CA cell. `c.wear` diffusion/accumulation on {PARK,SHOREPARK,GARDEN} relaxes toward `min(1,c.buzz/3)` + neighbour
-  diffusion ⇒ busy shopfront/plaza edge wears to bare earth, quiet interior stays green; draw = 3 sub-hex `soil`
-  ellipses, can't terrace. Zero rng()/terrain ⇒ census byte-identical. Probe: HEAD 0 worn, LIVELY 0.65 vs QUIET 0.09,
-  LEAK 0; 2 blind PASS.) · Nature **323** (WILDFLOWERS ANSWER SPRING — grassland
-  `bloomAt` had no season gate ⇒ flowers all year incl. ON the 321 snow; `bloomSeason()` gates the DRAW, CA `c.bloom`
-  untouched ⇒ census byte-identical, perf credit; probe spring-only DISTINCT 2 vs HEAD 1, 2 blind PASS.) · Water **322**
-  (WHALES MIGRATE — `whaleSeason()` gate off `w.ph/7`, zero draws, dolphins resident, byte-identical; 2 blind PASS.) · Sky **321**
-  (SNOW — Sky's 1st CA in 321 laps: reaction-diffusion `c.snow`, census byte-identical; +5.7%d/+4.7%n draw the
-  coldest ~3 weeks ONLY, self-skips + melts the rest of the year — ⚠ but warp=61 freezes it ON, see 325.) ·
+- **ROTATION.** Last: Urban **327** (FACADE TILE PICK — cue (ba) CLOSED; Urban's stalest kind, Interaction/UX 133→327.
+  `hoverAt` picked the nearest ground-plane hex CENTRE, so hovering a tall wall named the hex drawn BEHIND it (224's
+  screen-y-is-DEPTH, on the pick): a TOWER's facade self-named **3.7–5.6%**, all built facade **~34%**. New `pickTile`
+  = the FRONTMOST built column (`BODYT`, `c.h`-prism geometry) covering the cursor, ground-plane fallback off buildings
+  ⇒ facade **100%**, open-ground control byte-identical. Interaction-only, census byte-identical, zero perf; real-mouse
+  E2E: HEAD named a road 6–7 rows back, PATCH names "Tower". 2 blind PASS + located crossed.) Prev: Civic **326**
+  (CIVIC SQUARE MATURATION — Civic × New CA 36/107, LAST stale additive cell; `c.civ` accumulation+diffusion weathers
+  plazas over decades, census byte-identical, corr(civ,age)=1.0, 2 blind PASS. ⚠ plazas YOUNG ⇒ maxCiv≈0.91, raw-vs-
+  established gradient not 1996-vs-2035.) Prev (all shipped, census byte-identical, laws in SKILL.md): **STEP-BACK #42
+  @325** (NO DRIFT; day-length season alive; perm arc BYTE-FLAT vs 320 once snow cleared — clear `c.snow` before
+  pricing the arc) · People **324** (DESIRE PATHS, People's 1st non-excitable CA — `c.wear` diffusion off `c.buzz`
+  wears busy green to bare earth) · Nature **323** (WILDFLOWERS ANSWER SPRING — `bloomSeason()` gates the DRAW, CA
+  untouched) · Water **322** (WHALES MIGRATE — `whaleSeason()` off `w.ph/7`) · Sky **321** (SNOW — Sky's 1st CA,
+  reaction-diffusion `c.snow`, +5.7%d/+4.7%n the coldest ~3 wks ONLY, self-skips/melts — ⚠ warp=61 freezes it ON) ·
   Civic **319** (CUP-NIGHT FIREWORKS — `matchCelebrate()` 6-shell finale over each stadium, draw-only fixed point) ·
   People **318** (WASHING LINE answers rain+season) · People **317** (SEASONAL LEISURE COMPLETE) · Urban **316**
   (DISTRICTS — Voronoi `distOf`, 55→98%; ⛔ **the `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete**) ✅
-  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **STEP-BACK #42 RAN @ 325 — NO
-  DRIFT (next ~330).** ➡ **NEXT VECTOR: ADDITIVE space is now FULLY ROTATED across every domain × {New element, New CA
-  rule} — Civic × New CA filled at 326. Remaining additive is stale-by-recency only: Civic × New element (100, 226
-  laps — but header marks Civic additive COMPLETE at 292) and Sky × New element (291, "3rd ever", the one genuinely
-  sparse cell). Otherwise steer to a measured seam (225, 27-for-27 at finding) or Deepen/Polish; STEP-BACK due ~330.
-  Field-CA templates now cover diffusion (324 wear), reaction-diffusion (321 snow), and accumulation (326 civ).**
-  ✅ **308 fire-spark rides `fireSeason()`, 305 front greys the sky, 291 Sky lightning — full entries in ledger.** ⚠
-  **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; (bi) daytime-lamp & (av) catenary cues = barely-visible bad
-  trade ⇒ ⛔ do NOT force, `polish-tile`). Sky NEW ELEMENT additive still sparse (291, 3rd ever).
+  **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: ADDITIVE space is
+  FULLY ROTATED (Civic × New CA filled at 326; field-CA templates cover diffusion/reaction-diffusion/accumulation).
+  Remaining additive is stale-by-recency only: Sky × New element (291, "3rd ever", the one genuinely sparse cell).
+  Otherwise steer to a measured seam (225, now 27-for-27) or Deepen/Polish/Interaction. STEP-BACK #42 clean @325;
+  NEXT step-back ~330.**
+  ⚠ **TRANSPORT SATURATED** (304/312: 4 seams grepped clean; (bi) daytime-lamp & (av) catenary cues = barely-visible
+  bad trade ⇒ ⛔ do NOT force, `polish-tile`). Sky NEW ELEMENT additive still sparse (291, 3rd ever).
   ✅ **SPENT/CLOSED — full entries in ledger, laws in SKILL.md; the load-bearing fact is per-domain SATURATION:**
-  **NATURE** additive spent (301 deer), Polish debt paid (294 ax+bg); next = grep the tick()/CA seam (287/279 pattern).
-  **URBAN** tooltip/flag/TABLE SATURATED (295/302), stale = **Interaction/UX (133)**. **PEOPLE** Deepen CLOSED 14-deep
-  + Polish spent (300) + Interaction ran (278) + **New CA rule ran (324 desire paths)** ⇒ People FULLY ROTATED across
-  kinds; take no People vector without a measured seam. **CIVIC** additive COMPLETE (292 event-venue category {market,stadium,amphitheater}), Connect
-  measured-sound (285 civic mile — 11–30 cells, sound, do NOT "fix"), stale = **New CA rule (36/107)**. **SKY** additive
-  NOT fully spent (291 shipped lightning, the sparsest cell — 3rd ever). **TRANSPORT** all seams dry (304); its two named
-  cues (a elevated transit · av catenary) are the same 0.5px hairline `polish-tile` family ⛔, stale = **New CA rule
-  (77)**. Recent cliff closures: 303 herons (the one 301 cited as a control), 302 loft, 301 deer, 300 strip crowd —
-  every animate draw now *verifiably* off the 262 cliff (`225`'s grep-the-seam law is 26-for-26 at *finding*).
-  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next) · **(az)/(ba)** 278's two (below).
+  **NATURE** additive spent (301 deer), Polish paid (294); next = grep the tick()/CA seam (287/279). **URBAN**
+  tooltip/flag/TABLE SATURATED (295/302), Interaction/UX ran (133/**327**) ⇒ take no Urban vector without a measured
+  seam. **PEOPLE** FULLY ROTATED across kinds (Deepen 14-deep · Polish 300 · Interaction 278 · New CA 324) ⇒ measured
+  seam only. **CIVIC** additive COMPLETE (292), Connect measured-sound (285 civic mile — do NOT "fix"), stale = **New
+  CA rule (36/107)** — but that just RAN (326), so next Civic = seam/Deepen. **SKY** additive NOT fully spent (291
+  lightning, sparsest cell — 3rd ever). **TRANSPORT** all seams dry (304); its two named cues are the 0.5px hairline
+  `polish-tile` family ⛔, stale = **New CA rule (77)**. Every animate draw now *verifiably* off the 262 cliff (300 the last).
+  ➡ **OPEN cues: (ay)** windrow LENGTH (POLISH ⇒ not Water's next). ✅ **(ba) CLOSED @327** (facade tile pick —
+  occlusion-correct `pickTile`; law in SKILL.md — a pick by ground-plane centre names the tile behind a tall
+  facade, 224 on the cursor) · ✅ **(az) CLOSED @314** (vehicle oriented pick box).
   ✅ **CLOSED (detail in each entry):** (bh) 317 (NON-DEFECT: a fine gold statue) · (bd) 284 · (au) 302 · (ax)+(bg)
   294 · (bf) market packed-away square 299.
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (**300: the last global-`LITAMT` CLIFF — `drawBuilding`'s
@@ -96,13 +91,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   identity ~8°/10° vs HEAD's 23°/24° (`probe-goldenhue` PASS ⇒ monochrome cue CLOSED, 265 holds); night ordering
   `*TOWER *MID *COM > BEACH` clears by ~19 (222/251); the faint day-sea hex quilt is CAPPED-not-new (255/257/268);
   perm draw arc ~**+0.015%/lap** (byte-flat FIXES cancel the additive tendency). ⚠ **PRICE THE ARC IN PATH OBJECTS,
-  NOT ms** (perfab is load noise). ⚠ **AND CLEAR `c.snow`
-  (any season-persistent CA field) BEFORE PRICING THE PERM ARC (325):** `__warp(61)`≈2035.0 freezes the world
-  mid-winter with snow ON, and `__setYear` does NOT re-tick to melt it, so EVERY warp probe permanently samples the
-  snowy world — 321's seasonal +5.7%d reads as a permanent arc jump until you zero `c.snow`. ⚠ Blind A/B NON-ORDINAL +
-  CROSSED (268). ⚠ **TOOL NITS in `shot-stepback` (STILL banked, not fixed — legit future tool laps):** per-frame
-  `GWARM=0` self-report is a stale caption read (pixels ARE warm; agents + `probe-goldenhue` agree) — do NOT read it
-  as "golden unwarmed"; and `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM.
+  NOT ms** (perfab is load noise), **and CLEAR `c.snow`** (any season-persistent CA field) first — `__warp(61)` freezes
+  the world snowy and `__setYear` won't melt it, so every warp probe over-attributes 321's seasonal draw to the perm
+  arc (law in SKILL.md). ⚠ Blind A/B NON-ORDINAL + CROSSED (268). ⚠ **TOOL NITS in `shot-stepback` (banked, not fixed):**
+  per-frame `GWARM=0` self-report is a stale caption (pixels ARE warm; agents + `probe-goldenhue` agree) — do NOT read
+  as "golden unwarmed"; `HUD=STALE` on golden/dusk = `phaseWord`-vs-`clockWord` mismatch, not a stale DOM.
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -398,67 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 319 entries before Iteration 317 live in
+> **Archive:** the 320 entries before Iteration 318 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 317 — the beach packed away for winter; the park picnicked through it (2026-07-17) [People & activity × Deepen]
-
-**Vector.** The rotation steers to Civic/People × New CA rule, but the loop's law outranks it: grep the seam, not the
-cue list. The census columns are clean (287 fixed the last dead row), the CA passes / tables / flags / hours / seasons
-are all heavily audited, and the one banked visual cue (bh, an "over-bright plaza flame-blob") reproduced on seed 7 at
-2035 golden/day as a **fine small gold statue, not a blown-out blob** — a non-defect (205's label-tell false-positive;
-269: an agent right the thing exists, wrong that it is a fault), so (bh) is **CLOSED**. What the grep *did* turn up is
-a 271 category hole: **247 gave the BEACH a season** (`beachPhase()` — the furniture and the water crowd pack away over
-winter and fill for the dry peak), and its **park-lawn siblings were never enumerated**. The park café patrons, the
-park lawn picnic, and the shorepark picnic blanket gated only on `LITAMT` (day/night) and drew **identically in August
-and January** — a picnic on the grass through a cold wet winter, every year, forever. Confirmed on HEAD before
-designing (`probe-parkseason`, temporal): picnic + patron counts **flat across all four seasons, DISTINCT = 1 on 6
-seeds in 6** — the defect stated (236). This is the seasonal-leisure twin of the excitable-media completion (263 bloom
-· 272 shroom · 314 party): a property established for one member of a category, applied to the siblings but one.
-
-**Change (draw-only — no `rng()`, no `Math.random`, no terrain).** The three park draws become readers of the beach's
-OWN season predicate `beachPhase()` (one predicate, N readers — 271/285), so the park empties for winter exactly as
-the sand does:
-- **Park café patrons** — the seated-diner cutoff `hashCell > 0.5` → `hashCell > 0.5*beachPhase()`; the parasol stays
-  year-round, its diners thin over winter.
-- **Park lawn picnic** — the whole rug (blanket + basket + two seated figures) gated on a stable per-lawn
-  `hashCell(x,y,seed^0x50C2) < beachPhase()`.
-- **Shorepark picnic blanket** — same gate inside the SAME v-band (not moving the band, so the else-if chain is intact
-  and a winter cell draws bare shore-grass rather than handing its range to the next arm — 247's own trap).
-`beachPhase()===1` exactly at the dry peak, so all three are **byte-identical to HEAD there** (245's fixed point). The
-pitch game (FIELD) is deliberately left alone — a pickup match is played year-round, not a summer-only activity.
-
-**Census.** Draw-only, gated on a global season read, unreachable from `tick()` ⇒ `pop`/`developed`/`roads` **+0,
-byte-identical**, tile histogram empty, every metric flat (no RAF wobble this run). VERDICT: PASS (vacuous by design —
-the gate is the probe + eyes).
-
-**Probe** (`probes/probe-parkseason.mjs`, temporal/seasonal, 3 seeds × 4 seasons, build-agnostic via `SRC=`; counts
-the draws the frame ISSUES by geometric signature — 285). Fixed day hour (0.52, midday game-on), sweep the calendar:
-- **HEAD: picnics + patrons FLAT, DISTINCT = 1 on every seed** (seed 7 always 16+9 blankets / 173 patrons; 42 always
-  24+12 / 228; 1234 always 31+10 / 172) — the park did not know the season.
-- **PATCH: they answer `beachPhase()`** — seed 7 wet-trough `2+0`/9 → dry-peak `16+9`/173, seed 42 `1+1`/31 →
-  `24+12`/228, seed 1234 `2+1`/16 → `31+10`/172; spring and autumn sit symmetrically between (bp 0.55).
-- **Controls FLAT on both builds** (250): café **parasols** DISTINCT=1 (159/239/188) and pitch **players** DISTINCT=1
-  (8/40/24) — the furniture and the year-round sport do not move.
-- **FIXED POINT (245):** the patch's dry-peak counts **exactly equal HEAD's** at every season (25/173, 36/228,
-  41/172) — byte-identical at `beachPhase()===1`, proven HEAD-vs-patch rather than via an in-page stub (284: a
-  `function` stub survives and poisons later seeds — the first cut of the probe walked into exactly that).
-
-**Visual** (`probes/shot-parkseason.mjs`, seeds 42 & 7 — a summer↔winter close-up pair of the same park at midday
-(LITAMT 0.00 in both, so only the season differs), plus a whole-city frame; map CROSSED by seed, non-ordinal tokens —
-238/268). Both blind subagents **PASS** and — the locate-not-judge check (108) — **both correctly named the summer
-frame by the picnic/café life alone, on the crossed map** (seed 7: summer=bravo ✓; seed 42: summer=alpha ✓), each
-noting the café parasol/furniture is present in both (the control). No z-order tears, floating tiles or blown-out
-colour anywhere; both whole-city frames read as balanced, coherent, beautiful coastal cities.
-
-**Verdict: DEEPENED.** The park's outdoor leisure now keeps the calendar the beach has kept since 247: café terraces
-and picnic rugs fill for the golden dry peak and pack away over the wet winter (bare lawns in January, the parasol
-standing empty), at zero draw/stream cost and byte-identical at the dry peak. Completes the seasonal-leisure category
-(beach 247 → park 317), the twin of the excitable-media completion (bloom 263 · shroom 272 · party 314). Cue (bh)
-closed as a non-defect. `beachPhase()` gains three readers.
 
 ## Iteration 318 — the washing hung out in the rain, and through midwinter (2026-07-17) [People & activity × Deepen/interconnect]
 
@@ -906,3 +843,61 @@ clutter or darkness.
 concrete when a forecourt is freshly laid, an established dressed square once it has stood for years — so the civic
 core shows its age. Wholly census-inert (zero random draws, no terrain). The additive grid is now fully rotated across
 every domain × kind. `probes/probe-civmature.mjs`, `probes/shot-civmature.mjs`.
+
+## Iteration 327 — hover a tower's wall and it names the tower, not the road behind it (2026-07-17) [Urban fabric × Interaction/UX]
+
+**Vector.** The additive grid is fully rotated (326), so the guidance was a measured seam or Deepen/Polish, varying
+the kind away from New CA (324/326). Domain balance pointed at Urban or Transport (neither touched in 6 laps); Urban's
+stalest kind is **Interaction/UX (iter 133)** — and a live, measured open cue sat there: **(ba)**, banked at 278.
+(Cue **(az)** — vehicles under-reaching their own bodies — was already CLOSED by iter 314's oriented pick box; the
+drawVehicle `_phw/_phh/_pcy` footprint and `pickEntity`'s box test are the fix. So (ba) was the one still open.)
+The tile hover (`hoverAt`) converts the cursor to world (wx,wy) and takes the **nearest ground-plane hex CENTRE** —
+but a building rises UP the screen from its ground hex, so a cursor on a tower's wall sits far above that centre and
+the nearest ground centre is a hex several rows BEHIND. So hovering a tall facade named the tile drawn behind it
+(usually a road). This is 224's law (screen-y is DEPTH, not height) / 204's (a still frame hides where a thing is)
+arriving on the **pick** instead of the camera. Urban × Interaction/UX (133 → 327).
+
+**Change (interaction-only — no `rng()`, no terrain, no `tick()`, no draw).** New `pickTile(wx,wy)` (before
+`hoverAt`), and `hoverAt`'s tile branch now calls it. Draw order is depth order, so the tile a viewer actually sees
+at a point is the **FRONTMOST built column whose drawn body covers the cursor**: scan the bounded set of hexes whose
+`c.h`-prism body (base centre `ctr(x,y)`, half-width `0.34*CW`, rising `c.h` px — the geometry `drawBuilding` itself
+draws, `BODYT={RES,MID,COM,TOWER,IND}`) contains (wx,wy), and take the largest row (drawn last = in front), nearest-x
+on a tie. If no building stands in the way, fall back to the **original** ground-plane nearest-centre pick — so open
+ground, roads, water and parks are **byte-identical to HEAD**. The row scan is bounded by `HMAX=200` px (taller than
+any tower body) ⇒ ~15 rows × 3 cols per hover, read-only, and hover runs ~8/s, never in `render()` — zero draw/perf
+cost. The tile focus ring (`ctr(hoverTile)`) now lands on the building's own footprint for free.
+
+**Census.** Core **BYTE-IDENTICAL** — `pop`/`developed`/`roads` and every histogram cell **+0** (no `rng()`, no
+terrain, no `tick()`; the pick is read-only). VERDICT PASS / 0 page errors.
+
+**Perf.** No draw change; `pickTile` runs only on hover (~8/s), never per frame. The permanent draw arc is untouched.
+
+**Probe** (`probes/probe-facadepick.mjs`, build-agnostic via `SRC=`; settles heights `c.h=c.th` per 272; frozen
+world at 2035). For each visible building it samples points on the FRONT WALL and asks the pick to name the building
+itself, excluding occluded points (frontmost-containing-column ≠ this hex) so a buried wall point is skipped not
+scored:
+- **HEADLINE / the price (236):** the % of a building's own visible facade that names it. **HEAD (ground pick):
+  TOWER 3.7–5.6% · COM 46–48% · MID 24% · RES 62% · IND 42–48% · ALL 33–36%** — i.e. ~66% of all built facade
+  points, and **~95% of a TOWER's wall**, named the hex behind. **PATCH: 100.0% on every type, every seed.**
+- **CONTROL (250, must-not-move):** open-ground hex centres (ROAD/PARK/EMPTY/…) — **ground pick and shipped pick
+  agree 100.0%, both name the hex itself**, on HEAD and PATCH. The fallback is byte-identical off buildings.
+
+**End-to-end (`probes/shot-facadepick.mjs`, uses NONE of the pick's geometry model):** drives the REAL
+`page.mouse.move` onto a screen point on a downtown tower's wall (lifted up the facade in SCREEN px from the drawn
+base), fires the artifact's own mousemove listener, and reads the live `hoverTile` + card text. **HEAD:** seed 42
+cursor-on-tower-(28,29) → `hoverTile 28,23` (six rows back) → card **"Avenue"**; seed 7 tower-(31,42) →
+`hoverTile 31,35` (seven rows back) → **"Boulevard"**. **PATCH:** the SAME points → `hoverTile 28,29` / `31,42` →
+card **"Tower"**. Independent of the probe's model — it drives the actual pick.
+
+**Visual** (the same shots, HEAD vs PATCH, A/B tokens meaningless + **CROSSED between seeds** per 238/239/268). Both
+blind subagents **PASS** and both **located the fix on the crossed map**: on the patch the tooltip reads "Tower" (a
+downtown high-rise, ~54 floors, helipad, rooftop solar) with the ring at the tower's base; on HEAD it reads
+"Avenue"/"Boulevard" with the ring floating high on a road behind/above the cursor. No z-order tears, floating tiles,
+misplaced tooltips or blown colour in either frame; both read as a coherent dense downtown (the scene draw is
+untouched — only which tile the ring/card targets changed).
+
+**Verdict: SHIPPED.** Cue (ba) closed. Hovering a tall building's facade now names and rings the building the cursor
+is on, not the road drawn on the ground behind it — an occlusion-correct tile pick (frontmost built column covering
+the cursor, ground-plane fallback where nothing stands in the way), lifting a tower's facade from ~4% self-naming to
+100% while open ground is byte-identical. Interaction-only, wholly census-inert, zero perf cost, in Urban fabric's
+stalest kind. Urban × Interaction/UX (133 → 327). `probes/probe-facadepick.mjs`, `probes/shot-facadepick.mjs`.
