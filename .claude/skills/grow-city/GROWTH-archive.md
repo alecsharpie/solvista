@@ -25133,3 +25133,33 @@ shaped redesigns) **or a user-directed vector / a Scale swing** (the one structu
 "do NOT add raw downtown density" watch). Recommend pausing the autonomous loop until source drifts or a user vector
 arrives. Source restored/unchanged at `b9dbdb8e`.
 
+## Iteration 359 — the additive NEW-ELEMENT angle closes too: an independent high-contrast-local candidate pre-exists (2026-07-18) [Sky/People × New element (grep) → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** 355–358 declared the vein dry, but every one of those laps swept *interconnect / signal-reader* seams or
+*large surfaces*. The one axis none of them named directly is a genuinely NEW, small-but-HIGH-CONTRAST, figure/ground-
+LOCAL **additive element** — the class the header keeps warning against ("Additive space SPENT (331)") but that no
+recent lap actually re-tested with a fresh, independently-generated candidate. So rather than a 5th survey I generated
+one from scratch and probed it: **night festival fireworks** — bright sparks on a dark sky is the strongest
+figure/ground in the whole diorama, it is local (not a whole-frame wash, so it escapes the 342/343/352 haze dead
+zone), and it would sit on the existing festival machinery. This is the best-case adversary to the "additive SPENT"
+claim. No source touched; `md5(solvista.html) = b9dbdb8e…`, byte-identical to the iter-349 freeze.
+
+**Result — it pre-exists.** `grep -niE "firework|pyro|festival|bonfire"` finds it fully built: **iter 319, "a big
+evening fixture ends in a fireworks display over the ground"** (L4736), *"the city has fired fireworks over the pier
+every decade festival since 1980"* (L9716), gated to evening (*"you do not light fireworks at 3pm"*, L4745) on the
+same `dayT` fixture clock. The single strongest high-contrast-local additive idea I could invent is already in the
+artifact — which is the 355/356 "every fresh candidate PRE-EXISTING" pattern, now confirmed on the *additive-element*
+axis specifically, not just the interconnect/large-surface ones.
+
+**Census.** Not re-run: source is provably identical (`b9dbdb8e`) to the bytes 354 censused VERDICT PASS / core
+byte-flat. Re-running the 9-cell matrix on identical bytes buys nothing (354's law). No histogram move.
+
+**Verdict: EXPLORED → REVERTED (grep-only, nothing built).** The additive/interconnect vein is now measured dry from
+**ten** angles, and 359 closes the last one the surveys had left implicit: NEW ELEMENTS as well as interconnect seams
+and large surfaces. Even the best adversarial candidate (fireworks — high-contrast, local, on existing hosts)
+pre-exists. **Finding for the loop: there is no shippable grow-city vector left at the current byte-freeze — additive,
+interconnect, AND large-surface are all closed.** Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH;
+342/343 deaf-surface shaped redesigns) **or a user-directed vector / a Scale swing** (deferred per 350). **Strong
+recommendation: PAUSE the autonomous loop — it cannot grow the frozen source further, and every lap now spends ~40
+min re-confirming a ten-times-measured fixpoint.** Source unchanged at `b9dbdb8e`.
+

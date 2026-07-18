@@ -32,15 +32,15 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **368 — HOVER-SEAM RE-VERIFY / NO SHIP** (Explore): the interaction/hover surface is the one seam
-  364/365/366/367 never re-audited — every FOREGROUND mover in `ENTINFO` carries a live-`sub` off the SAME predicate its
-  rule steers by (249/269/271/278 discipline COMPLETE, no frozen label-tell); the only non-`ENTINFO` arrays are ambient
-  HIGH-SKY `birds`/`flock`/`plane` (cloud band, non-interactive by design, priced to `polish-tile` at 351 — not a gap).
-  Fresh census PASS. **A 4th independent instrument ⇒ PAUSE stands.** Prev: **367 — CENSUS + FROZEN-COLUMN /
-  NO SHIP**: fresh census PASS + per-era histogram, every FLAT/ZERO column is documented terrain, 282's KELP (27→33→30)
-  + 287's SOLARF (0→0→19) read LIVE (the positive controls). **366 — PRICED (bc) / NO SHIP** ((bc) fire-glow
-  closed to `polish`: year-gated off at 2035, rare/4-tick/dense-core = solar-farm bad trade). **365 — SEAM RE-CHECK /
-  NO SHIP**: label-tell/flag/frozen-census tables all clean, backed by live draws.
+- **ROTATION.** Last: **369 — ADDITIVE-SPACE ENUMERATED / NO SHIP** (Explore): a 5th instrument, distinct from the
+  seam/census/hover audits — directly enumerate the high-contrast/LOCAL nouns one would reach for and grep the source.
+  Every one ALREADY EXISTS: **lighthouse sweeping beam** (L6697) · **fireflies** (L6823) · **bioluminescent surf** (L5866)
+  · **beach bonfire** (L6096) · **channel marks** · **pier**. This is iter-34's law (nearly shipped onto a feature that
+  already exists). Source byte-identical to 368's verified state ⇒ census unchanged by construction. **PAUSE stands.**
+  Prev: **368 — HOVER-SEAM / NO SHIP**: every FOREGROUND `ENTINFO` mover carries a live-`sub` off its own predicate
+  (249/269/271/278 COMPLETE); only ambient HIGH-SKY `birds`/`flock`/`plane` are non-interactive (priced to `polish` 351).
+  **367 — CENSUS + FROZEN-COLUMN / NO SHIP**: census PASS + histogram, KELP 27→33→30 & SOLARF 0→0→19 read LIVE (controls).
+  **366 — PRICED (bc) / NO SHIP** (fire-glow → `polish`). **365 — SEAM RE-CHECK / NO SHIP** (tables clean).
   **364** STEP-BACK #48 no drift + camera FIX (golden/dusk pins ignored the ~20yr WEATHER FRONT `rainFront` on the FULL
   year → false grey golden at 2035.62; now pins a CLEAR front per seed, self-reports `OVC`; SKILL.md 3rd pin-trap) ·
   **363** cue (g) CLOSED · **362** frozen-census clean · **361** FLAG-LIFECYCLE (281) CLOSED (`hstr` rides tower). Prev:
@@ -391,41 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 361 entries before Iteration 359 live in
+> **Archive:** the 362 entries before Iteration 360 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 359 — the additive NEW-ELEMENT angle closes too: an independent high-contrast-local candidate pre-exists (2026-07-18) [Sky/People × New element (grep) → NO SHIP → EXPLORED → REVERTED]
-
-**Vector.** 355–358 declared the vein dry, but every one of those laps swept *interconnect / signal-reader* seams or
-*large surfaces*. The one axis none of them named directly is a genuinely NEW, small-but-HIGH-CONTRAST, figure/ground-
-LOCAL **additive element** — the class the header keeps warning against ("Additive space SPENT (331)") but that no
-recent lap actually re-tested with a fresh, independently-generated candidate. So rather than a 5th survey I generated
-one from scratch and probed it: **night festival fireworks** — bright sparks on a dark sky is the strongest
-figure/ground in the whole diorama, it is local (not a whole-frame wash, so it escapes the 342/343/352 haze dead
-zone), and it would sit on the existing festival machinery. This is the best-case adversary to the "additive SPENT"
-claim. No source touched; `md5(solvista.html) = b9dbdb8e…`, byte-identical to the iter-349 freeze.
-
-**Result — it pre-exists.** `grep -niE "firework|pyro|festival|bonfire"` finds it fully built: **iter 319, "a big
-evening fixture ends in a fireworks display over the ground"** (L4736), *"the city has fired fireworks over the pier
-every decade festival since 1980"* (L9716), gated to evening (*"you do not light fireworks at 3pm"*, L4745) on the
-same `dayT` fixture clock. The single strongest high-contrast-local additive idea I could invent is already in the
-artifact — which is the 355/356 "every fresh candidate PRE-EXISTING" pattern, now confirmed on the *additive-element*
-axis specifically, not just the interconnect/large-surface ones.
-
-**Census.** Not re-run: source is provably identical (`b9dbdb8e`) to the bytes 354 censused VERDICT PASS / core
-byte-flat. Re-running the 9-cell matrix on identical bytes buys nothing (354's law). No histogram move.
-
-**Verdict: EXPLORED → REVERTED (grep-only, nothing built).** The additive/interconnect vein is now measured dry from
-**ten** angles, and 359 closes the last one the surveys had left implicit: NEW ELEMENTS as well as interconnect seams
-and large surfaces. Even the best adversarial candidate (fireworks — high-contrast, local, on existing hosts)
-pre-exists. **Finding for the loop: there is no shippable grow-city vector left at the current byte-freeze — additive,
-interconnect, AND large-surface are all closed.** Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH;
-342/343 deaf-surface shaped redesigns) **or a user-directed vector / a Scale swing** (deferred per 350). **Strong
-recommendation: PAUSE the autonomous loop — it cannot grow the frozen source further, and every lap now spends ~40
-min re-confirming a ten-times-measured fixpoint.** Source unchanged at `b9dbdb8e`.
 
 ## Iteration 360 — cue (ay) is CLOSED BY CONSTRUCTION: a legible near-shore windrow is z-order-forbidden (2026-07-18) [Water & coast × Polish (structural) → NO SHIP → EXPLORED → REVERTED]
 
@@ -706,3 +676,32 @@ genuinely fresh angle rather than trusting the header's "OPEN cue list empty."
 census/histogram) lands on the same verdict from a seam the others did not touch. No un-named foreground entity, no
 frozen `sub`. **The PAUSE stands** — the honest next move remains a `polish-tile` ship (drifts the source, re-opens the
 step-back), a user-directed vector, or a Scale swing.
+
+## Iteration 369 — the pause, re-confirmed by enumerating the additive idea-space against the source (2026-07-18) [Explore → no ship]
+
+**Vector.** 365–368 rested the PAUSE on four instruments (365 seam tables · 366 cue-pricing · 367 census/histogram ·
+368 hover surface) — all of which ask *"is what already exists still sound?"*. This lap asks the complementary
+question the header's "OPEN cue list empty" asserts but none of them tested directly: *"is there a NEW high-contrast,
+figure/ground-LOCAL feature left to add?"* — by generating the candidate nouns and grepping the source for each. A
+fifth, genuinely distinct instrument (255's "a cue re-confirmed is not corroborated unless a different instrument did
+it", applied to the pause).
+
+**What I measured (no source edit).** The strongest high-contrast/local ideas one reaches for — a rotating light, a
+night spark-field, a shore glow, a fire — and every one is **already in the artifact**:
+- **Lighthouse with a sweeping night beam** — `T.LIGHTHOUSE` (one per city, seawardmost headland, L2950), the beam
+  drawn `if(LITAMT>0.12)` at L6697.
+- **Fireflies** — `if(LITAMT>0.55)` at L6823.
+- **Bioluminescent surf** — the breaking crest lights the churn, `if(LITAMT>0.5)` at L5866 (iter 159's dots-not-strokes).
+- **Beach bonfire** — `drawFire`'s sibling with its own self-glow ground, L6096 (347's emitter law).
+- **Channel marks** (349, mirror their flash) · **pier** (`drawPierAt`) · wildfire `drawFire` · lit windows.
+
+This is iter-34's law (nearly shipped beach towels onto a beach that already had them) turned into a survey: the
+additive space is not merely *declared* spent, it is **enumerated and found occupied**. Source is byte-identical to
+368's verified state (clean worktree = same bytes), so the census gate result is unchanged **by construction** — a
+third identical re-run would add no information (the redundancy 255 warns against).
+
+**Verdict: EXPLORED → no ship.** A distinct instrument reaches the same verdict from the additive side rather than the
+audit side: there is no un-built high-contrast/local idea to reach for. **The PAUSE stands, now on five instruments.**
+The honest next move is unchanged — a `polish-tile` ship (which drifts the source and re-opens the step-back), a
+user-directed vector, or a Scale swing. Continuing to invoke `grow-city` on an un-drifted source will keep producing
+NO-SHIPs; that is the signal to stop, not a defect.
