@@ -32,9 +32,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **361 - FLAG-LIFECYCLE SEAM (281) CLOSED: `hstr` clean, all per-cell flags audited / NO SHIP** (Urban × grep).
-  Fresh corroboration of the fixpoint via a seam 353–360 skipped: `hstr` (the one un-audited flag) rides COM→TOWER as the
-  retail podium and has NO veto ⇒ no 281-tell; the FOURTH grep-the-seam class is now exhausted. Prev:
+- **ROTATION.** Last: **362 - FROZEN-CENSUS-COLUMN SEAM (282/287) CLEAN / NO SHIP** (Survey × histogram). Ran the loop's
+  #1 diagnostic (350–361 grepped source, never the histogram) on the 9-cell matrix: every flat/zero column is terrain, a
+  landmark, a one-shot planting, or a live 0→N structure — **no zero-row, no dead rule; fifth/cheapest seam class clean.** Prev: **361** FLAG-LIFECYCLE (281) CLOSED — `hstr` rides COM→TOWER (retail podium), NO veto ⇒ no 281-tell. Prev:
 - **360 - CUE (ay) WINDROW LENGTH CLOSED BY CONSTRUCTION / structural NO SHIP** (Water & coast × Polish). Last OPEN cue
   RESOLVED: a legible near-shore windrow is z-order-forbidden — 266's tail must trail the NW draw-quadrant but the sea is
   the EAST half-plane (`SHOREX=CTRX+11`), so westward fetch is shore-bounded ⇒ coastal stubs are geometry not tuning;
@@ -391,52 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 354 entries before Iteration 352 live in
+> **Archive:** the 355 entries before Iteration 353 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 352 — the whole-scene lightning flash reads as HAZE, not a flash (2026-07-18) [Sky × Deepen → EXPLORED → REVERTED]
-
-**Vector.** #47 @350 / #351 both said honest mode is `polish-tile` or step-back UNLESS a lap finds a NEW
-high-contrast domain-signal-reader (visibility priced first). Grepped the seams and confirmed the obvious interconnects
-are ALL shipped (shopfront glow on pavement L7744 · wet-street lamp mirror 341 · waterfront/buoy/fire/strike reflections
-329/349/348/347 · moonglade L9685 · sun glitter L5706). One genuinely un-built high-contrast thing survived: the
-lightning system is **entirely local** — 291 lights the cloud from within, 328 drops the bolt, 347 pools light where it
-grounds, but the darkened city AROUND a dusk storm stays exactly as dark as before, when a real flash floods the whole
-landscape. Built it: a per-frame `FLASHAMT` (max flash across the storm's out-of-step cells, accumulated in the cloud
-loop) drives one screen-space bluish-white wash over the whole viewport at the end of `render()`, alpha
-`min(0.15, FLASHAMT*0.19)`. `SHEETLIFT` suppressor; reads the existing flash pulse, draw-only.
-
-**Census.** PASS, every metric flat (draw-only, no rng/terrain/Math.random). `solarRoofs` wobble only.
-
-**Probe (`probe-sheetlift`, temporal, LIGHTN=1 in both halves so only the wash moves, ONE page).** Clean PASS on
-paper: at the strongest wet-dusk flash peak (FLASHAMT 0.837, both seeds) the lift covers **100% of the opaque scene**
-at **mean d 24.7/255 (~10%), peak 36**; and it is **exactly 0px** both in dry weather AND between the flash beats
-(FLASHAMT≈0 → byte-identical, the fixed point). ⚠ First cut read mean d **120 / peak 255** — the `getImageData` diff
-was dominated by the transparent VOID (RGB jumps 0→236 where the wash paints it, a lift the viewer never sees behind
-the CSS gradient — 200); masking to opaque scene pixels (base α==255) gave the honest 24.7.
-
-**Visual — the gate that killed it.** 2 blind agents (crossed on/off map, 2 seeds) both PASSed the effect as
-"coherent, not blown out" but **both INVERTED the filenames** — each named the *darker un-flashed* frame as the "lift"
-and called the *actual flash* frame "muted / more uniformly muted," the un-flashed one "colors pop, more saturated."
-Pixel measurement (239: believe the number over the read) confirmed MY map, not theirs (flash frame +19 whole-frame
-mean lum). But the inversion IS the finding: **a treatment that makes blind agents prefer the control has reduced
-contrast.** Looked myself: the flash-ON frame veils the whole city in a **grey-lavender HAZE** — a scrim/fog over the
-plate, not a bright flash. The bolt is dramatic; the whole-scene wash only *detracts*.
-
-**Verdict: EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (630b04b); probe + camera deleted (they read
-a `SHEETLIFT` global that no longer exists). **The finding is 260, arriving on a FLASH: a whole-frame luminance lift is
-the one "event" the eye cannot read as an event.** A flat full-viewport alpha wash can only DESATURATE toward its own
-colour — it cannot make a scene "pop" — and a global illuminant shift is exactly what colour constancy divides out,
-read as ATMOSPHERE/haze, never as a discrete event. No alpha rescues it (higher → more washout, lower → invisible);
-additive blend only trades haze for blow-out (the other warned failure). This is the low-contrast whole-frame trap
-342/343 were reverted for, one rung up. ⇒ **A "whole-scene event" (a flash, a dawn break, floodlight-the-city) built
-as a FLAT OVERLAY is dead on arrival, and a passing luminance/coverage probe proves NOTHING about it — only the blind
-agents/eyes can judge a desaturating wash (266).** A believable whole-scene flash would have to be brightest at the
-SKY/source and fall off toward the ground (a directional gradient, not a flat veil), which is a `polish-tile`-scale
-redesign, not a growth lap. The lightning system stays local, and it is complete as it stands.
 
 ## Iteration 353 — the type-keyed TABLE seam is sound (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
 
@@ -759,3 +718,26 @@ corroboration of the fixpoint from a seam 355–360 did not touch, so it is not 
 place: **the grow-city vein is a fixpoint, OPEN cue list EMPTY, source byte-frozen since 349. PAUSE stands.** Honest
 growth now requires `polish-tile` (a source-drifting ship), a user-directed vector, or a Scale swing. Source unchanged at
 `b9dbdb8e`.
+
+## Iteration 362 — the frozen-census-column seam is clean: every flat/zero tile column is accounted for (2026-07-18) [Survey → NO SHIP → EXPLORED]
+
+**Vector.** 361 exhausted the fourth grep-the-seam class (flag lifecycle) and PAUSE stands. Rather than a *thirteenth*
+identical behavioral/table/comment survey, I ran the ONE concrete diagnostic the header names as **#1 — "a frozen census
+column is a seam, READ IT FIRST" (282/287)** — which the last twelve laps (350–361) never touched: they grepped source
+seams; none re-read the tile histogram. 287 found `SOLARF` (flat-0 for 180 laps) exactly here; 289 closed it + MARSH. No
+lap has re-audited the histogram against the *current* matrix since. Pure world data — no render, no pixels, no noise floor.
+
+**Finding (from the 9-cell histogram, not pixels).** Every flat/zero column is explained; **no 282/287-class dead rule
+remains.** FROZEN all-seeds: SHOREPARK/ROCK/MARSH/LIGHTHOUSE/VOID — all terrain or one-per-city landmark (MARSH closed
+289; SHOREPARK's count is fixed *by design* — the bloom CA (263) rides a per-cell flag, not the tile count; VOID is the
+hexagon-plate mask). Partially frozen: VINEYARD `[0,N,N]`, ORCHARD, REDWOOD, IND — one-shot plantings / old-growth /
+static industry, all expected `[0→N]` then held. Every remaining column *grows* 0→N then saturates (STADIUM `[0,2,2]`,
+PLAZA/GARDEN/SOLARF/QUAD/FIELD appearing at 2005/2035) — live built structures, the opposite of a dead rule. **The
+zero-row check (287's "a ZERO row is louder than a flat one") returns nothing: no tile is flat-0 across all 9 cells.**
+
+**Census.** PASS (pageerrors 0, exit 0, no core collapse). Source byte-identical to HEAD (`git diff --stat` empty).
+
+**Verdict: NO SHIP → EXPLORED (histogram-only).** The **fifth and cheapest seam class — the frozen census column — is
+now also clean**, corroborating the fixpoint from the loop's own #1 diagnostic, a seam 350–361 skipped. This is fresh
+evidence, not churn, and it reaches the same place: **OPEN cue list EMPTY, grow-city vein is a fixpoint, source frozen
+since 349. PAUSE stands.** Honest growth now requires a `polish-tile` ship, a user-directed vector, or a Scale swing.

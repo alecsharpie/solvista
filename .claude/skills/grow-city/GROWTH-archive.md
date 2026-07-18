@@ -24857,3 +24857,44 @@ dead rule hides in a frozen column. This confirms 344's growth wall from the **b
 it from the **visual/perf** side. Honest mode stays **`polish-tile`** or **STEP-BACK #48** (~355); a genuine growth lap
 now needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST, visibility priced FIRST. Nothing to fix.
 
+## Iteration 352 — the whole-scene lightning flash reads as HAZE, not a flash (2026-07-18) [Sky × Deepen → EXPLORED → REVERTED]
+
+**Vector.** #47 @350 / #351 both said honest mode is `polish-tile` or step-back UNLESS a lap finds a NEW
+high-contrast domain-signal-reader (visibility priced first). Grepped the seams and confirmed the obvious interconnects
+are ALL shipped (shopfront glow on pavement L7744 · wet-street lamp mirror 341 · waterfront/buoy/fire/strike reflections
+329/349/348/347 · moonglade L9685 · sun glitter L5706). One genuinely un-built high-contrast thing survived: the
+lightning system is **entirely local** — 291 lights the cloud from within, 328 drops the bolt, 347 pools light where it
+grounds, but the darkened city AROUND a dusk storm stays exactly as dark as before, when a real flash floods the whole
+landscape. Built it: a per-frame `FLASHAMT` (max flash across the storm's out-of-step cells, accumulated in the cloud
+loop) drives one screen-space bluish-white wash over the whole viewport at the end of `render()`, alpha
+`min(0.15, FLASHAMT*0.19)`. `SHEETLIFT` suppressor; reads the existing flash pulse, draw-only.
+
+**Census.** PASS, every metric flat (draw-only, no rng/terrain/Math.random). `solarRoofs` wobble only.
+
+**Probe (`probe-sheetlift`, temporal, LIGHTN=1 in both halves so only the wash moves, ONE page).** Clean PASS on
+paper: at the strongest wet-dusk flash peak (FLASHAMT 0.837, both seeds) the lift covers **100% of the opaque scene**
+at **mean d 24.7/255 (~10%), peak 36**; and it is **exactly 0px** both in dry weather AND between the flash beats
+(FLASHAMT≈0 → byte-identical, the fixed point). ⚠ First cut read mean d **120 / peak 255** — the `getImageData` diff
+was dominated by the transparent VOID (RGB jumps 0→236 where the wash paints it, a lift the viewer never sees behind
+the CSS gradient — 200); masking to opaque scene pixels (base α==255) gave the honest 24.7.
+
+**Visual — the gate that killed it.** 2 blind agents (crossed on/off map, 2 seeds) both PASSed the effect as
+"coherent, not blown out" but **both INVERTED the filenames** — each named the *darker un-flashed* frame as the "lift"
+and called the *actual flash* frame "muted / more uniformly muted," the un-flashed one "colors pop, more saturated."
+Pixel measurement (239: believe the number over the read) confirmed MY map, not theirs (flash frame +19 whole-frame
+mean lum). But the inversion IS the finding: **a treatment that makes blind agents prefer the control has reduced
+contrast.** Looked myself: the flash-ON frame veils the whole city in a **grey-lavender HAZE** — a scrim/fog over the
+plate, not a bright flash. The bolt is dramatic; the whole-scene wash only *detracts*.
+
+**Verdict: EXPLORED → REVERTED.** `solvista.html` byte-identical to HEAD (630b04b); probe + camera deleted (they read
+a `SHEETLIFT` global that no longer exists). **The finding is 260, arriving on a FLASH: a whole-frame luminance lift is
+the one "event" the eye cannot read as an event.** A flat full-viewport alpha wash can only DESATURATE toward its own
+colour — it cannot make a scene "pop" — and a global illuminant shift is exactly what colour constancy divides out,
+read as ATMOSPHERE/haze, never as a discrete event. No alpha rescues it (higher → more washout, lower → invisible);
+additive blend only trades haze for blow-out (the other warned failure). This is the low-contrast whole-frame trap
+342/343 were reverted for, one rung up. ⇒ **A "whole-scene event" (a flash, a dawn break, floodlight-the-city) built
+as a FLAT OVERLAY is dead on arrival, and a passing luminance/coverage probe proves NOTHING about it — only the blind
+agents/eyes can judge a desaturating wash (266).** A believable whole-scene flash would have to be brightest at the
+SKY/source and fall off toward the ground (a directional gradient, not a flat veil), which is a `polish-tile`-scale
+redesign, not a growth lap. The lightning system stays local, and it is complete as it stands.
+
