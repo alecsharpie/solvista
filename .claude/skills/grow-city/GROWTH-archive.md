@@ -24818,3 +24818,42 @@ SPENT (346), so honest mode from here is **`polish-tile`** (342/343's shaped-rid
 redesigns) **or STEP-BACK #48** (~355). A new growth lap still needs a NEW mechanism/domain-signal, **visibility priced
 FIRST** (266/342/343). Nothing to fix.
 
+## Iteration 351 — the half-built-completion / keeps-no-hour vein is dry (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** After #47 @350 the header named one remaining *growth* option (everything else being SPENT/CLOSED): "a NEW
+growth lap that finds a DIFFERENT kind of half-built completion — a mover that arrives+idles, a spawn that never
+completes — or a NEW mechanism/domain-signal-reader." This lap tested that option **directly**, by grepping the seam
+classes the vein lives in, before building anything (the additive/interconnect/emitter space is already spent, so a
+forced feature here is exactly the "one more shallow feature" the skill warns against — 344's wall). No source touched;
+`solvista.html` byte-identical to HEAD (5e06907 / 630b04b).
+
+**Survey — every seam class checked came back SOUND:**
+- **Movers arrive+idle (the "a mover that arrives+idles" seam):** ferry `dwell` at the pier head · launch `dwell` at
+  each end (`t>=1.3` puts about) · **copter** dwells on the pad (`t>=1.4` picks a new pad; draw clamps `p=min(1,t)` so it
+  *sits* at pad B, and `sin(π·p)=0` at `p=1` so it *lands* — a true arrive-and-idle) · monorail `dw` at platforms ·
+  cable car `dw` at terminals · bus `wait` at shelters. All complete.
+- **Label-tells (ENTINFO / VKIND / SERVDUTY):** all cards are live functions of the entity, read off the same predicate
+  the draw steers by (ferry/launch/boat/surfer/kayak/buoy/balloon/shuttle/mono/cable/tram/bus/police/ambo/fireeng). No
+  frozen-string tell (113/199 class) remains.
+- **Per-cell flags ride their upgrade (281/288 class):** `wear` (WEARLAND, footfall CA) · `hstr` (rides the tower up as
+  a retail podium, drawn last over the base) · `civ` (plaza maturity) · `treed` (boulevard) · `bridge` · `riv` — writer,
+  draw, tooltip and veto all agree on which types own each; `corner`/`solar`/`groof` already fixed (281/288).
+- **Spawn-completion / sparse fliers:** `plane` is complete (contrail that spreads with age, warm-pink `GWARM` tint at
+  dusk, blinking beacon, `day>0.02`-gated so it's gone at night); pelican `flock` melts into cover at night via
+  `nightAmt`. 🆕 **One residual inconsistency:** the 8 loose `birds` fade to α0.15 at night (`0.5-0.35*LITAMT`) rather
+  than roost — the flock's un-fixed sibling. But at α0.15 (dark-grey stroke on a dark night sky) they are **near-invisible
+  at fit zoom**, so this is a `polish-tile`/Sky close-up item, NOT a growth lap (visibility priced first — 266/342/343).
+- **Frozen census columns (`probe-frozencol`, 287's #1 seam tool):** only known terrain is FLAT (SHOREPARK/ROCK/MARSH
+  [audited 289]/LIGHTHOUSE/VOID); SOLARF 0→0→19, MARKET 0→5→16, VINEYARD/STADIUM/GARDEN/QUAD all grow, KELP 28/33/31
+  alive (282). **No new dead rule or zero row.**
+
+**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
+`roads` byte-unmoved (195508 / 6056 / 5727), only `solarRoofs +2` (226 tick-timing). Entity populations full and healthy
+(peds 762, cars 360, surfers 81, kayaks 81, buoys 45, plane 9, copters 6, etc.).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The half-built-completion /
+keeps-no-hour growth vein is **DRY**: every mover already dwells, every card is live, every flag rides its upgrade, no
+dead rule hides in a frozen column. This confirms 344's growth wall from the **behavioral** side, as 350 (#47) confirmed
+it from the **visual/perf** side. Honest mode stays **`polish-tile`** or **STEP-BACK #48** (~355); a genuine growth lap
+now needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST, visibility priced FIRST. Nothing to fix.
+

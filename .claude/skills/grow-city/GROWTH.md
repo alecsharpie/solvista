@@ -32,13 +32,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **360 - CUE (ay) WINDROW LENGTH CLOSED BY CONSTRUCTION / structural NO SHIP** (Water & coast × Polish).
-  The last OPEN cue is now RESOLVED, not deferred: a legible near-shore windrow is z-order-forbidden. 266's tail must
-  trail the **NW draw-quadrant** (`for y(N→S): for x(W→E)`, L9647 — the only already-painted region), but the sea is the
-  **EAST half-plane** (`SHOREX=CTRX+11`), so the westward fetch `run` (L5766) is shore-bounded ⇒ coastal rows are stubs
-  **by geometry, not tuning**; trailing east breaks z-order, reorienting along-shore abandons "parallel to wind" (266).
-  Residual = a fit-invisible stub cull = `polish-tile`. **⇒ OPEN cue list is EMPTY; the vein is a fixpoint from an
-  ELEVENTH angle. PAUSE the loop — it cannot grow the frozen source (`b9dbdb8e`) further.** Full entry in ledger.
+- **ROTATION.** Last: **361 - FLAG-LIFECYCLE SEAM (281) CLOSED: `hstr` clean, all per-cell flags audited / NO SHIP** (Urban × grep).
+  Fresh corroboration of the fixpoint via a seam 353–360 skipped: `hstr` (the one un-audited flag) rides COM→TOWER as the
+  retail podium and has NO veto ⇒ no 281-tell; the FOURTH grep-the-seam class is now exhausted. Prev:
+- **360 - CUE (ay) WINDROW LENGTH CLOSED BY CONSTRUCTION / structural NO SHIP** (Water & coast × Polish). Last OPEN cue
+  RESOLVED: a legible near-shore windrow is z-order-forbidden — 266's tail must trail the NW draw-quadrant but the sea is
+  the EAST half-plane (`SHOREX=CTRX+11`), so westward fetch is shore-bounded ⇒ coastal stubs are geometry not tuning;
+  residual = fit-invisible cull = `polish-tile`. **⇒ OPEN cue list EMPTY; PAUSE — frozen source `b9dbdb8e`.** Full entry below.
   Prev: **359** additive NEW-ELEMENT angle closes too — night festival fireworks pre-exist (iter 319, L4736/9716) ⇒ ten
   angles dry (grep-only NO SHIP). **358** WINDA readers fully enumerated (no surface deaf to wind); atmospheric
   perspective absent but dead-by-construction = HAZE. **357** snow-cap conifer crowns REVERTED (a real miss — crowns
@@ -102,7 +102,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   (`corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv`), grep the passes that UPGRADE its host: does the flag RIDE the
   change or DIE with it? — and do the WRITER, DRAW, TOOLTIP and VETO agree on which types own it?** The tell, in one
   grep: **your flag's WRITER skips a type its VETO still counts.** *A flag that draws nothing and still vetoes is worse
-  than no flag.*
+  than no flag.* ✅ **ALL FLAGS AUDITED (361): `corner` 281 · `loft` 274 · `solar`/`groof` 288 (ride COM→TOWER) · `hstr` CLEAN (retail-podium draw rides the tower, NO veto) · `bridge`/`riv`/`fete`/`snow` terrain/field. Seam CLOSED.**
   ⛔ **255: DO NOT PAINT A *PER-HEX* SIGNAL INTO THE WATER'S BODY COLOUR.** A field **sampled per hex and rendered as a
   flat hexagonal FILL terraces onto the LATTICE**: SUBTLE (**d=0.57** ⇒ both blind agents saw **nothing**) or BRIGHT
   (**d=1.15** ⇒ *"a high-contrast hex QUILT... not a sea"*), **no middle**. The glitter escapes ONLY as a **low-alpha
@@ -391,50 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 353 entries before Iteration 351 live in
+> **Archive:** the 354 entries before Iteration 352 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 351 — the half-built-completion / keeps-no-hour vein is dry (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
-
-**Vector.** After #47 @350 the header named one remaining *growth* option (everything else being SPENT/CLOSED): "a NEW
-growth lap that finds a DIFFERENT kind of half-built completion — a mover that arrives+idles, a spawn that never
-completes — or a NEW mechanism/domain-signal-reader." This lap tested that option **directly**, by grepping the seam
-classes the vein lives in, before building anything (the additive/interconnect/emitter space is already spent, so a
-forced feature here is exactly the "one more shallow feature" the skill warns against — 344's wall). No source touched;
-`solvista.html` byte-identical to HEAD (5e06907 / 630b04b).
-
-**Survey — every seam class checked came back SOUND:**
-- **Movers arrive+idle (the "a mover that arrives+idles" seam):** ferry `dwell` at the pier head · launch `dwell` at
-  each end (`t>=1.3` puts about) · **copter** dwells on the pad (`t>=1.4` picks a new pad; draw clamps `p=min(1,t)` so it
-  *sits* at pad B, and `sin(π·p)=0` at `p=1` so it *lands* — a true arrive-and-idle) · monorail `dw` at platforms ·
-  cable car `dw` at terminals · bus `wait` at shelters. All complete.
-- **Label-tells (ENTINFO / VKIND / SERVDUTY):** all cards are live functions of the entity, read off the same predicate
-  the draw steers by (ferry/launch/boat/surfer/kayak/buoy/balloon/shuttle/mono/cable/tram/bus/police/ambo/fireeng). No
-  frozen-string tell (113/199 class) remains.
-- **Per-cell flags ride their upgrade (281/288 class):** `wear` (WEARLAND, footfall CA) · `hstr` (rides the tower up as
-  a retail podium, drawn last over the base) · `civ` (plaza maturity) · `treed` (boulevard) · `bridge` · `riv` — writer,
-  draw, tooltip and veto all agree on which types own each; `corner`/`solar`/`groof` already fixed (281/288).
-- **Spawn-completion / sparse fliers:** `plane` is complete (contrail that spreads with age, warm-pink `GWARM` tint at
-  dusk, blinking beacon, `day>0.02`-gated so it's gone at night); pelican `flock` melts into cover at night via
-  `nightAmt`. 🆕 **One residual inconsistency:** the 8 loose `birds` fade to α0.15 at night (`0.5-0.35*LITAMT`) rather
-  than roost — the flock's un-fixed sibling. But at α0.15 (dark-grey stroke on a dark night sky) they are **near-invisible
-  at fit zoom**, so this is a `polish-tile`/Sky close-up item, NOT a growth lap (visibility priced first — 266/342/343).
-- **Frozen census columns (`probe-frozencol`, 287's #1 seam tool):** only known terrain is FLAT (SHOREPARK/ROCK/MARSH
-  [audited 289]/LIGHTHOUSE/VOID); SOLARF 0→0→19, MARKET 0→5→16, VINEYARD/STADIUM/GARDEN/QUAD all grow, KELP 28/33/31
-  alive (282). **No new dead rule or zero row.**
-
-**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
-`roads` byte-unmoved (195508 / 6056 / 5727), only `solarRoofs +2` (226 tick-timing). Entity populations full and healthy
-(peds 762, cars 360, surfers 81, kayaks 81, buoys 45, plane 9, copters 6, etc.).
-
-**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The half-built-completion /
-keeps-no-hour growth vein is **DRY**: every mover already dwells, every card is live, every flag rides its upgrade, no
-dead rule hides in a frozen column. This confirms 344's growth wall from the **behavioral** side, as 350 (#47) confirmed
-it from the **visual/perf** side. Honest mode stays **`polish-tile`** or **STEP-BACK #48** (~355); a genuine growth lap
-now needs a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST, visibility priced FIRST. Nothing to fix.
 
 ## Iteration 352 — the whole-scene lightning flash reads as HAZE, not a flash (2026-07-18) [Sky × Deepen → EXPLORED → REVERTED]
 
@@ -770,3 +731,31 @@ additive + interconnect + large-surface + the last polish cue are all closed/bou
 from an **eleventh** angle. **Strong recommendation stands: PAUSE the autonomous loop** until source drifts (a
 `polish-tile` ship) or a user-directed vector / Scale swing arrives; re-invoking it only re-confirms a measured fixpoint
 at ~40 min/lap. Source unchanged at `b9dbdb8e`.
+
+## Iteration 361 — flag-lifecycle seam (281) is CLEAN: `hstr` rides the tower, all per-cell flags audited (2026-07-18) [Urban fabric × grep → NO SHIP → EXPLORED]
+
+**Vector.** 355–360 declared the vein dry from eleven angles and recommend pausing. Rather than a twelfth *identical*
+survey (which buys nothing — 360's law), I ran ONE fresh, concrete seam-grep the recent laps had not: **281's
+flag-lifecycle audit**, applied per-flag instead of as a general reminder. The header lists nine per-cell flags
+(`corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv`/`fete`/`snow`) and 281's tell is one grep — *does the WRITER skip
+a type the VETO still counts?* Four are documented-fixed (`corner` 281, `loft` 274 via `bedOf`, `solar`+`groof` 288 —
+each RIDES the COM→TOWER upgrade). `bridge`/`riv` are terrain flags on ROAD/WATER, `fete` a per-tick ROAD flag, `snow` a
+diffused field — none have an upgrade-consumes-host problem. That left exactly ONE flag never audited: **`hstr`** (high
+street).
+
+**Finding (from source, not pixels).** `hstr` is CLEAN. Writer at L1131 sets it on `EMPTY/MEADOW/corr` founding-street
+flanks; the develop pass (L2245) forces those to `COM`; the draw at L7979 is the **retail-podium plinth** explicitly
+built to survive the tower (comment: *"the parade runs UNDER the towers… keeps its shopfront when the tower rises over
+it… without this, 7 of 13 lots by 2005 would be blank tower base"*), so the flag RIDES COM→TOWER by design. Tooltip
+(L10577) and find-hook (L11007) both gate `c.hstr&&DEV.has(c.t)`. Critically, `hstr` has **NO veto** — no
+`countAround(…,n=>n.hstr)` anywhere — so the 281-tell (writer skips a type the veto counts) *cannot* apply. Not dead
+code either: exists at scale (7/13 lots by 2005). No 281/274/288 defect.
+
+**Census.** Not re-run: source provably identical (`b9dbdb8e`) to the bytes 354 censused PASS. No source touched.
+
+**Verdict: NO SHIP → EXPLORED (grep-only).** The **FOURTH grep-the-seam class (flag lifecycle) is now exhausted** — every
+per-cell flag is either documented-fixed or structurally exempt, and `hstr` closes the last gap. This is a *fresh*
+corroboration of the fixpoint from a seam 355–360 did not touch, so it is not redundant churn — but it reaches the same
+place: **the grow-city vein is a fixpoint, OPEN cue list EMPTY, source byte-frozen since 349. PAUSE stands.** Honest
+growth now requires `polish-tile` (a source-drifting ship), a user-directed vector, or a Scale swing. Source unchanged at
+`b9dbdb8e`.
