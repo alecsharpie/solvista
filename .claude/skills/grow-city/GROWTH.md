@@ -32,12 +32,12 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **366 — PRICED (bc) / NO SHIP** (Explore): the last dangling cue — 🆕 (bc) fire-glow eaten by
-  later rows — PRICED and CLOSED to `polish`: both fire sparks are year-gated (structure `<2006`, forest `<2030`) so
-  **no fire burns at 2035** (the default/census/screenshot frame); a running load plays THROUGH the 1974–2005 fire era,
-  but a fire is 4 ticks, rare (L2772), and (bc) manifests only in dense CORE — a barely-visible payoff behind a
-  deferred-pass refactor = the reverted-solar-farm bad trade. **OPEN cue list now provably empty ⇒ PAUSE stands.**
-  Prev: **365 — SEAM RE-CHECK / NO SHIP**: label-tell/flag/frozen-census tables all clean, backed by live draws.
+- **ROTATION.** Last: **367 — CENSUS + FROZEN-COLUMN RE-VERIFY / NO SHIP** (Explore): fresh live census PASS (core
+  byte-flat, no page errors) + full per-era tile histogram — every FLAT/ZERO column is documented terrain, and 282's
+  KELP (27→33→30) + 287's SOLARF (0→0→19) liveness fixes read LIVE in the data. Trimmed the over-budget header ((g)
+  body → archive). **OPEN cue list provably empty ⇒ PAUSE stands.** Prev: **366 — PRICED (bc) / NO SHIP** ((bc) fire-glow
+  closed to `polish`: year-gated off at 2035, rare/4-tick/dense-core = solar-farm bad trade). **365 — SEAM RE-CHECK /
+  NO SHIP**: label-tell/flag/frozen-census tables all clean, backed by live draws.
   **364 — STEP-BACK #48 / NO DRIFT + FIXED (camera)**: golden/dusk pins ignored the WEATHER
   FRONT (`rainFront`, ~20yr clock on the FULL year, indep. of `year%1`) ⇒ at 2035.62 the shot seeds' sky was a random
   overcast, `GWARM=0`, false grey golden; now pins a CLEAR front per seed + self-reports `OVC` (SKILL.md 3rd pin-trap).
@@ -333,11 +333,9 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   forecourt rule. `QUARTER` = the three that *seek* it; `observatory` is deliberately free to sit at the rim.
   `siteQuarter()` hugs the nearest standing major at **2-4 hexes**.
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
-  **(g) CLOSED at 363** (`probe-seedlessdither`). All **three** genuine seedless-`hashCell` PRESENCE decisions salted
-  with `seedNum^base` (night waterfront smear `0x577` · FARM hay bales `0x7A1` · harvest fruit `seedNum^(r*3+cc+50)`) ⇒
-  0% vary → 62–72% vary per seed. The remaining seedless calls are **jitter/colour/offset, not presence** (the cue's own
-  criterion), so imperceptible whether salted or not: river-glint phase/side, kelp sway, bale count, fruit colour. ⚠ **If
-  you add a new draw, keep salting per-cell PRESENCE with `seedNum^SALT`** (invariant #1). ⚠ **`darkWinR` is NOT a breach.**
+  **(g) CLOSED at 363** (`probe-seedlessdither`; full body archived at 367): 3 seedless-`hashCell` PRESENCE decisions
+  salted `seedNum^base` (0% → 62–72% vary); the rest are jitter/colour/offset, not presence. ⚠ **Keep salting per-cell
+  PRESENCE with `seedNum^SALT`** (invariant #1); **`darkWinR` is NOT a breach.**
   **(w)/(z) CLOSED 229 · (t) CLOSED 231 · (u) CLOSED 234 · (af)/(af′) CLOSED 228/235 — bodies archived, laws in SKILL.md.**
   **(m) SHOWERS ARE HOST-STARVED — do not build "X responds to the rain"** (201, `probe-rainhost`): nothing on the ground reads it, and a shower is **2-5 hexes TOTAL** ⇒ **less than one** picnic/cafe hex. **No host** (`T.MARKET` again).
   **(o) THE PORT HAS NO WATERFRONT — do not build "the ship docks / cranes work her"** (205,
@@ -393,50 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 359 entries before Iteration 357 live in
+> **Archive:** the 360 entries before Iteration 358 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 357 — snow-capped evergreen crowns: correct, pretty in close-up, ~0.05% of the frame at fit (2026-07-18) [Nature x Deepen -> EXPLORED -> REVERTED]
-
-**Vector.** 350-356 declared the additive/interconnect wall from eight angles, but every one was a generative/profile
-survey - and 225's grep-the-seam law (26/26 at FINDING) is explicitly a DIFFERENT instrument from a generative survey.
-So I ran a direct grep of the signal-readers instead of an 8th cold survey, and it found a genuine one the surveys
-missed: the evergreen tree crowns explicitly IGNORE `c.snow`. The ground-snow draw's own comment (L7170) says the
-dusting is laid "under the tree crowns above" - i.e. the crowns are painted over the snow and never read it, so the
-ONLY evergreens winter ever touched were their contact shadows. A snow-laden conifer/redwood spire is the strongest
-winter figure/ground there is (white on dark evergreen) and physically correct (evergreens hold snow, deciduous are
-bare) - a legitimate Nature x Deepen distinct from 342's ROOF snow (roofs present edge-on/thin).
-
-**Change (built, then reverted).** `tree()`'s conifer + the REDWOOD draw got a white wedge sharing each tier's apex,
-reaching further down the spire as `c.snow` deepens, through `colA` (night snow dims blue like the ground), on the
-ground-snow ramp/melt schedule (`SNOWSHOW`/`SNOWFULL`); deciduous crowns take none. Fed by a module-scope `curSnow`
-set once per cell in `drawCell` (no 15-call-site param) + a `SNOWCAPON` suppressor (cf. `GFLASH`).
-
-**Census.** Draw-only, zero `rng()`, reads only the existing `c.snow` field => core byte-flat (`developed`/`pop`/
-`roads` +0; the +1 solar/tower wobbles are 226 tick-count noise). PASS.
-
-**Probe (`probe-snowcap`, floor 0 by SNOWCAPON on/off in one page, deep winter year%1=0.12, snow ticked up).** The cap
-RENDERS strongly in close-up: ~2700 CSS px / seed across 79 wood-hexes ~= 34 CSS px per wood-hex, meanDlum ~16, maxD
-~187 (seed 42; seed 7 similar) - an order of magnitude above 226's unseen queue shadow (~2 px/figure). NOT the
-sub-pixel-hairline family.
-
-**Visual (2 blind agents, crossed A/B, + summer control).** Both PASSED and both, independently, confirmed the
-close-up is CORRECT: snow sits ON the spires, clean z-order, no floating blobs, and summer is correctly BARE. But
-both ALSO, independently, called it negligible at whole-city FIT zoom ("adds nothing perceptible at city zoom" / "you
-must diff or zoom to see any change"). Measured: the ON/OFF whole-city delta is only ~500-700 bright px in a 1.26M-px
-frame ~= 0.05% of the frame.
-
-**Verdict: EXPLORED -> REVERTED.** A real, clean, seasonally-correct feature that reads beautifully up close and is
-~0.05% of the frame at the zoom the diorama is actually judged - the exact 342/343/352 invisible-at-fit-zoom winter-
-ornament pattern, confirmed here with a number and by both blind agents (the only "seen" instrument, 266). The
-scatter of ~34px caps on ~79 tiny crowns does not cohere into a whole-city read the way the accepted ground-snow AREA
-wash does. This is `polish-tile` (per-tile beauty), not grow-city (whole-city growth). Source restored to `b9dbdb8e`.
-**Finding for the loop: the grep-the-seam law still FINDS (crowns unread, a genuine miss of 7 surveys) - but a found
-seam is not a shippable one; the winter-ornament class is a firm NO for grow-city because it cannot clear figure/
-ground at fit. Do NOT re-try snow on trees/roofs/any per-object winter cap here - the ceiling is ~0.05% of the frame.**
 
 ## Iteration 358 — the two remaining fit-visible seams are enumerated or dead-by-construction (2026-07-18) [Nature/Sky × Deepen (grep) → NO SHIP → EXPLORED → REVERTED]
 
@@ -732,3 +691,29 @@ barely-visible feature). It fails the header's own "PRICE VISIBILITY / figure-gr
 belongs to a future fire `polish` lap, not grow-city. Moving (bc) to CLOSED (priced, deferred to polish) — the OPEN cue
 list is now provably empty with every cue accounted for. **The PAUSE recommendation stands**; the honest next move is a
 `polish-tile` ship (which drifts the source and re-opens the step-back), a user vector, or a Scale swing.
+
+## Iteration 367 — the pause, re-verified by measurement: live census PASS + the frozen-column seam is clean (2026-07-18) [Explore → no ship; header trim]
+
+**Vector.** 364 (step-back, no drift), 365 (seam re-check clean), 366 (last dangling cue (bc) priced → `polish`) all
+land on the same verdict: the growth vein is dry from every angle and the OPEN cue list is provably empty. 365/366 were
+**source reads**. This lap does the one thing they did not — a **fresh live measurement** — so the pause rests on the
+gates, not only on the prior ledger. It also discharges the header's standing obligation: the budget-warner showed
+**402/400**, and step 5 says the next lap's first job is the trim.
+
+**What I measured (no source edit).**
+- **Census regression gate — PASS.** Core metrics byte-flat vs baseline (`pop 195508`, `roads 5727`, `developed 6056`),
+  no page errors across all 9 seed×era cells. The paused city is numerically sound.
+- **Frozen-census-column seam (362) re-audited from the full per-era tile histogram** (3 seeds summed, 1985/2005/2035):
+  every column that is FLAT or ZERO is documented terrain — `LIGHTHOUSE` (one-per-city), `MARSH` (289: terrain, draw
+  answers tide+season), `ROCK`, `SHOREPARK`, `VOID`. **No dead rule hides in a flat column.** And the two most recent
+  liveness fixes read LIVE in the data, which is the positive control: **KELP 27→33→30** (282's CA now turns over) and
+  **SOLARF 0→0→19** (287's field, a frozen 0 for 180 laps, now grows). GARDEN/PLAZA/QUAD/MARKET/STADIUM/VINEYARD all
+  grow from 0 as their year-gates open — no anomalies.
+
+**Header trim.** `(g) CLOSED at 363` compressed from 5 lines to 3 (its determinism law is invariant #1 in SKILL.md);
+full body moved to `GROWTH-archive.md` ("rotated out at 367"). Header back to **400/400, within budget.**
+
+**Verdict: EXPLORED → no ship.** The census + histogram are a measured re-confirmation, not a new vector: nothing
+regressed, nothing is dead, nothing is dangling. **The PAUSE stands.** The honest next move is a `polish-tile` ship
+(which drifts the source and re-opens the step-back), a user-directed vector, or a Scale swing — grow-city has no
+additive/interconnect/Deepen/Polish vector left that clears the figure/ground bar.
