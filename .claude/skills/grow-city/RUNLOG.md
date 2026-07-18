@@ -291,4 +291,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ↩ Iter 358  Sky × Deepen               EXPLORED → REVERTED 9m49s    $7.14  395b1ad
 ↩ Iter 359  People × New element       EXPLORED → REVERTED 6m01s    $5.30  9661342
 ↩ Iter 360  Water & coast × Polish     EXPLORED → REVERTED 13m54s   $7.66  d264873
+✔ Iter 361  —                          SHIPPED             5m37s    $3.29  84315cc
 ```
