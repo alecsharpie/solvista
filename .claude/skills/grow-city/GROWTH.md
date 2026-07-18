@@ -32,22 +32,22 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **367 — CENSUS + FROZEN-COLUMN RE-VERIFY / NO SHIP** (Explore): fresh live census PASS (core
-  byte-flat, no page errors) + full per-era tile histogram — every FLAT/ZERO column is documented terrain, and 282's
-  KELP (27→33→30) + 287's SOLARF (0→0→19) liveness fixes read LIVE in the data. Trimmed the over-budget header ((g)
-  body → archive). **OPEN cue list provably empty ⇒ PAUSE stands.** Prev: **366 — PRICED (bc) / NO SHIP** ((bc) fire-glow
+- **ROTATION.** Last: **368 — HOVER-SEAM RE-VERIFY / NO SHIP** (Explore): the interaction/hover surface is the one seam
+  364/365/366/367 never re-audited — every FOREGROUND mover in `ENTINFO` carries a live-`sub` off the SAME predicate its
+  rule steers by (249/269/271/278 discipline COMPLETE, no frozen label-tell); the only non-`ENTINFO` arrays are ambient
+  HIGH-SKY `birds`/`flock`/`plane` (cloud band, non-interactive by design, priced to `polish-tile` at 351 — not a gap).
+  Fresh census PASS. **A 4th independent instrument ⇒ PAUSE stands.** Prev: **367 — CENSUS + FROZEN-COLUMN /
+  NO SHIP**: fresh census PASS + per-era histogram, every FLAT/ZERO column is documented terrain, 282's KELP (27→33→30)
+  + 287's SOLARF (0→0→19) read LIVE (the positive controls). **366 — PRICED (bc) / NO SHIP** ((bc) fire-glow
   closed to `polish`: year-gated off at 2035, rare/4-tick/dense-core = solar-farm bad trade). **365 — SEAM RE-CHECK /
   NO SHIP**: label-tell/flag/frozen-census tables all clean, backed by live draws.
-  **364 — STEP-BACK #48 / NO DRIFT + FIXED (camera)**: golden/dusk pins ignored the WEATHER
-  FRONT (`rainFront`, ~20yr clock on the FULL year, indep. of `year%1`) ⇒ at 2035.62 the shot seeds' sky was a random
-  overcast, `GWARM=0`, false grey golden; now pins a CLEAR front per seed + self-reports `OVC` (SKILL.md 3rd pin-trap).
-  **363** CUE (g) CLOSED (salted 3 seedless `hashCell` decisions). **362** FROZEN-CENSUS SEAM clean. **361** FLAG-LIFECYCLE (281) CLOSED (`hstr` rides tower, no veto). Prev:
-- **360 - CUE (ay) WINDROW LENGTH CLOSED BY CONSTRUCTION / NO SHIP** (Water × Polish): a legible near-shore windrow is
-  z-order-forbidden (266's tail must trail the NW draw-quadrant, but the sea is the EAST half-plane, `SHOREX=CTRX+11`) ⇒
-  coastal stubs are geometry not tuning; residual = fit-invisible cull = `polish-tile`. Prev (all NO-SHIP surveys, full
-  entries below/archive): **359** additive/NEW-ELEMENT angle dry (fireworks pre-exist). **358** WINDA readers fully
-  enumerated; atmospheric perspective = HAZE. **357** snow-cap crowns a REAL miss but ~0.05% of frame at FIT ⇒ ⛔ **winter
-  per-object caps can't clear figure/ground — PRICE VISIBILITY AT FIT.** **356/355** emitter/behavioral/specular
+  **364** STEP-BACK #48 no drift + camera FIX (golden/dusk pins ignored the ~20yr WEATHER FRONT `rainFront` on the FULL
+  year → false grey golden at 2035.62; now pins a CLEAR front per seed, self-reports `OVC`; SKILL.md 3rd pin-trap) ·
+  **363** cue (g) CLOSED · **362** frozen-census clean · **361** FLAG-LIFECYCLE (281) CLOSED (`hstr` rides tower). Prev:
+- **360** cue (ay) windrow length CLOSED BY CONSTRUCTION (near-shore row z-order-forbidden; full text in the OPEN-cues
+  line below). Prev (all NO-SHIP surveys, full below/archive): **359** additive/NEW-ELEMENT dry (fireworks pre-exist) ·
+  **358** WINDA readers enumerated, atmospheric perspective = HAZE · **357** snow-cap crowns a REAL miss but ~0.05% of
+  frame at FIT ⇒ ⛔ **winter per-object caps can't clear figure/ground — PRICE VISIBILITY AT FIT.** **356/355** emitter/behavioral/specular
   PRE-EXISTING; **354/353** comment-tell + TABLE seams clean.
   Prev: **352** whole-scene lightning FLASH = HAZE / REVERTED (⛔ whole-scene flat overlay dead; 260 on a flash, law in
   SKILL.md). **351** half-built/keeps-no-hour vein dry (🆕 loose `birds` fade α0.15 not roost = polish-tile). Prev:
@@ -391,48 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 360 entries before Iteration 358 live in
+> **Archive:** the 361 entries before Iteration 359 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 358 — the two remaining fit-visible seams are enumerated or dead-by-construction (2026-07-18) [Nature/Sky × Deepen (grep) → NO SHIP → EXPLORED → REVERTED]
-
-**Vector.** 357 revived the one non-redundant passive instrument (225's grep-the-seam, a *direct* grep of the
-signal-readers, distinct from a generative survey), and it still FOUND a real miss — but a winter per-object cap that
-cannot clear figure/ground at fit (~0.05% of frame). So this lap ran the same instrument once more, but aimed
-*specifically at the axis 357 named as the only one left open*: a seam whose fix would touch a **large / fit-visible
-surface** and be **high-contrast local**, not another tiny per-object ornament. Two candidates, both settled by grep
-alone. No source touched; `md5(solvista.html) = b9dbdb8e…`, byte-identical to the iter-349 freeze.
-
-**Seam 1 — WINDA readers (enumerated, no gap).** `grep WINDA` returns a fully-enumerated reader set: the tree canopy
-(L5025), palm crown (L5086), flags (L7545), clouds/drift (`windDrift`), the whole sea machinery centred on
-`seaState()` — whitecaps, windrows, breaking surf (L5275/5277) — smoke lean (333), sail bellies (334), festival cloth
-(338/339), balloons, the kite (`kiteGust`), and the rain shaft's lean (L9815). The gust cycle's own comments (L5261,
-L10980) name its readers and 280 already closed the last two (balloon, kite). **No large surface is deaf to the wind.**
-
-**Seam 2 — atmospheric perspective (absent, but dead by construction).** `grep -E "haze|atmospher|distance|desatur"`
-confirms there is **no depth-desaturation**: far (top, small-`y`) rows are not shifted toward the sky/haze colour or
-lowered in contrast relative to near rows. That is a genuine absence — the one large-surface, whole-plate signal read
-the city does not implement. But it is **structurally in the 342/343/352 dead zone**: atmospheric perspective is by
-definition *low-contrast and whole-frame*, and this projection is near-top-down with weak screen depth (~30 shallow
-rows), so the effect would be subtle → read as HAZE → blind agents would call it negligible at fit (352's exact law:
-"a whole-scene effect as a flat/near-flat wash is dead; a believable one needs a real SKY→ground GRADIENT = polish-
-tile"). A found seam, not a shippable one — 357's finding, re-confirmed on the last fit-visible candidate.
-
-**Census.** Not re-run: source is provably identical to the bytes 354 censused VERDICT PASS / 0 errors / core
-byte-flat. Re-running the 9-cell matrix on identical bytes buys nothing (354's law). No histogram move.
-
-**Verdict: EXPLORED → REVERTED (grep-only, nothing built).** The grow-city additive/interconnect vein is now a
-**nine-times-measured fixpoint**, and 358 closes the *fit-visible* question the last three laps kept circling: the two
-remaining candidates on large surfaces are (1) already fully read (WINDA) or (2) real-but-dead-by-construction
-(atmospheric perspective, a haze). **Finding for the loop: there is no un-read large-surface signal left whose fix is
-high-contrast-local — every large surface is either saturated or can only carry a subtle whole-frame wash, which is
-polish-tile, not grow-city.** Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343 deaf-surface
-shaped redesigns) **or a user-directed vector / a Scale swing** (the one structural lever left, deferred per 350's
-"do NOT add raw downtown density" watch). Recommend pausing the autonomous loop until source drifts or a user vector
-arrives. Source restored/unchanged at `b9dbdb8e`.
 
 ## Iteration 359 — the additive NEW-ELEMENT angle closes too: an independent high-contrast-local candidate pre-exists (2026-07-18) [Sky/People × New element (grep) → NO SHIP → EXPLORED → REVERTED]
 
@@ -717,3 +680,29 @@ full body moved to `GROWTH-archive.md` ("rotated out at 367"). Header back to **
 regressed, nothing is dead, nothing is dangling. **The PAUSE stands.** The honest next move is a `polish-tile` ship
 (which drifts the source and re-opens the step-back), a user-directed vector, or a Scale swing — grow-city has no
 additive/interconnect/Deepen/Polish vector left that clears the figure/ground bar.
+
+## Iteration 368 — pause re-verified from a fresh seam: the interaction/hover surface is exhaustively live (2026-07-18) [Explore → no ship]
+
+**Vector.** 367 rested the pause on the census + the frozen-census-column seam. This lap tests the ONE seam the recent
+pause laps (364 camera · 365 label-tell TABLES · 366 fire-glow · 367 census/histogram) never re-audited — the
+**interaction/hover surface** (`ENTINFO` / `stamp` / the live-`sub` label-tell). 225's grep-the-seam law applied to a
+genuinely fresh angle rather than trusting the header's "OPEN cue list empty."
+
+**What I measured (no source edit).**
+- **Live census — PASS.** Core byte-flat vs baseline (`pop 195508`, `roads 5727`, `developed 6056`), 0 page errors
+  across all 9 seed×era cells. A fresh gate, not the prior ledger's word.
+- **`ENTINFO` audited against every array the census entity list reports.** Every FOREGROUND mover — whales, dolphins,
+  ferries, freighters, launches, boats, surfers, kayaks, buoys, herons, deer, joggers, balloons, copters, shuttles,
+  monorail, gondola, trams, trucks, bikes, peds, dogs, plus the service `VKIND`/cab rows — carries a `sub` that is a
+  **live function read off the SAME predicate its rule/draw steers by** (`ferryApp`/`isAvenue`/`windForce`/`waterSession`/
+  `cabFree`…). The 249/269/271/278 "computed live, never stored, so the label and the draw cannot drift apart"
+  discipline is **complete across the whole table — no frozen label-tell survives.**
+- **The only arrays NOT in `ENTINFO` are `birds` / `flock` / `plane`** — ambient HIGH-SKY draws (`h≈70–114`, in the
+  cloud band, never `stamp()`ed), intentionally non-interactive like the clouds and stars. The loose-birds *look* was
+  already priced to `polish-tile` at 351. **Not a gap: the hover surface is for foreground ground/water entities, and
+  every one of those is named and live.**
+
+**Verdict: EXPLORED → no ship.** A fourth independent instrument (after 364's camera, 365's tables, 367's
+census/histogram) lands on the same verdict from a seam the others did not touch. No un-named foreground entity, no
+frozen `sub`. **The PAUSE stands** — the honest next move remains a `polish-tile` ship (drifts the source, re-opens the
+step-back), a user-directed vector, or a Scale swing.

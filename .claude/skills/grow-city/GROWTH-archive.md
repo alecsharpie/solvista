@@ -25096,3 +25096,40 @@ wash does. This is `polish-tile` (per-tile beauty), not grow-city (whole-city gr
 seam is not a shippable one; the winter-ornament class is a firm NO for grow-city because it cannot clear figure/
 ground at fit. Do NOT re-try snow on trees/roofs/any per-object winter cap here - the ceiling is ~0.05% of the frame.**
 
+## Iteration 358 — the two remaining fit-visible seams are enumerated or dead-by-construction (2026-07-18) [Nature/Sky × Deepen (grep) → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** 357 revived the one non-redundant passive instrument (225's grep-the-seam, a *direct* grep of the
+signal-readers, distinct from a generative survey), and it still FOUND a real miss — but a winter per-object cap that
+cannot clear figure/ground at fit (~0.05% of frame). So this lap ran the same instrument once more, but aimed
+*specifically at the axis 357 named as the only one left open*: a seam whose fix would touch a **large / fit-visible
+surface** and be **high-contrast local**, not another tiny per-object ornament. Two candidates, both settled by grep
+alone. No source touched; `md5(solvista.html) = b9dbdb8e…`, byte-identical to the iter-349 freeze.
+
+**Seam 1 — WINDA readers (enumerated, no gap).** `grep WINDA` returns a fully-enumerated reader set: the tree canopy
+(L5025), palm crown (L5086), flags (L7545), clouds/drift (`windDrift`), the whole sea machinery centred on
+`seaState()` — whitecaps, windrows, breaking surf (L5275/5277) — smoke lean (333), sail bellies (334), festival cloth
+(338/339), balloons, the kite (`kiteGust`), and the rain shaft's lean (L9815). The gust cycle's own comments (L5261,
+L10980) name its readers and 280 already closed the last two (balloon, kite). **No large surface is deaf to the wind.**
+
+**Seam 2 — atmospheric perspective (absent, but dead by construction).** `grep -E "haze|atmospher|distance|desatur"`
+confirms there is **no depth-desaturation**: far (top, small-`y`) rows are not shifted toward the sky/haze colour or
+lowered in contrast relative to near rows. That is a genuine absence — the one large-surface, whole-plate signal read
+the city does not implement. But it is **structurally in the 342/343/352 dead zone**: atmospheric perspective is by
+definition *low-contrast and whole-frame*, and this projection is near-top-down with weak screen depth (~30 shallow
+rows), so the effect would be subtle → read as HAZE → blind agents would call it negligible at fit (352's exact law:
+"a whole-scene effect as a flat/near-flat wash is dead; a believable one needs a real SKY→ground GRADIENT = polish-
+tile"). A found seam, not a shippable one — 357's finding, re-confirmed on the last fit-visible candidate.
+
+**Census.** Not re-run: source is provably identical to the bytes 354 censused VERDICT PASS / 0 errors / core
+byte-flat. Re-running the 9-cell matrix on identical bytes buys nothing (354's law). No histogram move.
+
+**Verdict: EXPLORED → REVERTED (grep-only, nothing built).** The grow-city additive/interconnect vein is now a
+**nine-times-measured fixpoint**, and 358 closes the *fit-visible* question the last three laps kept circling: the two
+remaining candidates on large surfaces are (1) already fully read (WINDA) or (2) real-but-dead-by-construction
+(atmospheric perspective, a haze). **Finding for the loop: there is no un-read large-surface signal left whose fix is
+high-contrast-local — every large surface is either saturated or can only carry a subtle whole-frame wash, which is
+polish-tile, not grow-city.** Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343 deaf-surface
+shaped redesigns) **or a user-directed vector / a Scale swing** (the one structural lever left, deferred per 350's
+"do NOT add raw downtown density" watch). Recommend pausing the autonomous loop until source drifts or a user vector
+arrives. Source restored/unchanged at `b9dbdb8e`.
+
