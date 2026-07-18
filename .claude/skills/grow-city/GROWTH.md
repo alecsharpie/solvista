@@ -32,23 +32,21 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **363 - CUE (g) CLOSED / FIXED** (Water & coast × Polish). Salted the 3 seedless `hashCell`
-  PRESENCE decisions (smear 5835 · hay bales 6525 · fruit 6562) with `seedNum^base` ⇒ 0%→62–72% vary per seed (invariant
-  #1); census +0, `probe-seedlessdither`, both agents PASS. **⚠ SOURCE DRIFTED off the 349 freeze ⇒ Step-back #48
-  warranted before the next survey.** Prev: **362** FROZEN-CENSUS-COLUMN SEAM (282/287) CLEAN / NO SHIP (Survey). Ran the loop's
-  #1 diagnostic (350–361 grepped source, never the histogram) on the 9-cell matrix: every flat/zero column is terrain, a
-  landmark, a one-shot planting, or a live 0→N structure — **no zero-row, no dead rule; fifth/cheapest seam class clean.** Prev: **361** FLAG-LIFECYCLE (281) CLOSED — `hstr` rides COM→TOWER (retail podium), NO veto ⇒ no 281-tell. Prev:
-- **360 - CUE (ay) WINDROW LENGTH CLOSED BY CONSTRUCTION / structural NO SHIP** (Water & coast × Polish). Last OPEN cue
-  RESOLVED: a legible near-shore windrow is z-order-forbidden — 266's tail must trail the NW draw-quadrant but the sea is
-  the EAST half-plane (`SHOREX=CTRX+11`), so westward fetch is shore-bounded ⇒ coastal stubs are geometry not tuning;
-  residual = fit-invisible cull = `polish-tile`. **⇒ OPEN cue list EMPTY; PAUSE — frozen source `b9dbdb8e`.** Full entry below.
-  Prev: **359** additive NEW-ELEMENT angle closes too — night festival fireworks pre-exist (iter 319, L4736/9716) ⇒ ten
-  angles dry (grep-only NO SHIP). **358** WINDA readers fully enumerated (no surface deaf to wind); atmospheric
-  perspective absent but dead-by-construction = HAZE. **357** snow-cap conifer crowns REVERTED (a real miss — crowns
-  ignore `c.snow` — but ~0.05% of frame at FIT; ⛔ winter per-object caps can't clear figure/ground at fit; *a FOUND seam
-  is not a SHIPPABLE one — PRICE VISIBILITY AT FIT*). **356/355** generative surveys, all candidates PRE-EXISTING
-  (emitter/behavioral/specular night axes saturated). **354/353** comment-tell + type-keyed-TABLE seams clean/sound (no
-  282/280/285/288 tell). Full text of each in ledger/archive.
+- **ROTATION.** Last: **364 — STEP-BACK #48 / NO DRIFT + FIXED (instrument)** (holistic). 3 lights × 2 seasons × 2 seeds
+  blind-PASS both seeds; core byte-flat; perf +0.06%/lap day vs iter 323 (~40 laps). **FIXED the step-back CAMERA:** its
+  golden/dusk pins ignored the WEATHER FRONT (`rainFront`, a ~20yr clock on the FULL year, independent of the `year%1`
+  season) — so at the fixed 2035.62 the shot seeds' sky was a random overcast, `GWARM=0`, a false grey golden hour. Now
+  pins a CLEAR front per seed (walk the integer year at fixed season) + self-reports `OVC`; law in SKILL.md (the step-back's
+  3rd pin-trap, after 202/264). **⚠ Source re-frozen at 364; OPEN cue list stays EMPTY ⇒ PAUSE stands.** Prev: **363** CUE
+  (g) CLOSED/FIXED — salted 3 seedless `hashCell` PRESENCE decisions (0%→62–72% vary/seed). **362** FROZEN-CENSUS-COLUMN
+  SEAM (282/287) clean. **361** FLAG-LIFECYCLE (281) CLOSED (`hstr` rides tower, no veto). Prev:
+- **360 - CUE (ay) WINDROW LENGTH CLOSED BY CONSTRUCTION / NO SHIP** (Water × Polish): a legible near-shore windrow is
+  z-order-forbidden (266's tail must trail the NW draw-quadrant, but the sea is the EAST half-plane, `SHOREX=CTRX+11`) ⇒
+  coastal stubs are geometry not tuning; residual = fit-invisible cull = `polish-tile`. Prev (all NO-SHIP surveys, full
+  entries below/archive): **359** additive/NEW-ELEMENT angle dry (fireworks pre-exist). **358** WINDA readers fully
+  enumerated; atmospheric perspective = HAZE. **357** snow-cap crowns a REAL miss but ~0.05% of frame at FIT ⇒ ⛔ **winter
+  per-object caps can't clear figure/ground — PRICE VISIBILITY AT FIT.** **356/355** emitter/behavioral/specular
+  candidates PRE-EXISTING. **354/353** comment-tell + type-keyed-TABLE seams clean.
   Prev: **352** whole-scene lightning FLASH = HAZE / REVERTED (⛔ whole-scene flat overlay dead; 260 on a flash, law in
   SKILL.md). **351** half-built/keeps-no-hour vein dry (🆕 loose `birds` fade α0.15 not roost = polish-tile). Prev:
   **350 — STEP-BACK #47 / NO DRIFT** (3 lights × 2 seasons × 2 seeds blind-PASS; core byte-flat; perf +0.020%/lap day vs
@@ -64,10 +62,8 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   paths · wildflowers · whales · SNOW `c.snow` ⚠ warp=61 freezes it ON · civic) · People **318/317** · Urban **316**
   (⛔ DISTRICTS' `tick()` vote is a STREAM-PRESERVING VESTIGE — do NOT delete). ✅
   **EXCITABLE-MEDIA CATEGORY COMPLETE** (bloom 263 · shroom 272 · party 314). ➡ **NEXT VECTOR: the growth vein is DRY
-  from ELEVEN angles and SOURCE IS BYTE-FROZEN since 349 — additive, interconnect, large-surface AND the last polish cue
-  ((ay), CLOSED BY CONSTRUCTION at 360) are all closed/bounded; the OPEN cue list is EMPTY. STEP-BACK #48 must WAIT until
-  an actual ship drifts the bytes (re-shooting #47's identical frames buys nothing). Honest mode is `polish-tile`**
-  (342/343 shaped-ridge / tapered-streak deaf-surface redesigns; the (ay) windrow stub-cull is a fit-invisible polish)
+  from ELEVEN angles; SOURCE re-frozen at 364 (STEP-BACK #48 DONE, no drift) — additive/interconnect/large-surface AND the
+  last polish cue ((ay), CLOSED at 360) all closed/bounded; OPEN cue list EMPTY. Honest mode is `polish-tile`**
   **or genuinely NEW: a mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL** (emitter CLOSED
   3-for-3 347/348/349; arrive+idle/spawn-completion DRY 351; whole-scene-flash REVERTED as haze 352; winter per-object
   cap a firm NO 357; WINDA + atmospheric-perspective closed 358 — do NOT re-try any "whole-scene X" flat overlay, winter
@@ -395,59 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 356 entries before Iteration 354 live in
+> **Archive:** the 357 entries before Iteration 355 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 354 — the comment-tell seam is clean, and the source has been byte-frozen for five laps (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
-
-**Vector.** Five of the last five laps found nothing to ship: 344 declared the growth wall, 350 (#47) confirmed it
-visual/perf, 351 surveyed the behavioral seams (movers/cards/flags/frozen-columns) dry, 352 built and reverted the
-last high-contrast whole-scene interconnect (the lightning flash → haze), 353 audited the type-keyed TABLES sound.
-Re-running any of those would be redundant, so this lap tested a **different** seam class none of them covered and
-that the loop's biggest historic finds came from: the **comment-tell family** — 199 (a name/comment asserting a
-behavior its value can't have) · 282 (a comment asserting an *absence* the code contradicts) · 278 (a "computed
-live" whose only caller is an event) · 280 (a comment enumerating its category as a changelog, so a sibling is
-missing). No source touched; `solvista.html` byte-identical to HEAD (630b04b / 5e06907).
-
-**Survey — the comment-tell seam came back CLEAN.** Grepped every `/* */` comment carrying `never|always|once|static|
-constant|frozen|fixed|no .*state|does not|carries no`. Every hit is a **healthy justification of correct behavior**,
-not a defect-tell — the *inverse* of the 282 shape (an assertion of an absence that turns out true because the rule
-is dead):
-- **"X is right *because* it never Y":** `Math.random so [dolphins] never perturb the [stream]` (L1352) · `outside the
-  plate: never drawn, never grows` (L992) · `the band can never spill past the waterline` (L6025) · `three salt RANGES,
-  spaced so 0x..+j can never collide` (L6733) · `never atop track already down` (L3271). All are correctness proofs.
-- **Tooltip-reads-the-SAME-predicate-the-draw-does** (the FIXED 113/199 shape, not the tell): `so it can never call a
-  wrong hour` (L4670/4758) · `the MARKET… never got one (iter 285)` now DOES (L4802/4846) · `so the two can never [drift]`
-  (L2094). These are the label-tell already *closed*.
-- **Deliberate un-readers, correctly commented:** `a palm does not feel the drought` / `the palm's band is UNSEASONED
-  — a palm does not migrate` (L5091/6177) — the 247 palm-vs-umbrella fix, working as designed.
-- **The one genuine open item is already banked and out of scope:** `the foam gets a SHAPE, because it could never get
-  a SIZE` (L5277) = open cue **(ay)** windrow LENGTH — a `polish-tile` job, not a growth lap.
-No absence-asserting-a-LIVE-rule (282), no changelog-as-taxonomy with a missing sibling (280), no frozen "computed
-live" (278). This confirms 344's growth wall from a **fifth** independent angle.
-
-**⚠ The load-bearing new fact: SOURCE IS BYTE-FROZEN SINCE ITER 349.** `md5(solvista.html)` = `b9dbdb8e8ad377d8df940e2d804a572b`
-for HEAD **≡ iter 349 (5e06907) ≡ iter 350 (#47, d6b7805)** — 350/351/352/353/354 shipped no bytes. Consequences:
-- Path objects unchanged by construction (measured `probe-drawbudget` night total ~139,837 = iter 349's 139,810). The
-  permanent perf arc is *identical* to what #47 measured; there is nothing new on the perf axis to price.
-- **A STEP-BACK #48 now would re-shoot #47's byte-identical frames and re-spawn blind agents to re-confirm a
-  byte-identical PASS** — the redundant-lap / grade-your-own-instrument trap. **A step-back's whole job is to catch
-  DRIFT since the last one, and there has been ZERO source drift.** So #48 is deferred until an actual ship moves the
-  bytes; re-running it on frozen source buys nothing. (The header's "#48 @~355" is superseded by this.)
-
-**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
-`roads` byte-flat (195508 / 6056 / 5727); entity populations full and healthy (peds 762, cars 360, surfers 81,
-kayaks 81, buoys 45, plane 9, copters 6, etc.). No histogram move (no source change).
-
-**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The comment-tell seam is
-**CLEAN** — the growth vein is now dry from FIVE angles (declared 344 · visual/perf 350 · behavioral 351 · table 353 ·
-comment-tell 354). Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343-class deaf-surface
-redesigns) **or wait for source to drift before the next step-back**. A genuine growth lap still needs a NEW
-mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL — none has survived a probe since 341.
-Nothing to fix.
 
 ## Iteration 355 — the fresh high-contrast-local candidate is already shipped (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
 
@@ -749,3 +697,45 @@ procedural again on the coast and the farms. ⚠ The source has **DRIFTED** off 
 Step-back #48 is now warranted before the next survey. The additive/interconnect/large-surface vein remains dry; the
 next honest grow-city move is still `polish-tile`, a user vector, or a Scale swing — but the one real determinism debt
 banked since ~iter 281 is now paid.
+
+## Iteration 364 — step-back #48: no drift, and the camera's golden hour was a random storm (2026-07-18) [Step-back / holistic → FIXED (instrument)]
+
+**Vector.** The mandated step-back (source had drifted off the 349 freeze when 363 shipped). Its job: read the whole
+frame at 3 lights × 2 seasons × 2 seeds for CUMULATIVE drift, plus the perf arc. It became a FIXED because the step-back's
+OWN camera was lying.
+
+**The finding (probe, before any agent).** `shot-stepback.mjs` self-reported `GWARM=0 (peaks 0)` for the golden frame on
+both shot seeds — i.e. the golden hour had no golden. GWARM is not dead: on a clear-front load it peaks **0.69–0.78 at
+t≈0.78** (confirmed by direct in-page sampling of `skyBot`/GWARM across `t`, now reproducible from `shot-stepback.mjs`'s
+own self-report). The cause is two independent clocks. `applySeason`/`sunWarp` read only `year%1` (the SEASON); but
+`rainFront()`/`overcast()` (L5177/5199) are a **~20-yr cycle on the FULL `year`** (the weather FRONT). The camera pins the
+"golden dry SEASON peak" at the fixed year **2035.62** — where the front happens to be a heavy overcast for the shot seeds
+(seed 42 `overcast=0.576`, seed 7 `0.603`; seed 1234 `0.273`), and `overcastSky()` (L9405) greys `skyBot` **before** GWARM
+is computed at L9409 ⇒ `GWARM=0`, grey sky, a false "flat/grey golden hour" an agent would (correctly) FAIL. Worse: the
+pin-DERIVATION ran with no `genWorld`, so it used the **page's random default seed** — a *third* weather front, unrelated
+to the frames it drives.
+
+**The fix (`shot-stepback.mjs`).** 259's law in the camera: pin the contaminating term. The derivation now runs
+`genWorld(seed)` (so `overcast()` keys on the shot seed), and each frame **keeps its season fraction (`year%1`) but walks
+the integer year to one whose front is CLEAR** (`overcast()==0`) for that seed — the artifact's own season/front
+independence (L10965; `__setYear` after `__warp` moves only the calendar, never the city `__warp` built). Every frame now
+**self-reports `OVC`**. Re-shot: seed 42 `dryYear=2021.62`, golden **GWARM=0.78 OVC=0 sun=UP**; the dusk pair
+discriminates cleanly (`dusk-summer` GWARM 0.74 sun=UP · `dusk-winter` GWARM 0 sun=DOWN, both OVC=0). Law promoted to
+SKILL.md (the step-back's third pin-trap, after 202's drift and 264's stale literals).
+
+**Census.** PASS (pageerrors 0, exit 0). Source `solvista.html` **byte-unchanged** — the edit is probe-only, so census is
++0 by construction; it confirms no page errors and the life/transport totals are healthy (peds 762, cars 360, etc.).
+
+**Perf (arc, not lap — `perfab.mjs REF=`).** Lap vs iter 349 (`5e06907`): **day +0.5% / night +0.2%** (noise). Arc vs iter
+323 (`cfd68c2`, ~40 laps): **day +2.5% / night +1.5%** ≈ **+0.06%/lap** — well within the loop's +0.2%/lap add-only budget;
+no perf drift alarm.
+
+**Visual (2 subagents, 1 per seed, whole-frame cumulative read).** Both **PASS** on both seeds, independently: balanced,
+coherent, beautiful coastal city at every light; NO z-order tears, floating tiles, blown/muddy/monochrome colour, or
+compounded clutter/darkness; the golden frame reads as a genuine warm golden hour (proving the fix — pre-fix it was flat
+grey); and both correctly named the dusk pair by light alone (summer sun-UP / winter sun-DOWN, longer summer day).
+
+**Verdict: FIXED (instrument).** Step-back #48 = **NO DRIFT** — the city is coherent and beautiful across 5 lights × 2
+seeds, perf healthy. The step-back camera's golden/dusk frames are now pinned to a clear front and can no longer be greyed
+by a random storm. Source re-frozen at this commit; the growth vein stays dry (OPEN cue list empty) ⇒ the PAUSE
+recommendation stands — next honest move is `polish-tile`, a user vector, or a Scale swing.

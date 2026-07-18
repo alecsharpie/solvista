@@ -76,8 +76,14 @@ const seed = parseInt(process.argv[2] || '42', 10);
 const outdir = resolve(process.argv[3] || join(HERE, '../shots/stepback'));
 mkdirSync(outdir, { recursive: true });
 
-const DRY = 2035.62;      /* applySeason's golden dry peak */
-const WINTER = 2035.02;   /* the wet trough */
+/* The dry SEASON peak and a CLEAR-SKY weather FRONT are two independent clocks (step-back
+   #48, iter 364): applySeason/sunWarp read only year%1, while rainFront()/overcast() are a
+   ~20yr cycle on the FULL year. At a fixed integer year that front is stormy for some seeds
+   (2035.62 is overcast 0.58/0.60 for seeds 42/7), and overcastSky() greys skyBot BEFORE
+   GWARM is read -- so the "golden hour" frame had NO golden. So we pin the SEASON FRACTION
+   only and let the PINS block choose the integer year with a CLEAR front, per seed. */
+const DRYF = 0.62;        /* applySeason's golden dry-season peak (year%1) */
+const WINF = 0.02;        /* the wet-season trough (year%1) */
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1600, height: 1000 }, deviceScaleFactor: 2 });
@@ -88,8 +94,23 @@ page.on('pageerror', e => console.error('PAGE ERROR:', e.message));
    re-implementing them (249), so a later lap that moves the light moves these pins too. */
 await page.goto(pathToFileURL(ART).href);
 await page.waitForTimeout(500);
-const PINS = await page.evaluate(({ dry, winter }) => {
+const PINS = await page.evaluate(({ dryf, winf, seed }) => {
   playing = false;
+  genWorld(seed);   /* rainFront()/overcast() key on seedNum, so the CLEAR-year search AND
+                       the golden argmax must run under the SEED WE SHOOT -- not the page's
+                       random default seed, which is a different weather front entirely. */
+  /* keep the SEASON (year%1=frac), walk the integer year to one whose FRONT is clear for
+     this seed. __setYear only pins the calendar; the city __warp built is untouched. */
+  const clearYear = (frac) => {
+    let bestY = 2020 + frac, bestOvc = 9;
+    for (let yi = 2020; yi <= 2080; yi++) {
+      const y = yi + frac; __setYear(y); const oc = overcast();
+      if (oc < bestOvc) { bestOvc = oc; bestY = y; }
+      if (oc === 0) return y;
+    }
+    return bestY;   /* fallback: the clearest year in range (still beats a random storm) */
+  };
+  const dryYear = clearYear(dryf), winYear = clearYear(winf);
   /* sunset, in WALL-CLOCK dayT, for the pinned year: the instant the warped clock SUNT
      crosses SUNDN. sunWarp is monotone by construction (DAYLEN is bounded so the day can
      never run backwards), so a bisection is exact. */
@@ -99,31 +120,33 @@ const PINS = await page.evaluate(({ dry, winter }) => {
     for (let i = 0; i < 50; i++) { const m = (lo + hi) / 2; if (sunWarp(m) < SUNDN) lo = m; else hi = m; }
     return (lo + hi) / 2;
   };
-  const sunsetDry = sunsetOf(dry), sunsetWin = sunsetOf(winter);
+  const sunsetDry = sunsetOf(dryYear), sunsetWin = sunsetOf(winYear);
   /* golden hour = the ARGMAX of the curve's own warmth signal, FOUND not guessed. GWARM is
      set inside render() off skyBot, so we render to read it rather than re-deriving it. */
-  __setYear(dry);
+  __setYear(dryYear);
   let goldenT = 0, best = -1;
   for (let t = 0.55; t <= 0.95; t += 0.005) {
     __setTime(t); render();
     if (GWARM > best) { best = GWARM; goldenT = t; }
   }
-  return { sunsetDry, sunsetWin, goldenT: +goldenT.toFixed(3), goldenGW: +best.toFixed(3),
+  return { dryYear, winYear, sunsetDry, sunsetWin,
+           goldenT: +goldenT.toFixed(3), goldenGW: +best.toFixed(3),
            /* the discriminating instant: the sun has SET in winter and is still UP in summer */
            duskT: +((sunsetDry + sunsetWin) / 2).toFixed(3) };
-}, { dry: DRY, winter: WINTER });
+}, { dryf: DRYF, winf: WINF, seed });
 
-console.log(`  pins  sunset dry=${PINS.sunsetDry.toFixed(3)} winter=${PINS.sunsetWin.toFixed(3)}` +
+console.log(`  pins  dryYear=${PINS.dryYear.toFixed(2)} winYear=${PINS.winYear.toFixed(2)} (fronts pinned CLEAR per seed)` +
+  `\n        sunset dry=${PINS.sunsetDry.toFixed(3)} winter=${PINS.sunsetWin.toFixed(3)}` +
   `  ->  dusk t=${PINS.duskT} (sun UP in summer, DOWN in winter)` +
   `   golden t=${PINS.goldenT} (GWARM peaks ${PINS.goldenGW})`);
 
 const FRAMES = [
-  { name: 'day',         t: 0.30,          year: DRY },
-  { name: 'golden',      t: PINS.goldenT,  year: DRY },
-  { name: 'night',       t: 0.92,          year: DRY },
+  { name: 'day',         t: 0.30,          year: PINS.dryYear },
+  { name: 'golden',      t: PINS.goldenT,  year: PINS.dryYear },
+  { name: 'night',       t: 0.92,          year: PINS.dryYear },
   /* the season, shot at the hour it LIVES, as a pair the agent must DISCRIMINATE (258) */
-  { name: 'dusk-summer', t: PINS.duskT,    year: DRY },
-  { name: 'dusk-winter', t: PINS.duskT,    year: WINTER },
+  { name: 'dusk-summer', t: PINS.duskT,    year: PINS.dryYear },
+  { name: 'dusk-winter', t: PINS.duskT,    year: PINS.winYear },
 ];
 
 for (const f of FRAMES) {
@@ -152,6 +175,7 @@ for (const f of FRAMES) {
     let lo = 0.5, hi = 0.999;
     for (let i = 0; i < 50; i++) { const m = (lo + hi) / 2; if (sunWarp(m) < SUNDN) lo = m; else hi = m; }
     return { dayT, year, LITAMT: +LITAMT.toFixed(2), GWARM: +GWARM.toFixed(2),
+             overcast: +overcast().toFixed(2),   /* the front, pinned CLEAR (step-back #48) */
              phase: phaseWord(dayT), sunUp: up, sunset: +((lo + hi) / 2).toFixed(3),
              hud: document.getElementById('stPhase').textContent };
   }, { seed, t: f.t, year: f.year });
@@ -160,7 +184,7 @@ for (const f of FRAMES) {
   const png = join(outdir, `s${seed}-${f.name}.png`);
   await page.screenshot({ path: png });        /* DOM composited, per iter 200 */
   console.log(`  ${f.name.padEnd(12)} t=${state.dayT.toFixed(3)} year=${state.year.toFixed(2)} ` +
-    `LITAMT=${String(state.LITAMT).padStart(4)} GWARM=${String(state.GWARM).padStart(4)} ` +
+    `LITAMT=${String(state.LITAMT).padStart(4)} GWARM=${String(state.GWARM).padStart(4)} OVC=${String(state.overcast).padStart(4)} ` +
     `sun=${state.sunUp ? 'UP  ' : 'DOWN'} (sets ${state.sunset.toFixed(3)}) phase=${state.phase.padEnd(11)} ` +
     `HUD=${(state.hud === state.phase ? 'ok' : 'STALE:' + state.hud).padEnd(8)} -> ${png}`);
 }

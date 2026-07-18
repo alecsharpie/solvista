@@ -435,6 +435,20 @@ the season is a **DISCRIMINATING PAIR** (258) — `dusk-summer` / `dusk-winter` 
 **same wall-clock instant**, taken midway between the two seasons' sunsets, so the sun
 is provably **UP in one frame and DOWN in the other**.
 
+⚠ **AND THE THIRD PIN IS THE ONE `t` NEVER WAS — THE WEATHER FRONT, A SECOND CLOCK THE
+DERIVED PINS IGNORED (iter 364, step-back #48).** `applySeason`/`sunWarp` read only
+`year%1`, but `rainFront()`/`overcast()` are a **~20-yr cycle on the FULL year** — so the
+"dry SEASON peak" `2035.62` and a "CLEAR SKY" are *different clocks*, and at that fixed
+year the front is a heavy overcast for seeds 42 & 7. `overcastSky()` greys `skyBot`
+**before GWARM is read**, so the golden argmax found `GWARM=0` and the "golden hour" was
+a grey daytime the pin never knew about — a false cumulative-drift FAIL waiting to happen
+(and note: the pin-derivation ran on the page's *random default seed*, a third weather
+entirely). This is **259's law in the camera: pin the contaminating term.**
+`shot-stepback.mjs` now **keeps the season fraction and walks the integer year to a CLEAR
+front per seed** (the artifact's own season/front independence, L10965 — `__setYear` after
+`__warp` moves only the calendar, never the city) and **self-reports `OVC`**. The tell:
+your golden frame self-reports `GWARM=0` on a sky that should blaze.
+
 `shot-stepback.mjs` freezes the world in-page (`playing=false` stops *both* clocks),
 pins `genWorld`+`__warp`+`__setYear`+`__setTime`, renders once with **no wait**, and
 shoots with `page.screenshot()` (DOM-composited, per 200's law). Every frame

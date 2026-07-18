@@ -24933,3 +24933,51 @@ snow-ridge/cat's-paws, 352's flash-as-sky→ground-gradient) or **STEP-BACK #48*
 a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL, and none has survived a probe since
 341. Nothing to fix.
 
+## Iteration 354 — the comment-tell seam is clean, and the source has been byte-frozen for five laps (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** Five of the last five laps found nothing to ship: 344 declared the growth wall, 350 (#47) confirmed it
+visual/perf, 351 surveyed the behavioral seams (movers/cards/flags/frozen-columns) dry, 352 built and reverted the
+last high-contrast whole-scene interconnect (the lightning flash → haze), 353 audited the type-keyed TABLES sound.
+Re-running any of those would be redundant, so this lap tested a **different** seam class none of them covered and
+that the loop's biggest historic finds came from: the **comment-tell family** — 199 (a name/comment asserting a
+behavior its value can't have) · 282 (a comment asserting an *absence* the code contradicts) · 278 (a "computed
+live" whose only caller is an event) · 280 (a comment enumerating its category as a changelog, so a sibling is
+missing). No source touched; `solvista.html` byte-identical to HEAD (630b04b / 5e06907).
+
+**Survey — the comment-tell seam came back CLEAN.** Grepped every `/* */` comment carrying `never|always|once|static|
+constant|frozen|fixed|no .*state|does not|carries no`. Every hit is a **healthy justification of correct behavior**,
+not a defect-tell — the *inverse* of the 282 shape (an assertion of an absence that turns out true because the rule
+is dead):
+- **"X is right *because* it never Y":** `Math.random so [dolphins] never perturb the [stream]` (L1352) · `outside the
+  plate: never drawn, never grows` (L992) · `the band can never spill past the waterline` (L6025) · `three salt RANGES,
+  spaced so 0x..+j can never collide` (L6733) · `never atop track already down` (L3271). All are correctness proofs.
+- **Tooltip-reads-the-SAME-predicate-the-draw-does** (the FIXED 113/199 shape, not the tell): `so it can never call a
+  wrong hour` (L4670/4758) · `the MARKET… never got one (iter 285)` now DOES (L4802/4846) · `so the two can never [drift]`
+  (L2094). These are the label-tell already *closed*.
+- **Deliberate un-readers, correctly commented:** `a palm does not feel the drought` / `the palm's band is UNSEASONED
+  — a palm does not migrate` (L5091/6177) — the 247 palm-vs-umbrella fix, working as designed.
+- **The one genuine open item is already banked and out of scope:** `the foam gets a SHAPE, because it could never get
+  a SIZE` (L5277) = open cue **(ay)** windrow LENGTH — a `polish-tile` job, not a growth lap.
+No absence-asserting-a-LIVE-rule (282), no changelog-as-taxonomy with a missing sibling (280), no frozen "computed
+live" (278). This confirms 344's growth wall from a **fifth** independent angle.
+
+**⚠ The load-bearing new fact: SOURCE IS BYTE-FROZEN SINCE ITER 349.** `md5(solvista.html)` = `b9dbdb8e8ad377d8df940e2d804a572b`
+for HEAD **≡ iter 349 (5e06907) ≡ iter 350 (#47, d6b7805)** — 350/351/352/353/354 shipped no bytes. Consequences:
+- Path objects unchanged by construction (measured `probe-drawbudget` night total ~139,837 = iter 349's 139,810). The
+  permanent perf arc is *identical* to what #47 measured; there is nothing new on the perf axis to price.
+- **A STEP-BACK #48 now would re-shoot #47's byte-identical frames and re-spawn blind agents to re-confirm a
+  byte-identical PASS** — the redundant-lap / grade-your-own-instrument trap. **A step-back's whole job is to catch
+  DRIFT since the last one, and there has been ZERO source drift.** So #48 is deferred until an actual ship moves the
+  bytes; re-running it on frozen source buys nothing. (The header's "#48 @~355" is superseded by this.)
+
+**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
+`roads` byte-flat (195508 / 6056 / 5727); entity populations full and healthy (peds 762, cars 360, surfers 81,
+kayaks 81, buoys 45, plane 9, copters 6, etc.). No histogram move (no source change).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The comment-tell seam is
+**CLEAN** — the growth vein is now dry from FIVE angles (declared 344 · visual/perf 350 · behavioral 351 · table 353 ·
+comment-tell 354). Honest mode is **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343-class deaf-surface
+redesigns) **or wait for source to drift before the next step-back**. A genuine growth lap still needs a NEW
+mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL — none has survived a probe since 341.
+Nothing to fix.
+
