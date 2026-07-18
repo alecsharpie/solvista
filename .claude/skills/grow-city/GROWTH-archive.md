@@ -24898,3 +24898,38 @@ agents/eyes can judge a desaturating wash (266).** A believable whole-scene flas
 SKY/source and fall off toward the ground (a directional gradient, not a flat veil), which is a `polish-tile`-scale
 redesign, not a growth lap. The lightning system stays local, and it is complete as it stands.
 
+## Iteration 353 — the type-keyed TABLE seam is sound (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** Three of the last four laps (344 declared the growth wall · 350 #47 confirmed it from the visual/perf side ·
+351 surveyed every *behavioral* seam dry · 352 reverted the last high-contrast interconnect). Re-running 351's behavioral
+survey would be redundant, so this lap tested a **different** seam class that neither 351 nor 352 covered and that the
+loop's biggest recent finds came from: the **type-keyed TABLES** (285's law — a table keyed on `c.kind`/`c.t` is
+structurally blind to a member that lives at a different level of the type hierarchy; 288's TOWER-can't-wear-tech is the
+same shape). No source touched; `solvista.html` byte-identical to HEAD (630b04b).
+
+**Survey — every table checked came back SOUND** (audited all 32 `T.*` tile types against each table's key set):
+- **TILELABEL** covers 31/32 — only `VOID` missing, correct (the void is not a tile you hover).
+- **TILEDESC** covers 29/32 — missing `ROAD`, `CIVIC`, `VOID`, and all three are **handled bespoke in `describeTile`**,
+  not by the table: `T.CIVIC` → `CIVICLABEL`/`CIVICDESC[c.kind]` (per-kind, the correct level); `T.ROAD` → a rich branch
+  naming fete/bridge/boulevard/arterial/busy/quiet off its own flags; `VOID` unreachable. No gap.
+- **POPW** covers only the 7 pop-bearing types (RES/MID/COM/TOWER/CIVIC/IND/MARKET) — intentional; a park has no
+  residents, and a loft's pop is keyed per-cell not per-row (274).
+- **BEDT** covers only the 4 windowed building types — intentional, and the loft's night curfew was already moved to the
+  per-cell `bedOf(c)` (274), so `T.IND` correctly stays OUT of the table (a `BEDT[T.IND]` row would bed the working
+  shed's night-shift clerestory, 173).
+
+Every missing member is a deliberate omission with a correct alternative path — none is the 285/288-class silent
+type-hierarchy blindness. This is a fourth independent confirmation of the growth wall (344 declared · 350 visual/perf ·
+351 behavioral · **353 structural/table**).
+
+**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
+`roads` byte-unmoved (195508 / 6056 / 5727), only `solarRoofs +1` / `greenRoofs +1` / `towerHt +1` (226 tick-timing).
+Entity populations full and healthy (peds 762, cars 360, surfers 81, kayaks 81, buoys 45, plane 9, copters 6, etc.).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The type-keyed TABLE seam
+is **SOUND** — the growth wall now stands confirmed from the behavioral (351), interconnect (352) *and* structural (353)
+angles. Honest mode stays **`polish-tile`** (the shaped-gradient deaf-surface redesigns: birds-roost close-up, 342/343's
+snow-ridge/cat's-paws, 352's flash-as-sky→ground-gradient) or **STEP-BACK #48** (~355). A genuine growth lap still needs
+a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL, and none has survived a probe since
+341. Nothing to fix.
+

@@ -18,7 +18,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 | Domain | New element | New CA rule | Deepen | Connect | Scale | Polish | Interaction/UX |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **Nature** | 4, 26, 29, 102, **156**, **174** | 1, 13, 60, **206**, **279**, **287** | 37, 46, 67, 76, **108**, **120**, **139**, **166**, ~~**233**~~, **238**, ~~**246**~~, **263**, **272**, **301**, **308**, **323**, **333**, ~~**342**~~ | ~~46~~, ~~88~~, ~~101~~ | U4 | 53, 96, **194**, ~~**198**~~, **215**, **221**, ~~**251**~~, **294** | **117**, **129**, **148**, **183** |
-| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334**, **348**, **349** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275**, ~~**360**~~ | **97**, **141**, **176** |
+| **Water & coast** | 6, 10, 12, 16, 20, 33, 106, **169**, **296** | 90, **282** | 17, 25, 51, 65, 72, **113**, **123**, **159**, **196**, **245**, **257**, **289**, **303**, **311**, **322**, **329**, **334**, **348**, **349** | 22, ~~**205**~~ | | U2, 44, 58, 79, **116**, **132**, **150**, **185**, **214**, **223**,  **234**, ~~**255**~~, **266**, **268**, **275**, ~~**360**~~, **363** | **97**, **141**, **176** |
 | **Urban fabric** | 32, 62, **295** | 7, 23, ~~82~~, **151**, **281** | 38, 54, 68, 92, **165**, **173**, **189**, **199**, **209**, ~~**218**~~, **219**, ~~**254**~~, **267**, **288**, **309**, **316**, ~~**332**~~, ~~**343**~~ | 47, **109**, ~~**160**~~ | 8, 14, 24, **U4** | 75, 83, 86, **98**, **99**, **103**, **110**, **118**, **124**, **143**, **180**, **216**, **220**, **224**, **228**, **235**, **239**, **274**, **302** | **133**, **327** |
 | **Transport** | 2, 9, 21, 31, 48, **164**, **297** | 77, **283** | 28, 39, 55, 63, **112**, **121**, **128**, **155**, **179**, **193**, **230**, **249**, **258**, **269**, ~~**312**~~, **341** | 5, 15, **138**, **211**, **276** | U4 | U1, U3, 70, 85, 87, 94, **146**, **188**, ~~**203**~~, **241**, **243** | **105**, **171**, **290** |
 | **Civic & culture** | 3, 11, 18, 30, **100** | 36, **107**, **326** | 36, 59, 66, 80, 91, **149**, **158**, **175**, ~~**195**~~, **213**, **244**, **250**, **259**, **277**, **285**, **292**, **307**, **338**, **339** | 45, **204**, **319** | | 73, ~~**114**~~, **168**, **231**, ~~**270**~~, **299** | 52, 122, **140**, **184** |
@@ -32,7 +32,10 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **362 - FROZEN-CENSUS-COLUMN SEAM (282/287) CLEAN / NO SHIP** (Survey × histogram). Ran the loop's
+- **ROTATION.** Last: **363 - CUE (g) CLOSED / FIXED** (Water & coast × Polish). Salted the 3 seedless `hashCell`
+  PRESENCE decisions (smear 5835 · hay bales 6525 · fruit 6562) with `seedNum^base` ⇒ 0%→62–72% vary per seed (invariant
+  #1); census +0, `probe-seedlessdither`, both agents PASS. **⚠ SOURCE DRIFTED off the 349 freeze ⇒ Step-back #48
+  warranted before the next survey.** Prev: **362** FROZEN-CENSUS-COLUMN SEAM (282/287) CLEAN / NO SHIP (Survey). Ran the loop's
   #1 diagnostic (350–361 grepped source, never the histogram) on the 9-cell matrix: every flat/zero column is terrain, a
   landmark, a one-shot planting, or a live 0→N structure — **no zero-row, no dead rule; fifth/cheapest seam class clean.** Prev: **361** FLAG-LIFECYCLE (281) CLOSED — `hstr` rides COM→TOWER (retail podium), NO veto ⇒ no 281-tell. Prev:
 - **360 - CUE (ay) WINDROW LENGTH CLOSED BY CONSTRUCTION / structural NO SHIP** (Water & coast × Polish). Last OPEN cue
@@ -332,10 +335,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   forecourt rule. `QUARTER` = the three that *seek* it; `observatory` is deliberately free to sit at the rim.
   `siteQuarter()` hugs the nearest standing major at **2-4 hexes**.
 - **Open cues, banked by holistic passes (take one when its domain comes up):**
-  **(g) ~SIXTEEN seedless `hashCell` calls paint the IDENTICAL pattern in EVERY city** (body archived at 281).
-  ⚠ **RE-RUN the audit, never a catalogue** (L-numbers drift): `grep -noE 'hashCell\([^;]{0,60}' solvista.html | grep -v
-  seedNum`. **Only PRESENCE decisions are a breach worth a vector**; the **night surf light-smear** (`hashCell(x,y,77)
-  <0.28`) is the one to fix. ⚠ **`darkWinR` is NOT a breach — check the callee.** When fixing a range, **space the bases**.
+  **(g) CLOSED at 363** (`probe-seedlessdither`). All **three** genuine seedless-`hashCell` PRESENCE decisions salted
+  with `seedNum^base` (night waterfront smear `0x577` · FARM hay bales `0x7A1` · harvest fruit `seedNum^(r*3+cc+50)`) ⇒
+  0% vary → 62–72% vary per seed. The remaining seedless calls are **jitter/colour/offset, not presence** (the cue's own
+  criterion), so imperceptible whether salted or not: river-glint phase/side, kelp sway, bale count, fruit colour. ⚠ **If
+  you add a new draw, keep salting per-cell PRESENCE with `seedNum^SALT`** (invariant #1). ⚠ **`darkWinR` is NOT a breach.**
   **(w)/(z) CLOSED 229 · (t) CLOSED 231 · (u) CLOSED 234 · (af)/(af′) CLOSED 228/235 — bodies archived, laws in SKILL.md.**
   **(m) SHOWERS ARE HOST-STARVED — do not build "X responds to the rain"** (201, `probe-rainhost`): nothing on the ground reads it, and a shower is **2-5 hexes TOTAL** ⇒ **less than one** picnic/cafe hex. **No host** (`T.MARKET` again).
   **(o) THE PORT HAS NO WATERFRONT — do not build "the ship docks / cranes work her"** (205,
@@ -391,46 +395,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 355 entries before Iteration 353 live in
+> **Archive:** the 356 entries before Iteration 354 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 353 — the type-keyed TABLE seam is sound (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
-
-**Vector.** Three of the last four laps (344 declared the growth wall · 350 #47 confirmed it from the visual/perf side ·
-351 surveyed every *behavioral* seam dry · 352 reverted the last high-contrast interconnect). Re-running 351's behavioral
-survey would be redundant, so this lap tested a **different** seam class that neither 351 nor 352 covered and that the
-loop's biggest recent finds came from: the **type-keyed TABLES** (285's law — a table keyed on `c.kind`/`c.t` is
-structurally blind to a member that lives at a different level of the type hierarchy; 288's TOWER-can't-wear-tech is the
-same shape). No source touched; `solvista.html` byte-identical to HEAD (630b04b).
-
-**Survey — every table checked came back SOUND** (audited all 32 `T.*` tile types against each table's key set):
-- **TILELABEL** covers 31/32 — only `VOID` missing, correct (the void is not a tile you hover).
-- **TILEDESC** covers 29/32 — missing `ROAD`, `CIVIC`, `VOID`, and all three are **handled bespoke in `describeTile`**,
-  not by the table: `T.CIVIC` → `CIVICLABEL`/`CIVICDESC[c.kind]` (per-kind, the correct level); `T.ROAD` → a rich branch
-  naming fete/bridge/boulevard/arterial/busy/quiet off its own flags; `VOID` unreachable. No gap.
-- **POPW** covers only the 7 pop-bearing types (RES/MID/COM/TOWER/CIVIC/IND/MARKET) — intentional; a park has no
-  residents, and a loft's pop is keyed per-cell not per-row (274).
-- **BEDT** covers only the 4 windowed building types — intentional, and the loft's night curfew was already moved to the
-  per-cell `bedOf(c)` (274), so `T.IND` correctly stays OUT of the table (a `BEDT[T.IND]` row would bed the working
-  shed's night-shift clerestory, 173).
-
-Every missing member is a deliberate omission with a correct alternative path — none is the 285/288-class silent
-type-hierarchy blindness. This is a fourth independent confirmation of the growth wall (344 declared · 350 visual/perf ·
-351 behavioral · **353 structural/table**).
-
-**Census + error gate.** Clean HEAD, tree clean. `census.mjs` VERDICT PASS, 0 page errors; core `pop`/`developed`/
-`roads` byte-unmoved (195508 / 6056 / 5727), only `solarRoofs +1` / `greenRoofs +1` / `towerHt +1` (226 tick-timing).
-Entity populations full and healthy (peds 762, cars 360, surfers 81, kayaks 81, buoys 45, plane 9, copters 6, etc.).
-
-**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** `solvista.html` byte-identical. The type-keyed TABLE seam
-is **SOUND** — the growth wall now stands confirmed from the behavioral (351), interconnect (352) *and* structural (353)
-angles. Honest mode stays **`polish-tile`** (the shaped-gradient deaf-surface redesigns: birds-roost close-up, 342/343's
-snow-ridge/cat's-paws, 352's flash-as-sky→ground-gradient) or **STEP-BACK #48** (~355). A genuine growth lap still needs
-a NEW mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL, and none has survived a probe since
-341. Nothing to fix.
 
 ## Iteration 354 — the comment-tell seam is clean, and the source has been byte-frozen for five laps (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
 
@@ -741,3 +710,42 @@ zero-row check (287's "a ZERO row is louder than a flat one") returns nothing: n
 now also clean**, corroborating the fixpoint from the loop's own #1 diagnostic, a seam 350–361 skipped. This is fresh
 evidence, not churn, and it reaches the same place: **OPEN cue list EMPTY, grow-city vein is a fixpoint, source frozen
 since 349. PAUSE stands.** Honest growth now requires a `polish-tile` ship, a user-directed vector, or a Scale swing.
+
+## Iteration 363 — cue (g) closed: the seedless-hashCell PRESENCE breaches are salted (2026-07-18) [Water & coast × Polish (determinism fix) → FIXED]
+
+**Vector.** Water & coast × Polish (invariant fix). The banked cue **(g)** — "seedless `hashCell` calls paint the
+IDENTICAL pattern in EVERY city" — was still live and explicitly actionable ("the night surf light-smear is the one to
+fix"), and it breaches the artifact's **#1 invariant** (procedural, new city every load). This is the one shippable
+grow-city vector left that is neither `polish-tile` nor closed: a *fix of a compounding breach*, which the skill lists
+as a first-class outcome. Not another survey.
+
+**Change.** Re-ran the audit (`grep -noE 'hashCell\([^;]{0,60}' | grep -v seedNum`) and classified every hit
+PRESENCE vs JITTER/COLOUR. Only **three** are genuine presence decisions (a threshold test that decides whether a thing
+is drawn at all), and all three used a **seedless** salt, so which cells get the ornament was pinned to world position,
+identical across every seed:
+- **5835** night waterfront light-smear `hashCell(x,y,77)` → `hashCell(x,y,seedNum^0x577)`
+- **6525** FARM hay-bale presence `hashCell(x,y,70)` → `hashCell(x,y,seedNum^0x7A1)`
+- **6562** FARM harvest-fruit presence `hashCell(x,y,r*3+cc+50)` → `hashCell(x,y,seedNum^(r*3+cc+50))`
+Bases spaced per the cue's guidance. **Only presence salted, jitter/colour/offset left alone** (the cue's own criterion:
+"only PRESENCE decisions are a breach worth a vector"): the remaining seedless calls — river-glint phase/side (5819/20),
+kelp mat sway (5931–50), bale count `hashCell(x,y,71)` (6527), fruit colour `cc+r` (6563), etc. — are position jitter or
+colour choice, imperceptible whether salted or not. Draw-only: no `rng()`, no terrain, no `c.*` writes.
+
+**Census.** PASS (pageerrors 0, exit 0). **Every metric +0, tile histogram empty** — exactly correct for a draw-only
+change the `__census()` pixel-blind hook cannot see.
+
+**Probe (`probes/probe-seedlessdither.mjs`).** Reimplements the artifact's exact `hashCell` (L185) and evaluates each
+presence-boolean over 1920 cells × the 3 census seeds. **OLD (seedless) = 0.0% vary on all three — the control that
+proves the breach (same city every load); NEW (seedNum^salt) = 62.4 / 71.8 / 72.3% vary — the fix, seed-dependent by
+construction.** A NEW column reading 0 would mean the salt never reached `seedNum` (dead fix); it does not. Pure
+arithmetic, no browser — it can only fail on a real salting mistake.
+
+**Visual.** Two blind subagents, night coast crop + whole-city (seeds 42, 7): both PASS. The warm waterfront sparkle
+renders correctly on the water off the shore, no z-order tears / floating tiles / blown-out colour, the whole night
+frame reads as a coherent balanced coastal city. Subtle, as expected for a density-preserving determinism fix.
+
+**Verdict: FIXED.** Cue (g) is **CLOSED** — every seedless *presence* decision now varies per seed; the artifact is
+procedural again on the coast and the farms. ⚠ The source has **DRIFTED** off the `b9dbdb8e`/349 freeze, so a
+Step-back #48 is now warranted before the next survey. The additive/interconnect/large-surface vein remains dry; the
+next honest grow-city move is still `polish-tile`, a user vector, or a Scale swing — but the one real determinism debt
+banked since ~iter 281 is now paid.
