@@ -25017,3 +25017,33 @@ whole-scene overlay (haze — 352), nor in a closed category (emitter/reflection
 probe since 341. **Recommendation: switch to `polish-tile`, or wait for source to drift before step-back #48.**
 Nothing to fix.
 
+## Iteration 356 — the behavioral and specular candidate classes are already shipped too (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** 350–355 confirmed the additive wall six ways, and 355 ran the *generative* complement — but only over
+**light-emitter** candidates (headlights, taxi lamp, copter beacon), the one profile the header names. This lap ran
+the generative survey over the two candidate classes 355 did **not** touch, on purpose, to check the wall is not just
+saturated in one profile: a **behavioral cross-domain interconnect** (nature × transport) and a **specular reflector**
+(water × sky). No source touched; `md5(solvista.html) = b9dbdb8e…`, byte-identical to the iter-349 freeze.
+
+**Survey — two fresh classes, both pre-existing.**
+- **Behavioral: gulls work the boat wake / roost at dark.** The obvious un-done-looking behavior — birds clustering on
+  a moving vessel — is at `drawBoat` L9124 (`if(LITAMT<0.55)`: three gulls orbit the wake behind the hull, wingbeat on
+  `time`, and vanish at night). Nature×transport behavioral interconnect, LOCAL and high-contrast (white gulls on dark
+  water). *Done.* (Herons roost too, L9227; shorebirds gather the damp margin by day, L6059.)
+- **Specular: the moonglade.** A bright glitter path on the night sea reading the moon's live position + phase — the
+  night twin of the day sun-glitter (L5706). Already shipped and traversing (iter 298 disc traverse, iter 153 one-
+  predicate reader; L9685 `moonglade: the sea twinkles in a POOL THAT TRACKS THE moon`). Water×sky specular reflector,
+  LOCAL. *Done.* (Reflection was already a CLOSED category per the header — 257/329/349 — this just re-confirms it from
+  the *lunar* instance.)
+
+**Census + error gate.** Tree clean; `md5 = b9dbdb8e8ad377d8df940e2d804a572b`, provably the same bytes 354 censused
+VERDICT PASS / 0 errors / core byte-flat. Re-running the 9-cell matrix on identical bytes buys nothing (354's law).
+No histogram move (no source change). Step-back #48 stays **deferred** — it would re-shoot #47's exact frames.
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** The wall now holds from a **seventh** angle (behavioral)
+and an **eighth** (specular/lunar), which are the two classes 355's light-only generative survey left open — so the
+generative confirmation is now complete across *all three* fresh-candidate profiles (emitter · reflector · behavior),
+and every one lands on an existing draw. The additive/interconnect grow-city vein is a stable fixpoint. **Honest mode
+is `polish-tile`** (open cue (ay) windrow LENGTH; birds fade α0.15 not roost) **or await a user-directed vector.**
+Nothing to fix; nothing to ship.
+

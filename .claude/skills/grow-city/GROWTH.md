@@ -32,11 +32,13 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **365 — SEAM RE-CHECK / NO SHIP** (Explore): re-walked the label-tell as a *table* — every
-  `TILEDESC`/`CIVICDESC` line is backed by a live draw (LIGHTHOUSE beam sweeps `time*1.1`; MARKET hours 285; observatory
-  dark rim 259; MARSH answers tide 289; parliament roof priced+bounded 270); flags audited 361, frozen census cols clean
-  362, animate draws off the `LITAMT` cliff 300. **No untouched defect ⇒ PAUSE stands** (source byte-frozen at 364).
-  Prev: **364 — STEP-BACK #48 / NO DRIFT + FIXED (camera)**: golden/dusk pins ignored the WEATHER
+- **ROTATION.** Last: **366 — PRICED (bc) / NO SHIP** (Explore): the last dangling cue — 🆕 (bc) fire-glow eaten by
+  later rows — PRICED and CLOSED to `polish`: both fire sparks are year-gated (structure `<2006`, forest `<2030`) so
+  **no fire burns at 2035** (the default/census/screenshot frame); a running load plays THROUGH the 1974–2005 fire era,
+  but a fire is 4 ticks, rare (L2772), and (bc) manifests only in dense CORE — a barely-visible payoff behind a
+  deferred-pass refactor = the reverted-solar-farm bad trade. **OPEN cue list now provably empty ⇒ PAUSE stands.**
+  Prev: **365 — SEAM RE-CHECK / NO SHIP**: label-tell/flag/frozen-census tables all clean, backed by live draws.
+  **364 — STEP-BACK #48 / NO DRIFT + FIXED (camera)**: golden/dusk pins ignored the WEATHER
   FRONT (`rainFront`, ~20yr clock on the FULL year, indep. of `year%1`) ⇒ at 2035.62 the shot seeds' sky was a random
   overcast, `GWARM=0`, false grey golden; now pins a CLEAR front per seed + self-reports `OVC` (SKILL.md 3rd pin-trap).
   **363** CUE (g) CLOSED (salted 3 seedless `hashCell` decisions). **362** FROZEN-CENSUS SEAM clean. **361** FLAG-LIFECYCLE (281) CLOSED (`hstr` rides tower, no veto). Prev:
@@ -56,7 +58,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ⛔ INVISIBLE-AT-ZOOM, polish-tile only · **341** wet streets mirror their lamps (rain's road reader). Prev (Deepen/shipped, byte-flat, laws in SKILL.md,
   full text in ledger/archive): **338/339** festival cloth on `windForce` · **336/337** RAIN-AWARE CROWDS on `dryAt`
   (category CLOSED, hold-out BEACH ⛔) · **334** SAIL BELLIES (WINDA-over-water DONE ⛔) · **333** fire smoke leans ((bj)
-  CLOSED, 🆕 (bc) fire-glow z-order future) · ~~**332**~~ CHIMNEY WOODSMOKE ⛔ INVISIBLE, DO NOT RE-TRY · **331** high jet
+  CLOSED, (bc) fire-glow z-order ✅ CLOSED 366 → polish) · ~~**332**~~ CHIMNEY WOODSMOKE ⛔ INVISIBLE, DO NOT RE-TRY · **331** high jet
   (does NOT parallax) · **329** waterfront reflection on `shoreGlow` · **328** the strike · **327** facade tile pick ·
   **326** civic square · **STEP-BACKS #42–#44 @325/330/335** (NO DRIFT) · **324–319** (desire
   paths · wildflowers · whales · SNOW `c.snow` ⚠ warp=61 freezes it ON · civic) · People **318/317** · Urban **316**
@@ -83,7 +85,7 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
   ➡ **OPEN cues: NONE** — (ay) windrow LENGTH **CLOSED BY CONSTRUCTION at 360** (a legible near-shore row is
   z-order-forbidden: 266's tail must trail the NW draw-quadrant, but the sea is the EAST half-plane, so westward fetch
   is shore-bounded ⇒ coastal stubs are geometry, not tuning; residual = fit-invisible stub cull = `polish-tile`).
-  ✅ **CLOSED (laws in SKILL.md):** (ay) 360 · (ba) 327 · (az) 314 · (bh) 317 · (bd) 284 · (au) 302 · (ax)+(bg) 294 · (bf) 299 · **(bj) 333**.
+  ✅ **CLOSED (laws in SKILL.md):** (ay) 360 · (ba) 327 · (az) 314 · (bh) 317 · (bd) 284 · (au) 302 · (ax)+(bg) 294 · (bf) 299 · **(bj) 333** · **(bc) 366 (priced → `polish`: fire is year-gated off at 2035, rare/4-tick, dense-core-only; deferred-pass refactor for a barely-visible payoff = solar-farm bad trade)**.
   🔑 **225'S GREP-THE-SEAM LAW IS 26 FOR 26 AT *FINDING*** (terse; full text in each numbered entry, laws in SKILL.md):
   300 the last global-`LITAMT` cliff (neon crowd stood all night) · 288 a FLAG the type-keyed TABLE couldn't reach on a
   TOWER · 287 `SOLARF` fully drawn yet NEVER ONCE existed (frozen census column caught it) · 285 the MARKET kept no hours
@@ -391,41 +393,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 358 entries before Iteration 356 live in
+> **Archive:** the 359 entries before Iteration 357 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 356 — the behavioral and specular candidate classes are already shipped too (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
-
-**Vector.** 350–355 confirmed the additive wall six ways, and 355 ran the *generative* complement — but only over
-**light-emitter** candidates (headlights, taxi lamp, copter beacon), the one profile the header names. This lap ran
-the generative survey over the two candidate classes 355 did **not** touch, on purpose, to check the wall is not just
-saturated in one profile: a **behavioral cross-domain interconnect** (nature × transport) and a **specular reflector**
-(water × sky). No source touched; `md5(solvista.html) = b9dbdb8e…`, byte-identical to the iter-349 freeze.
-
-**Survey — two fresh classes, both pre-existing.**
-- **Behavioral: gulls work the boat wake / roost at dark.** The obvious un-done-looking behavior — birds clustering on
-  a moving vessel — is at `drawBoat` L9124 (`if(LITAMT<0.55)`: three gulls orbit the wake behind the hull, wingbeat on
-  `time`, and vanish at night). Nature×transport behavioral interconnect, LOCAL and high-contrast (white gulls on dark
-  water). *Done.* (Herons roost too, L9227; shorebirds gather the damp margin by day, L6059.)
-- **Specular: the moonglade.** A bright glitter path on the night sea reading the moon's live position + phase — the
-  night twin of the day sun-glitter (L5706). Already shipped and traversing (iter 298 disc traverse, iter 153 one-
-  predicate reader; L9685 `moonglade: the sea twinkles in a POOL THAT TRACKS THE moon`). Water×sky specular reflector,
-  LOCAL. *Done.* (Reflection was already a CLOSED category per the header — 257/329/349 — this just re-confirms it from
-  the *lunar* instance.)
-
-**Census + error gate.** Tree clean; `md5 = b9dbdb8e8ad377d8df940e2d804a572b`, provably the same bytes 354 censused
-VERDICT PASS / 0 errors / core byte-flat. Re-running the 9-cell matrix on identical bytes buys nothing (354's law).
-No histogram move (no source change). Step-back #48 stays **deferred** — it would re-shoot #47's exact frames.
-
-**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** The wall now holds from a **seventh** angle (behavioral)
-and an **eighth** (specular/lunar), which are the two classes 355's light-only generative survey left open — so the
-generative confirmation is now complete across *all three* fresh-candidate profiles (emitter · reflector · behavior),
-and every one lands on an existing draw. The additive/interconnect grow-city vein is a stable fixpoint. **Honest mode
-is `polish-tile`** (open cue (ay) windrow LENGTH; birds fade α0.15 not roost) **or await a user-directed vector.**
-Nothing to fix; nothing to ship.
 
 ## Iteration 357 — snow-capped evergreen crowns: correct, pretty in close-up, ~0.05% of the frame at fit (2026-07-18) [Nature x Deepen -> EXPLORED -> REVERTED]
 
@@ -733,3 +705,30 @@ banked laws (whole-scene flat overlay = haze 352; winter per-object cap invisibl
 channel spent 254; per-hex water body-colour terraces 255). **The PAUSE recommendation stands** — the honest next move
 is a `polish-tile` ship (which will drift the source and re-open the step-back), a user vector, or a Scale swing. Logged
 so iteration 366 does not re-walk these exact tables.
+
+## Iteration 366 — pricing the last open cue: (bc) fire-glow z-order is a polish job, not a growth vector (2026-07-18) [Explore → no ship]
+
+**Vector.** 365 confirmed the label-tell/flag/frozen-census seams clean and logged "so iteration 366 does not re-walk
+these exact tables" — so I did not. But the header carried ONE dangling cue never resolved: 🆕 **(bc) — the wildfire's
+fire-glow is eaten by later rows in dense fabric** (a 266 z-order defect, agent-measured at 279, explicitly "left for a
+future fire lap" at 279/333). It was in neither the CLOSED list nor honestly OPEN. This lap PRICES it (no edit).
+
+**What I measured (source read only, no screenshots).**
+- **The glow** (`drawFire`, L7283): a radial gradient `r=15+7*glow` (≈22px), drawn at the TOP of `drawFire` during the
+  fire cell's OWN row. Render order is rows top→bottom, so the forward/downward spill is painted over by the taller
+  building in the row IN FRONT — exactly (bc). The 266-correct fix is a **deferred overlay pass** (draw the ground-spill
+  after the tile field composites, so no later row eats it) — an architectural change, which is *why* 279 deferred it.
+- **Visibility — the decisive number.** Both fire sparks are hard year-gated: structure fires `year<2006` (L2764/2804),
+  forest `year<2030` (L2768/2796). **At 2035 — the census/default `?warp=61` frame and the year every screenshot gate
+  shoots — NO fire ever burns.** A fresh public load *does* start at `year=1974` and plays forward (`year+=dt*s/6`,
+  ~0.167 yr/s), so a diorama left running passes THROUGH the fire era — but a fire lasts **4 ticks** and the code's own
+  audit (L2772) records it as extraordinarily rare and, crucially, (bc) only manifests in **dense core** fabric (open
+  forest has nothing in front to eat the spill). So the payoff is a slightly-more-correct warm spill for the ~2-second
+  window a *core* structure fire burns, in the 1974–2005 window only, seen by a viewer who happens to be watching then.
+
+**Verdict: EXPLORED → no ship.** (bc) is a real z-order defect but a **barely-visible, rare, transient, in-era-only**
+payoff behind a **deferred-pass refactor** — the reverted-solar-farm bad-trade shape (a passing gate for a
+barely-visible feature). It fails the header's own "PRICE VISIBILITY / figure-ground FIRST" bar for a *growth* lap and
+belongs to a future fire `polish` lap, not grow-city. Moving (bc) to CLOSED (priced, deferred to polish) — the OPEN cue
+list is now provably empty with every cue accounted for. **The PAUSE recommendation stands**; the honest next move is a
+`polish-tile` ship (which drifts the source and re-opens the step-back), a user vector, or a Scale swing.
