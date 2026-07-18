@@ -24981,3 +24981,39 @@ redesigns) **or wait for source to drift before the next step-back**. A genuine 
 mechanism/domain-signal-reader that is HIGH-CONTRAST and figure/ground LOCAL — none has survived a probe since 341.
 Nothing to fix.
 
+## Iteration 355 — the fresh high-contrast-local candidate is already shipped (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
+
+**Vector.** The last five laps confirmed the growth wall by *passive* seam-greps (351 behavioral · 353 tables · 354
+comment-tells). Re-running those is redundant (354's law). So this lap ran the **generative complement**: instead of
+grepping for a defect, I *generated* the strongest fresh candidates for the one thing the header still leaves open — a
+**NEW high-contrast, figure/ground-LOCAL mechanism/domain-signal-reader** (the 341/280 cross-domain-signal shape, the
+last thing that shipped) — and probed whether each already exists. This is the 34-beach-towels discipline run first,
+on purpose: "confirm your idea doesn't already exist" *before* designing. No source touched; `solvista.html`
+byte-identical to HEAD (md5 `b9dbdb8e`, = the iter-349 freeze).
+
+**Survey — three fresh candidates, three pre-existing.** Each is exactly the profile the header demands (bright local
+cue on dark ground, per-entity, reading an existing signal `LITAMT`), and the artifact already ships all three:
+- **Vehicle headlights** — cars/buses/trucks read night (`LITAMT>0.35`, L8904): a beam pool on the road ahead of the
+  nose, two warm headlamp points, two red taillight points. Bikes carry a bar lamp (L8817). *Done.*
+- **Taxi for-hire roof lamp** — amber when vacant, dark with a fare, `LITAMT>0.3 && cabFree(v)` (L8902). *Done.*
+- **Aircraft night nav lights** — the copter's tail beacon *blinks* at night (`LITAMT>0.25 && sin(time*5+ph)>0.2`,
+  L10098). *Done.*
+Every mover in the city already reads night with a bright local cue (add: ferry/bridge lights 179/193, lighthouse
+beam, emergency beacons, street lamps, fire/strike/buoy emitters 347/348/349). The "high-contrast local night-reader"
+axis is **saturated by construction** — a freshly-invented candidate lands on an existing draw, which is the strongest
+confirmation the additive space is spent (stronger than a passive grep, because it is adversarial: I *tried* to find a
+gap and could not).
+
+**Census + error gate.** Tree clean; `md5(solvista.html) = b9dbdb8e8ad377d8df940e2d804a572b`, byte-identical to the
+iter-349 freeze that 354 censused **VERDICT PASS, 0 errors, core `pop`/`developed`/`roads` byte-flat**. Re-running the
+9-cell matrix on provably-identical bytes buys nothing (it would re-confirm 354's own reading — the grade-your-own-
+instrument trap). No histogram move (no source change).
+
+**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** The growth vein is dry from a **sixth** angle, and this
+one is generative rather than passive: the best fresh high-contrast-local candidates are already implemented. Honest
+mode remains **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343-class deaf-surface redesigns) — a *different
+skill*. A genuine grow-city lap still needs a NEW mechanism that is neither additive-night-reader (saturated here),
+whole-scene overlay (haze — 352), nor in a closed category (emitter/reflection/wind-over-water); none has survived a
+probe since 341. **Recommendation: switch to `polish-tile`, or wait for source to drift before step-back #48.**
+Nothing to fix.
+

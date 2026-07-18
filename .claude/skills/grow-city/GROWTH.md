@@ -32,21 +32,21 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 - ✅ **THE TRIM METHOD** (paid 279, again 280): a block is cuttable when its **LAW is in SKILL.md** and its **ARTIFACT
   FACTS compress to their imperatives**; a *superseded* warning is free to cut (280's `__setWind` retired 275's).
   There is never a block you can simply *delete* — **compress the oldest, and pay for your OWN additions in the same lap.**
-- **ROTATION.** Last: **364 — STEP-BACK #48 / NO DRIFT + FIXED (instrument)** (holistic). 3 lights × 2 seasons × 2 seeds
-  blind-PASS both seeds; core byte-flat; perf +0.06%/lap day vs iter 323 (~40 laps). **FIXED the step-back CAMERA:** its
-  golden/dusk pins ignored the WEATHER FRONT (`rainFront`, a ~20yr clock on the FULL year, independent of the `year%1`
-  season) — so at the fixed 2035.62 the shot seeds' sky was a random overcast, `GWARM=0`, a false grey golden hour. Now
-  pins a CLEAR front per seed (walk the integer year at fixed season) + self-reports `OVC`; law in SKILL.md (the step-back's
-  3rd pin-trap, after 202/264). **⚠ Source re-frozen at 364; OPEN cue list stays EMPTY ⇒ PAUSE stands.** Prev: **363** CUE
-  (g) CLOSED/FIXED — salted 3 seedless `hashCell` PRESENCE decisions (0%→62–72% vary/seed). **362** FROZEN-CENSUS-COLUMN
-  SEAM (282/287) clean. **361** FLAG-LIFECYCLE (281) CLOSED (`hstr` rides tower, no veto). Prev:
+- **ROTATION.** Last: **365 — SEAM RE-CHECK / NO SHIP** (Explore): re-walked the label-tell as a *table* — every
+  `TILEDESC`/`CIVICDESC` line is backed by a live draw (LIGHTHOUSE beam sweeps `time*1.1`; MARKET hours 285; observatory
+  dark rim 259; MARSH answers tide 289; parliament roof priced+bounded 270); flags audited 361, frozen census cols clean
+  362, animate draws off the `LITAMT` cliff 300. **No untouched defect ⇒ PAUSE stands** (source byte-frozen at 364).
+  Prev: **364 — STEP-BACK #48 / NO DRIFT + FIXED (camera)**: golden/dusk pins ignored the WEATHER
+  FRONT (`rainFront`, ~20yr clock on the FULL year, indep. of `year%1`) ⇒ at 2035.62 the shot seeds' sky was a random
+  overcast, `GWARM=0`, false grey golden; now pins a CLEAR front per seed + self-reports `OVC` (SKILL.md 3rd pin-trap).
+  **363** CUE (g) CLOSED (salted 3 seedless `hashCell` decisions). **362** FROZEN-CENSUS SEAM clean. **361** FLAG-LIFECYCLE (281) CLOSED (`hstr` rides tower, no veto). Prev:
 - **360 - CUE (ay) WINDROW LENGTH CLOSED BY CONSTRUCTION / NO SHIP** (Water × Polish): a legible near-shore windrow is
   z-order-forbidden (266's tail must trail the NW draw-quadrant, but the sea is the EAST half-plane, `SHOREX=CTRX+11`) ⇒
   coastal stubs are geometry not tuning; residual = fit-invisible cull = `polish-tile`. Prev (all NO-SHIP surveys, full
   entries below/archive): **359** additive/NEW-ELEMENT angle dry (fireworks pre-exist). **358** WINDA readers fully
   enumerated; atmospheric perspective = HAZE. **357** snow-cap crowns a REAL miss but ~0.05% of frame at FIT ⇒ ⛔ **winter
   per-object caps can't clear figure/ground — PRICE VISIBILITY AT FIT.** **356/355** emitter/behavioral/specular
-  candidates PRE-EXISTING. **354/353** comment-tell + type-keyed-TABLE seams clean.
+  PRE-EXISTING; **354/353** comment-tell + TABLE seams clean.
   Prev: **352** whole-scene lightning FLASH = HAZE / REVERTED (⛔ whole-scene flat overlay dead; 260 on a flash, law in
   SKILL.md). **351** half-built/keeps-no-hour vein dry (🆕 loose `birds` fade α0.15 not roost = polish-tile). Prev:
   **350 — STEP-BACK #47 / NO DRIFT** (3 lights × 2 seasons × 2 seeds blind-PASS; core byte-flat; perf +0.020%/lap day vs
@@ -391,47 +391,11 @@ cross-cutting vectors (U2, 42, U5) stay in the bullets below, not in a cell.
 
 <!-- rotated -->
 
-> **Archive:** the 357 entries before Iteration 355 live in
+> **Archive:** the 358 entries before Iteration 356 live in
 > `GROWTH-archive.md`. Nothing reads that file by default — the header grid above
 > is the maintained summary. Rotated by `rotate-ledger.mjs`.
 
 <!-- /rotated -->
-
-## Iteration 355 — the fresh high-contrast-local candidate is already shipped (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
-
-**Vector.** The last five laps confirmed the growth wall by *passive* seam-greps (351 behavioral · 353 tables · 354
-comment-tells). Re-running those is redundant (354's law). So this lap ran the **generative complement**: instead of
-grepping for a defect, I *generated* the strongest fresh candidates for the one thing the header still leaves open — a
-**NEW high-contrast, figure/ground-LOCAL mechanism/domain-signal-reader** (the 341/280 cross-domain-signal shape, the
-last thing that shipped) — and probed whether each already exists. This is the 34-beach-towels discipline run first,
-on purpose: "confirm your idea doesn't already exist" *before* designing. No source touched; `solvista.html`
-byte-identical to HEAD (md5 `b9dbdb8e`, = the iter-349 freeze).
-
-**Survey — three fresh candidates, three pre-existing.** Each is exactly the profile the header demands (bright local
-cue on dark ground, per-entity, reading an existing signal `LITAMT`), and the artifact already ships all three:
-- **Vehicle headlights** — cars/buses/trucks read night (`LITAMT>0.35`, L8904): a beam pool on the road ahead of the
-  nose, two warm headlamp points, two red taillight points. Bikes carry a bar lamp (L8817). *Done.*
-- **Taxi for-hire roof lamp** — amber when vacant, dark with a fare, `LITAMT>0.3 && cabFree(v)` (L8902). *Done.*
-- **Aircraft night nav lights** — the copter's tail beacon *blinks* at night (`LITAMT>0.25 && sin(time*5+ph)>0.2`,
-  L10098). *Done.*
-Every mover in the city already reads night with a bright local cue (add: ferry/bridge lights 179/193, lighthouse
-beam, emergency beacons, street lamps, fire/strike/buoy emitters 347/348/349). The "high-contrast local night-reader"
-axis is **saturated by construction** — a freshly-invented candidate lands on an existing draw, which is the strongest
-confirmation the additive space is spent (stronger than a passive grep, because it is adversarial: I *tried* to find a
-gap and could not).
-
-**Census + error gate.** Tree clean; `md5(solvista.html) = b9dbdb8e8ad377d8df940e2d804a572b`, byte-identical to the
-iter-349 freeze that 354 censused **VERDICT PASS, 0 errors, core `pop`/`developed`/`roads` byte-flat**. Re-running the
-9-cell matrix on provably-identical bytes buys nothing (it would re-confirm 354's own reading — the grade-your-own-
-instrument trap). No histogram move (no source change).
-
-**Verdict: EXPLORED → REVERTED (a SURVEY — nothing built).** The growth vein is dry from a **sixth** angle, and this
-one is generative rather than passive: the best fresh high-contrast-local candidates are already implemented. Honest
-mode remains **`polish-tile`** (open cue (ay) windrow LENGTH; 342/343-class deaf-surface redesigns) — a *different
-skill*. A genuine grow-city lap still needs a NEW mechanism that is neither additive-night-reader (saturated here),
-whole-scene overlay (haze — 352), nor in a closed category (emitter/reflection/wind-over-water); none has survived a
-probe since 341. **Recommendation: switch to `polish-tile`, or wait for source to drift before step-back #48.**
-Nothing to fix.
 
 ## Iteration 356 — the behavioral and specular candidate classes are already shipped too (2026-07-18) [Survey → NO SHIP → EXPLORED → REVERTED]
 
@@ -739,3 +703,33 @@ grey); and both correctly named the dusk pair by light alone (summer sun-UP / wi
 seeds, perf healthy. The step-back camera's golden/dusk frames are now pinned to a clear front and can no longer be greyed
 by a random storm. Source re-frozen at this commit; the growth vein stays dry (OPEN cue list empty) ⇒ the PAUSE
 recommendation stands — next honest move is `polish-tile`, a user vector, or a Scale swing.
+
+## Iteration 365 — seam re-check: the label-tell tables are clean, the pause stands (2026-07-18) [Explore → no ship]
+
+**Vector.** Orient found the OPEN cue list EMPTY, additive/interconnect/large-surface veins dry from 11 angles, source
+byte-frozen at 364 (step-back #48, no drift), and a standing PAUSE recommendation. But 225's law is 26-for-26 at
+*finding*, and an empty cue list records where the loop has LOOKED, not what is THERE — so before honouring the pause I
+spent one bounded, render-free seam grep on the richest historical seam (the label-tell: a description asserting a
+behaviour the draw ignores), which the recent laps (285 market, 286 water crowd, 300 the last `LITAMT` cliff) had not
+re-walked as a *table*.
+
+**What I checked (grep only, no edits, no screenshots).**
+- **`TILEDESC` / `CIVICDESC` end-to-end** vs their draw cases: `LIGHTHOUSE` *"sweeps the bay at night"* → `drawCell`
+  L6697 rotates the beam cone by `a=time*1.1` (a real sweep, not a static claim); `MARKET` *"trades on its own days,
+  some mornings, some evenings under the lights"* → `marketAmt`/`marketWord` (285); `observatory` *"out on the dark
+  rim… open to the night"* → sited + `CIVHRS`-open (259); `parliament` *"the tallest civic roof"* → priced and bounded
+  (270, structurally unbuildable further); `MARSH` *"reedy tidal wetland"* → draw answers `TIDE`+season (289). Every
+  label is backed by a live draw.
+- **The four other seams the header names as already-closed, spot-confirmed:** flag lifecycle fully audited (361, all of
+  `corner`/`loft`/`solar`/`groof`/`hstr`/`bridge`/`riv` CLEAN); frozen census columns read clean (362); every animate
+  draw verifiably off the 262 global-`LITAMT` cliff (300). Nothing here re-opened.
+
+**Census / probe / visual.** None run — **there is no edit**. `solvista.html` is byte-identical to HEAD (364); the only
+working-tree change is a stray, already-appended `census-history.jsonl` line from an earlier session's census (a genuine
+append-only record, only the ±2 tick-wobble differs — `solarRoofs 1654`; kept, never edited).
+
+**Verdict: EXPLORED → no ship.** No untouched defect surfaced; every remaining additive shape is forbidden by the
+banked laws (whole-scene flat overlay = haze 352; winter per-object cap invisible at fit 357; the building colour
+channel spent 254; per-hex water body-colour terraces 255). **The PAUSE recommendation stands** — the honest next move
+is a `polish-tile` ship (which will drift the source and re-open the step-back), a user vector, or a Scale swing. Logged
+so iteration 366 does not re-walk these exact tables.
