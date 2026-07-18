@@ -295,4 +295,5 @@ for a grouped summary of any range, `node notes.mjs <since>..<until>`.
 ✔ Iter 362  —                          SHIPPED             6m17s    $2.93  8d2b422
 ✔ Iter 363  Water & coast × Polish     FIXED               11m15s   $4.57  7ef4e92
 ✔ Iter 364  —                          FIXED               30m55s   $10.30 c22fa83
+✔ Iter 365  —                          SHIPPED             6m29s    $3.95  662a2f7
 ```
